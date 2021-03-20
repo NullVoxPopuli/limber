@@ -10,15 +10,15 @@ module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
     babel: {
       // enables dynamic imports
-      plugins: [require.resolve('ember-auto-import/babel-plugin')],
+      // plugins: [require.resolve('ember-auto-import/babel-plugin')],
     },
-    autoImport: {
-      alias: {
-        // when the app tries to import from "plotly.js", use
-        // the real package "plotly.js-basic-dist" instead.
-        // '@ember/template-compiler': 'vendor/ember/ember-template-compiler.js',
-      },
-    },
+    // autoImport: {
+    //   alias: {
+    //     // when the app tries to import from "plotly.js", use
+    //     // the real package "plotly.js-basic-dist" instead.
+    //     // '@ember/template-compiler': 'vendor/ember/ember-template-compiler.js',
+    //   },
+    // },
     sourcemaps: {
       enabled: SOURCEMAPS,
     },
