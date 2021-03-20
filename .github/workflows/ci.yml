@@ -1,21 +1,47 @@
 name: CI
 on:
   push:
-    branches: [master]
-
+    branches: [main]
 
 jobs:
-  deploy:
-    name: Deploy to Netlify
+  build_app:
+    name: Build App
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    # needs:
-    # - tests
+    timeout-minutes: 10
 
     steps:
     - uses: actions/checkout@v2
     - uses: volta-cli/action@v1
-    - run: yarn install
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+    - name: Install and Build
+      run: yarn install && yarn build
+
+    - name: Upload App Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: built_app
+        path: ./dist/
+
+##############################################################
+
+  deploy:
+    name: Deploy to Netlify
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [build_app]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - name: Download Built App Artifacts
+      uses: actions/download-artifact@master
+      with:
+        name: built_app
+        path: ./deploy/app/
 
     - name: Deploy to Netlify
       env:
@@ -23,12 +49,41 @@ jobs:
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         NETLIFY_CLI_VERSION: 0.4.0
       run: |
-        time yarn build
-
-        cp ./config/netlify/_redirects ./dist
+        cp ./config/netlify/_redirects ./deploy/app
 
         wget https://github.com/netlify/netlifyctl/releases/download/v$NETLIFY_CLI_VERSION/netlifyctl-linux-amd64-$NETLIFY_CLI_VERSION.tar.gz
         tar -xf netlifyctl-linux-amd64-$NETLIFY_CLI_VERSION.tar.gz
 
-        ./netlifyctl -y deploy --site-id $NETLIFY_SITE_ID --access-token $NETLIFY_ACCESS_TOKEN --publish-directory "./dist"
+        ./netlifyctl -y deploy --site-id $NETLIFY_SITE_ID --access-token $NETLIFY_ACCESS_TOKEN --publish-directory "./deploy/app"
+
+
+##############################################################
+
+  deploy_preview:
+    name: Deploy Preview
+    if: github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [build_app]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+
+    - name: Download Built App Artifacts
+      uses: actions/download-artifact@master
+      with:
+        name: built_app
+        path: ./deploy/app/
+
+    - name: Deploy to Netlify
+      id: deploy
+      uses: nwtgck/actions-netlify@v1.1.13
+      with:
+        publish-dir: './deploy/app'
+        production-branch: __handled_separately__
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_ACCESS_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
