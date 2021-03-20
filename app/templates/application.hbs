@@ -1,0 +1,13 @@
+{{page-title "Limber"}}
+
+<textarea {{on 'change' this.updateText}}>
+  {{this.text}}
+</textarea>
+
+<button {{on 'click' this.makeComponent}}>Compile!</button>
+
+{{#if this.component}}
+  {{component this.component}}
+{{/if}}
+
+{{outlet}}
