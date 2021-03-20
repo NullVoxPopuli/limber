@@ -14,16 +14,19 @@
     </nav>
   </header>
 
-  <div class="grid grid-flow-col">
+  {{!-- template-lint-disable no-inline-styles --}}
+  <div class="grid" style="grid-template-columns: auto 1fr;">
     <textarea
-      class="w-full bg-gray-800 text-white p-4"
+      {{!-- template-lint-disable no-inline-styles --}}
+      class="bg-gray-800 text-white p-4 resize-x border border-gray-900"
+      style="width: calc(50vw - 16px)"
       spellcheck="false"
       {{on 'change' this.updateText}}
       {{on 'input' this.updateText}}
     >{{this.text}}</textarea>
 
     <section class="p-4 w-full shadow-inner">
-      <div class="prose">
+      <div class="prose max-w-full">
         {{#if this.component}}
           {{component this.component}}
         {{/if}}

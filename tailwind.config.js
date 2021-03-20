@@ -32,6 +32,9 @@ module.exports = {
       'sans': ['system-ui', 'Helvetica', 'Arial', 'sans-serif'],
     },
     extend: {
+      minWidth: {
+        '1/3': '33%',
+      },
       gridTemplateRows: {
         'editor': 'min-content 1fr',
       }
