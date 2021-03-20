@@ -2,6 +2,10 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
+const {SOURCEMAPS: _sourceMaps} = process.env;
+
+const SOURCEMAPS = _sourceMaps === 'true'; // default false
+
 module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
     babel: {
@@ -15,21 +19,43 @@ module.exports = function (defaults) {
         // '@ember/template-compiler': 'vendor/ember/ember-template-compiler.js',
       },
     },
+    sourcemaps: {
+      enabled: SOURCEMAPS,
+    },
+    postcssOptions: {
+      compile: {
+        map: SOURCEMAPS,
+        plugins: [
+          require('@tailwindcss/jit')('./tailwind.config.js'),
+          require('autoprefixer')(),
+        ],
+        cacheInclude: [/.*\.(css|hbs)$/, /.tailwind\.config\.js$/],
+      },
+    }
   });
 
-  // Use `app.import` to add additional libraries to the generated
-  // output files.
-  //
-  // If you need to use different assets in different
-  // environments, specify an object as the first parameter. That
-  // object's keys should be the environment name and the values
-  // should be the asset to use in that environment.
-  //
-  // If the library that you are including contains AMD or ES6
-  // modules that you would like to import into your application
-  // please specify an object with the list of modules as keys
-  // along with the exports of each module as its value.
   app.import('vendor/ember/ember-template-compiler.js');
 
-  return app.toTree();
+  const {Webpack} = require('@embroider/webpack');
+
+  return require('@embroider/compat').compatBuild(app, Webpack, {
+    staticAddonTrees: true,
+    staticAddonTestSupportTrees: true,
+    staticHelpers: true,
+    staticComponents: true,
+    splitControllers: true,
+    splitRouteClasses: true,
+    // staticAppPaths: [],
+    // splitAtRoutes: [],
+    packagerOptions: {
+      webpackConfig: {
+        // this option might not be working?
+        devtool: SOURCEMAPS ? 'eval-source-map' : 'none',
+      }
+    },
+    // required due to this app being a dynamic component generator
+    allowUnsafeDynamicComponents: true,
+  });
+
+  // return app.toTree();
 };
