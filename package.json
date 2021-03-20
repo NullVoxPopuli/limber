@@ -43,9 +43,7 @@
     "ember-cli-postcss": "^7.0.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.1",
-    "ember-data": "~3.25.0",
     "ember-export-application-global": "^2.0.1",
-    "ember-fetch": "^8.0.4",
     "ember-load-initializers": "^2.1.2",
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-page-title": "^6.2.1",
@@ -75,6 +73,9 @@
     "yarn": "1.22.10"
   },
   "dependencies": {
+    "@fortawesome/ember-fontawesome": "^0.2.3",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@tailwindcss/jit": "^0.1.5",
     "@tailwindcss/typography": "^0.4.0",
     "autoprefixer": "^10.2.5",

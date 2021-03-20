@@ -3,6 +3,10 @@
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
 
+```
+CLASSIC=true TAILWIND_MODE=watch ember s
+```
+
 ## Prerequisites
 
 You will need the following things properly installed on your computer.
