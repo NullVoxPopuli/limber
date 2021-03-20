@@ -6,7 +6,7 @@
       <a href="https://emberjs.com" target="_blank" rel="noreferrer noopener">
         <FaIcon @icon="ember" @prefix="fab" @size="3x" class="-mb-3 -mt-2" />
       </a>
-      <span>markdown playground</span>
+      <FaIcon @icon="markdown" @prefix="fab" @size="2x" class="-mb-2 -mt-2" />
     </h1>
 
     <nav class='text-white mt-1'>
@@ -19,7 +19,7 @@
     <textarea
       {{!-- template-lint-disable no-inline-styles --}}
       class="bg-gray-800 text-white p-4 resize-x border border-gray-900"
-      style="width: calc(50vw - 16px)"
+      style="width: calc(40vw - 16px)"
       spellcheck="false"
       {{on 'change' this.updateText}}
       {{on 'input' this.updateText}}
