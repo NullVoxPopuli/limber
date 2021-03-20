@@ -1,13 +1,17 @@
 {{page-title "Limber"}}
 
-<textarea {{on 'change' this.updateText}}>
-  {{this.text}}
-</textarea>
+<main class="flex gap-4">
+  <section class="h-full">
+    <textarea class="h-full w-full" {{on 'change' this.updateText}}>
+      {{this.text}}
+    </textarea>
+    <button class="bg-white text-white" {{on 'click' this.makeComponent}}>Compile!</button>
+  </section>
 
-<button {{on 'click' this.makeComponent}}>Compile!</button>
+  <section class="prose">
+    {{#if this.component}}
+      {{component this.component}}
+    {{/if}}
+  </section>
 
-{{#if this.component}}
-  {{component this.component}}
-{{/if}}
-
-{{outlet}}
+</main>
