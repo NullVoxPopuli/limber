@@ -1,7 +1,13 @@
 {{page-title "Limber"}}
 
-{{!-- The following component displays Ember's default welcome message. --}}
-<WelcomePage />
-{{!-- Feel free to remove this! --}}
+<textarea {{on 'change' this.updateText}}>
+  {{this.text}}
+</textarea>
+
+<button {{on 'click' this.makeComponent}}>Compile!</button>
+
+{{#if this.component}}
+  {{component this.component}}
+{{/if}}
 
 {{outlet}}
