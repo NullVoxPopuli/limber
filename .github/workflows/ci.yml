@@ -1,0 +1,34 @@
+name: CI
+on:
+  push:
+    branches: [master]
+
+
+jobs:
+  deploy:
+    name: Deploy to Netlify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # needs:
+    # - tests
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - run: yarn install
+
+    - name: Deploy to Netlify
+      env:
+        NETLIFY_ACCESS_TOKEN: ${{ secrets.NETLIFY_ACCESS_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        NETLIFY_CLI_VERSION: 0.4.0
+      run: |
+        time yarn build
+
+        cp ./config/netlify/_redirects ./dist
+
+        wget https://github.com/netlify/netlifyctl/releases/download/v$NETLIFY_CLI_VERSION/netlifyctl-linux-amd64-$NETLIFY_CLI_VERSION.tar.gz
+        tar -xf netlifyctl-linux-amd64-$NETLIFY_CLI_VERSION.tar.gz
+
+        ./netlifyctl -y deploy --site-id $NETLIFY_SITE_ID --access-token $NETLIFY_ACCESS_TOKEN --publish-directory "./dist"
+
