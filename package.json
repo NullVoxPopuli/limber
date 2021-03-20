@@ -11,8 +11,7 @@
     "test": "tests"
   },
   "scripts": {
-    "_build": "ember build --environment=production",
-    "build": "echo 'SWITCH BACK TO PRODUCTION BUILDS' && ember build --environment=development",
+    "build": "ember build --environment=production",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel 'lint:!(fix)'",
     "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
     "lint:hbs": "ember-template-lint .",

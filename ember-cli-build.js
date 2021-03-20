@@ -2,7 +2,7 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-const {SOURCEMAPS: _sourceMaps} = process.env;
+const {SOURCEMAPS: _sourceMaps, CLASSIC} = process.env;
 
 const SOURCEMAPS = _sourceMaps === 'true'; // default false
 
@@ -36,6 +36,10 @@ module.exports = function (defaults) {
 
   app.import('vendor/ember/ember-template-compiler.js');
 
+  if (CLASSIC) {
+    return app.toTree();
+  }
+
   const {Webpack} = require('@embroider/webpack');
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
@@ -56,6 +60,4 @@ module.exports = function (defaults) {
     // required due to this app being a dynamic component generator
     allowUnsafeDynamicComponents: true,
   });
-
-  // return app.toTree();
 };
