@@ -18,6 +18,8 @@ export default class TabLink extends Component {
   handleClick(e) {
     e.preventDefault();
 
-    this.router.transitionTo(this.args.href);
+    let qps = new URLSearchParams(this.router.currentRoute.queryParams);
+
+    this.router.transitionTo(this.args.href + `?${qps}`);
   }
 }
