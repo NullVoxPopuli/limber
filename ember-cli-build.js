@@ -2,7 +2,7 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-const {SOURCEMAPS: _sourceMaps, CLASSIC} = process.env;
+const { SOURCEMAPS: _sourceMaps, CLASSIC } = process.env;
 
 const SOURCEMAPS = _sourceMaps === 'true'; // default false
 
@@ -25,13 +25,10 @@ module.exports = function (defaults) {
     postcssOptions: {
       compile: {
         map: SOURCEMAPS,
-        plugins: [
-          require('@tailwindcss/jit')('./tailwind.config.js'),
-          require('autoprefixer')(),
-        ],
+        plugins: [require('@tailwindcss/jit')('./tailwind.config.js'), require('autoprefixer')()],
         cacheInclude: [/.*\.(css|hbs)$/, /.tailwind\.config\.js$/],
       },
-    }
+    },
   });
 
   app.import('vendor/ember/ember-template-compiler.js');
@@ -40,7 +37,7 @@ module.exports = function (defaults) {
     return app.toTree();
   }
 
-  const {Webpack} = require('@embroider/webpack');
+  const { Webpack } = require('@embroider/webpack');
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     staticAddonTrees: true,
@@ -55,7 +52,7 @@ module.exports = function (defaults) {
       webpackConfig: {
         // this option might not be working?
         devtool: SOURCEMAPS ? 'eval-source-map' : 'none',
-      }
+      },
     },
     // required due to this app being a dynamic component generator
     allowUnsafeDynamicComponents: true,

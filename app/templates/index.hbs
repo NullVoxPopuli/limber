@@ -1,0 +1,11 @@
+{{#let (service 'editor') as |context|}}
+
+  <div class="p-4 prose max-w-full">
+
+    {{#if context.component}}
+      {{component context.component}}
+    {{/if}}
+
+  </div>
+
+{{/let}}

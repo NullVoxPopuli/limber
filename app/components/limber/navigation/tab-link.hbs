@@ -1,0 +1,18 @@
+<a
+  {{on 'click' this.handleClick}}
+  href={{@href}}
+  class="
+    bg-white
+    py-1 px-4 block
+    hover:text-ember-light-blue focus:outline-none
+    rounded-t-sm
+    font-medium
+    {{if this.isActive
+      "text-ember-blue border-b-2 border-ember-blue"
+      "text-gray-600"
+    }}
+  "
+  ...attributes
+>
+  {{yield}}
+</a>

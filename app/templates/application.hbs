@@ -1,46 +1,18 @@
-{{page-title "Limber"}}
+{{page-title "Limber » Ember Markdown Playground"}}
 
 <main class="grid grid-flow-col h-screen grid grid-rows-editor">
-  <header class="bg-ember-black flex justify-between items-center shadow-lg py-2 px-4">
-    <h1 class='text-ember-brand flex gap-2 items-center'>
-      <a href="https://emberjs.com" target="_blank" rel="noreferrer noopener">
-        <FaIcon @icon="ember" @prefix="fab" @size="3x" class="-mb-3 -mt-2" />
-      </a>
-      <FaIcon @icon="markdown" @prefix="fab" @size="2x" class="-mb-2 -mt-2" />
-    </h1>
-
-    <nav class='text-white mt-1'>
-      <ExternalLink href="https://github.com/nullvoxpopuli/limber">GitHub</ExternalLink>
-    </nav>
-  </header>
+  <Limber::Header />
 
   {{!-- template-lint-disable no-inline-styles --}}
   <div class="grid" style="grid-template-columns: auto 1fr;">
-    <textarea
-      {{!-- template-lint-disable no-inline-styles --}}
-      class="bg-gray-800 text-white p-4 resize-x border border-gray-900"
-      style="width: calc(40vw - 16px)"
-      spellcheck="false"
-      {{on 'change' this.updateText}}
-      {{on 'input' this.updateText}}
-    >{{this.text}}</textarea>
+    <Limber::Editor />
 
-    <section class="p-4 w-full shadow-inner">
-      <div class="prose max-w-full">
-        {{#if this.component}}
-          {{component this.component}}
-        {{/if}}
-      </div>
+    <section class="w-full shadow-inner">
+      <Limber::Navigation />
 
-      {{#if this.error}}
-        <footer class="
-          fixed bottom-0 right-0 p-4
-          bg-red-100 text-black shadow-md border border-red-700
-          "
-        >
-          <pre>{{this.error}}</pre>
-        </footer>
-      {{/if}}
+      {{outlet}}
+
+      <Limber::Error />
     </section>
   </div>
 

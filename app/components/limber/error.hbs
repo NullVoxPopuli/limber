@@ -1,0 +1,11 @@
+{{#let (service 'editor') as |context|}}
+  {{#if context.error}}
+    <footer class="
+      fixed bottom-0 right-0 p-4
+      bg-red-100 text-black shadow-md border border-red-700
+      "
+    >
+      <pre>{{context.error}}</pre>
+    </footer>
+  {{/if}}
+{{/let}}

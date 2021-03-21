@@ -1,0 +1,10 @@
+{{#let (service 'editor') as |context|}}
+  <textarea
+    {{!-- template-lint-disable no-inline-styles --}}
+    class="bg-gray-800 text-white p-4 resize-x border border-gray-900"
+    style="width: calc(40vw - 16px)"
+    spellcheck="false"
+    {{on 'change' context.updateText}}
+    {{on 'input' context.updateText}}
+  >{{context.text}}</textarea>
+{{/let}}

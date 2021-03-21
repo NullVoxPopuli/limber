@@ -1,24 +1,24 @@
-import { render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
+import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | external-link', function (hooks) {
+module('Integration | Component | limber/header', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function (assert) {
+  test('it renders', async function(assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<ExternalLink />`);
+    await render(hbs`<Limber::Header />`);
 
     assert.equal(this.element.textContent.trim(), '');
 
     // Template block usage:
     await render(hbs`
-      <ExternalLink>
+      <Limber::Header>
         template block text
-      </ExternalLink>
+      </Limber::Header>
     `);
 
     assert.equal(this.element.textContent.trim(), 'template block text');

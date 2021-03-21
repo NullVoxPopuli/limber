@@ -1,0 +1,17 @@
+<nav class="flex flex-col sm:flex-row bg-ember-faint-gray gap-0.5 pt-0.5">
+  <Limber::Navigation::TabLink @href="/to-template" class="relative">
+      Ember
+      <span class="z-10 absolute right-[-5px] ">
+        <FaIcon @icon="caret-right" @transform="grow-6"/>
+      </span>
+  </Limber::Navigation::TabLink>
+  <Limber::Navigation::TabLink @href="/" class="relative">
+      Preview
+      <span class="z-10 absolute -right-2 ">
+        <FaIcon @icon="equals" @transform="shrink-2"/>
+      </span>
+  </Limber::Navigation::TabLink>
+  <Limber::Navigation::TabLink @href="/to-bytecode">
+      Glimmer Bytecode
+  </Limber::Navigation::TabLink>
+</nav>

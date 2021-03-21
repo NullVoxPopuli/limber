@@ -3,22 +3,22 @@ import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-module('Integration | Component | external-link', function (hooks) {
+module('Integration | Component | limber/editor', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<ExternalLink />`);
+    await render(hbs`<Limber::Editor />`);
 
     assert.equal(this.element.textContent.trim(), '');
 
     // Template block usage:
     await render(hbs`
-      <ExternalLink>
+      <Limber::Editor>
         template block text
-      </ExternalLink>
+      </Limber::Editor>
     `);
 
     assert.equal(this.element.textContent.trim(), 'template block text');

@@ -18,7 +18,7 @@ jobs:
         path: '**/node_modules'
         key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
     - name: Install and Build
-      run: yarn install && CLASSIC=true yarn build
+      run: npm install && CLASSIC=true npm run build
 
     - name: Upload App Artifacts
       uses: actions/upload-artifact@v2

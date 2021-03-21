@@ -1,0 +1,7 @@
+{{#let (service 'editor') as |context|}}
+
+  {{#if context.markdownToHbs}}
+    <pre class="p-4">{{context.markdownToHbs}}</pre>
+  {{/if}}
+
+{{/let}}

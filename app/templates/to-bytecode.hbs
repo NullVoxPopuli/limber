@@ -1,0 +1,10 @@
+{{#let (service 'editor') as |context|}}
+
+  {{#if context.template}}
+    <pre class="p-4">{{stringify context.template}}</pre>
+    <div class="fixed right-0 top-7 p-4 shadow-md border border-gray-800">
+      {{!-- bytecode-info context.template --}}
+    </div>
+  {{/if}}
+
+{{/let}}
