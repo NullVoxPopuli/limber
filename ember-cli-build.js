@@ -7,18 +7,17 @@ const { SOURCEMAPS: _sourceMaps, CLASSIC } = process.env;
 const SOURCEMAPS = _sourceMaps === 'true'; // default false
 
 module.exports = function (defaults) {
-  let app = new EmberApp(defaults, {
+  console.info(`
+    Building:
+      SOURCEMAPS: ${SOURCEMAPS}
+      CLASSIC: ${CLASSIC}
+  `);
+
+  let config = {
     babel: {
       // enables dynamic imports
       // plugins: [require.resolve('ember-auto-import/babel-plugin')],
     },
-    // autoImport: {
-    //   alias: {
-    //     // when the app tries to import from "plotly.js", use
-    //     // the real package "plotly.js-basic-dist" instead.
-    //     // '@ember/template-compiler': 'vendor/ember/ember-template-compiler.js',
-    //   },
-    // },
     sourcemaps: {
       enabled: SOURCEMAPS,
     },
@@ -29,7 +28,19 @@ module.exports = function (defaults) {
         cacheInclude: [/.*\.(css|hbs)$/, /.tailwind\.config\.js$/],
       },
     },
-  });
+  };
+
+  if (CLASSIC) {
+    config.autoImport = {
+      alias: {
+        // when the app tries to import from "plotly.js", use
+        // the real package "plotly.js-basic-dist" instead.
+        // '@ember/template-compiler': 'vendor/ember/ember-template-compiler.js',
+      },
+    };
+  }
+
+  let app = new EmberApp(defaults, config);
 
   app.import('vendor/ember/ember-template-compiler.js');
 

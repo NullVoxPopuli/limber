@@ -15,7 +15,6 @@ module.exports = {
       ...colors,
 
       ember: {
-        // https://emberjs.com/images/brand/Ember-Brand-Guidelines.pdf
         brand: '#E04E39',
         black: '#212121',
         'burnt-ember': '#9b2918',
