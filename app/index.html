@@ -34,14 +34,6 @@
     </style>
   </head>
   <body>
-    {{content-for "body"}}
-
-    <script src="{{rootURL}}assets/vendor.js"></script>
-    <script src="{{rootURL}}assets/limber.js"></script>
-
-    {{content-for "body-footer"}}
-
-
     <div id="initial-loader">
       <!--
         This is the App Shell
@@ -84,5 +76,14 @@
       </div>
 
     </div>
+
+    {{content-for "body"}}
+
+    <script src="{{rootURL}}assets/vendor.js"></script>
+    <script src="{{rootURL}}assets/limber.js"></script>
+
+    {{content-for "body-footer"}}
+
+
   </body>
 </html>
