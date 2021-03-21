@@ -13,6 +13,25 @@
     <link integrity="" rel="stylesheet" href="{{rootURL}}assets/limber.css">
 
     {{content-for "head-footer"}}
+
+    <!--
+      This the source of truth for the ember brand variables
+        https://emberjs.com/images/brand/Ember-Brand-Guidelines.pdf
+    -->
+    <style type="text/css">
+      :root {
+        --ember-brand: #E04E39;
+        --ember-black: #212121;
+        --ember-burnt-ember: #9b2918;
+        --ember-gray: #817f7f;
+        --ember-blue: #1e719b;
+        --ember-faint-gray: #efebea;
+        --ember-light-blue: #74b0ce;
+        --ember-linen: #fdf7f6;
+        --ember-yellow: #fbc840;
+        --ember-white: #fdfdfd;
+      }
+    </style>
   </head>
   <body>
     {{content-for "body"}}
@@ -22,6 +41,48 @@
 
     {{content-for "body-footer"}}
 
-    <div id="initial-loader">Loading</div>
+
+    <div id="initial-loader">
+      <!--
+        This is the App Shell
+        It's sole purpose is to show something when the HTML loads (which is small and loads / is parsed fast)
+        This gives the user an illusion of speed
+      -->
+      <div style="height: 100vh; width: 100vw; display: grid; grid-template-rows: min-content 1fr;">
+        <!-- header -->
+        <div style="background: var(--ember-black); height: 45px; width: 100%;"></div>
+
+        <!-- everything else -->
+        <div style="
+          display: grid; grid-template-columns: auto 1fr;
+          font-weight: bold;
+          font-size: 24px;
+        ">
+
+          <!-- editor -->
+          <div style="
+            width: 40vw; background: rgba(39, 39, 42);
+            color: white; padding-right: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: end;
+          ">
+            Loading
+          </div>
+
+          <!-- preview -->
+          <div style="
+            padding-left: 2px; color: rgb(39, 39, 42);
+            display: flex;
+            align-items: center;
+            justify-content: start;
+          ">
+            Limber
+          </div>
+
+        </div>
+      </div>
+
+    </div>
   </body>
 </html>

@@ -8,6 +8,8 @@ export default class Router extends EmberRouter {
 }
 
 Router.map(function () {
-  this.route('to-template');
-  this.route('to-bytecode');
+  this.route('ember');
+  this.route('opcodes');
+
+  this.route('error', { path: '*' });
 });
