@@ -92,6 +92,9 @@ export default class EditorService extends Service {
 /**
  * https://stackoverflow.com/a/57533980/356849
  * - Base64 Encoding is 33% bigger
+ *
+ * https://github.com/rotemdan/lzutf8.js
+ * - Compression
  */
 function buildQP(rawText) {
   const params = new URLSearchParams(location.search);
