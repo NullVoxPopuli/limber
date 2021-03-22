@@ -1,16 +1,18 @@
 {{page-title "Limber » Ember Markdown Playground"}}
 
-<main class="grid grid-flow-col h-screen grid grid-rows-editor">
+<main class="grid grid-flow-col h-screen max-h-screen grid grid-rows-editor">
   <Limber::Header />
 
   {{!-- template-lint-disable no-inline-styles --}}
-  <div class="grid" style="grid-template-columns: auto 1fr;">
+  <div class="grid overflow-hidden" style="grid-template-columns: auto 1fr;">
     <Limber::Editor />
 
-    <section class="w-full shadow-inner">
+    <section class="w-full shadow-inner grid" style="grid-template-rows: min-content 1fr;">
       <Limber::Navigation />
 
-      {{outlet}}
+      <div class="overflow-auto" {{constrain-vertically}}>
+        {{outlet}}
+      </div>
 
       <Limber::Error />
     </section>

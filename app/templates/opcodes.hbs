@@ -1,7 +1,9 @@
 {{#let (service 'editor') as |context|}}
 
   {{#if context.template}}
-    <pre class="p-4">{{stringify context.template}}</pre>
+    {{#let (stringify context.template) as |opcodes|}}
+      <pre class="json p-4" {{highlighted opcodes}}><code class="json">{{opcodes}}</code></pre>
+    {{/let}}
     {{!--
     <div class="fixed right-0 top-7 p-4 shadow-md border border-gray-800">
       {{bytecode-info context.template}}

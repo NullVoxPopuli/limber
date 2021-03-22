@@ -1,23 +1,24 @@
 'use strict';
 
+const yn = require('yn');
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const mergeTrees = require('broccoli-merge-trees');
 
-const { SOURCEMAPS: _sourceMaps, CLASSIC } = process.env;
-
-const SOURCEMAPS = _sourceMaps === 'true'; // default false
+const SOURCEMAPS = yn(process.env.SOURCEMAPS);
+const CLASSIC = yn(process.env.CLASSIC);
 
 module.exports = function (defaults) {
+  let environment = EmberApp.env();
+  let isProduction = environment === 'production';
+
   console.info(`
     Building:
       SOURCEMAPS: ${SOURCEMAPS}
       CLASSIC: ${CLASSIC}
+      isProduction: ${isProduction}
   `);
 
   let config = {
-    babel: {
-      // enables dynamic imports
-      // plugins: [require.resolve('ember-auto-import/babel-plugin')],
-    },
     sourcemaps: {
       enabled: SOURCEMAPS,
     },
@@ -31,10 +32,12 @@ module.exports = function (defaults) {
   };
 
   if (CLASSIC) {
+    config.babel = {
+      // enables dynamic imports
+      plugins: [require.resolve('ember-auto-import/babel-plugin')],
+    };
     config.autoImport = {
       alias: {
-        // when the app tries to import from "plotly.js", use
-        // the real package "plotly.js-basic-dist" instead.
         // '@ember/template-compiler': 'vendor/ember/ember-template-compiler.js',
       },
     };
@@ -42,15 +45,21 @@ module.exports = function (defaults) {
 
   let app = new EmberApp(defaults, config);
 
+  let additionalTrees = [
+    // workersFunnel({ isProduction }),
+    // monacoFunnel({ isProduction }),
+  ];
+
   app.import('vendor/ember/ember-template-compiler.js');
 
   if (CLASSIC) {
-    return app.toTree();
+    return mergeTrees([app.toTree(), ...additionalTrees]);
   }
 
   const { Webpack } = require('@embroider/webpack');
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
+    additionalTrees,
     staticAddonTrees: true,
     staticAddonTestSupportTrees: true,
     staticHelpers: true,
