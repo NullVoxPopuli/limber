@@ -61,6 +61,11 @@ module.exports = function (defaults) {
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     additionalTrees,
+    skipBabel: [
+      {
+        package: 'qunit',
+      },
+    ],
     ...(MAXIMUM_STATIC
       ? {
           staticAddonTrees: true,
