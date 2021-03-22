@@ -16,7 +16,7 @@ export default class EditorService extends Service {
 
   @tracked component = null;
   @tracked error = null;
-  @tracked errorLine = 20;
+  @tracked errorLine = null;
   @tracked markdownToHbs = null;
   @tracked template = null;
   @tracked text = getQP() ?? DEFAULT_SNIPPET;
@@ -59,7 +59,7 @@ export default class EditorService extends Service {
         return;
       }
 
-      this.router.transitionTo('/ember');
+      this.router.transitionTo('ember');
       this.error = e.message;
 
       let { line } = extractPosition(this.error);

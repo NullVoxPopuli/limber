@@ -1,23 +1,10 @@
 {{#let (service 'editor') as |context|}}
   {{#if context.error}}
-    {{#if context.errorLine}}
-      <mark
-        {{!-- template-lint-disable no-inline-styles --}}
-        style="top: calc(72px + 24px * {{context.errorLine}})"
-        class="fixed w-full opacity-50 bg-red-100">&nbsp;</mark>
-    {{/if}}
 
     <footer
-      {{!-- template-lint-disable no-inline-styles --}}
-      style="
-        {{if context.errorLine
-          (concat "top: calc(100px + 24px * " context.errorLine ");")
-          "bottom: 1rem;"
-        }}
-      "
       class="
-      rounded fixed right-4 p-4
-      bg-red-100 text-black shadow-md border border-red-700
+        rounded fixed right-4 bottom-4 p-4
+        bg-red-100 text-black shadow-md border border-red-700
       "
     >
       <pre>{{context.error}}</pre>
