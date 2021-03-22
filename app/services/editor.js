@@ -16,6 +16,7 @@ export default class EditorService extends Service {
 
   @tracked component = null;
   @tracked error = null;
+  @tracked errorLine = 20;
   @tracked markdownToHbs = null;
   @tracked template = null;
   @tracked text = getQP() ?? DEFAULT_SNIPPET;
@@ -60,6 +61,10 @@ export default class EditorService extends Service {
 
       this.router.transitionTo('/ember');
       this.error = e.message;
+
+      let { line } = extractPosition(this.error);
+      this.errorLine = line;
+
       return;
     }
 
@@ -107,4 +112,15 @@ function getQP() {
   let qpT = new URLSearchParams(location.search).get('t');
 
   return qpT;
+}
+
+function extractPosition(message) {
+  try {
+    let [, line] = message.match(/' @ line (\d+) : column/);
+    return { line };
+  } catch (e) {
+    console.error({ e, message });
+  }
+
+  return { line: null };
 }
