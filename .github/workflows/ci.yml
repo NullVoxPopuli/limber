@@ -58,8 +58,6 @@ jobs:
         key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
     - run: npm install
     - run: npm run build
-      env:
-        CLASSIC: true
 
     - name: Upload App Artifacts
       uses: actions/upload-artifact@v2
