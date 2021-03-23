@@ -28,6 +28,13 @@ jobs:
       with:
         path: '**/node_modules'
         key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
+    - name: Environment Info
+      run: |
+        firefox --version
+        google-chrome --version
+        echo "Node: $( node --version )"
+        echo "NPM: $( npm --version )"
+
     - run: npm install
 
     - name: Test
