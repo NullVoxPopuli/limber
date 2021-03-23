@@ -32,7 +32,7 @@ jobs:
         path: '**/node_modules'
         key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
     - run: npm install install
-    - run: num run lint:hbs
+    - run: npm run lint:hbs
 
     # - name: "Styles"
     #   working-directory: ${{ env.root }}
