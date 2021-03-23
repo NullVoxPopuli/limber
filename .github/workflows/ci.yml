@@ -5,6 +5,9 @@ on:
     branches: [main]
 
 jobs:
+
+##############################################################
+
   tests:
     name: Tests
     strategy:
@@ -32,6 +35,7 @@ jobs:
         CI_BROWSER: ${{ matrix.ci_browser }}
       run: npm run test:ember
 
+##############################################################
 
   build_app:
     name: Build App
