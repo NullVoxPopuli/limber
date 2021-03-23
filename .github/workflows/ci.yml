@@ -38,9 +38,10 @@ jobs:
     - run: npm install
 
     - name: Test
+      run: npm run test:ember
       env:
         CI_BROWSER: ${{ matrix.ci_browser }}
-      run: npm run test:ember
+        CLASSIC: true
 
 ##############################################################
 
