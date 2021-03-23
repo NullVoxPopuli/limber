@@ -1,11 +1,9 @@
 'use strict';
 
-const colors = require('tailwindcss/colors')
+const colors = require('tailwindcss/colors');
 
 module.exports = {
-  purge: [
-    'app/**/*.{js,ts,hbs}',
-  ],
+  purge: ['app/**/*.{js,ts,hbs}'],
   darkMode: false,
   theme: {
     colors: {
@@ -25,22 +23,20 @@ module.exports = {
         linen: '#fdf7f6',
         yellow: '#fbc840',
         white: '#fdfdfd',
-      }
+      },
     },
     fontFamily: {
-      'sans': ['system-ui', 'Helvetica', 'Arial', 'sans-serif'],
+      sans: ['system-ui', 'Helvetica', 'Arial', 'sans-serif'],
     },
     extend: {
       minWidth: {
         '1/3': '33%',
       },
       gridTemplateRows: {
-        'editor': 'min-content 1fr',
-      }
+        editor: 'min-content 1fr',
+      },
     },
   },
   variants: {},
-  plugins: [
-    require('@tailwindcss/typography')
-  ],
-}
+  plugins: [require('@tailwindcss/typography')],
+};

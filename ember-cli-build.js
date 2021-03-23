@@ -6,6 +6,7 @@ const mergeTrees = require('broccoli-merge-trees');
 
 const SOURCEMAPS = yn(process.env.SOURCEMAPS);
 const CLASSIC = yn(process.env.CLASSIC);
+const MAXIMUM_STATIC = yn(process.env.MAXIMUM_STATIC);
 
 module.exports = function (defaults) {
   let environment = EmberApp.env();
@@ -60,14 +61,18 @@ module.exports = function (defaults) {
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     additionalTrees,
-    staticAddonTrees: true,
-    staticAddonTestSupportTrees: true,
-    staticHelpers: true,
-    staticComponents: true,
-    splitControllers: true,
-    splitRouteClasses: true,
-    // staticAppPaths: [],
-    // splitAtRoutes: [],
+    ...(MAXIMUM_STATIC
+      ? {
+          staticAddonTrees: true,
+          staticAddonTestSupportTrees: true,
+          staticHelpers: true,
+          staticComponents: true,
+          splitControllers: true,
+          splitRouteClasses: true,
+          // staticAppPaths: [],
+          // splitAtRoutes: [],
+        }
+      : {}),
     packagerOptions: {
       webpackConfig: {
         // this option might not be working?
