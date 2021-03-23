@@ -4,8 +4,8 @@ on:
     branches: [main]
 
 jobs:
-  lint:
-    name: "Lint JS/TS & Type Checking"
+  js:
+    name: "JS/TS"
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -17,12 +17,22 @@ jobs:
         path: '**/node_modules'
         key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
     - run: npm install install
+    - run: npm run lint:js
 
-    - name: "JS/TS"
-      run: npm run lint:js
+  templates:
+    name: "Templates"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
 
-    - name: "Templates"
-      run: num run lint:hbs
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
+    - run: npm install install
+    - run: num run lint:hbs
 
     # - name: "Styles"
     #   working-directory: ${{ env.root }}
