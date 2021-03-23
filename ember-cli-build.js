@@ -7,6 +7,7 @@ const mergeTrees = require('broccoli-merge-trees');
 const SOURCEMAPS = yn(process.env.SOURCEMAPS);
 const CLASSIC = yn(process.env.CLASSIC);
 const MAXIMUM_STATIC = yn(process.env.MAXIMUM_STATIC);
+const MINIFY = yn(process.env.MINIFY) ?? true;
 
 module.exports = function (defaults) {
   let environment = EmberApp.env();
@@ -22,6 +23,9 @@ module.exports = function (defaults) {
   let config = {
     sourcemaps: {
       enabled: SOURCEMAPS,
+    },
+    'ember-cli-terser': {
+      enabled: MINIFY,
     },
     postcssOptions: {
       compile: {
