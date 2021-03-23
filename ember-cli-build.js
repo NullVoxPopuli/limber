@@ -17,6 +17,8 @@ module.exports = function (defaults) {
     Building:
       SOURCEMAPS: ${SOURCEMAPS}
       CLASSIC: ${CLASSIC}
+      MINIFY: ${MINIFY}
+      MAXIMUM_STATIC: ${MAXIMUM_STATIC}
       isProduction: ${isProduction}
   `);
 
