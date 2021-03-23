@@ -5,6 +5,34 @@ on:
     branches: [main]
 
 jobs:
+  tests:
+    name: Tests
+    strategy:
+      matrix:
+        # os: [ubuntu-latest, macOS-latest, windows-latest]
+        # browsers: [chrome, firefox, safari, edge]
+        ci_browser:
+        - Chrome
+        - Firefox
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
+    - run: npm install install
+
+    - name: Test
+      env:
+        CI_BROWSER: ${{ matrix.ci_browser }}
+      run: yarn ember test
+
+
   build_app:
     name: Build App
     runs-on: ubuntu-latest

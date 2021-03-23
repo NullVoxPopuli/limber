@@ -1,12 +1,19 @@
 'use strict';
 
+const DEFAULT_BROWSER = 'Chrome'
+const CI_BROWSER = process.env.CI_BROWSER || DEFAULT_BROWSER;
+
 module.exports = {
   test_page: 'tests/index.html?hidepassed',
   disable_watching: true,
-  launch_in_ci: ['Chrome'],
-  launch_in_dev: ['Chrome'],
+  launch_in_ci: [CI_BROWSER],
+  launch_in_dev: [DEFAULT_BROWSER],
   browser_start_timeout: 120,
   browser_args: {
+    Firefox: {
+      mode: 'ci',
+      args: ['-headless'],
+    },
     Chrome: {
       ci: [
         // --no-sandbox is needed when running Chrome inside a container
