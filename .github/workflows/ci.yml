@@ -25,12 +25,12 @@ jobs:
       with:
         path: '**/node_modules'
         key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
-    - run: npm install install
+    - run: npm install
 
     - name: Test
       env:
         CI_BROWSER: ${{ matrix.ci_browser }}
-      run: yarn ember test
+      run: npm run test:ember
 
 
   build_app:
