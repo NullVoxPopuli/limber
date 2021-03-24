@@ -9,6 +9,13 @@ const OPTIONS = {
   wordWrap: 'bounded',
   wrappingIndent: 'indent',
   trimAutoWhitespace: true,
+  automaticLayout: true,
+  scrollBeyondLastLine: false,
+  fontFamily: 'inherit',
+  // fontsize seems arbitrary -- there may be
+  // some scaling going on?
+  fontSize: '17px',
+  lineHeight: '24px',
   minimap: {
     enabled: false,
   },
@@ -18,6 +25,7 @@ export default modifier((element, [value, updateText]) => {
   configureWorkerPaths();
   insertStyles();
 
+  element.innerHTML = '';
   let editor = monaco.editor.create(element, {
     ...OPTIONS,
     value,
