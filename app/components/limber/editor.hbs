@@ -1,10 +1,9 @@
 {{#let (service 'editor') as |context|}}
-  <textarea
+  <div
+    {{monaco context.text context.updateText}}
+    class="bg-gray-800 text-white max-h-full resize-x border border-gray-900"
     {{!-- template-lint-disable no-inline-styles --}}
-    class="bg-gray-800 text-white p-4 max-h-full resize-x border border-gray-900"
     style="width: calc(40vw - 16px)"
-    spellcheck="false"
-    {{on 'change' context.updateText}}
-    {{on 'input' context.updateText}}
-  >{{context.text}}</textarea>
+  >
+  </div>
 {{/let}}

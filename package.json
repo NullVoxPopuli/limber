@@ -85,6 +85,7 @@
     "dompurify": "^2.2.7",
     "ember-could-get-used-to-this": "^1.0.1",
     "highlight.js": "^10.7.1",
+    "monaco-editor": "^0.16.2",
     "promise-worker-bi": "4.0.2",
     "remark-hbs": "^0.4.0",
     "remark-html": "^13.0.1",
