@@ -27,6 +27,17 @@ module.exports = {
     },
     fontFamily: {
       sans: ['system-ui', 'Helvetica', 'Arial', 'sans-serif'],
+      mono: [
+        'ui-monospace',
+        '-apple-system',
+        'BlinkMacSystemFont',
+        'Segoe WPC',
+        'Segoe UI',
+        'HelveticaNeue-Light',
+        'Ubuntu',
+        'Droid Sans',
+        'sans-serif',
+      ],
     },
     extend: {
       minWidth: {
