@@ -19,7 +19,8 @@ export default class EditorService extends Service {
   @tracked errorLine = null;
   @tracked markdownToHbs = null;
   @tracked template = null;
-  @tracked text = getQP() ?? DEFAULT_SNIPPET;
+
+  text = getQP() ?? DEFAULT_SNIPPET;
 
   constructor() {
     super(...arguments);
@@ -77,9 +78,8 @@ export default class EditorService extends Service {
   }
 
   @action
-  updateText(e) {
-    this.text = e.target.value;
-
+  updateText(text) {
+    this.text = text;
     debounce(this, this._updateSnippet, 300);
   }
 

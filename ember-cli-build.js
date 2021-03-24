@@ -3,15 +3,16 @@
 const yn = require('yn');
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const mergeTrees = require('broccoli-merge-trees');
-
-const SOURCEMAPS = yn(process.env.SOURCEMAPS);
-const CLASSIC = yn(process.env.CLASSIC);
-const MAXIMUM_STATIC = yn(process.env.MAXIMUM_STATIC);
-const MINIFY = yn(process.env.MINIFY) ?? true;
+const { monacoFunnel } = require('./lib/monaco');
 
 module.exports = function (defaults) {
   let environment = EmberApp.env();
   let isProduction = environment === 'production';
+
+  let SOURCEMAPS = yn(process.env.SOURCEMAPS) ?? false;
+  let CLASSIC = yn(process.env.CLASSIC) ?? false;
+  let MAXIMUM_STATIC = yn(process.env.MAXIMUM_STATIC) ?? false;
+  let MINIFY = yn(process.env.MINIFY) ?? isProduction;
 
   console.info(`
     Building:
@@ -19,6 +20,7 @@ module.exports = function (defaults) {
       CLASSIC: ${CLASSIC}
       MINIFY: ${MINIFY}
       MAXIMUM_STATIC: ${MAXIMUM_STATIC}
+
       isProduction: ${isProduction}
   `);
 
@@ -54,7 +56,7 @@ module.exports = function (defaults) {
 
   let additionalTrees = [
     // workersFunnel({ isProduction }),
-    // monacoFunnel({ isProduction }),
+    monacoFunnel({ isProduction }),
   ];
 
   app.import('vendor/ember/ember-template-compiler.js');
@@ -66,7 +68,7 @@ module.exports = function (defaults) {
   const { Webpack } = require('@embroider/webpack');
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
-    additionalTrees,
+    extraPublicTrees: additionalTrees,
     skipBabel: [
       {
         package: 'qunit',
