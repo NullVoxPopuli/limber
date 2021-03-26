@@ -13,16 +13,16 @@ module.exports = {
       ...colors,
 
       ember: {
-        brand: '#E04E39',
-        black: '#212121',
-        'burnt-ember': '#9b2918',
-        gray: '#817f7f',
-        blue: '#1e719b',
-        'faint-gray': '#efebea',
-        'light-blue': '#74b0ce',
-        linen: '#fdf7f6',
-        yellow: '#fbc840',
-        white: '#fdfdfd',
+        brand: 'var(--ember-brand)',
+        black: 'var(--ember-black)',
+        'burnt-ember': 'var(--ember-burnt-ember)',
+        gray: 'var(--ember-gray)',
+        blue: 'var(--ember-blue)',
+        'faint-gray': 'var(--ember-faint-gray)',
+        'light-blue': 'var(--ember-light-blue)',
+        linen: 'var(--ember-linen)',
+        yellow: 'var(--ember-yellow)',
+        white: 'var(--ember-white)',
       },
     },
     fontFamily: {
@@ -45,6 +45,19 @@ module.exports = {
       },
       gridTemplateRows: {
         editor: 'min-content 1fr',
+      },
+      keyframes: {
+        'fade-in': {
+          '0%': {
+            opacity: '0',
+          },
+          '100%': {
+            opacity: '1',
+          },
+        },
+      },
+      animation: {
+        'fade-in': 'fade-in 0.5s ease-out',
       },
     },
   },

@@ -1,34 +1,40 @@
+import './monaco-support';
+
 import { modifier } from 'ember-could-get-used-to-this';
 import * as monaco from 'monaco-editor';
 
 const CSS = '/monaco/editor.main.css';
-const OPTIONS = {
+const OPTIONS: monaco.editor.IEditorConstructionOptions = {
   language: 'markdown',
   lineNumbers: 'off',
   theme: 'vs-dark',
   wordWrap: 'bounded',
   wrappingIndent: 'indent',
-  trimAutoWhitespace: true,
   automaticLayout: true,
   scrollBeyondLastLine: false,
   fontFamily: 'inherit',
   // fontsize seems arbitrary -- there may be
   // some scaling going on?
-  fontSize: '17px',
-  lineHeight: '24px',
+  fontSize: 16,
+  lineHeight: 24,
   minimap: {
     enabled: false,
   },
 };
 
-export default modifier((element, [value, updateText]) => {
+type PositionalArgs = [string, (text: string) => void];
+
+export default modifier((element: HTMLElement, [value, updateText]: PositionalArgs) => {
   configureWorkerPaths();
   insertStyles();
 
   element.innerHTML = '';
   let editor = monaco.editor.create(element, {
     ...OPTIONS,
+    showFoldingControls: 'mouseover',
     value,
+    theme: 'horizon',
+    automaticLayout: true,
   });
 
   editor.onDidChangeModelContent(() => {
@@ -51,11 +57,14 @@ async function insertStyles() {
   document.body.appendChild(element);
   await Promise.resolve();
 }
-function configureWorkerPaths() {
-  if (window.MonacoEnvironment) return;
 
-  window.MonacoEnvironment = {
-    getWorkerUrl: function (moduleId, label) {
+function configureWorkerPaths() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if ((window as any).MonacoEnvironment) return;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (window as any).MonacoEnvironment = {
+    getWorkerUrl: function (_moduleId: unknown, label: string) {
       if (label === 'json') {
         return '/monaco/language/json/json.worker.js';
       }
