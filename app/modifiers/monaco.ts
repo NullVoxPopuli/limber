@@ -1,3 +1,5 @@
+import './monaco-support';
+
 import { modifier } from 'ember-could-get-used-to-this';
 import * as monaco from 'monaco-editor';
 
@@ -31,14 +33,8 @@ export default modifier((element: HTMLElement, [value, updateText]: PositionalAr
     ...OPTIONS,
     showFoldingControls: 'mouseover',
     value,
+    theme: 'horizon',
   });
-
-  fetch('/monaco/themes/onedark.json')
-    .then((data) => data.json())
-    .then((data) => {
-      monaco.editor.defineTheme('monokai', data);
-      monaco.editor.setTheme('monokai');
-    });
 
   editor.onDidChangeModelContent(() => {
     updateText(editor.getValue());
