@@ -32,7 +32,7 @@ module.exports = function (defaults) {
     autoImport: {
       alias: {
         // 'split-grid': 'split-grid/dist/'
-      }
+      },
     },
     postcssOptions: {
       compile: {
@@ -62,7 +62,7 @@ module.exports = function (defaults) {
       },
       {
         package: 'split-grid',
-      }
+      },
     ],
     ...(MAXIMUM_STATIC
       ? {
