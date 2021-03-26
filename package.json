@@ -115,6 +115,7 @@
     "remark-hbs": "^0.4.0",
     "remark-html": "^13.0.1",
     "remark-parse": "^9.0.0",
+    "split-grid": "^1.0.9",
     "stringify-object": "^3.3.0",
     "unified": "^9.2.1"
   }

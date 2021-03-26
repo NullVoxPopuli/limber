@@ -34,6 +34,7 @@ export default modifier((element: HTMLElement, [value, updateText]: PositionalAr
     showFoldingControls: 'mouseover',
     value,
     theme: 'horizon',
+    automaticLayout: true,
   });
 
   editor.onDidChangeModelContent(() => {

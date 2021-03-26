@@ -10,14 +10,12 @@ module.exports = function (defaults) {
   let isProduction = environment === 'production';
 
   let SOURCEMAPS = yn(process.env.SOURCEMAPS) ?? false;
-  let CLASSIC = yn(process.env.CLASSIC) ?? false;
   let MAXIMUM_STATIC = yn(process.env.MAXIMUM_STATIC) ?? false;
   let MINIFY = yn(process.env.MINIFY) ?? isProduction;
 
   console.info(`
     Building:
       SOURCEMAPS: ${SOURCEMAPS}
-      CLASSIC: ${CLASSIC}
       MINIFY: ${MINIFY}
       MAXIMUM_STATIC: ${MAXIMUM_STATIC}
 
@@ -31,6 +29,11 @@ module.exports = function (defaults) {
     'ember-cli-terser': {
       enabled: MINIFY,
     },
+    autoImport: {
+      alias: {
+        // 'split-grid': 'split-grid/dist/'
+      }
+    },
     postcssOptions: {
       compile: {
         map: SOURCEMAPS,
@@ -39,18 +42,6 @@ module.exports = function (defaults) {
       },
     },
   };
-
-  if (CLASSIC) {
-    config.babel = {
-      // enables dynamic imports
-      plugins: [require.resolve('ember-auto-import/babel-plugin')],
-    };
-    config.autoImport = {
-      alias: {
-        // '@ember/template-compiler': 'vendor/ember/ember-template-compiler.js',
-      },
-    };
-  }
 
   let app = new EmberApp(defaults, config);
 
@@ -61,10 +52,6 @@ module.exports = function (defaults) {
 
   app.import('vendor/ember/ember-template-compiler.js');
 
-  if (CLASSIC) {
-    return mergeTrees([app.toTree(), ...additionalTrees]);
-  }
-
   const { Webpack } = require('@embroider/webpack');
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
@@ -73,6 +60,9 @@ module.exports = function (defaults) {
       {
         package: 'qunit',
       },
+      {
+        package: 'split-grid',
+      }
     ],
     ...(MAXIMUM_STATIC
       ? {
