@@ -5,12 +5,15 @@ declare module 'limber/templates/*' {
   export default tmpl;
 }
 
+type Injections = Array<object | undefined>;
+
 type LazyTrackedArgs = {
   positional?: Array<unknown>;
   named?: Record<string, unknown>;
 }
 
 declare module 'split-grid';
+
 
 declare module 'ember-could-get-used-to-this' {
   type FunctionModifier<Args extends LazyTrackedArgs> = ((element: HTMLElement, args: Args['positional']) => () => void) | ((element: HTMLElement, args: Args['positional']) => void);

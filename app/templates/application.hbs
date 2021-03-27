@@ -4,12 +4,12 @@
   <Limber::Header />
 
   {{!-- template-lint-disable no-inline-styles --}}
-  <div class="grid overflow-hidden" style="grid-template-columns: 40% 8px 1fr;">
-    <Limber::Editor />
+  <div class="grid overflow-hidden" style="grid-template-columns: 1fr 1.5fr">
+    <section class="grid resize-x overflow-hidden min-w-[40vw]">
+      <Limber::Editor />
+    </section>
 
-    <div {{resize}} class="bg-ember-light-blue cursor-move"></div>
-
-    <section class="w-full shadow-inner grid" style="grid-template-rows: min-content 1fr;">
+    <section class="shadow-inner grid overflow-hidden" style="grid-template-rows: min-content 1fr;">
       <Limber::Navigation />
 
       <div class="overflow-auto relative" {{constrain-vertically}}>

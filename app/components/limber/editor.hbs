@@ -3,9 +3,10 @@
     <div
       {{monaco context.text context.updateText}}
       class="
-        font-sm font-mono bg-gray-800 text-white max-h-full resize-x
+        font-sm font-mono bg-gray-800 text-white
         border border-gray-900
       "
+      ...attributes
     >{{context.text}}</div>
   {{else}}
     <textarea
@@ -16,6 +17,7 @@
         px-6 py-2 max-h-full resize-x
         font-sm font-mono bg-gray-800 text-white
         border border-gray-900"
+      ...attributes
     >{{context.text}}</textarea>
   {{/if}}
 {{/let}}
