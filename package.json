@@ -103,7 +103,7 @@
   "volta": {
     "node": "14.16.0",
     "yarn": "1.22.10",
-    "npm": "7.6.3"
+    "npm": "7.7.5"
   },
   "dependencies": {
     "dompurify": "^2.2.7",
