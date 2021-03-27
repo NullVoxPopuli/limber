@@ -7,8 +7,8 @@ import { guidFor } from '@ember/object/internals';
 import { debounce, schedule } from '@ember/runloop';
 import Service, { inject as service } from '@ember/service';
 
-import { compileTemplate } from './compile-template';
-import { compileMarkdown } from './markdown-to-ember';
+import { compileTemplate } from './-compile/ember-to-opcodes';
+import { compileMarkdown } from './-compile/markdown-to-ember';
 import { DEFAULT_SNIPPET } from './starting-snippet';
 
 export default class EditorService extends Service {
@@ -94,6 +94,7 @@ export default class EditorService extends Service {
     this.router.replaceWith(next);
   }
 }
+
 /**
  * https://stackoverflow.com/a/57533980/356849
  * - Base64 Encoding is 33% bigger

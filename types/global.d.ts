@@ -22,3 +22,17 @@ declare module 'ember-could-get-used-to-this' {
     constructor(fn: () => Args['positional'] | Args);
   }
 }
+
+declare module '@ember/template-compilation' {
+  export interface CompileOptions {
+    moduleName: string;
+    strictMode: boolean;
+    locals: Array<unknown>;
+    isProduction: boolean;
+    meta: Record<string, unknown>;
+    plugins: {
+      ast: Array<unknown>
+    }
+  }
+  export function compileTemplate(template: string, options: CompileOptions): any;
+}

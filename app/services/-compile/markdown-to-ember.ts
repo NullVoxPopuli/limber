@@ -5,4 +5,4 @@ import unified from 'unified';
 
 const markdownCompiler = unified().use(markdown).use(HBS).use(html);
 
-export const compileMarkdown = (text) => markdownCompiler.processSync(text).toString();
+export const compileMarkdown = (text: string) => markdownCompiler.processSync(text).toString();
