@@ -10,10 +10,14 @@ type LazyTrackedArgs = {
   named?: Record<string, unknown>;
 }
 
+declare module 'split-grid';
+
 declare module 'ember-could-get-used-to-this' {
+  type FunctionModifier<Args extends LazyTrackedArgs> = ((element: HTMLElement, args: Args['positional']) => () => void) | ((element: HTMLElement, args: Args['positional']) => void);
+
   export const use: PropertyDecorator;
   export const modifier: <Args extends LazyTrackedArgs>(
-    callback: (element: HTMLElement, args: Args['positional']) => () => void
+    callback: FunctionModifier<Args>
   ) => void;
   export class Resource<Args extends LazyTrackedArgs> {
     protected args: Args;
