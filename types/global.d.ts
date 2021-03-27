@@ -13,6 +13,7 @@ type LazyTrackedArgs = {
 }
 
 declare module 'split-grid';
+declare module 'unist-util-flatmap';
 
 
 declare module 'ember-could-get-used-to-this' {

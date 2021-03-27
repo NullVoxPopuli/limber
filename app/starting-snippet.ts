@@ -28,7 +28,14 @@ List of links:
 
 ## With JavaScript
 
+
 \`\`\`gjs live
+<template>
+  Hello, Glimmer!
+</template>
+\`\`\`
+
+\`\`\`gjs live preview
 import Component, { tracked } from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';

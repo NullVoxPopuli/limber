@@ -5,6 +5,10 @@
 
   {{!-- template-lint-disable no-inline-styles --}}
   <div class="grid overflow-hidden" style="grid-template-columns: 1fr 1.5fr">
+    {{!--
+      the max size of an element adjascent to a resizable element within a grid
+      may not exceed the starting size (so far?)
+    --}}
     <section class="grid resize-x overflow-hidden min-w-[40vw]">
       <Limber::Editor />
     </section>

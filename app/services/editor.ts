@@ -9,7 +9,9 @@ import Service, { inject as service } from '@ember/service';
 import { DEFAULT_SNIPPET } from 'limber/starting-snippet';
 
 import { compile, doesExist, opcodesFrom, register } from './-compile';
+import { compileTemplate } from './-compile/ember-to-opcodes';
 
+import type ApplicationInstance from '@ember/application/instance';
 import type RouterService from '@ember/routing/router-service';
 
 export default class EditorService extends Service {
@@ -40,7 +42,8 @@ export default class EditorService extends Service {
 
     this.error = null;
 
-    let { error, rootTemplate, rootTemplateFactory } = compile(this.text, id);
+    let compilationResult = await compile(this.text, id);
+    let { error, rootTemplate, rootTemplateFactory } = compilationResult;
 
     if (error && !rootTemplate) {
       this.error = error.message;
@@ -74,6 +77,9 @@ export default class EditorService extends Service {
 
     assert(`Expected to have a template factory`, rootTemplateFactory);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (compilationResult as any).liveCode.map(({ name }: any) => registerPlaceholder(owner, name));
+
     let previousId = this.component;
 
     this.component = id;
@@ -105,6 +111,12 @@ declare module '@ember/service' {
   interface Registry {
     editor: EditorService;
   }
+}
+
+function registerPlaceholder(owner: ApplicationInstance, name: string) {
+  let template = compileTemplate('WIP Placeholder Content', { moduleName: name });
+
+  register(owner, template);
 }
 
 /**

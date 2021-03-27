@@ -1,6 +1,6 @@
 import { transform } from '@babel/standalone';
 
-const babelOptions = {};
+// const babelOptions = {};
 
 /**
  * Inspiration?
@@ -10,7 +10,7 @@ const babelOptions = {};
  */
 export function compileGJS(input: string) {
   let { code } = transform(input, { presets: ['env'] });
-  console.log({ code });
+  // console.log({ code });
 
-  return '';
+  return code;
 }
