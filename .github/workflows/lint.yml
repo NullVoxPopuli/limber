@@ -35,15 +35,24 @@ jobs:
     - run: npm run lint:hbs
 
     # - name: "Styles"
-    #   working-directory: ${{ env.root }}
     #   run: yarn stylelint ${{ env.app }}/**/*.css
 
     # - name: "Translations"
-    #   working-directory: ${{ env.full }}
     #   run: yarn lint:i18n
     #   continue-on-error: true
 
-    # - name: 'Type Correctness'
-    #   working-directory: ${{ env.full }}
-    #   run: yarn tsc --build
+  types:
+    name: "Type Correctness"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
+    - run: npm install install
+    - run: npm run check:types
 

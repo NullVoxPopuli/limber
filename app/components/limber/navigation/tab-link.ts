@@ -2,8 +2,14 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-export default class TabLink extends Component {
-  @service router;
+import type RouterService from '@ember/routing/router-service';
+
+interface Args {
+  href: string;
+}
+
+export default class TabLink extends Component<Args> {
+  @service declare router: RouterService;
 
   get isActive() {
     let routeInfo = this.router.recognize(this.args.href);
@@ -15,10 +21,12 @@ export default class TabLink extends Component {
   }
 
   @action
-  handleClick(e) {
+  handleClick(e: MouseEvent) {
     e.preventDefault();
 
-    let qps = new URLSearchParams(this.router.currentRoute.queryParams);
+    // It's "fine"
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let qps = new URLSearchParams(this.router.currentRoute.queryParams as any);
 
     this.router.transitionTo(this.args.href + `?${qps}`);
   }

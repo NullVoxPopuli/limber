@@ -14,7 +14,7 @@ export default modifier(function constraintVertically(element) {
   };
 });
 
-function constrain(element) {
+function constrain(element: HTMLElement) {
   let offset = element.getBoundingClientRect().y;
 
   element.setAttribute('style', `max-height: calc(100vh - ${offset}px)`);
