@@ -69,7 +69,6 @@
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-merge-trees": "^4.2.0",
     "common-tags": "^1.8.0",
-    "ember-auto-import": "^1.10.1",
     "ember-cli": "~3.25.2",
     "ember-cli-app-version": "^4.0.0",
     "ember-cli-babel": "^7.23.1",
@@ -116,17 +115,16 @@
   "dependencies": {
     "@babel/standalone": "^7.13.13",
     "dompurify": "^2.2.7",
+    "ember-auto-import": "^1.11.2",
     "ember-could-get-used-to-this": "^1.0.1",
     "highlight.js": "^10.7.1",
     "monaco-editor": "^0.16.2",
-    "monaco-languages": "^2.3.0",
-    "promise-worker-bi": "4.0.2",
-    "remark-code-blocks": "^2.0.1",
     "remark-hbs": "^0.4.0",
     "remark-html": "^13.0.1",
     "remark-parse": "^9.0.0",
     "stringify-object": "^3.3.0",
     "unified": "^9.2.1",
-    "unist-util-flatmap": "^1.0.0"
+    "unist-util-flatmap": "^1.0.0",
+    "webpack-bundle-analyzer": "^4.4.0"
   }
 }

@@ -23,6 +23,8 @@ export default class EditorService extends Service {
   @tracked markdownToHbs?: string;
   @tracked template?: unknown;
 
+  declare _editorSwapText: (text: string) => void;
+
   text = getQP() ?? DEFAULT_SNIPPET;
 
   constructor(...args: Injections) {
@@ -45,7 +47,11 @@ export default class EditorService extends Service {
     let compilationResult = await compile(this.text, id);
     let { error, rootTemplate, rootTemplateFactory } = compilationResult;
 
-    if (error && !rootTemplate) {
+    if (error) {
+      console.error(error);
+    }
+
+    if (error && rootTemplate === undefined) {
       this.error = error.message;
 
       return;
@@ -62,12 +68,12 @@ export default class EditorService extends Service {
     }
 
     if (error) {
-      console.error('Unhandled error', error);
+      console.error('Unhandled error');
 
       return;
     }
 
-    if (rootTemplate) {
+    if (rootTemplate !== undefined) {
       this.markdownToHbs = rootTemplate;
     }
 
@@ -92,6 +98,16 @@ export default class EditorService extends Service {
   updateText(text: string) {
     this.text = text;
     debounce(this, this._updateSnippet, 300);
+  }
+
+  @action
+  updateDemo(text: string) {
+    this._editorSwapText(text);
+  }
+
+  @action
+  swapText(callback: (text: string) => void) {
+    this._editorSwapText = callback;
   }
 
   @action

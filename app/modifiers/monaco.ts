@@ -23,26 +23,33 @@ const OPTIONS: monaco.editor.IEditorConstructionOptions = {
 };
 
 type PositionalArgs = [string, (text: string) => void];
+interface NamedArgs {
+  setValue: (callback: (text: string) => void) => void;
+}
 
-export default modifier((element: HTMLElement, [value, updateText]: PositionalArgs) => {
-  configureWorkerPaths();
-  insertStyles();
+export default modifier(
+  (element: HTMLElement, [value, updateText]: PositionalArgs, named: NamedArgs) => {
+    configureWorkerPaths();
+    insertStyles();
 
-  element.innerHTML = '';
-  let editor = monaco.editor.create(element, {
-    ...OPTIONS,
-    showFoldingControls: 'mouseover',
-    value,
-    theme: 'horizon',
-    automaticLayout: true,
-  });
+    element.innerHTML = '';
+    let editor = monaco.editor.create(element, {
+      ...OPTIONS,
+      showFoldingControls: 'mouseover',
+      value,
+      theme: 'horizon',
+      automaticLayout: true,
+    });
 
-  editor.onDidChangeModelContent(() => {
-    updateText(editor.getValue());
-  });
+    editor.onDidChangeModelContent(() => {
+      updateText(editor.getValue());
+    });
 
-  return () => editor.dispose();
-});
+    named?.setValue((text: string) => editor.setValue(text));
+
+    return () => editor.dispose();
+  }
+);
 
 async function insertStyles() {
   let hasStyles = document.querySelector(`link[href="${CSS}]"`);

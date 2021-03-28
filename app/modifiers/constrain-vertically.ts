@@ -2,7 +2,7 @@ import { debounce } from '@ember/runloop';
 
 import { modifier } from 'ember-could-get-used-to-this';
 
-export default modifier(function constraintVertically(element) {
+export default modifier(function constraintVertically(element: HTMLElement) {
   let debouncedConstrain = () => constrain(element);
   let x = () => debounce(debouncedConstrain, 10);
 

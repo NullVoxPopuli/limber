@@ -12,12 +12,19 @@ type LazyTrackedArgs = {
   named?: Record<string, unknown>;
 }
 
+declare module '@glimmerx/babel-preset';
+declare module '@glimmer/babel-preset';
 declare module 'split-grid';
 declare module 'unist-util-flatmap';
 
 
 declare module 'ember-could-get-used-to-this' {
-  type FunctionModifier<Args extends LazyTrackedArgs> = ((element: HTMLElement, args: Args['positional']) => () => void) | ((element: HTMLElement, args: Args['positional']) => void);
+  type FunctionModifier<Args extends LazyTrackedArgs> = (
+    (element: HTMLElement,
+     args: Args['positional'],
+     namedArgs: Record<string, any>
+    ) => () => void)
+  | ((element: HTMLElement, args: Args['positional']) => void);
 
   export const use: PropertyDecorator;
   export const modifier: <Args extends LazyTrackedArgs>(

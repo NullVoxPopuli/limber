@@ -2,7 +2,6 @@ import { setComponentTemplate } from '@ember/component';
 import templateOnlyComponent from '@ember/component/template-only';
 
 import { compileTemplate } from './ember-to-opcodes';
-// import { compileGJS } from './gjs-to-js';
 import { parseMarkdown } from './markdown-to-ember';
 
 import type { ExtractedCode } from './markdown-to-ember';
@@ -44,8 +43,7 @@ export async function compile(glimdownInput: string, name: string): Promise<Comp
   /**
    * Step 2: Compile the live code samples
    */
-  // eslint-disable-next-line no-console
-  console.log('TODO', { liveCode });
+  console.debug('TODO', { liveCode });
 
   /**
    * Step 4: Compile the Ember Template
