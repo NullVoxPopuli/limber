@@ -3,7 +3,9 @@ export const DEFAULT_SNIPPET = `
 
 **glimdown** //  _Ember or Glimmer  rendered with markdown_
 
-Select demos from the menu in the header or write your own custom content and share it with others! ❤️
+<p class="hidden sm:block">
+  Select demos from the menu in the header or write your own custom content and share it with others! ❤️
+</p>
 
 ## TODOs
 
