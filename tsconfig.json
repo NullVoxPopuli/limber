@@ -18,7 +18,7 @@
     "inlineSourceMap": true,
     "inlineSources": true,
     "baseUrl": ".",
-    "module": "es6",
+    "module": "esnext",
     "experimentalDecorators": true,
     "paths": {
       "limber/tests/*": [

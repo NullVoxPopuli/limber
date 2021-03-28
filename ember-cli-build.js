@@ -29,11 +29,6 @@ module.exports = function (defaults) {
     'ember-cli-terser': {
       enabled: MINIFY,
     },
-    autoImport: {
-      alias: {
-        // 'split-grid': 'split-grid/dist/'
-      },
-    },
     postcssOptions: {
       compile: {
         map: SOURCEMAPS,
@@ -53,15 +48,13 @@ module.exports = function (defaults) {
   app.import('vendor/ember/ember-template-compiler.js');
 
   const { Webpack } = require('@embroider/webpack');
+  const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     extraPublicTrees: additionalTrees,
     skipBabel: [
       {
         package: 'qunit',
-      },
-      {
-        package: 'split-grid',
       },
     ],
     ...(MAXIMUM_STATIC
@@ -80,6 +73,13 @@ module.exports = function (defaults) {
       webpackConfig: {
         // this option might not be working?
         devtool: SOURCEMAPS ? 'eval-source-map' : 'none',
+        plugins: [
+          new BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            openAnalyzer: false,
+            reportFilename: 'bundle.html',
+          }),
+        ],
       },
     },
     // required due to this app being a dynamic component generator
