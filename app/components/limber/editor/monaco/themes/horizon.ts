@@ -5,7 +5,7 @@
  *  - adapted to have a darker background for limber.glimdown.com
  */
 
-import * as monaco from 'monaco-editor';
+import type * as monaco from 'monaco-editor';
 
 const syntax = {
   lavender: '#B877DB',
@@ -44,7 +44,7 @@ const alpha = {
   none: '00',
 };
 
-const HorizonTheme: monaco.editor.IStandaloneThemeData = {
+export const HorizonTheme: monaco.editor.IStandaloneThemeData = {
   base: 'vs-dark',
   inherit: true,
   colors: {
@@ -209,5 +209,3 @@ const HorizonTheme: monaco.editor.IStandaloneThemeData = {
     },
   ],
 };
-
-monaco.editor.defineTheme('horizon', HorizonTheme);

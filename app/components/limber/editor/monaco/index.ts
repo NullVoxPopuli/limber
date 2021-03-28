@@ -1,7 +1,8 @@
-import './monaco-support';
-
 import { modifier } from 'ember-could-get-used-to-this';
-import * as monaco from 'monaco-editor';
+
+import { HorizonTheme } from './themes/horizon';
+
+import type * as monaco from 'monaco-editor';
 
 const CSS = '/monaco/editor.main.css';
 const OPTIONS: monaco.editor.IEditorConstructionOptions = {
@@ -29,27 +30,49 @@ interface NamedArgs {
 
 export default modifier(
   (element: HTMLElement, [value, updateText]: PositionalArgs, named: NamedArgs) => {
-    configureWorkerPaths();
-    insertStyles();
+    let editor: monaco.editor.IStandaloneCodeEditor;
 
-    element.innerHTML = '';
-    let editor = monaco.editor.create(element, {
-      ...OPTIONS,
-      showFoldingControls: 'mouseover',
-      value,
-      theme: 'horizon',
-      automaticLayout: true,
-    });
+    /**
+     * There is theoretically potential for a race condition
+     * where the element is no longer in the DOM.
+     * However, because of the logic of how this modifier is used in this app
+     * this element can't be missing
+     */
+    (async () => {
+      await setupMonaco();
 
-    editor.onDidChangeModelContent(() => {
-      updateText(editor.getValue());
-    });
+      element.innerHTML = '';
+      editor = MONACO.editor.create(element, {
+        ...OPTIONS,
+        showFoldingControls: 'mouseover',
+        value,
+        theme: 'horizon',
+        automaticLayout: true,
+      });
 
-    named?.setValue((text: string) => editor.setValue(text));
+      editor.onDidChangeModelContent(() => {
+        updateText(editor.getValue());
+      });
 
-    return () => editor.dispose();
+      named?.setValue((text: string) => editor.setValue(text));
+    })();
+
+    return () => editor?.dispose();
   }
 );
+
+let MONACO: typeof monaco;
+
+export async function setupMonaco() {
+  if (MONACO) return;
+
+  configureWorkerPaths();
+  insertStyles();
+
+  MONACO = await import('monaco-editor');
+
+  MONACO.editor.defineTheme('horizon', HorizonTheme);
+}
 
 async function insertStyles() {
   let hasStyles = document.querySelector(`link[href="${CSS}]"`);
@@ -66,9 +89,6 @@ async function insertStyles() {
 }
 
 function configureWorkerPaths() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  if ((window as any).MonacoEnvironment) return;
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (window as any).MonacoEnvironment = {
     getWorkerUrl: function (_moduleId: unknown, label: string) {
