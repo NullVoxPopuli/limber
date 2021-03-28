@@ -13,6 +13,8 @@ export default class Editor extends Component {
 
   waitForUser = modifier(() => {
     const activate = async () => {
+      if (this.isLoading) return;
+
       this.isLoading = true;
 
       await setupMonaco();
