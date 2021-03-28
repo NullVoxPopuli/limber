@@ -43,7 +43,17 @@ export async function compile(glimdownInput: string, name: string): Promise<Comp
   /**
    * Step 2: Compile the live code samples
    */
-  console.debug('TODO', { liveCode });
+  if (liveCode.length > 0) {
+    try {
+      let { compileGJS } = await import('limber/babel-compilation');
+
+      await Promise.all(liveCode.map(compileGJS));
+    } catch (error) {
+      console.error(error);
+
+      return { error, rootTemplate };
+    }
+  }
 
   /**
    * Step 4: Compile the Ember Template
