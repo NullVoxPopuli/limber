@@ -115,6 +115,7 @@
   },
   "dependencies": {
     "@babel/standalone": "^7.13.13",
+    "@glimmer/syntax": "^0.27.0",
     "babel-plugin-htmlbars-inline-precompile": "^5.2.1",
     "dompurify": "^2.2.7",
     "ember-auto-import": "^1.11.2",
