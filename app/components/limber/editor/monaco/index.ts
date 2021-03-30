@@ -73,11 +73,12 @@ export async function setupMonaco() {
 
   [MONACO, LANGUAGE_JS] = await Promise.all([
     import('monaco-editor'),
-    import('monaco-languages/release/esm/javascript/javascript'),
+    // import('monaco-languages/release/esm/javascript/javascript'),
   ]);
+  console.log({ MONACO });
 
   MONACO.editor.defineTheme('horizon', HorizonTheme);
-  extendJS(MONACO, LANGUAGE_JS);
+  // extendJS(MONACO, LANGUAGE_JS);
 }
 
 async function insertStyles() {

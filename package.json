@@ -114,16 +114,15 @@
     "npm": "7.7.5"
   },
   "dependencies": {
-    "@babel/core": "^7.13.13",
     "@babel/standalone": "^7.13.13",
-    "@glimmer/babel-preset": "*",
-    "@glimmerx/babel-preset": "^0.6.0",
+    "babel-plugin-htmlbars-inline-precompile": "^5.2.1",
     "dompurify": "^2.2.7",
     "ember-auto-import": "^1.11.2",
     "ember-could-get-used-to-this": "^1.0.1",
     "highlight.js": "^10.7.1",
     "monaco-editor": "^0.16.2",
     "monaco-languages": "^2.3.0",
+    "path-browserify": "^0.0.1",
     "remark-hbs": "^0.4.0",
     "remark-html": "^13.0.1",
     "remark-parse": "^9.0.0",

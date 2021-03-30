@@ -29,6 +29,13 @@ module.exports = function (defaults) {
     'ember-cli-terser': {
       enabled: MINIFY,
     },
+    autoImport: {
+      exclude: [
+        // 'babel-plugin-ember-modules-api-polyfill',
+        // 'babel-plugin-debug-macros',
+        // '@babel/core',
+      ],
+    },
     postcssOptions: {
       compile: {
         map: SOURCEMAPS,
@@ -77,22 +84,23 @@ module.exports = function (defaults) {
 
         node: {
           fs: 'empty',
-          path: 'empty',
-          module: 'empty',
+          // path: 'empty',
+          // module: 'empty',
           net: 'empty',
           v8: 'empty',
         },
-        externals: {
-          v8: 'v8',
-          path: 'path',
-        },
+        // externals: {
+        // v8: 'v8',
+        // path: 'path',
+        // '@babel/core': '@babel/core',
+        // },
         // babel/standalone doesn't have the traverse API that babel/core does, so
         // we can't just alias
-        // resolve: {
-        //   alias: {
-        //     '@babel/core': '@babel/standalone',
-        //   },
-        // },
+        resolve: {
+          alias: {
+            // '@babel/core': '@babel/standalone',
+          },
+        },
         plugins: [
           new BundleAnalyzerPlugin({
             analyzerMode: 'static',

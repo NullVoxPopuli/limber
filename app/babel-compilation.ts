@@ -1,7 +1,10 @@
-import glimmerPreset from '@glimmer/babel-preset';
 import { compileTemplate } from '@ember/template-compilation';
 
-import { transformAsync } from '@babel/core';
+import * as Babel from '@babel/standalone';
+// import BabelDecorators from '@babel/plugin-proposal-decorators';
+// import BabelEnv from '@babel/preset-env';
+import { transform } from '@babel/standalone';
+import HtmlbarsPrecompile from 'babel-plugin-htmlbars-inline-precompile';
 
 import type { ExtractedCode } from 'limber/services//-compile/markdown-to-ember';
 
@@ -17,15 +20,20 @@ import type { ExtractedCode } from 'limber/services//-compile/markdown-to-ember'
  *       "path", which doesn't exist in a browser
  */
 export async function compileGJS({ code: input, name }: ExtractedCode) {
-  let result = await transformAsync(input, {
+  let result = transform(input, {
     filename: `${name}.js`,
-    presets: [
+    plugins: [
       [
-        glimmerPreset,
+        HtmlbarsPrecompile,
         {
+          isProduction: false,
           precompile: compileTemplate,
-          __loadPlugins: true,
-          __customInlineTemplateModules: {
+          modules: {
+            'ember-template-imports': {
+              export: 'hbs',
+              useTemplateLiteralProposalSemantics: 1,
+            },
+
             'TEMPLATE-TAG-MODULE': {
               export: 'GLIMMER_TEMPLATE',
               debugName: '<template>',
@@ -34,8 +42,24 @@ export async function compileGJS({ code: input, name }: ExtractedCode) {
           },
         },
       ],
+      [Babel.availablePlugins['proposal-decorators'], { legacy: true }],
+    ],
+    presets: [
+      // [
+      //   {
+      //     precompile: compileTemplate,
+      //     __loadPlugins: true,
+      //     __customInlineTemplateModules: {
+      //       'TEMPLATE-TAG-MODULE': {
+      //         export: 'GLIMMER_TEMPLATE',
+      //         debugName: '<template>',
+      //         useTemplateTagProposalSemantics: 1,
+      //       },
+      //     },
+      //   },
+      // ],
       [
-        'env',
+        Babel.availablePresets['env'],
         {
           targets: [
             'last 1 Edge versions',
