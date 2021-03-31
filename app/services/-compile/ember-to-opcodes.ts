@@ -1,4 +1,4 @@
-import { compileTemplate as _compileTemplate } from '@ember/template-compilation';
+import { compileTemplate as _compile } from '@ember/template-compilation';
 
 import type { CompileOptions } from '@ember/template-compilation';
 
@@ -8,18 +8,17 @@ import type { CompileOptions } from '@ember/template-compilation';
  * can happen just in this file)
  */
 export function compileTemplate(text: string, { moduleName }: Pick<CompileOptions, 'moduleName'>) {
-  let compiled = _compileTemplate(text, {
-    // https://github.com/emberjs/ember.js/blob/22bfcfdac0aeefcf333fb2d6697772934201b43b/packages/ember-template-compiler/lib/types.d.ts#L15
+  // https://github.com/emberjs/rfcs/pull/731/files
+  let compiled = _compile(text, {
     // with strictMode, we'd need to import array, hash, and all that
     strictMode: false,
+    moduleName,
     locals: [],
     isProduction: false,
-    moduleName,
     meta: {},
     plugins: {
       ast: [],
     },
-    // customizeComponentName(/* tag */){}
   });
 
   return compiled;

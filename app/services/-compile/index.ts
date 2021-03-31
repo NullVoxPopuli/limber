@@ -1,17 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-types */
 import { setComponentTemplate } from '@ember/component';
-import templateOnlyComponent from '@ember/component/template-only';
+import _templateOnlyComponent from '@ember/component/template-only';
 
 import { compileTemplate } from './ember-to-opcodes';
 import { parseMarkdown } from './markdown-to-ember';
 
 import type { ExtractedCode } from './markdown-to-ember';
 import type ApplicationInstance from '@ember/application/instance';
+import type { TemplateOnlyComponent } from '@ember/component/template-only';
 import type { TemplateFactory } from 'htmlbars-inline-precompile';
 
 interface CompilationResult {
   rootTemplate?: string;
   rootTemplateFactory?: TemplateFactory;
-  rootTemplateOpcodes?: string;
+  rootComponent?: object;
+  scope?: object[];
 
   error?: Error;
   errorLine?: number;
@@ -20,7 +24,9 @@ interface CompilationResult {
 export async function compile(glimdownInput: string, name: string): Promise<CompilationResult> {
   let rootTemplate: string;
   let rootTemplateFactory: TemplateFactory;
+  let rootComponent: object;
   let liveCode: ExtractedCode[];
+  let scope: object[] = [];
 
   /**
    * Step 1: Convert Markdown To HTML (Ember).
@@ -43,25 +49,45 @@ export async function compile(glimdownInput: string, name: string): Promise<Comp
   /**
    * Step 2: Compile the live code samples
    */
-  console.debug('TODO', { liveCode });
+  if (liveCode.length > 0) {
+    try {
+      // let { compileGJS } = await import('limber/babel-compilation');
+
+      // await Promise.all(liveCode.map(compileGJS));
+      for (let { code, name, lang } of liveCode) {
+        if (lang !== 'hbs') continue;
+
+        scope.push(toComponent(compileTemplate(code, { moduleName: name }), name));
+      }
+    } catch (error) {
+      console.error(error);
+
+      return { error, rootTemplate };
+    }
+  }
 
   /**
    * Step 4: Compile the Ember Template
    */
   try {
     rootTemplateFactory = compileTemplate(rootTemplate, { moduleName: name });
+    rootComponent = toComponent(rootTemplateFactory, name);
   } catch (error) {
     return { error, rootTemplate };
   }
 
   // Temporarily, while we figure out how to load babel.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return { rootTemplate, rootTemplateFactory, liveCode } as any;
+  return { rootTemplate, rootTemplateFactory, rootComponent, liveCode, scope } as any;
+}
+
+function toComponent(template: TemplateFactory, name: string): TemplateOnlyComponent {
+  // https://github.com/glimmerjs/glimmer-vm/blob/master/packages/%40glimmer/runtime/lib/component/template-only.ts#L83
+  return setComponentTemplate(template, _templateOnlyComponent(name)) as TemplateOnlyComponent;
 }
 
 export function opcodesFrom(owner: ApplicationInstance, templateFactory: TemplateFactory) {
   // The TemplateFactory has an incomplete type
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (templateFactory as any)(owner).parsedLayout.block;
 }
 
@@ -69,16 +95,10 @@ export function doesExist(owner: ApplicationInstance, id: string, existing?: str
   return id === existing && owner.hasRegistration(`component:${id}`);
 }
 
-export function register(owner: ApplicationInstance, template: TemplateFactory) {
-  // __meta is probably private API
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let { moduleName } = (template as any).__meta;
-
+// type TemplateOnlyComponent does not have a moduleName property.. :-\
+export function register(owner: ApplicationInstance, component: any) {
   try {
-    owner.register(
-      `component:${moduleName}`,
-      setComponentTemplate(template, templateOnlyComponent())
-    );
+    owner.register(`component:${component.moduleName}`, component);
   } catch (e) {
     if (e.message.includes('Cannot re-register')) {
       return;

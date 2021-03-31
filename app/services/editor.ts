@@ -9,9 +9,7 @@ import Service, { inject as service } from '@ember/service';
 import { DEFAULT_SNIPPET } from 'limber/starting-snippet';
 
 import { compile, doesExist, opcodesFrom, register } from './-compile';
-import { compileTemplate } from './-compile/ember-to-opcodes';
 
-import type ApplicationInstance from '@ember/application/instance';
 import type RouterService from '@ember/routing/router-service';
 
 export default class EditorService extends Service {
@@ -45,7 +43,7 @@ export default class EditorService extends Service {
     this.error = null;
 
     let compilationResult = await compile(this.text, id);
-    let { error, rootTemplate, rootTemplateFactory } = compilationResult;
+    let { error, rootTemplate, rootTemplateFactory, rootComponent, scope } = compilationResult;
 
     if (error) {
       console.error(error);
@@ -77,14 +75,18 @@ export default class EditorService extends Service {
       this.markdownToHbs = rootTemplate;
     }
 
-    if (rootTemplateFactory) {
-      register(owner, rootTemplateFactory);
+    /**
+     * Should these be strict mode components?
+     */
+    if (rootTemplateFactory && rootComponent) {
+      if (scope?.length) {
+        scope.forEach((component) => register(owner, component));
+      }
+
+      register(owner, rootComponent);
     }
 
     assert(`Expected to have a template factory`, rootTemplateFactory);
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (compilationResult as any).liveCode.map(({ name }: any) => registerPlaceholder(owner, name));
 
     let previousId = this.component;
 
@@ -127,12 +129,6 @@ declare module '@ember/service' {
   interface Registry {
     editor: EditorService;
   }
-}
-
-function registerPlaceholder(owner: ApplicationInstance, name: string) {
-  let template = compileTemplate('WIP Placeholder Content', { moduleName: name });
-
-  register(owner, template);
 }
 
 /**

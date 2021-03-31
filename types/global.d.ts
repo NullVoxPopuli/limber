@@ -12,6 +12,8 @@ type LazyTrackedArgs = {
   named?: Record<string, unknown>;
 }
 
+declare module 'babel-plugin-htmlbars-inline-precompile';
+declare module '@babel/plugin-proposal-decorators';
 declare module '@glimmerx/babel-preset';
 declare module '@glimmer/babel-preset';
 declare module 'split-grid';

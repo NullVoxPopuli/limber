@@ -1,3 +1,5 @@
+import { DEBUG } from '@glimmer/env';
+
 import HBS from 'remark-hbs';
 import html from 'remark-html';
 import markdown from 'remark-parse';
@@ -13,6 +15,7 @@ import type { VFile } from 'vfile';
 export interface ExtractedCode {
   name: string;
   code: string;
+  lang: string;
 }
 
 export interface LiveCodeExtraction {
@@ -26,7 +29,7 @@ type VFileWithMeta = VFile & {
   data: LiveData;
 };
 
-const ALLOWED_LANGUAGES = ['gjs'];
+const ALLOWED_LANGUAGES = ['gjs', 'hbs'];
 
 // TODO: extract and publish remark plugin
 function liveCodeExtraction(_options = {}) {
@@ -50,9 +53,13 @@ function liveCodeExtraction(_options = {}) {
       let invokeNode = { type: 'html', value: invocation };
 
       file.data.liveCode.push({
+        lang,
         name,
         code,
       });
+
+      // TEMP -- need babel working
+      if (lang !== 'hbs' && !DEBUG) return [node];
 
       if (meta === 'live preview below') {
         return [node, invokeNode];
@@ -71,7 +78,7 @@ function liveCodeExtraction(_options = {}) {
   };
 }
 
-const markdownCompiler = unified().use(markdown).use(HBS).use(liveCodeExtraction).use(html);
+const markdownCompiler = unified().use(markdown).use(liveCodeExtraction).use(HBS).use(html);
 
 export async function parseMarkdown(input: string): Promise<LiveCodeExtraction> {
   let processed = await markdownCompiler.process(input);
