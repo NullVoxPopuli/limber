@@ -2,7 +2,8 @@ import type * as monaco from 'monaco-editor';
 
 type Monaco = typeof monaco;
 
-export function extendJS(monaco: Monaco, { conf, language }: monaco.languages.IMonarchLanguage) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function extendJS(monaco: Monaco, { conf, language }: any) {
   monaco.languages.register({ id: 'glimmer' });
 
   ///////////
