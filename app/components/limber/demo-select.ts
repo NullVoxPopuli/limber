@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { helper } from '@ember/component/helper';
 import { assert } from '@ember/debug';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
@@ -13,7 +12,7 @@ export default class DemoSelect extends Component {
 
   demos = ALL;
 
-  isSelected = helper(([text]: [string]) => text === this.editor.text);
+  isSelected = ([text]: [string]) => text === this.editor.text;
 
   @action
   select(event: Event) {
