@@ -57,6 +57,39 @@ module('Unit | parseMarkdown()', function () {
     assert.deepEqual(result.blocks, []);
   });
 
+  module('hbs', function () {
+    test('Code fence is live', async function (assert) {
+      let snippet = `{{concat "hello" " " "there"}}`;
+      let name = nameForSnippet(snippet);
+      let result = await parseMarkdown(
+        stripIndent`
+          # Title
+
+          \`\`\`hbs live
+            ${snippet}
+          \`\`\`
+        `.trim()
+      );
+
+      assertOutput(
+        result.templateOnlyGlimdown,
+        stripIndent`
+          <h1>Title</h1>
+
+          ${invocationOf(name)}
+        `
+      );
+
+      assert.deepEqual(result.blocks, [
+        {
+          code: snippet,
+          name,
+          lang: 'hbs',
+        },
+      ]);
+    });
+  });
+
   module('gjs', function () {
     test('Code fence does not have the "live" keyword', async function (assert) {
       let result = await parseMarkdown(stripIndent`
@@ -104,6 +137,7 @@ module('Unit | parseMarkdown()', function () {
         {
           code: snippet,
           name,
+          lang: 'gjs',
         },
       ]);
     });
@@ -134,6 +168,7 @@ module('Unit | parseMarkdown()', function () {
         {
           code: snippet,
           name,
+          lang: 'gjs',
         },
       ]);
     });

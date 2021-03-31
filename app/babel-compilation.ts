@@ -1,4 +1,4 @@
-import * as syntax from '@glimmer/syntax';
+// import { getTemplateLocals } from '@glimmer/syntax';
 import { compileTemplate } from '@ember/template-compilation';
 
 import * as Babel from '@babel/standalone';
@@ -10,9 +10,10 @@ import HtmlbarsPrecompile from 'babel-plugin-htmlbars-inline-precompile';
 import type { ExtractedCode } from 'limber/services//-compile/markdown-to-ember';
 
 export async function compileGJS({ code: input, name }: ExtractedCode) {
-  console.debug(syntax);
+  // TODO
+  return;
   let preprocessed = HtmlbarsPrecompile.preprocessEmbeddedTemplates(input, {
-    getTemplateLocalsRequirePath: '@glimmer/syntax',
+    getTemplateLocals,
     includeSourceMaps: false,
     includeTemplateTokens: true,
     templateTag: 'template',
