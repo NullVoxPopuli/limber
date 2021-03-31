@@ -1,3 +1,5 @@
+import { DEBUG } from '@glimmer/env';
+
 import HBS from 'remark-hbs';
 import html from 'remark-html';
 import markdown from 'remark-parse';
@@ -57,7 +59,7 @@ function liveCodeExtraction(_options = {}) {
       });
 
       // TEMP -- need babel working
-      if (lang !== 'hbs') return [node];
+      if (lang !== 'hbs' && !DEBUG) return [node];
 
       if (meta === 'live preview below') {
         return [node, invokeNode];
