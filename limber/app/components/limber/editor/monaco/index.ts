@@ -1,6 +1,6 @@
 import { modifier } from 'ember-could-get-used-to-this';
 
-// import { extendJS } from './syntax';
+import { extendHBS, extendJS, extendMD } from './syntax';
 import { HorizonTheme } from './themes/horizon';
 
 import type * as monaco from 'monaco-editor';
@@ -63,7 +63,6 @@ export default modifier(
 );
 
 let MONACO: typeof monaco;
-// let LANGUAGE_JS: any;
 
 export async function setupMonaco() {
   if (MONACO) return;
@@ -71,17 +70,12 @@ export async function setupMonaco() {
   configureWorkerPaths();
   insertStyles();
 
-  [
-    MONACO,
-    // LANGUAGE_JS
-  ] = await Promise.all([
-    import('monaco-editor'),
-    // import('monaco-languages/release/esm/javascript/javascript'),
-  ]);
-  // console.log({ MONACO });
-
+  MONACO = await import('monaco-editor');
   MONACO.editor.defineTheme('horizon', HorizonTheme);
-  // extendJS(MONACO, LANGUAGE_JS);
+
+  await extendHBS(MONACO);
+  await extendJS(MONACO);
+  await extendMD(MONACO);
 }
 
 async function insertStyles() {

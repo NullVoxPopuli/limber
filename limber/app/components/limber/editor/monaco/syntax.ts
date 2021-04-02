@@ -1,12 +1,45 @@
+import { assert } from '@ember/debug';
+
 import type * as monaco from 'monaco-editor';
 
 type Monaco = typeof monaco;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function extendJS(monaco: Monaco, { conf, language }: any) {
+async function getLanguage(monaco: Monaco, name: string) {
+  let index = monaco.languages.getEncodedLanguageId(name);
+  let languages = monaco.languages.getLanguages();
+  let definition = languages[index - 1];
+
+  assert(`Expected to have language definition named: ${name}`, definition);
+
+  let loader = await definition.loader();
+
+  return { loader, definition };
+}
+
+export async function extendHBS(monaco: Monaco) {
+  let { loader, definition } = await getLanguage(monaco, 'markdown');
+  let { language, conf } = loader;
+
+  definition.aliases?.push('hbs');
+}
+
+export async function extendMD(monaco: Monaco) {
+  let { loader, definition } = await getLanguage(monaco, 'markdown');
+  let { language, conf } = loader;
+
+  console.log({ language, conf });
+}
+
+export async function extendJS(monaco: Monaco) {
+  let { loader, definition } = await getLanguage(monaco, 'javascript');
+  let { language, conf } = loader;
+
+  definition.aliases?.push('gjs');
+
   monaco.languages.register({ id: 'glimmer' });
 
   ///////////
+  // From the Glimmer X Playground
 
   // JavaScript Highlighting
 
