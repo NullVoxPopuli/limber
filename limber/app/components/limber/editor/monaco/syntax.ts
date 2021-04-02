@@ -27,7 +27,38 @@ export async function extendMD(monaco: Monaco) {
   let { loader, definition } = await getLanguage(monaco, 'markdown');
   let { language, conf } = loader;
 
-  console.log({ language, conf });
+  definition.aliases?.push('glimdown');
+  definition.aliases?.push('gd');
+
+  language.tokenizer['hbs'] = [
+    // html tags
+    [/\{\{#([^}])+}}/, 'tag'],
+    [
+      /<(\w+)/,
+      {
+        cases: {
+          '@empty': { token: 'tag', next: '@tag.$1' },
+          '@default': { token: 'tag', next: '@tag.$1' },
+        },
+      },
+    ],
+    [/\{\{\/(\w+)\s*\}\}/, { token: 'tag' }],
+
+    [/\{\{!--/, 'comment', '@comment'],
+  ];
+
+  language.tokenizer.html.push(...language.tokenizer.hbs);
+
+  language.tokenizer.comment = [
+    [/[^<\-]+/, 'comment.content'],
+    [/-->/, 'comment', '@pop'],
+    [/<!--/, 'comment.content.invalid'],
+    [/[<\-]/, 'comment.content'],
+    [/\{\{!\-\-/, 'comment.content'],
+    [/\{\{!/, 'comment.content'],
+    [/--\}\}/, 'comment', '@pop'],
+    [/\}\}/, 'comment', '@pop'],
+  ];
 }
 
 export async function extendJS(monaco: Monaco) {
