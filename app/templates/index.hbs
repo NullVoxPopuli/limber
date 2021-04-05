@@ -3,7 +3,11 @@
   <div class="p-4 prose max-w-full">
 
     {{#if context.component}}
-      {{component context.component}}
+      {{#let (component context.component) as |Preview|}}
+        <div {{highlight-code-blocks}}>
+          <Preview />
+        </div>
+      {{/let}}
     {{/if}}
 
   </div>

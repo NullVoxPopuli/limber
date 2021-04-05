@@ -32,6 +32,10 @@ declare module 'ember-could-get-used-to-this' {
   export const modifier: <Args extends LazyTrackedArgs>(
     callback: FunctionModifier<Args>
   ) => void;
+  export class Modifier<Args extends LazyTrackedArgs = {}> {
+    protected args: Args;
+    protected element: Element;
+  }
   export class Resource<Args extends LazyTrackedArgs> {
     protected args: Args;
 
