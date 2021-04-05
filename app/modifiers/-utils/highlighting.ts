@@ -61,6 +61,14 @@ export async function getHighlighter() {
         let ast = preprocess(code);
 
         traverse(ast, {
+          ElementNode: {
+            enter() {
+              emitter.addText(`<i class="hljs-tag">`);
+            },
+            exit() {
+              emitter.addText(`</i>`);
+            },
+          },
           PathExpression(node) {
             emitter.addText(`<i class="hljs-name">${node.original}</i>`);
           },
