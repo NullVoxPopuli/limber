@@ -4,7 +4,7 @@
 
     {{#if context.component}}
       {{#let (component context.component) as |Preview|}}
-        <div {{highlight-code-blocks}}>
+        <div {{highlight-code-blocks context.component}}>
           <Preview />
         </div>
       {{/let}}

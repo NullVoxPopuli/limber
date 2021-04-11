@@ -1,81 +1,25 @@
-import type { cannotRemoveNode } from '@glimmer/syntax';
 import type { DOMPurifyI } from 'dompurify';
 import type * as HighlightJS from 'highlight.js';
 
-type GlimmerNode = Parameters<typeof cannotRemoveNode>[0];
-type LanguageWithCustomParser = Language & {
-  customParser?: (emitter: Emitter, code: string) => void;
-};
-
 let HIGHLIGHT: typeof HighlightJS;
 
-export async function getHighlighter() {
+export async function getHighlighter(): Promise<typeof HighlightJS> {
   if (HIGHLIGHT) return HIGHLIGHT;
 
-  HIGHLIGHT = (await import('highlight.js')).default;
+  // temp until v11 is out
+  let hljsv10 = (await import('highlight.js')).default;
+  HIGHLIGHT = (await import('highlightjs-glimmer/vendor/highlight.js')).hljs;
+  let { setup } = await import('highlightjs-glimmer');
 
-  HIGHLIGHT.unregisterLanguage('handlebars');
-  HIGHLIGHT.unregisterLanguage('htmlbars');
+  hljsv10.listLanguages().forEach(name => {
+    const lang = hljsv10.getLanguage(name);
 
-  function glimmerParserPlugin(context: BeforeHighlightContext) {
-    const language = HIGHLIGHT.getLanguage(context.language) as LanguageWithCustomParser;
+    if (!lang) return;
 
-    if (!language) {
-      // inline blocks will never have a language
-      console.warn(`Language definition not found for requested language: ${context.language}`);
-    }
-
-    if (!language) return;
-
-    if (!language.customParser) return;
-
-    // get a dummy result to use/abuse it's emitter
-    const r = HIGHLIGHT.highlight('', { language: 'plaintext' });
-
-    let code = context.code || context.el?.innerHTML;
-
-    language.customParser(r.emitter, code || '');
-    // provide our own result vs letting core parse the content
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (context as any).result = {
-      value: r.emitter.toHTML(),
-      language: context.language,
-      relevance: 0,
-    };
-  }
-
-  HIGHLIGHT.addPlugin({
-    'before:highlight': glimmerParserPlugin,
-    'before:highlightElement': glimmerParserPlugin,
-    'before:highlightBlock': glimmerParserPlugin,
+    HIGHLIGHT.registerLanguage(name, () => lang);
   });
 
-  const syntax = await import('@glimmer/syntax');
-
-  HIGHLIGHT.registerLanguage('glimmer', () => {
-    return {
-      name: 'Glimmer',
-      aliases: ['hbs', 'html.hbs', 'html.handlebars', 'htmlbars'],
-      customParser(emitter: Emitter, code: string) {
-        let { traverse, preprocess } = syntax;
-        let ast = preprocess(code);
-
-        traverse(ast, {
-          ElementNode: {
-            enter() {
-              emitter.addText(`<i class="hljs-tag">`);
-            },
-            exit() {
-              emitter.addText(`</i>`);
-            },
-          },
-          PathExpression(node) {
-            emitter.addText(`<i class="hljs-name">${node.original}</i>`);
-          },
-        });
-      },
-    } as LanguageWithCustomParser;
-  });
+  setup(HIGHLIGHT);
 
   return HIGHLIGHT;
 }

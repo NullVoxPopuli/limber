@@ -1,91 +1,151 @@
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
 
-/* Base16 Atelier Cave Light - Theme */
-/* by Bram de Haan (http://atelierbram.github.io/syntax-highlighting/atelier-schemes/cave) */
-/* Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16) */
-
-/* Atelier-Cave Comment */
-.hljs-comment,
-.hljs-quote {
-  color: #655f6d;
+@font-face {
+  font-family: 'Source Code Pro';
+  src: url('/SourceCodePro-Regular.ttf');
 }
 
-/* Atelier-Cave Red */
+
+
+/* Horizon Theme https://horizontheme.netlify.app/ */
+:root {
+  --punctuation: #aaa;
+
+  /* "Dark" */
+  --horizon-lavender: #B877DB;
+  --horizon-turquoise: #25B2BC;
+  --horizon-cranberry: #E95678;
+  --horizon-apricot: #F09383;
+  --horizon-rosebud: #FAB795;
+  --horizon-tacao: #FAC29A;
+
+  /* "Light" */
+  --horizon-amethyst: #8931B9;
+  --horizon-elm: #1D8991;
+  --horizon-crimson: #DA103F;
+  --horizon-thunderbird: #DC3318;
+  --horizon-tango: #F6661E;
+  --horizon-jaffa: #F77D26;
+}
+
+.syntax-dark {
+  --horizon-shadow: #16161C;
+  --horizon-border: #1A1C23;
+  --horizon-background: #1C1E26;
+  --horizon-background-alt: #232530;
+  --horizon-accent: #2E303E;
+  --horizon-accent-alt: #6C6F93;
+  --horizon-accent: #E9436F;
+  --horizon-secondary-accent-alt: #E95379;
+  --horizon-negative: #F43E5C;
+  --horizon-positive: #09F7A0;
+  --horizon-warning: #27D796;
+  --horizon-modifier: #21BFC2;
+  --horizon-tertiary-accent: #FAB28E;
+}
+
+.syntax-normal {
+  --horizon-blue: #26BBD9;
+  --horizon-cyan:#59E3E3;
+  --horizon-green: #29D398;
+  --horizon-magenta: #EE64AE;
+  --horizon-red: #E95678;
+  --horizon-yellow: #FAB795;
+}
+
+.syntax-bright {
+  --horizon-blue: #3FC6DE;
+  --horizon-cyan:#6BE6E6;
+  --horizon-green: #3FDAA4;
+  --horizon-magenta: #F075B7;
+  --horizon-red: #EC6A88;
+  --horizon-yellow: #FBC3A7;
+}
+
+.syntax-light {
+  --horizon-shadow: #16161C;
+  --horizon-border: #1A1C23;
+  --horizon-background: #FDF0ED;
+  --horizon-background-alt: #FADAD1;
+  --horizon-accent: #F9CBBE;
+  --horizon-accent-alt: #F9CEC3;
+  --horizon-accent: #E73665;
+  --horizon-secondary-accent-alt: #E84A72;
+  --horizon-negative: #F43E5C;
+  --horizon-positive: #07DA8C;
+  --horizon-warning: #1EB980;
+  --horizon-modifier: #1EAEAE;
+  --horizon-tertiary-accent: #AF5427;
+}
+
+.prose pre {
+  background: var(--horizon-background-alt);
+  color: #ccc;
+}
+.prose pre code.hljs,
+.hljs {
+  display: block;
+  overflow-x: auto;
+  font-family: 'Source Code Pro', ui-monospace, monospace, sans-serif;
+}
+
+.hljs-comment { color: #777; }
+.hljs-quote { color: #655f6d; }
+.hljs-operator,
+.hljs-punctuation { color: var(--punctuation); }
+
 .hljs-variable,
-.hljs-template-variable,
-.hljs-attribute,
-.hljs-tag,
-.hljs-name,
+.hljs-template-variable {
+  color: var(--horizon-cranberry);
+}
+.hljs-params { color: var(--horizon-apricot); }
+.hljs-attribute { color: var(--horizon-apricot); }
+
+.hljs-class { color: var(--horizon-yellow); }
+.hljs-tag { color: var(--horizon-accent-alt); }
+.hljs-title { color: var(--horizon-yellow); }
+.hljs-name { color: var(--horizon-yellow); }
+.hljs-number { color: var(--horizon-warning); }
+
 .hljs-regexp,
 .hljs-link,
-.hljs-name,
-.hljs-name,
 .hljs-selector-id,
 .hljs-selector-class {
   color: #be4678;
 }
 
-/* Atelier-Cave Orange */
-.hljs-number,
-.hljs-meta,
+.hljs-function { color: var(--horizon-turquoise); }
 .hljs-built_in,
-.hljs-builtin-name,
+.hljs-builtin-name { color: var(--horizon-lavender); }
+
+.hljs-meta,
 .hljs-literal,
-.hljs-type,
-.hljs-params {
-  color: #aa573c;
+.hljs-type {
+  color: var(--horizon-cranberry);
 }
 
-/* Atelier-Cave Green */
 .hljs-string,
 .hljs-symbol,
 .hljs-bullet {
-  color: #2a9292;
+  color: var(--horizon-tacao);
 }
 
-/* Atelier-Cave Blue */
-.hljs-title,
-.hljs-section {
-  color: #576ddb;
-}
-
-/* Atelier-Cave Purple */
 .hljs-keyword,
 .hljs-selector-tag {
-  color: #955ae7;
+  color: var(--horizon-lavender);
 }
 
 .hljs-deletion,
 .hljs-addition {
-  color: #19171c;
+  color: var(--horizon-background);
   display: inline-block;
   width: 100%;
 }
 
-.hljs-deletion {
-  background-color: #be4678;
-}
+.hljs-deletion { background-color: var(--horizon-negative); }
+.hljs-addition { background-color: var(--horizon-positive); }
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: bold; }
 
-.hljs-addition {
-  background-color: #2a9292;
-}
-
-.hljs {
-  display: block;
-  overflow-x: auto;
-  background: #efecf4;
-  color: #585260;
-  padding: 0.5em;
-}
-
-.hljs-emphasis {
-  font-style: italic;
-}
-
-.hljs-strong {
-  font-weight: bold;
-}
