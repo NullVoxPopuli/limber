@@ -16,9 +16,11 @@ declare module 'babel-plugin-htmlbars-inline-precompile';
 declare module '@babel/plugin-proposal-decorators';
 declare module '@glimmerx/babel-preset';
 declare module '@glimmer/babel-preset';
+declare module 'highlightjs-glimmer';
+declare module 'highlightjs-glimmer/vendor/highlight.js';
+declare module 'highlightjs-glimmer/vendor/javascript.min';
 declare module 'split-grid';
 declare module 'unist-util-flatmap';
-
 
 declare module 'ember-could-get-used-to-this' {
   type FunctionModifier<Args extends LazyTrackedArgs> = (
@@ -32,6 +34,10 @@ declare module 'ember-could-get-used-to-this' {
   export const modifier: <Args extends LazyTrackedArgs>(
     callback: FunctionModifier<Args>
   ) => void;
+  export class Modifier<Args extends LazyTrackedArgs = {}> {
+    protected args: Args;
+    protected element: Element;
+  }
   export class Resource<Args extends LazyTrackedArgs> {
     protected args: Args;
 

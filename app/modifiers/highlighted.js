@@ -2,8 +2,8 @@ import { isDestroyed, isDestroying } from '@ember/destroyable';
 import { action } from '@ember/object';
 
 import { Modifier } from 'ember-could-get-used-to-this';
-// import { getEditor } from 'limber/monaco';
-// import * as monaco from 'monaco-editor';
+
+import { getHighlighter, getPurifier } from './-utils/highlighting';
 
 export default class Highlighted extends Modifier {
   get isSafe() {
@@ -33,24 +33,4 @@ export default class Highlighted extends Modifier {
       target.innerHTML = purify.sanitize(value);
     }
   }
-}
-
-let HIGHLIGHT;
-
-async function getHighlighter() {
-  if (HIGHLIGHT) return HIGHLIGHT;
-
-  HIGHLIGHT = (await import('highlight.js')).default;
-
-  return HIGHLIGHT;
-}
-
-let PURIFY;
-
-async function getPurifier() {
-  if (PURIFY) return PURIFY;
-
-  PURIFY = (await import('dompurify')).default;
-
-  return PURIFY;
 }
