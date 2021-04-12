@@ -35,7 +35,7 @@
     "@glimmer/component": "^1.0.3",
     "@glimmer/runtime": "^0.42.2",
     "@glimmer/tracking": "^1.0.3",
-    "@nullvoxpopuli/eslint-configs": "1.2.1",
+    "@nullvoxpopuli/eslint-configs": "1.2.2",
     "@tailwindcss/jit": "^0.1.5",
     "@tailwindcss/typography": "^0.4.0",
     "@types/babel__core": "^7.1.14",

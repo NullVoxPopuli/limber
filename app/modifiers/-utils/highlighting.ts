@@ -8,10 +8,11 @@ export async function getHighlighter(): Promise<typeof HighlightJS> {
 
   // temp until v11 is out
   let hljsv10 = (await import('highlight.js')).default;
+
   HIGHLIGHT = (await import('highlightjs-glimmer/vendor/highlight.js')).hljs;
   let { setup } = await import('highlightjs-glimmer');
 
-  hljsv10.listLanguages().forEach(name => {
+  hljsv10.listLanguages().forEach((name) => {
     const lang = hljsv10.getLanguage(name);
 
     if (!lang) return;
