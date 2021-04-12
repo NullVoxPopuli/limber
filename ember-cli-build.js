@@ -57,6 +57,7 @@ module.exports = function (defaults) {
 
   const { Webpack } = require('@embroider/webpack');
   const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+  const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     extraPublicTrees: additionalTrees,
@@ -101,7 +102,21 @@ module.exports = function (defaults) {
             // '@babel/core': '@babel/standalone',
           },
         },
+        module: {
+          rules: [
+            {
+              test: /\.css$/,
+              use: ['style-loader', 'css-loader'],
+            },
+            {
+              test: /\.ttf$/,
+              use: ['file-loader'],
+            },
+          ],
+        },
         plugins: [
+          new MonacoWebpackPlugin(),
+
           new BundleAnalyzerPlugin({
             analyzerMode: 'static',
             openAnalyzer: false,
