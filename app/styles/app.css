@@ -78,6 +78,27 @@
   --horizon-warning: #1EB980;
   --horizon-modifier: #1EAEAE;
   --horizon-tertiary-accent: #AF5427;
+
+  /* overrides, for readability */
+  --horizon-amethyst: #8931B9;
+  --horizon-elm: #1D8991;
+  --horizon-crimson: #DA103F;
+  --horizon-thunderbird: #DC3318;
+  --horizon-tango: #F6661E;
+
+  --horizon-blue: #3FC6DE;
+  --horizon-cyan:#6BE6E6;
+  --horizon-green: #3FDAA4;
+  --horizon-magenta: #F075B7;
+  --horizon-red: #EC6A88;
+  --horizon-yellow: #bb8367;
+
+  --horizon-lavendar: var(--horizon-amethyst);
+  --horizon-turquoise: var(--horizon-elm);
+  --horizon-cranberry: var(--horizon-crimson);
+  --horizon-apricot: var(--horizon-thunderbird);
+  --horizon-rosebud: var(--horizon-tango);
+  --horizon-tacao: var(--horizon-jaffa);
 }
 
 .prose pre {
@@ -86,6 +107,7 @@
 }
 .prose pre code.hljs,
 .hljs {
+  background: var(--horizon-background-alt);
   display: block;
   overflow-x: auto;
   font-family: 'Source Code Pro', ui-monospace, monospace, sans-serif;

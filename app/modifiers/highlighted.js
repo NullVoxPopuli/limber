@@ -28,7 +28,7 @@ export default class Highlighted extends Modifier {
 
     if (this.isSafe && this.element) {
       let target = this.element.querySelector('code');
-      let { value } = hljs.highlight(code, { language: this.element.classList[0] });
+      let { value } = hljs.highlight(code, { language: target.classList[0] });
 
       target.innerHTML = purify.sanitize(value);
     }
