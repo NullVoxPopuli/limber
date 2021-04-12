@@ -22,7 +22,6 @@ declare module 'highlightjs-glimmer/vendor/javascript.min';
 declare module 'split-grid';
 declare module 'unist-util-flatmap';
 
-
 declare module 'ember-could-get-used-to-this' {
   type FunctionModifier<Args extends LazyTrackedArgs> = (
     (element: HTMLElement,

@@ -33,7 +33,7 @@ export default class HighlightCodeBlocks extends Modifier<Args> {
       let elements = this.element.querySelectorAll('pre > code');
 
       for (let element of elements) {
-        hljs.highlightElement(element);
+        hljs.highlightBlock(element as HTMLElement);
       }
     }
   }
