@@ -6,6 +6,14 @@ module.exports = {
   purge: ['app/**/*.{js,ts,hbs}'],
   darkMode: false,
   theme: {
+    screens: {
+      sm: '640px',
+      // => @media (min-width: 640px) { ... }
+      lg: '1024px',
+      // => @media (min-width: 1024px) { ... }
+      'until-lg': { max: '1023px' },
+      // => @media (max-width: 1023px) { ... }
+    },
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
@@ -45,6 +53,10 @@ module.exports = {
       },
       gridTemplateRows: {
         editor: 'min-content 1fr',
+        main: '1fr 1.5fr',
+      },
+      gridTemplateColumns: {
+        main: '1fr 1.5fr',
       },
       keyframes: {
         'fade-in': {
@@ -61,6 +73,5 @@ module.exports = {
       },
     },
   },
-  variants: {},
   plugins: [require('@tailwindcss/typography')],
 };

@@ -8,7 +8,6 @@
 }
 
 
-
 /* Horizon Theme https://horizontheme.netlify.app/ */
 :root {
   /* "Dark" */
@@ -140,7 +139,6 @@
 .hljs {
   background: var(--code-bg);
   display: block;
-  overflow-x: auto;
   font-family: 'Source Code Pro', ui-monospace, monospace, sans-serif;
 }
 

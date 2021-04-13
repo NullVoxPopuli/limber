@@ -7,7 +7,10 @@
   {{/if}}
 
   {{#if context.markdownToHbs}}
-    <pre class="plain-light p-4" {{highlighted context.markdownToHbs}}><code class="glimmer hljs">{{context.markdownToHbs}}</code></pre>
+    <pre
+      class="plain-light p-4"
+      {{highlighted context.markdownToHbs}}
+    ><code class="glimmer hljs">{{context.markdownToHbs}}</code></pre>
   {{/if}}
 
 {{/let}}
