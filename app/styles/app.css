@@ -11,8 +11,6 @@
 
 /* Horizon Theme https://horizontheme.netlify.app/ */
 :root {
-  --punctuation: #aaa;
-
   /* "Dark" */
   --horizon-lavender: #B877DB;
   --horizon-turquoise: #25B2BC;
@@ -44,6 +42,22 @@
   --horizon-warning: #27D796;
   --horizon-modifier: #21BFC2;
   --horizon-tertiary-accent: #FAB28E;
+
+  --code-bg: var(--horizon-background-alt);
+  --code-variable: var(--horizon-cranberry);
+  --code-param: var(--horizon-apricot);
+  --code-class: var(--horizon-yellow);
+  --code-tag: var(--horizon-accent-alt);
+  --code-name: var(--horizon-yellow);
+  --code-number: var(--horizon-warning);
+  --code-punctuation: #aaa;
+  --code-regex: #be4678;
+  --code-function: var(--horizon-turquoise);
+  --code-builtin: var(--horizon-lavender);
+  --code-literal: var(--horizon-cranberry);
+  --code-string: var(--horizon-tacao);
+  --code-keyword: var(--horizon-lavender);
+  --code-highlight-bg: var(--horizon-background);
 }
 
 .syntax-normal {
@@ -93,21 +107,38 @@
   --horizon-red: #EC6A88;
   --horizon-yellow: #bb8367;
 
-  --horizon-lavendar: var(--horizon-amethyst);
-  --horizon-turquoise: var(--horizon-elm);
-  --horizon-cranberry: var(--horizon-crimson);
-  --horizon-apricot: var(--horizon-thunderbird);
-  --horizon-rosebud: var(--horizon-tango);
-  --horizon-tacao: var(--horizon-jaffa);
+}
+
+.plain-light {
+  --code-bg: white;
+  --code-variable: var(--horizon-crimson);
+  --code-param: var(--horizon-tango);
+  --code-class: var(--horizon-yellow);
+  --code-tag: var(--horizon-accent-alt);
+  --code-name: var(--horizon-crimson);
+  --code-number: var(--horizon-accent);
+  --code-punctuation: #aaa;
+  --code-regex: #be4678;
+  --code-function: var(--horizon-turquoise);
+  --code-builtin: var(--horizon-lavender);
+  --code-literal: var(--horizon-cranberry);
+  --code-string: var(--horizon-thunderbird);
+  --code-keyword: var(--horizon-amethyst);
+  --code-highlight-bg: var(--horizon-background);
+}
+
+.plain-light .hljs-built_in,
+.plain-light .hljs-function {
+  font-weight: bold;
 }
 
 .prose pre {
-  background: var(--horizon-background-alt);
+  background: var(--code-bg);
   color: #ccc;
 }
 .prose pre code.hljs,
 .hljs {
-  background: var(--horizon-background-alt);
+  background: var(--code-bg);
   display: block;
   overflow-x: auto;
   font-family: 'Source Code Pro', ui-monospace, monospace, sans-serif;
@@ -116,52 +147,52 @@
 .hljs-comment { color: #777; }
 .hljs-quote { color: #655f6d; }
 .hljs-operator,
-.hljs-punctuation { color: var(--punctuation); }
+.hljs-punctuation { color: var(--code-punctuation); }
 
 .hljs-variable,
 .hljs-template-variable {
-  color: var(--horizon-cranberry);
+  color: var(--code-variable);
 }
-.hljs-params { color: var(--horizon-apricot); }
-.hljs-attribute { color: var(--horizon-apricot); }
+.hljs-params { color: var(--code-param); }
+.hljs-attribute { color: var(--code-param); }
 
-.hljs-class { color: var(--horizon-yellow); }
-.hljs-tag { color: var(--horizon-accent-alt); }
-.hljs-title { color: var(--horizon-yellow); }
-.hljs-name { color: var(--horizon-yellow); }
-.hljs-number { color: var(--horizon-warning); }
+.hljs-class { color: var(--code-class); }
+.hljs-tag { color: var(--code-tag); }
+.hljs-title { color: var(--code-name); }
+.hljs-name { color: var(--code-name); }
+.hljs-number { color: var(--code-number); }
 
 .hljs-regexp,
 .hljs-link,
 .hljs-selector-id,
 .hljs-selector-class {
-  color: #be4678;
+  color: var(--code-regex);
 }
 
-.hljs-function { color: var(--horizon-turquoise); }
+.hljs-function { color: var(--code-function); }
 .hljs-built_in,
-.hljs-builtin-name { color: var(--horizon-lavender); }
+.hljs-builtin-name { color: var(--code-builtin); }
 
 .hljs-meta,
 .hljs-literal,
 .hljs-type {
-  color: var(--horizon-cranberry);
+  color: var(--code-literal);
 }
 
 .hljs-string,
 .hljs-symbol,
 .hljs-bullet {
-  color: var(--horizon-tacao);
+  color: var(--code-string);
 }
 
 .hljs-keyword,
 .hljs-selector-tag {
-  color: var(--horizon-lavender);
+  color: var(--code-keyword);
 }
 
 .hljs-deletion,
 .hljs-addition {
-  color: var(--horizon-background);
+  color: var(--code-highlight-bg);
   display: inline-block;
   width: 100%;
 }

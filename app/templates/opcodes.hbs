@@ -2,7 +2,7 @@
 
   {{#if context.template}}
     {{#let (stringify context.template) as |opcodes|}}
-      <pre class="syntax-light p-4" {{highlighted opcodes}}><code class="json hljs">{{opcodes}}</code></pre>
+      <pre class="plain-light p-4" {{highlighted opcodes}}><code class="json hljs">{{opcodes}}</code></pre>
     {{/let}}
     {{!--
     <div class="fixed right-0 top-7 p-4 shadow-md border border-gray-800">
