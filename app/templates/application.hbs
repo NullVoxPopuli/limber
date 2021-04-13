@@ -4,12 +4,16 @@
   <Limber::Header />
 
   {{!-- template-lint-disable no-inline-styles --}}
-  <div class="grid overflow-hidden" style="grid-template-columns: 1fr 1.5fr">
+  <div class="grid overflow-hidden until-lg:grid-rows-main lg:grid-cols-main">
     {{!--
       the max size of an element adjascent to a resizable element within a grid
       may not exceed the starting size (so far?)
     --}}
-    <section class="grid resize-x overflow-hidden min-w-[40vw]">
+    <section class="
+      grid resize-y lg:resize-x overflow-hidden
+      min-w-full lg:min-w-[40vw]
+      min-h-[40vh] lg:min-h-full"
+    >
       <Limber::Editor />
     </section>
 
