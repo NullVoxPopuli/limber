@@ -1,75 +1,68 @@
-// import { getTemplateLocals } from '@glimmer/syntax';
-// import { compileTemplate } from '@ember/template-compilation';
+import { getTemplateLocals } from '@glimmer/syntax';
+import { compileTemplate } from '@ember/template-compilation';
 
-// import * as Babel from '@babel/standalone';
+import * as Babel from '@babel/standalone';
 // // import BabelDecorators from '@babel/plugin-proposal-decorators';
 // // import BabelEnv from '@babel/preset-env';
-// import { transform } from '@babel/standalone';
-// import HtmlbarsPrecompile from 'babel-plugin-htmlbars-inline-precompile';
+import HtmlbarsPrecompile from 'babel-plugin-htmlbars-inline-precompile';
 
-import type { ExtractedCode } from 'limber/services//-compile/markdown-to-ember';
+import type { ExtractedCode } from 'limber/services/-compile/markdown-to-ember';
 
-export async function compileGJS(_: ExtractedCode) {
-  // code: input, name
-  // TODO
-  return;
+export async function compileGJS({ code: input, name }: ExtractedCode) {
+  let preprocessed = HtmlbarsPrecompile.preprocessEmbeddedTemplates(input, {
+    getTemplateLocals,
+    relativePath: 'some-name.js',
+    includeSourceMaps: false,
+    includeTemplateTokens: true,
+    templateTag: 'template',
+    templateTagReplacement: 'GLIMMER_TEMPLATE',
+    getTemplateLocalsExportPath: 'getTemplateLocals',
+  });
 
-  // let preprocessed = HtmlbarsPrecompile.preprocessEmbeddedTemplates(input, {
-  //   getTemplateLocals,
-  //   includeSourceMaps: false,
-  //   includeTemplateTokens: true,
-  //   templateTag: 'template',
-  //   getTemplateLocalsExportPath: 'getTemplateLocals',
-  // });
+  let result = Babel.transform(preprocessed.output, {
+    filename: `${name}.js`,
+    plugins: [
+      [
+        HtmlbarsPrecompile,
+        {
+          isProduction: false,
+          precompile: compileTemplate,
+          modules: {
+            // 'ember-template-imports': {
+            //   export: 'hbs',
+            //   useTemplateLiteralProposalSemantics: 1,
+            // },
 
-  // console.log(preprocessed);
+            'TEMPLATE-TAG-MODULE': {
+              export: 'GLIMMER_TEMPLATE',
+              debugName: '<template>',
+              useTemplateTagProposalSemantics: 1,
+            },
+          },
+        },
+      ],
+      [Babel.availablePlugins['proposal-decorators'], { legacy: true }],
+      [Babel.availablePlugins['proposal-class-properties']],
+    ],
+    presets: [
+      [
+        Babel.availablePresets['env'],
+        {
+          modules: false, // preserves?
+        },
+      ],
+    ],
+  });
 
-  // let result = transform(input, {
-  //   filename: `${name}.js`,
-  //   plugins: [
-  //     [
-  //       HtmlbarsPrecompile,
-  //       {
-  //         isProduction: false,
-  //         precompile: compileTemplate,
-  //         modules: {
-  //           'ember-template-imports': {
-  //             export: 'hbs',
-  //             useTemplateLiteralProposalSemantics: 1,
-  //           },
+  if (!result) {
+    return;
+  }
 
-  //           'TEMPLATE-TAG-MODULE': {
-  //             export: 'GLIMMER_TEMPLATE',
-  //             debugName: '<template>',
-  //             useTemplateTagProposalSemantics: 1,
-  //           },
-  //         },
-  //       },
-  //     ],
-  //     [Babel.availablePlugins['proposal-decorators'], { legacy: true }],
-  //   ],
-  //   presets: [
-  //     [
-  //       Babel.availablePresets['env'],
-  //       {
-  //         targets: [
-  //           'last 1 Edge versions',
-  //           'last 1 Chrome versions',
-  //           'last 1 Firefox versions',
-  //           'last 1 Safari versions',
-  //         ],
-  //       },
-  //     ],
-  //   ],
-  // });
+  let { code } = result;
 
-  // if (!result) {
-  //   return;
-  // }
+  // yolo
+  console.log(code);
+  console.log(eval(code));
 
-  // let { code } = result;
-
-  // console.log({ code });
-
-  // return code;
+  return code;
 }

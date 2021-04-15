@@ -51,9 +51,10 @@ export async function compile(glimdownInput: string, name: string): Promise<Comp
    */
   if (liveCode.length > 0) {
     try {
-      // let { compileGJS } = await import('limber/babel-compilation');
+      let { compileGJS } = await import('limber/babel-compilation');
 
-      // await Promise.all(liveCode.map(compileGJS));
+      await Promise.all(liveCode.map(compileGJS));
+
       for (let { code, name, lang } of liveCode) {
         if (lang !== 'hbs') continue;
 

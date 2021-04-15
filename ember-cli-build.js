@@ -84,7 +84,7 @@ module.exports = function (defaults) {
 
         node: {
           fs: 'empty',
-          // path: 'empty',
+          path: 'empty',
           // module: 'empty',
           net: 'empty',
           v8: 'empty',
@@ -98,7 +98,7 @@ module.exports = function (defaults) {
         // we can't just alias
         resolve: {
           alias: {
-            // '@babel/core': '@babel/standalone',
+            path: 'path-browserify',
           },
         },
         plugins: [
