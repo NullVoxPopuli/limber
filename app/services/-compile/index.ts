@@ -3,6 +3,7 @@
 import { setComponentTemplate } from '@ember/component';
 import _templateOnlyComponent from '@ember/component/template-only';
 
+import { compileJS } from './babel';
 import { compileTemplate } from './ember-to-opcodes';
 import { parseMarkdown } from './markdown-to-ember';
 
@@ -51,13 +52,23 @@ export async function compile(glimdownInput: string, name: string): Promise<Comp
    */
   if (liveCode.length > 0) {
     try {
-      let { compileGJS } = await import('limber/babel-compilation');
+      let hbs = liveCode.filter((code) => code.lang === 'hbs');
+      let js = liveCode.filter((code) => ['js', 'gjs'].includes(code.lang));
 
-      await Promise.all(liveCode.map(compileGJS));
+      if (js.length > 0) {
+        let compiled = await compileJS(name, js);
 
-      for (let { code, name, lang } of liveCode) {
-        if (lang !== 'hbs') continue;
+        await Promise.all(
+          compiled.map(async ({ name, importPath }) => {
+            scope.push({
+              moduleName: name,
+              component: await import(/* webpackIgnore: true */ importPath),
+            });
+          })
+        );
+      }
 
+      for (let { code, name } of hbs) {
         scope.push(toComponent(compileTemplate(code, { moduleName: name }), name));
       }
     } catch (error) {

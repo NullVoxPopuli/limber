@@ -61,8 +61,8 @@ export async function compileGJS({ code: input, name }: ExtractedCode) {
   let { code } = result;
 
   // yolo
-  console.log(code);
-  console.log(eval(code));
+  // console.log(code);
+  // console.log(eval(code));
 
   return code;
 }
