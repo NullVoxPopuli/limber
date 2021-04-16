@@ -58,6 +58,8 @@ jobs:
         key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
     - run: npm install
     - run: npm run build
+    - name: Copy deply host config
+      run: cp ./config/netlify/_redirects ./dist/
 
     - name: Upload App Artifacts
       uses: actions/upload-artifact@v2
