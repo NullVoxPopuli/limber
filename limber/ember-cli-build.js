@@ -29,6 +29,7 @@ module.exports = function (defaults) {
     'ember-cli-terser': {
       enabled: MINIFY,
     },
+    fingerprint: { exclude: ['transpilation-worker.js'] },
     autoImport: {
       exclude: [
         // 'babel-plugin-ember-modules-api-polyfill',
@@ -48,8 +49,6 @@ module.exports = function (defaults) {
   let app = new EmberApp(defaults, config);
 
   let additionalTrees = [
-    // workersFunnel({ isProduction }),
-    // babelFunnel({ isProduction }),
     monacoFunnel({ isProduction }),
   ];
 

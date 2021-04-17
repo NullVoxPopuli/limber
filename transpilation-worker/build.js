@@ -8,8 +8,6 @@ const esbuild = require('esbuild');
 const appFolder = path.join(__dirname, '..', 'app');
 const workerRoot = path.join(appFolder, 'workers');
 
-const Funnel = require('broccoli-funnel');
-
 function detectWorkers() {
   let workers = {};
   let dir = fs.readdirSync(workerRoot);
@@ -58,9 +56,6 @@ function workersFunnel({ isProduction }) {
   // outputs {buildDir}/highlighting.js
   buildWorkers(options);
 
-  return new Funnel(buildDir, {
-    destDir: 'workers/',
-  });
 }
 
 module.exports = {

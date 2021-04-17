@@ -8,16 +8,18 @@ const esbuild = require('esbuild');
 const Funnel = require('broccoli-funnel');
 const mergeTrees = require('broccoli-merge-trees');
 
-// const monacoLocation = path.join('node_modules', 'monaco-editor', 'esm', 'vs');
-const cssLocation = path.join('node_modules', 'monaco-editor', 'min', 'vs', 'editor');
+const nm = path.join(__dirname, '../../node_modules/');
+const cssLocation = path.join(`${nm}monaco-editor/min/vs/editor`);
+
+console.log(cssLocation);
 
 const workers = {
-  base: 'node_modules/monaco-editor/esm/vs/editor/editor.main.js',
-  editor: 'node_modules/monaco-editor/esm/vs/editor/editor.worker.js',
-  json: 'node_modules/monaco-editor/esm/vs/language/json/json.worker.js',
-  css: 'node_modules/monaco-editor/esm/vs/language/css/css.worker.js',
-  html: 'node_modules/monaco-editor/esm/vs/language/html/html.worker.js',
-  ts: 'node_modules/monaco-editor/esm/vs/language/typescript/ts.worker.js',
+  base: path.join(nm, 'monaco-editor/esm/vs/editor/editor.main.js'),
+  editor: path.join(nm, 'monaco-editor/esm/vs/editor/editor.worker.js'),
+  json: path.join(nm, 'monaco-editor/esm/vs/language/json/json.worker.js'),
+  css: path.join(nm, 'monaco-editor/esm/vs/language/css/css.worker.js'),
+  html: path.join(nm, 'monaco-editor/esm/vs/language/html/html.worker.js'),
+  ts: path.join(nm, 'monaco-editor/esm/vs/language/typescript/ts.worker.js'),
 };
 
 function buildWorkers({ isProduction }) {

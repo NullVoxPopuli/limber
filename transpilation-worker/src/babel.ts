@@ -2,13 +2,14 @@ import { getTemplateLocals } from '@glimmer/syntax';
 import { compileTemplate } from '@ember/template-compilation';
 
 import * as Babel from '@babel/standalone';
-// // import BabelDecorators from '@babel/plugin-proposal-decorators';
-// // import BabelEnv from '@babel/preset-env';
 import HtmlbarsPrecompile from 'babel-plugin-htmlbars-inline-precompile';
 
-import type { ExtractedCode } from 'limber/services/-compile/markdown-to-ember';
+interface Info {
+  code: string;
+  name: string;
+}
 
-export async function compileGJS({ code: input, name }: ExtractedCode) {
+export async function compileGJS({ code: input, name }: Info) {
   let preprocessed = HtmlbarsPrecompile.preprocessEmbeddedTemplates(input, {
     getTemplateLocals,
     relativePath: 'some-name.js',
@@ -59,10 +60,6 @@ export async function compileGJS({ code: input, name }: ExtractedCode) {
   }
 
   let { code } = result;
-
-  // yolo
-  // console.log(code);
-  // console.log(eval(code));
 
   return code;
 }

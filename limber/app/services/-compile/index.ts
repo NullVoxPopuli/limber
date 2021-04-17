@@ -58,6 +58,14 @@ export async function compile(glimdownInput: string, name: string): Promise<Comp
       if (js.length > 0) {
         let compiled = await compileJS(name, js);
 
+        let missing = compiled.filter(({ importPath }) => !importPath);
+
+        if (missing.length > 0) {
+          let first = missing[0];
+
+          throw new Error(`Component, ${first.name}, failed to compile`);
+        }
+
         await Promise.all(
           compiled.map(async ({ name, importPath }) => {
             scope.push({
@@ -72,6 +80,7 @@ export async function compile(glimdownInput: string, name: string): Promise<Comp
         scope.push(toComponent(compileTemplate(code, { moduleName: name }), name));
       }
     } catch (error) {
+      console.info({ scope });
       console.error(error);
 
       return { error, rootTemplate };

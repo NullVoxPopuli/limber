@@ -2,7 +2,7 @@ import type { ExtractedCode } from './markdown-to-ember';
 
 let isRegistered = false;
 
-export async function compileJS(id: string, js: ExtractedCode[]) {
+export async function compileJS(_id: string, js: ExtractedCode[]) {
   if (!isRegistered) {
     await setupServiceWorker();
 
@@ -28,7 +28,7 @@ export async function compileJS(id: string, js: ExtractedCode[]) {
 
 async function setupServiceWorker() {
   if ('serviceWorker' in navigator) {
-    let registration = await navigator.serviceWorker.register('/sw.js');
+    let registration = await navigator.serviceWorker.register('/transpilation-worker.js');
 
     // registration.update();
 
