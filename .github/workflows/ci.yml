@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
 
+env:
+  app: limber/
+  sw: transpilation-worker/
+
 jobs:
 
 ##############################################################
@@ -39,6 +43,7 @@ jobs:
 
     - name: Test
       run: npm run test:ember
+      working-directory: ${{ env.app }}
       env:
         CI_BROWSER: ${{ matrix.ci_browser }}
 
@@ -58,14 +63,16 @@ jobs:
         key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
     - run: npm install
     - run: npm run build
+      working-directory: ${{ env.app }}
     - name: Copy deply host config
       run: cp ./config/netlify/_redirects ./dist/
+      working-directory: ${{ env.app }}
 
     - name: Upload App Artifacts
       uses: actions/upload-artifact@v2
       with:
         name: built_app
-        path: ./dist/
+        path: ${{ env.app }}/dist/
 
 ##############################################################
 
@@ -83,7 +90,7 @@ jobs:
       uses: actions/download-artifact@master
       with:
         name: built_app
-        path: ./deploy/app/
+        path: ${{ env.app }}/deploy/app/
 
     - name: Deploy to Netlify
       env:
@@ -97,6 +104,7 @@ jobs:
         tar -xf netlifyctl-linux-amd64-$NETLIFY_CLI_VERSION.tar.gz
 
         ./netlifyctl -y deploy --site-id $NETLIFY_SITE_ID --access-token $NETLIFY_ACCESS_TOKEN --publish-directory "./deploy/app"
+      working-directory: ${{ env.app }}
 
 
 ##############################################################
@@ -116,13 +124,13 @@ jobs:
       uses: actions/download-artifact@master
       with:
         name: built_app
-        path: ./deploy/app/
+        path: ${{ env.app }}/deploy/app/
 
     - name: Deploy to Netlify
       id: deploy
       uses: nwtgck/actions-netlify@v1.1.13
       with:
-        publish-dir: './deploy/app'
+        publish-dir: '${{ env.app }}/deploy/app'
         production-branch: __handled_separately__
         github-token: ${{ secrets.GITHUB_TOKEN }}
       env:
