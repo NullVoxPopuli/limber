@@ -4,6 +4,24 @@ let isRegistered = false;
 
 export async function compileJS(_id: string, js: ExtractedCode[]) {
   if (!isRegistered) {
+    let script = document.createElement('script');
+
+    script.setAttribute('type', 'importmap');
+    // let response = await import(
+    //   /* webpackIgnore: true */
+    //   'https://raw.githubusercontent.com/ef4/mho/a4391e53891f3f6321f0a8f36de88ec23511dbee/ember-app/importmap.json'
+    // );
+    // External Import maps are not supported yet
+    // let response = await fetch(
+    //   'https://raw.githubusercontent.com/ef4/mho/a4391e53891f3f6321f0a8f36de88ec23511dbee/ember-app/importmap.json'
+    // );
+    // let importmap = await response.text();
+    let importmap = (await import('/mho-importmap.json')).default;
+
+    console.debug({ importmap });
+
+    script.innerHTML = JSON.stringify(importmap);
+    document.body.appendChild(script);
     await setupServiceWorker();
 
     isRegistered = true;

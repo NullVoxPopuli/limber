@@ -1,3 +1,4 @@
+import { precompile } from '@glimmer/compiler';
 import { getTemplateLocals } from '@glimmer/syntax';
 import { compileTemplate } from '@ember/template-compilation';
 
@@ -27,7 +28,8 @@ export async function compileGJS({ code: input, name }: Info) {
         HtmlbarsPrecompile,
         {
           isProduction: false,
-          precompile: compileTemplate,
+          precompile,
+          // precompile: compileTemplate,
           modules: {
             // 'ember-template-imports': {
             //   export: 'hbs',
