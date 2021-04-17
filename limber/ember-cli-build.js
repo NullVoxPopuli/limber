@@ -48,9 +48,7 @@ module.exports = function (defaults) {
 
   let app = new EmberApp(defaults, config);
 
-  let additionalTrees = [
-    monacoFunnel({ isProduction }),
-  ];
+  let additionalTrees = [monacoFunnel({ isProduction })];
 
   app.import('vendor/ember/ember-template-compiler.js');
 

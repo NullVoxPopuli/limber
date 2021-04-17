@@ -11,8 +11,6 @@ const mergeTrees = require('broccoli-merge-trees');
 const nm = path.join(__dirname, '../../node_modules/');
 const cssLocation = path.join(`${nm}monaco-editor/min/vs/editor`);
 
-console.log(cssLocation);
-
 const workers = {
   base: path.join(nm, 'monaco-editor/esm/vs/editor/editor.main.js'),
   editor: path.join(nm, 'monaco-editor/esm/vs/editor/editor.worker.js'),

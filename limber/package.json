@@ -11,7 +11,8 @@
     "test": "tests"
   },
   "scripts": {
-    "get-worker": "cp ../transpilation-worker/dist/limber-worker.js public/transpilation-worker.js",
+    "build-worker": "cd ../transpilation-worker && npm run prepare",
+    "get-worker": "npm run build-worker && cp ../transpilation-worker/dist/limber-worker.js public/transpilation-worker.js",
     "build": "npm run get-worker && TAILWIND_MODE=build ember build --environment=production",
     "check:types": "tsc --build",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel 'lint:!(fix)'",
