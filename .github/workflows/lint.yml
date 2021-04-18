@@ -3,6 +3,10 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  app: limber/
+  sw: transpilation-worker/
+
 jobs:
   js:
     name: "JS/TS"
@@ -16,8 +20,13 @@ jobs:
       with:
         path: '**/node_modules'
         key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
-    - run: npm install install
-    - run: npm run lint:js
+    - run: npm install
+    - name: 'Limber App'
+      working-directory: ${{ env.app }}
+      run: npm run lint:js
+    - name: 'Worker'
+      working-directory: ${{ env.sw }}
+      run: npm run lint:js
 
   templates:
     name: "Templates"
@@ -31,8 +40,9 @@ jobs:
       with:
         path: '**/node_modules'
         key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
-    - run: npm install install
+    - run: npm install
     - run: npm run lint:hbs
+      working-directory: ${{ env.app }}
 
     # - name: "Styles"
     #   run: yarn stylelint ${{ env.app }}/**/*.css
@@ -53,6 +63,7 @@ jobs:
       with:
         path: '**/node_modules'
         key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
-    - run: npm install install
+    - run: npm install
     - run: npm run check:types
+      working-directory: ${{ env.app }}
 

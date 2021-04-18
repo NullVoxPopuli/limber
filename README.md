@@ -4,60 +4,27 @@ This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
 
 ```
-CLASSIC=true TAILWIND_MODE=watch ember s
+TAILWIND_MODE=watch ember s
 ```
-
-## Prerequisites
-
-You will need the following things properly installed on your computer.
-
-* [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/)
-* [Yarn](https://yarnpkg.com/)
-* [Ember CLI](https://ember-cli.com/)
-* [Google Chrome](https://google.com/chrome/)
-
-## Installation
-
-* `git clone <repository-url>` this repository
-* `cd limber`
-* `yarn install`
 
 ## Running / Development
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-* Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
+### Standalone
 
-### Code Generators
+This build converts ES Modules to CommonJS so that the can be eval'd
 
-Make use of the many generators for code, try `ember help generate` for more details
+1. npm run start
 
-### Running Tests
+### With experimental service worker and import maps
 
-* `ember test`
-* `ember test --server`
+In 3 separate terminals:
 
-### Linting
+1. `npm run watch-sw`
+  - will recompile the service worker as changes are detected
+2. `npm run sync`
+  - requires this [inotify watch script](https://github.com/NullVoxPopuli/dotfiles/blob/master/home/scripts/watch)
+  - copies the service-worker output file to the browser app
+3. `SERVICE_WORKER=true npm run start`
+  - starts the browser app
+4. visit [http://localhost:4200](http://localhost:4200)
 
-* `yarn lint:hbs`
-* `yarn lint:js`
-* `yarn lint:js --fix`
-
-### Building
-
-* `ember build` (development)
-* `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-* [ember.js](https://emberjs.com/)
-* [ember-cli](https://ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
-# limber
