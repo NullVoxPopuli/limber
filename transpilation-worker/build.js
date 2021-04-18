@@ -55,7 +55,6 @@ function workersFunnel({ isProduction }) {
 
   // outputs {buildDir}/highlighting.js
   buildWorkers(options);
-
 }
 
 module.exports = {

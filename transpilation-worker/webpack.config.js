@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 const webpack = require('webpack');
 
@@ -30,7 +32,9 @@ module.exports = {
     fallback: {
       fs: false,
       path: require.resolve('path-browserify'),
-      '@ember/template-compilation': require.resolve('ember-source/dist/ember-template-compiler.js'),
+      '@ember/template-compilation': require.resolve(
+        'ember-source/dist/ember-template-compiler.js'
+      ),
     },
     alias: {
       // this prevents complaining about require.extensions

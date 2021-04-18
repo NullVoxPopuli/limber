@@ -12,6 +12,8 @@ export async function getHighlighter(): Promise<HLJSApi> {
 
   setup(HIGHLIGHT);
 
+  HIGHLIGHT.registerAliases('gjs', { languageName: 'javascript' });
+
   return HIGHLIGHT;
 }
 

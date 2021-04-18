@@ -86,13 +86,6 @@ module.exports = function (defaults) {
           net: 'empty',
           v8: 'empty',
         },
-        // externals: {
-        // v8: 'v8',
-        // path: 'path',
-        // '@babel/core': '@babel/core',
-        // },
-        // babel/standalone doesn't have the traverse API that babel/core does, so
-        // we can't just alias
         resolve: {
           alias: {
             path: 'path-browserify',

@@ -1,12 +1,10 @@
-import _Component from '@glimmer/component';
 import { getTemplateLocals } from '@glimmer/syntax';
-import { tracked } from '@glimmer/tracking';
-import { compileTemplate } from '@ember/template-compilation';
+import { precompileTemplate } from '@ember/template-compilation';
 
 import * as Babel from '@babel/standalone';
-import HtmlbarsPrecompile from 'babel-plugin-htmlbars-inline-precompile';
+import HTMLBars, { preprocessEmbeddedTemplates } from 'babel-plugin-htmlbars-inline-precompile';
 
-import type Component from '@glimmer/component';
+import { evalSnippet } from './cjs-eval';
 
 interface Info {
   code: string;
@@ -27,33 +25,10 @@ export async function compile(js: Info[]) {
   return modules;
 }
 
-const modules = {
-  '@glimmer/component': _Component,
-  '@glimmer/tracking': { tracked },
-};
-
-// https://github.com/glimmerjs/glimmer-experimental/blob/master/packages/examples/playground/src/utils/eval-snippet.ts
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function require(moduleName: keyof typeof modules): unknown {
-  return modules[moduleName];
-}
-
-export function evalSnippet(
-  compiled: string
-): { default: Component; services?: { [key: string]: unknown } } {
-  const exports = {};
-
-  eval(compiled);
-
-  console.log(compiled, { exports });
-
-  return exports as { default: Component; services?: { [key: string]: unknown } };
-}
-
 async function compileGJS({ code: input, name }: Info) {
-  let preprocessed = HtmlbarsPrecompile.preprocessEmbeddedTemplates(input, {
+  let preprocessed = preprocessEmbeddedTemplates(input, {
     getTemplateLocals,
-    relativePath: 'some-name.js',
+    relativePath: `${name}.js`,
     includeSourceMaps: false,
     includeTemplateTokens: true,
     templateTag: 'template',
@@ -65,15 +40,16 @@ async function compileGJS({ code: input, name }: Info) {
     filename: `${name}.js`,
     plugins: [
       [
-        HtmlbarsPrecompile,
+        HTMLBars,
         {
-          isProduction: false,
-          precompile: compileTemplate,
+          precompile: precompileTemplate,
+          // this needs to be true until Ember 3.27+
+          ensureModuleApiPolyfill: true,
           modules: {
-            // 'ember-template-imports': {
-            //   export: 'hbs',
-            //   useTemplateLiteralProposalSemantics: 1,
-            // },
+            'ember-template-imports': {
+              export: 'hbs',
+              useTemplateLiteralProposalSemantics: 1,
+            },
 
             'TEMPLATE-TAG-MODULE': {
               export: 'GLIMMER_TEMPLATE',
@@ -85,8 +61,6 @@ async function compileGJS({ code: input, name }: Info) {
       ],
       [Babel.availablePlugins['proposal-decorators'], { legacy: true }],
       [Babel.availablePlugins['proposal-class-properties']],
-
-      // [Babel.availablePlugins['transform-modules-commonjs'], { loose: true }],
     ],
     presets: [
       [

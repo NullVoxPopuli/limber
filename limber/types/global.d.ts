@@ -16,6 +16,8 @@ declare module 'babel-plugin-htmlbars-inline-precompile';
 declare module '@babel/plugin-proposal-decorators';
 declare module '@glimmerx/babel-preset';
 declare module '@ember/template-compilation';
+declare module '@ember/template-factory';
+declare module 'ember-source/dist/ember-template-compiler';
 declare module '@glimmer/babel-preset';
 declare module 'highlightjs-glimmer';
 declare module 'highlightjs-glimmer/vendor/highlight.js';

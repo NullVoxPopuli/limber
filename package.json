@@ -9,7 +9,6 @@
   "scripts": {
     "watch-sw": "cd transpilation-worker && npm run start",
     "sync": "watch \"cp transpilation-worker/dist/limber-worker.js limber/public/transpilation-worker.js\"",
-    "alpha": "cd limber && npm run start",
     "start": "cd limber && npm run start"
   },
   "volta": {

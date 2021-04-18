@@ -6,6 +6,7 @@ const {
   baseRulesAppliedLast,
   moduleImports,
 } = require('@nullvoxpopuli/eslint-configs/configs/base');
+const { baseConfig: nodeCJS } = require('@nullvoxpopuli/eslint-configs/configs/node');
 
 let config = configs.ember();
 
@@ -13,6 +14,10 @@ module.exports = {
   ...config,
   overrides: [
     ...config.overrides,
+    {
+      files: ['build.js', '*.config.js'],
+      ...nodeCJS,
+    },
     {
       ...tsBase,
       files: ['src/**/*.ts'],

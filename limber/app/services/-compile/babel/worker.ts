@@ -54,6 +54,8 @@ async function installImportMap() {
   //   'https://raw.githubusercontent.com/ef4/mho/a4391e53891f3f6321f0a8f36de88ec23511dbee/ember-app/importmap.json'
   // );
   // let importmap = await response.text();
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   let importmap = (await import('/mho-importmap.json')).default;
 
   console.debug({ importmap });
