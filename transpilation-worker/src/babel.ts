@@ -1,6 +1,5 @@
 import { precompile } from '@glimmer/compiler';
 import { getTemplateLocals } from '@glimmer/syntax';
-import { compileTemplate } from '@ember/template-compilation';
 
 import * as Babel from '@babel/standalone';
 import HtmlbarsPrecompile from 'babel-plugin-htmlbars-inline-precompile';
@@ -29,7 +28,6 @@ export async function compileGJS({ code: input, name }: Info) {
         {
           isProduction: false,
           precompile,
-          // precompile: compileTemplate,
           modules: {
             // 'ember-template-imports': {
             //   export: 'hbs',

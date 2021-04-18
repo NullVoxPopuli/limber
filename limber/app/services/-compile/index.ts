@@ -3,6 +3,8 @@
 import { setComponentTemplate } from '@ember/component';
 import _templateOnlyComponent from '@ember/component/template-only';
 
+import { SERVICE_WORKER } from 'limber/config/environment';
+
 import { compileJS } from './babel';
 import { compileTemplate } from './ember-to-opcodes';
 import { parseMarkdown } from './markdown-to-ember';
@@ -58,20 +60,20 @@ export async function compile(glimdownInput: string, name: string): Promise<Comp
       if (js.length > 0) {
         let compiled = await compileJS(name, js);
 
-        let missing = compiled.filter(({ importPath }) => !importPath);
-
-        if (missing.length > 0) {
-          let first = missing[0];
-
-          throw new Error(`Component, ${first.name}, failed to compile`);
-        }
-
         await Promise.all(
-          compiled.map(async ({ name, importPath }) => {
-            scope.push({
-              moduleName: name,
-              component: await import(/* webpackIgnore: true */ importPath),
-            });
+          compiled.map(async (info) => {
+            let { name } = info;
+
+            if ('importPath' in info) {
+              return scope.push({
+                moduleName: name,
+                component: await import(/* webpackIgnore: true */ info.importPath),
+              });
+            }
+
+            info.default.moduleName = name;
+
+            scope.push(info.default);
           })
         );
       }
@@ -118,6 +120,8 @@ export function doesExist(owner: ApplicationInstance, id: string, existing?: str
 
 // type TemplateOnlyComponent does not have a moduleName property.. :-\
 export function register(owner: ApplicationInstance, component: any) {
+  console.log({ component });
+
   try {
     owner.register(`component:${component.moduleName}`, component);
   } catch (e) {

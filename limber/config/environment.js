@@ -1,5 +1,9 @@
 'use strict';
 
+const yn = require('yn');
+
+const SERVICE_WORKER = yn(process.env.SERVICE_WORKER);
+
 module.exports = function (environment) {
   let ENV = {
     modulePrefix: 'limber',
@@ -21,6 +25,8 @@ module.exports = function (environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
+
+    SERVICE_WORKER,
   };
 
   if (environment === 'development') {

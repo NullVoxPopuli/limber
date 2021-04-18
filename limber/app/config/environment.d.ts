@@ -11,4 +11,5 @@ declare const config: {
   locationType: string;
   rootURL: string;
   APP: Record<string, unknown>;
+  SERVICE_WORKER: boolean;
 };

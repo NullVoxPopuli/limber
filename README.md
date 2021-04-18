@@ -9,6 +9,14 @@ CLASSIC=true TAILWIND_MODE=watch ember s
 
 ## Running / Development
 
+### Standalone
+
+This build converts ES Modules to CommonJS so that the can be eval'd
+
+1. npm run start
+
+### With experimental service worker and import maps
+
 In 3 separate terminals:
 
 1. npm run watch-sw
@@ -16,7 +24,7 @@ In 3 separate terminals:
 2. npm run sync
   - requires this [inotify watch script](https://github.com/NullVoxPopuli/dotfiles/blob/master/home/scripts/watch)
   - copies the service-worker output file to the browser app
-3. npm run start
+3. npm run alpha
   - starts the browser app
 4. visit [http://localhost:4200](http://localhost:4200)
 
