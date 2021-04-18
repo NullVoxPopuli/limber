@@ -58,9 +58,6 @@ function liveCodeExtraction(_options = {}) {
         code,
       });
 
-      // TEMP -- need babel working
-      if (lang !== 'hbs' && !DEBUG) return [node];
-
       if (meta === 'live preview below') {
         return [node, invokeNode];
       }
