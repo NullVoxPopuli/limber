@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { assert } from '@ember/debug';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
@@ -15,10 +14,7 @@ export default class DemoSelect extends Component {
   isSelected = ([text]: [string]) => text === this.editor.text;
 
   @action
-  select(event: Event) {
-    assert('Event must have a target', event.target instanceof HTMLSelectElement);
-    let text = event.target.value;
-
-    this.editor.updateDemo(text);
+  select(demo: typeof ALL[0]) {
+    this.editor.updateDemo(demo.snippet);
   }
 }

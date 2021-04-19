@@ -1,5 +1,3 @@
-import { DEBUG } from '@glimmer/env';
-
 import HBS from 'remark-hbs';
 import html from 'remark-html';
 import markdown from 'remark-parse';

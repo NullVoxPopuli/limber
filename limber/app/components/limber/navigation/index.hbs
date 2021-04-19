@@ -1,17 +1,21 @@
-<nav class="flex flex-col sm:flex-row bg-ember-faint-gray gap-0.5 pt-0.5">
-  <Limber::Navigation::TabLink @href="/ember" class="relative">
-      Ember
-      <span class="z-10 absolute right-[-5px] hidden sm:inline-block">
-        <FaIcon @icon="caret-right" @transform="grow-6"/>
-      </span>
-  </Limber::Navigation::TabLink>
-  <Limber::Navigation::TabLink @href="/opcodes" class="relative">
-      Glimmer Opcodes
-      <span class="z-10 absolute right-[-5px] hidden sm:inline-block">
-        <FaIcon @icon="caret-right" @transform="grow-6"/>
-      </span>
-  </Limber::Navigation::TabLink>
-  <Limber::Navigation::TabLink @href="/" class="relative">
-      Preview
-  </Limber::Navigation::TabLink>
-</nav>
+<div class="grid grid-flow-col bg-ember-faint-gray gap-2">
+  <nav class="flex flex-col xs:flex-row gap-0.5 pt-0.5">
+    <Limber::Navigation::TabLink @href="/ember" class="relative">
+        Ember
+        <span class="z-10 absolute right-[-5px] hidden sm:inline-block">
+          <FaIcon @icon="caret-right" @transform="grow-6"/>
+        </span>
+    </Limber::Navigation::TabLink>
+    <Limber::Navigation::TabLink @href="/opcodes" class="relative">
+        <span class="hidden sm:inline-block">Glimmer</span> Opcodes
+        <span class="z-10 absolute right-[-5px] hidden sm:inline-block">
+          <FaIcon @icon="caret-right" @transform="grow-6"/>
+        </span>
+    </Limber::Navigation::TabLink>
+    <Limber::Navigation::TabLink @href="/" class="relative">
+        Preview
+    </Limber::Navigation::TabLink>
+  </nav>
+
+  <Limber::DemoSelect class="justify-self-end self-center block sm:hidden" />
+</div>
