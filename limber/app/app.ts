@@ -20,24 +20,27 @@ loadInitializers(App, config.modulePrefix);
  * a production build, we have to get a little creative with
  * how we report errors
  */
-Ember.onerror = (e) => {
-  console.error(e);
+// eslint-disable-next-line ember/no-ember-testing-in-module-scope
+if (!Ember.testing) {
+  Ember.onerror = (e) => {
+    console.error(e);
 
-  let origin = location.origin;
-  let qps = new URLSearchParams(location.search);
-  let msg = `The VM encountered an unrecoverable error
+    let origin = location.origin;
+    let qps = new URLSearchParams(location.search);
+    let msg = `The VM encountered an unrecoverable error
 
 ${e.message}
 `;
 
-  qps.set('e', msg);
+    qps.set('e', msg);
 
-  /**
-   * This URL doesn't render the markdown content
-   * as a full ember template so this is as safe page to visit
-   * but viewing `/` (the full render) will cause the VM to hault
-   */
-  let nextUrl = `${origin}/ember?${qps}`;
+    /**
+     * This URL doesn't render the markdown content
+     * as a full ember template so this is as safe page to visit
+     * but viewing `/` (the full render) will cause the VM to hault
+     */
+    let nextUrl = `${origin}/ember?${qps}`;
 
-  location.href = nextUrl;
-};
+    location.href = nextUrl;
+  };
+}
