@@ -7,6 +7,21 @@
   src: url('/SourceCodePro-Regular.ttf');
 }
 
+.glimdown-render {
+  margin-top: 0.5rem;
+}
+
+.glimdown-render button {
+  background: var(--code-bg);
+  border: 1px solid var(--horizon-border);
+  color: white;
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.5rem;
+}
+
+.glimdown-render button:hover {
+  opacity: 0.9;
+}
 
 /* Horizon Theme https://horizontheme.netlify.app/ */
 :root {

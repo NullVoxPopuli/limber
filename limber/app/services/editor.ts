@@ -15,8 +15,10 @@ import type RouterService from '@ember/routing/router-service';
 export default class EditorService extends Service {
   @service declare router: RouterService;
 
+  errorOnLoad = getQP('e');
+
   @tracked component?: string;
-  @tracked error: string | null = null;
+  @tracked error: string | null = this.errorOnLoad ?? null;
   @tracked errorLine: number | null = null;
   @tracked markdownToHbs?: string;
   @tracked template?: unknown;
@@ -36,11 +38,13 @@ export default class EditorService extends Service {
     let owner = getOwner(this);
     let id = `runtime-${guidFor(this.text)}`;
 
+    if (this.error !== this.errorOnLoad) {
+      this.error = null;
+    }
+
     if (doesExist(owner, id, this.component)) {
       return;
     }
-
-    this.error = null;
 
     let compilationResult = await compile(this.text, id);
     let { error, rootTemplate, rootTemplateFactory, rootComponent, scope } = compilationResult;
@@ -58,7 +62,6 @@ export default class EditorService extends Service {
     if (error && !rootTemplateFactory) {
       let { line } = extractPosition(error.message);
 
-      this.router.transitionTo('ember');
       this.error = error.message;
       this.errorLine = line;
 
@@ -142,12 +145,13 @@ function buildQP(rawText: string) {
   const params = new URLSearchParams(location.search);
 
   params.set('t', rawText);
+  params.delete('e');
 
   return params;
 }
 
-function getQP() {
-  let qpT = new URLSearchParams(location.search).get('t');
+function getQP(name = 't') {
+  let qpT = new URLSearchParams(location.search).get(name);
 
   return qpT;
 }

@@ -48,7 +48,10 @@ function liveCodeExtraction(_options = {}) {
       let code = value.trim();
       let name = nameForSnippet(code);
       let invocation = invocationOf(name);
-      let invokeNode = { type: 'html', value: invocation };
+      let invokeNode = {
+        type: 'html',
+        value: `<div class="glimdown-render">${invocation}</div>`,
+      };
 
       file.data.liveCode.push({
         lang,
