@@ -24,7 +24,7 @@ function buildWorkers({ isProduction }) {
   let buildDir = fs.mkdtempSync(path.join(os.tmpdir(), 'monaco--workers'));
 
   esbuild.buildSync({
-    loader: { '.ts': 'ts', '.js': 'js' },
+    loader: { '.ts': 'ts', '.js': 'js', '.ttf': 'file' },
     entryPoints: [
       workers.editor,
       workers.json,

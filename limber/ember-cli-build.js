@@ -78,6 +78,14 @@ module.exports = function (defaults) {
       webpackConfig: {
         // this option might not be working?
         devtool: SOURCEMAPS ? 'eval-source-map' : 'none',
+        module: {
+          rules: [
+            {
+              test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+              use: ['file-loader'],
+            },
+          ],
+        },
 
         node: {
           fs: 'empty',
