@@ -9,7 +9,13 @@ import { parseMarkdown } from 'limber/services/-compile/markdown-to-ember';
  *       indentation are stripped
  */
 function assertOutput(actual: string, expected: string) {
-  let _actual = actual.split('\n').filter(Boolean).join('\n').trim();
+  let _actual = actual
+    .split('\n')
+    .filter(Boolean)
+    .join('\n')
+    .trim()
+    .replace(/<div class="glimdown-render">/, '')
+    .replace(/<\/div>/, '');
   let _expected = expected.split('\n').filter(Boolean).join('\n').trim();
 
   QUnit.assert.equal(_actual, _expected);
