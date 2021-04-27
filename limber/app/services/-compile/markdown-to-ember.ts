@@ -53,7 +53,6 @@ function liveCodeExtraction(_options = {}) {
         value: `
           <div class="
             glimdown-render
-            shadow-inner
           "
           >${invocation}</div>`,
       };
