@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import Application from '@ember/application';
 
 import loadInitializers from 'ember-load-initializers';
@@ -11,3 +12,32 @@ export default class App extends Application {
 }
 
 loadInitializers(App, config.modulePrefix);
+
+/**
+ * When there is a compile error, Ember cannot render.
+ * This ensures a certain level of safety in production,
+ * but since we're creating a development environment inside
+ * a production build, we have to get a little creative with
+ * how we report errors
+ */
+Ember.onerror = (e) => {
+  console.error(e);
+
+  let origin = location.origin;
+  let qps = new URLSearchParams(location.search);
+  let msg = `The VM encountered an unrecoverable error
+
+${e.message}
+`;
+
+  qps.set('e', msg);
+
+  /**
+   * This URL doesn't render the markdown content
+   * as a full ember template so this is as safe page to visit
+   * but viewing `/` (the full render) will cause the VM to hault
+   */
+  let nextUrl = `${origin}/ember?${qps}`;
+
+  location.href = nextUrl;
+};
