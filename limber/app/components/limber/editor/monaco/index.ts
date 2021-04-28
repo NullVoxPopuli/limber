@@ -6,7 +6,7 @@ import { HorizonTheme } from './themes/horizon';
 import type * as monaco from 'monaco-editor';
 
 const CSS = '/monaco/editor.main.css';
-const OPTIONS: monaco.editor.IEditorConstructionOptions = {
+const OPTIONS: monaco.editor.IStandaloneEditorConstructionOptions = {
   language: 'markdown',
   lineNumbers: 'off',
   theme: 'vs-dark',
