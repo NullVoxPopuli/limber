@@ -1,5 +1,6 @@
 import { modifier } from 'ember-could-get-used-to-this';
 
+import { insertStyles } from '../-utils';
 // import { extendJS } from './syntax';
 import { HorizonTheme } from './themes/horizon';
 
@@ -69,7 +70,7 @@ export async function setupMonaco() {
   if (MONACO) return;
 
   configureWorkerPaths();
-  insertStyles();
+  insertStyles(CSS);
 
   [
     MONACO,
@@ -82,20 +83,6 @@ export async function setupMonaco() {
 
   MONACO.editor.defineTheme('horizon', HorizonTheme);
   // extendJS(MONACO, LANGUAGE_JS);
-}
-
-async function insertStyles() {
-  let hasStyles = document.querySelector(`link[href="${CSS}]"`);
-
-  if (hasStyles) return;
-
-  let element = document.createElement('link');
-
-  element.setAttribute('rel', 'stylesheet');
-  element.setAttribute('href', CSS);
-
-  document.body.appendChild(element);
-  await Promise.resolve();
 }
 
 function configureWorkerPaths() {

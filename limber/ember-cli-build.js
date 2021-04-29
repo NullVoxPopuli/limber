@@ -3,7 +3,9 @@
 const yn = require('yn');
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const mergeTrees = require('broccoli-merge-trees');
+
 const { monacoFunnel } = require('./lib/monaco');
+const { codeMirrorFunnel } = require('./lib/codemirror');
 
 module.exports = function (defaults) {
   let environment = EmberApp.env();
@@ -48,7 +50,12 @@ module.exports = function (defaults) {
 
   let app = new EmberApp(defaults, config);
 
-  let additionalTrees = [monacoFunnel({ isProduction })];
+  let additionalTrees = [
+    // Mobile Editor
+    // codeMirrorFunnel({ isProduction }),
+    // Desktop Editor
+    monacoFunnel({ isProduction }),
+  ];
 
   app.import('vendor/ember/ember-template-compiler.js');
 

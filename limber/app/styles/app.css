@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './codemirror-theme.css';
+
 @font-face {
   font-family: 'Source Code Pro';
   src: url('/SourceCodePro-Regular.ttf');

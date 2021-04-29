@@ -35,6 +35,7 @@ export default class EditorService extends Service {
 
   @action
   async makeComponent() {
+    deleteQP('e');
     let owner = getOwner(this);
     let id = `runtime-${guidFor(this.text)}`;
 
@@ -148,6 +149,14 @@ function buildQP(rawText: string) {
   params.delete('e');
 
   return params;
+}
+
+function deleteQP(name: string) {
+  let qps = new URLSearchParams(location.search);
+
+  qps.delete(name);
+
+  history.replaceState(null, document.title, `${location.origin}?${qps}`);
 }
 
 function getQP(name = 't') {

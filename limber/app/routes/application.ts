@@ -36,6 +36,11 @@ function setupOnError() {
 ${e.message}
 `;
 
+    // prevent infinite looping
+    if (qps.get('e')) {
+      return;
+    }
+
     qps.set('e', msg);
 
     /**
