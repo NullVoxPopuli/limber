@@ -119,12 +119,14 @@
     "@glimmer/syntax": "^0.78.0",
     "@glimmer/tracking": "^1.0.4",
     "babel-plugin-htmlbars-inline-precompile": "^5.3.0",
+    "codemirror": "^5.61.0",
     "dompurify": "^2.2.7",
     "ember-auto-import": "^1.11.2",
     "ember-could-get-used-to-this": "^1.0.1",
     "ember-focus-trap": "^0.5.0",
     "ember-headlessui": "github:GavinJoyce/ember-headlessui",
     "ember-router-helpers": "^0.4.0",
+    "ember-statechart-component": "github:NullVoxPopuli/ember-statechart-component#try-without-initializers",
     "highlight.js": "^11.0.0-alpha0",
     "highlightjs-glimmer": "^1.3.3",
     "monaco-editor": "0.23.0",
@@ -136,6 +138,7 @@
     "stringify-object": "^3.3.0",
     "unified": "^9.2.1",
     "unist-util-flatmap": "^1.0.0",
-    "webpack-bundle-analyzer": "^4.4.1"
+    "webpack-bundle-analyzer": "^4.4.1",
+    "xstate": "4.18.0"
   }
 }
