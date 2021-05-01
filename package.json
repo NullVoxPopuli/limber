@@ -3,8 +3,8 @@
   "private": true,
   "author": "NullVoxPopuli",
   "workspaces": [
-    "limber",
-    "transpilation-worker"
+    "frontend",
+    "packages/*"
   ],
   "scripts": {
     "watch-sw": "cd transpilation-worker && npm run start",

@@ -1,0 +1,22 @@
+{
+  "name": "@nullvoxpopuli/limber-consts",
+  "version": "0.0.0",
+  "description": "repo constants for helping out node scripts",
+  "main": "index.js",
+  "author": "NullVoxPopuli",
+  "type": "commonjs",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel 'lint:!(fix)'",
+    "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@nullvoxpopuli/eslint-configs": "1.2.5"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  }
+}

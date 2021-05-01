@@ -1,0 +1,39 @@
+{{!--
+TODO: switch to strict mode and import this from:
+https://github.com/GavinJoyce/ember-headlessui
+--}}
+<Menu ...attributes as |menu|>
+  <menu.Button
+    class="
+      text-black
+      relative rounded-sm border border-gray-900 bg-white px-2 py-1 -my-1 text-left
+      focus:ring-4
+      transition ease-in-out duration-150 sm:text-sm
+    "
+  >
+    Select demo
+  </menu.Button>
+
+  {{!--
+    Focus Trap cannot be used here unless we tie it in to the breakpoint,
+    otherwise focus cause trapped in the abyss when the viewport changes which
+    demo-select is shown
+  --}}
+  <menu.Items class="absolute z-10 grid mt-1 rounded-sm bg-white shadow-lg" as |items|>
+    {{#each this.demos as |demo|}}
+      <items.Item as |item|>
+        <item.Element
+          {{on 'click' (fn this.select demo)}}
+          @tagName="button"
+          class="
+            block w-full select-none relative py-2 px-4 text-left
+            text-black hover:bg-gray-100 focus:ring-4 ring-inset
+          "
+          tabindex="0"
+        >
+          {{demo.label}}
+        </item.Element>
+      </items.Item>
+    {{/each}}
+  </menu.Items>
+</Menu>

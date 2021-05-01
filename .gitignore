@@ -6,11 +6,14 @@
 
 # dependencies
 /bower_components/
-/node_modules/
+node_modules/
+# npm7 workspaces are buggy
+package-lock.json
 
 # misc
 /.env*
 /.pnp*
 /.eslintcache
 /npm-debug.log*
+yarn-error.log
 
