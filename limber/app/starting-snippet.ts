@@ -7,12 +7,6 @@ export const DEFAULT_SNIPPET = `
   Select demos from the menu in the header or write your own custom content and share it with others! ❤️
 </p>
 
-## TODOs
-
-- bundle [babel][1]
-- bundle [ember-template-imports][2]
-- add new [glimdown syntax][3] to various editors
-
 ## Template only content
 
 List of links:
