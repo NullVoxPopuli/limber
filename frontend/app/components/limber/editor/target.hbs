@@ -1,0 +1,15 @@
+{{#let (service 'editor') as |context|}}
+  <div
+    {{@editor
+      context.text
+      context.updateText
+      setValue=context.swapText
+    }}
+    class="
+      font-sm font-mono bg-gray-800 text-white
+      border border-gray-900
+    "
+    ...attributes
+  >{{context.text}}</div>
+{{/let}}
+

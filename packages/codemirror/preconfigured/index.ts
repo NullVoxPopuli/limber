@@ -1,4 +1,5 @@
 import { autocompletion, completionKeymap } from '@codemirror/autocomplete';
+import { basicSetup } from '@codemirror/basic-setup';
 import { closeBrackets, closeBracketsKeymap } from '@codemirror/closebrackets';
 import { defaultKeymap } from '@codemirror/commands';
 import { commentKeymap } from '@codemirror/comment';
@@ -12,7 +13,8 @@ import { lintKeymap } from '@codemirror/lint';
 import { bracketMatching } from '@codemirror/matchbrackets';
 import { searchKeymap } from '@codemirror/search';
 import { EditorState } from '@codemirror/state';
-import Text from '@codemirror/text';
+import { Text } from '@codemirror/text';
+import { oneDark } from '@codemirror/theme-one-dark';
 import { EditorView } from '@codemirror/view';
 import { keymap } from '@codemirror/view';
 
@@ -21,37 +23,43 @@ export default function newEditor(
   value: string,
   updateText: (text: string) => void
 ) {
-  EditorView.updateListener.of(({ state }) => {
-    updateText(Text.of(state.doc.toJSON()));
+  let updateListener = EditorView.updateListener.of(({ state, docChanged }) => {
+    if (docChanged) {
+      updateText(state.doc.toString());
+    }
   });
 
-  return new EditorView({
+  let view = new EditorView({
     state: EditorState.create({
       doc: value,
       extensions: [
+        ...basicSetup,
+        updateListener,
         foldGutter(),
         history(),
-        EditorState.allowMultipleSelections.of(true),
-        indentOnInput(),
-        defaultHighlightStyle.fallback,
+        // EditorState.allowMultipleSelections.of(true),
+        // indentOnInput(),
         bracketMatching(),
         closeBrackets(),
         autocompletion(),
-        keymap.of([
-          ...closeBracketsKeymap,
-          ...defaultKeymap,
-          ...searchKeymap,
-          ...historyKeymap,
-          ...foldKeymap,
-          ...commentKeymap,
-          ...completionKeymap,
-          ...lintKeymap,
-        ]),
-        javascript(),
+        // // keymap.of([
+        // //   ...closeBracketsKeymap,
+        // //   ...defaultKeymap,
+        // //   ...searchKeymap,
+        // //   ...historyKeymap,
+        // //   ...foldKeymap,
+        // //   ...commentKeymap,
+        // //   ...completionKeymap,
+        // //   ...lintKeymap,
+        // // ]),
+        // javascript(),
         markdown(),
-        // defaultHighlightStyle
+        // defaultHighlightStyle,
+        ...oneDark,
       ],
     }),
     parent: element,
   });
+
+  return view;
 }

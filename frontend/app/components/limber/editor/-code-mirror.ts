@@ -11,7 +11,9 @@ export default modifier(async (element: HTMLElement, [value, updateText]: Positi
 
   element.innerHTML = '';
 
-  CODEMIRROR(element, value, updateText);
+  let editor = CODEMIRROR(element, value, updateText);
+
+  console.log({ element, editor });
 });
 
 let CODEMIRROR: undefined | ((element: HTMLElement, ...args: PositionalArgs) => EditorView);
@@ -19,5 +21,5 @@ let CODEMIRROR: undefined | ((element: HTMLElement, ...args: PositionalArgs) => 
 export async function setupCodeMirror() {
   if (CODEMIRROR) return;
 
-  CODEMIRROR = (await import('./preconfigured')).default;
+  CODEMIRROR = (await import('/codemirror/preconfigured.js')).default;
 }

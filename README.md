@@ -59,3 +59,8 @@ _To build CodeMirror_
 ```bash
 cd packages/codemirror && node build.js
 ```
+
+If the app dev server is active, every time a build for either
+of these editors is executed, the app dev server will appropriately
+detect the change and reload.
+

@@ -1,6 +1,6 @@
 import { assign, createMachine } from 'xstate';
 
-import { setupCodeMirror } from './code-mirror';
+import { setupCodeMirror } from './-code-mirror';
 import { setupMonaco } from './monaco';
 
 export default createMachine({
@@ -25,8 +25,8 @@ export default createMachine({
         },
       },
       on: {
-        MOUSE: 'loadMonaco',
-        // MOUSE: 'loadCodeMirror',
+        // MOUSE: 'loadMonaco',
+        MOUSE: 'loadCodeMirror',
         KEY: 'loadMonaco',
         TOUCH: 'loadCodeMirror',
       },

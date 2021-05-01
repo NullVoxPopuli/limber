@@ -16,6 +16,9 @@
   "devDependencies": {
     "@nullvoxpopuli/eslint-configs": "1.2.5"
   },
+  "engines": {
+    "node": "14.16.0"
+  },
   "volta": {
     "extends": "../../package.json"
   }

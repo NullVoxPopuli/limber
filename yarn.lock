@@ -1206,6 +1206,15 @@
   resolved "https://registry.npmjs.org/@codemirror/text/-/text-0.18.0.tgz#a4a98862989ccef5545e730b269136d524c6a7c7"
   integrity sha512-HMzHNIAbjCiCf3tEJMRg6ul01KPuXxQGNiHlHgAnqPguq/CX+L4Nvj5JlWQAI91Pupk18zhmM1c6eaazX4YeTg==
 
+"@codemirror/theme-one-dark@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.npmjs.org/@codemirror/theme-one-dark/-/theme-one-dark-0.18.0.tgz#46fc508806deb0eb63956442c2d2c563b49b15b2"
+  integrity sha512-+CicflMb8Pydc2sXQPIQe6QwiPw8pstd7Dmb6ZjqtiOPPl8sHvf5gsTBxJfwRWZTEoJlsurCiQlG8X84IFGvcQ==
+  dependencies:
+    "@codemirror/highlight" "^0.18.0"
+    "@codemirror/state" "^0.18.0"
+    "@codemirror/view" "^0.18.0"
+
 "@codemirror/tooltip@^0.18.4":
   version "0.18.4"
   resolved "https://registry.npmjs.org/@codemirror/tooltip/-/tooltip-0.18.4.tgz#981bc0ced792c6754148edbc1f60092f3fa54207"

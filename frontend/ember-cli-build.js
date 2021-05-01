@@ -2,9 +2,6 @@
 
 const yn = require('yn');
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
-const mergeTrees = require('broccoli-merge-trees');
-
-const { codeMirrorFunnel } = require('./lib/codemirror');
 
 module.exports = function (defaults) {
   let environment = EmberApp.env();
@@ -42,26 +39,27 @@ module.exports = function (defaults) {
 
   let app = new EmberApp(defaults, config);
 
-  let additionalTrees = [
-    // Mobile Editor
-    // codeMirrorFunnel({ isProduction }),
-    // Desktop Editor
-    require('@nullvoxpopuli/limber-monaco/broccoli-funnel')(),
-  ];
-
   app.import('vendor/ember/ember-template-compiler.js');
 
   const { Webpack } = require('@embroider/webpack');
   const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
-    extraPublicTrees: additionalTrees,
+    extraPublicTrees: [
+      // Mobile Editor
+      require('@nullvoxpopuli/limber-codemirror/broccoli-funnel')(),
+      // Desktop Editor
+      require('@nullvoxpopuli/limber-monaco/broccoli-funnel')(),
+    ],
     skipBabel: [
       {
         package: 'qunit',
       },
       {
         package: 'monaco-editor',
+      },
+      {
+        package: '@babel/standalone',
       },
     ],
     ...(MAXIMUM_STATIC
