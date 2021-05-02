@@ -4,6 +4,7 @@ import { insertStyles } from '../-utils';
 // import { extendJS } from './syntax';
 import { HorizonTheme } from './themes/horizon';
 
+import type { NamedArgs, PositionalArgs } from '../-types';
 /**
  * I wish there was a way to specify types-only packages
  * while Limber uses Monaco, it's provided by the limber-monaco
@@ -32,11 +33,6 @@ const OPTIONS: monaco.editor.IStandaloneEditorConstructionOptions = {
     enabled: false,
   },
 };
-
-type PositionalArgs = [string, (text: string) => void];
-interface NamedArgs {
-  setValue: (callback: (text: string) => void) => void;
-}
 
 export default modifier(
   (element: HTMLElement, [value, updateText]: PositionalArgs, named: NamedArgs) => {

@@ -7,6 +7,7 @@ import { debounce, schedule } from '@ember/runloop';
 import Service, { inject as service } from '@ember/service';
 
 import { DEFAULT_SNIPPET } from 'limber/starting-snippet';
+import { getQP } from 'limber/utils/query-params';
 
 import { compile, doesExist, opcodesFrom, register } from './-compile';
 
@@ -157,12 +158,6 @@ function deleteQP(name: string) {
   qps.delete(name);
 
   history.replaceState(null, document.title, `${location.origin}?${qps}`);
-}
-
-function getQP(name = 't') {
-  let qpT = new URLSearchParams(location.search).get(name);
-
-  return qpT;
 }
 
 function extractPosition(message: string) {

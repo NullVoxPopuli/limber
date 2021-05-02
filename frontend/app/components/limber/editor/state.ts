@@ -1,3 +1,4 @@
+import { getQP } from 'limber/utils/query-params';
 import { assign, createMachine } from 'xstate';
 
 import { setupCodeMirror } from './-code-mirror';
@@ -25,9 +26,11 @@ export default createMachine({
         },
       },
       on: {
-        // flip the mouse comment for testing codemirror on desktop
-        MOUSE: 'loadMonaco',
-        // MOUSE: 'loadCodeMirror',
+        /*
+         * Codemirror is for mobile devices, but debugging happens
+         * on desktop -- we can toggle the behavior via Query Param
+         */
+        MOUSE: getQP('codemirror') ? 'loadCodeMirror' : 'loadMonaco',
         KEY: 'loadMonaco',
         TOUCH: 'loadCodeMirror',
       },

@@ -2,21 +2,32 @@ import { assert } from '@ember/debug';
 
 import { modifier } from 'ember-could-get-used-to-this';
 
+import type { NamedArgs, PositionalArgs } from './-types';
 import type { EditorView } from '@codemirror/view';
 
-type PositionalArgs = [string, (text: string) => void];
+export default modifier(
+  (element: HTMLElement, [value, updateText]: PositionalArgs, named: NamedArgs) => {
+    assert(`Expected CODEMIRROR to exist`, CODEMIRROR);
 
-export default modifier(async (element: HTMLElement, [value, updateText]: PositionalArgs) => {
-  assert(`Expected CODEMIRROR to exist`, CODEMIRROR);
+    element.innerHTML = '';
 
-  element.innerHTML = '';
+    let { view, setText } = CODEMIRROR(element, value, updateText);
 
-  let editor = CODEMIRROR(element, value, updateText);
+    named.setValue((text) => {
+      setText(text); // update the editor
+      updateText(text); // update the service / URL
+    });
 
-  return () => editor.destroy();
-});
+    return () => view.destroy();
+  }
+);
 
-let CODEMIRROR: undefined | ((element: HTMLElement, ...args: PositionalArgs) => EditorView);
+let CODEMIRROR:
+  | undefined
+  | ((
+      element: HTMLElement,
+      ...args: PositionalArgs
+    ) => { view: EditorView; setText: (text: string) => void });
 
 export async function setupCodeMirror() {
   if (CODEMIRROR) return;

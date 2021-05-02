@@ -24,40 +24,48 @@ export default function newEditor(
 
   // shadow.append(editorTarget);
 
+  let view = new EditorView({
+    // parent: editorTarget,
+    // root: shadow,
+    parent: element,
+    state: stateForValue(value, updateText),
+  });
+
+  let setText = (text: string) => {
+    view.setState(stateForValue(text, updateText));
+  };
+
+  return { view, setText };
+}
+
+function stateForValue(text: string, updateText: (text: string) => void) {
   let updateListener = EditorView.updateListener.of(({ state, docChanged }) => {
     if (docChanged) {
       updateText(state.doc.toString());
     }
   });
 
-  let view = new EditorView({
-    // parent: editorTarget,
-    // root: shadow,
-    parent: element,
-    state: EditorState.create({
-      doc: value,
-      extensions: [
-        updateListener,
-        foldGutter(),
-        history(),
-        bracketMatching(),
-        closeBrackets(),
-        autocompletion(),
-        rectangularSelection(),
-        keymap.of([
-          ...defaultKeymap,
-          ...historyKeymap,
-          ...foldKeymap,
-          ...closeBracketsKeymap,
-          ...completionKeymap,
-        ]),
-        HorizonTheme,
-        HorizonSyntaxTheme,
-        markdown(),
-        javascript(),
-      ],
-    }),
+  return EditorState.create({
+    doc: text,
+    extensions: [
+      updateListener,
+      foldGutter(),
+      history(),
+      bracketMatching(),
+      closeBrackets(),
+      autocompletion(),
+      rectangularSelection(),
+      keymap.of([
+        ...defaultKeymap,
+        ...historyKeymap,
+        ...foldKeymap,
+        ...closeBracketsKeymap,
+        ...completionKeymap,
+      ]),
+      HorizonTheme,
+      HorizonSyntaxTheme,
+      markdown(),
+      javascript(),
+    ],
   });
-
-  return view;
 }

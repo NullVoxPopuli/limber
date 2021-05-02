@@ -17959,38 +17959,44 @@ var HorizonTheme = EditorView.theme({
 
 // preconfigured/index.ts
 function newEditor(element, value, updateText) {
+  let view = new EditorView({
+    parent: element,
+    state: stateForValue(value, updateText)
+  });
+  let setText = (text) => {
+    view.setState(stateForValue(text, updateText));
+  };
+  return {view, setText};
+}
+function stateForValue(text, updateText) {
   let updateListener2 = EditorView.updateListener.of(({state, docChanged}) => {
     if (docChanged) {
       updateText(state.doc.toString());
     }
   });
-  let view = new EditorView({
-    parent: element,
-    state: EditorState.create({
-      doc: value,
-      extensions: [
-        updateListener2,
-        foldGutter(),
-        history(),
-        bracketMatching(),
-        closeBrackets(),
-        autocompletion(),
-        rectangularSelection(),
-        keymap.of([
-          ...defaultKeymap,
-          ...historyKeymap,
-          ...foldKeymap,
-          ...closeBracketsKeymap,
-          ...completionKeymap
-        ]),
-        HorizonTheme,
-        HorizonSyntaxTheme,
-        markdown(),
-        javascript()
-      ]
-    })
+  return EditorState.create({
+    doc: text,
+    extensions: [
+      updateListener2,
+      foldGutter(),
+      history(),
+      bracketMatching(),
+      closeBrackets(),
+      autocompletion(),
+      rectangularSelection(),
+      keymap.of([
+        ...defaultKeymap,
+        ...historyKeymap,
+        ...foldKeymap,
+        ...closeBracketsKeymap,
+        ...completionKeymap
+      ]),
+      HorizonTheme,
+      HorizonSyntaxTheme,
+      markdown(),
+      javascript()
+    ]
   });
-  return view;
 }
 export {
   newEditor as default
