@@ -2192,9 +2192,9 @@
   dependencies:
     "@types/node" "*"
 
-"@types/dompurify@^2.2.1":
+"@types/dompurify@^2.2.2":
   version "2.2.2"
-  resolved "https://registry.npmjs.org/@types/dompurify/-/dompurify-2.2.2.tgz#2c6692580eb7c653785ca3b2c1348847ea8b995d"
+  resolved "https://registry.yarnpkg.com/@types/dompurify/-/dompurify-2.2.2.tgz#2c6692580eb7c653785ca3b2c1348847ea8b995d"
   integrity sha512-8nNWfAa8/oZjH3OLY5Wsxu9ueo0NwVUotIi353g0P2+N5BuTLJyAVOnF4xBUY0NyFUGJHY05o1pO2bqLto+lmA==
   dependencies:
     "@types/trusted-types" "*"
