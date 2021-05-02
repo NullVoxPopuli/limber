@@ -21,6 +21,11 @@ const workers = {
   ts: path.join(ME, 'esm/vs/language/typescript/ts.worker.js'),
 };
 
+/**
+ * - Builds Web Workers
+ * - Builds a preconfigured bundle with monaco-editor
+ * - Copies tall relevant CSS to the same output folder
+ */
 module.exports = async function build() {
   let buildDir = await fs.mkdtemp(path.join(os.tmpdir(), 'monaco--workers-'));
 
@@ -41,6 +46,18 @@ module.exports = async function build() {
     sourcemap: false,
   });
 
+  await esbuild.build({
+    loader: { '.ts': 'ts', '.js': 'js', '.ttf': 'file' },
+    entryPoints: [path.join('preconfigured', 'index.ts')],
+    bundle: true,
+    outfile: path.join(buildDir, 'preconfigured.js'),
+    format: 'esm',
+    // something silly is going on with Monaco and esbuild
+    // TODO: report this to ESBuild's GitHub
+    minify: false,
+    sourcemap: false,
+  });
+
   await copy(`${buildDir}`, OUTPUT_DIR, {
     overwrite: true,
     filter: ['**/*', '!*.nls.*'],
@@ -50,6 +67,10 @@ module.exports = async function build() {
     overwrite: true,
     filter: ['**/*.css'],
   });
+
+  // TODO: how to change the monaco config to allow this to be in a `monaco/` folder
+  // const ICON_PATH = 'base/browser/ui/codicons/codicon/codicon.ttf';
+  // await copy(path.join(ME, 'esm/vs', ICON_PATH), ICON_PATH)
 };
 
 if (require.main === module) {

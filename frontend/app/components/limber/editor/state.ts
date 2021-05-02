@@ -2,7 +2,7 @@ import { getQP } from 'limber/utils/query-params';
 import { assign, createMachine } from 'xstate';
 
 import { setupCodeMirror } from './-code-mirror';
-import { setupMonaco } from './monaco';
+import { setupMonaco } from './-monaco';
 
 export default createMachine({
   initial: 'waiting',

@@ -16,6 +16,7 @@ module.exports = function (defaults) {
       SOURCEMAPS: ${SOURCEMAPS}
       MINIFY: ${MINIFY}
       MAXIMUM_STATIC: ${MAXIMUM_STATIC}
+      NODE_ENV: ${process.env.NODE_ENV}
 
       isProduction: ${isProduction}
   `);
