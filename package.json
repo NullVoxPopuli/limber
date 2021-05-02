@@ -8,10 +8,10 @@
   ],
   "scripts": {
     "build": "npm-run-all --aggregate-output --parallel 'build:*'",
-    "build:horizon": "cd packages/horizon && yarn build",
-    "build:monaco": "cd packages/monaco && node build.js",
-    "build:codemirror": "cd packages/codemirror && node build.js",
-    "start": "yarn build && ( cd frontend && yarn start )"
+    "build:horizon": "yarn workspace @nullvoxpopuli/horizon-theme build",
+    "build:monaco": "yarn workspace @nullvoxpopuli/limber-codemirror build",
+    "build:codemirror": "yarn workspace @nullvoxpopuli/limber-monaco build",
+    "start": "yarn workspace limber start"
   },
   "volta": {
     "node": "14.16.0",
