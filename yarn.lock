@@ -6944,9 +6944,9 @@ ember-statechart-component@2.3.1:
     tracked-built-ins "^1.1.1"
     tracked-maps-and-sets "^2.2.1"
 
-ember-template-lint@^3.2.0:
+ember-template-lint@^3.3.1:
   version "3.3.1"
-  resolved "https://registry.npmjs.org/ember-template-lint/-/ember-template-lint-3.3.1.tgz#09825ec320f1491e9f17d40ad12f10340179f844"
+  resolved "https://registry.yarnpkg.com/ember-template-lint/-/ember-template-lint-3.3.1.tgz#09825ec320f1491e9f17d40ad12f10340179f844"
   integrity sha512-YONgtnXXhaeNu2kwrHmnqWh2a6aZlVO3aRCLqjGpt0sGwtiXteeT7L7slJdJRtTTxEG/2QdNVFLr4Uef4rIUbw==
   dependencies:
     "@ember-template-lint/todo-utils" "^8.0.0"
@@ -7401,7 +7401,7 @@ eslint@7.24.0:
     text-table "^0.2.0"
     v8-compile-cache "^2.0.3"
 
-eslint@^7.24.0:
+eslint@^7.24.0, eslint@^7.25.0:
   version "7.25.0"
   resolved "https://registry.npmjs.org/eslint/-/eslint-7.25.0.tgz#1309e4404d94e676e3e831b3a3ad2b050031eb67"
   integrity sha512-TVpSovpvCNpLURIScDRB6g5CYu/ZFq9GfX2hLNIV4dSBKxIWojeDODvYl3t0k0VtMxYeR8OXPCFE5+oHMlGfhw==
