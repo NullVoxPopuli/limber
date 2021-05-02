@@ -14,8 +14,8 @@ export default modifier(
     let { view, setText } = CODEMIRROR(element, value, updateText);
 
     named.setValue((text) => {
-      setText(text); // update the editor
       updateText(text); // update the service / URL
+      setText(text); // update the editor
     });
 
     return () => view.destroy();
