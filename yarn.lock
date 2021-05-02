@@ -1223,7 +1223,18 @@
     "@codemirror/state" "^0.18.0"
     "@codemirror/view" "^0.18.0"
 
-"@codemirror/view@0.18.10", "@codemirror/view@^0.18.0":
+"@codemirror/view@0.18.11":
+  version "0.18.11"
+  resolved "https://registry.yarnpkg.com/@codemirror/view/-/view-0.18.11.tgz#3a9655758f0743cc57d718723b57ea49a72cdfa7"
+  integrity sha512-hNWTEGTpfFk1tjUnq4VjREe77rQQiS2nnhK9CDvU2M44g7wtkCFLB8ymvNp+Swo21hfUix33o2MKBeb830961g==
+  dependencies:
+    "@codemirror/rangeset" "^0.18.0"
+    "@codemirror/state" "^0.18.0"
+    "@codemirror/text" "^0.18.0"
+    style-mod "^4.0.0"
+    w3c-keyname "^2.2.4"
+
+"@codemirror/view@^0.18.0":
   version "0.18.10"
   resolved "https://registry.npmjs.org/@codemirror/view/-/view-0.18.10.tgz#2b4e59fe09ef5e62402cbe2d8f4f37448e1d4f78"
   integrity sha512-TEeR9YdEr0YwL8BTrd4ILSupv9dnU0yphf8cfG+I/EN92EwtMrJG2xaJ+b6/jS6XuPgCm7sI0ad/ml9RCmVvGQ==
