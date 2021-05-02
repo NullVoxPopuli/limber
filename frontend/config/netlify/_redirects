@@ -1,0 +1,5 @@
+https://limber.netlify.app/* https://limber.glimdown.com/:splat 301!
+
+/assets/bundle.html /assets/bundle.html 200
+
+/*    /index.html   200

@@ -1,0 +1,26 @@
+{
+  "name": "@nullvoxpopuli/horizon-theme",
+  "version": "0.0.0",
+  "description": "horizon variables for the limber editors and other JS-based theming",
+  "main": "dist/index.js",
+  "type": "module",
+  "types": "dist/types.d.ts",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "tsc --build",
+    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel 'lint:!(fix)'",
+    "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@nullvoxpopuli/eslint-configs": "1.2.5"
+  },
+  "engines": {
+    "node": "14.16.0"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  }
+}

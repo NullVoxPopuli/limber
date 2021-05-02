@@ -1,0 +1,31 @@
+{{page-title "Limber » Ember Markdown Playground"}}
+
+<main class="grid grid-flow-col h-screen max-h-screen grid grid-rows-editor">
+  <Limber::Header />
+
+  {{!-- template-lint-disable no-inline-styles --}}
+  <div class="grid overflow-hidden until-lg:grid-rows-main lg:grid-cols-main">
+    {{!--
+      the max size of an element adjascent to a resizable element within a grid
+      may not exceed the starting size (so far?)
+    --}}
+    <section class="
+      grid resize-y lg:resize-x overflow-hidden
+      min-w-full lg:min-w-[40vw]
+      min-h-[40vh] lg:min-h-full"
+    >
+      <Limber::Editor />
+    </section>
+
+    <section class="shadow-inner grid overflow-hidden" style="grid-template-rows: min-content 1fr;">
+      <Limber::Navigation />
+
+      <div class="overflow-auto relative" {{constrain-vertically}}>
+        {{outlet}}
+      </div>
+
+      <Limber::Error />
+    </section>
+  </div>
+
+</main>

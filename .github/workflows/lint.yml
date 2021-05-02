@@ -4,8 +4,13 @@ on:
     branches: [main]
 
 env:
-  app: limber/
-  sw: transpilation-worker/
+  app: frontend/
+  # packages
+  codemirror: packages/codemirror/
+  consts: packages/consts/
+  horizon: packages/horizon-theme/
+  monaco: packages/monaco
+  sw: packages/transpilation/
 
 jobs:
   js:
@@ -19,14 +24,26 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
-    - run: npm install
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+    - run: yarn install
     - name: 'Limber App'
       working-directory: ${{ env.app }}
-      run: npm run lint:js
-    - name: 'Worker'
+      run: yarn lint:js
+    - name: 'Code Mirror configuration'
+      working-directory: ${{ env.codemirror }}
+      run: yarn lint:js
+    - name: 'Monaco configuration'
+      working-directory: ${{ env.monaco }}
+      run: yarn lint:js
+    - name: 'Consts'
+      working-directory: ${{ env.consts }}
+      run: yarn lint:js
+    - name: 'Horizon Theme'
+      working-directory: ${{ env.horizon }}
+      run: yarn lint:js
+    - name: 'Transpilation'
       working-directory: ${{ env.sw }}
-      run: npm run lint:js
+      run: yarn lint:js
 
   templates:
     name: "Templates"
@@ -39,17 +56,10 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
-    - run: npm install
-    - run: npm run lint:hbs
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+    - run: yarn install
+    - run: yarn lint:hbs
       working-directory: ${{ env.app }}
-
-    # - name: "Styles"
-    #   run: yarn stylelint ${{ env.app }}/**/*.css
-
-    # - name: "Translations"
-    #   run: yarn lint:i18n
-    #   continue-on-error: true
 
   types:
     name: "Type Correctness"
@@ -62,8 +72,8 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
-    - run: npm install
-    - run: npm run check:types
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+    - run: yarn install
+    - run: yarn check:types
       working-directory: ${{ env.app }}
 

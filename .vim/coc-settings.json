@@ -1,5 +1,10 @@
 {
   "cSpell.words": [
-    "glimdown"
+    "CODEMIRROR",
+    "Consts",
+    "esbuild",
+    "glimdown",
+    "outdir",
+    "transpilation"
   ]
 }

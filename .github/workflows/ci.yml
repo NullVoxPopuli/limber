@@ -5,8 +5,8 @@ on:
     branches: [main]
 
 env:
-  app: limber/
-  sw: transpilation-worker/
+  app: frontend/
+  sw: packages/transpilation/
 
 jobs:
 
@@ -31,18 +31,19 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
     - name: Environment Info
       run: |
         firefox --version
         google-chrome --version
         echo "Node: $( node --version )"
         echo "NPM: $( npm --version )"
+        echo "Yarn: $( yarn --version )"
 
-    - run: npm install
+    - run: yarn install
 
     - name: Test
-      run: npm run test:ember
+      run: yarn test:ember
       working-directory: ${{ env.app }}
       env:
         CI_BROWSER: ${{ matrix.ci_browser }}
@@ -60,11 +61,14 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
-    - run: npm install
-    - run: npm run build
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+    - run: yarn install
+    - run: yarn build
+      name: 'Build Dependencies'
+    - run: yarn build
+      name: 'Build App'
       working-directory: ${{ env.app }}
-    - name: Copy deply host config
+    - name: Copy deploy host config
       run: cp ./config/netlify/_redirects ./dist/
       working-directory: ${{ env.app }}
 

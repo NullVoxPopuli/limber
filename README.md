@@ -28,3 +28,39 @@ In 3 separate terminals:
   - starts the browser app
 4. visit [http://localhost:4200](http://localhost:4200)
 
+
+## Contributing
+
+PRs always welcome! ❤️
+
+> This section is WIP
+
+In the terminal of your choice, set up `node` to `--trace-warnings` and
+`--unhandled-rejects=string`.
+I have this in my `~/.bash_profile`
+```
+export NODE_OPTIONS='--trace-warnings --unhandled-rejections=strict'
+```
+
+
+### Editors
+
+The editor packages only need to be rebuilt if configuration changed.
+Otherwise, they are pre-built to help speed up the boot and rebuild times of
+the main app.
+
+_To build Monaco_
+
+```bash
+cd packages/monaco && node build.js
+```
+
+_To build CodeMirror_
+```bash
+cd packages/codemirror && node build.js
+```
+
+If the app dev server is active, every time a build for either
+of these editors is executed, the app dev server will appropriately
+detect the change and reload.
+

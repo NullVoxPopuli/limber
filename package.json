@@ -3,13 +3,15 @@
   "private": true,
   "author": "NullVoxPopuli",
   "workspaces": [
-    "limber",
-    "transpilation-worker"
+    "frontend",
+    "packages/*"
   ],
   "scripts": {
-    "watch-sw": "cd transpilation-worker && npm run start",
-    "sync": "watch \"cp transpilation-worker/dist/limber-worker.js limber/public/transpilation-worker.js\"",
-    "start": "cd limber && npm run start"
+    "build": "npm-run-all --aggregate-output --parallel 'build:*'",
+    "build:horizon": "yarn workspace @nullvoxpopuli/horizon-theme build",
+    "build:monaco": "yarn workspace @nullvoxpopuli/limber-codemirror build",
+    "build:codemirror": "yarn workspace @nullvoxpopuli/limber-monaco build",
+    "start": "yarn workspace limber start"
   },
   "volta": {
     "node": "14.16.0",
