@@ -25,8 +25,9 @@ export default createMachine({
         },
       },
       on: {
-        // MOUSE: 'loadMonaco',
-        MOUSE: 'loadCodeMirror',
+        // flip the mouse comment for testing codemirror on desktop
+        MOUSE: 'loadMonaco',
+        // MOUSE: 'loadCodeMirror',
         KEY: 'loadMonaco',
         TOUCH: 'loadCodeMirror',
       },

@@ -2,7 +2,7 @@ import { assert } from '@ember/debug';
 
 import { modifier } from 'ember-could-get-used-to-this';
 
-import type { EditorView } from '@codemirror/basic-setup';
+import type { EditorView } from '@codemirror/view';
 
 type PositionalArgs = [string, (text: string) => void];
 
@@ -13,7 +13,7 @@ export default modifier(async (element: HTMLElement, [value, updateText]: Positi
 
   let editor = CODEMIRROR(element, value, updateText);
 
-  console.log({ element, editor });
+  return () => editor.destroy();
 });
 
 let CODEMIRROR: undefined | ((element: HTMLElement, ...args: PositionalArgs) => EditorView);
@@ -21,5 +21,8 @@ let CODEMIRROR: undefined | ((element: HTMLElement, ...args: PositionalArgs) => 
 export async function setupCodeMirror() {
   if (CODEMIRROR) return;
 
+  // TypeScript doesn't have a way to type files in the public folder
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   CODEMIRROR = (await import('/codemirror/preconfigured.js')).default;
 }

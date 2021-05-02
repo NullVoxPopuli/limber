@@ -7,7 +7,7 @@
 
   {{else if (state.matches 'editingWithCodeMirror')}}
 
-    <Limber::Editor::Target @editor={{this.codemirror}} />
+    <Limber::Editor::Target @editor={{this.codemirror}} class="overflow-y-auto" />
 
   {{else}}
     <div class="relative border border-gray-900 bg-gray-800" ...attributes>

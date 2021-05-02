@@ -7,9 +7,11 @@
     "packages/*"
   ],
   "scripts": {
-    "watch-sw": "cd transpilation-worker && npm run start",
-    "sync": "watch \"cp transpilation-worker/dist/limber-worker.js limber/public/transpilation-worker.js\"",
-    "start": "cd limber && npm run start"
+    "build": "npm-run-all --aggregate-output --parallel 'build:*'",
+    "build:horizon": "cd packages/horizon && yarn build",
+    "build:monaco": "cd packages/monaco && node build.js",
+    "build:codemirror": "cd packages/codemirror && node build.js",
+    "start": "yarn build && ( cd frontend && yarn start )"
   },
   "volta": {
     "node": "14.16.0",
