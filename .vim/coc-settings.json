@@ -5,6 +5,8 @@
     "esbuild",
     "glimdown",
     "outdir",
+    "outfile",
+    "preconfigured",
     "transpilation"
   ]
 }
