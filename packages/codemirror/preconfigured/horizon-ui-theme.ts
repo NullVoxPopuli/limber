@@ -1,5 +1,5 @@
 import { EditorView } from '@codemirror/view';
-import { alpha, syntax, ui } from '@nullvoxpopuli/horizon-theme';
+import { syntax, ui } from '@nullvoxpopuli/horizon-theme';
 
 export const HorizonTheme = EditorView.theme(
   {

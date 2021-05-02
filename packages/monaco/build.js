@@ -25,7 +25,7 @@ module.exports = async function build() {
   let buildDir = await fs.mkdtemp(path.join(os.tmpdir(), 'monaco--workers-'));
 
   await esbuild.build({
-    loader: {'.ts': 'ts', '.js': 'js', '.ttf': 'file'},
+    loader: { '.ts': 'ts', '.js': 'js', '.ttf': 'file' },
     entryPoints: [
       workers.editor,
       workers.json,
@@ -43,19 +43,14 @@ module.exports = async function build() {
 
   await copy(`${buildDir}`, OUTPUT_DIR, {
     overwrite: true,
-    filter: [
-      '**/*',
-      '!*.nls.*'
-    ],
+    filter: ['**/*', '!*.nls.*'],
   });
 
   await copy(`${cssLocation}`, OUTPUT_DIR, {
     overwrite: true,
-    filter: [
-      '**/*.css',
-    ],
-  })
-}
+    filter: ['**/*.css'],
+  });
+};
 
 if (require.main === module) {
   module.exports();
