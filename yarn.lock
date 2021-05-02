@@ -1113,9 +1113,9 @@
     "@codemirror/view" "^0.18.0"
     lezer-javascript "^0.13.0"
 
-"@codemirror/lang-markdown@^0.18.0":
+"@codemirror/lang-markdown@^0.18.1":
   version "0.18.1"
-  resolved "https://registry.npmjs.org/@codemirror/lang-markdown/-/lang-markdown-0.18.1.tgz#1f9ebc1310790b1634eae7a0ad376269203c2bd3"
+  resolved "https://registry.yarnpkg.com/@codemirror/lang-markdown/-/lang-markdown-0.18.1.tgz#1f9ebc1310790b1634eae7a0ad376269203c2bd3"
   integrity sha512-HthOPpA0zZivpScNno33KmFZbZ73JEwGeSNj5lKutyAyqSEpE4ALlVv0LdfI6YjzgtUH3MsctQyUhvZrJngKRQ==
   dependencies:
     "@codemirror/highlight" "^0.18.0"
