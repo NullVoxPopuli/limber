@@ -6289,7 +6289,7 @@ ember-ast-helpers@0.3.5:
     "@glimmer/compiler" "^0.27.0"
     "@glimmer/syntax" "^0.27.0"
 
-ember-auto-import@^1.10.1, ember-auto-import@^1.11.2, ember-auto-import@^1.11.3, ember-auto-import@^1.6.0:
+ember-auto-import@^1.10.1, ember-auto-import@^1.11.2, ember-auto-import@^1.11.3:
   version "1.11.3"
   resolved "https://registry.npmjs.org/ember-auto-import/-/ember-auto-import-1.11.3.tgz#6e3384a7fbb163384a34546f2e902cd297b0e683"
   integrity sha512-ekq/XCvsonESobFU30zjZ0I4XMy2E/2ZILCYWuQ1JdhcCSTYhnXDZcqRW8itUG7kbsPqAHT/XZ1LEZYm3seVwQ==
@@ -6783,15 +6783,15 @@ ember-export-application-global@^2.0.1:
   resolved "https://registry.npmjs.org/ember-export-application-global/-/ember-export-application-global-2.0.1.tgz#b120a70e322ab208defc9e2daebe8d0dfc2dcd46"
   integrity sha512-B7wiurPgsxsSGzJuPFkpBWnaeuCu2PGpG2BjyrfA1VcL7//o+5RSnZqiCEY326y7qmxb2GoCgo0ft03KBU0rRw==
 
-ember-focus-trap@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.npmjs.org/ember-focus-trap/-/ember-focus-trap-0.5.0.tgz#048160dfbf5679e89e9cfeb2d87d38b24c10520b"
-  integrity sha512-95AYHNRQ3NLYeL65NSx4JdtEOqGfimQ+lGa3SUI8NVDj0zZDn06UsjAaiImMArHcZ93hrYWiIfm6tjsCxfmelg==
+ember-focus-trap@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/ember-focus-trap/-/ember-focus-trap-0.6.0.tgz#49312309926835cec7bfc2e516dfa47f7821211d"
+  integrity sha512-LuEv0BNMLspTkW4c2KsAkWLwr3s5ZLlpGS6JN8YazFmYaILWvoyp82AFqgMKLjQJrONx9TpqpCqpW308KE7s4w==
   dependencies:
-    ember-auto-import "^1.6.0"
-    ember-cli-babel "^7.22.1"
+    ember-auto-import "^1.11.2"
+    ember-cli-babel "^7.26.3"
     ember-modifier-manager-polyfill "^1.2.0"
-    focus-trap "^6.2.0"
+    focus-trap "^6.4.0"
 
 ember-get-config@^0.3.0:
   version "0.3.0"
@@ -8061,9 +8061,9 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
-focus-trap@^6.2.0:
+focus-trap@^6.4.0:
   version "6.4.0"
-  resolved "https://registry.npmjs.org/focus-trap/-/focus-trap-6.4.0.tgz#e9951484fddf933d9b9b0e95b499f9420f6a54d6"
+  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-6.4.0.tgz#e9951484fddf933d9b9b0e95b499f9420f6a54d6"
   integrity sha512-RpH291GjfNhy1ek+Iwe00oCaqJN0sBaB+S/v7BpCIldf39IslPI7657nOZ6HwgoEHpjCmUJoAY+Mfgrm0rohvQ==
   dependencies:
     tabbable "^5.2.0"
