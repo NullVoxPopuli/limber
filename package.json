@@ -11,7 +11,10 @@
     "build:horizon": "yarn workspace @nullvoxpopuli/horizon-theme build",
     "build:monaco": "yarn workspace @nullvoxpopuli/limber-codemirror build",
     "build:codemirror": "yarn workspace @nullvoxpopuli/limber-monaco build",
-    "start": "yarn workspace limber start"
+    "start": "yarn workspace limber start",
+    "_": "_",
+    "__": "_ https://github.com/webpack/loader-utils/issues/179",
+    "postinstall": "rm -rf node_modules/@types/loader-utils"
   },
   "volta": {
     "node": "14.16.1",
