@@ -26,9 +26,9 @@
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.2.5",
-    "@embroider/compat": "^0.39.1",
-    "@embroider/core": "^0.39.1",
-    "@embroider/webpack": "^0.39.1",
+    "@embroider/compat": "^0.40.0",
+    "@embroider/core": "^0.40.0",
+    "@embroider/webpack": "^0.40.0",
     "@fortawesome/ember-fontawesome": "^0.2.3",
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
@@ -102,6 +102,7 @@
     "type-fest": "1.0.2",
     "typescript": "^4.2.4",
     "vfile": "^4.2.1",
+    "webpack": "^5.36.2",
     "yn": "^4.0.0"
   },
   "engines": {
@@ -119,9 +120,9 @@
     "@glimmer/component": "^1.0.4",
     "@glimmer/syntax": "^0.79.0",
     "@glimmer/tracking": "^1.0.4",
+    "@nullvoxpopuli/horizon-theme": "*",
     "@nullvoxpopuli/limber-codemirror": "*",
     "@nullvoxpopuli/limber-monaco": "*",
-    "@nullvoxpopuli/horizon-theme": "*",
     "@nullvoxpopuli/limber-transpilation": "*",
     "babel-plugin-htmlbars-inline-precompile": "^5.3.0",
     "dompurify": "^2.2.7",

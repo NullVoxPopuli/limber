@@ -11,3 +11,12 @@ export async function insertStyles(css: string) {
   document.body.appendChild(element);
   await Promise.resolve();
 }
+
+export async function insertStylesheet(css: string) {
+  let element = document.createElement('style');
+
+  element.innerText = css;
+
+  document.body.appendChild(element);
+  await Promise.resolve();
+}

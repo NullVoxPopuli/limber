@@ -77,28 +77,31 @@ module.exports = function (defaults) {
       : {}),
     packagerOptions: {
       webpackConfig: {
-        // this option might not be working?
-        devtool: SOURCEMAPS ? 'eval-source-map' : 'none',
         module: {
           rules: [
             {
               test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
               use: ['file-loader'],
             },
+            {
+              test: /codicon\.ttf$/,
+              use: [
+                {
+                  loader: 'ignore-loader',
+                },
+              ],
+            },
           ],
-        },
-
-        node: {
-          fs: 'empty',
-          path: 'empty',
-          // module: 'empty',
-          net: 'empty',
-          v8: 'empty',
         },
         resolve: {
           alias: {
             path: 'path-browserify',
           },
+        },
+        node: {
+          global: false,
+          __filename: true,
+          __dirname: true,
         },
         plugins: [
           new BundleAnalyzerPlugin({
