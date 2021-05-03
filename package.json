@@ -13,10 +13,6 @@
     "build:codemirror": "yarn workspace @nullvoxpopuli/limber-monaco build",
     "start": "yarn workspace limber start"
   },
-  "resolutions": {
-    "@types/webpack": "^5.28.0",
-    "webpack": "^5.36.2"
-  },
   "volta": {
     "node": "14.16.1",
     "yarn": "1.22.10",
