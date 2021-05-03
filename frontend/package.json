@@ -32,7 +32,7 @@
     "@fortawesome/ember-fontawesome": "^0.2.3",
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
-    "@glimmer/runtime": "^0.78.0",
+    "@glimmer/runtime": "^0.79.0",
     "@nullvoxpopuli/eslint-configs": "1.2.5",
     "@tailwindcss/jit": "^0.1.18",
     "@tailwindcss/typography": "^0.4.0",
