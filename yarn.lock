@@ -1822,7 +1822,7 @@
     "@glimmer/wire-format" "0.79.0"
     "@simple-dom/interface" "^1.4.0"
 
-"@glimmer/syntax@0.79.0":
+"@glimmer/syntax@0.79.0", "@glimmer/syntax@^0.79.0":
   version "0.79.0"
   resolved "https://registry.yarnpkg.com/@glimmer/syntax/-/syntax-0.79.0.tgz#56659d3d2a4435f4e18fb6cec98c25425213a883"
   integrity sha512-QHWY58iluLlkrTkMZ9iObroXHHJ9z82qFYHYkk7u4MoXNPBGM+UPPKA9mfKcYVv6wQ3go6k9g2mw0BXSYL7jqA==
@@ -1860,16 +1860,6 @@
     "@glimmer/interfaces" "0.65.2"
     "@glimmer/util" "0.65.2"
     "@handlebars/parser" "^1.1.0"
-    simple-html-tokenizer "^0.5.10"
-
-"@glimmer/syntax@^0.79.0":
-  version "0.79.0"
-  resolved "https://registry.yarnpkg.com/@glimmer/syntax/-/syntax-0.79.0.tgz#56659d3d2a4435f4e18fb6cec98c25425213a883"
-  integrity sha512-QHWY58iluLlkrTkMZ9iObroXHHJ9z82qFYHYkk7u4MoXNPBGM+UPPKA9mfKcYVv6wQ3go6k9g2mw0BXSYL7jqA==
-  dependencies:
-    "@glimmer/interfaces" "0.79.0"
-    "@glimmer/util" "0.79.0"
-    "@handlebars/parser" "~2.0.0"
     simple-html-tokenizer "^0.5.10"
 
 "@glimmer/tracking@^1.0.0", "@glimmer/tracking@^1.0.4":
@@ -8637,10 +8627,10 @@ highlight.js@^11.0.0-alpha1:
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.0.0-alpha1.tgz#675188cf42c269e039ed1d55be54f546571e1f56"
   integrity sha512-wQmLcqsHXOysXnETrFkiAjEJO+Jcy8t86/f0G8p8quszhuvrtJYa3yXtp7cWP5KCBDdsUD40/J1XHnKhM8hz5Q==
 
-highlightjs-glimmer@^1.3.3:
-  version "1.3.3"
-  resolved "https://registry.npmjs.org/highlightjs-glimmer/-/highlightjs-glimmer-1.3.3.tgz#53db440636bb8aab894033335f2ff55945182893"
-  integrity sha512-R1s6r83KUvukm4I2rtyoSUTmrzOtKoRmQbOhYvcPdVhiqICgIa5DXwNZC6+/nNOvwMMVCyq6dkRqaEIwKV1VMg==
+highlightjs-glimmer@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/highlightjs-glimmer/-/highlightjs-glimmer-1.4.0.tgz#f5cca6ee900910ecc313abc57995edc61e015fec"
+  integrity sha512-GBErggEPomt4QrNj7xgzPGy54YvhhxslqWvelg3KLDaVfCUSKmKLn62rUKGnBeOa5HrlpWwTFy+GQbMDUdoG1g==
 
 hmac-drbg@^1.0.1:
   version "1.0.1"
