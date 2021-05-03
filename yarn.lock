@@ -1862,13 +1862,13 @@
     "@handlebars/parser" "^1.1.0"
     simple-html-tokenizer "^0.5.10"
 
-"@glimmer/syntax@^0.78.0":
-  version "0.78.2"
-  resolved "https://registry.npmjs.org/@glimmer/syntax/-/syntax-0.78.2.tgz#3be25df8c7b7564d94d204ac0ab0c9717abe9043"
-  integrity sha512-B6OgBtUFo+K0sA+72sNQOs//TKJIZdAPUAIQGjZWsfGZGpzlFx3kuouKeK1DCtXxRIktqSDpmXFcPNKd1OqbOw==
+"@glimmer/syntax@^0.79.0":
+  version "0.79.0"
+  resolved "https://registry.yarnpkg.com/@glimmer/syntax/-/syntax-0.79.0.tgz#56659d3d2a4435f4e18fb6cec98c25425213a883"
+  integrity sha512-QHWY58iluLlkrTkMZ9iObroXHHJ9z82qFYHYkk7u4MoXNPBGM+UPPKA9mfKcYVv6wQ3go6k9g2mw0BXSYL7jqA==
   dependencies:
-    "@glimmer/interfaces" "0.78.2"
-    "@glimmer/util" "0.78.2"
+    "@glimmer/interfaces" "0.79.0"
+    "@glimmer/util" "0.79.0"
     "@handlebars/parser" "~2.0.0"
     simple-html-tokenizer "^0.5.10"
 
