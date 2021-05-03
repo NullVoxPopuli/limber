@@ -115,7 +115,7 @@
   },
   "dependencies": {
     "@babel/standalone": "^7.14.0",
-    "@glimmer/compiler": "0.78.0",
+    "@glimmer/compiler": "0.79.0",
     "@glimmer/component": "^1.0.4",
     "@glimmer/syntax": "^0.78.0",
     "@glimmer/tracking": "^1.0.4",
