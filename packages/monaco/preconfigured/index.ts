@@ -2,7 +2,7 @@ import * as Monaco from 'monaco-editor';
 
 // import { extendJS } from './syntax';
 import { HorizonTheme } from './horizon-theme';
-import { insertStyles } from './utils';
+import { insertStyles, insertStylesheet } from './utils';
 
 import type * as monaco from 'monaco-editor';
 
@@ -25,6 +25,13 @@ const OPTIONS: monaco.editor.IStandaloneEditorConstructionOptions = {
   },
 };
 
+const FONT = `
+@font-face {
+  font-family: 'codicon';
+  src: url('/monaco/codicon-JE4GZACF.ttf') format('truetype');
+}
+`;
+
 export default function setupEditor(
   element: HTMLElement,
   value: string,
@@ -32,6 +39,7 @@ export default function setupEditor(
 ) {
   configureWorkerPaths();
   insertStyles(CSS);
+  insertStylesheet(FONT);
 
   Monaco.editor.defineTheme('horizon', HorizonTheme);
 

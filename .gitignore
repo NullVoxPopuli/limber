@@ -11,9 +11,9 @@ node_modules/
 package-lock.json
 
 # misc
-/.env*
-/.pnp*
-/.eslintcache
-/npm-debug.log*
+.env*
+.pnp*
+.eslintcache
+npm-debug.log*
 yarn-error.log
 

@@ -19,6 +19,14 @@
       "schedule": ["after 9pm on sunday"],
     },
     {
+      "groupName": "Codemirror",
+      "packagePatterns": ["^@codemirror\/*"]
+    },
+    {
+      "groupName": "Glimmer",
+      "packagePatterns": ["^@glimmer\/*"]
+    },
+    {
       "groupName": "Lint Dependencies",
       "schedule": ["after 9pm on sunday"],
       "packageNames": [
@@ -41,8 +49,6 @@
       "groupName": "Framework Dependencies",
       "packageNames": [
         "@ember/optional-features",
-        "@glimmer/component",
-        "@glimmer/tracking",
         "ember-disable-prototype-extensions",
         "ember-export-application-global",
         "ember-load-initializers",

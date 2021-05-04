@@ -74,6 +74,16 @@ jobs:
         path: '**/node_modules'
         key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
     - run: yarn install
-    - run: yarn check:types
+    - name: "App Types"
+      run: yarn check:types
       working-directory: ${{ env.app }}
+    - name: "Monaco configuration Types"
+      run: yarn check:types
+      working-directory: ${{ env.monaco }}
+    - name: "Code Mirror configuration Types"
+      run: yarn check:types
+      working-directory: ${{ env.codemirror }}
+    - name: "Horizon Types"
+      run: yarn check:types
+      working-directory: ${{ env.horizon }}
 
