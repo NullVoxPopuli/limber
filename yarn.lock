@@ -970,7 +970,7 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@codemirror/autocomplete@^0.18.0", "@codemirror/autocomplete@^0.18.5":
+"@codemirror/autocomplete@0.18.5", "@codemirror/autocomplete@^0.18.0":
   version "0.18.5"
   resolved "https://registry.npmjs.org/@codemirror/autocomplete/-/autocomplete-0.18.5.tgz#5c25ddbef858503920fa4912b48bf78be93ee462"
   integrity sha512-Zp/HMTwvaP4B01HQx+5Ga0xBBLAwNaAlbALip355NPRBkYX9PZheX5b/F5IUAdI6kIrF2eYz1xAOChXgYg9maw==
@@ -982,7 +982,7 @@
     "@codemirror/view" "^0.18.0"
     lezer-tree "^0.13.0"
 
-"@codemirror/basic-setup@^0.18.0":
+"@codemirror/basic-setup@0.18.0":
   version "0.18.0"
   resolved "https://registry.npmjs.org/@codemirror/basic-setup/-/basic-setup-0.18.0.tgz#721c50ca06581d9c31e45e2ccea5a280b4933a35"
   integrity sha512-3IU6gBIkVVCF+ZtKqzCmYU1GLfbA12OsPYPWWq9rSzEb5G/FrWCA51ERYJpS3CzOI7TfBFjZZYc5j0OiNIF2VQ==
@@ -1003,7 +1003,7 @@
     "@codemirror/state" "^0.18.0"
     "@codemirror/view" "^0.18.0"
 
-"@codemirror/closebrackets@^0.18.0":
+"@codemirror/closebrackets@0.18.0", "@codemirror/closebrackets@^0.18.0":
   version "0.18.0"
   resolved "https://registry.npmjs.org/@codemirror/closebrackets/-/closebrackets-0.18.0.tgz#4bd7e9227ed6e90e590fa6d289d34b0c065cb8cf"
   integrity sha512-O1RAgUkzF4nq/B8IyXenZKZ1rJi2Mc7I6y4IhWhELiTnjyQy7YdAthTsJ40mNr8kZ6gRbasYe3K7TraITElZJA==
@@ -1014,7 +1014,7 @@
     "@codemirror/text" "^0.18.0"
     "@codemirror/view" "^0.18.0"
 
-"@codemirror/commands@^0.18.0", "@codemirror/commands@^0.18.1":
+"@codemirror/commands@0.18.1", "@codemirror/commands@^0.18.0":
   version "0.18.1"
   resolved "https://registry.npmjs.org/@codemirror/commands/-/commands-0.18.1.tgz#2866a15936b7ab3ff30112eb1887a0e01fef6205"
   integrity sha512-JBdGjRTCHi/eVsj5oL1S4kzhepyUVW0EnmOvwh1IYH9iN6FnRkEgaxJBryRgbos7Or8RomOKK01pprGjfqN6oA==
@@ -1026,7 +1026,7 @@
     "@codemirror/view" "^0.18.0"
     lezer-tree "^0.13.0"
 
-"@codemirror/comment@^0.18.0":
+"@codemirror/comment@0.18.0", "@codemirror/comment@^0.18.0":
   version "0.18.0"
   resolved "https://registry.npmjs.org/@codemirror/comment/-/comment-0.18.0.tgz#f42e3baaacbeb57f22f4a3eabe5738b3d2bca1f7"
   integrity sha512-yb/8dz/zIzXIa00L0Ed7/R8m2FupPZux/EMquwzbAOnTNcXeeaPVcp9kEMPf85b9D82csunXXdiOSalBVGjKWQ==
@@ -1055,7 +1055,7 @@
     "@codemirror/state" "^0.18.0"
     "@codemirror/view" "^0.18.0"
 
-"@codemirror/highlight@^0.18.0", "@codemirror/highlight@^0.18.3":
+"@codemirror/highlight@0.18.3", "@codemirror/highlight@^0.18.0":
   version "0.18.3"
   resolved "https://registry.npmjs.org/@codemirror/highlight/-/highlight-0.18.3.tgz#50e268630f113c322a2dc97c9f68d71934fffcb0"
   integrity sha512-NmRmkmWl8ht6Y6Y39ghov84AMPCqhUPIH9fmILs2NaWxZFZf4jGCTzrULnmREGsTie+26+LbKUncIU+PBu1Qng==
@@ -1067,7 +1067,7 @@
     lezer-tree "^0.13.0"
     style-mod "^4.0.0"
 
-"@codemirror/history@^0.18.0", "@codemirror/history@^0.18.1":
+"@codemirror/history@0.18.1", "@codemirror/history@^0.18.0":
   version "0.18.1"
   resolved "https://registry.npmjs.org/@codemirror/history/-/history-0.18.1.tgz#853cde4b138b172235d58f945871f0fc08b7310a"
   integrity sha512-Aad3p4zs6UYKCUMXYjh7cvPK0ajuL+rMib9yBZ61w81LLl6OkM31Xrn9J6CLJmPxCwP3OJFiqBmNSBQ05oIsTw==
@@ -1100,7 +1100,7 @@
     lezer-html "^0.13.0"
     lezer-tree "^0.13.0"
 
-"@codemirror/lang-javascript@^0.18.0":
+"@codemirror/lang-javascript@0.18.0", "@codemirror/lang-javascript@^0.18.0":
   version "0.18.0"
   resolved "https://registry.npmjs.org/@codemirror/lang-javascript/-/lang-javascript-0.18.0.tgz#e077b6601a076e1b4471c06ffc2b77dce8815c0e"
   integrity sha512-4KOkwXED9v39c17pIWoy+WKrNAYaKnAR/RRF8QZIqpuYjnMwGTe7GxMKKdq7E557fGzCVr7m34Qy7Gkhr5B41g==
@@ -1113,7 +1113,7 @@
     "@codemirror/view" "^0.18.0"
     lezer-javascript "^0.13.0"
 
-"@codemirror/lang-markdown@^0.18.0":
+"@codemirror/lang-markdown@0.18.1":
   version "0.18.1"
   resolved "https://registry.npmjs.org/@codemirror/lang-markdown/-/lang-markdown-0.18.1.tgz#1f9ebc1310790b1634eae7a0ad376269203c2bd3"
   integrity sha512-HthOPpA0zZivpScNno33KmFZbZ73JEwGeSNj5lKutyAyqSEpE4ALlVv0LdfI6YjzgtUH3MsctQyUhvZrJngKRQ==
@@ -1182,7 +1182,7 @@
     "@codemirror/text" "^0.18.0"
     "@codemirror/view" "^0.18.0"
 
-"@codemirror/search@^0.18.0", "@codemirror/search@^0.18.2":
+"@codemirror/search@0.18.2", "@codemirror/search@^0.18.0":
   version "0.18.2"
   resolved "https://registry.npmjs.org/@codemirror/search/-/search-0.18.2.tgz#7f6311ce4d5749d92aefb41b2f8628d28d90918c"
   integrity sha512-t90Ra34piJDF589hNDmuA1fVKCFDh0FTuTZTHDmmSaWS5OWq2++zAwRTQnOdQD+uGfEUwLQPiLJzu60NDhA5xw==
@@ -1194,26 +1194,17 @@
     "@codemirror/view" "^0.18.0"
     crelt "^1.0.5"
 
-"@codemirror/state@^0.18.0", "@codemirror/state@^0.18.3", "@codemirror/state@^0.18.6":
+"@codemirror/state@0.18.6", "@codemirror/state@^0.18.0", "@codemirror/state@^0.18.3":
   version "0.18.6"
   resolved "https://registry.npmjs.org/@codemirror/state/-/state-0.18.6.tgz#46f4cabd7e635dd0f229d0ff1136d79b071354f8"
   integrity sha512-jBY4KFY6RGPkuRUFXSZtgxpKebju8CJq7SkKYf+NsD8OZzDSauxPPYAL7V2z8ubvw74qLPIKIX2hERvY6WBdbg==
   dependencies:
     "@codemirror/text" "^0.18.0"
 
-"@codemirror/text@^0.18.0":
+"@codemirror/text@0.18.0", "@codemirror/text@^0.18.0":
   version "0.18.0"
   resolved "https://registry.npmjs.org/@codemirror/text/-/text-0.18.0.tgz#a4a98862989ccef5545e730b269136d524c6a7c7"
   integrity sha512-HMzHNIAbjCiCf3tEJMRg6ul01KPuXxQGNiHlHgAnqPguq/CX+L4Nvj5JlWQAI91Pupk18zhmM1c6eaazX4YeTg==
-
-"@codemirror/theme-one-dark@^0.18.0":
-  version "0.18.0"
-  resolved "https://registry.npmjs.org/@codemirror/theme-one-dark/-/theme-one-dark-0.18.0.tgz#46fc508806deb0eb63956442c2d2c563b49b15b2"
-  integrity sha512-+CicflMb8Pydc2sXQPIQe6QwiPw8pstd7Dmb6ZjqtiOPPl8sHvf5gsTBxJfwRWZTEoJlsurCiQlG8X84IFGvcQ==
-  dependencies:
-    "@codemirror/highlight" "^0.18.0"
-    "@codemirror/state" "^0.18.0"
-    "@codemirror/view" "^0.18.0"
 
 "@codemirror/tooltip@^0.18.4":
   version "0.18.4"
@@ -1223,18 +1214,7 @@
     "@codemirror/state" "^0.18.0"
     "@codemirror/view" "^0.18.0"
 
-"@codemirror/view@0.18.10":
-  version "0.18.10"
-  resolved "https://registry.npmjs.org/@codemirror/view/-/view-0.18.10.tgz#2b4e59fe09ef5e62402cbe2d8f4f37448e1d4f78"
-  integrity sha512-TEeR9YdEr0YwL8BTrd4ILSupv9dnU0yphf8cfG+I/EN92EwtMrJG2xaJ+b6/jS6XuPgCm7sI0ad/ml9RCmVvGQ==
-  dependencies:
-    "@codemirror/rangeset" "^0.18.0"
-    "@codemirror/state" "^0.18.0"
-    "@codemirror/text" "^0.18.0"
-    style-mod "^4.0.0"
-    w3c-keyname "^2.2.4"
-
-"@codemirror/view@^0.18.0":
+"@codemirror/view@0.18.11", "@codemirror/view@^0.18.0":
   version "0.18.11"
   resolved "https://registry.npmjs.org/@codemirror/view/-/view-0.18.11.tgz#3a9655758f0743cc57d718723b57ea49a72cdfa7"
   integrity sha512-hNWTEGTpfFk1tjUnq4VjREe77rQQiS2nnhK9CDvU2M44g7wtkCFLB8ymvNp+Swo21hfUix33o2MKBeb830961g==
@@ -4564,7 +4544,7 @@ broccoli-funnel@^3.0.0, broccoli-funnel@^3.0.3, broccoli-funnel@^3.0.5:
     path-posix "^1.0.0"
     walk-sync "^2.0.2"
 
-broccoli-funnel@ef4/broccoli-funnel#c70d060076e14793e8495571f304a976afc754ac:
+"broccoli-funnel@github:ef4/broccoli-funnel#c70d060076e14793e8495571f304a976afc754ac":
   version "2.0.2-ef4.0"
   resolved "https://codeload.github.com/ef4/broccoli-funnel/tar.gz/c70d060076e14793e8495571f304a976afc754ac"
   dependencies:
