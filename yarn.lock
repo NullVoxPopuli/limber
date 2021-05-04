@@ -8693,10 +8693,10 @@ heimdalljs@^0.2.0, heimdalljs@^0.2.1, heimdalljs@^0.2.3, heimdalljs@^0.2.5, heim
   dependencies:
     rsvp "~3.2.1"
 
-highlight.js@^11.0.0-alpha1:
-  version "11.0.0-alpha1"
-  resolved "https://registry.npmjs.org/highlight.js/-/highlight.js-11.0.0-alpha1.tgz#675188cf42c269e039ed1d55be54f546571e1f56"
-  integrity sha512-wQmLcqsHXOysXnETrFkiAjEJO+Jcy8t86/f0G8p8quszhuvrtJYa3yXtp7cWP5KCBDdsUD40/J1XHnKhM8hz5Q==
+highlight.js@^11.0.0-beta0:
+  version "11.0.0-beta0"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.0.0-beta0.tgz#9d81d2bcaa244fd6ea1ab4c5d99ef93e2d0186db"
+  integrity sha512-HCUbQcW6V5DX9AS910t17OjvI2fPaXpyZ90iF9ySB9rI5ZWJmd76flbhB4ORttDaf1jpg5UvSZll32MpZ/2c3w==
 
 highlightjs-glimmer@^1.4.0:
   version "1.4.0"
