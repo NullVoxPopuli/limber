@@ -52,12 +52,12 @@ the main app.
 _To build Monaco_
 
 ```bash
-cd packages/monaco && node build.js
+yarn build:monaco
 ```
 
 _To build CodeMirror_
 ```bash
-cd packages/codemirror && node build.js
+yarn build:codemirror
 ```
 
 If the app dev server is active, every time a build for either
