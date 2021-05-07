@@ -6927,13 +6927,13 @@ ember-source@^3.26.1:
     semver "^7.3.4"
     silent-error "^1.1.1"
 
-ember-statechart-component@2.3.1:
-  version "2.3.1"
-  resolved "https://registry.npmjs.org/ember-statechart-component/-/ember-statechart-component-2.3.1.tgz#442aeb8609c94641c1f528fe7dd6c55e63e2a0cc"
-  integrity sha512-EzBucN4F7TpknwevxQWihLUZgDEWwdBaUxVQqr2y52wPW6QkD1QmvFakAqHwzgVFkHePoBZnSOclIKIG5SIdlg==
+ember-statechart-component@2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/ember-statechart-component/-/ember-statechart-component-2.3.2.tgz#12845e6319b80cbd510ac852e782ced4c0d9998c"
+  integrity sha512-G3zS0HE69tXgSJbcTbLQyxi7s2C44VC3BqMJEWdxhksOFiIR5rakFXVfiAng9CUrPwK+Y3C4O4s/i71JjdQ9OA==
   dependencies:
     ember-auto-import "^1.11.3"
-    ember-cli-babel "^7.26.4"
+    ember-cli-babel "^7.26.5"
     ember-cli-htmlbars "^5.7.1"
     ember-cli-typescript "^4.1.0"
     qunit-console-grouper "^0.3.0"
