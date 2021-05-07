@@ -8,6 +8,7 @@ import _Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { setComponentTemplate } from '@ember/component';
 import _TO from '@ember/component/template-only';
+import * as _helpers from '@ember/helper';
 import { createTemplateFactory } from '@ember/template-factory';
 
 import type Component from '@glimmer/component';
@@ -22,6 +23,7 @@ const modules = {
   '@ember/component/template-only': _TO,
   '@glimmer/tracking': { tracked },
   '@ember/modifier': { on: _Ember._on },
+  '@ember/helper': _helpers,
 };
 
 // https://github.com/glimmerjs/glimmer-experimental/blob/master/packages/examples/playground/src/utils/eval-snippet.ts
