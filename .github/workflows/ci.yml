@@ -63,12 +63,10 @@ jobs:
         path: '**/node_modules'
         key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
     - run: yarn install
-    - run: yarn build
-      name: 'Build Dependencies'
-    - run: yarn build
-      name: 'Build App'
-      env:
-        SOURCEMAPS: true
+    - name: 'Build'
+      run: |
+        yarn build
+        ( cd ${{ env.app }} && yarn build )
       working-directory: ${{ env.app }}
     - name: Copy deploy host config
       run: cp ./config/netlify/_redirects ./dist/
