@@ -7,6 +7,7 @@
     "packages/*"
   ],
   "scripts": {
+    "predeploy": "yarn build && yarn workspace limber build",
     "build": "npm-run-all --aggregate-output --parallel 'build:*'",
     "build:horizon": "yarn workspace @nullvoxpopuli/horizon-theme build",
     "build:monaco": "yarn workspace @nullvoxpopuli/limber-codemirror build",

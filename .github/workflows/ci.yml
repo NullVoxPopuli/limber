@@ -64,10 +64,7 @@ jobs:
         key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
     - run: yarn install
     - name: 'Build'
-      run: |
-        yarn build
-        ( cd ${{ env.app }} && yarn build )
-      working-directory: ${{ env.app }}
+      run: yarn predeploy
     - name: Copy deploy host config
       run: cp ./config/netlify/_redirects ./dist/
       working-directory: ${{ env.app }}
