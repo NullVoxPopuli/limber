@@ -67,6 +67,8 @@ jobs:
       name: 'Build Dependencies'
     - run: yarn build
       name: 'Build App'
+      env:
+        SOURCEMAPS: true
       working-directory: ${{ env.app }}
     - name: Copy deploy host config
       run: cp ./config/netlify/_redirects ./dist/

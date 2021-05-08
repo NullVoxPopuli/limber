@@ -12,6 +12,7 @@
     "build:monaco": "yarn workspace @nullvoxpopuli/limber-codemirror build",
     "build:codemirror": "yarn workspace @nullvoxpopuli/limber-monaco build",
     "start": "yarn workspace limber start",
+    "start:prod": "MINIFY=false yarn start --environment=production",
     "_": "_",
     "__": "_ https://github.com/webpack/loader-utils/issues/179",
     "postinstall": "rm -rf node_modules/@types/loader-utils"
