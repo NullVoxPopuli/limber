@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Ember from 'ember';
 import Route from '@ember/routing/route';
+
+import ENV from 'limber/config/environment';
 
 const originalOnError = Ember.onerror;
 
@@ -26,8 +29,15 @@ function setupOnError() {
     return;
   }
 
+  (window as any).Sentry?.onLoad?.(function () {
+    (window as any).Sentry?.init({
+      environment: ENV.environment,
+    });
+  });
+
   Ember.onerror = (e) => {
     console.error(e);
+    originalOnError?.(e);
 
     let origin = location.origin;
     let qps = new URLSearchParams(location.search);
