@@ -12,6 +12,7 @@ type LazyTrackedArgs = {
   named?: Record<string, unknown>;
 }
 
+declare module '@sentry/ember';
 declare module 'babel-plugin-htmlbars-inline-precompile';
 declare module '@babel/plugin-proposal-decorators';
 declare module '@glimmerx/babel-preset';

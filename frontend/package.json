@@ -34,6 +34,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@glimmer/runtime": "^0.79.0",
     "@nullvoxpopuli/eslint-configs": "1.2.5",
+    "@sentry/ember": "^6.3.5",
     "@tailwindcss/jit": "^0.1.18",
     "@tailwindcss/typography": "^0.4.0",
     "@types/babel__core": "^7.1.14",

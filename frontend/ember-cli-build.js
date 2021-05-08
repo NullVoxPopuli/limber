@@ -77,12 +77,7 @@ module.exports = function (defaults) {
       : {}),
     packagerOptions: {
       webpackConfig: {
-        get devtool() {
-          if (!SOURCEMAPS) return 'nosources-source-map';
-          if (isProduction) return 'source-map';
-
-          return 'eval-source-map';
-        },
+        ...(isProduction ? { devtool: 'source-map' } : {}),
         module: {
           rules: [
             {
