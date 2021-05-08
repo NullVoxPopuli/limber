@@ -5,6 +5,7 @@ const os = require('os');
 const fs = require('fs').promises;
 const copy = require('recursive-copy');
 const esbuild = require('esbuild');
+const { esBuildBrowserTargets } = require('@nullvoxpopuli/limber-consts');
 
 const OUTPUT_DIR = path.join(__dirname, 'dist').toString();
 
@@ -42,6 +43,7 @@ module.exports = async function build() {
     bundle: true,
     outdir: buildDir,
     format: 'esm',
+    targets: esBuildBrowserTargets,
     minify: false,
     sourcemap: false,
   });
@@ -52,6 +54,7 @@ module.exports = async function build() {
     bundle: true,
     outfile: path.join(buildDir, 'preconfigured.js'),
     format: 'esm',
+    targets: esBuildBrowserTargets,
     // something silly is going on with Monaco and esbuild
     // TODO: report this to ESBuild's GitHub
     minify: false,
