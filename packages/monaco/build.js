@@ -42,7 +42,7 @@ module.exports = async function build() {
     bundle: true,
     outdir: buildDir,
     format: 'esm',
-    minify: true,
+    minify: false,
     sourcemap: false,
   });
 
