@@ -43,7 +43,7 @@ module.exports = async function build() {
     bundle: true,
     outdir: buildDir,
     format: 'esm',
-    targets: esBuildBrowserTargets,
+    target: esBuildBrowserTargets,
     minify: false,
     sourcemap: false,
   });
@@ -54,7 +54,7 @@ module.exports = async function build() {
     bundle: true,
     outfile: path.join(buildDir, 'preconfigured.js'),
     format: 'esm',
-    targets: esBuildBrowserTargets,
+    target: esBuildBrowserTargets,
     // something silly is going on with Monaco and esbuild
     // TODO: report this to ESBuild's GitHub
     minify: false,
