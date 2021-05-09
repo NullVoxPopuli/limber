@@ -8,7 +8,7 @@ module.exports = function (defaults) {
   let isProduction = environment === 'production';
 
   let SOURCEMAPS = yn(process.env.SOURCEMAPS) ?? false;
-  let MAXIMUM_STATIC = yn(process.env.MAXIMUM_STATIC) ?? false;
+  let MAXIMUM_STATIC = yn(process.env.MAXIMUM_STATIC) ?? true;
   let MINIFY = yn(process.env.MINIFY) ?? isProduction;
 
   console.info(`

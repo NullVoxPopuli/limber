@@ -44,7 +44,7 @@ module.exports = async function build() {
     outdir: buildDir,
     format: 'esm',
     target: esBuildBrowserTargets,
-    minify: true,
+    minify: false,
     sourcemap: true,
   });
 
