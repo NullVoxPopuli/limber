@@ -44,8 +44,8 @@ module.exports = async function build() {
     outdir: buildDir,
     format: 'esm',
     target: esBuildBrowserTargets,
-    minify: false,
-    sourcemap: false,
+    minify: true,
+    sourcemap: true,
   });
 
   await esbuild.build({
@@ -58,7 +58,7 @@ module.exports = async function build() {
     // something silly is going on with Monaco and esbuild
     // TODO: report this to ESBuild's GitHub
     minify: false,
-    sourcemap: false,
+    sourcemap: true,
   });
 
   await copy(`${buildDir}`, OUTPUT_DIR, {

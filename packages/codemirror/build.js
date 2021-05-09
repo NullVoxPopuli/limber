@@ -18,7 +18,7 @@ module.exports = async function build() {
     outfile: path.join(buildDir, 'preconfigured.js'),
     format: 'esm',
     minify: true,
-    sourcemap: false,
+    sourcemap: true,
   });
 
   await copy(`${buildDir}`, OUTPUT_DIR, {
