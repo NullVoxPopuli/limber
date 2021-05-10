@@ -82,7 +82,7 @@
         "project_name": "Limber",
         "build_name": "build-name",
         "exclude": [],
-        "parallels": "Here goes the number of parallels you want to run",
+        "parallels": "5",
         "npm_dependencies": {},
         "package_config_options": {},
         "headless": true
