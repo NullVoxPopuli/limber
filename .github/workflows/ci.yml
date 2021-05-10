@@ -79,7 +79,7 @@ jobs:
 ##############################################################
 
   cypress:
-    name: Deploy to Netlify
+    name: Cypress Tests
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
