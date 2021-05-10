@@ -64,3 +64,7 @@ If the app dev server is active, every time a build for either
 of these editors is executed, the app dev server will appropriately
 detect the change and reload.
 
+## Special Thanks
+
+Cross-Browser testing provided by <a href='http://browserstack.com' target='_blank'><img src='https://d2ogrdw2mh0rsl.cloudfront.net/production/images/static/header/header-logo.svg'></a>
+
