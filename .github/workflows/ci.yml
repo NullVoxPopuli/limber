@@ -95,6 +95,9 @@ jobs:
     - run: yarn install
     - run: yarn browserstack-cypress run --sync
       working-directory: ${{ env.tests }}
+      env:
+        BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+        BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
 
 ##############################################################
 
