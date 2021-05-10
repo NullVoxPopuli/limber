@@ -7,6 +7,7 @@ on:
 env:
   app: frontend/
   sw: packages/transpilation/
+  tests: tests/
 
 jobs:
 
@@ -74,6 +75,26 @@ jobs:
       with:
         name: built_app
         path: ${{ env.app }}/dist/
+
+##############################################################
+
+  cypress:
+    name: Cypress Tests
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [deploy]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+    - run: yarn install
+    - run: yarn browserstack-cypress run --sync
+      working-directory: ${{ env.tests }}
 
 ##############################################################
 
