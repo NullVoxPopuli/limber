@@ -82,7 +82,7 @@
         "project_name": "Limber",
         "build_name": "build-name",
         "exclude": [],
-        "parallels": "5",
+        "parallels": 5,
         "npm_dependencies": {},
         "package_config_options": {},
         "headless": true
