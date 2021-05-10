@@ -7264,10 +7264,10 @@ ember-source@^3.26.1:
     semver "^7.3.4"
     silent-error "^1.1.1"
 
-ember-statechart-component@2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/ember-statechart-component/-/ember-statechart-component-2.3.2.tgz#12845e6319b80cbd510ac852e782ced4c0d9998c"
-  integrity sha512-G3zS0HE69tXgSJbcTbLQyxi7s2C44VC3BqMJEWdxhksOFiIR5rakFXVfiAng9CUrPwK+Y3C4O4s/i71JjdQ9OA==
+ember-statechart-component@2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/ember-statechart-component/-/ember-statechart-component-2.3.3.tgz#a32061c481ef20e0ddeefd108a2bb4139fecdd41"
+  integrity sha512-TsCSH3nLSC1iXrZ6Xjrh94I3FtPRsKyYoLGcSAQKn899chJAxTbDlrFZSX2mGjzLyys7ktT4U/5zUUNEmRKiog==
   dependencies:
     ember-auto-import "^1.11.3"
     ember-cli-babel "^7.26.5"
