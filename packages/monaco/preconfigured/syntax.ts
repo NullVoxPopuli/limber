@@ -1,14 +1,42 @@
+import * as js from 'monaco-languages/release/esm/javascript/javascript';
+
+// import * as md from 'monaco-languages/release/esm/markdown/markdown';
 import type * as monaco from 'monaco-editor';
 
 type Monaco = typeof monaco;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function extendJS(monaco: Monaco, { conf, language }: any) {
+export function extendLanguages(monaco: Monaco) {
   monaco.languages.register({ id: 'glimmer' });
 
-  ///////////
+  extendJS(monaco);
+  extendHBS(monaco);
+  // extendMarkdown(monaco);
+}
 
-  // JavaScript Highlighting
+// TODO: PR this
+function extendHBS(monaco: Monaco) {
+  registerAlias(monaco, 'handlebars', 'hbs');
+}
+
+function registerAlias(monaco: Monaco, source: string, ...aliases: string[]) {
+  let languages = monaco.languages.getLanguages();
+  let registration = languages.find((language) => language.id === source);
+
+  if (!registration) {
+    throw new Error(`${source} not found`);
+  }
+
+  for (let alias of aliases) {
+    registration.aliases?.push(alias);
+    registration.extensions?.push(`.${alias}`);
+  }
+
+  monaco.languages.register(registration);
+}
+
+function extendJS(monaco: Monaco) {
+  const { conf, language } = js;
 
   // fix decorator highlighting
   language.symbols = /[=><!~?:&|+\-*/^%@]+/;
@@ -53,4 +81,9 @@ export function extendJS(monaco: Monaco, { conf, language }: any) {
 
   monaco.languages.setLanguageConfiguration('glimmer', conf);
   monaco.languages.setMonarchTokensProvider('glimmer', language);
+  registerAlias(monaco, 'javascript', 'gjs');
 }
+
+// export function extendMarkdown(/* monaco: Monaco */) {
+//   // const { conf, language } = md;
+// }
