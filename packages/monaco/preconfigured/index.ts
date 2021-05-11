@@ -1,7 +1,7 @@
 import * as Monaco from 'monaco-editor';
 
-// import { extendJS } from './syntax';
 import { HorizonTheme } from './horizon-theme';
+import { extendLanguages } from './syntax';
 import { insertStyles, insertStylesheet } from './utils';
 
 import type * as monaco from 'monaco-editor';
@@ -42,6 +42,8 @@ export default function setupEditor(
   insertStylesheet(FONT);
 
   Monaco.editor.defineTheme('horizon', HorizonTheme);
+
+  extendLanguages(Monaco);
 
   let editor = Monaco.editor.create(element, {
     ...OPTIONS,
