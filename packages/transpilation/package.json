@@ -47,7 +47,7 @@
     "webpack-node-externals": "^3.0.0"
   },
   "engines": {
-    "node": "14.16.1"
+    "node": "14.17.0"
   },
   "volta": {
     "extends": "../../package.json"
