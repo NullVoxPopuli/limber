@@ -11267,10 +11267,10 @@ modern-normalize@^1.0.0:
   resolved "https://registry.npmjs.org/modern-normalize/-/modern-normalize-1.1.0.tgz#da8e80140d9221426bd4f725c6e11283d34f90b7"
   integrity sha512-2lMlY1Yc1+CUy0gw4H95uNN7vjbpoED7NNRSBHE25nWfLBdmMzFCsPshlzbxHz+gYMcBEUN8V4pU16prcdPSgA==
 
-monaco-editor-core@^0.23.0:
-  version "0.23.0"
-  resolved "https://registry.npmjs.org/monaco-editor-core/-/monaco-editor-core-0.23.0.tgz#239a2a942de0bf049e3334e6dc561db85d5534dd"
-  integrity sha512-1LHVpCHp+FErFdUjwzal1muTe+hUkR5CfXAxzua//eHB31bHdWVe15OJPEPS3/rxmfQtl9wZqJdHi4FcGz2zog==
+monaco-editor-core@^0.24.0:
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/monaco-editor-core/-/monaco-editor-core-0.24.0.tgz#c3607a928d7ba70d91807b8f6d8364d98e42e508"
+  integrity sha512-WJAzpNYEaJp8Z7crIAiLCVln1zZdo4cFXCRuhTDN4A3tz6IK2NOXAtTOZ9iLKBTtd6eitZJ2Q1Fx8JN8rN3fWw==
 
 monaco-editor@^0.24.0:
   version "0.24.0"
