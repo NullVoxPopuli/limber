@@ -10,6 +10,7 @@ env:
   consts: packages/consts/
   horizon: packages/horizon-theme/
   monaco: packages/monaco
+  tests: tests/
   sw: packages/transpilation/
 
 jobs:
@@ -44,6 +45,9 @@ jobs:
     - name: 'Transpilation'
       working-directory: ${{ env.sw }}
       run: yarn lint:js
+    # - name: 'Cypress'
+    #   working-directory: ${{ env.tests }}
+    #   run: yarn lint:js
 
   templates:
     name: "Templates"
