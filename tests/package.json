@@ -10,7 +10,7 @@
     "start": "cypress open"
   },
   "engines": {
-    "node": "14.16.1"
+    "node": "14.17.0"
   },
   "volta": {
     "extends": "../package.json"
