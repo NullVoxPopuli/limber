@@ -126,7 +126,7 @@
     "@nullvoxpopuli/limber-transpilation": "*",
     "babel-plugin-htmlbars-inline-precompile": "^5.3.0",
     "dompurify": "^2.2.8",
-    "ember-auto-import": "^1.11.3",
+    "ember-auto-import": "^2.0.0",
     "ember-could-get-used-to-this": "^1.0.1",
     "ember-focus-trap": "^0.6.0",
     "ember-headlessui": "github:GavinJoyce/ember-headlessui",
