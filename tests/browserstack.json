@@ -22,6 +22,7 @@
             "browser": "edge",
             "os": "Windows 10",
             "versions": [
+                "88",
                 "latest"
             ]
         },
@@ -42,6 +43,7 @@
     ],
     "run_settings": {
         "cypress_config_file": "./cypress.json",
+        "cypress_version": 6,
         "project_name": "Limber",
         "build_name": "build-name",
         "exclude": [],
