@@ -26,7 +26,7 @@ describe('Loads Monaco', () => {
     cy.visit(`${ORIGIN}${MONACO_PATH}`);
 
     cy.get('body').trigger('mousemove');
-    cy.get('.monaco-editor', { timeout: 10000 }).should('be.visible');
+    cy.get('.monaco-editor', { timeout: 20000 }).should('be.visible');
     cy.get('.cm-editor').should('not.exist');
     cy.get('[data-test-loading-error]').should('not.exist');
   });
@@ -37,7 +37,7 @@ describe('Loads CodeMirror', () => {
     cy.visit(`${ORIGIN}${CODEMIRROR_PATH}`);
 
     cy.get('body').trigger('mousemove');
-    cy.get('.cm-editor', { timeout: 10000 }).should('be.visible');
+    cy.get('.cm-editor', { timeout: 20000 }).should('be.visible');
     cy.get('.monaco-editor').should('not.exist');
     cy.get('[data-test-loading-error]').should('not.exist');
   });
