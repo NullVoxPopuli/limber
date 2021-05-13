@@ -49,10 +49,7 @@ jobs:
     - run: yarn build
     - uses: actions/cache@v2
       with:
-        path: |
-          ${{ env.monaco }}/dist
-          ${{ env.codemirror }}/dist
-          ${{ env.horizon }}/dist
+        path: '**/dist'
         key: ${{ runner.os }}-modules-${{ hashFiles('packages/**') }}
 
 ##############################################################
@@ -80,10 +77,7 @@ jobs:
         key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
     - uses: actions/cache@v2
       with:
-        path: |
-          ${{ env.monaco }}/dist
-          ${{ env.codemirror }}/dist
-          ${{ env.horizon }}/dist
+        path: '**/dist'
         key: ${{ runner.os }}-modules-${{ hashFiles('packages/**') }}
     - name: Environment Info
       run: |
@@ -116,10 +110,7 @@ jobs:
         key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
     - uses: actions/cache@v2
       with:
-        path: |
-          ${{ env.monaco }}/dist
-          ${{ env.codemirror }}/dist
-          ${{ env.horizon }}/dist
+        path: '**/dist'
         key: ${{ runner.os }}-modules-${{ hashFiles('packages/**') }}
     - name: 'Build'
       run: yarn workspace limber build
