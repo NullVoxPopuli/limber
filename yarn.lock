@@ -11277,10 +11277,10 @@ monaco-editor@^0.24.0:
   resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.24.0.tgz#990b55096bcc95d08d8d28e55264c6eb17707269"
   integrity sha512-o1f0Lz6ABFNTtnEqqqvlY9qzNx24rQZx1RgYNQ8SkWkE+Ka63keHH/RqxQ4QhN4fs/UYOnvAtEUZsPrzccH++A==
 
-monaco-languages@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.npmjs.org/monaco-languages/-/monaco-languages-2.3.0.tgz#14351a4be9c9299c0fa117193c377455d3630b5a"
-  integrity sha512-gER/vKpIUH2kKhWEWRDojMuI6cm4S7Dl9jSYNFUfToOB8uIxoWSZUJCm2FH+ECnUZmnLs6O2fNONKQQ6JCoa/g==
+monaco-languages@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/monaco-languages/-/monaco-languages-2.4.0.tgz#30979254570fc21a50320ad0c0d3c5444fc2a354"
+  integrity sha512-63ZMAPgqBylS0kyC22QSKJWJmCRcwM7dWql1xtt9R7mCfzszfIIViSTiJ5vDSnzj0lH0aZh8OJggh/uZY6Vgnw==
 
 morgan@^1.10.0:
   version "1.10.0"
