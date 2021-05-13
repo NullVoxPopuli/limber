@@ -18,15 +18,7 @@ export default function newEditor(
   value: string,
   updateText: (text: string) => void
 ) {
-  // let shadow = element.attachShadow({ mode: 'open' });
-  // let editorTarget = document.createElement('div');
-  // editorTarget.classList.add('overflow-y-auto');
-
-  // shadow.append(editorTarget);
-
   let view = new EditorView({
-    // parent: editorTarget,
-    // root: shadow,
     parent: element,
     state: stateForValue(value, updateText),
   });

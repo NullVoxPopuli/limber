@@ -17,7 +17,8 @@ module.exports = async function build() {
     bundle: true,
     outfile: path.join(buildDir, 'preconfigured.js'),
     format: 'esm',
-    minify: true,
+    // minification breaks codemirror somehow
+    minify: false,
     sourcemap: true,
   });
 
