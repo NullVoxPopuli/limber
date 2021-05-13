@@ -46,11 +46,11 @@ jobs:
       with:
         path: '**/node_modules'
         key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-    - run: yarn build
     - uses: actions/cache@v2
       with:
         path: '**/dist'
         key: ${{ runner.os }}-modules-${{ hashFiles('packages/**') }}
+    - run: yarn build
 
 ##############################################################
 
