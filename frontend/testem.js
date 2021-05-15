@@ -12,7 +12,8 @@ module.exports = {
   browser_args: {
     Firefox: {
       mode: 'ci',
-      args: ['-headless'],
+      // https://github.com/SeleniumHQ/selenium/pull/6075
+      args: ['-headless', '--width=1440', '--height=900'],
     },
     Chrome: {
       ci: [
