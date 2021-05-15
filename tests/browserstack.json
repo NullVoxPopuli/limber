@@ -8,40 +8,46 @@
             "browser": "chrome",
             "os": "Windows 10",
             "versions": [
-                "latest"
+                "latest",
+                "latest-1"
             ]
         },
         {
             "browser": "firefox",
             "os": "Windows 10",
             "versions": [
-                "latest"
+                "latest",
+                "latest-1"
             ]
         },
         {
             "browser": "edge",
             "os": "Windows 10",
             "versions": [
-                "latest"
+                "latest",
+                "latest-1"
             ]
         },
         {
             "browser": "chrome",
             "os": "OS X Catalina",
             "versions": [
-                "latest"
+                "latest",
+                "latest-1"
             ]
         },
         {
             "browser": "firefox",
             "os": "OS X Catalina",
             "versions": [
-                "latest"
+                "latest",
+                "latest-1"
             ]
         }
     ],
     "run_settings": {
         "cypress_config_file": "./cypress.json",
+        "cypress_version": 6,
         "project_name": "Limber",
         "build_name": "build-name",
         "exclude": [],
