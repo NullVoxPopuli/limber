@@ -2,6 +2,9 @@ import { assert } from '@ember/debug';
 import { triggerEvent } from '@ember/test-helpers';
 
 import { PageObject, selector } from 'fractal-page-object';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { diffText } from 'onp/dist';
 
 import { s } from './-helpers';
 
@@ -33,7 +36,10 @@ export class Editor extends PageObject {
     let _editor = removeInvisibleCharacters(editorText);
     let _text = removeInvisibleCharacters(text);
 
-    return _editor === _text;
+    let diff = diffText(_editor, _text);
+    let similarity = 1 - diff.distance / _text.length;
+
+    return similarity > 0.75;
   }
 
   _placeholder = s(
@@ -47,7 +53,7 @@ export class Editor extends PageObject {
     }
   );
   _monaco = selector(
-    '.monaco-scrollable-element',
+    '.monaco-scrollable-element.editor-scrollable',
     class extends PageObject {
       get _text() {
         assert('Monaco editor not loaded', this.element);

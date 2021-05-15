@@ -11733,6 +11733,11 @@ onetime@^5.1.0, onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
+onp@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/onp/-/onp-1.0.3.tgz#7ad4fcfed22da1493ab404ddc9ce0d2e28076c6c"
+  integrity sha512-VVbZbLUGntsZpwUekbYuUXhLg+B7hVCS+kR3OoHdvb/l4HuxYO2iMUljRt3kVKeilC2T6jgReNxk99m0y3P80w==
+
 opener@^1.5.2:
   version "1.5.2"
   resolved "https://registry.npmjs.org/opener/-/opener-1.5.2.tgz#5d37e1f35077b9dcac4301372271afdeb2a13598"
