@@ -14,10 +14,10 @@ env:
   sw: packages/transpilation/
 
 jobs:
-  js:
-    name: "JS/TS"
+  install_dependencies:
+    name: Install Dependencies
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
 
     steps:
     - uses: actions/checkout@v2
@@ -27,32 +27,132 @@ jobs:
         path: '**/node_modules'
         key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
     - run: yarn install
+
+  js_app:
+    name: "ESLint: JS/TS >> Limber App"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [install_dependencies]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
     - name: 'Limber App'
       working-directory: ${{ env.app }}
       run: yarn lint:js
+
+  js_cm:
+    name: "ESLint: JS/TS >> CodeMirror"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [install_dependencies]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
     - name: 'Code Mirror configuration'
       working-directory: ${{ env.codemirror }}
       run: yarn lint:js
+
+  js_monaco:
+    name: "ESLint: JS/TS >> Monaco"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [install_dependencies]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
     - name: 'Monaco configuration'
       working-directory: ${{ env.monaco }}
       run: yarn lint:js
+
+  js_consts:
+    name: "ESLint: JS/TS >> Consts"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [install_dependencies]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
     - name: 'Consts'
       working-directory: ${{ env.consts }}
       run: yarn lint:js
+
+  js_horizon:
+    name: "ESLint: JS/TS >> Horizon Theme"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [install_dependencies]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
     - name: 'Horizon Theme'
       working-directory: ${{ env.horizon }}
       run: yarn lint:js
+
+  js_worker:
+    name: "ESLint: JS/TS >> Transpilation Worker"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [install_dependencies]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
     - name: 'Transpilation'
       working-directory: ${{ env.sw }}
       run: yarn lint:js
-    # - name: 'Cypress'
-    #   working-directory: ${{ env.tests }}
-    #   run: yarn lint:js
+
+  js_tests:
+    name: "ESLint: JS/TS >> e2e tests"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [install_dependencies]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+    - name: 'Cypress'
+      working-directory: ${{ env.tests }}
+      run: yarn lint:js
 
   templates:
     name: "Templates"
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    needs: [install_dependencies]
 
     steps:
     - uses: actions/checkout@v2
@@ -61,7 +161,6 @@ jobs:
       with:
         path: '**/node_modules'
         key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-    - run: yarn install
     - run: yarn lint:hbs
       working-directory: ${{ env.app }}
 
@@ -69,6 +168,7 @@ jobs:
     name: "Type Correctness"
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    needs: [install_dependencies]
 
     steps:
     - uses: actions/checkout@v2
@@ -77,7 +177,6 @@ jobs:
       with:
         path: '**/node_modules'
         key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-    - run: yarn install
     - name: "App Types"
       run: yarn check:types
       working-directory: ${{ env.app }}

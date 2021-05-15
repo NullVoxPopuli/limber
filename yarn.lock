@@ -8676,6 +8676,11 @@ forwarded@~0.1.2:
   resolved "https://registry.npmjs.org/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
+fractal-page-object@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/fractal-page-object/-/fractal-page-object-0.2.0.tgz#31c64b1ae54211f72068e45f48e9fa6b27024ecd"
+  integrity sha512-60WNDCdv6syGGhzJXhPo2E0D0MD2OntEVwUwB22egg5agzcZOB11Co/WSJmOC+0mvJ+K3bVlglWg+ZCf8eBaEA==
+
 fraction.js@^4.0.13:
   version "4.0.13"
   resolved "https://registry.npmjs.org/fraction.js/-/fraction.js-4.0.13.tgz#3c1c315fa16b35c85fffa95725a36fa729c69dfe"
@@ -11727,6 +11732,11 @@ onetime@^5.1.0, onetime@^5.1.2:
   integrity sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==
   dependencies:
     mimic-fn "^2.1.0"
+
+onp@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/onp/-/onp-1.0.3.tgz#7ad4fcfed22da1493ab404ddc9ce0d2e28076c6c"
+  integrity sha512-VVbZbLUGntsZpwUekbYuUXhLg+B7hVCS+kR3OoHdvb/l4HuxYO2iMUljRt3kVKeilC2T6jgReNxk99m0y3P80w==
 
 opener@^1.5.2:
   version "1.5.2"
