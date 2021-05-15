@@ -1,3 +1,5 @@
+import { waitForPromise } from '@ember/test-waiters';
+
 import { getQP } from 'limber/utils/query-params';
 import { assign, createMachine } from 'xstate';
 
@@ -37,14 +39,14 @@ export default createMachine({
     },
     loadMonaco: {
       invoke: {
-        src: () => setupMonaco(),
+        src: () => waitForPromise(setupMonaco()),
         onDone: 'editingWithMonaco',
         onError: { target: 'error', actions: assign({ error: (_, event) => event.data }) },
       },
     },
     loadCodeMirror: {
       invoke: {
-        src: () => setupCodeMirror(),
+        src: () => waitForPromise(setupCodeMirror()),
         onDone: 'editingWithCodeMirror',
         onError: { target: 'error', actions: assign({ error: (_, event) => event.data }) },
       },

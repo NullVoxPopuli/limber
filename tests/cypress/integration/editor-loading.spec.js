@@ -16,7 +16,11 @@ describe('Editor Loading', () => {
     cy.on('uncaught:exception', (err, runnable) => {
       // Monaco is throwing an error about top level export
       // for some reason
-      if (err.message.includes('export')) {
+      // Sometimes we get chunk load errors if we refresh the page before all the assets have finished
+      // loading
+      // Pending
+      // https://github.com/microsoft/vscode/pull/123739
+      if (err.message.includes('export') || err.message.includes('Chunk')) {
         // returning false here prevents Cypress from
         // failing the test
         return false;

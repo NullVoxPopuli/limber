@@ -2,7 +2,7 @@
 TODO: switch to strict mode and import this from:
 https://github.com/GavinJoyce/ember-headlessui
 --}}
-<Menu ...attributes as |menu|>
+<Menu ...attributes data-test-demo-select as |menu|>
   <menu.Button
     class="
       text-black
@@ -10,6 +10,7 @@ https://github.com/GavinJoyce/ember-headlessui
       focus:ring-4
       transition ease-in-out duration-150 sm:text-sm
     "
+    data-test-toggle
   >
     Select demo
   </menu.Button>
@@ -30,6 +31,7 @@ https://github.com/GavinJoyce/ember-headlessui
             text-black hover:bg-gray-100 focus:ring-4 ring-inset
           "
           tabindex="0"
+          data-test-demo
         >
           {{demo.label}}
         </item.Element>

@@ -157,7 +157,7 @@ function deleteQP(name: string) {
 
   qps.delete(name);
 
-  history.replaceState(null, document.title, `${location.origin}?${qps}`);
+  history.replaceState(null, document.title, `${location.origin}${location.pathname}?${qps}`);
 }
 
 function extractPosition(message: string) {

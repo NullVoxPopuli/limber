@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Ember from 'ember';
+import { DEBUG } from '@glimmer/env';
 import Route from '@ember/routing/route';
 
 import ENV from 'limber/config/environment';
@@ -29,15 +30,16 @@ function setupOnError() {
     return;
   }
 
-  (window as any).Sentry?.onLoad?.(function () {
-    (window as any).Sentry?.init({
-      environment: ENV.environment,
+  if (!DEBUG) {
+    (window as any).Sentry?.onLoad?.(function () {
+      (window as any).Sentry?.init({
+        environment: ENV.environment,
+      });
     });
-  });
+  }
 
   Ember.onerror = (e) => {
     console.error(e);
-    originalOnError?.(e);
 
     let origin = location.origin;
     let qps = new URLSearchParams(location.search);
@@ -59,6 +61,12 @@ ${e.message}
      * but viewing `/` (the full render) will cause the VM to hault
      */
     let nextUrl = `${origin}/ember?${qps}`;
+
+    (originalOnError as any)?.(e, nextUrl);
+
+    if (Ember.testing) {
+      return;
+    }
 
     location.href = nextUrl;
   };

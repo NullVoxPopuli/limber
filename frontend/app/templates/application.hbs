@@ -9,10 +9,12 @@
       the max size of an element adjascent to a resizable element within a grid
       may not exceed the starting size (so far?)
     --}}
-    <section class="
-      grid resize-y lg:resize-x overflow-hidden
-      min-w-full lg:min-w-[40vw]
-      min-h-[40vh] lg:min-h-full"
+    <section
+      data-test-editor-panel
+      class="
+        grid resize-y lg:resize-x overflow-hidden
+        min-w-full lg:min-w-[40vw]
+        min-h-[40vh] lg:min-h-full"
     >
       <Limber::Editor />
     </section>
@@ -20,7 +22,7 @@
     <section class="shadow-inner grid overflow-hidden" style="grid-template-rows: min-content 1fr;">
       <Limber::Navigation />
 
-      <div class="overflow-auto relative" {{constrain-vertically}}>
+      <div class="overflow-auto relative" {{constrain-vertically}} data-test-output>
         {{outlet}}
       </div>
 
