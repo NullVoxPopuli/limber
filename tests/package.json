@@ -7,7 +7,11 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "cypress open"
+    "start": "cypress open",
+    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel 'lint:!(fix)'",
+    "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix"
   },
   "engines": {
     "node": "14.17.0"
