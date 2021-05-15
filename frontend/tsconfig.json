@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2020",
-    "lib": ["ESNext.String", "ESNext", "DOM"],
+    "target": "ESNext",
     "allowJs": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,

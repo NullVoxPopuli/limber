@@ -11,7 +11,7 @@ import { hideUpstreamErrors } from './-utils';
 setApplication(Application.create(config.APP));
 
 setup(QUnit.assert);
-hideUpstreamErrors(QUnit);
+hideUpstreamErrors();
 QUnit.testDone(resetOnerror);
 
 start();
