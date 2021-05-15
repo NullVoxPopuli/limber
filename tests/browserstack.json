@@ -8,36 +8,40 @@
             "browser": "chrome",
             "os": "Windows 10",
             "versions": [
-                "latest"
+                "latest",
+                "latest-1"
             ]
         },
         {
             "browser": "firefox",
             "os": "Windows 10",
             "versions": [
-                "latest"
+                "latest",
+                "latest-1"
             ]
         },
         {
             "browser": "edge",
             "os": "Windows 10",
             "versions": [
-                "88",
-                "latest"
+                "latest",
+                "latest-1"
             ]
         },
         {
             "browser": "chrome",
             "os": "OS X Catalina",
             "versions": [
-                "latest"
+                "latest",
+                "latest-1"
             ]
         },
         {
             "browser": "firefox",
             "os": "OS X Catalina",
             "versions": [
-                "latest"
+                "latest",
+                "latest-1"
             ]
         }
     ],
