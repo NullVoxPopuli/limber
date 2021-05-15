@@ -4,21 +4,10 @@ import { setupApplicationTest } from 'ember-qunit';
 
 import { DEFAULT_SNIPPET, WITH_LIVE_HBS, WITH_LIVE_JS } from 'limber/starting-snippet';
 
-import { setupWindowOnError } from '../-utils';
 import { Page } from './-page';
 
 module('Scenarios', function (hooks) {
   setupApplicationTest(hooks);
-  setupWindowOnError(hooks, (error: string) => {
-    if (error.includes('export')) {
-      console.warn('Still waiting on https://github.com/microsoft/vscode/pull/123739');
-
-      return;
-    }
-
-    console.error(error);
-    throw error;
-  });
 
   let page = new Page();
 

@@ -6,12 +6,12 @@ import { start } from 'ember-qunit';
 import Application from 'limber/app';
 import config from 'limber/config/environment';
 
+import { hideUpstreamErrors } from './-utils';
+
 setApplication(Application.create(config.APP));
 
 setup(QUnit.assert);
-
-QUnit.testDone(function () {
-  resetOnerror();
-});
+hideUpstreamErrors(QUnit);
+QUnit.testDone(resetOnerror);
 
 start();

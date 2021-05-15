@@ -1,13 +1,19 @@
-export function setupWindowOnError(hooks: NestedHooks, callback: (error: string | Event) => void) {
-  let original: typeof window.onerror;
+// const originalOnError = window.onerror;
+const hideUpstreamProblems = (error: string) => {
+  if (error.includes('export')) {
+    console.warn('Still waiting on https://github.com/microsoft/vscode/pull/123739');
 
-  hooks.beforeEach(function () {
-    original = window.onerror;
+    return;
+  }
 
-    window.onerror = callback;
-  });
+  console.error(error);
+  throw error;
+};
 
-  hooks.afterEach(function () {
-    window.onerror = original;
-  });
+export function hideUpstreamErrors() {
+  window.onerror = hideUpstreamProblems;
+  // cleaning up here is too early for firefox :(
+  // QUnit.done(() => {
+  //   window.onerror = originalOnError;
+  // });
 }
