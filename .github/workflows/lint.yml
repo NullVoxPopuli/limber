@@ -131,6 +131,23 @@ jobs:
       working-directory: ${{ env.sw }}
       run: yarn lint:js
 
+  js_tests:
+    name: "ESLint: JS/TS >> e2e tests"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [install_dependencies]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+    - name: 'Cypress'
+      working-directory: ${{ env.tests }}
+      run: yarn lint:js
+
   templates:
     name: "Templates"
     runs-on: ubuntu-latest
