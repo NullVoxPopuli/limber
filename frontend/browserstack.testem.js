@@ -43,7 +43,7 @@ const BrowserStackLaunchers = {
 };
 
 module.exports = {
-  test_page: 'dist/tests/index.html?hidepassed&hideskipped&timeout=60000',
+  test_page: '/tests/index.html?hidepassed&hideskipped&timeout=60000',
   timeout: 1200,
   reporter: FailureOnlyPerBrowserReporter,
   browser_start_timeout: 2000,
