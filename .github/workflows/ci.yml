@@ -102,7 +102,7 @@ jobs:
       with:
         path: '**/dist'
         key: ${{ runner.os }}-modules-${{ hashFiles('packages/**') }}
-    - run: ./node_modules/bin/ember build
+    - run: yarn ember build --environment=development
       working-directory: ${{ env.app }}
 
     - name: Upload Test Artifacts
