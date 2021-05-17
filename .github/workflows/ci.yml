@@ -184,7 +184,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    needs: [build_app, tests]
+    needs: [build_app, tests, browserstack-test]
 
     steps:
     - uses: actions/checkout@v2
