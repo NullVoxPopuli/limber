@@ -179,7 +179,7 @@ jobs:
 ##############################################################
 
   deploy:
-    name: Deploy to Netlify
+    name: "Deploy: Production"
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -209,7 +209,7 @@ jobs:
       working-directory: ${{ env.app }}
 
   cypress:
-    name: Cypress Tests
+    name: "E2E: Production"
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -231,7 +231,7 @@ jobs:
 ##############################################################
 
   deploy_preview:
-    name: Deploy Preview
+    name: "Deploy: Branch"
     if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -267,7 +267,7 @@ jobs:
         path: deploy-url.txt
 
   cypress_branch:
-    name: "Cypress Tests (branch)"
+    name: "E2E: Branch"
     if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
