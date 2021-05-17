@@ -176,57 +176,6 @@ jobs:
       run: yarn test:browserstack
       working-directory: ${{ env.app }}
 
-##############################################################
-
-  deploy:
-    name: "Deploy: Production"
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [build_app, tests]
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: volta-cli/action@v1
-    - name: Download Built App Artifacts
-      uses: actions/download-artifact@master
-      with:
-        name: built_app
-        path: ${{ env.app }}/deploy/app/
-
-    - name: Deploy to Netlify
-      env:
-        NETLIFY_ACCESS_TOKEN: ${{ secrets.NETLIFY_ACCESS_TOKEN }}
-        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        NETLIFY_CLI_VERSION: 0.4.0
-      run: |
-        cp ./config/netlify/_redirects ./deploy/app
-
-        wget https://github.com/netlify/netlifyctl/releases/download/v$NETLIFY_CLI_VERSION/netlifyctl-linux-amd64-$NETLIFY_CLI_VERSION.tar.gz
-        tar -xf netlifyctl-linux-amd64-$NETLIFY_CLI_VERSION.tar.gz
-
-        ./netlifyctl -y deploy --site-id $NETLIFY_SITE_ID --access-token $NETLIFY_ACCESS_TOKEN --publish-directory "./deploy/app"
-      working-directory: ${{ env.app }}
-
-  cypress:
-    name: "E2E: Production"
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [deploy]
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: volta-cli/action@v1
-    - uses: actions/cache@v2
-      with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-    - run: yarn browserstack-cypress run --sync
-      working-directory: ${{ env.tests }}
-      env:
-        BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-        BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
 
 ##############################################################
 
@@ -292,6 +241,59 @@ jobs:
 
         cd ${{ env.tests }}
         yarn browserstack-cypress run --sync
+      env:
+        BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+        BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+
+
+##############################################################
+
+  deploy:
+    name: "Deploy: Production"
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [build_app, tests]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - name: Download Built App Artifacts
+      uses: actions/download-artifact@master
+      with:
+        name: built_app
+        path: ${{ env.app }}/deploy/app/
+
+    - name: Deploy to Netlify
+      env:
+        NETLIFY_ACCESS_TOKEN: ${{ secrets.NETLIFY_ACCESS_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        NETLIFY_CLI_VERSION: 0.4.0
+      run: |
+        cp ./config/netlify/_redirects ./deploy/app
+
+        wget https://github.com/netlify/netlifyctl/releases/download/v$NETLIFY_CLI_VERSION/netlifyctl-linux-amd64-$NETLIFY_CLI_VERSION.tar.gz
+        tar -xf netlifyctl-linux-amd64-$NETLIFY_CLI_VERSION.tar.gz
+
+        ./netlifyctl -y deploy --site-id $NETLIFY_SITE_ID --access-token $NETLIFY_ACCESS_TOKEN --publish-directory "./deploy/app"
+      working-directory: ${{ env.app }}
+
+  cypress:
+    name: "E2E: Production"
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [deploy]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+    - run: yarn browserstack-cypress run --sync
+      working-directory: ${{ env.tests }}
       env:
         BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
         BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
