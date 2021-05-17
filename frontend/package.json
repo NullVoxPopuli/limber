@@ -11,6 +11,9 @@
     "test": "tests"
   },
   "scripts": {
+    "browserstack:connect": "ember browserstack:connect",
+    "browserstack:disconnect": "ember browserstack:disconnect",
+    "browserstack:results": "ember browserstack:results",
     "build": "TAILWIND_MODE=build ember build --environment=production",
     "check:types": "tsc --build",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel 'lint:!(fix)'",
