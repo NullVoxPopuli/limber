@@ -156,7 +156,12 @@ jobs:
   browserstack-test:
     name: Browserstack Tests (Safari, Edge, etc)
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     needs: [build_tests]
+
+    env:
+      BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+      BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
 
     steps:
     - uses: actions/checkout@v2
@@ -170,11 +175,13 @@ jobs:
       with:
         name: built_tests
         path: ${{ env.app }}/dist/
-    - name: test:browserstack
-      env:
-        BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-        BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
-      run: yarn test:browserstack
+    - run: yarn browserstack:connect
+      working-directory: ${{ env.app }}
+    - run: yarn test:browserstack
+      working-directory: ${{ env.app }}
+    - run: yarn browserstack:results
+      working-directory: ${{ env.app }}
+    - run: yarn browserstack:disconnect
       working-directory: ${{ env.app }}
 
 ##############################################################
