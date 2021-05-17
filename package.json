@@ -4,8 +4,7 @@
   "author": "NullVoxPopuli",
   "workspaces": [
     "frontend",
-    "packages/*",
-    "tests"
+    "packages/*"
   ],
   "scripts": {
     "predeploy": "yarn build && yarn workspace limber build",
