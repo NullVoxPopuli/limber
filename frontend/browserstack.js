@@ -9,12 +9,7 @@ const chalk = require('chalk');
 function run(command, args = []) {
   console.log(chalk.dim('$ ' + command + ' ' + args.join(' ')));
 
-  let p = execa(command, args);
-
-  p.stdout.pipe(process.stdout);
-  p.stderr.pipe(process.stderr);
-
-  return p;
+  return execa(command, args, { stdio: 'inherit' });
 }
 
 (async function () {
