@@ -153,6 +153,29 @@ jobs:
       env:
         CI_BROWSER: ${{ matrix.ci_browser }}
 
+  browserstack-test:
+    name: Browserstack Tests (Safari, Edge, etc)
+    runs-on: ubuntu-latest
+    needs: [build_tests]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+    - name: Download Built Test Artifacts
+      uses: actions/download-artifact@master
+      with:
+        name: built_tests
+        path: ${{ env.app }}/dist/
+    - name: test:browserstack
+      env:
+        BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+        BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+      run: yarn test:browserstack
+      working-directory: ${{ env.app }}
+
 ##############################################################
 
   deploy:
