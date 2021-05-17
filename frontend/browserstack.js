@@ -13,9 +13,9 @@ function run(command, args = []) {
 }
 
 (async function () {
-  await run('ember', ['browserstack:connect']);
-
   try {
+    await run('ember', ['browserstack:connect']);
+
     try {
       // Calling testem directly here instead of `ember test` so that
       // we do not have to do a double build (by the time this is run
