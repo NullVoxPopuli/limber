@@ -177,17 +177,6 @@ jobs:
         path: ${{ env.app }}/dist/
     - run: yarn browserstack:connect
       working-directory: ${{ env.app }}
-
-
-    - run: |
-        ls -la ./dist
-        echo "debugging wip"
-        cat browserstack-local.pid
-        ember test --path ./dist
-        exit 1
-      working-directory: ${{ env.app }}
-
-
     - run: yarn test:browserstack
       working-directory: ${{ env.app }}
     - run: yarn browserstack:results
