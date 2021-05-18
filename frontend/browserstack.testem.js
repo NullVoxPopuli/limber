@@ -8,7 +8,7 @@ const BrowserStackLaunchers = {
   BS_Safari_Current: {
     exe: 'node_modules/.bin/browserstack-launch',
     args: [
-      '--os', 'macOS',
+      '--os', 'OS X',
       '--os_version', 'Big Sur',
       '--browser', 'safari',
       '--browser_version', 'latest',
