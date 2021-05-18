@@ -54,47 +54,6 @@ jobs:
 
 ##############################################################
 
-  tests:
-    name: Tests
-    strategy:
-      matrix:
-        # os: [ubuntu-latest, macOS-latest, windows-latest]
-        # browsers: [chrome, firefox, safari, edge]
-        ci_browser:
-        - Chrome
-        - Firefox
-
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [pre_build]
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: volta-cli/action@v1
-    - uses: actions/cache@v2
-      with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-    - uses: actions/cache@v2
-      with:
-        path: '**/dist'
-        key: ${{ runner.os }}-modules-${{ hashFiles('packages/**') }}
-    - name: Environment Info
-      run: |
-        firefox --version
-        google-chrome --version
-        echo "Node: $( node --version )"
-        echo "NPM: $( npm --version )"
-        echo "Yarn: $( yarn --version )"
-
-    - name: Test
-      run: yarn test:ember
-      working-directory: ${{ env.app }}
-      env:
-        CI_BROWSER: ${{ matrix.ci_browser }}
-
-##############################################################
-
   build_app:
     name: Build App
     runs-on: ubuntu-latest
@@ -126,12 +85,113 @@ jobs:
 
 ##############################################################
 
+  build_tests:
+    name: Build Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [pre_build]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+    - uses: actions/cache@v2
+      with:
+        path: '**/dist'
+        key: ${{ runner.os }}-modules-${{ hashFiles('packages/**') }}
+    - run: yarn ember build --environment=development
+      working-directory: ${{ env.app }}
+
+    - name: Upload Test Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: built_tests
+        path: ${{ env.app }}/dist/
+
+##############################################################
+
+  tests:
+    name: Tests
+    strategy:
+      matrix:
+        # os: [ubuntu-latest, macOS-latest, windows-latest]
+        # browsers: [chrome, firefox, safari, edge]
+        ci_browser:
+        - Chrome
+        - Firefox
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [build_tests]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+    - name: Download Built Test Artifacts
+      uses: actions/download-artifact@master
+      with:
+        name: built_tests
+        path: ${{ env.app }}/dist/
+    - name: Environment Info
+      run: |
+        firefox --version
+        google-chrome --version
+        echo "Node: $( node --version )"
+        echo "NPM: $( npm --version )"
+        echo "Yarn: $( yarn --version )"
+
+    - name: Test
+      run: yarn test:ember --path ./dist/
+      working-directory: ${{ env.app }}
+      env:
+        CI_BROWSER: ${{ matrix.ci_browser }}
+
+  browserstack-test:
+    name: Browserstack Tests (Safari, Edge, etc)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [build_tests]
+
+    env:
+      BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+      BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+    - name: Download Built Test Artifacts
+      uses: actions/download-artifact@master
+      with:
+        name: built_tests
+        path: ${{ env.app }}/dist/
+    - run: yarn browserstack:connect
+      working-directory: ${{ env.app }}
+    - run: yarn test:browserstack
+      working-directory: ${{ env.app }}
+    - run: yarn browserstack:results
+      working-directory: ${{ env.app }}
+    - run: yarn browserstack:disconnect
+      working-directory: ${{ env.app }}
+
+##############################################################
+
   deploy:
-    name: Deploy to Netlify
+    name: "Deploy: Production"
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    needs: [build_app, tests]
+    needs: [build_app, tests, browserstack-test]
 
     steps:
     - uses: actions/checkout@v2
@@ -157,7 +217,7 @@ jobs:
       working-directory: ${{ env.app }}
 
   cypress:
-    name: Cypress Tests
+    name: "E2E: Production"
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -179,7 +239,7 @@ jobs:
 ##############################################################
 
   deploy_preview:
-    name: Deploy Preview
+    name: "Deploy: Branch"
     if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -215,7 +275,7 @@ jobs:
         path: deploy-url.txt
 
   cypress_branch:
-    name: "Cypress Tests (branch)"
+    name: "E2E: Branch"
     if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15

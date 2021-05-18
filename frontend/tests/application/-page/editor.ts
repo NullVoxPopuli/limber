@@ -36,7 +36,9 @@ export class Editor extends PageObject {
     let _editor = removeInvisibleCharacters(editorText);
     let _text = removeInvisibleCharacters(text);
 
-    let diff = diffText(_editor, _text);
+    // need to chop down the source text to the amount that we can see in the editor.
+    // editors will optimize to the viewport so that they don't degrade perf
+    let diff = diffText(_editor, _text.slice(0, _editor.length));
     let similarity = 1 - diff.distance / _text.length;
 
     return similarity > 0.75;
