@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 'use strict';
 // https://github.com/emberjs/ember.js/blob/master/testem.browserstack.js
 
@@ -7,36 +8,26 @@ const BrowserStackLaunchers = {
   BS_Safari_Current: {
     exe: 'node_modules/.bin/browserstack-launch',
     args: [
-      '--os',
-      'OS X',
-      '--osv',
-      'Mojave',
-      '--b',
-      'safari',
-      '--bv',
-      'latest',
-      '-t',
-      '1440',
-      '--u',
-      '<url>',
+      '--os', 'macOS',
+      '--os_version', 'Big Sur',
+      '--browser', 'safari',
+      '--browser_version', 'latest',
+      '--timeout', '1000',
+      '--url', '<url>',
+      '--resolution', '1600x1200',
     ],
     protocol: 'browser',
   },
   BS_MS_Edge: {
     exe: 'node_modules/.bin/browserstack-launch',
     args: [
-      '--os',
-      'Windows',
-      '--osv',
-      '10',
-      '--b',
-      'edge',
-      '--bv',
-      'latest',
-      '-t',
-      '1440',
-      '--u',
-      '<url>',
+      '--os', 'Windows',
+      '--os_version', '10',
+      '--browser', 'edge',
+      '--browser_version', 'latest',
+      '--timeout', '1000',
+      '--url', '<url>',
+      '--resolution', '1440x900'
     ],
     protocol: 'browser',
   },

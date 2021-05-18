@@ -11,7 +11,7 @@ module.exports = {
     ...config.overrides,
     {
       ...baseNode,
-      files: ['browserstack.*'],
+      files: ['browserstack.testem.js'],
     },
   ],
 };
