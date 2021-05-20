@@ -125,7 +125,7 @@
     "extends": "../package.json"
   },
   "dependencies": {
-    "@babel/standalone": "^7.14.2",
+    "@babel/standalone": "^7.14.3",
     "@glimmer/compiler": "0.79.2",
     "@glimmer/component": "^1.0.4",
     "@glimmer/syntax": "^0.79.2",
