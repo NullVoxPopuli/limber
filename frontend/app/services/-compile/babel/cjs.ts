@@ -1,5 +1,7 @@
 import { getTemplateLocals, precompileTemplate } from '@ember/template-compilation';
 
+console.log({ getTemplateLocals, precompileTemplate });
+
 import * as Babel from '@babel/standalone';
 import HTMLBars, { preprocessEmbeddedTemplates } from 'babel-plugin-htmlbars-inline-precompile';
 
