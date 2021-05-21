@@ -1929,7 +1929,7 @@
     "@glimmer/wire-format" "0.79.2"
     "@simple-dom/interface" "^1.4.0"
 
-"@glimmer/syntax@0.79.2", "@glimmer/syntax@^0.79.2":
+"@glimmer/syntax@0.79.2":
   version "0.79.2"
   resolved "https://registry.yarnpkg.com/@glimmer/syntax/-/syntax-0.79.2.tgz#fcd6e742860ca39230043969fb04644d5cc6a5c9"
   integrity sha512-65ZXxIM38EMKESWgvTU31ouZiQAELRO/LmOfzTJZlYH5LhSAZWSQ7tatYXDrcjPoiDojLO0a16WccZggM1etmg==

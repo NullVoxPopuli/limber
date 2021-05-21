@@ -1,5 +1,4 @@
-import { getTemplateLocals } from '@glimmer/syntax';
-import { precompileTemplate } from '@ember/template-compilation';
+import { getTemplateLocals, precompileTemplate } from '@ember/template-compilation';
 
 import * as Babel from '@babel/standalone';
 import HTMLBars, { preprocessEmbeddedTemplates } from 'babel-plugin-htmlbars-inline-precompile';
