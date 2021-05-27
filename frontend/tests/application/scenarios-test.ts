@@ -26,7 +26,7 @@ module('Scenarios', function (hooks) {
       test('inline HBS - static', async function (assert) {
         await visit('/');
         await page.editor.load();
-        await page.demo.select('With inline Templates');
+        await page.selectDemo('With inline Templates');
 
         assert.dom(page.nav.activeTab.element).hasText('Preview');
         assert.true(page.editor.hasText(WITH_LIVE_HBS), 'snippet loaded');
@@ -38,7 +38,7 @@ module('Scenarios', function (hooks) {
       test('inline JS - interactive', async function (assert) {
         await visit('/');
         await page.editor.load();
-        await page.demo.select('With inline Javascript');
+        await page.selectDemo('With inline Javascript');
 
         assert.dom(page.nav.activeTab.element).hasText('Preview');
         assert.true(page.editor.hasText(WITH_LIVE_JS), 'snippet loaded');

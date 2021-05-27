@@ -9,12 +9,13 @@
     text-black focus:ring-4 sm:text-sm
     rounded-sm px-2 py-1
   "
+  data-test-demo-select
   ...attributes
 >
   <option value="" disabled selected>Select demo</option>
 
   {{#each this.demos as |demo|}}
-    <option value={{demo.snippet}}>{{demo.label}}</option>
+    <option data-test-demo value={{demo.snippet}}>{{demo.label}}</option>
   {{/each}}
 </SelectLight>
 
