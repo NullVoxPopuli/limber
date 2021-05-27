@@ -14,7 +14,7 @@ export default class DemoSelect extends Component {
   isSelected = ([text]: [string]) => text === this.editor.text;
 
   @action
-  select(demo: typeof ALL[0]) {
-    this.editor.updateDemo(demo.snippet);
+  select(snippet: string) {
+    this.editor.updateDemo(snippet);
   }
 }
