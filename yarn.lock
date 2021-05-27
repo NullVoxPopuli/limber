@@ -7640,10 +7640,10 @@ esbuild-plugin-alias@^0.1.2:
   resolved "https://registry.npmjs.org/esbuild-plugin-alias/-/esbuild-plugin-alias-0.1.2.tgz#1232fbde807c0c8ad44c44ec859819eb492e12a8"
   integrity sha512-WsX0OJy8IGOsGZV+4oHEU5B6XQUpxOsZN1iSoYf9COTDbY7WXcOwd1oCLYNWUIWCExyGXSghIGq2k7sXBldxwQ==
 
-esbuild@0.12.1:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.12.1.tgz#f652d5b3b9432dbb42fc2c034ddd62360296e03d"
-  integrity sha512-WfQ00MKm/Y4ysz1u9PCUAsV66k5lbrcEvS6aG9jhBIavpB94FBdaWeBkaZXxCZB4w+oqh+j4ozJFWnnFprOXbg==
+esbuild@0.12.4:
+  version "0.12.4"
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.12.4.tgz#a2a2769ee79af1ae0f605f59aed9d450e81740ec"
+  integrity sha512-HObgzMHbba5HzsHzxj1ccDIPWncCCCQjoruuLyS5geidwndqgLsjZEMt0XeSYIIbqoJFENGCEFQt4m2PtAFK2Q==
 
 escalade@^3.1.1:
   version "3.1.1"
