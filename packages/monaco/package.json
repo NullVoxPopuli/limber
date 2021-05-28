@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@nullvoxpopuli/eslint-configs": "1.2.5",
-    "esbuild": "0.12.4",
+    "esbuild": "0.12.5",
     "esbuild-plugin-alias": "^0.1.2",
     "recursive-copy": "^2.0.11"
   },
