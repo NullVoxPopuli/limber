@@ -19,7 +19,7 @@ module.exports = async function build() {
     format: 'esm',
     // minification breaks codemirror somehow
     minify: false,
-    sourcemap: true,
+    sourcemap: false,
   });
 
   await copy(`${buildDir}`, OUTPUT_DIR, {

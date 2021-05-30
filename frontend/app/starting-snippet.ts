@@ -108,3 +108,11 @@ export const ALL = [
   { label: 'With inline Javascript', snippet: WITH_LIVE_JS },
   { label: 'With inline Templates', snippet: WITH_LIVE_HBS },
 ];
+
+export const NAMES = ALL.map((demo) => demo.label);
+
+export const BY_NAME = ALL.reduce((obj, current) => {
+  obj[current.label] = current.snippet;
+
+  return obj;
+}, {} as Record<string, string>);
