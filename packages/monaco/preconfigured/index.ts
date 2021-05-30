@@ -58,7 +58,6 @@ export default function setupEditor(
   });
 
   let setText = (text: string) => {
-    console.log('setText', { text });
     editor.setValue(text);
   };
 
