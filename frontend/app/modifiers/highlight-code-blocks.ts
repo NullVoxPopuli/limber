@@ -1,4 +1,4 @@
-import { isDestroyed, isDestroying } from '@ember/destroyable';
+import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
 import { action } from '@ember/object';
 
 import { Modifier } from 'ember-could-get-used-to-this';
@@ -36,7 +36,31 @@ export default class HighlightCodeBlocks extends Modifier<Args> {
 
       for (let element of elements) {
         hljs.highlightBlock(element as HTMLElement);
+        addCopyButton(this, element as HTMLElement);
       }
     }
   }
+}
+
+const copyButtonClasses = ['absolute', 'top-3', 'right-4', 'px-2', 'py-1', 'rounded-sm', 'bg-white', 'text-black', 'text-sm', 'focus:ring-4', 'focus-visible:outline-none', 'ring-ember-brand', 'focus:outline-none'];
+
+function addCopyButton(destroyable: object, preCode: HTMLElement) {
+  let pre = preCode.parentElement as HTMLElement;
+  let copyButton=document.createElement('button');
+
+  pre.classList.add('relative');
+
+  copyButton.classList.add(...copyButtonClasses);
+  copyButton.setAttribute('type', 'button');
+  copyButton.setAttribute('title', 'copy to clipboard');
+  copyButton.innerText = '📋';
+  pre.append(copyButton)
+
+  const copy = () => navigator.clipboard.writeText(preCode.innerText);
+
+  copyButton.addEventListener('click', copy);
+
+  registerDestructor(destroyable, () => {
+    copyButton.removeEventListener('click', copy);
+  });
 }

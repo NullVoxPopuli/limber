@@ -10,15 +10,21 @@
 }
 
 .glimdown-render {
-  margin-top: 0.5rem;
+  @apply mt-2;
 }
 
 .glimdown-render button {
+  @apply text-white rounded px-2 py-1;
   background: var(--code-bg);
   border: 1px solid var(--horizon-border);
-  color: white;
-  border-radius: 0.25rem;
-  padding: 0.125rem 0.5rem;
+}
+
+.glimdown-render button:focus {
+  @apply ring-4 outline-none;
+}
+
+.glimdown-render button:focus-visible {
+  @apply outline-none;
 }
 
 .glimdown-render button:hover {
