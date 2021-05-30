@@ -42,11 +42,26 @@ export default class HighlightCodeBlocks extends Modifier<Args> {
   }
 }
 
-const copyButtonClasses = ['absolute', 'top-3', 'right-4', 'px-2', 'py-1', 'rounded-sm', 'bg-white', 'text-black', 'text-sm', 'focus:ring-4', 'focus-visible:outline-none', 'ring-ember-brand', 'focus:outline-none'];
+const copyButtonClasses = [
+  'absolute',
+  'top-3',
+  'right-4',
+  'px-2',
+  'py-1',
+  'rounded-sm',
+  'bg-white',
+  'text-black',
+  'text-sm',
+  'focus:ring-4',
+  'focus-visible:outline-none',
+  'ring-ember-brand',
+  'focus:outline-none',
+];
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 function addCopyButton(destroyable: object, preCode: HTMLElement) {
   let pre = preCode.parentElement as HTMLElement;
-  let copyButton=document.createElement('button');
+  let copyButton = document.createElement('button');
 
   pre.classList.add('relative');
 
@@ -54,7 +69,7 @@ function addCopyButton(destroyable: object, preCode: HTMLElement) {
   copyButton.setAttribute('type', 'button');
   copyButton.setAttribute('title', 'copy to clipboard');
   copyButton.innerText = '📋';
-  pre.append(copyButton)
+  pre.append(copyButton);
 
   const copy = () => navigator.clipboard.writeText(preCode.innerText);
 
