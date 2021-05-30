@@ -1392,14 +1392,6 @@
     mkdirp "^1.0.4"
     silent-error "^1.1.1"
 
-"@ember/render-modifiers@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/@ember/render-modifiers/-/render-modifiers-1.0.2.tgz#2e87c48db49d922ce4850d707215caaac60d8444"
-  integrity sha512-6tEnHl5+62NTSAG2mwhGMFPhUrJQjoVqV+slsn+rlTknm2Zik+iwxBQEbwaiQOU1FUYxkS8RWcieovRNMR8inQ==
-  dependencies:
-    ember-cli-babel "^7.10.0"
-    ember-modifier-manager-polyfill "^1.1.0"
-
 "@ember/test-helpers@^2.2.5":
   version "2.2.5"
   resolved "https://registry.npmjs.org/@ember/test-helpers/-/test-helpers-2.2.5.tgz#9f915310b79fd6330e8e19857958e5f241c1d0de"
@@ -6755,7 +6747,7 @@ ember-cli-babel-plugin-helpers@^1.0.0, ember-cli-babel-plugin-helpers@^1.1.0, em
   resolved "https://registry.npmjs.org/ember-cli-babel-plugin-helpers/-/ember-cli-babel-plugin-helpers-1.1.1.tgz#5016b80cdef37036c4282eef2d863e1d73576879"
   integrity sha512-sKvOiPNHr5F/60NLd7SFzMpYPte/nnGkq/tMIfXejfKHIhaiIkYFqX8Z9UFTKWLLn+V7NOaby6niNPZUdvKCRw==
 
-ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.6.0:
+ember-cli-babel@^6.0.0-beta.4:
   version "6.18.0"
   resolved "https://registry.npmjs.org/ember-cli-babel/-/ember-cli-babel-6.18.0.tgz#3f6435fd275172edeff2b634ee7b29ce74318957"
   integrity sha512-7ceC8joNYxY2wES16iIBlbPSxwKDBhYwC8drU3ZEvuPDMwVv1KzxCNu1fvxyFEBWhwaRNTUxSCsEVoTd9nosGA==
@@ -6885,7 +6877,7 @@ ember-cli-htmlbars@^4.2.0:
     strip-bom "^4.0.0"
     walk-sync "^2.0.2"
 
-ember-cli-htmlbars@^5.1.0, ember-cli-htmlbars@^5.2.0, ember-cli-htmlbars@^5.3.1, ember-cli-htmlbars@^5.7.1:
+ember-cli-htmlbars@^5.2.0, ember-cli-htmlbars@^5.3.1, ember-cli-htmlbars@^5.7.1:
   version "5.7.1"
   resolved "https://registry.npmjs.org/ember-cli-htmlbars/-/ember-cli-htmlbars-5.7.1.tgz#eb5b88c7d9083bc27665fb5447a9b7503b32ce4f"
   integrity sha512-9laCgL4tSy48orNoQgQKEHp93MaqAs9ZOl7or5q+8iyGGJHW6sVXIYrVv5/5O9HfV6Ts8/pW1rSoaeKyLUE+oA==
@@ -7229,15 +7221,6 @@ ember-destroyable-polyfill@^2.0.3:
     ember-cli-version-checker "^5.1.1"
     ember-compatibility-helpers "^1.2.1"
 
-ember-element-helper@^0.3.1:
-  version "0.3.2"
-  resolved "https://registry.npmjs.org/ember-element-helper/-/ember-element-helper-0.3.2.tgz#a0e384c266c6fb0e39803708d6f5e83ce6dba659"
-  integrity sha512-t4lrekoRb/jVQeg/N1V0kzehV6cw0YAH1hG1H2+Ykl35YxpYdX7/8hKtaGzVPxceemUVFO7fUorEQ6Y//wpWdA==
-  dependencies:
-    ember-cli-babel "^7.17.2"
-    ember-cli-htmlbars "^5.1.0"
-    ember-compatibility-helpers "^1.2.1"
-
 ember-export-application-global@^2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/ember-export-application-global/-/ember-export-application-global-2.0.1.tgz#b120a70e322ab208defc9e2daebe8d0dfc2dcd46"
@@ -7262,16 +7245,6 @@ ember-get-config@^0.3.0:
     broccoli-file-creator "^1.1.1"
     ember-cli-babel "^7.0.0"
 
-"ember-headlessui@github:GavinJoyce/ember-headlessui":
-  version "0.0.0"
-  resolved "https://codeload.github.com/GavinJoyce/ember-headlessui/tar.gz/472f0a326e602738476116f94ce9a5825137a393"
-  dependencies:
-    "@ember/render-modifiers" "^1.0.2"
-    ember-cli-babel "^7.22.1"
-    ember-cli-htmlbars "^5.3.1"
-    ember-element-helper "^0.3.1"
-    ember-truth-helpers "^2.1.0"
-
 ember-load-initializers@^2.1.2:
   version "2.1.2"
   resolved "https://registry.npmjs.org/ember-load-initializers/-/ember-load-initializers-2.1.2.tgz#8a47a656c1f64f9b10cecdb4e22a9d52ad9c7efa"
@@ -7290,7 +7263,7 @@ ember-maybe-import-regenerator@^0.1.6:
     ember-cli-babel "^6.0.0-beta.4"
     regenerator-runtime "^0.9.5"
 
-ember-modifier-manager-polyfill@^1.1.0, ember-modifier-manager-polyfill@^1.2.0:
+ember-modifier-manager-polyfill@^1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/ember-modifier-manager-polyfill/-/ember-modifier-manager-polyfill-1.2.0.tgz#cf4444e11a42ac84f5c8badd85e635df57565dda"
   integrity sha512-bnaKF1LLKMkBNeDoetvIJ4vhwRPKIIumWr6dbVuW6W6p4QV8ZiO+GdF8J7mxDNlog9CeL9Z/7wam4YS86G8BYA==
@@ -7353,6 +7326,14 @@ ember-router-helpers@^0.4.0:
   integrity sha512-DiPyncEAACKV/XcmYqUwh0iHBPvGW75Fw1uerDudblofXTtAH/+QzeE/0wK2G6MUBWKyn0HyIuLXE3pJm0zKFg==
   dependencies:
     ember-cli-babel "^7.20.0"
+
+ember-select-light@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.npmjs.org/ember-select-light/-/ember-select-light-2.0.4.tgz#a19921efc615b728630431f94357c1aea7c43637"
+  integrity sha512-x8gnTRKcfDFIyKllz+X2IAMsSbpSaasCxvrhL/j3AaZOYZZjCnHGjR5aRcpZoMgYkGNtLPgee3QCeZhmzilTNQ==
+  dependencies:
+    ember-cli-babel "^7.23.0"
+    ember-cli-htmlbars "^5.3.1"
 
 ember-source-channel-url@^3.0.0:
   version "3.0.0"
@@ -7471,13 +7452,6 @@ ember-template-recast@^5.0.1:
     slash "^3.0.0"
     tmp "^0.2.1"
     workerpool "^6.0.3"
-
-ember-truth-helpers@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.npmjs.org/ember-truth-helpers/-/ember-truth-helpers-2.1.0.tgz#d4dab4eee7945aa2388126485977baeb33ca0798"
-  integrity sha512-BQlU8aTNl1XHKTYZ243r66yqtR9JU7XKWQcmMA+vkqfkE/c9WWQ9hQZM8YABihCmbyxzzZsngvldokmeX5GhAw==
-  dependencies:
-    ember-cli-babel "^6.6.0"
 
 emitter-mixin@0.0.3:
   version "0.0.3"

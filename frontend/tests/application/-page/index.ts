@@ -1,7 +1,8 @@
+import { select } from '@ember/test-helpers';
+
 import { PageObject } from 'fractal-page-object';
 
-import { s } from './-helpers';
-import { DemoSelect } from './demo-select';
+import { dt, s } from './-helpers';
 import { Editor } from './editor';
 import { Nav } from './nav';
 import { OutputArea } from './output';
@@ -9,6 +10,9 @@ import { OutputArea } from './output';
 export class Page extends PageObject {
   nav = s('navigation', Nav);
   out = s('output', OutputArea);
-  demo = s('demo-select', DemoSelect);
   editor = s('editor-panel', Editor);
+
+  async selectDemo(label: string) {
+    await select(dt('demo-select'), label);
+  }
 }
