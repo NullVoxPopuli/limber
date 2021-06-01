@@ -141,7 +141,7 @@
     "ember-could-get-used-to-this": "^1.0.1",
     "ember-focus-trap": "^0.7.0",
     "ember-router-helpers": "^0.4.0",
-    "ember-select-light": "^2.0.4",
+    "ember-select-light": "^2.0.5",
     "ember-statechart-component": "2.3.4",
     "highlight.js": "^11.0.0",
     "highlightjs-glimmer": "^1.4.0",
