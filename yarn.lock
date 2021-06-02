@@ -1973,6 +1973,13 @@
   dependencies:
     babel-plugin-debug-macros "^0.3.4"
 
+"@glimmer/vm-babel-plugins@0.79.3":
+  version "0.79.3"
+  resolved "https://registry.npmjs.org/@glimmer/vm-babel-plugins/-/vm-babel-plugins-0.79.3.tgz#a8e6949f8ecc10786831d188f1001eb80927297f"
+  integrity sha512-346xmhP7J3wqCFKqIlwcaui/A+iHKm0ZWoaKb4lIkuro7/u5j094eEtdbonGq4eTj+UnDPpmzuqLWodXXxxo1Q==
+  dependencies:
+    babel-plugin-debug-macros "^0.3.4"
+
 "@glimmer/vm@0.79.3":
   version "0.79.3"
   resolved "https://registry.yarnpkg.com/@glimmer/vm/-/vm-0.79.3.tgz#79b0614116d5b3417e6d0a16c0c91fbf521ccbc4"
@@ -7249,7 +7256,38 @@ ember-source-channel-url@^3.0.0:
   dependencies:
     node-fetch "^2.6.0"
 
-ember-source@3.27.2, ember-source@^3.27.2:
+ember-source@3.28.0-beta.3:
+  version "3.28.0-beta.3"
+  resolved "https://registry.npmjs.org/ember-source/-/ember-source-3.28.0-beta.3.tgz#4352cc223e1c534a5d43cedd66dce2ad4083bf93"
+  integrity sha512-npI/BmmGp9P03D78ozgh6xR2Wwl+idMxvTrdJllu876YiyghwtUFRcWMJCvi9idMqNbKUZZ60TXaK8jzk5jUFA==
+  dependencies:
+    "@babel/helper-module-imports" "^7.8.3"
+    "@babel/plugin-transform-block-scoping" "^7.8.3"
+    "@babel/plugin-transform-object-assign" "^7.8.3"
+    "@ember/edition-utils" "^1.2.0"
+    "@glimmer/vm-babel-plugins" "0.79.3"
+    babel-plugin-debug-macros "^0.3.3"
+    babel-plugin-filter-imports "^4.0.0"
+    broccoli-concat "^4.2.4"
+    broccoli-debug "^0.6.4"
+    broccoli-funnel "^2.0.2"
+    broccoli-merge-trees "^4.2.0"
+    chalk "^4.0.0"
+    ember-cli-babel "^7.23.0"
+    ember-cli-get-component-path-option "^1.0.0"
+    ember-cli-is-package-missing "^1.0.0"
+    ember-cli-normalize-entity-name "^1.0.0"
+    ember-cli-path-utils "^1.0.0"
+    ember-cli-string-utils "^1.1.0"
+    ember-cli-version-checker "^5.1.1"
+    ember-router-generator "^2.0.0"
+    inflection "^1.12.0"
+    jquery "^3.5.1"
+    resolve "^1.17.0"
+    semver "^7.3.4"
+    silent-error "^1.1.1"
+
+ember-source@^3.27.2:
   version "3.27.2"
   resolved "https://registry.yarnpkg.com/ember-source/-/ember-source-3.27.2.tgz#3ab37191c2079d7e6e69f9c1c679f4c46f164703"
   integrity sha512-//w9jiikkm9/WRuSBkyO666vtOsbb6P1mFcQGeiQb/MkbpAT29COIQnf8a7YKEPG/G1dgKox9jUPtPhlnaveig==
