@@ -143,7 +143,7 @@
     "ember-router-helpers": "^0.4.0",
     "ember-select-light": "^2.0.5",
     "ember-statechart-component": "2.3.4",
-    "highlight.js": "^11.0.0",
+    "highlight.js": "^11.0.1",
     "highlightjs-glimmer": "^1.4.0",
     "path-browserify": "^1.0.1",
     "remark-hbs": "^0.4.1",
