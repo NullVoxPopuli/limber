@@ -106,7 +106,7 @@
     "onp": "^1.0.3",
     "postcss": "^8.3.0",
     "prettier": "^2.3.0",
-    "qunit": "^2.15.0",
+    "qunit": "^2.16.0",
     "qunit-dom": "^1.6.0",
     "tailwindcss": "^2.1.4",
     "testem-failure-only-reporter": "^0.0.1",
