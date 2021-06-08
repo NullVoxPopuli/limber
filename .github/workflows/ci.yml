@@ -12,6 +12,7 @@ env:
   monaco: packages/monaco
   tests: tests/
   sw: packages/transpilation/
+  NODE_OPTIONS: "--max-old-space-size=4096 --trace-warnings --unhandled-rejections=strict"
 
 jobs:
 
