@@ -1,4 +1,5 @@
-import { getTemplateLocals, precompileTemplate } from '@ember/template-compilation';
+import { getTemplateLocals } from '@glimmer/syntax';
+import { precompile as precompileTemplate } from 'ember-template-compiler';
 
 import * as Babel from '@babel/standalone';
 import HTMLBars, { preprocessEmbeddedTemplates } from 'babel-plugin-htmlbars-inline-precompile';
@@ -43,7 +44,7 @@ async function compileGJS({ code: input, name }: Info) {
         {
           precompile: precompileTemplate,
           // this needs to be true until Ember 3.27+
-          ensureModuleApiPolyfill: true,
+          ensureModuleApiPolyfill: false,
           modules: {
             'ember-template-imports': {
               export: 'hbs',
@@ -75,9 +76,12 @@ async function compileGJS({ code: input, name }: Info) {
     ],
   });
 
+
   if (!result) {
     return;
   }
+
+  console.log(result, result.code);
 
   let { code } = result;
 

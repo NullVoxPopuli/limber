@@ -40,6 +40,9 @@ module.exports = function (defaults) {
 
   let app = new EmberApp(defaults, config);
 
+  // Adds:
+  //  - ember-template-compiler
+  //  - @glimmer/syntax
   app.import('vendor/ember/ember-template-compiler.js');
 
   const { Webpack } = require('@embroider/webpack');
@@ -65,7 +68,10 @@ module.exports = function (defaults) {
     ],
     ...(MAXIMUM_STATIC
       ? {
-          staticAddonTrees: true,
+          // Temporarily disabled until
+          // https://github.com/emberjs/ember.js/issues/19568
+          // is resolved
+          // staticAddonTrees: true,
           staticAddonTestSupportTrees: true,
           staticHelpers: true,
           staticComponents: true,
