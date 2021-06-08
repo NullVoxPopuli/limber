@@ -33,7 +33,7 @@
     "@embroider/compat": "^0.41.0",
     "@embroider/core": "^0.41.0",
     "@embroider/webpack": "^0.41.0",
-    "@fortawesome/ember-fontawesome": "^0.2.3",
+    "@fortawesome/ember-fontawesome": "github:NullVoxPopuli/ember-fontawesome#support-3-20-and-3-24",
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
