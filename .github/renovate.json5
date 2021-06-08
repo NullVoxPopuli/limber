@@ -8,6 +8,10 @@
   "masterIssue": true,
   "rangeStrategy": "bump",
   "lockFileMaintenance": { "enabled": true },
+  "postUpgradeTasks": {
+    "commands": ["npx yarn-deduplicate"],
+    "fileFilters": ["yarn.lock", "**/*.json"],
+  },
   "packageRules": [
     ////////////////////////////////////////
     // Grouping namespaced packages together
