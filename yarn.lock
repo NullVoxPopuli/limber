@@ -11487,10 +11487,10 @@ onetime@^5.1.0, onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
-onp@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/onp/-/onp-1.0.3.tgz#7ad4fcfed22da1493ab404ddc9ce0d2e28076c6c"
-  integrity sha512-VVbZbLUGntsZpwUekbYuUXhLg+B7hVCS+kR3OoHdvb/l4HuxYO2iMUljRt3kVKeilC2T6jgReNxk99m0y3P80w==
+onp@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/onp/-/onp-1.0.4.tgz#acf79fda6e8a5336fc0d0a687589ab228de082de"
+  integrity sha512-fNacDVglrMAse2FZoTVD9GDSMw+K/2c9J40xvm3RA5mWqTzh8yW+3JT46l4R3U0bRBoDskD2acWrDS3fRBGmCg==
 
 opener@^1.5.2:
   version "1.5.2"
