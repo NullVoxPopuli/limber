@@ -13,7 +13,6 @@ type LazyTrackedArgs = {
 }
 
 // provided by vendor/ember/ember-template-compiler.js (somehow)
-declare module '@glimmer/syntax';
 declare module 'ember-template-compiler';
 
 declare module '@sentry/ember';

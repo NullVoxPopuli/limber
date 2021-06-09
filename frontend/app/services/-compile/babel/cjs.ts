@@ -1,8 +1,8 @@
 import { getTemplateLocals } from '@glimmer/syntax';
-import { precompile as precompileTemplate } from 'ember-template-compiler';
 
 import * as Babel from '@babel/standalone';
 import HTMLBars, { preprocessEmbeddedTemplates } from 'babel-plugin-htmlbars-inline-precompile';
+import { precompile as precompileTemplate } from 'ember-template-compiler';
 
 import { evalSnippet } from './cjs-eval';
 
@@ -76,12 +76,9 @@ async function compileGJS({ code: input, name }: Info) {
     ],
   });
 
-
   if (!result) {
     return;
   }
-
-  console.log(result, result.code);
 
   let { code } = result;
 
