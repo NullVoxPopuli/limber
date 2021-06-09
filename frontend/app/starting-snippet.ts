@@ -57,12 +57,12 @@ import { fn } from '@ember/helper';
 export default class HelloWorld extends Component {
   @tracked count = 1;
 
-  increment = (amount) => this.count += 2;
+  increment = (amount) => this.count += amount;
 
   <template>
     <p>You have clicked the button {{this.count}} times.</p>
 
-    <button {{on "click" (fn this.increment 2)}}>Click</button>
+    <button {{on "click" (fn this.increment 1)}}>Click</button>
   </template>
 }
 \`\`\`
