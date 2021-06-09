@@ -9,3 +9,8 @@ declare module '@ember/component' {
   export function setComponentTemplate(factory: TemplateFactory, obj: object): object;
 }
 
+
+// provided by vendor/ember/ember-template-compiler.js (somehow)
+declare module '@glimmer/syntax' {
+  export function getTemplateLocals(): unknown;
+}
