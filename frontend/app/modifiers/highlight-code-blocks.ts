@@ -35,7 +35,7 @@ export default class HighlightCodeBlocks extends Modifier<Args> {
       let elements = this.element.querySelectorAll('pre > code');
 
       for (let element of elements) {
-        hljs.highlightBlock(element as HTMLElement);
+        hljs.highlightElement(element as HTMLElement);
         addCopyButton(this, element as HTMLElement);
       }
     }

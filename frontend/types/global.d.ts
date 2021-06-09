@@ -15,6 +15,8 @@ type LazyTrackedArgs = {
 // provided by vendor/ember/ember-template-compiler.js (somehow)
 declare module 'ember-template-compiler';
 
+declare module '@ember/helper';
+declare module '@ember/modifier';
 declare module '@sentry/ember';
 declare module 'babel-plugin-htmlbars-inline-precompile';
 declare module '@babel/plugin-proposal-decorators';

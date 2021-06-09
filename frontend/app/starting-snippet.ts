@@ -52,16 +52,17 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { on } from '@ember/modifier';
+import { fn } from '@ember/helper';
 
 export default class HelloWorld extends Component {
   @tracked count = 1;
 
-  increment = () => this.count++;
+  increment = (amount) => this.count += amount;
 
   <template>
     <p>You have clicked the button {{this.count}} times.</p>
 
-    <button {{on "click" this.increment}}>Click</button>
+    <button {{on "click" (fn this.increment 1)}}>Click</button>
   </template>
 }
 \`\`\`

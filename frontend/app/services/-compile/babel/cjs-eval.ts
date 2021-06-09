@@ -3,25 +3,35 @@
  * We need to import and hang on to these references so that they
  * don't get optimized away during deploy
  */
-import Ember from 'ember';
-import _Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { setComponentTemplate } from '@ember/component';
+import _GlimmerComponent from '@glimmer/component';
+import * as _tracking from '@glimmer/tracking';
+import * as _array from '@ember/array';
+import * as _EmberComponent from '@ember/component';
 import _TO from '@ember/component/template-only';
+import * as _destroyable from '@ember/destroyable';
+import * as _helpers from '@ember/helper';
+import * as _modifier from '@ember/modifier';
+import * as _object from '@ember/object';
+import * as _service from '@ember/service';
+import * as _string from '@ember/string';
 import { createTemplateFactory } from '@ember/template-factory';
 
 import type Component from '@glimmer/component';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const _Ember = Ember as any;
-
 const modules = {
-  '@ember/component': { setComponentTemplate },
-  '@ember/template-factory': { createTemplateFactory },
-  '@glimmer/component': _Component,
+  '@ember/array': _array,
+  '@ember/component': _EmberComponent,
   '@ember/component/template-only': _TO,
-  '@glimmer/tracking': { tracked },
-  '@ember/modifier': { on: _Ember._on },
+  '@ember/destroyable': _destroyable,
+  '@ember/helper': _helpers,
+  '@ember/modifier': _modifier,
+  '@ember/object': _object,
+  '@ember/service': _service,
+  '@ember/string': _string,
+  '@ember/template-factory': { createTemplateFactory },
+
+  '@glimmer/component': _GlimmerComponent,
+  '@glimmer/tracking': _tracking,
 };
 
 // https://github.com/glimmerjs/glimmer-experimental/blob/master/packages/examples/playground/src/utils/eval-snippet.ts
