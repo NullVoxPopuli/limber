@@ -50,7 +50,7 @@ function liveCodeExtraction(_options = {}) {
       let invocation = invocationOf(name);
       let invokeNode = {
         type: 'html',
-        value: `<div class="glimdown-render">${invocation}</div>`,
+        value: `<div class="glimdown-render relative"><Limber::CopyMenu />${invocation}</div>`,
       };
 
       file.data.liveCode.push({

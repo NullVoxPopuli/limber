@@ -1,6 +1,13 @@
 {{#let (service 'editor') as |context|}}
 
-  <div class="p-4 prose max-w-full">
+  <div class="p-4 prose max-w-full relative">
+    {{!--
+      The copy menu exists here for two reasons:
+       - we need to statically reference this component so that it doesn't get tree-shaken away
+         (and therefor we'd see errors when dynamic content renders)
+       - we also want to be able to copy the contents of the entire preview
+    --}}
+    <Limber::CopyMenu />
 
     {{#if context.component}}
       {{#let (component context.component) as |Preview|}}

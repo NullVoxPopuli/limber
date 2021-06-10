@@ -1,48 +1,56 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { setComponentTemplate } from '@ember/component';
 import { registerDestructor } from '@ember/destroyable';
 import { action } from '@ember/object';
 import { hbs } from 'ember-cli-htmlbars';
 
-import Popper from '@popperjs/core';
+import { createPopper } from '@popperjs/core';
 // could use ember-modifier here as well
 import { modifier } from 'ember-could-get-used-to-this';
+
+import type Popper from '@popperjs/core';
 
 interface Args {
   placement?: Popper.Placement;
 }
 
-const showEvents = ['mouseenter', 'focus'];
+const showEvents = ['mouseenter', 'focus', 'click'];
 const hideEvents = ['mouseleave', 'blur'];
 
 class PopperJS extends Component<Args> {
-  declare _triggerElement: HTMLElement;
-  declare _popoverElement: HTMLElement;
+  declare _triggerElement?: HTMLElement;
+  declare _popoverElement?: HTMLElement;
 
-  trigger = modifier((element) => {
+  @tracked isShown = false;
+
+  trigger = modifier((element: HTMLElement) => {
     this._triggerElement = element;
 
-    if (this._popoverElement) this.initPopper();
+    if (this._popoverElement) this.setupPopper();
   });
 
-  popover = modifier((element) => {
+  popover = modifier((element: HTMLElement) => {
     this._popoverElement = element;
 
-    if (this._triggerElement) this.initPopper();
+    if (this._triggerElement) this.setupPopper();
   });
 
   @action
-  initPopper() {
-    let { _popoverElement: popover, _triggerElement: trigger } = this;
-    let { placement } = this.args;
+  setupPopper() {
+    const { _popoverElement: popover, _triggerElement: trigger } = this;
+    const { placement } = this.args;
 
-    let popper = Popper.createPopper(trigger, popover, {
+    if (!popover) return;
+    if (!trigger) return;
+
+    let popper = createPopper(trigger, popover, {
       placement: placement || 'bottom',
     });
 
-    let hide = () => popover.removeAttribute('data-show');
+    let hide = () => (this.isShown = false);
     let show = () => {
-      popover.setAttribute('data-show', '');
+      this.isShown = true;
       popper.update();
     };
 
@@ -60,7 +68,7 @@ class PopperJS extends Component<Args> {
 
 export default setComponentTemplate(
   hbs`
-    {{yield this.trigger this.popover}}
+    {{yield this.trigger this.popover this.isShown}}
   `,
   PopperJS
 );
