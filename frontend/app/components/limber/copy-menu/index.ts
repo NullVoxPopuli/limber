@@ -3,12 +3,56 @@ import { setComponentTemplate } from '@ember/component';
 import { action } from '@ember/object';
 import { hbs } from 'ember-cli-htmlbars';
 
+import { toBlob, toPng } from 'html-to-image';
+
 /**
  * This component is injected via the markdown rendering
  */
 class CopyMenu extends Component {
+  get canCopyToImage() {
+    return 'ClipboardItem' in window;
+  }
+
   @action
   copyAsText(event: Event) {
+    let code = this._getSnippetElement(event);
+
+    if (!code) return;
+
+    navigator.clipboard.writeText(code.innerText);
+  }
+
+  @action
+  async copyAsImage(event: Event) {
+    let code = this._getSnippetElement(event);
+
+    if (!code) return;
+
+    if (!this.canCopyToImage) {
+      let image = new Image();
+      let dataUri = await toPng(code);
+
+      image.src = dataUri;
+
+      let w = window.open('');
+
+      w?.document.write(
+        `Your browser does not support ` +
+          `<a target="_blank" href="https://caniuse.com/?search=ClipboardItem">ClipboardItem</a> yet. <br><br>` +
+          image.outerHTML
+      );
+    }
+
+    let blob = await toBlob(code);
+
+    // Works in chrome-based browsers only :(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+  }
+
+  @action
+  _getSnippetElement(event: Event) {
     let target = event.target as HTMLElement;
 
     /**
@@ -18,14 +62,7 @@ class CopyMenu extends Component {
      */
     let code = target.closest('.glimdown-snippet')?.querySelector('pre');
 
-    if (!code) return;
-
-    navigator.clipboard.writeText(code.innerText);
-  }
-
-  @action
-  copyAsImage() {
-    /* ... */
+    return code;
   }
 }
 
@@ -65,7 +102,7 @@ export default setComponentTemplate(
         </items.Item>
         <items.Item as |item|>
           <item.Element
-            {{on 'click' this.copyAsText}}
+            {{on 'click' this.copyAsImage}}
             @tagName="button"
             class="
               bg-transparent
