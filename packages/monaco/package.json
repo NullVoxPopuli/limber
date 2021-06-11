@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "broccoli-funnel": "^3.0.6",
-    "monaco-editor": "^0.24.0",
+    "monaco-editor": "^0.25.0",
     "monaco-editor-core": "^0.24.0",
     "monaco-languages": "^2.4.0"
   },
