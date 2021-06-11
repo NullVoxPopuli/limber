@@ -17,16 +17,12 @@ class CopyMenu extends Component {
   copyAsText(event: Event) {
     let code = this._getSnippetElement(event);
 
-    if (!code) return;
-
     navigator.clipboard.writeText(code.innerText);
   }
 
   @action
   async copyAsImage(event: Event) {
     let code = this._getSnippetElement(event);
-
-    if (!code) return;
 
     if (!this.canCopyToImage) {
       let image = new Image();
@@ -61,6 +57,10 @@ class CopyMenu extends Component {
      * markdown-to-ember.ts
      */
     let code = target.closest('.glimdown-snippet')?.querySelector('pre');
+
+    if (!code) {
+      return target.closest('[data-test-output]') as HTMLDivElement;
+    }
 
     return code;
   }
