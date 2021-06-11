@@ -16,7 +16,7 @@ class CopyMenu extends Component {
      * of how we build markdown previews in
      * markdown-to-ember.ts
      */
-    let code = target.parentElement?.querySelector('pre');
+    let code = target.closest('.glimdown-snippet')?.querySelector('pre');
 
     if (!code) return;
 
@@ -56,7 +56,7 @@ export default setComponentTemplate(
             class="
               bg-transparent
               block w-full select-none relative py-2 px-4 text-left
-              text-black hover:bg-gray-100 focus:ring-4 ring-inset
+              text-black hover:bg-gray-100 focus:ring-4 ring-inset focus:outline-none
             "
             tabindex="0"
           >
@@ -70,7 +70,7 @@ export default setComponentTemplate(
             class="
               bg-transparent
               block w-full select-none relative py-2 px-4 text-left
-              text-black hover:bg-gray-100 focus:ring-4 ring-inset
+              text-black hover:bg-gray-100 focus:ring-4 ring-inset focus:outline-none
             "
             tabindex="0"
           >
