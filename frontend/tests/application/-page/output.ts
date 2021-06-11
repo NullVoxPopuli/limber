@@ -12,7 +12,9 @@ export class OutputArea extends PageObject {
   get firstButton() {
     assert('Output element does not exist', this.element);
 
-    let button = this.element.querySelector('button');
+    let buttonsList = this.element.querySelectorAll('.glimdown-render > button');
+    let buttons = [...buttonsList] as HTMLButtonElement[];
+    let button = buttons.find((button) => !button.dataset['test-copy-menu']);
 
     assert('Button was not rendered', button);
 
