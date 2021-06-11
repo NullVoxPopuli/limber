@@ -132,6 +132,7 @@
     "@nullvoxpopuli/limber-codemirror": "*",
     "@nullvoxpopuli/limber-monaco": "*",
     "@nullvoxpopuli/limber-transpilation": "*",
+    "@popperjs/core": "^2.9.2",
     "babel-plugin-htmlbars-inline-precompile": "^5.3.0",
     "dompurify": "^2.2.9",
     "ember-auto-import": "^2.0.1",
