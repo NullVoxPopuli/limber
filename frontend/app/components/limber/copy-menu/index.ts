@@ -1,12 +1,14 @@
 import Component from '@glimmer/component';
+import { setComponentTemplate } from '@ember/component';
 import { action } from '@ember/object';
+import { hbs } from 'ember-cli-htmlbars';
 
 import { toBlob, toPng } from 'html-to-image';
 
 /**
  * This component is injected via the markdown rendering
  */
-export default class CopyMenu extends Component {
+class CopyMenu extends Component {
   @action
   copyAsText(event: Event) {
     let code = getSnippetElement(event);
@@ -21,6 +23,32 @@ export default class CopyMenu extends Component {
     await withHiddenCopyMenus(() => toClipboard(code));
   }
 }
+
+export default setComponentTemplate(
+  hbs`
+    <Limber::Menu class="absolute top-3 right-4 z-10" data-test-copy-menu>
+      <:trigger>
+        📋
+      </:trigger>
+
+      <:options as |Item|>
+        <Item {{on 'click' this.copyAsText}}>
+          Copy as text
+        </Item>
+        <Item {{on 'click' this.copyAsImage}}>
+          Copy as image
+        </Item>
+      </:options>
+    </Limber::Menu>
+  `,
+  CopyMenu
+);
+
+/*************************************************
+ *
+ * Helpers and stuff
+ *
+ * ********************************************/
 
 const HIDE_COPY_MENU_CLASS = 'copy-menus-hidden';
 
