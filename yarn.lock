@@ -7232,10 +7232,10 @@ ember-focus-trap@^0.7.0:
     ember-modifier-manager-polyfill "^1.2.0"
     focus-trap "^6.4.0"
 
-ember-headlessui@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.npmjs.org/ember-headlessui/-/ember-headlessui-0.3.1.tgz#47296289a73930e8ba419269ce78530a0cef66ce"
-  integrity sha512-SBzWiUGvR2CjUanZlvvrFHD7+rXCjM8Frf2GBpx/8QBU4Rkidfnxa+G5eZc8CbiQhWk9RwGOMGK08vuEFmIBiQ==
+ember-headlessui@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/ember-headlessui/-/ember-headlessui-0.4.0.tgz#71cf805e877a0f7ed64b7caf66f2fe435529b391"
+  integrity sha512-u4n6rRKk/PtY7m+2lOrFAelStPwGrukODbmvG/Uz9B/tX9AGaLja12cVM2nvtXqMcvwSISVaS/zWgqZAmLr0wg==
   dependencies:
     "@ember/render-modifiers" "^1.0.2"
     "@embroider/macros" "^0.41.0"
