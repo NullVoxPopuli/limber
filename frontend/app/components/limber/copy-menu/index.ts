@@ -20,7 +20,7 @@ class CopyMenu extends Component {
   async copyAsImage(event: Event) {
     let code = getSnippetElement(event);
 
-    await toClipboard(code);
+    await withExtraStyles(code, () => toClipboard(code));
   }
 }
 
@@ -57,14 +57,35 @@ function getSnippetElement(event: Event) {
    * This component has intimate knowledge
    * of how we build markdown previews in
    * markdown-to-ember.ts
+   *
+   * We can't select the pre tag directly, otherwise html-to-image
+   * loses the padding, border-radius, shadow
    */
-  let code = target.closest('.glimdown-snippet')?.querySelector('pre');
+  let code = target.closest('.glimdown-snippet') as HTMLDivElement;
 
   if (!code) {
     return target.closest('[data-test-output]') as HTMLDivElement;
   }
 
   return code;
+}
+
+async function withExtraStyles(target: HTMLElement, next: () => Promise<void>) {
+  let pre = target.querySelector('pre');
+
+  if (!pre) {
+    return await next();
+  }
+
+  pre.classList.add('shadow-lg');
+  pre.style.margin = '0';
+
+  try {
+    await next();
+  } finally {
+    pre.classList.remove('shadow-lg');
+    pre.setAttribute('style', '');
+  }
 }
 
 async function toClipboard(target: HTMLElement) {
@@ -75,21 +96,20 @@ async function toClipboard(target: HTMLElement) {
 
     return !node.hasAttribute('data-test-copy-menu');
   };
+
+  let box = target.getBoundingClientRect();
+
   let options = {
     filter,
     backgroundColor,
+    // tell html-to-image to include margins in dimensions
+    // html-to-image does not make adjustments if margins exist anyway
+    width: box.width + 32,
+    height: box.height + 32,
     style: {
-      // mt-0
-      marginTop: '0',
-      // NOTE: none of these work for some reason,
-      // see: https://github.com/bubkoo/html-to-image/issues/144
-      // py-3 px-4
-      padding: '0.75rem 1rem',
-      // rounded-sm
-      borderRadius: '0.35rem',
-      // shadow-lg
-      boxShadow:
-        'rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+      // m-0
+      // make margin uniform all the way around
+      margin: '1rem',
     },
   };
 
