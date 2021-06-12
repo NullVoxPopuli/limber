@@ -27,10 +27,27 @@ type VFileWithMeta = VFile & {
   data: LiveData;
 };
 
+interface Options {
+  snippets?: {
+    classList?: string[];
+  };
+  demo?: {
+    classList?: string[];
+  };
+  copyComponent?: string;
+}
+
 const ALLOWED_LANGUAGES = ['gjs', 'hbs'];
 
 // TODO: extract and publish remark plugin
-function liveCodeExtraction(_options = {}) {
+function liveCodeExtraction(options: Options = {}) {
+  let { copyComponent, snippets, demo } = options;
+  let { classList: snippetClasses } = snippets || {};
+  let { classList: demoClasses } = demo || {};
+
+  snippetClasses ??= [];
+  demoClasses ??= [];
+
   return function transformer(tree: Parent, file: VFileWithMeta) {
     flatMap(tree, (node: Code /* Node */) => {
       if (node.type !== 'code') return [node];
@@ -50,7 +67,19 @@ function liveCodeExtraction(_options = {}) {
       let invocation = invocationOf(name);
       let invokeNode = {
         type: 'html',
-        value: `<div class="glimdown-render">${invocation}</div>`,
+        value: `<div class="${demoClasses}">${invocation}</div>`,
+      };
+      let copy = {
+        type: 'html',
+        value: copyComponent,
+      };
+      let wrapper = {
+        // <p> is wrong, but I think I need to make a rehype plugin instead of remark for this
+        type: 'paragraph',
+        data: {
+          hProperties: { className: snippetClasses },
+        },
+        children: [node, copy],
       };
 
       file.data.liveCode.push({
@@ -60,23 +89,35 @@ function liveCodeExtraction(_options = {}) {
       });
 
       if (meta === 'live preview below') {
-        return [node, invokeNode];
+        return [wrapper, invokeNode];
       }
 
       if (meta === 'live preview') {
-        return [invokeNode, node];
+        return [invokeNode, wrapper];
       }
 
       if (meta === 'live') {
         return [invokeNode];
       }
 
-      return [node];
+      return [wrapper];
     });
   };
 }
 
-const markdownCompiler = unified().use(markdown).use(liveCodeExtraction).use(HBS).use(html);
+const markdownCompiler = unified()
+  .use(markdown)
+  .use(liveCodeExtraction, {
+    snippets: {
+      classList: ['glimdown-snippet', 'relative'],
+    },
+    demo: {
+      classList: ['glimdown-render'],
+    },
+    copyComponent: '<Limber::CopyMenu />',
+  })
+  .use(HBS)
+  .use(html);
 
 export async function parseMarkdown(input: string): Promise<LiveCodeExtraction> {
   let processed = await markdownCompiler.process(input);

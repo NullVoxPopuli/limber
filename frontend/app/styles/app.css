@@ -9,6 +9,10 @@
   src: url('/SourceCodePro-Regular.ttf');
 }
 
+.copy-menus-hidden [data-test-copy-menu] {
+  display: none;
+}
+
 .glimdown-render {
   @apply mt-2;
 }
