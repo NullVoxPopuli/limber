@@ -68,16 +68,34 @@ function getSnippetElement(event: Event) {
 }
 
 async function toClipboard(target: HTMLElement) {
+  let backgroundColor = '#ffffff';
   let canCopyToImage = 'ClipboardItem' in window;
   let filter = (node: HTMLElement | Text) => {
     if (node instanceof Text) return true;
 
     return !node.hasAttribute('data-test-copy-menu');
   };
+  let options = {
+    filter,
+    backgroundColor,
+    style: {
+      // mt-0
+      marginTop: '0',
+      // NOTE: none of these work for some reason,
+      // see: https://github.com/bubkoo/html-to-image/issues/144
+      // py-3 px-4
+      padding: '0.75rem 1rem',
+      // rounded-sm
+      borderRadius: '0.35rem',
+      // shadow-lg
+      boxShadow:
+        'rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+    },
+  };
 
   if (!canCopyToImage) {
     let image = new Image();
-    let dataUri = await toPng(target, { filter });
+    let dataUri = await toPng(target, options);
 
     image.src = dataUri;
 
@@ -92,7 +110,7 @@ async function toClipboard(target: HTMLElement) {
     return;
   }
 
-  let blob = await toBlob(target, { filter });
+  let blob = await toBlob(target, options);
 
   // Works in chrome-based browsers only :(
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
