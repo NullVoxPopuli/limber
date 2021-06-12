@@ -20,7 +20,7 @@ class CopyMenu extends Component {
   async copyAsImage(event: Event) {
     let code = getSnippetElement(event);
 
-    await withHiddenCopyMenus(() => toClipboard(code));
+    await toClipboard(code);
   }
 }
 
@@ -50,18 +50,6 @@ export default setComponentTemplate(
  *
  * ********************************************/
 
-const HIDE_COPY_MENU_CLASS = 'copy-menus-hidden';
-
-export async function withHiddenCopyMenus<Return>(doThis: () => Return | Promise<Return>) {
-  document.body.classList.add(HIDE_COPY_MENU_CLASS);
-
-  try {
-    await doThis();
-  } finally {
-    document.body.classList.remove(HIDE_COPY_MENU_CLASS);
-  }
-}
-
 function getSnippetElement(event: Event) {
   let target = event.target as HTMLElement;
 
@@ -81,10 +69,15 @@ function getSnippetElement(event: Event) {
 
 async function toClipboard(target: HTMLElement) {
   let canCopyToImage = 'ClipboardItem' in window;
+  let filter = (node: HTMLElement | Text) => {
+    if (node instanceof Text) return true;
+
+    return !node.hasAttribute('data-test-copy-menu');
+  };
 
   if (!canCopyToImage) {
     let image = new Image();
-    let dataUri = await toPng(target);
+    let dataUri = await toPng(target, { filter });
 
     image.src = dataUri;
 
@@ -99,7 +92,7 @@ async function toClipboard(target: HTMLElement) {
     return;
   }
 
-  let blob = await toBlob(target);
+  let blob = await toBlob(target, { filter });
 
   // Works in chrome-based browsers only :(
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
