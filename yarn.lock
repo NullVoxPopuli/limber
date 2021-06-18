@@ -11216,15 +11216,15 @@ modern-normalize@^1.0.0:
   resolved "https://registry.yarnpkg.com/modern-normalize/-/modern-normalize-1.1.0.tgz#da8e80140d9221426bd4f725c6e11283d34f90b7"
   integrity sha512-2lMlY1Yc1+CUy0gw4H95uNN7vjbpoED7NNRSBHE25nWfLBdmMzFCsPshlzbxHz+gYMcBEUN8V4pU16prcdPSgA==
 
-monaco-editor-core@^0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/monaco-editor-core/-/monaco-editor-core-0.25.0.tgz#6e903e58875de3163976f02a0f86193c4c3f67d5"
-  integrity sha512-PcaM+wCw2UggfECbBd/v5LDX5JtG/NS/9VAVYZj+azI2geoy6ohEpISPTJYiWRhk9yu8LxPDG6/NJXguzG2Bxg==
+monaco-editor-core@^0.25.1:
+  version "0.25.1"
+  resolved "https://registry.yarnpkg.com/monaco-editor-core/-/monaco-editor-core-0.25.1.tgz#83bff762be72cc8f96714b235db0424840c88a36"
+  integrity sha512-QHYiTAJ8tehH/ZjmsXP/QXQaxFJBfZNgKTuUOEl2/EezSZDozBdQlgKgJZiC6cjVuuo0VaUEb06EWYaDYi2xLA==
 
-monaco-editor@^0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.25.0.tgz#4cbbe25adb4661a1673e4893cdc13dfa406b665e"
-  integrity sha512-Lzk9CGIvFXly1J0s5t8SXk1+UleahGqcoHnSoPe2OBSrKhWLbR7Nvk2QQwaEzJQi4Wtbu5gou2qat1CAbvB82A==
+monaco-editor@^0.25.2:
+  version "0.25.2"
+  resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.25.2.tgz#119e2b15bbd968a1a99c03cac9c329316d7c37e9"
+  integrity sha512-5iylzSJevCnzJn9UVsW8yOZ3yHjmAs4TfvH3zsbftKiFKmHG0xirGN6DK9Kk04VSWxYCZZAIafYJoNJJMAU1KA==
 
 monaco-languages@^2.5.0:
   version "2.5.0"
