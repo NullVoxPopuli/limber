@@ -141,7 +141,7 @@
     "ember-headlessui": "^0.4.1",
     "ember-router-helpers": "^0.4.0",
     "ember-select-light": "^2.0.5",
-    "ember-statechart-component": "2.3.4",
+    "ember-statechart-component": "2.3.6",
     "highlight.js": "^11.0.1",
     "highlightjs-glimmer": "^1.4.0",
     "html-to-image": "^1.6.2",
