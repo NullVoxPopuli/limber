@@ -1729,15 +1729,15 @@
   dependencies:
     purgecss "^3.1.3"
 
-"@glimmer/compiler@0.79.3":
-  version "0.79.3"
-  resolved "https://registry.yarnpkg.com/@glimmer/compiler/-/compiler-0.79.3.tgz#fc68770fe50df0eab0aee0331f40ff26a8ce4763"
-  integrity sha512-eGuZg/6C9ITUZJswpiIElfTQ9P9zQoZccrwfFyoc6QQRcwPCGkfgLpbAjnOCHON/HNsq8Aa+2iswJzAuVyz4QA==
+"@glimmer/compiler@0.80.0":
+  version "0.80.0"
+  resolved "https://registry.yarnpkg.com/@glimmer/compiler/-/compiler-0.80.0.tgz#f825b2d5b55500c0a695f076c7a2fdd312a1e94e"
+  integrity sha512-oz72cvjNHXpKY1i9aJBiLQSkmqW1zbCGc1J/gIGTXeMC5tdJlDXve22eS2ZkNWI41ai3ClzpA0hIz5ju7qO8zw==
   dependencies:
-    "@glimmer/interfaces" "0.79.3"
-    "@glimmer/syntax" "0.79.3"
-    "@glimmer/util" "0.79.3"
-    "@glimmer/wire-format" "0.79.3"
+    "@glimmer/interfaces" "0.80.0"
+    "@glimmer/syntax" "0.80.0"
+    "@glimmer/util" "0.80.0"
+    "@glimmer/wire-format" "0.80.0"
     "@simple-dom/interface" "^1.4.0"
 
 "@glimmer/compiler@^0.27.0":
@@ -1803,10 +1803,10 @@
   dependencies:
     "@simple-dom/interface" "^1.4.0"
 
-"@glimmer/interfaces@0.79.3":
-  version "0.79.3"
-  resolved "https://registry.yarnpkg.com/@glimmer/interfaces/-/interfaces-0.79.3.tgz#4e0a3ff9cf0b60bdab1a4d420f641ab540d4fc85"
-  integrity sha512-EFiNKwehbxm1xRsfnNu/5nu8Rw+0IYINL/Hciwl/28T8an7FOxftpy/iXXSaWvIsnPyBHqH1ufwsKYY6KXyNzg==
+"@glimmer/interfaces@0.80.0":
+  version "0.80.0"
+  resolved "https://registry.yarnpkg.com/@glimmer/interfaces/-/interfaces-0.80.0.tgz#eabc7551ffe7ad27c44ba96d39e2af6ebf01c942"
+  integrity sha512-evD9aVhYacFe/lD/FzaPs0CuuIgkr17+KbOCWDeEMXW0q2FnrLiQET40eP5nyhGLELhKE62mlIzdGmleUR6XYg==
   dependencies:
     "@simple-dom/interface" "^1.4.0"
 
@@ -1867,13 +1867,13 @@
     "@glimmer/vm" "^0.42.2"
     "@glimmer/wire-format" "^0.42.2"
 
-"@glimmer/syntax@0.79.3":
-  version "0.79.3"
-  resolved "https://registry.yarnpkg.com/@glimmer/syntax/-/syntax-0.79.3.tgz#5beadd53494d0f199b83f016af90fa28c3ecaa8c"
-  integrity sha512-IERTn/mqRk0pZnddAnYjGUV4e93rRf5scY0dYQl2EFvBHFaOdFQPe3fhSCozx0hZpagg5LCOsbRgsMwL9IT9fw==
+"@glimmer/syntax@0.80.0":
+  version "0.80.0"
+  resolved "https://registry.yarnpkg.com/@glimmer/syntax/-/syntax-0.80.0.tgz#5f9c2e5824fdc8f88ec3e71861598c339b6777c1"
+  integrity sha512-LP8I5MmcguUiHhahyF96dgjKrPE6l1QVl2rlJY23FkzPSVMtUAQxNsxHPZ7vqi+gu7wucNiOfIPNTh9avOr20Q==
   dependencies:
-    "@glimmer/interfaces" "0.79.3"
-    "@glimmer/util" "0.79.3"
+    "@glimmer/interfaces" "0.80.0"
+    "@glimmer/util" "0.80.0"
     "@handlebars/parser" "~2.0.0"
     simple-html-tokenizer "^0.5.10"
 
@@ -1924,13 +1924,13 @@
     "@glimmer/interfaces" "0.65.3"
     "@simple-dom/interface" "^1.4.0"
 
-"@glimmer/util@0.79.3":
-  version "0.79.3"
-  resolved "https://registry.yarnpkg.com/@glimmer/util/-/util-0.79.3.tgz#a54f0383d8e83ca43625e289fe1df6c72ccfb938"
-  integrity sha512-SVHHA6blGzIM6ZMJErqvzqsapYEsN5hXyobJl+lQAAzBKvaExc7VHQfs10267HxA9WlMNLuu83+tYOu+UR67hA==
+"@glimmer/util@0.80.0":
+  version "0.80.0"
+  resolved "https://registry.yarnpkg.com/@glimmer/util/-/util-0.80.0.tgz#286ec9e2c8c9e2f364e49272a3baf9d0fe3dc40c"
+  integrity sha512-fvr4zyGVp58vzVajwTwbGwp0LmPxm2SVWkfIGFcCr9r2BmYD+9bd52I0u00LsZvNJQqFNyI8RB+qXThRMi+TiA==
   dependencies:
     "@glimmer/env" "0.1.7"
-    "@glimmer/interfaces" "0.79.3"
+    "@glimmer/interfaces" "0.80.0"
     "@simple-dom/interface" "^1.4.0"
 
 "@glimmer/util@^0.27.0":
@@ -1976,13 +1976,13 @@
     "@glimmer/interfaces" "^0.42.2"
     "@glimmer/util" "^0.42.2"
 
-"@glimmer/wire-format@0.79.3":
-  version "0.79.3"
-  resolved "https://registry.yarnpkg.com/@glimmer/wire-format/-/wire-format-0.79.3.tgz#eac19c32297caa5129f820206b8035b8f77d07f4"
-  integrity sha512-6izhGKLIeuWbK9FfaM1I+hXYh3EgKpbpbA99SDQav+TMPiFWFy9sos4PyEuywha5p7MZrMDKXip/l49ARG8XHg==
+"@glimmer/wire-format@0.80.0":
+  version "0.80.0"
+  resolved "https://registry.yarnpkg.com/@glimmer/wire-format/-/wire-format-0.80.0.tgz#bea3da7973a6a70611bf45cfc15592dbec132091"
+  integrity sha512-DAUEqUxq0ymuzRStw51DMhTrRZdCBVPZ7K63YFLRud3pojaApWxgeOFlsLua9nRqR6wYSSKS0y2E0n0tPnRndA==
   dependencies:
-    "@glimmer/interfaces" "0.79.3"
-    "@glimmer/util" "0.79.3"
+    "@glimmer/interfaces" "0.80.0"
+    "@glimmer/util" "0.80.0"
 
 "@glimmer/wire-format@^0.27.0":
   version "0.27.0"

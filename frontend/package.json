@@ -125,7 +125,7 @@
   },
   "dependencies": {
     "@babel/standalone": "^7.14.6",
-    "@glimmer/compiler": "0.79.3",
+    "@glimmer/compiler": "0.80.0",
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
     "@nullvoxpopuli/horizon-theme": "*",
