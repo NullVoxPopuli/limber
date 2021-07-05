@@ -1,22 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import { setComponentTemplate } from '@ember/component';
-import _templateOnlyComponent from '@ember/component/template-only';
-
 import { compileHBS, compileJS } from 'ember-repl';
 
-import { compileTemplate } from './ember-to-opcodes';
 import { parseMarkdown } from './markdown-to-ember';
 
-import type { CompileOutput } from './babel';
 import type { ExtractedCode } from './markdown-to-ember';
-import type ApplicationInstance from '@ember/application/instance';
-import type { TemplateOnlyComponent } from '@ember/component/template-only';
-import type { TemplateFactory } from 'htmlbars-inline-precompile';
 
 interface CompilationResult {
   rootTemplate?: string;
-  rootTemplateFactory?: TemplateFactory;
   rootComponent?: object;
   scope?: object[];
 
@@ -34,9 +25,8 @@ export async function compileAll(js: { code: string }[]) {
   return modules;
 }
 
-export async function compile(glimdownInput: string, name: string): Promise<CompilationResult> {
+export async function compile(glimdownInput: string): Promise<CompilationResult> {
   let rootTemplate: string;
-  let rootTemplateFactory: TemplateFactory;
   let rootComponent: object;
   let liveCode: ExtractedCode[];
   let scope: object[] = [];
@@ -68,22 +58,21 @@ export async function compile(glimdownInput: string, name: string): Promise<Comp
       let js = liveCode.filter((code) => ['js', 'gjs'].includes(code.lang));
 
       if (js.length > 0) {
-        let compiled = await compileJS(name, js);
+        let compiled = await compileAll(js);
 
         await Promise.all(
-          compiled.map(async (info: CompileOutput) => {
-            let { name } = info;
+          compiled.map(async (info) => {
+            // using web worker + import maps is not available yet (need firefox support)
+            // (and to somehow be able to point at npm)
+            //
+            // if ('importPath' in info) {
+            //   return scope.push({
+            //     moduleName: name,
+            //     component: await import(/* webpackIgnore: true */ info.importPath),
+            //   });
+            // }
 
-            if ('importPath' in info) {
-              return scope.push({
-                moduleName: name,
-                component: await import(/* webpackIgnore: true */ info.importPath),
-              });
-            }
-
-            (info.default as any).moduleName = name;
-
-            return scope.push(info.default);
+            return scope.push(info);
           })
         );
       }
@@ -103,40 +92,10 @@ export async function compile(glimdownInput: string, name: string): Promise<Comp
    * Step 4: Compile the Ember Template
    */
   try {
-    rootTemplateFactory = compileTemplate(rootTemplate, { moduleName: name });
-    rootComponent = toComponent(rootTemplateFactory, name);
+    rootComponent = compileHBS(rootTemplate, { scope });
   } catch (error) {
     return { error, rootTemplate };
   }
 
-  // Temporarily, while we figure out how to load babel.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return { rootTemplate, rootTemplateFactory, rootComponent, liveCode, scope } as any;
-}
-
-function toComponent(template: TemplateFactory, name: string): TemplateOnlyComponent {
-  // https://github.com/glimmerjs/glimmer-vm/blob/master/packages/%40glimmer/runtime/lib/component/template-only.ts#L83
-  return setComponentTemplate(template, _templateOnlyComponent(name)) as TemplateOnlyComponent;
-}
-
-export function opcodesFrom(owner: ApplicationInstance, templateFactory: TemplateFactory) {
-  // The TemplateFactory has an incomplete type
-  return (templateFactory as any)(owner).parsedLayout.block;
-}
-
-export function doesExist(owner: ApplicationInstance, id: string, existing?: string) {
-  return id === existing && owner.hasRegistration(`component:${id}`);
-}
-
-// type TemplateOnlyComponent does not have a moduleName property.. :-\
-export function register(owner: ApplicationInstance, component: any) {
-  try {
-    owner.register(`component:${component.moduleName}`, component);
-  } catch (e) {
-    if (e.message.includes('Cannot re-register')) {
-      return;
-    }
-
-    throw e;
-  }
+  return { rootTemplate, rootComponent };
 }
