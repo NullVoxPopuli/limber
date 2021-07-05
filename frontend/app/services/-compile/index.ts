@@ -3,7 +3,8 @@
 import { setComponentTemplate } from '@ember/component';
 import _templateOnlyComponent from '@ember/component/template-only';
 
-import { compileJS } from './babel';
+import { compileHBS, compileJS } from 'ember-repl';
+
 import { compileTemplate } from './ember-to-opcodes';
 import { parseMarkdown } from './markdown-to-ember';
 
@@ -21,6 +22,16 @@ interface CompilationResult {
 
   error?: Error;
   errorLine?: number;
+}
+
+export async function compileAll(js: { code: string }[]) {
+  let modules = await Promise.all(
+    js.map(async ({ code }) => {
+      return await compileJS(code);
+    })
+  );
+
+  return modules;
 }
 
 export async function compile(glimdownInput: string, name: string): Promise<CompilationResult> {
@@ -77,8 +88,8 @@ export async function compile(glimdownInput: string, name: string): Promise<Comp
         );
       }
 
-      for (let { code, name } of hbs) {
-        scope.push(toComponent(compileTemplate(code, { moduleName: name }), name));
+      for (let { code } of hbs) {
+        scope.push(compileHBS(code));
       }
     } catch (error) {
       console.info({ scope });

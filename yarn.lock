@@ -1003,6 +1003,11 @@
   resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.14.6.tgz#9070bd3cc2bb997d42e14bdf3b0d24a11b00242b"
   integrity sha512-oAoSp82jhJFnXKybKTOj5QF04XxiDRyiiqrFToiU1udlBXuZoADlPmmnOcuqBrZxSNNUjzJIVK8vt838Qoqjxg==
 
+"@babel/standalone@^7.14.7":
+  version "7.14.7"
+  resolved "https://registry.npmjs.org/@babel/standalone/-/standalone-7.14.7.tgz#68635da005d6a34a0259599e0720d2e73133ecc3"
+  integrity sha512-7RlfMPR4604SbYpj5zvs2ZK587hVhixgU9Pd9Vs8lB8KYtT3U0apXSf0vZXhy8XRh549eUmJOHXhWKTO3ObzOQ==
+
 "@babel/template@^7.14.5":
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.14.5.tgz#a9bc9d8b33354ff6e55a9c60d1109200a68974f4"
@@ -1671,7 +1676,6 @@
 
 "@fortawesome/ember-fontawesome@github:NullVoxPopuli/ember-fontawesome#support-3-20-and-3-24":
   version "0.2.3"
-  uid f097df09371b8ae65f306b3bd0247133aaf02e57
   resolved "https://codeload.github.com/NullVoxPopuli/ember-fontawesome/tar.gz/f097df09371b8ae65f306b3bd0247133aaf02e57"
   dependencies:
     "@embroider/macros" "^0.41.0"
@@ -6643,6 +6647,46 @@ ember-auto-import@^2.0.1:
     typescript-memoize "^1.0.0-alpha.3"
     walk-sync "^0.3.3"
 
+ember-auto-import@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/ember-auto-import/-/ember-auto-import-2.0.2.tgz#bd25191fbce58c4c91ca1789e5514de4fc7ee9d4"
+  integrity sha512-mBtHZCmFQvAnq31sM1PHvHRQWkI2p/T2VZ0Y7c+HE2BGUkY/2AW0wMhw3uhpivIr3WRbRIiYwYPVNtInNL7TwA==
+  dependencies:
+    "@babel/core" "^7.1.6"
+    "@babel/plugin-proposal-class-properties" "^7.13.0"
+    "@babel/plugin-proposal-decorators" "^7.13.5"
+    "@babel/preset-env" "^7.10.2"
+    "@babel/traverse" "^7.1.6"
+    "@babel/types" "^7.1.6"
+    "@embroider/shared-internals" "^0.40.0"
+    babel-loader "^8.0.6"
+    babel-plugin-ember-modules-api-polyfill "^3.5.0"
+    babel-plugin-htmlbars-inline-precompile "^5.2.1"
+    babel-plugin-syntax-dynamic-import "^6.18.0"
+    broccoli-debug "^0.6.4"
+    broccoli-merge-trees "^4.2.0"
+    broccoli-node-api "^1.7.0"
+    broccoli-plugin "^4.0.0"
+    broccoli-source "^3.0.0"
+    css-loader "^5.2.0"
+    debug "^4.3.1"
+    ember-cli-babel "^7.0.0"
+    fs-extra "^6.0.1"
+    fs-tree-diff "^2.0.0"
+    handlebars "^4.3.1"
+    js-string-escape "^1.0.1"
+    lodash "^4.17.19"
+    mkdirp "^0.5.1"
+    parse5 "^6.0.1"
+    resolve "^1.20.0"
+    resolve-package-path "^3.1.0"
+    rimraf "^2.6.2"
+    semver "^7.3.4"
+    style-loader "^2.0.0"
+    symlink-or-copy "^1.2.0"
+    typescript-memoize "^1.0.0-alpha.3"
+    walk-sync "^0.3.3"
+
 ember-cli-app-version@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-app-version/-/ember-cli-app-version-5.0.0.tgz#adad17c6f706f419b223707eec66dd1cd28530c3"
@@ -6710,7 +6754,6 @@ ember-cli-babel@^7.0.0, ember-cli-babel@^7.1.0, ember-cli-babel@^7.10.0, ember-c
 
 "ember-cli-browserstack@github:NullVoxPopuli/ember-cli-browserstack#patch-1":
   version "1.1.0"
-  uid "72697dbd4369c3f4c20810b6433e49a14cb135a0"
   resolved "https://codeload.github.com/NullVoxPopuli/ember-cli-browserstack/tar.gz/72697dbd4369c3f4c20810b6433e49a14cb135a0"
   dependencies:
     browserstack "^1.6.0"
@@ -6808,7 +6851,6 @@ ember-cli-path-utils@^1.0.0:
 
 "ember-cli-postcss@github:jeffjewiss/ember-cli-postcss#remove-library-register":
   version "7.0.0"
-  uid d0be987cc34a80ffa78683e8157bed1ce14a4e6a
   resolved "https://codeload.github.com/jeffjewiss/ember-cli-postcss/tar.gz/d0be987cc34a80ffa78683e8157bed1ce14a4e6a"
   dependencies:
     broccoli-merge-trees "^4.0.0"
@@ -7207,6 +7249,22 @@ ember-qunit@^5.1.4:
     resolve-package-path "^3.1.0"
     silent-error "^1.1.1"
     validate-peer-dependencies "^1.1.0"
+
+ember-repl@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/ember-repl/-/ember-repl-1.1.0.tgz#14bcb37c77b737c3e2e600a43434847c18764a41"
+  integrity sha512-KLDb/AfyYkDaAajCSTkGLOA3evn0TCUaOlnzKr2TiB97ZQYjsQJFfMyHKMge7wPV8c9j5XxrBKCCrDjN+hCaDA==
+  dependencies:
+    "@babel/standalone" "^7.14.7"
+    "@glimmer/component" "^1.0.4"
+    "@glimmer/tracking" "^1.0.4"
+    babel-plugin-htmlbars-inline-precompile "^5.3.0"
+    ember-auto-import "^2.0.2"
+    ember-cli-babel "^7.26.6"
+    ember-cli-htmlbars "^5.7.1"
+    ember-compatibility-helpers "^1.2.4"
+    path-browserify "^1.0.1"
+    uuid "8.3.2"
 
 ember-resolver@^8.0.2:
   version "8.0.2"
@@ -14457,7 +14515,6 @@ tr46@^2.1.0:
 
 tracked-built-ins@^1.1.1, "tracked-built-ins@github:pzuraq/tracked-built-ins#master":
   version "1.1.1"
-  uid "76d1c03b5fd9e07b8c7a4903cd01ed226b974f39"
   resolved "https://codeload.github.com/pzuraq/tracked-built-ins/tar.gz/76d1c03b5fd9e07b8c7a4903cd01ed226b974f39"
   dependencies:
     ember-cli-babel "^7.26.3"
@@ -14466,7 +14523,6 @@ tracked-built-ins@^1.1.1, "tracked-built-ins@github:pzuraq/tracked-built-ins#mas
 
 tracked-maps-and-sets@^2.0.0, tracked-maps-and-sets@^2.2.1, "tracked-maps-and-sets@github:NullVoxPopuli/tracked-maps-and-sets#resolve-global-ember-issue":
   version "2.2.1"
-  uid b9925ff4aacbd4e5a9c993bac5b13f7007a8d53a
   resolved "https://codeload.github.com/NullVoxPopuli/tracked-maps-and-sets/tar.gz/b9925ff4aacbd4e5a9c993bac5b13f7007a8d53a"
   dependencies:
     "@glimmer/tracking" "^1.0.0"
@@ -14854,15 +14910,15 @@ utils-merge@1.0.1:
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
 
+uuid@8.3.2, uuid@^8.3.0, uuid@^8.3.2:
+  version "8.3.2"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
+  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
 uuid@^3.3.2:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
-
-uuid@^8.3.0, uuid@^8.3.2:
-  version "8.3.2"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
-  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
 v8-compile-cache@^2.0.3, v8-compile-cache@^2.2.0, v8-compile-cache@^2.3.0:
   version "2.3.0"

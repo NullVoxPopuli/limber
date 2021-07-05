@@ -6,6 +6,7 @@ import { guidFor } from '@ember/object/internals';
 import { debounce, schedule } from '@ember/runloop';
 import Service, { inject as service } from '@ember/service';
 
+import { nameFor } from 'ember-repl';
 import { DEFAULT_SNIPPET } from 'limber/starting-snippet';
 import { getQP } from 'limber/utils/query-params';
 
@@ -38,7 +39,7 @@ export default class EditorService extends Service {
   async makeComponent() {
     deleteQP('e');
     let owner = getOwner(this);
-    let id = `runtime-${guidFor(this.text)}`;
+    let id = nameFor(this.text);
 
     if (this.error !== this.errorOnLoad) {
       this.error = null;
