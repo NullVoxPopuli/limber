@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Ember from 'ember';
-import {DEBUG} from '@glimmer/env';
+import { DEBUG } from '@glimmer/env';
 import Route from '@ember/routing/route';
 
 import ENV from 'limber/config/environment';
