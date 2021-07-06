@@ -1,19 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import { compileHBS, compileJS } from 'ember-repl';
+import { compileHBS, compileJS, invocationName } from 'ember-repl';
 
 import { parseMarkdown } from './markdown-to-ember';
 
 import type { ExtractedCode } from './markdown-to-ember';
+import type { CompileResult } from 'ember-repl';
 
 interface CompilationResult {
   rootTemplate?: string;
-  rootComponent?: object;
+  rootComponent?: unknown;
   scope?: object[];
 
   error?: Error;
   errorLine?: number;
 }
+
 
 export async function compileAll(js: { code: string }[]) {
   let modules = await Promise.all(
@@ -27,9 +29,8 @@ export async function compileAll(js: { code: string }[]) {
 
 export async function compile(glimdownInput: string): Promise<CompilationResult> {
   let rootTemplate: string;
-  let rootComponent: object;
   let liveCode: ExtractedCode[];
-  let scope: object[] = [];
+  let scope: CompileResult[] = [];
 
   /**
    * Step 1: Convert Markdown To HTML (Ember).
@@ -92,10 +93,18 @@ export async function compile(glimdownInput: string): Promise<CompilationResult>
    * Step 4: Compile the Ember Template
    */
   try {
-    rootComponent = compileHBS(rootTemplate, { scope });
+    let localScope = scope.reduce((accum, { component, name }) => {
+      accum[invocationName(name)] = component;
+
+      return accum;
+    }, {} as Record<string, unknown>);
+
+    console.log(localScope);
+    let { component, error } = compileHBS(rootTemplate, { scope: localScope });
+
+    console.log(component, error);
+    return { rootTemplate, rootComponent: component, error };
   } catch (error) {
     return { error, rootTemplate };
   }
-
-  return { rootTemplate, rootComponent };
 }

@@ -1,10 +1,9 @@
+import { invocationOf, nameFor } from 'ember-repl';
 import HBS from 'remark-hbs';
 import html from 'remark-html';
 import markdown from 'remark-parse';
 import unified from 'unified';
 import flatMap from 'unist-util-flatmap';
-
-import { invocationOf, nameForSnippet } from './id';
 
 import type { Code } from 'mdast';
 import type { Parent } from 'unist';
@@ -63,7 +62,7 @@ function liveCodeExtraction(options: Options = {}) {
       file.data.liveCode = file.data.liveCode || [];
 
       let code = value.trim();
-      let name = nameForSnippet(code);
+      let name = nameFor(code);
       let invocation = invocationOf(name);
       let invokeNode = {
         type: 'html',
