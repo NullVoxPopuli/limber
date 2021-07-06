@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 import { compileHBS, compileJS, invocationName } from 'ember-repl';
+import CopyMenu from 'limber/components/limber/copy-menu';
 
 import { parseMarkdown } from './markdown-to-ember';
 
@@ -15,7 +16,6 @@ interface CompilationResult {
   error?: Error;
   errorLine?: number;
 }
-
 
 export async function compileAll(js: { code: string }[]) {
   let modules = await Promise.all(
@@ -99,10 +99,10 @@ export async function compile(glimdownInput: string): Promise<CompilationResult>
       return accum;
     }, {} as Record<string, unknown>);
 
-    console.log(localScope);
-    let { component, error } = compileHBS(rootTemplate, { scope: localScope });
+    let { component, error } = compileHBS(rootTemplate, {
+      scope: { ...localScope, 'Limber::CopyMenu': CopyMenu },
+    });
 
-    console.log(component, error);
     return { rootTemplate, rootComponent: component, error };
   } catch (error) {
     return { error, rootTemplate };

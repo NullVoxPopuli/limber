@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Ember from 'ember';
-import { DEBUG } from '@glimmer/env';
+import {DEBUG} from '@glimmer/env';
 import Route from '@ember/routing/route';
 
 import ENV from 'limber/config/environment';
@@ -21,6 +21,9 @@ export default class ApplicationRoute extends Route {
  * but since we're creating a development environment inside
  * a production build, we have to get a little creative with
  * how we report errors
+ *
+ * TODO: get rid of this silliness when ErrorBoundaries land
+ *
  */
 // eslint-disable-next-line ember/no-ember-testing-in-module-scope
 function setupOnError() {
