@@ -45,10 +45,11 @@ export default class EditorService extends Service {
 
     if (CACHE.has(id)) {
       this.component = CACHE.get(id);
+
+      return;
     }
 
-    let compilationResult = await compile(this.text);
-    let { error, rootTemplate, rootComponent } = compilationResult;
+    let { error, rootTemplate, rootComponent } = await compile(this.text);
 
     if (error) {
       console.error(error);
