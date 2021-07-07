@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 
 import { stripIndent } from 'common-tags';
-import { invocationOf, nameForSnippet } from 'limber/services/-compile/id';
+import { invocationOf, nameFor } from 'ember-repl';
 import { parseMarkdown } from 'limber/services/-compile/markdown-to-ember';
 
 /**
@@ -66,7 +66,7 @@ module('Unit | parseMarkdown()', function () {
   module('hbs', function () {
     test('Code fence is live', async function (assert) {
       let snippet = `{{concat "hello" " " "there"}}`;
-      let name = nameForSnippet(snippet);
+      let name = nameFor(snippet);
       let result = await parseMarkdown(
         stripIndent`
           # Title
@@ -121,7 +121,7 @@ module('Unit | parseMarkdown()', function () {
 
     test('Code fence is live', async function (assert) {
       let snippet = `const two = 2`;
-      let name = nameForSnippet(snippet);
+      let name = nameFor(snippet);
       let result = await parseMarkdown(stripIndent`
         # Title
 
@@ -150,7 +150,7 @@ module('Unit | parseMarkdown()', function () {
 
     test('Can invoke a component again when defined in a live fence', async function (assert) {
       let snippet = `const two = 2`;
-      let name = nameForSnippet(snippet);
+      let name = nameFor(snippet);
       let result = await parseMarkdown(stripIndent`
       # Title
 

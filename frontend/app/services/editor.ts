@@ -1,24 +1,24 @@
 import { tracked } from '@glimmer/tracking';
-import { getOwner } from '@ember/application';
-import { assert } from '@ember/debug';
 import { action } from '@ember/object';
-import { guidFor } from '@ember/object/internals';
 import { debounce, schedule } from '@ember/runloop';
 import Service, { inject as service } from '@ember/service';
 
+import { nameFor } from 'ember-repl';
 import { DEFAULT_SNIPPET } from 'limber/starting-snippet';
 import { getQP } from 'limber/utils/query-params';
 
-import { compile, doesExist, opcodesFrom, register } from './-compile';
+import { compile } from './-compile';
 
 import type RouterService from '@ember/routing/router-service';
+
+const CACHE = new Map<string, unknown>();
 
 export default class EditorService extends Service {
   @service declare router: RouterService;
 
   errorOnLoad = getQP('e');
 
-  @tracked component?: string;
+  @tracked component?: unknown;
   @tracked error: string | null = this.errorOnLoad ?? null;
   @tracked errorLine: number | null = null;
   @tracked markdownToHbs?: string;
@@ -37,19 +37,19 @@ export default class EditorService extends Service {
   @action
   async makeComponent() {
     deleteQP('e');
-    let owner = getOwner(this);
-    let id = `runtime-${guidFor(this.text)}`;
+    let id = nameFor(this.text);
 
     if (this.error !== this.errorOnLoad) {
       this.error = null;
     }
 
-    if (doesExist(owner, id, this.component)) {
+    if (CACHE.has(id)) {
+      this.component = CACHE.get(id);
+
       return;
     }
 
-    let compilationResult = await compile(this.text, id);
-    let { error, rootTemplate, rootTemplateFactory, rootComponent, scope } = compilationResult;
+    let { error, rootTemplate, rootComponent } = await compile(this.text);
 
     if (error) {
       console.error(error);
@@ -61,7 +61,7 @@ export default class EditorService extends Service {
       return;
     }
 
-    if (error && !rootTemplateFactory) {
+    if (error) {
       let { line } = extractPosition(error.message);
 
       this.error = error.message;
@@ -70,35 +70,13 @@ export default class EditorService extends Service {
       return;
     }
 
-    if (error) {
-      console.error('Unhandled error');
-
-      return;
-    }
-
     if (rootTemplate !== undefined) {
       this.markdownToHbs = rootTemplate;
     }
 
-    /**
-     * Should these be strict mode components?
-     */
-    if (rootTemplateFactory && rootComponent) {
-      if (scope?.length) {
-        scope.forEach((component) => register(owner, component));
-      }
+    CACHE.set(id, rootComponent);
 
-      register(owner, rootComponent);
-    }
-
-    assert(`Expected to have a template factory`, rootTemplateFactory);
-
-    let previousId = this.component;
-
-    this.component = id;
-    this.template = opcodesFrom(owner, rootTemplateFactory);
-
-    owner.unregister(`component:${previousId}`);
+    this.component = rootComponent;
   }
 
   @action

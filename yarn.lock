@@ -1003,6 +1003,11 @@
   resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.14.6.tgz#9070bd3cc2bb997d42e14bdf3b0d24a11b00242b"
   integrity sha512-oAoSp82jhJFnXKybKTOj5QF04XxiDRyiiqrFToiU1udlBXuZoADlPmmnOcuqBrZxSNNUjzJIVK8vt838Qoqjxg==
 
+"@babel/standalone@^7.14.7":
+  version "7.14.7"
+  resolved "https://registry.npmjs.org/@babel/standalone/-/standalone-7.14.7.tgz#68635da005d6a34a0259599e0720d2e73133ecc3"
+  integrity sha512-7RlfMPR4604SbYpj5zvs2ZK587hVhixgU9Pd9Vs8lB8KYtT3U0apXSf0vZXhy8XRh549eUmJOHXhWKTO3ObzOQ==
+
 "@babel/template@^7.14.5":
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.14.5.tgz#a9bc9d8b33354ff6e55a9c60d1109200a68974f4"
@@ -1671,7 +1676,6 @@
 
 "@fortawesome/ember-fontawesome@github:NullVoxPopuli/ember-fontawesome#support-3-20-and-3-24":
   version "0.2.3"
-  uid f097df09371b8ae65f306b3bd0247133aaf02e57
   resolved "https://codeload.github.com/NullVoxPopuli/ember-fontawesome/tar.gz/f097df09371b8ae65f306b3bd0247133aaf02e57"
   dependencies:
     "@embroider/macros" "^0.41.0"
@@ -1728,17 +1732,6 @@
   integrity sha512-kwOXw8fZ0Lt1QmeOOrd+o4Ibvp4UTEBFQbzvWldjlKv5n+G9sXfIPn1hh63IQIL8K8vbvv1oYMJiIUbuy9bGaA==
   dependencies:
     purgecss "^3.1.3"
-
-"@glimmer/compiler@0.79.3":
-  version "0.79.3"
-  resolved "https://registry.yarnpkg.com/@glimmer/compiler/-/compiler-0.79.3.tgz#fc68770fe50df0eab0aee0331f40ff26a8ce4763"
-  integrity sha512-eGuZg/6C9ITUZJswpiIElfTQ9P9zQoZccrwfFyoc6QQRcwPCGkfgLpbAjnOCHON/HNsq8Aa+2iswJzAuVyz4QA==
-  dependencies:
-    "@glimmer/interfaces" "0.79.3"
-    "@glimmer/syntax" "0.79.3"
-    "@glimmer/util" "0.79.3"
-    "@glimmer/wire-format" "0.79.3"
-    "@simple-dom/interface" "^1.4.0"
 
 "@glimmer/compiler@^0.27.0":
   version "0.27.0"
@@ -1803,13 +1796,6 @@
   dependencies:
     "@simple-dom/interface" "^1.4.0"
 
-"@glimmer/interfaces@0.79.3":
-  version "0.79.3"
-  resolved "https://registry.yarnpkg.com/@glimmer/interfaces/-/interfaces-0.79.3.tgz#4e0a3ff9cf0b60bdab1a4d420f641ab540d4fc85"
-  integrity sha512-EFiNKwehbxm1xRsfnNu/5nu8Rw+0IYINL/Hciwl/28T8an7FOxftpy/iXXSaWvIsnPyBHqH1ufwsKYY6KXyNzg==
-  dependencies:
-    "@simple-dom/interface" "^1.4.0"
-
 "@glimmer/interfaces@^0.27.0":
   version "0.27.0"
   resolved "https://registry.yarnpkg.com/@glimmer/interfaces/-/interfaces-0.27.0.tgz#473cda3c8cca636989fb310b4ffdb8f14ffae5c9"
@@ -1867,16 +1853,6 @@
     "@glimmer/vm" "^0.42.2"
     "@glimmer/wire-format" "^0.42.2"
 
-"@glimmer/syntax@0.79.3":
-  version "0.79.3"
-  resolved "https://registry.yarnpkg.com/@glimmer/syntax/-/syntax-0.79.3.tgz#5beadd53494d0f199b83f016af90fa28c3ecaa8c"
-  integrity sha512-IERTn/mqRk0pZnddAnYjGUV4e93rRf5scY0dYQl2EFvBHFaOdFQPe3fhSCozx0hZpagg5LCOsbRgsMwL9IT9fw==
-  dependencies:
-    "@glimmer/interfaces" "0.79.3"
-    "@glimmer/util" "0.79.3"
-    "@handlebars/parser" "~2.0.0"
-    simple-html-tokenizer "^0.5.10"
-
 "@glimmer/syntax@^0.27.0":
   version "0.27.0"
   resolved "https://registry.yarnpkg.com/@glimmer/syntax/-/syntax-0.27.0.tgz#e53133727cf465a8787a07c7ea660a91689ebdc2"
@@ -1924,15 +1900,6 @@
     "@glimmer/interfaces" "0.65.3"
     "@simple-dom/interface" "^1.4.0"
 
-"@glimmer/util@0.79.3":
-  version "0.79.3"
-  resolved "https://registry.yarnpkg.com/@glimmer/util/-/util-0.79.3.tgz#a54f0383d8e83ca43625e289fe1df6c72ccfb938"
-  integrity sha512-SVHHA6blGzIM6ZMJErqvzqsapYEsN5hXyobJl+lQAAzBKvaExc7VHQfs10267HxA9WlMNLuu83+tYOu+UR67hA==
-  dependencies:
-    "@glimmer/env" "0.1.7"
-    "@glimmer/interfaces" "0.79.3"
-    "@simple-dom/interface" "^1.4.0"
-
 "@glimmer/util@^0.27.0":
   version "0.27.0"
   resolved "https://registry.yarnpkg.com/@glimmer/util/-/util-0.27.0.tgz#e6e26779b4b7ced899ec376c7b949d0f16f92383"
@@ -1976,14 +1943,6 @@
     "@glimmer/interfaces" "^0.42.2"
     "@glimmer/util" "^0.42.2"
 
-"@glimmer/wire-format@0.79.3":
-  version "0.79.3"
-  resolved "https://registry.yarnpkg.com/@glimmer/wire-format/-/wire-format-0.79.3.tgz#eac19c32297caa5129f820206b8035b8f77d07f4"
-  integrity sha512-6izhGKLIeuWbK9FfaM1I+hXYh3EgKpbpbA99SDQav+TMPiFWFy9sos4PyEuywha5p7MZrMDKXip/l49ARG8XHg==
-  dependencies:
-    "@glimmer/interfaces" "0.79.3"
-    "@glimmer/util" "0.79.3"
-
 "@glimmer/wire-format@^0.27.0":
   version "0.27.0"
   resolved "https://registry.yarnpkg.com/@glimmer/wire-format/-/wire-format-0.27.0.tgz#1d1729814da57b99f2dbbe718f71456259484b11"
@@ -2003,11 +1962,6 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@handlebars/parser/-/parser-1.1.0.tgz#d6dbc7574774b238114582410e8fee0dc3532bdf"
   integrity sha512-rR7tJoSwJ2eooOpYGxGGW95sLq6GXUaS1UtWvN7pei6n2/okYvCGld9vsUTvkl2migxbkszsycwtMf/GEc1k1A==
-
-"@handlebars/parser@~2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@handlebars/parser/-/parser-2.0.0.tgz#5e8b7298f31ff8f7b260e6b7363c7e9ceed7d9c5"
-  integrity sha512-EP9uEDZv/L5Qh9IWuMUGJRfwhXJ4h1dqKTT4/3+tY0eu7sPis7xh23j61SYUnNF4vqCQvvUXpDo9Bh/+q1zASA==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -6643,6 +6597,46 @@ ember-auto-import@^2.0.1:
     typescript-memoize "^1.0.0-alpha.3"
     walk-sync "^0.3.3"
 
+ember-auto-import@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/ember-auto-import/-/ember-auto-import-2.0.2.tgz#bd25191fbce58c4c91ca1789e5514de4fc7ee9d4"
+  integrity sha512-mBtHZCmFQvAnq31sM1PHvHRQWkI2p/T2VZ0Y7c+HE2BGUkY/2AW0wMhw3uhpivIr3WRbRIiYwYPVNtInNL7TwA==
+  dependencies:
+    "@babel/core" "^7.1.6"
+    "@babel/plugin-proposal-class-properties" "^7.13.0"
+    "@babel/plugin-proposal-decorators" "^7.13.5"
+    "@babel/preset-env" "^7.10.2"
+    "@babel/traverse" "^7.1.6"
+    "@babel/types" "^7.1.6"
+    "@embroider/shared-internals" "^0.40.0"
+    babel-loader "^8.0.6"
+    babel-plugin-ember-modules-api-polyfill "^3.5.0"
+    babel-plugin-htmlbars-inline-precompile "^5.2.1"
+    babel-plugin-syntax-dynamic-import "^6.18.0"
+    broccoli-debug "^0.6.4"
+    broccoli-merge-trees "^4.2.0"
+    broccoli-node-api "^1.7.0"
+    broccoli-plugin "^4.0.0"
+    broccoli-source "^3.0.0"
+    css-loader "^5.2.0"
+    debug "^4.3.1"
+    ember-cli-babel "^7.0.0"
+    fs-extra "^6.0.1"
+    fs-tree-diff "^2.0.0"
+    handlebars "^4.3.1"
+    js-string-escape "^1.0.1"
+    lodash "^4.17.19"
+    mkdirp "^0.5.1"
+    parse5 "^6.0.1"
+    resolve "^1.20.0"
+    resolve-package-path "^3.1.0"
+    rimraf "^2.6.2"
+    semver "^7.3.4"
+    style-loader "^2.0.0"
+    symlink-or-copy "^1.2.0"
+    typescript-memoize "^1.0.0-alpha.3"
+    walk-sync "^0.3.3"
+
 ember-cli-app-version@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-app-version/-/ember-cli-app-version-5.0.0.tgz#adad17c6f706f419b223707eec66dd1cd28530c3"
@@ -6710,7 +6704,6 @@ ember-cli-babel@^7.0.0, ember-cli-babel@^7.1.0, ember-cli-babel@^7.10.0, ember-c
 
 "ember-cli-browserstack@github:NullVoxPopuli/ember-cli-browserstack#patch-1":
   version "1.1.0"
-  uid "72697dbd4369c3f4c20810b6433e49a14cb135a0"
   resolved "https://codeload.github.com/NullVoxPopuli/ember-cli-browserstack/tar.gz/72697dbd4369c3f4c20810b6433e49a14cb135a0"
   dependencies:
     browserstack "^1.6.0"
@@ -6808,7 +6801,6 @@ ember-cli-path-utils@^1.0.0:
 
 "ember-cli-postcss@github:jeffjewiss/ember-cli-postcss#remove-library-register":
   version "7.0.0"
-  uid d0be987cc34a80ffa78683e8157bed1ce14a4e6a
   resolved "https://codeload.github.com/jeffjewiss/ember-cli-postcss/tar.gz/d0be987cc34a80ffa78683e8157bed1ce14a4e6a"
   dependencies:
     broccoli-merge-trees "^4.0.0"
@@ -7207,6 +7199,22 @@ ember-qunit@^5.1.4:
     resolve-package-path "^3.1.0"
     silent-error "^1.1.1"
     validate-peer-dependencies "^1.1.0"
+
+ember-repl@1.4.1:
+  version "1.4.1"
+  resolved "https://registry.npmjs.org/ember-repl/-/ember-repl-1.4.1.tgz#c82b44e0179dcd9fb80ca123f29777d52c91f77e"
+  integrity sha512-wGOXwjjCIscazlvHcGxgmcpuC3rSzXne4zBbIQUym/9DNb12tj2zFUSUlxg+dUx5qJWB1L5KRg/tT2CDDbYcDA==
+  dependencies:
+    "@babel/standalone" "^7.14.7"
+    "@glimmer/component" "^1.0.4"
+    "@glimmer/tracking" "^1.0.4"
+    babel-plugin-htmlbars-inline-precompile "^5.3.0"
+    ember-auto-import "^2.0.2"
+    ember-cli-babel "^7.26.6"
+    ember-cli-htmlbars "^5.7.1"
+    ember-compatibility-helpers "^1.2.4"
+    path-browserify "^1.0.1"
+    uuid "8.3.2"
 
 ember-resolver@^8.0.2:
   version "8.0.2"
@@ -14457,8 +14465,7 @@ tr46@^2.1.0:
 
 tracked-built-ins@^1.1.1, "tracked-built-ins@github:pzuraq/tracked-built-ins#master":
   version "1.1.1"
-  uid "76d1c03b5fd9e07b8c7a4903cd01ed226b974f39"
-  resolved "https://codeload.github.com/pzuraq/tracked-built-ins/tar.gz/76d1c03b5fd9e07b8c7a4903cd01ed226b974f39"
+  resolved "https://codeload.github.com/pzuraq/tracked-built-ins/tar.gz/6ce21560cf3d09cbb80d711176103b3d5b83f32b"
   dependencies:
     ember-cli-babel "^7.26.3"
     ember-cli-typescript "^4.1.0"
@@ -14466,7 +14473,6 @@ tracked-built-ins@^1.1.1, "tracked-built-ins@github:pzuraq/tracked-built-ins#mas
 
 tracked-maps-and-sets@^2.0.0, tracked-maps-and-sets@^2.2.1, "tracked-maps-and-sets@github:NullVoxPopuli/tracked-maps-and-sets#resolve-global-ember-issue":
   version "2.2.1"
-  uid b9925ff4aacbd4e5a9c993bac5b13f7007a8d53a
   resolved "https://codeload.github.com/NullVoxPopuli/tracked-maps-and-sets/tar.gz/b9925ff4aacbd4e5a9c993bac5b13f7007a8d53a"
   dependencies:
     "@glimmer/tracking" "^1.0.0"
@@ -14854,15 +14860,15 @@ utils-merge@1.0.1:
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
 
+uuid@8.3.2, uuid@^8.3.0, uuid@^8.3.2:
+  version "8.3.2"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
+  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
 uuid@^3.3.2:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
-
-uuid@^8.3.0, uuid@^8.3.2:
-  version "8.3.2"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
-  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
 v8-compile-cache@^2.0.3, v8-compile-cache@^2.2.0, v8-compile-cache@^2.3.0:
   version "2.3.0"
