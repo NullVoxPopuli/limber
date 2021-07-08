@@ -9,6 +9,10 @@
   src: url('/SourceCodePro-Regular.ttf');
 }
 
+* {
+  touch-action: manipulation;
+}
+
 .copy-menus-hidden [data-test-copy-menu] {
   display: none;
 }
