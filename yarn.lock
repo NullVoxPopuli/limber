@@ -7179,10 +7179,10 @@ ember-qunit@^5.1.4:
     silent-error "^1.1.1"
     validate-peer-dependencies "^1.1.0"
 
-ember-repl@1.4.1:
-  version "1.4.1"
-  resolved "https://registry.npmjs.org/ember-repl/-/ember-repl-1.4.1.tgz#c82b44e0179dcd9fb80ca123f29777d52c91f77e"
-  integrity sha512-wGOXwjjCIscazlvHcGxgmcpuC3rSzXne4zBbIQUym/9DNb12tj2zFUSUlxg+dUx5qJWB1L5KRg/tT2CDDbYcDA==
+ember-repl@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.npmjs.org/ember-repl/-/ember-repl-1.5.0.tgz#fe2c79dd1a32f007bc8684da1dc97cab176cf9d2"
+  integrity sha512-1Se1js6bHJAenhDnJH+bMMhuBF0lCVQ4jfHdZMK4CgZUJ3As8itB7oBpDzm/5Uk/11IWMC/GMmJXqcqVtY7cCg==
   dependencies:
     "@babel/standalone" "^7.14.7"
     "@glimmer/component" "^1.0.4"
