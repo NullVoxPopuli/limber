@@ -2,6 +2,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { debounce, schedule } from '@ember/runloop';
 import Service, { inject as service } from '@ember/service';
+import { waitFor } from '@ember/test-waiters';
 
 import { nameFor } from 'ember-repl';
 import { DEFAULT_SNIPPET } from 'limber/starting-snippet';
@@ -35,6 +36,7 @@ export default class EditorService extends Service {
   }
 
   @action
+  @waitFor
   async makeComponent() {
     deleteQP('e');
     let id = nameFor(this.text);
