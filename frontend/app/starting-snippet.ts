@@ -50,7 +50,6 @@ Options:
 \`\`\`gjs live preview
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 
@@ -104,10 +103,33 @@ List of links:
 \`\`\`
 `.trim();
 
+export const EXAMPLE_STYLEGUIDE_DEMO = `
+# Use with your styleguide
+
+In Ember's strict mode, components must be imported in order
+to be rendered. The default resolver, which has everything available
+in the global namespace, is not used.
+
+For more information on template-strict-mode, view
+[RFC#496](https://github.com/emberjs/rfcs/pull/496)
+
+\`\`\`gjs  live preview
+import Navigation from 'limber/components/limber/navigation';
+import ExternalLink from 'limber/components/external-link';
+
+<template>
+  <Navigation />
+  <ExternalLink href="#">Link</ExernalLink>
+  <ExternalLink href="https://emberjs.com">Ember.JS' Site</ExernalLink>
+</template>
+  \`\`\`
+`.trim();
+
 export const ALL = [
   { label: 'Welcome', snippet: DEFAULT_SNIPPET },
   { label: 'With inline Javascript', snippet: WITH_LIVE_JS },
   { label: 'With inline Templates', snippet: WITH_LIVE_HBS },
+  { label: 'Styleguide Demo', snippet: EXAMPLE_STYLEGUIDE_DEMO },
 ];
 
 export const NAMES = ALL.map((demo) => demo.label);
