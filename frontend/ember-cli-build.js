@@ -68,10 +68,7 @@ module.exports = function (defaults) {
     ],
     ...(MAXIMUM_STATIC
       ? {
-          // Temporarily disabled until
-          // https://github.com/emberjs/ember.js/issues/19568
-          // is resolved
-          // staticAddonTrees: true,
+          staticAddonTrees: true,
           staticAddonTestSupportTrees: true,
           staticHelpers: true,
           staticComponents: true,
@@ -81,9 +78,18 @@ module.exports = function (defaults) {
           // splitAtRoutes: [],
         }
       : {}),
+    implicitModulesStrategy: 'packageNames',
     packagerOptions: {
       webpackConfig: {
-        ...(isProduction ? { devtool: 'source-map' } : {}),
+        devtool: isProduction ? 'source-map' : false,
+        experiments: {
+          // Causes app to not boot
+          // lazyCompilation: true,
+        },
+        // output: {
+        //   Causes app to not boot
+        //   chunkFormat: 'module',
+        // },
         module: {
           rules: [
             {

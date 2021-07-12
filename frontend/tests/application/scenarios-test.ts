@@ -2,7 +2,12 @@ import { click, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
-import { DEFAULT_SNIPPET, WITH_LIVE_HBS, WITH_LIVE_JS } from 'limber/starting-snippet';
+import {
+  DEFAULT_SNIPPET,
+  EXAMPLE_STYLEGUIDE_DEMO,
+  WITH_LIVE_HBS,
+  WITH_LIVE_JS,
+} from 'limber/starting-snippet';
 
 import { Page } from './-page';
 
@@ -49,6 +54,20 @@ module('Scenarios', function (hooks) {
 
         await click(page.out.firstButton);
         assert.dom(page.out.element).containsText('clicked the button 2 times');
+      });
+
+      test('Styleguide Demo', async function (assert) {
+        await visit('/');
+        await page.editor.load();
+        await page.selectDemo('Styleguide Demo');
+
+        assert.dom(page.nav.activeTab.element).hasText('Preview');
+        assert.true(page.editor.hasText(EXAMPLE_STYLEGUIDE_DEMO), 'snippet loaded');
+
+        assert.true(page.out.hasCodeSnippets);
+        assert.true(page.out.hasRenderedSnippets);
+
+        assert.dom(page.out.element).containsText(`Ember.JS' Site`);
       });
     });
 

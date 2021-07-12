@@ -3,6 +3,7 @@
 import { compileHBS, compileJS, invocationName } from 'ember-repl';
 import CopyMenu from 'limber/components/limber/copy-menu';
 
+import { COMPONENT_MAP } from './component-map';
 import { parseMarkdown } from './markdown-to-ember';
 
 import type { ExtractedCode } from './markdown-to-ember';
@@ -20,7 +21,7 @@ interface CompilationResult {
 export async function compileAll(js: { code: string }[]) {
   let modules = await Promise.all(
     js.map(async ({ code }) => {
-      return await compileJS(code);
+      return await compileJS(code, COMPONENT_MAP);
     })
   );
 
@@ -86,6 +87,21 @@ export async function compile(glimdownInput: string): Promise<CompilationResult>
       console.error(error);
 
       return { error, rootTemplate };
+    }
+  }
+
+  /**
+   * Make sure non of our snippets errored
+   *
+   * TODO: for these errors, report them differently so that we
+   * can render the 'Ember' and still highlight the correct line?
+   * or maybe there is a way to highlight in the editor instead?
+   */
+  for (let { error, component } of scope) {
+    if (!component) {
+      if (error) {
+        return { error, rootTemplate };
+      }
     }
   }
 
