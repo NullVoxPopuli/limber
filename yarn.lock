@@ -1576,7 +1576,7 @@
     resolve "^1.8.1"
     semver "^7.3.2"
 
-"@embroider/macros@0.42.3":
+"@embroider/macros@0.42.3", "@embroider/macros@^0.42.3":
   version "0.42.3"
   resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-0.42.3.tgz#eb4dc35c43f1cb1d14298219ba037f8cead06081"
   integrity sha512-4I+Sde8FU7QMwNQ3gYtj8fdBTqUeoPDn61XuV4Xng7p9LszQksGDXtyEhWrf9KWU3G+NtrZotY5LICd5P+E3tw==
@@ -7201,18 +7201,20 @@ ember-qunit@^5.1.4:
     silent-error "^1.1.1"
     validate-peer-dependencies "^1.1.0"
 
-ember-repl@1.5.0:
-  version "1.5.0"
-  resolved "https://registry.npmjs.org/ember-repl/-/ember-repl-1.5.0.tgz#fe2c79dd1a32f007bc8684da1dc97cab176cf9d2"
-  integrity sha512-1Se1js6bHJAenhDnJH+bMMhuBF0lCVQ4jfHdZMK4CgZUJ3As8itB7oBpDzm/5Uk/11IWMC/GMmJXqcqVtY7cCg==
+ember-repl@1.6.2:
+  version "1.6.2"
+  resolved "https://registry.npmjs.org/ember-repl/-/ember-repl-1.6.2.tgz#faaea2f7ad2edd11408d073c6c01b3e208aaec5b"
+  integrity sha512-U/bOVCLI91Wrx4kQU7RdfFBBMii1HplHK652P4s1RvACEjErgObuWsDHnOIkAWm5Fdld9CYOHkyuQ3F2tdYfYQ==
   dependencies:
     "@babel/standalone" "^7.14.7"
+    "@embroider/macros" "^0.42.3"
     "@glimmer/component" "^1.0.4"
     "@glimmer/tracking" "^1.0.4"
     babel-plugin-htmlbars-inline-precompile "^5.3.0"
     ember-auto-import "^2.0.2"
     ember-cli-babel "^7.26.6"
     ember-cli-htmlbars "^5.7.1"
+    ember-cli-typescript "^4.2.1"
     ember-compatibility-helpers "^1.2.4"
     path-browserify "^1.0.1"
     uuid "8.3.2"
