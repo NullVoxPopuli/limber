@@ -114,13 +114,11 @@ For more information on template-strict-mode, view
 [RFC#496](https://github.com/emberjs/rfcs/pull/496)
 
 \`\`\`gjs  live preview
-import Navigation from 'limber/components/limber/navigation';
 import ExternalLink from 'limber/components/external-link';
 
 <template>
-  <Navigation />
-  <ExternalLink href="#">Link</ExernalLink>
-  <ExternalLink href="https://emberjs.com">Ember.JS' Site</ExernalLink>
+  <ExternalLink href="#">Link</ExternalLink>
+  <ExternalLink href="https://emberjs.com">Ember.JS' Site</ExternalLink>
 </template>
   \`\`\`
 `.trim();
