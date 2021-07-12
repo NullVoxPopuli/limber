@@ -7,6 +7,7 @@ import {
   EXAMPLE_STYLEGUIDE_DEMO,
   WITH_LIVE_HBS,
   WITH_LIVE_JS,
+  REPL,
 } from 'limber/starting-snippet';
 
 import { Page } from './-page';
@@ -68,6 +69,20 @@ module('Scenarios', function (hooks) {
         assert.true(page.out.hasRenderedSnippets);
 
         assert.dom(page.out.element).containsText(`Ember.JS' Site`);
+      });
+
+      test('REPL', async function (assert) {
+        await visit('/');
+        await page.editor.load();
+        await page.selectDemo('Build your own REPL');
+
+        assert.dom(page.nav.activeTab.element).hasText('Preview');
+        assert.true(page.editor.hasText(REPL), 'snippet loaded');
+
+        assert.true(page.out.hasCodeSnippets);
+        assert.true(page.out.hasRenderedSnippets);
+
+        assert.dom(page.out.element).containsText(`Render`);
       });
     });
 

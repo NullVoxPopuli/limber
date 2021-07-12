@@ -2,6 +2,8 @@
 /*
  * TypeScript does not know what to do with template-only components
  */
+
+import * as REPL from 'ember-repl';
 // @ts-ignore
 import * as ExternalLink from 'limber/components/external-link';
 // @ts-ignore
@@ -12,4 +14,5 @@ export const COMPONENT_MAP = {
   'limber/components/limber/menu': Menu,
   'limber/components/external-link': ExternalLink,
   'limber/components/popper-j-s': Popper,
+  'ember-repl': REPL,
 };
