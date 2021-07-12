@@ -5,9 +5,9 @@ import { setupApplicationTest } from 'ember-qunit';
 import {
   DEFAULT_SNIPPET,
   EXAMPLE_STYLEGUIDE_DEMO,
+  REPL,
   WITH_LIVE_HBS,
   WITH_LIVE_JS,
-  REPL,
 } from 'limber/starting-snippet';
 
 import { Page } from './-page';
