@@ -8,7 +8,7 @@
   {{!-- template-lint-disable no-inline-styles --}}
   <div class="grid overflow-hidden until-lg:grid-rows-main lg:grid-cols-main">
     {{!--
-      the max size of an element adjascent to a resizable element within a grid
+      the max size of an element adjacent to a resizable element within a grid
       may not exceed the starting size (so far?)
     --}}
     <section
@@ -21,13 +21,14 @@
       <Limber::Editor />
     </section>
 
-    <section class="shadow-inner grid overflow-hidden" style="grid-template-rows: min-content 1fr;">
+    <section class="shadow-inner grid overflow-hidden relative" style="grid-template-rows: min-content 1fr;">
       <Limber::Navigation />
 
       <div class="overflow-auto relative bg-white" {{constrain-vertically}} data-test-output>
         {{outlet}}
       </div>
 
+      <Limber::Building />
       <Limber::Error />
     </section>
   </div>

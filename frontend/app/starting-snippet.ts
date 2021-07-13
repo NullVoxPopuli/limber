@@ -1,5 +1,4 @@
-export const DEFAULT_SNIPPET = `
-# Limber Editor
+export const DEFAULT_SNIPPET = `# Limber Editor
 
 **glimdown** //  _Ember or Glimmer  rendered with markdown_
 
@@ -24,11 +23,25 @@ List of links:
 
 [1]: https://github.com/glimmerjs/glimmer-experimental/tree/master/packages/examples/playground
 [2]: https://github.com/ember-template-imports/ember-template-imports
-[3]: https://github.com/NullVoxPopuli/limber/issues/14
-`.trim();
+[3]: https://github.com/NullVoxPopuli/limber/issues/14`;
 
-export const WITH_LIVE_JS = `
-# Limber Editor
+const LIVE_JS = `import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
+
+export default class HelloWorld extends Component {
+  @tracked count = 0;
+
+  increment = () => this.count += 1;
+
+  <template>
+    <p>You have clicked the button {{this.count}} times.</p>
+
+    <button {{on "click" this.increment}}>Click</button>
+  </template>
+}`;
+
+export const WITH_LIVE_JS = `# Limber Editor
 
 ## With JavaScript
 
@@ -48,27 +61,10 @@ Options:
 \`\`\`
 
 \`\`\`gjs live preview
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
+${LIVE_JS}
+\`\`\``;
 
-export default class HelloWorld extends Component {
-  @tracked count = 1;
-
-  increment = (amount) => this.count += amount;
-
-  <template>
-    <p>You have clicked the button {{this.count}} times.</p>
-
-    <button {{on "click" (fn this.increment 1)}}>Click</button>
-  </template>
-}
-\`\`\`
-`.trim();
-
-export const WITH_LIVE_HBS = `
-# Limber Editor
+export const WITH_LIVE_HBS = `# Limber Editor
 
 ## With JavaScript
 
@@ -100,11 +96,9 @@ List of links:
     </li>
   {{/each}}
 </ul>
-\`\`\`
-`.trim();
+\`\`\``;
 
-export const EXAMPLE_STYLEGUIDE_DEMO = `
-# Use with your styleguide
+export const EXAMPLE_STYLEGUIDE_DEMO = `# Use with your styleguide
 
 In Ember's strict mode, components must be imported in order
 to be rendered. The default resolver, which has everything available
@@ -120,14 +114,80 @@ import ExternalLink from 'limber/components/external-link';
   <ExternalLink href="#">Link</ExternalLink>
   <ExternalLink href="https://emberjs.com">Ember.JS' Site</ExternalLink>
 </template>
-  \`\`\`
-`.trim();
+\`\`\``;
+
+export const REPL = `# Build your own REPL
+
+This app is powered by the [ember-repl](https://github.com/NullVoxPopuli/ember-repl)
+package, which bundles the template compiler, \`@babel/standalone\`, and the
+ember/glimmer dev dependencies.
+These are dynamically imported, so if your app does not need these dependencies on boot,
+your app's time-to-interactive will be unaffected.
+
+### Usage of \`ember-repl\` may look like this
+
+\`\`\`gjs live preview
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { on } from '@ember/modifier';
+import { compileJS } from 'ember-repl';
+
+export default class ExampleREPL extends Component {
+  @tracked code = \`${LIVE_JS}\`;
+  @tracked component;
+  @tracked error;
+
+  @action setCode(inputEvent) {
+    this.code = inputEvent.target.value;
+  }
+
+  @action async render(submitEvent) {
+    submitEvent.preventDefault();
+    this.error = null;
+
+    try {
+      let { component, error } = await compileJS(this.code);
+
+      if (error) {
+        this.error = error;
+        return;
+      }
+      this.component = component;
+    } catch (e) {
+      this.error = e.message;
+    }
+  }
+
+  <template>
+    {{#if this.error}}
+      {{this.error}}
+    {{/if}}
+
+    <form {{on 'submit' this.render}} class='grid gap-4 border p-4'>
+      <div class='flex justify-between'>
+        <label for='code'>Type your glimmer javascript here</label>
+        <button type='submit'>Render</button>
+      </div>
+
+      <textarea
+        {{on 'input' this.setCode}}
+        id='code' class='border p-2' rows="6">{{this.code}}</textarea>
+    </form>
+
+    {{#if this.component}}
+      <div class='border p-4'><this.component /></div>
+    {{/if}}
+  </template>
+}
+\`\`\``;
 
 export const ALL = [
   { label: 'Welcome', snippet: DEFAULT_SNIPPET },
   { label: 'With inline Javascript', snippet: WITH_LIVE_JS },
   { label: 'With inline Templates', snippet: WITH_LIVE_HBS },
   { label: 'Styleguide Demo', snippet: EXAMPLE_STYLEGUIDE_DEMO },
+  { label: 'Build your own REPL', snippet: REPL },
 ];
 
 export const NAMES = ALL.map((demo) => demo.label);

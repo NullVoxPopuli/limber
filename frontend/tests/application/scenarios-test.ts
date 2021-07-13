@@ -5,6 +5,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import {
   DEFAULT_SNIPPET,
   EXAMPLE_STYLEGUIDE_DEMO,
+  REPL,
   WITH_LIVE_HBS,
   WITH_LIVE_JS,
 } from 'limber/starting-snippet';
@@ -50,10 +51,10 @@ module('Scenarios', function (hooks) {
 
         assert.true(page.out.hasCodeSnippets);
         assert.true(page.out.hasRenderedSnippets);
-        assert.dom(page.out.element).containsText('clicked the button 1 times');
+        assert.dom(page.out.element).containsText('clicked the button 0 times');
 
         await click(page.out.firstButton);
-        assert.dom(page.out.element).containsText('clicked the button 2 times');
+        assert.dom(page.out.element).containsText('clicked the button 1 times');
       });
 
       test('Styleguide Demo', async function (assert) {
@@ -68,6 +69,20 @@ module('Scenarios', function (hooks) {
         assert.true(page.out.hasRenderedSnippets);
 
         assert.dom(page.out.element).containsText(`Ember.JS' Site`);
+      });
+
+      test('REPL', async function (assert) {
+        await visit('/');
+        await page.editor.load();
+        await page.selectDemo('Build your own REPL');
+
+        assert.dom(page.nav.activeTab.element).hasText('Preview');
+        assert.true(page.editor.hasText(REPL), 'snippet loaded');
+
+        assert.true(page.out.hasCodeSnippets);
+        assert.true(page.out.hasRenderedSnippets);
+
+        assert.dom(page.out.element).containsText(`Render`);
       });
     });
 

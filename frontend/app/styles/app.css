@@ -13,6 +13,16 @@
   touch-action: manipulation;
 }
 
+/**
+ * https://www.w3schools.com/howto/howto_css_loader.asp
+ */
+
+.loader {
+  border: 4px solid var(--ember-faint-gray);
+  border-radius: 50%;
+  border-top: 4px solid var(--code-keyword);
+}
+
 .copy-menus-hidden [data-test-copy-menu] {
   display: none;
 }
