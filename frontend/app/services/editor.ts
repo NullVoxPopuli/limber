@@ -19,6 +19,7 @@ export default class EditorService extends Service {
 
   errorOnLoad = getQP('e');
 
+  @tracked isCompiling = false;
   @tracked component?: unknown;
   @tracked error: string | null = this.errorOnLoad ?? null;
   @tracked errorLine: number | null = null;
@@ -51,6 +52,17 @@ export default class EditorService extends Service {
       return;
     }
 
+    this.isCompiling = true;
+
+    try {
+      await this._compile(id);
+    } finally {
+      this.isCompiling = false;
+    }
+  }
+
+  @action
+  async _compile(id: string) {
     let { error, rootTemplate, rootComponent } = await compile(this.text);
 
     if (error) {

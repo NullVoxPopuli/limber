@@ -51,10 +51,10 @@ module('Scenarios', function (hooks) {
 
         assert.true(page.out.hasCodeSnippets);
         assert.true(page.out.hasRenderedSnippets);
-        assert.dom(page.out.element).containsText('clicked the button 1 times');
+        assert.dom(page.out.element).containsText('clicked the button 0 times');
 
         await click(page.out.firstButton);
-        assert.dom(page.out.element).containsText('clicked the button 2 times');
+        assert.dom(page.out.element).containsText('clicked the button 1 times');
       });
 
       test('Styleguide Demo', async function (assert) {
