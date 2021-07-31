@@ -21,7 +21,7 @@
     "start:prod": "MINIFY=false yarn start --environment=production",
     "_": "_",
     "__": "_ https://github.com/webpack/loader-utils/issues/179",
-    "postinstall": "rm -rf node_modules/@types/loader-utils && ( cd node_modules/tracked-maps-and-sets && yarn && yarn build )"
+    "postinstall": "( cd node_modules/tracked-maps-and-sets && yarn && yarn build )"
   },
   "volta": {
     "node": "14.17.0",
