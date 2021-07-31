@@ -2664,11 +2664,6 @@
   resolved "https://registry.yarnpkg.com/@types/qunit/-/qunit-2.11.1.tgz#3496d430d2bb0fa4761f00a27511f46020c6b410"
   integrity sha512-vcM5+9O8LZuu5DYseaV4J7ehkYrhkv+aMIuxnF/OqMYlVEdv+odpCH1/5OVztiqxbCqTpQKWuELkMvG7OPycUQ==
 
-"@types/qunit@^2.11.2":
-  version "2.11.2"
-  resolved "https://registry.npmjs.org/@types/qunit/-/qunit-2.11.2.tgz#4cb99ae3ea6afe94b9c4cfd3ab715a285729ca9c"
-  integrity sha512-Bt0fz9l8sWxqP+cjoqWQyNVyOPPK+7GPhKIKLLTi7llR0FV+pyd50FXTXafZeZnsFVUgXw4pdupydz75E6vxjQ==
-
 "@types/range-parser@*":
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
@@ -14611,7 +14606,7 @@ tr46@^2.1.0:
   dependencies:
     punycode "^2.1.1"
 
-tracked-built-ins@^1.1.1:
+tracked-built-ins@^1.1.1, "tracked-built-ins@github:pzuraq/tracked-built-ins#master":
   version "1.1.1"
   resolved "https://codeload.github.com/pzuraq/tracked-built-ins/tar.gz/6ce21560cf3d09cbb80d711176103b3d5b83f32b"
   dependencies:
@@ -14619,7 +14614,7 @@ tracked-built-ins@^1.1.1:
     ember-cli-typescript "^4.1.0"
     tracked-maps-and-sets "^2.0.0"
 
-tracked-maps-and-sets@^2.0.0, tracked-maps-and-sets@^2.2.1:
+tracked-maps-and-sets@^2.0.0, tracked-maps-and-sets@^2.2.1, "tracked-maps-and-sets@github:NullVoxPopuli/tracked-maps-and-sets#resolve-global-ember-issue":
   version "2.2.1"
   resolved "https://codeload.github.com/NullVoxPopuli/tracked-maps-and-sets/tar.gz/b9925ff4aacbd4e5a9c993bac5b13f7007a8d53a"
   dependencies:
