@@ -7664,10 +7664,10 @@ esbuild-plugin-alias@^0.1.2:
   resolved "https://registry.yarnpkg.com/esbuild-plugin-alias/-/esbuild-plugin-alias-0.1.2.tgz#1232fbde807c0c8ad44c44ec859819eb492e12a8"
   integrity sha512-WsX0OJy8IGOsGZV+4oHEU5B6XQUpxOsZN1iSoYf9COTDbY7WXcOwd1oCLYNWUIWCExyGXSghIGq2k7sXBldxwQ==
 
-esbuild@0.12.15:
-  version "0.12.15"
-  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.12.15.tgz#9d99cf39aeb2188265c5983e983e236829f08af0"
-  integrity sha512-72V4JNd2+48eOVCXx49xoSWHgC3/cCy96e7mbXKY+WOWghN00cCmlGnwVLRhRHorvv0dgCyuMYBZlM2xDM5OQw==
+esbuild@0.12.19:
+  version "0.12.19"
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.12.19.tgz#ab849766705a5093df5acd8ec2f6ba2159a38a6c"
+  integrity sha512-5NuT1G6THW7l3fsSCDkcPepn24R0XtyPjKoqKHD8LfhqMXzCdz0mrS9HgO6hIhzVT7zt0T+JGbzCqF5AH8hS9w==
 
 escalade@^3.1.1:
   version "3.1.1"
