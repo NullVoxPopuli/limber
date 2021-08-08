@@ -14546,7 +14546,7 @@ tr46@^2.1.0:
   dependencies:
     punycode "^2.1.1"
 
-tracked-built-ins@^1.1.1:
+tracked-built-ins@^1.1.1, "tracked-built-ins@github:pzuraq/tracked-built-ins#master":
   version "1.1.1"
   resolved "https://codeload.github.com/pzuraq/tracked-built-ins/tar.gz/6ce21560cf3d09cbb80d711176103b3d5b83f32b"
   dependencies:
@@ -14554,7 +14554,7 @@ tracked-built-ins@^1.1.1:
     ember-cli-typescript "^4.1.0"
     tracked-maps-and-sets "^2.0.0"
 
-tracked-maps-and-sets@^2.0.0, tracked-maps-and-sets@^2.2.1:
+tracked-maps-and-sets@^2.0.0, tracked-maps-and-sets@^2.2.1, "tracked-maps-and-sets@github:NullVoxPopuli/tracked-maps-and-sets#resolve-global-ember-issue":
   version "2.2.1"
   resolved "https://codeload.github.com/NullVoxPopuli/tracked-maps-and-sets/tar.gz/b9925ff4aacbd4e5a9c993bac5b13f7007a8d53a"
   dependencies:
