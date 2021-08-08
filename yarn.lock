@@ -1073,6 +1073,11 @@
   resolved "https://registry.npmjs.org/@babel/standalone/-/standalone-7.14.8.tgz#4fbb0be8161dbdb30e68d903595fb6479ecf9209"
   integrity sha512-5Aa1Bhis4oZD23iLJE5CDYHEs1zSC3ejppHE5aim0OWjGCWTa9Oq1PwopK4u1++ao6B6POW/PqNZjOCZNTSx0Q==
 
+"@babel/standalone@^7.15.1":
+  version "7.15.1"
+  resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.15.1.tgz#9b5e0852fa37c9e1408163b9be6e3ec1feb872a2"
+  integrity sha512-OJvIUtmXWEnTFvm+/TSMFkJK9vmbOF1wNmu/vbU18/Hlj9E6JdrkWxTkwbrsM1UjLtyb4w+pwZ/A1C4XZXorXg==
+
 "@babel/template@^7.14.5":
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.14.5.tgz#a9bc9d8b33354ff6e55a9c60d1109200a68974f4"
@@ -1652,7 +1657,7 @@
     resolve "^1.8.1"
     semver "^7.3.2"
 
-"@embroider/macros@0.43.3", "@embroider/macros@^0.43.3":
+"@embroider/macros@0.43.3":
   version "0.43.3"
   resolved "https://registry.npmjs.org/@embroider/macros/-/macros-0.43.3.tgz#83b0bf684ffbc4a71c3c05a35a84faac5ff86ac7"
   integrity sha512-rtT57t0qHL+Sz1HGj9avJyOnrW26Pz9VJ3y5Mbcp090JQCFXLjSYS2IYkfxvkptabBtKmbg3d6BkW8owxJirwg==
@@ -1676,6 +1681,18 @@
     resolve "^1.8.1"
     semver "^7.3.2"
 
+"@embroider/macros@^0.43.4":
+  version "0.43.4"
+  resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-0.43.4.tgz#c85f33cc397149483dfead9bcea54100214dc8d5"
+  integrity sha512-KOHQZeAzliuTp8qhlq67vtNPdku4Sy9DFe+rhgAzuyfpXB+BLbhVQbSPU+NG+5t2J2i1dU464ectZFUxNmLzwg==
+  dependencies:
+    "@embroider/shared-internals" "0.43.4"
+    assert-never "^1.2.1"
+    ember-cli-babel "^7.26.6"
+    lodash "^4.17.21"
+    resolve "^1.20.0"
+    semver "^7.3.2"
+
 "@embroider/shared-internals@0.41.0":
   version "0.41.0"
   resolved "https://registry.yarnpkg.com/@embroider/shared-internals/-/shared-internals-0.41.0.tgz#2553f026d4f48ea1fd11235501feb63bf49fa306"
@@ -1693,6 +1710,18 @@
   version "0.43.3"
   resolved "https://registry.npmjs.org/@embroider/shared-internals/-/shared-internals-0.43.3.tgz#9a7e69ce6d57be7efdf142d8a83d7e3656d6951a"
   integrity sha512-3t1zhZVW6+mtQ9ftdKmAezMoX6oBYpLeYnrJz6t4N3k4DrpcEPX4RWUmWThN4XhLemkH4LvtTXP5S6q4XMopRA==
+  dependencies:
+    ember-rfc176-data "^0.3.17"
+    fs-extra "^9.1.0"
+    lodash "^4.17.21"
+    resolve-package-path "^4.0.1"
+    semver "^7.3.5"
+    typescript-memoize "^1.0.1"
+
+"@embroider/shared-internals@0.43.4":
+  version "0.43.4"
+  resolved "https://registry.yarnpkg.com/@embroider/shared-internals/-/shared-internals-0.43.4.tgz#ff99ed15efa6922191792700517b7aeb91884087"
+  integrity sha512-EPVw6x2Qo4S/Ff5vV8wijcCfCPexQWKpi32kOyVENLeFt5jtDTWBgLgBKHF/4yzNjneZZMaQ7znQaTaSh0AI6w==
   dependencies:
     ember-rfc176-data "^0.3.17"
     fs-extra "^9.1.0"
@@ -7296,13 +7325,13 @@ ember-qunit@^5.1.4:
     silent-error "^1.1.1"
     validate-peer-dependencies "^1.1.0"
 
-ember-repl@1.7.5:
-  version "1.7.5"
-  resolved "https://registry.npmjs.org/ember-repl/-/ember-repl-1.7.5.tgz#cd27447fb47fe2ff2d7f524d1cf3ef92735e2fc5"
-  integrity sha512-5ewtFuuxv7FqXHYaj/D6RKF9DR8OYlM67d90D9BSvmjRDHFwU3YEXGocgZZQiaR0KyTwSGUzuXEWsAAzddVklw==
+ember-repl@1.7.9:
+  version "1.7.9"
+  resolved "https://registry.yarnpkg.com/ember-repl/-/ember-repl-1.7.9.tgz#d80171452a7802c5ca58692481014c753524b374"
+  integrity sha512-qgFXallKx2TUzgWlaij8CxGbWYuxvCrGwcjcCEoaOGeEpleLq+M8uozMHH7PG3WAV77vOFXwFRI+kNKakVg48A==
   dependencies:
-    "@babel/standalone" "^7.14.8"
-    "@embroider/macros" "^0.43.3"
+    "@babel/standalone" "^7.15.1"
+    "@embroider/macros" "^0.43.4"
     "@glimmer/component" "^1.0.4"
     "@glimmer/tracking" "^1.0.4"
     babel-plugin-htmlbars-inline-precompile "^5.3.0"
