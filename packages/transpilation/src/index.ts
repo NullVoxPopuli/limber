@@ -1,6 +1,6 @@
 import { handleFetch } from './fetch-handler';
 
-const worker = (self as unknown) as ServiceWorkerGlobalScope;
+const worker = self as unknown as ServiceWorkerGlobalScope;
 
 /**
  * For a given glimdown document id, we will compile
