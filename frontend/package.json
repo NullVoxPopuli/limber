@@ -128,7 +128,7 @@
     "@nullvoxpopuli/limber-codemirror": "*",
     "@nullvoxpopuli/limber-monaco": "*",
     "@nullvoxpopuli/limber-transpilation": "*",
-    "@popperjs/core": "^2.9.2",
+    "@popperjs/core": "^2.9.3",
     "dompurify": "^2.3.0",
     "ember-auto-import": "^2.0.2",
     "ember-could-get-used-to-this": "^1.0.1",
