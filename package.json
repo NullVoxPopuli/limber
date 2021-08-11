@@ -30,7 +30,7 @@
     "postinstall": "( cd node_modules/tracked-maps-and-sets && yarn && yarn build )"
   },
   "volta": {
-    "node": "14.17.0",
+    "node": "14.17.5",
     "yarn": "1.22.11",
     "npm": "7.11.1"
   },
