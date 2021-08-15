@@ -137,7 +137,7 @@
     "ember-repl": "1.7.11",
     "ember-router-helpers": "^0.4.0",
     "ember-select-light": "^2.0.5",
-    "ember-statechart-component": "2.3.6",
+    "ember-statechart-component": "2.3.7",
     "highlight.js": "^11.2.0",
     "highlightjs-glimmer": "^1.4.0",
     "html-to-image": "^1.7.0",
