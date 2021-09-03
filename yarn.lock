@@ -1739,6 +1739,18 @@
     resolve "^1.8.1"
     semver "^7.3.2"
 
+"@embroider/macros@0.41.0", "@embroider/macros@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-0.41.0.tgz#3e78b6f388d7229906abf4c75edfff8bb0208aca"
+  integrity sha512-QISzwEEfLsskZeL0jyZDs1RoQSotwBWj+4upTogNHuxQP5j/9H3IMG/3QB1gh8GEpbudATb/cS4NDYK3UBxufw==
+  dependencies:
+    "@embroider/shared-internals" "0.41.0"
+    assert-never "^1.1.0"
+    ember-cli-babel "^7.23.0"
+    lodash "^4.17.10"
+    resolve "^1.8.1"
+    semver "^7.3.2"
+
 "@embroider/macros@0.43.5", "@embroider/macros@^0.43.5":
   version "0.43.5"
   resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-0.43.5.tgz#f846bb883482436611a58a3512c687d4f9fddfad"
@@ -1750,18 +1762,6 @@
     find-up "^5.0.0"
     lodash "^4.17.21"
     resolve "^1.20.0"
-    semver "^7.3.2"
-
-"@embroider/macros@^0.41.0":
-  version "0.41.0"
-  resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-0.41.0.tgz#3e78b6f388d7229906abf4c75edfff8bb0208aca"
-  integrity sha512-QISzwEEfLsskZeL0jyZDs1RoQSotwBWj+4upTogNHuxQP5j/9H3IMG/3QB1gh8GEpbudATb/cS4NDYK3UBxufw==
-  dependencies:
-    "@embroider/shared-internals" "0.41.0"
-    assert-never "^1.1.0"
-    ember-cli-babel "^7.23.0"
-    lodash "^4.17.10"
-    resolve "^1.8.1"
     semver "^7.3.2"
 
 "@embroider/shared-internals@0.41.0":
@@ -1801,6 +1801,15 @@
     resolve-package-path "^1.2.2"
     semver "^7.3.2"
     typescript-memoize "^1.0.0-alpha.3"
+
+"@embroider/util@^0.39.1 || ^0.40.0 || ^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@embroider/util/-/util-0.41.0.tgz#5324cb4742aa4ed8d613c4f88a466f73e4e6acc1"
+  integrity sha512-ytA3J/YfQh7FEUEBwz3ezTqQNm/S5et5rZw3INBIy4Ak4x0NXV/VXLjyL8mv3txL8fGknZTBdXEhDsHUKIq8SQ==
+  dependencies:
+    "@embroider/macros" "0.41.0"
+    broccoli-funnel "^3.0.5"
+    ember-cli-babel "^7.23.1"
 
 "@embroider/webpack@^0.43.5":
   version "0.43.5"
@@ -4953,7 +4962,7 @@ broccoli-funnel@^3.0.0, broccoli-funnel@^3.0.3:
     minimatch "^3.0.0"
     walk-sync "^2.0.2"
 
-broccoli-funnel@^3.0.7, broccoli-funnel@^3.0.8:
+broccoli-funnel@^3.0.5, broccoli-funnel@^3.0.7, broccoli-funnel@^3.0.8:
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/broccoli-funnel/-/broccoli-funnel-3.0.8.tgz#f5b62e2763c3918026a15a3c833edc889971279b"
   integrity sha512-ng4eIhPYiXqMw6SyGoxPHR3YAwEd2lr9FgBI1CyTbspl4txZovOsmzFkMkGAlu88xyvYXJqHiM2crfLa65T1BQ==
@@ -7467,14 +7476,14 @@ ember-destroyable-polyfill@^2.0.2, ember-destroyable-polyfill@^2.0.3:
     ember-cli-version-checker "^5.1.1"
     ember-compatibility-helpers "^1.2.1"
 
-ember-element-helper@^0.3.1:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/ember-element-helper/-/ember-element-helper-0.3.2.tgz#a0e384c266c6fb0e39803708d6f5e83ce6dba659"
-  integrity sha512-t4lrekoRb/jVQeg/N1V0kzehV6cw0YAH1hG1H2+Ykl35YxpYdX7/8hKtaGzVPxceemUVFO7fUorEQ6Y//wpWdA==
+ember-element-helper@^0.5.5:
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/ember-element-helper/-/ember-element-helper-0.5.5.tgz#4a9ecb4dce57ee7f5ceb868a53c7b498c729f056"
+  integrity sha512-Tu3hsI+/mjHBUvw62Qi+YDZtKkn59V66CjwbgfNTZZ7aHf4gFm1ow4zJ4WLnpnie8p9FvOmIUxwl5HvgPJIcFA==
   dependencies:
+    "@embroider/util" "^0.39.1 || ^0.40.0 || ^0.41.0"
     ember-cli-babel "^7.17.2"
     ember-cli-htmlbars "^5.1.0"
-    ember-compatibility-helpers "^1.2.1"
 
 ember-export-application-global@^2.0.1:
   version "2.0.1"
@@ -7492,20 +7501,21 @@ ember-focus-trap@^0.7.0:
     ember-modifier-manager-polyfill "^1.2.0"
     focus-trap "^6.4.0"
 
-ember-headlessui@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/ember-headlessui/-/ember-headlessui-0.5.0.tgz#69ae7c31e283a211e1ce2fcf8a02919da085526c"
-  integrity sha512-HvEUQPBMC6Td6VYnWWDY9MGlmeh7I2Ni/wNOuDPqARyIMioRcZnobKmLydhvbVPVDgQ38Jqm73h+XErhFe9AuA==
+ember-headlessui@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/ember-headlessui/-/ember-headlessui-0.9.0.tgz#ae90ef95dc54711098de4939d274bf5b4ff19757"
+  integrity sha512-iwml1bYr96eypB8BYtvJCR8LUPAC+U0GX6fe2PyVYQ6ZY7HnwIqv5UUvciKRnwc30w4Fy/QT/UJojxkWRGUk/g==
   dependencies:
     "@ember/render-modifiers" "^1.0.2"
-    "@embroider/macros" "^0.41.0"
+    "@embroider/macros" "^0.43.5"
     ember-cli-babel "^7.26.3"
     ember-cli-htmlbars "^5.7.1"
     ember-click-outside-modifier "^2.0.0"
     ember-concurrency "^2.1.0"
-    ember-element-helper "^0.3.1"
+    ember-element-helper "^0.5.5"
     ember-focus-trap "^0.7.0"
     ember-truth-helpers "^3.0.0"
+    tracked-maps-and-sets "^3.0.1"
 
 ember-load-initializers@^2.1.2:
   version "2.1.2"
@@ -14803,7 +14813,7 @@ tracked-built-ins@^1.1.1, "tracked-built-ins@github:pzuraq/tracked-built-ins#mas
     ember-cli-typescript "^4.1.0"
     tracked-maps-and-sets "^2.0.0"
 
-tracked-maps-and-sets@^2.0.0, tracked-maps-and-sets@^2.2.1, "tracked-maps-and-sets@github:NullVoxPopuli/tracked-maps-and-sets#resolve-global-ember-issue":
+tracked-maps-and-sets@^2.0.0, tracked-maps-and-sets@^2.2.1, tracked-maps-and-sets@^3.0.1, "tracked-maps-and-sets@github:NullVoxPopuli/tracked-maps-and-sets#resolve-global-ember-issue":
   version "2.2.1"
   resolved "https://codeload.github.com/NullVoxPopuli/tracked-maps-and-sets/tar.gz/b9925ff4aacbd4e5a9c993bac5b13f7007a8d53a"
   dependencies:
