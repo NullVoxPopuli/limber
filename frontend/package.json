@@ -145,7 +145,7 @@
     "remark-hbs": "^0.4.1",
     "remark-html": "^13.0.1",
     "remark-parse": "^9.0.0",
-    "stringify-object": "^3.3.0",
+    "stringify-object": "^4.0.0",
     "unified": "^9.2.2",
     "unist-util-flatmap": "^1.0.0",
     "webpack-bundle-analyzer": "^4.4.2",
