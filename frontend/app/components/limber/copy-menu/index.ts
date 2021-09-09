@@ -91,10 +91,15 @@ async function withExtraStyles(target: HTMLElement, next: () => Promise<void>) {
 async function toClipboard(target: HTMLElement) {
   let backgroundColor = '#ffffff';
   let canCopyToImage = 'ClipboardItem' in window;
+  let buttons = [
+    ...target.querySelectorAll(
+      '[data-test-copy-menu], [data-test-copy-menu] + [data-test-menu-items]'
+    ),
+  ];
   let filter = (node: HTMLElement | Text) => {
     if (node instanceof Text) return true;
 
-    return !node.hasAttribute('data-test-copy-menu');
+    return !buttons.includes(node);
   };
 
   let box = target.getBoundingClientRect();
