@@ -1,4 +1,4 @@
-  <Menu ...attributes as |menu|>
+  <Menu as |menu|>
     <PopperJS as |trigger popover|>
       <menu.Button
         {{trigger}}
@@ -8,12 +8,14 @@
           transition ease-in-out duration-150 sm:text-sm
           focus:ring-4 focus-visible:outline-none ring-ember-brand focus:outline-none
         "
+        ...attributes
     >
       {{yield to="trigger"}}
     </menu.Button>
     <menu.Items
       {{popover}}
       class="absolute top-2 z-10 grid mt-1 rounded-sm bg-white shadow-lg min-w-max"
+      data-test-menu-items
       as |items|
     >
       {{yield (component 'limber/menu/button' item=items.Item) to="options"}}
