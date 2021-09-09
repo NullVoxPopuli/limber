@@ -1177,10 +1177,10 @@
   resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.15.3.tgz#60f74273202ffcc6bb1428918053449fe477227c"
   integrity sha512-Bst2YWEyQ2ROyO0+jxPVnnkSmUh44/x54+LSbe5M4N5LGfOkxpajEUKVE4ndXtIVrLlHCyuiqCPwv3eC1ItnCg==
 
-"@babel/standalone@^7.15.5":
-  version "7.15.5"
-  resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.15.5.tgz#6aba337fa718bfa42ce8665f7377d7911487dda8"
-  integrity sha512-rho2fzDGLrdYVbl0S71I8z6AREWnVvADzv7Gb4TLKhqpE6cJAvno0ALMuF253+wqhN8futx4ELWQpBYMxi4jmA==
+"@babel/standalone@^7.15.6":
+  version "7.15.6"
+  resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.15.6.tgz#c16866ec1ef7196be7e8c8f1d5c38d436c723117"
+  integrity sha512-1N9+KHL9ZYKiDDXFgBvg8Sl135evIJgP/YZdOhqdfMMTL/zuAm6bUi/FYEwzTXYhQS8MBtRMVmmcIurif7hYiQ==
 
 "@babel/template@^7.14.5":
   version "7.14.5"
@@ -1242,6 +1242,14 @@
   version "7.15.4"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.15.4.tgz#74eeb86dbd6748d2741396557b9860e57fce0a0d"
   integrity sha512-0f1HJFuGmmbrKTCZtbm3cU+b/AqdEYk5toj5iQur58xkVMlS0JWaKxTBSmCXd47uiN7vbcozAupm6Mvs80GNhw==
+  dependencies:
+    "@babel/helper-validator-identifier" "^7.14.9"
+    to-fast-properties "^2.0.0"
+
+"@babel/types@^7.15.6":
+  version "7.15.6"
+  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.15.6.tgz#99abdc48218b2881c058dd0a7ab05b99c9be758f"
+  integrity sha512-BPU+7QhqNjmWyDO0/vitH/CuhpV8ZmK1wpKva8nuyNF5MJfuRNWMc+hc14+u9xT93kvykMdncrJT19h74uB1Ig==
   dependencies:
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
