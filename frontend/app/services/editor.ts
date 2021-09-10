@@ -5,7 +5,7 @@ import Service, { inject as service } from '@ember/service';
 import { waitFor } from '@ember/test-waiters';
 
 import { nameFor } from 'ember-repl';
-import { DEFAULT_SNIPPET } from 'limber/starting-snippet';
+import { DEFAULT_SNIPPET } from 'limber/snippets';
 import { getQP } from 'limber/utils/query-params';
 
 import { compile } from './-compile';

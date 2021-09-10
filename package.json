@@ -8,7 +8,6 @@
     "tests"
   ],
   "resolutions": {
-    "tracked-maps-and-sets": "github:NullVoxPopuli/tracked-maps-and-sets#resolve-global-ember-issue",
     "tracked-built-ins": "github:pzuraq/tracked-built-ins#master"
   },
   "scripts": {
@@ -24,10 +23,7 @@
     "lint:transpilation:fix": "yarn workspace @nullvoxpopuli/limber-transpilation lint:fix",
     "lint:frontend:fix": "yarn workspace limber lint:fix",
     "start": "yarn workspace limber start",
-    "start:prod": "MINIFY=false yarn start --environment=production",
-    "_": "_",
-    "__": "_ https://github.com/webpack/loader-utils/issues/179",
-    "postinstall": "( cd node_modules/tracked-maps-and-sets && yarn && yarn build )"
+    "start:prod": "MINIFY=false yarn start --environment=production"
   },
   "volta": {
     "node": "14.17.0",

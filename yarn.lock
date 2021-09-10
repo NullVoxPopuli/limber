@@ -1606,7 +1606,7 @@
     ember-cli-babel "^7.10.0"
     ember-modifier-manager-polyfill "^1.1.0"
 
-"@ember/test-helpers@^2.4.2":
+"@ember/test-helpers@^2.3.0", "@ember/test-helpers@^2.4.2":
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/@ember/test-helpers/-/test-helpers-2.4.2.tgz#e5be97e316dc502d7da933461135fbcb9254726e"
   integrity sha512-++k/dXZ0IeOQLSm0Yu5QuCRe9UoptuckMhaXHY37VLb1varLHRuP8908kigVNt9c5waiocaK4jPjDBkKYRLlfA==
@@ -7699,6 +7699,14 @@ ember-template-recast@^5.0.3:
     slash "^3.0.0"
     tmp "^0.2.1"
     workerpool "^6.1.4"
+
+ember-tracked-storage-polyfill@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-tracked-storage-polyfill/-/ember-tracked-storage-polyfill-1.0.0.tgz#84d307a1e4badc5f84dca681db2cfea9bdee8a77"
+  integrity sha512-eL7lZat68E6P/D7b9UoTB5bB5Oh/0aju0Z7PCMi3aTwhaydRaxloE7TGrTRYU+NdJuyNVZXeGyxFxn2frvd3TA==
+  dependencies:
+    ember-cli-babel "^7.26.3"
+    ember-cli-htmlbars "^5.7.1"
 
 ember-truth-helpers@^3.0.0:
   version "3.0.0"
@@ -14589,12 +14597,24 @@ tracked-built-ins@^1.1.1, "tracked-built-ins@github:pzuraq/tracked-built-ins#mas
     ember-cli-typescript "^4.1.0"
     tracked-maps-and-sets "^2.0.0"
 
-tracked-maps-and-sets@^2.0.0, tracked-maps-and-sets@^2.2.1, tracked-maps-and-sets@^3.0.1, "tracked-maps-and-sets@github:NullVoxPopuli/tracked-maps-and-sets#resolve-global-ember-issue":
+tracked-maps-and-sets@^2.0.0, tracked-maps-and-sets@^2.2.1:
   version "2.2.1"
-  resolved "https://codeload.github.com/NullVoxPopuli/tracked-maps-and-sets/tar.gz/b9925ff4aacbd4e5a9c993bac5b13f7007a8d53a"
+  resolved "https://registry.yarnpkg.com/tracked-maps-and-sets/-/tracked-maps-and-sets-2.2.1.tgz#323dd40540c561e8b0ffdec8bf129c68ec5025f9"
+  integrity sha512-XYrXh6L/GpGmVmG3KcN/qoDyi4FxHh8eZY/BA/RuoxynskV+GZSfwrX3R+5DR2CIkzkCx4zi4kkDRg1AMDfDhg==
   dependencies:
     "@glimmer/tracking" "^1.0.0"
+    ember-cli-babel "^7.17.2"
+
+tracked-maps-and-sets@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/tracked-maps-and-sets/-/tracked-maps-and-sets-3.0.1.tgz#aa3a71aa7ef4785e784324059b21b83153df445b"
+  integrity sha512-x1IC6C6muJzpeZaQOcollKiLYSazWEtSM5EDCO5PUfbU7RTMa1x7t9SJrwqDxeasvmJCa1QftECsRtI7osOs8w==
+  dependencies:
+    "@ember/test-helpers" "^2.3.0"
+    "@glimmer/tracking" "^1.0.0"
     ember-cli-babel "^7.26.5"
+    ember-tracked-storage-polyfill "1.0.0"
+    qunit "^2.16.0"
 
 tree-sync@^1.2.2:
   version "1.4.0"
