@@ -2,13 +2,7 @@ import { click, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
-import {
-  DEFAULT_SNIPPET,
-  EXAMPLE_STYLEGUIDE_DEMO,
-  REPL,
-  WITH_LIVE_HBS,
-  WITH_LIVE_JS,
-} from 'limber/starting-snippet';
+import { DEFAULT_SNIPPET, getFromLabel } from 'limber/snippets';
 
 import { Page } from './-page';
 
@@ -33,9 +27,10 @@ module('Scenarios', function (hooks) {
         await visit('/');
         await page.editor.load();
         await page.selectDemo('With inline Templates');
+        let demoText = await getFromLabel('With inline Templates');
 
         assert.dom(page.nav.activeTab.element).hasText('Preview');
-        assert.true(page.editor.hasText(WITH_LIVE_HBS), 'snippet loaded');
+        assert.true(page.editor.hasText(demoText), 'snippet loaded');
 
         assert.true(page.out.hasCodeSnippets);
         assert.true(page.out.hasRenderedSnippets);
@@ -45,9 +40,10 @@ module('Scenarios', function (hooks) {
         await visit('/');
         await page.editor.load();
         await page.selectDemo('With inline Javascript');
+        let demoText = await getFromLabel('With inline Javascript');
 
         assert.dom(page.nav.activeTab.element).hasText('Preview');
-        assert.true(page.editor.hasText(WITH_LIVE_JS), 'snippet loaded');
+        assert.true(page.editor.hasText(demoText), 'snippet loaded');
 
         assert.true(page.out.hasCodeSnippets);
         assert.true(page.out.hasRenderedSnippets);
@@ -61,9 +57,10 @@ module('Scenarios', function (hooks) {
         await visit('/');
         await page.editor.load();
         await page.selectDemo('Styleguide Demo');
+        let demoText = await getFromLabel('Styleguide Demo');
 
         assert.dom(page.nav.activeTab.element).hasText('Preview');
-        assert.true(page.editor.hasText(EXAMPLE_STYLEGUIDE_DEMO), 'snippet loaded');
+        assert.true(page.editor.hasText(demoText), 'snippet loaded');
 
         assert.true(page.out.hasCodeSnippets);
         assert.true(page.out.hasRenderedSnippets);
@@ -75,9 +72,10 @@ module('Scenarios', function (hooks) {
         await visit('/');
         await page.editor.load();
         await page.selectDemo('Build your own REPL');
+        let demoText = await getFromLabel('Build your own REPL');
 
         assert.dom(page.nav.activeTab.element).hasText('Preview');
-        assert.true(page.editor.hasText(REPL), 'snippet loaded');
+        assert.true(page.editor.hasText(demoText), 'snippet loaded');
 
         assert.true(page.out.hasCodeSnippets);
         assert.true(page.out.hasRenderedSnippets);
