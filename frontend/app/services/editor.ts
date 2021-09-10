@@ -111,11 +111,11 @@ export default class EditorService extends Service {
 
   @action
   _updateSnippet() {
+    this.makeComponent();
+
     let qps = buildQP(this.text);
     let base = this.router.currentURL.split('?')[0];
     let next = `${base}?${qps}`;
-
-    this.makeComponent();
 
     this.router.replaceWith(next);
   }

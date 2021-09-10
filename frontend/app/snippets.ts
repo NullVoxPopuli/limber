@@ -31,6 +31,7 @@ export const ALL = [
   { label: 'With inline Templates', path: '/samples/live-hbs.md' },
   { label: 'Styleguide Demo', path: '/samples/styleguide-demo.md' },
   { label: 'Build your own REPL', path: '/samples/repl.md' },
+  { label: 'ember-styleguide/docs/card.md', path: '/samples/card.md' },
 ] as const;
 
 export const NAMES = ALL.map((demo) => demo.label);

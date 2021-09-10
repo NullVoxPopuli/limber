@@ -13,6 +13,15 @@
   touch-action: manipulation;
 }
 
+/* remove styles from ember-styleguide... */
+.grid > * {
+  grid-column: unset;
+  align-items: unset;
+}
+.grid {
+  grid-gap: unset;
+}
+
 /**
  * https://www.w3schools.com/howto/howto_css_loader.asp
  */
