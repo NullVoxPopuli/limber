@@ -1,16 +1,20 @@
-<SelectLight
-  @onChange={{this.select}}
-  class="
-    text-black focus:ring-4 sm:text-sm focus-visible:outline-none focus:outline-none ring-inset
-    rounded-sm px-2 py-1
-  "
-  data-test-demo-select
-  ...attributes
->
-  <option value="" disabled selected>Select demo</option>
+<Limber::Menu data-test-demo-select ...attributes>
+  <:trigger as |menu|>
+    <span class="grid grid-flow-col gap-2 items-center">
+      Select demo
+      {{#if menu.isOpen}}
+        <FaIcon @icon="angle-up" class="min-w-3" />
+      {{else}}
+        <FaIcon @icon="angle-right" class="min-w-3" />
+      {{/if}}
+    </span>
+  </:trigger>
 
-  {{#each this.demos as |demo|}}
-    <option data-test-demo>{{demo}}</option>
-  {{/each}}
-</SelectLight>
-
+  <:options as |Item|>
+    {{#each this.demos as |demoName|}}
+      <Item {{on 'click' (fn this.select demoName)}} data-test-demo>
+        {{demoName}}
+      </Item>
+    {{/each}}
+  </:options>
+</Limber::Menu>

@@ -53,6 +53,7 @@ module.exports = {
     extend: {
       minWidth: {
         '1/3': '33%',
+        3: '0.75rem',
       },
       gridTemplateRows: {
         editor: 'min-content 1fr',
