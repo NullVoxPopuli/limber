@@ -111,6 +111,7 @@ async function toClipboard(target: HTMLElement) {
     // html-to-image does not make adjustments if margins exist anyway
     width: box.width + 32,
     height: box.height + 32,
+    pixelRatio: 3,
     style: {
       // m-0
       // make margin uniform all the way around

@@ -3,7 +3,6 @@
 import { compileHBS, compileJS, invocationName } from 'ember-repl';
 import CopyMenu from 'limber/components/limber/copy-menu';
 
-import { COMPONENT_MAP } from './component-map';
 import { parseMarkdown } from './markdown-to-ember';
 
 import type { ExtractedCode } from './markdown-to-ember';
@@ -19,6 +18,10 @@ interface CompilationResult {
 }
 
 export async function compileAll(js: { code: string }[]) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  let { COMPONENT_MAP } = await import('/ember-repl/component-map.js');
+
   let modules = await Promise.all(
     js.map(async ({ code }) => {
       return await compileJS(code, COMPONENT_MAP);
