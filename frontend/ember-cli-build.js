@@ -54,6 +54,15 @@ module.exports = function (defaults) {
       require('@nullvoxpopuli/limber-codemirror/broccoli-funnel')(),
       // Desktop Editor
       require('@nullvoxpopuli/limber-monaco/broccoli-funnel')(),
+      // COMPONENT_MAP,
+      require('ember-repl').buildComponentMap([
+        'limber/components/limber/menu',
+        'limber/components/limber/header',
+        'limber/components/external-link',
+        'limber/components/shadowed',
+        'limber/components/popper-j-s',
+        'ember-repl',
+      ]),
     ],
     skipBabel: [
       {
