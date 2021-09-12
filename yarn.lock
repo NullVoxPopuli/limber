@@ -1172,11 +1172,6 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/standalone@^7.15.3":
-  version "7.15.3"
-  resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.15.3.tgz#60f74273202ffcc6bb1428918053449fe477227c"
-  integrity sha512-Bst2YWEyQ2ROyO0+jxPVnnkSmUh44/x54+LSbe5M4N5LGfOkxpajEUKVE4ndXtIVrLlHCyuiqCPwv3eC1ItnCg==
-
 "@babel/standalone@^7.15.6":
   version "7.15.6"
   resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.15.6.tgz#c16866ec1ef7196be7e8c8f1d5c38d436c723117"
@@ -1790,7 +1785,7 @@
     resolve "^1.8.1"
     semver "^7.3.2"
 
-"@embroider/macros@0.44.1":
+"@embroider/macros@0.44.1", "@embroider/macros@^0.44.1":
   version "0.44.1"
   resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-0.44.1.tgz#6c25cb1939ff435d09aee82cdc2bc6ed207668c4"
   integrity sha512-Y3ZnSZxD+a0G6Kbfx8yBDQmGdGrKGWCknDtHophSKl+pfZROK1coMzEOifNT77O5zUKMDoZTvr2+AvcVlGj0qA==
@@ -7554,13 +7549,13 @@ ember-qunit@^5.1.4:
     silent-error "^1.1.1"
     validate-peer-dependencies "^1.1.0"
 
-ember-repl@1.8.0:
-  version "1.8.0"
-  resolved "https://registry.npmjs.org/ember-repl/-/ember-repl-1.8.0.tgz#519903cd06b5801b3fd7dd18b877e2ed9dfb760a"
-  integrity sha512-LV4QDXKbKgy370RCMoJrtLAayh4fMlRrMc1Bkx0DngL8YXOetGlhocL0cLQ8xE0eKKr/yDcbFFeFxKuASTuvsg==
+ember-repl@1.8.2:
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/ember-repl/-/ember-repl-1.8.2.tgz#9d5a6702853d356308b2ad13cea7dc220823649f"
+  integrity sha512-+HnlsVQDNTYovamgVh0z8yAeqW4BMknqDo2UHwO0BK6ij7q/wLd9u5/hPus0wAXDaEdE0DnpojtjiYiUDexEZw==
   dependencies:
-    "@babel/standalone" "^7.15.3"
-    "@embroider/macros" "^0.43.5"
+    "@babel/standalone" "^7.15.6"
+    "@embroider/macros" "^0.44.1"
     "@glimmer/component" "^1.0.4"
     "@glimmer/tracking" "^1.0.4"
     babel-plugin-htmlbars-inline-precompile "^5.3.0"
