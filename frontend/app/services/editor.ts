@@ -5,7 +5,7 @@ import Service, { inject as service } from '@ember/service';
 import { waitFor } from '@ember/test-waiters';
 
 import { nameFor } from 'ember-repl';
-import { DEFAULT_SNIPPET } from 'limber/snippets';
+import { DEFAULT_SNIPPET, getFromLabel } from 'limber/snippets';
 import { getQP } from 'limber/utils/query-params';
 
 import { compile } from './-compile';
@@ -100,8 +100,18 @@ export default class EditorService extends Service {
   }
 
   @action
-  updateDemo(text: string) {
+  @waitFor
+  async selectDemo(name: string) {
+    let base = this.router.currentURL.split('?')[0];
+    let next = `${base}?demo=${name}`;
+
+    this.router.replaceWith(next);
+
+    let text = await getFromLabel(name);
+
     this._editorSwapText(text);
+
+    this.makeComponent();
   }
 
   @action

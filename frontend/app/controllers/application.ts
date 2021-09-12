@@ -8,5 +8,5 @@ import Controller from '@ember/controller';
  *  After 715, this file may be deleted
  */
 export default class ApplicationController extends Controller {
-  queryParams = ['t'];
+  queryParams = ['t', 'demo'];
 }
