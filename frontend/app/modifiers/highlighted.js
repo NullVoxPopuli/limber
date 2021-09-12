@@ -24,9 +24,9 @@ export default class Highlighted extends Modifier {
 
   @action
   async highlight(code) {
-    let [hljs, purify] = await Promise.all([getHighlighter(), getPurifier()]);
-
     if (this.isSafe && this.element) {
+      let [hljs, purify] = await Promise.all([getHighlighter(), getPurifier()]);
+
       let target = this.element.querySelector('code');
       let { value } = hljs.highlight(code, { language: target.classList[0] });
 

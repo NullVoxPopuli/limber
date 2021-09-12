@@ -29,12 +29,12 @@ export default class HighlightCodeBlocks extends Modifier<Args> {
       );
     }
 
-    let hljs = await getHighlighter();
-
     if (this.isSafe && this.element) {
       let elements = this.element.querySelectorAll('pre > code');
 
       for (let element of elements) {
+        let hljs = await getHighlighter();
+
         hljs.highlightElement(element as HTMLElement);
       }
     }
