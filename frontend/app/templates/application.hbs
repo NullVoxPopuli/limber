@@ -5,12 +5,7 @@
 <main class="grid grid-flow-col h-screen max-h-screen grid grid-rows-editor">
   <Limber::Header />
 
-  {{!-- template-lint-disable no-inline-styles --}}
   <div class="flex flex-col lg:flex-row overflow-hidden">
-    {{!--
-      the max size of an element adjacent to a resizable element within a grid
-      may not exceed the starting size (so far?)
-    --}}
     <section
       data-test-editor-panel
       class="
@@ -21,6 +16,7 @@
       <Limber::Editor />
     </section>
 
+    {{!-- template-lint-disable no-inline-styles --}}
     <section class="flex-1 shadow-inner grid overflow-hidden relative" style="grid-template-rows: min-content 1fr;">
       <Limber::Navigation />
 
