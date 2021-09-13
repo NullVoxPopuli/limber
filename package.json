@@ -8,7 +8,8 @@
     "tests"
   ],
   "resolutions": {
-    "tracked-built-ins": "github:pzuraq/tracked-built-ins#master"
+    "tracked-built-ins": "github:NullVoxPopuli/tracked-built-ins#tracked-storage",
+    "tracked-maps-and-sets": "3.0.1"
   },
   "scripts": {
     "predeploy": "yarn build && yarn workspace limber build",

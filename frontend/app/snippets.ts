@@ -35,10 +35,7 @@ export const ALL = [
 
 export const NAMES = ALL.map((demo) => demo.label);
 
-type ElementOf<A> = A extends readonly (infer T)[] ? T : never;
-type Label = ElementOf<typeof ALL>['label'];
-
-export async function getFromLabel<L extends Label>(label: L): Promise<string> {
+export async function getFromLabel(label: string): Promise<string> {
   let entry = ALL.find((entry) => entry.label === label);
 
   if (!entry) return DEFAULT_SNIPPET;
