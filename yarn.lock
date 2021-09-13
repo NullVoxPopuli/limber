@@ -14589,7 +14589,7 @@ tr46@^2.1.0:
 
 tracked-built-ins@^1.1.1, "tracked-built-ins@github:pzuraq/tracked-built-ins#master":
   version "1.1.1"
-  resolved "https://codeload.github.com/pzuraq/tracked-built-ins/tar.gz/6ce21560cf3d09cbb80d711176103b3d5b83f32b"
+  resolved "https://codeload.github.com/pzuraq/tracked-built-ins/tar.gz/1d00bb677a9c23479b7976ec54e383f6cb548879"
   dependencies:
     ember-cli-babel "^7.26.3"
     ember-cli-typescript "^4.1.0"
