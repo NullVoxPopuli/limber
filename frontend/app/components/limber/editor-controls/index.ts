@@ -10,7 +10,14 @@ import type { InterpreterFrom, StateFrom } from 'xstate';
 
 const CONTROLS_TEMPLATE = hbs`
   {{#if this.needsControls}}
-    <div class='absolute top-0 right-0 z-[1] flex lg:grid'>
+    <div
+      class='
+        absolute top-0 right-0 z-[1] flex lg:grid
+        {{if this.isMinimized
+          'bg-ember-black h-full content-start'
+        }}
+      '
+    >
       <button
         type='button'
         title={{if this.isMaximized 'Back to split view' 'Maximize Editor'}}
