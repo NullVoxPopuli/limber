@@ -15539,10 +15539,10 @@ xmldom@^0.6.0:
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.6.0.tgz#43a96ecb8beece991cef382c08397d82d4d0c46f"
   integrity sha512-iAcin401y58LckRZ0TkI4k0VSM1Qg0KGSc3i8rU+xrxe19A/BN1zHyVSJY7uoutVlaTSzYyk/v5AmkewAP7jtg==
 
-xstate@^4.24.0:
-  version "4.24.0"
-  resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.24.0.tgz#06171885e1cfed16d65f91542c7116249bf76937"
-  integrity sha512-0gap+4mo0z4LjA0Wd+8EtB8L82ES0S3tjPGNXryqtsOvIDC53/mQGuyXqEHktvyONGO+dAFqcLIla6oSxexCqA==
+xstate@^4.24.1:
+  version "4.24.1"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.24.1.tgz#07d805202205f11ac31d5075675e736b0ba3ec0e"
+  integrity sha512-7Bl9B91OFmADMDYyKuBO9EAy7CtalY6Pf9GZYsNtfxmPO1KnXaULdSWQEuTFofEgChrU+BIt+TqrmE2C2exEzg==
 
 xtend@^4.0.0, xtend@^4.0.2, xtend@~4.0.1:
   version "4.0.2"
