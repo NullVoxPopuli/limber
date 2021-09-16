@@ -2296,10 +2296,10 @@
     eslint-plugin-simple-import-sort "^7.0.0"
     prettier "2.3.2"
 
-"@nullvoxpopuli/eslint-configs@1.4.5":
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/@nullvoxpopuli/eslint-configs/-/eslint-configs-1.4.5.tgz#8bdf697bad2620b55586bb0d076f815017021e1d"
-  integrity sha512-hJI1SxcDQ4Aek493yjMYn7HHFlfim2LENUkqSUXp+M1z9i5V4FIETVfkP8LR8iYynGjmb0mbrVX84gICDgGKQA==
+"@nullvoxpopuli/eslint-configs@1.4.6":
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/@nullvoxpopuli/eslint-configs/-/eslint-configs-1.4.6.tgz#a6de13118aceb6e1e887b9118917c7b309ba80ba"
+  integrity sha512-Ovni/OTdc/6t9hrU3BqZo4LRs9qAABZjd3T8iQ8lDScsb3w3Yp+P1ogP1cA9HDgR2KVwsqnc/pHAo4hhoBG07A==
   dependencies:
     "@typescript-eslint/eslint-plugin" "4.31.1"
     "@typescript-eslint/parser" "4.31.1"
@@ -2314,7 +2314,7 @@
     eslint-plugin-prettier "4.0.0"
     eslint-plugin-qunit "6.2.0"
     eslint-plugin-simple-import-sort "^7.0.0"
-    prettier "2.4.0"
+    prettier "2.4.1"
 
 "@polka/url@^1.0.0-next.15":
   version "1.0.0-next.15"
@@ -12411,10 +12411,10 @@ prettier@2.3.2, prettier@^2.3.2:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.3.2.tgz#ef280a05ec253712e486233db5c6f23441e7342d"
   integrity sha512-lnJzDfJ66zkMy58OL5/NY5zp70S7Nz6KqcKkXYzn2tMVrNxvbqaBpg7H3qHaLxCJ5lNMsGuM8+ohS7cZrthdLQ==
 
-prettier@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.4.0.tgz#85bdfe0f70c3e777cf13a4ffff39713ca6f64cba"
-  integrity sha512-DsEPLY1dE5HF3BxCRBmD4uYZ+5DCbvatnolqTqcxEgKVZnL2kUfyu7b8pPQ5+hTBkdhU9SLUmK0/pHb07RE4WQ==
+prettier@2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.4.1.tgz#671e11c89c14a4cfc876ce564106c4a6726c9f5c"
+  integrity sha512-9fbDAXSBcc6Bs1mZrDYb3XKzDLm4EXXL9sC1LqKP5rZkT6KRr/rf9amVUcODVXgguK/isJz0d0hP72WeaKWsvA==
 
 pretty-bytes@^5.6.0:
   version "5.6.0"
