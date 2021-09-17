@@ -148,6 +148,6 @@
     "unified": "^9.2.2",
     "unist-util-flatmap": "^1.0.0",
     "webpack-bundle-analyzer": "^4.4.2",
-    "xstate": "^4.24.1"
+    "xstate": "^4.25.0"
   }
 }
