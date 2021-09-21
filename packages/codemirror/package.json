@@ -32,7 +32,7 @@
     "broccoli-funnel": "^3.0.8"
   },
   "devDependencies": {
-    "@nullvoxpopuli/eslint-configs": "1.4.7",
+    "@nullvoxpopuli/eslint-configs": "1.4.8",
     "esbuild": "0.12.28",
     "esbuild-plugin-alias": "^0.1.2",
     "recursive-copy": "^2.0.13"
