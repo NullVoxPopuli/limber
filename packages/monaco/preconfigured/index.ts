@@ -15,7 +15,8 @@ const OPTIONS: monaco.editor.IStandaloneEditorConstructionOptions = {
   wrappingIndent: 'indent',
   automaticLayout: true,
   scrollBeyondLastLine: false,
-  fontFamily: 'inherit',
+  fontFamily: 'Source Code Pro',
+  // fontFamily: 'inherit',
   // fontsize seems arbitrary -- there may be
   // some scaling going on?
   fontSize: 16,
