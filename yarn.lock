@@ -1778,7 +1778,7 @@
     resolve "^1.8.1"
     semver "^7.3.2"
 
-"@embroider/macros@0.44.2":
+"@embroider/macros@0.44.2", "@embroider/macros@^0.44.2":
   version "0.44.2"
   resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-0.44.2.tgz#4b6b1bfb80d70f55668e14a11d168f4bda84fe44"
   integrity sha512-XPHidVFp2JDaJQ7GB2X3hyG7W27WspbrjvLCvbx1MOgismhIDhzDZEdPAs02nHMaqTyrzyzBvQoyY4ZLxJuPMg==
@@ -1804,19 +1804,6 @@
     resolve "^1.20.0"
     semver "^7.3.2"
 
-"@embroider/macros@^0.44.1":
-  version "0.44.1"
-  resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-0.44.1.tgz#6c25cb1939ff435d09aee82cdc2bc6ed207668c4"
-  integrity sha512-Y3ZnSZxD+a0G6Kbfx8yBDQmGdGrKGWCknDtHophSKl+pfZROK1coMzEOifNT77O5zUKMDoZTvr2+AvcVlGj0qA==
-  dependencies:
-    "@embroider/shared-internals" "0.44.1"
-    assert-never "^1.2.1"
-    ember-cli-babel "^7.26.6"
-    find-up "^5.0.0"
-    lodash "^4.17.21"
-    resolve "^1.20.0"
-    semver "^7.3.2"
-
 "@embroider/shared-internals@0.41.0":
   version "0.41.0"
   resolved "https://registry.yarnpkg.com/@embroider/shared-internals/-/shared-internals-0.41.0.tgz#2553f026d4f48ea1fd11235501feb63bf49fa306"
@@ -1834,18 +1821,6 @@
   version "0.43.5"
   resolved "https://registry.yarnpkg.com/@embroider/shared-internals/-/shared-internals-0.43.5.tgz#4269208095452c23bfa4f08554fd8f7ed7b83a83"
   integrity sha512-vydU3kRS5hH/hWOBHiHP06427d0C5t2p+UTPtbH09+Jlyj0WvvtgUfiNltEneY6jjpLXlqOfgs4LjsRdmBFksw==
-  dependencies:
-    ember-rfc176-data "^0.3.17"
-    fs-extra "^9.1.0"
-    lodash "^4.17.21"
-    resolve-package-path "^4.0.1"
-    semver "^7.3.5"
-    typescript-memoize "^1.0.1"
-
-"@embroider/shared-internals@0.44.1":
-  version "0.44.1"
-  resolved "https://registry.yarnpkg.com/@embroider/shared-internals/-/shared-internals-0.44.1.tgz#355b2dbbb943fdc9583d1431508f22717864875e"
-  integrity sha512-1RLaB0+CqWz4BBbvDu/jp7mBIqxrHKnIIjDU5XwnfIfKGSfI1zpzpIbpsGSi35zx7ybplSq1FSEenaUa37QCOg==
   dependencies:
     ember-rfc176-data "^0.3.17"
     fs-extra "^9.1.0"
@@ -7569,13 +7544,13 @@ ember-qunit@^5.1.4:
     silent-error "^1.1.1"
     validate-peer-dependencies "^1.1.0"
 
-ember-repl@1.8.3:
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/ember-repl/-/ember-repl-1.8.3.tgz#aa1f8c97e335622eac3d7a48e7037121cc5a607e"
-  integrity sha512-NMpwNmkBoZCehPjDXPYgjo5/jkWgmwsz7VsDWGx/Q+eh5D3pqTzmwPGPDJ0X29+mc0jFXXXH+GKXwro8zaOmbg==
+ember-repl@1.8.4:
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/ember-repl/-/ember-repl-1.8.4.tgz#d508a71ea12ad23d762c677fb88ec6609e896e26"
+  integrity sha512-rXTLCaI6S7iXMh0Hgg80tWA7rD7TlVn+ZUDpLLJuMO/4bsr/eX47S+G8nIUHqhox7a6N7A23aYkJlkLXeFSoNw==
   dependencies:
     "@babel/standalone" "^7.15.7"
-    "@embroider/macros" "^0.44.1"
+    "@embroider/macros" "^0.44.2"
     "@glimmer/component" "^1.0.4"
     "@glimmer/tracking" "^1.0.4"
     babel-plugin-htmlbars-inline-precompile "^5.3.0"

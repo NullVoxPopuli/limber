@@ -134,7 +134,7 @@
     "ember-could-get-used-to-this": "^1.0.1",
     "ember-focus-trap": "^0.7.0",
     "ember-headlessui": "^0.9.0",
-    "ember-repl": "1.8.3",
+    "ember-repl": "1.8.4",
     "ember-router-helpers": "^0.4.0",
     "ember-statechart-component": "2.3.7",
     "highlight.js": "^11.2.0",
