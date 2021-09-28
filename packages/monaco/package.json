@@ -22,7 +22,7 @@
     "monaco-languages": "^2.8.1"
   },
   "devDependencies": {
-    "@nullvoxpopuli/eslint-configs": "1.4.9",
+    "@nullvoxpopuli/eslint-configs": "1.4.10",
     "esbuild": "0.13.2",
     "esbuild-plugin-alias": "^0.1.2",
     "recursive-copy": "^2.0.13"
