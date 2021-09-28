@@ -2296,17 +2296,17 @@
     eslint-plugin-simple-import-sort "^7.0.0"
     prettier "2.3.2"
 
-"@nullvoxpopuli/eslint-configs@1.4.9":
-  version "1.4.9"
-  resolved "https://registry.yarnpkg.com/@nullvoxpopuli/eslint-configs/-/eslint-configs-1.4.9.tgz#70630195fc1e0a46e5eec531b4047a0fd90b70f0"
-  integrity sha512-MtPizDalc9Dd9CDh+UXc3LwNCDZVmzT994hwYR8d9F1W8i1LZ78Vfc8m3n74FD522wzSU2IPMQ3cZ/sraeaH2Q==
+"@nullvoxpopuli/eslint-configs@1.4.10":
+  version "1.4.10"
+  resolved "https://registry.yarnpkg.com/@nullvoxpopuli/eslint-configs/-/eslint-configs-1.4.10.tgz#66cb848fdac1d60017f3dbf9975a3dcc5bbb5989"
+  integrity sha512-I3qqJpPAz4evGBt0ZktV5XJvh7oIU4k12FrcQbgttYWw+jbGQOs168ODXPEqGk9/KMd3O3E/cUBT1sbJafsGIQ==
   dependencies:
     "@typescript-eslint/eslint-plugin" "4.32.0"
     "@typescript-eslint/parser" "4.32.0"
     babel-eslint "10.1.0"
     eslint "7.32.0"
     eslint-config-prettier "8.3.0"
-    eslint-plugin-decorator-position "2.2.29"
+    eslint-plugin-decorator-position "4.0.0"
     eslint-plugin-ember "10.5.5"
     eslint-plugin-import "^2.24.2"
     eslint-plugin-json "^3.1.0"
@@ -8043,6 +8043,15 @@ eslint-plugin-decorator-position@2.2.29:
   version "2.2.29"
   resolved "https://registry.npmjs.org/eslint-plugin-decorator-position/-/eslint-plugin-decorator-position-2.2.29.tgz#c66d52c6e2636541612463897ed7ef92db933dc6"
   integrity sha512-M+IIi4aYbLuWoaJBHZV100blntgk+X/MDXK5xbFC6YYm1NHGNP0wTkLiYNQ62l8AixMp4rbLvg5nhJQqPiVgXQ==
+  dependencies:
+    "@ember-data/rfc395-data" "^0.0.4"
+    ember-rfc176-data "^0.3.12"
+    snake-case "^3.0.3"
+
+eslint-plugin-decorator-position@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-decorator-position/-/eslint-plugin-decorator-position-4.0.0.tgz#96e5f1fcb8d6c82310b616c944b2e6e6ef359668"
+  integrity sha512-aopU1aq6yFWuepkx6k0M3EUduIkTZbENqL8uIZp08wyH6RCbO9k3hHfOffpeCTLyxvTX9f9eHMqASW+smzTc6A==
   dependencies:
     "@ember-data/rfc395-data" "^0.0.4"
     ember-rfc176-data "^0.3.12"
