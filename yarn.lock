@@ -3823,6 +3823,15 @@ assert@^1.1.1:
     object-assign "^4.1.1"
     util "0.10.3"
 
+assets-webpack-plugin@^7.1.1:
+  version "7.1.1"
+  resolved "https://registry.npmjs.org/assets-webpack-plugin/-/assets-webpack-plugin-7.1.1.tgz#0b988bf904a1895cae5820957ad82aa402673894"
+  integrity sha512-HwsDcu9UR9kv7AtiyMpUO9fARn94SbrLzw5+aQ59RnOZJeet+EVHmOrMwXl8fZ8cZmdZ9Sbl1/l+fn7ymiyfMg==
+  dependencies:
+    camelcase "^6.0.0"
+    escape-string-regexp "^4.0.0"
+    lodash "^4.17.21"
+
 assign-symbols@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/assign-symbols/-/assign-symbols-1.0.0.tgz#59667f41fadd4f20ccbc2bb96b8d4f7f78ec0367"
@@ -5606,6 +5615,11 @@ camelcase@^5.0.0:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-5.3.1.tgz#e3c9b31569e106811df242f715725a1f4c494320"
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
+
+camelcase@^6.0.0:
+  version "6.2.0"
+  resolved "https://registry.npmjs.org/camelcase/-/camelcase-6.2.0.tgz#924af881c9d525ac9d87f40d964e5cea982a1809"
+  integrity sha512-c7wVvbw3f37nuobQNtgsgG9POC9qMbNuMQmTCqZv23b6MIz0fcYpBiOlv9gEN/hdLdnZTDQhg6e9Dq5M1vKvfg==
 
 can-symlink@^1.0.0:
   version "1.0.0"
@@ -7686,7 +7700,7 @@ ember-template-recast@^5.0.3:
     tmp "^0.2.1"
     workerpool "^6.1.4"
 
-ember-tracked-storage-polyfill@1.0.0:
+ember-tracked-storage-polyfill@1.0.0, ember-tracked-storage-polyfill@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/ember-tracked-storage-polyfill/-/ember-tracked-storage-polyfill-1.0.0.tgz#84d307a1e4badc5f84dca681db2cfea9bdee8a77"
   integrity sha512-eL7lZat68E6P/D7b9UoTB5bB5Oh/0aju0Z7PCMi3aTwhaydRaxloE7TGrTRYU+NdJuyNVZXeGyxFxn2frvd3TA==
@@ -14728,7 +14742,7 @@ tr46@^2.1.0:
   dependencies:
     punycode "^2.1.1"
 
-tracked-built-ins@^1.1.1, "tracked-built-ins@github:NullVoxPopuli/tracked-built-ins#tracked-storage":
+tracked-built-ins@^1.1.1:
   version "1.1.1"
   resolved "https://codeload.github.com/NullVoxPopuli/tracked-built-ins/tar.gz/3d9b55e318183a2de3e7383779551b1935850379"
   dependencies:
@@ -14736,9 +14750,17 @@ tracked-built-ins@^1.1.1, "tracked-built-ins@github:NullVoxPopuli/tracked-built-
     ember-cli-typescript "^4.1.0"
     tracked-maps-and-sets "^2.0.0"
 
-tracked-maps-and-sets@3.0.1, tracked-maps-and-sets@^2.0.0, tracked-maps-and-sets@^2.2.1, tracked-maps-and-sets@^3.0.1:
+tracked-maps-and-sets@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.npmjs.org/tracked-maps-and-sets/-/tracked-maps-and-sets-2.2.1.tgz#323dd40540c561e8b0ffdec8bf129c68ec5025f9"
+  integrity sha512-XYrXh6L/GpGmVmG3KcN/qoDyi4FxHh8eZY/BA/RuoxynskV+GZSfwrX3R+5DR2CIkzkCx4zi4kkDRg1AMDfDhg==
+  dependencies:
+    "@glimmer/tracking" "^1.0.0"
+    ember-cli-babel "^7.17.2"
+
+tracked-maps-and-sets@^3.0.1:
   version "3.0.1"
-  resolved "https://registry.yarnpkg.com/tracked-maps-and-sets/-/tracked-maps-and-sets-3.0.1.tgz#aa3a71aa7ef4785e784324059b21b83153df445b"
+  resolved "https://registry.npmjs.org/tracked-maps-and-sets/-/tracked-maps-and-sets-3.0.1.tgz#aa3a71aa7ef4785e784324059b21b83153df445b"
   integrity sha512-x1IC6C6muJzpeZaQOcollKiLYSazWEtSM5EDCO5PUfbU7RTMa1x7t9SJrwqDxeasvmJCa1QftECsRtI7osOs8w==
   dependencies:
     "@ember/test-helpers" "^2.3.0"

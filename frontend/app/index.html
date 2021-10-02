@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src='https://js.sentry-cdn.com/cbe554dff4374619833a5dcbdaf7407c.min.js' crossorigin="anonymous"></script>
+    <script defer async src="{{rootURL}}manifest.js"></script>
 
     {{content-for "head"}}
 
@@ -34,12 +35,6 @@
         --ember-white: #fdfdfd;
       }
     </style>
-    <script>
-      globalThis.v8 = {};
-      globalThis.path = {
-        resolve: (...args) => args.join('/'),
-      }
-    </script>
   </head>
   <body class="overflow-hidden syntax-dark syntax-bright">
     <div id="initial-loader">

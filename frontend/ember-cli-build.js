@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const yn = require('yn');
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
@@ -28,7 +29,10 @@ module.exports = function (defaults) {
     'ember-cli-terser': {
       enabled: MINIFY,
     },
-    fingerprint: { exclude: ['transpilation-worker.js'] },
+    fingerprint: {
+      generateAssetMap: true,
+      exclude: ['transpilation-worker.js'],
+    },
     postcssOptions: {
       compile: {
         map: SOURCEMAPS,
@@ -45,8 +49,12 @@ module.exports = function (defaults) {
   //  - @glimmer/syntax
   app.import('vendor/ember/ember-template-compiler.js');
 
+  const rootURL = app.options.project.config(environment).rootURL;
+  const productionOnly = (plugin) => (isProduction ? [plugin] : []);
+
   const { Webpack } = require('@embroider/webpack');
   const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+  const AssetsWebpackPlugin = require('assets-webpack-plugin');
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     extraPublicTrees: [
@@ -126,11 +134,25 @@ module.exports = function (defaults) {
           __dirname: true,
         },
         plugins: [
-          new BundleAnalyzerPlugin({
-            analyzerMode: 'static',
-            openAnalyzer: false,
-            reportFilename: 'bundle.html',
+          // Generate Asset Map
+          new AssetsWebpackPlugin({
+            filename: 'manifest.js',
+            fileTypes: ['js', 'css'],
+            manifestFirst: true,
+            path: path.join(__dirname, 'public'),
+            processOutput: (assets) => 'window.assetMap = ' + JSON.stringify(assets),
+            metadata: {
+              rootURL,
+              isProduction,
+            },
           }),
+          ...productionOnly(
+            new BundleAnalyzerPlugin({
+              analyzerMode: 'static',
+              openAnalyzer: false,
+              reportFilename: 'bundle.html',
+            })
+          ),
         ],
       },
     },

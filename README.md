@@ -3,6 +3,9 @@
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
 
+Error capturing at: [Sentry.io](https://sentry.io/organizations/nullvoxpopuli/issues/?project=5755433)
+Since code is stored in the URL for easier sharing without a server, if you want to keep your code hidden from Sentry.io, you'll want to either turn off the network connection in the devtools, or block requests to Sentry.
+
 ```
 TAILWIND_MODE=watch ember s
 ```
