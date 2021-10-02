@@ -15,7 +15,7 @@ class Shadowed extends Component {
     this.shadow = element.attachShadow({ mode: 'open' });
   });
 
-  get stylesheets() {
+  get styleImports() {
     return ['assets/vendor.css', 'assets/limber.css']
       .map((sheet) => {
         return `@import "${assetFor(sheet)}";`;
@@ -30,10 +30,8 @@ export default setComponentTemplate(
 
     {{#if this.shadow}}
       {{#in-element this.shadow}}
-        <style>
-          @import "/assets/vendor.css";
-          @import "/assets/limber.css";
-        </style>
+        <style>{{this.styleImports}}</style>
+
         {{yield}}
       {{/in-element}}
     {{/if}}

@@ -9,6 +9,7 @@ const originalOnError = Ember.onerror;
 
 export default class ApplicationRoute extends Route {
   async beforeModel() {
+    let response = await fetch('/assets/manifest.json');
     document.querySelector('#initial-loader')?.remove();
 
     setupOnError();

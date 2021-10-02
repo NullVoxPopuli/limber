@@ -54,7 +54,6 @@ module.exports = function (defaults) {
 
   const { Webpack } = require('@embroider/webpack');
   const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-  const AssetsWebpackPlugin = require('assets-webpack-plugin');
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     extraPublicTrees: [
@@ -134,18 +133,6 @@ module.exports = function (defaults) {
           __dirname: true,
         },
         plugins: [
-          // Generate Asset Map
-          new AssetsWebpackPlugin({
-            filename: 'manifest.js',
-            fileTypes: ['js', 'css'],
-            manifestFirst: true,
-            path: path.join(__dirname, 'public'),
-            processOutput: (assets) => 'window.assetMap = ' + JSON.stringify(assets),
-            metadata: {
-              rootURL,
-              isProduction,
-            },
-          }),
           ...productionOnly(
             new BundleAnalyzerPlugin({
               analyzerMode: 'static',
