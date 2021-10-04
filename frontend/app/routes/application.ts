@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import './styles/app.css';
+
 import Ember from 'ember';
 import { DEBUG } from '@glimmer/env';
 import Route from '@ember/routing/route';
@@ -9,7 +11,6 @@ const originalOnError = Ember.onerror;
 
 export default class ApplicationRoute extends Route {
   async beforeModel() {
-    let response = await fetch('/assets/manifest.json');
     document.querySelector('#initial-loader')?.remove();
 
     setupOnError();

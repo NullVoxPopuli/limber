@@ -30,15 +30,7 @@ module.exports = function (defaults) {
       enabled: MINIFY,
     },
     fingerprint: {
-      generateAssetMap: true,
       exclude: ['transpilation-worker.js'],
-    },
-    postcssOptions: {
-      compile: {
-        map: SOURCEMAPS,
-        plugins: [require('@tailwindcss/jit')('./tailwind.config.js'), require('autoprefixer')()],
-        cacheInclude: [/.*\.(css|hbs)$/, /.tailwind\.config\.js$/],
-      },
     },
   };
 
@@ -54,6 +46,8 @@ module.exports = function (defaults) {
 
   const { Webpack } = require('@embroider/webpack');
   const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+  const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+  const AssetsWebpackPlugin = require('assets-webpack-plugin');
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     extraPublicTrees: [
@@ -120,6 +114,11 @@ module.exports = function (defaults) {
                 },
               ],
             },
+            {
+              test: /\.css$/i,
+              include: path.resolve(__dirname, 'app'),
+              use: ['style-loader', 'css-loader', 'postcss-loader'],
+            },
           ],
         },
         resolve: {
@@ -133,6 +132,18 @@ module.exports = function (defaults) {
           __dirname: true,
         },
         plugins: [
+          new WebpackManifestPlugin({
+            fileName: 'webpack-manifest.json',
+            isAsset: true,
+          }),
+          new AssetsWebpackPlugin({
+            filename: 'manifest-assets-webpack-plugin.js',
+            path: path.join(__dirname, 'public/assets'),
+            metadata: {
+              rootURL,
+              isProduction,
+            },
+          }),
           ...productionOnly(
             new BundleAnalyzerPlugin({
               analyzerMode: 'static',
