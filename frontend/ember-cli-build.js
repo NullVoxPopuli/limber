@@ -48,6 +48,8 @@ module.exports = function (defaults) {
   const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
   const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
   const AssetsWebpackPlugin = require('assets-webpack-plugin');
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     extraPublicTrees: [
@@ -102,22 +104,26 @@ module.exports = function (defaults) {
         // },
         module: {
           rules: [
-            {
-              test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-              use: ['file-loader'],
-            },
-            {
-              test: /codicon\.ttf$/,
-              use: [
-                {
-                  loader: 'ignore-loader',
-                },
-              ],
-            },
+            // {
+            //   test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+            //   use: ['file-loader'],
+            // },
+            // {
+            //   test: /codicon\.ttf$/,
+            //   use: [
+            //     {
+            //       loader: 'ignore-loader',
+            //     },
+            //   ],
+            // },
             {
               test: /\.css$/i,
-              include: path.resolve(__dirname, 'app'),
-              use: ['style-loader', 'css-loader', 'postcss-loader'],
+              use: [
+                MiniCssExtractPlugin.loader,
+                'style-loader',
+                'css-loader',
+                'postcss-loader',
+              ],
             },
           ],
         },
@@ -132,18 +138,18 @@ module.exports = function (defaults) {
           __dirname: true,
         },
         plugins: [
-          new WebpackManifestPlugin({
-            fileName: 'webpack-manifest.json',
-            isAsset: true,
-          }),
-          new AssetsWebpackPlugin({
-            filename: 'manifest-assets-webpack-plugin.js',
-            path: path.join(__dirname, 'public/assets'),
-            metadata: {
-              rootURL,
-              isProduction,
-            },
-          }),
+          // new WebpackManifestPlugin({
+          //   fileName: 'webpack-manifest.json',
+          //   isAsset: true,
+          // }),
+          // new AssetsWebpackPlugin({
+          //   filename: 'manifest-assets-webpack-plugin.js',
+          //   path: path.join(__dirname, 'public/assets'),
+          //   metadata: {
+          //     rootURL,
+          //     isProduction,
+          //   },
+          // }),
           ...productionOnly(
             new BundleAnalyzerPlugin({
               analyzerMode: 'static',
