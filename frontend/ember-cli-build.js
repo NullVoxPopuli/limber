@@ -129,7 +129,7 @@ module.exports = function (defaults) {
               sourcemap: false,
               minify: isProduction,
               css: true,
-              exclude: [/monaco/, /codemirrero/],
+              exclude: [/monaco/, /codemirror/],
             }),
           ],
         },
