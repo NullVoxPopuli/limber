@@ -10,6 +10,11 @@
     "doc": "doc",
     "test": "tests"
   },
+  "browserslist": [
+    "last 1 chrome versions",
+    "last 1 firefox versions",
+    "last 1 safari versions"
+  ],
   "scripts": {
     "browserstack:connect": "ember browserstack:connect",
     "browserstack:disconnect": "ember browserstack:disconnect",
@@ -130,6 +135,7 @@
     "@nullvoxpopuli/limber-monaco": "*",
     "@nullvoxpopuli/limber-transpilation": "*",
     "@popperjs/core": "^2.10.2",
+    "browserslist": "^4.17.4",
     "dompurify": "^2.3.3",
     "ember-auto-import": "^2.2.0",
     "ember-could-get-used-to-this": "^1.0.1",
