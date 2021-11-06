@@ -28,7 +28,7 @@
   },
   "volta": {
     "node": "14.17.0",
-    "yarn": "1.22.11",
+    "yarn": "1.22.17",
     "npm": "7.24.1"
   },
   "devDependencies": {
