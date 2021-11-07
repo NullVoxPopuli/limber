@@ -1,9 +1,8 @@
 import { selector } from 'fractal-page-object';
 
-import type { PageObject } from 'fractal-page-object';
-import type { PageObjectClass } from 'fractal-page-object/dist/-private/types';
+import type { PageObject, PageObjectConstructor } from 'fractal-page-object';
 
-type Nested = PageObjectClass<PageObject>;
+type Nested = PageObjectConstructor<PageObject>;
 
 export const dt = (name: string) => `[data-test-${name}]`;
 
