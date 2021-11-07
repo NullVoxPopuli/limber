@@ -9365,10 +9365,10 @@ forwarded@0.2.0:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.2.0.tgz#2269936428aad4c15c7ebe9779a84bf0b2a81811"
   integrity sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==
 
-fractal-page-object@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/fractal-page-object/-/fractal-page-object-0.2.0.tgz#31c64b1ae54211f72068e45f48e9fa6b27024ecd"
-  integrity sha512-60WNDCdv6syGGhzJXhPo2E0D0MD2OntEVwUwB22egg5agzcZOB11Co/WSJmOC+0mvJ+K3bVlglWg+ZCf8eBaEA==
+fractal-page-object@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/fractal-page-object/-/fractal-page-object-0.2.1.tgz#4e526af2aa8e4186d6a9621649587e5eae370cdf"
+  integrity sha512-W+Ar5wYe8ViT+THrEyOxOK50SSK36tli7rkLmjQPvLmlv+fMScf0BTqenOTVPWKd+rzd+PX2OtAOWeL3V6RDXQ==
 
 fraction.js@^4.1.1:
   version "4.1.1"
