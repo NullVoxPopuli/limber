@@ -15,7 +15,7 @@ extraPublicTrees: [
     'limber/components/limber/menu',
     'limber/components/limber/header',
     'limber/components/external-link',
-    'limber/components/popper-j-s',
+    'ember-popperjs',
     'ember-repl',
   ]),
 ]

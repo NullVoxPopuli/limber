@@ -62,7 +62,7 @@ module.exports = function (defaults) {
         'limber/components/limber/header',
         'limber/components/external-link',
         'limber/components/shadowed',
-        'limber/components/popper-j-s',
+        'ember-popperjs',
         'ember-repl',
       ]),
     ],

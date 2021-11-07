@@ -119,7 +119,7 @@
     "yn": "^4.0.0"
   },
   "engines": {
-    "node": "14.17.0"
+    "node": ">= 14.0.0"
   },
   "ember": {
     "edition": "octane"
@@ -141,6 +141,7 @@
     "ember-could-get-used-to-this": "^1.0.1",
     "ember-focus-trap": "^0.7.0",
     "ember-headlessui": "^0.10.2",
+    "ember-popperjs": "^2.0.0",
     "ember-repl": "1.8.4",
     "ember-router-helpers": "^0.4.0",
     "ember-statechart-component": "2.3.7",
