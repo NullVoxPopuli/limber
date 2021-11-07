@@ -9,7 +9,7 @@
   ],
   "resolutions": {
     "tracked-built-ins": "github:NullVoxPopuli/tracked-built-ins#tracked-storage",
-    "tracked-maps-and-sets": "3.0.1"
+    "tracked-maps-and-sets": "3.0.2"
   },
   "scripts": {
     "predeploy": "yarn build && yarn workspace limber build",
