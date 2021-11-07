@@ -7901,7 +7901,7 @@ ember-template-recast@^5.0.3:
     tmp "^0.2.1"
     workerpool "^6.1.4"
 
-ember-tracked-storage-polyfill@1.0.0:
+ember-tracked-storage-polyfill@1.0.0, ember-tracked-storage-polyfill@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ember-tracked-storage-polyfill/-/ember-tracked-storage-polyfill-1.0.0.tgz#84d307a1e4badc5f84dca681db2cfea9bdee8a77"
   integrity sha512-eL7lZat68E6P/D7b9UoTB5bB5Oh/0aju0Z7PCMi3aTwhaydRaxloE7TGrTRYU+NdJuyNVZXeGyxFxn2frvd3TA==
@@ -15145,7 +15145,7 @@ tracked-built-ins@^1.1.1, "tracked-built-ins@github:NullVoxPopuli/tracked-built-
     ember-tracked-storage-polyfill "^1.0.0"
     tracked-maps-and-sets "^3.0.2"
 
-tracked-maps-and-sets@3.0.2, tracked-maps-and-sets@^2.0.0, tracked-maps-and-sets@^2.2.1, tracked-maps-and-sets@^3.0.1:
+tracked-maps-and-sets@3.0.2, tracked-maps-and-sets@^2.2.1, tracked-maps-and-sets@^3.0.1, tracked-maps-and-sets@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/tracked-maps-and-sets/-/tracked-maps-and-sets-3.0.2.tgz#6ea1b9f2a367d24f2e9905b74b24437fbce76ea6"
   integrity sha512-UIRcWsX1kDOcC/Q2R58weYWlw01EnmWWBwUv3okWS+zMBvsgIfYoO6veHhuNE3hgzWCEImNp46QS5CyKnw5QUA==
@@ -15612,7 +15612,7 @@ vfile-message@^2.0.0:
     "@types/unist" "^2.0.0"
     unist-util-stringify-position "^2.0.0"
 
-vfile@^4.0.0:
+vfile@^4.0.0, vfile@^4.2.1:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/vfile/-/vfile-4.2.1.tgz#03f1dce28fc625c625bc6514350fbdb00fa9e624"
   integrity sha512-O6AE4OskCG5S1emQ/4gl8zK586RqA3srz3nfK/Viy0UPToBc5Trp9BVFb1u0CjsKrAWwnpr4ifM/KBXPWwJbCA==
