@@ -10,6 +10,11 @@
     "doc": "doc",
     "test": "tests"
   },
+  "browserslist": [
+    "last 1 chrome versions",
+    "last 1 firefox versions",
+    "last 1 safari versions"
+  ],
   "scripts": {
     "browserstack:connect": "ember browserstack:connect",
     "browserstack:disconnect": "ember browserstack:disconnect",
@@ -92,6 +97,7 @@
     "ember-resolver": "^8.0.3",
     "ember-source": "4.1.0-alpha.6",
     "ember-template-lint": "^3.6.0",
+    "esbuild-loader": "^2.16.0",
     "eslint": "^7.32.0",
     "execa": "^5.1.1",
     "file-loader": "^6.2.0",
@@ -129,6 +135,7 @@
     "@nullvoxpopuli/limber-monaco": "*",
     "@nullvoxpopuli/limber-transpilation": "*",
     "@popperjs/core": "^2.10.2",
+    "browserslist": "^4.17.4",
     "dompurify": "^2.3.3",
     "ember-auto-import": "^2.2.0",
     "ember-could-get-used-to-this": "^1.0.1",

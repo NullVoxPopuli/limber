@@ -48,6 +48,8 @@ module.exports = function (defaults) {
   const { Webpack } = require('@embroider/webpack');
   const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
+  const { ESBuildMinifyPlugin } = require('esbuild-loader');
+
   return require('@embroider/compat').compatBuild(app, Webpack, {
     extraPublicTrees: [
       // Mobile Editor
@@ -119,6 +121,17 @@ module.exports = function (defaults) {
           alias: {
             path: 'path-browserify',
           },
+        },
+        optimization: {
+          minimizer: [
+            new ESBuildMinifyPlugin({
+              legalComments: 'none',
+              sourcemap: false,
+              minify: isProduction,
+              css: true,
+              exclude: [/monaco/, /codemirror/],
+            }),
+          ],
         },
         node: {
           global: false,
