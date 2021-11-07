@@ -119,7 +119,7 @@
     "yn": "^4.0.0"
   },
   "engines": {
-    "node": ">= 14.0.0"
+    "node": ">= v14.18.1"
   },
   "ember": {
     "edition": "octane"
