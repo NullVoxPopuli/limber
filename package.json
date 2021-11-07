@@ -27,7 +27,7 @@
     "start:prod": "MINIFY=false yarn start --environment=production"
   },
   "volta": {
-    "node": "14.17.0",
+    "node": "14.18.1",
     "yarn": "1.22.17",
     "npm": "7.24.2"
   },

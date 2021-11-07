@@ -14,7 +14,7 @@
     "lint:js:fix": "eslint . --fix"
   },
   "engines": {
-    "node": "14.17.0"
+    "node": ">= 14.0.0"
   },
   "volta": {
     "extends": "../package.json"

@@ -19,7 +19,7 @@
     "@nullvoxpopuli/eslint-configs": "1.4.10"
   },
   "engines": {
-    "node": "14.17.0"
+    "node": ">= 14.0.0"
   },
   "volta": {
     "extends": "../../package.json"
