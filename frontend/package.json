@@ -135,7 +135,7 @@
     "@nullvoxpopuli/limber-monaco": "*",
     "@nullvoxpopuli/limber-transpilation": "*",
     "@popperjs/core": "^2.10.2",
-    "browserslist": "^4.17.4",
+    "browserslist": "^4.17.6",
     "dompurify": "^2.3.3",
     "ember-auto-import": "^2.2.0",
     "ember-could-get-used-to-this": "^1.0.1",
