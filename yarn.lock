@@ -7901,7 +7901,7 @@ ember-template-recast@^5.0.3:
     tmp "^0.2.1"
     workerpool "^6.1.4"
 
-ember-tracked-storage-polyfill@1.0.0:
+ember-tracked-storage-polyfill@1.0.0, ember-tracked-storage-polyfill@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ember-tracked-storage-polyfill/-/ember-tracked-storage-polyfill-1.0.0.tgz#84d307a1e4badc5f84dca681db2cfea9bdee8a77"
   integrity sha512-eL7lZat68E6P/D7b9UoTB5bB5Oh/0aju0Z7PCMi3aTwhaydRaxloE7TGrTRYU+NdJuyNVZXeGyxFxn2frvd3TA==
@@ -10111,10 +10111,10 @@ html-tags@^3.1.0:
   resolved "https://registry.yarnpkg.com/html-tags/-/html-tags-3.1.0.tgz#7b5e6f7e665e9fb41f30007ed9e0d41e97fb2140"
   integrity sha512-1qYz89hW3lFDEazhjW0yVAV87lw8lVkrJocr72XmBkMKsoSVJCQx3W8BXsC7hO2qAt8BoVjYjtAcZ9perqGnNg==
 
-html-to-image@^1.8.5:
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/html-to-image/-/html-to-image-1.8.5.tgz#cbdca590911c817248af68715199367d44ed7cc5"
-  integrity sha512-W+QV4LFLkK5pEZhmAOXrLWwuNGqa/eVLTVVFAghhZmAfBNjxw53wDX/sw+tGMT2n6Z7lRQxzh0dzrtM7nsUC0g==
+html-to-image@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/html-to-image/-/html-to-image-1.9.0.tgz#cb49bf9f4b37376771c85cfdd65863ae9420b268"
+  integrity sha512-9gaDCIYg62Ek07F2pBk76AHgYZ2gxq2YALU7rK3gNCqXuhu6cWzsOQqM7qGbjZiOzxGzrU1deDqZpAod2NEwbA==
 
 html-void-elements@^1.0.0:
   version "1.0.5"
@@ -15145,7 +15145,7 @@ tracked-built-ins@^1.1.1, "tracked-built-ins@github:NullVoxPopuli/tracked-built-
     ember-tracked-storage-polyfill "^1.0.0"
     tracked-maps-and-sets "^3.0.2"
 
-tracked-maps-and-sets@3.0.2, tracked-maps-and-sets@^2.0.0, tracked-maps-and-sets@^2.2.1, tracked-maps-and-sets@^3.0.1:
+tracked-maps-and-sets@3.0.2, tracked-maps-and-sets@^2.2.1, tracked-maps-and-sets@^3.0.1, tracked-maps-and-sets@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/tracked-maps-and-sets/-/tracked-maps-and-sets-3.0.2.tgz#6ea1b9f2a367d24f2e9905b74b24437fbce76ea6"
   integrity sha512-UIRcWsX1kDOcC/Q2R58weYWlw01EnmWWBwUv3okWS+zMBvsgIfYoO6veHhuNE3hgzWCEImNp46QS5CyKnw5QUA==
