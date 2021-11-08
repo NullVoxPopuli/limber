@@ -8260,10 +8260,10 @@ esbuild-openbsd-64@0.13.4:
   resolved "https://registry.npmjs.org/esbuild-openbsd-64/-/esbuild-openbsd-64-0.13.4.tgz#1c8122101898c52a20c8786935cf3eb7a19b83b4"
   integrity sha512-xEkI1o5HYxDzbv9jSox0EsDxpwraG09SRiKKv0W8pH6O3bt+zPSlnoK7+I7Q69tkvONkpIq5n2o+c55uq0X7cw==
 
-esbuild-plugin-alias@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/esbuild-plugin-alias/-/esbuild-plugin-alias-0.1.2.tgz#1232fbde807c0c8ad44c44ec859819eb492e12a8"
-  integrity sha512-WsX0OJy8IGOsGZV+4oHEU5B6XQUpxOsZN1iSoYf9COTDbY7WXcOwd1oCLYNWUIWCExyGXSghIGq2k7sXBldxwQ==
+esbuild-plugin-alias@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/esbuild-plugin-alias/-/esbuild-plugin-alias-0.2.0.tgz#941b7bf60d4f861e38d2b54e2a830aeb9cb411ac"
+  integrity sha512-biAUOtI9cinWE1ZeO7xyoSEJDb3cTTljLtLZEJJ8sZAe3wLWICrvkyG0zejT7e36S2jQywC0JL067tvCi/fxVw==
 
 esbuild-sunos-64@0.13.12:
   version "0.13.12"
