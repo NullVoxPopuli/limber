@@ -24,7 +24,7 @@
   "devDependencies": {
     "@nullvoxpopuli/eslint-configs": "1.4.10",
     "esbuild": "0.13.12",
-    "esbuild-plugin-alias": "^0.1.2",
+    "esbuild-plugin-alias": "^0.2.0",
     "recursive-copy": "^2.0.13"
   },
   "engines": {
