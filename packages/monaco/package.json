@@ -28,7 +28,7 @@
     "recursive-copy": "^2.0.13"
   },
   "engines": {
-    "node": ">= v14.18.1"
+    "node": ">= v16.13.0"
   },
   "volta": {
     "extends": "../../package.json"
