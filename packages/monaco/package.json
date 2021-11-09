@@ -17,9 +17,9 @@
   },
   "dependencies": {
     "broccoli-funnel": "^3.0.8",
-    "monaco-editor": "^0.28.1",
-    "monaco-editor-core": "^0.28.1",
-    "monaco-languages": "^2.8.1"
+    "monaco-editor": "^0.30.1",
+    "monaco-editor-core": "^0.30.1",
+    "monaco-languages": "^2.11.1"
   },
   "devDependencies": {
     "@nullvoxpopuli/eslint-configs": "1.4.10",
