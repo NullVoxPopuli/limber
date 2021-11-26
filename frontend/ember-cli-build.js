@@ -29,13 +29,6 @@ module.exports = function (defaults) {
       enabled: MINIFY,
     },
     fingerprint: { exclude: ['transpilation-worker.js'] },
-    postcssOptions: {
-      compile: {
-        map: SOURCEMAPS,
-        plugins: [require('@tailwindcss/jit')('./tailwind.config.js'), require('autoprefixer')()],
-        cacheInclude: [/.*\.(css|hbs)$/, /.tailwind\.config\.js$/],
-      },
-    },
   };
 
   let app = new EmberApp(defaults, config);
@@ -56,6 +49,8 @@ module.exports = function (defaults) {
       require('@nullvoxpopuli/limber-codemirror/broccoli-funnel')(),
       // Desktop Editor
       require('@nullvoxpopuli/limber-monaco/broccoli-funnel')(),
+      // Tailwind
+      require('@nullvoxpopuli/limber-styles/broccoli-funnel')(),
       // COMPONENT_MAP,
       require('ember-repl').buildComponentMap([
         'limber/components/limber/menu',

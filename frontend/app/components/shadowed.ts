@@ -3,14 +3,12 @@ import { tracked } from '@glimmer/tracking';
 import { setComponentTemplate } from '@ember/component';
 import { hbs } from 'ember-cli-htmlbars';
 
-import { modifier } from 'ember-could-get-used-to-this';
-
 class Shadowed extends Component {
   @tracked shadow?: ShadowRoot;
 
-  attachShadow = modifier((element: HTMLElement) => {
+  attachShadow = (element: HTMLElement) => {
     this.shadow = element.attachShadow({ mode: 'open' });
-  });
+  };
 }
 
 export default setComponentTemplate(

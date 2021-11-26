@@ -1,10 +1,13 @@
 'use strict';
 
+const path = require('path');
 const colors = require('tailwindcss/colors');
+
+const appRoot = path.join(__dirname, '../../frontend');
 
 module.exports = {
   mode: 'jit',
-  purge: ['./app/**/*.{js,ts,hbs}', './pubilc/**/*.md'],
+  purge: [`${appRoot}/app/**/*.{js,ts,hbs}`, `${appRoot}/public/**/*.md`],
   darkMode: false,
   theme: {
     screens: {

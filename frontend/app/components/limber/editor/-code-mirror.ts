@@ -1,26 +1,26 @@
 import { assert } from '@ember/debug';
 
-import { modifier } from 'ember-could-get-used-to-this';
-
 import type { NamedArgs, PositionalArgs } from './-types';
 import type { EditorView } from '@codemirror/view';
 
-export default modifier(
-  (element: HTMLElement, [value, updateText]: PositionalArgs, named: NamedArgs) => {
-    assert(`Expected CODEMIRROR to exist`, CODEMIRROR);
+export default function codeMirror(
+  element: HTMLElement,
+  [value, updateText]: PositionalArgs,
+  named: NamedArgs
+) {
+  assert(`Expected CODEMIRROR to exist`, CODEMIRROR);
 
-    element.innerHTML = '';
+  element.innerHTML = '';
 
-    let { view, setText } = CODEMIRROR(element, value, updateText);
+  let { view, setText } = CODEMIRROR(element, value, updateText);
 
-    named.setValue((text) => {
-      updateText(text); // update the service / URL
-      setText(text); // update the editor
-    });
+  named.setValue((text) => {
+    updateText(text); // update the service / URL
+    setText(text); // update the editor
+  });
 
-    return () => view.destroy();
-  }
-);
+  return () => view.destroy();
+}
 
 let CODEMIRROR:
   | undefined

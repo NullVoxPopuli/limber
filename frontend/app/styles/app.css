@@ -1,13 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&display=swap');
 
 @import './codemirror-theme.css';
 
-@font-face {
-  font-family: 'Source Code Pro';
-  src: url('/SourceCodePro-Regular.ttf');
-}
 
 * {
   touch-action: manipulation;

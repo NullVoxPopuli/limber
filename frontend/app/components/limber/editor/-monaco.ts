@@ -1,7 +1,5 @@
 import { assert } from '@ember/debug';
 
-import { modifier } from 'ember-could-get-used-to-this';
-
 import type { NamedArgs, PositionalArgs } from './-types';
 /**
  * I wish there was a way to specify types-only packages
@@ -13,23 +11,25 @@ import type { NamedArgs, PositionalArgs } from './-types';
  */
 import type * as monaco from 'monaco-editor';
 
-export default modifier(
-  (element: HTMLElement, [value, updateText]: PositionalArgs, named: NamedArgs) => {
-    assert(`Expected MONACO to exist`, MONACO);
+export default function installMonaco(
+  element: HTMLElement,
+  [value, updateText]: PositionalArgs,
+  named: NamedArgs
+) {
+  assert(`Expected MONACO to exist`, MONACO);
 
-    element.innerHTML = '';
+  element.innerHTML = '';
 
-    let { editor, setText } = MONACO(element, value, updateText);
+  let { editor, setText } = MONACO(element, value, updateText);
 
-    named.setValue((text) => {
-      // changing the text this ways calls updateText for us
-      // updateText(text); // update the service / URL
-      setText(text); // update the editor
-    });
+  named.setValue((text) => {
+    // changing the text this ways calls updateText for us
+    // updateText(text); // update the service / URL
+    setText(text); // update the editor
+  });
 
-    return () => editor?.dispose();
-  }
-);
+  return () => editor?.dispose();
+}
 
 let MONACO:
   | undefined

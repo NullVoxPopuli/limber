@@ -7,16 +7,13 @@
     "packages/*",
     "tests"
   ],
-  "resolutions": {
-    "tracked-built-ins": "github:NullVoxPopuli/tracked-built-ins#tracked-storage",
-    "tracked-maps-and-sets": "3.0.2"
-  },
   "scripts": {
     "predeploy": "yarn build && yarn workspace limber build",
     "build": "npm-run-all --aggregate-output --parallel 'build:*'",
     "build:horizon": "yarn workspace @nullvoxpopuli/horizon-theme build",
     "build:monaco": "yarn workspace @nullvoxpopuli/limber-codemirror build",
     "build:codemirror": "yarn workspace @nullvoxpopuli/limber-monaco build",
+    "build:styles": "yarn workspace @nullvoxpopuli/limber-styles build",
     "lint:fix": "npm-run-all --aggregate-output --parallel 'lint:*:fix'",
     "lint:horizon:fix": "yarn workspace @nullvoxpopuli/horizon-theme lint:fix",
     "lint:monaco:fix": "yarn workspace @nullvoxpopuli/limber-codemirror lint:fix",
@@ -33,5 +30,8 @@
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5"
+  },
+  "resolutions": {
+    "ember-auto-import": "^2.2.4"
   }
 }

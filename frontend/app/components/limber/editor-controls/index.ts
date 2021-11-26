@@ -2,8 +2,6 @@ import Component from '@glimmer/component';
 import { setComponentTemplate } from '@ember/component';
 import { hbs } from 'ember-cli-htmlbars';
 
-import { modifier } from 'ember-could-get-used-to-this';
-
 import State from './state';
 
 import type { InterpreterFrom, StateFrom } from 'xstate';
@@ -72,11 +70,11 @@ class CurriedControls extends Component<CurriedArgs> {
   // could this be a standalone modifier?
   // {{modifier (fn @send 'CONTAINER_FOUND') (fn @send 'CONTAINER_REMOVED')}}
   // ?
-  containerToControl = modifier((element: Element) => {
+  containerToControl = (element: Element) => {
     this.args.send('CONTAINER_FOUND', { container: element as HTMLElement });
 
     return () => this.args.send('CONTAINER_REMOVED');
-  });
+  };
 
   get Controls() {
     let { send, state } = this.args;

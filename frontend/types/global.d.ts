@@ -31,30 +31,6 @@ declare module 'highlightjs-glimmer/vendor/javascript.min';
 declare module 'split-grid';
 declare module 'unist-util-flatmap';
 
-declare module 'ember-could-get-used-to-this' {
-  type FunctionModifier<Args extends LazyTrackedArgs> = (
-    (element: HTMLElement,
-     args: Args['positional'],
-     namedArgs: Record<string, any>
-    ) => () => void)
-  | ((element: HTMLElement, args: Args['positional']) => void);
-
-  export const use: PropertyDecorator;
-  export const modifier: <Args extends LazyTrackedArgs>(
-    callback: FunctionModifier<Args>
-  ) => void;
-  export class Modifier<Args extends LazyTrackedArgs = {}> {
-    protected args: Args;
-    protected element: Element;
-  }
-  export class Resource<Args extends LazyTrackedArgs> {
-    protected args: Args;
-
-    // This is a lie, but makes the call site nice
-    constructor(fn: () => Args['positional'] | Args);
-  }
-}
-
 declare module '@ember/template-compilation' {
   export interface CompileOptions {
     moduleName: string;
