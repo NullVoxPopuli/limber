@@ -142,7 +142,7 @@
     "ember-focus-trap": "^0.7.0",
     "ember-headlessui": "^0.10.2",
     "ember-popperjs": "^2.0.0",
-    "ember-repl": "1.8.4",
+    "ember-repl": "1.8.10",
     "ember-router-helpers": "^0.4.0",
     "ember-statechart-component": "2.3.7",
     "highlight.js": "^11.3.1",
