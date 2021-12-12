@@ -27,6 +27,7 @@ module('Scenarios', function (hooks) {
         await visit('/');
         await page.editor.load();
         await page.selectDemo('With inline Templates');
+
         let demoText = await getFromLabel('With inline Templates');
 
         assert.dom(page.nav.activeTab.element).hasText('Preview');
@@ -40,6 +41,7 @@ module('Scenarios', function (hooks) {
         await visit('/');
         await page.editor.load();
         await page.selectDemo('With inline Javascript');
+
         let demoText = await getFromLabel('With inline Javascript');
 
         assert.dom(page.nav.activeTab.element).hasText('Preview');
@@ -57,6 +59,7 @@ module('Scenarios', function (hooks) {
         await visit('/');
         await page.editor.load();
         await page.selectDemo('Styleguide Demo');
+
         let demoText = await getFromLabel('Styleguide Demo');
 
         assert.dom(page.nav.activeTab.element).hasText('Preview');
@@ -72,6 +75,7 @@ module('Scenarios', function (hooks) {
         await visit('/');
         await page.editor.load();
         await page.selectDemo('Build your own REPL');
+
         let demoText = await getFromLabel('Build your own REPL');
 
         assert.dom(page.nav.activeTab.element).hasText('Preview');

@@ -14,7 +14,7 @@ export default async function highlighted(element, code) {
 
   // because the above is async, it's possible that the element
   // has been removed from the DOM
-  if (!window.body.getElementById(guid)) {
+  if (!document.getElementById(guid)) {
     return;
   }
 

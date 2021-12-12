@@ -1,5 +1,3 @@
-import { setOwner } from '@ember/application';
-import { destroy, registerDestructor } from '@ember/destroyable';
 import { capabilities as modifierCapabilities, setModifierManager } from '@ember/modifier';
 
 class FunctionalModifierManager {
