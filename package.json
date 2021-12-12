@@ -8,6 +8,7 @@
     "tests"
   ],
   "scripts": {
+    "prepare": "node patch-packages.js",
     "predeploy": "yarn build && yarn workspace limber build",
     "build": "npm-run-all --aggregate-output --parallel 'build:*'",
     "build:horizon": "yarn workspace @nullvoxpopuli/horizon-theme build",
@@ -32,6 +33,7 @@
     "npm-run-all": "^4.1.5"
   },
   "resolutions": {
-    "ember-auto-import": "^2.2.4"
+    "ember-auto-import": "^2.2.4",
+    "@ember/render-modifiers": "^2.0.0"
   }
 }
