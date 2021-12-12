@@ -121,6 +121,7 @@ const markdownCompiler = unified()
 export async function parseMarkdown(input: string): Promise<LiveCodeExtraction> {
   let processed = await markdownCompiler.process(input);
   let liveCode = (processed.data as LiveData).liveCode || [];
+  let templateOnly = processed.toString();
 
-  return { templateOnlyGlimdown: processed.toString(), blocks: liveCode };
+  return { templateOnlyGlimdown: templateOnly, blocks: liveCode };
 }
