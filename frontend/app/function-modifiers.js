@@ -19,8 +19,9 @@ class FunctionalModifierManager {
 
   setupModifier(state) {
     let { fn, args, element } = state;
+    let argsForFn = [...args.positional, Object.keys(args.named).length > 0 ? args.named : {}];
 
-    state.destructor = fn(element, args.positional, args.named);
+    state.destructor = fn(element, ...argsForFn);
   }
 
   destroyModifier(state) {

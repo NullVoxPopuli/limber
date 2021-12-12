@@ -1,6 +1,6 @@
 import { assert } from '@ember/debug';
 
-import type { NamedArgs, PositionalArgs } from './-types';
+import type { Args } from './-types';
 /**
  * I wish there was a way to specify types-only packages
  * while Limber uses Monaco, it's provided by the limber-monaco
@@ -11,16 +11,12 @@ import type { NamedArgs, PositionalArgs } from './-types';
  */
 import type * as monaco from 'monaco-editor';
 
-export default function installMonaco(
-  element: HTMLElement,
-  [value, updateText]: PositionalArgs,
-  named: NamedArgs
-) {
+export default function installMonaco(element: HTMLElement, ...[value, updateText, named]: Args) {
   assert(`Expected MONACO to exist`, MONACO);
 
   element.innerHTML = '';
 
-  let { editor, setText } = MONACO(element, value, updateText);
+  let { editor, setText } = MONACO(element, value, updateText, named);
 
   named.setValue((text) => {
     // changing the text this ways calls updateText for us
@@ -35,7 +31,7 @@ let MONACO:
   | undefined
   | ((
       element: HTMLElement,
-      ...args: PositionalArgs
+      ...args: Args
     ) => { editor: monaco.editor.IStandaloneCodeEditor; setText: (text: string) => void });
 
 export async function setupMonaco() {

@@ -18,6 +18,7 @@ export default async function highlighted(element, code) {
     return;
   }
 
+  console.log(code);
   let target = element.querySelector('code');
   let { value } = hljs.highlight(code, { language: target.classList[0] });
 
