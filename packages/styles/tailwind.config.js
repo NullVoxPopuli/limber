@@ -6,11 +6,9 @@ const colors = require('tailwindcss/colors');
 const appRoot = path.join(__dirname, '../../frontend');
 
 module.exports = {
-  mode: 'jit',
-  purge: [`${appRoot}/app/**/*.{js,ts,hbs}`, `${appRoot}/public/**/*.md`],
-  darkMode: false,
+  content: [`${appRoot}/app/**/*.{js,ts,hbs}`, `${appRoot}/public/**/*.md`],
   theme: {
-    screens: {
+    variants: {
       xs: '465px',
       // => @media (min-width: 465px) { ... }
       sm: '640px',

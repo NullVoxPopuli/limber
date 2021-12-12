@@ -17,6 +17,7 @@ async function start() {
 
 async function patchEmbroiderIssue1038() {
   console.log('Patching @embroider/util due to https://github.com/embroider-build/embroider/issues/1038');
+
   let emberPrivateApi = path.join(modules, '@embroider/util/addon/ember-private-api.js');
   let fileBuffer = await fs.readFile(emberPrivateApi);
   let file = fileBuffer.toString();
@@ -28,11 +29,5 @@ async function patchEmbroiderIssue1038() {
 
   await fs.writeFile(emberPrivateApi, file);
 }
-
-
-
-
-
-
 
 start();

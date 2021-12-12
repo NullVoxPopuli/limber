@@ -3,8 +3,15 @@ import { tracked } from '@glimmer/tracking';
 import { setComponentTemplate } from '@ember/component';
 import { hbs } from 'ember-cli-htmlbars';
 
-class Shadowed extends Component {
+interface Args {
+  omitStyles: boolean;
+}
+
+class Shadowed extends Component<Args> {
   @tracked shadow?: ShadowRoot;
+
+  vendor = '/assets/vendor.css';
+  app = '/assets/limber.css';
 
   attachShadow = (element: HTMLElement) => {
     this.shadow = element.attachShadow({ mode: 'open' });
@@ -17,10 +24,13 @@ export default setComponentTemplate(
 
     {{#if this.shadow}}
       {{#in-element this.shadow}}
-        <style>
-          @import "/assets/vendor.css";
-          @import "/assets/limber.css";
-        </style>
+        {{#unless @omitStyles}}
+          <style>
+            @import "{{this.vendor}}";
+            @import "{{this.app}}";
+          </style>
+        {{/unless}}
+
         {{yield}}
       {{/in-element}}
     {{/if}}
