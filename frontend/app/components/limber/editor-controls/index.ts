@@ -56,6 +56,10 @@ interface CurriedArgs {
 }
 
 /**
+ * TODO: fix this, since this was written, the component helper now
+ * does what we want
+ *
+ *
  * This is needed because we can't curry args to arbitrary renderables
  * the (component) helper only takes a string path as the first argument.
  * and... no person new to Ember should have to figure out what the naming

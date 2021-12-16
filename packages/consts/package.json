@@ -14,7 +14,7 @@
     "lint:js:fix": "eslint . --fix"
   },
   "devDependencies": {
-    "@nullvoxpopuli/eslint-configs": "2.1.10"
+    "@nullvoxpopuli/eslint-configs": "2.1.11"
   },
   "engines": {
     "node": ">= v16.13.0"

@@ -8,14 +8,12 @@ module.exports = function (defaults) {
   let isProduction = environment === 'production';
 
   let SOURCEMAPS = yn(process.env.SOURCEMAPS) ?? false;
-  let MAXIMUM_STATIC = yn(process.env.MAXIMUM_STATIC) ?? true;
   let MINIFY = yn(process.env.MINIFY) ?? isProduction;
 
   console.info(`
     Building:
       SOURCEMAPS: ${SOURCEMAPS}
       MINIFY: ${MINIFY}
-      MAXIMUM_STATIC: ${MAXIMUM_STATIC}
       NODE_ENV: ${process.env.NODE_ENV}
 
       isProduction: ${isProduction}
@@ -71,23 +69,27 @@ module.exports = function (defaults) {
       {
         package: '@babel/standalone',
       },
+      {
+        package: 'codemirror/preconfigured.js',
+      },
+      {
+        package: 'monaco/preconfigured.js',
+      },
     ],
-    ...(MAXIMUM_STATIC
-      ? {
-          staticAddonTrees: true,
-          staticAddonTestSupportTrees: true,
-          staticHelpers: true,
-          staticComponents: true,
-          splitControllers: true,
-          splitRouteClasses: true,
-          // staticAppPaths: [],
-          // splitAtRoutes: [],
-        }
-      : {}),
+    staticAddonTrees: true,
+    staticAddonTestSupportTrees: true,
+    staticHelpers: true,
+    staticModifiers: true,
+    staticComponents: true,
+    splitControllers: true,
+    splitRouteClasses: true,
+    // staticAppPaths: [],
+    // splitAtRoutes: [],
     implicitModulesStrategy: 'packageNames',
     packagerOptions: {
       webpackConfig: {
-        devtool: isProduction ? 'source-map' : false,
+        devtool: 'source-map',
+        // devtool: isProduction ? 'source-map' : false,
         experiments: {
           // Causes app to not boot
           // lazyCompilation: true,

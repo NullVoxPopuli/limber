@@ -40,5 +40,5 @@ export async function setupMonaco() {
   // TypeScript doesn't have a way to type files in the public folder
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  MONACO = (await import('/monaco/preconfigured.js')).default;
+  MONACO = (await import(/* webpackIgnore: true */ '/monaco/preconfigured.js')).default;
 }

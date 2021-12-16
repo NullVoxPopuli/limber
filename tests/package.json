@@ -20,7 +20,7 @@
     "extends": "../package.json"
   },
   "devDependencies": {
-    "@nullvoxpopuli/eslint-configs": "2.1.10",
+    "@nullvoxpopuli/eslint-configs": "2.1.11",
     "browserstack-cypress-cli": "^1.8.1",
     "cypress": "^7.2.0"
   }

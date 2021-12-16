@@ -31,5 +31,5 @@ export async function setupCodeMirror() {
   // TypeScript doesn't have a way to type files in the public folder
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  CODEMIRROR = (await import('/codemirror/preconfigured.js')).default;
+  CODEMIRROR = (await import(/* webpackIgnore: true */ '/codemirror/preconfigured.js')).default;
 }
