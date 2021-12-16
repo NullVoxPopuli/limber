@@ -7,12 +7,10 @@ module.exports = function (defaults) {
   let environment = EmberApp.env();
   let isProduction = environment === 'production';
 
-  let SOURCEMAPS = yn(process.env.SOURCEMAPS) ?? false;
   let MINIFY = yn(process.env.MINIFY) ?? isProduction;
 
   console.info(`
     Building:
-      SOURCEMAPS: ${SOURCEMAPS}
       MINIFY: ${MINIFY}
       NODE_ENV: ${process.env.NODE_ENV}
 
@@ -20,12 +18,15 @@ module.exports = function (defaults) {
   `);
 
   let config = {
-    sourcemaps: {
-      enabled: SOURCEMAPS,
-    },
     'ember-cli-terser': {
       enabled: MINIFY,
     },
+    babel: {
+      loose: true,
+    },
+    // 'ember-cli-babel': {
+    //   useBabelConfig: true,
+    // },
     fingerprint: { exclude: ['transpilation-worker.js'] },
   };
 
