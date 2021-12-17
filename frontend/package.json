@@ -42,7 +42,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
-    "@nullvoxpopuli/eslint-configs": "2.1.11",
+    "@nullvoxpopuli/eslint-configs": "2.1.12",
     "@tailwindcss/jit": "^0.1.18",
     "@tailwindcss/typography": "^0.5.0",
     "@types/babel__core": "^7.1.15",
@@ -79,7 +79,7 @@
     "common-tags": "^1.8.1",
     "ember-cli": "~3.28.4",
     "ember-cli-app-version": "^5.0.0",
-    "ember-cli-babel": "^7.26.8",
+    "ember-cli-babel": "^7.26.10",
     "ember-cli-browserstack": "^2.0.0",
     "ember-cli-dependency-checker": "^3.2.0",
     "ember-cli-htmlbars": "^6.0.1",
@@ -137,11 +137,11 @@
     "dompurify": "^2.3.3",
     "ember-auto-import": "^2.2.4",
     "ember-focus-trap": "^0.8.0",
-    "ember-functions-as-helper-polyfill": "1.0.6",
+    "ember-functions-as-helper-polyfill": "1.0.7",
     "ember-headlessui": "github:GavinJoyce/ember-headlessui#master",
     "ember-modifier": "^3.0.0",
-    "ember-popperjs": "^2.0.2",
-    "ember-repl": "2.0.5",
+    "ember-popperjs": "^2.0.4",
+    "ember-repl": "2.0.6",
     "ember-router-helpers": "^0.4.0",
     "ember-statechart-component": "3.0.1",
     "highlight.js": "^11.3.1",
@@ -158,5 +158,3 @@
     "xstate": "^4.26.0"
   }
 }
-
-
