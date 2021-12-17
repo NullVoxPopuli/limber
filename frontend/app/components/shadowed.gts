@@ -5,7 +5,7 @@ interface Args {
   omitStyles: boolean;
 }
 
-export default class Shadowed extends Component<Args> {
+class Shadowed extends Component<Args> {
   @tracked shadow?: ShadowRoot;
 
   vendor = '/assets/vendor.css';
