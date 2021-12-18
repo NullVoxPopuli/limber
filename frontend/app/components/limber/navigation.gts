@@ -2,6 +2,8 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+
 import DemoSelect from './demo-select';
 
 import type RouterService from '@ember/routing/router-service';

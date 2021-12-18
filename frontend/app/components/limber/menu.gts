@@ -1,4 +1,4 @@
-import HeadlessMenu from 'ember-headless-ui/components/menu';
+import HeadlessMenu from 'ember-headlessui/components/menu';
 import { PopperJS } from 'ember-popperjs';
 
 const Button = <template>

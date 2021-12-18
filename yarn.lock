@@ -6638,9 +6638,10 @@ ember-functions-as-helper-polyfill@1.0.7:
     ember-cli-htmlbars "^6.0.1"
     ember-cli-typescript "^4.2.1"
 
-"ember-headlessui@github:GavinJoyce/ember-headlessui#master":
-  version "0.10.3"
-  resolved "https://codeload.github.com/GavinJoyce/ember-headlessui/tar.gz/c73b02bca246944cabf03766be66f60074614571"
+ember-headlessui@0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/ember-headlessui/-/ember-headlessui-0.11.0.tgz#221630bd271f5cfc7bc68da3613c8233910e0e50"
+  integrity sha512-Li8uw1uJdmFu5yb0wPLY2N0w2f6RKIdr2CvyCYzScuZugZTW/2hrNBHe1bqJ4L0IPueccfqf+KjFy0URw2Vxnw==
   dependencies:
     "@ember/render-modifiers" "^2.0.0"
     "@embroider/macros" "^0.48.1"

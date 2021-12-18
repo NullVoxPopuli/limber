@@ -1,7 +1,11 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { on } from '@ember/modifier';
+import { fn } from '@ember/helper';
 import { inject as service } from '@ember/service';
 import { waitFor } from '@ember/test-waiters';
+
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
 import { getFromLabel, NAMES } from 'limber/snippets';
 import Menu from './menu';
