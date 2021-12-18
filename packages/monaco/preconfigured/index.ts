@@ -13,7 +13,7 @@ const OPTIONS: monaco.editor.IStandaloneEditorConstructionOptions = {
   theme: 'vs-dark',
   wordWrap: 'bounded',
   wrappingIndent: 'indent',
-  automaticLayout: true,
+  // automaticLayout: true,
   scrollBeyondLastLine: false,
   // fontFamily: 'Source Code Pro',
   // fontFamily: 'inherit',

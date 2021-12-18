@@ -1,14 +1,13 @@
 {{#let (service 'editor') as |context|}}
-  <div
-    {{@editor
-      context.text
-      context.updateText
-      setValue=context.swapText
-    }}
-    class="
-      border border-gray-900 overflow-hidden
-    "
-    ...attributes
-  >{{context.text}}</div>
+  <Shadowed @omitStyles={{true}} ...attributes class="border border-gray-900 overflow-hidden">
+    <div
+      style="width: 100%; height: 100%;"
+      {{@editor
+        context.text
+        context.updateText
+        setValue=context.swapText
+      }}
+    >{{context.text}}</div>
+  </Shadowed>
 {{/let}}
 
