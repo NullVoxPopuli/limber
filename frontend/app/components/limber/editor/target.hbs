@@ -1,9 +1,9 @@
 {{#let (service 'editor') as |context|}}
   <Shadowed @omitStyles={{true}} ...attributes class="border border-gray-900 overflow-hidden">
     <link rel="stylesheet" href="/monaco/editor.main.css">
-    <link rel="stylesheet" href="/monaco/editor/editor.main.css">
     <link rel="stylesheet" href="/monaco/preconfigured.css">
 
+    {{!-- template-lint-disable no-inline-styles --}}
     <div
       style="width: 100%; height: 100%;"
       {{@editor

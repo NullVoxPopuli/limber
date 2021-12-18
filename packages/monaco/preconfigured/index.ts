@@ -29,7 +29,7 @@ const OPTIONS: monaco.editor.IStandaloneEditorConstructionOptions = {
 const FONT = `
 @font-face {
   font-family: 'codicon';
-  src: url('/monaco/codicon-JE4GZACF.ttf') format('truetype');
+  src: url('/monaco/codicon.ttf') format('truetype');
 }
 `;
 
