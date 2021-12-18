@@ -93,7 +93,7 @@
     "ember-page-title": "^7.0.0",
     "ember-qunit": "^5.1.5",
     "ember-resolver": "^8.0.3",
-    "ember-source": "~4.2.0-alpha.4",
+    "ember-source": "4.0.1",
     "ember-template-imports": "^2.0.0",
     "ember-template-lint": "^3.6.0",
     "esbuild-loader": "^2.16.0",
