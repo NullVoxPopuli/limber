@@ -15,6 +15,19 @@ const container = (element: Element, send: Send) => {
   return () => send('CONTAINER_REMOVED');
 };
 
+const Button = <template>
+  <button
+    type='button'
+    class="
+      block select-none py-2 px-3 text-white text-xs
+      hover:bg-[#9b2918]
+      focus:ring-4 ring-inset focus:outline-none"
+    ...attributes
+  >
+    {{yield}}
+  </button>
+</template>;
+
 const Controls = <template>
   {{#if @needsControls}}
     <div
@@ -25,13 +38,8 @@ const Controls = <template>
         }}
       '
     >
-      <button
-        type='button'
+      <Button
         title={{if @isMaximized 'Back to split view' 'Maximize Editor'}}
-        class="
-          block select-none py-2 px-3 text-white text-xs
-          hover:bg-[#9b2918]
-          focus:ring-4 ring-inset focus:outline-none"
         {{on 'click' (fn @send 'MAXIMIZE')}}
       >
         {{#if @isMaximized}}
@@ -39,14 +47,9 @@ const Controls = <template>
         {{else}}
           <FaIcon @icon="window-maximize" @prefix='far' />
         {{/if}}
-      </button>
-      <button
-        type='button'
+      </Button>
+      <Button
         title={{if @isMinimized 'Back to split view' 'Minimize Editor'}}
-        class="
-          block select-none py-2 px-3 text-white text-xs
-          hover:bg-[#9b2918]
-          focus:ring-4 ring-inset focus:outline-none"
         {{on 'click' (fn @send 'MINIMIZE')}}
       >
         {{#if @isMinimized}}
@@ -54,7 +57,7 @@ const Controls = <template>
         {{else}}
           <FaIcon @icon='window-minimize' @prefix='far' />
         {{/if}}
-      </button>
+      </Button>
     </div>
   {{/if}}
 </template>;

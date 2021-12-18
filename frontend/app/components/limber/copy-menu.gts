@@ -1,14 +1,14 @@
 import Component from '@glimmer/component';
-import { setComponentTemplate } from '@ember/component';
 import { action } from '@ember/object';
-import { hbs } from 'ember-cli-htmlbars';
 
 import { toBlob, toPng } from 'html-to-image';
+
+import Menu from './menu';
 
 /**
  * This component is injected via the markdown rendering
  */
-class CopyMenu extends Component {
+export default class CopyMenu extends Component {
   @action
   copyAsText(event: Event) {
     let code = getSnippetElement(event);
@@ -22,11 +22,9 @@ class CopyMenu extends Component {
 
     await withExtraStyles(code, () => toClipboard(code));
   }
-}
 
-export default setComponentTemplate(
-  hbs`
-    <Limber::Menu class="absolute top-3 right-4 z-10" data-test-copy-menu>
+  <template>
+    <Menu class="absolute top-3 right-4 z-10" data-test-copy-menu>
       <:trigger>
         📋
       </:trigger>
@@ -39,10 +37,10 @@ export default setComponentTemplate(
           Copy as image
         </Item>
       </:options>
-    </Limber::Menu>
-  `,
-  CopyMenu
-);
+    </Menu>
+  </template>
+}
+
 
 /*************************************************
  *
