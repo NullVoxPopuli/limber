@@ -5,6 +5,7 @@ const path = require('path');
 const fs = require('fs/promises');
 
 const modules = path.join(__dirname, 'node_modules');
+const deps = require(path.join(__dirname, 'frontend/package.json'));
 
 /**
   * These are patches to packages where things work for
@@ -16,6 +17,10 @@ async function start() {
 }
 
 async function patchEmbroiderIssue1038() {
+  let isNeeded = has('ember-source', 'alpha') || has('ember-source', 'beta')
+  if (!isNeeded) {
+    return;
+  }
   console.log('Patching @embroider/util due to https://github.com/embroider-build/embroider/issues/1038');
 
   let emberPrivateApi = path.join(modules, '@embroider/util/addon/ember-private-api.js');
@@ -28,6 +33,12 @@ async function patchEmbroiderIssue1038() {
   file = file.replace(/macroCondition\(/, 'true || (');
 
   await fs.writeFile(emberPrivateApi, file);
+}
+
+function has(name, version) {
+  let allDeps = { ...deps.dependencies, ...deps.devDependencies };
+
+  return allDeps[name]?.includes(version);
 }
 
 start();
