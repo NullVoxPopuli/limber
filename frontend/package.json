@@ -142,7 +142,6 @@
     "ember-modifier": "^3.0.0",
     "ember-popperjs": "^2.0.5",
     "ember-repl": "2.0.6",
-    "ember-router-helpers": "^0.4.0",
     "ember-statechart-component": "3.0.1",
     "highlight.js": "^11.3.1",
     "highlightjs-glimmer": "^1.4.0",
