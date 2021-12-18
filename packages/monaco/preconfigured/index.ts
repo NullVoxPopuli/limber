@@ -58,6 +58,8 @@ export default function setupEditor(
     updateText(editor.getValue());
   });
 
+  Monaco.editor.remeasureFonts();
+
   let setText = (text: string) => {
     editor.setValue(text);
   };
