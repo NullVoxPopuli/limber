@@ -69,10 +69,10 @@ const Controls = <template>
         Controls
         isMinimized=(state.matches 'hasContainer.minimized')
         isMaximized=(state.matches 'hasContainer.maximized')
-        needsControls=(state.context.container)
+        needsControls=state.context.container
         send=send
       )
-      container
+      (modifier container send)
     }}
   </State>
 </template>
