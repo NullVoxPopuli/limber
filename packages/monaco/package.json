@@ -8,7 +8,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "start": "echo 'this should not be ran by turborepo when running the root start'",
     "build": "node build.js",
+    "dev": "echo 'limber-monaco does not have a watch mode'; yarn build",
     "check:types": "tsc --build",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel 'lint:!(fix)'",
     "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",

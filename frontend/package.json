@@ -27,7 +27,8 @@
     "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
-    "start": "TAILWIND_MODE=watch ember serve",
+    "start": "ember serve",
+    "dev": "yarn start",
     "test": "npm-run-all lint test:*",
     "test:browserstack": "ember test --path ./dist --test-port=7774 --host 127.0.0.1 --config-file=browserstack.testem.js",
     "test:ember": "ember test"
@@ -133,7 +134,6 @@
     "@nullvoxpopuli/horizon-theme": "*",
     "@nullvoxpopuli/limber-codemirror": "*",
     "@nullvoxpopuli/limber-monaco": "*",
-    "@nullvoxpopuli/limber-transpilation": "*",
     "@popperjs/core": "^2.10.2",
     "browserslist": "^4.17.6",
     "dompurify": "^2.3.3",
