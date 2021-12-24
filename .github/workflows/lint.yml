@@ -26,7 +26,9 @@ jobs:
       with:
         path: '**/node_modules'
         key: ${{ runner.os }}-modules-${{ hashFiles('**/pnpm-lock.lock') }}
-    - run: pnpm install
+    - run: |
+        yarn global add pnpm
+        pnpm install
 
   js_app:
     name: "ESLint: JS/TS >> Limber App"
