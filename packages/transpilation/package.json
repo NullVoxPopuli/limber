@@ -6,7 +6,7 @@
   "author": "NullVoxPopuli",
   "main": "dist/limber-worker.js",
   "scripts": {
-    "prepare": "webpack",
+    "_prepare": "webpack",
     "lint:fix": "npm-run-all --aggregate-output --parallel 'lint:*:fix'",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
