@@ -12,19 +12,18 @@
     "tracked-maps-and-sets": "3.0.2"
   },
   "scripts": {
-    "predeploy": "yarn build && yarn workspace limber build",
+    "predeploy": "pnpm run build && pnpm run build --filter=limber",
     "build": "npm-run-all --aggregate-output --parallel 'build:*'",
-    "build:horizon": "yarn workspace @nullvoxpopuli/horizon-theme build",
-    "build:monaco": "yarn workspace @nullvoxpopuli/limber-codemirror build",
-    "build:codemirror": "yarn workspace @nullvoxpopuli/limber-monaco build",
+    "build:horizon": "pnpm run build --filter @nullvoxpopuli/horizon-theme",
+    "build:monaco": "pnpm run build --filter @nullvoxpopuli/limber-codemirror",
+    "build:codemirror": "pnpm run build --filter @nullvoxpopuli/limber-monaco",
     "lint:fix": "npm-run-all --aggregate-output --parallel 'lint:*:fix'",
-    "lint:horizon:fix": "yarn workspace @nullvoxpopuli/horizon-theme lint:fix",
-    "lint:monaco:fix": "yarn workspace @nullvoxpopuli/limber-codemirror lint:fix",
-    "lint:codemirror:fix": "yarn workspace @nullvoxpopuli/limber-monaco lint:fix",
-    "lint:transpilation:fix": "yarn workspace @nullvoxpopuli/limber-transpilation lint:fix",
-    "lint:frontend:fix": "yarn workspace limber lint:fix",
-    "start": "yarn workspace limber start",
-    "start:prod": "MINIFY=false yarn start --environment=production"
+    "lint:horizon:fix": "pnpm run lint:fix --filter @nullvoxpopuli/horizon-theme",
+    "lint:monaco:fix": "pnpm run lint:fix --filter @nullvoxpopuli/limber-codemirror",
+    "lint:codemirror:fix": "pnpm run lint:fix --filter @nullvoxpopuli/limber-monaco",
+    "lint:transpilation:fix": "pnpm run lint:fix --filter @nullvoxpopuli/limber-transpilation",
+    "lint:frontend:fix": "pnpm run lint:fix --filter limber",
+    "start": "pnpm run start --filter limber"
   },
   "volta": {
     "node": "16.13.0",
