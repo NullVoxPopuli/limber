@@ -29,8 +29,8 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-    - run: yarn install
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/pnpm-lock.lock') }}
+    - run: pnpm install
 
 ##############################################################
 
@@ -46,12 +46,12 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/pnpm-lock.lock') }}
     - uses: actions/cache@v2
       with:
         path: '**/dist'
         key: ${{ runner.os }}-modules-${{ hashFiles('packages/**') }}
-    - run: yarn build
+    - run: pnpm run build
 
 ##############################################################
 
@@ -67,13 +67,13 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/pnpm-lock.lock') }}
     - uses: actions/cache@v2
       with:
         path: '**/dist'
         key: ${{ runner.os }}-modules-${{ hashFiles('packages/**') }}
     - name: 'Build'
-      run: yarn workspace limber build
+      run: pnpm run build --filter "limber"
     - name: Copy deploy host config
       run: cp ./config/netlify/_redirects ./dist/
       working-directory: ${{ env.app }}
@@ -98,12 +98,12 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/pnpm-lock.lock') }}
     - uses: actions/cache@v2
       with:
         path: '**/dist'
         key: ${{ runner.os }}-modules-${{ hashFiles('packages/**') }}
-    - run: yarn ember build --environment=development
+    - run: pnpm exec ember build --environment=development
       working-directory: ${{ env.app }}
 
     - name: Upload Test Artifacts
@@ -134,7 +134,7 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/pnpm-lock.lock') }}
     - name: Download Built Test Artifacts
       uses: actions/download-artifact@master
       with:
@@ -147,9 +147,10 @@ jobs:
         echo "Node: $( node --version )"
         echo "NPM: $( npm --version )"
         echo "Yarn: $( yarn --version )"
+        echo "pnpm: $( pnpm --version )"
 
     - name: Test
-      run: yarn test:ember --path ./dist/
+      run: pnpm run test:ember --path ./dist/
       working-directory: ${{ env.app }}
       env:
         CI_BROWSER: ${{ matrix.ci_browser }}
@@ -170,19 +171,19 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/pnpm-lock.lock') }}
     - name: Download Built Test Artifacts
       uses: actions/download-artifact@master
       with:
         name: built_tests
         path: ${{ env.app }}/dist/
-    - run: yarn browserstack:connect
+    - run: pnpm run browserstack:connect
       working-directory: ${{ env.app }}
-    - run: yarn test:browserstack
+    - run: pnpm run test:browserstack
       working-directory: ${{ env.app }}
-    - run: yarn browserstack:results
+    - run: pnpm run browserstack:results
       working-directory: ${{ env.app }}
-    - run: yarn browserstack:disconnect
+    - run: pnpm run browserstack:disconnect
       working-directory: ${{ env.app }}
 
 ##############################################################
@@ -230,8 +231,8 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-    - run: yarn browserstack-cypress run --sync
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/pnpm-lock.lock') }}
+    - run: pnpm exec browserstack-cypress run --sync
       working-directory: ${{ env.tests }}
       env:
         BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
@@ -288,7 +289,7 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/pnpm-lock.lock') }}
 
     - name: Get Deploy URL
       uses: actions/download-artifact@v2
@@ -300,7 +301,7 @@ jobs:
         echo $CYPRESS_BASE_URL
 
         cd ${{ env.tests }}
-        yarn browserstack-cypress run --sync
+        pnpm exec browserstack-cypress run --sync
       env:
         BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
         BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
