@@ -13,18 +13,9 @@
   },
   "scripts": {
     "predeploy": "yarn build && yarn workspace limber build",
-    "build": "npm-run-all --aggregate-output --parallel 'build:*'",
-    "build:horizon": "yarn workspace @nullvoxpopuli/horizon-theme build",
-    "build:monaco": "yarn workspace @nullvoxpopuli/limber-codemirror build",
-    "build:codemirror": "yarn workspace @nullvoxpopuli/limber-monaco build",
-    "lint:fix": "npm-run-all --aggregate-output --parallel 'lint:*:fix'",
-    "lint:horizon:fix": "yarn workspace @nullvoxpopuli/horizon-theme lint:fix",
-    "lint:monaco:fix": "yarn workspace @nullvoxpopuli/limber-codemirror lint:fix",
-    "lint:codemirror:fix": "yarn workspace @nullvoxpopuli/limber-monaco lint:fix",
-    "lint:transpilation:fix": "yarn workspace @nullvoxpopuli/limber-transpilation lint:fix",
-    "lint:frontend:fix": "yarn workspace limber lint:fix",
-    "start": "yarn workspace limber start",
-    "start:prod": "MINIFY=false yarn start --environment=production"
+    "build": "yarn nx run-many --target=build --all",
+    "lint:fix": "yarn nx run-many --target=lint:js --all",
+    "start": "yarn nx run limber:start"
   },
   "volta": {
     "node": "16.13.0",
