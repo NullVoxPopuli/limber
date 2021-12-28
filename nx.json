@@ -1,0 +1,26 @@
+{
+  "extends": "@nrwl/workspace/presets/npm.json",
+  "npmScope": "limber-monorepo",
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "lint"
+        ]
+      }
+    }
+  },
+  "targetDependencies": {
+    "start": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
+  },
+  "affected": {
+    "defaultBase": "master"
+  }
+}
