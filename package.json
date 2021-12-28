@@ -12,8 +12,8 @@
     "tracked-maps-and-sets": "3.0.2"
   },
   "scripts": {
-    "predeploy": "yarn build && yarn workspace limber build",
-    "build": "yarn nx run-many --target=build --all",
+    "predeploy": "yarn build",
+    "build": "yarn nx run limber:build",
     "lint:fix": "yarn nx run-many --target=lint:js --all",
     "start": "yarn nx run limber:start"
   },
