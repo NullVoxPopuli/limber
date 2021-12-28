@@ -14,6 +14,12 @@
     }
   },
   "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ],
     "start": [
       {
         "target": "build",
