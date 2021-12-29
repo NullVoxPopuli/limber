@@ -255,6 +255,7 @@ importers:
       '@codemirror/history': 0.19.0
       '@codemirror/lang-javascript': 0.19.3
       '@codemirror/lang-markdown': 0.19.2
+      '@codemirror/matchbrackets': 0.19.3
       '@codemirror/rectangular-selection': ^0.19.1
       '@codemirror/search': 0.19.3
       '@codemirror/state': 0.19.6
@@ -277,6 +278,7 @@ importers:
       '@codemirror/history': 0.19.0
       '@codemirror/lang-javascript': 0.19.3
       '@codemirror/lang-markdown': 0.19.2
+      '@codemirror/matchbrackets': 0.19.3
       '@codemirror/rectangular-selection': 0.19.1
       '@codemirror/search': 0.19.3
       '@codemirror/state': 0.19.6
@@ -16454,7 +16456,7 @@ packages:
   /wide-align/1.1.5:
     resolution: {integrity: sha512-eDMORYaPNZ4sQIuuYPDHdQvf4gyCF9rEEV/yPxGfwPkRodwEgiMUUXTx/dex+Me0wxx53S+NgUHaP7y3MGlDmg==}
     dependencies:
-      string-width: 1.0.2
+      string-width: 4.2.3
     dev: true
 
   /widest-line/3.1.0:
