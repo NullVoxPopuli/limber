@@ -16,6 +16,7 @@
     "last 1 safari versions"
   ],
   "scripts": {
+    "ember:update": "npx ember-source-channel-url canary --write",
     "browserstack:connect": "ember browserstack:connect",
     "browserstack:disconnect": "ember browserstack:disconnect",
     "browserstack:results": "ember browserstack:results",
@@ -93,7 +94,7 @@
     "ember-page-title": "^7.0.0",
     "ember-qunit": "^5.1.5",
     "ember-resolver": "^8.0.3",
-    "ember-source": "4.2.0-alpha.4",
+    "ember-source": "https://s3.amazonaws.com/builds.emberjs.com/canary/shas/ef2ad15ff3fe8abb2ae6cc562588ce4228816952.tgz",
     "ember-template-imports": "^2.0.0",
     "ember-template-lint": "^3.6.0",
     "esbuild-loader": "^2.16.0",
