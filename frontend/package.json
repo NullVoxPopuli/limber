@@ -47,7 +47,7 @@
     "@tailwindcss/jit": "^0.1.18",
     "@tailwindcss/typography": "^0.5.0",
     "@types/babel__core": "^7.1.15",
-    "@types/codemirror": "5.60.2",
+    "@types/codemirror": "5.60.5",
     "@types/common-tags": "^1.8.1",
     "@types/dompurify": "^2.2.2",
     "@types/ember-qunit": "^3.4.14",
