@@ -13,7 +13,7 @@ const deps = require(path.join(__dirname, 'frontend/package.json'));
   * for real is.
   */
 async function start() {
-  await patchEmbroiderIssue1038();
+  // await patchEmbroiderIssue1038();
 }
 
 async function patchEmbroiderIssue1038() {
