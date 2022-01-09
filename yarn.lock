@@ -6239,6 +6239,15 @@ ember-functions-as-helper-polyfill@1.0.7:
     ember-cli-htmlbars "^6.0.1"
     ember-cli-typescript "^4.2.1"
 
+ember-functions-as-modifiers-polyfill@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/ember-functions-as-modifiers-polyfill/-/ember-functions-as-modifiers-polyfill-1.0.0.tgz#b1eb0f2797f601619c650a9982d2985d6593d76c"
+  integrity sha512-WyFtKJA3KWSyvuwoQmUHvqYM8PX7ao6rz5WmxCRuiOC6ZeBLrSr6Tw0vCM0ha1MIU0VcK8YlLz+bygdbV1spbA==
+  dependencies:
+    ember-cli-babel "^7.26.11"
+    ember-cli-htmlbars "^6.0.1"
+    ember-cli-typescript "^4.2.1"
+
 ember-headlessui@0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/ember-headlessui/-/ember-headlessui-0.11.0.tgz#221630bd271f5cfc7bc68da3613c8233910e0e50"
@@ -6283,17 +6292,6 @@ ember-modifier-manager-polyfill@^1.2.0:
     ember-cli-babel "^7.10.0"
     ember-cli-version-checker "^2.1.2"
     ember-compatibility-helpers "^1.2.0"
-
-ember-modifier@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/ember-modifier/-/ember-modifier-3.0.0.tgz#74466d32e4ef9b80004915676cc3bfd6e3fd7a3d"
-  integrity sha512-ccXfMnjWhjEUCB5taeIPQmf0h1zPUIMbmsCV7W+JZ2BioPUZTLhE1WuHspmV0iEOiX3Fwx8jMOx6b74sFcKJ0g==
-  dependencies:
-    ember-cli-babel "^7.26.6"
-    ember-cli-normalize-entity-name "^1.0.0"
-    ember-cli-string-utils "^1.1.0"
-    ember-cli-typescript "^4.2.1"
-    ember-compatibility-helpers "^1.2.5"
 
 ember-page-title@^7.0.0:
   version "7.0.0"

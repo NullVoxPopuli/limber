@@ -1,5 +1,4 @@
 import 'ember-statechart-component';
-import './function-modifiers';
 
 import Application from '@ember/application';
 
