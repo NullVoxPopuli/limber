@@ -34,7 +34,9 @@
   },
   "resolutions": {
     "ember-auto-import": "^2.2.4",
-    "@embroider/macros": "0.49.0",
-    "@ember/render-modifiers": "^2.0.2"
+    "@ember/render-modifiers": "^2.0.2",
+    "@embroider/macros": "0.50.0",
+    "@embroider/core": "0.50.0",
+    "@embroider/util": "0.50.0"
   }
 }
