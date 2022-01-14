@@ -34,7 +34,7 @@
   },
   "resolutions": {
     "ember-auto-import": "^2.2.4",
-    "@ember/render-modifiers": "github:emberjs/ember-render-modifiers#ef4-patch-1",
+    "@ember/render-modifiers": "2.0.3",
     "@embroider/addon-shim": "0.50.1",
     "@embroider/macros": "0.50.1",
     "@embroider/core": "0.50.1",

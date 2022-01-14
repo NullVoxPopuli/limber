@@ -1347,9 +1347,10 @@
     mkdirp "^1.0.4"
     silent-error "^1.1.1"
 
-"@ember/render-modifiers@^2.0.0", "@ember/render-modifiers@github:emberjs/ember-render-modifiers#ef4-patch-1":
-  version "2.0.2"
-  resolved "https://codeload.github.com/emberjs/ember-render-modifiers/tar.gz/b41602ef2ac890dd678d6680d2ae576ec6cf1b70"
+"@ember/render-modifiers@2.0.3", "@ember/render-modifiers@^2.0.0":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@ember/render-modifiers/-/render-modifiers-2.0.3.tgz#bdbc93c02f854e86902fa9a5aca538356d151d1f"
+  integrity sha512-E5R3RN6XapSQid93UNKLj774Xg6e2tpdJAz1T1NWLIWajEpWR/hVPBd6c8eRAUBnTliEewc4L3pq7mwUUdsWHA==
   dependencies:
     "@embroider/macros" ">= 0.48.1 < 2.0.0-alpha.1"
     ember-cli-babel "^7.26.6"
