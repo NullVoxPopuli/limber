@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@nullvoxpopuli/eslint-configs": "2.1.17",
-    "browserstack-cypress-cli": "^1.8.1",
+    "browserstack-cypress-cli": "^1.11.2",
     "cypress": "^7.2.0"
   }
 }
