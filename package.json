@@ -8,7 +8,6 @@
     "tests"
   ],
   "scripts": {
-    "prepare": "node patch-packages.js",
     "predeploy": "yarn build && yarn workspace limber build",
     "build": "concurrently \"npm:build:*\"",
     "build:horizon": "yarn workspace @nullvoxpopuli/horizon-theme build",
@@ -36,7 +35,6 @@
     "ember-auto-import": "^2.3.0",
     "@ember/render-modifiers": "2.0.3",
     "@embroider/addon-shim": "0.50.2",
-    "@embroider/macros": "0.50.2",
     "@embroider/core": "0.50.2",
     "@embroider/util": "0.50.2"
   }
