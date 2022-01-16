@@ -9,6 +9,7 @@ export default class Shadowed extends Component<Args> {
   @tracked shadow?: ShadowRoot;
 
   vendor = '/assets/vendor.css';
+  tailwind = '/assets/tailwind.css';
   app = '/assets/limber.css';
 
   attachShadow = (element: HTMLElement) => {
@@ -21,9 +22,10 @@ export default class Shadowed extends Component<Args> {
     {{#if this.shadow}}
       {{#in-element this.shadow}}
         {{#unless @omitStyles}}
-          <style>
-            @import "{{this.vendor}}";
-            @import "{{this.app}}";
+          <style type="text/css">
+            @import '{{this.tailwind}}';
+            @import '{{this.vendor}}';
+            @import '{{this.app}}';
           </style>
         {{/unless}}
 

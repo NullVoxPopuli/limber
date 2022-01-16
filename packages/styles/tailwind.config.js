@@ -6,7 +6,7 @@ const colors = require('tailwindcss/colors');
 const appRoot = path.join(__dirname, '../../frontend');
 
 module.exports = {
-  content: [`${appRoot}/app/**/*.{js,ts,hbs}`, `${appRoot}/public/**/*.md`],
+  content: [`${appRoot}/app/**/*.{js,ts,hbs,gjs,gts}`, `${appRoot}/public/**/*.md`],
   theme: {
     variants: {
       xs: '465px',
