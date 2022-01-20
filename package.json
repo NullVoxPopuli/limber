@@ -34,8 +34,8 @@
   "resolutions": {
     "ember-auto-import": "^2.3.0",
     "@ember/render-modifiers": "2.0.3",
-    "@embroider/addon-shim": "0.50.2",
-    "@embroider/core": "0.50.2",
-    "@embroider/util": "0.50.2"
+    "@embroider/addon-shim": "1.0.0",
+    "@embroider/core": "1.0.0",
+    "@embroider/util": "1.0.0"
   }
 }
