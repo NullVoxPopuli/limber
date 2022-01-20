@@ -9,19 +9,37 @@
   ],
   "scripts": {
     "predeploy": "yarn build && yarn workspace limber build",
-    "build": "concurrently \"npm:build:*\"",
-    "build:horizon": "yarn workspace @nullvoxpopuli/horizon-theme build",
-    "build:monaco": "yarn workspace @nullvoxpopuli/limber-codemirror build",
-    "build:codemirror": "yarn workspace @nullvoxpopuli/limber-monaco build",
-    "build:styles": "yarn workspace @nullvoxpopuli/limber-styles build",
-    "lint:fix": "concurrently \"npm:lint:*:fix\"",
-    "lint:horizon:fix": "yarn workspace @nullvoxpopuli/horizon-theme lint:fix",
-    "lint:monaco:fix": "yarn workspace @nullvoxpopuli/limber-codemirror lint:fix",
-    "lint:codemirror:fix": "yarn workspace @nullvoxpopuli/limber-monaco lint:fix",
-    "lint:transpilation:fix": "yarn workspace @nullvoxpopuli/limber-transpilation lint:fix",
-    "lint:frontend:fix": "yarn workspace limber lint:fix",
-    "start": "yarn workspace limber start",
-    "start:prod": "MINIFY=false yarn start --environment=production"
+    "build": "yarn turbo run build --scope='@nullvoxpopuli/*'",
+    "lint:fix": "yarn turbo run lint:fix",
+    "start": "yarn turbo run start --scope='limber' --include-dependencies"
+  },
+  "turbo": {
+    "baseBranch": "origin/main",
+    "pipeline": {
+      "dev": {
+        "dependsOn": [
+          "^dev"
+        ]
+      },
+      "start": {
+        "dependsOn": [
+          "^build"
+        ],
+        "cache": false
+      },
+      "build": {
+        "dependsOn": [
+          "^build"
+        ]
+      },
+      "lint": {},
+      "lint:fix": {},
+      "test": {
+        "dependsOn": [
+          "^build"
+        ]
+      }
+    }
   },
   "volta": {
     "node": "16.13.0",
@@ -29,7 +47,8 @@
     "npm": "8.1.3"
   },
   "devDependencies": {
-    "concurrently": "^7.0.0"
+    "concurrently": "^7.0.0",
+    "turbo": "^1.0.28"
   },
   "resolutions": {
     "ember-auto-import": "^2.3.0",

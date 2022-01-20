@@ -3,6 +3,7 @@
 # compiled output
 dist/
 /tmp/
+/out/
 
 # dependencies
 /bower_components/
@@ -14,6 +15,7 @@ package-lock.json
 .env*
 .pnp*
 .eslintcache
+.turbo
 npm-debug.log*
 yarn-error.log
 
