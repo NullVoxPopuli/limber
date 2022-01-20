@@ -40,7 +40,7 @@
     "@embroider/compat": "^1.0.0",
     "@embroider/core": "^1.0.0",
     "@embroider/webpack": "^1.0.0",
-    "@fortawesome/ember-fontawesome": "github:NullVoxPopuli/ember-fontawesome#support-3-20-and-3-24",
+    "@fortawesome/ember-fontawesome": "^0.3.0",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
