@@ -1,0 +1,28 @@
+{
+  "baseBranch": "origin/main",
+  "pipeline": {
+    "dev": {
+      "dependsOn": [
+        "^dev"
+      ]
+    },
+    "start": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": false
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "lint": {},
+    "lint:fix": {},
+    "test": {
+      "dependsOn": [
+        "^build"
+      ]
+    }
+  }
+}

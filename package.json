@@ -13,34 +13,6 @@
     "lint:fix": "yarn turbo run lint:fix",
     "start": "yarn turbo run start --scope='limber' --include-dependencies"
   },
-  "turbo": {
-    "baseBranch": "origin/main",
-    "pipeline": {
-      "dev": {
-        "dependsOn": [
-          "^dev"
-        ]
-      },
-      "start": {
-        "dependsOn": [
-          "^build"
-        ],
-        "cache": false
-      },
-      "build": {
-        "dependsOn": [
-          "^build"
-        ]
-      },
-      "lint": {},
-      "lint:fix": {},
-      "test": {
-        "dependsOn": [
-          "^build"
-        ]
-      }
-    }
-  },
   "volta": {
     "node": "16.13.0",
     "yarn": "1.22.17",
@@ -48,7 +20,7 @@
   },
   "devDependencies": {
     "concurrently": "^7.0.0",
-    "turbo": "^1.0.28"
+    "turbo": "^1.1.1"
   },
   "resolutions": {
     "ember-auto-import": "^2.3.0",
@@ -56,5 +28,6 @@
     "@embroider/addon-shim": "1.0.0",
     "@embroider/core": "1.0.0",
     "@embroider/util": "1.0.0"
-  }
+  },
+  "packageManager": "yarn@1.22.17"
 }
