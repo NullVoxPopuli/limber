@@ -27,7 +27,8 @@
     "@ember/render-modifiers": "2.0.3",
     "@embroider/addon-shim": "1.0.0",
     "@embroider/core": "1.0.0",
-    "@embroider/util": "1.0.0"
+    "@embroider/util": "1.0.0",
+    "@embroider/macros": "1.0.0"
   },
   "packageManager": "yarn@1.22.17"
 }
