@@ -28,7 +28,8 @@
     "@embroider/addon-shim": "1.0.0",
     "@embroider/core": "1.0.0",
     "@embroider/util": "1.0.0",
-    "@embroider/macros": "1.0.0"
+    "@embroider/macros": "1.0.0",
+    "xstate": "4.28.1"
   },
   "packageManager": "yarn@1.22.17"
 }
