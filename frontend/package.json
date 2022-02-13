@@ -144,7 +144,7 @@
     "ember-functions-as-modifiers-polyfill": "1.0.0",
     "ember-headlessui": "0.11.1",
     "ember-popperjs": "^2.0.8",
-    "ember-repl": "2.0.6",
+    "ember-repl": "^2.0.25",
     "ember-statechart-component": "3.0.1",
     "highlight.js": "^11.3.1",
     "highlightjs-glimmer": "^1.4.0",
