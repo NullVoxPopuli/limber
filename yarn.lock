@@ -10348,15 +10348,15 @@ mktemp@~0.4.0:
   resolved "https://registry.yarnpkg.com/mktemp/-/mktemp-0.4.0.tgz#6d0515611c8a8c84e484aa2000129b98e981ff0b"
   integrity sha1-bQUVYRyKjITkhKogABKbmOmB/ws=
 
-monaco-editor-core@^0.31.0:
-  version "0.31.1"
-  resolved "https://registry.yarnpkg.com/monaco-editor-core/-/monaco-editor-core-0.31.1.tgz#7dfde54f00a3894e87db6151b7c1333944727455"
-  integrity sha512-JdwqSmTJP10bhb7qc94ehWX0C1D2R2rwCHfm+5Vd2Oh0dwjfeCAWHDelnTZ+BVbGPCb+7ZGHZvG+oYZHdmuemg==
+monaco-editor-core@^0.32.1:
+  version "0.32.1"
+  resolved "https://registry.yarnpkg.com/monaco-editor-core/-/monaco-editor-core-0.32.1.tgz#3a22bced29268dbab5dc8cab5914f80b0f0e8c2d"
+  integrity sha512-abXXr1Pr1a5CwKMZfHDOshkGHw/EL20vfUjpJXVb7Qx3pMXzfTDJfHwhhO7OydkIpSSAKDgUe3JK2xBldCU9mQ==
 
-monaco-editor@^0.31.0:
-  version "0.31.1"
-  resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.31.1.tgz#67f597b3e45679d1f551237e12a3a42c4438b97b"
-  integrity sha512-FYPwxGZAeP6mRRyrr5XTGHD9gRXVjy7GUzF4IPChnyt3fS5WrNxIkS8DNujWf6EQy0Zlzpxw8oTVE+mWI2/D1Q==
+monaco-editor@^0.32.1:
+  version "0.32.1"
+  resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.32.1.tgz#75a9bba379a923fd8e9ce99cddcab3a4e7657615"
+  integrity sha512-LUt2wsUvQmEi2tfTOK+tjAPvt7eQ+K5C4rZPr6SeuyzjAuAHrIvlUloTcOiGjZW3fn3a/jFQCONrEJbNOaCqbA==
 
 monaco-languages@^2.11.1:
   version "2.11.1"
