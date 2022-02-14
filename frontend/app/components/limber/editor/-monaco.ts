@@ -1,8 +1,6 @@
 import { assert } from '@ember/debug';
 
-import { modifier } from 'ember-could-get-used-to-this';
-
-import type { NamedArgs, PositionalArgs } from './-types';
+import type { Args } from './-types';
 /**
  * I wish there was a way to specify types-only packages
  * while Limber uses Monaco, it's provided by the limber-monaco
@@ -13,29 +11,27 @@ import type { NamedArgs, PositionalArgs } from './-types';
  */
 import type * as monaco from 'monaco-editor';
 
-export default modifier(
-  (element: HTMLElement, [value, updateText]: PositionalArgs, named: NamedArgs) => {
-    assert(`Expected MONACO to exist`, MONACO);
+export default function installMonaco(element: HTMLElement, ...[value, updateText, named]: Args) {
+  assert(`Expected MONACO to exist`, MONACO);
 
-    element.innerHTML = '';
+  element.innerHTML = '';
 
-    let { editor, setText } = MONACO(element, value, updateText);
+  let { editor, setText } = MONACO(element, value, updateText, named);
 
-    named.setValue((text) => {
-      // changing the text this ways calls updateText for us
-      // updateText(text); // update the service / URL
-      setText(text); // update the editor
-    });
+  named.setValue((text) => {
+    // changing the text this ways calls updateText for us
+    // updateText(text); // update the service / URL
+    setText(text); // update the editor
+  });
 
-    return () => editor?.dispose();
-  }
-);
+  return () => editor?.dispose();
+}
 
 let MONACO:
   | undefined
   | ((
       element: HTMLElement,
-      ...args: PositionalArgs
+      ...args: Args
     ) => { editor: monaco.editor.IStandaloneCodeEditor; setText: (text: string) => void });
 
 export async function setupMonaco() {
@@ -44,5 +40,5 @@ export async function setupMonaco() {
   // TypeScript doesn't have a way to type files in the public folder
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  MONACO = (await import('/monaco/preconfigured.js')).default;
+  MONACO = (await import(/* webpackIgnore: true */ '/monaco/preconfigured.js')).default;
 }

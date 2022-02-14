@@ -7,35 +7,27 @@ module.exports = function (defaults) {
   let environment = EmberApp.env();
   let isProduction = environment === 'production';
 
-  let SOURCEMAPS = yn(process.env.SOURCEMAPS) ?? false;
-  let MAXIMUM_STATIC = yn(process.env.MAXIMUM_STATIC) ?? true;
   let MINIFY = yn(process.env.MINIFY) ?? isProduction;
 
   console.info(`
     Building:
-      SOURCEMAPS: ${SOURCEMAPS}
       MINIFY: ${MINIFY}
-      MAXIMUM_STATIC: ${MAXIMUM_STATIC}
       NODE_ENV: ${process.env.NODE_ENV}
 
       isProduction: ${isProduction}
   `);
 
   let config = {
-    sourcemaps: {
-      enabled: SOURCEMAPS,
-    },
     'ember-cli-terser': {
       enabled: MINIFY,
     },
-    fingerprint: { exclude: ['transpilation-worker.js'] },
-    postcssOptions: {
-      compile: {
-        map: SOURCEMAPS,
-        plugins: [require('@tailwindcss/jit')('./tailwind.config.js'), require('autoprefixer')()],
-        cacheInclude: [/.*\.(css|hbs)$/, /.tailwind\.config\.js$/],
-      },
+    babel: {
+      loose: true,
     },
+    // 'ember-cli-babel': {
+    //   useBabelConfig: true,
+    // },
+    fingerprint: { exclude: ['transpilation-worker.js'] },
   };
 
   let app = new EmberApp(defaults, config);
@@ -56,6 +48,8 @@ module.exports = function (defaults) {
       require('@nullvoxpopuli/limber-codemirror/broccoli-funnel')(),
       // Desktop Editor
       require('@nullvoxpopuli/limber-monaco/broccoli-funnel')(),
+      // Tailwind
+      require('@nullvoxpopuli/limber-styles/broccoli-funnel')(),
       // COMPONENT_MAP,
       require('ember-repl').buildComponentMap([
         'limber/components/limber/menu',
@@ -76,23 +70,27 @@ module.exports = function (defaults) {
       {
         package: '@babel/standalone',
       },
+      {
+        package: 'codemirror/preconfigured.js',
+      },
+      {
+        package: 'monaco/preconfigured.js',
+      },
     ],
-    ...(MAXIMUM_STATIC
-      ? {
-          staticAddonTrees: true,
-          staticAddonTestSupportTrees: true,
-          staticHelpers: true,
-          staticComponents: true,
-          splitControllers: true,
-          splitRouteClasses: true,
-          // staticAppPaths: [],
-          // splitAtRoutes: [],
-        }
-      : {}),
+    staticAddonTrees: true,
+    staticAddonTestSupportTrees: true,
+    staticHelpers: true,
+    staticModifiers: true,
+    staticComponents: true,
+    splitControllers: true,
+    splitRouteClasses: true,
+    // staticAppPaths: [],
+    // splitAtRoutes: [],
     implicitModulesStrategy: 'packageNames',
     packagerOptions: {
       webpackConfig: {
-        devtool: isProduction ? 'source-map' : false,
+        devtool: 'source-map',
+        // devtool: isProduction ? 'source-map' : false,
         experiments: {
           // Causes app to not boot
           // lazyCompilation: true,

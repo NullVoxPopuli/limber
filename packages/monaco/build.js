@@ -64,6 +64,13 @@ module.exports = async function build() {
   await copy(`${buildDir}`, OUTPUT_DIR, {
     overwrite: true,
     filter: ['**/*', '!*.nls.*'],
+    rename(filePath) {
+      if (filePath.includes('ttf')) {
+        return 'codicon.ttf';
+      }
+
+      return filePath;
+    },
   });
 
   await copy(`${cssLocation}`, OUTPUT_DIR, {

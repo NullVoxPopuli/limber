@@ -1,36 +1,26 @@
-import { isDestroyed, isDestroying } from '@ember/destroyable';
-import { action } from '@ember/object';
-
-import { Modifier } from 'ember-could-get-used-to-this';
+import { guidFor } from '@ember/object/internals';
 
 import { getHighlighter, getPurifier } from './-utils/highlighting';
 
-export default class Highlighted extends Modifier {
-  get isSafe() {
-    return !isDestroyed(this) && !isDestroying(this);
+/**
+ * NOTE: this cannot have a destructor, because it is async
+ */
+export default async function highlighted(element, code) {
+  let guid = guidFor(element);
+
+  element.setAttribute('id', guid);
+
+  let [hljs, purify] = await Promise.all([getHighlighter(), getPurifier()]);
+
+  // because the above is async, it's possible that the element
+  // has been removed from the DOM
+  if (!document.getElementById(guid)) {
+    return;
   }
 
-  get code() {
-    return this.args.positional[0];
-  }
+  console.log(code);
+  let target = element.querySelector('code');
+  let { value } = hljs.highlight(code, { language: target.classList[0] });
 
-  setup() {
-    this.highlight(this.code);
-  }
-
-  update() {
-    this.highlight(this.code);
-  }
-
-  @action
-  async highlight(code) {
-    if (this.isSafe && this.element) {
-      let [hljs, purify] = await Promise.all([getHighlighter(), getPurifier()]);
-
-      let target = this.element.querySelector('code');
-      let { value } = hljs.highlight(code, { language: target.classList[0] });
-
-      target.innerHTML = purify.sanitize(value);
-    }
-  }
+  target.innerHTML = purify.sanitize(value);
 }

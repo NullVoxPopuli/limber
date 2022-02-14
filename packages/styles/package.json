@@ -1,0 +1,20 @@
+{
+  "name": "@nullvoxpopuli/limber-styles",
+  "version": "0.0.0",
+  "description": "CSS used for Limber",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "yarn tailwindcss -o dist/tailwind.css",
+    "start": "yarn tailwindcss -o dist/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.4",
+    "tailwindcss": "^3.0.22"
+  },
+  "dependencies": {
+    "broccoli-funnel": "^3.0.8"
+  }
+}

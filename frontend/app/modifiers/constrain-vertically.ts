@@ -1,8 +1,6 @@
 import { debounce } from '@ember/runloop';
 
-import { modifier } from 'ember-could-get-used-to-this';
-
-export default modifier(function constraintVertically(element: HTMLElement) {
+export default function constraintVertically(element: HTMLElement) {
   let debouncedConstrain = () => constrain(element);
   let x = () => debounce(debouncedConstrain, 10);
 
@@ -12,7 +10,7 @@ export default modifier(function constraintVertically(element: HTMLElement) {
   return () => {
     window.removeEventListener('resize', x);
   };
-});
+}
 
 function constrain(element: HTMLElement) {
   let offset = element.getBoundingClientRect().y;

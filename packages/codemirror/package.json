@@ -8,6 +8,7 @@
   "private": true,
   "scripts": {
     "build": "node build.js",
+    "dev": "echo 'limber-codemirror does not have a watch mode'; yarn build",
     "check:types": "tsc --build",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel 'lint:!(fix)'",
     "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
@@ -15,27 +16,27 @@
     "lint:js:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@codemirror/autocomplete": "0.19.9",
-    "@codemirror/basic-setup": "0.19.0",
+    "@codemirror/autocomplete": "0.19.12",
+    "@codemirror/basic-setup": "0.19.1",
     "@codemirror/closebrackets": "0.19.0",
-    "@codemirror/commands": "0.19.5",
+    "@codemirror/commands": "0.19.8",
     "@codemirror/comment": "0.19.0",
-    "@codemirror/highlight": "0.19.6",
-    "@codemirror/history": "0.19.0",
-    "@codemirror/lang-javascript": "0.19.3",
-    "@codemirror/lang-markdown": "0.19.2",
-    "@codemirror/search": "0.19.3",
-    "@codemirror/state": "0.19.6",
-    "@codemirror/text": "0.19.5",
-    "@codemirror/view": "0.19.24",
+    "@codemirror/highlight": "0.19.7",
+    "@codemirror/history": "0.19.2",
+    "@codemirror/lang-javascript": "0.19.7",
+    "@codemirror/lang-markdown": "0.19.6",
+    "@codemirror/search": "0.19.7",
+    "@codemirror/state": "0.19.7",
+    "@codemirror/text": "0.19.6",
+    "@codemirror/view": "0.19.42",
     "@nullvoxpopuli/horizon-theme": "*",
     "broccoli-funnel": "^3.0.8"
   },
   "devDependencies": {
-    "@nullvoxpopuli/eslint-configs": "1.4.10",
-    "esbuild": "0.13.13",
+    "@nullvoxpopuli/eslint-configs": "2.1.21",
+    "esbuild": "0.14.2",
     "esbuild-plugin-alias": "^0.2.0",
-    "recursive-copy": "^2.0.13"
+    "recursive-copy": "^2.0.14"
   },
   "engines": {
     "node": ">= v16.13.0"

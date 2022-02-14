@@ -1,7 +1,7 @@
 import { assert } from '@ember/debug';
 import { triggerEvent } from '@ember/test-helpers';
 
-import { PageObject, selector } from 'fractal-page-object';
+import { PageObject } from 'fractal-page-object';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { diffText } from 'onp/dist';
@@ -54,14 +54,25 @@ export class Editor extends PageObject {
       }
     }
   );
-  _monaco = selector(
-    '.monaco-scrollable-element.editor-scrollable',
-    class extends PageObject {
-      get _text() {
-        assert('Monaco editor not loaded', this.element);
 
-        return this.element.textContent || '';
-      }
-    }
-  );
+  /**
+   * Monaco is loaded in a shadow DOM so we need
+   * we get a little creative with the element getting
+   */
+  get _monaco() {
+    return {
+      get element(): Element | null | undefined {
+        return document
+          .querySelector('[data-test-editor-panel] [data-shadow]')
+          ?.shadowRoot?.querySelector('.monaco-scrollable-element.editor-scrollable');
+      },
+      get _text(): string {
+        let element = this.element;
+
+        assert('Monaco editor not loaded', element);
+
+        return element.textContent || '';
+      },
+    };
+  }
 }

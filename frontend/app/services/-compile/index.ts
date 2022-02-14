@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 import { compileHBS, compileJS, invocationName } from 'ember-repl';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import CopyMenu from 'limber/components/limber/copy-menu';
 
 import { parseMarkdown } from './markdown-to-ember';

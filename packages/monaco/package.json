@@ -8,7 +8,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "start": "echo 'this should not be ran by turborepo when running the root start'",
     "build": "node build.js",
+    "dev": "echo 'limber-monaco does not have a watch mode'; yarn build",
     "check:types": "tsc --build",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel 'lint:!(fix)'",
     "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
@@ -17,15 +19,15 @@
   },
   "dependencies": {
     "broccoli-funnel": "^3.0.8",
-    "monaco-editor": "^0.30.1",
-    "monaco-editor-core": "^0.30.1",
+    "monaco-editor": "^0.31.0",
+    "monaco-editor-core": "^0.31.0",
     "monaco-languages": "^2.11.1"
   },
   "devDependencies": {
-    "@nullvoxpopuli/eslint-configs": "1.4.10",
-    "esbuild": "0.13.13",
+    "@nullvoxpopuli/eslint-configs": "2.1.21",
+    "esbuild": "0.14.2",
     "esbuild-plugin-alias": "^0.2.0",
-    "recursive-copy": "^2.0.13"
+    "recursive-copy": "^2.0.14"
   },
   "engines": {
     "node": ">= v16.13.0"

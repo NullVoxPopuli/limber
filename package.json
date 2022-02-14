@@ -7,24 +7,11 @@
     "packages/*",
     "tests"
   ],
-  "resolutions": {
-    "tracked-built-ins": "github:NullVoxPopuli/tracked-built-ins#tracked-storage",
-    "tracked-maps-and-sets": "3.0.2"
-  },
   "scripts": {
     "predeploy": "yarn build && yarn workspace limber build",
-    "build": "npm-run-all --aggregate-output --parallel 'build:*'",
-    "build:horizon": "yarn workspace @nullvoxpopuli/horizon-theme build",
-    "build:monaco": "yarn workspace @nullvoxpopuli/limber-codemirror build",
-    "build:codemirror": "yarn workspace @nullvoxpopuli/limber-monaco build",
-    "lint:fix": "npm-run-all --aggregate-output --parallel 'lint:*:fix'",
-    "lint:horizon:fix": "yarn workspace @nullvoxpopuli/horizon-theme lint:fix",
-    "lint:monaco:fix": "yarn workspace @nullvoxpopuli/limber-codemirror lint:fix",
-    "lint:codemirror:fix": "yarn workspace @nullvoxpopuli/limber-monaco lint:fix",
-    "lint:transpilation:fix": "yarn workspace @nullvoxpopuli/limber-transpilation lint:fix",
-    "lint:frontend:fix": "yarn workspace limber lint:fix",
-    "start": "yarn workspace limber start",
-    "start:prod": "MINIFY=false yarn start --environment=production"
+    "build": "yarn turbo run build --scope='@nullvoxpopuli/*'",
+    "lint:fix": "yarn turbo run lint:fix",
+    "start": "yarn turbo run start --scope='limber' --include-dependencies"
   },
   "volta": {
     "node": "16.13.0",
@@ -32,6 +19,17 @@
     "npm": "8.1.3"
   },
   "devDependencies": {
-    "npm-run-all": "^4.1.5"
-  }
+    "concurrently": "^7.0.0",
+    "turbo": "^1.1.3-canary.2"
+  },
+  "resolutions": {
+    "ember-auto-import": "^2.4.0",
+    "@ember/render-modifiers": "2.0.3",
+    "@embroider/addon-shim": "1.2.0",
+    "@embroider/core": "1.2.0",
+    "@embroider/util": "1.2.0",
+    "@embroider/macros": "1.2.0",
+    "xstate": "4.28.1"
+  },
+  "packageManager": "yarn@1.22.17"
 }

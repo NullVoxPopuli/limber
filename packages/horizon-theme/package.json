@@ -9,6 +9,7 @@
   "private": true,
   "scripts": {
     "build": "tsc --build",
+    "dev": "tsc --build --watch",
     "check:types": "tsc --build",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel 'lint:!(fix)'",
     "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
@@ -16,7 +17,7 @@
     "lint:js:fix": "eslint . --fix"
   },
   "devDependencies": {
-    "@nullvoxpopuli/eslint-configs": "1.4.10"
+    "@nullvoxpopuli/eslint-configs": "2.1.21"
   },
   "engines": {
     "node": ">= v16.13.0"

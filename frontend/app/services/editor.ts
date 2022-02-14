@@ -40,6 +40,7 @@ export default class EditorService extends Service {
   @waitFor
   async makeComponent() {
     deleteQP('e');
+
     let id = nameFor(this.text);
 
     if (this.error !== this.errorOnLoad) {

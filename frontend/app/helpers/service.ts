@@ -3,6 +3,8 @@ import Helper from '@ember/component/helper';
 
 export default class GetService extends Helper {
   compute([name]: [string]) {
-    return getOwner(this).lookup(`service:${name}`);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (getOwner(this) as any) /* TYPE IS INCORRECT */
+      .lookup(`service:${name}`);
   }
 }

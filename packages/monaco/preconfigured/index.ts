@@ -13,9 +13,9 @@ const OPTIONS: monaco.editor.IStandaloneEditorConstructionOptions = {
   theme: 'vs-dark',
   wordWrap: 'bounded',
   wrappingIndent: 'indent',
-  automaticLayout: true,
+  // automaticLayout: true,
   scrollBeyondLastLine: false,
-  fontFamily: 'Source Code Pro',
+  // fontFamily: 'Source Code Pro',
   // fontFamily: 'inherit',
   // fontsize seems arbitrary -- there may be
   // some scaling going on?
@@ -29,7 +29,7 @@ const OPTIONS: monaco.editor.IStandaloneEditorConstructionOptions = {
 const FONT = `
 @font-face {
   font-family: 'codicon';
-  src: url('/monaco/codicon-JE4GZACF.ttf') format('truetype');
+  src: url('/monaco/codicon.ttf') format('truetype');
 }
 `;
 
@@ -57,6 +57,8 @@ export default function setupEditor(
   editor.onDidChangeModelContent(() => {
     updateText(editor.getValue());
   });
+
+  Monaco.editor.remeasureFonts();
 
   let setText = (text: string) => {
     editor.setValue(text);
