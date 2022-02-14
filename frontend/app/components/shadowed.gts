@@ -17,7 +17,7 @@ export default class Shadowed extends Component<Args> {
   };
 
   <template>
-    <div {{this.attachShadow}}></div>
+    <div data-shadow {{this.attachShadow}}></div>
 
     {{#if this.shadow}}
       {{#in-element this.shadow}}
