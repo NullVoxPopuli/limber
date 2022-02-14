@@ -29,7 +29,7 @@
     "@embroider/core": "1.2.0",
     "@embroider/util": "1.2.0",
     "@embroider/macros": "1.2.0",
-    "xstate": "4.28.1"
+    "xstate": "4.30.0"
   },
   "packageManager": "yarn@1.22.17"
 }
