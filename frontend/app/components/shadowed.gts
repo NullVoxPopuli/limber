@@ -1,37 +1,33 @@
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import state from 'limber/helpers/state';
 
-interface Args {
+export interface Args {
   omitStyles: boolean;
 }
 
-export default class Shadowed extends Component<Args> {
-  @tracked shadow?: ShadowRoot;
+const t = '{{rootURL}}/assets/tailwind.css';
 
-  vendor = '/assets/vendor.css';
-  tailwind = '/assets/tailwind.css';
-  app = '/assets/limber.css';
+console.log({ t, a: '/assets/tailwind.css', b: 'assets/tailwind.css' });
 
-  attachShadow = (element: HTMLElement) => {
-    this.shadow = element.attachShadow({ mode: 'open' });
-  };
+const attachShadow = (element: HTMLElement, setShadow) => {
+  setShadow(element.attachShadow({ mode: 'open' }));
+};
 
-  <template>
-    <div data-shadow {{this.attachShadow}}></div>
+<template>
+  {{#let (state) as |shadow|}}
+    <div data-shadow {{attachShadow shadow.update}}></div>
 
-    {{#if this.shadow}}
-      {{#in-element this.shadow}}
+    {{#if shadow.value}}
+      {{#in-element shadow.value}}
         {{#unless @omitStyles}}
-          <style type="text/css">
-            @import '{{this.tailwind}}';
-            @import '{{this.vendor}}';
-            @import '{{this.app}}';
-          </style>
+          <link rel="stylesheet" href="/assets/tailwind.css">
+          <link rel="stylesheet" href="/assets/vendor.css">
+          <link rel="stylesheet" href="/assets/app.css">
         {{/unless}}
 
         {{yield}}
       {{/in-element}}
     {{/if}}
-  </template>
-}
+  {{/let}}
+
+</template>
 
