@@ -1,10 +1,11 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { on } from '@ember/modifier';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
+import isEditing from 'limber/helpers/is-editing';
 import DemoSelect from './demo-select';
 
 import type RouterService from '@ember/routing/router-service';
@@ -59,17 +60,29 @@ class TabLink extends Component<{href: string}> {
   <div class="grid grid-flow-col bg-ember-faint-gray gap-2" data-test-navigation>
     <nav class="flex flex-row gap-0.5 pt-0.5">
       <TabLink @href="/ember" class="relative">
-          Ember
-          <span class="z-10 absolute right-[-5px] inline-block">
-            <FaIcon @icon="caret-right" @transform="grow-6"/>
-          </span>
+        Ember
+        <span class="z-10 absolute right-[-5px] inline-block">
+          <FaIcon @icon="caret-right" @transform="grow-6"/>
+        </span>
       </TabLink>
 
       <TabLink @href="/" class="relative">
-          Preview
+        Preview
       </TabLink>
+
+      {{#unless (isEditing)}}
+        <TabLink
+          @href="/"
+          class="flex gap-2 items-center border border-2"
+        >
+          <FaIcon @icon="pencil" @transform="grow-4"/>
+          <span>Edit</span>
+        </TabLink>
+      {{/unless}}
     </nav>
 
-    <DemoSelect class="justify-self-end self-center block sm:hidden" />
+    {{#if (isEditing)}}
+      <DemoSelect class="justify-self-end self-center block sm:hidden" />
+    {{/if}}
   </div>
 </template>;

@@ -4,28 +4,13 @@
   <Limber::Header />
 
   <div class="flex flex-col lg:flex-row overflow-hidden">
-    <Limber::EditorControls as |Controls container|>
-      <section
-        data-test-editor-panel
-        class="
-          grid resize-y lg:resize-x overflow-hidden
-          relative
-          transition-all
-          w-full lg:w-[40vw]
-          h-[40vh] lg:min-h-full"
-        {{container}}
-      >
-        <Controls />
-
-        <Limber::Editor />
-      </section>
-    </Limber::EditorControls>
+    <Limber::EditorContainer />
 
     {{!-- template-lint-disable no-inline-styles --}}
     <section class="flex-1 shadow-inner grid overflow-hidden relative" style="grid-template-rows: min-content 1fr;">
       <Limber::Navigation />
 
-      <div class="overflow-auto relative bg-white" {{constrain-vertically}} data-test-output>
+     <div class="overflow-auto relative bg-white" {{constrain-vertically}} data-test-output>
         {{outlet}}
       </div>
 
