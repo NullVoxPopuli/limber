@@ -9,6 +9,7 @@ export default class Router extends EmberRouter {
 
 Router.map(function () {
   this.route('ember');
+  this.route('output');
 
   this.route('error', { path: '*' });
 });

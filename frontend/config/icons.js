@@ -9,6 +9,7 @@ module.exports = function () {
       'angle-up',
       'equals',
       'columns',
+      'pencil',
     ],
     'free-regular-svg-icons': ['clipboard', 'window-maximize', 'window-minimize'],
     'free-brands-svg-icons': ['ember', 'markdown'],
