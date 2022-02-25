@@ -1,37 +1,31 @@
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import state from 'limber/helpers/state';
 
-interface Args {
-  omitStyles: boolean;
+const attachShadow = (element, setShadow) => {
+  setShadow(element.attachShadow({ mode: 'open' }));
+};
+
+// index.html has the production-fingerprinted references to these links
+// Ideally, we'd have some pre-processor scan everything for references to
+// assets in public, but idk how to set that up
+const getStyles = () => {
+  return [...document.head.querySelectorAll('link')].map(link => link.href);;
 }
 
-export default class Shadowed extends Component<Args> {
-  @tracked shadow?: ShadowRoot;
+<template>
+  {{#let (state) as |shadow|}}
+    <div data-shadow {{attachShadow shadow.update}}></div>
 
-  vendor = '/assets/vendor.css';
-  tailwind = '/assets/tailwind.css';
-  app = '/assets/limber.css';
-
-  attachShadow = (element: HTMLElement) => {
-    this.shadow = element.attachShadow({ mode: 'open' });
-  };
-
-  <template>
-    <div data-shadow {{this.attachShadow}}></div>
-
-    {{#if this.shadow}}
-      {{#in-element this.shadow}}
-        {{#unless @omitStyles}}
-          <style type="text/css">
-            @import '{{this.tailwind}}';
-            @import '{{this.vendor}}';
-            @import '{{this.app}}';
-          </style>
-        {{/unless}}
+    {{#if shadow.value}}
+      {{#in-element shadow.value}}
+        {{#let (getStyles) as |styles|}}
+          {{#each styles as |styleHref|}}
+            <link rel="stylesheet" href={{styleHref}}>
+          {{/each}}
+        {{/let}}
 
         {{yield}}
       {{/in-element}}
     {{/if}}
-  </template>
-}
+  {{/let}}
+</template>
 
