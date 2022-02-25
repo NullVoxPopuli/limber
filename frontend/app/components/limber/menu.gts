@@ -20,7 +20,7 @@ const Button = <template>
 </template>;
 
 <template>
-  <HeadlessMenu as |menu|>
+  <HeadlessMenu ...attributes as |menu|>
     <PopperJS as |trigger popover|>
       <menu.Button
         {{trigger}}

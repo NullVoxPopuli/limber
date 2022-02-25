@@ -56,8 +56,11 @@ module.exports = function (defaults) {
         'limber/components/limber/header',
         'limber/components/external-link',
         'limber/components/shadowed',
+        'limber/helpers/state',
         'ember-popperjs',
         'ember-repl',
+        'ember-headlessui/components/menu',
+        'ember-focus-trap/modifiers/focus-trap',
       ]),
     ],
     skipBabel: [
