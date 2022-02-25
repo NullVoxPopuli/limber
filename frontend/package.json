@@ -101,6 +101,7 @@
     "ember-template-lint": "^3.6.0",
     "esbuild-loader": "^2.16.0",
     "eslint": "^7.32.0",
+    "eslint-plugin-ember": "github:NullVoxPopuli/eslint-plugin-ember#support-template-imports",
     "execa": "^6.0.0",
     "file-loader": "^6.2.0",
     "fractal-page-object": "^0.2.1",
