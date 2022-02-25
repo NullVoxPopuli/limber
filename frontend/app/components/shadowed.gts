@@ -1,14 +1,6 @@
 import state from 'limber/helpers/state';
 
-export interface Args {
-  omitStyles: boolean;
-}
-
-const t = '{{rootURL}}/assets/tailwind.css';
-
-console.log({ t, a: '/assets/tailwind.css', b: 'assets/tailwind.css' });
-
-const attachShadow = (element: HTMLElement, setShadow) => {
+const attachShadow = (element, setShadow) => {
   setShadow(element.attachShadow({ mode: 'open' }));
 };
 
@@ -28,6 +20,5 @@ const attachShadow = (element: HTMLElement, setShadow) => {
       {{/in-element}}
     {{/if}}
   {{/let}}
-
 </template>
 
