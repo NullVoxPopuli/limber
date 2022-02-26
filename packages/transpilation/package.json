@@ -41,7 +41,7 @@
     "@types/babel__standalone": "^7.1.4",
     "@types/htmlbars-inline-precompile": "^3.0.0",
     "babel-loader": "^8.2.3",
-    "esbuild": "0.14.2",
+    "esbuild": "0.14.23",
     "typescript": "^4.4.4",
     "webpack": "^5.64.4",
     "webpack-cli": "^4.9.1",
