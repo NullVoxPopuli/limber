@@ -1362,13 +1362,13 @@
     mkdirp "^1.0.4"
     silent-error "^1.1.1"
 
-"@ember/render-modifiers@2.0.3", "@ember/render-modifiers@^2.0.0":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@ember/render-modifiers/-/render-modifiers-2.0.3.tgz#bdbc93c02f854e86902fa9a5aca538356d151d1f"
-  integrity sha512-E5R3RN6XapSQid93UNKLj774Xg6e2tpdJAz1T1NWLIWajEpWR/hVPBd6c8eRAUBnTliEewc4L3pq7mwUUdsWHA==
+"@ember/render-modifiers@2.0.4", "@ember/render-modifiers@^2.0.0":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@ember/render-modifiers/-/render-modifiers-2.0.4.tgz#0ac7af647cb736076dbfcd54ca71e090cd329d71"
+  integrity sha512-Zh/fo5VUmVzYHkHVvzWVjJ1RjFUxA2jH0zCp2+DQa80Bf3DUXauiEByxU22UkN4LFT55DBFttC0xCQSJG3WTsg==
   dependencies:
-    "@embroider/macros" ">= 0.48.1 < 2.0.0-alpha.1"
-    ember-cli-babel "^7.26.6"
+    "@embroider/macros" "^1.0.0"
+    ember-cli-babel "^7.26.11"
     ember-modifier-manager-polyfill "^1.2.0"
 
 "@ember/test-helpers@^2.6.0":
@@ -1496,7 +1496,7 @@
   resolved "https://registry.yarnpkg.com/@embroider/hbs-loader/-/hbs-loader-1.2.0.tgz#73ef5ed18c22ca1ffcfeaf04e505f75ddc640eaf"
   integrity sha512-xM/piVIQzyhZEVbwLkhZSYt8y0KOHDvY0AXoieia6VwRhNXb/P1q92qDO+uNodNRpq3/aJfkmbgWukiLjkF9rw==
 
-"@embroider/macros@1.2.0", "@embroider/macros@>= 0.48.1 < 2.0.0-alpha.1", "@embroider/macros@^0.48.1", "@embroider/macros@^0.50.0 || ^1.0.0", "@embroider/macros@^0.50.2", "@embroider/macros@^1.0.0", "@embroider/macros@^1.2.0":
+"@embroider/macros@1.2.0", "@embroider/macros@^0.48.1", "@embroider/macros@^0.50.0 || ^1.0.0", "@embroider/macros@^0.50.2", "@embroider/macros@^1.0.0", "@embroider/macros@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-1.2.0.tgz#9a2d99225fba6dcb69e795cddad9f4948c2a2b6b"
   integrity sha512-WD2V3OKXZB73OymI/zC2+MbqIYaAskhjtSOVVY6yG6kWILyVsJ6+fcbNHEnZyGqs4sm0TvHVJfevmA2OXV8Pww==
