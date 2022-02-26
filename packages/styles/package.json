@@ -10,8 +10,6 @@
     "start": "yarn tailwindcss -o dist/tailwind.css --watch"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.0",
-    "postcss": "^8.4.4",
     "tailwindcss": "^3.0.22"
   },
   "dependencies": {

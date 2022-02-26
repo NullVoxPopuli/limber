@@ -1,8 +1,6 @@
 'use strict';
 
 const path = require('path');
-const colors = require('tailwindcss/colors');
-
 const appRoot = path.join(__dirname, '../../frontend');
 
 module.exports = {
@@ -15,27 +13,8 @@ module.exports = {
       // => @media (min-width: 640px) { ... }
       lg: '1024px',
       // => @media (min-width: 1024px) { ... }
-      'until-lg': { max: '1023px' },
+      'until-lg': {max: '1023px'},
       // => @media (max-width: 1023px) { ... }
-    },
-    colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
-
-      ...colors,
-
-      ember: {
-        brand: 'var(--ember-brand)',
-        black: 'var(--ember-black)',
-        'burnt-ember': 'var(--ember-burnt-ember)',
-        gray: 'var(--ember-gray)',
-        blue: 'var(--ember-blue)',
-        'faint-gray': 'var(--ember-faint-gray)',
-        'light-blue': 'var(--ember-light-blue)',
-        linen: 'var(--ember-linen)',
-        yellow: 'var(--ember-yellow)',
-        white: 'var(--ember-white)',
-      },
     },
     fontFamily: {
       sans: ['system-ui', 'Helvetica', 'Arial', 'sans-serif'],
@@ -52,6 +31,22 @@ module.exports = {
       ],
     },
     extend: {
+      colors: {
+        transparent: 'transparent',
+        current: 'currentColor',
+        ember: {
+          brand: 'var(--ember-brand)',
+          black: 'var(--ember-black)',
+          'burnt-ember': 'var(--ember-burnt-ember)',
+          gray: 'var(--ember-gray)',
+          blue: 'var(--ember-blue)',
+          'faint-gray': 'var(--ember-faint-gray)',
+          'light-blue': 'var(--ember-light-blue)',
+          linen: 'var(--ember-linen)',
+          yellow: 'var(--ember-yellow)',
+          white: 'var(--ember-white)',
+        },
+      },
       minWidth: {
         '1/3': '33%',
         3: '0.75rem',
