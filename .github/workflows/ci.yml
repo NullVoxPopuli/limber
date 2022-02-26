@@ -10,7 +10,6 @@ env:
   consts: packages/consts/
   horizon: packages/horizon-theme/
   monaco: packages/monaco
-  tests: tests/
   sw: packages/transpilation/
   NODE_OPTIONS: "--max-old-space-size=4096 --trace-warnings --unhandled-rejections=strict"
 
@@ -254,34 +253,4 @@ jobs:
       with:
         name: deploy-url
         path: deploy-url.txt
-
-  cypress_branch:
-    name: "E2E: Branch"
-    if: github.ref != 'refs/heads/main'
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [deploy_preview]
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: volta-cli/action@v1
-    - uses: actions/cache@v2
-      with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-
-    - name: Get Deploy URL
-      uses: actions/download-artifact@v2
-      with:
-        name: deploy-url
-    - run: |
-        set -a
-        export CYPRESS_BASE_URL=$(cat ./deploy-url.txt)
-        echo $CYPRESS_BASE_URL
-
-        cd ${{ env.tests }}
-        yarn browserstack-cypress run --sync
-      env:
-        BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-        BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
 
