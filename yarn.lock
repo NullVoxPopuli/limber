@@ -6000,7 +6000,7 @@ ember-page-title@^7.0.0:
   dependencies:
     ember-cli-babel "^7.26.6"
 
-ember-popperjs@^2.0.8:
+ember-popperjs@^2.0.9:
   version "2.0.9"
   resolved "https://registry.yarnpkg.com/ember-popperjs/-/ember-popperjs-2.0.9.tgz#f20908851f5763afbb6bd2e908446cc36b5eb41c"
   integrity sha512-gnNN+3JFLWulM1A5Sh0ghi1a0ppVk4Mq+liLGgH2G7JYSuJsmj/yvoIess+kUn5l96lN0C9YhUUCFJtzT39p4Q==
