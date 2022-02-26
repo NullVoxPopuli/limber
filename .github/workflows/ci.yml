@@ -217,26 +217,6 @@ jobs:
         ./netlifyctl -y deploy --site-id $NETLIFY_SITE_ID --access-token $NETLIFY_ACCESS_TOKEN --publish-directory "./deploy/app"
       working-directory: ${{ env.app }}
 
-  cypress:
-    name: "E2E: Production"
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [deploy]
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: volta-cli/action@v1
-    - uses: actions/cache@v2
-      with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-    - run: yarn browserstack-cypress run --sync
-      working-directory: ${{ env.tests }}
-      env:
-        BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-        BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
-
 ##############################################################
 
   deploy_preview:
