@@ -139,7 +139,7 @@
     "@popperjs/core": "^2.11.0",
     "browserslist": "^4.19.3",
     "dompurify": "^2.3.3",
-    "ember-auto-import": "^2.3.0",
+    "ember-auto-import": "^2.4.0",
     "ember-focus-trap": "^1.0.0",
     "ember-functions-as-helper-polyfill": "1.0.13",
     "ember-functions-as-modifiers-polyfill": "1.0.0",
