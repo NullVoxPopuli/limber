@@ -1496,7 +1496,7 @@
   resolved "https://registry.yarnpkg.com/@embroider/hbs-loader/-/hbs-loader-1.2.0.tgz#73ef5ed18c22ca1ffcfeaf04e505f75ddc640eaf"
   integrity sha512-xM/piVIQzyhZEVbwLkhZSYt8y0KOHDvY0AXoieia6VwRhNXb/P1q92qDO+uNodNRpq3/aJfkmbgWukiLjkF9rw==
 
-"@embroider/macros@1.2.0", "@embroider/macros@^0.48.1", "@embroider/macros@^0.50.0 || ^1.0.0", "@embroider/macros@^0.50.2", "@embroider/macros@^1.0.0", "@embroider/macros@^1.2.0":
+"@embroider/macros@1.2.0", "@embroider/macros@^0.48.1", "@embroider/macros@^0.50.0 || ^1.0.0", "@embroider/macros@^1.0.0", "@embroider/macros@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-1.2.0.tgz#9a2d99225fba6dcb69e795cddad9f4948c2a2b6b"
   integrity sha512-WD2V3OKXZB73OymI/zC2+MbqIYaAskhjtSOVVY6yG6kWILyVsJ6+fcbNHEnZyGqs4sm0TvHVJfevmA2OXV8Pww==
@@ -5910,16 +5910,12 @@ ember-focus-trap@^1.0.1:
     "@embroider/addon-shim" "^1.0.0"
     focus-trap "^6.7.1"
 
-ember-functions-as-helper-polyfill@1.0.13:
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/ember-functions-as-helper-polyfill/-/ember-functions-as-helper-polyfill-1.0.13.tgz#da7770bb73e8d6eb81c334f28fa23ff24af72053"
-  integrity sha512-RhV6iJdQFSWQkrSzmu70QUCow3s68RD+MyA7oJuQk5QIQWeW+5Hb1pfP7/pXl7ZyMMHuJoyA1ekxdM0fScAmXg==
+ember-functions-as-helper-polyfill@1.0.15:
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/ember-functions-as-helper-polyfill/-/ember-functions-as-helper-polyfill-1.0.15.tgz#abe4a6bac7a7269633069fbf3c0d9baaeea3508a"
+  integrity sha512-fIthmFhkkj03yut7F7iDFv3T3nw5h+R8jsTq5LljUfTskSU8UbSsacFbs9BPTlRAk6t2jN37WwEO/4nZQ1HzbQ==
   dependencies:
-    "@embroider/macros" "^0.50.2"
-    "@glimmer/tracking" "^1.0.4"
-    ember-auto-import "^2.2.4"
     ember-cli-babel "^7.26.11"
-    ember-cli-htmlbars "^6.0.1"
     ember-cli-typescript "^4.2.1"
 
 ember-functions-as-modifiers-polyfill@1.0.0:
