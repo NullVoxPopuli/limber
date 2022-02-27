@@ -102,7 +102,7 @@
     "ember-template-lint": "^3.6.0",
     "esbuild-loader": "^2.18.0",
     "eslint": "^7.32.0",
-    "execa": "^6.0.0",
+    "execa": "^6.1.0",
     "file-loader": "^6.2.0",
     "fractal-page-object": "^0.2.1",
     "loader.js": "^4.7.0",
