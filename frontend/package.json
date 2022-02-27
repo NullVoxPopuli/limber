@@ -100,7 +100,7 @@
     "ember-source": "^4.2.0",
     "ember-template-imports": "^2.0.1",
     "ember-template-lint": "^3.6.0",
-    "esbuild-loader": "^2.16.0",
+    "esbuild-loader": "^2.18.0",
     "eslint": "^7.32.0",
     "execa": "^6.0.0",
     "file-loader": "^6.2.0",
