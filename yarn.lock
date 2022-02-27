@@ -989,11 +989,6 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/standalone@^7.17.2":
-  version "7.17.2"
-  resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.17.2.tgz#4c55936b181f230d0ba7c5c38e66b68713cdb114"
-  integrity sha512-Adjbjnlk0IBuBEldyuicdIeq1P/YI5nfm7HnOVd8blGDRetPW2NllESjlrItMKORWVuILWqKe10D+b8yEybeBA==
-
 "@babel/standalone@^7.17.6":
   version "7.17.6"
   resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.17.6.tgz#cb105f20916ab7e516074b44b71270c615f44499"
@@ -6027,12 +6022,12 @@ ember-qunit@^5.1.5:
     silent-error "^1.1.1"
     validate-peer-dependencies "^1.2.0"
 
-ember-repl@^2.0.25:
-  version "2.0.25"
-  resolved "https://registry.yarnpkg.com/ember-repl/-/ember-repl-2.0.25.tgz#68cd31df042b0688cf54d580d5c574e76fb959f7"
-  integrity sha512-h2vCDDbbiMThxgj382BE9NKB8rG7xF8jYDV0S7u+SFbFky93wsuzkG9sq19k0GTXK/K6hMSTrhU72CvUbbNF3g==
+ember-repl@^2.0.29:
+  version "2.0.29"
+  resolved "https://registry.yarnpkg.com/ember-repl/-/ember-repl-2.0.29.tgz#7bef84950f5110faa5a8938239382672b2c09d4d"
+  integrity sha512-omzTJzTcs/UZo3vgjeAHlKTUQ5pVsAF+iBvcFTfepgrBLUTrKeDGxXeLpPZP2ZTb6YNrb78hVFGwHH0FmP0qsg==
   dependencies:
-    "@babel/standalone" "^7.17.2"
+    "@babel/standalone" "^7.17.6"
     "@embroider/macros" "^1.2.0"
     "@glimmer/component" "^1.0.4"
     "@glimmer/tracking" "^1.0.4"
