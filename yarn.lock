@@ -5902,7 +5902,7 @@ ember-export-application-global@^2.0.1:
   resolved "https://registry.yarnpkg.com/ember-export-application-global/-/ember-export-application-global-2.0.1.tgz#b120a70e322ab208defc9e2daebe8d0dfc2dcd46"
   integrity sha512-B7wiurPgsxsSGzJuPFkpBWnaeuCu2PGpG2BjyrfA1VcL7//o+5RSnZqiCEY326y7qmxb2GoCgo0ft03KBU0rRw==
 
-ember-focus-trap@^1.0.0:
+ember-focus-trap@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ember-focus-trap/-/ember-focus-trap-1.0.1.tgz#a99565f6ce55d500b92a0965e79e3ad04219f157"
   integrity sha512-ZUyq5ZkIuXp+ng9rCMkqBh36/V95PltL7iljStkma4+651xlAy3Z84L9WOu/uOJyVpNUxii8RJBbAySHV6c+RQ==
