@@ -8043,7 +8043,7 @@ highlight.js@^11.4.0:
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.4.0.tgz#34ceadd49e1596ee5aba3d99346cdfd4845ee05a"
   integrity sha512-nawlpCBCSASs7EdvZOYOYVkJpGmAOKMYZgZtUqSRqodZE0GRVcFKwo1RcpeOemqh9hyttTdd5wDBwHkuSyUfnA==
 
-highlightjs-glimmer@^1.4.0:
+highlightjs-glimmer@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/highlightjs-glimmer/-/highlightjs-glimmer-1.4.1.tgz#e0100ada16c39c9b41c806599fbb9d113bc752c1"
   integrity sha512-S2LpbYHcjvYMhf0TSFSKcFNbhDJwIVZBeTaFH1wCL9vL5XVX5fyrGG/IwCmIIvT0Vli9tUai8TTzmGJZrOSAtA==

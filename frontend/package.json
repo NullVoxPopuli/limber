@@ -148,7 +148,7 @@
     "ember-repl": "^2.0.29",
     "ember-statechart-component": "3.0.1",
     "highlight.js": "^11.4.0",
-    "highlightjs-glimmer": "^1.4.0",
+    "highlightjs-glimmer": "^1.4.1",
     "html-to-image": "^1.9.0",
     "path-browserify": "^1.0.1",
     "remark-hbs": "0.4.1",
