@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "concurrently": "^7.0.0",
-    "turbo": "^1.1.3-canary.2"
+    "turbo": "^1.1.4"
   },
   "resolutions": {
     "ember-auto-import": "^2.4.0",
