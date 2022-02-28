@@ -10,7 +10,7 @@
     "start": "yarn tailwindcss -o dist/tailwind.css --watch"
   },
   "devDependencies": {
-    "tailwindcss": "^3.0.22"
+    "tailwindcss": "^3.0.23"
   },
   "dependencies": {
     "broccoli-funnel": "^3.0.8"
