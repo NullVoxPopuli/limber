@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 15
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
     - uses: actions/cache@v2
       with:
@@ -40,7 +40,7 @@ jobs:
     needs: [install_dependencies]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
     - uses: actions/cache@v2
       with:
@@ -61,7 +61,7 @@ jobs:
     needs: [pre_build]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
     - uses: actions/cache@v2
       with:
@@ -92,7 +92,7 @@ jobs:
     needs: [pre_build]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
     - uses: actions/cache@v2
       with:
@@ -128,7 +128,7 @@ jobs:
     needs: [build_tests]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
     - uses: actions/cache@v2
       with:
@@ -164,7 +164,7 @@ jobs:
       BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
     - uses: actions/cache@v2
       with:
@@ -194,7 +194,7 @@ jobs:
     needs: [build_app, tests, browserstack-test]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
     - name: Download Built App Artifacts
       uses: actions/download-artifact@master
@@ -226,7 +226,7 @@ jobs:
     needs: [build_app]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
 
     - name: Download Built App Artifacts
