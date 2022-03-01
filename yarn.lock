@@ -7469,10 +7469,10 @@ forwarded@0.2.0:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.2.0.tgz#2269936428aad4c15c7ebe9779a84bf0b2a81811"
   integrity sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==
 
-fractal-page-object@^0.2.1:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/fractal-page-object/-/fractal-page-object-0.2.2.tgz#31fe3226d75ee43f9acd8cd2bfa5d368796c64dc"
-  integrity sha512-jJ+/r3lUJ8AoF0ghUQLIepq66uZhayDakIBsOM0lot4YfmjWvfnhfhurqTy/bspIzdb7XZVXXh1LnpSg42pQIg==
+fractal-page-object@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/fractal-page-object/-/fractal-page-object-0.3.0.tgz#aaacfb44d9a618e17ccf9487f4a1ea6e638e0355"
+  integrity sha512-Jrbcm1eIFN/dY/RuTiTjr5K7YpfJbP4inGdt9f9n/jEnqBPi7gqM5WTKIIc4DnyBOWtWs9HE1treSoCYl1HUpg==
 
 fragment-cache@^0.2.1:
   version "0.2.1"
