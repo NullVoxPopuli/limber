@@ -5914,13 +5914,13 @@ ember-focus-trap@^1.0.1:
     "@embroider/addon-shim" "^1.0.0"
     focus-trap "^6.7.1"
 
-ember-functions-as-helper-polyfill@1.0.15:
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/ember-functions-as-helper-polyfill/-/ember-functions-as-helper-polyfill-1.0.15.tgz#abe4a6bac7a7269633069fbf3c0d9baaeea3508a"
-  integrity sha512-fIthmFhkkj03yut7F7iDFv3T3nw5h+R8jsTq5LljUfTskSU8UbSsacFbs9BPTlRAk6t2jN37WwEO/4nZQ1HzbQ==
+ember-functions-as-helper-polyfill@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/ember-functions-as-helper-polyfill/-/ember-functions-as-helper-polyfill-2.0.1.tgz#5fb35fde337904e146568eb900cca5284e90aba8"
+  integrity sha512-IK+GAv2Pw/siQ7aN6V5CRQBNBrnjqNlm2u+bTV+OIP3RsPeStytbYwGI3yaUD9qqPNjFfxYeOkFSZV7q4CQplQ==
   dependencies:
     ember-cli-babel "^7.26.11"
-    ember-cli-typescript "^4.2.1"
+    ember-cli-typescript "^5.0.0"
 
 ember-functions-as-modifiers-polyfill@1.0.0:
   version "1.0.0"
