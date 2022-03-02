@@ -143,7 +143,7 @@
     "ember-focus-trap": "^1.0.1",
     "ember-functions-as-helper-polyfill": "2.0.1",
     "ember-functions-as-modifiers-polyfill": "1.0.0",
-    "ember-headlessui": "0.12.0",
+    "ember-headlessui": "0.12.1",
     "ember-popperjs": "^2.0.9",
     "ember-repl": "^2.0.29",
     "ember-statechart-component": "3.0.1",
