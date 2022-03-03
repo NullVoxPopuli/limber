@@ -78,7 +78,7 @@ jobs:
       working-directory: ${{ env.app }}
 
     - name: Upload App Artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: built_app
         path: ${{ env.app }}/dist/
@@ -106,7 +106,7 @@ jobs:
       working-directory: ${{ env.app }}
 
     - name: Upload Test Artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: built_tests
         path: ${{ env.app }}/dist/
@@ -249,7 +249,7 @@ jobs:
     - run: echo "${{ steps.deploy.outputs.deploy-url }}" > deploy-url.txt
 
     - name: Upload URL as Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: deploy-url
         path: deploy-url.txt
