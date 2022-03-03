@@ -1947,16 +1947,16 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@nullvoxpopuli/eslint-configs@2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@nullvoxpopuli/eslint-configs/-/eslint-configs-2.2.1.tgz#f62325b61b9e598dd9b3ae51d748889be2a4ff1e"
-  integrity sha512-q1pMX54HF1kJdpwMYhGLNt9MwEKKUdQgzRP0/02B+jlboqTQ3C6QM62PrAHC6VjYM8U/lLol4mF771dxz+Zo9w==
+"@nullvoxpopuli/eslint-configs@2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@nullvoxpopuli/eslint-configs/-/eslint-configs-2.2.2.tgz#fde7ccbc6aa3d2e7de00b049ad57ab662b3f5d55"
+  integrity sha512-2TPtxWE9JjXCOxSmQb3bbz0D4+zz8DL5BcmjlRjS8P2DyUIuEGlirzIFMfp65DObEeQknK42SGrgUDZZ47s8DQ==
   dependencies:
     "@typescript-eslint/eslint-plugin" "5.13.0"
     "@typescript-eslint/parser" "5.13.0"
     babel-eslint "10.1.0"
     eslint "7.32.0"
-    eslint-config-prettier "8.4.0"
+    eslint-config-prettier "8.5.0"
     eslint-plugin-decorator-position "4.0.1"
     eslint-plugin-ember "10.5.9"
     eslint-plugin-import "^2.25.4"
@@ -6685,10 +6685,10 @@ escodegen@^2.0.0:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-prettier@8.4.0:
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.4.0.tgz#8e6d17c7436649e98c4c2189868562921ef563de"
-  integrity sha512-CFotdUcMY18nGRo5KGsnNxpznzhkopOcOo0InID+sgQssPrzjvsyKZPvOgymTFeHrFuC3Tzdf2YndhXtULK9Iw==
+eslint-config-prettier@8.5.0:
+  version "8.5.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.5.0.tgz#5a81680ec934beca02c7b1a61cf8ca34b66feab1"
+  integrity sha512-obmWKLUNCnhtQRKc+tmnYuQl0pFU1ibYJQ5BGhTVB08bHe9wC8qUeG7c08dj9XX+AuPj1YSGSQIHl1pnDHZR0Q==
 
 eslint-import-resolver-node@^0.3.6:
   version "0.3.6"
