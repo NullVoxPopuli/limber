@@ -110,7 +110,7 @@
     "npm-run-all": "^4.1.5",
     "onp": "^2.0.3",
     "prettier": "^2.3.2",
-    "qunit": "^2.17.2",
+    "qunit": "^2.18.0",
     "qunit-dom": "^2.0.0",
     "testem-failure-only-reporter": "^1.0.0",
     "type-fest": "2.12.0",
