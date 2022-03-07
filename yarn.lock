@@ -1491,7 +1491,7 @@
   resolved "https://registry.yarnpkg.com/@embroider/hbs-loader/-/hbs-loader-1.4.0.tgz#ed8e376454f6024cc211dbf4400ed6058eaff14e"
   integrity sha512-9ifNuRkUQKrrnozEhueTdh+znLHanHWKLfVejTIiPLBjlyzkINYbImXBkGhu7Ys6oyRe1z+KIc1hOvvHT3dysg==
 
-"@embroider/macros@1.3.0", "@embroider/macros@1.4.0", "@embroider/macros@^0.50.0 || ^1.0.0", "@embroider/macros@^1.0.0", "@embroider/macros@^1.2.0", "@embroider/macros@^1.3.0":
+"@embroider/macros@1.3.0", "@embroider/macros@1.4.0", "@embroider/macros@^0.50.0 || ^1.0.0", "@embroider/macros@^1.0.0", "@embroider/macros@^1.2.0", "@embroider/macros@^1.4.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-1.3.0.tgz#61f552ed5d177c12c55c2e1004db906a4ab5dbad"
   integrity sha512-UyiP5N/bjWrv5Nf17VaTS9BVSA4MeROzo5kOvyzcNypXEOUu3u468p7542aoRFCUFQ3cpldrQkV51sLHy8duCA==
@@ -6094,13 +6094,13 @@ ember-qunit@^5.1.5:
     silent-error "^1.1.1"
     validate-peer-dependencies "^1.2.0"
 
-ember-repl@^2.0.30:
-  version "2.0.30"
-  resolved "https://registry.yarnpkg.com/ember-repl/-/ember-repl-2.0.30.tgz#42622d553d320a9d0e5e5ba434d98cb3675d7abb"
-  integrity sha512-f4zQZBjZIIKq4ru6LwdbAqefK/78cxyxSL7+3wbgzmzOoo9eUwN+UobGjUR8cVUAvWrXODZNDaHYcqRCxfemcQ==
+ember-repl@^2.0.31:
+  version "2.0.31"
+  resolved "https://registry.yarnpkg.com/ember-repl/-/ember-repl-2.0.31.tgz#31a2f010a6ff611f73b167a065b68b0e78bc5f56"
+  integrity sha512-4UUswjagQDj2pnRrcVQb96IoQlmjUZh/3OO+i0mTax1FLiYnxJBPG0vRUkyiGqYL2qRsQYldD12jjmkBpV+SnA==
   dependencies:
     "@babel/standalone" "^7.17.6"
-    "@embroider/macros" "^1.3.0"
+    "@embroider/macros" "^1.4.0"
     "@glimmer/component" "^1.0.4"
     "@glimmer/tracking" "^1.0.4"
     babel-plugin-htmlbars-inline-precompile "^5.3.1"
