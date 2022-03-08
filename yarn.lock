@@ -1388,12 +1388,12 @@
     ember-cli-version-checker "^5.1.2"
     semver "^7.3.5"
 
-"@embroider/addon-shim@1.3.0", "@embroider/addon-shim@^1.0.0", "@embroider/addon-shim@^1.2.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@embroider/addon-shim/-/addon-shim-1.3.0.tgz#7d550f60f7e3cb6d429a7a7e702c3d38aba4cc0d"
-  integrity sha512-l0FaG5g8Q0vG7SQYTB/P9BWWU5ZUm2L9X054amdo/wu1w42rB9nG8MrC/qWWCp9NnZXgqYEvQju6oxKit3m8zQ==
+"@embroider/addon-shim@1.5.0", "@embroider/addon-shim@^1.0.0", "@embroider/addon-shim@^1.2.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@embroider/addon-shim/-/addon-shim-1.5.0.tgz#639b8b394336a5ae26dd3e24ffc3d34d864ac5ce"
+  integrity sha512-5zgwA/wTYjgn2Oo6hKRQhF/5Gnwb+hGhj/WXhZQa5yA7fRRdBV1tVMS7b7SLawZcmOhuWkyPwFdgsYtGBvDB0w==
   dependencies:
-    "@embroider/shared-internals" "^1.3.0"
+    "@embroider/shared-internals" "^1.5.0"
     semver "^7.3.5"
 
 "@embroider/babel-loader-8@1.5.0":
@@ -1491,12 +1491,12 @@
   resolved "https://registry.yarnpkg.com/@embroider/hbs-loader/-/hbs-loader-1.5.0.tgz#a007573a591e6cdb18eb2077bb35bac5c9a58a39"
   integrity sha512-//fSJEE+FQaLDRpJKEP64pg5R4qQtL1oH/HKtaUK+nXPKHwYwaOXQegtrv3UJwFjuL9H84QbLLZxjKa8TnhTLg==
 
-"@embroider/macros@1.3.0", "@embroider/macros@1.5.0", "@embroider/macros@^0.50.0 || ^1.0.0", "@embroider/macros@^1.0.0", "@embroider/macros@^1.2.0", "@embroider/macros@^1.4.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-1.3.0.tgz#61f552ed5d177c12c55c2e1004db906a4ab5dbad"
-  integrity sha512-UyiP5N/bjWrv5Nf17VaTS9BVSA4MeROzo5kOvyzcNypXEOUu3u468p7542aoRFCUFQ3cpldrQkV51sLHy8duCA==
+"@embroider/macros@1.5.0", "@embroider/macros@^0.50.0 || ^1.0.0", "@embroider/macros@^1.0.0", "@embroider/macros@^1.2.0", "@embroider/macros@^1.4.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-1.5.0.tgz#8c67666359e7814d91cdeac2fd96c896080473b3"
+  integrity sha512-QqNsWmIJ8LvwWg+YAfB+nfcRZ49hAJNTJAKt2IDpgZDKa/FYj/Mp75UWfJ1BJvB3KUq50OQCOv4TZ3ZcU9h/TQ==
   dependencies:
-    "@embroider/shared-internals" "1.3.0"
+    "@embroider/shared-internals" "1.5.0"
     assert-never "^1.2.1"
     babel-import-util "^1.1.0"
     ember-cli-babel "^7.26.6"
@@ -1505,20 +1505,7 @@
     resolve "^1.20.0"
     semver "^7.3.2"
 
-"@embroider/shared-internals@1.3.0", "@embroider/shared-internals@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@embroider/shared-internals/-/shared-internals-1.3.0.tgz#53d8d25f4774c66c641965e8db4f321b32669a80"
-  integrity sha512-psByCUBW2Hv5Y+QDWhaFJ8uQoZ0GCd0LpUeehRkBynbOQmgGDdYpd2SrKplt/o1C+z3bKrD7JyiwthU9Yn3yRw==
-  dependencies:
-    babel-import-util "^1.1.0"
-    ember-rfc176-data "^0.3.17"
-    fs-extra "^9.1.0"
-    lodash "^4.17.21"
-    resolve-package-path "^4.0.1"
-    semver "^7.3.5"
-    typescript-memoize "^1.0.1"
-
-"@embroider/shared-internals@1.5.0":
+"@embroider/shared-internals@1.5.0", "@embroider/shared-internals@^1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@embroider/shared-internals/-/shared-internals-1.5.0.tgz#d3883f13571be36fcdbc59c65c785db7b6d8186e"
   integrity sha512-kdR7Fh2YdzsNofJO+DJxLfrlMbW4/NNf78aMXgE21z/tg9GO5W2mKlI1DzsO2JlO5yfZdiYfqb9C9vSLJEx14A==
@@ -1544,12 +1531,12 @@
     semver "^7.3.5"
     typescript-memoize "^1.0.1"
 
-"@embroider/util@1.3.0", "@embroider/util@^0.39.1 || ^0.40.0 || ^0.41.0 || ^1.0.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@embroider/util/-/util-1.3.0.tgz#64e8e267be9d2f54dc985d47351c63c4a3c0feea"
-  integrity sha512-/wIcQezK1FN+/twjNmqDaZe9tAfma2v/Py1kg2jmeqRN068BH/yjfmbJXfKzuBD0jZXLz53hK3YMAtZwvEm8yQ==
+"@embroider/util@1.5.0", "@embroider/util@^0.39.1 || ^0.40.0 || ^0.41.0 || ^1.0.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@embroider/util/-/util-1.5.0.tgz#0c7da82a75052daca7c709d6888b72a1da19822e"
+  integrity sha512-CoE98WDnRtXPn8x8SJkWHGw7frikRIetpImwwC9qyse/AvSoOsS4B5U0G8omZLMvwm2IEc9NemlDrS4ZyUlJ/A==
   dependencies:
-    "@embroider/macros" "1.3.0"
+    "@embroider/macros" "1.5.0"
     broccoli-funnel "^3.0.5"
     ember-cli-babel "^7.23.1"
 
