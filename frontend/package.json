@@ -37,9 +37,9 @@
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.6.0",
-    "@embroider/compat": "^1.4.0",
-    "@embroider/core": "^1.4.0",
-    "@embroider/webpack": "^1.4.0",
+    "@embroider/compat": "^1.5.0",
+    "@embroider/core": "^1.5.0",
+    "@embroider/webpack": "^1.5.0",
     "@fortawesome/ember-fontawesome": "^0.3.2",
     "@fortawesome/free-brands-svg-icons": "^6.0.0",
     "@fortawesome/free-regular-svg-icons": "^6.0.0",
