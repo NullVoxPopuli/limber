@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "concurrently": "^7.0.0",
-    "turbo": "^1.1.5"
+    "turbo": "^1.1.6"
   },
   "resolutions": {
     "ember-auto-import": "^2.4.0",
