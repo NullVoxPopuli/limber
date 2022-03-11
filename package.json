@@ -16,7 +16,7 @@
   "volta": {
     "node": "16.14.0",
     "yarn": "1.22.17",
-    "npm": "8.5.3"
+    "npm": "8.5.4"
   },
   "devDependencies": {
     "concurrently": "^7.0.0",
