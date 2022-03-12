@@ -6,6 +6,11 @@ export default class EditorError extends Component {
   @service editor;
   @service router;
 
+  // see: https://github.com/emberjs/ember.js/pull/20017
+  get isEmberRouteActive() {
+    return this.router.isActive('ember');
+  }
+
   <template>
     {{#if this.editor.error}}
 
@@ -18,7 +23,7 @@ export default class EditorError extends Component {
         "
       >
         {{!-- template-lint-disable simple-unless --}}
-        {{#unless (this.router.isActive 'ember')}}
+        {{#unless this.isEmberRouteActive}}
           Click
           <LinkTo @route="ember" class="underline hover:text-black">
             here to view the compiled markdown
