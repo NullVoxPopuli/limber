@@ -49,10 +49,8 @@ const handleSubmit = (event) => {
 
 ### Ember References
  - [the `on` modifier][3]
- - [docs on `@tracked`][4]
 
 
 [1]: https://developer.mozilla.org/en-US/docs/Web/API/FormData
 [2]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form
 [3]: https://guides.emberjs.com/release/components/component-state-and-actions/#toc_html-modifiers-and-actions
-[4]: https://guides.emberjs.com/release/components/component-state-and-actions/#toc_tracked-properties
