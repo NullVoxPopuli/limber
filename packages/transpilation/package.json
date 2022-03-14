@@ -24,13 +24,13 @@
     "last 1 Safari versions"
   ],
   "dependencies": {
-    "@babel/standalone": "^7.17.6",
+    "@babel/standalone": "^7.17.7",
     "babel-plugin-htmlbars-inline-precompile": "^5.3.1",
     "ember-source": "^4.2.0",
     "path-browserify": "^1.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.5",
+    "@babel/core": "^7.17.7",
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@babel/plugin-proposal-decorators": "^7.17.2",
     "@babel/plugin-transform-runtime": "^7.17.0",
