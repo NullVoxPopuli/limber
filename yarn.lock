@@ -1962,10 +1962,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@nullvoxpopuli/eslint-configs@2.2.4":
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/@nullvoxpopuli/eslint-configs/-/eslint-configs-2.2.4.tgz#b2d9632a3b9fb95ad435332558b27a336786d542"
-  integrity sha512-KkLP/t/JwWoJdj6nU6ERWeJq9+9/XyqReugPvaJ9N8kOPd7CWGs8tRdWUbyIjT2TvgyjPL8uWQDIXLthg55rKg==
+"@nullvoxpopuli/eslint-configs@2.2.5":
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/@nullvoxpopuli/eslint-configs/-/eslint-configs-2.2.5.tgz#5e89ce758936dff5c1c501d54b76d33bb1845086"
+  integrity sha512-JdilvZbntQZT06yPJFgiY5BXqZmZQMPVoXjIzDC1FUc0J+qPSgLFY0e5xhmz2BPzyBYGck1EborzcYU9JS/bMg==
   dependencies:
     "@typescript-eslint/eslint-plugin" "5.15.0"
     "@typescript-eslint/parser" "5.15.0"
@@ -1980,7 +1980,7 @@
     eslint-plugin-prettier "4.0.0"
     eslint-plugin-qunit "7.2.0"
     eslint-plugin-simple-import-sort "^7.0.0"
-    prettier "2.5.1"
+    prettier "2.6.0"
 
 "@polka/url@^1.0.0-next.20":
   version "1.0.0-next.21"
@@ -10448,7 +10448,12 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@2.5.1, prettier@^2.3.2:
+prettier@2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.6.0.tgz#12f8f504c4d8ddb76475f441337542fa799207d4"
+  integrity sha512-m2FgJibYrBGGgQXNzfd0PuDGShJgRavjUoRCw1mZERIWVSXF0iLzLm+aOqTAbLnC3n6JzUhAA8uZnFVghHJ86A==
+
+prettier@^2.3.2:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.5.1.tgz#fff75fa9d519c54cf0fce328c1017d94546bc56a"
   integrity sha512-vBZcPRUR5MZJwoyi3ZoyQlc1rXeEck8KgeC9AwwOn+exuxLxq5toTRDTSaVrXHxelDMHy9zlicw8u66yxoSUFg==
