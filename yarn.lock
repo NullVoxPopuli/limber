@@ -3449,7 +3449,7 @@ babel-plugin-ember-modules-api-polyfill@^3.5.0:
   dependencies:
     ember-rfc176-data "^0.3.17"
 
-babel-plugin-ember-template-compilation@^1.0.0:
+babel-plugin-ember-template-compilation@^1.0.0, babel-plugin-ember-template-compilation@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-ember-template-compilation/-/babel-plugin-ember-template-compilation-1.0.1.tgz#64baf434ff1b751c6292936f8b9eb75a2f8149dc"
   integrity sha512-V/kY6CDyUNrl5Kx6UPKUPhzSKNfdrxNii+S5zK4dgJvVyoxFv7Ykg06Ct/yskY0LkA4wUPdYN7JOBtYJwHk2sg==
@@ -5512,7 +5512,7 @@ ember-ast-helpers@0.3.5:
     "@glimmer/compiler" "^0.27.0"
     "@glimmer/syntax" "^0.27.0"
 
-ember-auto-import@2.4.0, ember-auto-import@^1.11.3, ember-auto-import@^2.2.0, ember-auto-import@^2.2.4, ember-auto-import@^2.4.0:
+ember-auto-import@2.4.0, ember-auto-import@^1.11.3, ember-auto-import@^2.2.0, ember-auto-import@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-2.4.0.tgz#91c4797f08315728086e35af954cb60bd23c14bc"
   integrity sha512-BwF6iTaoSmT2vJ9NEHEGRBCh2+qp+Nlaz/Q7roqNSxl5oL5iMRwenPnHhOoBPTYZvPhcV/KgXR5e+pBQ107plQ==
@@ -5645,7 +5645,7 @@ ember-cli-htmlbars@^5.7.1:
     strip-bom "^4.0.0"
     walk-sync "^2.2.0"
 
-ember-cli-htmlbars@^6.0.0, ember-cli-htmlbars@^6.0.1:
+ember-cli-htmlbars@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-6.0.1.tgz#5487831d477e61682bc867fd138808269e5d2152"
   integrity sha512-IDsl9uty+MXtMfp/BUTEc/Q36EmlHYj8ZdPekcoRa8hmdsigHnK4iokfaB7dJFktlf6luruei+imv7JrJrBQPQ==
@@ -6202,15 +6202,13 @@ ember-source@^4.2.0:
     semver "^7.3.4"
     silent-error "^1.1.1"
 
-ember-statechart-component@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/ember-statechart-component/-/ember-statechart-component-3.0.1.tgz#6bee33d6726a99179929b023da509bed70f24677"
-  integrity sha512-ETxI3mogzM3rmqItKtOGRWqrNsR3soSqR1HZLXKlqhnUbnEy/QqYgisnSWXgQSZzUePzOQgov0pyCCUJHba72Q==
+ember-statechart-component@4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/ember-statechart-component/-/ember-statechart-component-4.1.2.tgz#20ceaff8742c227e885813a40ef4e5b154434bf5"
+  integrity sha512-W9MxtBMpNy1Uby83FIQddXLOFKyCqevhbs/Ty+q5X1cfaVDU7Ums6X05SjwkicWcW0rwWa0tjIYjZuSeemfY5A==
   dependencies:
-    ember-auto-import "^2.2.4"
-    ember-cli-babel "^7.26.6"
-    ember-cli-htmlbars "^6.0.0"
-    ember-cli-typescript "^4.2.1"
+    "@embroider/addon-shim" "^1.0.0"
+    babel-plugin-ember-template-compilation "^1.0.1"
     ember-tracked-storage-polyfill "^1.0.0"
 
 ember-template-imports@^2.0.1:

@@ -146,7 +146,7 @@
     "ember-headlessui": "0.12.1",
     "ember-popperjs": "^2.0.9",
     "ember-repl": "^2.0.33",
-    "ember-statechart-component": "3.0.1",
+    "ember-statechart-component": "4.1.2",
     "highlight.js": "^11.5.0",
     "highlightjs-glimmer": "^1.4.1",
     "html-to-image": "^1.9.0",
