@@ -36,7 +36,7 @@
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/plugin-transform-typescript": "^7.16.8",
     "@babel/types": "^7.17.0",
-    "@nullvoxpopuli/eslint-configs": "2.2.4",
+    "@nullvoxpopuli/eslint-configs": "2.2.5",
     "@types/babel__core": "^7.1.18",
     "@types/babel__standalone": "^7.1.4",
     "@types/htmlbars-inline-precompile": "^3.0.0",
