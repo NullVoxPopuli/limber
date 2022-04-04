@@ -127,7 +127,7 @@ module.exports = function (defaults) {
           minimizer: [
             new ESBuildMinifyPlugin({
               legalComments: 'none',
-              sourcemap: false,
+              sourcemap: true,
               minify: isProduction,
               css: true,
               exclude: [/monaco/, /codemirror/],
