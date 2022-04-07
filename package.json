@@ -9,9 +9,9 @@
   ],
   "scripts": {
     "predeploy": "yarn build && yarn workspace limber build",
-    "build": "yarn turbo run build --scope='@nullvoxpopuli/*'",
+    "build": "yarn turbo run build --filter=...^limber",
     "lint:fix": "yarn turbo run lint:fix",
-    "start": "yarn turbo run start --scope='limber' --include-dependencies"
+    "start": "yarn turbo run start --filter=limber"
   },
   "volta": {
     "node": "16.14.1",
@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "concurrently": "^7.0.0",
-    "turbo": "^1.1.6"
+    "turbo": "^1.2.0"
   },
   "resolutions": {
     "ember-auto-import": "^2.4.0",
