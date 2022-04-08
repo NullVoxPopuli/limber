@@ -1,5 +1,7 @@
 import { debounce } from '@ember/runloop';
 
+import { isTesting } from '@embroider/macros';
+
 export default function constraintVertically(element: HTMLElement) {
   let debouncedConstrain = () => constrain(element);
   let x = () => debounce(debouncedConstrain, 10);
@@ -14,6 +16,16 @@ export default function constraintVertically(element: HTMLElement) {
 
 function constrain(element: HTMLElement) {
   let offset = element.getBoundingClientRect().y;
+
+  /**
+   * Improve scaled debug window
+   */
+  if (isTesting()) {
+    let container = document.querySelector('#ember-testing');
+    let containerOffset = container?.getBoundingClientRect()?.y ?? 0;
+
+    offset -= containerOffset;
+  }
 
   element.setAttribute('style', `max-height: calc(100vh - ${offset}px)`);
 }
