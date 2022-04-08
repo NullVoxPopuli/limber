@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "predeploy": "yarn build && yarn workspace limber build",
-    "build": "yarn turbo run build --filter=...^limber",
+    "build": "yarn turbo run build --filter=limber^...",
     "lint:fix": "yarn turbo run lint:fix",
     "start": "yarn turbo run start --filter=limber"
   },
