@@ -99,7 +99,7 @@
     "ember-resources": "^4.4.0",
     "ember-source": "^4.2.0",
     "ember-template-imports": "^2.0.1",
-    "ember-template-lint": "^3.6.0",
+    "ember-template-lint": "^4.4.0",
     "ember-template-lint-plugin-tailwindcss": "^4.0.2",
     "esbuild-loader": "^2.18.0",
     "eslint": "^7.32.0",
