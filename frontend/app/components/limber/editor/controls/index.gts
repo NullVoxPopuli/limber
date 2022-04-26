@@ -1,11 +1,14 @@
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier'
 
+// @ts-expect-error
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
 import State from './state';
 
 import type { InterpreterFrom } from 'xstate';
+import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
+
 
 type Send = InterpreterFrom<typeof State>['send'];
 
@@ -15,7 +18,10 @@ const container = (element: Element, send: Send) => {
   return () => send('CONTAINER_REMOVED');
 };
 
-const Button = <template>
+const Button: TOC<{
+  Element: HTMLButtonElement
+  Blocks: { default: [] }
+}> = <template>
   <button
     type='button'
     class="
@@ -28,7 +34,14 @@ const Button = <template>
   </button>
 </template>;
 
-const Controls = <template>
+const Controls: TOC<{
+  Args: {
+    needsControls: boolean
+    isMinimized: boolean;
+    isMaximized: boolean;
+    send: Send;
+  }
+}> = <template>
   {{#if @needsControls}}
     <div
       class='

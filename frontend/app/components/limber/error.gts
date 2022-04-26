@@ -2,9 +2,16 @@ import Component from '@glimmer/component';
 import { LinkTo } from '@ember/routing';
 import { inject as service } from '@ember/service';
 
-export default class EditorError extends Component {
-  @service editor;
-  @service router;
+import type EditorService from 'limber/services/editor';
+import type RouterService from '@ember/routing/router-service';
+
+interface Signature {
+  Element: HTMLElement | null;
+}
+
+export default class EditorError extends Component<Signature> {
+  @service declare editor: EditorService;
+  @service declare router: RouterService;
 
   // see: https://github.com/emberjs/ember.js/pull/20017
   get isEmberRouteActive() {

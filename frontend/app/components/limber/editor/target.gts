@@ -1,5 +1,4 @@
 import Shadowed from 'limber/components/shadowed';
-import Editor from 'limber/services/editor';
 
 import service from 'limber/helpers/service';
 

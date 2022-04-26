@@ -1,7 +1,51 @@
-import HeadlessMenu from 'ember-headlessui/components/menu';
+// @ts-ignore
+import _HeadlessMenu from 'ember-headlessui/components/menu';
 import { PopperJS } from 'ember-popperjs';
 
-const Button = <template>
+import type { ComponentLike } from "@glint/template";
+
+import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
+
+const HeadlessMenu = _HeadlessMenu as unknown as ComponentLike<{
+  Blocks: {
+    default: [
+      {
+        Button: ComponentLike<{ Element: HTMLButtonElement, Blocks: { default: []} }>;
+        Items: ComponentLike<{
+          Element: HTMLButtonElement | HTMLAnchorElement;
+          Blocks: {
+            default: [{ Item: ComponentLike<{
+              Blocks: {
+                default: [{
+                  Element: ComponentLike<{
+                    Element: HTMLButtonElement | HTMLButtonElement;
+                    Args: {
+                      tagName: 'button' | 'a'
+                    }
+                  }>
+                }]
+              }
+            }> }]
+          }
+        }>;
+        isOpen: boolean;
+      }
+    ]
+  }
+}>;
+
+const Button: TOC<{
+  Element: HTMLButtonElement;
+  Args: {
+    /**
+     * TODO: add types to ember-headlessui
+     */
+    item: any
+  },
+  Blocks: {
+    default: []
+  }
+}> = <template>
   <@item as |item|>
     <item.Element
       @tagName="button"
@@ -19,7 +63,13 @@ const Button = <template>
   </@item>
 </template>;
 
-<template>
+const Menu: TOC<{
+  Element: HTMLButtonElement;
+  Blocks: {
+    trigger: [{ isOpen: boolean }],
+    options: [TOC<{ Element: HTMLButtonElement }>],
+  }
+}> = <template>
   <HeadlessMenu as |menu|>
     <PopperJS as |trigger popover|>
       <menu.Button
@@ -45,3 +95,5 @@ const Button = <template>
     </PopperJS>
   </HeadlessMenu>
 </template>
+
+export default Menu;

@@ -5,6 +5,7 @@ import { fn } from '@ember/helper';
 import { inject as service } from '@ember/service';
 import { waitFor } from '@ember/test-waiters';
 
+// @ts-expect-error
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
 import { getFromLabel, NAMES } from 'limber/snippets';
@@ -12,7 +13,11 @@ import Menu from './menu';
 
 import type EditorService from 'limber/services/editor';
 
-export default class DemoSelect extends Component {
+interface Signature {
+  Element: HTMLElement;
+}
+
+export default class DemoSelect extends Component<Signature> {
   @service declare editor: EditorService;
 
   demos = NAMES;

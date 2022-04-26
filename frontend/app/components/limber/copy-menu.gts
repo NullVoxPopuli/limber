@@ -30,6 +30,7 @@ export default class CopyMenu extends Component {
         📋
       </:trigger>
 
+
       <:options as |Item|>
         <Item {{on 'click' this.copyAsText}}>
           Copy as text
