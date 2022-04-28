@@ -6,8 +6,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "yarn tailwindcss -o dist/tailwind.css",
-    "start": "yarn tailwindcss -o dist/tailwind.css --watch"
+    "build": "tailwindcss -o dist/tailwind.css",
+    "start": "tailwindcss -o dist/tailwind.css --watch"
   },
   "devDependencies": {
     "tailwindcss": "^3.0.23"
