@@ -10,9 +10,12 @@
     "start": "tailwindcss -o dist/tailwind.css --watch"
   },
   "devDependencies": {
+    "autoprefixer": "^10.0.0",
+    "postcss": "^8.0.0",
     "tailwindcss": "^3.0.23"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.2",
     "broccoli-funnel": "^3.0.8"
   }
 }
