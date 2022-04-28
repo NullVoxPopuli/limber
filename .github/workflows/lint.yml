@@ -22,11 +22,18 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
-    - uses: actions/cache@v2
+    - name: Cache pnpm modules
+      uses: actions/cache@v3
       with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-    - run: yarn install
+        path: ~/.pnpm-store
+        key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-
+
+    - uses: pnpm/action-setup@v2.2.1
+      with:
+        version: 6.32.1
+    - run: pnpm install
 
   js_app:
     name: "ESLint: JS/TS >> Limber App"
@@ -37,13 +44,21 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
-    - uses: actions/cache@v2
+    - name: Cache pnpm modules
+      uses: actions/cache@v3
       with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        path: ~/.pnpm-store
+        key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-
+
+    - uses: pnpm/action-setup@v2.2.1
+      with:
+        version: 6.32.1
+    - run: pnpm install
     - name: 'Limber App'
       working-directory: ${{ env.app }}
-      run: yarn lint:js
+      run: pnpm run lint:js
 
   js_cm:
     name: "ESLint: JS/TS >> CodeMirror"
@@ -54,13 +69,21 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
-    - uses: actions/cache@v2
+    - name: Cache pnpm modules
+      uses: actions/cache@v3
       with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        path: ~/.pnpm-store
+        key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-
+
+    - uses: pnpm/action-setup@v2.2.1
+      with:
+        version: 6.32.1
+    - run: pnpm install
     - name: 'Code Mirror configuration'
       working-directory: ${{ env.codemirror }}
-      run: yarn lint:js
+      run: pnpm run lint:js
 
   js_monaco:
     name: "ESLint: JS/TS >> Monaco"
@@ -71,13 +94,21 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
-    - uses: actions/cache@v2
+    - name: Cache pnpm modules
+      uses: actions/cache@v3
       with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        path: ~/.pnpm-store
+        key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-
+
+    - uses: pnpm/action-setup@v2.2.1
+      with:
+        version: 6.32.1
+    - run: pnpm install
     - name: 'Monaco configuration'
       working-directory: ${{ env.monaco }}
-      run: yarn lint:js
+      run: pnpm run lint:js
 
   js_consts:
     name: "ESLint: JS/TS >> Consts"
@@ -88,13 +119,21 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
-    - uses: actions/cache@v2
+    - name: Cache pnpm modules
+      uses: actions/cache@v3
       with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        path: ~/.pnpm-store
+        key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-
+
+    - uses: pnpm/action-setup@v2.2.1
+      with:
+        version: 6.32.1
+    - run: pnpm install
     - name: 'Consts'
       working-directory: ${{ env.consts }}
-      run: yarn lint:js
+      run: pnpm run lint:js
 
   js_horizon:
     name: "ESLint: JS/TS >> Horizon Theme"
@@ -105,13 +144,21 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
-    - uses: actions/cache@v2
+    - name: Cache pnpm modules
+      uses: actions/cache@v3
       with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        path: ~/.pnpm-store
+        key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-
+
+    - uses: pnpm/action-setup@v2.2.1
+      with:
+        version: 6.32.1
+    - run: pnpm install
     - name: 'Horizon Theme'
       working-directory: ${{ env.horizon }}
-      run: yarn lint:js
+      run: pnpm run lint:js
 
   js_worker:
     name: "ESLint: JS/TS >> Transpilation Worker"
@@ -122,14 +169,22 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
-    - uses: actions/cache@v2
+    - name: Cache pnpm modules
+      uses: actions/cache@v3
       with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        path: ~/.pnpm-store
+        key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-
+
+    - uses: pnpm/action-setup@v2.2.1
+      with:
+        version: 6.32.1
+    - run: pnpm install
 
     - name: 'Transpilation'
       working-directory: ${{ env.sw }}
-      run: yarn lint:js
+      run: pnpm run lint:js
 
   templates:
     name: "Templates"
@@ -140,11 +195,19 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
-    - uses: actions/cache@v2
+    - name: Cache pnpm modules
+      uses: actions/cache@v3
       with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-    - run: yarn lint:hbs
+        path: ~/.pnpm-store
+        key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-
+
+    - uses: pnpm/action-setup@v2.2.1
+      with:
+        version: 6.32.1
+    - run: pnpm install
+    - run: pnpm run lint:hbs
       working-directory: ${{ env.app }}
 
   types:
@@ -156,20 +219,29 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
-    - uses: actions/cache@v2
+
+    - name: Cache pnpm modules
+      uses: actions/cache@v3
       with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        path: ~/.pnpm-store
+        key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-
+
+    - uses: pnpm/action-setup@v2.2.1
+      with:
+        version: 6.32.1
+    - run: pnpm install
     - name: "App Types"
-      run: yarn check:types
+      run: pnpm run check:types
       working-directory: ${{ env.app }}
     - name: "Monaco configuration Types"
-      run: yarn check:types
+      run: pnpm run check:types
       working-directory: ${{ env.monaco }}
     - name: "Code Mirror configuration Types"
-      run: yarn check:types
+      run: pnpm run check:types
       working-directory: ${{ env.codemirror }}
     - name: "Horizon Types"
-      run: yarn check:types
+      run: pnpm run check:types
       working-directory: ${{ env.horizon }}
 
