@@ -17,7 +17,12 @@
         "^build"
       ]
     },
-    "lint": {},
+    "lint": {
+      "dependsOn": [
+        "^lint:js",
+        "^lint:hbs"
+      ]
+    },
     "lint:fix": {},
     "test": {
       "dependsOn": [
