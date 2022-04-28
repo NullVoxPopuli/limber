@@ -5,7 +5,7 @@ import { fn } from '@ember/helper';
 import { inject as service } from '@ember/service';
 import { waitFor } from '@ember/test-waiters';
 
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import Icon from '../icon';
 
 import { getFromLabel, NAMES } from 'limber/snippets';
 import Menu from './menu';
@@ -31,9 +31,9 @@ export default class DemoSelect extends Component {
         <span class="grid grid-flow-col gap-2 items-center">
           Select demo
           {{#if menu.isOpen}}
-            <FaIcon @icon="angle-up" class="min-w-3" />
+            <Icon @name="solid/angle-up" class="min-w-3" />
           {{else}}
-            <FaIcon @icon="angle-right" class="min-w-3" />
+            <Icon @name="solid/angle-right" class="min-w-3" />
           {{/if}}
         </span>
       </:trigger>

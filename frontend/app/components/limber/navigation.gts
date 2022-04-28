@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import Icon from '../icon';
 
 import isEditing from 'limber/helpers/is-editing';
 import DemoSelect from './demo-select';
@@ -62,7 +62,7 @@ class TabLink extends Component<{href: string}> {
       <TabLink @href="/ember" class="relative">
         Ember
         <span class="z-10 absolute right-[-5px] inline-block">
-          <FaIcon @icon="caret-right" @transform="grow-6"/>
+          <Icon @name="solid/caret-right" @size="6x"/>
         </span>
       </TabLink>
 
@@ -75,7 +75,7 @@ class TabLink extends Component<{href: string}> {
           @href="/"
           class="flex gap-2 items-center border border-2"
         >
-          <FaIcon @icon="pencil" @transform="grow-4"/>
+          <Icon @name="solid/pencil" @size="4x" />
           <span>Edit</span>
         </TabLink>
       {{/unless}}

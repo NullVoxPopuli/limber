@@ -1,4 +1,4 @@
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import Icon from '../icon';
 
 import ExternalLink from '../external-link';
 import DemoSelect from './demo-select';
@@ -12,10 +12,10 @@ import DemoSelect from './demo-select';
         target="_blank"
         rel="noreferrer noopener"
       >
-        <FaIcon @icon="ember" @prefix="fab" @size="3x" class="-mb-3 -mt-2" />
+        <Icon @name="brands/ember" @size="3x" class="-mb-3 -mt-2" />
         <span class="sr-only">Ember.JS homepage</span>
       </a>
-      <FaIcon @icon="markdown" @prefix="fab" @size="2x" class="-mb-2 -mt-2" />
+      <Icon @name="brands/markdown" @size="2x" class="-mb-2 -mt-2" />
     </h1>
 
     <nav class='text-white mt-1 flex gap-2 items-baseline'>
