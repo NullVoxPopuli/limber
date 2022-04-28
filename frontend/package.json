@@ -35,6 +35,7 @@
     "test:ember": "ember test"
   },
   "devDependencies": {
+    "@codemirror/view": "0.19.47",
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.6.0",
     "@embroider/compat": "^1.5.0",
@@ -45,8 +46,6 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.0",
     "@fortawesome/free-solid-svg-icons": "^6.1.0",
     "@nullvoxpopuli/eslint-configs": "2.2.5",
-    "@tailwindcss/jit": "^0.1.18",
-    "@tailwindcss/typography": "^0.5.2",
     "@types/babel__core": "^7.1.18",
     "@types/codemirror": "5.60.5",
     "@types/common-tags": "^1.8.1",
@@ -75,6 +74,8 @@
     "@types/mdast": "^3.0.10",
     "@types/rsvp": "^4.0.4",
     "@types/unist": "^2.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.18.0",
+    "@typescript-eslint/parser": "^5.0.0",
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-merge-trees": "^4.2.0",
     "build-time-reporter-webpack-plugin": "^1.3.0",
@@ -129,6 +130,8 @@
     "extends": "../package.json"
   },
   "dependencies": {
+    "@ember/test-waiters": "^3.0.1",
+    "@embroider/macros": "1.6.0",
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
     "@nullvoxpopuli/horizon-theme": "*",

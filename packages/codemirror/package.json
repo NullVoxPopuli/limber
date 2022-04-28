@@ -16,27 +16,34 @@
     "lint:js:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@codemirror/autocomplete": "0.19.14",
-    "@codemirror/basic-setup": "0.19.1",
-    "@codemirror/closebrackets": "0.19.1",
+    "@codemirror/autocomplete": "0.19.15",
+    "@codemirror/basic-setup": "0.19.3",
+    "@codemirror/closebrackets": "0.19.2",
     "@codemirror/commands": "0.19.8",
     "@codemirror/comment": "0.19.1",
-    "@codemirror/highlight": "0.19.7",
+    "@codemirror/fold": "^0.19.3",
+    "@codemirror/highlight": "0.19.8",
     "@codemirror/history": "0.19.2",
     "@codemirror/lang-javascript": "0.19.7",
     "@codemirror/lang-markdown": "0.19.6",
-    "@codemirror/search": "0.19.9",
+    "@codemirror/matchbrackets": "^0.19.4",
+    "@codemirror/rectangular-selection": "^0.19.2",
+    "@codemirror/search": "0.19.10",
     "@codemirror/state": "0.19.9",
     "@codemirror/text": "0.19.6",
-    "@codemirror/view": "0.19.47",
     "@nullvoxpopuli/horizon-theme": "*",
     "broccoli-funnel": "^3.0.8"
   },
   "devDependencies": {
+    "@codemirror/view": "0.19.48",
     "@nullvoxpopuli/eslint-configs": "2.2.5",
+    "@typescript-eslint/eslint-plugin": "^5.18.0",
+    "@typescript-eslint/parser": "^5.0.0",
     "esbuild": "0.14.27",
     "esbuild-plugin-alias": "^0.2.1",
-    "recursive-copy": "^2.0.14"
+    "eslint": "^7.32.0",
+    "recursive-copy": "^2.0.14",
+    "typescript": "^4.6.2"
   },
   "engines": {
     "node": ">= v16.14.1"
