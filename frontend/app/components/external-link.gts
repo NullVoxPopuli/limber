@@ -1,4 +1,4 @@
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import Icon from './icon';
 
 <template>
   <a
@@ -10,6 +10,6 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
   >
     <span>{{yield}}</span>
 
-    <FaIcon @icon="external-link-alt" />
+    <Icon @name="solid/arrow-up-right-from-square" />
   </a>
 </template>

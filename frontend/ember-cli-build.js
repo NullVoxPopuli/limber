@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const yn = require('yn');
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
@@ -44,6 +45,15 @@ module.exports = function (defaults) {
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     extraPublicTrees: [
+      // Icons
+      require('@html-next/svg-icon-optimizer')({
+        svgPaths: [
+          path.join(
+            path.dirname(require.resolve('@fortawesome/fontawesome-free/package.json')),
+            'svgs'
+          ),
+        ],
+      }),
       // Mobile Editor
       require('@nullvoxpopuli/limber-codemirror/broccoli-funnel')(),
       // Desktop Editor

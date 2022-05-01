@@ -1,7 +1,7 @@
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier'
 
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import Icon from 'limber/components/icon';
 
 import State from './state';
 
@@ -43,9 +43,9 @@ const Controls = <template>
         {{on 'click' (fn @send 'MAXIMIZE')}}
       >
         {{#if @isMaximized}}
-          <FaIcon @icon='columns' />
+          <Icon @name='solid/table-columns' />
         {{else}}
-          <FaIcon @icon="window-maximize" @prefix='far' />
+          <Icon @name="regular/window-maximize" />
         {{/if}}
       </Button>
       <Button
@@ -53,9 +53,9 @@ const Controls = <template>
         {{on 'click' (fn @send 'MINIMIZE')}}
       >
         {{#if @isMinimized}}
-          <FaIcon @icon='columns' />
+          <Icon @name='solid/table-columns' />
         {{else}}
-          <FaIcon @icon='window-minimize' @prefix='far' />
+          <Icon @name='regular/window-minimize' />
         {{/if}}
       </Button>
     </div>
