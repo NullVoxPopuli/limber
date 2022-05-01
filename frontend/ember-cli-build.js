@@ -90,6 +90,9 @@ module.exports = function (defaults) {
     // staticAppPaths: [],
     // splitAtRoutes: [],
     implicitModulesStrategy: 'packageNames',
+    /**
+     * Most of this config is to support monaco. *oof*
+     */
     packagerOptions: {
       webpackConfig: {
         devtool: 'source-map',
@@ -121,6 +124,9 @@ module.exports = function (defaults) {
         resolve: {
           alias: {
             path: 'path-browserify',
+          },
+          fallback: {
+            path: require.resolve('path-browserify'),
           },
         },
         optimization: {

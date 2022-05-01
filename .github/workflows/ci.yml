@@ -192,7 +192,7 @@ jobs:
         echo "pnpm: $( pnpm --version )"
 
     - name: Test
-      run: pnpm run test:ember --path ./dist/
+      run: pnpm run test:ember -- --path ./dist/
       working-directory: ${{ env.app }}
       env:
         CI_BROWSER: ${{ matrix.ci_browser }}
