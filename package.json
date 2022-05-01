@@ -8,10 +8,11 @@
     "tests"
   ],
   "scripts": {
-    "predeploy": "yarn build && yarn workspace limber build",
-    "build": "yarn turbo run build --filter=limber^...",
-    "lint:fix": "yarn turbo run lint:fix",
-    "start": "yarn turbo run start --filter=limber"
+    "predeploy": "turbo run build --filter=limber",
+    "build": "turbo run build --filter=limber^...",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "start": "turbo run start --filter=limber"
   },
   "volta": {
     "node": "16.14.1",
@@ -20,16 +21,17 @@
   },
   "devDependencies": {
     "concurrently": "^7.0.0",
-    "turbo": "^1.2.0"
+    "turbo": "^1.2.5"
   },
   "resolutions": {
     "ember-auto-import": "^2.4.0",
     "@ember/render-modifiers": "2.0.4",
-    "@embroider/addon-shim": "1.5.0",
-    "@embroider/core": "1.5.0",
-    "@embroider/util": "1.5.0",
-    "@embroider/macros": "1.5.0",
+    "@embroider/addon-shim": "1.6.0",
+    "@embroider/core": "1.6.0",
+    "@embroider/util": "1.6.0",
+    "@embroider/macros": "1.6.0",
+    "@types/eslint": "^7.0.0",
     "xstate": "4.30.6"
   },
-  "packageManager": "yarn@1.22.17"
+  "packageManager": "pnpm@6.32.4"
 }

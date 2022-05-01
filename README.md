@@ -9,17 +9,13 @@ TAILWIND_MODE=watch ember s
 
 ## Running / Development
 
-`yarn build` to build preconfigured editors, monaco theme, etc
-This only needs to be run once per change to the non-app packages.
-(watch mode could be configured in the future (PRs welcome))
-
 ### Standalone
 
 This build converts ES Modules to CommonJS so that the can be eval'd
 
-1. `yarn start` to start the app.
+1. `pnpm run start` to start the app.
 
-When `yarn build` is ran, the app will refresh
+When `pnpm run build` is ran, the app will refresh
 
 ### With experimental service worker and import maps
 
