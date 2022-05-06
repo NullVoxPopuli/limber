@@ -9,6 +9,8 @@
   ],
   "scripts": {
     "daemon": "pm2 start ./launch-daemon.sh",
+    "daemon:status": "pm2 ls",
+    "daemon:stop": "pm2 stop ./launch-daemon.sh",
     "reset": "git clean -Xfd && pnpm install",
     "predeploy": "turbo run build --filter=limber",
     "build": "turbo run build --filter=limber^...",
