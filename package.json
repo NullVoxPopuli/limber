@@ -8,6 +8,7 @@
     "tests"
   ],
   "scripts": {
+    "daemon": "pm2 start ./launch-daemon.sh",
     "predeploy": "turbo run build --filter=limber",
     "build": "turbo run build --filter=limber^...",
     "lint": "turbo run lint",
