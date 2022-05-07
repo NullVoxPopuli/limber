@@ -2,21 +2,7 @@ import type { ExtractedCode } from '../markdown-to-ember';
 
 let isRegistered = false;
 
-export async function compile(js: ExtractedCode[]) {
-  let moduleInfos = await compileModules(js);
-
-  let missing = moduleInfos.filter(({ importPath }) => !importPath);
-
-  if (missing.length > 0) {
-    let first = missing[0];
-
-    throw new Error(`Component, ${first.name}, failed to compile`);
-  }
-
-  return moduleInfos;
-}
-
-export async function compileModules(js: ExtractedCode[]) {
+export async function compile(js: ExtractedCode) {
   if (!isRegistered) {
     await installImportMap();
     await setupServiceWorker();
@@ -24,21 +10,17 @@ export async function compileModules(js: ExtractedCode[]) {
     isRegistered = true;
   }
 
-  let responses = await Promise.all(
-    js.map(async ({ name, code }) => {
-      let qps = new URLSearchParams();
+  let { name, code } = js;
 
-      qps.set('n', name);
-      qps.set('q', code);
+  let qps = new URLSearchParams();
 
-      let response = await fetch(`/compile-sw?${qps}`);
-      let { importPath } = await response.json();
+  qps.set('n', name);
+  qps.set('q', code);
 
-      return { name, importPath };
-    })
-  );
+  let response = await fetch(`/compile-sw?${qps}`);
+  let { importPath } = await response.json();
 
-  return responses;
+  return { name, importPath };
 }
 
 async function installImportMap() {

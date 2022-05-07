@@ -1,19 +1,18 @@
-// import config from 'limber/config/environment';
+import { compileJS as cjs } from 'ember-repl';
+import config from 'limber/config/environment';
 
-// import { compile as worker } from './worker';
+import { compile as worker } from './worker';
 
-// import type { ExtractedCode } from '../markdown-to-ember';
-// import type { AsyncReturnType } from 'type-fest';
+import type { AsyncReturnType } from 'type-fest';
 
-// type CompiledViaWorker = AsyncReturnType<typeof worker>;
-// type CompiledViaCJS = AsyncReturnType<typeof cjs>;
-// export type CompileOutput = CompiledViaCJS[0] | CompiledViaWorker[0];
+type CompiledViaWorker = AsyncReturnType<typeof worker>;
+type CompiledViaCJS = AsyncReturnType<typeof cjs>;
+export type CompileOutput = CompiledViaCJS | CompiledViaWorker;
 
-// export async function compileJS(_id: string, js: ExtractedCode[]): Promise<CompileOutput[]> {
-//   if (config.SERVICE_WORKER) {
-//     return worker(js);
-//   }
+export async function compileJS(js: string): Promise<CompileOutput[]> {
+  if (config.SERVICE_WORKER) {
+    return worker(js);
+  }
 
-//   // use compileAll from -compile/index
-//   // return cjs(js);
-// }
+  return cjs(js);
+}

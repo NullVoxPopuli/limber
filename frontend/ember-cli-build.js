@@ -44,6 +44,8 @@ module.exports = function (defaults) {
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     extraPublicTrees: [
+      // Service Worker / transpilation
+      require('@nullvoxpopuli/limber-transpilation/broccoli-funnel')(),
       // Mobile Editor
       require('@nullvoxpopuli/limber-codemirror/broccoli-funnel')(),
       // Desktop Editor
