@@ -8,15 +8,15 @@
     "tests"
   ],
   "scripts": {
-    "daemon": "pm2 start ./launch-daemon.sh",
+    "daemon": ". ./.env.turbo && (pm2 start ./launch-daemon.sh 2> /dev/null || true)",
     "daemon:status": "pm2 ls",
     "daemon:stop": "pm2 stop ./launch-daemon.sh",
     "reset": "git clean -Xfd && pnpm install",
     "predeploy": "turbo run build --filter=limber",
-    "build": "turbo run build --filter=limber^...",
+    "build": "set -a; . ./.env.turbo && pnpm run daemon && turbo run build --filter=limber^...",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
-    "start": "turbo run start --filter=limber"
+    "start": ". ./.env.turbo && pnpm run daemon && turbo run start --filter=limber"
   },
   "volta": {
     "node": "16.14.1",
