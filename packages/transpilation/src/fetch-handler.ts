@@ -83,7 +83,8 @@ async function compile(url: URL) {
     );
   }
 
-  let compiled = await compileGJS({ name, code });
+  // let compiled = await compileGJS({ name, code });
+  let compiled = '';
 
   COMPILE_CACHE.set(modulePath, compiled);
 

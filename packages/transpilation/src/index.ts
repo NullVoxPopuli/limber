@@ -43,6 +43,8 @@ worker.addEventListener('install', () => {
 
 worker.addEventListener('activate', (event) => {
   // Claim any clients immediately, so that the page will be under SW control without reloading.
+  //
+  // https://developer.mozilla.org/en-US/docs/Web/API/Clients/claim
   event.waitUntil(worker.clients.claim());
   console.info(`\
     Service Worker installed successfully!
