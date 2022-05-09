@@ -18,6 +18,18 @@ module.exports = function (defaults) {
   `);
 
   let config = {
+    contentFor(_, __, type) {
+      if (type === 'head' && isProduction) {
+        return `
+          <script
+            src='https://js.sentry-cdn.com/cbe554dff4374619833a5dcbdaf7407c.min.js'
+            crossorigin="anonymous">
+          </script>
+        `
+      }
+
+      this._super.call(this, ...arguments);
+    },
     'ember-cli-terser': {
       enabled: MINIFY,
     },
@@ -44,6 +56,8 @@ module.exports = function (defaults) {
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     extraPublicTrees: [
+      // Service Worker / transpilation
+      require('@nullvoxpopuli/limber-transpilation/broccoli-funnel')(),
       // Mobile Editor
       require('@nullvoxpopuli/limber-codemirror/broccoli-funnel')(),
       // Desktop Editor

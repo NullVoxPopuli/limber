@@ -1,97 +1,114 @@
-// import { compileGJS } from './babel';
+import { compileGJS } from './babel';
 
-// // const CACHE_NAME = 'babel-compilation-and-module-service';
-// const URLS = ['/compile-sw', /^\/module-sw\//];
+// const CACHE_NAME = 'babel-compilation-and-module-service';
+const URLS = ['/compile-sw', /^\/module-sw\//, '/populate-sw'];
 
-// const COMPILE_CACHE = new Map();
+const COMPILE_CACHE = new Map();
+let REQUIRE_JS_LIST: Set<string>;
 
-// export async function handleFetch(event: FetchEvent): Promise<Response> {
-//   const url = new URL(event.request.url);
+export async function handleFetch(event: FetchEvent): Promise<Response> {
+  const url = new URL(event.request.url);
 
-//   console.info('handleFetch', url.pathname);
+  if (!URLS.some((matcher) => url.pathname.match(matcher))) {
+    return fetch(event.request);
+  }
 
-//   if (!URLS.some((matcher) => url.pathname.match(matcher))) {
-//     return fetch(event.request);
-//   }
+  console.info('handleFetch', url.pathname);
 
-//   if (COMPILE_CACHE.has(url.pathname)) {
-//     return moduleResponse(url.pathname);
-//   }
+  if (COMPILE_CACHE.has(url.pathname)) {
+    return moduleResponse(url.pathname);
+  }
 
-//   if (url.pathname === '/compile-sw') {
-//     return maybe(() => compile(url));
-//   }
+  if (url.pathname === '/populate-sw') {
+    return maybe(() => populateRequireJSModules(event));
+  }
 
-//   return error(`Unhandled URL: ${url.pathname}`);
-// }
+  if (url.pathname === '/compile-sw') {
+    return maybe(() => compile(url));
+  }
 
-// async function maybe<Return>(op: () => Return | Promise<Return>) {
-//   try {
-//     return await op();
-//   } catch (e) {
-//     return error(e);
-//   }
-// }
+  return error(`Unhandled URL: ${url.pathname}`);
+}
 
-// function error(msg: Error | string, status = 500) {
-//   let payload: string | Error | Record<string, unknown>;
+async function maybe<Return>(op: () => Return | Promise<Return>) {
+  try {
+    return await op();
+  } catch (e) {
+    return error(e);
+  }
+}
 
-//   if (typeof msg === 'string') {
-//     payload = msg;
-//   } else if (msg instanceof TypeError) {
-//     payload = {
-//       ...msg,
-//       name: msg.name,
-//       message: msg.message,
-//       stack: msg.stack,
-//     };
-//   } else {
-//     payload = msg;
-//   }
+function error(msg: Error | string, status = 500) {
+  let payload: string | Error | Record<string, unknown>;
 
-//   return new Response(JSON.stringify({ error: payload }), {
-//     status,
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//   });
-// }
+  if (typeof msg === 'string') {
+    payload = msg;
+  } else if (msg instanceof TypeError) {
+    payload = {
+      ...msg,
+      name: msg.name,
+      message: msg.message,
+      stack: msg.stack,
+    };
+  } else {
+    payload = msg;
+  }
 
-// function moduleResponse(pathName: string) {
-//   let code = COMPILE_CACHE.get(pathName);
+  return new Response(JSON.stringify({ error: payload }), {
+    status,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+}
 
-//   if (!code) {
-//     throw new Error(`Code has not been compiled. call /compile-sw with the code`);
-//   }
+async function populateRequireJSModules(event: FetchEvent) {
+  let list = await event.request.json();
 
-//   return new Response(code, {
-//     headers: {
-//       'Content-Type': 'application/javascript',
-//     },
-//   });
-// }
+  REQUIRE_JS_LIST = new Set(list);
 
-// async function compile(url: URL) {
-//   let qps = new URLSearchParams(url.search);
-//   let name = qps.get('n');
-//   let code = qps.get('q');
-//   let modulePath = `/module-sw/${name}.js`;
+  return new Response('{ "status": "done" }', {
+    headers: {
+      'Content-Type': 'application/javascript',
+    },
+  });
+}
 
-//   if (!name || !code) {
-//     throw new Error(
-//       `Both name and code are required. Make sure than the n and q query params are specified`
-//     );
-//   }
+function moduleResponse(pathName: string) {
+  let code = COMPILE_CACHE.get(pathName);
 
-//   let compiled = await compileGJS({ name, code });
+  if (!code) {
+    throw new Error(`Code has not been compiled. call /compile-sw with the code`);
+  }
 
-//   COMPILE_CACHE.set(modulePath, compiled);
+  return new Response(code, {
+    headers: {
+      'Content-Type': 'application/javascript',
+    },
+  });
+}
 
-//   let response = new Response(JSON.stringify({ importPath: modulePath }), {
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//   });
+async function compile(url: URL) {
+  let qps = new URLSearchParams(url.search);
+  let name = qps.get('n');
+  let code = qps.get('q');
+  let modulePath = `/module-sw/${name}.js`;
 
-//   return response;
-// }
+  if (!name || !code) {
+    throw new Error(
+      `Both name and code are required. Make sure than the n and q query params are specified`
+    );
+  }
+
+  let compiled = await compileGJS({ name, code }, REQUIRE_JS_LIST);
+
+  COMPILE_CACHE.set(modulePath, compiled);
+
+  let response = new Response(JSON.stringify({ importPath: modulePath }), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return response;
+}

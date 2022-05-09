@@ -1,62 +1,30 @@
-'use strict';
-
 const path = require('path');
-const os = require('os');
-const fs = require('fs');
 const esbuild = require('esbuild');
 
-const appFolder = path.join(__dirname, '..', 'app');
-const workerRoot = path.join(appFolder, 'workers');
+const entry = path.join(__dirname, 'src', 'index.ts');
+const buildDir = path.join(__dirname, 'dist');
 
-function detectWorkers() {
-  let workers = {};
-  let dir = fs.readdirSync(workerRoot);
+const isWatching = process.argv.includes('--watch')
+const isProduction = !isWatching;
 
-  for (let i = 0; i < dir.length; i++) {
-    let name = dir[i];
-
-    workers[name] = path.join(workerRoot, name, 'index.js');
-  }
-
-  return workers;
-}
-
-function configureWorkerTree({ isProduction, buildDir }) {
-  return ([name, entryPath]) => {
-    esbuild.buildSync({
-      loader: { '.ts': 'ts', '.js': 'js' },
-      entryPoints: [entryPath],
-      bundle: true,
-      outfile: path.join(buildDir, `${name}.js`),
-      format: 'esm',
-      minify: isProduction,
-      sourcemap: !isProduction,
-      // incremental: true,
-      // tsconfig: path.join(appFolder, 'tsconfig.json'),
-    });
-  };
-}
-
-function buildWorkers(env) {
-  let inputs = detectWorkers();
-  let workerBuilder = configureWorkerTree(env);
-
-  // separate build from ember, will be detached, won't watch
-  Object.entries(inputs).map(workerBuilder);
-}
-
-function workersFunnel({ isProduction }) {
-  let buildDir = fs.mkdtempSync(path.join(os.tmpdir(), 'limber--workers'));
-
-  let options = {
-    isProduction,
-    buildDir,
-  };
-
-  // outputs {buildDir}/highlighting.js
-  buildWorkers(options);
-}
-
-module.exports = {
-  workersFunnel,
-};
+esbuild.build({
+  loader: { '.ts': 'ts', '.js': 'js' },
+  entryPoints: [entry],
+  bundle: true,
+  outfile: path.join(buildDir, `transpile.js`),
+  format: 'esm',
+  minify: isProduction,
+  sourcemap: isProduction,
+  ...(
+    isWatching ? {
+      incremental: true,
+      watch: {
+        onRebuild(error, result) {
+          if (error) console.error('watch build failed:', error)
+          else console.log('watch build succeeded:', result)
+        },
+      },
+    }
+      : {}
+  )
+});

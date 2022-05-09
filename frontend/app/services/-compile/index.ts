@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import { compileHBS, compileJS, invocationName } from 'ember-repl';
+import { compileHBS, invocationName } from 'ember-repl';
+import { compileJS } from './babel';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import CopyMenu from 'limber/components/limber/copy-menu';
@@ -19,14 +20,14 @@ interface CompilationResult {
   errorLine?: number;
 }
 
-export async function compileAll(js: { code: string }[]) {
+export async function compileAll(js: ExtractedCode[]) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   let { COMPONENT_MAP } = await import('/ember-repl/component-map.js');
 
   let modules = await Promise.all(
-    js.map(async ({ code }) => {
-      return await compileJS(code, COMPONENT_MAP);
+    js.map(async (info) => {
+      return await compileJS(info);
     })
   );
 
@@ -71,13 +72,13 @@ export async function compile(glimdownInput: string): Promise<CompilationResult>
           compiled.map(async (info) => {
             // using web worker + import maps is not available yet (need firefox support)
             // (and to somehow be able to point at npm)
-            //
-            // if ('importPath' in info) {
-            //   return scope.push({
-            //     moduleName: name,
-            //     component: await import(/* webpackIgnore: true */ info.importPath),
-            //   });
-            // }
+
+            if ('importPath' in info) {
+              return scope.push({
+                moduleName: name,
+                component: await import(/* webpackIgnore: true */ info.importPath),
+              });
+            }
 
             return scope.push(info);
           })
@@ -88,9 +89,6 @@ export async function compile(glimdownInput: string): Promise<CompilationResult>
         scope.push(compileHBS(code));
       }
     } catch (error) {
-      console.info({ scope });
-      console.error(error);
-
       return { error, rootTemplate };
     }
   }
