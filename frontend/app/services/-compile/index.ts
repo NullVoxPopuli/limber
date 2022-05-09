@@ -70,15 +70,15 @@ export async function compile(glimdownInput: string): Promise<CompilationResult>
 
         await Promise.all(
           compiled.map(async (info) => {
-             // using web worker + import maps is not available yet (need firefox support)
-             // (and to somehow be able to point at npm)
+            // using web worker + import maps is not available yet (need firefox support)
+            // (and to somehow be able to point at npm)
 
-             if ('importPath' in info) {
-               return scope.push({
-                 moduleName: name,
-                 component: await import(/* webpackIgnore: true */ info.importPath),
-               });
-             }
+            if ('importPath' in info) {
+              return scope.push({
+                moduleName: name,
+                component: await import(/* webpackIgnore: true */ info.importPath),
+              });
+            }
 
             return scope.push(info);
           })
@@ -89,8 +89,6 @@ export async function compile(glimdownInput: string): Promise<CompilationResult>
         scope.push(compileHBS(code));
       }
     } catch (error) {
-      console.error(error);
-
       return { error, rootTemplate };
     }
   }

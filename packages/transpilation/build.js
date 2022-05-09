@@ -11,7 +11,7 @@ esbuild.build({
   loader: { '.ts': 'ts', '.js': 'js' },
   entryPoints: [entry],
   bundle: true,
-  outfile: path.join(buildDir, `limber-worker.js`),
+  outfile: path.join(buildDir, `transpile.js`),
   format: 'esm',
   minify: isProduction,
   sourcemap: isProduction,

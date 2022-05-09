@@ -1,21 +1,26 @@
-// import { compileGJS } from './babel';
+import { compileGJS } from './babel';
 
 // const CACHE_NAME = 'babel-compilation-and-module-service';
-const URLS = ['/compile-sw', /^\/module-sw\//];
+const URLS = ['/compile-sw', /^\/module-sw\//, '/populate-sw'];
 
 const COMPILE_CACHE = new Map();
+let REQUIRE_JS_LIST: Set<string>;
 
 export async function handleFetch(event: FetchEvent): Promise<Response> {
   const url = new URL(event.request.url);
-
-  console.info('handleFetch', url.pathname);
 
   if (!URLS.some((matcher) => url.pathname.match(matcher))) {
     return fetch(event.request);
   }
 
+  console.info('handleFetch', url.pathname);
+
   if (COMPILE_CACHE.has(url.pathname)) {
     return moduleResponse(url.pathname);
+  }
+
+  if (url.pathname === '/populate-sw') {
+    return maybe(() => populateRequireJSModules(event));
   }
 
   if (url.pathname === '/compile-sw') {
@@ -57,6 +62,18 @@ function error(msg: Error | string, status = 500) {
   });
 }
 
+async function populateRequireJSModules(event: FetchEvent) {
+  let list = await event.request.json();
+
+  REQUIRE_JS_LIST = new Set(list);
+
+  return new Response('{ "status": "done" }', {
+    headers: {
+      'Content-Type': 'application/javascript',
+    },
+  });
+}
+
 function moduleResponse(pathName: string) {
   let code = COMPILE_CACHE.get(pathName);
 
@@ -83,8 +100,7 @@ async function compile(url: URL) {
     );
   }
 
-  // let compiled = await compileGJS({ name, code });
-  let compiled = '';
+  let compiled = await compileGJS({ name, code }, REQUIRE_JS_LIST);
 
   COMPILE_CACHE.set(modulePath, compiled);
 

@@ -55,5 +55,7 @@ worker.addEventListener('activate', (event) => {
 });
 
 worker.addEventListener('fetch', (event) => {
-  event.respondWith(handleFetch(event));
+  let response = handleFetch(event);
+
+  event.respondWith(response);
 });

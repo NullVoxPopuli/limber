@@ -12,6 +12,7 @@ const SRC_FILES = path.join(__dirname, 'dist');
  */
 module.exports = function distWatcher() {
   return new Funnel(SRC_FILES, {
-    destDir: 'transpilation/',
+    // dist or whatever the root of the output directory is
+    destDir: '/',
   });
 };
