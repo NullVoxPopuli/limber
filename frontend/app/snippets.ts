@@ -33,6 +33,7 @@ export const ALL = [
   { label: 'Build your own REPL', path: '/samples/repl.md' },
   { label: 'Menu with focus trap', path: '/samples/menu-with-focus-trap.md' },
   { label: 'Forms', path: '/samples/forms/intro.md' },
+  { label: 'RemoteData', path: '/samples/remote-data.md' },
 ] as const;
 
 export const NAMES = ALL.map((demo) => demo.label);
