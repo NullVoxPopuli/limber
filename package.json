@@ -8,11 +8,15 @@
     "tests"
   ],
   "scripts": {
+    "daemon": ". ./.env.turbo && (pm2 start ./launch-daemon.sh 2> /dev/null || true)",
+    "daemon:status": "pm2 ls",
+    "daemon:stop": "pm2 ./launch-daemon.sh",
+    "reset": "git clean -Xfd && pnpm install",
     "predeploy": "turbo run build --filter=limber",
-    "build": "turbo run build --filter=limber^...",
+    "build": "pnpm daemon; set -a; . ./.env.turbo && turbo run build --filter=limber^...",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
-    "start": "turbo run start --filter=limber"
+    "start": "pnpm daemon; set -a; . ./.env.turbo && turbo run start --filter=limber"
   },
   "volta": {
     "node": "16.14.1",
@@ -21,7 +25,9 @@
   },
   "devDependencies": {
     "concurrently": "^7.0.0",
-    "turbo": "^1.2.5"
+    "pm2": "^5.2.0",
+    "turbo": "^1.2.9",
+    "turborepo-remote-cache": "^1.1.1"
   },
   "resolutions": {
     "ember-auto-import": "^2.4.0",
