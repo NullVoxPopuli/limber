@@ -16,7 +16,7 @@
     "build": "pnpm daemon; set -a; . ./.env.turbo && turbo run build --filter=limber^...",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
-    "start": "pnpm daemon; . ./.env.turbo && turbo run start --filter=limber"
+    "start": "pnpm daemon; set -a; . ./.env.turbo && turbo run start --filter=limber"
   },
   "volta": {
     "node": "16.14.1",
