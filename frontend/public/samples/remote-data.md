@@ -1,11 +1,12 @@
 # RemoteData
 
-`RemoteData` is a utility `Resource` from [ember-resources][gh-resources] that
-provides an easy way to interact with [fetch][mdn-fetch].
+`RemoteData` is a utility `Resource` from [ember-resources][gh-resources]
+that provides an easy way to interact with [`fetch`][mdn-fetch]
+with a pre-wired [`AbortController`][mdn-AbortController].
 
 In this example, the fetching of data from the [StarWars API][swapi] occurs
-automatically based on changes to the URL. You may change the `id` of the Person
-to fetch from the StarWars API.
+automatically based on changes to the URL.
+You may change the `id` of the Person to fetch from the StarWars API.
 
 ```gjs live
 import Component from '@glimmer/component';
@@ -54,6 +55,7 @@ Information about how Resources fit in to the next edition of Ember can be [foun
 
 [gh-resources]: https://github.com/nullvoxpopuli/ember-resources
 [mdn-fetch]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+[mdn-AbortController]: https://developer.mozilla.org/en-US/docs/Web/API/AbortController
 [docs-remote-data]: https://ember-resources.pages.dev/modules/util_remote_data
 [polaris-reactivity]: https://wycats.github.io/polaris-sketchwork/reactivity.html
 [swapi]: https://swapi.dev/
