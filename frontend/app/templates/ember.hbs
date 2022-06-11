@@ -1,16 +1,16 @@
-{{#let (service 'editor') as |context|}}
+{{#let (service "editor") as |context|}}
 
   {{#if context.errorLine}}
     <mark
-      {{positioned-n-lines-from-top context.errorLine '1rem'}}
-      class="absolute w-full opacity-40 bg-red-100">&nbsp;</mark>
+      {{positioned-n-lines-from-top context.errorLine "1rem"}}
+      class="absolute w-full opacity-40 bg-red-100"
+    >&nbsp;</mark>
   {{/if}}
 
   {{#if context.markdownToHbs}}
-    <pre
-      class="plain-light p-4"
-      {{highlighted context.markdownToHbs}}
-    ><code class="glimmer hljs">{{context.markdownToHbs}}</code></pre>
+    <pre class="plain-light p-4" {{highlighted context.markdownToHbs}}><code
+        class="glimmer hljs"
+      >{{context.markdownToHbs}}</code></pre>
   {{/if}}
 
 {{/let}}
