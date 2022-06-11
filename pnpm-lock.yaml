@@ -176,9 +176,9 @@ importers:
       '@codemirror/view': 0.19.47
       '@ember/optional-features': 2.0.0
       '@ember/test-helpers': 2.8.1_2sxeqdgobzzppyo7vkeatzxku4
-      '@embroider/compat': 1.8.0_@embroider+core@1.6.0
-      '@embroider/core': 1.6.0
-      '@embroider/webpack': 1.8.0_zs46hqhd7fofmhh6jilw4t35ma
+      '@embroider/compat': 1.8.0_@embroider+core@1.8.0
+      '@embroider/core': 1.8.0
+      '@embroider/webpack': 1.8.0_emdh6iatfl7io5bi2gdfendt5q
       '@fortawesome/ember-fontawesome': 0.3.3_rollup@2.75.6
       '@fortawesome/free-brands-svg-icons': 6.1.1
       '@fortawesome/free-regular-svg-icons': 6.1.1
@@ -2076,6 +2076,7 @@ packages:
 
   /@codemirror/closebrackets/0.19.2:
     resolution: {integrity: sha512-ClMPzPcPP0eQiDcVjtVPl6OLxgdtZSYDazsvT0AKl70V1OJva0eHgl4/6kCW3RZ0pb2n34i9nJz4eXCmK+TYDA==}
+    deprecated: As of 0.20.0, this package has been merged into @codemirror/autocomplete
     dependencies:
       '@codemirror/language': 0.19.10
       '@codemirror/rangeset': 0.19.9
@@ -2097,6 +2098,7 @@ packages:
 
   /@codemirror/comment/0.19.1:
     resolution: {integrity: sha512-uGKteBuVWAC6fW+Yt8u27DOnXMT/xV4Ekk2Z5mRsiADCZDqYvryrJd6PLL5+8t64BVyocwQwNfz1UswYS2CtFQ==}
+    deprecated: As of 0.20.0, this package has been merged into @codemirror/commands
     dependencies:
       '@codemirror/state': 0.19.9
       '@codemirror/text': 0.19.6
@@ -2125,6 +2127,7 @@ packages:
 
   /@codemirror/highlight/0.19.8:
     resolution: {integrity: sha512-v/lzuHjrYR8MN2mEJcUD6fHSTXXli9C1XGYpr+ElV6fLBIUhMTNKR3qThp611xuWfXfwDxeL7ppcbkM/MzPV3A==}
+    deprecated: As of 0.20.0, this package has been split between @lezer/highlight and @codemirror/language
     dependencies:
       '@codemirror/language': 0.19.10
       '@codemirror/rangeset': 0.19.9
@@ -2136,6 +2139,7 @@ packages:
 
   /@codemirror/history/0.19.2:
     resolution: {integrity: sha512-unhP4t3N2smzmHoo/Yio6ueWi+il8gm9VKrvi6wlcdGH5fOfVDNkmjHQ495SiR+EdOG35+3iNebSPYww0vN7ow==}
+    deprecated: As of 0.20.0, this package has been merged into @codemirror/commands
     dependencies:
       '@codemirror/state': 0.19.9
       '@codemirror/view': 0.19.48
@@ -2261,6 +2265,7 @@ packages:
 
   /@codemirror/text/0.19.6:
     resolution: {integrity: sha512-T9jnREMIygx+TPC1bOuepz18maGq/92q2a+n4qTqObKwvNMg+8cMTslb8yxeEDEq7S3kpgGWxgO1UWbQRij0dA==}
+    deprecated: As of 0.20.0, this package has been merged into @codemirror/state
 
   /@codemirror/tooltip/0.19.16:
     resolution: {integrity: sha512-zxKDHryUV5/RS45AQL+wOeN+i7/l81wK56OMnUPoTSzCWNITfxHn7BToDsjtrRKbzHqUxKYmBnn/4hPjpZ4WJQ==}
@@ -2335,8 +2340,8 @@ packages:
       ember-source: '>=3.8.0'
     dependencies:
       '@ember/test-waiters': 3.0.2
-      '@embroider/macros': 1.6.0
-      '@embroider/util': 1.6.0_ember-source@4.4.1
+      '@embroider/macros': 1.8.0
+      '@embroider/util': 1.8.0_ember-source@4.4.1
       broccoli-debug: 0.6.5
       broccoli-funnel: 3.0.8
       ember-cli-babel: 7.26.11
@@ -2359,8 +2364,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@embroider/addon-shim/1.6.0:
-    resolution: {integrity: sha512-wHXsBsDsKxF6Ftnh67SBzV0OvwCBCBlgN5IVm661ByEdDacwWzYywFpVNcNJpCUttEJPMrqB5MJK7xf/xEqihg==}
+  /@embroider/addon-shim/1.8.0:
+    resolution: {integrity: sha512-iMD9Yzx24WY0/K42if2piWzkw+BFCpqxwbPaNWFqlTbNGzzd1UnNiFhtdjXT5vTyYSQRgbQwuFcr/04Rh8qF8A==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
       '@embroider/shared-internals': 1.8.0
@@ -2384,7 +2389,7 @@ packages:
       - webpack
     dev: true
 
-  /@embroider/compat/1.8.0_@embroider+core@1.6.0:
+  /@embroider/compat/1.8.0_@embroider+core@1.8.0:
     resolution: {integrity: sha512-nlO3U5XPTM+oACcp5U3hHSSFaCseEn9q77+W+jOvQKc2djyRyLFYNFzUyUtLHVeA0nQCS0KHEfoYmroeelzmlg==}
     engines: {node: 12.* || 14.* || >= 16}
     hasBin: true
@@ -2396,7 +2401,7 @@ packages:
       '@babel/plugin-syntax-dynamic-import': 7.8.3_@babel+core@7.18.2
       '@babel/preset-env': 7.18.2_@babel+core@7.18.2
       '@babel/traverse': 7.18.2
-      '@embroider/core': 1.6.0
+      '@embroider/core': 1.8.0
       '@embroider/macros': 1.8.0
       '@embroider/shared-internals': 1.8.0
       '@types/babel__code-frame': 7.0.3
@@ -2435,8 +2440,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@embroider/core/1.6.0:
-    resolution: {integrity: sha512-VM+M09gtPu9Gg7byVyjkrGTtdKQWvgE/lodut/GJPhTq3Wnx/2ume4bKWAUTfJ9mQNF9EUiya8Sb44G5OMKJ9g==}
+  /@embroider/core/1.8.0:
+    resolution: {integrity: sha512-/eufwU/K180hmDN3bd0C9rYwjhSAj0p5EYJSR1a1ZZvd40cAJgCzUPgN7ePgjuD7B0OGsri/YwKvkB8MQ8dV1w==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
       '@babel/core': 7.18.2
@@ -2445,8 +2450,8 @@ packages:
       '@babel/plugin-transform-runtime': 7.18.2_@babel+core@7.18.2
       '@babel/runtime': 7.18.3
       '@babel/traverse': 7.18.2
-      '@embroider/macros': 1.6.0
-      '@embroider/shared-internals': 1.6.0
+      '@embroider/macros': 1.8.0
+      '@embroider/shared-internals': 1.8.0
       assert-never: 1.2.1
       babel-import-util: 1.2.2
       babel-plugin-ember-template-compilation: 1.0.2
@@ -2519,14 +2524,14 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@embroider/hbs-loader/1.8.0_zs46hqhd7fofmhh6jilw4t35ma:
+  /@embroider/hbs-loader/1.8.0_emdh6iatfl7io5bi2gdfendt5q:
     resolution: {integrity: sha512-fiRvu10UBeGzF2rmRWeR7PSw2a291t5BX1tzI5Dhsj1c1rXFvBWKhdkHWQKm662GoNzaWhlppz5HUVzMLwfeuw==}
     engines: {node: 12.* || 14.* || >= 16}
     peerDependencies:
       '@embroider/core': 1.8.0
       webpack: ^5
     dependencies:
-      '@embroider/core': 1.6.0
+      '@embroider/core': 1.8.0
       webpack: 5.73.0
     dev: true
 
@@ -2544,6 +2549,7 @@ packages:
       semver: 7.3.7
     transitivePeerDependencies:
       - supports-color
+    dev: false
 
   /@embroider/macros/1.8.0:
     resolution: {integrity: sha512-jeRoUMPbZ/ADBU0FsyBGS1UgV5vQmwIPnpbVUsJ0XcZFZq/8ZHV6Ts4yeubvH/lePnUpHaKogs4dDvGk5tpQKw==}
@@ -2588,6 +2594,7 @@ packages:
       resolve-package-path: 4.0.3
       semver: 7.3.7
       typescript-memoize: 1.1.0
+    dev: false
 
   /@embroider/shared-internals/1.8.0:
     resolution: {integrity: sha512-TsjApG80SDVZ+dxkshO4FtzwzZYupmyl1w3Bnehfbk1429dsv30K+/DhcxDFIlKXPtsvCF9mdQY3mYUs+hoLOg==}
@@ -2602,20 +2609,20 @@ packages:
       semver: 7.3.7
       typescript-memoize: 1.1.0
 
-  /@embroider/util/1.6.0_ember-source@4.4.1:
-    resolution: {integrity: sha512-oUQDAMiAATHsiNwEMH/SzNSQ/Z5wDr9f6NImsDIFLvDT6T34/p7cqR4wyfrfMRtcc1EB6PbwhZ6bXYsJ6QPWRA==}
+  /@embroider/util/1.8.0_ember-source@4.4.1:
+    resolution: {integrity: sha512-uCR8fpBBVexW1FvqEJMzI52iiEM7aYJIIJgQ3S5za+d1Je2jPH3YUVJ2RR6gAxhjYBdazRG7FbUCYvZz/6cOPA==}
     engines: {node: 12.* || 14.* || >= 16}
     peerDependencies:
       ember-source: '*'
     dependencies:
-      '@embroider/macros': 1.6.0
+      '@embroider/macros': 1.8.0
       broccoli-funnel: 3.0.8
       ember-cli-babel: 7.26.11
       ember-source: 4.4.1_dzrarqmejens5o5lr5bdn3kdtu
     transitivePeerDependencies:
       - supports-color
 
-  /@embroider/webpack/1.8.0_zs46hqhd7fofmhh6jilw4t35ma:
+  /@embroider/webpack/1.8.0_emdh6iatfl7io5bi2gdfendt5q:
     resolution: {integrity: sha512-3DE/VusALWKhHxfxdhZsjt+6Go4VbyUgRbFLUFNpxbMq3BL8dVzwxZLN6uvrjFL4j1RPyLaM0LFfyCN/TSZvQQ==}
     engines: {node: 12.* || 14.* || >= 16}
     peerDependencies:
@@ -2626,8 +2633,8 @@ packages:
       '@babel/plugin-proposal-nullish-coalescing-operator': 7.17.12_@babel+core@7.18.2
       '@babel/plugin-proposal-optional-chaining': 7.17.12_@babel+core@7.18.2
       '@embroider/babel-loader-8': 1.8.0_sljsvzqjupuhw3r5gcxnuxyequ
-      '@embroider/core': 1.6.0
-      '@embroider/hbs-loader': 1.8.0_zs46hqhd7fofmhh6jilw4t35ma
+      '@embroider/core': 1.8.0
+      '@embroider/hbs-loader': 1.8.0_emdh6iatfl7io5bi2gdfendt5q
       '@embroider/shared-internals': 1.8.0
       '@types/source-map': 0.5.7
       '@types/supports-color': 8.1.1
@@ -6893,7 +6900,7 @@ packages:
       '@babel/plugin-proposal-class-properties': 7.17.12_@babel+core@7.18.2
       '@babel/plugin-proposal-decorators': 7.18.2_@babel+core@7.18.2
       '@babel/preset-env': 7.18.2_@babel+core@7.18.2
-      '@embroider/macros': 1.6.0
+      '@embroider/macros': 1.8.0
       '@embroider/shared-internals': 1.8.0
       babel-loader: 8.2.5_dzrarqmejens5o5lr5bdn3kdtu
       babel-plugin-ember-modules-api-polyfill: 3.5.0
@@ -7487,7 +7494,7 @@ packages:
     peerDependencies:
       ember-source: ^3.8 || 4
     dependencies:
-      '@embroider/util': 1.6.0_ember-source@4.4.1
+      '@embroider/util': 1.8.0_ember-source@4.4.1
       ember-cli-babel: 7.26.11
       ember-cli-htmlbars: 6.0.1
       ember-source: 4.4.1_dzrarqmejens5o5lr5bdn3kdtu
@@ -7504,7 +7511,7 @@ packages:
     resolution: {integrity: sha512-ZUyq5ZkIuXp+ng9rCMkqBh36/V95PltL7iljStkma4+651xlAy3Z84L9WOu/uOJyVpNUxii8RJBbAySHV6c+RQ==}
     engines: {node: 12.* || >= 14}
     dependencies:
-      '@embroider/addon-shim': 1.6.0
+      '@embroider/addon-shim': 1.8.0
       focus-trap: 6.9.4
     dev: false
 
@@ -7721,8 +7728,8 @@ packages:
     dependencies:
       '@babel/runtime': 7.18.3
       '@ember/test-waiters': 3.0.2
-      '@embroider/addon-shim': 1.6.0
-      '@embroider/macros': 1.6.0
+      '@embroider/addon-shim': 1.8.0
+      '@embroider/macros': 1.8.0
       '@glimmer/tracking': 1.1.2
       ember-source: 4.4.1_dzrarqmejens5o5lr5bdn3kdtu
     transitivePeerDependencies:
@@ -14291,7 +14298,7 @@ packages:
     dev: true
 
   /type-check/0.3.2:
-    resolution: {integrity: sha1-WITKtRLPHTVeP7eE8wgEsrUg23I=}
+    resolution: {integrity: sha512-ZCmOJdvOWDBYJlzAoFkC+Q0+bUyEOS1ltgp1MGU03fqHG+dbi9tBFU2Rd9QKiDZFAYrhPh2JUf7rZRIuHRKtOg==}
     engines: {node: '>= 0.8.0'}
     dependencies:
       prelude-ls: 1.1.2
