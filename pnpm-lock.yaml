@@ -29,10 +29,10 @@ importers:
       '@embroider/core': ^1.6.0
       '@embroider/macros': 1.8.0
       '@embroider/webpack': ^1.6.0
-      '@fortawesome/ember-fontawesome': ^0.3.2
-      '@fortawesome/free-brands-svg-icons': ^6.1.0
-      '@fortawesome/free-regular-svg-icons': ^6.1.0
-      '@fortawesome/free-solid-svg-icons': ^6.1.0
+      '@fortawesome/ember-fontawesome': ^0.3.3
+      '@fortawesome/free-brands-svg-icons': ^6.1.1
+      '@fortawesome/free-regular-svg-icons': ^6.1.1
+      '@fortawesome/free-solid-svg-icons': ^6.1.1
       '@glimmer/component': ^1.1.2
       '@glimmer/tracking': ^1.1.2
       '@nullvoxpopuli/eslint-configs': 2.2.22
@@ -183,7 +183,7 @@ importers:
       '@embroider/compat': 1.6.0_@embroider+core@1.6.0
       '@embroider/core': 1.6.0
       '@embroider/webpack': 1.6.0_b88169d65c7d81f538594a5f88b6af84
-      '@fortawesome/ember-fontawesome': 0.3.2_rollup@2.73.0
+      '@fortawesome/ember-fontawesome': 0.3.3_rollup@2.73.0
       '@fortawesome/free-brands-svg-icons': 6.1.1
       '@fortawesome/free-regular-svg-icons': 6.1.1
       '@fortawesome/free-solid-svg-icons': 6.1.1
@@ -2841,11 +2841,11 @@ packages:
       - supports-color
     dev: true
 
-  /@fortawesome/ember-fontawesome/0.3.2_rollup@2.73.0:
-    resolution: {integrity: sha512-9UR8ROA2zMi4rwXEh7Li/TTSaCsi6iccZ71p5ChVb6eBFdJGEyCfLPiaCKubKb9qiYyyix0DjmTkS+f/1r4mnw==}
+  /@fortawesome/ember-fontawesome/0.3.3_rollup@2.73.0:
+    resolution: {integrity: sha512-GN9WsGGsbu68glrvuo35WTI+Dhx+ViSk51VDcqSsSJwdTEP6bv8sakn+xU4y3hT+NSS8EddzzAWXk3vsFC4c1A==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
-      '@fortawesome/fontawesome-svg-core': 1.2.36
+      '@fortawesome/fontawesome-svg-core': 1.3.0
       broccoli-file-creator: 2.1.1
       broccoli-merge-trees: 4.2.0
       broccoli-plugin: 4.0.7
@@ -2855,18 +2855,19 @@ packages:
       ember-ast-helpers: 0.3.5
       ember-cli-babel: 7.26.11
       ember-cli-htmlbars: 5.7.2
-      ember-get-config: 1.0.4
+      ember-get-config: 2.0.0
       find-yarn-workspace-root: 2.0.0
-      glob: 7.2.0
+      glob: 7.2.3
       rollup-plugin-node-resolve: 5.2.0_rollup@2.73.0
     transitivePeerDependencies:
       - rollup
       - supports-color
     dev: true
 
-  /@fortawesome/fontawesome-common-types/0.2.36:
-    resolution: {integrity: sha512-a/7BiSgobHAgBWeN7N0w+lAhInrGxksn13uK7231n2m8EDPE3BMCl9NZLTGrj9ZXfCmC6LM0QLqXidIizVQ6yg==}
+  /@fortawesome/fontawesome-common-types/0.3.0:
+    resolution: {integrity: sha512-CA3MAZBTxVsF6SkfkHXDerkhcQs0QPofy43eFdbWJJkZiq3SfiaH1msOkac59rQaqto5EqWnASboY1dBuKen5w==}
     engines: {node: '>=6'}
+    deprecated: Please upgrade to 6.1.0. https://fontawesome.com/docs/changelog/
     requiresBuild: true
     dev: true
 
@@ -2876,12 +2877,13 @@ packages:
     requiresBuild: true
     dev: true
 
-  /@fortawesome/fontawesome-svg-core/1.2.36:
-    resolution: {integrity: sha512-YUcsLQKYb6DmaJjIHdDWpBIGCcyE/W+p/LMGvjQem55Mm2XWVAP5kWTMKWLv9lwpCVjpLxPyOMOyUocP1GxrtA==}
+  /@fortawesome/fontawesome-svg-core/1.3.0:
+    resolution: {integrity: sha512-UIL6crBWhjTNQcONt96ExjUnKt1D68foe3xjEensLDclqQ6YagwCRYVQdrp/hW0ALRp/5Fv/VKw+MqTUWYYvPg==}
     engines: {node: '>=6'}
+    deprecated: Please upgrade to 6.1.0. https://fontawesome.com/docs/changelog/
     requiresBuild: true
     dependencies:
-      '@fortawesome/fontawesome-common-types': 0.2.36
+      '@fortawesome/fontawesome-common-types': 0.3.0
     dev: true
 
   /@fortawesome/free-brands-svg-icons/6.1.1:
@@ -2909,7 +2911,7 @@ packages:
     dev: true
 
   /@glimmer/compiler/0.27.0:
-    resolution: {integrity: sha1-skBCdSpTFx1cs9mpWinfwPMU7Sw=}
+    resolution: {integrity: sha512-SJUUEpkFCL+GTpEK6c2EhZQJant67ahGLF6M1xRmIsq6E+AtbHgu+y8mWvFbtpb7lx4gqNKpXSEwlHUTTuxVGw==}
     dependencies:
       '@glimmer/interfaces': 0.27.0
       '@glimmer/syntax': 0.27.0
@@ -2962,7 +2964,7 @@ packages:
     dev: true
 
   /@glimmer/interfaces/0.27.0:
-    resolution: {integrity: sha1-RzzaPIzKY2mJ+zELT/248U/65ck=}
+    resolution: {integrity: sha512-Uz9txXB0Agnac6vUOAk6uZIB7SeS/fFrdjyNsNJnge5XeojvOQs1YyIFqOhky3G7NHO/mcx3Tdt8PXggFakVtQ==}
     dependencies:
       '@glimmer/wire-format': 0.27.0
     dev: true
@@ -3018,7 +3020,7 @@ packages:
     dev: true
 
   /@glimmer/syntax/0.27.0:
-    resolution: {integrity: sha1-5TEzcnz0Zah4egfH6mYKkWievcI=}
+    resolution: {integrity: sha512-IC+JaGkfF+J3e5jUXrW4SkVAAgI6WyN4kzfJKqWEnjMAa6pB8XGEDkaaMhoMrxjfK+R0Us2PO45CWhGB3FqsKg==}
     dependencies:
       '@glimmer/interfaces': 0.27.0
       '@glimmer/util': 0.27.0
@@ -3052,7 +3054,7 @@ packages:
     dev: false
 
   /@glimmer/util/0.27.0:
-    resolution: {integrity: sha1-5uJnebS3ztiZ7Ddse5SdDxb5I4M=}
+    resolution: {integrity: sha512-GxER83ZuyEyZ5Phn86VkHcjjN/3MagK0MMr91S5t62IVSW/zyFevpaVV26YKmisDqOe4918nvwGqn543O5gGXw==}
     dev: true
 
   /@glimmer/util/0.42.2:
@@ -3097,7 +3099,7 @@ packages:
     dev: true
 
   /@glimmer/wire-format/0.27.0:
-    resolution: {integrity: sha1-HRcpgU2le5ny275xj3FFYllISxE=}
+    resolution: {integrity: sha512-gNhityUr9HODYH9GydHVk7C6NZ57MqSbdGzC5TM8VdPibtd72N3+3Zggrm12Faw4E4zTvTM1692Sz/bNwMxLNw==}
     dependencies:
       '@glimmer/util': 0.27.0
     dev: true
@@ -7443,8 +7445,8 @@ packages:
       - supports-color
     dev: false
 
-  /ember-get-config/1.0.4:
-    resolution: {integrity: sha512-WOnf1E0ceRHWy7apnmUFbKcJm2c3KOg4rNNUKNtBFCFp770tOTwv5LAYcqV4+HootPCsQYL7oFUd/0JLiZpMeg==}
+  /ember-get-config/2.0.0:
+    resolution: {integrity: sha512-FdT1iuldJZ8TRweh+wO9wcT86uVbW117aME6WCM+S0lPp282XH+3/aWVDD0hmcbBQC3aEV/Rs/vOv1mjBfeR0w==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
       '@embroider/macros': 1.8.0
@@ -10298,7 +10300,7 @@ packages:
     dev: true
 
   /is-module/1.0.0:
-    resolution: {integrity: sha1-Mlj7afeMFNW4FdZkM2tM/7ZEFZE=}
+    resolution: {integrity: sha512-51ypPSPCoTEIN9dy5Oy+h4pShgJmPCygKfyRCISBI+JoWT/2oJvK8QPxmwv7b/p239jXrm9M1mlQbyKJ5A152g==}
     dev: true
 
   /is-negative-zero/2.0.2:
@@ -12969,7 +12971,7 @@ packages:
       debug: 2.6.9
 
   /simple-html-tokenizer/0.3.0:
-    resolution: {integrity: sha1-m4tVWdgOMxpUTdE91ZOC5dDZRBE=}
+    resolution: {integrity: sha512-cuUWLyKJbCExtBmxJWhmIk/KIbMF1yOuNaansJiPEdxqitM7r7So3a1M4Sw2uqfNYWjBTiVVdJjb7vtYIaEjhw==}
     dev: true
 
   /simple-html-tokenizer/0.5.11:
