@@ -36,7 +36,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-
 
-    - uses: pnpm/action-setup@v2.2.1
+    - uses: pnpm/action-setup@v2.2.2
       with:
         version: 6.32.1
     - run: pnpm install
@@ -63,7 +63,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-
 
-    - uses: pnpm/action-setup@v2.2.1
+    - uses: pnpm/action-setup@v2.2.2
       with:
         version: 6.32.1
     - run: pnpm install
@@ -90,7 +90,7 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('node_modules/.cache/**') }}
         restore-keys: |
           ${{ runner.os }}-
-    - uses: pnpm/action-setup@v2.2.1
+    - uses: pnpm/action-setup@v2.2.2
       with:
         version: 6.32.1
     - run: pnpm install
@@ -127,7 +127,7 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('node_modules/.cache/**') }}
         restore-keys: |
           ${{ runner.os }}-
-    - uses: pnpm/action-setup@v2.2.1
+    - uses: pnpm/action-setup@v2.2.2
       with:
         version: 6.32.1
     - run: pnpm install
@@ -174,7 +174,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-
 
-    - uses: pnpm/action-setup@v2.2.1
+    - uses: pnpm/action-setup@v2.2.2
       with:
         version: 6.32.1
     - run: pnpm install
@@ -221,7 +221,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-
 
-    - uses: pnpm/action-setup@v2.2.1
+    - uses: pnpm/action-setup@v2.2.2
       with:
         version: 6.32.1
     - run: pnpm install
