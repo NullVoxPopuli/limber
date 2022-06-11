@@ -26,10 +26,6 @@
   "resolutions": {
     "ember-auto-import": "^2.4.0",
     "@ember/render-modifiers": "2.0.4",
-    "@embroider/addon-shim": "1.6.0",
-    "@embroider/core": "1.6.0",
-    "@embroider/util": "1.6.0",
-    "@embroider/macros": "1.6.0",
     "@types/eslint": "^7.0.0",
     "xstate": "4.30.6"
   },
