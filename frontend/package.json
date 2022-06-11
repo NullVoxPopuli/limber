@@ -119,7 +119,7 @@
     "type-fest": "2.13.0",
     "typescript": "^4.6.2",
     "vfile": "^4.2.1",
-    "webpack": "^5.72.1",
+    "webpack": "^5.73.0",
     "yn": "^4.0.0"
   },
   "engines": {
