@@ -40,7 +40,7 @@
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^7.32.0",
-    "@types/babel__core": "^7.1.18",
+    "@types/babel__core": "^7.1.19",
     "@types/babel__standalone": "^7.1.4",
     "@types/htmlbars-inline-precompile": "^3.0.0",
     "babel-loader": "^8.2.5",
