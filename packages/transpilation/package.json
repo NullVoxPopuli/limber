@@ -26,7 +26,7 @@
   "dependencies": {
     "@babel/standalone": "^7.18.4",
     "babel-plugin-htmlbars-inline-precompile": "^5.3.1",
-    "ember-source": "^4.2.0",
+    "ember-source": "^4.4.1",
     "path-browserify": "^1.0.1"
   },
   "devDependencies": {
