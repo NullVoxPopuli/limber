@@ -26,7 +26,7 @@
     "monaco-languages": "^2.11.1"
   },
   "devDependencies": {
-    "@nullvoxpopuli/eslint-configs": "2.2.5",
+    "@nullvoxpopuli/eslint-configs": "2.2.22",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.0.0",
     "esbuild": "0.14.27",
