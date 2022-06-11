@@ -23,7 +23,7 @@
     "concurrently": "^7.0.0",
     "turbo": "^1.2.16"
   },
-  "packageManager": "pnpm@6.32.4",
+  "packageManager": "pnpm@7.2.1",
   "pnpm": {
     "overrides": {
       "@babel/core": "~7.17.0",
