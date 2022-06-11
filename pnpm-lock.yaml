@@ -123,7 +123,7 @@ importers:
       onp: ^2.0.3
       path-browserify: ^1.0.1
       prettier: ^2.3.2
-      qunit: ^2.18.0
+      qunit: ^2.19.1
       qunit-dom: ^2.0.0
       remark-hbs: 0.4.1
       remark-html: 13.0.1
@@ -237,7 +237,7 @@ importers:
       ember-load-initializers: 2.1.2_@babel+core@7.17.9
       ember-maybe-import-regenerator: 1.0.0
       ember-page-title: 7.0.0
-      ember-qunit: 5.1.5_ghwvcws4343x37kvwwzynau2ve
+      ember-qunit: 5.1.5_pvj4g5logri3vri224wcqipsci
       ember-resolver: 8.0.3_@babel+core@7.17.9
       ember-source: 4.4.0_r35pzwvakxi7oz3ykvkd3cqx4m
       ember-template-imports: 3.0.1_ember-cli-htmlbars@6.0.1
@@ -253,7 +253,7 @@ importers:
       npm-run-all: 4.1.5
       onp: 2.0.3
       prettier: 2.6.2
-      qunit: 2.18.1
+      qunit: 2.19.1
       qunit-dom: 2.0.0
       rollup: 2.73.0
       testem-failure-only-reporter: 1.0.0
@@ -7868,7 +7868,7 @@ packages:
       ember-source: 4.4.0_r35pzwvakxi7oz3ykvkd3cqx4m
     dev: false
 
-  /ember-qunit/5.1.5_ghwvcws4343x37kvwwzynau2ve:
+  /ember-qunit/5.1.5_pvj4g5logri3vri224wcqipsci:
     resolution: {integrity: sha512-2cFA4oMygh43RtVcMaBrr086Tpdhgbn3fVZ2awLkzF/rnSN0D0PSRpd7hAD7OdBPerC/ZYRwzVyGXLoW/Zes4A==}
     engines: {node: 10.* || 12.* || >= 14.*}
     peerDependencies:
@@ -7882,7 +7882,7 @@ packages:
       ember-auto-import: 2.4.1_webpack@5.73.0
       ember-cli-babel: 7.26.11
       ember-cli-test-loader: 3.0.0
-      qunit: 2.18.1
+      qunit: 2.19.1
       resolve-package-path: 3.1.0
       silent-error: 1.1.1
       validate-peer-dependencies: 1.2.0
@@ -12678,8 +12678,8 @@ packages:
       - supports-color
     dev: true
 
-  /qunit/2.18.1:
-    resolution: {integrity: sha512-A2Adgr/DeMQOJZFVllyQi2wiGJVVXGSRRwMe39fNfuuftUYHHpGRTWUhBa8wNblunCAOUCt+1uFcg1L7NaxQTA==}
+  /qunit/2.19.1:
+    resolution: {integrity: sha512-gSGuw0vErE/rNjnlBW/JmE7NNubBlGrDPQvsug32ejYhcVFuZec9yoU0+C30+UgeCGwq6Ap89K65dMGo+kDGZQ==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
