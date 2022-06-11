@@ -103,7 +103,7 @@ importers:
       ember-qunit: ^5.1.5
       ember-repl: ^2.0.52
       ember-resolver: ^8.0.3
-      ember-resources: ^4.8.2
+      ember-resources: ^4.9.0
       ember-source: ^4.4.0
       ember-statechart-component: 3.0.1
       ember-template-imports: ^3.0.1
@@ -161,7 +161,7 @@ importers:
       ember-modifier: 3.2.7_@babel+core@7.17.9
       ember-popperjs: 3.0.0_qnbthgwcrjbxn5cvo7frwcsluu
       ember-repl: 2.0.52_r35pzwvakxi7oz3ykvkd3cqx4m
-      ember-resources: 4.8.2_egz26wxmxahc2ysi5de7kqgox4
+      ember-resources: 4.9.0_egz26wxmxahc2ysi5de7kqgox4
       ember-statechart-component: 3.0.1_fwvtesvzl236xog3aej5pbwfeq
       highlight.js: 11.5.1
       highlightjs-glimmer: 1.4.1_highlight.js@11.5.1
@@ -7943,8 +7943,8 @@ packages:
       - supports-color
     dev: true
 
-  /ember-resources/4.8.2_egz26wxmxahc2ysi5de7kqgox4:
-    resolution: {integrity: sha512-Ni4zkadhhPsIAGM974pK7gBaaajeFJmjrigKtPIFSaTdeCuNdDn99Cs0NVCZ22QSmh2L5/4tYQh8/nLHggZlaQ==}
+  /ember-resources/4.9.0_egz26wxmxahc2ysi5de7kqgox4:
+    resolution: {integrity: sha512-pmHK44RMo+DEqmhAYXL1zjqSVzYxl4SlKvggwumpbcWUYrk2s2+AIHJUKSPcIh0L/7GEpvKzn15Tn8IBO13wGQ==}
     peerDependencies:
       '@ember/test-waiters': ^3.0.0
       '@glimmer/tracking': ^1.0.0
@@ -7958,7 +7958,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.17.9
       '@ember/test-waiters': 3.0.2
-      '@embroider/addon-shim': 1.6.0
+      '@embroider/addon-shim': 1.8.0
       '@embroider/macros': 1.8.0
       '@glimmer/tracking': 1.1.2
       ember-source: 4.4.0_r35pzwvakxi7oz3ykvkd3cqx4m
@@ -10904,7 +10904,7 @@ packages:
     dev: true
 
   /js-string-escape/1.0.1:
-    resolution: {integrity: sha1-4mJbrbwNZ8dTPp7cEGjFh65BN+8=}
+    resolution: {integrity: sha512-Smw4xcfIQ5LVjAOuJCvN/zIodzA/BBSsluuoSykP+lUvScIi4U6RJLfwHet5cxFnCswUjISV8oAXaqaJDY3chg==}
     engines: {node: '>= 0.8'}
 
   /js-tokens/3.0.2:

@@ -152,7 +152,7 @@
     "ember-modifier": "^3.2.7",
     "ember-popperjs": "^3.0.0",
     "ember-repl": "^2.0.52",
-    "ember-resources": "^4.8.2",
+    "ember-resources": "^4.9.0",
     "ember-statechart-component": "3.0.1",
     "highlight.js": "^11.5.1",
     "highlightjs-glimmer": "^1.4.1",
