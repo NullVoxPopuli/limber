@@ -23,11 +23,19 @@
     "concurrently": "^7.0.0",
     "turbo": "^1.2.5"
   },
-  "resolutions": {
-    "ember-auto-import": "^2.4.0",
-    "@ember/render-modifiers": "2.0.4",
-    "@types/eslint": "^7.0.0",
-    "xstate": "4.30.6"
-  },
-  "packageManager": "pnpm@6.32.4"
+  "packageManager": "pnpm@6.32.4",
+  "pnpm": {
+    "overrides": {
+      "@babel/core": "~7.17.0",
+      "ember-auto-import": "^2.4.0",
+      "@ember/render-modifiers": "^2.0.4",
+      "@types/eslint": "^7.0.0",
+      "mustache": "^4.2.0",
+      "xstate": "4.30.6"
+    },
+    "overrides-notes": {
+       "mustache": "ember-cli -> testem -> consolidate -> mustache is ancient"
+    }
+  }
+
 }
