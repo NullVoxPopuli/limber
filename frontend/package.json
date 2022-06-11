@@ -142,7 +142,7 @@
     "@nullvoxpopuli/limber-styles": "*",
     "@nullvoxpopuli/limber-transpilation": "*",
     "@popperjs/core": "^2.11.5",
-    "browserslist": "^4.20.3",
+    "browserslist": "^4.20.4",
     "dompurify": "^2.3.8",
     "ember-auto-import": "^2.4.1",
     "ember-focus-trap": "^1.0.1",
