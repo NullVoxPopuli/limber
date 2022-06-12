@@ -386,14 +386,14 @@ importers:
       '@tailwindcss/typography': ^0.5.2
       autoprefixer: ^10.4.7
       broccoli-funnel: ^3.0.8
-      postcss: ^8.0.0
+      postcss: ^8.4.14
       tailwindcss: ^3.1.2
     dependencies:
       '@tailwindcss/typography': 0.5.2_tailwindcss@3.1.2
       broccoli-funnel: 3.0.8
     devDependencies:
-      autoprefixer: 10.4.7_postcss@8.4.12
-      postcss: 8.4.12
+      autoprefixer: 10.4.7_postcss@8.4.14
+      postcss: 8.4.14
       tailwindcss: 3.1.2
 
   packages/transpilation:
@@ -4557,7 +4557,7 @@ packages:
     hasBin: true
     dev: true
 
-  /autoprefixer/10.4.7_postcss@8.4.12:
+  /autoprefixer/10.4.7_postcss@8.4.14:
     resolution: {integrity: sha512-ypHju4Y2Oav95SipEcCcI5J7CGPuvz8oat7sUtYj3ClK44bldfvtvcxK6IEK++7rqB7YchDGzweZIBG+SD0ZAA==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
@@ -4569,7 +4569,7 @@ packages:
       fraction.js: 4.2.0
       normalize-range: 0.1.2
       picocolors: 1.0.0
-      postcss: 8.4.12
+      postcss: 8.4.14
       postcss-value-parser: 4.2.0
     dev: true
 
