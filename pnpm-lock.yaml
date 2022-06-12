@@ -128,7 +128,7 @@ importers:
       remark-hbs: 0.4.1
       remark-html: 13.0.1
       remark-parse: 9.0.0
-      rollup: ^2.73.0
+      rollup: ^2.75.6
       stringify-object: ^4.0.1
       testem-failure-only-reporter: ^1.0.0
       type-fest: 2.13.0
@@ -183,7 +183,7 @@ importers:
       '@embroider/compat': 1.6.0_@embroider+core@1.6.0
       '@embroider/core': 1.6.0
       '@embroider/webpack': 1.6.0_zs46hqhd7fofmhh6jilw4t35ma
-      '@fortawesome/ember-fontawesome': 0.3.3_rollup@2.73.0
+      '@fortawesome/ember-fontawesome': 0.3.3_rollup@2.75.6
       '@fortawesome/free-brands-svg-icons': 6.1.1
       '@fortawesome/free-regular-svg-icons': 6.1.1
       '@fortawesome/free-solid-svg-icons': 6.1.1
@@ -255,7 +255,7 @@ importers:
       prettier: 2.6.2
       qunit: 2.19.1
       qunit-dom: 2.0.0
-      rollup: 2.73.0
+      rollup: 2.75.6
       testem-failure-only-reporter: 1.0.0
       type-fest: 2.13.0
       typescript: 4.7.3
@@ -2839,7 +2839,7 @@ packages:
       - supports-color
     dev: true
 
-  /@fortawesome/ember-fontawesome/0.3.3_rollup@2.73.0:
+  /@fortawesome/ember-fontawesome/0.3.3_rollup@2.75.6:
     resolution: {integrity: sha512-GN9WsGGsbu68glrvuo35WTI+Dhx+ViSk51VDcqSsSJwdTEP6bv8sakn+xU4y3hT+NSS8EddzzAWXk3vsFC4c1A==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
@@ -2856,7 +2856,7 @@ packages:
       ember-get-config: 2.0.0
       find-yarn-workspace-root: 2.0.0
       glob: 7.2.3
-      rollup-plugin-node-resolve: 5.2.0_rollup@2.73.0
+      rollup-plugin-node-resolve: 5.2.0_rollup@2.75.6
     transitivePeerDependencies:
       - rollup
       - supports-color
@@ -12825,7 +12825,7 @@ packages:
     dependencies:
       glob: 7.2.3
 
-  /rollup-plugin-node-resolve/5.2.0_rollup@2.73.0:
+  /rollup-plugin-node-resolve/5.2.0_rollup@2.75.6:
     resolution: {integrity: sha512-jUlyaDXts7TW2CqQ4GaO5VJ4PwwaV8VUGA7+km3n6k6xtOEacf61u0VXwN80phY/evMcaS+9eIeJ9MOyDxt5Zw==}
     deprecated: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-node-resolve.
     peerDependencies:
@@ -12835,7 +12835,7 @@ packages:
       builtin-modules: 3.2.0
       is-module: 1.0.0
       resolve: 1.22.0
-      rollup: 2.73.0
+      rollup: 2.75.6
       rollup-pluginutils: 2.8.2
     dev: true
 
@@ -12854,8 +12854,8 @@ packages:
       acorn: 7.4.1
     dev: true
 
-  /rollup/2.73.0:
-    resolution: {integrity: sha512-h/UngC3S4Zt28mB3g0+2YCMegT5yoftnQplwzPqGZcKvlld5e+kT/QRmJiL+qxGyZKOYpgirWGdLyEO1b0dpLQ==}
+  /rollup/2.75.6:
+    resolution: {integrity: sha512-OEf0TgpC9vU6WGROJIk1JA3LR5vk/yvqlzxqdrE2CzzXnqKXNzbAwlWUXis8RS3ZPe7LAq+YUxsRa0l3r27MLA==}
     engines: {node: '>=10.0.0'}
     hasBin: true
     optionalDependencies:
