@@ -33,7 +33,7 @@ const handleSubmit = ( event) => {
 <template>
   <form 
     {{on 'input' handleInput}} 
-    {{on 'submit' handleSubmi}}
+    {{on 'submit' handleSubmit}}
     class="grid gap-2" 
     style="max-width: 300px"
   >
