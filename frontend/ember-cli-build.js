@@ -61,6 +61,7 @@ module.exports = function (defaults) {
         'ember-repl',
         'ember-headlessui/components/menu',
         'ember-focus-trap/modifiers/focus-trap',
+        'ember-resources',
         'ember-resources/core',
         'ember-resources/util/map',
         'ember-resources/util/function',
