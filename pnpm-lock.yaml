@@ -103,7 +103,7 @@ importers:
       ember-qunit: ^5.1.5
       ember-repl: ^2.0.52
       ember-resolver: ^8.0.3
-      ember-resources: ^4.9.0
+      ember-resources: ^5.0.0
       ember-source: ^4.4.1
       ember-statechart-component: 3.0.1
       ember-template-imports: ^3.0.1
@@ -161,7 +161,7 @@ importers:
       ember-modifier: 3.2.7_@babel+core@7.17.9
       ember-popperjs: 3.0.0_snhubtiiupynczox63thhpljcy
       ember-repl: 2.0.52_r35pzwvakxi7oz3ykvkd3cqx4m
-      ember-resources: 4.9.0_ria55n6jit46plcvzkeol3amra
+      ember-resources: 5.0.0_pgieqjlrcuugin3n74ura6fnnu
       ember-statechart-component: 3.0.1_fwvtesvzl236xog3aej5pbwfeq
       highlight.js: 11.5.1
       highlightjs-glimmer: 1.4.1_highlight.js@11.5.1
@@ -7916,15 +7916,21 @@ packages:
       - supports-color
     dev: true
 
-  /ember-resources/4.9.0_ria55n6jit46plcvzkeol3amra:
-    resolution: {integrity: sha512-pmHK44RMo+DEqmhAYXL1zjqSVzYxl4SlKvggwumpbcWUYrk2s2+AIHJUKSPcIh0L/7GEpvKzn15Tn8IBO13wGQ==}
+  /ember-resources/5.0.0_pgieqjlrcuugin3n74ura6fnnu:
+    resolution: {integrity: sha512-b4SYm9G6p+YbcxUkPZWhLra6cn45E2wQHo6CZFfyu13IRNWwe14HGVcahyXx1BjS8JnEkIjdf7F1wI79ZIp0yg==}
     peerDependencies:
       '@ember/test-waiters': ^3.0.0
-      '@glimmer/tracking': ^1.0.0
-      ember-concurrency: ^1.0.0 || ^2.0.0
-      ember-source: '>= 3.25.0'
+      '@glimmer/component': ^1.1.2
+      '@glimmer/tracking': ^1.1.2
+      '@glint/template': ^0.8.3
+      ember-concurrency: ^2.0.0
+      ember-source: '>= 3.28.0'
     peerDependenciesMeta:
       '@ember/test-waiters':
+        optional: true
+      '@glimmer/component':
+        optional: true
+      '@glint/template':
         optional: true
       ember-concurrency:
         optional: true
@@ -7933,6 +7939,7 @@ packages:
       '@ember/test-waiters': 3.0.2
       '@embroider/addon-shim': 1.8.0
       '@embroider/macros': 1.8.0
+      '@glimmer/component': 1.1.2_@babel+core@7.17.9
       '@glimmer/tracking': 1.1.2
       ember-source: 4.4.1_r35pzwvakxi7oz3ykvkd3cqx4m
     transitivePeerDependencies:
