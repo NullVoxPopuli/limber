@@ -27,6 +27,7 @@
   "pnpm": {
     "overrides": {
       "@babel/core": "~7.17.0",
+      "ember-cli-babel": "github:NullVoxPopuli/ember-cli-babel#stop-transpiling-class-properties",
       "ember-auto-import": "^2.4.0",
       "@ember/render-modifiers": "^2.0.4",
       "@types/eslint": "^7.0.0",
