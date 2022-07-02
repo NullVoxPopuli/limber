@@ -409,12 +409,12 @@ importers:
   packages/transpilation:
     specifiers:
       '@babel/core': ~7.17.0
-      '@babel/plugin-proposal-class-properties': ^7.17.12
-      '@babel/plugin-proposal-decorators': ^7.18.2
-      '@babel/plugin-transform-runtime': ^7.18.2
-      '@babel/plugin-transform-typescript': ^7.18.4
-      '@babel/standalone': ^7.18.4
-      '@babel/types': ^7.18.4
+      '@babel/plugin-proposal-class-properties': ^7.18.6
+      '@babel/plugin-proposal-decorators': ^7.18.6
+      '@babel/plugin-transform-runtime': ^7.18.6
+      '@babel/plugin-transform-typescript': ^7.18.6
+      '@babel/standalone': ^7.18.7
+      '@babel/types': ^7.18.7
       '@nullvoxpopuli/eslint-configs': 2.2.31
       '@types/babel__core': ^7.1.19
       '@types/babel__standalone': ^7.1.4
@@ -438,7 +438,7 @@ importers:
       path-browserify: 1.0.1
     devDependencies:
       '@babel/core': 7.17.9
-      '@babel/plugin-proposal-class-properties': 7.17.12_@babel+core@7.17.9
+      '@babel/plugin-proposal-class-properties': 7.18.6_@babel+core@7.17.9
       '@babel/plugin-proposal-decorators': 7.18.6_@babel+core@7.17.9
       '@babel/plugin-transform-runtime': 7.18.6_@babel+core@7.17.9
       '@babel/plugin-transform-typescript': 7.18.6_@babel+core@7.17.9
@@ -1207,6 +1207,19 @@ packages:
     dependencies:
       '@babel/core': 7.17.9
       '@babel/helper-create-class-features-plugin': 7.18.0_@babel+core@7.17.9
+      '@babel/helper-plugin-utils': 7.18.6
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@babel/plugin-proposal-class-properties/7.18.6_@babel+core@7.17.9:
+    resolution: {integrity: sha512-cumfXOF0+nzZrrN8Rf0t7M+tF6sZc7vhQwYQck9q1/5w2OExlD+b4v4RpMJFaV1Z7WcDRgO6FqvxqxGlwo+RHQ==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.17.9
+      '@babel/helper-create-class-features-plugin': 7.18.6_@babel+core@7.17.9
       '@babel/helper-plugin-utils': 7.18.6
     transitivePeerDependencies:
       - supports-color
@@ -8431,7 +8444,7 @@ packages:
     engines: {node: 10.* || >= 12.*}
     dependencies:
       resolve-package-path: 3.1.0
-      semver: 7.3.6
+      semver: 7.3.7
       silent-error: 1.1.1
     transitivePeerDependencies:
       - supports-color
@@ -13515,7 +13528,7 @@ packages:
     resolution: {integrity: sha512-/njmZ8s1wVeR6pjTZ+0nCnv8SpZNRMT2D1RLOJQESlYFDBvwpTA4KWJpZ+sBJ4+vhjILRcK7JIFdGCdxEAAitg==}
     engines: {node: '>= 0.10'}
     dependencies:
-      resolve: 1.22.0
+      resolve: 1.22.1
 
   /recursive-copy/2.0.14:
     resolution: {integrity: sha512-K8WNY8f8naTpfbA+RaXmkaQuD1IeW9EgNEfyGxSqqTQukpVtoOKros9jUqbpEsSw59YOmpd8nCBgtqJZy5nvog==}
