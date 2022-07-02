@@ -1,9 +1,21 @@
 import Shadowed from 'limber/components/shadowed';
-import Editor from 'limber/services/editor';
 
 import service from 'limber/helpers/service';
 
-<template>
+import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
+import { ModifierLike } from '@glint/template';
+
+const Target: TOC<{
+  Element: HTMLDivElement;
+  Args: {
+    editor: ModifierLike<{
+      Args: {
+        Positional: [string, (text: string) => void], 
+        Named: { setValue: (fn: (text: string) => void) => void }
+      }
+    }>
+  }
+}> = <template>
   {{#let (service 'editor') as |context|}}
     <Shadowed @omitStyles={{true}} class="border border-gray-900 overflow-hidden" ...attributes>
       <link rel="stylesheet" href="/monaco/editor.main.css">
@@ -21,3 +33,5 @@ import service from 'limber/helpers/service';
     </Shadowed>
   {{/let}}
 </template>
+
+export default Target;

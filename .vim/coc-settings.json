@@ -1,4 +1,5 @@
 {
+  "tsserver.enable": true,
   "cSpell.words": [
     "CODEMIRROR",
     "Consts",

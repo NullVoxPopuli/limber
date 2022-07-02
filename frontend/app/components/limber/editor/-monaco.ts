@@ -1,6 +1,8 @@
 import { assert } from '@ember/debug';
 
-import type { Args } from './-types';
+import { modifier } from 'ember-modifier';
+
+import type { Signature } from './-types';
 /**
  * I wish there was a way to specify types-only packages
  * while Limber uses Monaco, it's provided by the limber-monaco
@@ -11,27 +13,33 @@ import type { Args } from './-types';
  */
 import type * as monaco from 'monaco-editor';
 
-export default function installMonaco(element: HTMLElement, ...[value, updateText, named]: Args) {
-  assert(`Expected MONACO to exist`, MONACO);
+export default modifier<Signature>(
+  (element: Element, [value, updateText], named) => {
+    assert(`Expected MONACO to exist`, MONACO);
+    assert(`can only install monaco editor an an HTMLElement`, element instanceof HTMLElement);
 
-  element.innerHTML = '';
+    element.innerHTML = '';
 
-  let { editor, setText } = MONACO(element, value, updateText, named);
+    let { editor, setText } = MONACO(element, value, updateText, named);
 
-  named.setValue((text) => {
-    // changing the text this ways calls updateText for us
-    // updateText(text); // update the service / URL
-    setText(text); // update the editor
-  });
+    named.setValue((text) => {
+      // changing the text this ways calls updateText for us
+      // updateText(text); // update the service / URL
+      setText(text); // update the editor
+    });
 
-  return () => editor?.dispose();
-}
+    return () => editor?.dispose();
+  },
+  { eager: false }
+);
 
 let MONACO:
   | undefined
   | ((
       element: HTMLElement,
-      ...args: Args
+      value: Signature['Args']['Positional'][0],
+      updateText: Signature['Args']['Positional'][1],
+      named: Signature['Args']['Named']
     ) => { editor: monaco.editor.IStandaloneCodeEditor; setText: (text: string) => void });
 
 export async function setupMonaco() {

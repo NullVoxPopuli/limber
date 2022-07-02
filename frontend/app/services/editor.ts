@@ -11,8 +11,9 @@ import { getQP } from 'limber/utils/query-params';
 import { compile } from './-compile';
 
 import type RouterService from '@ember/routing/router-service';
+import type { ComponentLike } from '@glint/template';
 
-const CACHE = new Map<string, unknown>();
+const CACHE = new Map<string, ComponentLike>();
 
 export default class EditorService extends Service {
   @service declare router: RouterService;
@@ -20,7 +21,7 @@ export default class EditorService extends Service {
   errorOnLoad = getQP('e');
 
   @tracked isCompiling = false;
-  @tracked component?: unknown;
+  @tracked component?: ComponentLike;
   @tracked error: string | null = this.errorOnLoad ?? null;
   @tracked errorLine: number | null = null;
   @tracked markdownToHbs?: string;
@@ -89,9 +90,9 @@ export default class EditorService extends Service {
       this.markdownToHbs = rootTemplate;
     }
 
-    CACHE.set(id, rootComponent);
+    CACHE.set(id, rootComponent as ComponentLike);
 
-    this.component = rootComponent;
+    this.component = rootComponent as ComponentLike;
   }
 
   @action

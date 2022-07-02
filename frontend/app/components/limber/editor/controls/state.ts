@@ -1,5 +1,6 @@
 import { assign, createMachine } from 'xstate';
 
+import type { ComponentFromMachine } from 'limber/statechart-component-types';
 import type { EventObject } from 'xstate';
 
 interface HasContainer {
@@ -14,7 +15,7 @@ function isVerticalSplit() {
   return window.innerWidth >= 1024;
 }
 
-export default createMachine<HasContainer>(
+export const machine = createMachine<HasContainer>(
   {
     id: 'editor-control-state',
     initial: 'noContainer',
@@ -107,3 +108,5 @@ export default createMachine<HasContainer>(
     },
   }
 );
+
+export default machine as unknown as ComponentFromMachine<typeof machine>;

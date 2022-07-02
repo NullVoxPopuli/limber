@@ -1,8 +1,13 @@
-type PositionalArgs = [number, number];
+import { modifier } from 'ember-modifier';
 
-export default function positionFromTop(element: HTMLElement, [lines, padding]: PositionalArgs) {
-  let container = element.parentElement as Element;
-  let lineHeight = getComputedStyle(container).lineHeight;
+type PositionalArgs = [number, string];
 
-  element.setAttribute('style', `top: calc(${padding} + ${lineHeight} * ${lines - 1})`);
-}
+export default modifier(
+  (element: HTMLElement, [lines, padding]: PositionalArgs) => {
+    let container = element.parentElement as Element;
+    let lineHeight = getComputedStyle(container).lineHeight;
+
+    element.setAttribute('style', `top: calc(${padding} + ${lineHeight} * ${lines - 1})`);
+  },
+  { eager: false }
+);

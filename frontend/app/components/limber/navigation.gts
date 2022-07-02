@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
+// @ts-expect-error
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
 import isEditing from 'limber/helpers/is-editing';
@@ -10,8 +11,17 @@ import DemoSelect from './demo-select';
 
 import type RouterService from '@ember/routing/router-service';
 
+interface TabSignature {
+  Element: HTMLAnchorElement;
+  Args: {
+    href: string;
+  };
+  Blocks: {
+    default: []
+  }
+}
 
-class TabLink extends Component<{href: string}> {
+class TabLink extends Component<TabSignature> {
   @service declare router: RouterService;
 
   get isActive() {

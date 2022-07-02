@@ -1,4 +1,10 @@
-<template>
+import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
+
+export const LoadingError: TOC<{
+  Args: {
+    error?: string
+  }
+}> = <template>
   <div
     data-test-loading-error
     class="

@@ -6,7 +6,13 @@ import { assign, createMachine } from 'xstate';
 import { setupCodeMirror } from './-code-mirror';
 import { setupMonaco } from './-monaco';
 
-export default createMachine({
+import type { ComponentFromMachine } from 'limber/statechart-component-types';
+
+interface Context {
+  error?: string;
+}
+
+export const machine = createMachine<Context>({
   initial: 'waiting',
   states: {
     waiting: {
@@ -56,3 +62,5 @@ export default createMachine({
     error: {},
   },
 });
+
+export default machine as unknown as ComponentFromMachine<typeof machine>;

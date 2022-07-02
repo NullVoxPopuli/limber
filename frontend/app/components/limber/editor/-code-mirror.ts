@@ -1,28 +1,36 @@
 import { assert } from '@ember/debug';
 
-import type { Args } from './-types';
+import { modifier } from 'ember-modifier';
+
+import type { Signature } from './-types';
 import type { EditorView } from '@codemirror/view';
 
-export default function codeMirror(element: HTMLElement, ...[value, updateText, named]: Args) {
-  assert(`Expected CODEMIRROR to exist`, CODEMIRROR);
+export default modifier<Signature>(
+  (element: Element, [value, updateText], named) => {
+    assert(`Expected CODEMIRROR to exist`, CODEMIRROR);
+    assert(`can only install codemirror editor an an HTMLElement`, element instanceof HTMLElement);
 
-  element.innerHTML = '';
+    element.innerHTML = '';
 
-  let { view, setText } = CODEMIRROR(element, value, updateText, named);
+    let { view, setText } = CODEMIRROR(element, value, updateText, named);
 
-  named.setValue((text) => {
-    updateText(text); // update the service / URL
-    setText(text); // update the editor
-  });
+    named.setValue((text) => {
+      updateText(text); // update the service / URL
+      setText(text); // update the editor
+    });
 
-  return () => view.destroy();
-}
+    return () => view.destroy();
+  },
+  { eager: false }
+);
 
 let CODEMIRROR:
   | undefined
   | ((
       element: HTMLElement,
-      ...args: Args
+      value: Signature['Args']['Positional'][0],
+      updateText: Signature['Args']['Positional'][1],
+      named: Signature['Args']['Named']
     ) => { view: EditorView; setText: (text: string) => void });
 
 export async function setupCodeMirror() {

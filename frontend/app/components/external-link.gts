@@ -1,6 +1,15 @@
+// @ts-expect-error
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
-<template>
+import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
+
+
+const ExternalLink: TOC<{
+  Element: HTMLAnchorElement;
+  Blocks: {
+    'default': []
+  }
+}> = <template>
   <a
     target="_blank"
     rel="noreferrer noopener"
@@ -13,3 +22,6 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
     <FaIcon @icon="external-link-alt" />
   </a>
 </template>
+
+
+export default ExternalLink;
