@@ -2,8 +2,8 @@
   "glint": {
     "environment": [
        "ember-loose",
-       "ember-template-imports",
-    ],
+       "ember-template-imports"
+    ]
   },
   "compilerOptions": {
     "target": "ESNext",
