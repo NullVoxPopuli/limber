@@ -12,7 +12,7 @@ export default modifier<Signature>(
 
     element.innerHTML = '';
 
-    let { view, setText } = CODEMIRROR(element, [value, updateText], named);
+    let { view, setText } = CODEMIRROR(element, value, updateText, named);
 
     named.setValue((text) => {
       updateText(text); // update the service / URL
@@ -28,7 +28,8 @@ let CODEMIRROR:
   | undefined
   | ((
       element: HTMLElement,
-      positional: Signature['Args']['Positional'],
+      value: Signature['Args']['Positional'][0],
+      updateText: Signature['Args']['Positional'][1],
       named: Signature['Args']['Named']
     ) => { view: EditorView; setText: (text: string) => void });
 

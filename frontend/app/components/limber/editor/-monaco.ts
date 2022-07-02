@@ -20,7 +20,7 @@ export default modifier<Signature>(
 
     element.innerHTML = '';
 
-    let { editor, setText } = MONACO(element, [value, updateText], named);
+    let { editor, setText } = MONACO(element, value, updateText, named);
 
     named.setValue((text) => {
       // changing the text this ways calls updateText for us
@@ -37,7 +37,8 @@ let MONACO:
   | undefined
   | ((
       element: HTMLElement,
-      positional: Signature['Args']['Positional'],
+      value: Signature['Args']['Positional'][0],
+      updateText: Signature['Args']['Positional'][1],
       named: Signature['Args']['Named']
     ) => { editor: monaco.editor.IStandaloneCodeEditor; setText: (text: string) => void });
 
