@@ -1,22 +1,19 @@
-import { fn } from '@ember/helper';
+import { fn, modifier } from '@ember/helper';
 import { on } from '@ember/modifier'
+import { modifier as functionModifier} from 'ember-modifier';
 
 // @ts-expect-error
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
 import State from './state';
 
-import type { InterpreterFrom } from 'xstate';
 import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
+import type { 
+  ComponentLike, 
+  ModifierLike 
+} from "@glint/template";
+import type { Send } from 'limber/statechart-component-types';
 
-
-type Send = InterpreterFrom<typeof State>['send'];
-
-const container = (element: Element, send: Send) => {
-  send('CONTAINER_FOUND', { container: element as HTMLElement });
-
-  return () => send('CONTAINER_REMOVED');
-};
 
 const Button: TOC<{
   Element: HTMLButtonElement
@@ -39,7 +36,7 @@ const Controls: TOC<{
     needsControls: boolean
     isMinimized: boolean;
     isMaximized: boolean;
-    send: Send;
+    send: Send<any>;
   }
 }> = <template>
   {{#if @needsControls}}
@@ -75,18 +72,32 @@ const Controls: TOC<{
   {{/if}}
 </template>;
 
-<template>
-  <State as |state send|>
-    {{yield
-      (component
-        Controls
-        isMinimized=(state.matches 'hasContainer.minimized')
-        isMaximized=(state.matches 'hasContainer.maximized')
-        needsControls=state.context.container
-        send=send
-      )
-      (modifier container send)
-    }}
-  </State>
-</template>
+const toBoolean = (x: unknown) => Boolean(x);
 
+const container = functionModifier((element: Element, [send]: [Send<unknown>]) => {
+  send('CONTAINER_FOUND', { container: element as HTMLElement });
+
+  return () => send('CONTAINER_REMOVED');
+}, { eager: false });
+
+const EditorControls: TOC<{
+  Blocks: {
+    default: [ComponentLike, ModifierLike]
+  }
+}> = 
+  <template>
+    <State as |state send|>
+      {{yield
+        (component
+          Controls
+          isMinimized=(state.matches 'hasContainer.minimized')
+          isMaximized=(state.matches 'hasContainer.maximized')
+          needsControls=(toBoolean state.context.container)
+          send=send
+        )
+        (modifier container send)
+      }}
+    </State>
+  </template>
+
+export default EditorControls;

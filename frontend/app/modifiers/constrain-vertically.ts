@@ -1,18 +1,22 @@
 import { debounce } from '@ember/runloop';
 
 import { isTesting } from '@embroider/macros';
+import { modifier } from 'ember-modifier';
 
-export default function constraintVertically(element: HTMLElement) {
-  let debouncedConstrain = () => constrain(element);
-  let x = () => debounce(debouncedConstrain, 10);
+export default modifier(
+  (element: HTMLElement) => {
+    let debouncedConstrain = () => constrain(element);
+    let x = () => debounce(debouncedConstrain, 10);
 
-  constrain(element);
-  window.addEventListener('resize', x);
+    constrain(element);
+    window.addEventListener('resize', x);
 
-  return () => {
-    window.removeEventListener('resize', x);
-  };
-}
+    return () => {
+      window.removeEventListener('resize', x);
+    };
+  },
+  { eager: false }
+);
 
 function constrain(element: HTMLElement) {
   let offset = element.getBoundingClientRect().y;

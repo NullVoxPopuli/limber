@@ -3,4 +3,9 @@ export interface NamedArgs {
   setValue: (callback: (text: string) => void) => void;
 }
 
-export type Args = [...PositionalArgs, NamedArgs];
+export type Signature = {
+  Args: {
+    Positional: PositionalArgs;
+    Named: NamedArgs;
+  };
+};

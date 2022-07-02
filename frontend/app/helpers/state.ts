@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { tracked } from '@glimmer/tracking';
 
-import { Resource } from 'ember-resources/core';
-
-// import type { HelperLike } from '@glint/template';
+import { Resource } from 'ember-resources';
 
 /**
  * Utility for manipulating any kind of state.
@@ -24,8 +22,3 @@ export default class State extends Resource {
   update = (nextValue: any) => (this.value = nextValue);
   toggle = () => (this.value = !this.value);
 }
-
-// export default interface State extends InstanceType<HelperLike<{
-//    Args: {}
-//    Return: State
-//  }>> {}

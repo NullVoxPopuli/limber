@@ -14,20 +14,26 @@ const attachShadow = modifier((element: Element, [setShadow]: [State['update']])
 const getStyles = () => [...document.head.querySelectorAll('link')].map(link => link.href);
 
 const Shadowed: TOC<{
+  Element: HTMLDivElement;
+  Args: {
+    omitStyles?: boolean;
+  }
   Blocks: { default: [] }
 }> =
 <template>
 
   {{#let (State) as |shadow|}}
-    <div data-shadow {{attachShadow shadow.update}}></div>
+    <div data-shadow {{attachShadow shadow.update}} ...attributes></div>
 
     {{#if shadow.value}}
       {{#in-element shadow.value}}
-        {{#let (getStyles) as |styles|}}
-          {{#each styles as |styleHref|}}
-            <link rel="stylesheet" href={{styleHref}}>
-          {{/each}}
-        {{/let}}
+        {{#unless @omitStyles}}
+          {{#let (getStyles) as |styles|}}
+            {{#each styles as |styleHref|}}
+              <link rel="stylesheet" href={{styleHref}}>
+            {{/each}}
+          {{/let}}
+        {{/unless}}
 
         {{yield}}
       {{/in-element}}

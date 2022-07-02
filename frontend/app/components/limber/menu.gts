@@ -67,7 +67,7 @@ const Menu: TOC<{
   Element: HTMLButtonElement;
   Blocks: {
     trigger: [{ isOpen: boolean }],
-    options: [TOC<{ Element: HTMLButtonElement }>],
+    options: [ComponentLike<{ Element: HTMLButtonElement, Blocks: { default: []} }>],
   }
 }> = <template>
   <HeadlessMenu as |menu|>

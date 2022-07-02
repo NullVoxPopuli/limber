@@ -1,6 +1,9 @@
 import service from 'limber/helpers/service';
+import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
 
-<template>
+export const Placeholder: TOC<{
+  Element: HTMLTextAreaElement;
+}> = <template>
   {{#let (service 'editor') as |context|}}
     <label class="sr-only" for="initial-editor">
       Glimmer + Markdown Code Editor
@@ -16,3 +19,4 @@ import service from 'limber/helpers/service';
     >{{context.text}}</textarea>
   {{/let}}
 </template>
+

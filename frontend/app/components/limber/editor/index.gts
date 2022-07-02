@@ -1,14 +1,18 @@
-import or from 'limber/helpers/or';
-
 import codemirror from './-code-mirror';
 import monaco from './-monaco';
 import State from './state';
 import Target from './target';
 import Loader from './loader';
-import LoadingError from './loading-error';
-import Placeholder from './placeholder';
+import { LoadingError } from './loading-error';
+import { Placeholder } from './placeholder';
 
-<template>
+import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
+
+const isLoading = (a: boolean, b: boolean) => a || b;
+
+const Editor: TOC<{
+  Element: HTMLDivElement;
+}> = <template>
   <State as |state|>
 
     {{#if (state.matches 'editingWithMonaco')}}
@@ -22,7 +26,7 @@ import Placeholder from './placeholder';
     {{else}}
       <div class="relative border border-gray-900 bg-gray-800" ...attributes>
 
-        {{#if (or (state.matches 'loadMonaco') (state.matches 'loadCodeMirror'))}}
+        {{#if (isLoading (state.matches 'loadMonaco') (state.matches 'loadCodeMirror'))}}
           <Loader />
         {{/if}}
 
@@ -37,3 +41,4 @@ import Placeholder from './placeholder';
   </State>
 </template>
 
+export default Editor;
