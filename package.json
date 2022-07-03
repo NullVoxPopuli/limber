@@ -30,8 +30,7 @@
       "ember-auto-import": "^2.4.0",
       "@ember/render-modifiers": "^2.0.4",
       "@types/eslint": "^7.0.0",
-      "mustache": "^4.2.0",
-      "xstate": "4.30.6"
+      "mustache": "^4.2.0"
     },
     "overrides-notes": {
        "mustache": "ember-cli -> testem -> consolidate -> mustache is ancient"

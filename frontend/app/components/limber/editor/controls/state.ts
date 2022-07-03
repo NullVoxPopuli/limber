@@ -1,24 +1,24 @@
+import { asComponent } from 'ember-statechart-component/glint';
 import { assign, createMachine } from 'xstate';
-
-import type { ComponentFromMachine } from 'limber/statechart-component-types';
-import type { EventObject } from 'xstate';
-
-interface HasContainer {
-  container?: HTMLElement;
-}
-
-interface Found extends EventObject {
-  container: HTMLElement;
-}
 
 function isVerticalSplit() {
   return window.innerWidth >= 1024;
 }
 
-export const machine = createMachine<HasContainer>(
+export const machine = createMachine(
   {
     id: 'editor-control-state',
     initial: 'noContainer',
+    schema: {
+      context: {} as {
+        container?: HTMLElement;
+      },
+      events: {} as
+        | { type: 'CONTAINER_FOUND'; container: HTMLElement }
+        | { type: 'CONTAINER_REMOVED' }
+        | { type: 'MAXIMIZE' }
+        | { type: 'MINIMIZE' },
+    },
     context: {
       container: undefined,
     },
@@ -26,14 +26,14 @@ export const machine = createMachine<HasContainer>(
       CONTAINER_FOUND: {
         target: 'hasContainer',
         actions: assign({
-          container: (_, event: Found) => {
-            return event.container;
+          container: (_, { container }: { container: HTMLElement }) => {
+            return container;
           },
         }),
       },
       CONTAINER_REMOVED: {
         target: 'noContainer',
-        actions: assign({ container: undefined }),
+        actions: assign({ container: (_, __) => undefined }),
       },
     },
     states: {
@@ -109,4 +109,4 @@ export const machine = createMachine<HasContainer>(
   }
 );
 
-export default machine as unknown as ComponentFromMachine<typeof machine>;
+export default asComponent(machine);

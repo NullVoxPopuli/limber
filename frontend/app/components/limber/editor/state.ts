@@ -1,18 +1,19 @@
 import { waitForPromise } from '@ember/test-waiters';
 
+import { asComponent } from 'ember-statechart-component/glint';
 import { getQP } from 'limber/utils/query-params';
 import { assign, createMachine } from 'xstate';
 
 import { setupCodeMirror } from './-code-mirror';
 import { setupMonaco } from './-monaco';
 
-import type { ComponentFromMachine } from 'limber/statechart-component-types';
-
-interface Context {
-  error?: string;
-}
-
-export const machine = createMachine<Context>({
+export const machine = createMachine({
+  schema: {
+    context: {} as {
+      error?: string;
+    },
+    events: {} as { type: 'MOUSE' } | { type: 'KEY' } | { type: 'TOUCH' },
+  },
   initial: 'waiting',
   states: {
     waiting: {
@@ -63,4 +64,4 @@ export const machine = createMachine<Context>({
   },
 });
 
-export default machine as unknown as ComponentFromMachine<typeof machine>;
+export default asComponent(machine);

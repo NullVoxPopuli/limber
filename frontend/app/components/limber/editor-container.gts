@@ -1,6 +1,6 @@
 import isEditing from 'limber/helpers/is-editing';
 import Editor from './editor';
-import EditorControls from './editor/controls';
+import { EditorControls } from './editor/controls';
 
 <template>
   {{#if (isEditing)}}

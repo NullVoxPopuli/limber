@@ -8,11 +8,11 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import State from './state';
 
 import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
-import type { 
-  ComponentLike, 
-  ModifierLike 
+import type {
+  ComponentLike,
+  ModifierLike
 } from "@glint/template";
-import type { Send } from 'limber/statechart-component-types';
+import type { Send } from 'ember-statechart-component/glint';
 
 
 const Button: TOC<{
@@ -80,11 +80,11 @@ const container = functionModifier((element: Element, [send]: [Send<unknown>]) =
   return () => send('CONTAINER_REMOVED');
 }, { eager: false });
 
-const EditorControls: TOC<{
+export const EditorControls: TOC<{
   Blocks: {
     default: [ComponentLike, ModifierLike]
   }
-}> = 
+}> =
   <template>
     <State as |state send|>
       {{yield
@@ -99,5 +99,3 @@ const EditorControls: TOC<{
       }}
     </State>
   </template>
-
-export default EditorControls;

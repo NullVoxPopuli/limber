@@ -6,7 +6,6 @@ overrides:
   '@ember/render-modifiers': ^2.0.4
   '@types/eslint': ^7.0.0
   mustache: ^4.2.0
-  xstate: 4.30.6
 
 importers:
 
@@ -110,7 +109,7 @@ importers:
       ember-resolver: ^8.0.3
       ember-resources: ^5.0.2
       ember-source: ^4.4.1
-      ember-statechart-component: 3.0.1
+      ember-statechart-component: 6.0.1
       ember-template-imports: ^3.0.1
       ember-template-lint: ^4.1.0
       ember-template-lint-plugin-prettier: ^4.0.0
@@ -143,7 +142,7 @@ importers:
       vfile: ^4.2.1
       webpack: ^5.73.0
       webpack-bundle-analyzer: ^4.5.0
-      xstate: 4.30.6
+      xstate: 4.32.1
       yn: ^4.0.0
     dependencies:
       '@ember/test-waiters': 3.0.2
@@ -167,7 +166,7 @@ importers:
       ember-popperjs: 3.0.0_p675qborsaonqppa4lmrtixhqm
       ember-repl: 2.0.56_r35pzwvakxi7oz3ykvkd3cqx4m
       ember-resources: 5.0.2_c4scodcchm2atf7zk3hppctzre
-      ember-statechart-component: 3.0.1_fwvtesvzl236xog3aej5pbwfeq
+      ember-statechart-component: 6.0.1_ntnihjul2heeja6s4k7xwxexge
       highlight.js: 11.5.1
       highlightjs-glimmer: 1.4.1_highlight.js@11.5.1
       html-to-image: 1.9.0
@@ -179,7 +178,7 @@ importers:
       unified: 9.2.2
       unist-util-flatmap: 1.0.0
       webpack-bundle-analyzer: 4.5.0
-      xstate: 4.30.6
+      xstate: 4.32.1
     devDependencies:
       '@babel/core': 7.17.9
       '@codemirror/view': 0.19.47
@@ -3496,7 +3495,7 @@ packages:
       js-string-escape: 1.0.1
       lodash: 4.17.21
       resolve-package-path: 4.0.3
-      semver: 7.3.7
+      semver: 7.3.6
       typescript-memoize: 1.1.0
 
   /@embroider/shared-internals/1.8.0:
@@ -4767,7 +4766,7 @@ packages:
       debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
-      semver: 7.3.7
+      semver: 7.3.6
       tsutils: 3.21.0_typescript@4.7.4
       typescript: 4.7.4
     transitivePeerDependencies:
@@ -8958,21 +8957,22 @@ packages:
       - supports-color
       - webpack
 
-  /ember-statechart-component/3.0.1_fwvtesvzl236xog3aej5pbwfeq:
-    resolution: {integrity: sha512-ETxI3mogzM3rmqItKtOGRWqrNsR3soSqR1HZLXKlqhnUbnEy/QqYgisnSWXgQSZzUePzOQgov0pyCCUJHba72Q==}
-    engines: {node: 14.* || >= 16.*}
+  /ember-statechart-component/6.0.1_ntnihjul2heeja6s4k7xwxexge:
+    resolution: {integrity: sha512-2CbwXnLd56a9PkHqOGfRvuAazLtFfZeUaOg9gGQkelefd1QXPnrF7cCJfq88gYERGK/TLbgorzWRYChN1BjK4A==}
+    engines: {node: '>=12.2.0 < 13 || >= 14'}
     peerDependencies:
-      xstate: ^4.23.1
+      '@glint/template': '>= 0.8.3'
+      xstate: ^4.32.1
+    peerDependenciesMeta:
+      '@glint/template':
+        optional: true
     dependencies:
-      ember-auto-import: 2.4.1_webpack@5.73.0
-      ember-cli-babel: 7.26.11
-      ember-cli-htmlbars: 6.0.1
-      ember-cli-typescript: 4.2.1
+      '@embroider/addon-shim': 1.8.1
+      '@glint/template': 0.9.1_@glimmer+component@1.1.2
       ember-tracked-storage-polyfill: 1.0.0
-      xstate: 4.30.6
+      xstate: 4.32.1
     transitivePeerDependencies:
       - supports-color
-      - webpack
     dev: false
 
   /ember-template-imports/3.0.1_ember-cli-htmlbars@6.0.1:
@@ -16185,8 +16185,8 @@ packages:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
     dev: true
 
-  /xstate/4.30.6:
-    resolution: {integrity: sha512-V7liK1cjkZRh6R/MSneG8S5VLGRatpOUcnNieiYJX4LbwKi9eUVUH5V04ugJYVcJ+2oKDKvEFvzk0VnSC7lTag==}
+  /xstate/4.32.1:
+    resolution: {integrity: sha512-QYUd+3GkXZ8i6qdixnOn28bL3EvA++LONYL/EMWwKlFSh/hiLndJ8YTnz77FDs+JUXcwU7NZJg7qoezoRHc4GQ==}
     dev: false
 
   /xtend/4.0.2:
