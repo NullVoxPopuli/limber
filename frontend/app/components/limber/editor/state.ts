@@ -12,10 +12,7 @@ export const machine = createMachine({
     context: {} as {
       error?: string;
     },
-    events: {} as
-      | { type: 'MOUSE' }
-      | { type: 'KEY' }
-      | { type: 'TOUCH' }
+    events: {} as { type: 'MOUSE' } | { type: 'KEY' } | { type: 'TOUCH' },
   },
   initial: 'waiting',
   states: {

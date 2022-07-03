@@ -14,10 +14,10 @@ export const machine = createMachine(
         container?: HTMLElement;
       },
       events: {} as
-        | { type: 'CONTAINER_FOUND', container: HTMLElement }
+        | { type: 'CONTAINER_FOUND'; container: HTMLElement }
         | { type: 'CONTAINER_REMOVED' }
         | { type: 'MAXIMIZE' }
-        | { type: 'MINIMIZE' }
+        | { type: 'MINIMIZE' },
     },
     context: {
       container: undefined,
