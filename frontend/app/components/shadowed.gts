@@ -13,7 +13,7 @@ const attachShadow = modifier((element: Element, [setShadow]: [State['update']])
 // assets in public, but idk how to set that up
 const getStyles = () => [...document.head.querySelectorAll('link')].map(link => link.href);
 
-const Shadowed: TOC<{
+export const Shadowed: TOC<{
   Element: HTMLDivElement;
   Args: {
     omitStyles?: boolean;
