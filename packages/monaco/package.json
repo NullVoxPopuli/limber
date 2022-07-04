@@ -12,8 +12,8 @@
     "build": "node build.js",
     "dev": "echo 'limber-monaco does not have a watch mode'; yarn build",
     "check:types": "tsc --build",
-    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel 'lint:!(fix)'",
-    "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
+    "lint": "concurrently 'npm:lint:*(!fix)' --names 'lint:'",
+    "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix"
   },
@@ -29,6 +29,7 @@
     "@nullvoxpopuli/eslint-configs": "2.2.34",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.0.0",
+    "concurrently": "^7.2.1",
     "esbuild": "0.14.48",
     "esbuild-plugin-alias": "^0.2.1",
     "eslint": "^7.32.0",

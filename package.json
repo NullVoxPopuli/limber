@@ -10,7 +10,7 @@
   "scripts": {
     "predeploy": "turbo run build --filter=limber",
     "build": "turbo run build --filter=limber^...",
-    "lint": "turbo run lint",
+    "lint": "pnpm --filter='*' lint",
     "lint:fix": "turbo run lint:fix",
     "start": "turbo run start --filter=limber"
   },
