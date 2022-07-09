@@ -109,7 +109,7 @@ importers:
       ember-resolver: ^8.0.3
       ember-resources: ^5.0.2
       ember-source: ^4.4.1
-      ember-statechart-component: 6.0.1
+      ember-statechart-component: 6.1.1
       ember-template-imports: ^3.0.1
       ember-template-lint: ^4.1.0
       ember-template-lint-plugin-prettier: ^4.0.0
@@ -166,7 +166,7 @@ importers:
       ember-popperjs: 3.0.0_p675qborsaonqppa4lmrtixhqm
       ember-repl: 2.0.59_r35pzwvakxi7oz3ykvkd3cqx4m
       ember-resources: 5.0.2_c4scodcchm2atf7zk3hppctzre
-      ember-statechart-component: 6.0.1_ntnihjul2heeja6s4k7xwxexge
+      ember-statechart-component: 6.1.1_ntnihjul2heeja6s4k7xwxexge
       highlight.js: 11.5.1
       highlightjs-glimmer: 1.4.1_highlight.js@11.5.1
       html-to-image: 1.9.0
@@ -8999,8 +8999,8 @@ packages:
       - supports-color
       - webpack
 
-  /ember-statechart-component/6.0.1_ntnihjul2heeja6s4k7xwxexge:
-    resolution: {integrity: sha512-2CbwXnLd56a9PkHqOGfRvuAazLtFfZeUaOg9gGQkelefd1QXPnrF7cCJfq88gYERGK/TLbgorzWRYChN1BjK4A==}
+  /ember-statechart-component/6.1.1_ntnihjul2heeja6s4k7xwxexge:
+    resolution: {integrity: sha512-D82XxRz+ibbvPlEFzbXAsOBMjimK+Plk4BjwxLsuvew2tsntGubTp4/nsZBcaBLDGsknHXaztXXScvB+4Aqd8g==}
     engines: {node: '>=12.2.0 < 13 || >= 14'}
     peerDependencies:
       '@glint/template': '>= 0.8.3'
@@ -11992,7 +11992,7 @@ packages:
     dev: true
 
   /json-stable-stringify/1.0.1:
-    resolution: {integrity: sha1-mnWdOcXy/1A/1TAGRu1EX4jE+a8=}
+    resolution: {integrity: sha512-i/J297TW6xyj7sDFa7AmBPkQvLIxWr2kKPWI26tXydnZrzVAocNqn5DMNT1Mzk0vit1V5UkRM7C1KdVNp7Lmcg==}
     dependencies:
       jsonify: 0.0.0
 
@@ -12035,7 +12035,7 @@ packages:
       graceful-fs: 4.2.10
 
   /jsonify/0.0.0:
-    resolution: {integrity: sha1-LHS27kHZPKUbe1qu6PUDYx0lKnM=}
+    resolution: {integrity: sha512-trvBk1ki43VZptdBI5rIlG4YOzyeH/WefQt5rj1grasPn4iiZWKet8nkgc4GlsAylaztn0qZfUYOiTsASJFdNA==}
 
   /junk/1.0.3:
     resolution: {integrity: sha1-h75jSIZJy9ym9Tqzm+yczSNH9ZI=}
