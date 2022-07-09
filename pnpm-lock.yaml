@@ -11,7 +11,7 @@ importers:
 
   .:
     specifiers:
-      concurrently: ^7.2.1
+      concurrently: ^7.2.2
       turbo: ^1.2.16
     devDependencies:
       concurrently: 7.2.2
@@ -13688,7 +13688,7 @@ packages:
     dev: true
 
   /require-directory/2.1.1:
-    resolution: {integrity: sha1-jGStX9MNqxyXbiNE/+f3kqam30I=}
+    resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
     engines: {node: '>=0.10.0'}
     dev: true
 
