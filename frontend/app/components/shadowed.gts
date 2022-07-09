@@ -21,7 +21,6 @@ export const Shadowed: TOC<{
   Blocks: { default: [] }
 }> =
 <template>
-
   {{#let (State) as |shadow|}}
     <div data-shadow {{attachShadow shadow.update}} ...attributes></div>
 
@@ -30,7 +29,7 @@ export const Shadowed: TOC<{
         {{#unless @omitStyles}}
           {{#let (getStyles) as |styles|}}
             {{#each styles as |styleHref|}}
-              <link rel="stylesheet" href={{styleHref}}>
+              <link rel="stylesheet" href={{styleHref}} />
             {{/each}}
           {{/let}}
         {{/unless}}
