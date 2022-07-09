@@ -39,7 +39,7 @@
     "@nullvoxpopuli/eslint-configs": "2.2.31",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.0.0",
-    "esbuild": "0.14.43",
+    "esbuild": "0.14.48",
     "esbuild-plugin-alias": "^0.2.1",
     "eslint": "^7.32.0",
     "recursive-copy": "^2.0.14",
