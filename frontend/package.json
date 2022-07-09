@@ -51,7 +51,7 @@
     "@glint/environment-ember-loose": "^0.9.1",
     "@glint/environment-ember-template-imports": "^0.9.1",
     "@glint/template": "^0.9.1",
-    "@nullvoxpopuli/eslint-configs": "2.2.31",
+    "@nullvoxpopuli/eslint-configs": "2.2.34",
     "@types/babel__core": "^7.1.19",
     "@types/codemirror": "5.60.5",
     "@types/common-tags": "^1.8.1",
