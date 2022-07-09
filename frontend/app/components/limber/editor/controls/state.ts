@@ -1,11 +1,10 @@
-import { asComponent } from 'ember-statechart-component/glint';
 import { assign, createMachine } from 'xstate';
 
 function isVerticalSplit() {
   return window.innerWidth >= 1024;
 }
 
-export const machine = createMachine(
+export default createMachine(
   {
     id: 'editor-control-state',
     initial: 'noContainer',
@@ -108,5 +107,3 @@ export const machine = createMachine(
     },
   }
 );
-
-export default asComponent(machine);

@@ -1,11 +1,12 @@
 import "@glint/environment-ember-loose";
 import "@glint/environment-ember-loose/native-integration";
 import "ember-page-title/glint";
+import 'ember-statechart-component/glint';
 
-import type { 
-  // ComponentLike, 
-  // HelperLike, 
-  // ModifierLike 
+import type {
+  // ComponentLike,
+  // HelperLike,
+  // ModifierLike
 } from "@glint/template";
 
 // declare module '@fortawesome/ember-fontawesome/components/fa-icon' {
@@ -30,7 +31,7 @@ declare module "@glint/environment-ember-loose/registry" {
     // How to define globals from external addons
     // state: HelperLike<{ Args: {}, Return: State }>;
     // attachShadow: ModifierLike<{ Args: { Positional: [State['update']]}}>;
-    
+
     /**
      *  Components
      */

@@ -10,7 +10,7 @@
   "scripts": {
     "predeploy": "turbo run build --filter=limber",
     "build": "turbo run build --filter=limber^...",
-    "lint": "turbo run lint",
+    "lint": "pnpm --filter='*' lint",
     "lint:fix": "turbo run lint:fix",
     "start": "turbo run start --filter=limber"
   },
@@ -29,10 +29,17 @@
       "@babel/core": "~7.17.0",
       "ember-auto-import": "^2.4.0",
       "@ember/render-modifiers": "^2.0.4",
-      "@types/eslint": "^7.0.0",
-      "mustache": "^4.2.0"
+      "@types/eslint": "^7.0.0"
     },
-    "overrides-notes": {
+    "allowedDeprecatedVersions": {
+      "babel-eslint": "^10.0.0",
+      "source-map-url": "^0.3.0",
+      "core-js": "^2.0.0"
+    },
+    "peerDependencyRules": {
+      "allowAny": ["mustache"]
+    },
+    "notes": {
        "mustache": "ember-cli -> testem -> consolidate -> mustache is ancient"
     }
   }

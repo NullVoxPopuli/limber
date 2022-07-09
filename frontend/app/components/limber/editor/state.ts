@@ -1,13 +1,12 @@
 import { waitForPromise } from '@ember/test-waiters';
 
-import { asComponent } from 'ember-statechart-component/glint';
 import { getQP } from 'limber/utils/query-params';
 import { assign, createMachine } from 'xstate';
 
 import { setupCodeMirror } from './-code-mirror';
 import { setupMonaco } from './-monaco';
 
-export const machine = createMachine({
+export default createMachine({
   schema: {
     context: {} as {
       error?: string;
@@ -63,5 +62,3 @@ export const machine = createMachine({
     error: {},
   },
 });
-
-export default asComponent(machine);

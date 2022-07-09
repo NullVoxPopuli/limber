@@ -13,7 +13,7 @@ const attachShadow = modifier((element: Element, [setShadow]: [State['update']])
 // assets in public, but idk how to set that up
 const getStyles = () => [...document.head.querySelectorAll('link')].map(link => link.href);
 
-const Shadowed: TOC<{
+export const Shadowed: TOC<{
   Element: HTMLDivElement;
   Args: {
     omitStyles?: boolean;
@@ -21,7 +21,6 @@ const Shadowed: TOC<{
   Blocks: { default: [] }
 }> =
 <template>
-
   {{#let (State) as |shadow|}}
     <div data-shadow {{attachShadow shadow.update}} ...attributes></div>
 
@@ -30,7 +29,7 @@ const Shadowed: TOC<{
         {{#unless @omitStyles}}
           {{#let (getStyles) as |styles|}}
             {{#each styles as |styleHref|}}
-              <link rel="stylesheet" href={{styleHref}}>
+              <link rel="stylesheet" href={{styleHref}} />
             {{/each}}
           {{/let}}
         {{/unless}}
