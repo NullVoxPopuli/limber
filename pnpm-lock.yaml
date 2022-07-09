@@ -5,7 +5,6 @@ overrides:
   ember-auto-import: ^2.4.0
   '@ember/render-modifiers': ^2.0.4
   '@types/eslint': ^7.0.0
-  mustache: ^4.2.0
 
 importers:
 
@@ -7454,7 +7453,7 @@ packages:
       through2: 3.0.2
     dev: true
 
-  /consolidate/0.15.1_mustache@4.2.0:
+  /consolidate/0.15.1_mustache@3.2.1:
     resolution: {integrity: sha512-DW46nrsMJgy9kqAbPt5rKaCr7uFtpo4mSUvLHIUbJEjm0vo+aY5QLwBUq3FK4tRnJr/X0Psc0C4jf/h+HtXSMw==}
     engines: {node: '>= 0.10.0'}
     peerDependencies:
@@ -7485,7 +7484,7 @@ packages:
       lodash: ^4.17.20
       marko: ^3.14.4
       mote: ^0.2.0
-      mustache: ^3.0.0
+      mustache: '*'
       nunjucks: ^3.2.2
       plates: ~0.4.11
       pug: ^3.0.0
@@ -7620,7 +7619,7 @@ packages:
         optional: true
     dependencies:
       bluebird: 3.7.2
-      mustache: 4.2.0
+      mustache: 3.2.1
     dev: true
 
   /content-disposition/0.5.4:
@@ -12702,8 +12701,9 @@ packages:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
     dev: true
 
-  /mustache/4.2.0:
-    resolution: {integrity: sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==}
+  /mustache/3.2.1:
+    resolution: {integrity: sha512-RERvMFdLpaFfSRIEe632yDm5nsd0SDKn8hGmcUwswnyiE5mtdZLDybtHAz6hjJhawokF0hXvGLtx9mrQfm6FkA==}
+    engines: {npm: '>=1.4.0'}
     hasBin: true
     dev: true
 
@@ -15007,7 +15007,7 @@ packages:
       charm: 1.0.2
       commander: 2.20.3
       compression: 1.7.4
-      consolidate: 0.15.1_mustache@4.2.0
+      consolidate: 0.15.1_mustache@3.2.1
       execa: 1.0.0
       express: 4.17.3
       fireworm: 0.7.2
@@ -15020,7 +15020,7 @@ packages:
       lodash.find: 4.6.0
       lodash.uniqby: 4.7.0
       mkdirp: 0.5.6
-      mustache: 4.2.0
+      mustache: 3.2.1
       node-notifier: 9.0.1
       npmlog: 4.1.2
       printf: 0.6.1
