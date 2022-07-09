@@ -21,7 +21,7 @@ import DemoSelect from './demo-select';
 
     <nav class='text-white mt-1 flex gap-2 items-baseline'>
       <DemoSelect class="hidden sm:block" />
-      <ExternalLink href="/assets/bundle.html">Bundle</ExternalLink>
+      <ExternalLink href="/bundle.html">Bundle</ExternalLink>
       <ExternalLink href="https://github.com/nullvoxpopuli/limber">GitHub</ExternalLink>
     </nav>
   </header>

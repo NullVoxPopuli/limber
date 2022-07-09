@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { HighlightStyle, tags as t } from '@codemirror/highlight';
+import { HighlightStyle } from "@codemirror/language";
+import { tags as t } from '@lezer/highlight';
 import { alpha, syntax, ui } from '@nullvoxpopuli/horizon-theme';
 
 export const HorizonSyntaxTheme = HighlightStyle.define([
