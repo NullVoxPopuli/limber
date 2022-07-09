@@ -80,10 +80,10 @@ module.exports = function (defaults) {
         package: '@babel/standalone',
       },
       {
-        package: 'codemirror/preconfigured.js',
+        package: '@nullvoxpopuli/limber-codemirror',
       },
       {
-        package: 'monaco/preconfigured.js',
+        package: '@nullvoxpopuli/limber-monaco',
       },
     ],
     staticAddonTrees: true,
@@ -101,7 +101,8 @@ module.exports = function (defaults) {
      */
     packagerOptions: {
       webpackConfig: {
-        devtool: 'source-map',
+        devtool: false,
+        // devtool: 'source-map',
         // devtool: isProduction ? 'source-map' : false,
         experiments: {
           // Causes app to not boot
