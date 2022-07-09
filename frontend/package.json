@@ -157,7 +157,7 @@
     "ember-headlessui": "0.12.3",
     "ember-modifier": "^3.2.7",
     "ember-popperjs": "^3.0.0",
-    "ember-repl": "^2.0.52",
+    "ember-repl": "^2.0.59",
     "ember-resources": "^5.0.2",
     "ember-statechart-component": "6.0.1",
     "highlight.js": "^11.5.1",
