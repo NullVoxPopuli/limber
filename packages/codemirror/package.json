@@ -15,19 +15,29 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix"
   },
+  "browser": {
+    "path": "path-browserify"
+  },
   "dependencies": {
     "@codemirror/autocomplete": "6.0.4",
     "@codemirror/commands": "6.0.1",
+    "@codemirror/lang-html": "^6.1.0",
     "@codemirror/lang-javascript": "6.0.1",
     "@codemirror/lang-markdown": "6.0.0",
     "@codemirror/language": "^6.2.0",
+    "@codemirror/lint": "^6.0.0",
     "@codemirror/search": "6.0.0",
     "@codemirror/state": "6.1.0",
     "@codemirror/view": "6.0.3",
     "@lezer/highlight": "^1.0.0",
+    "@lezer/html": "^1.0.0",
     "@nullvoxpopuli/horizon-theme": "*",
+    "assert": "^2.0.0",
     "broccoli-funnel": "^3.0.8",
-    "codemirror": "^6.0.1"
+    "codemirror": "^6.0.1",
+    "codemirror-languageserver": "^1.9.0",
+    "eslint4b": "^7.32.0",
+    "path-browserify": "^1.0.1"
   },
   "devDependencies": {
     "@nullvoxpopuli/eslint-configs": "2.2.34",

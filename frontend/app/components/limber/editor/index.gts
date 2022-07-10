@@ -26,7 +26,6 @@ const Editor: TOC<{
               setValue=context.swapText
             }}
           >{{context.text}}</div>
-
         </div>
       {{/let}}
 

@@ -1,10 +1,15 @@
-import { javascript } from '@codemirror/lang-javascript';
-import { markdown } from '@codemirror/lang-markdown';
+import { completeFromList, completionKeymap } from '@codemirror/autocomplete';
+import { esLint, javascriptLanguage } from '@codemirror/lang-javascript';
 import { syntaxHighlighting } from '@codemirror/language';
+import { linter, lintGutter, lintKeymap } from '@codemirror/lint';
 import { Compartment, EditorSelection, EditorState } from '@codemirror/state';
-// import { EditorState } from '@codemirror/state';
+import { keymap } from '@codemirror/view';
 import { basicSetup, EditorView } from 'codemirror';
 
+// @ts-ignore
+// import { Linter } from 'eslint4b';
+import { glimdown } from './glimdown';
+// import { languageServer } from 'codemirror-languageserver';
 import { HorizonSyntaxTheme } from './horizon-syntax-theme';
 import { HorizonTheme } from './horizon-ui-theme';
 
@@ -19,19 +24,41 @@ export default function newEditor(
     }
   });
 
+  // const transport = new WebSocketTransport(serverUri);
+
+  // let serverUri = `${window.location.protocol.endsWith('s:') ? 'wss:' : 'ws:'}//${
+  //   window.location.host
+  // }`;
+  // let filename = 'file.ts';
+  // let lsp = languageServer({
+  //   // WebSocket server uri and other client options.
+  //   serverUri,
+  //   rootUri: 'file:///',
+  //   documentUri: `file:///${filename}`,
+  //   // As defined at https://microsoft.github.io/language-server-protocol/specification#textDocumentItem.
+  //   languageId: 'typescript',
+  // });
+
   let view = new EditorView({
     parent: element,
-    // state: stateForValue(value, updateText),
     extensions: [
       // features
       basicSetup,
       updateListener,
       EditorView.lineWrapping,
-      // Intentionally do not capture the tab key -- otherwise we can't leave the editor.
-      // keymap.of([indentWithTab]),
+      keymap.of([
+        // Intentionally do not capture the tab key -- otherwise we can't leave the editor.
+        // indentWithTab
+        // ...defaultKeymap,
+        ...lintKeymap,
+        ...completionKeymap,
+      ]),
+
       // languages
-      // markdown(),
-      javascript(),
+      ...glimdown,
+      // lintGutter(),
+      // linter(esLint(new Linter())),
+      // lsp,
       // Theme
       HorizonTheme,
       syntaxHighlighting(HorizonSyntaxTheme),
@@ -61,4 +88,12 @@ export default function newEditor(
   };
 
   return { view, setText };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function completionsOfObject(obj: any) {
+  return Object.keys(obj).map((p) => ({
+    label: p,
+    type: /^[A-Z]/.test(p) ? 'class' : typeof obj[p] == 'function' ? 'function' : 'variable',
+  }));
 }

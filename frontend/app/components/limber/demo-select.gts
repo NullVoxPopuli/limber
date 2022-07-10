@@ -20,8 +20,6 @@ interface Signature {
 export default class DemoSelect extends Component<Signature> {
   @service declare editor: EditorService;
 
-  demos = NAMES;
-
   @action
   @waitFor
   async select(demoName: string) {
@@ -44,7 +42,7 @@ export default class DemoSelect extends Component<Signature> {
       </:trigger>
 
       <:options as |Item|>
-        {{#each this.demos as |demoName|}}
+        {{#each NAMES as |demoName|}}
           <Item {{on 'click' (fn this.select demoName)}} data-test-demo>
             {{demoName}}
           </Item>
