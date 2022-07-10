@@ -22,6 +22,7 @@ import type Building from 'limber/components/limber/building';
 import type Error from 'limber/components/limber/error';
 
 import type service from 'limber/helpers/service';
+import type inIframe from 'limber/helpers/in-iframe';
 import type highlighted from 'limber/modifiers/highlighted';
 import type positionedNLines from 'limber/modifiers/positioned-n-lines-from-top';
 import type constraintVertically from "limber/modifiers/constrain-vertically";
@@ -47,6 +48,7 @@ declare module "@glint/environment-ember-loose/registry" {
      * Helpers
      */
     service: typeof service;
+    'in-iframe': typeof inIframe;
 
     /**
      * Modifiers

@@ -1,7 +1,9 @@
 <Limber::Portals />
 
 <main class="grid grid-flow-col h-screen max-h-screen grid grid-rows-editor">
-  <Limber::Header />
+  {{#unless (in-iframe)}}
+    <Limber::Header />
+  {{/unless}}
 
   <div class="flex flex-col lg:flex-row overflow-hidden">
     <Limber::EditorContainer />
@@ -11,7 +13,9 @@
       class="flex-1 shadow-inner grid overflow-hidden relative"
       style="grid-template-rows: min-content 1fr;"
     >
-      <Limber::Navigation />
+      {{#unless (in-iframe)}}
+        <Limber::Navigation />
+      {{/unless}}
 
       <div
         class="overflow-auto relative bg-white"

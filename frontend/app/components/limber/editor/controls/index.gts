@@ -1,3 +1,4 @@
+import { assert } from '@ember/debug';
 import { fn, modifier } from '@ember/helper';
 import { on } from '@ember/modifier'
 import { modifier as functionModifier} from 'ember-modifier';
@@ -5,7 +6,7 @@ import { modifier as functionModifier} from 'ember-modifier';
 // @ts-expect-error
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
-import State from './state';
+import State, { setupResizeObserver } from './state';
 
 import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
 import type {
@@ -75,10 +76,18 @@ const Controls: TOC<{
 const toBoolean = (x: unknown) => Boolean(x);
 
 const container = functionModifier((element: Element, [send]: [Send<unknown>]) => {
-  send('CONTAINER_FOUND', { container: element as HTMLElement });
+  assert(`Element is not resizable`, element instanceof HTMLElement);
+
+  let observer = setupResizeObserver(() => send('RESIZE'));
+  send('CONTAINER_FOUND', {
+    container: element,
+    observer,
+    maximize: () => send('MAXIMIZE'),
+    minimize: () => send('MINIMIZE'),
+  });
 
   return () => send('CONTAINER_REMOVED');
-}, { eager: false });
+});
 
 export const EditorControls: TOC<{
   Blocks: {

@@ -1,5 +1,5 @@
 // @ts-ignore
-import HeadlessMenu from 'ember-headlessui/components/menu/index';
+import HeadlessMenu from 'ember-headlessui/components/menu';
 import { PopperJS } from 'ember-popperjs';
 
 import type { ComponentLike } from "@glint/template";

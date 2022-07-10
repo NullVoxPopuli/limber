@@ -28,6 +28,9 @@ export const HorizonTheme = EditorView.theme(
     '&.cm-focused .cm-selectionBackground, .cm-selectionBackground, ::selection': {
       backgroundColor: ui.backgroundAlt,
     },
+    '&.cm-focused .cm-matchingBracket': {
+      'background-color': `${ui.backgroundAlt}`,
+    },
 
     '.cm-panels': { backgroundColor: ui.shadow, color: syntax.gray },
     '.cm-panels.cm-panels-top': { borderBottom: '2px solid black' },
@@ -45,10 +48,11 @@ export const HorizonTheme = EditorView.theme(
     '.cm-selectionMatch': { backgroundColor: ui.shadow },
 
     '.cm-matchingBracket, .cm-nonmatchingBracket': {
-      outline: `1px solid ${syntax.lavender}`,
+      outline: `1px solid ${ui.backgroundAlt}`,
       margin: '-2px',
       padding: '2px',
     },
+
 
     '.cm-gutters': {
       backgroundColor: ui.background,

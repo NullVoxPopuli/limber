@@ -50,7 +50,7 @@ export default function newEditor(
         // Intentionally do not capture the tab key -- otherwise we can't leave the editor.
         // indentWithTab
         // ...defaultKeymap,
-        ...lintKeymap,
+        // ...lintKeymap,
         ...completionKeymap,
       ]),
 

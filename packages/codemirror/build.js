@@ -13,6 +13,7 @@ const isWatch = process.argv.includes('--watch');
 if (isWatch) {
   console.info(`Starting watch mode...`);
 }
+
 module.exports = async function build() {
   let buildDir = await fs.mkdtemp(path.join(os.tmpdir(), 'monaco--workers-'));
 
@@ -23,18 +24,20 @@ module.exports = async function build() {
     format: 'esm',
     platform: 'browser',
     define: {
-      'process.cwd': 'String'
+      'process.cwd': 'String',
     },
     loader: { '.ts': 'ts', '.js': 'js', '.ttf': 'file' },
     entryPoints: [path.join('preconfigured', 'index.ts')],
     outfile: path.join(buildDir, 'preconfigured.js'),
     // minification breaks codemirror somehow
-    watch: isWatch ? {
-      onRebuild(error, result) {
-        if (error) console.error('watch build failed:', error)
-        else console.log('watch build succeeded:', result)
-      }
-    } : false,
+    watch: isWatch
+      ? {
+          onRebuild(error, result) {
+            if (error) console.error('watch build failed:', error);
+            else console.log('watch build succeeded:', result);
+          },
+        }
+      : false,
     // plugins: [replaceNodeBuiltins()]
   });
 
@@ -49,20 +52,21 @@ if (require.main === module) {
 }
 
 const replaceNodeBuiltins = () => {
-    const replace = {
-        // 'path': require.resolve('path-browserify'),
-        // 'process': require.resolve('process'),
-        // 'fs': require.resolve('./src/fs.cjs'),
-        // 'util': require.resolve('./src/util.cjs'),
-        // 'url': require.resolve('url/'),
-    }
-    const filter = RegExp(`^(${Object.keys(replace).join("|")})$`);
-    return {
-        name: "replaceNodeBuiltIns",
-        setup(build) {
-            build.onResolve({ filter }, arg => ({
-                path: replace[arg.path],
-            }));
-        },
-    };
-}
+  const replace = {
+    // 'path': require.resolve('path-browserify'),
+    // 'process': require.resolve('process'),
+    // 'fs': require.resolve('./src/fs.cjs'),
+    // 'util': require.resolve('./src/util.cjs'),
+    // 'url': require.resolve('url/'),
+  };
+  const filter = RegExp(`^(${Object.keys(replace).join('|')})$`);
+
+  return {
+    name: 'replaceNodeBuiltIns',
+    setup(build) {
+      build.onResolve({ filter }, (arg) => ({
+        path: replace[arg.path],
+      }));
+    },
+  };
+};
