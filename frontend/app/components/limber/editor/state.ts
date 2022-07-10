@@ -1,10 +1,8 @@
 import { waitForPromise } from '@ember/test-waiters';
 
-import { getQP } from 'limber/utils/query-params';
 import { assign, createMachine } from 'xstate';
 
 import { setupCodeMirror } from './-code-mirror';
-import { setupMonaco } from './-monaco';
 
 export default createMachine({
   schema: {
@@ -34,21 +32,9 @@ export default createMachine({
         },
       },
       on: {
-        /*
-         * Codemirror is for mobile devices, but debugging happens
-         * on desktop -- we can toggle the behavior via Query Param
-         */
-        // MOUSE: getQP('codemirror') ? 'loadCodeMirror' : 'loadMonaco',
-        MOUSE: getQP('codemirror') ? 'loadCodeMirror' : 'loadCodeMirror',
-        KEY: 'loadMonaco',
+        MOUSE: 'loadCodeMirror',
+        KEY: 'loadCodeMirror',
         TOUCH: 'loadCodeMirror',
-      },
-    },
-    loadMonaco: {
-      invoke: {
-        src: () => waitForPromise(setupMonaco()),
-        onDone: 'editingWithMonaco',
-        onError: { target: 'error', actions: assign({ error: (_, event) => event.data }) },
       },
     },
     loadCodeMirror: {
@@ -59,7 +45,6 @@ export default createMachine({
       },
     },
     editingWithCodeMirror: {},
-    editingWithMonaco: {},
     error: {},
   },
 });

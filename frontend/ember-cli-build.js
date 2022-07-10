@@ -44,10 +44,7 @@ module.exports = function (defaults) {
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     extraPublicTrees: [
-      // Mobile Editor
       require('@nullvoxpopuli/limber-codemirror/broccoli-funnel')(),
-      // Desktop Editor
-      require('@nullvoxpopuli/limber-monaco/broccoli-funnel')(),
       // Tailwind
       require('@nullvoxpopuli/limber-styles/broccoli-funnel')(),
       // COMPONENT_MAP,
@@ -74,16 +71,10 @@ module.exports = function (defaults) {
         package: 'qunit',
       },
       {
-        package: 'monaco-editor',
-      },
-      {
         package: '@babel/standalone',
       },
       {
         package: '@nullvoxpopuli/limber-codemirror',
-      },
-      {
-        package: '@nullvoxpopuli/limber-monaco',
       },
     ],
     staticAddonTrees: true,
@@ -96,11 +87,11 @@ module.exports = function (defaults) {
     // staticAppPaths: [],
     // splitAtRoutes: [],
     implicitModulesStrategy: 'packageNames',
-    /**
-     * Most of this config is to support monaco. *oof*
-     */
+    // required due to this app being a dynamic component generator
+    allowUnsafeDynamicComponents: true,
     packagerOptions: {
       webpackConfig: {
+        // embroider 1.8.3 might have an issues with gts + sourcemaps?
         devtool: false,
         // devtool: 'source-map',
         // devtool: isProduction ? 'source-map' : false,
@@ -112,22 +103,6 @@ module.exports = function (defaults) {
         //   Causes app to not boot
         //   chunkFormat: 'module',
         // },
-        module: {
-          rules: [
-            {
-              test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-              use: ['file-loader'],
-            },
-            {
-              test: /codicon\.ttf$/,
-              use: [
-                {
-                  loader: 'ignore-loader',
-                },
-              ],
-            },
-          ],
-        },
         resolve: {
           alias: {
             path: 'path-browserify',
@@ -143,7 +118,7 @@ module.exports = function (defaults) {
               sourcemap: true,
               minify: isProduction,
               css: true,
-              exclude: [/monaco/, /codemirror/],
+              exclude: [/codemirror/],
             }),
           ],
         },
@@ -161,7 +136,5 @@ module.exports = function (defaults) {
         ],
       },
     },
-    // required due to this app being a dynamic component generator
-    allowUnsafeDynamicComponents: true,
   });
 };

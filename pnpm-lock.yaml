@@ -41,7 +41,6 @@ importers:
       '@nullvoxpopuli/eslint-configs': 2.2.34
       '@nullvoxpopuli/horizon-theme': '*'
       '@nullvoxpopuli/limber-codemirror': '*'
-      '@nullvoxpopuli/limber-monaco': '*'
       '@nullvoxpopuli/limber-styles': '*'
       '@nullvoxpopuli/limber-transpilation': '*'
       '@popperjs/core': ^2.11.5
@@ -149,7 +148,6 @@ importers:
       '@glimmer/tracking': 1.1.2
       '@nullvoxpopuli/horizon-theme': link:../packages/horizon-theme
       '@nullvoxpopuli/limber-codemirror': link:../packages/codemirror
-      '@nullvoxpopuli/limber-monaco': link:../packages/monaco
       '@nullvoxpopuli/limber-styles': link:../packages/styles
       '@nullvoxpopuli/limber-transpilation': link:../packages/transpilation
       '@popperjs/core': 2.11.5
@@ -346,41 +344,6 @@ importers:
       '@typescript-eslint/parser': 5.30.5_hxadhbs2xogijvk7vq4t2azzbu
       concurrently: 7.2.2
       eslint: 7.32.0
-      typescript: 4.7.4
-
-  packages/monaco:
-    specifiers:
-      '@nullvoxpopuli/eslint-configs': 2.2.34
-      '@nullvoxpopuli/horizon-theme': '*'
-      '@nullvoxpopuli/limber-consts': '*'
-      '@typescript-eslint/eslint-plugin': ^5.18.0
-      '@typescript-eslint/parser': ^5.0.0
-      broccoli-funnel: ^3.0.8
-      concurrently: ^7.2.1
-      esbuild: 0.14.48
-      esbuild-plugin-alias: ^0.2.1
-      eslint: ^7.32.0
-      monaco-editor: ^0.33.0
-      monaco-editor-core: ^0.33.0
-      monaco-languages: ^2.11.1
-      recursive-copy: ^2.0.14
-      typescript: ^4.7.3
-    dependencies:
-      '@nullvoxpopuli/horizon-theme': link:../horizon-theme
-      '@nullvoxpopuli/limber-consts': link:../consts
-      broccoli-funnel: 3.0.8
-      monaco-editor: 0.33.0
-      monaco-editor-core: 0.33.0
-      monaco-languages: 2.11.1
-    devDependencies:
-      '@nullvoxpopuli/eslint-configs': 2.2.34_typescript@4.7.4
-      '@typescript-eslint/eslint-plugin': 5.30.5_tqdvjhskp4iqqnzfei7kl2fvsq
-      '@typescript-eslint/parser': 5.30.5_hxadhbs2xogijvk7vq4t2azzbu
-      concurrently: 7.2.2
-      esbuild: 0.14.48
-      esbuild-plugin-alias: 0.2.1
-      eslint: 7.32.0
-      recursive-copy: 2.0.14
       typescript: 4.7.4
 
   packages/styles:
@@ -11092,16 +11055,9 @@ packages:
     resolution: {integrity: sha512-IXnMcJ6ZyTuhRmJSjzvHSRhlVPiN9Jwc6e59V0bEJ0ba6OBeX2L0E+mRN1QseeOF4mM+F1Rit6Nh7o+rl2Yn/A==}
     engines: {node: '>0.9'}
 
-  /monaco-editor-core/0.33.0:
-    resolution: {integrity: sha512-Kzxak8jnMS8vI08DcseBuOfeQlcVPpGXO210D8M+QnaNR92s4IYzgUeiow/Hld9Gi5pGvjDbPsdUXkPewoTA5g==}
-    dev: false
-
   /monaco-editor/0.33.0:
     resolution: {integrity: sha512-VcRWPSLIUEgQJQIE0pVT8FcGBIgFoxz7jtqctE+IiCxWugD0DwgyQBcZBhdSrdMC84eumoqMZsGl2GTreOzwqw==}
-
-  /monaco-languages/2.11.1:
-    resolution: {integrity: sha512-XLd6RtqCTYQ1AD7Tz/JzT/Eag/OfvjUtsetqVe6Hm+Tj01osGgnlKsjmPPfTddOIfnSsT6S3TR5aMRL57bSrJg==}
-    dev: false
+    dev: true
 
   /morgan/1.10.0:
     resolution: {integrity: sha512-AbegBVI4sh6El+1gNwvD5YIck7nSA36weD7xvIxG4in80j/UoK8AEGaWnnz8v1GxonMCltmlNs5ZKbGvl9b1XQ==}

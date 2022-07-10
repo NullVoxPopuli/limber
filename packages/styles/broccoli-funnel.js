@@ -10,7 +10,7 @@ const SRC_FILES = path.join(__dirname, 'dist');
  * app's public folder. No building occurs
  *
  */
-module.exports = function monacoFunnel() {
+module.exports = function stylesFunnel() {
   return new Funnel(SRC_FILES, {
     destDir: 'assets/',
   });
