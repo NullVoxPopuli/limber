@@ -6,6 +6,7 @@ export const HorizonTheme = EditorView.theme(
     '&': {
       color: ui.lightText,
       backgroundColor: ui.background,
+      height: '100%',
     },
 
     '.cm-content': {

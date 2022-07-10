@@ -38,7 +38,8 @@ export default createMachine({
          * Codemirror is for mobile devices, but debugging happens
          * on desktop -- we can toggle the behavior via Query Param
          */
-        MOUSE: getQP('codemirror') ? 'loadCodeMirror' : 'loadMonaco',
+        // MOUSE: getQP('codemirror') ? 'loadCodeMirror' : 'loadMonaco',
+        MOUSE: getQP('codemirror') ? 'loadCodeMirror' : 'loadCodeMirror',
         KEY: 'loadMonaco',
         TOUCH: 'loadCodeMirror',
       },

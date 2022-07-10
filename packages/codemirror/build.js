@@ -8,6 +8,11 @@ const esbuild = require('esbuild');
 
 const OUTPUT_DIR = path.join(__dirname, 'dist').toString();
 
+const isWatch = process.argv.includes('--watch');
+
+if (isWatch) {
+  console.info(`Starting watch mode...`);
+}
 module.exports = async function build() {
   let buildDir = await fs.mkdtemp(path.join(os.tmpdir(), 'monaco--workers-'));
 
@@ -19,6 +24,12 @@ module.exports = async function build() {
     format: 'esm',
     // minification breaks codemirror somehow
     minify: false,
+    watch: isWatch ? {
+      onRebuild(error, result) {
+        if (error) console.error('watch build failed:', error)
+        else console.log('watch build succeeded:', result)
+      }
+    } : false,
     sourcemap: false,
   });
 

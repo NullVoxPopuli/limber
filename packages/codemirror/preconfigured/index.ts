@@ -1,6 +1,8 @@
 import { javascript } from '@codemirror/lang-javascript';
 import { markdown } from '@codemirror/lang-markdown';
-import { EditorState } from '@codemirror/state';
+import { syntaxHighlighting } from '@codemirror/language';
+import { Compartment, EditorSelection, EditorState } from '@codemirror/state';
+// import { EditorState } from '@codemirror/state';
 import { basicSetup, EditorView } from 'codemirror';
 
 import { HorizonSyntaxTheme } from './horizon-syntax-theme';
@@ -11,34 +13,52 @@ export default function newEditor(
   value: string,
   updateText: (text: string) => void
 ) {
-  let view = new EditorView({
-    parent: element,
-    state: stateForValue(value, updateText),
-  });
-
-  let setText = (text: string) => {
-    view.setState(stateForValue(text, updateText));
-  };
-
-  return { view, setText };
-}
-
-function stateForValue(text: string, updateText: (text: string) => void) {
   let updateListener = EditorView.updateListener.of(({ state, docChanged }) => {
     if (docChanged) {
       updateText(state.doc.toString());
     }
   });
 
-  return EditorState.create({
-    doc: text,
+  let view = new EditorView({
+    parent: element,
+    // state: stateForValue(value, updateText),
     extensions: [
+      // features
       basicSetup,
       updateListener,
-      HorizonTheme,
-      HorizonSyntaxTheme,
-      markdown(),
+      EditorView.lineWrapping,
+      // Intentionally do not capture the tab key -- otherwise we can't leave the editor.
+      // keymap.of([indentWithTab]),
+      // languages
+      // markdown(),
       javascript(),
+      // Theme
+      HorizonTheme,
+      syntaxHighlighting(HorizonSyntaxTheme),
     ],
   });
+
+  view.dispatch(
+    view.state.changeByRange((range) => ({
+      changes: [{ from: range.from, insert: value }],
+      range: EditorSelection.range(range.from, range.to),
+    }))
+  );
+
+  let tabSize = new Compartment();
+
+  view.dispatch({
+    effects: tabSize.reconfigure(EditorState.tabSize.of(2)),
+  });
+
+  let setText = (text: string) => {
+    view.dispatch(
+      view.state.changeByRange((range) => ({
+        changes: [{ from: range.from, insert: text }],
+        range: EditorSelection.range(range.from, range.to),
+      }))
+    );
+  };
+
+  return { view, setText };
 }

@@ -8,7 +8,7 @@
   "private": true,
   "scripts": {
     "build": "node build.js",
-    "dev": "echo 'limber-codemirror does not have a watch mode'; pnpm build",
+    "dev": "pnpm build --watch",
     "check:types": "tsc --build",
     "lint": "concurrently 'npm:lint:*(!fix)' --names 'lint:'",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
