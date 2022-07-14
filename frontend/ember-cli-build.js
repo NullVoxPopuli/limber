@@ -57,6 +57,7 @@ module.exports = function (defaults) {
         'limber/components/external-link',
         'limber/components/shadowed',
         'limber/helpers/state',
+        'limber/cell',
         'ember-popperjs',
         'ember-repl',
         'ember-modifier',
