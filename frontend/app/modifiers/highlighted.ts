@@ -4,29 +4,33 @@ import { modifier } from 'ember-modifier';
 
 import { getHighlighter, getPurifier } from './-utils/highlighting';
 
-export default modifier(
-  (element: Element, [code]: [string]) => {
-    let guid = guidFor(element);
+interface Signature {
+  Element: HTMLPreElement;
+  Args: {
+    Positional: [string];
+  };
+}
 
-    element.setAttribute('id', guid);
+export default modifier<Signature>((element: Element, [code]) => {
+  let guid = guidFor(element);
 
-    (async () => {
-      let [hljs, purify] = await Promise.all([getHighlighter(), getPurifier()]);
+  element.setAttribute('id', guid);
 
-      // because the above is async, it's possible that the element
-      // has been removed from the DOM
-      if (!document.getElementById(guid)) {
-        return;
-      }
+  (async () => {
+    let [hljs, purify] = await Promise.all([getHighlighter(), getPurifier()]);
 
-      let target = element.querySelector('code');
+    // because the above is async, it's possible that the element
+    // has been removed from the DOM
+    if (!document.getElementById(guid)) {
+      return;
+    }
 
-      if (!target) return;
+    let target = element.querySelector('code');
 
-      let { value } = hljs.highlight(code, { language: target.classList[0] });
+    if (!target) return;
 
-      target.innerHTML = purify.sanitize(value);
-    })();
-  },
-  { eager: false }
-);
+    let { value } = hljs.highlight(code, { language: target.classList[0] });
+
+    target.innerHTML = purify.sanitize(value);
+  })();
+});

@@ -18,6 +18,7 @@ import type Building from 'limber/components/limber/building';
 import type Error from 'limber/components/limber/error';
 
 import type service from 'limber/helpers/service';
+import type not from 'limber/helpers/not';
 import type inIframe from 'limber/helpers/in-iframe';
 import type highlighted from 'limber/modifiers/highlighted';
 import type positionedNLines from 'limber/modifiers/positioned-n-lines-from-top';
@@ -40,6 +41,7 @@ declare module "@glint/environment-ember-loose/registry" {
     'Limber::Building': typeof Building;
     'Limber::Error': typeof Error;
     'ContainerQuery': ComponentLike<{
+      Element: HTMLDivElement;
       Args: {
         features: any;
       },
@@ -52,6 +54,7 @@ declare module "@glint/environment-ember-loose/registry" {
      * Helpers
      */
     service: typeof service;
+    not: typeof not;
     'in-iframe': typeof inIframe;
     'cq-aspect-ratio': HelperLike<{
       Args: {

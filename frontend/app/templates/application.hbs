@@ -1,12 +1,14 @@
 <Limber::Portals />
 
 <main class="grid grid-flow-col h-screen max-h-screen grid grid-rows-editor">
-  {{#unless (in-iframe)}}
+  {{#if (not (in-iframe))}}
     <Limber::Header />
-  {{/unless}}
+  {{/if}}
 
   <ContainerQuery
     @features={{hash verticalSplit=(cq-aspect-ratio min=1)}}
+    {{! grid forces all the contents to take up all available vertical space }}
+    class="grid"
     as |query|
   >
     <div
@@ -21,9 +23,9 @@
         class="flex-1 shadow-inner grid overflow-hidden relative"
         style="grid-template-rows: min-content 1fr;"
       >
-        {{#unless (in-iframe)}}
+        {{#if (not (in-iframe))}}
           <Limber::Navigation />
-        {{/unless}}
+        {{/if}}
 
         <div
           class="overflow-auto relative bg-white"

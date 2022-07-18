@@ -4,6 +4,7 @@ export interface NamedArgs {
 }
 
 export type Signature = {
+  Element: HTMLDivElement;
   Args: {
     Positional: PositionalArgs;
     Named: NamedArgs;
