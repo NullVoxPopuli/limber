@@ -8,4 +8,4 @@ const options = {
   inlineCharacterLimit: 80,
 };
 
-export default helper(([value]) => stringifyObject(value, options));
+export default helper(([value]: [string]) => stringifyObject(value, options));
