@@ -3,11 +3,7 @@ import "@glint/environment-ember-loose/native-integration";
 import "ember-page-title/glint";
 import 'ember-statechart-component/glint';
 
-import type {
-  // ComponentLike,
-  // HelperLike,
-  // ModifierLike
-} from "@glint/template";
+import type { ComponentLike, HelperLike } from "@glint/template";
 
 // declare module '@fortawesome/ember-fontawesome/components/fa-icon' {
 //   export default ComponentLike;
@@ -43,12 +39,25 @@ declare module "@glint/environment-ember-loose/registry" {
     'Limber::Navigation': typeof Navigation;
     'Limber::Building': typeof Building;
     'Limber::Error': typeof Error;
+    'ContainerQuery': ComponentLike<{
+      Args: {
+        features: any;
+      },
+      Blocks: {
+        default: [{ features: any }]
+      }
+    }>;
 
     /**
      * Helpers
      */
     service: typeof service;
     'in-iframe': typeof inIframe;
+    'cq-aspect-ratio': HelperLike<{
+      Args: {
+        Named: { min: number };
+      }
+    }>;
 
     /**
      * Modifiers

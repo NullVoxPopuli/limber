@@ -47,6 +47,7 @@
       "mustache": "ember-cli -> testem -> consolidate -> mustache is ancient"
     },
     "patchedDependencies": {
+      "ember-on-resize-modifier@1.1.0": "patches/ember-on-resize-modifier@1.1.0.patch"
     }
   }
 }

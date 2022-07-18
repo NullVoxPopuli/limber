@@ -5,29 +5,38 @@
     <Limber::Header />
   {{/unless}}
 
-  <div class="flex flex-col lg:flex-row overflow-hidden">
-    <Limber::EditorContainer />
-
-    {{! template-lint-disable no-inline-styles }}
-    <section
-      class="flex-1 shadow-inner grid overflow-hidden relative"
-      style="grid-template-rows: min-content 1fr;"
+  <ContainerQuery
+    @features={{hash verticalSplit=(cq-aspect-ratio min=1)}}
+    as |query|
+  >
+    <div
+      class="
+        {{if query.features.verticalSplit "flex-row" "flex-col"}}
+        flex overflow-hidden"
     >
-      {{#unless (in-iframe)}}
-        <Limber::Navigation />
-      {{/unless}}
+      <Limber::EditorContainer />
 
-      <div
-        class="overflow-auto relative bg-white"
-        {{constrain-vertically}}
-        data-test-output
+      {{! template-lint-disable no-inline-styles }}
+      <section
+        class="flex-1 shadow-inner grid overflow-hidden relative"
+        style="grid-template-rows: min-content 1fr;"
       >
-        {{outlet}}
-      </div>
+        {{#unless (in-iframe)}}
+          <Limber::Navigation />
+        {{/unless}}
 
-      <Limber::Building />
-      <Limber::Error />
-    </section>
-  </div>
+        <div
+          class="overflow-auto relative bg-white"
+          {{constrain-vertically}}
+          data-test-output
+        >
+          {{outlet}}
+        </div>
+
+        <Limber::Building />
+        <Limber::Error />
+      </section>
+    </div>
+  </ContainerQuery>
 
 </main>
