@@ -58,7 +58,7 @@ declare module "@glint/environment-ember-loose/registry" {
     'in-iframe': typeof inIframe;
     'cq-aspect-ratio': HelperLike<{
       Args: {
-        Named: { min: number };
+        Named: { min?: number, max?: number };
       }
     }>;
 

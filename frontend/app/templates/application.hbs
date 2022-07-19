@@ -6,17 +6,19 @@
   {{/if}}
 
   <ContainerQuery
-    @features={{hash verticalSplit=(cq-aspect-ratio min=1)}}
+    @features={{hash horizontalSplit=(cq-aspect-ratio max=1)}}
     {{! grid forces all the contents to take up all available vertical space }}
     class="grid"
     as |query|
   >
+    {{log query.features}}
     <div
+      {{! row = left to right, col = top to bottom }}
       class="
-        {{if query.features.verticalSplit "flex-row" "flex-col"}}
+        {{if query.features.horizontalSplit "flex-col" "flex-row"}}
         flex overflow-hidden"
     >
-      <Limber::EditorContainer />
+      <Limber::EditorContainer @splitHorizontally={{query.features.horizontalSplit}} />
 
       {{! template-lint-disable no-inline-styles }}
       <section

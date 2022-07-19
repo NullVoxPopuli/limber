@@ -3,17 +3,25 @@ import isEditing from 'limber/helpers/is-editing';
 import Editor from './editor';
 import { EditorControls } from './editor/controls';
 
+import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
+
+export const EditorContainer: TOC<{
+  Args: {
+    splitHorizontally: boolean;
+  }
+}> =
 <template>
   {{#if (isEditing)}}
     <EditorControls as |Controls container|>
       <section
         data-test-editor-panel
         class="
-          grid resize-y lg:resize-x overflow-hidden
-          relative
-          transition-all
-          w-full lg:w-[40vw]
-          h-[40vh] lg:min-h-full"
+          grid overflow-hidden relative transition-all
+          {{if @splitHorizontally
+            "w-full h-[40vh] resize-y"
+            "w-[40vw] min-h-full resize-x"
+          }}
+        "
         {{container}}
       >
         <Controls />
@@ -23,3 +31,5 @@ import { EditorControls } from './editor/controls';
     </EditorControls>
   {{/if}}
 </template>
+
+export default EditorContainer;
