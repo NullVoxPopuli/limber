@@ -12,35 +12,38 @@
     as |query|
   >
     {{log query.features}}
-    <div
-      {{! row = left to right, col = top to bottom }}
-      class="
-        {{if query.features.horizontalSplit "flex-col" "flex-row"}}
-        flex overflow-hidden"
-    >
-      <Limber::EditorContainer @splitHorizontally={{query.features.horizontalSplit}} />
 
-      {{! template-lint-disable no-inline-styles }}
-      <section
-        class="flex-1 shadow-inner grid overflow-hidden relative"
-        style="grid-template-rows: min-content 1fr;"
+    {{#let query.features.horizontalSplit as |splitHorizontally|}}
+      <div
+        {{! row = left to right, col = top to bottom }}
+        class="
+          {{if splitHorizontally "flex-col" "flex-row"}}
+          flex overflow-hidden"
       >
-        {{#if (not (in-iframe))}}
-          <Limber::Navigation />
-        {{/if}}
+        <Limber::EditorContainer @splitHorizontally={{splitHorizontally}} />
 
-        <div
-          class="overflow-auto relative bg-white"
-          {{constrain-vertically}}
-          data-test-output
+        {{! template-lint-disable no-inline-styles }}
+        <section
+          class="flex-1 shadow-inner grid overflow-hidden relative"
+          style="grid-template-rows: min-content 1fr;"
         >
-          {{outlet}}
-        </div>
+          {{#if (not (in-iframe))}}
+            <Limber::Navigation />
+          {{/if}}
 
-        <Limber::Building />
-        <Limber::Error />
-      </section>
-    </div>
+          <div
+            class="overflow-auto relative bg-white"
+            {{constrain-vertically}}
+            data-test-output
+          >
+            {{outlet}}
+          </div>
+
+          <Limber::Building />
+          <Limber::Error />
+        </section>
+      </div>
+    {{/let}}
   </ContainerQuery>
 
 </main>
