@@ -34,7 +34,8 @@ const Button: TOC<{
 
 const Controls: TOC<{
   Args: {
-    needsControls: boolean
+    needsControls: boolean;
+    splitHorizontally: boolean;
     isMinimized: boolean;
     isMaximized: boolean;
     send: Send<any>;
@@ -42,12 +43,17 @@ const Controls: TOC<{
 }> = <template>
   {{#if @needsControls}}
     <div
-      class='
-        absolute top-0 right-0 z-[1] flex lg:grid
+      data-is-minimized="{{@isMinimized}}"
+      class="
+        absolute top-0 right-0 z-[1]
+        {{if @splitHorizontally
+          'flex flex-row-reverse'
+          'grid'
+        }}
         {{if @isMinimized
           'bg-ember-black h-full content-start'
         }}
-      '
+      "
     >
       <Button
         title={{if @isMaximized 'Back to split view' 'Maximize Editor'}}
@@ -69,6 +75,12 @@ const Controls: TOC<{
           <FaIcon @icon='window-minimize' @prefix='far' />
         {{/if}}
       </Button>
+      <Button
+        title="Rotate Editor/Output orientation"
+        {{on 'click' (fn @send 'ROTATE')}}
+      >
+        <FaIcon @icon='rotate' />
+      </Button>
     </div>
   {{/if}}
 </template>;
@@ -89,19 +101,30 @@ const container = functionModifier((element: Element, [send]: [Send<unknown>]) =
   return () => send('CONTAINER_REMOVED');
 });
 
+const sendOrientation = (send: Send<unknown>, splitHorizontally: boolean) => {
+  send('ORIENTATION', { splitHorizontally });
+}
+
 export const EditorControls: TOC<{
+  Args: {
+    splitHorizontally: boolean;
+  };
   Blocks: {
     default: [ComponentLike, ModifierLike]
   }
 }> =
   <template>
     <State as |state send|>
+
+      {{ (sendOrientation send @splitHorizontally) }}
+
       {{yield
         (component
           Controls
           isMinimized=(state.matches 'hasContainer.minimized')
           isMaximized=(state.matches 'hasContainer.maximized')
           needsControls=(toBoolean state.context.container)
+          splitHorizontally=@splitHorizontally
           send=send
         )
         (modifier container send)

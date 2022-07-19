@@ -30,7 +30,7 @@ const Editor: TOC<{
       {{/let}}
 
     {{else}}
-      <div class="syntax-dark relative border border-gray-900 bg-code-bg" ...attributes>
+      <div class="syntax-dark relative border border-gray-900 bg-code-bg overflow-hidden" ...attributes>
 
         {{#if (state.matches 'loadCodeMirror')}}
           <Loader />

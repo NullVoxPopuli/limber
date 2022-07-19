@@ -1,18 +1,17 @@
 import { getService } from 'ember-statechart-component';
 import { assign, createMachine } from 'xstate';
 
-function isLargeScreen() {
-  return window.self.innerWidth >= 1024;
+function isLargeScreen(ctx: { splitHorizontally?: boolean }) {
+  return !ctx.splitHorizontally;
 }
 
-function isSmallScreen() {
-  return !isLargeScreen();
+function isSmallScreen(ctx: { splitHorizontally?: boolean }) {
+  return !isLargeScreen(ctx);
 }
 
 interface ContainerFoundData {
   container: HTMLElement;
   observer: ResizeObserver;
-  onWindowResize: (event: UIEvent) => void;
   maximize: () => void;
   minimize: () => void;
 }
@@ -25,9 +24,9 @@ export default createMachine(
       context: {} as {
         container?: HTMLElement;
         observer?: ResizeObserver;
-        onWindowResize?: () => void;
         maximize?: () => void;
         minimize?: () => void;
+        splitHorizontally?: boolean;
       },
       events: {} as
         | ({ type: 'CONTAINER_FOUND' } & ContainerFoundData)
@@ -35,18 +34,18 @@ export default createMachine(
         | { type: 'MAXIMIZE' }
         | { type: 'MINIMIZE' }
         | { type: 'RESIZE' }
-        | { type: 'WINDOW_RESIZE' },
+        | { type: 'WINDOW_RESIZE' }
+        | { type: 'ORIENTATION'; splitHorizontally: boolean },
     },
     on: {
       CONTAINER_FOUND: {
         target: 'hasContainer',
         actions: assign((_, event: ContainerFoundData) => {
-          let { container, observer, onWindowResize, maximize, minimize } = event;
+          let { container, observer, maximize, minimize } = event;
 
           return {
             container,
             observer,
-            onWindowResize,
             maximize,
             minimize,
           };
@@ -55,6 +54,12 @@ export default createMachine(
       CONTAINER_REMOVED: {
         target: 'noContainer',
         actions: assign({ container: (_, __) => undefined }),
+      },
+      ORIENTATION: {
+        actions: assign({
+          splitHorizontally: (_, { splitHorizontally }: { splitHorizontally: boolean }) =>
+            splitHorizontally,
+        }),
       },
     },
     states: {
@@ -140,7 +145,7 @@ export default createMachine(
     // update due to the state machine still being in the maximized state.
     actions: {
       maximizeEditor: ({ container }) => container && maximizeEditor(container),
-      minimizeEditor: ({ container }) => container && minimizeEditor(container),
+      minimizeEditor: (ctx) => minimizeEditor(ctx),
       restoreEditor: (context) => {
         let { container, maximize, minimize } = context;
 
@@ -156,7 +161,7 @@ export default createMachine(
         } else if (minimize && requestingMin) {
           minimize();
         } else {
-          if (isLargeScreen()) {
+          if (isLargeScreen(context)) {
             restoreWidth(container);
             clearHeight(container);
           } else {
@@ -165,10 +170,6 @@ export default createMachine(
           }
         }
       },
-      addResizeListener: ({ onWindowResize }) =>
-        onWindowResize && window.addEventListener('resize', onWindowResize),
-      removeResizeListener: ({ onWindowResize }) =>
-        onWindowResize && window.removeEventListener('resize', onWindowResize),
 
       clearHeight: ({ container }) => container && clearHeight(container),
       clearWidth: ({ container }) => container && clearWidth(container),
@@ -204,8 +205,12 @@ export default createMachine(
   }
 );
 
-const minimizeEditor = (container: HTMLElement) => {
-  if (isLargeScreen()) {
+const minimizeEditor = (ctx: { container?: HTMLElement; splitHorizontally?: boolean }) => {
+  let { container } = ctx;
+
+  if (!container) return;
+
+  if (isLargeScreen(ctx)) {
     container.style.width = '32px';
     clearHeight(container);
   } else {

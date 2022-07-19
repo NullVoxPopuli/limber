@@ -1,14 +1,20 @@
 <Limber::Portals />
 
-<main class="grid grid-flow-col h-screen max-h-screen grid grid-rows-editor">
+<main
+  class="
+    grid grid-flow-col h-screen max-h-screen grid
+    {{if (not (in-iframe)) 'grid-rows-editor'}}
+  "
+>
   {{#if (not (in-iframe))}}
     <Limber::Header />
   {{/if}}
 
   <ContainerQuery
-    @features={{hash horizontalSplit=(cq-aspect-ratio max=1)}}
+    @features={{hash horizontalSplit=(cq-aspect-ratio max=1.2)}}
     {{! grid forces all the contents to take up all available vertical space }}
     class="grid"
+    {{constrain-vertically}}
     as |query|
   >
     {{log query.features}}

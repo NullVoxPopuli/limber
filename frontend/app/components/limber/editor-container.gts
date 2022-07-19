@@ -12,7 +12,7 @@ export const EditorContainer: TOC<{
 }> =
 <template>
   {{#if (isEditing)}}
-    <EditorControls as |Controls container|>
+    <EditorControls @splitHorizontally={{@splitHorizontally}} as |Controls container|>
       <section
         data-test-editor-panel
         class="
