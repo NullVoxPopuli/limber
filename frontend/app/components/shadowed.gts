@@ -6,7 +6,7 @@ import type { TemplateOnlyComponent as TOC } from '@ember/component/template-onl
 
 const attachShadow = modifier((element: Element, [setShadow]: [State['update']]) => {
   setShadow(element.attachShadow({ mode: 'open' }));
-}, { eager: false });
+});
 
 // index.html has the production-fingerprinted references to these links
 // Ideally, we'd have some pre-processor scan everything for references to

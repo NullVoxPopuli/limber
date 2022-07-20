@@ -1,5 +1,7 @@
 import { helper } from '@ember/component/helper';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import stringifyObject from 'stringify-object';
 
 const options = {

@@ -38,6 +38,7 @@ const Controls: TOC<{
     splitHorizontally: boolean;
     isMinimized: boolean;
     isMaximized: boolean;
+    rotate: () => void;
     send: Send<any>;
   }
 }> = <template>
@@ -77,7 +78,7 @@ const Controls: TOC<{
       </Button>
       <Button
         title="Rotate Editor/Output orientation"
-        {{on 'click' (fn @send 'ROTATE')}}
+        {{on 'click' @rotate}}
       >
         <FaIcon @icon='rotate' />
       </Button>
@@ -108,6 +109,7 @@ const sendOrientation = (send: Send<unknown>, splitHorizontally: boolean) => {
 export const EditorControls: TOC<{
   Args: {
     splitHorizontally: boolean;
+    rotate: () => void;
   };
   Blocks: {
     default: [ComponentLike, ModifierLike]
@@ -125,6 +127,7 @@ export const EditorControls: TOC<{
           isMaximized=(state.matches 'hasContainer.maximized')
           needsControls=(toBoolean state.context.container)
           splitHorizontally=@splitHorizontally
+          rotate=@rotate
           send=send
         )
         (modifier container send)
