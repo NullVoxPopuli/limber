@@ -7,7 +7,7 @@ import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
 import isEditing from 'limber/helpers/is-editing';
-import DemoSelect from './demo-select';
+import DemoSelect from '../demo-select';
 
 import type RouterService from '@ember/routing/router-service';
 

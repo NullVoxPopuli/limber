@@ -8,7 +8,8 @@ import type { ComponentLike, HelperLike } from "@glint/template";
 import type Output from 'limber/components/limber/output';
 import type Portals from 'limber/components/limber/portals';
 import type Header from 'limber/components/limber/header';
-import type Main from 'limber/components/limber/main';
+import type Layout from 'limber/components/limber/layout';
+import type Editor from 'limber/components/limber/editor';
 
 import type service from 'limber/helpers/service';
 import type not from 'limber/helpers/not';
@@ -30,7 +31,8 @@ declare module "@glint/environment-ember-loose/registry" {
     'Limber::Output': typeof Output;
     'Limber::Portals': typeof Portals;
     'Limber::Header': typeof Header;
-    'Limber::Main': typeof Main;
+    'Limber::Layout': typeof Layout;
+    'Limber::Editor': typeof Editor;
 
     /**
      * Helpers

@@ -10,5 +10,13 @@
     <Limber::Header />
   {{/if}}
 
-  <Limber::Main />
+  <Limber::Layout>
+    <:editor>
+      <Limber::Editor />
+    </:editor>
+
+    <:output>
+      {{outlet}}
+    </:output>
+  </Limber::Layout>
 </main>
