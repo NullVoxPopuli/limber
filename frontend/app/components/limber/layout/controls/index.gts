@@ -1,6 +1,7 @@
 import { assert } from '@ember/debug';
 import { fn, modifier } from '@ember/helper';
 import { on } from '@ember/modifier'
+import not from 'limber/helpers/not';
 import { modifier as functionModifier} from 'ember-modifier';
 
 // @ts-expect-error
@@ -15,7 +16,6 @@ import type {
 } from "@glint/template";
 import type { Send } from 'ember-statechart-component/glint';
 
-
 const Button: TOC<{
   Element: HTMLButtonElement
   Blocks: { default: [] }
@@ -25,12 +25,15 @@ const Button: TOC<{
     class="
       block select-none py-2 px-3 text-white text-xs
       hover:bg-[#9b2918]
-      focus:ring-4 ring-inset focus:outline-none"
+      focus:ring-4 ring-inset focus:outline-none
+      disabled:opacity-30
+    "
     ...attributes
   >
     {{yield}}
   </button>
 </template>;
+
 
 const Controls: TOC<{
   Args: {
@@ -78,7 +81,8 @@ const Controls: TOC<{
       </Button>
       <Button
         title="Rotate Editor/Output orientation"
-        {{on 'click' @rotate}}
+        disabled={{@isMaximized}}
+        {{ (if (not @isMaximized) (modifier on 'click' @rotate)) }}
       >
         <FaIcon @icon='rotate' />
       </Button>
