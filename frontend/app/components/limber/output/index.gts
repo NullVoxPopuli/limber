@@ -1,6 +1,6 @@
 import service from 'limber/helpers/service';
 import highlight from 'limber/modifiers/highlight-code-blocks';
-import CopyMenu from './copy-menu';
+import CopyMenu from '../copy-menu';
 
 import Compiler from './compiler';
 

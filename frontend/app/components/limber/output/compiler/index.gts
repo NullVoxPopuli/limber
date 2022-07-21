@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { hash } from '@ember/helper';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
@@ -6,7 +7,9 @@ import { registerDestructor } from '@ember/destroyable';
 import { waitFor } from '@ember/test-waiters';
 
 import { nameFor } from 'ember-repl';
+import { iframeMessageHandler, isAllowedFormat, DEFAULT_FORMAT } from './iframe-message-handler';
 
+import type { Type as Format } from './iframe-message-handler';
 import type { ComponentLike } from '@glint/template';
 import type RouterService from '@ember/routing/router-service';
 
@@ -21,10 +24,6 @@ interface Signature {
 type Format = 'glimdown' | 'gjs' | 'hbs';
 
 const CACHE = new Map<string, ComponentLike>();
-const DEFAULT_FORMAT = 'glimdown' as const;
-const ALLOWED_FORMATS = [DEFAULT_FORMAT, 'gjs', 'hbs'] as const;
-const isAllowedFormat = (x?: string): x is Format => Boolean(x && (ALLOWED_FORMATS as readonly string[]).includes(x));
-
 export default class Compiler extends Component<Signature> {
   @service declare router: RouterService;
 
@@ -36,11 +35,25 @@ export default class Compiler extends Component<Signature> {
   constructor(owner: unknown, args: any) {
     super(owner, args);
 
-    let handle = (...args: unknown[]) => console.log('compiler received', ...args);
+    let handle = (event: MessageEvent) => {
+      let text = iframeMessageHandler(this)(event);
+
+      if (text) {
+        this.makeComponent(text);
+      }
+    }
 
     window.addEventListener('message', handle);
 
     registerDestructor(this, () => window.removeEventListener('message', handle));
+  }
+
+  report = (message: object) => {
+    window.parent.postMessage(JSON.stringify({ message, from: 'limber-frame' } as const));
+  }
+
+  reportError = (error: string | { error: string; line: number }) => {
+    this.report({ error });
   }
 
   get format() {
@@ -53,77 +66,17 @@ export default class Compiler extends Component<Signature> {
     return DEFAULT_FORMAT;
   }
 
-  getCompiler = (format: Format): () => unknown => {
-    return {
-      glimdown: () => import('./glimdown'),
-      gjs: () => 0,
-      hbs: () => 0,
-    }[format]
-  }
-
 
   @action
   @waitFor
-  async makeComponent() {
-    let id = nameFor(this.text);
-
-    this.error = null;
-
-    if (CACHE.has(id)) {
-      this.component = CACHE.get(id);
-
-      return;
-    }
-
-    // this.isCompiling = true;
-
-    try {
-      await this._compile(id);
-    } finally {
-      // this.isCompiling = false;
-    }
+  async makeComponent(text: string) {
+    await compileTopLevelComponent(text, {
+      format: this.format,
+      onSuccess: (component) => this.component = component,
+      onError: this.reportError,
+    });
   }
 
-  @action
-  async _compile(id: string) {
-    let compiler = await this.getCompiler(this.format)?.();
-
-    if (!compiler) {
-      this.error = 'Could not find compiler';
-
-      return;
-    }
-
-    if (!this.text) {
-      this.error = "No Input Document yet";
-      return;
-    }
-
-    let { error, rootTemplate, rootComponent } = await compiler.compile(this.text);
-
-    if (error) {
-      console.error(error);
-    }
-
-    if (error && rootTemplate === undefined) {
-      this.error = error.message;
-
-      return;
-    }
-
-    if (error) {
-      let { line } = extractPosition(error.message);
-
-      this.error = error.message;
-      this.errorLine = line;
-
-      return;
-    }
-
-    CACHE.set(id, rootComponent as ComponentLike);
-
-    this.component = rootComponent as ComponentLike;
-  }
 
   <template>
     {{yield
@@ -132,6 +85,73 @@ export default class Compiler extends Component<Signature> {
       )
     }}
   </template>
+}
+
+async function compileTopLevelComponent(text: string, { format, onSuccess, onError }: {format: Format, onSuccess: (component: ComponentLike) => void, onError: (error: string) => void}) {
+    let id = nameFor(text);
+
+    let existing = CACHE.get(id);
+    if (existing) {
+      onSuccess(existing);
+
+      return;
+    }
+
+    const getCompiler = (format: Format): () => unknown => {
+    return {
+      glimdown: () => import('./glimdown'),
+      gjs: () => 0,
+      hbs: () => 0,
+    }[format]
+  }
+
+
+    // this.isCompiling = true;
+
+    try {
+      let compiler = await getCompiler(format)?.();
+
+      if (!compiler) {
+        onError('Could not find compiler');
+
+        return;
+      }
+
+      if (!text) {
+        onError("No Input Document yet");
+
+        return;
+      }
+
+      let { error, rootTemplate, rootComponent } = await compiler.compile(text);
+
+      if (error) {
+        console.error(error);
+      }
+
+      if (error && rootTemplate === undefined) {
+        onError(error.message);
+
+        return;
+      }
+
+      if (error) {
+        onError(error);
+
+        // let { line } = extractPosition(error.message);
+
+        // this.error = error.message;
+        // this.errorLine = line;
+
+        return;
+      }
+
+      CACHE.set(id, rootComponent as ComponentLike);
+
+      onSuccess(rootComponent);
+    } finally {
+      // this.isCompiling = false;
+    }
 }
 
 function extractPosition(message: string) {

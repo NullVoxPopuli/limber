@@ -40,6 +40,7 @@
       globalThis.path = {
         resolve: (...args) => args.join('/'),
       }
+      console.log(window.top, window.parent, window.self);
     </script>
   </head>
   <body class="overflow-hidden syntax-dark syntax-bright">
