@@ -2,9 +2,10 @@ import service from 'limber/helpers/service';
 import highlight from 'limber/modifiers/highlight-code-blocks';
 import CopyMenu from './copy-menu';
 
-<template>
-  {{#let (service 'editor') as |context|}}
+import Compiler from './compiler';
 
+<template>
+  <Compiler as |context|>
     <div class='p-4 prose max-w-full relative'>
       {{!--
         The copy menu exists here for two reasons:
@@ -23,6 +24,5 @@ import CopyMenu from './copy-menu';
       {{/if}}
 
     </div>
-
-  {{/let}}
+  </Compiler>
 </template>

@@ -10,6 +10,7 @@ import type Portals from 'limber/components/limber/portals';
 import type Header from 'limber/components/limber/header';
 import type Layout from 'limber/components/limber/layout';
 import type Editor from 'limber/components/limber/editor';
+import type FrameOutput from 'limber/components/limber/frame-output';
 
 import type service from 'limber/helpers/service';
 import type not from 'limber/helpers/not';
@@ -33,6 +34,7 @@ declare module "@glint/environment-ember-loose/registry" {
     'Limber::Header': typeof Header;
     'Limber::Layout': typeof Layout;
     'Limber::Editor': typeof Editor;
+    'Limber::FrameOutput': typeof FrameOutput;
 
     /**
      * Helpers

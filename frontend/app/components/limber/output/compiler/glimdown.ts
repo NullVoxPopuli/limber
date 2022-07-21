@@ -3,9 +3,9 @@
 import { compileHBS, compileJS, invocationName } from 'ember-repl';
 import CopyMenu from 'limber/components/limber/copy-menu';
 
-import { parseMarkdown } from './markdown-to-ember';
+import { parseMarkdown } from './-compile/markdown-to-ember';
 
-import type { ExtractedCode } from './markdown-to-ember';
+import type { ExtractedCode } from './-compile/markdown-to-ember';
 import type { CompileResult } from 'ember-repl';
 
 interface CompilationResult {
