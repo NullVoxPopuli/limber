@@ -211,10 +211,10 @@ const minimizeEditor = (ctx: { container?: HTMLElement; splitHorizontally?: bool
   if (!container) return;
 
   if (isLargeScreen(ctx)) {
-    container.style.width = '32px';
+    container.style.width = '38px';
     clearHeight(container);
   } else {
-    container.style.height = '32px';
+    container.style.height = '38px';
     clearWidth(container);
   }
 };
