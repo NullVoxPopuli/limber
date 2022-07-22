@@ -1,41 +1,22 @@
+import { ALLOWED_FORMATS, fromParent, FromParent, hasAllowedFormat, hasContent, hasFormat, parseEvent } from "limber/utils/messaging";
+
 interface Context {
   error: string | null;
   onError?: (error: string | Error) => void;
 }
 
-export type Type = 'glimdown' | 'gjs' | 'hbs';
-type Data = {
-  type: Type;
-  content: string;
-  from: 'limber';
-};
-
-export const DEFAULT_FORMAT = 'glimdown' as const;
-
-const ALLOWED_FORMATS = [DEFAULT_FORMAT, 'gjs', 'hbs'] as const;
-
-export const isAllowedFormat = (x?: string): x is Type =>
-  Boolean(x && (ALLOWED_FORMATS as readonly string[]).includes(x));
-
 class MessageFormatError extends Error {}
 
 export function iframeMessageHandler(ctx: Context) {
   return (event: MessageEvent) => {
-    let data: Data;
-    let parsed: object = {};
+    let parsed = parseEvent(event);
 
-    try {
-      parsed = JSON.parse(event.data);
-    } catch (e) {
-      console.debug('Unrecognized message data');
-    }
-
-    if (!isFromParent(parsed)) {
+    if (!fromParent(parsed)) {
       return;
     }
 
     try {
-      data = verify(parsed);
+      let data = verify(parsed);
 
       return data.content;
     } catch (e) {
@@ -46,28 +27,19 @@ export function iframeMessageHandler(ctx: Context) {
   };
 }
 
-const isFromParent = (x?: object): boolean => {
-  if (hasFrom(x)) {
-    return x.from === 'limber';
+const hasCorrectTypes = (x: {
+  format: unknown;
+  content: unknown;
+}): x is { format: string; content: string } => {
+  return typeof x.format === 'string' && typeof x.content === 'string';
+};
+
+function verify(parsed: object): FromParent {
+  if (!fromParent(parsed)) {
+    throw new Error('Message not from parent. Not valid input');
   }
 
-  return false;
-};
-
-const hasFrom = (x?: object): x is { from: unknown } => Boolean(x && 'from' in x);
-const hasType = (x?: object): x is { type: unknown } => Boolean(x && 'type' in x);
-const hasContent = (x?: object): x is { content: unknown } => Boolean(x && 'content' in x);
-const hasCorrectTypes = (x: {
-  type: unknown;
-  content: unknown;
-}): x is { type: string; content: string } => {
-  return typeof x.type === 'string' && typeof x.content === 'string';
-};
-const hasAllowedFormat = (x: { type: string; content: string }): x is Data =>
-  isAllowedFormat(x.type);
-
-function verify(parsed: object): Data {
-  if (!hasType(parsed)) {
+  if (!hasFormat(parsed)) {
     throw new MessageFormatError('received JSON message does not have a type property');
   }
 
@@ -76,7 +48,7 @@ function verify(parsed: object): Data {
   }
 
   if (!hasCorrectTypes(parsed)) {
-    throw new MessageFormatError(`value types for ${parsed.type} were not correct`);
+    throw new MessageFormatError(`values for format or content are not correct`);
   }
 
   if (!hasAllowedFormat(parsed)) {

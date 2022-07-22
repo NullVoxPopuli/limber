@@ -82,7 +82,7 @@ const Controls: TOC<{
       <Button
         title="Rotate Editor/Output orientation"
         disabled={{@isMaximized}}
-        {{ (if (not @isMaximized) (modifier on 'click' @rotate)) }}
+        {{on 'click' @rotate}}
       >
         <FaIcon @icon='rotate' />
       </Button>

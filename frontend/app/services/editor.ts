@@ -15,6 +15,7 @@ export default class EditorService extends Service {
   errorOnLoad = getQP('e');
 
   @tracked isCompiling = false;
+  @tracked error?: string;
 
   declare _editorSwapText: (text: string) => void;
 

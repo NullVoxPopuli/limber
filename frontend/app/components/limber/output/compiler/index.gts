@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import Ember from 'ember';
 import { hash } from '@ember/helper';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
@@ -7,9 +8,9 @@ import { registerDestructor } from '@ember/destroyable';
 import { waitFor } from '@ember/test-waiters';
 
 import { nameFor } from 'ember-repl';
-import { iframeMessageHandler, isAllowedFormat, DEFAULT_FORMAT } from './iframe-message-handler';
+import { iframeMessageHandler } from './iframe-message-handler';
+import { isAllowedFormat, DEFAULT_FORMAT, type ToParent } from 'limber/utils/messaging';
 
-import type { Type as Format } from './iframe-message-handler';
 import type { ComponentLike } from '@glint/template';
 import type RouterService from '@ember/routing/router-service';
 
@@ -24,6 +25,10 @@ interface Signature {
 type Format = 'glimdown' | 'gjs' | 'hbs';
 
 const CACHE = new Map<string, ComponentLike>();
+
+/**
+  * The Receiving Component is Limber::FrameOutput
+  */
 export default class Compiler extends Component<Signature> {
   @service declare router: RouterService;
 
@@ -43,17 +48,20 @@ export default class Compiler extends Component<Signature> {
       }
     }
 
+    let handleError = (error: any) => this.report({ status: 'error', error: error.message || error});
+
     window.addEventListener('message', handle);
+    window.onerror = handleError;
+    window.addEventListener('error', handleError);
+    Ember.onerror = handleError;
 
     registerDestructor(this, () => window.removeEventListener('message', handle));
+
+    this.report({ status: 'ready' });
   }
 
-  report = (message: object) => {
-    window.parent.postMessage(JSON.stringify({ message, from: 'limber-frame' } as const));
-  }
-
-  reportError = (error: string | { error: string; line: number }) => {
-    this.report({ error });
+  report = (message: ToParent) => {
+    window.parent.postMessage(JSON.stringify({ ...message, from: 'limber-output' }));
   }
 
   get format() {
@@ -72,8 +80,16 @@ export default class Compiler extends Component<Signature> {
   async makeComponent(text: string) {
     await compileTopLevelComponent(text, {
       format: this.format,
-      onSuccess: (component) => this.component = component,
-      onError: this.reportError,
+      onCompileStart: () => {
+        this.report({ status: 'compile-begin' });
+      },
+      onSuccess: (component) => {
+        this.component = component;
+        this.report({ status: 'success' });
+      },
+      onError: (error: string) => {
+        this.report({ status: 'error', error });
+      }
     });
   }
 
@@ -87,7 +103,13 @@ export default class Compiler extends Component<Signature> {
   </template>
 }
 
-async function compileTopLevelComponent(text: string, { format, onSuccess, onError }: {format: Format, onSuccess: (component: ComponentLike) => void, onError: (error: string) => void}) {
+async function compileTopLevelComponent(text: string, {
+  format, onSuccess, onError, onCompileStart }: {
+    format: Format,
+    onSuccess: (component: ComponentLike) => void,
+    onError: (error: string) => void,
+    onCompileStart: () => void
+  }) {
     let id = nameFor(text);
 
     let existing = CACHE.get(id);
@@ -98,60 +120,57 @@ async function compileTopLevelComponent(text: string, { format, onSuccess, onErr
     }
 
     const getCompiler = (format: Format): () => unknown => {
-    return {
-      glimdown: () => import('./glimdown'),
-      gjs: () => 0,
-      hbs: () => 0,
-    }[format]
-  }
+      return {
+        glimdown: () => import('./glimdown'),
+        gjs: () => null,
+        hbs: () => null,
+      }[format]
+    };
 
 
-    // this.isCompiling = true;
+    onCompileStart();
 
-    try {
-      let compiler = await getCompiler(format)?.();
+    let compiler = await getCompiler(format)?.();
 
-      if (!compiler) {
-        onError('Could not find compiler');
+    if (!compiler) {
+      onError('Could not find compiler');
 
-        return;
-      }
-
-      if (!text) {
-        onError("No Input Document yet");
-
-        return;
-      }
-
-      let { error, rootTemplate, rootComponent } = await compiler.compile(text);
-
-      if (error) {
-        console.error(error);
-      }
-
-      if (error && rootTemplate === undefined) {
-        onError(error.message);
-
-        return;
-      }
-
-      if (error) {
-        onError(error);
-
-        // let { line } = extractPosition(error.message);
-
-        // this.error = error.message;
-        // this.errorLine = line;
-
-        return;
-      }
-
-      CACHE.set(id, rootComponent as ComponentLike);
-
-      onSuccess(rootComponent);
-    } finally {
-      // this.isCompiling = false;
+      return;
     }
+
+    if (!text) {
+      onError("No Input Document yet");
+
+      return;
+    }
+
+    let { error, rootTemplate, rootComponent } = await compiler.compile(text);
+
+    if (error) {
+      onError(error.message);
+      return;
+    }
+
+    if (error && rootTemplate === undefined) {
+      onError(error.message);
+
+      return;
+    }
+
+    if (error) {
+      onError(error);
+
+      // let { line } = extractPosition(error.message);
+
+      // this.error = error.message;
+      // this.errorLine = line;
+
+      return;
+    }
+
+    CACHE.set(id, rootComponent as ComponentLike);
+
+    onSuccess(rootComponent);
 }
 
 function extractPosition(message: string) {

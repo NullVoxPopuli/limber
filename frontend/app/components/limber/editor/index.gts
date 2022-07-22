@@ -16,7 +16,7 @@ const Editor: TOC<{
     {{#if (state.matches 'editingWithCodeMirror')}}
 
       {{#let (service 'editor') as |context|}}
-        <div class="border border-gray-900 overflow-hidden overflow-y-auto">
+        <div class="overflow-hidden overflow-y-auto">
           {{!-- template-lint-disable no-inline-styles --}}
           <div
             style="width: 100%; height: 100%;"
