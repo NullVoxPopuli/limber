@@ -17,6 +17,7 @@ export type Success = { status: 'success' };
 export type CompileBegin = { status: 'compile-begin' };
 export type Error =
   | { status: 'error'; error: string }
+  | { status: 'error'; error: string; unrecoverable: true }
   | { status: 'error'; error: string; errorLine: number };
 
 type FromLimber = { from: 'limber' };

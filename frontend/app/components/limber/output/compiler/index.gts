@@ -48,13 +48,15 @@ export default class Compiler extends Component<Signature> {
       }
     }
 
-    let handleError = (error: any) => this.report({ status: 'error', error: error.message || error});
+    let handleError = (error: any, extra: any = {}) => this.report({ ...extra, status: 'error', error: error.message || error});
 
     window.addEventListener('message', handle);
     window.addEventListener('error', handleError);
     Ember.onerror = (error: any) => {
-      handleError(error);
-      // this.report({ status: 'unrecoverable-error', error: error.message || error});
+      /**
+        * This app now can't render again, so we need to tell the host frame to re-load the output frame
+        */
+      handleError(error, { unrecoverable: true });
     }
 
     registerDestructor(this, () => window.removeEventListener('message', handle));

@@ -24,16 +24,28 @@ export default class FrameOutput extends Component {
 
   @tracked frameStatus: unknown;
 
+  hadUnrecoverableError = false;
+
+
   /**
     * We can't post right away, because we might do so before the iframe is ready.
     * We need to wait until the frame initiates contact.
     */
   postMessage = modifier((element: HTMLIFrameElement, [_status]) => {
+    if (!element.contentWindow) return;
+
+    if (this.hadUnrecoverableError && this.frameStatus === 'ready') {
+      this.hadUnrecoverableError = false;
+
+      element.src = '/output';
+
+      return;
+    }
+
     let qps = this.router.currentURL.split('?')[1];
     let text = new URLSearchParams(qps).get('t') || DEFAULT_SNIPPET;
     let payload = makePayload('glimdown', text);
 
-    if (!element.contentWindow) return;
 
     element.contentWindow.postMessage(JSON.stringify(payload));
   });
@@ -51,6 +63,9 @@ export default class FrameOutput extends Component {
           case 'error':
             this.editor.error = obj.error;
             this.editor.isCompiling = false;
+            if ('unrecoverable' in obj) {
+              this.hadUnrecoverableError = true;
+            }
             break;
           case 'compile-begin':
             this.editor.isCompiling = true;
