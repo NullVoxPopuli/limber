@@ -88,8 +88,8 @@ importers:
       build-time-reporter-webpack-plugin: ^1.4.3
       chalk: ^5.0.1
       common-tags: ^1.8.2
-      concurrently: ^7.2.1
-      dompurify: ^2.3.9
+      concurrently: ^7.3.0
+      dompurify: ^2.3.10
       ember-auto-import: ^2.4.0
       ember-cli: ~4.5.0
       ember-cli-app-version: ^5.0.0
@@ -162,7 +162,7 @@ importers:
       '@nullvoxpopuli/limber-transpilation': link:../packages/transpilation
       '@popperjs/core': 2.11.5
       browserslist: 4.21.2
-      dompurify: 2.3.9
+      dompurify: 2.3.10
       ember-auto-import: 2.4.2_webpack@5.73.0
       ember-container-query: 2.1.0_eygrfgvxxnxey4el5rk2i3pxri
       ember-element-helper: 0.6.1_ember-source@4.5.0
@@ -238,7 +238,7 @@ importers:
       build-time-reporter-webpack-plugin: 1.4.3_webpack@5.73.0
       chalk: 5.0.1
       common-tags: 1.8.2
-      concurrently: 7.2.2
+      concurrently: 7.3.0
       ember-cli: 4.5.0
       ember-cli-app-version: 5.0.0
       ember-cli-babel: 7.26.11
@@ -6871,6 +6871,22 @@ packages:
       yargs: 17.5.1
     dev: true
 
+  /concurrently/7.3.0:
+    resolution: {integrity: sha512-IiDwm+8DOcFEInca494A8V402tNTQlJaYq78RF2rijOrKEk/AOHTxhN4U1cp7GYKYX5Q6Ymh1dLTBlzIMN0ikA==}
+    engines: {node: ^12.20.0 || ^14.13.0 || >=16.0.0}
+    hasBin: true
+    dependencies:
+      chalk: 4.1.2
+      date-fns: 2.29.1
+      lodash: 4.17.21
+      rxjs: 7.5.6
+      shell-quote: 1.7.3
+      spawn-command: 0.0.2-1
+      supports-color: 8.1.1
+      tree-kill: 1.2.2
+      yargs: 17.5.1
+    dev: true
+
   /configstore/5.0.1:
     resolution: {integrity: sha512-aMKprgk5YhBNyH25hj8wGt2+D52Sw1DRRIzqBwLp2Ya9mFmY8KPvvtvmna8SxVR9JMZ4kzMD68N22vlaRpkeFA==}
     engines: {node: '>=8'}
@@ -7267,6 +7283,11 @@ packages:
     engines: {node: '>=0.11'}
     dev: true
 
+  /date-fns/2.29.1:
+    resolution: {integrity: sha512-dlLD5rKaKxpFdnjrs+5azHDFOPEu4ANy/LTh04A1DTzMM7qoajmKCBc8pkKRFT41CNzw+4gQh79X5C+Jq27HAw==}
+    engines: {node: '>=0.11'}
+    dev: true
+
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
     peerDependencies:
@@ -7461,8 +7482,8 @@ packages:
     dependencies:
       webidl-conversions: 5.0.0
 
-  /dompurify/2.3.9:
-    resolution: {integrity: sha512-3zOnuTwup4lPV/GfGS6UzG4ub9nhSYagR/5tB3AvDEwqyy5dtyCM2dVjwGDCnrPerXifBKTYh/UWCGKK7ydhhw==}
+  /dompurify/2.3.10:
+    resolution: {integrity: sha512-o7Fg/AgC7p/XpKjf/+RC3Ok6k4St5F7Q6q6+Nnm3p2zGWioAY6dh0CbbuwOhH2UcSzKsdniE/YnE2/92JcsA+g==}
     dev: false
 
   /dot-case/3.0.4:
@@ -13375,6 +13396,12 @@ packages:
 
   /rxjs/7.5.5:
     resolution: {integrity: sha512-sy+H0pQofO95VDmFLzyaw9xNJU4KTRSwQIGM6+iG3SypAtCiLDzpeG8sJrNCWn2Up9km+KhkvTdbkrdy+yzZdw==}
+    dependencies:
+      tslib: 2.4.0
+    dev: true
+
+  /rxjs/7.5.6:
+    resolution: {integrity: sha512-dnyv2/YsXhnm461G+R/Pe5bWP41Nm6LBXEYWI6eiFP4fiwx6WRI/CD0zbdVAudd9xwLEF2IDcKXLHit0FYjUzw==}
     dependencies:
       tslib: 2.4.0
     dev: true
