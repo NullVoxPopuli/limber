@@ -11,8 +11,8 @@ import {
   indentNodeProp,
   Language,
   languageDataProp,
-  // LanguageDescription,
-  // LanguageSupport,
+  LanguageDescription,
+  LanguageSupport,
 } from '@codemirror/language';
 import { languages } from '@codemirror/language-data';
 import { keymap } from '@codemirror/view';
@@ -114,6 +114,14 @@ export const glimdown = [
     base: markdownLang(extendedMarkdown),
     codeLanguages: [
       ...languages,
+      LanguageDescription.of({
+        name: 'javascript',
+        alias: ['js', 'gjs'],
+        async load() {
+          const { javascriptLanguage } = await import("@codemirror/lang-javascript");
+          return new LanguageSupport(javascriptLanguage);
+        },
+      }),
       // LanguageDescription.of({
       //   name: 'glimmer',
       //   alias: ['hbs'],
