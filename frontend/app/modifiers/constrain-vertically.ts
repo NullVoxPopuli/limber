@@ -5,7 +5,6 @@ import { modifier } from 'ember-modifier';
 
 interface Signature {
   Element: HTMLElement;
-  Args: {}
 }
 
 export default modifier<Signature>((element: HTMLElement) => {

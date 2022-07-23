@@ -10,7 +10,7 @@ module.exports = function () {
       'equals',
       'columns',
       'pencil',
-      "rotate",
+      'rotate',
     ],
     'free-regular-svg-icons': ['clipboard', 'window-maximize', 'window-minimize'],
     'free-brands-svg-icons': ['ember', 'markdown'],

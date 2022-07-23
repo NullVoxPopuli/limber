@@ -3,9 +3,8 @@ import { action } from '@ember/object';
 import { debounce } from '@ember/runloop';
 import Service, { inject as service } from '@ember/service';
 
-import { getQP } from 'limber/utils/query-params';
-
 import { DEFAULT_SNIPPET } from 'limber/snippets';
+import { getQP } from 'limber/utils/query-params';
 
 import type RouterService from '@ember/routing/router-service';
 

@@ -1,8 +1,8 @@
 /**
-  * NOTE: window's on message handler receives *a lot* of messages
-  *   (esp from various browser extensions)
-  *
-  */
+ * NOTE: window's on message handler receives *a lot* of messages
+ *   (esp from various browser extensions)
+ *
+ */
 import { warn } from '@ember/debug';
 
 export type Format = 'glimdown' | 'gjs' | 'hbs';
@@ -65,7 +65,6 @@ export function fromParent<T extends { from?: string }>(x?: T | null): x is T & 
 }
 
 export function hasStatus<T extends { status?: string }>(x: T): x is T & (Ready | Error)['status'] {
-
   if ('status' in x && x.status) {
     return (STATUSES as readonly string[]).includes(x.status);
   }

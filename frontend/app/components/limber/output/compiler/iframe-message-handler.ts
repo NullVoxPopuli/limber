@@ -1,4 +1,13 @@
-import { ALLOWED_FORMATS, fromParent, FromParent, hasAllowedFormat, hasContent, hasFormat, parseEvent } from "limber/utils/messaging";
+import {
+  ALLOWED_FORMATS,
+  fromParent,
+  hasAllowedFormat,
+  hasContent,
+  hasFormat,
+  parseEvent,
+} from 'limber/utils/messaging';
+
+import type { FromParent } from 'limber/utils/messaging';
 
 interface Context {
   error: string | null;

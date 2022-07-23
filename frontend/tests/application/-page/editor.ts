@@ -44,7 +44,8 @@ export class Editor extends PageObject {
     return similarity > 0.75;
   }
 
-  _editor = selector('.cm-content',
+  _editor = selector(
+    '.cm-content',
     class extends PageObject {
       get _text() {
         assert('Editor not present', this.element);
