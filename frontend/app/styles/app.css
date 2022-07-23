@@ -218,6 +218,7 @@
 
 .hljs-string,
 .hljs-symbol,
+.hljs-code,
 .hljs-bullet {
   color: var(--code-string);
 }
@@ -225,6 +226,10 @@
 .hljs-keyword,
 .hljs-selector-tag {
   color: var(--code-keyword);
+}
+
+.hljs-section {
+  color: var(--horizon-lavender);
 }
 
 .hljs-deletion,

@@ -9,7 +9,7 @@ import { waitFor } from '@ember/test-waiters';
 
 import { nameFor } from 'ember-repl';
 import { iframeMessageHandler } from './iframe-message-handler';
-import { isAllowedFormat, DEFAULT_FORMAT, type ToParent } from 'limber/utils/messaging';
+import { isAllowedFormat, DEFAULT_FORMAT, type ToParent, type Format } from 'limber/utils/messaging';
 
 import type { ComponentLike } from '@glint/template';
 import type RouterService from '@ember/routing/router-service';
@@ -21,8 +21,6 @@ interface Signature {
     }]
   }
 }
-
-type Format = 'glimdown' | 'gjs' | 'hbs';
 
 const CACHE = new Map<string, ComponentLike>();
 

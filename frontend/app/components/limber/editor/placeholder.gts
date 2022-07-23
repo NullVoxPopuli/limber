@@ -1,9 +1,13 @@
 import service from 'limber/helpers/service';
+import qp from 'limber/helpers/qp';
 import highlighted from 'limber/modifiers/highlighted';
+
 import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
 
+const orGlimdown = (format: string | undefined) => format || 'glimdown';
+
 export const Placeholder: TOC<{
-  Element: HTMLTextAreaElement;
+  Element: HTMLPreElement;
 }> = <template>
   {{#let (service 'editor') as |context|}}
     <label class="sr-only" for="initial-editor">
@@ -17,7 +21,7 @@ export const Placeholder: TOC<{
       class="w-full h-full px-6 py-2 font-sm font-mono text-white"
       {{highlighted context.text}}
       ...attributes
-    ><code class="javascript hljs gjs">{{context.text}}</code></pre>
+    ><code class="{{orGlimdown (qp 'format')}} hljs">{{context.text}}</code></pre>
   {{/let}}
 </template>
 
