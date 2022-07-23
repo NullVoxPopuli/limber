@@ -37,6 +37,7 @@ export default class FrameOutput extends Component {
     if (this.hadUnrecoverableError && this.frameStatus === 'ready') {
       this.hadUnrecoverableError = false;
 
+      // this reloads the frame
       element.src = '/output';
 
       return;
@@ -54,7 +55,6 @@ export default class FrameOutput extends Component {
     let handle = (event: MessageEvent) => {
       let obj = parseEvent(event);
 
-      // TODO: move to statechart, within the service?
       if (fromOutput(obj)) {
         switch (obj.status) {
           case 'ready':
