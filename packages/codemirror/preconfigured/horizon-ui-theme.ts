@@ -53,7 +53,6 @@ export const HorizonTheme = EditorView.theme(
       padding: '2px',
     },
 
-
     '.cm-gutters': {
       backgroundColor: ui.background,
       color: '#777',
