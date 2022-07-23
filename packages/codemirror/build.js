@@ -34,7 +34,7 @@ module.exports = async function build() {
       ? {
           onRebuild(error, result) {
             if (error) console.error('watch build failed:', error);
-            else console.log('watch build succeeded:', result);
+            else console.info('watch build succeeded:', result);
           },
         }
       : false,

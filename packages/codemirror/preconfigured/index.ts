@@ -1,11 +1,15 @@
-import { completeFromList, completionKeymap } from '@codemirror/autocomplete';
-import { esLint, javascriptLanguage } from '@codemirror/lang-javascript';
+import {
+  // completeFromList,
+  completionKeymap,
+} from '@codemirror/autocomplete';
+// import { esLint, javascriptLanguage } from '@codemirror/lang-javascript';
 import { syntaxHighlighting } from '@codemirror/language';
-import { linter, lintGutter, lintKeymap } from '@codemirror/lint';
+// import { linter, lintGutter, lintKeymap } from '@codemirror/lint';
 import { Compartment, EditorSelection, EditorState } from '@codemirror/state';
 import { keymap } from '@codemirror/view';
 import { basicSetup, EditorView } from 'codemirror';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // import { Linter } from 'eslint4b';
 import { glimdown } from './glimdown';
@@ -91,9 +95,9 @@ export default function newEditor(
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function completionsOfObject(obj: any) {
-  return Object.keys(obj).map((p) => ({
-    label: p,
-    type: /^[A-Z]/.test(p) ? 'class' : typeof obj[p] == 'function' ? 'function' : 'variable',
-  }));
-}
+// function completionsOfObject(obj: any) {
+//   return Object.keys(obj).map((p) => ({
+//     label: p,
+//     type: /^[A-Z]/.test(p) ? 'class' : typeof obj[p] == 'function' ? 'function' : 'variable',
+//   }));
+// }
