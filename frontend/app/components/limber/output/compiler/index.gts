@@ -51,11 +51,14 @@ export default class Compiler extends Component<Signature> {
     let handleError = (error: any) => this.report({ status: 'error', error: error.message || error});
 
     window.addEventListener('message', handle);
-    window.onerror = handleError;
     window.addEventListener('error', handleError);
-    Ember.onerror = handleError;
+    Ember.onerror = (error: any) => {
+      handleError(error);
+      // this.report({ status: 'unrecoverable-error', error: error.message || error});
+    }
 
     registerDestructor(this, () => window.removeEventListener('message', handle));
+    registerDestructor(this, () => window.removeEventListener('error', handleError));
 
     this.report({ status: 'ready' });
   }

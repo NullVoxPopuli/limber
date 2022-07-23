@@ -171,5 +171,10 @@
     "unist-util-flatmap": "^1.0.0",
     "webpack-bundle-analyzer": "^4.5.0",
     "xstate": "4.32.1"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "ember-on-resize-modifier@1.1.0": "patches/ember-on-resize-modifier@1.1.0.patch"
+    }
   }
 }

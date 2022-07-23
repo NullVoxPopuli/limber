@@ -40,7 +40,7 @@
       globalThis.path = {
         resolve: (...args) => args.join('/'),
       }
-      console.log(window.top, window.parent, window.self);
+
     </script>
   </head>
   <body class="overflow-hidden syntax-dark syntax-bright">
@@ -88,6 +88,12 @@
     </div>
 
     {{content-for "body"}}
+
+    <script>
+      if (window.self !== window.parent) {
+        window.self.document.querySelector('#initial-loader').style.display = 'none';
+      }
+    </script>
 
     <script src="{{rootURL}}assets/vendor.js"></script>
     <script src="{{rootURL}}assets/limber.js"></script>
