@@ -9,6 +9,10 @@ import { Page } from './-page';
 module('Scenarios', function (hooks) {
   setupApplicationTest(hooks);
 
+  hooks.beforeEach(function () {
+    localStorage.clear();
+  });
+
   let page = new Page();
 
   module('compile and run user input', function () {
@@ -33,8 +37,8 @@ module('Scenarios', function (hooks) {
         assert.dom(page.nav.activeTab.element).hasText('Preview');
         assert.true(page.editor.hasText(demoText), 'snippet loaded');
 
-        assert.true(page.out.hasCodeSnippets);
-        assert.true(page.out.hasRenderedSnippets);
+        assert.true(page.out.hasCodeSnippets, 'snippets exist');
+        assert.true(page.out.hasRenderedSnippets, 'snippets rendered');
       });
 
       test('inline JS - interactive', async function (assert) {
@@ -47,12 +51,12 @@ module('Scenarios', function (hooks) {
         assert.dom(page.nav.activeTab.element).hasText('Preview');
         assert.true(page.editor.hasText(demoText), 'snippet loaded');
 
-        assert.true(page.out.hasCodeSnippets);
-        assert.true(page.out.hasRenderedSnippets);
-        assert.dom(page.out.element).containsText('clicked the button 0 times');
+        assert.true(page.out.hasCodeSnippets, 'snippets exist');
+        assert.true(page.out.hasRenderedSnippets, 'snippet content is rendered');
+        assert.dom(page.out.content).containsText('clicked the button 0 times');
 
         await click(page.out.firstButton);
-        assert.dom(page.out.element).containsText('clicked the button 1 times');
+        assert.dom(page.out.content).containsText('clicked the button 1 times');
       });
 
       test('Styleguide Demo', async function (assert) {
@@ -68,7 +72,7 @@ module('Scenarios', function (hooks) {
         assert.true(page.out.hasCodeSnippets);
         assert.true(page.out.hasRenderedSnippets);
 
-        assert.dom(page.out.element).containsText(`Ember.JS' Site`);
+        assert.dom(page.out.content).containsText(`Ember.JS' Site`);
       });
 
       test('REPL', async function (assert) {
@@ -84,7 +88,7 @@ module('Scenarios', function (hooks) {
         assert.true(page.out.hasCodeSnippets);
         assert.true(page.out.hasRenderedSnippets);
 
-        assert.dom(page.out.element).containsText(`Render`);
+        assert.dom(page.out.content).containsText(`Render`);
       });
     });
 

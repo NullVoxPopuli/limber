@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { modifier } from 'ember-modifier';
+import { buildWaiter, waitForPromise } from '@ember/test-waiters';
 
 import { DEFAULT_SNIPPET } from 'limber/snippets';
 import { parseEvent, fromOutput } from 'limber/utils/messaging';
@@ -15,6 +16,9 @@ function makePayload(format: Type, content: string) {
   return { format, content, from: 'limber' } as const;
 }
 
+let readyWaiter = buildWaiter('<FrameOutput />:waiting-for-ready');
+let compileWaiter = buildWaiter('<FrameOutput />:compiling');
+
 /**
   * The Receiving Component is Limber::Output::Compiler
   */
@@ -25,6 +29,8 @@ export default class FrameOutput extends Component {
   @tracked frameStatus: unknown;
 
   hadUnrecoverableError = false;
+
+  compileFinished = () => {};
 
 
   /**
@@ -47,17 +53,24 @@ export default class FrameOutput extends Component {
     let text = new URLSearchParams(qps).get('t') || DEFAULT_SNIPPET;
     let payload = makePayload('glimdown', text);
 
+    if (this.frameStatus === 'ready') {
+      waitForPromise(new Promise(resolve => this.compileFinished = resolve));
+    }
 
     element.contentWindow.postMessage(JSON.stringify(payload));
   });
 
   onMessage = modifier(() => {
+    let ready;
+    waitForPromise(new Promise(resolve => ready = resolve));
+
     let handle = (event: MessageEvent) => {
       let obj = parseEvent(event);
 
       if (fromOutput(obj)) {
         switch (obj.status) {
           case 'ready':
+            ready();
             this.frameStatus = 'ready';
             break;
           case 'error':
@@ -66,6 +79,7 @@ export default class FrameOutput extends Component {
             if ('unrecoverable' in obj) {
               this.hadUnrecoverableError = true;
             }
+            this.compileFinished();
             break;
           case 'compile-begin':
             this.editor.isCompiling = true;
@@ -73,6 +87,7 @@ export default class FrameOutput extends Component {
           case 'success':
             this.editor.error = undefined;
             this.editor.isCompiling = false;
+            this.compileFinished();
             break;
         }
       }
