@@ -83,11 +83,12 @@ export default function newEditor(
   });
 
   let setText = (text: string) => {
-    view.dispatch(
-      view.state.changeByRange((range) => ({
-        changes: [{ from: range.from, insert: text }],
-        range: EditorSelection.range(range.from, range.to),
-      }))
+    view.dispatch({
+      changes: {
+        from: 0,
+        to: view.state.doc.length,
+        insert: text,
+      }}
     );
   };
 
