@@ -9,7 +9,6 @@ env:
   codemirror: packages/codemirror/
   consts: packages/consts/
   horizon: packages/horizon-theme/
-  monaco: packages/monaco
   tests: tests/
   sw: packages/transpilation/
 
@@ -83,31 +82,6 @@ jobs:
     - run: pnpm install
     - name: 'Code Mirror configuration'
       working-directory: ${{ env.codemirror }}
-      run: pnpm run lint:js
-
-  js_monaco:
-    name: "ESLint: JS/TS >> Monaco"
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    needs: [install_dependencies]
-
-    steps:
-    - uses: actions/checkout@v3
-    - uses: volta-cli/action@v1
-    - name: Cache pnpm modules
-      uses: actions/cache@v3
-      with:
-        path: ~/.pnpm-store
-        key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-
-
-    - uses: pnpm/action-setup@v2.2.2
-      with:
-        version: 6.32.1
-    - run: pnpm install
-    - name: 'Monaco configuration'
-      working-directory: ${{ env.monaco }}
       run: pnpm run lint:js
 
   js_consts:
