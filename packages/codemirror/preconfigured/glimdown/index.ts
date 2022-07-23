@@ -118,7 +118,8 @@ export const glimdown = [
         name: 'javascript',
         alias: ['js', 'gjs'],
         async load() {
-          const { javascriptLanguage } = await import("@codemirror/lang-javascript");
+          const { javascriptLanguage } = await import('@codemirror/lang-javascript');
+
           return new LanguageSupport(javascriptLanguage);
         },
       }),

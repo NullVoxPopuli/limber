@@ -88,8 +88,8 @@ export default function newEditor(
         from: 0,
         to: view.state.doc.length,
         insert: text,
-      }}
-    );
+      },
+    });
   };
 
   return { view, setText };
