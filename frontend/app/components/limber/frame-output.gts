@@ -28,7 +28,7 @@ export default class FrameOutput extends Component {
 
   hadUnrecoverableError = false;
 
-  compileFinished = () => {};
+  compileFinished: (value?: unknown) => void = () => {};
 
   get format() {
     let requested  = this.router.currentRoute.queryParams.format
@@ -66,7 +66,7 @@ export default class FrameOutput extends Component {
   });
 
   onMessage = modifier(() => {
-    let ready;
+    let ready: (value?: unknown) => void;
     waitForPromise(new Promise(resolve => ready = resolve));
 
     let handle = (event: MessageEvent) => {
