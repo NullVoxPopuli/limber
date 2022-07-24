@@ -7,15 +7,7 @@ import { parseMarkdown } from './-compile/markdown-to-ember';
 
 import type { ExtractedCode } from './-compile/markdown-to-ember';
 import type { CompileResult } from 'ember-repl';
-
-interface CompilationResult {
-  rootTemplate?: string;
-  rootComponent?: unknown;
-  scope?: object[];
-
-  error?: Error;
-  errorLine?: number;
-}
+import type { CompilationResult } from './types';
 
 export async function compileAll(js: { code: string }[]) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

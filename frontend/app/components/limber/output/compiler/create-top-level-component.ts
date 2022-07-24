@@ -28,11 +28,11 @@ export async function compileTopLevelComponent(
     return;
   }
 
-  const getCompiler = (format: Format): (() => unknown) => {
+  const getCompiler = (format: Format) => {
     return {
-      glimdown: () => import('./glimdown'),
-      gjs: () => null,
-      hbs: () => null,
+      glimdown: () => import('./formats/glimdown'),
+      gjs: () => import('./formats/gjs'),
+      hbs: () => import('./formats/hbs'),
     }[format];
   };
 

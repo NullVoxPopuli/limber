@@ -29,6 +29,28 @@ jobs:
 
 ##############################################################
 
+  lints:
+    name: "Lints"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [install_dependencies]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/pnpm
+      - run: pnpm --filter '*' lint
+
+  types:
+    name: "Type Correctness"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [install_dependencies]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/pnpm
+      - run: pnpm --filter '*' check:types
+
   pre_build:
     name: Pre Build
     runs-on: ubuntu-latest
