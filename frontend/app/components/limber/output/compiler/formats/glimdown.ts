@@ -6,8 +6,8 @@ import CopyMenu from 'limber/components/limber/copy-menu';
 import { parseMarkdown } from './-compile/markdown-to-ember';
 
 import type { ExtractedCode } from './-compile/markdown-to-ember';
-import type { CompileResult } from 'ember-repl';
 import type { CompilationResult } from './types';
+import type { CompileResult } from 'ember-repl';
 
 export async function compileAll(js: { code: string }[]) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
