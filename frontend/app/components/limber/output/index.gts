@@ -14,6 +14,7 @@ import Compiler from './compiler';
       --}}
       <CopyMenu />
 
+      {{log context.component}}
       {{#if context.component}}
         {{#let (component context.component) as |Preview|}}
           <div {{highlight context.component}}>

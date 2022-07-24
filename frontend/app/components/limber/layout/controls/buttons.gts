@@ -84,7 +84,7 @@ export const Controls: TOC<{
       {{#if (inIframe)}}
         <a
           title="Edit in a new tab"
-          href={{ (currentURL )}}
+          href={{ (currentURL) }}
           rel="noreferrer noopener"
           target="_blank"
           class="

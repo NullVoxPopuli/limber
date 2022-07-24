@@ -8,7 +8,9 @@ export async function compile(gjsInput: string): Promise<CompilationResult> {
   let { COMPONENT_MAP } = await import('/ember-repl/component-map.js');
 
   try {
-    return await compileJS(gjsInput, COMPONENT_MAP);
+    let { component, ...rest } = await compileJS(gjsInput, COMPONENT_MAP);
+
+    return { ...rest, rootComponent: component };
   } catch (error) {
     return { error };
   }

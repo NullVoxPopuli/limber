@@ -8,7 +8,7 @@ import { registerDestructor } from '@ember/destroyable';
 import { waitFor } from '@ember/test-waiters';
 
 import { iframeMessageHandler } from './iframe-message-handler';
-import { isAllowedFormat, DEFAULT_FORMAT, type ToParent, type Format } from 'limber/utils/messaging';
+import { isAllowedFormat, DEFAULT_FORMAT, type ToParent } from 'limber/utils/messaging';
 
 import { compileTopLevelComponent } from './create-top-level-component'
 
@@ -29,7 +29,7 @@ const report = (message: ToParent) => {
 
 const handleError = (error: any, extra: any = {}) => report({ ...extra, status: 'error', error: error.message || error});
 
-function setupEvents(context: object, { onReceiveText }: { onReceiveText: (text: string) => void }) {
+function setupEvents(context: Compiler, { onReceiveText }: { onReceiveText: (text: string) => void }) {
   let handle = (event: MessageEvent) => {
     let text = iframeMessageHandler(context)(event);
 
@@ -88,12 +88,19 @@ export default class Compiler extends Component<Signature> {
   @action
   @waitFor
   async makeComponent(text: string) {
+    console.debug(`Making top-level component with format: ${this.format}`);
+
     await compileTopLevelComponent(text, {
       format: this.format,
       onCompileStart: () => {
         report({ status: 'compile-begin' });
       },
       onSuccess: (component) => {
+        if (!component) {
+          report({ status: 'error', error: 'could not build component' });
+          return;
+        }
+
         this.component = component;
         report({ status: 'success' });
       },

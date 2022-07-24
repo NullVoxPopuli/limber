@@ -5,7 +5,7 @@ import { modifier } from 'ember-modifier';
 import { buildWaiter, waitForPromise } from '@ember/test-waiters';
 
 import { DEFAULT_SNIPPET } from 'limber/snippets';
-import { parseEvent, fromOutput } from 'limber/utils/messaging';
+import { parseEvent, fromOutput, isAllowedFormat, DEFAULT_FORMAT } from 'limber/utils/messaging';
 
 import type EditorService from 'limber/services/editor';
 import type RouterService from '@ember/routing/router-service';
@@ -32,6 +32,16 @@ export default class FrameOutput extends Component {
 
   compileFinished = () => {};
 
+  get format() {
+    let requested  = this.router.currentRoute.queryParams.format
+
+    if (isAllowedFormat(requested)) {
+      return requested;
+    }
+
+    return DEFAULT_FORMAT;
+  }
+
 
   /**
     * We can't post right away, because we might do so before the iframe is ready.
@@ -44,7 +54,7 @@ export default class FrameOutput extends Component {
       this.hadUnrecoverableError = false;
 
       // this reloads the frame
-      element.src = '/output';
+      element.src = `/output?forma=${this.format}`;
 
       return;
     }
@@ -103,6 +113,6 @@ export default class FrameOutput extends Component {
       {{this.postMessage this.frameStatus}}
       {{this.onMessage}}
       class="w-full h-full border-none"
-      src="/output"></iframe>
+      src="/output?format={{this.format}}"></iframe>
   </template>
 }
