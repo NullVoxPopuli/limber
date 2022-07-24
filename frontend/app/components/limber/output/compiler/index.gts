@@ -29,9 +29,9 @@ const report = (message: ToParent) => {
 
 const handleError = (error: any, extra: any = {}) => report({ ...extra, status: 'error', error: error.message || error});
 
-function setupEvents(context: unknown, { onReceiveText }) {
+function setupEvents(context: object, { onReceiveText }: { onReceiveText: (text: string) => void }) {
   let handle = (event: MessageEvent) => {
-    let text = iframeMessageHandler(this)(event);
+    let text = iframeMessageHandler(context)(event);
 
     if (text) {
       onReceiveText(text);

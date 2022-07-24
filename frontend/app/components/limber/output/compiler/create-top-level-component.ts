@@ -52,22 +52,10 @@ export async function compileTopLevelComponent(
     return;
   }
 
-  let { error, rootTemplate, rootComponent } = await compiler.compile(text);
+  let { error, rootComponent } = await compiler.compile(text);
 
   if (error) {
-    onError(error.message);
-
-    return;
-  }
-
-  if (error && rootTemplate === undefined) {
-    onError(error.message);
-
-    return;
-  }
-
-  if (error) {
-    onError(error);
+    onError(error.message || `${ error }`);
 
     // let { line } = extractPosition(error.message);
 
@@ -79,7 +67,7 @@ export async function compileTopLevelComponent(
 
   CACHE.set(id, rootComponent as ComponentLike);
 
-  onSuccess(rootComponent);
+  onSuccess(rootComponent as ComponentLike);
 }
 
 // function extractPosition(message: string) {
