@@ -1,3 +1,4 @@
+import { htmlSafe } from '@ember/template';
 import { notInIframe } from 'limber/helpers/in-iframe';
 import constrainVertically from 'limber/modifiers/constrain-vertically';
 
@@ -35,14 +36,14 @@ export const OutputContainer: TOC<{
 }> = <template>
   <section
     class="flex-1 shadow-inner grid overflow-hidden relative"
-    style="grid-template-rows: min-content 1fr;"
+    style={{htmlSafe (if (notInIframe) "grid-template-rows: min-content 1fr;")}}
   >
     {{#if (notInIframe)}}
       <Navigation />
     {{/if}}
 
     <div
-      class="overflow-auto relative bg-white"
+      class="overflow-auto relative bg-white flex"
       {{constrainVertically}}
       data-test-output
     >

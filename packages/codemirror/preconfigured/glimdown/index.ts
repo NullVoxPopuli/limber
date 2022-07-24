@@ -2,7 +2,6 @@
 // import { completeFromList } from '@codemirror/autocomplete';
 import {
   markdown,
-  markdownKeymap,
   // markdownLanguage
 } from '@codemirror/lang-markdown';
 import {
@@ -15,7 +14,6 @@ import {
   LanguageSupport,
 } from '@codemirror/language';
 import { languages } from '@codemirror/language-data';
-import { keymap } from '@codemirror/view';
 import { Emoji, GFM, parser as baseParser, Subscript, Superscript, Table } from '@lezer/markdown';
 
 import type {
@@ -108,9 +106,8 @@ const extendedMarkdown = commonmark.configure([
   // Glimdown,
 ]);
 
-export const glimdown = [
-  keymap.of([...markdownKeymap]),
-  markdown({
+export function glimdown() {
+  return markdown({
     base: markdownLang(extendedMarkdown),
     codeLanguages: [
       ...languages,
@@ -133,5 +130,5 @@ export const glimdown = [
       //   },
       // }),
     ],
-  }),
-];
+  });
+}

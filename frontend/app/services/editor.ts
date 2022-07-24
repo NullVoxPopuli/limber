@@ -4,9 +4,11 @@ import { debounce } from '@ember/runloop';
 import Service, { inject as service } from '@ember/service';
 
 import { DEFAULT_SNIPPET } from 'limber/snippets';
+import { formatFrom } from 'limber/utils/messaging';
 import { getQP } from 'limber/utils/query-params';
 
 import type RouterService from '@ember/routing/router-service';
+import type { Format } from 'limber/utils/messaging';
 
 export default class EditorService extends Service {
   @service declare router: RouterService;
@@ -17,29 +19,31 @@ export default class EditorService extends Service {
   @tracked error?: string;
   @tracked errorLine?: number;
 
-  declare _editorSwapText: (text: string) => void;
+  declare _editorSwapText: (text: string, format: Format) => void;
 
   text = getQP() ?? DEFAULT_SNIPPET;
+  format?: Format;
 
   @action
   updateText(text: string) {
+    /**
+     * Setting these properties queues an update to the URL, debounced (usually)
+     */
     this.text = text;
     debounce(this, this._updateSnippet, 300);
   }
 
   @action
-  updateDemo(text: string) {
-    this._editorSwapText(text);
-  }
-
-  @action
-  swapText(callback: (text: string) => void) {
-    this._editorSwapText = callback;
+  updateDemo(text: string, format: Format) {
+    /**
+     * Setting these properties queues an update to the URL, debounced (usually)
+     */
+    this._editorSwapText(text, format);
   }
 
   @action
   _updateSnippet() {
-    let qps = buildQP(this.text);
+    let qps = buildQP(this.text, formatFrom(this.format || getQP('format')));
     let base = this.router.currentURL.split('?')[0];
     let next = `${base}?${qps}`;
 
@@ -61,10 +65,11 @@ declare module '@ember/service' {
  * https://github.com/rotemdan/lzutf8.js
  * - Compression
  */
-function buildQP(rawText: string) {
+function buildQP(rawText: string, format: Format) {
   const params = new URLSearchParams(location.search);
 
   params.set('t', rawText);
+  params.set('format', format);
 
   return params;
 }

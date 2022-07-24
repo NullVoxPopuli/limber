@@ -6,7 +6,7 @@ import Loader from './loader';
 import { LoadingError } from './loading-error';
 import { Placeholder } from './placeholder';
 
-import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
+import type { TOC } from '@ember/component/template-only';
 
 const Editor: TOC<{
   Element: HTMLDivElement;
@@ -20,11 +20,7 @@ const Editor: TOC<{
           {{!-- template-lint-disable no-inline-styles --}}
           <div
             style="width: 100%; height: 100%;"
-            {{codemirror
-              context.text
-              context.updateText
-              setValue=context.swapText
-            }}
+            {{codemirror context.text}}
           >{{context.text}}</div>
         </div>
       {{/let}}

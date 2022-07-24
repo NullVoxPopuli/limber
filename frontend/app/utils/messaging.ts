@@ -33,12 +33,20 @@ export const DEFAULT_FORMAT = 'glimdown' as const;
 export const ALLOWED_FORMATS = [DEFAULT_FORMAT, 'gjs', 'hbs'] as const;
 export const STATUSES = ['ready', 'error'] as const;
 
-export function isAllowedFormat(x?: string): x is Format {
+export function isAllowedFormat(x?: string | null): x is Format {
   return Boolean(x && (ALLOWED_FORMATS as readonly string[]).includes(x));
 }
 
 export function hasAllowedFormat<T extends { format?: string }>(x: T): x is T & NewContent {
   return isAllowedFormat(x.format);
+}
+
+export function formatFrom(x: string | undefined | null): Format {
+  if (isAllowedFormat(x)) {
+    return x;
+  }
+
+  return DEFAULT_FORMAT;
 }
 
 export const hasFrom = (x?: object): x is { from: unknown } => Boolean(x && 'from' in x);

@@ -55,7 +55,7 @@ export async function compileTopLevelComponent(
   let { error, rootComponent } = await compiler.compile(text);
 
   if (error) {
-    onError(error.message || `${error}`);
+    onError(error.message || `${ error }`);
 
     // let { line } = extractPosition(error.message);
 

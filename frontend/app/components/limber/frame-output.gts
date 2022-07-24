@@ -5,14 +5,12 @@ import { modifier } from 'ember-modifier';
 import { buildWaiter, waitForPromise } from '@ember/test-waiters';
 
 import { DEFAULT_SNIPPET } from 'limber/snippets';
-import { parseEvent, fromOutput, isAllowedFormat, DEFAULT_FORMAT } from 'limber/utils/messaging';
+import { parseEvent, fromOutput, formatFrom, type Format } from 'limber/utils/messaging';
 
 import type EditorService from 'limber/services/editor';
 import type RouterService from '@ember/routing/router-service';
 
-type Type = 'glimdown' | 'gjs' | 'hbs';
-
-function makePayload(format: Type, content: string) {
+function makePayload(format: Format, content: string) {
   return { format, content, from: 'limber' } as const;
 }
 
@@ -34,12 +32,7 @@ export default class FrameOutput extends Component {
 
   get format() {
     let requested  = this.router.currentRoute.queryParams.format
-
-    if (isAllowedFormat(requested)) {
-      return requested;
-    }
-
-    return DEFAULT_FORMAT;
+    return formatFrom(requested);
   }
 
 
@@ -54,14 +47,16 @@ export default class FrameOutput extends Component {
       this.hadUnrecoverableError = false;
 
       // this reloads the frame
-      element.src = `/output?forma=${this.format}`;
+      element.src = `/output?format=${this.format}`;
 
       return;
     }
 
     let qps = this.router.currentURL.split('?')[1];
-    let text = new URLSearchParams(qps).get('t') || DEFAULT_SNIPPET;
-    let payload = makePayload('glimdown', text);
+    let searchParams = new URLSearchParams(qps);
+    let text = searchParams.get('t') || DEFAULT_SNIPPET;
+    let format = formatFrom(searchParams.get('format'));
+    let payload = makePayload(format, text);
 
     if (this.frameStatus === 'ready') {
       waitForPromise(new Promise(resolve => this.compileFinished = resolve));

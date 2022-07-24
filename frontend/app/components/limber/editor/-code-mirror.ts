@@ -1,35 +1,75 @@
 import { assert } from '@ember/debug';
+import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
+import { service } from '@ember/service';
 
-import { modifier } from 'ember-modifier';
+import Modifier from 'ember-modifier';
+import { formatFrom } from 'limber/utils/messaging';
 
-import type { Signature } from './-types';
 import type { EditorView } from '@codemirror/view';
+import type RouterService from '@ember/routing/router-service';
+import type EditorService from 'limber/services/editor';
+import type { Format } from 'limber/utils/messaging';
 
-export default modifier<Signature>((element: Element, [value, updateText], named) => {
-  assert(`Expected CODEMIRROR to exist`, CODEMIRROR);
-  assert(`can only install codemirror editor an an HTMLElement`, element instanceof HTMLElement);
+type PositionalArgs = [string];
+type Signature = {
+  Element: HTMLDivElement;
+  Args: {
+    Positional: PositionalArgs;
+  };
+};
 
-  element.innerHTML = '';
+export default class CodeMirror extends Modifier<Signature> {
+  @service declare editor: EditorService;
+  @service declare router: RouterService;
 
-  let { view, setText } = CODEMIRROR(element, value, updateText, named);
+  modify(element: Element, [value]: PositionalArgs) {
+    this.setup(element, [value]);
+  }
 
-  named.setValue((text) => {
-    updateText(text); // update the service / URL
-    setText(text); // update the editor
-  });
+  isSetup = false;
+  setup = async (element: Element, [value]: PositionalArgs) => {
+    if (this.isSetup) {
+      return;
+    }
 
-  return () => view.destroy();
-});
+    await Promise.resolve();
+
+    if (isDestroyed(this) || isDestroying(this)) return;
+
+    assert(`Expected CODEMIRROR to exist`, CODEMIRROR);
+    assert(`can only install codemirror editor an an HTMLElement`, element instanceof HTMLElement);
+
+    element.innerHTML = '';
+
+    let updateText = this.editor.updateText;
+    let format = formatFrom(this.router.currentRoute.queryParams.format);
+    let { view, setText } = CODEMIRROR(element, value, format, updateText);
+
+    /**
+     * This has to be defined on the service so that
+     * the demo selector can also affect both the URL and the editor
+     */
+    this.editor._editorSwapText = (text, format) => {
+      updateText(text); // update the service / URL
+      setText(text, format); // update the editor
+    };
+
+    registerDestructor(this, () => view.destroy());
+  };
+}
 
 let CODEMIRROR:
   | undefined
   | ((
       element: HTMLElement,
       value: Signature['Args']['Positional'][0],
-      updateText: Signature['Args']['Positional'][1],
-      named: Signature['Args']['Named']
-    ) => { view: EditorView; setText: (text: string) => void });
+      format: Format,
+      updateText: (text: string) => void
+    ) => { view: EditorView; setText: (text: string, format: Format) => void });
 
+/**
+ * This is called from the state machine which manages loading state
+ */
 export async function setupCodeMirror() {
   if (CODEMIRROR) return;
 

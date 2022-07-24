@@ -1,73 +1,74 @@
-import {
-  // completeFromList,
-  completionKeymap,
-} from '@codemirror/autocomplete';
-// import { esLint, javascriptLanguage } from '@codemirror/lang-javascript';
+import { completionKeymap } from '@codemirror/autocomplete';
+import { javascript } from '@codemirror/lang-javascript';
+import { markdownKeymap } from '@codemirror/lang-markdown';
 import { syntaxHighlighting } from '@codemirror/language';
-// import { linter, lintGutter, lintKeymap } from '@codemirror/lint';
 import { Compartment, EditorSelection, EditorState } from '@codemirror/state';
 import { keymap } from '@codemirror/view';
 import { basicSetup, EditorView } from 'codemirror';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-// import { Linter } from 'eslint4b';
 import { glimdown } from './glimdown';
-// import { languageServer } from 'codemirror-languageserver';
 import { HorizonSyntaxTheme } from './horizon-syntax-theme';
 import { HorizonTheme } from './horizon-ui-theme';
 
 export default function newEditor(
   element: HTMLElement,
   value: string,
+  format: 'glimdown' | 'gjs' | 'hbs',
   updateText: (text: string) => void
 ) {
+  let languageConf = new Compartment();
+  let tabSize = new Compartment();
+
   let updateListener = EditorView.updateListener.of(({ state, docChanged }) => {
     if (docChanged) {
       updateText(state.doc.toString());
     }
   });
 
-  // const transport = new WebSocketTransport(serverUri);
-
-  // let serverUri = `${window.location.protocol.endsWith('s:') ? 'wss:' : 'ws:'}//${
-  //   window.location.host
-  // }`;
-  // let filename = 'file.ts';
-  // let lsp = languageServer({
-  //   // WebSocket server uri and other client options.
-  //   serverUri,
-  //   rootUri: 'file:///',
-  //   documentUri: `file:///${filename}`,
-  //   // As defined at https://microsoft.github.io/language-server-protocol/specification#textDocumentItem.
-  //   languageId: 'typescript',
-  // });
+  function languageForFormat(format: 'glimdown' | 'gjs' | 'hbs') {
+    switch (format) {
+      case 'glimdown':
+        return glimdown();
+      case 'gjs':
+        return javascript();
+      default:
+        throw new Error(`Unrecognized format: ${format}`);
+    }
+  }
 
   let view = new EditorView({
     parent: element,
     extensions: [
       // features
       basicSetup,
+      languageForFormat(format),
       updateListener,
       EditorView.lineWrapping,
       keymap.of([
         // Intentionally do not capture the tab key -- otherwise we can't leave the editor.
         // indentWithTab
-        // ...defaultKeymap,
-        // ...lintKeymap,
         ...completionKeymap,
+        ...markdownKeymap,
       ]),
 
-      // languages
-      ...glimdown,
-      // lintGutter(),
-      // linter(esLint(new Linter())),
       // lsp,
+
       // Theme
       HorizonTheme,
       syntaxHighlighting(HorizonSyntaxTheme),
     ],
   });
+
+  let setText = (text: string, format: 'glimdown' | 'gjs' | 'hbs') => {
+    view.dispatch({
+      changes: {
+        from: 0,
+        to: view.state.doc.length,
+        insert: text,
+      },
+      effects: languageConf.reconfigure(languageForFormat(format)),
+    });
+  };
 
   view.dispatch(
     view.state.changeByRange((range) => ({
@@ -76,29 +77,12 @@ export default function newEditor(
     }))
   );
 
-  let tabSize = new Compartment();
-
   view.dispatch({
-    effects: tabSize.reconfigure(EditorState.tabSize.of(2)),
+    effects: [
+      tabSize.reconfigure(EditorState.tabSize.of(2)),
+      languageConf.reconfigure(languageForFormat(format)),
+    ],
   });
-
-  let setText = (text: string) => {
-    view.dispatch({
-      changes: {
-        from: 0,
-        to: view.state.doc.length,
-        insert: text,
-      },
-    });
-  };
 
   return { view, setText };
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-// function completionsOfObject(obj: any) {
-//   return Object.keys(obj).map((p) => ({
-//     label: p,
-//     type: /^[A-Z]/.test(p) ? 'class' : typeof obj[p] == 'function' ? 'function' : 'variable',
-//   }));
-// }

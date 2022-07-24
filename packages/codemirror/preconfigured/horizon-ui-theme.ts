@@ -11,8 +11,7 @@ export const HorizonTheme = EditorView.theme(
 
     '.cm-content': {
       caretColor: ui.secondaryAccent,
-      // fontFamily: `'Source Code Pro', ui-monospace, monospace, sans-serif`,
-      fontFamily: 'inherit',
+      fontFamily: `'Source Code Pro', ui-monospace, monospace, sans-serif`,
       fontWeight: 'normal',
       fontSize: '16px',
       fontFeatureSettings: `"liga" 0, "calt" 0`,
