@@ -15,6 +15,7 @@ export default class EditorService extends Service {
 
   @tracked isCompiling = false;
   @tracked error?: string;
+  @tracked errorLine?: number;
 
   declare _editorSwapText: (text: string) => void;
 

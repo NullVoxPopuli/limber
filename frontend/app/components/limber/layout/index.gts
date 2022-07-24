@@ -4,7 +4,14 @@ import { Orientation } from './orientation'
 import { EditorControls } from './controls';
 import { EditorContainer, OutputContainer } from './containers';
 
-<template>
+import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
+
+export const Layout: TOC<{
+  Blocks: {
+    editor: [];
+    output: [];
+  }
+}> = <template>
   <Orientation as |splitHorizontally rotate|>
     <div
       {{! row = left to right, col = top to bottom }}
@@ -38,4 +45,6 @@ import { EditorContainer, OutputContainer } from './containers';
       </OutputContainer>
     </div>
   </Orientation>
-</template>
+</template>;
+
+export default Layout;

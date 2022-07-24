@@ -7,7 +7,6 @@ import { service } from '@ember/service';
 import { registerDestructor } from '@ember/destroyable';
 import { waitFor } from '@ember/test-waiters';
 
-import { nameFor } from 'ember-repl';
 import { iframeMessageHandler } from './iframe-message-handler';
 import { isAllowedFormat, DEFAULT_FORMAT, type ToParent, type Format } from 'limber/utils/messaging';
 

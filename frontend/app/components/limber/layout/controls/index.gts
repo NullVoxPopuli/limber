@@ -1,7 +1,6 @@
 import { assert } from '@ember/debug';
 import { fn, modifier } from '@ember/helper';
 import { on } from '@ember/modifier'
-import not from 'limber/helpers/not';
 import { modifier as functionModifier} from 'ember-modifier';
 
 // @ts-expect-error
