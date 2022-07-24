@@ -140,10 +140,10 @@ jobs:
         echo "Node: $( node --version )"
         echo "NPM: $( npm --version )"
         echo "pnpm: $( pnpm --version )"
-        ls -la ${{ env.app }}/dist
 
+    - run: pnpm build
     - name: Test
-      run: pnpm run test:ember -- --path ./dist/
+      run: pnpm test:ember -- --path ./dist/
       working-directory: ${{ env.app }}
       env:
         CI_BROWSER: ${{ matrix.ci_browser }}
