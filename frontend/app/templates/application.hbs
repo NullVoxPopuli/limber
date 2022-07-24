@@ -1,21 +1,3 @@
 <Limber::Portals />
 
-<main
-  class="grid grid-flow-col h-screen max-h-screen grid
-    {{if (not (in-iframe)) 'grid-rows-editor'}}
-    "
->
-  {{#if (not (in-iframe))}}
-    <Limber::Header />
-  {{/if}}
-
-  <Limber::Layout>
-    <:editor>
-      <Limber::Editor />
-    </:editor>
-
-    <:output>
-      {{outlet}}
-    </:output>
-  </Limber::Layout>
-</main>
+{{outlet}}
