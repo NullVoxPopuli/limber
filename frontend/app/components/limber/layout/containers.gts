@@ -33,13 +33,9 @@ export const EditorContainer: TOC<{
 export const OutputContainer: TOC<{
   Blocks: { default: [] }
 }> = <template>
-  <section
-    class="flex-1 shadow-inner grid overflow-hidden relative"
-    style={{htmlSafe (if (notInIframe) "grid-template-rows: min-content 1fr;")}}
-  >
+  <section class="flex-1 shadow-inner grid overflow-hidden relative">
     <div
       class="overflow-auto relative bg-white flex"
-      {{constrainVertically}}
       data-test-output
     >
       {{yield}}
