@@ -26,6 +26,11 @@ export class Editor extends PageObject {
 
     return active;
   }
+
+  // async setText(text: string) {
+  //   let active = this.activeEditor;
+  // }
+
   /**
    * Because editors do goofy things, we need to normalize
    * both the text in the editor and the passed text

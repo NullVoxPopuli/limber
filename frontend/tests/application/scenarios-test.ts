@@ -1,7 +1,8 @@
 import { click, visit } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import { module, skip, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
+import { stripIndent } from 'common-tags';
 import { DEFAULT_SNIPPET, getFromLabel } from 'limber/snippets';
 
 import { Page } from './-page';
@@ -98,7 +99,50 @@ module('Scenarios', function (hooks) {
       });
     });
 
-    module('input is valid', function () {});
+    module('input is valid', function () {
+      skip('format: glimdown', async function (assert) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const code = stripIndent`
+          import Component from '@glimmer/component';
+          import { tracked } from '@glimmer/tracking';
+          import { on } from '@ember/modifier';
+
+          export default class HelloWorld extends Component {
+            @tracked count = 0;
+
+            increment = () => this.count += 1;
+
+            <template>
+              <p>You have clicked the button {{this.count}} times.</p>
+
+              <button {{on "click" this.increment}}>Click</button>
+            </template>
+          }
+        `;
+
+        await visit('/edit');
+        await page.editor.load();
+        // await page.editor.setText(code);
+
+        let demoText = await getFromLabel('With inline Javascript');
+
+        // assert.dom(page.nav.activeTab.element).hasText('Preview');
+        assert.true(page.editor.hasText(demoText), 'snippet loaded');
+
+        assert.true(page.out.hasCodeSnippets, 'snippets exist');
+        assert.true(page.out.hasRenderedSnippets, 'snippet content is rendered');
+        assert.true(
+          page.out.content?.includes('clicked the button 0 times'),
+          'output text is present'
+        );
+
+        await click(page.out.firstButton);
+        assert.true(
+          page.out.content?.includes('clicked the button 1 times'),
+          'output text is rendered'
+        );
+      });
+    });
 
     module('input is invalid', function () {});
   });
