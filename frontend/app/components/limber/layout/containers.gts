@@ -1,7 +1,3 @@
-import { htmlSafe } from '@ember/template';
-import { notInIframe } from 'limber/helpers/in-iframe';
-import constrainVertically from 'limber/modifiers/constrain-vertically';
-
 import Building from './building';
 import Error from './error';
 
