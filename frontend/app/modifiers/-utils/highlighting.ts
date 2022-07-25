@@ -6,13 +6,29 @@ let HIGHLIGHT: HLJSApi;
 export async function getHighlighter(): Promise<HLJSApi> {
   if (HIGHLIGHT) return HIGHLIGHT;
 
-  HIGHLIGHT = (await import('highlight.js')).default;
+  /**
+   * highlight.js is 282kb in total,
+   * since we now use hljs on initial page load, eagerly, we want to load
+   * as little as possible
+   */
+  let [hljs, glimmer, javascript, typescript, markdown] = await Promise.all([
+    import('highlight.js/lib/core'),
+    import('highlightjs-glimmer'),
+    import('highlight.js/lib/languages/javascript'),
+    import('highlight.js/lib/languages/typescript'),
+    import('highlight.js/lib/languages/markdown'),
+  ]);
 
-  let { setup } = await import('highlightjs-glimmer');
+  HIGHLIGHT = hljs.default;
+  HIGHLIGHT.registerLanguage('javascript', javascript.default);
+  HIGHLIGHT.registerLanguage('typescript', typescript.default);
+  HIGHLIGHT.registerLanguage('markdown', markdown.default);
 
-  setup(HIGHLIGHT);
+  glimmer.setup(HIGHLIGHT);
 
   HIGHLIGHT.registerAliases('gjs', { languageName: 'javascript' });
+  HIGHLIGHT.registerAliases('gts', { languageName: 'typescript' });
+  HIGHLIGHT.registerAliases('glimdown', { languageName: 'markdown' });
 
   return HIGHLIGHT;
 }

@@ -26,8 +26,10 @@
   "packageManager": "pnpm@7.5.0",
   "pnpm": {
     "overrides": {
-      "@babel/core": "~7.17.0",
+      "@babel/core": "~7.18.0",
       "ember-auto-import": "^2.4.0",
+      "ember-modifier": "^4.0.0-beta.1",
+      "ember-source": "^4.5.0",
       "@ember/render-modifiers": "^2.0.4",
       "@types/eslint": "^7.0.0"
     },
@@ -37,11 +39,15 @@
       "core-js": "^2.0.0"
     },
     "peerDependencyRules": {
-      "allowAny": ["mustache"]
+      "allowAny": [
+        "mustache"
+      ]
     },
     "notes": {
-       "mustache": "ember-cli -> testem -> consolidate -> mustache is ancient"
+      "mustache": "ember-cli -> testem -> consolidate -> mustache is ancient"
+    },
+    "patchedDependencies": {
+      "ember-on-resize-modifier@1.1.0": "patches/ember-on-resize-modifier@1.1.0.patch"
     }
   }
-
 }

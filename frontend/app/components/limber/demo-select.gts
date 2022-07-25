@@ -12,6 +12,7 @@ import { getFromLabel, NAMES } from 'limber/snippets';
 import Menu from './menu';
 
 import type EditorService from 'limber/services/editor';
+import type RouterService from '@ember/routing/router-service';
 
 interface Signature {
   Element: HTMLElement;
@@ -19,15 +20,14 @@ interface Signature {
 
 export default class DemoSelect extends Component<Signature> {
   @service declare editor: EditorService;
-
-  demos = NAMES;
+  @service declare router: RouterService;
 
   @action
   @waitFor
   async select(demoName: string) {
     let demo = await getFromLabel(demoName);
 
-    this.editor.updateDemo(demo);
+    this.editor.updateDemo(demo, 'glimdown');
   }
 
   <template>
@@ -44,7 +44,7 @@ export default class DemoSelect extends Component<Signature> {
       </:trigger>
 
       <:options as |Item|>
-        {{#each this.demos as |demoName|}}
+        {{#each NAMES as |demoName|}}
           <Item {{on 'click' (fn this.select demoName)}} data-test-demo>
             {{demoName}}
           </Item>

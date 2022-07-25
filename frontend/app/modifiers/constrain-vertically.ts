@@ -3,20 +3,21 @@ import { debounce } from '@ember/runloop';
 import { isTesting } from '@embroider/macros';
 import { modifier } from 'ember-modifier';
 
-export default modifier(
-  (element: HTMLElement) => {
-    let debouncedConstrain = () => constrain(element);
-    let x = () => debounce(debouncedConstrain, 10);
+interface Signature {
+  Element: HTMLElement;
+}
 
-    constrain(element);
-    window.addEventListener('resize', x);
+export default modifier<Signature>((element: HTMLElement) => {
+  let debouncedConstrain = () => constrain(element);
+  let x = () => debounce(debouncedConstrain, 10);
 
-    return () => {
-      window.removeEventListener('resize', x);
-    };
-  },
-  { eager: false }
-);
+  constrain(element);
+  window.addEventListener('resize', x);
+
+  return () => {
+    window.removeEventListener('resize', x);
+  };
+});
 
 function constrain(element: HTMLElement) {
   let offset = element.getBoundingClientRect().y;

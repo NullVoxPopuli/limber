@@ -6,12 +6,12 @@ export const HorizonTheme = EditorView.theme(
     '&': {
       color: ui.lightText,
       backgroundColor: ui.background,
+      height: '100%',
     },
 
     '.cm-content': {
       caretColor: ui.secondaryAccent,
-      // fontFamily: `'Source Code Pro', ui-monospace, monospace, sans-serif`,
-      fontFamily: 'inherit',
+      fontFamily: `'Source Code Pro', ui-monospace, monospace, sans-serif`,
       fontWeight: 'normal',
       fontSize: '16px',
       fontFeatureSettings: `"liga" 0, "calt" 0`,
@@ -25,7 +25,10 @@ export const HorizonTheme = EditorView.theme(
 
     '&.cm-focused .cm-cursor': { borderLeftColor: ui.lightText },
     '&.cm-focused .cm-selectionBackground, .cm-selectionBackground, ::selection': {
-      backgroundColor: ui.background,
+      backgroundColor: ui.backgroundAlt,
+    },
+    '&.cm-focused .cm-matchingBracket': {
+      'background-color': `${ui.backgroundAlt}`,
     },
 
     '.cm-panels': { backgroundColor: ui.shadow, color: syntax.gray },
@@ -40,17 +43,18 @@ export const HorizonTheme = EditorView.theme(
       backgroundColor: '#6199ff2f',
     },
 
-    '.cm-activeLine': { backgroundColor: ui.backgroundAlt },
+    '.cm-activeLine, .cm-activeLineGutter': { backgroundColor: '#2c2c33' },
     '.cm-selectionMatch': { backgroundColor: ui.shadow },
 
     '.cm-matchingBracket, .cm-nonmatchingBracket': {
-      backgroundColor: syntax.apricot,
-      outline: `1px solid ${syntax.tacao}`,
+      outline: `1px solid ${ui.backgroundAlt}`,
+      margin: '-2px',
+      padding: '2px',
     },
 
     '.cm-gutters': {
-      backgroundColor: ui.border,
-      color: syntax.gray,
+      backgroundColor: ui.background,
+      color: '#777',
       border: 'none',
     },
 

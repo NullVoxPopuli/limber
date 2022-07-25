@@ -1,7 +1,7 @@
 import { assert } from '@ember/debug';
 import { triggerEvent } from '@ember/test-helpers';
 
-import { PageObject } from 'fractal-page-object';
+import { PageObject, selector } from 'fractal-page-object';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { diffText } from 'onp/dist';
@@ -18,14 +18,19 @@ export class Editor extends PageObject {
   }
 
   get activeEditor() {
-    let { _monaco, _placeholder } = this;
+    let { _editor, _placeholder } = this;
 
-    let active = [_monaco, _placeholder].find((editor) => editor.element);
+    let active = [_editor, _placeholder].find((editor) => editor.element);
 
     assert(`Something went wrong, there is no active editor`, active);
 
     return active;
   }
+
+  // async setText(text: string) {
+  //   let active = this.activeEditor;
+  // }
+
   /**
    * Because editors do goofy things, we need to normalize
    * both the text in the editor and the passed text
@@ -44,6 +49,17 @@ export class Editor extends PageObject {
     return similarity > 0.75;
   }
 
+  _editor = selector(
+    '.cm-content',
+    class extends PageObject {
+      get _text() {
+        assert('Editor not present', this.element);
+
+        return this.element.textContent || '';
+      }
+    }
+  );
+
   _placeholder = s(
     'placeholder',
     class extends PageObject {
@@ -54,25 +70,4 @@ export class Editor extends PageObject {
       }
     }
   );
-
-  /**
-   * Monaco is loaded in a shadow DOM so we need
-   * we get a little creative with the element getting
-   */
-  get _monaco() {
-    return {
-      get element(): Element | null | undefined {
-        return document
-          .querySelector('[data-test-editor-panel] [data-shadow]')
-          ?.shadowRoot?.querySelector('.monaco-scrollable-element.editor-scrollable');
-      },
-      get _text(): string {
-        let element = this.element;
-
-        assert('Monaco editor not loaded', element);
-
-        return element.textContent || '';
-      },
-    };
-  }
 }

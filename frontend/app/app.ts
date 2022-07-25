@@ -1,11 +1,21 @@
-import 'ember-statechart-component';
-
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { DEBUG } from '@glimmer/env';
 import Application from '@ember/application';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { _backburner } from '@ember/runloop';
 
 import loadInitializers from 'ember-load-initializers';
 import Resolver from 'ember-resolver';
 import { setupComponentMachines } from 'ember-statechart-component';
 import config from 'limber/config/environment';
+
+if (DEBUG) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  _backburner.DEBUG = true;
+}
 
 export default class App extends Application {
   modulePrefix = config.modulePrefix;

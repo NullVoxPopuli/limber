@@ -1,5 +1,5 @@
 import { assert } from '@ember/debug';
-import { click } from '@ember/test-helpers';
+import { click, settled } from '@ember/test-helpers';
 
 import { PageObject } from 'fractal-page-object';
 
@@ -11,6 +11,7 @@ export class DemoSelect extends PageObject {
 
     assert('Demo selection went missing', toggleButton);
 
+    await settled();
     await click(toggleButton);
 
     let option = [...(this.element?.parentElement?.querySelectorAll(dt('demo')) || [])].find(

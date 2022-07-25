@@ -25,23 +25,31 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: volta-cli/action@v1
-    - name: Cache
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.pnpm-store
-          'node_modules/'
-          'node_modules/.cache'
-        key: ${{ runner.os }}-${{ hashFiles('node_modules/.cache/**') }}
-        restore-keys: |
-          ${{ runner.os }}-
-
-    - uses: pnpm/action-setup@v2.2.2
-      with:
-        version: 6.32.1
-    - run: pnpm install
+    - uses: ./.github/actions/pnpm
 
 ##############################################################
+
+  lints:
+    name: "Lints"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [install_dependencies]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/pnpm
+      - run: pnpm --filter '*' lint
+
+  types:
+    name: "Type Correctness"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [install_dependencies]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/pnpm
+      - run: pnpm --filter '*' check:types
 
   pre_build:
     name: Pre Build
@@ -51,22 +59,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: volta-cli/action@v1
-    - name: Cache
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.pnpm-store
-          'node_modules/'
-          'node_modules/.cache'
-        key: ${{ runner.os }}-${{ hashFiles('node_modules/.cache/**') }}
-        restore-keys: |
-          ${{ runner.os }}-
-
-    - uses: pnpm/action-setup@v2.2.2
-      with:
-        version: 6.32.1
-    - run: pnpm install
+    - uses: ./.github/actions/pnpm
     - run: pnpm run build
 
 ##############################################################
@@ -79,21 +72,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: volta-cli/action@v1
-    - name: Cache
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.pnpm-store
-          'node_modules/'
-          'node_modules/.cache'
-        key: ${{ runner.os }}-${{ hashFiles('node_modules/.cache/**') }}
-        restore-keys: |
-          ${{ runner.os }}-
-    - uses: pnpm/action-setup@v2.2.2
-      with:
-        version: 6.32.1
-    - run: pnpm install
+    - uses: ./.github/actions/pnpm
     - name: 'Build'
       run: pnpm run predeploy
     - name: Copy deploy host config
@@ -116,21 +95,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: volta-cli/action@v1
-    - name: Cache
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.pnpm-store
-          'node_modules/'
-          'node_modules/.cache'
-        key: ${{ runner.os }}-${{ hashFiles('node_modules/.cache/**') }}
-        restore-keys: |
-          ${{ runner.os }}-
-    - uses: pnpm/action-setup@v2.2.2
-      with:
-        version: 6.32.1
-    - run: pnpm install
+    - uses: ./.github/actions/pnpm
     # This could maybe be combined into one command, but
     # pending: https://github.com/vercel/turborepo/discussions/1148
     - run: pnpm run build
@@ -162,22 +127,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: volta-cli/action@v1
-    - name: Cache
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.pnpm-store
-          'node_modules/'
-          'node_modules/.cache'
-        key: ${{ runner.os }}-${{ hashFiles('node_modules/.cache/**') }}
-        restore-keys: |
-          ${{ runner.os }}-
-
-    - uses: pnpm/action-setup@v2.2.2
-      with:
-        version: 6.32.1
-    - run: pnpm install
+    - uses: ./.github/actions/pnpm
     - name: Download Built Test Artifacts
       uses: actions/download-artifact@master
       with:
@@ -191,8 +141,9 @@ jobs:
         echo "NPM: $( npm --version )"
         echo "pnpm: $( pnpm --version )"
 
+    - run: pnpm build
     - name: Test
-      run: pnpm run test:ember -- --path ./dist/
+      run: pnpm test:ember -- --path ./dist/
       working-directory: ${{ env.app }}
       env:
         CI_BROWSER: ${{ matrix.ci_browser }}
@@ -209,22 +160,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: volta-cli/action@v1
-    - name: Cache
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.pnpm-store
-          'node_modules/'
-          'node_modules/.cache'
-        key: ${{ runner.os }}-${{ hashFiles('node_modules/.cache/**') }}
-        restore-keys: |
-          ${{ runner.os }}-
-
-    - uses: pnpm/action-setup@v2.2.2
-      with:
-        version: 6.32.1
-    - run: pnpm install
+    - uses: ./.github/actions/pnpm
     - name: Download Built Test Artifacts
       uses: actions/download-artifact@master
       with:

@@ -20,9 +20,31 @@ import DemoSelect from './demo-select';
     </h1>
 
     <nav class='text-white mt-1 flex gap-2 items-baseline'>
-      <DemoSelect class="hidden sm:block" />
-      <ExternalLink href="/assets/bundle.html">Bundle</ExternalLink>
-      <ExternalLink href="https://github.com/nullvoxpopuli/limber">GitHub</ExternalLink>
+      <DemoSelect />
+      <ExternalLink href="/bundle.html">
+        <:custom as |DefaultContent|>
+          <span class="hidden sm:block">
+            <DefaultContent>
+              Bundle
+            </DefaultContent>
+          </span>
+          <span class="block sm:hidden px-2">
+            <FaIcon @icon="cubes" />
+          </span>
+        </:custom>
+      </ExternalLink>
+      <ExternalLink href="https://github.com/nullvoxpopuli/limber">
+        <:custom as |DefaultContent|>
+          <span class="hidden sm:block">
+            <DefaultContent>
+              GitHub
+            </DefaultContent>
+          </span>
+          <span class="block sm:hidden px-2">
+            <FaIcon @icon="github" @prefix="fab" />
+          </span>
+        </:custom>
+      </ExternalLink>
     </nav>
   </header>
 </template>

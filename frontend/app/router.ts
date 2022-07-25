@@ -1,5 +1,4 @@
-import EmberRouter from '@ember/routing/router';
-
+import EmberRouter from '@embroider/router';
 import config from 'limber/config/environment';
 
 export default class Router extends EmberRouter {
@@ -8,6 +7,15 @@ export default class Router extends EmberRouter {
 }
 
 Router.map(function () {
+  /**
+   * The main editing UI is here
+   */
+  this.route('edit');
+
+  /**
+   * These top-level views are only meaningful via iframe
+   * or very carefully crafted URLS
+   */
   this.route('ember');
   this.route('output');
 

@@ -46,6 +46,7 @@ module.exports = {
           yellow: 'var(--ember-yellow)',
           white: 'var(--ember-white)',
         },
+        'code-bg': 'var(--code-bg)',
       },
       minWidth: {
         '1/3': '33%',
