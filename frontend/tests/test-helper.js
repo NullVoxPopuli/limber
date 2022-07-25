@@ -7,14 +7,11 @@ import { start } from 'ember-qunit';
 import Application from 'limber/app';
 import config from 'limber/config/environment';
 
-import { hideUpstreamErrors } from './-utils';
-
 setApplication(Application.create(config.APP));
 
 Object.assign(window, { getSettledState, getPendingWaiterState });
 
 setupDom(QUnit.assert);
-hideUpstreamErrors();
 
 QUnit.testDone(resetOnerror);
 

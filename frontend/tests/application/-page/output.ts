@@ -6,7 +6,7 @@ export class OutputArea extends PageObject {
   get content() {
     assert('Output frame does not exist', this._innerDocument);
 
-    return this._innerDocument.querySelector('[data-test-output]');
+    return this._innerDocument.querySelector('[data-test-compiled-output]')?.textContent;
   }
 
   get firstButton() {

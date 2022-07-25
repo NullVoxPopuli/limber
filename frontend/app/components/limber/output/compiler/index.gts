@@ -1,14 +1,15 @@
 import Component from '@glimmer/component';
 import Ember from 'ember';
+import { schedule } from '@ember/runloop';
 import { hash } from '@ember/helper';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { registerDestructor } from '@ember/destroyable';
-import { waitFor } from '@ember/test-waiters';
+import { registerDestructor, isDestroyed, isDestroying } from '@ember/destroyable';
+import { waitFor, waitForPromise } from '@ember/test-waiters';
+import { connectToParent, type Connection, type AsyncMethodReturns } from 'penpal';
 
-import { iframeMessageHandler } from './iframe-message-handler';
-import { isAllowedFormat, DEFAULT_FORMAT, type ToParent } from 'limber/utils/messaging';
+import { formatFrom, type OutputError, type Format } from 'limber/utils/messaging';
 
 import { compileTopLevelComponent } from './create-top-level-component'
 
@@ -23,35 +24,49 @@ interface Signature {
   }
 }
 
-const report = (message: ToParent) => {
-    window.parent.postMessage(JSON.stringify({ ...message, from: 'limber-output' }));
-  }
+interface ParentMethods {
+  ready: () => void;
+  error: (error: OutputError) => void;
+  beginCompile: () => void;
+  success: () => void;
+  finishedRendering: () => void;
+}
 
-const handleError = (error: any, extra: any = {}) => report({ ...extra, status: 'error', error: error.message || error});
-
-function setupEvents(context: Compiler, { onReceiveText }: { onReceiveText: (text: string) => void }) {
-  let handle = (event: MessageEvent) => {
-    let text = iframeMessageHandler(context)(event);
-
-    if (text) {
-      onReceiveText(text);
+async function setupEvents(context: Compiler, { onReceiveText, onConnect }: {
+  onReceiveText: (text: string) => void,
+  onConnect: (parent: AsyncMethodReturns<ParentMethods>) => void,
+}) {
+  let connection = connectToParent<ParentMethods>({
+    methods: {
+      update(format: Format, text: string) {
+        onReceiveText(text);
+      }
     }
-  }
+  });
 
-  window.addEventListener('message', handle);
+  context.connection = connection;
+
+  registerDestructor(context, () => connection.destroy());
+
+  let parent = await connection.promise;
+  onConnect(parent);
+
+  if (isDestroyed(context) || isDestroying(context)) return;
+
+  /**
+    * This app now can't render again, so we need to tell the host frame to re-load the output frame
+    */
+  Ember.onerror = (error: any) => parent.error({ error, unrecoverable: true });
+
+  const handleError = (error: any) => parent.error({ error: error.message || error });
+
   window.addEventListener('error', handleError);
 
-  Ember.onerror = (error: any) => {
-    /**
-      * This app now can't render again, so we need to tell the host frame to re-load the output frame
-      */
-    handleError(error, { unrecoverable: true });
-  }
-
-  registerDestructor(context, () => window.removeEventListener('message', handle));
   registerDestructor(context, () => window.removeEventListener('error', handleError));
 
-  report({ status: 'ready' });
+  await parent.ready();
+
+  return connection;
 }
 
 
@@ -66,22 +81,22 @@ export default class Compiler extends Component<Signature> {
   @tracked errorLine: number | null = null;
   @tracked template?: unknown;
 
+  declare connection: Connection<ParentMethods>;
+  declare parentFrame: AsyncMethodReturns<ParentMethods>;
+
   constructor(owner: unknown, args: any) {
     super(owner, args);
 
-    setupEvents(this, {
-      onReceiveText: (text: string) => this.makeComponent(text)
-    });
+    waitForPromise(setupEvents(this, {
+      onReceiveText: (text: string) => this.makeComponent(text),
+      onConnect: (parent) => this.parentFrame = parent,
+    }));
   }
 
   get format() {
-    let requested  = this.router.currentRoute.queryParams.format
+    let requested = this.router.currentRoute.queryParams.format
 
-    if (isAllowedFormat(requested)) {
-      return requested;
-    }
-
-    return DEFAULT_FORMAT;
+    return formatFrom(requested);
   }
 
 
@@ -92,24 +107,32 @@ export default class Compiler extends Component<Signature> {
 
     await compileTopLevelComponent(text, {
       format: this.format,
-      onCompileStart: () => {
-        report({ status: 'compile-begin' });
+      onCompileStart: async () => {
+        await  (this.parentFrame.beginCompile());
       },
-      onSuccess: (component) => {
+      onSuccess: async (component) => {
         if (!component) {
-          report({ status: 'error', error: 'could not build component' });
+          await (this.parentFrame.error({ error: 'could not build component' }));
           return;
         }
 
+        if (isDestroyed(this) || isDestroying(this)) return;
         this.component = component;
-        report({ status: 'success' });
+
+        await (this.parentFrame.success())
+
+        schedule('afterRender', () => {
+          if (isDestroyed(this) || isDestroying(this)) return;
+
+          this.parentFrame.finishedRendering();
+        });
       },
-      onError: (error: string) => {
-        report({ status: 'error', error });
+      onError: async (error: string) => {
+        await (this.parentFrame.error({ error }));
       }
     });
-  }
 
+  }
 
   <template>
     {{yield

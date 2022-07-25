@@ -3,8 +3,6 @@
  *   (esp from various browser extensions)
  *
  */
-import { warn } from '@ember/debug';
-
 export type Format = 'glimdown' | 'gjs' | 'hbs';
 
 export type NewContent = {
@@ -16,9 +14,11 @@ export type Ready = { status: 'ready' };
 export type Success = { status: 'success' };
 export type CompileBegin = { status: 'compile-begin' };
 export type Error =
-  | { status: 'error'; error: string }
-  | { status: 'error'; error: string; unrecoverable: true }
-  | { status: 'error'; error: string; errorLine: number };
+  | { error: string }
+  | { error: string; unrecoverable: true }
+  | { error: string; errorLine: number };
+
+export type OutputError = Error;
 
 type FromLimber = { from: 'limber' };
 type FromLimberOutput = { from: 'limber-output' };
@@ -71,53 +71,4 @@ export function fromParent<T extends { from?: string }>(x?: T | null): x is T & 
   }
 
   return false;
-}
-
-export function hasStatus<T extends { status?: string }>(x: T): x is T & (Ready | Error)['status'] {
-  if ('status' in x && x.status) {
-    return (STATUSES as readonly string[]).includes(x.status);
-  }
-
-  return false;
-}
-
-export function hasError<T extends { error?: string; status?: string }>(x: T): x is T & Error {
-  if (!hasStatus(x)) return false;
-  if (x.status !== 'error') return false;
-
-  return true;
-}
-
-export function parseEvent(event: MessageEvent): null | FromParent | FromOutput {
-  let { data } = event;
-
-  if (!data) {
-    return null;
-  }
-
-  if (typeof data !== 'string') {
-    return null;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let json: any;
-
-  try {
-    json = JSON.parse(data);
-  } catch (e) {
-    warn(e.message, { id: 'messaging JSON.parse error' });
-
-    return null;
-  }
-
-  if (!hasFrom(json)) {
-    return null;
-  }
-
-  if (json.from !== 'limber' && json.from !== 'limber-output') {
-    return null;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return json as any; // likely? -- being lazy
 }

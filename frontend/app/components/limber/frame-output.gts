@@ -1,21 +1,20 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { isDestroyed, isDestroying } from '@ember/destroyable';
 import { service } from '@ember/service';
+import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
-import { buildWaiter, waitForPromise } from '@ember/test-waiters';
+import { waitForPromise, waitFor, buildWaiter } from '@ember/test-waiters';
+import { connectToChild, type Connection } from 'penpal';
 
 import { DEFAULT_SNIPPET } from 'limber/snippets';
-import { parseEvent, fromOutput, formatFrom, type Format } from 'limber/utils/messaging';
+import { formatFrom, type Format, type OutputError } from 'limber/utils/messaging';
 
 import type EditorService from 'limber/services/editor';
 import type RouterService from '@ember/routing/router-service';
 
-function makePayload(format: Format, content: string) {
-  return { format, content, from: 'limber' } as const;
-}
-
-let readyWaiter = buildWaiter('<FrameOutput />:waiting-for-ready');
-let compileWaiter = buildWaiter('<FrameOutput />:compiling');
+const compileWaiter = buildWaiter('<FrameOutput />::compile');
+const compileTokens: unknown[] = [];
 
 /**
   * The Receiving Component is Limber::Output::Compiler
@@ -26,9 +25,10 @@ export default class FrameOutput extends Component {
 
   @tracked frameStatus: unknown;
 
+  connection?: Connection<{
+    update: (format: Format, text: string) => void;
+  }>;
   hadUnrecoverableError = false;
-
-  compileFinished: (value?: unknown) => void = () => {};
 
   get format() {
     let requested  = this.router.currentRoute.queryParams.format
@@ -52,55 +52,57 @@ export default class FrameOutput extends Component {
       return;
     }
 
+    this.queuePayload();
+  });
+
+  @action
+  @waitFor
+  async queuePayload() {
     let qps = this.router.currentURL.split('?')[1];
+
+    if (!this.connection) return;
+
+    let child = await this.connection.promise;
+    if (isDestroyed(this) || isDestroying(this)) return;
+
     let searchParams = new URLSearchParams(qps);
     let text = searchParams.get('t') || DEFAULT_SNIPPET;
     let format = formatFrom(searchParams.get('format'));
-    let payload = makePayload(format, text);
 
-    if (this.frameStatus === 'ready') {
-      waitForPromise(new Promise(resolve => this.compileFinished = resolve));
-    }
+    compileTokens.push(compileWaiter.beginAsync());
+    await child.update(format, text);
+  }
 
-    element.contentWindow.postMessage(JSON.stringify(payload));
-  });
-
-  onMessage = modifier(() => {
-    let ready: (value?: unknown) => void;
-    waitForPromise(new Promise(resolve => ready = resolve));
-
-    let handle = (event: MessageEvent) => {
-      let obj = parseEvent(event);
-
-      if (fromOutput(obj)) {
-        switch (obj.status) {
-          case 'ready':
-            ready();
-            this.frameStatus = 'ready';
-            break;
-          case 'error':
-            this.editor.error = obj.error;
-            this.editor.isCompiling = false;
-            if ('unrecoverable' in obj) {
-              this.hadUnrecoverableError = true;
-            }
-            this.compileFinished();
-            break;
-          case 'compile-begin':
-            this.editor.isCompiling = true;
-            break;
-          case 'success':
-            this.editor.error = undefined;
-            this.editor.isCompiling = false;
-            this.compileFinished();
-            break;
+  onMessage = modifier((element: HTMLIFrameElement) => {
+    this.connection = connectToChild({
+      iframe: element,
+      methods: {
+        ready: () => this.frameStatus = 'ready',
+        error: (obj: OutputError) => {
+          this.editor.error = obj.error;
+          this.editor.isCompiling = false;
+          if ('unrecoverable' in obj) {
+            this.hadUnrecoverableError = true;
+          }
+        },
+        beginCompile: () => {
+          compileTokens.push(compileWaiter.beginAsync());
+          this.editor.isCompiling = true;
+        },
+        success: () => {
+          this.editor.error = undefined;
+          this.editor.isCompiling = false;
+        },
+        finishedRendering: () => {
+          compileTokens.forEach(token => compileWaiter.endAsync(token));
         }
+
       }
-    };
+    });
 
-    window.addEventListener('message', handle);
+    waitForPromise(this.connection.promise).catch(console.error);
 
-    return () => window.removeEventListener('message', handle);
+    return () => this.connection?.destroy();
   });
 
   <template>

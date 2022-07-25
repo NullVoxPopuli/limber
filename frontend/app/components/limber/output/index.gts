@@ -5,7 +5,7 @@ import Compiler from './compiler';
 
 <template>
   <Compiler as |context|>
-    <div class='p-4 prose max-w-full relative'>
+    <div class='p-4 prose max-w-full relative' data-test-compiled-output>
       {{!--
         The copy menu exists here for two reasons:
          - we need to statically reference this component so that it doesn't get tree-shaken away
@@ -14,7 +14,6 @@ import Compiler from './compiler';
       --}}
       <CopyMenu />
 
-      {{log context.component}}
       {{#if context.component}}
         {{#let (component context.component) as |Preview|}}
           <div {{highlight context.component}}>

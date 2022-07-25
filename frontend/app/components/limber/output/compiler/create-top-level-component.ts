@@ -13,9 +13,9 @@ export async function compileTopLevelComponent(
     onCompileStart,
   }: {
     format: Format;
-    onSuccess: (component: ComponentLike) => void;
-    onError: (error: string) => void;
-    onCompileStart: () => void;
+    onSuccess: (component: ComponentLike) => Promise<void>;
+    onError: (error: string) => Promise<void>;
+    onCompileStart: () => Promise<void>;
   }
 ) {
   let id = nameFor(text);
@@ -36,18 +36,18 @@ export async function compileTopLevelComponent(
     }[format];
   };
 
-  onCompileStart();
+  await onCompileStart();
 
   let compiler = await getCompiler(format)?.();
 
   if (!compiler) {
-    onError('Could not find compiler');
+    await onError('Could not find compiler');
 
     return;
   }
 
   if (!text) {
-    onError('No Input Document yet');
+    await onError('No Input Document yet');
 
     return;
   }
@@ -55,29 +55,12 @@ export async function compileTopLevelComponent(
   let { error, rootComponent } = await compiler.compile(text);
 
   if (error) {
-    onError(error.message || `${error}`);
-
-    // let { line } = extractPosition(error.message);
-
-    // this.error = error.message;
-    // this.errorLine = line;
+    await onError(error.message || `${error}`);
 
     return;
   }
 
   CACHE.set(id, rootComponent as ComponentLike);
 
-  onSuccess(rootComponent as ComponentLike);
+  await onSuccess(rootComponent as ComponentLike);
 }
-
-// function extractPosition(message: string) {
-//   let match = message.match(/' @ line (\d+) : column/);
-
-//   if (!match) {
-//     return { line: null };
-//   }
-
-//   let [, line] = match;
-
-//   return { line: parseInt(line, 10) };
-// }
