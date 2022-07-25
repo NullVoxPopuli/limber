@@ -1,6 +1,5 @@
 import { assert } from '@ember/debug';
-import { fn, modifier } from '@ember/helper';
-import { on } from '@ember/modifier'
+import { modifier } from '@ember/helper';
 import { modifier as functionModifier} from 'ember-modifier';
 
 import State, { setupResizeObserver } from './state';
