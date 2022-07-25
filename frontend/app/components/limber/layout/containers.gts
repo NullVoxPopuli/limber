@@ -4,7 +4,6 @@ import constrainVertically from 'limber/modifiers/constrain-vertically';
 
 import Building from './building';
 import Error from './error';
-import Navigation from './navigation';
 
 import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
 
@@ -38,10 +37,6 @@ export const OutputContainer: TOC<{
     class="flex-1 shadow-inner grid overflow-hidden relative"
     style={{htmlSafe (if (notInIframe) "grid-template-rows: min-content 1fr;")}}
   >
-    {{#if (notInIframe)}}
-      <Navigation />
-    {{/if}}
-
     <div
       class="overflow-auto relative bg-white flex"
       {{constrainVertically}}
