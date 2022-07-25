@@ -7,8 +7,13 @@ import aspectRatio from 'ember-container-query/helpers/cq-aspect-ratio';
 
 import constrainVertically from 'limber/modifiers/constrain-vertically';
 
+interface Signature {
+  Blocks: {
+    default: [boolean, () => void];
+  }
+}
 
-export class Orientation extends Component {
+export class Orientation extends Component<Signature> {
   @tracked forcedAlternate?: boolean;
 
   rotate = () => this.forcedAlternate = !this.forcedAlternate;

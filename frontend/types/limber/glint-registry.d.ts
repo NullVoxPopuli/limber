@@ -3,8 +3,6 @@ import "@glint/environment-ember-loose/native-integration";
 import "ember-page-title/glint";
 import 'ember-statechart-component/glint';
 
-import type { ComponentLike, HelperLike } from "@glint/template";
-
 import type Output from 'limber/components/limber/output';
 import type Portals from 'limber/components/limber/portals';
 import type Header from 'limber/components/limber/header';
@@ -42,11 +40,6 @@ declare module "@glint/environment-ember-loose/registry" {
     service: typeof service;
     not: typeof not;
     'in-iframe': typeof inIframe;
-    'cq-aspect-ratio': HelperLike<{
-      Args: {
-        Named: { min?: number, max?: number };
-      }
-    }>;
 
     /**
      * Modifiers

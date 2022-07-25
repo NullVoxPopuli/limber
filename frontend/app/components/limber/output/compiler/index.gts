@@ -38,7 +38,7 @@ async function setupEvents(context: Compiler, { onReceiveText, onConnect }: {
 }) {
   let connection = connectToParent<ParentMethods>({
     methods: {
-      update(format: Format, text: string) {
+      update(_format: Format, text: string) {
         onReceiveText(text);
       }
     }

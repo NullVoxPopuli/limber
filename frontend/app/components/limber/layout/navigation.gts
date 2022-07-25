@@ -69,21 +69,6 @@ class TabLink extends Component<TabSignature> {
 <template>
   <div class="grid grid-flow-col bg-ember-faint-gray gap-2" data-test-navigation>
     <nav class="flex flex-row gap-0.5 pt-0.5">
-      {{!--
-
-      <TabLink @href="/ember" class="relative">
-        Ember
-        <span class="z-10 absolute right-[-5px] inline-block">
-          <FaIcon @icon="caret-right" @transform="grow-6"/>
-        </span>
-      </TabLink>
-
-      <TabLink @href="/" class="relative">
-        Preview
-      </TabLink>
-
-      --}}
-
       {{#unless (isEditing)}}
         <TabLink
           @href="/"
