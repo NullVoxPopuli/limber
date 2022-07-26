@@ -50,7 +50,6 @@ export default class CodeMirror extends Modifier<Signature> {
      * the demo selector can also affect both the URL and the editor
      */
     this.editor._editorSwapText = (text, format) => {
-      updateText(text); // update the service / URL
       setText(text, format); // update the editor
     };
 

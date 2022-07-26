@@ -35,10 +35,13 @@ export default class EditorService extends Service {
 
   @action
   updateDemo(text: string, format: Format) {
-    /**
-     * Setting these properties queues an update to the URL, debounced (usually)
-     */
+    // Updates the editor
     this._editorSwapText(text, format);
+
+    // Update ourselves
+    this.text = text;
+    this.format = format;
+    this._updateSnippet();
   }
 
   @action
