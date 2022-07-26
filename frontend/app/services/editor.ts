@@ -19,7 +19,7 @@ export default class EditorService extends Service {
   @tracked error?: string;
   @tracked errorLine?: number;
 
-  declare _editorSwapText: (text: string, format: Format) => void;
+  _editorSwapText?: (text: string, format: Format) => void;
 
   text = getQP() ?? DEFAULT_SNIPPET;
   format?: Format;
@@ -36,7 +36,7 @@ export default class EditorService extends Service {
   @action
   updateDemo(text: string, format: Format) {
     // Updates the editor
-    this._editorSwapText(text, format);
+    this._editorSwapText?.(text, format);
 
     // Update ourselves
     this.text = text;
