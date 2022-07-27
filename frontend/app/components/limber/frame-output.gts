@@ -107,7 +107,9 @@ export default class FrameOutput extends Component {
 
   <template>
     <iframe
+      {{!-- @glint-ignore --}}
       {{this.postMessage this.frameStatus}}
+      {{!-- @glint-ignore --}}
       {{this.onMessage}}
       class="w-full h-full border-none"
       src="/output?format={{this.format}}"></iframe>

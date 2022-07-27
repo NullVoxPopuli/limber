@@ -1,11 +1,12 @@
 import Component from '@glimmer/component';
 import { schedule } from '@ember/runloop';
+// @ts-ignore
 import { hash } from '@ember/helper';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isDestroyed, isDestroying } from '@ember/destroyable';
-import { waitFor, waitForPromise } from '@ember/test-waiters';
+import { waitFor } from '@ember/test-waiters';
 
 import { formatFrom } from 'limber/utils/messaging';
 

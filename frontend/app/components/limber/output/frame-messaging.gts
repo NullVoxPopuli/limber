@@ -1,10 +1,10 @@
 import Component from '@glimmer/component';
 import Ember from 'ember';
+// @ts-ignore
 import { hash } from '@ember/helper';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { registerDestructor, isDestroyed, isDestroying } from '@ember/destroyable';
-// import { waitFor, waitForPromise } from '@ember/test-waiters';
 import { connectToParent, type Connection, type AsyncMethodReturns } from 'penpal';
 
 import { formatFrom, type OutputError, type Format } from 'limber/utils/messaging';

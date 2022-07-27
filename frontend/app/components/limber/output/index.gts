@@ -26,6 +26,7 @@ export const Output: TOC<Signature> =
 
       {{#if context.component}}
         {{#let (component context.component) as |Preview|}}
+          {{!-- @glint-ignore --}}
           <div {{highlight context.component}}>
             <Preview />
           </div>

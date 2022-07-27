@@ -45,6 +45,7 @@ const Menu: TOC<{
   <HeadlessMenu as |menu|>
     <PopperJS as |trigger popover|>
       <menu.Button
+        {{!-- @glint-ignore --}}
         {{trigger}}
         class="
           text-black
@@ -57,6 +58,7 @@ const Menu: TOC<{
         {{yield menu to="trigger"}}
       </menu.Button>
       <menu.Items
+        {{!-- @glint-ignore --}}
         {{popover}}
         class="absolute top-2 z-20 grid mt-1 rounded-sm bg-white shadow-lg min-w-max"
         data-test-menu-items
