@@ -4,11 +4,13 @@ import "ember-page-title/glint";
 import 'ember-statechart-component/glint';
 
 import type Output from 'limber/components/limber/output';
+import type OutputFramMessaging from 'limber/components/limber/output/frame-messaging';
 import type Portals from 'limber/components/limber/portals';
 import type Header from 'limber/components/limber/header';
 import type Layout from 'limber/components/limber/layout';
 import type Editor from 'limber/components/limber/editor';
 import type FrameOutput from 'limber/components/limber/frame-output';
+import type DemoSelect from 'limber/components/limber/demo-select';
 
 import type service from 'limber/helpers/service';
 import type not from 'limber/helpers/not';
@@ -27,7 +29,9 @@ declare module "@glint/environment-ember-loose/registry" {
     /**
      *  Components
      */
+    'Limber::DemoSelect': typeof DemoSelect;
     'Limber::Output': typeof Output;
+    'Limber::Output::FrameMessaging': typeof OutputFramMessaging;
     'Limber::Portals': typeof Portals;
     'Limber::Header': typeof Header;
     'Limber::Layout': typeof Layout;

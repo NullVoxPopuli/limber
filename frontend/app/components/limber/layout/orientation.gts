@@ -1,3 +1,4 @@
+// @ts-ignore
 import { hash } from '@ember/helper';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
@@ -35,6 +36,7 @@ export class Orientation extends Component<Signature> {
       @features={{hash horizontalSplit=(aspectRatio max=1.2)}}
       {{! grid forces all the contents to take up all available vertical space }}
       class="grid"
+      {{!-- @glint-ignore --}}
       {{constrainVertically}}
       as |query|
     >

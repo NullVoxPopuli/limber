@@ -22,6 +22,7 @@ export const Shadowed: TOC<{
 }> =
 <template>
   {{#let (State) as |shadow|}}
+    {{!-- @glint-ignore --}}
     <div data-shadow {{attachShadow shadow.update}} ...attributes></div>
 
     {{#if shadow.value}}

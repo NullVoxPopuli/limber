@@ -2,7 +2,7 @@ import { type ComponentLike } from '@glint/template';
 import { nameFor } from 'ember-repl';
 import { type Format } from 'limber/utils/messaging';
 
-const CACHE = new Map<string, ComponentLike>();
+export const CACHE = new Map<string, ComponentLike>();
 
 export async function compileTopLevelComponent(
   text: string,
@@ -13,9 +13,9 @@ export async function compileTopLevelComponent(
     onCompileStart,
   }: {
     format: Format;
-    onSuccess: (component: ComponentLike) => Promise<void>;
-    onError: (error: string) => Promise<void>;
-    onCompileStart: () => Promise<void>;
+    onSuccess: (component: ComponentLike) => Promise<unknown>;
+    onError: (error: string) => Promise<unknown>;
+    onCompileStart: () => Promise<unknown>;
   }
 ) {
   let id = nameFor(text);

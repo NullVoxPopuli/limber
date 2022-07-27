@@ -3,8 +3,18 @@ import highlight from 'limber/modifiers/highlight-code-blocks';
 import CopyMenu from '../copy-menu';
 import Compiler from './compiler';
 
+import type { TOC } from '@ember/component/template-only';
+import type { MessagingAPI } from './frame-messaging';
+
+interface Signature {
+  Args: {
+    messagingAPI: MessagingAPI
+  }
+}
+
+export const Output: TOC<Signature> =
 <template>
-  <Compiler as |context|>
+  <Compiler @messagingAPI={{@messagingAPI}} as |context|>
     <div class='p-4 prose max-w-full relative' data-test-compiled-output>
       {{!--
         The copy menu exists here for two reasons:
@@ -16,6 +26,7 @@ import Compiler from './compiler';
 
       {{#if context.component}}
         {{#let (component context.component) as |Preview|}}
+          {{!-- @glint-ignore --}}
           <div {{highlight context.component}}>
             <Preview />
           </div>
@@ -24,4 +35,6 @@ import Compiler from './compiler';
 
     </div>
   </Compiler>
-</template>
+</template>;
+
+export default Output;
