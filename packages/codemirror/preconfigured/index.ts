@@ -31,6 +31,8 @@ export default function newEditor(
         return glimdown();
       case 'gjs':
         return javascript();
+      case 'hbs':
+        return javascript();
       default:
         throw new Error(`Unrecognized format: ${format}`);
     }
