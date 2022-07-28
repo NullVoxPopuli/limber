@@ -1,10 +1,11 @@
 // @ts-ignore
+import { hash } from '@ember/helper';
+// @ts-ignore
 import HeadlessMenu from 'ember-headlessui/components/menu';
 import { PopperJS } from 'ember-popperjs';
 
 import type { ComponentLike } from "@glint/template";
-
-import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
+import type { TOC } from '@ember/component/template-only';
 
 const Button: TOC<{
   Element: HTMLButtonElement;
@@ -35,28 +36,73 @@ const Button: TOC<{
   </@item>
 </template>;
 
-const Menu: TOC<{
+const DefaultTrigger: TOC<{
   Element: HTMLButtonElement;
+  Args: {
+    menu: any;
+  };
   Blocks: {
-    trigger: [{ isOpen: boolean }],
+    default: [any];
+  }
+}> = <template>
+  <@menu.Button
+    {{!-- @glint-ignore --}}
+    {{@trigger}}
+    class="
+      text-black
+      rounded-sm border border-gray-900 bg-white px-2 py-1 -my-1 text-left
+      transition ease-in-out duration-150 sm:text-sm
+      focus:ring-4 focus-visible:outline-none ring-ember-brand focus:outline-none
+    "
+    ...attributes
+  >
+    {{yield @menu}}
+  </@menu.Button>
+</template>;
+
+const PlainTrigger: TOC<{
+  Element: HTMLButtonElement;
+  Args: {
+    menu: any;
+  };
+  Blocks: {
+    default: [{ isOpen: boolean }];
+  }
+}> = <template>
+  <@menu.Button
+    {{!-- @glint-ignore --}}
+    {{@trigger}}
+    ...attributes
+  >
+    {{yield @menu}}
+  </@menu.Button>
+</template>;
+
+const Menu: TOC<{
+  Blocks: {
+    trigger: [{
+      menu: { isOpen: boolean },
+      // TODO: what are these types?
+      isOpen: boolean,
+      Default: any,
+      Button: any,
+      modifiers: any
+    }],
     options: [ComponentLike<{ Element: HTMLButtonElement, Blocks: { default: []} }>],
   }
 }> = <template>
   <HeadlessMenu as |menu|>
     <PopperJS as |trigger popover|>
-      <menu.Button
-        {{!-- @glint-ignore --}}
-        {{trigger}}
-        class="
-          text-black
-          rounded-sm border border-gray-900 bg-white px-2 py-1 -my-1 text-left
-          transition ease-in-out duration-150 sm:text-sm
-          focus:ring-4 focus-visible:outline-none ring-ember-brand focus:outline-none
-        "
-        ...attributes
-      >
-        {{yield menu to="trigger"}}
-      </menu.Button>
+      {{yield
+        (hash
+          menu=menu
+          isOpen=menu.isOpen
+          modifiers=trigger
+          Button=(component PlainTrigger menu=menu trigger=trigger)
+          Default=(component DefaultTrigger menu=menu trigger=trigger)
+        )
+        to="trigger"
+      }}
       <menu.Items
         {{!-- @glint-ignore --}}
         {{popover}}

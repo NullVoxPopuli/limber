@@ -6,23 +6,23 @@ import currentURL from 'limber/helpers/current-url';
 // @ts-expect-error
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
+import { FormatMenu } from './format-menu';
+
 import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
 import type { Send } from 'ember-statechart-component/glint';
+
+const buttonClasses = `
+  block select-none py-2 px-3 text-white text-xs
+  hover:bg-[#9b2918]
+  focus:ring-4 ring-inset focus:outline-none
+  disabled:opacity-30
+`;
 
 const Button: TOC<{
   Element: HTMLButtonElement
   Blocks: { default: [] }
 }> = <template>
-  <button
-    type='button'
-    class="
-      block select-none py-2 px-3 text-white text-xs
-      hover:bg-[#9b2918]
-      focus:ring-4 ring-inset focus:outline-none
-      disabled:opacity-30
-    "
-    ...attributes
-  >
+  <button type='button' class={{buttonClasses}} ...attributes>
     {{yield}}
   </button>
 </template>;
@@ -98,6 +98,8 @@ export const Controls: TOC<{
           <FaIcon @icon="external-link-alt" />
         </a>
       {{/if}}
+
+      <FormatMenu class={{buttonClasses}} />
     </div>
   {{/if}}
 </template>;

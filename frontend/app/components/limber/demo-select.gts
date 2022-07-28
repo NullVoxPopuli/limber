@@ -31,16 +31,18 @@ export default class DemoSelect extends Component<Signature> {
   }
 
   <template>
-    <Menu data-test-demo-select ...attributes>
-      <:trigger as |menu|>
-        <span class="grid grid-flow-col gap-2 items-center">
-          Select demo
-          {{#if menu.isOpen}}
-            <FaIcon @icon="angle-up" class="min-w-3" />
-          {{else}}
-            <FaIcon @icon="angle-right" class="min-w-3" />
-          {{/if}}
-        </span>
+    <Menu>
+      <:trigger as |t|>
+        <t.Default data-test-demo-select ...attributes as |menu|>
+          <span class="grid grid-flow-col gap-2 items-center">
+            Select demo
+            {{#if menu.isOpen}}
+              <FaIcon @icon="angle-up" class="min-w-3" />
+            {{else}}
+              <FaIcon @icon="angle-right" class="min-w-3" />
+            {{/if}}
+          </span>
+        </t.Default>
       </:trigger>
 
       <:options as |Item|>
