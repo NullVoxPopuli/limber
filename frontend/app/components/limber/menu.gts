@@ -1,3 +1,5 @@
+import { resource } from 'ember-resources';
+import { cell } from 'limber/cell';
 import { assert } from '@ember/debug';
 // @ts-ignore
 import { hash } from '@ember/helper';
@@ -79,8 +81,8 @@ const PlainTrigger: TOC<{
   </@menu.Button>
 </template>;
 
-const portalTarget = (name: string) => {
-  let selector = `[data-portal="${name}"]`;
+const portalTarget = () => {
+  let selector = `[data-portal="popover"]`;
   let element = document.querySelector(selector);
 
   assert(
@@ -89,6 +91,21 @@ const portalTarget = (name: string) => {
 
   return element;
 }
+
+const PortalTarget = resource(({ on }) => {
+  let element = cell();
+  let selector = `[data-portal="popover"]`;
+
+  let interval = setInterval(() => {
+    if (!element.current) {
+      element.current = document.querySelector(selector);
+    }
+  }, 10);
+
+  on.cleanup(() => clearInterval(interval));
+
+  return () => element.current;
+});
 
 const Menu: TOC<{
   Blocks: {
@@ -117,17 +134,19 @@ const Menu: TOC<{
         to="trigger"
       }}
 
-      {{#in-element (portalTarget "popover")}}
-        <menu.Items
-          {{!-- @glint-ignore --}}
-          {{popover}}
-          class="absolute top-2 z-20 grid mt-1 rounded-sm bg-white drop-shadow-lg min-w-max"
-          data-test-menu-items
-          as |items|
-        >
-          {{yield (component Button item=items.Item) to="options"}}
-        </menu.Items>
-      {{/in-element}}
+      {{#if menu.isOpen}}
+        {{#in-element (portalTarget)}}
+          <menu.Items
+            {{!-- @glint-ignore --}}
+            {{popover}}
+            class="absolute top-2 z-20 grid mt-1 rounded-sm bg-white drop-shadow-lg min-w-max"
+            data-test-menu-items
+            as |items|
+          >
+            {{yield (component Button item=items.Item) to="options"}}
+          </menu.Items>
+        {{/in-element}}
+      {{/if}}
 
     </PopperJS>
   </HeadlessMenu>
