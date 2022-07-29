@@ -1,5 +1,3 @@
-import { resource } from 'ember-resources';
-import { cell } from 'limber/cell';
 import { assert } from '@ember/debug';
 // @ts-ignore
 import { hash } from '@ember/helper';
@@ -91,21 +89,6 @@ const portalTarget = () => {
 
   return element;
 }
-
-const PortalTarget = resource(({ on }) => {
-  let element = cell();
-  let selector = `[data-portal="popover"]`;
-
-  let interval = setInterval(() => {
-    if (!element.current) {
-      element.current = document.querySelector(selector);
-    }
-  }, 10);
-
-  on.cleanup(() => clearInterval(interval));
-
-  return () => element.current;
-});
 
 const Menu: TOC<{
   Blocks: {
