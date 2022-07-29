@@ -11,9 +11,6 @@ import Menu from 'limber/components/limber/menu';
 import type { Format } from 'limber/utils/messaging';
 import type RouterService from '@ember/routing/router-service';
 
-/**
- * This component is injected via the markdown rendering
- */
 export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
   @service declare router: RouterService;
 
