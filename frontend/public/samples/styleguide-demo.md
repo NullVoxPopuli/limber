@@ -84,8 +84,10 @@ import Shadowed from 'limber/components/shadowed';
 <template>
   <Shadowed>
     <Menu>
-      <:trigger>
-        toggle menu
+      <:trigger as |t|>
+        <t.Default>
+          toggle menu
+        </t.Default>
       </:trigger>
 
       <:options as |Item|>

@@ -5,6 +5,7 @@ module.exports = function () {
     'free-solid-svg-icons': [
       'external-link-alt',
       'caret-right',
+      'cog',
       'cubes',
       'angle-right',
       'angle-up',

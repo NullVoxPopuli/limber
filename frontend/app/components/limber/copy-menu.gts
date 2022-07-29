@@ -25,9 +25,11 @@ export default class CopyMenu extends Component {
   }
 
   <template>
-    <Menu class="absolute top-3 right-4 z-10" data-test-copy-menu>
-      <:trigger>
-        📋
+    <Menu>
+      <:trigger as |t|>
+        <t.Default class="absolute top-3 right-4 z-10" data-test-copy-menu>
+          📋
+        </t.Default>
       </:trigger>
 
 
@@ -77,13 +79,13 @@ async function withExtraStyles(target: HTMLElement, next: () => Promise<void>) {
     return await next();
   }
 
-  pre.classList.add('shadow-lg');
+  pre.classList.add('drop-shadow-lg');
   pre.style.margin = '0';
 
   try {
     await next();
   } finally {
-    pre.classList.remove('shadow-lg');
+    pre.classList.remove('drop-shadow-lg');
     pre.setAttribute('style', '');
   }
 }

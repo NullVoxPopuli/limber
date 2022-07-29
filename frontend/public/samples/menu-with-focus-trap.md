@@ -36,7 +36,7 @@ const Button =
           Toggle Menu
         </menu.Button>
 
-        <menu.Items {{popover}} class="grid gap-3 p-2 shadow-lg z-10 bg-white" as |items|>
+        <menu.Items {{popover}} class="grid gap-3 p-2 drop-shadow-lg z-10 bg-white" as |items|>
           {{#let (component Button item=items.Item) as |Button|}}
             <Button>Option 1</Button>
             <Button>Option 2</Button>

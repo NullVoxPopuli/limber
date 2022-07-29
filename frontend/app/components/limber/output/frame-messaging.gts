@@ -57,7 +57,7 @@ async function setupEvents(context: Compiler, { onReceiveText, onConnect }: {
   /**
     * This app now can't render again, so we need to tell the host frame to re-load the output frame
     */
-  Ember.onerror = (error: any) => parent.error({ error, unrecoverable: true });
+  Ember.onerror = (error: any) => parent.error({ error: error.message || error, unrecoverable: true });
 
   const handleError = (error: any) => parent.error({ error: error.message || error });
 

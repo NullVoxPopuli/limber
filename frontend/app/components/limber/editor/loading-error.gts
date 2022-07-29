@@ -9,7 +9,7 @@ export const LoadingError: TOC<{
     data-test-loading-error
     class="
       rounded absolute left-4 p-4 top-4
-      bg-red-100 text-black shadow-md border border-red-700
+      bg-red-100 text-black drop-shadow-md border border-red-700
       max-w-[40vw]
     "
   >

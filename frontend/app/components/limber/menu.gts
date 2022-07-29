@@ -1,10 +1,12 @@
+import { assert } from '@ember/debug';
+// @ts-ignore
+import { hash } from '@ember/helper';
 // @ts-ignore
 import HeadlessMenu from 'ember-headlessui/components/menu';
 import { PopperJS } from 'ember-popperjs';
 
 import type { ComponentLike } from "@glint/template";
-
-import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
+import type { TOC } from '@ember/component/template-only';
 
 const Button: TOC<{
   Element: HTMLButtonElement;
@@ -35,37 +37,100 @@ const Button: TOC<{
   </@item>
 </template>;
 
-const Menu: TOC<{
+const DefaultTrigger: TOC<{
   Element: HTMLButtonElement;
+  Args: {
+    menu: any;
+  };
   Blocks: {
-    trigger: [{ isOpen: boolean }],
+    default: [any];
+  }
+}> = <template>
+  <@menu.Button
+    {{!-- @glint-ignore --}}
+    {{@trigger}}
+    class="
+      text-black
+      rounded-sm border border-gray-900 bg-white px-2 py-1 -my-1 text-left
+      transition ease-in-out duration-150 sm:text-sm
+      focus:ring-4 focus-visible:outline-none ring-ember-brand focus:outline-none
+    "
+    ...attributes
+  >
+    {{yield @menu}}
+  </@menu.Button>
+</template>;
+
+const PlainTrigger: TOC<{
+  Element: HTMLButtonElement;
+  Args: {
+    menu: any;
+  };
+  Blocks: {
+    default: [{ isOpen: boolean }];
+  }
+}> = <template>
+  <@menu.Button
+    {{!-- @glint-ignore --}}
+    {{@trigger}}
+    ...attributes
+  >
+    {{yield @menu}}
+  </@menu.Button>
+</template>;
+
+const portalTarget = () => {
+  let selector = `[data-portal="popover"]`;
+  let element = document.querySelector(selector);
+
+  assert(
+    `Expected to find portal target element matching \`${selector}\`, `
+    + `but did not find one.`, element);
+
+  return element;
+}
+
+const Menu: TOC<{
+  Blocks: {
+    trigger: [{
+      menu: { isOpen: boolean },
+      // TODO: what are these types?
+      isOpen: boolean,
+      Default: any,
+      Button: any,
+      modifiers: any
+    }],
     options: [ComponentLike<{ Element: HTMLButtonElement, Blocks: { default: []} }>],
   }
 }> = <template>
   <HeadlessMenu as |menu|>
     <PopperJS as |trigger popover|>
-      <menu.Button
-        {{!-- @glint-ignore --}}
-        {{trigger}}
-        class="
-          text-black
-          rounded-sm border border-gray-900 bg-white px-2 py-1 -my-1 text-left
-          transition ease-in-out duration-150 sm:text-sm
-          focus:ring-4 focus-visible:outline-none ring-ember-brand focus:outline-none
-        "
-        ...attributes
-      >
-        {{yield menu to="trigger"}}
-      </menu.Button>
-      <menu.Items
-        {{!-- @glint-ignore --}}
-        {{popover}}
-        class="absolute top-2 z-20 grid mt-1 rounded-sm bg-white shadow-lg min-w-max"
-        data-test-menu-items
-        as |items|
-      >
-        {{yield (component Button item=items.Item) to="options"}}
-      </menu.Items>
+
+      {{yield
+        (hash
+          menu=menu
+          isOpen=menu.isOpen
+          modifiers=trigger
+          Button=(component PlainTrigger menu=menu trigger=trigger)
+          Default=(component DefaultTrigger menu=menu trigger=trigger)
+        )
+        to="trigger"
+      }}
+
+      {{#if menu.isOpen}}
+        {{#in-element (portalTarget)}}
+          <menu.Items
+            {{!-- @glint-ignore --}}
+            {{popover}}
+            class="absolute top-2 z-20 grid mt-1 rounded-sm bg-white drop-shadow-lg min-w-max"
+            data-test-menu-items
+            as |items|
+          >
+            {{yield (component Button item=items.Item) to="options"}}
+          </menu.Items>
+        {{/in-element}}
+      {{/if}}
+
     </PopperJS>
   </HeadlessMenu>
 </template>

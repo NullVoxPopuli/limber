@@ -17,7 +17,7 @@ export default class EditorError extends Component<Signature> {
         data-test-error
         class="
           rounded fixed right-4 bottom-4 p-4
-          bg-red-100 text-black shadow-md border border-red-700
+          bg-red-100 text-black drop-shadow-md border border-red-700
           max-w-[60vw]
         "
       >
