@@ -1,3 +1,4 @@
+import { assert } from '@ember/debug';
 // @ts-ignore
 import { hash } from '@ember/helper';
 // @ts-ignore
@@ -78,6 +79,17 @@ const PlainTrigger: TOC<{
   </@menu.Button>
 </template>;
 
+const portalTarget = (name: string) => {
+  let selector = `[data-portal="${name}"]`;
+  let element = document.querySelector(selector);
+
+  assert(
+    `Expected to find portal target element matching \`${selector}\`, `
+    + `but did not find one.`, element);
+
+  return element;
+}
+
 const Menu: TOC<{
   Blocks: {
     trigger: [{
@@ -93,6 +105,7 @@ const Menu: TOC<{
 }> = <template>
   <HeadlessMenu as |menu|>
     <PopperJS as |trigger popover|>
+
       {{yield
         (hash
           menu=menu
@@ -103,15 +116,19 @@ const Menu: TOC<{
         )
         to="trigger"
       }}
-      <menu.Items
-        {{!-- @glint-ignore --}}
-        {{popover}}
-        class="absolute top-2 z-20 grid mt-1 rounded-sm bg-white shadow-lg min-w-max"
-        data-test-menu-items
-        as |items|
-      >
-        {{yield (component Button item=items.Item) to="options"}}
-      </menu.Items>
+
+      {{#in-element (portalTarget "popover")}}
+        <menu.Items
+          {{!-- @glint-ignore --}}
+          {{popover}}
+          class="absolute top-2 z-20 grid mt-1 rounded-sm bg-white drop-shadow-lg min-w-max"
+          data-test-menu-items
+          as |items|
+        >
+          {{yield (component Button item=items.Item) to="options"}}
+        </menu.Items>
+      {{/in-element}}
+
     </PopperJS>
   </HeadlessMenu>
 </template>

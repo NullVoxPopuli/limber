@@ -5,7 +5,7 @@ import ExternalLink from '../external-link';
 import DemoSelect from './demo-select';
 
 <template>
-  <header class="bg-ember-black flex justify-between items-center shadow-lg py-2 px-4 max-h-12">
+  <header class="bg-ember-black flex justify-between items-center drop-shadow-lg py-2 px-4 max-h-12">
     <h1 class='text-ember-brand flex gap-2 items-center'>
       <a
         class="focus:ring-4 focus:outline-none focus-visible:outline-none"
@@ -20,7 +20,9 @@ import DemoSelect from './demo-select';
     </h1>
 
     <nav class='text-white mt-1 flex gap-2 items-baseline'>
+
       <DemoSelect />
+
       <ExternalLink href="/bundle.html">
         <:custom as |DefaultContent|>
           <span class="hidden sm:block">

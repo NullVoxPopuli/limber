@@ -29,7 +29,7 @@ export const EditorContainer: TOC<{
 export const OutputContainer: TOC<{
   Blocks: { default: [] }
 }> = <template>
-  <section class="flex-1 shadow-inner grid overflow-hidden relative">
+  <section class="flex-1 drop-shadow-inner grid overflow-hidden relative">
     <div
       class="overflow-auto relative bg-white flex"
       data-test-output

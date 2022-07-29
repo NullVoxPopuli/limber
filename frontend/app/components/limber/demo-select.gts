@@ -9,16 +9,12 @@ import { waitFor } from '@ember/test-waiters';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
 import { getFromLabel, NAMES } from 'limber/snippets';
-import Menu from './menu';
+import Menu from 'limber/components/limber/menu';
 
 import type EditorService from 'limber/services/editor';
 import type RouterService from '@ember/routing/router-service';
 
-interface Signature {
-  Element: HTMLElement;
-}
-
-export default class DemoSelect extends Component<Signature> {
+export default class DemoSelect extends Component {
   @service declare editor: EditorService;
   @service declare router: RouterService;
 
@@ -33,9 +29,10 @@ export default class DemoSelect extends Component<Signature> {
   <template>
     <Menu>
       <:trigger as |t|>
-        <t.Default data-test-demo-select ...attributes as |menu|>
+        <t.Default data-test-demo-select as |menu|>
           <span class="grid grid-flow-col gap-2 items-center">
             Select demo
+
             {{#if menu.isOpen}}
               <FaIcon @icon="angle-up" class="min-w-3" />
             {{else}}

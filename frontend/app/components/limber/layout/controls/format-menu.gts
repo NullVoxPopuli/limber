@@ -30,7 +30,7 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
 
       <:options as |Item|>
         <Item {{on 'click' (fn this.switch 'glimdown')}}>
-          glimdown
+          Glimdown
         </Item>
 
         <Item {{on 'click' (fn this.switch 'gjs')}}>

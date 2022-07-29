@@ -79,13 +79,13 @@ async function withExtraStyles(target: HTMLElement, next: () => Promise<void>) {
     return await next();
   }
 
-  pre.classList.add('shadow-lg');
+  pre.classList.add('drop-shadow-lg');
   pre.style.margin = '0';
 
   try {
     await next();
   } finally {
-    pre.classList.remove('shadow-lg');
+    pre.classList.remove('drop-shadow-lg');
     pre.setAttribute('style', '');
   }
 }
