@@ -18,6 +18,7 @@ export default class EditorService extends Service {
   @tracked isCompiling = false;
   @tracked error?: string;
   @tracked errorLine?: number;
+  @tracked scrollbarWidth = 0;
 
   _editorSwapText?: (text: string, format: Format) => void;
 

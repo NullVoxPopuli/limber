@@ -53,6 +53,12 @@ export default class CodeMirror extends Modifier<Signature> {
       setText(text, format); // update the editor
     };
 
+    let scrollable = document.querySelector('.cm-scroller');
+
+    if (scrollable instanceof HTMLElement) {
+      this.editor.scrollbarWidth = scrollable.offsetWidth - scrollable.clientWidth;
+    }
+
     registerDestructor(this, () => view.destroy());
   };
 }
