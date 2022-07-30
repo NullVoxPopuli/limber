@@ -21,4 +21,5 @@ export default class State extends Resource {
 
   update = (nextValue: any) => (this.value = nextValue);
   toggle = () => (this.value = !this.value);
+  increment = () => (this.value = (this.value || 0) + 1);
 }
