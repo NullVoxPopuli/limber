@@ -8,14 +8,22 @@ interface Context {
 }
 
 export function isVerticalSplit(ctx: Context) {
-  return splitDirection(ctx) === VERTICAL;
+  return hasHorizontalOrientation(ctx);
 }
 
 export function isHorizontalSplit(ctx: Context) {
-  return !isVerticalSplit(ctx);
+  return hasVerticalOrientation(ctx);
 }
 
-function splitDirection(ctx: Context): Direction {
+function hasHorizontalOrientation(ctx: Context) {
+  return resolvedOrientation(ctx) === HORIZONTAL;
+}
+
+function hasVerticalOrientation(ctx: Context) {
+  return resolvedOrientation(ctx) === VERTICAL;
+}
+
+function resolvedOrientation(ctx: Context): Direction {
   if (ctx.manualOrientation) return ctx.manualOrientation;
 
   return ctx.actualOrientation || VERTICAL;
@@ -24,6 +32,11 @@ function splitDirection(ctx: Context): Direction {
 function hasManualOrientation(ctx: Context): boolean {
   return ctx.manualOrientation !== undefined;
 }
+
+const assignOrientation = assign({
+  actualOrientation: (_, { isVertical }: { isVertical: boolean }) =>
+    isVertical ? VERTICAL : HORIZONTAL,
+});
 
 interface ContainerFoundData {
   container: HTMLElement;
@@ -39,7 +52,7 @@ type Direction = typeof VERTICAL | typeof HORIZONTAL;
 
 export default createMachine(
   {
-    id: 'editor-control-state',
+    id: 'editor-layout',
     initial: 'noContainer',
     schema: {
       context: {} as {
@@ -79,10 +92,7 @@ export default createMachine(
         actions: assign({ container: (_, __) => undefined }),
       },
       ORIENTATION: {
-        actions: assign({
-          actualOrientation: (_, { isVertical }: { isVertical: boolean }) =>
-            isVertical ? VERTICAL : HORIZONTAL,
-        }),
+        actions: assignOrientation,
       },
     },
     states: {
@@ -90,7 +100,7 @@ export default createMachine(
         initial: 'default',
         states: {
           default: {
-            entry: ['restoreEditor', 'observe'],
+            entry: ['observe'],
             exit: ['unobserve'],
             initial: 'unknownSplit',
             on: {
@@ -99,14 +109,47 @@ export default createMachine(
             },
             states: {
               unknownSplit: {
+                // the always events will only suceed if we've previously
+                // resolved the device / window / iframe orientation
+                // (and this is why we can't use the native Device API
+                //   because we have window and iframes to worry about)
                 always: [
                   { cond: isVerticalSplit, target: 'verticallySplit' },
-                  { target: 'horizontallySplit' },
+                  { cond: isHorizontalSplit, target: 'horizontallySplit' },
                 ],
+                on: {
+                  ORIENTATION: [
+                    {
+                      cond: (_, event) => event.isVertical == true,
+                      target: 'horizontallySplit',
+                      actions: assignOrientation,
+                    },
+                    {
+                      cond: (_, event) => event.isVertical == false,
+                      target: 'verticallySplit',
+                      actions: assignOrientation,
+                    },
+                  ],
+                },
               },
               horizontallySplit: {
                 entry: ['restoreHorizontalSplitSize'],
                 on: {
+                  MINIMIZE: {
+                    actions: 'persistHorizontalSplitSize',
+                    target: '#editor-layout.hasContainer.minimized',
+                  },
+                  MAXIMIZE: {
+                    actions: 'persistHorizontalSplitSize',
+                    target: '#editor-layout.hasContainer.maximized',
+                  },
+                  ORIENTATION: [
+                    {
+                      cond: (_, event) => event.isVertical == false,
+                      target: 'verticallySplit',
+                      actions: assignOrientation,
+                    },
+                  ],
                   ROTATE: {
                     target: 'verticallySplit',
                     actions: assign({ manualOrientation: (_, __) => VERTICAL }),
@@ -122,6 +165,7 @@ export default createMachine(
                       actions: ['clearHeight'],
                     },
                     {
+                      cond: isHorizontalSplit,
                       target: 'horizontallySplit',
                       actions: ['persistHorizontalSplitSize'],
                     },
@@ -131,6 +175,21 @@ export default createMachine(
               verticallySplit: {
                 entry: ['restoreVerticalSplitSize'],
                 on: {
+                  MINIMIZE: {
+                    actions: 'persistVerticalSplitSize',
+                    target: '#editor-layout.hasContainer.minimized',
+                  },
+                  MAXIMIZE: {
+                    actions: 'persistVerticalSplitSize',
+                    target: '#editor-layout.hasContainer.maximized',
+                  },
+                  ORIENTATION: [
+                    {
+                      cond: (_, event) => event.isVertical == true,
+                      target: 'horizontallySplit',
+                      actions: assignOrientation,
+                    },
+                  ],
                   ROTATE: {
                     target: 'horizontallySplit',
                     actions: assign({ manualOrientation: (_, __) => HORIZONTAL }),
@@ -146,6 +205,7 @@ export default createMachine(
                       actions: ['clearWidth'],
                     },
                     {
+                      cond: isVerticalSplit,
                       target: 'verticallySplit',
                       actions: ['persistVerticalSplitSize'],
                     },

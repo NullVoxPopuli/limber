@@ -73,7 +73,7 @@ export const Layout: TOC<{
   }
 }> = <template>
   <State as |state send|>
-    {{ log (state.toStrings) state.context }}
+    {{log "--" (state.toStrings) }}
 
     {{#let (containerDirection state) as |horizontallySplit|}}
       <Orientation as |isVertical|>
