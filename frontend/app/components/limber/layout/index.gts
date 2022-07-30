@@ -3,7 +3,7 @@ import { hash, fn } from '@ember/helper';
 import { assert } from '@ember/debug';
 import { modifier } from 'ember-modifier';
 
-import State, { setupResizeObserver } from './state';
+import State, { setupResizeObserver, isHorizontalSplit } from './state';
 import { Orientation } from './orientation'
 import { Controls } from './controls';
 import { EditorContainer, OutputContainer } from './containers';
@@ -54,6 +54,18 @@ const isResizable = (state: StateFor<typeof State>) => {
   return !(state.matches('hasContainer.minimized') || state.matches('hasContainer.maximized'));
 }
 
+/**
+  * true for horizontally split
+* false for vertically split
+  */
+const containerDirection = (state: StateFor<typeof State>) => {
+  if (state.matches('hasContainer.default.horizontallySplit')) {
+    return true;
+  }
+
+  return isHorizontalSplit(state.context);
+}
+
 export const Layout: TOC<{
   Blocks: {
     editor: [];
@@ -61,7 +73,9 @@ export const Layout: TOC<{
   }
 }> = <template>
   <State as |state send|>
-    {{#let (state.matches 'hasContainer.default.horizontallySplit') as |horizontallySplit|}}
+    {{ log (state.toStrings) state.context }}
+
+    {{#let (containerDirection state) as |horizontallySplit|}}
       <Orientation as |isVertical|>
         {{effect (fn send 'ORIENTATION' (hash isVertical=isVertical )) }}
 

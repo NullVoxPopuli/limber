@@ -5,7 +5,7 @@ import ExternalLink from '../external-link';
 import DemoSelect from './demo-select';
 
 <template>
-  <header class="bg-ember-black flex justify-between items-center drop-shadow-lg py-2 px-4 max-h-12">
+  <header class="bg-ember-black flex justify-between items-center drop-shadow-lg z-20 py-2 px-4 max-h-12">
     <h1 class='text-ember-brand flex gap-2 items-center'>
       <a
         class="focus:ring-4 focus:outline-none focus-visible:outline-none"

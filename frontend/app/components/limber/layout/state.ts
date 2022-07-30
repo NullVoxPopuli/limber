@@ -7,11 +7,11 @@ interface Context {
   actualOrientation?: Direction;
 }
 
-function isVerticalSplit(ctx: Context) {
+export function isVerticalSplit(ctx: Context) {
   return splitDirection(ctx) === VERTICAL;
 }
 
-function isHorizontalSplit(ctx: Context) {
+export function isHorizontalSplit(ctx: Context) {
   return !isVerticalSplit(ctx);
 }
 
@@ -183,7 +183,7 @@ export default createMachine(
     // the editor snaps back to to split view *but* the icons do not appropriately
     // update due to the state machine still being in the maximized state.
     actions: {
-      maximizeEditor: ({ container }) => container && maximizeEditor(container),
+      maximizeEditor: (ctx) => maximizeEditor(ctx),
       minimizeEditor: (ctx) => minimizeEditor(ctx),
       restoreEditor: (context) => {
         let { container, maximize, minimize } = context;
@@ -259,13 +259,19 @@ const minimizeEditor = (ctx: Context) => {
 
   if (isVerticalSplit(ctx)) {
     container.style.width = '38px';
+    container.style.maxWidth = '';
     clearHeight(container);
   } else {
     container.style.height = '38px';
+    container.style.maxHeight = '';
     clearWidth(container);
   }
 };
-const maximizeEditor = (container: HTMLElement) => {
+const maximizeEditor = (ctx: Context) => {
+  let { container } = ctx;
+
+  if (!container) return;
+
   container.style.width = '100%';
   container.style.height = '100%';
   container.style.maxHeight = '';
