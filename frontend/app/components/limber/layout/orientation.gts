@@ -1,55 +1,36 @@
 // @ts-ignore
 import { hash } from '@ember/helper';
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 
 import ContainerQuery from 'ember-container-query/components/container-query';
 import aspectRatio from 'ember-container-query/helpers/cq-aspect-ratio';
 
 import constrainVertically from 'limber/modifiers/constrain-vertically';
 
+import type { TOC } from '@ember/component/template-only';
+
 interface Signature {
   Blocks: {
-    default: [boolean, () => void];
+    default: [boolean];
   }
 }
 
-export class Orientation extends Component<Signature> {
-  @tracked forcedAlternate?: boolean;
+export const Orientation: TOC<Signature> =
+<template>
+  <ContainerQuery
+    @features={{hash isVertical=(aspectRatio max=1.2)}}
+    {{! grid forces all the contents to take up all available vertical space }}
+    class="grid"
+    {{!-- @glint-ignore --}}
+    {{constrainVertically}}
+    as |query|
+  >
 
-  rotate = () => this.forcedAlternate = !this.forcedAlternate;
-  reset = (_splitHorizontallyQuery: boolean) => {
-    (async () => {
-      // Delay so that we don't infinite loop, since we consume
-      // forcedAlternate during render
-      await Promise.resolve();
-      this.forcedAlternate = undefined;
-    })();
-  }
+    {{#let query.features.isVertical as |isVertical|}}
 
-  intent = (splitHorizontallyQuery: boolean) => {
-    return this.forcedAlternate ?? splitHorizontallyQuery;
-  }
+      {{yield isVertical}}
 
-  <template>
-    <ContainerQuery
-      @features={{hash horizontalSplit=(aspectRatio max=1.2)}}
-      {{! grid forces all the contents to take up all available vertical space }}
-      class="grid"
-      {{!-- @glint-ignore --}}
-      {{constrainVertically}}
-      as |query|
-    >
+    {{/let}}
 
-      {{#let query.features.horizontalSplit as |splitHorizontally|}}
-
-        {{ (this.reset splitHorizontally) }}
-
-        {{yield (this.intent splitHorizontally) this.rotate}}
-
-      {{/let}}
-
-    </ContainerQuery>
-  </template>
-}
+  </ContainerQuery>
+</template>;
 

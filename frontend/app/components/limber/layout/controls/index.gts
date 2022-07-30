@@ -1,62 +1,110 @@
-import { assert } from '@ember/debug';
-import { modifier } from '@ember/helper';
-import { modifier as functionModifier} from 'ember-modifier';
+import { fn, concat } from '@ember/helper';
+import { on } from '@ember/modifier'
+import { inIframe } from 'limber/helpers/in-iframe';
+import service from 'limber/helpers/service';
+import currentURL from 'limber/helpers/current-url';
 
-import State, { setupResizeObserver } from './state';
-import { Controls } from './buttons';
+// @ts-expect-error
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+
+import { FormatMenu } from './format-menu';
 
 import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
-import type {
-  ComponentLike,
-  ModifierLike
-} from "@glint/template";
 import type { Send } from 'ember-statechart-component/glint';
 
-const toBoolean = (x: unknown) => Boolean(x);
+const buttonClasses = `
+  block select-none py-2 px-3 text-white text-xs
+  hover:bg-[#9b2918]
+  focus:ring-4 ring-inset focus:outline-none
+  disabled:opacity-30
+`;
 
-const container = functionModifier((element: Element, [send]: [Send<unknown>]) => {
-  assert(`Element is not resizable`, element instanceof HTMLElement);
+const Button: TOC<{
+  Element: HTMLButtonElement
+  Blocks: { default: [] }
+}> = <template>
+  <button type='button' class={{buttonClasses}} ...attributes>
+    {{yield}}
+  </button>
+</template>;
 
-  let observer = setupResizeObserver(() => send('RESIZE'));
-  send('CONTAINER_FOUND', {
-    container: element,
-    observer,
-    maximize: () => send('MAXIMIZE'),
-    minimize: () => send('MINIMIZE'),
-  });
+const or = (a: boolean, b: boolean) => a || b;
 
-  return () => send('CONTAINER_REMOVED');
-});
 
-const sendOrientation = (send: Send<unknown>, splitHorizontally: boolean) => {
-  send('ORIENTATION', { splitHorizontally });
-}
-
-export const EditorControls: TOC<{
+export const Controls: TOC<{
   Args: {
+    needsControls: boolean;
     splitHorizontally: boolean;
-    rotate: () => void;
-  };
-  Blocks: {
-    default: [ComponentLike, ModifierLike]
+    isMinimized: boolean;
+    isMaximized: boolean;
+    send: Send<any>;
   }
-}> =
-  <template>
-    <State as |state send|>
+}> = <template>
+  {{#if @needsControls}}
+    {{#let (service "editor") as |editor|}}
+      <div
+        data-is-minimized="{{@isMinimized}}"
+        style={{ (concat "right: " editor.scrollbarWidth "px;")}}
+        class="
+          absolute top-0 right-0 z-[1]
+          {{if @splitHorizontally
+            'flex flex-row-reverse'
+            'grid'
+          }}
+          {{if @isMinimized
+            'bg-ember-black h-full content-start'
+          }}
+        "
+      >
+        <Button
+          title={{if @isMaximized 'Back to split view' 'Maximize Editor'}}
+          {{on 'click' (fn @send 'MAXIMIZE')}}
+        >
+          {{#if @isMaximized}}
+            <FaIcon @icon='columns' />
+          {{else}}
+            <FaIcon @icon="window-maximize" @prefix='far' />
+          {{/if}}
+        </Button>
+        <Button
+          title={{if @isMinimized 'Back to split view' 'Minimize Editor'}}
+          {{on 'click' (fn @send 'MINIMIZE')}}
+        >
+          {{#if @isMinimized}}
+            <FaIcon @icon='columns' />
+          {{else}}
+            <FaIcon @icon='window-minimize' @prefix='far' />
+          {{/if}}
+        </Button>
+        <Button
+          title='Rotate Editor/Output orientation'
+          disabled={{or @isMaximized @isMinimized}}
+          {{on 'click' (fn @send 'ROTATE')}}
+        >
+          <FaIcon @icon='rotate' />
+        </Button>
 
-      {{ (sendOrientation send @splitHorizontally) }}
+        {{#if (inIframe)}}
+          <a
+            title="Edit in a new tab"
+            href={{ (currentURL) }}
+            rel="noreferrer noopener"
+            target="_blank"
+            class="
+              flex select-none py-2 px-3 text-white text-xs
+              items-center
+              hover:bg-[#9b2918]
+              focus:ring-4 ring-inset focus:outline-none
+              disabled:opacity-30
+            "
+          >
+            <FaIcon @icon="external-link-alt" />
+          </a>
+        {{/if}}
 
-      {{yield
-        (component
-          Controls
-          isMinimized=(state.matches 'hasContainer.minimized')
-          isMaximized=(state.matches 'hasContainer.maximized')
-          needsControls=(toBoolean state.context.container)
-          splitHorizontally=@splitHorizontally
-          rotate=@rotate
-          send=send
-        )
-        (modifier container send)
-      }}
-    </State>
-  </template>
+        <FormatMenu class={{buttonClasses}} />
+      </div>
+    {{/let}}
+  {{/if}}
+</template>;
+

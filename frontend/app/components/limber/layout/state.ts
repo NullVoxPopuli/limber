@@ -1,12 +1,28 @@
 import { getService } from 'ember-statechart-component';
 import { assign, createMachine } from 'xstate';
 
-function isLargeScreen(ctx: { splitHorizontally?: boolean }) {
-  return !ctx.splitHorizontally;
+interface Context {
+  container?: HTMLElement;
+  manualOrientation?: Direction;
+  actualOrientation?: Direction;
 }
 
-function isSmallScreen(ctx: { splitHorizontally?: boolean }) {
-  return !isLargeScreen(ctx);
+function isVerticalSplit(ctx: Context) {
+  return splitDirection(ctx) === VERTICAL;
+}
+
+function isHorizontalSplit(ctx: Context) {
+  return !isVerticalSplit(ctx);
+}
+
+function splitDirection(ctx: Context): Direction {
+  if (ctx.manualOrientation) return ctx.manualOrientation;
+
+  return ctx.actualOrientation || VERTICAL;
+}
+
+function hasManualOrientation(ctx: Context): boolean {
+  return ctx.manualOrientation !== undefined;
 }
 
 interface ContainerFoundData {
@@ -15,6 +31,11 @@ interface ContainerFoundData {
   maximize: () => void;
   minimize: () => void;
 }
+
+const VERTICAL = 'vertical' as const;
+const HORIZONTAL = 'horizontal' as const;
+
+type Direction = typeof VERTICAL | typeof HORIZONTAL;
 
 export default createMachine(
   {
@@ -26,7 +47,8 @@ export default createMachine(
         observer?: ResizeObserver;
         maximize?: () => void;
         minimize?: () => void;
-        splitHorizontally?: boolean;
+        manualOrientation?: Direction;
+        actualOrientation?: Direction;
       },
       events: {} as
         | ({ type: 'CONTAINER_FOUND' } & ContainerFoundData)
@@ -34,8 +56,9 @@ export default createMachine(
         | { type: 'MAXIMIZE' }
         | { type: 'MINIMIZE' }
         | { type: 'RESIZE' }
+        | { type: 'ROTATE' }
         | { type: 'WINDOW_RESIZE' }
-        | { type: 'ORIENTATION'; splitHorizontally: boolean },
+        | { type: 'ORIENTATION'; isVertical: boolean },
     },
     on: {
       CONTAINER_FOUND: {
@@ -57,8 +80,8 @@ export default createMachine(
       },
       ORIENTATION: {
         actions: assign({
-          splitHorizontally: (_, { splitHorizontally }: { splitHorizontally: boolean }) =>
-            splitHorizontally,
+          actualOrientation: (_, { isVertical }: { isVertical: boolean }) =>
+            isVertical ? VERTICAL : HORIZONTAL,
         }),
       },
     },
@@ -77,16 +100,24 @@ export default createMachine(
             states: {
               unknownSplit: {
                 always: [
-                  { cond: isLargeScreen, target: 'verticallySplit' },
+                  { cond: isVerticalSplit, target: 'verticallySplit' },
                   { target: 'horizontallySplit' },
                 ],
               },
               horizontallySplit: {
                 entry: ['restoreHorizontalSplitSize'],
                 on: {
+                  ROTATE: {
+                    target: 'verticallySplit',
+                    actions: assign({ manualOrientation: (_, __) => VERTICAL }),
+                  },
                   RESIZE: [
                     {
-                      cond: isLargeScreen,
+                      cond: hasManualOrientation,
+                      target: 'horizontallySplit',
+                    },
+                    {
+                      cond: isVerticalSplit,
                       target: 'verticallySplit',
                       actions: ['clearHeight'],
                     },
@@ -100,9 +131,17 @@ export default createMachine(
               verticallySplit: {
                 entry: ['restoreVerticalSplitSize'],
                 on: {
+                  ROTATE: {
+                    target: 'horizontallySplit',
+                    actions: assign({ manualOrientation: (_, __) => HORIZONTAL }),
+                  },
                   RESIZE: [
                     {
-                      cond: isSmallScreen,
+                      cond: hasManualOrientation,
+                      target: 'verticallySplit',
+                    },
+                    {
+                      cond: isHorizontalSplit,
                       target: 'horizontallySplit',
                       actions: ['clearWidth'],
                     },
@@ -161,7 +200,7 @@ export default createMachine(
         } else if (minimize && requestingMin) {
           minimize();
         } else {
-          if (isLargeScreen(context)) {
+          if (isVerticalSplit(context)) {
             restoreWidth(container);
             clearHeight(container);
           } else {
@@ -174,8 +213,16 @@ export default createMachine(
       clearHeight: ({ container }) => container && clearHeight(container),
       clearWidth: ({ container }) => container && clearWidth(container),
 
-      restoreVerticalSplitSize: ({ container }) => container && restoreWidth(container),
-      restoreHorizontalSplitSize: ({ container }) => container && restoreHeight(container),
+      restoreVerticalSplitSize: ({ container }) => {
+        if (!container) return;
+
+        restoreWidth(container);
+      },
+      restoreHorizontalSplitSize: ({ container }) => {
+        if (!container) return;
+
+        restoreHeight(container);
+      },
 
       observe: ({ observer, container }) => {
         if (!container || !observer) return;
@@ -205,12 +252,12 @@ export default createMachine(
   }
 );
 
-const minimizeEditor = (ctx: { container?: HTMLElement; splitHorizontally?: boolean }) => {
+const minimizeEditor = (ctx: Context) => {
   let { container } = ctx;
 
   if (!container) return;
 
-  if (isLargeScreen(ctx)) {
+  if (isVerticalSplit(ctx)) {
     container.style.width = '38px';
     clearHeight(container);
   } else {
@@ -221,14 +268,24 @@ const minimizeEditor = (ctx: { container?: HTMLElement; splitHorizontally?: bool
 const maximizeEditor = (container: HTMLElement) => {
   container.style.width = '100%';
   container.style.height = '100%';
+  container.style.maxHeight = '';
+  container.style.maxWidth = '';
 };
 
 const clearHeight = (element: HTMLElement) => (element.style.height = '');
 const clearWidth = (element: HTMLElement) => (element.style.width = '');
-const restoreWidth = (element: HTMLElement) =>
-  (element.style.width = getSize(WHEN_VERTICALLY_SPLIT) ?? '');
-const restoreHeight = (element: HTMLElement) =>
-  (element.style.height = getSize(WHEN_HORIZONTALLY_SPLIT) ?? '');
+const restoreWidth = (element: HTMLElement) => {
+  element.style.width = getSize(WHEN_VERTICALLY_SPLIT) ?? '';
+  element.style.maxHeight = '';
+  element.style.height = '100%';
+  element.style.maxWidth = 'calc(100vw - 38px)';
+};
+const restoreHeight = (element: HTMLElement) => {
+  element.style.height = getSize(WHEN_HORIZONTALLY_SPLIT) ?? '';
+  element.style.maxWidth = '';
+  element.style.width = '100%';
+  element.style.maxHeight = 'calc(100vh - 38px)';
+};
 
 function getData(): SplitSizeData {
   let json = localStorage.getItem(STORAGE_NAME);
@@ -261,27 +318,8 @@ function setSize(name: SplitName, value: `${number}px`) {
   localStorage.setItem(STORAGE_NAME, JSON.stringify(data));
 }
 
-/**
- * We need to do all this debouncing because the other statemachine events are firing
- * after the resize observer
- */
-let delay = 20;
-let timeout: NodeJS.Timeout;
-const debounced = (fn: (...args: unknown[]) => void) => {
-  let forNextFrame = nextAvailableFrame.bind(null, fn);
-
-  if (timeout) clearTimeout(timeout);
-  timeout = setTimeout(forNextFrame, delay);
-};
-
-let frame: number | null;
-const nextAvailableFrame = (fn: (...args: unknown[]) => void) => {
-  if (frame) cancelAnimationFrame(frame);
-  frame = requestAnimationFrame(fn);
-};
-
 export const setupResizeObserver = (callback: () => unknown) => {
-  let observer = new ResizeObserver(() => debounced(callback));
+  let observer = new ResizeObserver(() => callback);
 
   return observer;
 };
