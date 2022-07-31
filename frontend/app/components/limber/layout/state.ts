@@ -166,11 +166,15 @@ export default createMachine(
                 on: {
                   ORIENTATION: [
                     {
+                      description:
+                        'Viewport orientation changed to be more vertical. But on touch devices, we ignore this.',
                       cond: (_, event) => event.isVertical === true && isNonTouchDevice(),
                       target: 'horizontallySplit',
                       actions: assignOrientation,
                     },
                     {
+                      description:
+                        'Viewport orientation changed to be more horizontal. But on touch devices, we ignore this.',
                       cond: (_, event) => event.isVertical === false && isNonTouchDevice(),
                       target: 'verticallySplit',
                       actions: assignOrientation,
@@ -195,6 +199,8 @@ export default createMachine(
                   },
                   ORIENTATION: [
                     {
+                      description:
+                        'Viewport orientation changed to be more horizontal. But on touch devices, we ignore this.',
                       cond: (ctx, event) =>
                         event.isVertical === false &&
                         isNonTouchDevice() &&
@@ -204,10 +210,7 @@ export default createMachine(
                     },
                   ],
                   ROTATE: {
-                    /**
-                     * When the screen is narrow, but vertically short / horiznotally wide, we split vertically,
-                     * because there is more room for each part of the REPL
-                     */
+                    description: DEBUG && `User manually changed the split direction`,
                     target: 'verticallySplit',
                     actions: assign({ manualOrientation: (_, __) => HORIZONTAL }),
                   },
@@ -238,6 +241,9 @@ export default createMachine(
                   },
                   ORIENTATION: [
                     {
+                      description:
+                        DEBUG &&
+                        'Viewport orientation changed to be more vertical. But on touch devices, we ignore this.',
                       cond: (ctx, event) =>
                         event.isVertical === true &&
                         isNonTouchDevice() &&
@@ -247,10 +253,7 @@ export default createMachine(
                     },
                   ],
                   ROTATE: {
-                    /**
-                     * When the screen is narrow, but vertically tall, we split horizontally,
-                     * because there is more room for each part of the REPL
-                     */
+                    description: DEBUG && `User manually changed the split direction`,
                     target: 'horizontallySplit',
                     actions: assign({ manualOrientation: (_, __) => VERTICAL }),
                   },
