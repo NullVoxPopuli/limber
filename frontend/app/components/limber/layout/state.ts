@@ -1,7 +1,9 @@
 import { DEBUG } from '@glimmer/env';
 
-import { getService } from 'ember-statechart-component';
+import { getService, setupComponentMachines } from 'ember-statechart-component';
 import { assign, createMachine } from 'xstate';
+
+setupComponentMachines();
 
 interface Context {
   container?: HTMLElement;

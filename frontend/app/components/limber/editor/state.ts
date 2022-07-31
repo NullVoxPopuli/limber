@@ -16,19 +16,30 @@ export default createMachine({
     waiting: {
       invoke: {
         src: () => (send) => {
-          let mouse = () => send('MOUSE');
-          let key = () => send('KEY');
-          let touch = () => send('TOUCH');
+          let cleanup = () => {
+            window.removeEventListener('mousemove', mouse);
+            window.removeEventListener('keydown', key);
+            window.removeEventListener('touchstart', touch);
+          };
+
+          let mouse = () => {
+            send('MOUSE');
+            cleanup();
+          };
+          let key = () => {
+            send('KEY');
+            cleanup();
+          };
+          let touch = () => {
+            send('TOUCH');
+            cleanup();
+          };
 
           window.addEventListener('mousemove', mouse);
           window.addEventListener('keydown', key);
           window.addEventListener('touchstart', touch);
 
-          return () => {
-            window.removeEventListener('mousemove', mouse);
-            window.removeEventListener('keydown', key);
-            window.removeEventListener('touchstart', touch);
-          };
+          return cleanup;
         },
       },
       on: {
