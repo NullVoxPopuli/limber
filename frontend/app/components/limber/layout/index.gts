@@ -73,7 +73,7 @@ export const Layout: TOC<{
     output: [];
   }
 }> = <template>
-  <State as |state send onTransition|>
+  <State as |state send|>
     {{!--
     {{effect (fn onTransition console.log)}}
     {{log (state.toStrings)}}
