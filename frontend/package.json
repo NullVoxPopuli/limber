@@ -147,6 +147,7 @@
     "@nullvoxpopuli/limber-styles": "*",
     "@nullvoxpopuli/limber-transpilation": "*",
     "@popperjs/core": "^2.11.5",
+    "@xstate/inspect": "^0.7.0",
     "browserslist": "^4.21.3",
     "dompurify": "^2.3.10",
     "ember-auto-import": "^2.4.1",
@@ -171,6 +172,7 @@
     "unified": "^9.2.2",
     "unist-util-flatmap": "^1.0.0",
     "webpack-bundle-analyzer": "^4.5.0",
+    "ws": "^8.8.1",
     "xstate": "4.32.1"
   },
   "pnpm": {

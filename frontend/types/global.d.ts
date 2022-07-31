@@ -15,6 +15,8 @@ type LazyTrackedArgs = {
 // provided by vendor/ember/ember-template-compiler.js (somehow)
 declare module 'ember-template-compiler';
 
+declare module '@glimmer/env';
+
 declare module '@fortawesome/ember-fontawesome-components/fa-icon';
 declare module '@ember/helper';
 declare module '@ember/modifier';

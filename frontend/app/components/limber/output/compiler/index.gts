@@ -60,8 +60,6 @@ export default class Compiler extends Component<Signature> {
   @action
   @waitFor
   async makeComponent(text: string) {
-    console.debug(`Making top-level component with format: ${this.format}`);
-
     await compileTopLevelComponent(text, {
       format: this.format,
       onCompileStart: async () => {

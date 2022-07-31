@@ -1,3 +1,5 @@
+import { DEBUG } from '@glimmer/env';
+
 import { getService } from 'ember-statechart-component';
 import { assign, createMachine } from 'xstate';
 
@@ -75,6 +77,13 @@ export default createMachine(
   {
     id: 'editor-layout',
     initial: 'noContainer',
+    description:
+      DEBUG &&
+      'Controls the overall layout of the app, based on orientation, ' +
+        'device type, container resize, and manual rotation. Additionally, ' +
+        'when the editor itself is resized, this machine controls the persisting ' +
+        'and restoring of the editor size in both dimensions, depending on the current ' +
+        'orientation (either default or manually overridden)',
     schema: {
       context: {} as {
         container?: HTMLElement;
@@ -96,6 +105,7 @@ export default createMachine(
     },
     on: {
       CONTAINER_FOUND: {
+        description: DEBUG && `The editor has been rendered.`,
         target: 'hasContainer',
         actions: assign((_, event: ContainerFoundData) => {
           let { container, observer, maximize, minimize } = event;
@@ -109,10 +119,12 @@ export default createMachine(
         }),
       },
       CONTAINER_REMOVED: {
+        description: DEBUG && `The editor has been removed from the DOM.`,
         target: 'noContainer',
         actions: assign({ container: (_, __) => undefined }),
       },
       ORIENTATION: {
+        description: DEBUG && `Determine initial orientation for initial layout.`,
         cond: isNonTouchDevice,
         actions: assignOrientation,
       },
@@ -120,10 +132,16 @@ export default createMachine(
     states: {
       hasContainer: {
         initial: 'default',
+        description: DEBUG && `When we have a div to observe, begin watching for events.`,
         entry: [assign({ actualOrientation: detectAspectRatio })],
         states: {
           default: {
             entry: ['observe'],
+            description:
+              DEBUG &&
+              `Setup resize observer for the container. ` +
+                `This 'default' state is where the editor exists most of the time, ` +
+                `neither minimized nor maximized.`,
             exit: ['unobserve'],
             initial: 'unknownSplit',
             on: {
@@ -132,6 +150,11 @@ export default createMachine(
             },
             states: {
               unknownSplit: {
+                description:
+                  DEBUG &&
+                  `If the device orientation has been determined, ` +
+                    `we can immediately transition to the appropriate orientation-state, ` +
+                    `else we listen for an orientation update.`,
                 // the always events will only suceed if we've previously
                 // resolved the device / window / iframe orientation
                 // (and this is why we can't use the native Device API
@@ -156,6 +179,10 @@ export default createMachine(
                 },
               },
               horizontallySplit: {
+                description:
+                  DEBUG &&
+                  `By default, the view is horizontally split when the orientation is more vertical. ` +
+                    `The vertical orientation displays the editor above and the rendered output below.`,
                 entry: ['restoreHorizontalSplitSize'],
                 on: {
                   MINIMIZE: {
@@ -186,6 +213,7 @@ export default createMachine(
                   },
                   RESIZE: [
                     {
+                      description: 'if we retain the same orientation, persist the editor height',
                       cond: isHorizontalSplit,
                       target: 'horizontallySplit',
                       actions: ['persistHorizontalSplitSize'],
@@ -194,6 +222,10 @@ export default createMachine(
                 },
               },
               verticallySplit: {
+                description:
+                  DEBUG &&
+                  `By default, the view is vertically split when the orientation is more horizontal. ` +
+                    `The horizontal orientation displays the editor to the left and the rendered output to the right.`,
                 entry: ['restoreVerticalSplitSize'],
                 on: {
                   MINIMIZE: {
@@ -224,6 +256,7 @@ export default createMachine(
                   },
                   RESIZE: [
                     {
+                      description: 'if we retain the same orientation, persist the editor width',
                       cond: isVerticalSplit,
                       target: 'verticallySplit',
                       actions: ['persistVerticalSplitSize'],
@@ -234,6 +267,9 @@ export default createMachine(
             },
           },
           maximized: {
+            description:
+              DEBUG &&
+              `The editor is maximized, filling the whole screen, and the output is entirely hidden.`,
             entry: ['maximizeEditor', 'addResizeListener'],
             exit: ['removeResizeListener'],
             on: {
@@ -243,6 +279,9 @@ export default createMachine(
             },
           },
           minimized: {
+            description:
+              DEBUG &&
+              `The editor is minimized, showing only the buttons to unminimize, and maximize. The output fills nearly the entire screen.`,
             entry: 'minimizeEditor',
             on: {
               MAXIMIZE: 'maximized',
@@ -253,6 +292,11 @@ export default createMachine(
       },
       noContainer: {
         /* nothing can happen, nothing to resize */
+        description:
+          DEBUG &&
+          `It's possible for the statechart to start rendering before we have a div to observe. ` +
+            `When that div is rendered, it'll send an event that will transition us out of this state. ` +
+            `Without that div, this statechart may not do anything.`,
       },
     },
   },
