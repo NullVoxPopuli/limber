@@ -59,9 +59,11 @@ const isResizable = (state: StateFor<typeof State>) => {
 * false for vertically split
   */
 const containerDirection = (state: StateFor<typeof State>) => {
+  console.log('m', state.matches('hasContainer.default.horizontallySplit'), isHorizontalSplit(state.context), state.context.manualOrientation, state.context.actualOrientation);
   if (state.matches('hasContainer.default.horizontallySplit')) {
     return true;
   }
+
 
   return isHorizontalSplit(state.context);
 }

@@ -7,6 +7,27 @@ interface Context {
   actualOrientation?: Direction;
 }
 
+export const BREAKPOINT = 1.2;
+
+function detectAspectRatio() {
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  let aspectRatio = width / height;
+
+  if (aspectRatio < BREAKPOINT) {
+    return VERTICAL;
+  }
+
+  return HORIZONTAL;
+}
+
+/**
+ * Touch devices can have on screen keyboards, which may
+ * change the orientation of the viewport
+ */
+const isTouchDevice = () => window.matchMedia('(pointer: coarse)').matches;
+const isNonTouchDevice = () => isTouchDevice();
+
 export function isVerticalSplit(ctx: Context) {
   return hasHorizontalOrientation(ctx);
 }
@@ -92,12 +113,14 @@ export default createMachine(
         actions: assign({ container: (_, __) => undefined }),
       },
       ORIENTATION: {
+        cond: isNonTouchDevice,
         actions: assignOrientation,
       },
     },
     states: {
       hasContainer: {
         initial: 'default',
+        entry: [assign({ actualOrientation: detectAspectRatio })],
         states: {
           default: {
             entry: ['observe'],
@@ -120,12 +143,12 @@ export default createMachine(
                 on: {
                   ORIENTATION: [
                     {
-                      cond: (_, event) => event.isVertical == true,
+                      cond: (_, event) => event.isVertical === true && isNonTouchDevice(),
                       target: 'horizontallySplit',
                       actions: assignOrientation,
                     },
                     {
-                      cond: (_, event) => event.isVertical == false,
+                      cond: (_, event) => event.isVertical === false && isNonTouchDevice(),
                       target: 'verticallySplit',
                       actions: assignOrientation,
                     },
@@ -145,25 +168,29 @@ export default createMachine(
                   },
                   ORIENTATION: [
                     {
-                      cond: (_, event) => event.isVertical == false,
+                      cond: (_, event) => event.isVertical === false && isNonTouchDevice(),
                       target: 'verticallySplit',
                       actions: assignOrientation,
                     },
                   ],
                   ROTATE: {
+                    /**
+                     * When the screen is narrow, but vertically short / horiznotally wide, we split vertically,
+                     * because there is more room for each part of the REPL
+                     */
                     target: 'verticallySplit',
-                    actions: assign({ manualOrientation: (_, __) => VERTICAL }),
+                    actions: assign({ manualOrientation: (_, __) => HORIZONTAL }),
                   },
                   RESIZE: [
-                    {
-                      cond: hasManualOrientation,
-                      target: 'horizontallySplit',
-                    },
-                    {
-                      cond: isVerticalSplit,
-                      target: 'verticallySplit',
-                      actions: ['clearHeight'],
-                    },
+                    // {
+                    //   cond: hasManualOrientation,
+                    //   target: 'horizontallySplit',
+                    // },
+                    // {
+                    //   cond: isVerticalSplit,
+                    //   target: 'verticallySplit',
+                    //   actions: ['clearHeight'],
+                    // },
                     {
                       cond: isHorizontalSplit,
                       target: 'horizontallySplit',
@@ -185,25 +212,29 @@ export default createMachine(
                   },
                   ORIENTATION: [
                     {
-                      cond: (_, event) => event.isVertical == true,
+                      cond: (_, event) => event.isVertical === true && isNonTouchDevice(),
                       target: 'horizontallySplit',
                       actions: assignOrientation,
                     },
                   ],
                   ROTATE: {
+                    /**
+                     * When the screen is narrow, but vertically tall, we split horizontally,
+                     * because there is more room for each part of the REPL
+                     */
                     target: 'horizontallySplit',
-                    actions: assign({ manualOrientation: (_, __) => HORIZONTAL }),
+                    actions: assign({ manualOrientation: (_, __) => VERTICAL }),
                   },
                   RESIZE: [
-                    {
-                      cond: hasManualOrientation,
-                      target: 'verticallySplit',
-                    },
-                    {
-                      cond: isHorizontalSplit,
-                      target: 'horizontallySplit',
-                      actions: ['clearWidth'],
-                    },
+                    // {
+                    //   cond: hasManualOrientation,
+                    //   target: 'verticallySplit',
+                    // },
+                    // {
+                    //   cond: isHorizontalSplit,
+                    //   target: 'horizontallySplit',
+                    //   actions: ['clearWidth'],
+                    // },
                     {
                       cond: isVerticalSplit,
                       target: 'verticallySplit',
@@ -384,8 +415,37 @@ function setSize(name: SplitName, value: `${number}px`) {
   localStorage.setItem(STORAGE_NAME, JSON.stringify(data));
 }
 
+/**
+ * We need to do all this debouncing because the other statemachine events are firing
+ * after the resize observer
+ *
+ * and nextAnimationFrame doesn't have a way to delay.
+ * Since this is specifically used with the resize observer below,
+ * we can let it be quite a bit delayed to improve perf.
+ */
+let delay = 200;
+let timeout: NodeJS.Timeout;
+const debounced = (fn: (...args: unknown[]) => void) => {
+  let forNextFrame = nextAvailableFrame.bind(null, fn);
+
+  if (timeout) clearTimeout(timeout);
+  timeout = setTimeout(forNextFrame, delay);
+};
+
+let frame: number | null;
+const nextAvailableFrame = (fn: (...args: unknown[]) => void) => {
+  if (frame) cancelAnimationFrame(frame);
+  frame = requestAnimationFrame(fn);
+};
+
+/**
+ * This resizeObserver is used for tracking manual resize
+ * of the editor and persisting it to local storage
+ */
 export const setupResizeObserver = (callback: () => unknown) => {
-  let observer = new ResizeObserver(() => callback);
+  let observer = new ResizeObserver(() => {
+    debounced(callback);
+  });
 
   return observer;
 };
