@@ -26,7 +26,7 @@ function detectAspectRatio() {
  * change the orientation of the viewport
  */
 const isTouchDevice = () => window.matchMedia('(pointer: coarse)').matches;
-const isNonTouchDevice = () => isTouchDevice();
+const isNonTouchDevice = () => !isTouchDevice();
 
 export function isVerticalSplit(ctx: Context) {
   return hasHorizontalOrientation(ctx);

@@ -73,8 +73,9 @@ export const Layout: TOC<{
     output: [];
   }
 }> = <template>
-  <State as |state send|>
-    {{log "--" (state.toStrings) }}
+  <State as |state send onTransition|>
+    {{effect (fn onTransition console.log)}}
+    {{log (state.toStrings)}}
 
     {{#let (containerDirection state) as |horizontallySplit|}}
       <Orientation as |isVertical|>
