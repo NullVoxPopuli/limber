@@ -168,7 +168,10 @@ export default createMachine(
                   },
                   ORIENTATION: [
                     {
-                      cond: (_, event) => event.isVertical === false && isNonTouchDevice(),
+                      cond: (ctx, event) =>
+                        event.isVertical === false &&
+                        isNonTouchDevice() &&
+                        !hasManualOrientation(ctx),
                       target: 'verticallySplit',
                       actions: assignOrientation,
                     },
@@ -182,15 +185,6 @@ export default createMachine(
                     actions: assign({ manualOrientation: (_, __) => HORIZONTAL }),
                   },
                   RESIZE: [
-                    // {
-                    //   cond: hasManualOrientation,
-                    //   target: 'horizontallySplit',
-                    // },
-                    // {
-                    //   cond: isVerticalSplit,
-                    //   target: 'verticallySplit',
-                    //   actions: ['clearHeight'],
-                    // },
                     {
                       cond: isHorizontalSplit,
                       target: 'horizontallySplit',
@@ -212,7 +206,10 @@ export default createMachine(
                   },
                   ORIENTATION: [
                     {
-                      cond: (_, event) => event.isVertical === true && isNonTouchDevice(),
+                      cond: (ctx, event) =>
+                        event.isVertical === true &&
+                        isNonTouchDevice() &&
+                        !hasManualOrientation(ctx),
                       target: 'horizontallySplit',
                       actions: assignOrientation,
                     },
@@ -226,15 +223,6 @@ export default createMachine(
                     actions: assign({ manualOrientation: (_, __) => VERTICAL }),
                   },
                   RESIZE: [
-                    // {
-                    //   cond: hasManualOrientation,
-                    //   target: 'verticallySplit',
-                    // },
-                    // {
-                    //   cond: isHorizontalSplit,
-                    //   target: 'horizontallySplit',
-                    //   actions: ['clearWidth'],
-                    // },
                     {
                       cond: isVerticalSplit,
                       target: 'verticallySplit',
@@ -375,13 +363,15 @@ const restoreWidth = (element: HTMLElement) => {
   element.style.width = getSize(WHEN_VERTICALLY_SPLIT) ?? '';
   element.style.maxHeight = '';
   element.style.height = '100%';
-  element.style.maxWidth = 'calc(100vw - 38px)';
+  element.style.maxWidth = 'calc(100vw - 72px)';
 };
 const restoreHeight = (element: HTMLElement) => {
+  let offset = document.querySelector('main > header')?.getBoundingClientRect().height || 0;
+
   element.style.height = getSize(WHEN_HORIZONTALLY_SPLIT) ?? '';
   element.style.maxWidth = '';
   element.style.width = '100%';
-  element.style.maxHeight = 'calc(100vh - 38px)';
+  element.style.maxHeight = `calc(100vh - 72px - ${offset}px)`;
 };
 
 function getData(): SplitSizeData {
