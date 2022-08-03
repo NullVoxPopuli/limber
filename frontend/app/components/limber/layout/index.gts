@@ -2,7 +2,6 @@
 import { hash, fn } from '@ember/helper';
 import { assert } from '@ember/debug';
 import { modifier } from 'ember-modifier';
-import Split from 'split.js'
 
 import State, { setupResizeObserver, isHorizontalSplit } from './state';
 import { Orientation } from './orientation'
@@ -27,13 +26,6 @@ const setupState = modifier((element: Element, [send]: [Send<unknown>]) => {
   return () => send('CONTAINER_REMOVED');
 });
 
-const split = modifier((element: HTMLElement, [direction]: ['vertical' | 'horizontal']) => {
-  let panes = [...element.children] as HTMLElement[]
-  let instance = Split(panes, { direction, gutterSize: 5 });
-
-  return () => instance.destroy();
-});
-
 const resizeDirection = (horzSplit: boolean) => horzSplit ? 'vertical' : 'horizontal';
 const toBoolean = (x: unknown) => Boolean(x);
 const eq = (a: string, b: string) => a === b;
@@ -41,21 +33,36 @@ const effect = (fn: (...args: unknown[]) => void) =>  {
   fn();
 }
 
+const resizePrevious = modifier((element: Element) => {
+  let dragHandler = () => {
+
+  }
+
+  window.addEventListener('dragstart', dragHandler);
+
+
+  return window.removeEventListener('dragstart', dragHandler);
+});
+
 const ResizeHandle: TOC<{
   Args: {
     direction: 'vertical' | 'horizontal';
   }
 }> = <template>
-  {{!
-    pass pointer events through to the underlying resizable element.
-    because the resize handle is not styleable, we will fake a custom
-    handle so that the resize handle is more visible.
-  }}
-  <div class="
-    absolute h-4 w-4 px-[3px] text-center bottom-0 right-[2px] bg-transparent text-white
-    leading-4
-    pointer-events-none z-10
-  ">{{if (eq @direction 'horizontal') '⬌' '⬍'}}</div>
+  <div
+    class="
+      {{if (eq @direction 'horizontal')
+        "h-full w-2 py-2"
+        "w-full h-2 px-2"
+      }}
+      flex justify-end items-end
+      text-white bg-horizon-lavender
+      leading-4 shadow z-10
+    "
+  style="text-shadow: 1px 1px 1px black"
+  {{! @glint-ignore }}
+  {{resizePrevious}}
+  >{{if (eq @direction 'horizontal') '⬌' '⬍'}}</div>
 </template>;
 
 const isResizable = (state: StateFor<typeof State>) => {
@@ -64,7 +71,7 @@ const isResizable = (state: StateFor<typeof State>) => {
 
 /**
   * true for horizontally split
-* false for vertically split
+  * false for vertically split
   */
 const containerDirection = (state: StateFor<typeof State>) => {
   if (state.matches('hasContainer.default.horizontallySplit')) {
@@ -92,8 +99,6 @@ export const Layout: TOC<{
         {{effect (fn send 'ORIENTATION' (hash isVertical=isVertical )) }}
 
         <div
-          {{! @glint-ignore }}
-          {{split (if isVertical 'vertical' 'horizontal')}}
           {{! row = left to right, col = top to bottom }}
           class="
             {{if horizontallySplit 'flex-col' 'flex-row'}}
@@ -115,11 +120,13 @@ export const Layout: TOC<{
 
             {{yield to="editor"}}
 
-            {{#if (isResizable state)}}
-              <ResizeHandle @direction={{resizeDirection horizontallySplit}} />
-            {{/if}}
-
           </EditorContainer>
+
+          {{#if (isResizable state)}}
+            <ResizeHandle
+              @direction={{resizeDirection horizontallySplit}}
+            />
+          {{/if}}
 
 
           <OutputContainer>

@@ -47,6 +47,7 @@ module.exports = {
           white: 'var(--ember-white)',
         },
         'code-bg': 'var(--code-bg)',
+        'horizon-lavender': 'var(--horizon-lavender)',
       },
       minWidth: {
         '1/3': '33%',
