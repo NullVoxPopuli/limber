@@ -168,6 +168,7 @@
     "remark-hbs": "0.4.1",
     "remark-html": "13.0.1",
     "remark-parse": "9.0.0",
+    "split.js": "^1.6.5",
     "stringify-object": "^4.0.1",
     "unified": "^9.2.2",
     "unist-util-flatmap": "^1.0.0",

@@ -2,6 +2,7 @@
 import { hash, fn } from '@ember/helper';
 import { assert } from '@ember/debug';
 import { modifier } from 'ember-modifier';
+import Split from 'split.js'
 
 import State, { setupResizeObserver, isHorizontalSplit } from './state';
 import { Orientation } from './orientation'
@@ -24,6 +25,13 @@ const setupState = modifier((element: Element, [send]: [Send<unknown>]) => {
   });
 
   return () => send('CONTAINER_REMOVED');
+});
+
+const split = modifier((element: HTMLElement, [direction]: ['vertical' | 'horizontal']) => {
+  let panes = [...element.children] as HTMLElement[]
+  let instance = Split(panes, { direction, gutterSize: 5 });
+
+  return () => instance.destroy();
 });
 
 const resizeDirection = (horzSplit: boolean) => horzSplit ? 'vertical' : 'horizontal';
@@ -84,6 +92,7 @@ export const Layout: TOC<{
         {{effect (fn send 'ORIENTATION' (hash isVertical=isVertical )) }}
 
         <div
+          {{split (if isVertical 'vertical' 'horizontal')}}
           {{! row = left to right, col = top to bottom }}
           class="
             {{if horizontallySplit 'flex-col' 'flex-row'}}
