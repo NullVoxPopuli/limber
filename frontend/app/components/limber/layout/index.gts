@@ -92,6 +92,7 @@ export const Layout: TOC<{
         {{effect (fn send 'ORIENTATION' (hash isVertical=isVertical )) }}
 
         <div
+          {{! @glint-ignore }}
           {{split (if isVertical 'vertical' 'horizontal')}}
           {{! row = left to right, col = top to bottom }}
           class="
