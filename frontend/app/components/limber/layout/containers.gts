@@ -13,9 +13,8 @@ export const EditorContainer: TOC<{
   <section
     data-test-editor-panel
     class="
-      grid overflow-hidden relative transition-all
+      grid overflow-hidden relative
       min-w-[38px] min-h-[38px]
-      shadow-sm shadow-slate-700 z-10
       {{if @splitHorizontally
         'w-full h-[40vh] resize-y'
         'w-[40vw] min-h-full resize-x'

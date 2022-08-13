@@ -165,6 +165,16 @@
   --code-highlight-bg: var(--horizon-background);
 }
 
+.gutter {
+  background: var(--code-keyword);
+}
+.gutter-horizontal {
+  cursor: col-resize;
+}
+.gutter-vertical {
+  cursor: row-resize;
+}
+
 .plain-light .hljs-built_in,
 .plain-light .hljs-function {
   font-weight: bold;

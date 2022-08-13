@@ -87,6 +87,8 @@ export default createMachine(
     schema: {
       context: {} as {
         container?: HTMLElement;
+        handle?: HTMLElement;
+        panes?: [HTMLElement, HTMLElement];
         observer?: ResizeObserver;
         maximize?: () => void;
         minimize?: () => void;
@@ -109,8 +111,10 @@ export default createMachine(
         target: 'hasContainer',
         actions: assign((_, event: ContainerFoundData) => {
           let { container, observer, maximize, minimize } = event;
+          let handle = container.nextElementSibling;
 
           return {
+            handle,
             container,
             observer,
             maximize,

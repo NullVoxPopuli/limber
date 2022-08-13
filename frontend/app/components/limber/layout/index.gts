@@ -7,6 +7,7 @@ import State, { setupResizeObserver, isHorizontalSplit } from './state';
 import { Orientation } from './orientation'
 import { Controls } from './controls';
 import { EditorContainer, OutputContainer } from './containers';
+import { ResizeHandle } from './resize-handle';
 
 import type { TOC } from '@ember/component/template-only';
 import type { Send, State as StateFor } from 'ember-statechart-component/glint';
@@ -28,27 +29,9 @@ const setupState = modifier((element: Element, [send]: [Send<unknown>]) => {
 
 const resizeDirection = (horzSplit: boolean) => horzSplit ? 'vertical' : 'horizontal';
 const toBoolean = (x: unknown) => Boolean(x);
-const eq = (a: string, b: string) => a === b;
 const effect = (fn: (...args: unknown[]) => void) =>  {
   fn();
 }
-
-const ResizeHandle: TOC<{
-  Args: {
-    direction: 'vertical' | 'horizontal';
-  }
-}> = <template>
-  {{!
-    pass pointer events through to the underlying resizable element.
-    because the resize handle is not styleable, we will fake a custom
-    handle so that the resize handle is more visible.
-  }}
-  <div class="
-    absolute h-4 w-4 px-[3px] text-center bottom-0 right-[2px] bg-transparent text-white
-    leading-4
-    pointer-events-none z-10
-  ">{{if (eq @direction 'horizontal') '⬌' '⬍'}}</div>
-</template>;
 
 const isResizable = (state: StateFor<typeof State>) => {
   return !(state.matches('hasContainer.minimized') || state.matches('hasContainer.maximized'));
@@ -56,7 +39,7 @@ const isResizable = (state: StateFor<typeof State>) => {
 
 /**
   * true for horizontally split
-* false for vertically split
+  * false for vertically split
   */
 const containerDirection = (state: StateFor<typeof State>) => {
   if (state.matches('hasContainer.default.horizontallySplit')) {
@@ -105,11 +88,13 @@ export const Layout: TOC<{
 
             {{yield to="editor"}}
 
-            {{#if (isResizable state)}}
-              <ResizeHandle @direction={{resizeDirection horizontallySplit}} />
-            {{/if}}
-
           </EditorContainer>
+
+          {{#if (isResizable state)}}
+            <ResizeHandle
+              @direction={{resizeDirection horizontallySplit}}
+            />
+          {{/if}}
 
 
           <OutputContainer>
