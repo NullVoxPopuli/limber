@@ -153,7 +153,7 @@ export const ResizeHandle: TOC<{
       class="
         {{if (eq @direction 'horizontal')
           "h-full w-2 py-2 cursor-col-resize"
-          "w-full h-4 px-2 cursor-row-resize"
+          "w-full h-2 px-2 cursor-row-resize"
         }}
         absolute inset-0
         flex justify-end items-end
