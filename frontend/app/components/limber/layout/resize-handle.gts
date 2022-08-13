@@ -42,25 +42,15 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] }}> {
   }
 
   setup = () => {
-    // window.addEventListener('pointerdown', this.dragStartHandler);
-    // window.addEventListener('pointermove', this.dragEndHandler);
-    // window.addEventListener('pointerup', this.dragMove);
-    window.addEventListener('touchstart', this.dragStartHandler);
-    window.addEventListener('touchend', this.dragEndHandler);
-    window.addEventListener('touchmove', this.dragMove);
-    window.addEventListener('mousedown', this.dragStartHandler);
-    window.addEventListener('mousemove', this.dragMove);
-    window.addEventListener('mouseup', this.dragEndHandler);
+    this.dragHandle.addEventListener('touchstart', this.dragStartHandler);
+    this.dragHandle.addEventListener('mousedown', this.dragStartHandler);
     this.dragHandle.addEventListener('keydown', this.keyHandler);
 
     registerDestructor(this, () => {
-      // window.removeEventListener('pointerdown', this.dragStartHandler);
-      // window.removeEventListener('pointermove', this.dragMove);
-      // window.removeEventListener('pointerup', this.dragEndHandler);
-      window.removeEventListener('touchstart', this.dragStartHandler);
+      this.dragHandle.removeEventListener('touchstart', this.dragStartHandler);
+      this.dragHandle.removeEventListener('mousedown', this.dragStartHandler);
       window.removeEventListener('touchmove', this.dragMove);
       window.removeEventListener('touchend', this.dragEndHandler);
-      window.removeEventListener('mousedown', this.dragStartHandler);
       window.removeEventListener('mousemove', this.dragMove);
       window.removeEventListener('mouseup', this.dragEndHandler);
       this.dragHandle.removeEventListener('keydown', this.keyHandler);
@@ -94,6 +84,14 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] }}> {
     this.dragging = false;
     this.queueUpdate();
     this.dragSurface.remove();
+
+    /**
+      * No need to listen if we aren't dragging
+      */
+    window.removeEventListener('touchmove', this.dragMove);
+    window.removeEventListener('touchend', this.dragEndHandler);
+    window.removeEventListener('mousemove', this.dragMove);
+    window.removeEventListener('mouseup', this.dragEndHandler);
   }
 
   dragMove = (event: PointerEvent) => {
@@ -108,6 +106,11 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] }}> {
     document.body.appendChild(this.dragSurface);
 
     this.setPosition(event);
+
+    window.addEventListener('touchend', this.dragEndHandler);
+    window.addEventListener('touchmove', this.dragMove);
+    window.addEventListener('mousemove', this.dragMove);
+    window.addEventListener('mouseup', this.dragEndHandler);
   }
 
   keyHandler = (event: KeyboardEvent) => {
