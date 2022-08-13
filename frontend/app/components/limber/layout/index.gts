@@ -7,6 +7,7 @@ import State, { setupResizeObserver, isHorizontalSplit } from './state';
 import { Orientation } from './orientation'
 import { Controls } from './controls';
 import { EditorContainer, OutputContainer } from './containers';
+import { ResizeHandle } from './resize-handle';
 
 import type { TOC } from '@ember/component/template-only';
 import type { Send, State as StateFor } from 'ember-statechart-component/glint';
@@ -28,42 +29,9 @@ const setupState = modifier((element: Element, [send]: [Send<unknown>]) => {
 
 const resizeDirection = (horzSplit: boolean) => horzSplit ? 'vertical' : 'horizontal';
 const toBoolean = (x: unknown) => Boolean(x);
-const eq = (a: string, b: string) => a === b;
 const effect = (fn: (...args: unknown[]) => void) =>  {
   fn();
 }
-
-const resizePrevious = modifier((element: Element) => {
-  let dragHandler = () => {
-
-  }
-
-  window.addEventListener('dragstart', dragHandler);
-
-
-  return window.removeEventListener('dragstart', dragHandler);
-});
-
-const ResizeHandle: TOC<{
-  Args: {
-    direction: 'vertical' | 'horizontal';
-  }
-}> = <template>
-  <div
-    class="
-      {{if (eq @direction 'horizontal')
-        "h-full w-2 py-2"
-        "w-full h-2 px-2"
-      }}
-      flex justify-end items-end
-      text-white bg-horizon-lavender
-      leading-4 shadow z-10
-    "
-  style="text-shadow: 1px 1px 1px black"
-  {{! @glint-ignore }}
-  {{resizePrevious}}
-  >{{if (eq @direction 'horizontal') '⬌' '⬍'}}</div>
-</template>;
 
 const isResizable = (state: StateFor<typeof State>) => {
   return !(state.matches('hasContainer.minimized') || state.matches('hasContainer.maximized'));
