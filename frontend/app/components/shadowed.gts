@@ -1,8 +1,7 @@
 import { modifier } from 'ember-modifier';
 import State from 'limber/helpers/state';
 
-import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
-
+import type { TOC } from '@ember/component/template-only';
 
 const attachShadow = modifier((element: Element, [setShadow]: [State['update']]) => {
   setShadow(element.attachShadow({ mode: 'open' }));

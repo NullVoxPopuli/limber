@@ -12,11 +12,9 @@ Using the native API, [FormData][1], we can gather the user inputs when the user
 
 ```gjs live
 import { on } from '@ember/modifier';
-import { tracked } from '@glimmer/tracking';
+import { cell } from 'ember-resources';
 
-let state = new (class {
-  @tracked current;
-})();
+const state = cell();
 
 const handleInput = (event) => {
   let formData = new FormData(event.currentTarget);
@@ -31,10 +29,10 @@ const handleSubmit = ( event) => {
 };
 
 <template>
-  <form 
-    {{on 'input' handleInput}} 
+  <form
+    {{on 'input' handleInput}}
     {{on 'submit' handleSubmit}}
-    class="grid gap-2" 
+    class="grid gap-2"
     style="max-width: 300px"
   >
     <label> First Name
