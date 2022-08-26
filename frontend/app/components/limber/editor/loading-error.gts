@@ -1,4 +1,4 @@
-import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
+import type { TOC } from '@ember/component/template-only';
 
 export const LoadingError: TOC<{
   Args: {

@@ -2,7 +2,7 @@ import service from 'limber/helpers/service';
 import qp from 'limber/helpers/qp';
 import highlighted from 'limber/modifiers/highlighted';
 
-import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
+import type { TOC } from '@ember/component/template-only';
 
 const orGlimdown = (format: string | undefined) => format || 'glimdown';
 

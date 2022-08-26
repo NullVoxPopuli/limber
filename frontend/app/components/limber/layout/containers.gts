@@ -1,7 +1,7 @@
 import Building from './building';
 import Error from './error';
 
-import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
+import type { TOC } from '@ember/component/template-only';
 
 export const EditorContainer: TOC<{
   Element: HTMLElement;

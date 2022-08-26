@@ -9,7 +9,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
 import { FormatMenu } from './format-menu';
 
-import type { TemplateOnlyComponent as TOC } from '@ember/component/template-only';
+import type { TOC } from '@ember/component/template-only';
 import type { Send } from 'ember-statechart-component/glint';
 
 const buttonClasses = `
