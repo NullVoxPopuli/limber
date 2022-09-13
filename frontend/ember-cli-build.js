@@ -63,6 +63,7 @@ module.exports = function (defaults) {
         'ember-resources',
         'ember-resources/core',
         'ember-resources/util/map',
+        'ember-resources/util/keep-latest',
         'ember-resources/util/function',
         'ember-resources/util/function-resource',
         'ember-resources/util/remote-data',
