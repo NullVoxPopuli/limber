@@ -58,6 +58,7 @@ module.exports = function (defaults) {
         'ember-popperjs',
         'ember-repl',
         'ember-modifier',
+        'tracked-built-ins',
         'ember-headlessui/components/menu',
         'ember-focus-trap/modifiers/focus-trap',
         'ember-resources',
