@@ -160,7 +160,7 @@
     "ember-modifier": "^4.0.0-beta.1-unstable.ede0053",
     "ember-popperjs": "^3.0.0",
     "ember-repl": "^2.0.59",
-    "ember-resources": "^5.4.0",
+    "ember-resources": "^5.6.0",
     "ember-statechart-component": "6.1.2",
     "highlight.js": "^11.6.0",
     "highlightjs-glimmer": "^2.0.1",
