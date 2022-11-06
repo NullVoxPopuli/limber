@@ -48,7 +48,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@glint/config": "^0.9.4",
     "@glint/core": "^0.9.4",
-    "@glint/environment-ember-loose": "^0.9.4",
+    "@glint/environment-ember-loose": "^0.9.7",
     "@glint/environment-ember-template-imports": "^0.9.4",
     "@glint/template": "^0.9.4",
     "@nullvoxpopuli/eslint-configs": "2.2.35",
