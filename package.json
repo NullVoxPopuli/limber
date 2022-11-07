@@ -40,7 +40,8 @@
     },
     "peerDependencyRules": {
       "allowAny": [
-        "mustache"
+        "mustache",
+        "ember-modifier"
       ]
     },
     "notes": {
