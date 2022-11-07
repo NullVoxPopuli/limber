@@ -32,7 +32,7 @@
     "@codemirror/view": "6.1.1",
     "@lezer/highlight": "^1.0.0",
     "@lezer/html": "^1.0.0",
-    "@lezer/markdown": "^1.0.1",
+    "@lezer/markdown": "^1.0.2",
     "@nullvoxpopuli/horizon-theme": "*",
     "assert": "^2.0.0",
     "broccoli-funnel": "^3.0.8",
