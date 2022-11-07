@@ -387,13 +387,13 @@ importers:
 
   packages/styles:
     specifiers:
-      '@tailwindcss/typography': ^0.5.3
+      '@tailwindcss/typography': ^0.5.8
       autoprefixer: ^10.4.8
       broccoli-funnel: ^3.0.8
       postcss: ^8.4.14
       tailwindcss: ^3.1.7
     dependencies:
-      '@tailwindcss/typography': 0.5.4_tailwindcss@3.1.7
+      '@tailwindcss/typography': 0.5.8_tailwindcss@3.1.7
       broccoli-funnel: 3.0.8
     devDependencies:
       autoprefixer: 10.4.8_postcss@8.4.14
@@ -3451,14 +3451,15 @@ packages:
     resolution: {integrity: sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==}
     dev: true
 
-  /@tailwindcss/typography/0.5.4_tailwindcss@3.1.7:
-    resolution: {integrity: sha512-QEdg40EmGvE7kKoDei8zr5sf4D1pIayHj4R31bH3lX8x2BtTiR+jNejYPOkhbmy3DXgkMF9jC8xqNiGFAuL9Sg==}
+  /@tailwindcss/typography/0.5.8_tailwindcss@3.1.7:
+    resolution: {integrity: sha512-xGQEp8KXN8Sd8m6R4xYmwxghmswrd0cPnNI2Lc6fmrC3OojysTBJJGSIVwPV56q4t6THFUK3HJ0EaWwpglSxWw==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
     dependencies:
       lodash.castarray: 4.4.0
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
+      postcss-selector-parser: 6.0.10
       tailwindcss: 3.1.7
     dev: false
 
