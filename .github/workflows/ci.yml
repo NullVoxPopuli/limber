@@ -228,7 +228,7 @@ jobs:
 
     - name: Deploy to Netlify
       id: deploy
-      uses: nwtgck/actions-netlify@v1.2.3
+      uses: nwtgck/actions-netlify@v1.2.4
       with:
         publish-dir: '${{ env.app }}/deploy/app'
         production-branch: __handled_separately__
