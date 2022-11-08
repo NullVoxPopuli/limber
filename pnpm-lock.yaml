@@ -17,10 +17,10 @@ importers:
 
   .:
     specifiers:
-      concurrently: ^7.2.2
+      concurrently: ^7.5.0
       turbo: ^1.6.3
     devDependencies:
-      concurrently: 7.3.0
+      concurrently: 7.5.0
       turbo: 1.6.3
 
   frontend:
@@ -312,7 +312,7 @@ importers:
       broccoli-funnel: ^3.0.8
       codemirror: ^6.0.1
       codemirror-languageserver: ^1.10.0
-      concurrently: ^7.2.1
+      concurrently: ^7.5.0
       esbuild: 0.14.48
       esbuild-plugin-alias: ^0.2.1
       eslint: ^7.32.0
@@ -346,7 +346,7 @@ importers:
       '@nullvoxpopuli/eslint-configs': 2.2.34_typescript@4.7.4
       '@typescript-eslint/eslint-plugin': 5.30.7_b7znustjs6hut3dnhxinxprjzm
       '@typescript-eslint/parser': 5.30.7_hxadhbs2xogijvk7vq4t2azzbu
-      concurrently: 7.3.0
+      concurrently: 7.5.0
       esbuild: 0.14.48
       esbuild-plugin-alias: 0.2.1
       eslint: 7.32.0
@@ -358,14 +358,14 @@ importers:
       '@nullvoxpopuli/eslint-configs': 2.2.34
       '@typescript-eslint/eslint-plugin': ^5.18.0
       '@typescript-eslint/parser': ^5.0.0
-      concurrently: ^7.2.1
+      concurrently: ^7.5.0
       eslint: ^7.32.0
       typescript: ^4.7.3
     devDependencies:
       '@nullvoxpopuli/eslint-configs': 2.2.34_typescript@4.7.4
       '@typescript-eslint/eslint-plugin': 5.30.7_b7znustjs6hut3dnhxinxprjzm
       '@typescript-eslint/parser': 5.30.7_hxadhbs2xogijvk7vq4t2azzbu
-      concurrently: 7.3.0
+      concurrently: 7.5.0
       eslint: 7.32.0
       typescript: 4.7.4
 
@@ -374,14 +374,14 @@ importers:
       '@nullvoxpopuli/eslint-configs': 2.2.34
       '@typescript-eslint/eslint-plugin': ^5.18.0
       '@typescript-eslint/parser': ^5.0.0
-      concurrently: ^7.2.1
+      concurrently: ^7.5.0
       eslint: ^7.32.0
       typescript: ^4.7.3
     devDependencies:
       '@nullvoxpopuli/eslint-configs': 2.2.34_typescript@4.7.4
       '@typescript-eslint/eslint-plugin': 5.30.7_b7znustjs6hut3dnhxinxprjzm
       '@typescript-eslint/parser': 5.30.7_hxadhbs2xogijvk7vq4t2azzbu
-      concurrently: 7.3.0
+      concurrently: 7.5.0
       eslint: 7.32.0
       typescript: 4.7.4
 
@@ -6945,22 +6945,6 @@ packages:
   /concat-map/0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
-  /concurrently/7.3.0:
-    resolution: {integrity: sha512-IiDwm+8DOcFEInca494A8V402tNTQlJaYq78RF2rijOrKEk/AOHTxhN4U1cp7GYKYX5Q6Ymh1dLTBlzIMN0ikA==}
-    engines: {node: ^12.20.0 || ^14.13.0 || >=16.0.0}
-    hasBin: true
-    dependencies:
-      chalk: 4.1.2
-      date-fns: 2.29.1
-      lodash: 4.17.21
-      rxjs: 7.5.6
-      shell-quote: 1.7.3
-      spawn-command: 0.0.2-1
-      supports-color: 8.1.1
-      tree-kill: 1.2.2
-      yargs: 17.5.1
-    dev: true
-
   /concurrently/7.5.0:
     resolution: {integrity: sha512-5E3mwiS+i2JYBzr5BpXkFxOnleZTMsG+WnE/dCG4/P+oiVXrbmrBwJ2ozn4SxwB2EZDrKR568X+puVohxz3/Mg==}
     engines: {node: ^12.20.0 || ^14.13.0 || >=16.0.0}
@@ -7368,11 +7352,6 @@ packages:
       abab: 2.0.6
       whatwg-mimetype: 2.3.0
       whatwg-url: 8.7.0
-
-  /date-fns/2.29.1:
-    resolution: {integrity: sha512-dlLD5rKaKxpFdnjrs+5azHDFOPEu4ANy/LTh04A1DTzMM7qoajmKCBc8pkKRFT41CNzw+4gQh79X5C+Jq27HAw==}
-    engines: {node: '>=0.11'}
-    dev: true
 
   /date-fns/2.29.3:
     resolution: {integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==}
@@ -13685,12 +13664,6 @@ packages:
       tslib: 1.14.1
     dev: true
 
-  /rxjs/7.5.6:
-    resolution: {integrity: sha512-dnyv2/YsXhnm461G+R/Pe5bWP41Nm6LBXEYWI6eiFP4fiwx6WRI/CD0zbdVAudd9xwLEF2IDcKXLHit0FYjUzw==}
-    dependencies:
-      tslib: 2.4.1
-    dev: true
-
   /rxjs/7.5.7:
     resolution: {integrity: sha512-z9MzKh/UcOqB3i20H6rtrlaE/CgjLOvheWK/9ILrbhROGTweAi1BaFsTT9FbwZi5Trr1qNRs+MXkhmR06awzQA==}
     dependencies:
@@ -13907,10 +13880,6 @@ packages:
   /shebang-regex/3.0.0:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
-
-  /shell-quote/1.7.3:
-    resolution: {integrity: sha512-Vpfqwm4EnqGdlsBFNmHhxhElJYrdfcxPThu+ryKS5J8L/fhAwLazFZtq+S+TWZ9ANj2piSQLGj6NQg+lKPmxrw==}
-    dev: true
 
   /shell-quote/1.7.4:
     resolution: {integrity: sha512-8o/QEhSSRb1a5i7TFR0iM4G16Z0vYB2OQVs4G3aAFXjn3T6yEx8AZxy1PgDF7I00LZHYA3WxaSYIf5e5sAX8Rw==}
