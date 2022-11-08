@@ -20,7 +20,7 @@
     "npm": "8.12.1"
   },
   "devDependencies": {
-    "concurrently": "^7.2.2",
+    "concurrently": "^7.5.0",
     "turbo": "^1.6.3"
   },
   "packageManager": "pnpm@7.5.0",
