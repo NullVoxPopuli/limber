@@ -121,7 +121,7 @@
     "prettier": "^2.3.2",
     "qunit": "^2.19.1",
     "qunit-dom": "^2.0.0",
-    "rollup": "^2.77.2",
+    "rollup": "^2.79.1",
     "testem-failure-only-reporter": "^1.0.0",
     "type-fest": "2.16.0",
     "typescript": "^4.7.3",
