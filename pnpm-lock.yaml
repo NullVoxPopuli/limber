@@ -115,7 +115,7 @@ importers:
       ember-page-title: ^7.0.0
       ember-popperjs: ^3.0.0
       ember-qunit: ^5.1.5
-      ember-repl: ^2.0.59
+      ember-repl: ^2.0.63
       ember-resolver: ^8.0.3
       ember-resources: ^5.6.0
       ember-source: ^4.5.0
@@ -176,7 +176,7 @@ importers:
       ember-headlessui: 0.13.0_dfa5gwwctf32negxhvqw5kdt2y
       ember-modifier: 4.0.0-beta.1-unstable.a4fec35_ember-source@4.7.0
       ember-popperjs: 3.0.0_koh3m6p3zeux5ys7hmolp2k6rm
-      ember-repl: 2.0.60_y3lv6tn6yokher4u7xj4j22px4
+      ember-repl: 2.0.63_y3lv6tn6yokher4u7xj4j22px4
       ember-resources: 5.6.0_gv6j52yonbqt3c433e2sdxgmyu
       ember-statechart-component: 6.1.2_yjwpxj2v5i6prozqbgztnh3lyq
       highlight.js: 11.6.0
@@ -2117,6 +2117,11 @@ packages:
 
   /@babel/standalone/7.18.9:
     resolution: {integrity: sha512-6E+p5azHMHcMkHzGFnA7Pqhtgfwx1cClwjMqomMHhdFupCLZDDpVQUctRGYE7p7nn7cXJZSI/L9en+tt30AP3w==}
+    engines: {node: '>=6.9.0'}
+    dev: false
+
+  /@babel/standalone/7.20.3:
+    resolution: {integrity: sha512-u6VIhdacVpqVhBhSo21TRb1zcCdnPPyBsIC2LLnLnbmuJxlLsmGMAlLh+Xcsaqko4aGZrAtXIvTaMIQtUBkE8A==}
     engines: {node: '>=6.9.0'}
     dev: false
 
@@ -7027,7 +7032,7 @@ packages:
     dev: true
 
   /concat-map/0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
   /concurrently/7.3.0:
     resolution: {integrity: sha512-IiDwm+8DOcFEInca494A8V402tNTQlJaYq78RF2rijOrKEk/AOHTxhN4U1cp7GYKYX5Q6Ymh1dLTBlzIMN0ikA==}
@@ -8440,11 +8445,11 @@ packages:
       - webpack
     dev: true
 
-  /ember-repl/2.0.60_y3lv6tn6yokher4u7xj4j22px4:
-    resolution: {integrity: sha512-7ndDWx3wxsk0KlNHgNE03AMVjIz/1max94hQgU293MsV+1hLmTLF4saM9Tr1nv2wHypE+CK6rpudltIJdjmLdw==}
+  /ember-repl/2.0.63_y3lv6tn6yokher4u7xj4j22px4:
+    resolution: {integrity: sha512-363dsvR/T9DsxdjfikCNyClYeGaiQ7KQVURKieh0IZG+mddSw4rFY+zaYnUvyCA50Hi/qb3d07EGCBuY1KIRxg==}
     engines: {node: 12.* || >= 14.*}
     dependencies:
-      '@babel/standalone': 7.18.9
+      '@babel/standalone': 7.20.3
       '@embroider/macros': 1.8.3
       '@glimmer/component': 1.1.2_@babel+core@7.18.9
       '@glimmer/tracking': 1.1.2
@@ -9487,7 +9492,7 @@ packages:
       eslint-import-resolver-node: 0.3.6
       eslint-module-utils: 2.7.3_bsugbhruclroeiaqnd7gqoy7ya
       has: 1.0.3
-      is-core-module: 2.9.0
+      is-core-module: 2.10.0
       is-glob: 4.0.3
       minimatch: 3.1.2
       object.values: 1.1.5
