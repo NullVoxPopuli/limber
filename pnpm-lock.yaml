@@ -35,10 +35,10 @@ importers:
       '@embroider/macros': 1.9.0
       '@embroider/router': ^1.9.0
       '@embroider/webpack': 1.9.0
-      '@fortawesome/ember-fontawesome': ^0.3.3
-      '@fortawesome/free-brands-svg-icons': ^6.1.1
-      '@fortawesome/free-regular-svg-icons': ^6.1.1
-      '@fortawesome/free-solid-svg-icons': ^6.1.1
+      '@fortawesome/ember-fontawesome': ^0.4.1
+      '@fortawesome/free-brands-svg-icons': ^6.2.0
+      '@fortawesome/free-regular-svg-icons': ^6.2.0
+      '@fortawesome/free-solid-svg-icons': ^6.2.0
       '@glimmer/component': ^1.1.2
       '@glimmer/tracking': ^1.1.2
       '@glint/config': ^0.9.7
@@ -57,8 +57,6 @@ importers:
       '@types/common-tags': ^1.8.1
       '@types/dompurify': ^2.3.4
       '@types/ember': ^4.0.2
-      '@types/ember-qunit': ^5.0.2
-      '@types/ember-resolver': ^5.0.13
       '@types/ember__application': ^4.0.4
       '@types/ember__array': ^4.0.3
       '@types/ember__component': ^4.0.11
@@ -78,6 +76,8 @@ importers:
       '@types/ember__test': ^4.0.1
       '@types/ember__test-helpers': ^2.8.2
       '@types/ember__utils': ^4.0.2
+      '@types/ember-qunit': ^5.0.2
+      '@types/ember-resolver': ^5.0.13
       '@types/htmlbars-inline-precompile': ^3.0.0
       '@types/mdast': ^3.0.10
       '@types/rsvp': ^4.0.4
@@ -202,10 +202,10 @@ importers:
       '@embroider/compat': 1.9.0_@embroider+core@1.9.0
       '@embroider/core': 1.9.0
       '@embroider/webpack': 1.9.0_4mpovkaptyark33dbwnkp36cwi
-      '@fortawesome/ember-fontawesome': 0.3.4_rollup@2.77.2
-      '@fortawesome/free-brands-svg-icons': 6.1.1
-      '@fortawesome/free-regular-svg-icons': 6.1.1
-      '@fortawesome/free-solid-svg-icons': 6.1.1
+      '@fortawesome/ember-fontawesome': 0.4.1_rollup@2.77.2
+      '@fortawesome/free-brands-svg-icons': 6.2.0
+      '@fortawesome/free-regular-svg-icons': 6.2.0
+      '@fortawesome/free-solid-svg-icons': 6.2.0
       '@glint/config': 0.9.7
       '@glint/core': 0.9.7_typescript@4.7.4
       '@glint/environment-ember-loose': 0.9.7_3wxzex3v5bm6ngzepy7xn7cbhq
@@ -217,8 +217,6 @@ importers:
       '@types/common-tags': 1.8.1
       '@types/dompurify': 2.3.4
       '@types/ember': 4.0.2_@babel+core@7.18.13
-      '@types/ember-qunit': 5.0.2_@babel+core@7.18.13
-      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/ember__application': 4.0.4_@babel+core@7.18.13
       '@types/ember__array': 4.0.3_@babel+core@7.18.13
       '@types/ember__component': 4.0.11_@babel+core@7.18.13
@@ -238,6 +236,8 @@ importers:
       '@types/ember__test': 4.0.1_@babel+core@7.18.13
       '@types/ember__test-helpers': 2.8.2_@babel+core@7.18.13
       '@types/ember__utils': 4.0.2_@babel+core@7.18.13
+      '@types/ember-qunit': 5.0.2_@babel+core@7.18.13
+      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/htmlbars-inline-precompile': 3.0.0
       '@types/mdast': 3.0.10
       '@types/rsvp': 4.0.4
@@ -321,13 +321,13 @@ importers:
       recursive-copy: ^2.0.14
       typescript: ^4.7.3
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
+      '@codemirror/autocomplete': 6.3.0
       '@codemirror/commands': 6.1.2
       '@codemirror/lang-html': 6.1.3
       '@codemirror/lang-javascript': 6.1.1
       '@codemirror/lang-markdown': 6.0.4
       '@codemirror/language': 6.3.0
-      '@codemirror/language-data': 6.1.0_@codemirror+view@6.4.1
+      '@codemirror/language-data': 6.1.0
       '@codemirror/lint': 6.0.0
       '@codemirror/search': 6.2.2
       '@codemirror/state': 6.1.2
@@ -339,7 +339,7 @@ importers:
       assert: 2.0.0
       broccoli-funnel: 3.0.8
       codemirror: 6.0.1
-      codemirror-languageserver: 1.10.0_@codemirror+language@6.3.0
+      codemirror-languageserver: 1.10.0
       eslint4b: 7.32.0
       path-browserify: 1.0.1
     devDependencies:
@@ -398,7 +398,7 @@ importers:
     devDependencies:
       autoprefixer: 10.4.8_postcss@8.4.14
       postcss: 8.4.14
-      tailwindcss: 3.1.7_postcss@8.4.14
+      tailwindcss: 3.1.7
 
   packages/transpilation:
     specifiers:
@@ -2315,12 +2315,8 @@ packages:
       minimist: 1.2.7
     dev: true
 
-  /@codemirror/autocomplete/6.3.0_tbobn6a5yenuudstugu4hugp4y:
+  /@codemirror/autocomplete/6.3.0:
     resolution: {integrity: sha512-4jEvh3AjJZTDKazd10J6ZsCIqaYxDMCeua5ouQxY8hlFIml+nr7le0SgBhT3SIytFBmdzPK3AUhXGuW3T79nVg==}
-    peerDependencies:
-      '@codemirror/language': ^6.0.0
-      '@codemirror/state': ^6.0.0
-      '@codemirror/view': ^6.0.0
     dependencies:
       '@codemirror/language': 6.3.0
       '@codemirror/state': 6.1.2
@@ -2344,33 +2340,29 @@ packages:
       '@lezer/cpp': 1.0.0
     dev: false
 
-  /@codemirror/lang-css/6.0.0_@codemirror+view@6.4.1:
+  /@codemirror/lang-css/6.0.0:
     resolution: {integrity: sha512-jBqc+BTuwhNOTlrimFghLlSrN6iFuE44HULKWoR4qKYObhOIl9Lci1iYj6zMIte1XTQmZguNvjXMyr43LUKwSw==}
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
+      '@codemirror/autocomplete': 6.3.0
       '@codemirror/language': 6.3.0
       '@codemirror/state': 6.1.2
       '@lezer/css': 1.0.0
-    transitivePeerDependencies:
-      - '@codemirror/view'
     dev: false
 
-  /@codemirror/lang-css/6.0.1_@codemirror+view@6.4.1:
+  /@codemirror/lang-css/6.0.1:
     resolution: {integrity: sha512-rlLq1Dt0WJl+2epLQeAsfqIsx3lGu4HStHCJu95nGGuz2P2fNugbU3dQYafr2VRjM4eMC9HviI6jvS98CNtG5w==}
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
+      '@codemirror/autocomplete': 6.3.0
       '@codemirror/language': 6.3.0
       '@codemirror/state': 6.1.2
       '@lezer/css': 1.0.1
-    transitivePeerDependencies:
-      - '@codemirror/view'
     dev: false
 
   /@codemirror/lang-html/6.1.3:
     resolution: {integrity: sha512-LmtIElopGK6bBfddAyjBitS6hz8nFr/PVUtvqmfomXlHB4m+Op2d5eGk/X9/CSby6Y8NqXXkGa3yDd9lfJ6Qlg==}
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
-      '@codemirror/lang-css': 6.0.1_@codemirror+view@6.4.1
+      '@codemirror/autocomplete': 6.3.0
+      '@codemirror/lang-css': 6.0.1
       '@codemirror/lang-javascript': 6.1.1
       '@codemirror/language': 6.3.0
       '@codemirror/state': 6.1.2
@@ -2389,7 +2381,7 @@ packages:
   /@codemirror/lang-javascript/6.1.1:
     resolution: {integrity: sha512-F4+kiuC5d5dUSJmff96tJQwpEXs/tX/4bapMRnZWW6bHKK1Fx6MunTzopkCUWRa9bF87GPmb9m7Qtg7Yv8f3uQ==}
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
+      '@codemirror/autocomplete': 6.3.0
       '@codemirror/language': 6.3.0
       '@codemirror/lint': 6.0.0
       '@codemirror/state': 6.1.2
@@ -2440,16 +2432,14 @@ packages:
       '@lezer/rust': 1.0.0
     dev: false
 
-  /@codemirror/lang-sql/6.0.0_@codemirror+view@6.4.1:
+  /@codemirror/lang-sql/6.0.0:
     resolution: {integrity: sha512-mq4NwTDbbo7QZktfgPsS+ms0FmAceH4WM2jLbgf+N28FoKUy0JzGe3XJymgnTewXnNUwujKBxArQzibxSDdVyQ==}
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
+      '@codemirror/autocomplete': 6.3.0
       '@codemirror/language': 6.3.0
       '@codemirror/state': 6.1.2
       '@lezer/highlight': 1.1.2
       '@lezer/lr': 1.2.4
-    transitivePeerDependencies:
-      - '@codemirror/view'
     dev: false
 
   /@codemirror/lang-wast/6.0.0:
@@ -2460,23 +2450,21 @@ packages:
       '@lezer/lr': 1.2.4
     dev: false
 
-  /@codemirror/lang-xml/6.0.0_@codemirror+view@6.4.1:
+  /@codemirror/lang-xml/6.0.0:
     resolution: {integrity: sha512-M/HLWxIiP956xGjtrxkeHkCmDGVQGKu782x8pOH5CLJIMkWtiB1DWfDoDHqpFjdEE9dkfcqPWvYfVi6GbhuXEg==}
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
+      '@codemirror/autocomplete': 6.3.0
       '@codemirror/language': 6.3.0
       '@codemirror/state': 6.1.2
       '@lezer/common': 1.0.1
       '@lezer/xml': 1.0.0
-    transitivePeerDependencies:
-      - '@codemirror/view'
     dev: false
 
-  /@codemirror/language-data/6.1.0_@codemirror+view@6.4.1:
+  /@codemirror/language-data/6.1.0:
     resolution: {integrity: sha512-g9V23fuLRI9AEbpM6bDy1oquqgpFlIDHTihUhL21NPmxp+x67ZJbsKk+V71W7/Bj8SCqEO1PtqQA/tDGgt1nfw==}
     dependencies:
       '@codemirror/lang-cpp': 6.0.1
-      '@codemirror/lang-css': 6.0.0_@codemirror+view@6.4.1
+      '@codemirror/lang-css': 6.0.0
       '@codemirror/lang-html': 6.1.3
       '@codemirror/lang-java': 6.0.0
       '@codemirror/lang-javascript': 6.1.1
@@ -2485,13 +2473,11 @@ packages:
       '@codemirror/lang-php': 6.0.0
       '@codemirror/lang-python': 6.0.1
       '@codemirror/lang-rust': 6.0.0
-      '@codemirror/lang-sql': 6.0.0_@codemirror+view@6.4.1
+      '@codemirror/lang-sql': 6.0.0
       '@codemirror/lang-wast': 6.0.0
-      '@codemirror/lang-xml': 6.0.0_@codemirror+view@6.4.1
+      '@codemirror/lang-xml': 6.0.0
       '@codemirror/language': 6.3.0
       '@codemirror/legacy-modes': 6.1.0
-    transitivePeerDependencies:
-      - '@codemirror/view'
     dev: false
 
   /@codemirror/language/6.3.0:
@@ -2866,11 +2852,11 @@ packages:
       - supports-color
     dev: true
 
-  /@fortawesome/ember-fontawesome/0.3.4_rollup@2.77.2:
-    resolution: {integrity: sha512-phI+DwvEhMlAm6cFZ+3ReRgVdO0GhwV74QjguAl5hbCbEoj0qrZ0I14jEhH/SUZEyYnrDFrCSBXKyRB10wDwMA==}
+  /@fortawesome/ember-fontawesome/0.4.1_rollup@2.77.2:
+    resolution: {integrity: sha512-drBupV++kJP2rmyfxg55e4NeaezGEk1Ng9QMTFvEURIkFQfd3QPAxBdC9CLuAWKtzgF6zACGyv/9D2AzF45juQ==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
-      '@fortawesome/fontawesome-svg-core': 1.3.0
+      '@fortawesome/fontawesome-svg-core': 6.2.0
       broccoli-file-creator: 2.1.1
       broccoli-merge-trees: 4.2.0
       broccoli-plugin: 4.0.7
@@ -2880,7 +2866,7 @@ packages:
       ember-ast-helpers: 0.3.5
       ember-cli-babel: 7.26.11
       ember-cli-htmlbars: 5.7.2
-      ember-get-config: 1.0.4
+      ember-get-config: 2.1.1
       find-yarn-workspace-root: 2.0.0
       glob: 7.2.3
       rollup-plugin-node-resolve: 5.2.0_rollup@2.77.2
@@ -2889,50 +2875,42 @@ packages:
       - supports-color
     dev: true
 
-  /@fortawesome/fontawesome-common-types/0.3.0:
-    resolution: {integrity: sha512-CA3MAZBTxVsF6SkfkHXDerkhcQs0QPofy43eFdbWJJkZiq3SfiaH1msOkac59rQaqto5EqWnASboY1dBuKen5w==}
-    engines: {node: '>=6'}
-    deprecated: Please upgrade to 6.1.0. https://fontawesome.com/docs/changelog/
-    requiresBuild: true
-    dev: true
-
-  /@fortawesome/fontawesome-common-types/6.1.1:
-    resolution: {integrity: sha512-wVn5WJPirFTnzN6tR95abCx+ocH+3IFLXAgyavnf9hUmN0CfWoDjPT/BAWsUVwSlYYVBeCLJxaqi7ZGe4uSjBA==}
+  /@fortawesome/fontawesome-common-types/6.2.0:
+    resolution: {integrity: sha512-rBevIsj2nclStJ7AxTdfsa3ovHb1H+qApwrxcTVo+NNdeJiB9V75hsKfrkG5AwNcRUNxrPPiScGYCNmLMoh8pg==}
     engines: {node: '>=6'}
     requiresBuild: true
     dev: true
 
-  /@fortawesome/fontawesome-svg-core/1.3.0:
-    resolution: {integrity: sha512-UIL6crBWhjTNQcONt96ExjUnKt1D68foe3xjEensLDclqQ6YagwCRYVQdrp/hW0ALRp/5Fv/VKw+MqTUWYYvPg==}
-    engines: {node: '>=6'}
-    deprecated: Please upgrade to 6.1.0. https://fontawesome.com/docs/changelog/
-    requiresBuild: true
-    dependencies:
-      '@fortawesome/fontawesome-common-types': 0.3.0
-    dev: true
-
-  /@fortawesome/free-brands-svg-icons/6.1.1:
-    resolution: {integrity: sha512-mFbI/czjBZ+paUtw5NPr2IXjun5KAC8eFqh1hnxowjA4mMZxWz4GCIksq6j9ZSa6Uxj9JhjjDVEd77p2LN2Blg==}
+  /@fortawesome/fontawesome-svg-core/6.2.0:
+    resolution: {integrity: sha512-Cf2mAAeMWFMzpLC7Y9H1I4o3wEU+XovVJhTiNG8ZNgSQj53yl7OCJaS80K4YjrABWZzbAHVaoHE1dVJ27AAYXw==}
     engines: {node: '>=6'}
     requiresBuild: true
     dependencies:
-      '@fortawesome/fontawesome-common-types': 6.1.1
+      '@fortawesome/fontawesome-common-types': 6.2.0
     dev: true
 
-  /@fortawesome/free-regular-svg-icons/6.1.1:
-    resolution: {integrity: sha512-xXiW7hcpgwmWtndKPOzG+43fPH7ZjxOaoeyooptSztGmJxCAflHZxXNK0GcT0uEsR4jTGQAfGklDZE5NHoBhKg==}
+  /@fortawesome/free-brands-svg-icons/6.2.0:
+    resolution: {integrity: sha512-fm1y4NyZ2qKYNmYhdMz9VAWRw1Et7PMHNunSw3W0SVAwKwv6o0qiJworLH3Y9SnmhHzAymXJwCX1op22FFvGiA==}
     engines: {node: '>=6'}
     requiresBuild: true
     dependencies:
-      '@fortawesome/fontawesome-common-types': 6.1.1
+      '@fortawesome/fontawesome-common-types': 6.2.0
     dev: true
 
-  /@fortawesome/free-solid-svg-icons/6.1.1:
-    resolution: {integrity: sha512-0/5exxavOhI/D4Ovm2r3vxNojGZioPwmFrKg0ZUH69Q68uFhFPs6+dhAToh6VEQBntxPRYPuT5Cg1tpNa9JUPg==}
+  /@fortawesome/free-regular-svg-icons/6.2.0:
+    resolution: {integrity: sha512-M1dG+PAmkYMTL9BSUHFXY5oaHwBYfHCPhbJ8qj8JELsc9XCrUJ6eEHWip4q0tE+h9C0DVyFkwIM9t7QYyCpprQ==}
     engines: {node: '>=6'}
     requiresBuild: true
     dependencies:
-      '@fortawesome/fontawesome-common-types': 6.1.1
+      '@fortawesome/fontawesome-common-types': 6.2.0
+    dev: true
+
+  /@fortawesome/free-solid-svg-icons/6.2.0:
+    resolution: {integrity: sha512-UjCILHIQ4I8cN46EiQn0CZL/h8AwCGgR//1c4R96Q5viSRwuKVo0NdQEc4bm+69ZwC0dUvjbDqAHF1RR5FA3XA==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 6.2.0
     dev: true
 
   /@glimmer/compiler/0.27.0:
@@ -3510,7 +3488,7 @@ packages:
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.1.7_postcss@8.4.14
+      tailwindcss: 3.1.7
     dev: false
 
   /@tootallnate/once/1.1.2:
@@ -3616,9 +3594,9 @@ packages:
   /@types/ember-qunit/5.0.2_@babel+core@7.18.13:
     resolution: {integrity: sha512-LXp0Ew4wPhaCMuw49cNDHWs/bROn+Msb4ypMG1t60EMBx0UaEoX0tZlkf5bQJfdD249WZTu5cCtKvl47xbQzxA==}
     dependencies:
-      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/ember__test': 4.0.1_@babel+core@7.18.13
       '@types/ember__test-helpers': 2.8.2_@babel+core@7.18.13
+      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/qunit': 2.19.3
     transitivePeerDependencies:
       - '@babel/core'
@@ -3791,10 +3769,10 @@ packages:
   /@types/ember__test-helpers/2.8.2_@babel+core@7.18.13:
     resolution: {integrity: sha512-Ho3TTcnbjdQO9UvLwoswRMpCR2j7X6T8qSOaKehnST9s15ACb4MXHwec1NhmpCOhdvBRREYfG3YbduNeXoITMg==}
     dependencies:
-      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/ember__application': 4.0.4_@babel+core@7.18.13
       '@types/ember__error': 4.0.1
       '@types/ember__owner': 4.0.2
+      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/htmlbars-inline-precompile': 3.0.0
     transitivePeerDependencies:
       - '@babel/core'
@@ -3855,7 +3833,7 @@ packages:
   /@types/fs-extra/5.1.0:
     resolution: {integrity: sha512-AInn5+UBFIK9FK5xc9yP5e3TQSPNNgjHByqYcj9g5elVBnDQcQL7PlO1CIRy2gWlbwK7UPYqi7vRvFA44dCmYQ==}
     dependencies:
-      '@types/node': 18.6.1
+      '@types/node': 18.11.9
 
   /@types/fs-extra/8.1.2:
     resolution: {integrity: sha512-SvSrYXfWSc7R4eqnOzbQF4TZmfpNSM9FrSWLU3EUnWBuyZqNBOrv1B1JA3byUDPUl9z4Ab3jeZG2eDdySlgNMg==}
@@ -3867,7 +3845,7 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 3.0.5
-      '@types/node': 18.6.2
+      '@types/node': 18.11.9
 
   /@types/htmlbars-inline-precompile/3.0.0:
     resolution: {integrity: sha512-n1YwM/Q937KmS9W4Ytran71nzhhcT2FDQI00eRGBNUyeErLZspBdDBewEe1F8tcRlUdsCVo2AZBLJsRjEceTRg==}
@@ -3893,13 +3871,9 @@ packages:
 
   /@types/node/18.11.9:
     resolution: {integrity: sha512-CRpX21/kGdzjOpFsZSkcrXMGIBWMGNIHXXBVFSH+ggkftxg+XYP20TESbh+zFvFj3EQOl5byk0HTRn1IL6hbqg==}
-    dev: true
 
   /@types/node/18.6.1:
     resolution: {integrity: sha512-z+2vB6yDt1fNwKOeGbckpmirO+VBDuQqecXkgeIqDlaOtmKn6hPR/viQ8cxCfqLU4fTlvM3+YjM367TukWdxpg==}
-
-  /@types/node/18.6.2:
-    resolution: {integrity: sha512-KcfkBq9H4PI6Vpu5B/KoPeuVDAbmi+2mDBqGPGUgoL7yXQtcWGu2vJWmmRkneWK3Rh0nIAX192Aa87AqKHYChQ==}
 
   /@types/qs/6.9.7:
     resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
@@ -3916,14 +3890,14 @@ packages:
   /@types/resolve/0.0.8:
     resolution: {integrity: sha512-auApPaJf3NPfe18hSoJkp8EbZzer2ISk7o8mCC3M9he/a04+gbMF97NkpD2S8riMGvm4BMRI59/SZQSaLTKpsQ==}
     dependencies:
-      '@types/node': 18.6.1
+      '@types/node': 18.11.9
     dev: true
 
   /@types/rimraf/2.0.5:
     resolution: {integrity: sha512-YyP+VfeaqAyFmXoTh3HChxOQMyjByRMsHU7kc5KOJkSlXudhMhQIALbYV7rHh/l8d2lX3VUQzprrcAgWdRuU8g==}
     dependencies:
       '@types/glob': 7.2.0
-      '@types/node': 18.6.1
+      '@types/node': 18.11.9
 
   /@types/rsvp/4.0.4:
     resolution: {integrity: sha512-J3Ol++HCC7/hwZhanDvggFYU/GtxHxE/e7cGRWxR04BF7Tt3TqJZ84BkzQgDxmX0uu8IagiyfmfoUlBACh2Ilg==}
@@ -6838,17 +6812,16 @@ packages:
     resolution: {integrity: sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==}
     engines: {node: '>=0.8'}
 
-  /codemirror-languageserver/1.10.0_@codemirror+language@6.3.0:
+  /codemirror-languageserver/1.10.0:
     resolution: {integrity: sha512-srrz7w0x9zvUfezRLutCURuyrci1dnaan6B0Eidxd5tpj8VcK3rposylVxo1Csofl+zbwVgB3dTsZhsFRZPnKQ==}
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
+      '@codemirror/autocomplete': 6.3.0
       '@codemirror/lint': 6.0.0
       '@codemirror/state': 6.1.2
       '@codemirror/view': 6.4.1
       '@open-rpc/client-js': 1.7.1
       vscode-languageserver-protocol: 3.17.2
     transitivePeerDependencies:
-      - '@codemirror/language'
       - bufferutil
       - encoding
       - utf-8-validate
@@ -6857,7 +6830,7 @@ packages:
   /codemirror/6.0.1:
     resolution: {integrity: sha512-J8j+nZ+CdWmIeFIGXEFbFPtpiYacFMDR8GlHK3IyHQJMCaVRfGx9NT+Hxivv1ckLWPvNdZqndbr/7lVhrf/Svg==}
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
+      '@codemirror/autocomplete': 6.3.0
       '@codemirror/commands': 6.1.2
       '@codemirror/language': 6.3.0
       '@codemirror/lint': 6.0.0
@@ -8248,8 +8221,8 @@ packages:
       focus-trap: 6.9.4
     dev: false
 
-  /ember-get-config/1.0.4:
-    resolution: {integrity: sha512-WOnf1E0ceRHWy7apnmUFbKcJm2c3KOg4rNNUKNtBFCFp770tOTwv5LAYcqV4+HootPCsQYL7oFUd/0JLiZpMeg==}
+  /ember-get-config/2.1.1:
+    resolution: {integrity: sha512-uNmv1cPG/4qsac8oIf5txJ2FZ8p88LEpG4P3dNcjsJS98Y8hd0GPMFwVqpnzI78Lz7VYRGQWY4jnE4qm5R3j4g==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
       '@embroider/macros': 1.9.0
@@ -8714,7 +8687,7 @@ packages:
     dependencies:
       '@types/cookie': 0.4.1
       '@types/cors': 2.8.12
-      '@types/node': 18.6.1
+      '@types/node': 18.11.9
       accepts: 1.3.8
       base64id: 2.0.0
       cookie: 0.4.2
@@ -10682,7 +10655,7 @@ packages:
     engines: {node: '>=0.4.7'}
     hasBin: true
     dependencies:
-      minimist: 1.2.6
+      minimist: 1.2.7
       neo-async: 2.6.2
       source-map: 0.6.1
       wordwrap: 1.0.0
@@ -12333,7 +12306,6 @@ packages:
 
   /minimist/1.2.7:
     resolution: {integrity: sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==}
-    dev: true
 
   /minipass/2.9.0:
     resolution: {integrity: sha512-wxfUjg9WebH+CUDX/CdbRlh5SmfZiy/hpkxaRI16Y9W56Pa75sWgd/rvFilSgrauD9NyFymP/+JFV3KwzIsJeg==}
@@ -12354,7 +12326,7 @@ packages:
     resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
     hasBin: true
     dependencies:
-      minimist: 1.2.6
+      minimist: 1.2.7
 
   /mkdirp/1.0.4:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
@@ -13680,7 +13652,7 @@ packages:
     hasBin: true
     dependencies:
       '@types/estree': 1.0.0
-      '@types/node': 18.6.1
+      '@types/node': 18.11.9
       acorn: 7.4.1
     dev: true
 
@@ -14492,12 +14464,10 @@ packages:
       strip-ansi: 6.0.1
     dev: true
 
-  /tailwindcss/3.1.7_postcss@8.4.14:
+  /tailwindcss/3.1.7:
     resolution: {integrity: sha512-r7mgumZ3k0InfVPpGWcX8X/Ut4xBfv+1O/+C73ar/m01LxGVzWvPxF/w6xIUPEztrCoz7axfx0SMdh8FH8ZvRQ==}
     engines: {node: '>=12.13.0'}
     hasBin: true
-    peerDependencies:
-      postcss: ^8.0.9
     dependencies:
       arg: 5.0.2
       chokidar: 3.5.3
