@@ -407,7 +407,7 @@ importers:
       '@babel/plugin-proposal-decorators': ^7.20.2
       '@babel/plugin-transform-runtime': ^7.19.6
       '@babel/plugin-transform-typescript': ^7.20.2
-      '@babel/standalone': ^7.20.3
+      '@babel/standalone': ^7.20.4
       '@babel/types': ^7.20.2
       '@nullvoxpopuli/eslint-configs': 2.2.34
       '@types/babel__core': ^7.1.20
@@ -426,7 +426,7 @@ importers:
       webpack-cli: ^4.9.2
       webpack-node-externals: ^3.0.0
     dependencies:
-      '@babel/standalone': 7.20.3
+      '@babel/standalone': 7.20.4
       babel-plugin-htmlbars-inline-precompile: 5.3.1
       ember-source: 4.5.0_y3lv6tn6yokher4u7xj4j22px4
       path-browserify: 1.0.1
@@ -2221,6 +2221,11 @@ packages:
 
   /@babel/standalone/7.20.3:
     resolution: {integrity: sha512-u6VIhdacVpqVhBhSo21TRb1zcCdnPPyBsIC2LLnLnbmuJxlLsmGMAlLh+Xcsaqko4aGZrAtXIvTaMIQtUBkE8A==}
+    engines: {node: '>=6.9.0'}
+    dev: false
+
+  /@babel/standalone/7.20.4:
+    resolution: {integrity: sha512-27bv4h47jbaFZ7+e7gT1VEo9PNL1ynxqUX6/BERLz1qxm/5gzpbcHX+47VnSeYHyEyGZkRznpSOd8zPBhiz6tw==}
     engines: {node: '>=6.9.0'}
     dev: false
 
