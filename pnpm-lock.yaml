@@ -120,7 +120,7 @@ importers:
       ember-resources: ^5.6.0
       ember-source: ^4.5.0
       ember-statechart-component: 6.1.2
-      ember-template-imports: ^3.3.1
+      ember-template-imports: ^3.4.0
       ember-template-lint: ~4.4.0
       ember-template-lint-plugin-prettier: ^4.0.0
       esbuild-loader: ^2.19.0
@@ -209,7 +209,7 @@ importers:
       '@glint/config': 0.9.7
       '@glint/core': 0.9.7_typescript@4.7.4
       '@glint/environment-ember-loose': 0.9.7_3wxzex3v5bm6ngzepy7xn7cbhq
-      '@glint/environment-ember-template-imports': 0.9.7_c5ap5pjrqcv6h3erkqkoj4kraq
+      '@glint/environment-ember-template-imports': 0.9.7_bcsri5pb4wp67pnaf33w2f4jlm
       '@glint/template': 0.9.7_@glimmer+component@1.1.2
       '@nullvoxpopuli/eslint-configs': 2.2.35_typescript@4.7.4
       '@types/babel__core': 7.1.20
@@ -267,7 +267,7 @@ importers:
       ember-qunit: 5.1.5_q2umwxufvnpx3vgxqbnuszsnxm
       ember-resolver: 8.0.3_@babel+core@7.18.13
       ember-source: 4.7.0_tb6moc662p5idmcg3l5ipbhpta
-      ember-template-imports: 3.3.1_ember-cli-htmlbars@6.1.1
+      ember-template-imports: 3.4.0_ember-cli-htmlbars@6.1.1
       ember-template-lint: 4.4.2
       ember-template-lint-plugin-prettier: 4.0.0_wa4kiqg5fghp6npjq3i33vv4zu
       esbuild-loader: 2.19.0_webpack@5.74.0
@@ -3176,7 +3176,7 @@ packages:
       - supports-color
     dev: true
 
-  /@glint/environment-ember-template-imports/0.9.7_c5ap5pjrqcv6h3erkqkoj4kraq:
+  /@glint/environment-ember-template-imports/0.9.7_bcsri5pb4wp67pnaf33w2f4jlm:
     resolution: {integrity: sha512-vj+A0g/ucdxq3GUOvlE6GIzM20GtIxV3yK+2q5/GI567zuu6LQwFW2M5b3Z6Xa+uzqVXJHPFysDwKWoV+1lr1g==}
     peerDependencies:
       '@glint/environment-ember-loose': ^0.9.7
@@ -3184,7 +3184,7 @@ packages:
     dependencies:
       '@glint/environment-ember-loose': 0.9.7_3wxzex3v5bm6ngzepy7xn7cbhq
       '@glint/template': 0.9.7_@glimmer+component@1.1.2
-      ember-template-imports: 3.3.1_ember-cli-htmlbars@6.1.1
+      ember-template-imports: 3.4.0_ember-cli-htmlbars@6.1.1
     transitivePeerDependencies:
       - '@glimmer/component'
     dev: true
@@ -8498,8 +8498,8 @@ packages:
       - supports-color
     dev: false
 
-  /ember-template-imports/3.3.1_ember-cli-htmlbars@6.1.1:
-    resolution: {integrity: sha512-OeOaEhKL6fz40O3OgKff8czu0d9ppX3tLV7ohvaQL0eM1Pv+Fl4bi/zvEdiCCAn+5Nu7/DFCaMElFuRhurlPJA==}
+  /ember-template-imports/3.4.0_ember-cli-htmlbars@6.1.1:
+    resolution: {integrity: sha512-3Cwcj3NXA129g3ZhmrQ/nYOxksFonTmB/qxyaSNTHrLBSoc93UZys47hBz13DlcfoeSCCrNt2Qpq1j890I04PQ==}
     engines: {node: 12.* || >= 14}
     peerDependencies:
       ember-cli-htmlbars: ^6.0.0
