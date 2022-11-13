@@ -62,8 +62,6 @@ importers:
       '@types/common-tags': ^1.8.1
       '@types/dompurify': ^2.3.4
       '@types/ember': ^4.0.2
-      '@types/ember-qunit': ^5.0.2
-      '@types/ember-resolver': ^5.0.13
       '@types/ember__application': ^4.0.4
       '@types/ember__array': ^4.0.3
       '@types/ember__component': ^4.0.11
@@ -83,6 +81,8 @@ importers:
       '@types/ember__test': ^4.0.1
       '@types/ember__test-helpers': ^2.8.2
       '@types/ember__utils': ^4.0.2
+      '@types/ember-qunit': ^5.0.2
+      '@types/ember-resolver': ^5.0.13
       '@types/htmlbars-inline-precompile': ^3.0.0
       '@types/mdast': ^3.0.10
       '@types/rsvp': ^4.0.4
@@ -149,7 +149,7 @@ importers:
       stringify-object: ^4.0.1
       testem-failure-only-reporter: ^1.0.0
       tracked-built-ins: ^3.1.0
-      type-fest: 2.16.0
+      type-fest: 2.19.0
       typescript: ^4.7.3
       unified: ^9.2.2
       unist-util-flatmap: ^1.0.0
@@ -222,8 +222,6 @@ importers:
       '@types/common-tags': 1.8.1
       '@types/dompurify': 2.3.4
       '@types/ember': 4.0.2_@babel+core@7.18.13
-      '@types/ember-qunit': 5.0.2_@babel+core@7.18.13
-      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/ember__application': 4.0.4_@babel+core@7.18.13
       '@types/ember__array': 4.0.3_@babel+core@7.18.13
       '@types/ember__component': 4.0.11_@babel+core@7.18.13
@@ -243,6 +241,8 @@ importers:
       '@types/ember__test': 4.0.1_@babel+core@7.18.13
       '@types/ember__test-helpers': 2.8.2_@babel+core@7.18.13
       '@types/ember__utils': 4.0.2_@babel+core@7.18.13
+      '@types/ember-qunit': 5.0.2_@babel+core@7.18.13
+      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/htmlbars-inline-precompile': 3.0.0
       '@types/mdast': 3.0.10
       '@types/rsvp': 4.0.4
@@ -286,7 +286,7 @@ importers:
       qunit-dom: 2.0.0
       rollup: 2.79.1
       testem-failure-only-reporter: 1.0.0
-      type-fest: 2.16.0
+      type-fest: 2.19.0
       typescript: 4.7.4
       vfile: 4.2.1
       webpack: 5.74.0
@@ -325,13 +325,13 @@ importers:
       recursive-copy: ^2.0.14
       typescript: ^4.7.3
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
+      '@codemirror/autocomplete': 6.3.0
       '@codemirror/commands': 6.1.2
       '@codemirror/lang-html': 6.1.3
       '@codemirror/lang-javascript': 6.1.1
       '@codemirror/lang-markdown': 6.0.4
       '@codemirror/language': 6.3.0
-      '@codemirror/language-data': 6.1.0_@codemirror+view@6.4.1
+      '@codemirror/language-data': 6.1.0
       '@codemirror/lint': 6.0.0
       '@codemirror/search': 6.2.2
       '@codemirror/state': 6.1.2
@@ -343,7 +343,7 @@ importers:
       assert: 2.0.0
       broccoli-funnel: 3.0.8
       codemirror: 6.0.1
-      codemirror-languageserver: 1.10.0_@codemirror+language@6.3.0
+      codemirror-languageserver: 1.10.0
       eslint4b: 7.32.0
       path-browserify: 1.0.1
     devDependencies:
@@ -538,7 +538,7 @@ importers:
     devDependencies:
       autoprefixer: 10.4.13_postcss@8.4.18
       postcss: 8.4.18
-      tailwindcss: 3.1.7_postcss@8.4.18
+      tailwindcss: 3.1.7
 
   packages/transpilation:
     specifiers:
@@ -2605,12 +2605,8 @@ packages:
       minimist: 1.2.7
     dev: true
 
-  /@codemirror/autocomplete/6.3.0_tbobn6a5yenuudstugu4hugp4y:
+  /@codemirror/autocomplete/6.3.0:
     resolution: {integrity: sha512-4jEvh3AjJZTDKazd10J6ZsCIqaYxDMCeua5ouQxY8hlFIml+nr7le0SgBhT3SIytFBmdzPK3AUhXGuW3T79nVg==}
-    peerDependencies:
-      '@codemirror/language': ^6.0.0
-      '@codemirror/state': ^6.0.0
-      '@codemirror/view': ^6.0.0
     dependencies:
       '@codemirror/language': 6.3.0
       '@codemirror/state': 6.1.2
@@ -2634,33 +2630,29 @@ packages:
       '@lezer/cpp': 1.0.0
     dev: false
 
-  /@codemirror/lang-css/6.0.0_@codemirror+view@6.4.1:
+  /@codemirror/lang-css/6.0.0:
     resolution: {integrity: sha512-jBqc+BTuwhNOTlrimFghLlSrN6iFuE44HULKWoR4qKYObhOIl9Lci1iYj6zMIte1XTQmZguNvjXMyr43LUKwSw==}
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
+      '@codemirror/autocomplete': 6.3.0
       '@codemirror/language': 6.3.0
       '@codemirror/state': 6.1.2
       '@lezer/css': 1.0.0
-    transitivePeerDependencies:
-      - '@codemirror/view'
     dev: false
 
-  /@codemirror/lang-css/6.0.1_@codemirror+view@6.4.1:
+  /@codemirror/lang-css/6.0.1:
     resolution: {integrity: sha512-rlLq1Dt0WJl+2epLQeAsfqIsx3lGu4HStHCJu95nGGuz2P2fNugbU3dQYafr2VRjM4eMC9HviI6jvS98CNtG5w==}
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
+      '@codemirror/autocomplete': 6.3.0
       '@codemirror/language': 6.3.0
       '@codemirror/state': 6.1.2
       '@lezer/css': 1.0.1
-    transitivePeerDependencies:
-      - '@codemirror/view'
     dev: false
 
   /@codemirror/lang-html/6.1.3:
     resolution: {integrity: sha512-LmtIElopGK6bBfddAyjBitS6hz8nFr/PVUtvqmfomXlHB4m+Op2d5eGk/X9/CSby6Y8NqXXkGa3yDd9lfJ6Qlg==}
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
-      '@codemirror/lang-css': 6.0.1_@codemirror+view@6.4.1
+      '@codemirror/autocomplete': 6.3.0
+      '@codemirror/lang-css': 6.0.1
       '@codemirror/lang-javascript': 6.1.1
       '@codemirror/language': 6.3.0
       '@codemirror/state': 6.1.2
@@ -2679,7 +2671,7 @@ packages:
   /@codemirror/lang-javascript/6.1.1:
     resolution: {integrity: sha512-F4+kiuC5d5dUSJmff96tJQwpEXs/tX/4bapMRnZWW6bHKK1Fx6MunTzopkCUWRa9bF87GPmb9m7Qtg7Yv8f3uQ==}
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
+      '@codemirror/autocomplete': 6.3.0
       '@codemirror/language': 6.3.0
       '@codemirror/lint': 6.0.0
       '@codemirror/state': 6.1.2
@@ -2730,16 +2722,14 @@ packages:
       '@lezer/rust': 1.0.0
     dev: false
 
-  /@codemirror/lang-sql/6.0.0_@codemirror+view@6.4.1:
+  /@codemirror/lang-sql/6.0.0:
     resolution: {integrity: sha512-mq4NwTDbbo7QZktfgPsS+ms0FmAceH4WM2jLbgf+N28FoKUy0JzGe3XJymgnTewXnNUwujKBxArQzibxSDdVyQ==}
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
+      '@codemirror/autocomplete': 6.3.0
       '@codemirror/language': 6.3.0
       '@codemirror/state': 6.1.2
       '@lezer/highlight': 1.1.2
       '@lezer/lr': 1.2.4
-    transitivePeerDependencies:
-      - '@codemirror/view'
     dev: false
 
   /@codemirror/lang-wast/6.0.0:
@@ -2750,23 +2740,21 @@ packages:
       '@lezer/lr': 1.2.4
     dev: false
 
-  /@codemirror/lang-xml/6.0.0_@codemirror+view@6.4.1:
+  /@codemirror/lang-xml/6.0.0:
     resolution: {integrity: sha512-M/HLWxIiP956xGjtrxkeHkCmDGVQGKu782x8pOH5CLJIMkWtiB1DWfDoDHqpFjdEE9dkfcqPWvYfVi6GbhuXEg==}
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
+      '@codemirror/autocomplete': 6.3.0
       '@codemirror/language': 6.3.0
       '@codemirror/state': 6.1.2
       '@lezer/common': 1.0.1
       '@lezer/xml': 1.0.0
-    transitivePeerDependencies:
-      - '@codemirror/view'
     dev: false
 
-  /@codemirror/language-data/6.1.0_@codemirror+view@6.4.1:
+  /@codemirror/language-data/6.1.0:
     resolution: {integrity: sha512-g9V23fuLRI9AEbpM6bDy1oquqgpFlIDHTihUhL21NPmxp+x67ZJbsKk+V71W7/Bj8SCqEO1PtqQA/tDGgt1nfw==}
     dependencies:
       '@codemirror/lang-cpp': 6.0.1
-      '@codemirror/lang-css': 6.0.0_@codemirror+view@6.4.1
+      '@codemirror/lang-css': 6.0.0
       '@codemirror/lang-html': 6.1.3
       '@codemirror/lang-java': 6.0.0
       '@codemirror/lang-javascript': 6.1.1
@@ -2775,13 +2763,11 @@ packages:
       '@codemirror/lang-php': 6.0.0
       '@codemirror/lang-python': 6.0.1
       '@codemirror/lang-rust': 6.0.0
-      '@codemirror/lang-sql': 6.0.0_@codemirror+view@6.4.1
+      '@codemirror/lang-sql': 6.0.0
       '@codemirror/lang-wast': 6.0.0
-      '@codemirror/lang-xml': 6.0.0_@codemirror+view@6.4.1
+      '@codemirror/lang-xml': 6.0.0
       '@codemirror/language': 6.3.0
       '@codemirror/legacy-modes': 6.1.0
-    transitivePeerDependencies:
-      - '@codemirror/view'
     dev: false
 
   /@codemirror/language/6.3.0:
@@ -4040,7 +4026,7 @@ packages:
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.1.7_postcss@8.4.18
+      tailwindcss: 3.1.7
     dev: false
 
   /@tootallnate/once/1.1.2:
@@ -4152,9 +4138,9 @@ packages:
   /@types/ember-qunit/5.0.2_@babel+core@7.18.13:
     resolution: {integrity: sha512-LXp0Ew4wPhaCMuw49cNDHWs/bROn+Msb4ypMG1t60EMBx0UaEoX0tZlkf5bQJfdD249WZTu5cCtKvl47xbQzxA==}
     dependencies:
-      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/ember__test': 4.0.1_@babel+core@7.18.13
       '@types/ember__test-helpers': 2.8.2_@babel+core@7.18.13
+      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/qunit': 2.19.3
     transitivePeerDependencies:
       - '@babel/core'
@@ -4327,10 +4313,10 @@ packages:
   /@types/ember__test-helpers/2.8.2_@babel+core@7.18.13:
     resolution: {integrity: sha512-Ho3TTcnbjdQO9UvLwoswRMpCR2j7X6T8qSOaKehnST9s15ACb4MXHwec1NhmpCOhdvBRREYfG3YbduNeXoITMg==}
     dependencies:
-      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/ember__application': 4.0.4_@babel+core@7.18.13
       '@types/ember__error': 4.0.1
       '@types/ember__owner': 4.0.2
+      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/htmlbars-inline-precompile': 3.0.0
     transitivePeerDependencies:
       - '@babel/core'
@@ -7757,17 +7743,16 @@ packages:
     resolution: {integrity: sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==}
     engines: {node: '>=0.8'}
 
-  /codemirror-languageserver/1.10.0_@codemirror+language@6.3.0:
+  /codemirror-languageserver/1.10.0:
     resolution: {integrity: sha512-srrz7w0x9zvUfezRLutCURuyrci1dnaan6B0Eidxd5tpj8VcK3rposylVxo1Csofl+zbwVgB3dTsZhsFRZPnKQ==}
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
+      '@codemirror/autocomplete': 6.3.0
       '@codemirror/lint': 6.0.0
       '@codemirror/state': 6.1.2
       '@codemirror/view': 6.4.1
       '@open-rpc/client-js': 1.7.1
       vscode-languageserver-protocol: 3.17.2
     transitivePeerDependencies:
-      - '@codemirror/language'
       - bufferutil
       - encoding
       - utf-8-validate
@@ -7776,7 +7761,7 @@ packages:
   /codemirror/6.0.1:
     resolution: {integrity: sha512-J8j+nZ+CdWmIeFIGXEFbFPtpiYacFMDR8GlHK3IyHQJMCaVRfGx9NT+Hxivv1ckLWPvNdZqndbr/7lVhrf/Svg==}
     dependencies:
-      '@codemirror/autocomplete': 6.3.0_tbobn6a5yenuudstugu4hugp4y
+      '@codemirror/autocomplete': 6.3.0
       '@codemirror/commands': 6.1.2
       '@codemirror/language': 6.3.0
       '@codemirror/lint': 6.0.0
@@ -16779,12 +16764,10 @@ packages:
       strip-ansi: 6.0.1
     dev: true
 
-  /tailwindcss/3.1.7_postcss@8.4.18:
+  /tailwindcss/3.1.7:
     resolution: {integrity: sha512-r7mgumZ3k0InfVPpGWcX8X/Ut4xBfv+1O/+C73ar/m01LxGVzWvPxF/w6xIUPEztrCoz7axfx0SMdh8FH8ZvRQ==}
     engines: {node: '>=12.13.0'}
     hasBin: true
-    peerDependencies:
-      postcss: ^8.0.9
     dependencies:
       arg: 5.0.2
       chokidar: 3.5.3
@@ -17527,8 +17510,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /type-fest/2.16.0:
-    resolution: {integrity: sha512-qpaThT2HQkFb83gMOrdKVsfCN7LKxP26Yq+smPzY1FqoHRjqmjqHXA7n5Gkxi8efirtbeEUxzfEdePthQWCuHw==}
+  /type-fest/2.19.0:
+    resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
     engines: {node: '>=12.20'}
     dev: true
 
