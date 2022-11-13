@@ -18,12 +18,8 @@
   "scripts": {
     "ember:canary": "npx ember-source-channel-url canary --write",
     "ember:beta": "npx ember-source-channel-url beta --write",
-    "browserstack:connect": "ember browserstack:connect",
-    "browserstack:disconnect": "ember browserstack:disconnect",
-    "browserstack:results": "ember browserstack:results",
     "build": "ember build --environment=production",
-    "check:types": "glint",
-    "lint": "concurrently 'npm:lint:*(!fix)' --names 'lint:'",
+    "typecheck": "glint",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
     "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
     "lint:js": "eslint . --cache",
@@ -31,7 +27,7 @@
     "lint:js:fix": "eslint . --fix",
     "start": "ember serve",
     "start:iframe": "pnpx http-server ./public -i -p 4204",
-    "test:browserstack": "ember test --path ./dist --test-port=7774 --host 127.0.0.1 --config-file=browserstack.testem.js",
+    "test:browserstack": "./scripts/browserstack.sh",
     "test:ember": "ember test"
   },
   "devDependencies": {
@@ -43,6 +39,7 @@
     "@embroider/core": "1.9.0",
     "@embroider/webpack": "1.9.0",
     "@fortawesome/ember-fontawesome": "^0.4.1",
+    "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-brands-svg-icons": "^6.2.0",
     "@fortawesome/free-regular-svg-icons": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
@@ -98,7 +95,6 @@
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
-    "ember-cli-typescript": "^5.2.1",
     "ember-export-application-global": "^2.0.1",
     "ember-load-initializers": "^2.1.2",
     "ember-maybe-import-regenerator": "^1.0.0",

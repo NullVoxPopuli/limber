@@ -7,7 +7,6 @@
   "main": "dist/limber-worker.js",
   "scripts": {
     "prepare": "webpack",
-    "lint": "concurrently 'npm:lint:*(!fix)' --names 'lint:'",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",

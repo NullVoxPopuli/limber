@@ -1,10 +1,19 @@
 {
   "baseBranch": "origin/main",
   "pipeline": {
+    /////////////////////////////////////////////////
+    /////////////////////////////////////////////////
+    //
+    //         Local Dev
+    //
+    /////////////////////////////////////////////////
+    /////////////////////////////////////////////////
     "dev": {
+      // TODO: how do I manage all the "watch" scripts at once?
       "dependsOn": [
         "^dev"
-      ]
+      ],
+      "cache": false
     },
     "start": {
       "dependsOn": [
@@ -12,22 +21,70 @@
       ],
       "cache": false
     },
+
+    /////////////////////////////////////////////////
+    /////////////////////////////////////////////////
+    //
+    //         C.I. / C.D.
+    //
+    /////////////////////////////////////////////////
+    /////////////////////////////////////////////////
     "build": {
+      "outputs": ["dist/**"],
       "dependsOn": [
         "^build"
       ]
     },
-    "lint": {
-      "dependsOn": [
-        "^lint:js",
-        "^lint:hbs"
-      ]
-    },
-    "lint:fix": {},
+    // Libraries will have "test"
     "test": {
       "dependsOn": [
         "^build"
       ]
+    },
+    // Apps will have test:ember and test:browserstack
+    // They are separate so that they can cache independently
+    // and provide more variability than just "test"
+    "test:ember": {
+      "env": ["CI_BROWSER"],
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "test:browserstack": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
+
+    /////////////////////////////////////////////////
+    /////////////////////////////////////////////////
+    //
+    //         Quality Checks
+    //
+    /////////////////////////////////////////////////
+    /////////////////////////////////////////////////
+    "lint": {
+      // A package's `lint` script has no dependencies and
+      // can be run whenever. It also has no filesystem outputs.
+      "outputs": [],
+      // "lint" is an alias for all types of linting
+      // This allows the results of eslint and ember-template-lint
+      // to be individually cached, depending on what's changed
+      "dependsOn": ["lint:js", "lint:hbs"]
+    },
+    "lint:js": {
+      // A package's `lint` script has no dependencies and
+      // can be run whenever. It also has no filesystem outputs.
+      "outputs": []
+    },
+    "lint:hbs": {
+      // A package's `lint` script has no dependencies and
+      // can be run whenever. It also has no filesystem outputs.
+      "outputs": []
+    },
+    "typecheck": {
+      "outputs": [],
+      "dependsOn": ["^typecheck", "^build"]
     }
   }
 }
