@@ -62,6 +62,8 @@ importers:
       '@types/common-tags': ^1.8.1
       '@types/dompurify': ^2.3.4
       '@types/ember': ^4.0.2
+      '@types/ember-qunit': ^5.0.2
+      '@types/ember-resolver': ^5.0.13
       '@types/ember__application': ^4.0.4
       '@types/ember__array': ^4.0.3
       '@types/ember__component': ^4.0.11
@@ -81,8 +83,6 @@ importers:
       '@types/ember__test': ^4.0.1
       '@types/ember__test-helpers': ^2.8.2
       '@types/ember__utils': ^4.0.2
-      '@types/ember-qunit': ^5.0.2
-      '@types/ember-resolver': ^5.0.13
       '@types/htmlbars-inline-precompile': ^3.0.0
       '@types/mdast': ^3.0.10
       '@types/rsvp': ^4.0.4
@@ -157,7 +157,7 @@ importers:
       webpack: ^5.75.0
       webpack-bundle-analyzer: ^4.5.0
       ws: ^8.8.1
-      xstate: 4.32.1
+      xstate: 4.34.0
       yn: ^4.0.0
     dependencies:
       '@ember/test-waiters': 3.0.2
@@ -170,7 +170,7 @@ importers:
       '@nullvoxpopuli/limber-styles': link:../packages/styles
       '@nullvoxpopuli/limber-transpilation': link:../packages/transpilation
       '@popperjs/core': 2.11.6
-      '@xstate/inspect': 0.7.0_ws@8.8.1+xstate@4.32.1
+      '@xstate/inspect': 0.7.0_ws@8.8.1+xstate@4.34.0
       browserslist: 4.21.4
       dompurify: 2.4.0
       ember-auto-import: 2.4.2_webpack@5.75.0
@@ -182,7 +182,7 @@ importers:
       ember-popperjs: 3.0.0_koh3m6p3zeux5ys7hmolp2k6rm
       ember-repl: 2.0.63_3trtzikkejydnx63saqaqa33ay
       ember-resources: 5.6.0_b2hyg7arbenxv4krjh6kctya54
-      ember-statechart-component: 6.1.2_vmqsxpowbrzjco54g5px5qleca
+      ember-statechart-component: 6.1.2_ugrjuvilxwddhfh36llxstrdye
       highlight.js: 11.6.0
       highlightjs-glimmer: 2.0.1_highlight.js@11.6.0
       html-to-image: 1.9.0
@@ -197,7 +197,7 @@ importers:
       unist-util-flatmap: 1.0.0
       webpack-bundle-analyzer: 4.5.0
       ws: 8.8.1
-      xstate: 4.32.1
+      xstate: 4.34.0
     devDependencies:
       '@babel/core': 7.18.13
       '@codemirror/view': 6.4.1
@@ -222,6 +222,8 @@ importers:
       '@types/common-tags': 1.8.1
       '@types/dompurify': 2.3.4
       '@types/ember': 4.0.2_@babel+core@7.18.13
+      '@types/ember-qunit': 5.0.2_@babel+core@7.18.13
+      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/ember__application': 4.0.4_@babel+core@7.18.13
       '@types/ember__array': 4.0.3_@babel+core@7.18.13
       '@types/ember__component': 4.0.11_@babel+core@7.18.13
@@ -241,8 +243,6 @@ importers:
       '@types/ember__test': 4.0.1_@babel+core@7.18.13
       '@types/ember__test-helpers': 2.8.2_@babel+core@7.18.13
       '@types/ember__utils': 4.0.2_@babel+core@7.18.13
-      '@types/ember-qunit': 5.0.2_@babel+core@7.18.13
-      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/htmlbars-inline-precompile': 3.0.0
       '@types/mdast': 3.0.10
       '@types/rsvp': 4.0.4
@@ -4138,9 +4138,9 @@ packages:
   /@types/ember-qunit/5.0.2_@babel+core@7.18.13:
     resolution: {integrity: sha512-LXp0Ew4wPhaCMuw49cNDHWs/bROn+Msb4ypMG1t60EMBx0UaEoX0tZlkf5bQJfdD249WZTu5cCtKvl47xbQzxA==}
     dependencies:
+      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/ember__test': 4.0.1_@babel+core@7.18.13
       '@types/ember__test-helpers': 2.8.2_@babel+core@7.18.13
-      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/qunit': 2.19.3
     transitivePeerDependencies:
       - '@babel/core'
@@ -4313,10 +4313,10 @@ packages:
   /@types/ember__test-helpers/2.8.2_@babel+core@7.18.13:
     resolution: {integrity: sha512-Ho3TTcnbjdQO9UvLwoswRMpCR2j7X6T8qSOaKehnST9s15ACb4MXHwec1NhmpCOhdvBRREYfG3YbduNeXoITMg==}
     dependencies:
+      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/ember__application': 4.0.4_@babel+core@7.18.13
       '@types/ember__error': 4.0.1
       '@types/ember__owner': 4.0.2
-      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/htmlbars-inline-precompile': 3.0.0
     transitivePeerDependencies:
       - '@babel/core'
@@ -5388,7 +5388,7 @@ packages:
     engines: {node: '>=10.0.0'}
     dev: true
 
-  /@xstate/inspect/0.7.0_ws@8.8.1+xstate@4.32.1:
+  /@xstate/inspect/0.7.0_ws@8.8.1+xstate@4.34.0:
     resolution: {integrity: sha512-3wrTf8TfBYprH1gBFdxmOQUBDpBazlICWvGdFzr8IHFL4MbiexEZdAsL2QC/WAmW9BqNYTWTwgfbvKHKg+FrlA==}
     peerDependencies:
       '@types/ws': ^8.0.0
@@ -5400,7 +5400,7 @@ packages:
     dependencies:
       fast-safe-stringify: 2.1.1
       ws: 8.8.1
-      xstate: 4.32.1
+      xstate: 4.34.0
     dev: false
 
   /@xtuc/ieee754/1.2.0:
@@ -9743,7 +9743,7 @@ packages:
       - supports-color
       - webpack
 
-  /ember-statechart-component/6.1.2_vmqsxpowbrzjco54g5px5qleca:
+  /ember-statechart-component/6.1.2_ugrjuvilxwddhfh36llxstrdye:
     resolution: {integrity: sha512-XzDcGINfwDLqJVbRm6T5A6C/mj0gm3eaUcYr9nDh4ZfON9JbY3WReGyfAaUEvahLXBcpH9wX9+Wuk06160zafg==}
     engines: {node: '>=12.2.0 < 13 || >= 14'}
     peerDependencies:
@@ -9756,7 +9756,7 @@ packages:
       '@embroider/addon-shim': 1.8.3
       '@glint/template': 0.9.7_@glimmer+component@1.1.2
       ember-tracked-storage-polyfill: 1.0.0
-      xstate: 4.32.1
+      xstate: 4.34.0
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -18105,8 +18105,8 @@ packages:
   /xmlchars/2.2.0:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
 
-  /xstate/4.32.1:
-    resolution: {integrity: sha512-QYUd+3GkXZ8i6qdixnOn28bL3EvA++LONYL/EMWwKlFSh/hiLndJ8YTnz77FDs+JUXcwU7NZJg7qoezoRHc4GQ==}
+  /xstate/4.34.0:
+    resolution: {integrity: sha512-MFnYz7cJrWuXSZ8IPkcCyLB1a2T3C71kzMeShXKmNaEjBR/JQebKZPHTtxHKZpymESaWO31rA3IQ30TC6LW+sw==}
     dev: false
 
   /xtend/4.0.2:

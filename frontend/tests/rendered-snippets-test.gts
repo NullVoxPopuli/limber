@@ -1,5 +1,4 @@
 import { click, fillIn, render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
 import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -46,9 +45,7 @@ module('Rendered Snippets / Demos', function (hooks) {
       assert.ok(component, 'component rendered');
       assert.notOk(error, 'no error, because compilation was success');
 
-      this.setProperties({ component });
-
-      await render(hbs`<this.component />`);
+      await render(<template><component /></template>);
       assert.verifySteps(['start compile', 'compiled']);
 
       assert.dom('li').exists({ count: 3 });
@@ -63,12 +60,10 @@ module('Rendered Snippets / Demos', function (hooks) {
 
       assert.ok(component, 'component rendered');
       assert.notOk(error, 'no error, because compilation was success');
-
-      this.setProperties({ component });
     });
 
     test('it renders', async function (assert) {
-      await render(hbs`<this.component />`);
+      await render(<template><component /></template>);
       assert.verifySteps(['start compile', 'compiled']);
 
       assert.dom().containsText('Hello, Glimmer!');
@@ -76,7 +71,7 @@ module('Rendered Snippets / Demos', function (hooks) {
     });
 
     test('correct behavior', async function (assert) {
-      await render(hbs`<this.component />`);
+      await render(<template><component /></template>);
       assert.verifySteps(['start compile', 'compiled']);
 
       let output = '.glimdown-render p';
@@ -99,9 +94,7 @@ module('Rendered Snippets / Demos', function (hooks) {
       assert.ok(component, 'component rendered');
       assert.notOk(error, 'no error, because compilation was success');
 
-      this.setProperties({ component });
-
-      await render(hbs`<this.component />`);
+      await render(<template><component /></template>);
       assert.verifySteps(['start compile', 'compiled']);
 
       assert.dom('a').exists({ count: 3 });
@@ -116,9 +109,7 @@ module('Rendered Snippets / Demos', function (hooks) {
       assert.ok(component, 'component rendered');
       assert.notOk(error, 'no error, because compilation was success');
 
-      this.setProperties({ component });
-
-      await render(hbs`<this.component />`);
+      await render(<template><component /></template>);
       assert.verifySteps(['start compile', 'compiled']);
 
       assert.dom('h2').exists({ count: 4 });
@@ -133,9 +124,7 @@ module('Rendered Snippets / Demos', function (hooks) {
       assert.ok(component, 'component rendered');
       assert.notOk(error, 'no error, because compilation was success');
 
-      this.setProperties({ component });
-
-      await render(hbs`<this.component />`);
+      await render(<template><component /></template>);
       assert.verifySteps(['start compile', 'compiled']);
 
       assert.dom('h2').exists({ count: 4 });
@@ -150,9 +139,7 @@ module('Rendered Snippets / Demos', function (hooks) {
       assert.ok(component, 'component rendered');
       assert.notOk(error, 'no error, because compilation was success');
 
-      this.setProperties({ component });
-
-      await render(hbs`<this.component />`);
+      await render(<template><component /></template>);
       assert.verifySteps(['start compile', 'compiled']);
 
       assert.dom('.glimdown-render button').exists({ count: 1 });
@@ -170,9 +157,7 @@ module('Rendered Snippets / Demos', function (hooks) {
       assert.ok(component, 'component rendered');
       assert.notOk(error, 'no error, because compilation was success');
 
-      this.setProperties({ component });
-
-      await render(hbs`<this.component />`);
+      await render(<template><component /></template>);
       assert.verifySteps(['start compile', 'compiled']);
 
       assert.dom('pre').doesNotContainText('the value');
@@ -192,9 +177,7 @@ module('Rendered Snippets / Demos', function (hooks) {
       assert.ok(component, 'component rendered');
       assert.notOk(error, 'no error, because compilation was success');
 
-      this.setProperties({ component });
-
-      await render(hbs`<this.component />`);
+      await render(<template><component /></template>);
       assert.verifySteps(['start compile', 'compiled']);
 
       assert.dom().containsText('Mace Windu');

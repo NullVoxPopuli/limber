@@ -172,7 +172,7 @@
     "unist-util-flatmap": "^1.0.0",
     "webpack-bundle-analyzer": "^4.5.0",
     "ws": "^8.8.1",
-    "xstate": "4.32.1"
+    "xstate": "4.34.0"
   },
   "pnpm": {
     "overrides": {
