@@ -147,6 +147,7 @@ jobs:
         pnpm _turbo build --filter="limber"
         cd frontend/
         cp ./config/netlify/_redirects ./dist/
+        cd ..
 
         wget https://github.com/netlify/netlifyctl/releases/download/v$NETLIFY_CLI_VERSION/netlifyctl-linux-amd64-$NETLIFY_CLI_VERSION.tar.gz
         tar -xf netlifyctl-linux-amd64-$NETLIFY_CLI_VERSION.tar.gz
