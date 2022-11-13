@@ -115,7 +115,7 @@
     "loader.js": "^4.7.0",
     "onp": "^2.0.3",
     "prettier": "^2.3.2",
-    "qunit": "^2.19.1",
+    "qunit": "^2.19.3",
     "qunit-dom": "^2.0.0",
     "rollup": "^2.79.1",
     "testem-failure-only-reporter": "^1.0.0",
