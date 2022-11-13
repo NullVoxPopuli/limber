@@ -9,19 +9,42 @@
   "rangeStrategy": "bump",
   "lockFileMaintenance": { "enabled": true },
   "packageRules": [
-    ////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
+    // Standard rules for proper package management
+    //
+    // Renovate, by default, wants to do breaking changes
+    // But we want to have wide ranges by default, and not change them.
+    // Things that are braking changes
+    //  - increasing minimum version of ^ dependencies and peer dependencies
+    //  - engines -- because this affects the node environment of the consumer
+    //             - we only want to change this if we bump the min version
+    //               (as a breaking change) or widen (as a minor bump)
+    ////////////////////////////////////////////////////////////
+    {
+      // ensure maximum compatibility, when possible
+      "matchPaths": ["packages/limber-snippet"],
+      "matchDepTypes": ["dependencies", "peerDependencies", "engines"],
+      "enabled": false
+    },
+    {
+      // test-apps are "minimum compatible",
+      // so that testing problems is more straight forward
+      // as such, deps will be updated manually
+      "matchPaths": ["test-app"],
+      "enabled": false
+    },
+
+    ////////////////////////////////////////////////////////////
     // Grouping namespaced packages together
     //
     // This reduces overall PR count
-    ////////////////////////////////////////
+    //  ...which we want to do to save on time and C.I. resources.
+    //  ...additionally, these tend to work best grouped together anyway
+    ////////////////////////////////////////////////////////////
     {
       "groupName": "Type Definitions",
       "packagePatterns": ["^@types\/*"],
       "schedule": ["after 9pm on sunday"],
-    },
-    {
-      "groupName": "Monaco Editor",
-      "packagePatterns": ["^monaco*"]
     },
     {
       "groupName": "Codemirror",
@@ -30,6 +53,10 @@
     {
       "groupName": "Glimmer",
       "packagePatterns": ["^@glimmer\/*"]
+    },
+    {
+      "groupName": "Embroider",
+      "packagePatterns": ["^@embroider\/*"]
     },
     {
       "groupName": "Lint Dependencies",
@@ -66,9 +93,6 @@
     {
       "groupName": "CLI Dependencies",
       "packageNames": [
-        "@embroider/compat",
-        "@embroider/core",
-        "@embroider/webpack",
         "broccoli-asset-rev",
         "ember-cli",
         "ember-auto-import",
@@ -86,8 +110,7 @@
         "ember-try",
         "ember-source-channel-url",
         "ember-qunit",
-        "qunit",
-        "npm-run-all"
+        "qunit"
       ]
     }
   ]
