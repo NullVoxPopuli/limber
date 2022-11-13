@@ -24,7 +24,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: volta-cli/action@v1
+    - name: TurboRepo local server
+      uses: felixmosh/turborepo-gh-artifacts@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
     - uses: ./.github/actions/pnpm
 
 ##############################################################
@@ -37,8 +41,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
       - uses: ./.github/actions/pnpm
-      - run: pnpm --filter '*' lint
+      - run: pnpm lint
 
   types:
     name: "Type Correctness"
@@ -48,66 +57,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
       - uses: ./.github/actions/pnpm
-      - run: pnpm --filter '*' check:types
-
-  pre_build:
-    name: Pre Build
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [install_dependencies]
-
-    steps:
-    - uses: actions/checkout@v3
-    - uses: ./.github/actions/pnpm
-    - run: pnpm run build
-
-##############################################################
-
-  build_app:
-    name: Build App
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: [pre_build]
-
-    steps:
-    - uses: actions/checkout@v3
-    - uses: ./.github/actions/pnpm
-    - name: 'Build'
-      run: pnpm run predeploy
-    - name: Copy deploy host config
-      run: cp ./config/netlify/_redirects ./dist/
-      working-directory: ${{ env.app }}
-
-    - name: Upload App Artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: built_app
-        path: ${{ env.app }}/dist/
-
-##############################################################
-
-  build_tests:
-    name: Build Tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: [pre_build]
-
-    steps:
-    - uses: actions/checkout@v3
-    - uses: ./.github/actions/pnpm
-    # This could maybe be combined into one command, but
-    # pending: https://github.com/vercel/turborepo/discussions/1148
-    - run: pnpm run build
-    # - run: pnpm --filter=limber exec ember build --environment=development
-    - run: node_modules/.bin/ember build --environment=development
-      working-directory: ${{ env.app }}
-
-    - name: Upload Test Artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: built_tests
-        path: ${{ env.app }}/dist/
+      - run: pnpm typecheck
 
 ##############################################################
 
@@ -123,16 +79,16 @@ jobs:
 
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    needs: [build_tests]
+    needs: [install_dependencies]
 
     steps:
     - uses: actions/checkout@v3
-    - uses: ./.github/actions/pnpm
-    - name: Download Built Test Artifacts
-      uses: actions/download-artifact@master
+    - name: TurboRepo local server
+      uses: felixmosh/turborepo-gh-artifacts@v1
       with:
-        name: built_tests
-        path: ${{ env.app }}/dist/
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
+    - uses: ./.github/actions/pnpm
     - name: Environment Info
       run: |
         firefox --version
@@ -140,11 +96,8 @@ jobs:
         echo "Node: $( node --version )"
         echo "NPM: $( npm --version )"
         echo "pnpm: $( pnpm --version )"
-
-    - run: pnpm build
     - name: Test
-      run: pnpm test:ember -- --path ./dist/
-      working-directory: ${{ env.app }}
+      run: pnpm _turbo test:ember
       env:
         CI_BROWSER: ${{ matrix.ci_browser }}
 
@@ -152,7 +105,7 @@ jobs:
     name: Browserstack Tests (Safari, Edge, etc)
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    needs: [build_tests]
+    needs: [tests]
 
     env:
       BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
@@ -160,20 +113,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: ./.github/actions/pnpm
-    - name: Download Built Test Artifacts
-      uses: actions/download-artifact@master
+    - name: TurboRepo local server
+      uses: felixmosh/turborepo-gh-artifacts@v1
       with:
-        name: built_tests
-        path: ${{ env.app }}/dist/
-    - run: pnpm run browserstack:connect
-      working-directory: ${{ env.app }}
-    - run: pnpm run test:browserstack
-      working-directory: ${{ env.app }}
-    - run: pnpm run browserstack:results
-      working-directory: ${{ env.app }}
-    - run: pnpm run browserstack:disconnect
-      working-directory: ${{ env.app }}
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
+    - uses: ./.github/actions/pnpm
+    - run: pnpm _turbo test:browserstack
 
 ##############################################################
 
@@ -182,30 +128,30 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    needs: [build_app, tests, browserstack-test]
+    needs: [tests, browserstack-test]
 
     steps:
     - uses: actions/checkout@v3
-    - uses: volta-cli/action@v1
-    - name: Download Built App Artifacts
-      uses: actions/download-artifact@master
+    - name: TurboRepo local server
+      uses: felixmosh/turborepo-gh-artifacts@v1
       with:
-        name: built_app
-        path: ${{ env.app }}/deploy/app/
-
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
+    - uses: ./.github/actions/pnpm
     - name: Deploy to Netlify
       env:
         NETLIFY_ACCESS_TOKEN: ${{ secrets.NETLIFY_ACCESS_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         NETLIFY_CLI_VERSION: 0.4.0
       run: |
-        cp ./config/netlify/_redirects ./deploy/app
+        pnpm _turbo build --filter="limber"
+        cd frontend/
+        cp ./config/netlify/_redirects ./dist/
 
         wget https://github.com/netlify/netlifyctl/releases/download/v$NETLIFY_CLI_VERSION/netlifyctl-linux-amd64-$NETLIFY_CLI_VERSION.tar.gz
         tar -xf netlifyctl-linux-amd64-$NETLIFY_CLI_VERSION.tar.gz
 
-        ./netlifyctl -y deploy --site-id $NETLIFY_SITE_ID --access-token $NETLIFY_ACCESS_TOKEN --publish-directory "./deploy/app"
-      working-directory: ${{ env.app }}
+        ./netlifyctl -y deploy --site-id $NETLIFY_SITE_ID --access-token $NETLIFY_ACCESS_TOKEN --publish-directory "./frontend/dist"
 
 ##############################################################
 
@@ -214,23 +160,28 @@ jobs:
     if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    needs: [build_app]
+    needs: [install_dependencies]
 
     steps:
     - uses: actions/checkout@v3
-    - uses: volta-cli/action@v1
-
-    - name: Download Built App Artifacts
-      uses: actions/download-artifact@master
+    - name: TurboRepo local server
+      uses: felixmosh/turborepo-gh-artifacts@v1
       with:
-        name: built_app
-        path: ${{ env.app }}/deploy/app/
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
+    - uses: ./.github/actions/pnpm
+
+    - name: Build
+      run: |
+        pnpm _turbo build --filter="limber"
+        cd frontend/
+        cp ./config/netlify/_redirects ./dist/
 
     - name: Deploy to Netlify
       id: deploy
       uses: nwtgck/actions-netlify@v1.2.4
       with:
-        publish-dir: '${{ env.app }}/deploy/app'
+        publish-dir: '${{ env.app }}/dist'
         production-branch: __handled_separately__
         github-token: ${{ secrets.GITHUB_TOKEN }}
       env:

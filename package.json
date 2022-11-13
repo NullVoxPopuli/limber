@@ -2,17 +2,15 @@
   "name": "limber-monorepo",
   "private": true,
   "author": "NullVoxPopuli",
-  "workspaces": [
-    "frontend",
-    "packages/*",
-    "tests"
-  ],
   "scripts": {
-    "predeploy": "turbo run build --filter=limber",
-    "build": "turbo run build --filter=limber^...",
-    "lint": "pnpm --filter='*' lint",
-    "lint:fix": "turbo run lint:fix",
-    "start": "turbo run start --filter=limber"
+    "prepare": "pnpm build",
+    "release": "changeset publish",
+    "build": "pnpm _turbo build --filter=limber^...",
+    "lint:fix": "pnpm --filter='*' lint:fix",
+    "lint": "pnpm _turbo lint",
+    "typecheck": "pnpm _turbo typecheck",
+    "start": "pnpm _turbo start --filter=limber",
+    "_turbo": "pnpm turbo --api='http://127.0.0.1:9080' --token=this-is-not-a-secret --team=foo"
   },
   "volta": {
     "node": "16.16.0",
@@ -20,6 +18,8 @@
     "npm": "8.12.1"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.4.7",
+    "@changesets/cli": "^2.25.2",
     "concurrently": "^7.5.0",
     "turbo": "^1.6.3"
   },
@@ -42,9 +42,11 @@
       "allowAny": [
         "mustache",
         "ember-modifier"
-      ]
+      ],
+      "ignoreMissing": [ "ember-cli-htmlbars" ]
     },
     "notes": {
+      "ember-cli-htmlbars": "peer of ember-template-imports via eslint-plugin-ember",
       "mustache": "ember-cli -> testem -> consolidate -> mustache is ancient"
     },
     "patchedDependencies": {
