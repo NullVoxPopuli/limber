@@ -1,6 +1,7 @@
 import { DEBUG } from '@glimmer/env';
 
 import { getService } from 'ember-statechart-component';
+import inIframe from 'limber/helpers/in-iframe';
 import { assign, createMachine } from 'xstate';
 
 interface Context {
@@ -411,7 +412,9 @@ const maximizeEditor = (ctx: Context) => {
 const clearHeight = (element: HTMLElement) => (element.style.height = '');
 const clearWidth = (element: HTMLElement) => (element.style.width = '');
 const restoreWidth = (element: HTMLElement) => {
-  element.style.width = getSize(WHEN_VERTICALLY_SPLIT) ?? '';
+  let size = getSize(WHEN_VERTICALLY_SPLIT) ?? '';
+
+  element.style.width = size;
   element.style.maxHeight = '';
   element.style.height = '100%';
   element.style.maxWidth = 'calc(100vw - 72px)';
@@ -419,13 +422,21 @@ const restoreWidth = (element: HTMLElement) => {
 const restoreHeight = (element: HTMLElement) => {
   let offset = document.querySelector('main > header')?.getBoundingClientRect().height || 0;
 
-  element.style.height = getSize(WHEN_HORIZONTALLY_SPLIT) ?? '';
+  let size = getSize(WHEN_HORIZONTALLY_SPLIT) ?? '';
+
+  element.style.height = size;
   element.style.maxWidth = '';
   element.style.width = '100%';
   element.style.maxHeight = `calc(100vh - 72px - ${offset}px)`;
 };
 
+const RUNTIME_FOR_IFRAME: Record<string, string> = {};
+
 function getData(): SplitSizeData {
+  if (inIframe()) {
+    return RUNTIME_FOR_IFRAME;
+  }
+
   let json = localStorage.getItem(STORAGE_NAME);
 
   if (!json) return {};
@@ -449,6 +460,12 @@ function getSize(name: SplitName) {
 }
 
 function setSize(name: SplitName, value: `${number}px`) {
+  if (inIframe()) {
+    RUNTIME_FOR_IFRAME[name] = value;
+
+    return;
+  }
+
   let data = getData();
 
   data[name] = value;
@@ -465,7 +482,7 @@ function setSize(name: SplitName, value: `${number}px`) {
  * we can let it be quite a bit delayed to improve perf.
  */
 let delay = 200;
-let timeout: NodeJS.Timeout;
+let timeout: ReturnType<typeof setTimeout>;
 const debounced = (fn: (...args: unknown[]) => void) => {
   let forNextFrame = nextAvailableFrame.bind(null, fn);
 
