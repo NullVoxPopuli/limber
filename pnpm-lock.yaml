@@ -62,8 +62,6 @@ importers:
       '@types/common-tags': ^1.8.1
       '@types/dompurify': ^2.3.4
       '@types/ember': ^4.0.2
-      '@types/ember-qunit': ^5.0.2
-      '@types/ember-resolver': ^5.0.13
       '@types/ember__application': ^4.0.4
       '@types/ember__array': ^4.0.3
       '@types/ember__component': ^4.0.11
@@ -83,6 +81,8 @@ importers:
       '@types/ember__test': ^4.0.1
       '@types/ember__test-helpers': ^2.8.2
       '@types/ember__utils': ^4.0.2
+      '@types/ember-qunit': ^5.0.2
+      '@types/ember-resolver': ^5.0.13
       '@types/htmlbars-inline-precompile': ^3.0.0
       '@types/mdast': ^3.0.10
       '@types/rsvp': ^4.0.4
@@ -222,8 +222,6 @@ importers:
       '@types/common-tags': 1.8.1
       '@types/dompurify': 2.3.4
       '@types/ember': 4.0.2_@babel+core@7.18.13
-      '@types/ember-qunit': 5.0.2_@babel+core@7.18.13
-      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/ember__application': 4.0.4_@babel+core@7.18.13
       '@types/ember__array': 4.0.3_@babel+core@7.18.13
       '@types/ember__component': 4.0.11_@babel+core@7.18.13
@@ -243,6 +241,8 @@ importers:
       '@types/ember__test': 4.0.1_@babel+core@7.18.13
       '@types/ember__test-helpers': 2.8.2_@babel+core@7.18.13
       '@types/ember__utils': 4.0.2_@babel+core@7.18.13
+      '@types/ember-qunit': 5.0.2_@babel+core@7.18.13
+      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/htmlbars-inline-precompile': 3.0.0
       '@types/mdast': 3.0.10
       '@types/rsvp': 4.0.4
@@ -392,10 +392,10 @@ importers:
   packages/limber-snippet/addon:
     specifiers:
       '@babel/core': ~7.18.0
-      '@babel/eslint-parser': ^7.18.2
-      '@babel/plugin-proposal-class-properties': ^7.16.7
-      '@babel/plugin-proposal-decorators': ^7.17.0
-      '@babel/plugin-syntax-decorators': ^7.17.0
+      '@babel/eslint-parser': ^7.19.1
+      '@babel/plugin-proposal-class-properties': ^7.18.6
+      '@babel/plugin-proposal-decorators': ^7.20.2
+      '@babel/plugin-syntax-decorators': ^7.19.0
       '@embroider/addon-dev': ^1.0.0
       '@embroider/addon-shim': ^1.0.0
       '@nullvoxpopuli/eslint-configs': ^2.3.4
@@ -4138,9 +4138,9 @@ packages:
   /@types/ember-qunit/5.0.2_@babel+core@7.18.13:
     resolution: {integrity: sha512-LXp0Ew4wPhaCMuw49cNDHWs/bROn+Msb4ypMG1t60EMBx0UaEoX0tZlkf5bQJfdD249WZTu5cCtKvl47xbQzxA==}
     dependencies:
-      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/ember__test': 4.0.1_@babel+core@7.18.13
       '@types/ember__test-helpers': 2.8.2_@babel+core@7.18.13
+      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/qunit': 2.19.3
     transitivePeerDependencies:
       - '@babel/core'
@@ -4313,10 +4313,10 @@ packages:
   /@types/ember__test-helpers/2.8.2_@babel+core@7.18.13:
     resolution: {integrity: sha512-Ho3TTcnbjdQO9UvLwoswRMpCR2j7X6T8qSOaKehnST9s15ACb4MXHwec1NhmpCOhdvBRREYfG3YbduNeXoITMg==}
     dependencies:
-      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/ember__application': 4.0.4_@babel+core@7.18.13
       '@types/ember__error': 4.0.1
       '@types/ember__owner': 4.0.2
+      '@types/ember-resolver': 5.0.13_@babel+core@7.18.13
       '@types/htmlbars-inline-precompile': 3.0.0
     transitivePeerDependencies:
       - '@babel/core'
