@@ -7,15 +7,5 @@ const config = configs.node();
 
 module.exports = {
   ...config,
-  overrides: [
-    ...config.overrides,
-    {
-      files: ['index.js'],
-      ...moduleBase,
-      rules: {
-        ...moduleBase.rules,
-        ...baseRulesAppliedLast,
-      },
-    },
-  ],
+  overrides: [...config.overrides],
 };
