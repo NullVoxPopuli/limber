@@ -306,7 +306,7 @@ importers:
       '@codemirror/state': 6.1.2
       '@codemirror/view': 6.4.1
       '@lezer/highlight': ^1.1.2
-      '@lezer/html': ^1.0.1
+      '@lezer/html': ^1.1.0
       '@lezer/markdown': ^1.0.2
       '@nullvoxpopuli/eslint-configs': 2.2.34
       '@nullvoxpopuli/horizon-theme': '*'
@@ -337,7 +337,7 @@ importers:
       '@codemirror/state': 6.1.2
       '@codemirror/view': 6.4.1
       '@lezer/highlight': 1.1.2
-      '@lezer/html': 1.0.1
+      '@lezer/html': 1.1.0
       '@lezer/markdown': 1.0.2
       '@nullvoxpopuli/horizon-theme': link:../horizon-theme
       assert: 2.0.0
@@ -2620,7 +2620,7 @@ packages:
       '@codemirror/state': 6.1.2
       '@codemirror/view': 6.4.1
       '@lezer/common': 1.0.1
-      '@lezer/html': 1.0.1
+      '@lezer/html': 1.1.0
     dev: false
 
   /@codemirror/lang-java/6.0.0:
@@ -3668,8 +3668,8 @@ packages:
       '@lezer/common': 1.0.1
     dev: false
 
-  /@lezer/html/1.0.1:
-    resolution: {integrity: sha512-sC00zEt3GBh3vVO6QaGX4YZCl41S9dHWN/WGBsDixy9G+sqOC7gsa4cxA/fmRVAiBvhqYkJk+5Ul4oul92CPVw==}
+  /@lezer/html/1.1.0:
+    resolution: {integrity: sha512-94MMm4oyXnmphMldSy6cC/p1zbsIS+/m71kyo3dmId858iWOXslba23fvD5vGl3kcJIZZJA3+DLQv2+GR5AeYQ==}
     dependencies:
       '@lezer/common': 1.0.1
       '@lezer/highlight': 1.1.2
