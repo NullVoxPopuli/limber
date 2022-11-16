@@ -40,7 +40,7 @@ jobs:
     needs: [install_dependencies]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: TurboRepo local server
         uses: felixmosh/turborepo-gh-artifacts@v1
         with:
