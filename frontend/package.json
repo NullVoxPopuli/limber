@@ -126,7 +126,7 @@
     "yn": "^4.0.0"
   },
   "engines": {
-    "node": ">= v16.16.0"
+    "node": ">= v16.18.1"
   },
   "ember": {
     "edition": "octane"
