@@ -134,7 +134,7 @@ importers:
       fractal-page-object: ^0.3.0
       highlight.js: ^11.6.0
       highlightjs-glimmer: ^2.0.1
-      html-to-image: ^1.9.0
+      html-to-image: ^1.10.8
       loader.js: ^4.7.0
       onp: ^2.0.3
       path-browserify: ^1.0.1
@@ -185,7 +185,7 @@ importers:
       ember-statechart-component: 6.1.2_ugrjuvilxwddhfh36llxstrdye
       highlight.js: 11.6.0
       highlightjs-glimmer: 2.0.1_highlight.js@11.6.0
-      html-to-image: 1.9.0
+      html-to-image: 1.10.8
       path-browserify: 1.0.1
       penpal: 6.2.2
       remark-hbs: 0.4.1
@@ -12609,8 +12609,8 @@ packages:
     dependencies:
       whatwg-encoding: 1.0.5
 
-  /html-to-image/1.9.0:
-    resolution: {integrity: sha512-9gaDCIYg62Ek07F2pBk76AHgYZ2gxq2YALU7rK3gNCqXuhu6cWzsOQqM7qGbjZiOzxGzrU1deDqZpAod2NEwbA==}
+  /html-to-image/1.10.8:
+    resolution: {integrity: sha512-t+JyFJwKDCp4ZwBp4iC/wqw0meQDDc77Qs8OFl5P7RGlIP3LQMvwpD7VXxqQfC7/TfC+GKYlFP6WDYfXTmXHfw==}
     dev: false
 
   /html-void-elements/1.0.5:

@@ -160,7 +160,7 @@
     "ember-statechart-component": "6.1.2",
     "highlight.js": "^11.6.0",
     "highlightjs-glimmer": "^2.0.1",
-    "html-to-image": "^1.9.0",
+    "html-to-image": "^1.10.8",
     "path-browserify": "^1.0.1",
     "penpal": "^6.2.2",
     "remark-hbs": "0.4.1",
