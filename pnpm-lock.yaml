@@ -156,7 +156,7 @@ importers:
       vfile: ^4.2.1
       webpack: ^5.75.0
       webpack-bundle-analyzer: ^4.5.0
-      ws: ^8.8.1
+      ws: ^8.11.0
       xstate: 4.34.0
       yn: ^4.0.0
     dependencies:
@@ -170,7 +170,7 @@ importers:
       '@nullvoxpopuli/limber-styles': link:../packages/styles
       '@nullvoxpopuli/limber-transpilation': link:../packages/transpilation
       '@popperjs/core': 2.11.6
-      '@xstate/inspect': 0.7.0_ws@8.8.1+xstate@4.34.0
+      '@xstate/inspect': 0.7.0_ws@8.11.0+xstate@4.34.0
       browserslist: 4.21.4
       dompurify: 2.4.1
       ember-auto-import: 2.4.2_webpack@5.75.0
@@ -196,7 +196,7 @@ importers:
       unified: 9.2.2
       unist-util-flatmap: 1.0.0
       webpack-bundle-analyzer: 4.5.0
-      ws: 8.8.1
+      ws: 8.11.0
       xstate: 4.34.0
     devDependencies:
       '@babel/core': 7.18.13
@@ -5482,7 +5482,7 @@ packages:
     engines: {node: '>=10.0.0'}
     dev: true
 
-  /@xstate/inspect/0.7.0_ws@8.8.1+xstate@4.34.0:
+  /@xstate/inspect/0.7.0_ws@8.11.0+xstate@4.34.0:
     resolution: {integrity: sha512-3wrTf8TfBYprH1gBFdxmOQUBDpBazlICWvGdFzr8IHFL4MbiexEZdAsL2QC/WAmW9BqNYTWTwgfbvKHKg+FrlA==}
     peerDependencies:
       '@types/ws': ^8.0.0
@@ -5493,7 +5493,7 @@ packages:
         optional: true
     dependencies:
       fast-safe-stringify: 2.1.1
-      ws: 8.8.1
+      ws: 8.11.0
       xstate: 4.34.0
     dev: false
 
@@ -18424,6 +18424,19 @@ packages:
       utf-8-validate:
         optional: true
 
+  /ws/8.11.0:
+    resolution: {integrity: sha512-HPG3wQd9sNQoT9xHyNCXoDUa+Xw/VevmY9FoHyQ+g+rrMn4j6FB4np7Z0OhdTgjx6MgQLK7jwSy1YecU1+4Asg==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    dev: false
+
   /ws/8.2.3:
     resolution: {integrity: sha512-wBuoj1BDpC6ZQ1B7DWQBYVLphPWkm8i9Y0/3YdHjHKHiohOJ1ws+3OccDWtH+PoC9DZD5WOTrJvNbWvjS6JWaA==}
     engines: {node: '>=10.0.0'}
@@ -18436,19 +18449,6 @@ packages:
       utf-8-validate:
         optional: true
     dev: true
-
-  /ws/8.8.1:
-    resolution: {integrity: sha512-bGy2JzvzkPowEJV++hF07hAD6niYSr0JzBNo/J29WsB57A2r7Wlc1UFcTR9IzrPvuNVO4B8LGqF8qcpsVOhJCA==}
-    engines: {node: '>=10.0.0'}
-    peerDependencies:
-      bufferutil: ^4.0.1
-      utf-8-validate: ^5.0.2
-    peerDependenciesMeta:
-      bufferutil:
-        optional: true
-      utf-8-validate:
-        optional: true
-    dev: false
 
   /xdg-basedir/4.0.0:
     resolution: {integrity: sha512-PSNhEJDejZYV7h50BohL09Er9VaIefr2LMAf3OEmpCkjOi34eYyQYAXUTjEQtZJTKcF0E2UKTh+osDLsgNim9Q==}
