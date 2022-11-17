@@ -15,7 +15,7 @@
   "volta": {
     "node": "16.18.1",
     "yarn": "1.22.19",
-    "npm": "8.19.3"
+    "npm": "9.1.2"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.7",
