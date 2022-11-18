@@ -149,7 +149,7 @@ importers:
       stringify-object: ^4.0.1
       testem-failure-only-reporter: ^1.0.0
       tracked-built-ins: ^3.1.0
-      type-fest: 2.19.0
+      type-fest: 3.2.0
       typescript: ^4.9.3
       unified: ^9.2.2
       unist-util-flatmap: ^1.0.0
@@ -286,7 +286,7 @@ importers:
       qunit-dom: 2.0.0
       rollup: 2.79.1
       testem-failure-only-reporter: 1.0.0
-      type-fest: 2.19.0
+      type-fest: 3.2.0
       typescript: 4.9.3
       vfile: 4.2.1
       webpack: 5.75.0
@@ -17638,9 +17638,9 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /type-fest/2.19.0:
-    resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
-    engines: {node: '>=12.20'}
+  /type-fest/3.2.0:
+    resolution: {integrity: sha512-Il3wdLRzWvbAEtocgxGQA9YOoRVeVUGOMBtel5LdEpNeEAol6GJTLw8GbX6Z8EIMfvfhoOXs2bwOijtAZdK5og==}
+    engines: {node: '>=14.16'}
     dev: true
 
   /type-is/1.6.18:
