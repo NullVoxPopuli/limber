@@ -25,7 +25,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: TurboRepo local server
-      uses: felixmosh/turborepo-gh-artifacts@v1
+      uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: TurboRepo local server
-        uses: felixmosh/turborepo-gh-artifacts@v1
+        uses: felixmosh/turborepo-gh-artifacts@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
@@ -58,7 +58,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: TurboRepo local server
-        uses: felixmosh/turborepo-gh-artifacts@v1
+        uses: felixmosh/turborepo-gh-artifacts@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
@@ -84,7 +84,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: TurboRepo local server
-      uses: felixmosh/turborepo-gh-artifacts@v1
+      uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
@@ -114,7 +114,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: TurboRepo local server
-      uses: felixmosh/turborepo-gh-artifacts@v1
+      uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
@@ -133,7 +133,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: TurboRepo local server
-      uses: felixmosh/turborepo-gh-artifacts@v1
+      uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
@@ -166,7 +166,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: TurboRepo local server
-      uses: felixmosh/turborepo-gh-artifacts@v1
+      uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
