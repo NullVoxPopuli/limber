@@ -13,7 +13,7 @@
     "_turbo": "pnpm turbo --api='http://127.0.0.1:9080' --token=this-is-not-a-secret --team=foo"
   },
   "volta": {
-    "node": "16.18.1",
+    "node": "18.12.1",
     "yarn": "1.22.19",
     "npm": "9.1.2"
   },
