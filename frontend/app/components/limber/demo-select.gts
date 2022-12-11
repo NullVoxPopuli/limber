@@ -30,13 +30,13 @@ export default class DemoSelect extends Component {
     <Menu>
       <:trigger as |t|>
         <t.Default data-test-demo-select as |menu|>
-          <span class="grid grid-flow-col gap-2 items-center">
+          <span class='grid grid-flow-col gap-2 items-center'>
             Select demo
 
             {{#if menu.isOpen}}
-              <FaIcon @icon="angle-up" class="min-w-3" />
+              <FaIcon @icon='angle-up' class='min-w-3' />
             {{else}}
-              <FaIcon @icon="angle-right" class="min-w-3" />
+              <FaIcon @icon='angle-right' class='min-w-3' />
             {{/if}}
           </span>
         </t.Default>
