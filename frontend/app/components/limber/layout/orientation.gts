@@ -1,8 +1,7 @@
 // @ts-ignore
 import { hash } from '@ember/helper';
 
-import ContainerQuery from 'ember-container-query/components/container-query';
-import aspectRatio from 'ember-container-query/helpers/cq-aspect-ratio';
+import { ContainerQuery, aspectRatio } from 'ember-container-query';
 
 import constrainVertically from 'limber/modifiers/constrain-vertically';
 
@@ -10,7 +9,7 @@ import type { TOC } from '@ember/component/template-only';
 
 interface Signature {
   Blocks: {
-    default: [boolean];
+    default: [unknown];
   }
 }
 
