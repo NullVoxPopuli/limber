@@ -13,7 +13,7 @@ patchedDependencies:
     hash: prsfdndcfbbwmlkgbxbo7gxczu
     path: patches/ember-on-resize-modifier@1.1.0.patch
   ember-container-query@3.0.0:
-    hash: coay45gksb4e3fjamuowe4oynm
+    hash: q2jnztvptl7hmqyghpu4ccfuni
     path: patches/ember-container-query@3.0.0.patch
 
 importers:
@@ -177,7 +177,7 @@ importers:
       browserslist: 4.21.4
       dompurify: 2.4.1
       ember-auto-import: 2.5.0_webpack@5.75.0
-      ember-container-query: 3.0.0_coay45gksb4e3fjamuowe4oynm_ember-source@4.7.0
+      ember-container-query: 3.0.0_q2jnztvptl7hmqyghpu4ccfuni_ember-source@4.7.0
       ember-element-helper: 0.6.1_ember-source@4.7.0
       ember-focus-trap: 1.0.1
       ember-headlessui: 0.13.0_rgd662j7qaat3uucx6j3bv36dy
@@ -9427,7 +9427,7 @@ packages:
       - supports-color
     dev: false
 
-  /ember-container-query/3.0.0_coay45gksb4e3fjamuowe4oynm_ember-source@4.7.0:
+  /ember-container-query/3.0.0_q2jnztvptl7hmqyghpu4ccfuni_ember-source@4.7.0:
     resolution: {integrity: sha512-OHZ0ppZOH18stLKA5InPEzdGq3OfkD6A1h0LbjwdWGeZeL2yIZ+siyyp/aWVGk0HUVNlstLuihNxkYwX7R6pJg==}
     engines: {node: 14.* || 16.* || >= 18}
     dependencies:
