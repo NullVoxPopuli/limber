@@ -25,7 +25,6 @@ export const Orientation: TOC<Signature> =
   >
 
     {{#let query.features.isVertical as |isVertical|}}
-      {{log query.features}}
 
       {{yield isVertical}}
 
