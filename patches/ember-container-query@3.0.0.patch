@@ -30,7 +30,7 @@ index e56d5e1732a20821e5aa627524722cbb4cdfa80a..38c029d923c60b0dccc9083ef85ceeb1
 +  Blocks: {
 +    default: [
 +      {
-+        features: Features;
++        features: { [featureName: string]: boolean };
 +        dimensions: {
 +          aspectRatio: number;
 +          height: number;

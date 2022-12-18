@@ -9,7 +9,7 @@ import type { TOC } from '@ember/component/template-only';
 
 interface Signature {
   Blocks: {
-    default: [unknown];
+    default: [boolean];
   }
 }
 
@@ -25,6 +25,7 @@ export const Orientation: TOC<Signature> =
   >
 
     {{#let query.features.isVertical as |isVertical|}}
+      {{log query.features}}
 
       {{yield isVertical}}
 
