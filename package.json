@@ -43,14 +43,17 @@
         "mustache",
         "ember-modifier"
       ],
-      "ignoreMissing": [ "ember-cli-htmlbars" ]
+      "ignoreMissing": [
+        "ember-cli-htmlbars"
+      ]
     },
     "notes": {
       "ember-cli-htmlbars": "peer of ember-template-imports via eslint-plugin-ember",
       "mustache": "ember-cli -> testem -> consolidate -> mustache is ancient"
     },
     "patchedDependencies": {
-      "ember-on-resize-modifier@1.1.0": "patches/ember-on-resize-modifier@1.1.0.patch"
+      "ember-on-resize-modifier@1.1.0": "patches/ember-on-resize-modifier@1.1.0.patch",
+      "ember-container-query@3.0.0": "patches/ember-container-query@3.0.0.patch"
     }
   }
 }

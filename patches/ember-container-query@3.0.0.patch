@@ -1,0 +1,89 @@
+diff --git a/addon/index.js b/addon/index.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..3f8720120f84caa2fd470deedb3de9d4d2a00592
+--- /dev/null
++++ b/addon/index.js
+@@ -0,0 +1,4 @@
++export { default as ContainerQuery } from './components/container-query';
++export { default as aspectRatio } from './helpers/cq-aspect-ratio';
++export { default as height } from './helpers/cq-height';
++export { default as width } from './helpers/cq-width';
+diff --git a/components/container-query.d.ts b/components/container-query.d.ts
+index e56d5e1732a20821e5aa627524722cbb4cdfa80a..38c029d923c60b0dccc9083ef85ceeb1755027f3 100644
+--- a/components/container-query.d.ts
++++ b/components/container-query.d.ts
+@@ -1,12 +1,32 @@
+ import Component from '@glimmer/component';
+ import type { Dimensions, Features, QueryResults } from 'ember-container-query/modifiers/container-query';
++
+ interface ContainerQueryComponentArgs {
+     dataAttributePrefix?: string;
+     debounce?: number;
+     features?: Features;
+     tagName?: string;
+ }
+-export default class ContainerQueryComponent extends Component<ContainerQueryComponentArgs> {
++
++interface Signature {
++  Element: HTMLElement;
++  Args: ContainerQueryComponentArgs;
++  Blocks: {
++    default: [
++      {
++        features: Features;
++        dimensions: {
++          aspectRatio: number;
++          height: number;
++          width: number;
++        };
++      }
++    ];
++  };
++}
++
++
++export default class ContainerQueryComponent extends Component<Signature> {
+     dimensions?: Dimensions;
+     queryResults?: QueryResults;
+     tagName: string;
+diff --git a/index.d.ts b/index.d.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..3f8720120f84caa2fd470deedb3de9d4d2a00592
+--- /dev/null
++++ b/index.d.ts
+@@ -0,0 +1,4 @@
++export { default as ContainerQuery } from './components/container-query';
++export { default as aspectRatio } from './helpers/cq-aspect-ratio';
++export { default as height } from './helpers/cq-height';
++export { default as width } from './helpers/cq-width';
+diff --git a/package.json b/package.json
+index 4b227ec7a59406f393528deccf77df96337596f0..32c7d28be0ae85c67b211fda94e6bd533dfe327f 100644
+--- a/package.json
++++ b/package.json
+@@ -58,7 +58,7 @@
+     "ember-cli-htmlbars": "^6.1.1",
+     "ember-cli-typescript": "^5.2.1",
+     "ember-element-helper": "^0.6.1",
+-    "ember-modifier": "^3.2.7",
++    "ember-auto-import": "^2.0.0",
+     "ember-resize-observer-service": "^1.1.0",
+     "ember-test-selectors": "^6.0.0"
+   },
+@@ -115,6 +115,7 @@
+     "ember-cli-terser": "^4.0.2",
+     "ember-css-modules": "^2.0.1",
+     "ember-load-initializers": "^2.1.2",
++    "ember-modifier": "^3.2.7",
+     "ember-named-blocks-polyfill": "^0.2.5",
+     "ember-page-title": "^7.0.0",
+     "ember-qunit": "^6.0.0",
+@@ -145,6 +146,9 @@
+     "typescript": "^4.9.4",
+     "webpack": "^5.75.0"
+   },
++  "peerDependencies": {
++    "ember-modifier": "^3.2.7 || ^4.0.0"
++  },
+   "engines": {
+     "node": "14.* || 16.* || >= 18"
+   },
