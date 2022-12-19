@@ -31,7 +31,7 @@
     "@babel/plugin-proposal-decorators": "^7.20.2",
     "@babel/plugin-syntax-decorators": "^7.19.0",
     "@embroider/addon-dev": "^1.8.3",
-    "@nullvoxpopuli/eslint-configs": "^2.3.4",
+    "@nullvoxpopuli/eslint-configs": "^2.3.5",
     "@rollup/plugin-babel": "^6.0.2",
     "concurrently": "^7.5.0",
     "ember-cli-htmlbars": "^6.1.1",

@@ -41,7 +41,7 @@
     "@babel/types": "^7.20.2",
     "@glimmer/component": "^1.1.2",
     "ember-source": "^4.8.2",
-    "@nullvoxpopuli/eslint-configs": "2.2.34",
+    "@nullvoxpopuli/eslint-configs": "2.3.5",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^7.32.0",
