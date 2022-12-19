@@ -28,7 +28,6 @@
     "overrides": {
       "@babel/core": "~7.18.0",
       "ember-auto-import": "^2.5.0",
-      "ember-source": "^4.5.0",
       "@ember/render-modifiers": "^2.0.4",
       "@types/eslint": "^7.0.0"
     },
