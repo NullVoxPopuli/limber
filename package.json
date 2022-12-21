@@ -18,7 +18,7 @@
     "npm": "9.1.2"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.4.7",
+    "@changesets/changelog-github": "^0.4.8",
     "@changesets/cli": "^2.25.2",
     "concurrently": "^7.5.0",
     "turbo": "^1.6.3"
