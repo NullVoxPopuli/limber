@@ -1,0 +1,17 @@
+{
+  "name": "glimmer-tutorial",
+  "version": "0.0.0",
+  "private": true,
+  "repository": "",
+  "license": "MIT",
+  "author": "NullVoxPopuli",
+  "scripts": {
+    "lint:tutorials": ""
+  },
+  "dependencies": {
+    "workspace": "../packages/limber-tutorials"
+  },
+  "volta": {
+    "extends": "../package.json"
+  }
+}

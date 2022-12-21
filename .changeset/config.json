@@ -16,6 +16,7 @@
   "updateInternalDependencies": "patch",
   "ignore": [
     "limber",
+    "glimmer-tutorial",
     "limber-snippet-test-app",
     "@nullvoxpopuli/limber-codemirror",
     "@nullvoxpopuli/limber-consts",
