@@ -93,6 +93,7 @@
     "ember-cli-browserstack": "^2.0.1",
     "ember-cli-htmlbars": "^6.1.1",
     "ember-cli-inject-live-reload": "^2.1.0",
+    "ember-cli-memory-leak-detector": "^0.7.1",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
     "ember-export-application-global": "^2.0.1",
