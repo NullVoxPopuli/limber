@@ -614,45 +614,7 @@ importers:
       webpack-cli: 5.0.1_webpack@5.75.0
       webpack-node-externals: 3.0.0
 
-  spikes/url-shortening:
-    specifiers:
-      '@algorithm.ts/base64': 3.0.0-alpha.3
-      '@algorithm.ts/huffman': 3.0.0-alpha.3
-      filesize: ^10.0.6
-      jsoncrush: ^1.1.8
-      lz-string: ^1.4.4
-    dependencies:
-      '@algorithm.ts/base64': 3.0.0-alpha.3
-      '@algorithm.ts/huffman': 3.0.0-alpha.3
-      filesize: 10.0.6
-      jsoncrush: 1.1.8
-      lz-string: 1.4.4
-
 packages:
-
-  /@algorithm.ts/base64/3.0.0-alpha.3:
-    resolution: {integrity: sha512-ckVdG/KX22/3HtfjKTr8/pQ+sbqHT5BjtAEsHOQIrMXAgU+2C6eBZb7iAakBnYJYyIo9UveuEgQalK6DX0TojA==}
-    engines: {node: '>= 14.15.0'}
-    dev: false
-
-  /@algorithm.ts/huffman/3.0.0-alpha.3:
-    resolution: {integrity: sha512-O5jimcNGwdDlntTFYrT0cGOp22dQVBnfalNCmN6UlQt5lyNIj02snMSGg/BZJHGJGad6RWYUtq/TH260pL2D/w==}
-    engines: {node: '>= 14.15.0'}
-    dependencies:
-      '@algorithm.ts/queue': 3.0.0-alpha.3
-    dev: false
-
-  /@algorithm.ts/queue/3.0.0-alpha.3:
-    resolution: {integrity: sha512-Q6Y+ljQMc0zQg24NL5+oH6BP9c59fnHkKejiDAlgRB7fO53T3ERjffS8ifATLifdiFpkTiOCa9B+sC6OYX+O3A==}
-    engines: {node: '>= 14.15.0'}
-    dependencies:
-      '@algorithm.ts/types': 3.0.0-alpha.3
-    dev: false
-
-  /@algorithm.ts/types/3.0.0-alpha.3:
-    resolution: {integrity: sha512-Ft4O7BMhmmFK+Vsf6Qy8e68AbbpuoWIFvoYNb4AoCD/lvaewbCYfcnIq1OrFEIPRy97trIWh3DxAom0DtL307g==}
-    engines: {node: '>= 14.15.0'}
-    dev: false
 
   /@ampproject/remapping/2.2.0:
     resolution: {integrity: sha512-qRmjj8nj9qmLTQXXmaR1cck3UXSRMPrbsLJAasZpF+t3riI71BXed5ebIOYwQntykeZuhjsdweEc9BxH5Jc26w==}
@@ -11536,6 +11498,7 @@ packages:
   /filesize/10.0.6:
     resolution: {integrity: sha512-rzpOZ4C9vMFDqOa6dNpog92CoLYjD79dnjLk2TYDDtImRIyLTOzqojCb05Opd1WuiWjs+fshhCgTd8cl7y5t+g==}
     engines: {node: '>= 10.4.0'}
+    dev: true
 
   /filesize/5.0.3:
     resolution: {integrity: sha512-RM123v6KPqgZJmVCh4rLvCo8tLKr4sgD92DeZ+AuoUE8teGZJHKs1cTORwETcpIJSlGsz2WYdwKDQUXby5hNqQ==}
@@ -13499,10 +13462,6 @@ packages:
     resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
     dev: true
 
-  /jsoncrush/1.1.8:
-    resolution: {integrity: sha512-lvIMGzMUA0fjuqwNcxlTNRq2bibPZ9auqT/LyGdlR5hvydJtA/BasSgkx4qclqTKVeTidrJvsS/oVjlTCPQ4Nw==}
-    dev: false
-
   /jsonfile/2.4.0:
     resolution: {integrity: sha512-PKllAqbgLgxHaj8TElYymKCAgrASebJrWpTnEkOaTowt23VKXXN0sUeriJ+eh7y6ufb/CC5ap11pz71/cM0hUw==}
     optionalDependencies:
@@ -13957,11 +13916,6 @@ packages:
     resolution: {integrity: sha512-zSxlVVwOabhVyTi6E8gYv2cr6bXK+8ifYz5/uyJb9feXX6NACVDwY4p5Ut3WC3Ivo/QhpARHU3iujx2xGAYHbQ==}
     engines: {node: '>=12'}
     dev: true
-
-  /lz-string/1.4.4:
-    resolution: {integrity: sha512-0ckx7ZHRPqb0oUm8zNr+90mtf9DQB60H1wMCjBtfi62Kl3a7JbHob6gA2bC+xRvZoOL+1hzUK8jeuEIQE8svEQ==}
-    hasBin: true
-    dev: false
 
   /magic-string/0.24.1:
     resolution: {integrity: sha512-YBfNxbJiixMzxW40XqJEIldzHyh5f7CZKalo1uZffevyrPEX8Qgo9s0dmcORLHdV47UyvJg8/zD+6hQG3qvJrA==}

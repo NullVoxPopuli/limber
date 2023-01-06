@@ -8,6 +8,17 @@ import { originalText } from './data.js'
 
 const size = (str) => filesize(str.length, { base: 2, standard: "jedec"})
 
+const names = {
+  original: 'original',
+  lzString: 'lz-string',
+  JSONCrush: 'JSONCrush',
+  huffman: 'Huffman',
+}
+
+// Impact to bundle via https://bundlejs.com/
+const bundleImpact = {
+  [names.lzString]: '5.17KB (1.61KB gzip)'
+}
 
 
 console.log(
@@ -26,6 +37,10 @@ console.log(
   }).join('')
 )
 
+
+/**
+  * The Huffman library requires a lot of boilerplate.
+  */
 function compress(text) {
   const { encodedData, encodingTable } = huffman.encode(text)
   const cipherBuffer = huffman.compress(encodedData)
