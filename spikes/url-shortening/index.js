@@ -34,8 +34,10 @@ console.log(
   }).join('')
 );
 
-const encodeBench = new Bench({ time: 100 });
-const decodeBench = new Bench({ time: 100 });
+const iterations = 1000;
+const encodeBench = new Bench({ iterations });
+const decodeBench = new Bench({ iterations });
+const encodeURIComponentBench = new Bench({ iterations });
 
 encodeBench
   .add('JSONCrush', () => JSONCrush.encode(originalText))
@@ -47,6 +49,11 @@ const encodedText = {
   huffman: huffman.encode(originalText),
   LZString: LZString.encode(originalText),
 }
+
+encodeURIComponentBench
+  .add('JSONCrush', () => encodeURIComponent(encodedText.JSONCrush))
+  .add('Huffman', () => encodeURIComponent(encodedText.huffman))
+  .add('lz-string', () => encodeURIComponent(encodedText.LZString));
 
 decodeBench
   .add('JSONCrush', () => JSONCrush.decode(encodedText.JSONCrush))
@@ -63,8 +70,11 @@ const printBench = (bench) => console.table(
 
 await encodeBench.run();
 await decodeBench.run();
+await encodeURIComponentBench.run();
 
 console.log('Encode benchmark:')
 printBench(encodeBench);
 console.log('Decode benchmark:')
 printBench(decodeBench);
+console.log('encodeURIComponent:')
+printBench(encodeURIComponentBench);
