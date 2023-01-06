@@ -620,11 +620,13 @@ importers:
       '@algorithm.ts/huffman': 3.0.0-alpha.3
       filesize: ^10.0.6
       jsoncrush: ^1.1.8
+      lz-string: ^1.4.4
     dependencies:
       '@algorithm.ts/base64': 3.0.0-alpha.3
       '@algorithm.ts/huffman': 3.0.0-alpha.3
       filesize: 10.0.6
       jsoncrush: 1.1.8
+      lz-string: 1.4.4
 
 packages:
 
@@ -13955,6 +13957,11 @@ packages:
     resolution: {integrity: sha512-zSxlVVwOabhVyTi6E8gYv2cr6bXK+8ifYz5/uyJb9feXX6NACVDwY4p5Ut3WC3Ivo/QhpARHU3iujx2xGAYHbQ==}
     engines: {node: '>=12'}
     dev: true
+
+  /lz-string/1.4.4:
+    resolution: {integrity: sha512-0ckx7ZHRPqb0oUm8zNr+90mtf9DQB60H1wMCjBtfi62Kl3a7JbHob6gA2bC+xRvZoOL+1hzUK8jeuEIQE8svEQ==}
+    hasBin: true
+    dev: false
 
   /magic-string/0.24.1:
     resolution: {integrity: sha512-YBfNxbJiixMzxW40XqJEIldzHyh5f7CZKalo1uZffevyrPEX8Qgo9s0dmcORLHdV47UyvJg8/zD+6hQG3qvJrA==}

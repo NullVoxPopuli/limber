@@ -2,6 +2,7 @@ import JSONCrush from 'jsoncrush'
 import * as huffman from '@algorithm.ts/huffman'
 import base64 from '@algorithm.ts/base64'
 import {filesize} from "filesize";
+import LZString from 'lz-string';
 
 import { originalText } from './data.js'
 
@@ -13,12 +14,14 @@ console.log(
   [
     ['original', originalText],
     ['JSONCrush', JSONCrush.crush(JSON.stringify({ i: originalText }))],
-    ['Huffman', compress(originalText)]
+    ['Huffman', compress(originalText)],
+    ['lz-string', LZString.compressToBase64(originalText),
+      LZString.compressToEncodedURIComponent(originalText)]
 
-  ].map(([label, text]) => {
+  ].map(([label, text, uriText]) => {
     return `
       ${label}: ${size(text)}
-      ${label} as URI: ${size(encodeURIComponent(text))}
+      ${label} as URI: ${size(uriText ?? encodeURIComponent(text))}
     `
   }).join('')
 )
