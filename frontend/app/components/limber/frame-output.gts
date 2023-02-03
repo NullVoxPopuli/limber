@@ -111,6 +111,7 @@ export default class FrameOutput extends Component {
       {{this.postMessage this.frameStatus}}
       {{!-- @glint-ignore --}}
       {{this.onMessage}}
+      title="Rendered output"
       class="w-full h-full border-none"
       src="/output?format={{this.format}}"></iframe>
   </template>
