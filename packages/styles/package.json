@@ -6,12 +6,15 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "format": "prettier -w .",
+    "format:check": "prettier -c .",
     "build": "tailwindcss -o dist/tailwind.css",
     "start": "tailwindcss -o dist/tailwind.css --watch"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.19",
+    "prettier": "^2.8.3",
     "tailwindcss": "^3.2.4"
   },
   "dependencies": {

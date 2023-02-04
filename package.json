@@ -8,6 +8,8 @@
     "build": "pnpm _turbo build --filter=limber^...",
     "lint:fix": "pnpm --filter='*' lint:fix",
     "lint": "pnpm _turbo lint",
+    "format": "pnpm --filter='*' format",
+    "format:check": "pnpm _turbo format:check",
     "typecheck": "pnpm _turbo typecheck",
     "start": "pnpm _turbo start --filter=limber",
     "_turbo": "pnpm turbo --api='http://127.0.0.1:9080' --token=this-is-not-a-secret --team=foo"
@@ -21,6 +23,7 @@
     "@changesets/changelog-github": "^0.4.8",
     "@changesets/cli": "^2.26.0",
     "concurrently": "^7.6.0",
+    "prettier": "^2.8.3",
     "turbo": "^1.7.3"
   },
   "packageManager": "pnpm@7.16.1",
