@@ -48,6 +48,7 @@ jobs:
           server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
       - uses: ./.github/actions/pnpm
       - run: pnpm lint
+      - run: pnpm format:check
 
   types:
     name: "Type Correctness"

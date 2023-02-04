@@ -13,7 +13,7 @@ module.exports = {
       // => @media (min-width: 640px) { ... }
       lg: '1024px',
       // => @media (min-width: 1024px) { ... }
-      'until-lg': {max: '1023px'},
+      'until-lg': { max: '1023px' },
       // => @media (max-width: 1023px) { ... }
     },
     fontFamily: {

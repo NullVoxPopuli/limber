@@ -10,7 +10,7 @@ type Injections = Array<object | undefined>;
 type LazyTrackedArgs = {
   positional?: Array<unknown>;
   named?: Record<string, unknown>;
-}
+};
 
 // provided by vendor/ember/ember-template-compiler.js (somehow)
 declare module 'ember-template-compiler';
@@ -42,8 +42,8 @@ declare module '@ember/template-compilation' {
     isProduction: boolean;
     meta: Record<string, unknown>;
     plugins: {
-      ast: Array<unknown>
-    }
+      ast: Array<unknown>;
+    };
   }
   export function compileTemplate(template: string, options: CompileOptions): any;
 }

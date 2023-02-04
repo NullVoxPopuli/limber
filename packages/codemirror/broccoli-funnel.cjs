@@ -3,7 +3,7 @@
 const path = require('path');
 const Funnel = require('broccoli-funnel');
 
-const SRC_FILES = path.join(__dirname, 'dist');
+const COMPILED_FILES = path.join(__dirname, 'dist');
 
 /**
  * This broccoli funnel is for copying the built assets to a target
@@ -11,7 +11,7 @@ const SRC_FILES = path.join(__dirname, 'dist');
  *
  */
 module.exports = function codemirrorFunnel() {
-  return new Funnel(SRC_FILES, {
+  return new Funnel(COMPILED_FILES, {
     destDir: 'codemirror/',
   });
 };

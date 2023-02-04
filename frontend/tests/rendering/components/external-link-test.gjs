@@ -9,21 +9,18 @@ module('Integration | Component | external-link', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    this.setProperties({ ExternalLink });
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+    await render(<template><ExternalLink /></template>);
 
-    await render(hbs`<this.ExternalLink />`);
-
-    assert.strictEqual(this.element.textContent.trim(), '');
+    assert.dom().hasNoText();
 
     // Template block usage:
-    await render(hbs`
-      <this.ExternalLink>
+    await render(
+      <template>
+      <ExternalLink>
         template block text
-      </this.ExternalLink>
-    `);
+      </ExternalLink>
+    </template>);
 
-    assert.strictEqual(this.element.textContent.trim(), 'template block text');
+    assert.dom().hasText('template block text');
   });
 });

@@ -63,6 +63,11 @@
     //
     /////////////////////////////////////////////////
     /////////////////////////////////////////////////
+    "format:check": {
+      // A package's `format:check` script has no dependencies and
+      // can be run whenever. It also has no filesystem outputs.
+      "outputs": []
+    },
     "lint": {
       // A package's `lint` script has no dependencies and
       // can be run whenever. It also has no filesystem outputs.

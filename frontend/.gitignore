@@ -4,6 +4,7 @@
 /dist/
 /tmp/
 /public/transpilation-worker.js
+tsconfig.tsbuildinfo
 
 # dependencies
 /bower_components/

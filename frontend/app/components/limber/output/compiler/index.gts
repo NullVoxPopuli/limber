@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { schedule } from '@ember/runloop';
-// @ts-ignore
 import { hash } from '@ember/helper';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
@@ -22,7 +21,7 @@ interface Signature {
   }
   Blocks: {
     default: [{
-      component: ComponentLike | undefined;
+      component: ComponentLike<never> | undefined;
     }]
   }
 }
@@ -32,9 +31,11 @@ interface Signature {
   * The Receiving Component is Limber::FrameOutput
   */
 export default class Compiler extends Component<Signature> {
+  <template>{{yield (hash component=this.component)}}</template>
+
   @service declare router: RouterService;
 
-  @tracked component?: ComponentLike;
+  @tracked component?: ComponentLike<never>;
   @tracked error: string | null = null;
   @tracked errorLine: number | null = null;
   @tracked template?: unknown;
@@ -72,7 +73,7 @@ export default class Compiler extends Component<Signature> {
         }
 
         if (isDestroyed(this) || isDestroying(this)) return;
-        this.component = component;
+        this.component = component as ComponentLike<never>;
 
         await (this.parentFrame.success())
 
@@ -88,13 +89,5 @@ export default class Compiler extends Component<Signature> {
     });
 
   }
-
-  <template>
-    {{yield
-      (hash
-        component=this.component
-      )
-    }}
-  </template>
 }
 

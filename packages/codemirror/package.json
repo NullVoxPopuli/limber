@@ -2,14 +2,21 @@
   "name": "@nullvoxpopuli/limber-codemirror",
   "version": "0.0.0",
   "description": "custom build of codemirror for use in Limber",
-  "main": "index.js",
+  "type": "module",
+  "exports": {
+    "./broccoli-funnel": {
+      "require": "./broccoli-funnel.cjs"
+    }
+  },
   "author": "NullVoxPopuli",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "node build.js",
+    "build": "node build.cjs",
     "dev": "pnpm build --watch",
     "typecheck": "tsc --build",
+    "format": "prettier -w .",
+    "format:check": "prettier -c .",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix"
@@ -41,18 +48,20 @@
     "path-browserify": "^1.0.1"
   },
   "devDependencies": {
-    "@nullvoxpopuli/eslint-configs": "2.2.34",
+    "@nullvoxpopuli/eslint-configs": "^3.1.1",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.0.0",
     "concurrently": "^7.5.0",
     "esbuild": "0.15.14",
     "esbuild-plugin-alias": "^0.2.1",
-    "eslint": "^7.32.0",
+    "eslint": "^8.33.0",
+    "prettier": "^2.8.3",
     "recursive-copy": "^2.0.14",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.3",
+    "@babel/core": "^7.20.12"
   },
   "engines": {
-    "node": ">= v18.12.1"
+    "node": ">= v16"
   },
   "volta": {
     "extends": "../../package.json"

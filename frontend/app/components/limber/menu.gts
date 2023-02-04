@@ -5,7 +5,7 @@ import { hash } from '@ember/helper';
 import HeadlessMenu from 'ember-headlessui/components/menu';
 import { PopperJS } from 'ember-popperjs';
 
-import type { ComponentLike } from "@glint/template";
+import type { ComponentLike, ModifierLike } from "@glint/template";
 import type { TOC } from '@ember/component/template-only';
 
 const Button: TOC<{
@@ -19,23 +19,17 @@ const Button: TOC<{
   Blocks: {
     default: []
   }
-}> = <template>
-  <@item as |i|>
-    <i.Element
-      @tagName="button"
-      class="
-        bg-transparent
-        block w-full select-none py-2 px-4 text-left
-        text-black hover:bg-gray-100 focus:ring-4 ring-inset focus:outline-none
-      "
-      tabindex="0"
-      data-test-menu-button
-      ...attributes
-    >
-      {{yield}}
-    </i.Element>
-  </@item>
-</template>;
+}> = <template><@item as |i|>
+  <i.Element
+    @tagName='button'
+    class='bg-transparent block w-full select-none py-2 px-4 text-left text-black hover:bg-gray-100 focus:ring-4 ring-inset focus:outline-none'
+    tabindex='0'
+    data-test-menu-button
+    ...attributes
+  >
+    {{yield}}
+  </i.Element>
+</@item></template>;
 
 const DefaultTrigger: TOC<{
   Element: HTMLButtonElement;
@@ -45,39 +39,27 @@ const DefaultTrigger: TOC<{
   Blocks: {
     default: [any];
   }
-}> = <template>
-  <@menu.Button
-    {{!-- @glint-ignore --}}
-    {{@trigger}}
-    class="
-      text-black
-      rounded-sm border border-gray-900 bg-white px-2 py-1 -my-1 text-left
-      transition ease-in-out duration-150 sm:text-sm
-      focus:ring-4 focus-visible:outline-none ring-ember-brand focus:outline-none
-    "
-    ...attributes
-  >
-    {{yield @menu}}
-  </@menu.Button>
-</template>;
+}> = <template><@menu.Button
+  {{! @glint-ignore }}
+  {{@trigger}}
+  class='text-black rounded-sm border border-gray-900 bg-white px-2 py-1 -my-1 text-left transition ease-in-out duration-150 sm:text-sm focus:ring-4 focus-visible:outline-none ring-ember-brand focus:outline-none'
+  ...attributes
+>
+  {{yield @menu}}
+</@menu.Button></template>;
 
 const PlainTrigger: TOC<{
   Element: HTMLButtonElement;
   Args: {
     menu: any;
+    trigger: ModifierLike;
   };
   Blocks: {
     default: [{ isOpen: boolean }];
   }
-}> = <template>
-  <@menu.Button
-    {{!-- @glint-ignore --}}
-    {{@trigger}}
-    ...attributes
-  >
-    {{yield @menu}}
-  </@menu.Button>
-</template>;
+}> = <template><@menu.Button {{! @glint-ignore }} {{@trigger}} ...attributes>
+  {{yield @menu}}
+</@menu.Button></template>;
 
 const portalTarget = () => {
   let selector = `[data-portal="popover"]`;
@@ -102,37 +84,34 @@ const Menu: TOC<{
     }],
     options: [ComponentLike<{ Element: HTMLButtonElement, Blocks: { default: []} }>],
   }
-}> = <template>
-  <HeadlessMenu as |menu|>
-    <PopperJS as |trigger popover|>
+}> = <template><HeadlessMenu as |menu|>
+  <PopperJS as |trigger popover|>
 
-      {{yield
-        (hash
-          menu=menu
-          isOpen=menu.isOpen
-          modifiers=trigger
-          Button=(component PlainTrigger menu=menu trigger=trigger)
-          Default=(component DefaultTrigger menu=menu trigger=trigger)
-        )
-        to="trigger"
-      }}
+    {{yield
+      (hash
+        menu=menu
+        isOpen=menu.isOpen
+        modifiers=trigger
+        Button=(component PlainTrigger menu=menu trigger=trigger)
+        Default=(component DefaultTrigger menu=menu trigger=trigger)
+      )
+      to='trigger'
+    }}
 
-      {{#if menu.isOpen}}
-        {{#in-element (portalTarget)}}
-          <menu.Items
-            {{!-- @glint-ignore --}}
-            {{popover}}
-            class="absolute top-2 z-20 grid mt-1 rounded-sm bg-white drop-shadow-lg min-w-max"
-            data-test-menu-items
-            as |items|
-          >
-            {{yield (component Button item=items.Item) to="options"}}
-          </menu.Items>
-        {{/in-element}}
-      {{/if}}
+    {{#if menu.isOpen}}
+      {{#in-element (portalTarget)}}
+        <menu.Items
+          {{popover}}
+          class='absolute top-2 z-20 grid mt-1 rounded-sm bg-white drop-shadow-lg min-w-max'
+          data-test-menu-items
+          as |items|
+        >
+          {{yield (component Button item=items.Item) to='options'}}
+        </menu.Items>
+      {{/in-element}}
+    {{/if}}
 
-    </PopperJS>
-  </HeadlessMenu>
-</template>
+  </PopperJS>
+</HeadlessMenu></template>
 
 export default Menu;

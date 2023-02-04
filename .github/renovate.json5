@@ -112,6 +112,10 @@
         "ember-qunit",
         "qunit"
       ]
+    },
+    {
+      "depTypeList": ["engines"],
+      "enabled": false
     }
   ]
 }

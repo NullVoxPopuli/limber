@@ -19,25 +19,23 @@ export const Shadowed: TOC<{
   }
   Blocks: { default: [] }
 }> =
-<template>
-  {{#let (State) as |shadow|}}
-    {{!-- @glint-ignore --}}
-    <div data-shadow {{attachShadow shadow.update}} ...attributes></div>
+<template>{{#let (State) as |shadow|}}
+  {{! @glint-ignore }}
+  <div data-shadow {{attachShadow shadow.update}} ...attributes></div>
 
-    {{#if shadow.value}}
-      {{#in-element shadow.value}}
-        {{#unless @omitStyles}}
-          {{#let (getStyles) as |styles|}}
-            {{#each styles as |styleHref|}}
-              <link rel="stylesheet" href={{styleHref}} />
-            {{/each}}
-          {{/let}}
-        {{/unless}}
+  {{#if shadow.value}}
+    {{#in-element shadow.value}}
+      {{#unless @omitStyles}}
+        {{#let (getStyles) as |styles|}}
+          {{#each styles as |styleHref|}}
+            <link rel='stylesheet' href={{styleHref}} />
+          {{/each}}
+        {{/let}}
+      {{/unless}}
 
-        {{yield}}
-      {{/in-element}}
-    {{/if}}
-  {{/let}}
-</template>
+      {{yield}}
+    {{/in-element}}
+  {{/if}}
+{{/let}}</template>
 
 export default Shadowed;

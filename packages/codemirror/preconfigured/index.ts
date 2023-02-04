@@ -46,6 +46,8 @@ export default function newEditor(
       languageForFormat(format),
       updateListener,
       EditorView.lineWrapping,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       keymap.of([
         // Intentionally do not capture the tab key -- otherwise we can't leave the editor.
         // indentWithTab

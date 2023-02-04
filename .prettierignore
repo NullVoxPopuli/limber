@@ -1,0 +1,11 @@
+*.yml
+*.yaml
+*.md
+*.json
+
+node_modules/
+dist/
+public/
+vendor/
+coverage/
+.lint-todo/

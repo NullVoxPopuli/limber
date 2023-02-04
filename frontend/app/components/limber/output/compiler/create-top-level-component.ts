@@ -1,5 +1,6 @@
 import { type ComponentLike } from '@glint/template';
 import { nameFor } from 'ember-repl';
+
 import { type Format } from 'limber/utils/messaging';
 
 export const CACHE = new Map<string, ComponentLike>();

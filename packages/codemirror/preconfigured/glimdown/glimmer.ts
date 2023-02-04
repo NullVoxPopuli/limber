@@ -1,5 +1,4 @@
-import { LRLanguage } from '@codemirror/language';
-import { foldInside, foldNodeProp, indentNodeProp } from '@codemirror/language';
+import { foldInside, foldNodeProp, indentNodeProp, LRLanguage } from '@codemirror/language';
 import { styleTags, tags as t } from '@lezer/highlight';
 import {
   // configureNesting,

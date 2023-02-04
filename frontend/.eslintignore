@@ -1,3 +1,14 @@
+# We need the following bugs fixed to support --fix
+#   - https://github.com/ember-cli/eslint-plugin-ember/issues/1750
+*.gjs
+*.gts
+
+# We need the following repos to release (maybe in a chain?)
+# Bugfixes need to be released.
+#  - https://github.com/glimmerjs/glimmer-vm
+#  - https://github.com/ember-template-imports/ember-template-imports/
+#    (becausue the glimmer parser update should be forced on everywhere)
+
 # unconventional js
 /blueprints/*/files/
 /vendor/

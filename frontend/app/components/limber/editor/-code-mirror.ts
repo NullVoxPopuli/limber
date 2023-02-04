@@ -3,6 +3,7 @@ import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyabl
 import { service } from '@ember/service';
 
 import Modifier from 'ember-modifier';
+
 import { formatFrom } from 'limber/utils/messaging';
 
 import type { EditorView } from '@codemirror/view';

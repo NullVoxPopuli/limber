@@ -1,4 +1,5 @@
 packages:
+  - './dev'
   - './frontend'
   - './packages/**'
   - './tests'

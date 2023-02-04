@@ -1,8 +1,9 @@
 import { DEBUG } from '@glimmer/env';
 
 import { getService } from 'ember-statechart-component';
-import inIframe from 'limber/helpers/in-iframe';
 import { assign, createMachine } from 'xstate';
+
+import inIframe from 'limber/helpers/in-iframe';
 
 interface Context {
   container?: HTMLElement;

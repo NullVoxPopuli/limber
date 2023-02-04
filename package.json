@@ -3,55 +3,55 @@
   "private": true,
   "author": "NullVoxPopuli",
   "scripts": {
+    "dev": "node ./dev/index.js",
     "prepare": "pnpm build",
     "release": "changeset publish",
     "build": "pnpm _turbo build --filter=limber^...",
     "lint:fix": "pnpm --filter='*' lint:fix",
     "lint": "pnpm _turbo lint",
+    "format": "pnpm --filter='*' format",
+    "format:check": "pnpm _turbo format:check",
     "typecheck": "pnpm _turbo typecheck",
     "start": "pnpm _turbo start --filter=limber",
     "_turbo": "pnpm turbo --api='http://127.0.0.1:9080' --token=this-is-not-a-secret --team=foo"
   },
+  "engines": {
+    "node": ">= 16"
+  },
   "volta": {
-    "node": "18.12.1",
+    "node": "18.14.0",
     "yarn": "1.22.19",
     "npm": "9.1.2"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.4.7",
-    "@changesets/cli": "^2.25.2",
-    "concurrently": "^7.5.0",
-    "turbo": "^1.6.3"
+    "@babel/core": "^7.20.12",
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.26.0",
+    "@nullvoxpopuli/eslint-configs": "^3.1.1",
+    "concurrently": "^7.6.0",
+    "eslint": "^8.33.0",
+    "prettier": "^2.8.3",
+    "turbo": "^1.7.3"
   },
   "packageManager": "pnpm@7.16.1",
   "pnpm": {
     "overrides": {
-      "@babel/core": "~7.18.0",
-      "ember-auto-import": "^2.5.0",
-      "@ember/render-modifiers": "^2.0.4",
-      "@types/eslint": "^7.0.0"
+      "ember-auto-import": "^2.6.0",
+      "@types/eslint": "^8.0.0"
     },
     "allowedDeprecatedVersions": {
-      "babel-eslint": "^10.0.0",
       "source-map-url": "^0.3.0",
       "core-js": "^2.0.0"
     },
     "peerDependencyRules": {
       "allowAny": [
-        "mustache",
         "ember-modifier"
-      ],
-      "ignoreMissing": [
-        "ember-cli-htmlbars"
       ]
     },
-    "notes": {
-      "ember-cli-htmlbars": "peer of ember-template-imports via eslint-plugin-ember",
-      "mustache": "ember-cli -> testem -> consolidate -> mustache is ancient"
-    },
+    "notes": {},
     "patchedDependencies": {
       "ember-on-resize-modifier@1.1.0": "patches/ember-on-resize-modifier@1.1.0.patch",
-      "ember-container-query@3.0.0": "patches/ember-container-query@3.0.0.patch"
+      "ember-container-query@4.0.0-alpha.1": "patches/ember-container-query@4.0.0-alpha.1.patch"
     }
   }
 }
