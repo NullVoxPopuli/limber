@@ -9,8 +9,9 @@ import { _backburner } from '@ember/runloop';
 import loadInitializers from 'ember-load-initializers';
 import Resolver from 'ember-resolver';
 import { setupComponentMachines } from 'ember-statechart-component';
-import config from 'limber/config/environment';
 import { StateNode } from 'xstate';
+
+import config from 'limber/config/environment';
 
 if (DEBUG) {
   // This has performance implications, but the debuggability is worth it.

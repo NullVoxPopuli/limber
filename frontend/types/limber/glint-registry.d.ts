@@ -4,22 +4,20 @@ import 'ember-page-title/glint';
 import 'ember-statechart-component/glint';
 
 import type EmberContainerQueryRegistry from 'ember-container-query/template-registry';
-
+import type DemoSelect from 'limber/components/limber/demo-select';
+import type Editor from 'limber/components/limber/editor';
+import type FrameOutput from 'limber/components/limber/frame-output';
+import type Header from 'limber/components/limber/header';
+import type Layout from 'limber/components/limber/layout';
 import type Output from 'limber/components/limber/output';
 import type OutputFramMessaging from 'limber/components/limber/output/frame-messaging';
 import type Portals from 'limber/components/limber/portals';
-import type Header from 'limber/components/limber/header';
-import type Layout from 'limber/components/limber/layout';
-import type Editor from 'limber/components/limber/editor';
-import type FrameOutput from 'limber/components/limber/frame-output';
-import type DemoSelect from 'limber/components/limber/demo-select';
-
-import type service from 'limber/helpers/service';
-import type not from 'limber/helpers/not';
 import type inIframe from 'limber/helpers/in-iframe';
+import type not from 'limber/helpers/not';
+import type service from 'limber/helpers/service';
+import type constraintVertically from 'limber/modifiers/constrain-vertically';
 import type highlighted from 'limber/modifiers/highlighted';
 import type positionedNLines from 'limber/modifiers/positioned-n-lines-from-top';
-import type constraintVertically from 'limber/modifiers/constrain-vertically';
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry extends EmberContainerQueryRegistry {

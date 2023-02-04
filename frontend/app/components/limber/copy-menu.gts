@@ -24,25 +24,22 @@ export default class CopyMenu extends Component {
     await withExtraStyles(code, () => toClipboard(code));
   }
 
-  <template>
-    <Menu>
-      <:trigger as |t|>
-        <t.Default class="absolute top-3 right-4 z-10" data-test-copy-menu>
-          📋
-        </t.Default>
-      </:trigger>
+  <template><Menu>
+  <:trigger as |t|>
+    <t.Default class='absolute top-3 right-4 z-10' data-test-copy-menu>
+      📋
+    </t.Default>
+  </:trigger>
 
-
-      <:options as |Item|>
-        <Item {{on 'click' this.copyAsText}}>
-          Copy as text
-        </Item>
-        <Item {{on 'click' this.copyAsImage}}>
-          Copy as image
-        </Item>
-      </:options>
-    </Menu>
-  </template>
+  <:options as |Item|>
+    <Item {{on 'click' this.copyAsText}}>
+      Copy as text
+    </Item>
+    <Item {{on 'click' this.copyAsImage}}>
+      Copy as image
+    </Item>
+  </:options>
+</Menu></template>
 }
 
 

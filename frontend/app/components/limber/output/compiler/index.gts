@@ -89,12 +89,6 @@ export default class Compiler extends Component<Signature> {
 
   }
 
-  <template>
-    {{yield
-      (hash
-        component=this.component
-      )
-    }}
-  </template>
+  <template>{{yield (hash component=this.component)}}</template>
 }
 

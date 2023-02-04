@@ -55,57 +55,50 @@ export const Layout: TOC<{
     editor: [];
     output: [];
   }
-}> = <template>
-  <State as |state send|>
-    {{!--
+}> = <template><State as |state send|>
+  {{!--
     {{effect (fn onTransition console.log)}}
     {{log (state.toStrings)}}
     --}}
 
-    {{#let (containerDirection state) as |horizontallySplit|}}
-      <Orientation as |isVertical|>
-        {{effect (fn send 'ORIENTATION' (hash isVertical=isVertical )) }}
+  {{#let (containerDirection state) as |horizontallySplit|}}
+    <Orientation as |isVertical|>
+      {{effect (fn send 'ORIENTATION' (hash isVertical=isVertical))}}
 
-        <div
-          {{! row = left to right, col = top to bottom }}
-          class="
-            {{if horizontallySplit 'flex-col' 'flex-row'}}
-            flex overflow-hidden"
+      <div
+        {{! row = left to right, col = top to bottom }}
+        class='{{if horizontallySplit "flex-col" "flex-row"}} flex overflow-hidden'
+      >
+
+        <EditorContainer
+          @splitHorizontally={{horizontallySplit}}
+          {{! @glint-ignore }}
+          {{setupState send}}
         >
-
-          <EditorContainer
+          <Controls
+            @isMinimized={{state.matches 'hasContainer.minimized'}}
+            @isMaximized={{state.matches 'hasContainer.maximized'}}
+            @needsControls={{toBoolean state.context.container}}
             @splitHorizontally={{horizontallySplit}}
-            {{!-- @glint-ignore --}}
-            {{setupState send}}
-          >
-            <Controls
-              @isMinimized={{state.matches 'hasContainer.minimized'}}
-              @isMaximized={{state.matches 'hasContainer.maximized'}}
-              @needsControls={{toBoolean state.context.container}}
-              @splitHorizontally={{horizontallySplit}}
-              @send={{send}}
-            />
+            @send={{send}}
+          />
 
-            {{yield to="editor"}}
+          {{yield to='editor'}}
 
-          </EditorContainer>
+        </EditorContainer>
 
-          {{#if (isResizable state)}}
-            <ResizeHandle
-              @direction={{resizeDirection horizontallySplit}}
-            />
-          {{/if}}
+        {{#if (isResizable state)}}
+          <ResizeHandle @direction={{resizeDirection horizontallySplit}} />
+        {{/if}}
 
+        <OutputContainer>
 
-          <OutputContainer>
+          {{yield to='output'}}
 
-            {{yield to="output"}}
-
-          </OutputContainer>
-        </div>
-      </Orientation>
-    {{/let}}
-  </State>
-</template>;
+        </OutputContainer>
+      </div>
+    </Orientation>
+  {{/let}}
+</State></template>;
 
 export default Layout;

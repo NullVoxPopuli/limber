@@ -51,9 +51,8 @@ module('Demos', function (hooks) {
         this.owner.register('controller:edit', FakeController);
         this.owner.register(
           'template:edit',
-          hbs`
-            {{!-- @glint-ignore --}}
-            <Limber::Output @messagingAPI={{this.api}} />`
+          hbs`{{! @glint-ignore }}
+<Limber::Output @messagingAPI={{this.api}} />`
         );
 
         await visit('/edit');

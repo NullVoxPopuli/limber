@@ -1,6 +1,16 @@
 'use strict';
 
 module.exports = {
-  plugins: ['ember-template-lint-plugin-prettier'],
-  extends: ['recommended', 'ember-template-lint-plugin-prettier:recommended'],
+  plugins: [],
+  extends: ['recommended'],
+  overrides: [
+    {
+      files: ['**/*.gts', '**/*.gjs'],
+      rules: {
+        // Handled by ESLint
+        //   otherwise gives false negatives
+        'no-implicit-this': 'off',
+      },
+    },
+  ],
 };

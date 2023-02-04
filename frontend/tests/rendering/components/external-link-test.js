@@ -18,11 +18,9 @@ module('Integration | Component | external-link', function (hooks) {
     assert.strictEqual(this.element.textContent.trim(), '');
 
     // Template block usage:
-    await render(hbs`
-      <this.ExternalLink>
-        template block text
-      </this.ExternalLink>
-    `);
+    await render(hbs`<this.ExternalLink>
+  template block text
+</this.ExternalLink>`);
 
     assert.strictEqual(this.element.textContent.trim(), 'template block text');
   });

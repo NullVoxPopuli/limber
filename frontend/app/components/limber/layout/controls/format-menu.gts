@@ -16,29 +16,26 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
 
   switch = (format: Format) => this.router.transitionTo({ queryParams: { format }});
 
-  <template>
-    <Menu>
-      <:trigger as |t|>
-        <t.Button title="Change document language" ...attributes>
-          <FaIcon @icon='cog' />
-        </t.Button>
-      </:trigger>
+  <template><Menu>
+  <:trigger as |t|>
+    <t.Button title='Change document language' ...attributes>
+      <FaIcon @icon='cog' />
+    </t.Button>
+  </:trigger>
 
+  <:options as |Item|>
+    <Item {{on 'click' (fn this.switch 'glimdown')}}>
+      Glimdown
+    </Item>
 
-      <:options as |Item|>
-        <Item {{on 'click' (fn this.switch 'glimdown')}}>
-          Glimdown
-        </Item>
+    <Item {{on 'click' (fn this.switch 'gjs')}}>
+      Glimmer JS
+    </Item>
 
-        <Item {{on 'click' (fn this.switch 'gjs')}}>
-          Glimmer JS
-        </Item>
-
-        <Item {{on 'click' (fn this.switch 'hbs')}}>
-          Template
-        </Item>
-      </:options>
-    </Menu>
-  </template>
+    <Item {{on 'click' (fn this.switch 'hbs')}}>
+      Template
+    </Item>
+  </:options>
+</Menu></template>
 }
 

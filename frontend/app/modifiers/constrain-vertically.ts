@@ -1,6 +1,6 @@
 import { debounce } from '@ember/runloop';
-
 import { isTesting } from '@embroider/macros';
+
 import { modifier } from 'ember-modifier';
 
 interface Signature {

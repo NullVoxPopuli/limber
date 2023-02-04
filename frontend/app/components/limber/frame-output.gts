@@ -105,14 +105,13 @@ export default class FrameOutput extends Component {
     return () => this.connection?.destroy();
   });
 
-  <template>
-    <iframe
-      {{!-- @glint-ignore --}}
-      {{this.postMessage this.frameStatus}}
-      {{!-- @glint-ignore --}}
-      {{this.onMessage}}
-      title="Rendered output"
-      class="w-full h-full border-none"
-      src="/output?format={{this.format}}"></iframe>
-  </template>
+  <template><iframe
+  {{! @glint-ignore }}
+  {{this.postMessage this.frameStatus}}
+  {{! @glint-ignore }}
+  {{this.onMessage}}
+  title='Rendered output'
+  class='w-full h-full border-none'
+  src='/output?format={{this.format}}'
+></iframe></template>
 }

@@ -13,5 +13,9 @@ module.exports = {
       ...baseNode,
       files: ['browserstack.testem.js'],
     },
+    {
+      files: ['**/*.{gts,gjs'],
+      rules: {},
+    },
   ],
 };

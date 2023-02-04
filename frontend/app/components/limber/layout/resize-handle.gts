@@ -144,35 +144,22 @@ export const ResizeHandle: TOC<{
   Args: {
     direction: 'vertical' | 'horizontal';
   }
-}> = <template>
-  <div class="
-    relative
-    {{if (eq @direction 'horizontal')
-      "h-full w-2 py-2"
-      "w-full h-2 px-2"
-    }}
-  ">
-    <button
-      class="
-        {{if (eq @direction 'horizontal')
-          "h-full w-2 py-2 cursor-col-resize"
-          "w-full h-2 px-2 cursor-row-resize"
-        }}
-        absolute inset-0
-        flex justify-end items-end
-        text-white bg-horizon-lavender
-        focus:ring-4 focus:outline-none focus-visible:outline-none
-        leading-4 shadow z-10
-        group
-      "
-    style="text-shadow: 1px 1px 1px black"
-    aria-label="resize the editor"
+}> = <template><div class='relative {{if (eq @direction "horizontal") "h-full w-2 py-2" "w-full h-2 px-2"}} '>
+  <button
+    class='{{if
+        (eq @direction "horizontal")
+        "h-full w-2 py-2 cursor-col-resize"
+        "w-full h-2 px-2 cursor-row-resize"
+      }}
+      absolute inset-0 flex justify-end items-end text-white bg-horizon-lavender focus:ring-4 focus:outline-none focus-visible:outline-none leading-4 shadow z-10 group'
+    style='text-shadow: 1px 1px 1px black'
+    aria-label='resize the editor'
+    type='button'
     {{! @glint-ignore }}
     {{ResizePrevious @direction}}
-    >
-      <span class="group-focus:animate-bounce">
-        {{if (eq @direction 'horizontal') '⬌' '⬍'}}
-      </span>
-    </button>
-  </div>
-</template>;
+  >
+    <span class='group-focus:animate-bounce'>
+      {{if (eq @direction 'horizontal') '⬌' '⬍'}}
+    </span>
+  </button>
+</div></template>;
