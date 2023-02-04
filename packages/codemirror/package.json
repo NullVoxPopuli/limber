@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "description": "custom build of codemirror for use in Limber",
   "type": "module",
-  "main": "index.js",
+  "exports": {
+    "./broccoli-funnel": {
+      "require": "./broccoli-funnel.cjs"
+    }
+  },
   "author": "NullVoxPopuli",
   "license": "MIT",
   "private": true,

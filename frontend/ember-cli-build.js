@@ -47,7 +47,6 @@ module.exports = function (defaults) {
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     extraPublicTrees: [
-      // eslint-disable-next-line n/no-missing-require
       require('@nullvoxpopuli/limber-codemirror/broccoli-funnel')(),
       // Tailwind
       require('@nullvoxpopuli/limber-styles/broccoli-funnel')(),
