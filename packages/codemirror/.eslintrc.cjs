@@ -6,7 +6,5 @@ let config = configs.crossPlatform();
 
 module.exports = {
   ...config,
-  overrides: [
-    ...config.overrides,
-  ],
+  overrides: [...config.overrides],
 };
