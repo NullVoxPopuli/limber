@@ -17,7 +17,6 @@ export default class GetService<Key extends keyof Registry> extends Helper<Signa
 
     assert(`Could not get owner.`, owner);
 
-    return owner
-      .lookup(`service:${name}`);
+    return owner.lookup(`service:${name}`);
   }
 }
