@@ -3,6 +3,8 @@ import "@glint/environment-ember-loose/native-integration";
 import "ember-page-title/glint";
 import 'ember-statechart-component/glint';
 
+import type EmberContainerQueryRegistry from 'ember-container-query/template-registry';
+
 import type Output from 'limber/components/limber/output';
 import type OutputFramMessaging from 'limber/components/limber/output/frame-messaging';
 import type Portals from 'limber/components/limber/portals';
@@ -21,7 +23,7 @@ import type constraintVertically from "limber/modifiers/constrain-vertically";
 
 
 declare module "@glint/environment-ember-loose/registry" {
-  export default interface Registry {
+  export default interface Registry extends EmberContainerQueryRegistry {
     // How to define globals from external addons
     // state: HelperLike<{ Args: {}, Return: State }>;
     // attachShadow: ModifierLike<{ Args: { Positional: [State['update']]}}>;
