@@ -156,6 +156,7 @@ importers:
       path-browserify: ^1.0.1
       penpal: ^6.2.2
       prettier: ^2.8.3
+      prettier-plugin-ember-template-tag: ^0.3.2
       qunit: ^2.19.3
       qunit-dom: ^2.0.0
       remark-hbs: 0.4.1
@@ -280,6 +281,7 @@ importers:
       loader.js: 4.7.0
       onp: 2.0.4
       prettier: 2.8.3
+      prettier-plugin-ember-template-tag: 0.3.2
       qunit: 2.19.4
       qunit-dom: 2.0.0
       rollup: 2.79.1

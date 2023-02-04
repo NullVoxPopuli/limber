@@ -1,4 +1,3 @@
-// @ts-ignore
 import { hash } from '@ember/helper';
 
 import { ContainerQuery, aspectRatio } from 'ember-container-query';
@@ -14,20 +13,21 @@ interface Signature {
 }
 
 export const Orientation: TOC<Signature> =
-<template><ContainerQuery
-  @features={{hash isVertical=(aspectRatio max=1.2)}}
-  {{! grid forces all the contents to take up all available vertical space }}
-  class='grid'
-  {{! @glint-ignore }}
-  {{constrainVertically}}
-  as |query|
->
+  <template>
+    <ContainerQuery
+      @features={{hash isVertical=(aspectRatio max=1.2)}}
+      {{! grid forces all the contents to take up all available vertical space }}
+      class='grid'
+      {{constrainVertically}}
+      as |query|
+    >
 
-  {{#let query.features.isVertical as |isVertical|}}
+      {{#let query.features.isVertical as |isVertical|}}
 
-    {{yield isVertical}}
+        {{yield (Boolean isVertical)}}
 
-  {{/let}}
+      {{/let}}
 
-</ContainerQuery></template>;
+    </ContainerQuery>
+  </template>;
 
