@@ -30,14 +30,6 @@ module.exports = async function build() {
     entryPoints: [path.join('preconfigured', 'index.ts')],
     outfile: path.join(buildDir, 'preconfigured.js'),
     // minification breaks codemirror somehow
-    watch: isWatch
-      ? {
-          onRebuild(error, result) {
-            if (error) console.error('watch build failed:', error);
-            else console.info('watch build succeeded:', result);
-          },
-        }
-      : false,
     // plugins: [replaceNodeBuiltins()]
   });
 
