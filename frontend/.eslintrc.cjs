@@ -17,5 +17,17 @@ module.exports = {
       files: ['**/*.{gts,gjs'],
       rules: {},
     },
+    {
+      files: ['tests/**/*.ts'],
+      rules: {
+        '@typescript-eslint/no-empty-function': 'off',
+      },
+    },
+    {
+      files: ['types/**/*'],
+      rules: {
+        '@typescript-eslint/no-explicit-any': 'off',
+      },
+    },
   ],
 };

@@ -21,7 +21,7 @@ const ExternalLink: TOC<{
   class='flex gap-2 items-baseline focus:ring-4 focus:outline-none focus-visible:outline-none rounded-sm'
   ...attributes
 >
-  {{#if (has-block 'default')}}
+  {{#if (has-block)}}
     <DefaultContent>
       {{yield}}
     </DefaultContent>
