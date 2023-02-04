@@ -51,22 +51,22 @@ if (require.main === module) {
   module.exports();
 }
 
-const replaceNodeBuiltins = () => {
-  const replace = {
-    // 'path': require.resolve('path-browserify'),
-    // 'process': require.resolve('process'),
-    // 'fs': require.resolve('./src/fs.cjs'),
-    // 'util': require.resolve('./src/util.cjs'),
-    // 'url': require.resolve('url/'),
-  };
-  const filter = RegExp(`^(${Object.keys(replace).join('|')})$`);
+// const replaceNodeBuiltins = () => {
+//   const replace = {
+//     // 'path': require.resolve('path-browserify'),
+//     // 'process': require.resolve('process'),
+//     // 'fs': require.resolve('./src/fs.cjs'),
+//     // 'util': require.resolve('./src/util.cjs'),
+//     // 'url': require.resolve('url/'),
+//   };
+//   const filter = RegExp(`^(${Object.keys(replace).join('|')})$`);
 
-  return {
-    name: 'replaceNodeBuiltIns',
-    setup(build) {
-      build.onResolve({ filter }, (arg) => ({
-        path: replace[arg.path],
-      }));
-    },
-  };
-};
+//   return {
+//     name: 'replaceNodeBuiltIns',
+//     setup(build) {
+//       build.onResolve({ filter }, (arg) => ({
+//         path: replace[arg.path],
+//       }));
+//     },
+//   };
+// };

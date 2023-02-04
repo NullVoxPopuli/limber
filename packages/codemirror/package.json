@@ -2,6 +2,7 @@
   "name": "@nullvoxpopuli/limber-codemirror",
   "version": "0.0.0",
   "description": "custom build of codemirror for use in Limber",
+  "type": "module",
   "main": "index.js",
   "author": "NullVoxPopuli",
   "license": "MIT",
