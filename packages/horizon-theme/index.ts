@@ -12,10 +12,10 @@ export const ui = {
   shadow: '#161e2b',
   border: '#1a2332',
   /**
-    * I wanted a slightly darker background, so instead
-    * of using the Horizon default background, this is
-    * now bg-gray-800 from the default tailwind theme
-    */
+   * I wanted a slightly darker background, so instead
+   * of using the Horizon default background, this is
+   * now bg-gray-800 from the default tailwind theme
+   */
   background: '#27272a',
   backgroundAlt: '#252f41',
   accent: '#323c4d',
@@ -39,4 +39,3 @@ export const alpha = {
   low: '1A',
   none: '00',
 } as const;
-

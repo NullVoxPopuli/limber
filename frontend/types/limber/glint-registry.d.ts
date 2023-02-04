@@ -1,6 +1,6 @@
-import "@glint/environment-ember-loose";
-import "@glint/environment-ember-loose/native-integration";
-import "ember-page-title/glint";
+import '@glint/environment-ember-loose';
+import '@glint/environment-ember-loose/native-integration';
+import 'ember-page-title/glint';
 import 'ember-statechart-component/glint';
 
 import type EmberContainerQueryRegistry from 'ember-container-query/template-registry';
@@ -19,10 +19,9 @@ import type not from 'limber/helpers/not';
 import type inIframe from 'limber/helpers/in-iframe';
 import type highlighted from 'limber/modifiers/highlighted';
 import type positionedNLines from 'limber/modifiers/positioned-n-lines-from-top';
-import type constraintVertically from "limber/modifiers/constrain-vertically";
+import type constraintVertically from 'limber/modifiers/constrain-vertically';
 
-
-declare module "@glint/environment-ember-loose/registry" {
+declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry extends EmberContainerQueryRegistry {
     // How to define globals from external addons
     // state: HelperLike<{ Args: {}, Return: State }>;
