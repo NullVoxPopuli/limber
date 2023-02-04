@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 'use strict';
 // https://github.com/emberjs/ember.js/blob/master/testem.browserstack.js
 
