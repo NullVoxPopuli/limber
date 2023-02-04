@@ -8,8 +8,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "tsc --build",
-    "dev": "tsc --build --watch",
+    "build": "tsc",
+    "dev": "tsc --watch",
     "typecheck": "tsc --build",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
     "lint:js": "eslint . --cache",
