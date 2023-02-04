@@ -409,7 +409,7 @@ importers:
       '@embroider/addon-dev': ^1.8.3
       '@embroider/addon-shim': ^1.0.0
       '@nullvoxpopuli/eslint-configs': ^3.1.1
-      '@rollup/plugin-babel': ^6.0.2
+      '@rollup/plugin-babel': ^6.0.3
       concurrently: ^7.5.0
       ember-cli-htmlbars: ^6.1.1
       ember-template-lint: ^4.0.0
@@ -4179,7 +4179,7 @@ packages:
     resolution: {integrity: sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA==}
     dependencies:
       '@types/eslint': 8.21.0
-      '@types/estree': 0.0.51
+      '@types/estree': 1.0.0
 
   /@types/eslint/8.21.0:
     resolution: {integrity: sha512-35EhHNOXgxnUgh4XCJsGhE7zdlDhYDN/aMG6UbkByCFFNgQ7b3U+uVoqBpicFydR8JEfgdjCF7SJ7MiJfzuiTA==}
