@@ -15,6 +15,9 @@
     "start": "pnpm _turbo start --filter=limber",
     "_turbo": "pnpm turbo --api='http://127.0.0.1:9080' --token=this-is-not-a-secret --team=foo"
   },
+  "engines": {
+    "node": ">= 16"
+  },
   "volta": {
     "node": "18.14.0",
     "yarn": "1.22.19",
@@ -33,28 +36,19 @@
   "packageManager": "pnpm@7.16.1",
   "pnpm": {
     "overrides": {
-      "@babel/core": "~7.18.0",
-      "ember-auto-import": "^2.5.0",
-      "@ember/render-modifiers": "^2.0.4",
-      "@types/eslint": "^7.0.0"
+      "ember-auto-import": "^2.6.0",
+      "@types/eslint": "^8.0.0"
     },
     "allowedDeprecatedVersions": {
-      "babel-eslint": "^10.0.0",
       "source-map-url": "^0.3.0",
       "core-js": "^2.0.0"
     },
     "peerDependencyRules": {
       "allowAny": [
-        "mustache",
         "ember-modifier"
-      ],
-      "ignoreMissing": [
-        "ember-cli-htmlbars"
       ]
     },
     "notes": {
-      "ember-cli-htmlbars": "peer of ember-template-imports via eslint-plugin-ember",
-      "mustache": "ember-cli -> testem -> consolidate -> mustache is ancient"
     },
     "patchedDependencies": {
       "ember-on-resize-modifier@1.1.0": "patches/ember-on-resize-modifier@1.1.0.patch"

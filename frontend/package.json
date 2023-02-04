@@ -47,18 +47,15 @@
     "@fortawesome/free-brands-svg-icons": "^6.2.1",
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
-    "@glint/config": "^0.9.7",
-    "@glint/core": "^0.9.7",
-    "@glint/environment-ember-loose": "^0.9.7",
-    "@glint/environment-ember-template-imports": "^0.9.7",
-    "@glint/template": "^0.9.7",
+    "@glint/core": "^1.0.0-beta.3",
+    "@glint/environment-ember-loose": "^1.0.0-beta.3",
+    "@glint/environment-ember-template-imports": "^1.0.0-beta.3",
+    "@glint/template": "^1.0.0-beta.3",
     "@nullvoxpopuli/eslint-configs": "^3.1.1",
     "@types/babel__core": "^7.1.20",
     "@types/codemirror": "5.60.7",
     "@types/common-tags": "^1.8.1",
     "@types/dompurify": "^2.3.4",
-    "@types/ember-qunit": "^6.1.1",
-    "@types/ember-resolver": "^9.0.0",
     "@types/ember__test-helpers": "^2.9.1",
     "@types/htmlbars-inline-precompile": "^3.0.0",
     "@types/mdast": "^3.0.10",
@@ -112,7 +109,7 @@
     "yn": "^4.0.0"
   },
   "engines": {
-    "node": ">= v18.12.1"
+    "node": ">= v16"
   },
   "ember": {
     "edition": "octane"
@@ -158,7 +155,7 @@
     "unist-util-flatmap": "^1.0.0",
     "webpack-bundle-analyzer": "^4.7.0",
     "ws": "^8.11.0",
-    "xstate": "4.34.0"
+    "xstate": "4.35.4"
   },
   "pnpm": {
     "overrides": {
