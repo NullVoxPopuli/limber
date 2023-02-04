@@ -96,7 +96,6 @@ importers:
       '@types/codemirror': 5.60.7
       '@types/common-tags': ^1.8.1
       '@types/dompurify': ^2.3.4
-      '@types/ember__test-helpers': ^2.9.1
       '@types/htmlbars-inline-precompile': ^3.0.0
       '@types/mdast': ^3.0.10
       '@types/qunit': ^2.19.4
@@ -239,7 +238,6 @@ importers:
       '@types/codemirror': 5.60.7
       '@types/common-tags': 1.8.1
       '@types/dompurify': 2.4.0
-      '@types/ember__test-helpers': 2.9.1_dr5a25oqcvtmoy4o567hsz72pe
       '@types/htmlbars-inline-precompile': 3.0.0
       '@types/mdast': 3.0.10
       '@types/qunit': 2.19.4
@@ -4210,18 +4208,6 @@ packages:
     resolution: {integrity: sha512-IDBwO5IZhrKvHFUl+clZxgf3hn2b/lU6H1KaBShPkQyGJUQ0xwebezIPSuiyGwfz1UzJWQl4M7BDxtHtCCPlTg==}
     dependencies:
       '@types/trusted-types': 2.0.2
-    dev: true
-
-  /@types/ember__test-helpers/2.9.1_dr5a25oqcvtmoy4o567hsz72pe:
-    resolution: {integrity: sha512-KZ6jYr0ZiQHlklLcfyuy1j+FkvygEayf5mZ9FcaSOahw9ghK3K5TYSRDCuIBELRw//OB/WP9J7v9NduFRNfRgg==}
-    deprecated: This is a stub types definition. @ember/test-helpers provides its own type definitions, so you do not need this installed.
-    dependencies:
-      '@ember/test-helpers': 2.9.3_dr5a25oqcvtmoy4o567hsz72pe
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@glint/template'
-      - ember-source
-      - supports-color
     dev: true
 
   /@types/eslint-scope/3.7.4:

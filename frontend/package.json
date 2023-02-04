@@ -56,7 +56,6 @@
     "@types/codemirror": "5.60.7",
     "@types/common-tags": "^1.8.1",
     "@types/dompurify": "^2.3.4",
-    "@types/ember__test-helpers": "^2.9.1",
     "@types/htmlbars-inline-precompile": "^3.0.0",
     "@types/mdast": "^3.0.10",
     "@types/qunit": "^2.19.4",
