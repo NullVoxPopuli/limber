@@ -21,7 +21,7 @@
     "@babel/core": "^7.20.12"
   },
   "dependencies": {
-    "@tailwindcss/typography": "^0.5.8",
+    "@tailwindcss/typography": "^0.5.9",
     "broccoli-funnel": "^3.0.8"
   }
 }
