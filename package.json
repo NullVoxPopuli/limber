@@ -3,6 +3,7 @@
   "private": true,
   "author": "NullVoxPopuli",
   "scripts": {
+    "dev": "node ./dev/index.js",
     "prepare": "pnpm build",
     "release": "changeset publish",
     "build": "pnpm _turbo build --filter=limber^...",
@@ -24,7 +25,10 @@
     "@changesets/cli": "^2.26.0",
     "concurrently": "^7.6.0",
     "prettier": "^2.8.3",
-    "turbo": "^1.7.3"
+    "turbo": "^1.7.3",
+    "@nullvoxpopuli/eslint-configs": "^3.1.1",
+    "eslint": "^8.33.0",
+    "@babel/core": "^7.20.12"
   },
   "packageManager": "pnpm@7.16.1",
   "pnpm": {

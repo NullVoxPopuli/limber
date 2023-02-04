@@ -33,7 +33,7 @@
     "test:ember": "ember test"
   },
   "devDependencies": {
-    "@babel/core": "~7.20.12",
+    "@babel/core": "^7.20.12",
     "@babel/eslint-parser": "^7.19.1",
     "@codemirror/view": "6.7.3",
     "@ember/optional-features": "^2.0.0",

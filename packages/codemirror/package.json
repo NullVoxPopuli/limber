@@ -43,16 +43,17 @@
     "path-browserify": "^1.0.1"
   },
   "devDependencies": {
-    "@nullvoxpopuli/eslint-configs": "2.2.34",
+    "@nullvoxpopuli/eslint-configs": "^3.1.1",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.0.0",
     "concurrently": "^7.5.0",
     "esbuild": "0.15.14",
     "esbuild-plugin-alias": "^0.2.1",
-    "eslint": "^7.32.0",
+    "eslint": "^8.33.0",
     "prettier": "^2.8.3",
     "recursive-copy": "^2.0.14",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.3",
+    "@babel/core": "^7.20.12"
   },
   "engines": {
     "node": ">= v18.12.1"

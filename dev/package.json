@@ -7,12 +7,18 @@
     "extends": "../package.json"
   },
   "dependencies": {
+    "chalk": "^5.2.0",
     "ember-apply": "^2.6.0",
     "execa": "^6.1.0",
+    "latest-version": "^7.0.0",
     "yargs": "^17.6.2"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
-    "@types/yargs": "^17.0.22"
+    "@types/yargs": "^17.0.22",
+    "@nullvoxpopuli/eslint-configs": "^3.1.1",
+    "eslint": "^8.33.0",
+    "prettier": "^2.8.3",
+    "@babel/core": "^7.20.12"
   }
 }
