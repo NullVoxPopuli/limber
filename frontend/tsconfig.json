@@ -6,6 +6,7 @@
     ]
   },
   "compilerOptions": {
+    "skipLibCheck": true,
     "target": "ESNext",
     "allowJs": true,
     "moduleResolution": "node",
