@@ -24,14 +24,14 @@
     "npm": "9.1.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.12",
     "@changesets/changelog-github": "^0.4.8",
     "@changesets/cli": "^2.26.0",
-    "concurrently": "^7.6.0",
-    "prettier": "^2.8.3",
-    "turbo": "^1.7.3",
     "@nullvoxpopuli/eslint-configs": "^3.1.1",
+    "concurrently": "^7.6.0",
     "eslint": "^8.33.0",
-    "@babel/core": "^7.20.12"
+    "prettier": "^2.8.3",
+    "turbo": "^1.7.3"
   },
   "packageManager": "pnpm@7.16.1",
   "pnpm": {
@@ -48,10 +48,10 @@
         "ember-modifier"
       ]
     },
-    "notes": {
-    },
+    "notes": {},
     "patchedDependencies": {
-      "ember-on-resize-modifier@1.1.0": "patches/ember-on-resize-modifier@1.1.0.patch"
+      "ember-on-resize-modifier@1.1.0": "patches/ember-on-resize-modifier@1.1.0.patch",
+      "ember-container-query@4.0.0-alpha.1": "patches/ember-container-query@4.0.0-alpha.1.patch"
     }
   }
 }

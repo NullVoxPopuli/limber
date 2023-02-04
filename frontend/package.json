@@ -59,6 +59,7 @@
     "@types/ember__test-helpers": "^2.9.1",
     "@types/htmlbars-inline-precompile": "^3.0.0",
     "@types/mdast": "^3.0.10",
+    "@types/qunit": "^2.19.4",
     "@types/rsvp": "^4.0.4",
     "@types/unist": "^2.0.6",
     "@typescript-eslint/eslint-plugin": "^5.50.0",

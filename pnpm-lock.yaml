@@ -5,6 +5,9 @@ overrides:
   '@types/eslint': ^8.0.0
 
 patchedDependencies:
+  ember-container-query@4.0.0-alpha.1:
+    hash: q2vzywo4fccxvth2uzxsgpb5xy
+    path: patches/ember-container-query@4.0.0-alpha.1.patch
   ember-on-resize-modifier@1.1.0:
     hash: prsfdndcfbbwmlkgbxbo7gxczu
     path: patches/ember-on-resize-modifier@1.1.0.patch
@@ -96,6 +99,7 @@ importers:
       '@types/ember__test-helpers': ^2.9.1
       '@types/htmlbars-inline-precompile': ^3.0.0
       '@types/mdast': ^3.0.10
+      '@types/qunit': ^2.19.4
       '@types/rsvp': ^4.0.4
       '@types/unist': ^2.0.6
       '@typescript-eslint/eslint-plugin': ^5.50.0
@@ -186,7 +190,7 @@ importers:
       browserslist: 4.21.5
       dompurify: 2.4.3
       ember-auto-import: 2.6.0_webpack@5.75.0
-      ember-container-query: 4.0.0-alpha.1_dr5a25oqcvtmoy4o567hsz72pe
+      ember-container-query: 4.0.0-alpha.1_q2vzywo4fccxvth2uzxsgpb5xy_dr5a25oqcvtmoy4o567hsz72pe
       ember-element-helper: 0.6.1_j4rdeqmk3bfqity5vrrnavkxem
       ember-focus-trap: 1.0.1
       ember-headlessui: 0.13.0_dainveaj5zx7stwzoodk7bdfdq
@@ -237,6 +241,7 @@ importers:
       '@types/ember__test-helpers': 2.9.1_dr5a25oqcvtmoy4o567hsz72pe
       '@types/htmlbars-inline-precompile': 3.0.0
       '@types/mdast': 3.0.10
+      '@types/qunit': 2.19.4
       '@types/rsvp': 4.0.4
       '@types/unist': 2.0.6
       '@typescript-eslint/eslint-plugin': 5.50.0_go4drrxstycfikanvu45pi4vgq
@@ -4308,6 +4313,10 @@ packages:
 
   /@types/qs/6.9.7:
     resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
+    dev: true
+
+  /@types/qunit/2.19.4:
+    resolution: {integrity: sha512-EocRiD2JRWrOaA0dnyyLX083DIo1p3OSBBiGODcHaMzOFhteXtvRRp0kKsiYYqynnBSMqnqRI92iE32axdoXZw==}
     dev: true
 
   /@types/range-parser/1.2.4:
@@ -8518,7 +8527,7 @@ packages:
       - supports-color
     dev: false
 
-  /ember-container-query/4.0.0-alpha.1_dr5a25oqcvtmoy4o567hsz72pe:
+  /ember-container-query/4.0.0-alpha.1_q2vzywo4fccxvth2uzxsgpb5xy_dr5a25oqcvtmoy4o567hsz72pe:
     resolution: {integrity: sha512-nijUWm+0Z220h3cCHYjNo9EZFPUqH2oQYlkmuJKYcRrxp7MsWYK5W2ldx87wBEV0BigrrBR3V5JRfDuArGrVEw==}
     engines: {node: 14.* || 16.* || >= 18}
     dependencies:
@@ -8533,6 +8542,7 @@ packages:
       - ember-source
       - supports-color
     dev: false
+    patched: true
 
   /ember-destroyable-polyfill/2.0.3_@babel+core@7.20.12:
     resolution: {integrity: sha512-TovtNqCumzyAiW0/OisSkkVK93xnVF4NRU6+FN0ubpfwEOpRrmM2RqDwXI6YAChCgSHON1cz0DfQStpA1Gjuuw==}
