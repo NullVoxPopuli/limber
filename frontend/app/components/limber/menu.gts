@@ -5,7 +5,7 @@ import { hash } from '@ember/helper';
 import HeadlessMenu from 'ember-headlessui/components/menu';
 import { PopperJS } from 'ember-popperjs';
 
-import type { ComponentLike } from "@glint/template";
+import type { ComponentLike, ModifierLike } from "@glint/template";
 import type { TOC } from '@ember/component/template-only';
 
 const Button: TOC<{
@@ -52,6 +52,7 @@ const PlainTrigger: TOC<{
   Element: HTMLButtonElement;
   Args: {
     menu: any;
+    trigger: ModifierLike;
   };
   Blocks: {
     default: [{ isOpen: boolean }];
@@ -100,7 +101,6 @@ const Menu: TOC<{
     {{#if menu.isOpen}}
       {{#in-element (portalTarget)}}
         <menu.Items
-          {{! @glint-ignore }}
           {{popover}}
           class='absolute top-2 z-20 grid mt-1 rounded-sm bg-white drop-shadow-lg min-w-max'
           data-test-menu-items
