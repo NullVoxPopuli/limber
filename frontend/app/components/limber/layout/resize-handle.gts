@@ -42,9 +42,9 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] }}> {
   }
 
   setup = () => {
-    this.dragHandle.addEventListener('touchstart', this.dragStartHandler);
-    this.dragHandle.addEventListener('mousedown', this.dragStartHandler);
-    this.dragHandle.addEventListener('keydown', this.keyHandler);
+    this.dragHandle.addEventListener('touchstart', this.dragStartHandler, { passive: true });
+    this.dragHandle.addEventListener('mousedown', this.dragStartHandler, { passive: true });
+    this.dragHandle.addEventListener('keydown', this.keyHandler, { passive: true });
 
     registerDestructor(this, () => {
       this.dragHandle.removeEventListener('touchstart', this.dragStartHandler);
@@ -107,10 +107,10 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] }}> {
 
     this.setPosition(event);
 
-    window.addEventListener('touchend', this.dragEndHandler);
-    window.addEventListener('touchmove', this.dragMove);
-    window.addEventListener('mousemove', this.dragMove);
-    window.addEventListener('mouseup', this.dragEndHandler);
+    window.addEventListener('touchend', this.dragEndHandler, { passive: true });
+    window.addEventListener('touchmove', this.dragMove, { passive: true });
+    window.addEventListener('mousemove', this.dragMove, { passive: true });
+    window.addEventListener('mouseup', this.dragEndHandler, { passive: true });
   }
 
   keyHandler = (event: KeyboardEvent) => {
