@@ -35,9 +35,9 @@ export default createMachine({
             cleanup();
           };
 
-          window.addEventListener('mousemove', mouse);
-          window.addEventListener('keydown', key);
-          window.addEventListener('touchstart', touch);
+          window.addEventListener('mousemove', mouse, { passive: true });
+          window.addEventListener('keydown', key, { passive: true });
+          window.addEventListener('touchstart', touch, { passive: true });
 
           return cleanup;
         },
