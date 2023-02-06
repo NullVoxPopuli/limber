@@ -25,13 +25,9 @@ export const Output: TOC<Signature> =
         <CopyMenu />
 
         {{#if context.component}}
-          {{! @glint-ignore }}
-          {{#let (component context.component) as |Preview|}}
-            <div {{highlight context.component}}>
-              {{! @glint-ignore }}
-              <Preview />
-            </div>
-          {{/let}}
+          <div {{highlight context.component}}>
+            <context.component />
+          </div>
         {{/if}}
 
       </div>
