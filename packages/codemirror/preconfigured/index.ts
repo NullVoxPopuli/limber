@@ -29,8 +29,12 @@ export default function newEditor(
     switch (format) {
       case 'glimdown':
         return glimdown();
-      case 'gjs':
-        return javascript();
+      case 'gjs': {
+        // Includes autocomplete, which is annoying since we're
+        // kind of writing invalid JavaScript
+        return javascript({ jsx: true });
+        // return new LanguageSupport(typescriptLanguage, [])
+      }
       case 'hbs':
         return javascript();
       default:

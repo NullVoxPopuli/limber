@@ -9,9 +9,6 @@
     "build": "pnpm _turbo build --filter=limber^...",
     "lint:fix": "pnpm --filter='*' lint:fix",
     "lint": "pnpm _turbo lint",
-    "format": "pnpm --filter='*' format",
-    "format:check": "pnpm _turbo format:check",
-    "typecheck": "pnpm _turbo typecheck",
     "start": "pnpm _turbo start --filter=limber",
     "_turbo": "pnpm turbo --api='http://127.0.0.1:9080' --token=this-is-not-a-secret --team=foo"
   },
@@ -24,14 +21,14 @@
     "npm": "9.1.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.12",
+    "@babel/core": "^7.21.0",
     "@changesets/changelog-github": "^0.4.8",
     "@changesets/cli": "^2.26.0",
-    "@nullvoxpopuli/eslint-configs": "^3.1.1",
+    "@nullvoxpopuli/eslint-configs": "^3.1.3",
     "concurrently": "^7.6.0",
-    "eslint": "^8.33.0",
-    "prettier": "^2.8.3",
-    "turbo": "^1.7.3"
+    "eslint": "^8.34.0",
+    "prettier": "^2.8.4",
+    "turbo": "^1.8.2"
   },
   "packageManager": "pnpm@7.16.1",
   "pnpm": {
