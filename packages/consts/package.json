@@ -8,8 +8,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "format": "prettier -w .",
-    "format:check": "prettier -c .",
+    "lint:prettier:fix": "prettier -w .",
+    "lint:prettier": "prettier -c .",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix"

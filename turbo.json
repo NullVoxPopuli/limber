@@ -9,16 +9,11 @@
     /////////////////////////////////////////////////
     /////////////////////////////////////////////////
     "dev": {
-      // TODO: how do I manage all the "watch" scripts at once?
-      "dependsOn": [
-        "^dev"
-      ],
+      "dependsOn": ["^dev"],
       "cache": false
     },
     "start": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": ["^build"],
       "cache": false
     },
 
@@ -31,29 +26,21 @@
     /////////////////////////////////////////////////
     "build": {
       "outputs": ["dist/**"],
-      "dependsOn": [
-        "^build"
-      ]
+      "dependsOn": ["^build"]
     },
-    // Libraries will have "test"
     "test": {
-      "dependsOn": [
-        "^build"
-      ]
+      "outputs": [],
+      "dependsOn": ["^build"]
     },
     // Apps will have test:ember and test:browserstack
     // They are separate so that they can cache independently
     // and provide more variability than just "test"
     "test:ember": {
       "env": ["CI_BROWSER"],
-      "dependsOn": [
-        "^build"
-      ]
+      "dependsOn": ["^build"]
     },
     "test:browserstack": {
-      "dependsOn": [
-        "^build"
-      ]
+      "dependsOn": ["^build"]
     },
 
     /////////////////////////////////////////////////
@@ -63,33 +50,22 @@
     //
     /////////////////////////////////////////////////
     /////////////////////////////////////////////////
-    "format:check": {
-      // A package's `format:check` script has no dependencies and
-      // can be run whenever. It also has no filesystem outputs.
-      "outputs": []
-    },
     "lint": {
-      // A package's `lint` script has no dependencies and
-      // can be run whenever. It also has no filesystem outputs.
       "outputs": [],
-      // "lint" is an alias for all types of linting
-      // This allows the results of eslint and ember-template-lint
-      // to be individually cached, depending on what's changed
-      "dependsOn": ["lint:js", "lint:hbs"]
+      "dependsOn": ["lint:js", "lint:hbs", "lint:prettier", "lint:types"]
     },
     "lint:js": {
-      // A package's `lint` script has no dependencies and
-      // can be run whenever. It also has no filesystem outputs.
       "outputs": []
     },
     "lint:hbs": {
-      // A package's `lint` script has no dependencies and
-      // can be run whenever. It also has no filesystem outputs.
       "outputs": []
     },
-    "typecheck": {
+    "lint:prettier": {
+      "outputs": []
+    },
+    "lint:types": {
       "outputs": [],
-      "dependsOn": ["^typecheck", "^build"]
+      "dependsOn": ["^build"]
     }
   }
 }

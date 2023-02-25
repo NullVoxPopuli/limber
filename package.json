@@ -9,9 +9,6 @@
     "build": "pnpm _turbo build --filter=limber^...",
     "lint:fix": "pnpm --filter='*' lint:fix",
     "lint": "pnpm _turbo lint",
-    "format": "pnpm --filter='*' format",
-    "format:check": "pnpm _turbo format:check",
-    "typecheck": "pnpm _turbo typecheck",
     "start": "pnpm _turbo start --filter=limber",
     "_turbo": "pnpm turbo --api='http://127.0.0.1:9080' --token=this-is-not-a-secret --team=foo"
   },

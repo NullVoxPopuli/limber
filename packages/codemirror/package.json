@@ -14,9 +14,9 @@
   "scripts": {
     "build": "node build.cjs",
     "dev": "pnpm build --watch",
-    "typecheck": "tsc --build",
-    "format": "prettier -w .",
-    "format:check": "prettier -c .",
+    "lint:types": "tsc --noEmit",
+    "lint:prettier:fix": "prettier -w .",
+    "lint:prettier": "prettier -c .",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix"

@@ -6,13 +6,15 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "format": "prettier -w .",
-    "format:check": "prettier -c .",
+    "lint:prettier:fix": "prettier -w .",
+    "lint:prettier": "prettier -c .",
+    "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
     "build": "tailwindcss -o dist/tailwind.css",
     "start": "tailwindcss -o dist/tailwind.css --watch"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
+    "concurrently": "^7.5.0",
     "postcss": "^8.4.19",
     "prettier": "^2.8.3",
     "tailwindcss": "^3.2.4",

@@ -30,7 +30,7 @@ export default function newEditor(
       case 'glimdown':
         return glimdown();
       case 'gjs': {
-        // Includes autocomplete, which is annoying since we're 
+        // Includes autocomplete, which is annoying since we're
         // kind of writing invalid JavaScript
         return javascript({ jsx: true });
         // return new LanguageSupport(typescriptLanguage, [])

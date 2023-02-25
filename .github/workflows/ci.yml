@@ -48,23 +48,6 @@ jobs:
           server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
       - uses: ./.github/actions/pnpm
       - run: pnpm lint
-      - run: pnpm format:check
-
-  types:
-    name: "Type Correctness"
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    needs: [install_dependencies]
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: TurboRepo local server
-        uses: felixmosh/turborepo-gh-artifacts@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
-      - uses: ./.github/actions/pnpm
-      - run: pnpm typecheck
 
 ##############################################################
 
