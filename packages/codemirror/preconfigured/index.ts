@@ -1,7 +1,7 @@
 import { completionKeymap } from '@codemirror/autocomplete';
-import { javascript } from '@codemirror/lang-javascript';
+import { javascript, typescriptLanguage } from '@codemirror/lang-javascript';
 import { markdownKeymap } from '@codemirror/lang-markdown';
-import { syntaxHighlighting } from '@codemirror/language';
+import { LanguageSupport, syntaxHighlighting } from '@codemirror/language';
 import { Compartment, EditorSelection, EditorState } from '@codemirror/state';
 import { keymap } from '@codemirror/view';
 import { basicSetup, EditorView } from 'codemirror';
@@ -29,8 +29,12 @@ export default function newEditor(
     switch (format) {
       case 'glimdown':
         return glimdown();
-      case 'gjs':
-        return javascript();
+      case 'gjs': {
+        // Includes autocomplete, which is annoying since we're 
+        // kind of writing invalid JavaScript
+        return javascript({ jsx: true });
+        // return new LanguageSupport(typescriptLanguage, [])
+      }
       case 'hbs':
         return javascript();
       default:
