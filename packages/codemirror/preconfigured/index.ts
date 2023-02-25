@@ -1,7 +1,7 @@
 import { completionKeymap } from '@codemirror/autocomplete';
-import { javascript, typescriptLanguage } from '@codemirror/lang-javascript';
+import { javascript } from '@codemirror/lang-javascript';
 import { markdownKeymap } from '@codemirror/lang-markdown';
-import { LanguageSupport, syntaxHighlighting } from '@codemirror/language';
+import { syntaxHighlighting } from '@codemirror/language';
 import { Compartment, EditorSelection, EditorState } from '@codemirror/state';
 import { keymap } from '@codemirror/view';
 import { basicSetup, EditorView } from 'codemirror';
