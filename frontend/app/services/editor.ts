@@ -1,15 +1,16 @@
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { debounce } from '@ember/runloop';
 import Service, { inject as service } from '@ember/service';
 
 import { getQP } from 'limber/utils/query-params';
 
+import type EditorText from './editor-text';
 import type RouterService from '@ember/routing/router-service';
 import type { Format } from 'limber/utils/messaging';
 
 export default class EditorService extends Service {
   @service declare router: RouterService;
+  @service declare editorText: EditorText;
 
   errorOnLoad = getQP('e');
 
@@ -25,8 +26,7 @@ export default class EditorService extends Service {
     /**
      * Setting these properties queues an update to the URL, debounced (usually)
      */
-    this.text = text;
-    debounce(this, this._updateSnippet, 300);
+    this.editorText.relaxedUpdate(text);
   }
 
   @action
@@ -35,10 +35,9 @@ export default class EditorService extends Service {
     this._editorSwapText?.(text, format);
 
     // Update ourselves
-    this.text = text;
-    this.format = format;
-    this._updateSnippet();
+    this.editorText.immediateUpdate(text, format);
   }
+
 }
 
 // DO NOT DELETE: this is how TypeScript knows how to look up your services.

@@ -1,16 +1,21 @@
 import Service, { inject as service } from '@ember/service';
 
+import { UrlCompression } from '@nullvoxpopuli/limber-url-compression';
+import { trackedFunction } from 'ember-resources/util/function';
+
 import { DEFAULT_SNIPPET } from 'limber/snippets';
 import { type Format, formatFrom } from 'limber/utils/messaging';
 import { getQP } from 'limber/utils/query-params';
-
-import { UrlCompression } from '@nullvoxpopuli/limber-url-compression';
 
 import type RouterService from '@ember/routing/router-service';
 
 /**
  * Manages the URL state, representing the editor text.
  * Editor text may be newer than the URL state.
+ *
+ * Text + Format = File. The URL represents a file.
+ *
+ * --------------------------------------------------------------
  *
  * NOTE: that the URL (and this service) *never* sets the editor content.
  *       Editor content flows unidirectionally to the URL.
@@ -43,14 +48,27 @@ export default class EditorText extends Service {
     onEncoded: (encoded) => {
       this.#text = encoded;
       this.#updateQPs();
-
     },
-    onDecoded: (decoded) => {
-    }
-  })
+    onDecoded: (decoded) => {},
+  });
 
-  #text = getQP() ?? DEFAULT_SNIPPET;
-  format?: Format;
+  format: Format = 'glimdown';
+
+  get queryParams() {
+    return this.router.currentRoute?.queryParams || {};
+  }
+
+  internalText = trackedFunction(this, async () => {
+    if (this.queryParams.c) {
+      return await this.#compressor.decode(this.queryParams.c);
+    }
+
+    return this.queryParams.t;
+  });
+
+  get text() {
+    return this.internalText.value ?? DEFAULT_SNIPPET;
+  }
 
   /**
    * When the user presses control+s or command+s,
@@ -63,12 +81,27 @@ export default class EditorText extends Service {
   };
 
   /**
-   * Called when we know what the URL should be.
-   */
-  setTextURI = () => {};
+    * Called during normal typing.
+    */
+  relaxedUpdate = async (rawText: string, format?: Format) => {
+    this.#updateQPs(rawText, format ?? this.format);
+  };
 
-  #updateQPs = () => {
-    let qps = buildQP(this.#text, formatFrom(this.format || getQP('format')));
+  /**
+    * Called when the Demo dropdown changes its value
+    */
+  immediateUpdate = (rawText: string, format: Format) => {
+    this.#updateQPs(rawText, format)
+  };
+
+  #updateQPs = async (rawText: string, format: Format) => {
+    let encoded = await this.#compressor.encode(rawText);
+
+    let qps = new URLSearchParams(location.search);
+
+    qps.set('c', encoded);
+    qps.set('format', format);
+
     let base = this.router.currentURL.split('?')[0];
     let next = `${base}?${qps}`;
 
@@ -83,11 +116,3 @@ declare module '@ember/service' {
   }
 }
 
-function buildQP(rawText: string, format: Format) {
-  const params = new URLSearchParams(location.search);
-
-  params.set('t', rawText);
-  params.set('format', format);
-
-  return params;
-}

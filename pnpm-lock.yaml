@@ -617,15 +617,19 @@ importers:
   packages/url-compression:
     specifiers:
       '@babel/core': ^7.20.12
+      '@embroider/addon-shim': ^1.0.0
       '@nullvoxpopuli/eslint-configs': ^3.1.1
       '@tsconfig/ember': ^2.0.0
       '@types/lz-string': ^1.3.34
       concurrently: ^7.5.0
       esbuild: ^0.17.10
       eslint: ^8.33.0
+      execa: ^7.0.0
       lz-string: ^1.4.4
       prettier: ^2.8.3
       typescript: ^4.9.5
+    dependencies:
+      '@embroider/addon-shim': 1.8.4
     devDependencies:
       '@babel/core': 7.21.0
       '@nullvoxpopuli/eslint-configs': 3.1.3_cbo7o3nvndxbzggotgt2cjmt4y
@@ -634,6 +638,7 @@ importers:
       concurrently: 7.6.0
       esbuild: 0.17.10
       eslint: 8.34.0
+      execa: 7.0.0
       lz-string: 1.4.4
       prettier: 2.8.4
       typescript: 4.9.5
@@ -12073,6 +12078,21 @@ packages:
       signal-exit: 3.0.7
       strip-final-newline: 3.0.0
 
+  /execa/7.0.0:
+    resolution: {integrity: sha512-tQbH0pH/8LHTnwTrsKWideqi6rFB/QNUawEwrn+WHyz7PX1Tuz2u7wfTvbaNBdP5JD5LVWxNo8/A8CHNZ3bV6g==}
+    engines: {node: ^14.18.0 || ^16.14.0 || >=18.0.0}
+    dependencies:
+      cross-spawn: 7.0.3
+      get-stream: 6.0.1
+      human-signals: 4.3.0
+      is-stream: 3.0.0
+      merge-stream: 2.0.0
+      npm-run-path: 5.1.0
+      onetime: 6.0.0
+      signal-exit: 3.0.7
+      strip-final-newline: 3.0.0
+    dev: true
+
   /exit/0.1.2:
     resolution: {integrity: sha512-Zk/eNKV2zbjpKzrsQ+n1G6poVbErQxJ0LBOJXaKZ1EViLzH+hrLu9cdXI4zw9dBQJslwBEpbQ2P1oS7nDxs6jQ==}
     engines: {node: '>= 0.8.0'}
@@ -13399,6 +13419,11 @@ packages:
   /human-signals/3.0.1:
     resolution: {integrity: sha512-rQLskxnM/5OCldHo+wNXbpVgDn5A17CUoKX+7Sokwaknlq7CdSnphy0W39GU8dw59XiCXmFXDg4fRuckQRKewQ==}
     engines: {node: '>=12.20.0'}
+
+  /human-signals/4.3.0:
+    resolution: {integrity: sha512-zyzVyMjpGBX2+6cDVZeFPCdtOtdsxOeseRhB9tkQ6xXmGUNrcnBzdEKPy3VPNYz+4gy1oukVOXcrJCunSyc6QQ==}
+    engines: {node: '>=14.18.0'}
+    dev: true
 
   /humanize-ms/1.2.1:
     resolution: {integrity: sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==}

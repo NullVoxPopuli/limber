@@ -1,7 +1,21 @@
-// .eslintrc.js
 'use strict';
 
 const { configs } = require('@nullvoxpopuli/eslint-configs');
 
-// accommodates: JS, TS, ESM, and CJS
-module.exports = configs.node();
+const config = configs.ember();
+
+module.exports = {
+  ...config,
+  overrides: [
+    ...config.overrides,
+    {
+      files: ['build.js'],
+      parserOptions: {
+        sourceType: 'module',
+      },
+      rules: {
+        'n/no-unsupported-features': 'off',
+      },
+    },
+  ],
+};

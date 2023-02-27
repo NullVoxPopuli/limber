@@ -10,7 +10,8 @@ import Controller from '@ember/controller';
 export default class ApplicationController extends Controller {
   queryParams = [
     // Code
-    't', 'c',
+    't',
+    'c',
 
     // Maximize / Minimize of the Editor
     // "min" | "max"

@@ -6,9 +6,18 @@
   "type": "module",
   "exports": {
     ".": "./dist/setup.js",
-    "./worker": "./dist/worker.js"
+    "./worker": "./dist/worker.js",
+    "./addon-main.js": "./addon-main.cjs"
   },
   "private": true,
+  "ember-addon": {
+    "version": 2,
+    "type": "addon",
+    "main": "addon-main.js",
+    "public-assets": {
+      "./dist/worker.js": "/workers/url-compression.js"
+    }
+  },
   "scripts": {
     "lint:prettier:fix": "prettier -w .",
     "lint:prettier": "prettier -c .",
@@ -26,8 +35,15 @@
     "concurrently": "^7.5.0",
     "esbuild": "^0.17.10",
     "eslint": "^8.33.0",
+    "execa": "^7.0.0",
     "lz-string": "^1.4.4",
     "prettier": "^2.8.3",
     "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@embroider/addon-shim": "^1.0.0"
+  },
+  "volta": {
+    "extends": "../../package.json"
   }
 }
