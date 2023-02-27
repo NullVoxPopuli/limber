@@ -5,8 +5,7 @@ import { UrlCompression } from '@nullvoxpopuli/limber-url-compression';
 import { trackedFunction } from 'ember-resources/util/function';
 
 import { DEFAULT_SNIPPET } from 'limber/snippets';
-import { type Format, formatFrom } from 'limber/utils/messaging';
-import { getQP } from 'limber/utils/query-params';
+import { type Format } from 'limber/utils/messaging';
 
 import type RouterService from '@ember/routing/router-service';
 
@@ -48,11 +47,12 @@ export default class EditorText extends Service {
   @tracked isWaitingForUpdate = false;
 
   #compressor = new UrlCompression({
-    onEncoded: (encoded) => {
-      this.#text = encoded;
-      this.#updateQPs();
+    onEncoded: (encoded: string) => {
+      this.#updateQPs(encoded, this.format);
     },
-    onDecoded: (decoded) => {},
+    onDecoded: (decoded: string) => {
+      console.log(decoded);
+    },
   });
 
   format: Format = 'glimdown';

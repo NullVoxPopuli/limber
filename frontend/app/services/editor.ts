@@ -29,6 +29,10 @@ export default class EditorService extends Service {
     this.editorText.relaxedUpdate(text);
   }
 
+  get text() {
+    return this.editorText.text;
+  }
+
   @action
   updateDemo(text: string, format: Format) {
     // Updates the editor

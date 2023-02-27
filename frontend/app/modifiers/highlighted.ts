@@ -1,3 +1,5 @@
+import { DEBUG } from '@glimmer/env';
+import { warn } from '@ember/debug';
 import { guidFor } from '@ember/object/internals';
 
 import { modifier } from 'ember-modifier';
@@ -28,6 +30,19 @@ export default modifier<Signature>((element: Element, [code]) => {
     let target = element.querySelector('code');
 
     if (!target) return;
+
+    if (DEBUG) {
+      warn(`Cannot highlight code with undefined/null code`, Boolean(code), {
+        id: 'limber.modifiers.highlighted',
+      });
+
+
+      if (!code) {
+        console.debug({ element });
+
+        return;
+      }
+    }
 
     let { value } = hljs.highlight(code, { language: target.classList[0] });
 

@@ -5,18 +5,19 @@
   "license": "MIT",
   "type": "module",
   "exports": {
-    ".": "./dist/setup.js",
+    ".": {
+      "import": "./dist/setup.js",
+      "types": "./dist/setup.d.ts"
+    },
     "./worker": "./dist/worker.js",
     "./addon-main.js": "./addon-main.cjs"
   },
+  "types": "./dist/setup.d.ts",
   "private": true,
   "ember-addon": {
     "version": 2,
     "type": "addon",
-    "main": "addon-main.js",
-    "public-assets": {
-      "./dist/worker.js": "/workers/url-compression.js"
-    }
+    "main": "addon-main.js"
   },
   "scripts": {
     "lint:prettier:fix": "prettier -w .",

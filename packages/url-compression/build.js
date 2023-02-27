@@ -8,6 +8,7 @@ await esbuild.build({
   outdir: 'dist',
   format: 'esm',
   sourcemap: true,
+  target: ['chrome110', 'firefox110', 'safari16.3', 'edge110'],
 });
 
 await execa('pnpm', ['tsc', '--noEmit', 'false']);

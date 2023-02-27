@@ -1,4 +1,4 @@
-export function getWorker() {
+function getWorker() {
   return new Worker(new URL('./worker', import.meta.url));
 }
 
