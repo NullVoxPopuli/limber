@@ -1,3 +1,28 @@
+
+import path from 'node:path';
+import url from 'node:url';
+import fs from 'node:fs/promises';
+
+import { globby } from 'globby';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
+const SAMPLES_FOLDER = path.join(__dirname, '../../frontend/public/samples'); 
+
+export async function getSamples() {
+  let filePaths = await globby('**/*.md', { cwd: SAMPLES_FOLDER });
+
+  let result = {};
+
+  for (let filePath of filePaths) {
+    let fileContent = await fs.readFile(path.join(SAMPLES_FOLDER, filePath), 'utf8');
+
+    result[filePath] = fileContent.toString();
+  }
+
+  return result;
+}
+
 export const originalText = `
 # Clock as a Resource
 
@@ -96,4 +121,8 @@ const asJSON = (obj) => JSON.stringify(obj, null, 4);
 </template>
 
 \`\`\`
-`
+`;
+
+
+
+

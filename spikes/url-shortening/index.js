@@ -2,30 +2,24 @@ import { filesize } from "filesize";
 import { Bench } from 'tinybench';
 
 import { originalText } from './data.js'
-import * as huffman from './techniques/huffman.js';
-import * as JSONCrush from './techniques/json-crush.js';
-import * as LZString from './techniques/lz-string.js';
+import { names, huffman, JSONCrush, LZString } from './techniques.js'
 
 const size = (str) => filesize(str.length, { base: 2, standard: "jedec"})
 
-const names = {
-  original: 'original',
-  lzString: 'lz-string',
-  JSONCrush: 'JSONCrush',
-  huffman: 'Huffman',
-}
 
 // Impact to bundle via https://bundlejs.com/
 const bundleImpact = {
-  [names.lzString]: '5.17KB (1.61KB gzip)'
+  [names.lzString]: '5.17KB -> 1.61KB gzip',
+  [names.huffman]: '9.01KB -> 3.28KB gzip',
+  [names.JSONCrush]: '0B -> 20B gzip ???'
 }
 
 console.log(
   [
-    ['original', originalText],
-    ['JSONCrush', JSONCrush.encode(originalText)],
-    ['Huffman', huffman.encode(originalText)],
-    ['lz-string', LZString.encode(originalText)]
+    [names.original, originalText],
+    [names.JSONCrush, JSONCrush.encode(originalText)],
+    [names.huffman, huffman.encode(originalText)],
+    [names.lzString, LZString.encode(originalText)]
 
   ].map(([label, text]) => {
     return `\n
@@ -40,25 +34,25 @@ const decodeBench = new Bench({ iterations });
 const encodeURIComponentBench = new Bench({ iterations });
 
 encodeBench
-  .add('JSONCrush', () => JSONCrush.encode(originalText))
-  .add('Huffman', () => huffman.encode(originalText))
-  .add('lz-string', () => LZString.encode(originalText));
+  .add(names.JSONCrush, () => JSONCrush.encode(originalText))
+  .add(names.huffman, () => huffman.encode(originalText))
+  .add(names.lzString, () => LZString.encode(originalText));
 
 const encodedText = {
-  JSONCrush: JSONCrush.encode(originalText),
-  huffman: huffman.encode(originalText),
-  LZString: LZString.encode(originalText),
+  [names.JSONCrush]: JSONCrush.encode(originalText),
+  [names.huffman]: huffman.encode(originalText),
+  [names.lzString]: LZString.encode(originalText),
 }
 
 encodeURIComponentBench
-  .add('JSONCrush', () => encodeURIComponent(encodedText.JSONCrush))
-  .add('Huffman', () => encodeURIComponent(encodedText.huffman))
-  .add('lz-string', () => encodeURIComponent(encodedText.LZString));
+  .add(names.JSONCrush, () => encodeURIComponent(encodedText.JSONCrush))
+  .add(names.huffman, () => encodeURIComponent(encodedText.huffman))
+  .add(names.lzString, () => encodeURIComponent(encodedText.LZString));
 
 decodeBench
-  .add('JSONCrush', () => JSONCrush.decode(encodedText.JSONCrush))
-  .add('Huffman', () => huffman.decode(encodedText.huffman))
-  .add('lz-string', () => LZString.decode(encodedText.LZString));
+  .add(names.JSONCrush, () => JSONCrush.decode(encodedText.JSONCrush))
+  .add(names.huffman, () => huffman.decode(encodedText.huffman))
+  .add(names.lzString, () => LZString.decode(encodedText.LZString));
 
 const printBench = (bench) => console.table(
   bench.tasks.map(({ name, result }) => ({
