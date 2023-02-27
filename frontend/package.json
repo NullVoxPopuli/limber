@@ -126,6 +126,7 @@
     "@glimmer/tracking": "^1.1.2",
     "@nullvoxpopuli/horizon-theme": "*",
     "@nullvoxpopuli/limber-codemirror": "*",
+    "@nullvoxpopuli/limber-url-compression": "*",
     "@nullvoxpopuli/limber-styles": "*",
     "@nullvoxpopuli/limber-transpilation": "*",
     "@popperjs/core": "^2.11.6",

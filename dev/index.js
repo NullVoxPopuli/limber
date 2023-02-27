@@ -23,6 +23,9 @@ yarg
     },
     symlinkEverywhere
   )
+.command('sync-prettier', 'symlinks all workspaces to use the same prettier config', () => {}, () => {
+  return symlinkEverywhere({ target: '.prettierrc.cjs' });
+})
 .command(
   'sync-deps <depName>',
   'updates a depenedncy to the latest version, if it exists.', 
