@@ -1,3 +1,4 @@
+import { tracked } from '@glimmer/tracking';
 import Service, { inject as service } from '@ember/service';
 
 import { UrlCompression } from '@nullvoxpopuli/limber-url-compression';
@@ -43,6 +44,8 @@ import type RouterService from '@ember/routing/router-service';
  */
 export default class EditorText extends Service {
   @service declare router: RouterService;
+  // Is it time for a statechart?
+  @tracked isWaitingForUpdate = false;
 
   #compressor = new UrlCompression({
     onEncoded: (encoded) => {
