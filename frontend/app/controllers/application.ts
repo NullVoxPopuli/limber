@@ -11,6 +11,7 @@ export default class ApplicationController extends Controller {
   queryParams = [
     // Code
     't',
+    'c',
 
     // Maximize / Minimize of the Editor
     // "min" | "max"

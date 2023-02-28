@@ -6,6 +6,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
 import { ALL, getFromLabel } from 'limber/snippets';
+import { fileFromParams } from 'limber/utils/messaging';
 
 import { getService } from '../helpers';
 import { Page } from './-page';
@@ -25,8 +26,13 @@ module('Demos', function (hooks) {
 
         let { queryParams = {} } = getService('router').currentRoute;
 
+        let file = fileFromParams(queryParams);
+
         assert.strictEqual(queryParams.format, 'glimdown');
-        assert.strictEqual(queryParams.t, await getFromLabel(demo.label));
+        assert.strictEqual(file.format, queryParams.format, 'format matches queryParams');
+        assert.strictEqual(queryParams.t, undefined, 'old format is no longer in use');
+        assert.notStrictEqual(queryParams.c, undefined, 'new format is is what is used');
+        assert.strictEqual(file.text, await getFromLabel(demo.label), 'detected text matches demo');
       });
     }
   });
@@ -52,7 +58,7 @@ module('Demos', function (hooks) {
         this.owner.register(
           'template:edit',
           hbs`{{! @glint-ignore }}
-<Limber::Output @messagingAPI={{this.api}} />`
+            <Limber::Output @messagingAPI={{this.api}} />`
         );
 
         await visit('/edit');

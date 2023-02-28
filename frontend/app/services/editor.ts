@@ -1,38 +1,80 @@
 import { tracked } from '@glimmer/tracking';
+import { assert } from '@ember/debug';
+import { associateDestroyableChild } from '@ember/destroyable';
 import { action } from '@ember/object';
-import { debounce } from '@ember/runloop';
+import { getOwner, setOwner } from '@ember/owner';
 import Service, { inject as service } from '@ember/service';
 
 import { DEFAULT_SNIPPET } from 'limber/snippets';
-import { formatFrom } from 'limber/utils/messaging';
-import { getQP } from 'limber/utils/query-params';
+import { TextURIComponent } from 'limber/utils/editor-text';
 
 import type RouterService from '@ember/routing/router-service';
 import type { Format } from 'limber/utils/messaging';
 
+interface Descriptor {
+  initializer: () => unknown;
+}
+
+function link(_prototype: object, key: string, descriptor?: Descriptor): void {
+  if (!descriptor) return;
+
+  assert(`@link can only be used with string-keys`, typeof key === 'string');
+
+  let { initializer } = descriptor;
+
+  assert(
+    `@link may only be used on initialized properties. For example, ` +
+      `\`@link foo = new MyClass();\``,
+    initializer
+  );
+
+  let caches = new WeakMap<object, any>();
+
+  // https://github.com/pzuraq/ember-could-get-used-to-this/blob/master/addon/index.js
+  return {
+    get(this: object) {
+      let child = caches.get(this);
+
+      if (!child) {
+        child = initializer.call(this);
+
+        associateDestroyableChild(this, child);
+
+        let owner = getOwner(this);
+
+        if (owner) {
+          setOwner(child, owner);
+        }
+
+        caches.set(this, child);
+        assert(`Failed to create cache for internal resource configuration object`, child);
+      }
+
+      return child;
+    },
+  } as unknown as void /* Thanks TS. */;
+}
+
 export default class EditorService extends Service {
   @service declare router: RouterService;
-
-  errorOnLoad = getQP('e');
 
   @tracked isCompiling = false;
   @tracked error?: string;
   @tracked errorLine?: number;
   @tracked scrollbarWidth = 0;
 
-  _editorSwapText?: (text: string, format: Format) => void;
-
-  text = getQP() ?? DEFAULT_SNIPPET;
-  format?: Format;
+  @link textURIComponent = new TextURIComponent();
 
   @action
   updateText(text: string) {
-    /**
-     * Setting these properties queues an update to the URL, debounced (usually)
-     */
-    this.text = text;
-    debounce(this, this._updateSnippet, 300);
+    this.textURIComponent.queue(text);
   }
+
+  get text() {
+    return this.textURIComponent.decoded ?? DEFAULT_SNIPPET;
+  }
+
+  _editorSwapText?: (text: string, format: Format) => void;
 
   @action
   updateDemo(text: string, format: Format) {
@@ -40,18 +82,7 @@ export default class EditorService extends Service {
     this._editorSwapText?.(text, format);
 
     // Update ourselves
-    this.text = text;
-    this.format = format;
-    this._updateSnippet();
-  }
-
-  @action
-  _updateSnippet() {
-    let qps = buildQP(this.text, formatFrom(this.format || getQP('format')));
-    let base = this.router.currentURL.split('?')[0];
-    let next = `${base}?${qps}`;
-
-    this.router.replaceWith(next);
+    this.textURIComponent.set(text, format);
   }
 }
 
@@ -60,20 +91,4 @@ declare module '@ember/service' {
   interface Registry {
     editor: EditorService;
   }
-}
-
-/**
- * https://stackoverflow.com/a/57533980/356849
- * - Base64 Encoding is 33% bigger
- *
- * https://github.com/rotemdan/lzutf8.js
- * - Compression
- */
-function buildQP(rawText: string, format: Format) {
-  const params = new URLSearchParams(location.search);
-
-  params.set('t', rawText);
-  params.set('format', format);
-
-  return params;
 }

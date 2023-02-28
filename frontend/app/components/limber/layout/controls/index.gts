@@ -1,4 +1,5 @@
 import { fn, concat } from '@ember/helper';
+import { htmlSafe } from '@ember/template';
 import { on } from '@ember/modifier'
 import { inIframe } from 'limber/helpers/in-iframe';
 import service from 'limber/helpers/service';
@@ -41,7 +42,7 @@ export const Controls: TOC<{
   {{#let (service 'editor') as |editor|}}
     <div
       data-is-minimized='{{@isMinimized}}'
-      style={{(concat 'right: ' editor.scrollbarWidth 'px;')}}
+      style={{htmlSafe (concat 'right: ' editor.scrollbarWidth 'px;')}}
       class='absolute top-0 right-0 z-[1]
         {{if @splitHorizontally "flex flex-row-reverse" "grid"}}
         {{if @isMinimized "bg-ember-black h-full content-start"}}

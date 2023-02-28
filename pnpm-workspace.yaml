@@ -3,3 +3,4 @@ packages:
   - './frontend'
   - './packages/**'
   - './tests'
+  - './spikes/**'

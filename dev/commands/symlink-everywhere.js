@@ -1,7 +1,7 @@
+import fs from 'node:fs/promises';
 import path from "node:path";
 import assert from "node:assert";
 
-import { execa } from "execa";
 import { project } from "ember-apply";
 
 /**
@@ -24,9 +24,27 @@ export async function symlinkEverywhere(options) {
   for await (let workspace of await project.eachWorkspace()) {
     if (workspace === root) continue;
 
-    let relativeTo = path.relative(workspace, resolved);
+    let newFile = path.join(workspace, fileName)
+    let linkTarget = path.relative(workspace, resolved);
 
-    await execa('ln', ['-s', relativeTo, fileName], { cwd: workspace });
+    if (await exists(newFile)) {
+      continue;
+    }
+
+    await fs.symlink(linkTarget, fileName);
+  }
+
+}
+
+async function exists(filePath) {
+  try {
+    return await fs.stat(filePath)
+  } catch (e) {
+    if (e.code === 'ENOENT') {
+      return false;
+    }
+
+    throw e;
   }
 
 }
