@@ -1,9 +1,0 @@
-{
-  "extends": "@tsconfig/ember/tsconfig.json",
-  "compilerOptions": {
-    "declarationDir": "./dist",
-    "emitDeclarationOnly": true,
-    "declaration": true
-  },
-  "include": ["src/**/*"]
-}
