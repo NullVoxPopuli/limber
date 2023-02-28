@@ -1,22 +1,23 @@
-import { tracked } from '@glimmer/tracking';
-import Service, { inject as service } from '@ember/service';
+/* eslint-disable ember/classic-decorator-no-classic-methods */
+import { isDestroyed, isDestroying } from '@ember/destroyable';
+import { inject as service } from '@ember/service';
 
-import { Resource } from 'ember-resources';
-import  { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
+import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 
 import { DEFAULT_SNIPPET } from 'limber/snippets';
-import { formatFrom, type Format } from 'limber/utils/messaging';
-import { getQP } from 'limber/utils/query-params';
+import { type Format, fileFromParams,formatFrom } from 'limber/utils/messaging';
 
 import type RouterService from '@ember/routing/router-service';
 
 interface Signature {
-Args: {
-  Named: {
-    setEditor: (text: string, format: Format) => void;
-  }
-};
+  Args: {
+    Named: {
+      setEditor: (text: string, format: Format) => void;
+    };
+  };
 }
+
+const DEBOUNCE_MS = 300;
 
 /**
  * Manages the URL state, representing the editor text.
@@ -50,12 +51,12 @@ Args: {
  *  - on ctrl+s
  *    - write URL to clipboard
  */
-export class TextURIComponent extends Resource<Signature> {
+export class TextURIComponent {
   @service declare router: RouterService;
 
+  #initialFile = fileFromParams();
+  #text = this.#initialFile.text;
   format: Format = 'glimdown';
-
-  #text = getInitialText();
 
   get decoded() {
     return this.#text;
@@ -68,17 +69,43 @@ export class TextURIComponent extends Resource<Signature> {
    *   - display a message to the user that the URL is now in their clipboard
    */
   toClipboard = () => {
+    this.#flush();
     navigator.clipboard.writeText(this.router.currentURL);
   };
 
   /**
-    * Called during normal typing.
-    */
+   * Called during normal typing.
+   */
   set = (rawText: string, format?: Format) => {
-    this.#updateQPs(rawText, format ?? this.format);
+    this.#updateQPs(rawText, format);
   };
 
-  #updateQPs = async (rawText: string, format: Format) => {
+  #timeout?: number;
+  #queuedFn?: () => void;
+
+  /**
+    * Debounce so we are kinder on the CPU
+    */
+  queue = (rawText: string) => {
+    if (this.#timeout) clearTimeout(this.#timeout)
+
+    this.#queuedFn = () => {
+      if (isDestroyed(this) || isDestroying(this)) return;
+
+      this.set(rawText);
+      this.#queuedFn = undefined;
+    }
+
+    this.#timeout = setTimeout(this.#queuedFn, DEBOUNCE_MS);
+  }
+
+  #flush = () => {
+    if (this.#timeout) clearTimeout(this.#timeout)
+
+    this.#queuedFn?.();
+  }
+
+  #updateQPs = async (rawText: string, format?: Format) => {
     let encoded = compressToEncodedURIComponent(rawText);
 
     let qps = new URLSearchParams(location.search);
@@ -93,18 +120,3 @@ export class TextURIComponent extends Resource<Signature> {
   };
 }
 
-
-function getInitialText() {
-  let c = getQP('c');
-  let t = getQP('t');
-
-  if (c) {
-    return decompressFromEncodedURIComponent(c);
-  }
-
-  if (t) {
-    return t;
-  }
-
-  return DEFAULT_SNIPPET;
-}

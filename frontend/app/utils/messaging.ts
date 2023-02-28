@@ -1,3 +1,5 @@
+import { decompressFromEncodedURIComponent } from "lz-string";
+
 /**
  * NOTE: window's on message handler receives *a lot* of messages
  *   (esp from various browser extensions)
@@ -71,4 +73,29 @@ export function fromParent<T extends { from?: string }>(x?: T | null): x is T & 
   }
 
   return false;
+}
+
+export function fileFromParams(search = location.search) {
+  let qps = new URLSearchParams(search);
+
+  return {
+    text: getText(qps) ?? null,
+    format: formatFrom(qps.get('format')),
+  }
+}
+
+function getText(qps: URLSearchParams) {
+  let c = qps.get('c');
+
+  if (c) {
+    return decompressFromEncodedURIComponent(c);
+  }
+
+  let t = qps.get('t');
+
+  if (t) {
+    return t;
+  }
+
+  return;
 }

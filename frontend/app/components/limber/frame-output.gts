@@ -8,7 +8,7 @@ import { waitForPromise, waitFor, buildWaiter } from '@ember/test-waiters';
 import { connectToChild, type Connection } from 'penpal';
 
 import { DEFAULT_SNIPPET } from 'limber/snippets';
-import { formatFrom, type Format, type OutputError } from 'limber/utils/messaging';
+import { fileFromParams, formatFrom, type Format, type OutputError } from 'limber/utils/messaging';
 
 import type EditorService from 'limber/services/editor';
 import type RouterService from '@ember/routing/router-service';
@@ -65,12 +65,10 @@ export default class FrameOutput extends Component {
     let child = await this.connection.promise;
     if (isDestroyed(this) || isDestroying(this)) return;
 
-    let searchParams = new URLSearchParams(qps);
-    let text = searchParams.get('t') || DEFAULT_SNIPPET;
-    let format = formatFrom(searchParams.get('format'));
+    let { text, format } = fileFromParams(qps);
 
     compileTokens.push(compileWaiter.beginAsync());
-    await child.update(format, text);
+    await child.update(format, text ?? DEFAULT_SNIPPET);
   }
 
   onMessage = modifier((element: HTMLIFrameElement) => {
@@ -105,13 +103,13 @@ export default class FrameOutput extends Component {
     return () => this.connection?.destroy();
   });
 
-  <template><iframe
-  {{! @glint-ignore }}
-  {{this.postMessage this.frameStatus}}
-  {{! @glint-ignore }}
-  {{this.onMessage}}
-  title='Rendered output'
-  class='w-full h-full border-none'
-  src='/output?format={{this.format}}'
-></iframe></template>
+  <template>
+    <iframe
+      {{this.postMessage this.frameStatus}}
+      {{this.onMessage}}
+      title='Rendered output'
+      class='w-full h-full border-none'
+      src='/output?format={{this.format}}'
+    ></iframe>
+  </template>
 }

@@ -36,7 +36,6 @@ export default modifier<Signature>((element: Element, [code]) => {
         id: 'limber.modifiers.highlighted',
       });
 
-
       if (!code) {
         console.debug({ element });
 
