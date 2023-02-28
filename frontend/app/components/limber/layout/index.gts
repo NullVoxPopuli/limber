@@ -1,4 +1,3 @@
-// @ts-ignore
 import { hash, fn } from '@ember/helper';
 import { assert } from '@ember/debug';
 import { modifier } from 'ember-modifier';
@@ -8,6 +7,7 @@ import { Orientation } from './orientation'
 import { Controls } from './controls';
 import { EditorContainer, OutputContainer } from './containers';
 import { ResizeHandle } from './resize-handle';
+import Save from '../save';
 
 import type { TOC } from '@ember/component/template-only';
 import type { Send, State as StateFor } from 'ember-statechart-component/glint';
@@ -55,50 +55,53 @@ export const Layout: TOC<{
     editor: [];
     output: [];
   }
-}> = <template><State as |state send|>
-  {{!--
-    {{effect (fn onTransition console.log)}}
-    {{log (state.toStrings)}}
-    --}}
+}> = <template>
+  <Save />
+  <State as |state send|>
+    {{!--
+      {{effect (fn onTransition console.log)}}
+      {{log (state.toStrings)}}
+      --}}
 
-  {{#let (containerDirection state) as |horizontallySplit|}}
-    <Orientation as |isVertical|>
-      {{effect (fn send 'ORIENTATION' (hash isVertical=isVertical))}}
+    {{#let (containerDirection state) as |horizontallySplit|}}
+      <Orientation as |isVertical|>
+        {{effect (fn send 'ORIENTATION' (hash isVertical=isVertical))}}
 
-      <div
-        {{! row = left to right, col = top to bottom }}
-        class='{{if horizontallySplit "flex-col" "flex-row"}} flex overflow-hidden'
-      >
-
-        <EditorContainer
-          @splitHorizontally={{horizontallySplit}}
-          {{! @glint-ignore }}
-          {{setupState send}}
+        <div
+          {{! row = left to right, col = top to bottom }}
+          class='{{if horizontallySplit "flex-col" "flex-row"}} flex overflow-hidden'
         >
-          <Controls
-            @isMinimized={{state.matches 'hasContainer.minimized'}}
-            @isMaximized={{state.matches 'hasContainer.maximized'}}
-            @needsControls={{toBoolean state.context.container}}
+
+          <EditorContainer
             @splitHorizontally={{horizontallySplit}}
-            @send={{send}}
-          />
+            {{! @glint-ignore }}
+            {{setupState send}}
+          >
+            <Controls
+              @isMinimized={{state.matches 'hasContainer.minimized'}}
+              @isMaximized={{state.matches 'hasContainer.maximized'}}
+              @needsControls={{toBoolean state.context.container}}
+              @splitHorizontally={{horizontallySplit}}
+              @send={{send}}
+            />
 
-          {{yield to='editor'}}
+            {{yield to='editor'}}
 
-        </EditorContainer>
+          </EditorContainer>
 
-        {{#if (isResizable state)}}
-          <ResizeHandle @direction={{resizeDirection horizontallySplit}} />
-        {{/if}}
+          {{#if (isResizable state)}}
+            <ResizeHandle @direction={{resizeDirection horizontallySplit}} />
+          {{/if}}
 
-        <OutputContainer>
+          <OutputContainer>
 
-          {{yield to='output'}}
+            {{yield to='output'}}
 
-        </OutputContainer>
-      </div>
-    </Orientation>
-  {{/let}}
-</State></template>;
+          </OutputContainer>
+        </div>
+      </Orientation>
+    {{/let}}
+  </State>
+</template>;
 
 export default Layout;
