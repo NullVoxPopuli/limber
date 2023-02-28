@@ -75,8 +75,8 @@ export function fromParent<T extends { from?: string }>(x?: T | null): x is T & 
   return false;
 }
 
-export function fileFromParams(search = location.search) {
-  let qps = new URLSearchParams(search);
+export function fileFromParams(search: string | object = location.search) {
+  let qps = new URLSearchParams(typeof search === 'string' ? search : Object.entries(search));
 
   return {
     text: getText(qps) ?? null,
