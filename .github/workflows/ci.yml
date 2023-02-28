@@ -12,6 +12,9 @@ env:
   monaco: packages/monaco
   sw: packages/transpilation/
   NODE_OPTIONS: "--max-old-space-size=4096 --trace-warnings --unhandled-rejections=strict"
+  TURBO_API: http://127.0.0.1:9080
+  TURBO_TOKEN: this-is-not-a-secret
+  TURBO_TEAM: myself
 
 jobs:
 
@@ -28,7 +31,6 @@ jobs:
       uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
     - uses: ./.github/actions/pnpm
 
 ##############################################################
@@ -45,7 +47,6 @@ jobs:
         uses: felixmosh/turborepo-gh-artifacts@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
       - uses: ./.github/actions/pnpm
       - run: pnpm lint
 
@@ -71,7 +72,6 @@ jobs:
       uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
     - uses: ./.github/actions/pnpm
     - name: Environment Info
       run: |
@@ -81,7 +81,7 @@ jobs:
         echo "NPM: $( npm --version )"
         echo "pnpm: $( pnpm --version )"
     - name: Test
-      run: pnpm _turbo test:ember
+      run: pnpm turbo test:ember
       env:
         CI_BROWSER: ${{ matrix.ci_browser }}
 
@@ -101,9 +101,8 @@ jobs:
       uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
     - uses: ./.github/actions/pnpm
-    - run: pnpm _turbo test:browserstack
+    - run: pnpm turbo test:browserstack
 
 ##############################################################
 
@@ -120,7 +119,6 @@ jobs:
       uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
     - uses: ./.github/actions/pnpm
     - name: Deploy to Netlify
       env:
@@ -128,7 +126,7 @@ jobs:
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         NETLIFY_CLI_VERSION: 0.4.0
       run: |
-        pnpm _turbo build --filter="limber"
+        pnpm turbo build
         cd frontend/
         cp ./config/netlify/_redirects ./dist/
         cd ..
@@ -153,12 +151,11 @@ jobs:
       uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
     - uses: ./.github/actions/pnpm
 
     - name: Build
       run: |
-        pnpm _turbo build --filter="limber"
+        pnpm turbo build
         cd frontend/
         cp ./config/netlify/_redirects ./dist/
 

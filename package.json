@@ -6,11 +6,10 @@
     "dev": "node ./dev/index.js",
     "prepare": "pnpm build",
     "release": "changeset publish",
-    "build": "pnpm _turbo build --filter=limber^...",
+    "build": "pnpm turbo build --filter=limber^...",
     "lint:fix": "pnpm --filter='*' lint:fix",
-    "lint": "pnpm _turbo lint",
-    "start": "pnpm _turbo start --filter=limber",
-    "_turbo": "pnpm turbo --api='http://127.0.0.1:9080' --token=this-is-not-a-secret --team=foo"
+    "lint": "pnpm turbo lint",
+    "start": "pnpm turbo start --filter=limber"
   },
   "engines": {
     "node": ">= 16"
