@@ -1,6 +1,14 @@
 import { getSamples } from './data.js';
-import { encode, bundleImpact } from './techniques.js'
+
+import LZString from 'lz-string';
 import { size, toPercent, average, twoDecimals } from './utils.js'
+
+const encode = {
+  base64: LZString.compressToBase64,
+  UTF16: LZString.compressToUTF16,
+  encodeURIComponent: LZString.compressToEncodedURIComponent,
+  Uint8Array: LZString.compressToUint8Array,
+} 
 
 let samples = await getSamples();
 
@@ -29,7 +37,6 @@ for (let [name, text] of Object.entries(samples)) {
   result.push(current);
 }
 
-console.log(bundleImpact);
 console.table(result);
 
 console.log('Average Savings');
@@ -37,8 +44,7 @@ let averageSavings = [];
 for (let [name, nums] of Object.entries(savings)) {
   averageSavings.push({
     name, 
-    'Average % Savings': twoDecimals(average(nums)),
-    bundleImpact: bundleImpact[name],
+    'Average % Savings': twoDecimals(average(nums))
   });
 }
 

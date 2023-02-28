@@ -2,15 +2,16 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
 
+import { use } from 'ember-resources';
+
+import { TextURIComponent } from 'limber/utils/editor-text';
 import { getQP } from 'limber/utils/query-params';
 
-import type EditorText from './editor-text';
 import type RouterService from '@ember/routing/router-service';
 import type { Format } from 'limber/utils/messaging';
 
 export default class EditorService extends Service {
   @service declare router: RouterService;
-  @service declare editorText: EditorText;
 
   errorOnLoad = getQP('e');
 
@@ -19,6 +20,10 @@ export default class EditorService extends Service {
   @tracked errorLine?: number;
   @tracked scrollbarWidth = 0;
 
+  @use textURIComponent = TextURIComponent.from(() => ({
+    setEditor: (text, format) => this._editorSwapText?.(text, format),
+  }));
+
   _editorSwapText?: (text: string, format: Format) => void;
 
   @action
@@ -26,11 +31,11 @@ export default class EditorService extends Service {
     /**
      * Setting these properties queues an update to the URL, debounced (usually)
      */
-    this.editorText.relaxedUpdate(text);
+     this.textURIComponent.set(text);
   }
 
   get text() {
-    return this.editorText.text;
+    return this.textURIComponent.decoded;
   }
 
   @action
@@ -39,7 +44,7 @@ export default class EditorService extends Service {
     this._editorSwapText?.(text, format);
 
     // Update ourselves
-    this.editorText.immediateUpdate(text, format);
+    this.textURIComponent.set(text, format);
   }
 
 }

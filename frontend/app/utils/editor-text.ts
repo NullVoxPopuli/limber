@@ -1,13 +1,22 @@
 import { tracked } from '@glimmer/tracking';
 import Service, { inject as service } from '@ember/service';
 
-import { UrlCompression } from '@nullvoxpopuli/limber-url-compression';
-import { trackedFunction } from 'ember-resources/util/function';
+import { Resource } from 'ember-resources';
+import  { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 
 import { DEFAULT_SNIPPET } from 'limber/snippets';
-import { type Format } from 'limber/utils/messaging';
+import { formatFrom, type Format } from 'limber/utils/messaging';
+import { getQP } from 'limber/utils/query-params';
 
 import type RouterService from '@ember/routing/router-service';
+
+interface Signature {
+Args: {
+  Named: {
+    setEditor: (text: string, format: Format) => void;
+  }
+};
+}
 
 /**
  * Manages the URL state, representing the editor text.
@@ -38,39 +47,18 @@ import type RouterService from '@ember/routing/router-service';
  *  - on editor update:
  *    - write to URL (debounced and encoded)
  *
- *  - on ctrl+c
+ *  - on ctrl+s
  *    - write URL to clipboard
  */
-export default class EditorText extends Service {
+export class TextURIComponent extends Resource<Signature> {
   @service declare router: RouterService;
-  // Is it time for a statechart?
-  @tracked isWaitingForUpdate = false;
-
-  #compressor = new UrlCompression({
-    onEncoded: (encoded: string) => {
-      this.#updateQPs(encoded, this.format);
-    },
-    onDecoded: (decoded: string) => {
-      console.log(decoded);
-    },
-  });
 
   format: Format = 'glimdown';
 
-  get queryParams() {
-    return this.router.currentRoute?.queryParams || {};
-  }
+  #text = getInitialText();
 
-  internalText = trackedFunction(this, async () => {
-    if (this.queryParams.c) {
-      return await this.#compressor.decode(this.queryParams.c);
-    }
-
-    return this.queryParams.t;
-  });
-
-  get text() {
-    return this.internalText.value ?? DEFAULT_SNIPPET;
+  get decoded() {
+    return this.#text;
   }
 
   /**
@@ -86,24 +74,17 @@ export default class EditorText extends Service {
   /**
     * Called during normal typing.
     */
-  relaxedUpdate = async (rawText: string, format?: Format) => {
+  set = (rawText: string, format?: Format) => {
     this.#updateQPs(rawText, format ?? this.format);
   };
 
-  /**
-    * Called when the Demo dropdown changes its value
-    */
-  immediateUpdate = (rawText: string, format: Format) => {
-    this.#updateQPs(rawText, format)
-  };
-
   #updateQPs = async (rawText: string, format: Format) => {
-    let encoded = await this.#compressor.encode(rawText);
+    let encoded = compressToEncodedURIComponent(rawText);
 
     let qps = new URLSearchParams(location.search);
 
     qps.set('c', encoded);
-    qps.set('format', format);
+    qps.set('format', formatFrom(format));
 
     let base = this.router.currentURL.split('?')[0];
     let next = `${base}?${qps}`;
@@ -112,10 +93,18 @@ export default class EditorText extends Service {
   };
 }
 
-// DO NOT DELETE: this is how TypeScript knows how to look up your services.
-declare module '@ember/service' {
-  interface Registry {
-    'editor-text': EditorText;
-  }
-}
 
+function getInitialText() {
+  let c = getQP('c');
+  let t = getQP('t');
+
+  if (c) {
+    return decompressFromEncodedURIComponent(c);
+  }
+
+  if (t) {
+    return t;
+  }
+
+  return DEFAULT_SNIPPET;
+}
