@@ -13,6 +13,7 @@ export default class Save extends Component {
       backdrop-blur-md bg-slate-800/30
       border-y border-slate-800/50
       transition-all duration-300
+      pointer-events-none
       text-white shadow-2xl text-center z-[100] top-[39%]
       {{if this.isShowing 'opacity-100' 'opacity-0'}}
     "

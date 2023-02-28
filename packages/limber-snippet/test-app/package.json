@@ -11,7 +11,6 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "ember build --environment=production",
     "lint:prettier:fix": "prettier -w .",
     "lint:prettier": "prettier -c .",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",

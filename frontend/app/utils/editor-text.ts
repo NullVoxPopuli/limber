@@ -109,6 +109,7 @@ export class TextURIComponent {
     let qps = new URLSearchParams(location.search);
 
     qps.set('c', encoded);
+    qps.delete('t');
     qps.set('format', formatFrom(format));
 
     let base = this.router.currentURL.split('?')[0];
