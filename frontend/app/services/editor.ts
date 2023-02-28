@@ -2,7 +2,7 @@ import { tracked } from '@glimmer/tracking';
 import { assert } from '@ember/debug';
 import { associateDestroyableChild } from '@ember/destroyable';
 import { action } from '@ember/object';
-import { getOwner,setOwner } from '@ember/owner';
+import { getOwner, setOwner } from '@ember/owner';
 import Service, { inject as service } from '@ember/service';
 
 import { TextURIComponent } from 'limber/utils/editor-text';
@@ -19,7 +19,6 @@ function link(_prototype: object, key: string, descriptor?: Descriptor): void {
 
   assert(`@link can only be used with string-keys`, typeof key === 'string');
 
-
   let { initializer } = descriptor;
 
   assert(
@@ -27,7 +26,6 @@ function link(_prototype: object, key: string, descriptor?: Descriptor): void {
       `\`@link foo = new MyClass();\``,
     initializer
   );
-
 
   let caches = new WeakMap<object, any>();
 

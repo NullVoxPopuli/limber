@@ -1,4 +1,4 @@
-import { decompressFromEncodedURIComponent } from "lz-string";
+import { decompressFromEncodedURIComponent } from 'lz-string';
 
 /**
  * NOTE: window's on message handler receives *a lot* of messages
@@ -81,7 +81,7 @@ export function fileFromParams(search = location.search) {
   return {
     text: getText(qps) ?? null,
     format: formatFrom(qps.get('format')),
-  }
+  };
 }
 
 function getText(qps: URLSearchParams) {

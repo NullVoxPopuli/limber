@@ -1,21 +1,12 @@
 /* eslint-disable ember/classic-decorator-no-classic-methods */
-import { isDestroyed, isDestroying } from '@ember/destroyable';
+import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
 import { inject as service } from '@ember/service';
 
-import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
+import { compressToEncodedURIComponent } from 'lz-string';
 
-import { DEFAULT_SNIPPET } from 'limber/snippets';
-import { type Format, fileFromParams,formatFrom } from 'limber/utils/messaging';
+import { type Format, fileFromParams, formatFrom } from 'limber/utils/messaging';
 
 import type RouterService from '@ember/routing/router-service';
-
-interface Signature {
-  Args: {
-    Named: {
-      setEditor: (text: string, format: Format) => void;
-    };
-  };
-}
 
 const DEBOUNCE_MS = 300;
 
@@ -58,6 +49,10 @@ export class TextURIComponent {
   #text = this.#initialFile.text;
   format: Format = 'glimdown';
 
+  constructor() {
+    registerDestructor(this, () => clearTimeout(this.#timeout));
+  }
+
   get decoded() {
     return this.#text;
   }
@@ -84,26 +79,26 @@ export class TextURIComponent {
   #queuedFn?: () => void;
 
   /**
-    * Debounce so we are kinder on the CPU
-    */
+   * Debounce so we are kinder on the CPU
+   */
   queue = (rawText: string) => {
-    if (this.#timeout) clearTimeout(this.#timeout)
+    if (this.#timeout) clearTimeout(this.#timeout);
 
     this.#queuedFn = () => {
       if (isDestroyed(this) || isDestroying(this)) return;
 
       this.set(rawText);
       this.#queuedFn = undefined;
-    }
+    };
 
     this.#timeout = setTimeout(this.#queuedFn, DEBOUNCE_MS);
-  }
+  };
 
   #flush = () => {
-    if (this.#timeout) clearTimeout(this.#timeout)
+    if (this.#timeout) clearTimeout(this.#timeout);
 
     this.#queuedFn?.();
-  }
+  };
 
   #updateQPs = async (rawText: string, format?: Format) => {
     let encoded = compressToEncodedURIComponent(rawText);
@@ -119,4 +114,3 @@ export class TextURIComponent {
     this.router.replaceWith(next);
   };
 }
-
