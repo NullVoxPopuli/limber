@@ -6,7 +6,7 @@ import { registerDestructor } from '@ember/destroyable';
 
 const SHOW_TIME = 2000;
 
-export default class Save extends Component<{ Args: unknown }> {
+export default class Save extends Component {
   <template>
     <div class="
       w-full p-10 fixed text-2xl
@@ -25,7 +25,7 @@ export default class Save extends Component<{ Args: unknown }> {
 
   @tracked isShowing = false;
 
-  constructor(owner: unknown, args: unknown) {
+  constructor(owner: unknown, args: {}) {
     super(owner, args);
 
     const handler = (e: KeyboardEvent) => {
@@ -48,7 +48,7 @@ export default class Save extends Component<{ Args: unknown }> {
 
   onSave = async () => {
     this.isShowing = true;
-    this.editor.textURIComponent.toClipboard();
+    await this.editor.textURIComponent.toClipboard();
     await new Promise(resolve => setTimeout(resolve, SHOW_TIME));
     this.isShowing = false;
   }

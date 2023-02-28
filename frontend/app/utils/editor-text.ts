@@ -63,9 +63,12 @@ export class TextURIComponent {
    *   - copy the updated URL to the clipboard
    *   - display a message to the user that the URL is now in their clipboard
    */
-  toClipboard = () => {
+  toClipboard = async () => {
     this.#flush();
-    navigator.clipboard.writeText(this.router.currentURL);
+
+    let url = location.origin + this.router.currentURL;
+
+    await navigator.clipboard.writeText(url);
   };
 
   /**

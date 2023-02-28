@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { getOwner, setOwner } from '@ember/owner';
 import Service, { inject as service } from '@ember/service';
 
+import { DEFAULT_SNIPPET } from 'limber/snippets';
 import { TextURIComponent } from 'limber/utils/editor-text';
 
 import type RouterService from '@ember/routing/router-service';
@@ -70,7 +71,7 @@ export default class EditorService extends Service {
   }
 
   get text() {
-    return this.textURIComponent.decoded;
+    return this.textURIComponent.decoded ?? DEFAULT_SNIPPET;
   }
 
   _editorSwapText?: (text: string, format: Format) => void;
