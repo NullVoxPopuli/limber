@@ -545,7 +545,7 @@ importers:
       broccoli-funnel: ^3.0.8
       concurrently: ^7.5.0
       eslint: ^8.33.0
-      postcss: ^8.4.19
+      postcss: ^8.4.21
       prettier: ^2.8.3
       tailwindcss: ^3.2.4
     dependencies:
