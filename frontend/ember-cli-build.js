@@ -59,6 +59,7 @@ module.exports = function (defaults) {
         'limber/helpers/state',
         'ember-popperjs',
         'ember-repl',
+        'xstate',
         'ember-modifier',
         'tracked-built-ins',
         'ember-headlessui/components/menu',
