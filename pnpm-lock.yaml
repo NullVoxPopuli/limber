@@ -424,7 +424,7 @@ importers:
       '@tsconfig/ember': ^2.0.0
       concurrently: ^7.6.0
       ember-async-data: ^0.7.0
-      ember-cli-htmlbars: ^6.1.1
+      ember-cli-htmlbars: ^6.2.0
       ember-resources: ^6.0.0-beta.0
       ember-source: ^4.11.0
       ember-template-imports: ^3.4.1
@@ -7735,7 +7735,7 @@ packages:
     dev: true
 
   /concat-map/0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
   /concurrently/7.6.0:
     resolution: {integrity: sha512-BKtRgvcJGeZ4XttiDiNcFiRlxoAeZOseqUvyYRUp/Vtd+9p1ULmeoSqGsDA+2ivdeDFpqrJvGvmI+StKfKl5hw==}
