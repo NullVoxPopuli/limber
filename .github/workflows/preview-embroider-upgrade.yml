@@ -18,11 +18,4 @@ jobs:
       - name: Update lockfile
         run: pnpm install --fix-lockfile
       - name: Push to branch
-        run: |
-          git checkout -b preview-embroider-upgrade
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions-bot@users.noreply.github.com"
-          git add .
-          git commit -m "Upgrade to @embroider/*-unstable.sha while nightly cron"
-          git push origin preview-embroider-upgrade --force 
-
+        run: ./dev/bot-push.sh
