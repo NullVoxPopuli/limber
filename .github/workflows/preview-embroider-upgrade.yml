@@ -1,0 +1,31 @@
+name: Preview Embroider Upgrade
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    # Runs "at minute 55 past every hour" (see https://crontab.guru)
+    - cron: '* 3 * * *'
+
+jobs:
+  update_unstable_branch:
+    name: Update Unstable Branch
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
+      - name: Set overrides
+        run: pnpm dev use-unstable-embroider
+      - name: Update lockfile
+        run: pnpm install --fix-lockfile
+      - name: Push to branch
+        run: |
+          git checkout -b preview-embroider-upgrade
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions-bot@users.noreply.github.com"
+          git add .
+          git commit -m "Upgrade to @embroider/*-unstable.sha while nightly cron"
+          git push origin preview-embroider-upgrade --force 
+
