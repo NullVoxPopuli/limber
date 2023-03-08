@@ -5,6 +5,7 @@ import { hideBin } from 'yargs/helpers';
 
 import { symlinkEverywhere } from './commands/symlink-everywhere.js';
 import { syncDeps } from './commands/sync-deps.js';
+import { useUnstableEmbroider } from './commands/use-unstable-embroider.js';
 
 
 let yarg = yargs(hideBin(process.argv));
@@ -25,6 +26,9 @@ yarg
   )
 .command('sync-prettier', 'symlinks all workspaces to use the same prettier config', () => {}, () => {
   return symlinkEverywhere({ target: '.prettierrc.cjs' });
+})
+.command('use-unstable-embroider', 'use the "main" and unstable release of embroider', () => {}, () => {
+  return useUnstableEmbroider();
 })
 .command(
   'sync-deps <depName>',
