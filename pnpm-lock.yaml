@@ -101,7 +101,7 @@ importers:
       '@types/unist': ^2.0.6
       '@typescript-eslint/eslint-plugin': ^5.53.0
       '@typescript-eslint/parser': ^5.53.0
-      '@xstate/inspect': ^0.7.1
+      '@xstate/inspect': ^0.8.0
       broccoli-asset-rev: ^3.0.0
       broccoli-merge-trees: ^4.2.0
       browserslist: ^4.21.5
@@ -184,7 +184,7 @@ importers:
       '@nullvoxpopuli/limber-styles': link:../packages/styles
       '@nullvoxpopuli/limber-transpilation': link:../packages/transpilation
       '@popperjs/core': 2.11.6
-      '@xstate/inspect': 0.7.1_ws@8.12.1+xstate@4.35.4
+      '@xstate/inspect': 0.8.0_ws@8.12.1+xstate@4.35.4
       browserslist: 4.21.5
       dompurify: 2.4.5
       ember-auto-import: 2.6.1_webpack@5.75.0
@@ -5072,12 +5072,12 @@ packages:
     engines: {node: '>=10.0.0'}
     dev: true
 
-  /@xstate/inspect/0.7.1_ws@8.12.1+xstate@4.35.4:
-    resolution: {integrity: sha512-lEIi6cSvzA9f+GzaJMRVe4xnNjPY/oKdU8rjb+qxqUYx2evLuqysFu0XbPmEjMCwpfdIvG4FFsZJ7Ng7+k9UHw==}
+  /@xstate/inspect/0.8.0_ws@8.12.1+xstate@4.35.4:
+    resolution: {integrity: sha512-wSkFeOnp+7dhn+zTThO0M4D2FEqZN9lGIWowJu5JLa2ojjtlzRwK8SkjcHZ4rLX8VnMev7kGjgQLrGs8kxy+hw==}
     peerDependencies:
       '@types/ws': ^8.0.0
       ws: ^8.0.0
-      xstate: ^4.35.3
+      xstate: ^4.37.0
     peerDependenciesMeta:
       '@types/ws':
         optional: true
