@@ -131,7 +131,7 @@ importers:
       ember-headlessui: 0.13.0
       ember-load-initializers: ^2.1.2
       ember-maybe-import-regenerator: ^1.0.0
-      ember-modifier: ^4.0.0
+      ember-modifier: ^4.1.0
       ember-on-resize-modifier: ^1.1.0
       ember-page-title: ^7.0.0
       ember-popperjs: ^3.0.0
