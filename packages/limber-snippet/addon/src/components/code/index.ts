@@ -8,6 +8,7 @@ type AllowedFormat = 'gjs' | 'gts' | 'hbs' | 'gmd';
 type Storage = 'local' | 'url';
 
 interface Signature {
+  Element: HTMLIFrameElement;
   Args:
     | {
         /**
@@ -75,6 +76,10 @@ export default class Code extends Component<Signature> {
 
     assert(`either @path or @code must be passed to the Code/REPL component, but neither was.`);
   });
+
+  get isPreview() {
+    return false;
+  }
 
   get queryParams() {
     return wrap(this.code.value || '');

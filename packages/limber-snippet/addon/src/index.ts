@@ -1,1 +1,1 @@
-export { Code, Code as EditableCode, Code as REPL } from './components/code';
+export { default as Code, default as EditableCode, default as REPL } from './components/code';

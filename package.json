@@ -32,6 +32,8 @@
   "packageManager": "pnpm@7.16.1",
   "pnpm": {
     "overrides": {
+      "@glimmer/component": "^1.1.2",
+      "@glimmer/tracking": "^1.1.2",
       "ember-auto-import": "^2.6.0",
       "@types/eslint": "^8.0.0"
     },
