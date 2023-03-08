@@ -34,6 +34,7 @@
     "overrides": {
       "@glimmer/component": "^1.1.2",
       "@glimmer/tracking": "^1.1.2",
+      "ember-async-data": "^0.7.0",
       "ember-auto-import": "^2.6.0",
       "@types/eslint": "^8.0.0"
     },
@@ -45,11 +46,14 @@
       "allowAny": [
         "ember-modifier"
       ],
-      "ignoreMissing": ["webpack"]
+      "ignoreMissing": [
+        "webpack"
+      ]
     },
     "notes": {},
     "patchedDependencies": {
-      "ember-on-resize-modifier@1.1.0": "patches/ember-on-resize-modifier@1.1.0.patch"
+      "ember-on-resize-modifier@1.1.0": "patches/ember-on-resize-modifier@1.1.0.patch",
+      "ember-async-data@0.7.0": "patches/ember-async-data@0.7.0.patch"
     }
   }
 }

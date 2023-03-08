@@ -3,10 +3,14 @@ lockfileVersion: 5.4
 overrides:
   '@glimmer/component': ^1.1.2
   '@glimmer/tracking': ^1.1.2
+  ember-async-data: ^0.7.0
   ember-auto-import: ^2.6.0
   '@types/eslint': ^8.0.0
 
 patchedDependencies:
+  ember-async-data@0.7.0:
+    hash: lcu42p7qs2in5uz443b3kv6t7e
+    path: patches/ember-async-data@0.7.0.patch
   ember-on-resize-modifier@1.1.0:
     hash: prsfdndcfbbwmlkgbxbo7gxczu
     path: patches/ember-on-resize-modifier@1.1.0.patch
@@ -455,7 +459,7 @@ importers:
       '@rollup/plugin-babel': 6.0.3_a5lozykpytg33uq3o54uvv7c3m
       '@tsconfig/ember': 2.0.0
       concurrently: 7.6.0
-      ember-async-data: 0.7.0
+      ember-async-data: 0.7.0_lcu42p7qs2in5uz443b3kv6t7e
       ember-cli-htmlbars: 6.2.0
       ember-resources: 6.0.0-beta.0_xdynijnyxkhyp5xoy2vpph54hi
       ember-source: 4.11.0_tjijq7ea5h6eehcyhwtwl5ia5m
@@ -520,7 +524,7 @@ importers:
       typescript: ^4.8.4
       webpack: ^5.75.0
     dependencies:
-      ember-async-data: 0.7.0
+      ember-async-data: 0.7.0_lcu42p7qs2in5uz443b3kv6t7e
       limber-snippet: link:../addon
     devDependencies:
       '@babel/core': 7.21.0
@@ -757,7 +761,6 @@ packages:
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@babel/eslint-parser/7.19.1_zt6cfucldurvbyn2isj445jria:
     resolution: {integrity: sha512-AqNf2QWt1rtu2/1rLswy6CDP7H9Oh3mMhk177Y67Rg8d7RD9WfOLLv8CGn6tisFvS2htm86yIe1yLF6I1UDaGQ==}
@@ -915,7 +918,6 @@ packages:
       '@babel/types': 7.21.2
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@babel/helper-optimise-call-expression/7.18.6:
     resolution: {integrity: sha512-HP59oD9/fEHQkdcbgFCnbmgH5vIQTJbxh2yf+CdM89/glUNnuzr87Q8GIjGEnOktTROemO0Pe0iPAYbqZuOUiA==}
@@ -1014,7 +1016,6 @@ packages:
       '@babel/types': 7.21.2
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@babel/highlight/7.18.6:
     resolution: {integrity: sha512-u7stbOuYjaPezCuLj29hNW1v64M2Md2qupEKP1fHc7WdOA3DgLh37suiSrZYY7haUB7iBeQZ9P1uiRF359do3g==}
@@ -1982,7 +1983,6 @@ packages:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@babel/types/7.21.2:
     resolution: {integrity: sha512-3wRZSs7jiFaB8AjxiiD+VqN5DTG2iRvJGQ+qYFrs/654lg6kGTQWIOFjlBo5RaXuAZjBmP3+OQH4dmhqiiyYxw==}
@@ -3709,7 +3709,7 @@ packages:
       '@types/ember__routing':
         optional: true
     dependencies:
-      '@glint/environment-ember-loose': 1.0.0-beta.3_jp4edzasexunb63jwdl454ycd4
+      '@glint/environment-ember-loose': 1.0.0-beta.3_wt3zkvip3eqybjfuwsq2agrquy
       '@glint/template': 1.0.0-beta.3
       ember-template-imports: 3.4.1
     dev: true
@@ -5894,7 +5894,7 @@ packages:
       webpack:
         optional: true
     dependencies:
-      '@babel/core': 7.21.0
+      '@babel/core': 7.21.0_supports-color@8.1.1
       find-cache-dir: 3.3.2
       loader-utils: 2.0.4
       make-dir: 3.1.0
@@ -8297,7 +8297,6 @@ packages:
     dependencies:
       ms: 2.1.2
       supports-color: 8.1.1
-    dev: true
 
   /decamelize-keys/1.1.1:
     resolution: {integrity: sha512-WiPxgEirIV0/eIOMcnFBA3/IJZAZqKnwAwWyvvdi4lsr1WCN22nhdf/3db3DoZcUjTV2SqfzIwNyp6y2xs3nmg==}
@@ -8646,7 +8645,7 @@ packages:
       '@glimmer/syntax': 0.27.0
     dev: true
 
-  /ember-async-data/0.7.0:
+  /ember-async-data/0.7.0_lcu42p7qs2in5uz443b3kv6t7e:
     resolution: {integrity: sha512-hiHSSMXYGd4eBM+w1EYCHiIkfnTpup/mxEUeEGVMmaAAzVMjb+ACieEPx2xoZ5Wi5baswYMKIIyoKDWT69645Q==}
     engines: {node: 14.* || 16.* || >= 18}
     dependencies:
@@ -8654,6 +8653,7 @@ packages:
       '@embroider/addon-shim': 1.8.4
     transitivePeerDependencies:
       - supports-color
+    patched: true
 
   /ember-auto-import/2.6.1:
     resolution: {integrity: sha512-3bCRi/pXp4QslmuCXGlSz9xwR7DF5oDx3zZO5OXKzNZihtkqAM1xvGuRIdQSl46pvbAXOkp8Odl5fOen1i0dRw==}
@@ -9596,7 +9596,7 @@ packages:
       ember-source: '>=3.28'
       qunit: ^2.13.0
     dependencies:
-      '@ember/test-helpers': 2.9.3_tdbzy47nbsiytitk6ukbodh4zu
+      '@ember/test-helpers': 2.9.3_xofn2vvucy6ydscs5n5hjhl7qq
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 3.0.2
       common-tags: 1.8.2
@@ -9723,7 +9723,7 @@ packages:
       '@glimmer/component': 1.1.2_@babel+core@7.21.0
       '@glimmer/tracking': 1.1.2
       '@glint/template': 1.0.0-beta.3
-      ember-async-data: 0.7.0
+      ember-async-data: 0.7.0_lcu42p7qs2in5uz443b3kv6t7e
       ember-source: 4.11.0_tjijq7ea5h6eehcyhwtwl5ia5m
     transitivePeerDependencies:
       - supports-color
