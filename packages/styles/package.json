@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
-    "concurrently": "^7.5.0",
+    "concurrently": "^7.6.0",
     "postcss": "^8.4.21",
     "prettier": "^2.8.3",
     "tailwindcss": "^3.2.7",

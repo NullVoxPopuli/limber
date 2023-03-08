@@ -314,7 +314,7 @@ importers:
       broccoli-funnel: ^3.0.8
       codemirror: ^6.0.1
       codemirror-languageserver: ^1.11.0
-      concurrently: ^7.5.0
+      concurrently: ^7.6.0
       esbuild: 0.17.10
       esbuild-plugin-alias: ^0.2.1
       eslint: ^8.34.0
@@ -364,7 +364,7 @@ importers:
       '@nullvoxpopuli/eslint-configs': ^3.1.1
       '@typescript-eslint/eslint-plugin': ^5.18.0
       '@typescript-eslint/parser': ^5.0.0
-      concurrently: ^7.5.0
+      concurrently: ^7.6.0
       eslint: ^8.33.0
       prettier: ^2.8.3
       typescript: ^4.9.5
@@ -384,7 +384,7 @@ importers:
       '@nullvoxpopuli/eslint-configs': ^3.1.1
       '@typescript-eslint/eslint-plugin': ^5.42.1
       '@typescript-eslint/parser': ^5.42.1
-      concurrently: ^7.5.0
+      concurrently: ^7.6.0
       eslint: ^8.33.0
       prettier: ^2.8.3
       typescript: ^4.9.5
@@ -409,7 +409,7 @@ importers:
       '@embroider/addon-shim': ^1.0.0
       '@nullvoxpopuli/eslint-configs': ^3.1.1
       '@rollup/plugin-babel': ^6.0.3
-      concurrently: ^7.5.0
+      concurrently: ^7.6.0
       ember-cli-htmlbars: ^6.1.1
       ember-template-lint: ^4.0.0
       eslint: ^8.33.0
@@ -547,7 +547,7 @@ importers:
       '@tailwindcss/typography': ^0.5.9
       autoprefixer: ^10.4.13
       broccoli-funnel: ^3.0.8
-      concurrently: ^7.5.0
+      concurrently: ^7.6.0
       eslint: ^8.33.0
       postcss: ^8.4.21
       prettier: ^2.8.3
