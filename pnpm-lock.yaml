@@ -611,7 +611,7 @@ importers:
       '@types/htmlbars-inline-precompile': ^3.0.0
       '@typescript-eslint/eslint-plugin': ^5.18.0
       '@typescript-eslint/parser': ^5.0.0
-      babel-loader: ^9.1.0
+      babel-loader: ^9.1.2
       babel-plugin-htmlbars-inline-precompile: ^5.3.1
       ember-source: ^4.11.0
       esbuild: 0.15.14
