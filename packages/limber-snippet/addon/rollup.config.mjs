@@ -19,6 +19,7 @@ export default defineConfig({
   output: addon.output(),
   plugins: [
     addon.publicEntrypoints(['**/*.js']),
+    addon.appReexports(['components/**/*.js']),
 
     ts({
       // can be changed to swc or other transpilers later
