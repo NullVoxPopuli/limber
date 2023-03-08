@@ -42,7 +42,8 @@
     "peerDependencyRules": {
       "allowAny": [
         "ember-modifier"
-      ]
+      ],
+      "ignoreMissing": ["webpack"]
     },
     "notes": {},
     "patchedDependencies": {

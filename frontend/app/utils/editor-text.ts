@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 
 import { compressToEncodedURIComponent } from 'lz-string';
 
-import { type Format, fileFromParams, formatFrom } from 'limber/utils/messaging';
+import { fileFromParams, type Format, formatFrom } from 'limber/utils/messaging';
 
 import type RouterService from '@ember/routing/router-service';
 
