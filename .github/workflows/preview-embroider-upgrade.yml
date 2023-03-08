@@ -13,9 +13,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
-      - name: Set overrides
-        run: pnpm dev use-unstable-embroider
-      - name: Update lockfile
-        run: pnpm install --fix-lockfile
-      - name: Push to branch
-        run: ./dev/bot-push.sh
+      - run: ./dev/update-unstable-embroider.sh

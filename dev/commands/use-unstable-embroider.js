@@ -16,16 +16,14 @@ const EMBROIDER_PACKAGES = [
 ]
 
 export async function useUnstableEmbroider() {
-  let withVersions = {};
-
-  for (let name of EMBROIDER_PACKAGES) {
+  let withVersions = await Promise.all(EMBROIDER_PACKAGES.map(async name => {
     let version = await latestVersion(name, { version: 'unstable' });
 
-    withVersions[name] = version;
-  }  
+    return [name, version];
+  }));
 
   await packageJson.modify(( json ) => {
-    for (let [name, version] of Object.entries(withVersions)) {
+    for (let [name, version] of withVersions) {
       json.pnpm.overrides[name] = version;
     }
   });
