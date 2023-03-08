@@ -1,34 +1,33 @@
-import babel from '@rollup/plugin-babel';
+// @ts-nocheck
+import ts from 'rollup-plugin-ts';
 import { Addon } from '@embroider/addon-dev/rollup';
+import copy from 'rollup-plugin-copy';
+import { defineConfig } from 'rollup';
 
 const addon = new Addon({
   srcDir: 'src',
   destDir: 'dist',
 });
 
-export default {
-  // This provides defaults that work well alongside `publicEntrypoints` below.
-  // You can augment this if you need to.
+export default defineConfig({
+  // https://github.com/rollup/rollup/issues/1828
+  watch: {
+    chokidar: {
+      usePolling: true,
+    },
+  },
   output: addon.output(),
-
   plugins: [
-    // These are the modules that users should be able to import from your
-    // addon. Anything not listed here may get optimized away.
-    addon.publicEntrypoints(['components/**/*.js', 'index.js']),
-
-    // These are the modules that should get reexported into the traditional
-    // "app" tree. Things in here should also be in publicEntrypoints above, but
-    // not everything in publicEntrypoints necessarily needs to go here.
+    addon.publicEntrypoints(['**/*.js']),
     addon.appReexports(['components/**/*.js']),
 
-    // This babel config should *not* apply presets or compile away ES modules.
-    // It exists only to provide development niceties for you, like automatic
-    // template colocation.
-    //
-    // By default, this will load the actual babel config from the file
-    // babel.config.json.
-    babel({
-      babelHelpers: 'bundled',
+    ts({
+      // can be changed to swc or other transpilers later
+      // but we need the ember plugins converted first
+      // (template compilation and co-location)
+      transpiler: 'babel',
+      babelConfig: './babel.config.json',
+      browserslist: ['last 2 firefox versions', 'last 2 chrome versions'],
     }),
 
     // Follow the V2 Addon rules about dependencies. Your code can import from
@@ -39,11 +38,15 @@ export default {
     // Ensure that standalone .hbs files are properly integrated as Javascript.
     addon.hbs(),
 
-    // addons are allowed to contain imports of .css files, which we want rollup
-    // to leave alone and keep in the published output.
-    addon.keepAssets(['**/*.css']),
-
-    // Remove leftover build artifacts when starting a new build.
+    // Start with a clean output directory before building
     addon.clean(),
+
+    // Copy Readme and License into published package
+    copy({
+      targets: [
+        { src: '../README.md', dest: '.' },
+        { src: '../LICENSE.md', dest: '.' },
+      ],
+    }),
   ],
-};
+});
