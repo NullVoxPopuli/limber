@@ -22,6 +22,7 @@
     "test:ember": "ember test"
   },
   "dependencies": {
+    "ember-async-data": "^0.7.0",
     "limber-snippet": "workspace:../addon"
   },
   "devDependencies": {

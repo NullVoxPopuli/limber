@@ -1,0 +1,9 @@
+diff --git a/dist/helpers/load.d.ts b/dist/helpers/load.d.ts
+index b5fd94465451ed3a7335b19c9339726db1feb71f..81d6b0fb75b8816b071c096a11d3ef2dc51486e3 100644
+--- a/dist/helpers/load.d.ts
++++ b/dist/helpers/load.d.ts
+@@ -1,4 +1,3 @@
+-/// <reference types="ember__component" />
+ import Helper from '@ember/component/helper';
+ import TrackedAsyncData from "../tracked-async-data";
+ /**
