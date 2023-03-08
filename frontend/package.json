@@ -67,7 +67,7 @@
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-merge-trees": "^4.2.0",
     "build-time-reporter-webpack-plugin": "^1.4.3",
-    "chalk": "^5.1.2",
+    "chalk": "^5.2.0",
     "common-tags": "^1.8.2",
     "concurrently": "^7.6.0",
     "ember-cli": "~4.11.0",
