@@ -131,7 +131,7 @@
     "@popperjs/core": "^2.11.6",
     "@xstate/inspect": "^0.7.1",
     "browserslist": "^4.21.5",
-    "dompurify": "^2.4.3",
+    "dompurify": "^2.4.5",
     "ember-auto-import": "^2.6.1",
     "ember-container-query": "4.0.0-alpha.2",
     "ember-element-helper": "^0.6.1",
