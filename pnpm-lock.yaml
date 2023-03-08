@@ -119,7 +119,7 @@ importers:
       ember-cli-inject-live-reload: ^2.1.0
       ember-cli-sri: ^2.1.1
       ember-cli-terser: ^4.0.2
-      ember-container-query: 4.0.0-alpha.4
+      ember-container-query: 4.0.0-alpha.5
       ember-element-helper: ^0.6.1
       ember-focus-trap: ^1.0.1
       ember-headlessui: 0.13.0
@@ -188,7 +188,7 @@ importers:
       browserslist: 4.21.5
       dompurify: 2.4.5
       ember-auto-import: 2.6.1_webpack@5.75.0
-      ember-container-query: 4.0.0-alpha.4_y356zqhwraaj67n6hpm6x5zw3i
+      ember-container-query: 4.0.0-alpha.5_y356zqhwraaj67n6hpm6x5zw3i
       ember-element-helper: 0.6.1_y356zqhwraaj67n6hpm6x5zw3i
       ember-focus-trap: 1.0.1
       ember-headlessui: 0.13.0_vei75ioqudwzu3tfnlazywl2wa
@@ -9143,8 +9143,8 @@ packages:
       - supports-color
     dev: false
 
-  /ember-container-query/4.0.0-alpha.4_y356zqhwraaj67n6hpm6x5zw3i:
-    resolution: {integrity: sha512-vAOPXwYrG1WAvbRweJCsVoqspA1XRcWwCZHczgmYKcrYLHiFHc0Rs6hYk+oYDrFfdD9GDEUoDX+vo+SD82jTCw==}
+  /ember-container-query/4.0.0-alpha.5_y356zqhwraaj67n6hpm6x5zw3i:
+    resolution: {integrity: sha512-D+r0Ws9neSMAmRmh/cjf+Tjs/qnq7h0Db5mo+IWY6HAk2Mq+PjeInV7me6emZCfwcw09JxhJbhqWp6en5E1OPg==}
     engines: {node: 14.* || 16.* || >= 18}
     dependencies:
       '@embroider/addon-shim': 1.8.4
