@@ -613,7 +613,7 @@ importers:
       '@typescript-eslint/parser': ^5.0.0
       babel-loader: ^9.1.0
       babel-plugin-htmlbars-inline-precompile: ^5.3.1
-      ember-source: ^4.8.2
+      ember-source: ^4.11.0
       esbuild: 0.15.14
       eslint: ^8.33.0
       path-browserify: ^1.0.1
@@ -7735,7 +7735,7 @@ packages:
     dev: true
 
   /concat-map/0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
   /concurrently/7.6.0:
     resolution: {integrity: sha512-BKtRgvcJGeZ4XttiDiNcFiRlxoAeZOseqUvyYRUp/Vtd+9p1ULmeoSqGsDA+2ivdeDFpqrJvGvmI+StKfKl5hw==}
