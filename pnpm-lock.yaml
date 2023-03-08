@@ -547,7 +547,7 @@ importers:
       eslint: ^8.33.0
       postcss: ^8.4.21
       prettier: ^2.8.3
-      tailwindcss: ^3.2.4
+      tailwindcss: ^3.2.7
     dependencies:
       '@tailwindcss/typography': 0.5.9_tailwindcss@3.2.7
       broccoli-funnel: 3.0.8
