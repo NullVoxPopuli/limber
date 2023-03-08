@@ -424,7 +424,7 @@ importers:
       '@tsconfig/ember': ^2.0.0
       concurrently: ^7.6.0
       ember-async-data: ^0.7.0
-      ember-cli-htmlbars: ^6.1.1
+      ember-cli-htmlbars: ^6.2.0
       ember-resources: ^6.0.0-beta.0
       ember-source: ^4.11.0
       ember-template-imports: ^3.4.1
