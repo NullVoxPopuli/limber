@@ -17,23 +17,24 @@ module.exports = function (defaults) {
       isProduction: ${isProduction}
   `);
 
-  let config = {
+  let app = new EmberApp(defaults, {
     'ember-cli-babel': {
       enableTypeScriptTransform: true,
     },
     'ember-cli-terser': {
       enabled: MINIFY,
     },
-    babel: {
-      loose: true,
-    },
-    // 'ember-cli-babel': {
-    //   useBabelConfig: true,
-    // },
     fingerprint: { exclude: ['transpilation-worker.js'] },
-  };
-
-  let app = new EmberApp(defaults, config);
+    sourcemaps: { enabled: true, extensions: ['js', 'css', 'ts', 'gjs', 'gts', 'hbs'] },
+    bundleAnalyzer: {
+      enabled: true,
+    },
+    autoImport: {
+      webpackConfig: {
+        devtool: 'source-map',
+      }
+    }
+  });
 
   // Adds:
   //  - ember-template-compiler
@@ -41,7 +42,6 @@ module.exports = function (defaults) {
   app.import('vendor/ember/ember-template-compiler.js');
 
   const { Webpack } = require('@embroider/webpack');
-  const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
   const { ESBuildMinifyPlugin } = require('esbuild-loader');
 
@@ -81,6 +81,9 @@ module.exports = function (defaults) {
         package: '@babel/standalone',
       },
       {
+        package: 'babel-plugin-htmlbars-inline-precompile',
+      },
+      {
         package: '@nullvoxpopuli/limber-codemirror',
       },
     ],
@@ -98,18 +101,16 @@ module.exports = function (defaults) {
     allowUnsafeDynamicComponents: true,
     packagerOptions: {
       webpackConfig: {
-        // embroider 1.8.3 might have an issues with gts + sourcemaps?
-        devtool: false,
-        // devtool: 'source-map',
+        devtool: 'source-map',
         // devtool: isProduction ? 'source-map' : false,
         experiments: {
           // Causes app to not boot
           // lazyCompilation: true,
         },
-        // output: {
+        output: {
         //   Causes app to not boot
         //   chunkFormat: 'module',
-        // },
+        },
         resolve: {
           alias: {
             path: 'path-browserify',
@@ -134,13 +135,6 @@ module.exports = function (defaults) {
           __filename: true,
           __dirname: true,
         },
-        plugins: [
-          new BundleAnalyzerPlugin({
-            analyzerMode: 'static',
-            openAnalyzer: false,
-            reportFilename: 'bundle.html',
-          }),
-        ],
       },
     },
   });
