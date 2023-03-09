@@ -19,7 +19,7 @@ export function getSnippetElement(event: Event) {
   for (let element of ancestry) {
     if (!(element instanceof HTMLElement)) continue;
 
-    if (element.classList.contains('.glimdown-snippet')) {
+    if (element.classList.contains('glimdown-snippet')) {
       return element;
     }
 
