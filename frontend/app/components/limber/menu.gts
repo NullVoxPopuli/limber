@@ -42,7 +42,11 @@ const DefaultTrigger: TOC<{
 }> = <template>
   <@menu.Button
     {{@trigger}}
-    class="text-black rounded-sm border border-gray-900 bg-white px-2 py-1 -my-1 text-left transition ease-in-out duration-150 sm:text-sm focus:ring-4 focus-visible:outline-none ring-ember-brand focus:outline-none"
+    class="
+      text-black rounded border bg-white px-2 py-1 -my-1 text-left transition ease-in-out duration-150 sm:text-sm
+      drop-shadow-md hover:drop-shadow-xl
+      focus:ring-4 focus-visible:outline-none ring-ember-brand focus:outline-none
+    "
     ...attributes
   >
     {{yield @menu}}
