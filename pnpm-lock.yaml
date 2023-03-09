@@ -152,7 +152,7 @@ importers:
       fractal-page-object: ^0.3.0
       highlight.js: ^11.7.0
       highlightjs-glimmer: ^2.0.1
-      html-to-image: ^1.10.8
+      html-to-image: ^1.11.11
       loader.js: ^4.7.0
       lz-string: ^1.5.0
       onp: ^2.0.4
