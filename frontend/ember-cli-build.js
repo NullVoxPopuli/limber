@@ -66,6 +66,7 @@ module.exports = function (defaults) {
         'ember-focus-trap/modifiers/focus-trap',
         'ember-resources',
         'ember-resources/core',
+        'ember-resources/service',
         'ember-resources/util/map',
         'ember-resources/util/keep-latest',
         'ember-resources/util/function',
