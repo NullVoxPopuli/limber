@@ -80,7 +80,7 @@ const Items: TOC<{
 }> = <template>
   <@items
     {{@popover}}
-    class='absolute top-2 z-20 grid mt-1 rounded-sm bg-white drop-shadow-lg min-w-max'
+    class='absolute top-2 z-20 grid mt-1 rounded border bg-white drop-shadow-xl min-w-max'
     data-test-menu-items
     ...attributes
     as |items|
