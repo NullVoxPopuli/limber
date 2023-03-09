@@ -100,8 +100,6 @@ const portalTarget = () => {
   return element;
 }
 
-const not = (x: unknown) => !x;
-
 const Menu: TOC<{
   Element: HTMLDivElement;
   Args: {
@@ -133,16 +131,16 @@ const Menu: TOC<{
       }}
 
       {{#if menu.isOpen}}
-        {{#if (not @portal)}}
-          <Items @items={{menu.Items}} @popover={{popover}} ...attributes as |Button|>
-            {{yield Button to="options"}}
-          </Items>
-        {{else}}
+        {{#if @portal}}
           {{#in-element (portalTarget)}}
             <Items @items={{menu.Items}} @popover={{popover}} ...attributes as |Button|>
               {{yield Button to="options"}}
             </Items>
           {{/in-element}}
+        {{else}}
+          <Items @items={{menu.Items}} @popover={{popover}} ...attributes as |Button|>
+            {{yield Button to="options"}}
+          </Items>
         {{/if}}
       {{/if}}
 

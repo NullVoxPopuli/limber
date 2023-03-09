@@ -2,10 +2,10 @@ import { toBlob, toPng } from 'html-to-image';
 
 export function getSnippetElement(event: Event) {
   /**
-    * Use the composedPath to get the actual element instead of
-  * closest, because the element may be removed from the DOM
-  * by the time this function runs.
-    */
+   * Use the composedPath to get the actual element instead of
+   * closest, because the element may be removed from the DOM
+   * by the time this function runs.
+   */
   let ancestry = event.composedPath();
 
   /**
@@ -62,7 +62,6 @@ export async function toClipboard(target: HTMLElement) {
   let canCopyToImage = 'ClipboardItem' in window;
   let filter = (node: HTMLElement | Text) => {
     if (node instanceof Text) return true;
-
 
     if ('getAttribute' in node && node.hasAttribute('data-test-copy-menu')) {
       return false;
