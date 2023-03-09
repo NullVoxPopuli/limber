@@ -47,3 +47,37 @@ declare module '@ember/template-compilation' {
   }
   export function compileTemplate(template: string, options: CompileOptions): any;
 }
+
+
+declare module 'ember-headlessui/components/menu' {
+  import { ComponentLike } from '@glint/template';
+
+  export type Element<T extends HTMLButtonElement | HTMLAnchorElement> = ComponentLike<{
+    Element: T;
+    Args: { tagName?: 'button' };
+    Blocks: { default: []}
+  }>;
+
+  export type Item = ComponentLike<{
+    Element: HTMLDivElement;
+    Blocks: { default: [{ Element: Element }]}
+  }>;
+
+  export type Items = ComponentLike<{
+    Element: HTMLDivElement;
+    Blocks: { default: [{ Item: Item }]}
+  }>;
+
+  export interface Menu {
+    isOpen: boolean;
+    Items: Items
+    Button: ComponentLike<{
+      Element: HTMLButtonElement;
+      Blocks: { default: []}
+    }>;
+  }
+
+  export default ComponentLike<{
+    Blocks: { default: [Menu]}
+  }>;
+}
