@@ -156,7 +156,7 @@
     "unified": "^9.2.2",
     "unist-util-flatmap": "^1.0.0",
     "webpack-bundle-analyzer": "^4.8.0",
-    "ws": "^8.11.0",
+    "ws": "^8.12.1",
     "xstate": "4.35.4"
   },
   "pnpm": {
