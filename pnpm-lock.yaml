@@ -299,7 +299,7 @@ importers:
     specifiers:
       '@babel/core': ^7.21.0
       '@codemirror/autocomplete': 6.4.2
-      '@codemirror/commands': 6.2.1
+      '@codemirror/commands': 6.2.2
       '@codemirror/lang-html': ^6.4.2
       '@codemirror/lang-javascript': 6.1.4
       '@codemirror/lang-markdown': 6.1.0
@@ -331,7 +331,7 @@ importers:
       typescript: ^4.9.5
     dependencies:
       '@codemirror/autocomplete': 6.4.2_m2g2fjrvetqbsl7zxwctz5ljh4
-      '@codemirror/commands': 6.2.1
+      '@codemirror/commands': 6.2.2
       '@codemirror/lang-html': 6.4.2
       '@codemirror/lang-javascript': 6.1.4
       '@codemirror/lang-markdown': 6.1.0
@@ -2217,8 +2217,8 @@ packages:
       '@lezer/common': 1.0.2
     dev: false
 
-  /@codemirror/commands/6.2.1:
-    resolution: {integrity: sha512-FFiNKGuHA5O8uC6IJE5apI5rT9gyjlw4whqy4vlcX0wE/myxL6P1s0upwDhY4HtMWLOwzwsp0ap3bjdQhvfDOA==}
+  /@codemirror/commands/6.2.2:
+    resolution: {integrity: sha512-s9lPVW7TxXrI/7voZ+HmD/yiAlwAYn9PH5SUVSUhsxXHhv4yl5eZ3KLntSoTynfdgVYM0oIpccQEWRBQgmNZyw==}
     dependencies:
       '@codemirror/language': 6.6.0
       '@codemirror/state': 6.2.0
@@ -7659,7 +7659,7 @@ packages:
     resolution: {integrity: sha512-J8j+nZ+CdWmIeFIGXEFbFPtpiYacFMDR8GlHK3IyHQJMCaVRfGx9NT+Hxivv1ckLWPvNdZqndbr/7lVhrf/Svg==}
     dependencies:
       '@codemirror/autocomplete': 6.4.2_m2g2fjrvetqbsl7zxwctz5ljh4
-      '@codemirror/commands': 6.2.1
+      '@codemirror/commands': 6.2.2
       '@codemirror/language': 6.6.0
       '@codemirror/lint': 6.2.0
       '@codemirror/search': 6.2.3
