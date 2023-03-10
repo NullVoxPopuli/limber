@@ -1,7 +1,7 @@
 packages:
   - './dev'
   - './frontend'
-  - './packages/**'
+  - './packages/*'
   - './tests'
   - './spikes/**'
   - './tutorial'

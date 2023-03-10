@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@embroider/core": "^2.0.2" ,
+    "@embroider/webpack": "^2.0.2",
+    "@embroider/compat": "^2.0.2"
+  }
+}

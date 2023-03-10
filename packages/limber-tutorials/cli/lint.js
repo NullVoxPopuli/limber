@@ -89,7 +89,7 @@ function print(reports) {
     * This results in less output
     */
 
-  if (process.env.INDIVIDUAL_ERRORS) {
+  if (process.env[ 'INDIVIDUAL_ERRORS' ]) {
     for (let report of reports) {
       console.log();
       let log = logger[report.severity];
