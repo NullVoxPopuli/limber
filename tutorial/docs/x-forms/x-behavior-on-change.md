@@ -18,7 +18,7 @@ const log = () => {
   let next = pretty(state.current);
   if (initial !== next) {
     console.log(state.current);
-    initial = next; 
+    initial = next;
   }
 }
 
@@ -47,7 +47,7 @@ const handleSubmit = ( event) => {
     </label>
     <label> Last Name
       <input name='lastName'>
-    </label>  
+    </label>
 
     <label> Include last name in chat
       <input type='checkbox' name='includeLastNameInChat'>
@@ -55,7 +55,7 @@ const handleSubmit = ( event) => {
 
     <button type='submit'>Submit</button>
   </form>
-  
+
   Open the browser console to see logs
 
   <style>

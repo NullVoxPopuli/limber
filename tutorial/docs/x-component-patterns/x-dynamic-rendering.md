@@ -15,9 +15,9 @@ const Three = <template>Three</template>;
 const Fallback = <template>Fallback / nothing selecetd</template>;
 
 const MAP = {
-  'one': One,
-  'two': Two,
-  'three': Three,
+'one': One,
+'two': Two,
+'three': Three,
 };
 
 // This is a helper, as all functions are helpers
@@ -26,14 +26,14 @@ const componentFor = (key) => MAP[key] ?? Fallback;
 // This way of dealing with form/input event binding is demonstrated
 // in the "Forms" demo in the "Select demo" menu at the top of the screen
 const handleInput = (event) => {
-  let formData = new FormData(event.currentTarget);
-  let data = Object.fromEntries(formData.entries());
+let formData = new FormData(event.currentTarget);
+let data = Object.fromEntries(formData.entries());
 
-  selected.current = data.component;
+selected.current = data.component;
 }
 const handleSubmit = ( event) => {
-  event.preventDefault();
-  handleInput(event);
+event.preventDefault();
+handleInput(event);
 };
 
 <template>
@@ -51,5 +51,6 @@ const handleSubmit = ( event) => {
     {{#let (componentFor selected.current) as |Selected|}}
       <Selected />
     {{/let}}
+
   </Shadowed>
 </template>

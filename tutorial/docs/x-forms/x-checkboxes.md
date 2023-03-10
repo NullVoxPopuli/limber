@@ -11,17 +11,17 @@ export default class Demo extends Component {
   @tracked value;
 
   update = (event) => this.value = event.target.checked;
-  
+
   <template>
     {{this.value}}<br>
-    <label> 
+    <label>
       the checkbox
-  
-      <input 
+
+      <input
         type="checkbox"
-        checked={{this.value}} 
+        checked={{this.value}}
         class="border"
-        {{on 'change' this.update}} 
+        {{on 'change' this.update}}
       />
     </label>
   </template>
@@ -50,10 +50,10 @@ const handleSubmit = ( event) => {
 };
 
 <template>
-  <form 
-    {{on 'input' handleInput}} 
+  <form
+    {{on 'input' handleInput}}
     {{on 'submit' handleSubmit}}
-    class="grid gap-2" 
+    class="grid gap-2"
     style="max-width: 300px"
   >
     <label> isChecked

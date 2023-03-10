@@ -25,7 +25,7 @@ export default class Demo extends Component {
   updateId = (event) => this.id = event.target.value;
 
   @use request = RemoteData(() => urlFor(this.id));
-  @use latest = keepLatest({ 
+  @use latest = keepLatest({
     value: () => this.request.value,
     when: () => this.request.isLoading,
   });
@@ -53,8 +53,6 @@ export default class Demo extends Component {
 
 Docs for `RemoteData` can [be found here][docs-remote-data].
 Information about how Resources fit in to the next edition of Ember can be [found here][polaris-reactivity]
-
-
 
 [gh-resources]: https://github.com/nullvoxpopuli/ember-resources
 [mdn-fetch]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch

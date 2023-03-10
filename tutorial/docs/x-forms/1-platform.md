@@ -60,12 +60,13 @@ const handleSubmit = ( event) => {
 <hr>
 
 ### "Platform" References
- - [`<form>` on MDN][2]
- - [`FormData` on MDN][1]
+
+- [`<form>` on MDN][2]
+- [`FormData` on MDN][1]
 
 ### Ember References
- - [the `on` modifier][3]
 
+- [the `on` modifier][3]
 
 [1]: https://developer.mozilla.org/en-US/docs/Web/API/FormData
 [2]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form

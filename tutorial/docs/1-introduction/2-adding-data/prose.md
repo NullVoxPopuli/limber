@@ -1,7 +1,7 @@
-A component that renders some static markup isn't very interesting. 
+A component that renders some static markup isn't very interesting.
 Let's add some data.
 
-First, define a local variable 
+First, define a local variable
 
 ```gjs
 let name = "world";
@@ -12,7 +12,9 @@ let name = "world";
 ```
 
 Then, we can refer to `name` in the markup:
+
 ```hbs
 <h1>Hello {{name}}</h1>
 ```
+
 Inside the curly braces, we can put any _reference_ we want.
