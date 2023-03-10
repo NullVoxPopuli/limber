@@ -13,7 +13,7 @@
     "start": "tailwindcss -o dist/tailwind.css --watch"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.13",
+    "autoprefixer": "^10.4.14",
     "concurrently": "^7.6.0",
     "postcss": "^8.4.21",
     "prettier": "^2.8.3",
