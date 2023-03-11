@@ -13,7 +13,7 @@ export class Selection extends Component {
   handleChange = (event: Event) => {
     assert(`Target must be select element`, event.target instanceof HTMLSelectElement);
 
-    this.router.transitionTo(`/${event.target.value}`);
+    this.router.transitionTo(event.target.value);
   }
 
   isSelected = ({ path }: { path: string }) => {
@@ -21,7 +21,12 @@ export class Selection extends Component {
   }
 
   <template>
-    <select aria-label="Change tutorial" {{on "change" this.handleChange}}>
+    <select
+      aria-label="Change tutorial"
+      name="tutorial"
+      class="bg-none border-none font-lg rounded p-2"
+      {{on "change" this.handleChange}}
+    >
       {{#each-in this.docs.grouped as |group tutorials|}}
         <optgroup label={{group}}>
           {{#each tutorials as |tutorial|}}

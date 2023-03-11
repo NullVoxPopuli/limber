@@ -31,7 +31,11 @@ module.exports = function (defaults) {
   const { Webpack } = require('@embroider/webpack');
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
-    extraPublicTrees: [...docsTrees()],
+    extraPublicTrees: [
+      ...docsTrees(),
+      // Tailwind
+      require('@nullvoxpopuli/limber-styles/broccoli-funnel')(),
+    ],
     skipBabel: [
       {
         package: 'qunit',
@@ -121,7 +125,7 @@ function parse(paths) {
     let tutorialName = name.replaceAll(/[\d-]/g, '');
 
     result[group] ||= [];
-    result[group]?.push({ path, name, groupName, tutorialName });
+    result[group]?.push({ path: `/${path}`, name, groupName, tutorialName });
   }
 
   return result;

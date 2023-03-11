@@ -8,6 +8,7 @@ module.exports = function () {
       'cog',
       'cubes',
       'angle-right',
+      'angle-left',
       'angle-up',
       'equals',
       'columns',

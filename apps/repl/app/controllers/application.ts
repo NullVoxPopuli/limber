@@ -26,6 +26,14 @@ export default class ApplicationController extends Controller {
     // where the primary use case is reading, rather than tinkering.
     'noAutoEditor',
 
+    // Normally the editor will load automatically upon detecting 
+    // activity -- this is to optimize page-load (as editors can be heavy
+    // when fully featured)
+    //
+    // when this is 'true', the editor will automatically load, without 
+    // requiring user interaction.
+    'forceEditor',
+
     // This is the file format to use for the editor.
     //
     // Supported

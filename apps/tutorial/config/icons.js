@@ -7,6 +7,7 @@ module.exports = function () {
       'caret-right',
       'cog',
       'cubes',
+      'angle-left',
       'angle-right',
       'angle-up',
       'equals',

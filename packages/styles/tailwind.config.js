@@ -1,10 +1,18 @@
 'use strict';
 
 const path = require('path');
-const appRoot = path.join(__dirname, '../../apps/repl');
+const replRoot = path.join(__dirname, '../../apps/repl');
+const tutorialRoot = path.join(__dirname, '../../apps/tutorial');
+const uiRoot = path.join(__dirname, '../../packages/limber-ui/addon');
 
 module.exports = {
-  content: [`${appRoot}/app/**/*.{js,ts,hbs,gjs,gts}`, `${appRoot}/public/**/*.md`],
+  content: [
+    `${replRoot}/app/**/*.{js,ts,hbs,gjs,gts}`, 
+    `${replRoot}/public/**/*.md`,
+    `${tutorialRoot}/app/**/*.{js,ts,hbs,gjs,gts}`, 
+    `${tutorialRoot}/docs/**/*.{md,gjs}`,
+    `${uiRoot}/src/**/*.{js,ts,hbs,gjs,gts}`, 
+  ],
   theme: {
     variants: {
       xs: '465px',
@@ -59,6 +67,7 @@ module.exports = {
       },
       gridTemplateColumns: {
         main: '1fr 1.5fr',
+        tutorial: 'minmax(33%, max-content) 1fr',
       },
       keyframes: {
         'fade-in': {

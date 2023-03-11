@@ -2,6 +2,8 @@ import 'ember-source/types';
 import 'ember-source/types/preview';
 import '@glint/environment-ember-loose';
 import '@glint/environment-ember-loose/native-integration';
+import '@nullvoxpopuli/limber-untyped';
+import 'ember-cached-decorator-polyfill';
 
 import type { HelperLike, ModifierLike } from '@glint/template';
 import type Layout from 'tutorial/components/layout';

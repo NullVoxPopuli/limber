@@ -2,20 +2,90 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>MyApp</title>
+    <title>Glimmer Tutorial</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    {{content-for "head"}}
+    {{content-for "head"}} {{content-for "head-footer"}}
 
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css" />
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/tutorial.css" />
-
-    {{content-for "head-footer"}}
+    <!--
+      This the source of truth for the ember brand variables
+        https://emberjs.com/images/brand/Ember-Brand-Guidelines.pdf
+    -->
+    <style type="text/css">
+      :root {
+        --ember-brand: #e04e39;
+        --ember-black: #212121;
+        --ember-burnt-ember: #9b2918;
+        --ember-gray: #817f7f;
+        --ember-blue: #1e719b;
+        --ember-faint-gray: #efebea;
+        --ember-light-blue: #74b0ce;
+        --ember-linen: #fdf7f6;
+        --ember-yellow: #fbc840;
+        --ember-white: #fdfdfd;
+      }
+    </style>
   </head>
-  <body>
+  <body class="overflow-hidden syntax-dark syntax-bright">
     {{content-for "body"}}
 
+    <div id="initial-loader" style="position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 100; background: #eee">
+      <!--
+        This is the App Shell
+        It's sole purpose is to show something when the HTML loads (which is small and loads / is parsed fast)
+        This gives the user an illusion of speed
+      -->
+      <div style="height: 100vh; width: 100vw; display: grid; grid-template-rows: min-content 1fr; font-weight: bold; font-size: 24px;">
+        <!-- header -->
+        <div style="background: var(--ember-black); height: 45px; width: 100%"></div>
+
+        <div style="display: grid; grid-auto-flow: column;">
+          <!-- Left / prose -->
+          <div style="position: relative;">
+            <p style="transform: rotate(-90deg); position: absolute; top: 39vh; right: -1.8rem;">Tutorial</p>
+          </div>
+
+          <!-- Right / editor -->
+          <div
+            style="display: grid; grid-template-rows: auto 1fr;"
+          >
+            <!-- editor -->
+            <div
+              style="
+                height: 40vh;
+                background: rgba(39, 39, 42);
+                color: white;
+                padding: 0 8px;
+                display: grid;
+                align-items: end;
+                justify-content: start;
+              "
+            >
+              <p>Loading</p>
+            </div>
+
+            <!-- preview -->
+            <div
+              style="
+                padding: 0 8px;
+                background: white;
+                color: rgb(39, 39, 42);
+                display: grid;
+                align-items: start;
+                justify-content: start;
+              "
+            >
+              <p>Limber</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/tailwind.css" />
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css" />
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/tutorial.css" />
     <script src="{{rootURL}}assets/vendor.js"></script>
     <script src="{{rootURL}}assets/tutorial.js"></script>
 

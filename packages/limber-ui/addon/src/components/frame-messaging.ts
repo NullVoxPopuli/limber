@@ -24,7 +24,9 @@ export class HostMessaging {
 
     if (!element.contentWindow) return;
 
-    this.queuePayload('gjs', data ?? '<template></template>');
+    if (data) {
+      this.queuePayload('gjs', data);
+    }
   });
   onMessage = modifier((element: HTMLIFrameElement) => {
     this.connection = connectToChild({
@@ -42,6 +44,9 @@ export class HostMessaging {
   @action
   @waitFor
   async queuePayload(format: string, text: string) {
+    await Promise.resolve();
+    if (isDestroyed(this) || isDestroying(this)) return;
+
     if (!this.connection) return;
 
     let child = await this.connection.promise;

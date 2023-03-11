@@ -9,7 +9,7 @@ const DefaultContent: TOC<{ Blocks: { default: [] }}> = <template>
   </template>;
 
 
-const ExternalLink: TOC<{
+export const ExternalLink: TOC<{
   Element: HTMLAnchorElement;
   Blocks: {
     'default': [],
