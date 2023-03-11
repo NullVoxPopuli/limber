@@ -6,11 +6,11 @@
     "dev": "node ./dev/index.js",
     "prepare": "pnpm build",
     "release": "changeset publish",
-    "build": "turbo build --filter=limber^... --filter=my-app^...",
+    "build": "turbo build --filter=limber^... --filter=tutorial^...",
     "lint:fix": "pnpm --filter='*' lint:fix",
     "lint": "turbo lint",
     "start": "turbo start --filter=limber",
-    "start:tutorial": "turbo start --filter=my-app"
+    "start:tutorial": "turbo start --filter=tutorial"
   },
   "engines": {
     "node": ">= 16"
@@ -49,7 +49,7 @@
         "ember-modifier"
       ],
       "ignoreMissing": [
-        "webpack"
+        "webpack", "rollup"
       ]
     },
     "notes": {},

@@ -1,5 +1,5 @@
 ---
-"limber-snippet": major
+"limber-ui": major
 ---
 
 Initial release of limber-snippet.

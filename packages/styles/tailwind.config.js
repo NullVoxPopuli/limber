@@ -1,7 +1,7 @@
 'use strict';
 
 const path = require('path');
-const appRoot = path.join(__dirname, '../../frontend');
+const appRoot = path.join(__dirname, '../../apps/repl');
 
 module.exports = {
   content: [`${appRoot}/app/**/*.{js,ts,hbs,gjs,gts}`, `${appRoot}/public/**/*.md`],

@@ -7,7 +7,7 @@ import { globby } from 'globby';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-const SAMPLES_FOLDER = path.join(__dirname, '../../frontend/public/samples'); 
+const SAMPLES_FOLDER = path.join(__dirname, '../../apps/repl/public/samples'); 
 
 export async function getSamples() {
   let filePaths = await globby('**/*.md', { cwd: SAMPLES_FOLDER });

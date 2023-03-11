@@ -1,8 +1,6 @@
 packages:
   - './dev'
-  - './frontend'
+  - './apps/*'
   - './packages/*'
-  - './packages/limber-snippet/*'
-  - './tests'
+  - './packages/limber-ui/*'
   - './spikes/**'
-  - './tutorial'

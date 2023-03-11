@@ -4,8 +4,9 @@ on:
   push:
     branches: [main]
 
+##############################################################
+
 env:
-  app: frontend/
   codemirror: packages/codemirror/
   consts: packages/consts/
   horizon: packages/horizon-theme/
@@ -18,6 +19,8 @@ env:
 
 permissions:
   contents: read
+
+##############################################################
 
 jobs:
 
@@ -121,8 +124,8 @@ jobs:
       contents: read
       deployments: write
     outputs:
-      limber-url: steps.publishLimber.outputs.url
-      tutorial-url: steps.publishTutorial.outputs.url
+      limberUrl: ${{ steps.publishLimber.outputs.url }}
+      tutorialUrl: ${{ steps.publishTutorial.outputs.url }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -140,7 +143,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: limber-glimdown
-          directory: ./frontend/dist
+          directory: ./apps/repl/dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish Tutorial 
         id: publishTutorial
@@ -149,7 +152,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: limber-glimmer-tutorial
-          directory: ./packages/my-app/dist
+          directory: ./apps/tutorial/dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
   DeployProduction:
@@ -177,7 +180,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: limber-glimdown
-          directory: ./frontend/dist
+          directory: ./apps/repl/dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish Tutorial 
         uses: cloudflare/pages-action@v1.4.1
@@ -185,29 +188,30 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: limber-glimmer-tutorial
-          directory: ./packages/my-app/dist
+          directory: ./apps/tutorial/dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
 
-  PostPreviewURLascommenttoPR:
+  PostComment:
     name: Post Preview URL as comment to PR
     runs-on: ubuntu-latest
-    needs: [DeployPreview]
+    needs: DeployPreview
     if: github.ref != 'refs/heads/main'
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
         with:
           persist-credentials: false
       - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
-      - uses: ./.github/actions/download-built-package
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: preview-urls 
           message: |+
             | Project   | Preview URL |
             | -------   | ----------- |
-            | Limber    | ${{ needs.DeployPreview.outputs.limber-url }}   |
-            | Tutorial  | ${{ needs.DeployPreview.outputs.tutorial-url }} |
+            | Limber    | ${{ needs.DeployPreview.outputs.limberUrl }}   |
+            | Tutorial  | ${{ needs.DeployPreview.outputs.tutorialUrl }} |
 
 
 
