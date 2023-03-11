@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { assert } from '@ember/debug';
 import { guidFor } from '@ember/object/internals';
+import { htmlSafe } from '@ember/template';
 
 import { trackedFunction } from 'ember-resources/util/function';
 
@@ -60,6 +61,7 @@ interface Signature {
 const DEFAULT_NUMBER_OF_LINES = 7;
 
 export default class Code extends Component<Signature> {
+  htmlSafe = htmlSafe;
   code = trackedFunction(this, async () => {
     if ('code' in this.args && this.args.code) {
       return this.args.code;
@@ -90,9 +92,9 @@ export default class Code extends Component<Signature> {
   }
 
   get host() {
-    if (window.location.host.includes('localhost')) {
-      return 'http://localhost:4200';
-    }
+    // if (window.location.host.includes('localhost')) {
+    //   return 'http://localhost:4200';
+    // }
 
     return 'https://limber.glimdown.com/edit';
   }

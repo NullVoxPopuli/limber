@@ -2,6 +2,7 @@ packages:
   - './dev'
   - './frontend'
   - './packages/*'
+  - './packages/limber-snippet/*'
   - './tests'
   - './spikes/**'
   - './tutorial'

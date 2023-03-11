@@ -4,14 +4,12 @@
 
 {{else}}
 
-  {{#if this.code.isResolved}}
     <iframe
       title={{this.title}}
       src="{{this.host}}?{{this.queryParams}}"
-      style={{htmlSafe (concat "height: calc(1.5rem * " this.lines ");")}}
+      style={{this.htmlSafe (concat "height: calc(1.5rem * " this.lines ");")}}
       ...attributes
     >
     </iframe>
-  {{/if}}
 
 {{/if}}

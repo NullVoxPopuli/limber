@@ -1,7 +1,11 @@
 'use strict';
 
+const os = require('os');
+const fs = require('fs');
+const path = require('path');
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
+const globby = require('globby');
 
 module.exports = function (defaults) {
   const app = new EmberApp(defaults, {
@@ -26,11 +30,7 @@ module.exports = function (defaults) {
 
   const { Webpack } = require('@embroider/webpack');
   return require('@embroider/compat').compatBuild(app, Webpack, {
-    extraPublicTrees: [
-      new Funnel(path.join(__dirname, '../../tutorial/docs'), {
-        destDir: 'docs'
-      })
-    ],
+    extraPublicTrees: [...docsTrees()],
     skipBabel: [
       {
         package: 'qunit',
@@ -38,3 +38,93 @@ module.exports = function (defaults) {
     ],
   });
 };
+
+function docsTrees() {
+  let docsPath = path.join(__dirname, '../../tutorial/docs');
+  let docsToPublic = new Funnel(docsPath, { destDir: 'docs' });
+
+  return [docsToPublic, docsMeta(docsPath)];
+}
+
+// This only updates on boot
+// (because it's a simple plugin)
+// Long-term, use an unplugin
+//  (also: learn unplugin)
+function docsMeta(docsPath) {
+  let paths = globby.sync(['**/*'], {
+    onlyDirectories: true,
+    cwd: docsPath,
+    expandDirectories: true,
+  });
+
+  let tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'tutorial'));
+
+  fs.writeFileSync(
+    path.join(tmpDir, 'manifest.json'),
+    JSON.stringify(reshape(paths))
+  );
+
+  return new Funnel(tmpDir, {
+    destDir: 'docs',
+  });
+}
+
+/**
+ * @param {string[]} paths
+ */
+function reshape(paths) {
+  let grouped = parse(paths);
+
+  let entries = Object.entries(grouped);
+  let first = entries[0];
+  let firstTutorial = grouped[first[0]][0];
+
+  let list = entries.map(([, tutorials]) => tutorials);
+
+  return {
+    first: firstTutorial,
+    list,
+    grouped,
+  };
+}
+
+/**
+ * @typedof {object} Manifest
+ * @property {string[]} sections
+ *
+ * @typedef {object} Tutorial
+ * @property {string} path
+ * @property {string} name
+ * @property {string} groupName
+ * @property {string} tutorialName
+ *
+ * I don't know if we want this shape long term?
+ * @typedef {{ [group: string ]: Tutorial[] }} Tutorials
+ *
+ * @param {string[]} paths
+ *
+ * @returns {Tutorials}
+ */
+function parse(paths) {
+  let result = {};
+
+  for (let path of paths) {
+    if (!path.includes('/')) {
+      result[path] ||= [];
+      continue;
+    }
+
+    let [group, name] = path.split('/');
+
+    if (!group) continue;
+    if (!name) continue;
+
+    let groupName = group.replaceAll(/[\d-]/g, '');
+    let tutorialName = name.replaceAll(/[\d-]/g, '');
+
+    result[group] ||= [];
+    result[group]?.push({ path, name, groupName, tutorialName });
+  }
+
+  return result;
+}

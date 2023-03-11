@@ -18,7 +18,7 @@ export default defineConfig({
   },
   output: addon.output(),
   plugins: [
-    addon.publicEntrypoints(['**/*.js']),
+    addon.publicEntrypoints(['index.js', '**/*.js']),
     addon.appReexports(['components/**/*.js']),
 
     ts({
