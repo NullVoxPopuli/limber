@@ -2,7 +2,7 @@ name: Preview Embroider Upgrade
 on:
   schedule:
     # Runs "at minute 55 past every hour" (see https://crontab.guru)
-    - cron: '* 3 * * *'
+    - cron: '0 3 * * *'
 
 jobs:
   update_unstable_branch:
