@@ -1,14 +1,25 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-
 import { Selection } from './selection';
 import { Prose } from './prose';
 import { Editor } from './editor';
 
-import type DocsService from 'my-app/services/docs';
+// TODO: use ExternalLink from addon
+// TODO: use gts in v2 addon
+const Footer = <template>
+  <footer>
+    <a href="https://guides.emberjs.com/">
+      Guides
+    </a>
+    <a href="https://api.emberjs.com">
+      API Reference
+    </a>
+    <a href="http://new.emberjs.com">
+      Blitz
+    </a>
+  </footer>
+</template>;
 
-export default class Layout extends Component {
-  <template>
+<template>
+  <div class="container">
     <main>
       <section>
         <Selection />
@@ -16,7 +27,6 @@ export default class Layout extends Component {
       </section>
       <Editor />
     </main>
-  </template>
-
-  @service declare docs: DocsService;
-}
+    <Footer />
+  </div>
+</template>

@@ -4,6 +4,8 @@ import { Addon } from '@embroider/addon-dev/rollup';
 import copy from 'rollup-plugin-copy';
 import { defineConfig } from 'rollup';
 
+import gjs from './gjs-plugin.mjs';
+
 const addon = new Addon({
   srcDir: 'src',
   destDir: 'dist',
@@ -26,19 +28,15 @@ export default defineConfig({
       // but we need the ember plugins converted first
       // (template compilation and co-location)
       transpiler: 'babel',
+      transpileOnly: true,
       babelConfig: './babel.config.json',
       browserslist: ['last 2 firefox versions', 'last 2 chrome versions'],
     }),
 
-    // Follow the V2 Addon rules about dependencies. Your code can import from
-    // `dependencies` and `peerDependencies` as well as standard Ember-provided
-    // package names.
     addon.dependencies(),
-
-    // Ensure that standalone .hbs files are properly integrated as Javascript.
     addon.hbs(),
-
-    // Start with a clean output directory before building
+    gjs(),
+    addon.keepAssets(['**/*.css']),
     addon.clean(),
 
     // Copy Readme and License into published package

@@ -62,45 +62,53 @@ interface Signature {
 }
 
 const DEFAULT_NUMBER_OF_LINES = 7;
+const HOST = 'https://limber.glimdown.com/edit';
+const INITIAL_URL = `${HOST}?format=gjs&t=<template></template>`;
+
+async function fetchFile(path: string) {
+  let response = await fetch(`/${path}`);
+  let text = await response.text();
+
+  return text;
+}
+
+function defaultStyle(lines: number) {
+  return `height: calc(1.5rem * ${lines});`;
+}
 
 export default class Code extends Component<Signature> {
   @link(HostMessaging) declare messaging: HostMessaging;
 
-  htmlSafe = htmlSafe;
   code = trackedFunction(this, async () => {
     if ('code' in this.args && this.args.code) {
       return this.args.code;
     }
 
     if ('path' in this.args) {
-      let { path } = this.args;
-
-      let response = await fetch(`/${path}`);
-      let text = await response.text();
-
-      return text;
+      return fetchFile(this.args.path);
     }
 
     assert(`either @path or @code must be passed to the Code/REPL component, but neither was.`);
   });
 
-  get isPreview() {
-    return false;
-  }
-
   get lines() {
     return this.code.value?.split('\n')?.length ?? DEFAULT_NUMBER_OF_LINES;
-  }
-
-  get host() {
-    if (window.location.host.includes('localhost')) {
-      return 'http://localhost:4201';
-    }
-
-    return 'https://limber.glimdown.com/edit';
   }
 
   get title() {
     return this.args.title ?? guidFor(this.code);
   }
+
+  <template>
+    <iframe
+      {{this.messaging.postMessage this.code.value}}
+      {{this.messaging.onMessage}}
+      title={{this.title}}
+      src={{INITIAL_URL}}
+      style={{htmlSafe (defaultStyle this.lines)}}
+      ...attributes
+    >
+    </iframe>
+
+  </template>
 }

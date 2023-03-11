@@ -34,6 +34,7 @@
     "@babel/runtime": "^7.21.0",
     "@ember/test-waiters": "^3.0.2",
     "@embroider/addon-shim": "^1.0.0",
+    "@fortawesome/ember-fontawesome": "^0.4.1",
     "ember-modifier": "^4.1.0",
     "penpal": "^6.2.2"
   },
@@ -84,7 +85,8 @@
     "main": "addon-main.cjs",
     "app-js": {
       "./components/code/frame-messaging.js": "./dist/_app_/components/code/frame-messaging.js",
-      "./components/code/index.js": "./dist/_app_/components/code/index.js"
+      "./components/code/index.js": "./dist/_app_/components/code/index.js",
+      "./components/external-link.js": "./dist/_app_/components/external-link.js"
     }
   },
   "typesVersions": {
@@ -97,6 +99,7 @@
   "exports": {
     ".": "./dist/index.js",
     "./*": "./dist/*",
+    "./theme.css": "./dist/theme.css",
     "./addon-main.js": "./addon-main.cjs"
   }
 }
