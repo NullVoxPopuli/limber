@@ -32,7 +32,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.21.0",
-    "@embroider/addon-shim": "^1.0.0"
+    "@ember/test-waiters": "^3.0.2",
+    "@embroider/addon-shim": "^1.0.0",
+    "ember-modifier": "^4.1.0",
+    "penpal": "^6.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
@@ -80,6 +83,7 @@
     "type": "addon",
     "main": "addon-main.cjs",
     "app-js": {
+      "./components/code/frame-messaging.js": "./dist/_app_/components/code/frame-messaging.js",
       "./components/code/index.js": "./dist/_app_/components/code/index.js"
     }
   },

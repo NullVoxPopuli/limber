@@ -5,8 +5,10 @@
 {{else}}
 
     <iframe
+      {{this.messaging.postMessage this.code.value}}
+      {{this.messaging.onMessage}}
       title={{this.title}}
-      src="{{this.host}}?{{this.queryParams}}"
+      src="{{this.host}}"
       style={{this.htmlSafe (concat "height: calc(1.5rem * " this.lines ");")}}
       ...attributes
     >

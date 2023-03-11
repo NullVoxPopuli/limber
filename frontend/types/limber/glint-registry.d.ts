@@ -7,6 +7,7 @@ import type EmberContainerQueryRegistry from 'ember-container-query/template-reg
 import type DemoSelect from 'limber/components/limber/demo-select';
 import type Editor from 'limber/components/limber/editor';
 import type FrameOutput from 'limber/components/limber/frame-output';
+import type Guest from 'limber/components/limber/guest';
 import type Header from 'limber/components/limber/header';
 import type Layout from 'limber/components/limber/layout';
 import type Output from 'limber/components/limber/output';
@@ -33,6 +34,7 @@ declare module '@glint/environment-ember-loose/registry' {
     'Limber::Output': typeof Output;
     'Limber::Output::FrameMessaging': typeof OutputFramMessaging;
     'Limber::Portals': typeof Portals;
+    'Limber::Guest': typeof Guest;
     'Limber::Save': typeof Save;
     'Limber::Header': typeof Header;
     'Limber::Layout': typeof Layout;

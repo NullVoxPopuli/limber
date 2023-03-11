@@ -122,6 +122,13 @@ export default class Compiler extends Component<Signature> {
     }
   };
 
-  <template>{{yield (hash onReceiveText=this.onReceiveText onConnect=this.onConnect)}}</template>
+  <template>
+    {{yield
+      (hash
+       onReceiveText=this.onReceiveText
+       onConnect=this.onConnect
+      )
+    }}
+  </template>
 }
 

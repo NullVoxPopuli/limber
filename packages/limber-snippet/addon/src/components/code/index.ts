@@ -2,11 +2,14 @@ import Component from '@glimmer/component';
 import { assert } from '@ember/debug';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
+import { link } from 'ember-resources/link';
 
 import { trackedFunction } from 'ember-resources/util/function';
 
 type AllowedFormat = 'gjs' | 'gts' | 'hbs' | 'gmd';
 type Storage = 'local' | 'url';
+
+import { HostMessaging } from './frame-messaging';
 
 interface Signature {
   Element: HTMLIFrameElement;
@@ -61,6 +64,8 @@ interface Signature {
 const DEFAULT_NUMBER_OF_LINES = 7;
 
 export default class Code extends Component<Signature> {
+  @link(HostMessaging) declare messaging: HostMessaging;
+
   htmlSafe = htmlSafe;
   code = trackedFunction(this, async () => {
     if ('code' in this.args && this.args.code) {
@@ -83,18 +88,14 @@ export default class Code extends Component<Signature> {
     return false;
   }
 
-  get queryParams() {
-    return wrap(this.code.value || '');
-  }
-
   get lines() {
     return this.code.value?.split('\n')?.length ?? DEFAULT_NUMBER_OF_LINES;
   }
 
   get host() {
-    // if (window.location.host.includes('localhost')) {
-    //   return 'http://localhost:4200';
-    // }
+    if (window.location.host.includes('localhost')) {
+      return 'http://localhost:4201';
+    }
 
     return 'https://limber.glimdown.com/edit';
   }
@@ -102,15 +103,4 @@ export default class Code extends Component<Signature> {
   get title() {
     return this.args.title ?? guidFor(this.code);
   }
-}
-
-function wrap(code: string) {
-  const params = new URLSearchParams();
-
-  let sample = '' + code + '';
-
-  params.set('t', sample);
-  params.set('format', 'gjs');
-
-  return params.toString();
 }
