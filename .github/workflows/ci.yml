@@ -107,7 +107,6 @@ jobs:
       uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: ./.github/actions/pnpm
     - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
     - run: pnpm turbo test:browserstack
 
