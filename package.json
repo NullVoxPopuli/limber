@@ -6,10 +6,11 @@
     "dev": "node ./dev/index.js",
     "prepare": "pnpm build",
     "release": "changeset publish",
-    "build": "pnpm turbo build --filter=limber^...",
+    "build": "turbo build --filter=limber^... --filter=tutorial^...",
     "lint:fix": "pnpm --filter='*' lint:fix",
-    "lint": "pnpm turbo lint",
-    "start": "pnpm turbo start --filter=limber"
+    "lint": "turbo lint",
+    "start": "turbo start --filter=limber",
+    "start:tutorial": "turbo start --filter=tutorial"
   },
   "engines": {
     "node": ">= 16"
@@ -36,6 +37,7 @@
       "@glimmer/tracking": "^1.1.2",
       "ember-async-data": "^0.7.0",
       "ember-auto-import": "^2.6.0",
+      "ember-modifier": "^4.1.0",
       "@types/eslint": "^8.0.0"
     },
     "allowedDeprecatedVersions": {
@@ -47,7 +49,7 @@
         "ember-modifier"
       ],
       "ignoreMissing": [
-        "webpack"
+        "webpack", "rollup"
       ]
     },
     "notes": {},

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>iframe Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/tailwind.css" />
+
+    <style>
+      div {
+        padding: 4rem;
+      }
+
+      .full {
+        width: 100%;
+        height: 100%;
+      }
+
+      .half {
+        height: 50vh;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Iframe test</h1>
+
+    <button id="max">Max</button>
+    <button id="min">Min</button>
+
+    <hr />
+
+    <div class="half">
+      <iframe class="full"> Somehow your browser doesn't support frames </iframe>
+    </div>
+
+    <script type="module">
+      const iframe = document.querySelector('iframe');
+      const host = `http://localhost:4200`;
+      const qps = 'editor=min';
+
+      iframe.src = host + '?' + qps;
+
+      document.querySelector('#min').addEventListener('click', () => {
+        iframe.src = host + '?' + 'editor=min';
+      });
+
+      document.querySelector('#max').addEventListener('click', () => {
+        iframe.src = host + '?' + 'editor=max';
+      });
+    </script>
+  </body>
+</html>

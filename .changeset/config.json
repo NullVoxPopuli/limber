@@ -16,7 +16,8 @@
   "updateInternalDependencies": "patch",
   "ignore": [
     "limber",
-    "limber-snippet-test-app",
+    "tutorial",
+    "limber-ui-test-app",
     "@nullvoxpopuli/limber-codemirror",
     "@nullvoxpopuli/limber-consts",
     "@nullvoxpopuli/horizon-theme",

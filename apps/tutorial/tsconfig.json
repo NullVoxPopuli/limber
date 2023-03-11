@@ -1,0 +1,14 @@
+{
+  "extends": "@tsconfig/ember/tsconfig.json",
+  "glint": {
+    "environment": ["ember-loose", "ember-template-imports"]
+  },
+  "compilerOptions": {
+    "paths": {
+      "tutorial/tests/*": ["tests/*"],
+      "tutorial/*": ["app/*"],
+      "*": ["types/*"]
+    }
+  },
+  "include": ["app/**/*", "tests/**/*", "types/**/*"]
+}
