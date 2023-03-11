@@ -30,9 +30,7 @@ export default class DocsService extends Service {
   }
 
   get selected(): Tutorial | undefined {
-    let fromUrl = this.#fromURL();
-    console.log({ fromUrl }, this.tutorials.flat(), this.router.currentURL);
-    return fromUrl ?? this.docs.value?.first;
+    return this.#fromURL() ?? this.docs.value?.first;
   }
 
   get showAnswer() {

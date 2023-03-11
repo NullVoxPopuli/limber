@@ -26,8 +26,15 @@
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "ember-async-data": "^0.7.0",
+    "ember-modifier": "^4.1.0",
     "ember-resources": "^6.0.0-beta.2",
-    "limber-snippet": "workspace:*"
+    "highlight.js": "^11.7.0",
+    "highlightjs-glimmer": "^2.0.1",
+    "limber-snippet": "workspace:*",
+    "rehype-stringify": "^9.0.3",
+    "remark-parse": "^10.0.0",
+    "remark-rehype": "^10.1.0",
+    "unified": "^10.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
@@ -43,7 +50,6 @@
     "@glint/environment-ember-template-imports": "^1.0.0-beta.3",
     "@glint/template": "^1.0.0-beta.3",
     "@tsconfig/ember": "^2.0.0",
-    "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-funnel": "^3.0.8",
     "concurrently": "^7.6.0",
@@ -62,7 +68,7 @@
     "ember-source": "~4.11.0",
     "ember-template-imports": "^3.4.1",
     "ember-template-lint": "^5.6.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.0.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-ember": "^11.4.7",
     "eslint-plugin-n": "^15.6.1",
@@ -75,7 +81,7 @@
     "qunit": "^2.19.4",
     "qunit-dom": "^2.0.0",
     "typescript": "^4.9.5",
-    "webpack": "^5.75.0"
+    "webpack": "^5.76.1"
   },
   "engines": {
     "node": "14.* || 16.* || >= 18"

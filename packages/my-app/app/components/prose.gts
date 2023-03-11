@@ -1,9 +1,19 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { on } from '@ember/modifier';
+import { trackedFunction } from 'ember-resources/util/function';
+import { unified } from 'unified';
+
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import rehypeStringify from 'rehype-stringify';
+
+import { highlight } from './/highlight';
 
 import type RouterService from '@ember/routing/router-service';
 import type DocsService from 'my-app/services/docs';
+
+const prosePath = (path: string): `${string}.md` => `/docs/${path}/prose.md`;
 
 export class Prose extends Component {
   @service declare docs: DocsService;
@@ -12,9 +22,23 @@ export class Prose extends Component {
   showAnswer = () => this.router.transitionTo({ queryParams: { showAnswer: 1 }});
   hideAnswer = () => this.router.transitionTo({ queryParams: { showAnswer: 0 }});
 
+  markdown = trackedFunction(this, async () => {
+    let selected = this.docs.selected?.path;
+    if (!selected) return;
+
+    let response = await fetch(prosePath(selected));
+
+    return response.text();
+  });
+
+  compiled = trackedFunction(this, async () => compile(this.markdown.value));
 
   <template>
-    prose here
+    <div {{highlight this.compiled.value}}>
+      {{#if this.compiled.value}}
+        {{{this.compiled.value}}}
+      {{/if}}
+    </div>
 
     <footer>
       <button {{on "click" this.showAnswer}}>
@@ -26,4 +50,14 @@ export class Prose extends Component {
     </footer>
 
   </template>
+}
+
+const compiler = unified().use(remarkParse).use(remarkRehype).use(rehypeStringify);
+
+async function compile(markdown: string | undefined | null) {
+  if (!markdown) return;
+
+  let processed = await compiler.process(markdown);
+
+  return String(processed);
 }
