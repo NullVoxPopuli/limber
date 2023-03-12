@@ -3,10 +3,9 @@ import { fn } from '@ember/helper';
 import { service } from '../helpers/service';
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
-import { assert } from '@ember/debug';
 
 const navigate = (router: RouterService, event: MouseEvent) => {
-  assert(`Element is not an Anchor`, event.target instanceof HTMLAnchorElement);
+  if(!(event.target instanceof HTMLAnchorElement)) return;
   event.preventDefault();
 
   router.transitionTo(event.target.href);
@@ -27,7 +26,7 @@ export const Link: TOC<{
         focus-visible:outline-none focus-visible:ring
         shadow
         grid gap-2
-        disabled:opacity-30
+        disabled:opacity-[0.3] disabled:cursor-not-allowed
       "
       ...attributes
       {{on "click" (fn navigate router)}}

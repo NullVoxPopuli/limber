@@ -7,13 +7,13 @@ import { service } from '@ember/service';
 import { registerDestructor, isDestroyed, isDestroying } from '@ember/destroyable';
 import { connectToParent, type Connection, type AsyncMethodReturns } from 'penpal';
 
-import { formatFrom, type OutputError, type Format } from 'limber/utils/messaging';
+import { type OutputError, type Format } from 'limber/utils/messaging';
 
 import type { ComponentLike } from '@glint/template';
 import type RouterService from '@ember/routing/router-service';
 
 export interface MessagingAPI {
-  onReceiveText: (callback: (text: string) => void) => void;
+  onReceiveText: (callback: (format: Format, text: string) => void) => void;
   onConnect: (callback: (parent: AsyncMethodReturns<ParentMethods>) => void) => void;
 }
 
@@ -34,13 +34,13 @@ interface ParentMethods {
 }
 
 async function setupEvents(context: Compiler, { onReceiveText, onConnect }: {
-  onReceiveText: (text: string) => void,
+  onReceiveText: (format: Format, text: string) => void,
   onConnect: (parent: AsyncMethodReturns<ParentMethods>) => void,
 }) {
   let connection = connectToParent<ParentMethods>({
     methods: {
-      update(_format: Format, text: string) {
-        onReceiveText(text);
+      update(format: Format, text: string) {
+        onReceiveText(format, text);
       }
     }
   });
@@ -93,13 +93,7 @@ export default class Compiler extends Component<Signature> {
 
   connection?: Connection<ParentMethods>;
 
-  get format() {
-    let requested = this.router.currentRoute.queryParams.format
-
-    return formatFrom(requested);
-  }
-
-  _onReceiveText?: (text: string) => void;
+  _onReceiveText?: (format: Format, text: string) => void;
   onReceiveText = (callback: NonNullable<typeof this._onReceiveText>) => {
     this._onReceiveText = callback;
     this.trySetup()

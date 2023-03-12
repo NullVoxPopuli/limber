@@ -7,11 +7,11 @@ const uiRoot = path.join(__dirname, '../../packages/limber-ui/addon');
 
 module.exports = {
   content: [
-    `${replRoot}/app/**/*.{js,ts,hbs,gjs,gts}`, 
+    `${replRoot}/app/**/*.{js,ts,hbs,gjs,gts}`,
     `${replRoot}/public/**/*.md`,
-    `${tutorialRoot}/app/**/*.{js,ts,hbs,gjs,gts}`, 
+    `${tutorialRoot}/app/**/*.{js,ts,hbs,gjs,gts}`,
     `${tutorialRoot}/docs/**/*.{md,gjs}`,
-    `${uiRoot}/src/**/*.{js,ts,hbs,gjs,gts}`, 
+    `${uiRoot}/src/**/*.{js,ts,hbs,gjs,gts}`,
   ],
   theme: {
     variants: {

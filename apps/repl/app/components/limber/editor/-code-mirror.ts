@@ -11,7 +11,7 @@ import type RouterService from '@ember/routing/router-service';
 import type EditorService from 'limber/services/editor';
 import type { Format } from 'limber/utils/messaging';
 
-type PositionalArgs = [string];
+type PositionalArgs = [string, Format];
 type Signature = {
   Element: HTMLDivElement;
   Args: {
@@ -23,12 +23,12 @@ export default class CodeMirror extends Modifier<Signature> {
   @service declare editor: EditorService;
   @service declare router: RouterService;
 
-  modify(element: Element, [value]: PositionalArgs) {
-    this.setup(element, [value]);
+  modify(element: Element, [value, format]: PositionalArgs) {
+    this.setup(element, [value, format]);
   }
 
   isSetup = false;
-  setup = async (element: Element, [value]: PositionalArgs) => {
+  setup = async (element: Element, [value, format]: PositionalArgs) => {
     if (this.isSetup) {
       return;
     }
@@ -43,7 +43,9 @@ export default class CodeMirror extends Modifier<Signature> {
     element.innerHTML = '';
 
     let updateText = this.editor.updateText;
-    let format = formatFrom(this.router.currentRoute.queryParams.format);
+
+    format = formatFrom(format);
+
     let { view, setText } = CODEMIRROR(element, value, format, updateText);
 
     /**

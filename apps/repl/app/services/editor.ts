@@ -4,8 +4,7 @@ import Service, { inject as service } from '@ember/service';
 
 import { link } from 'ember-resources/link';
 
-import { DEFAULT_SNIPPET } from 'limber/snippets';
-import { TextURIComponent } from 'limber/utils/editor-text';
+import { FileURIComponent } from 'limber/utils/editor-text';
 
 import type RouterService from '@ember/routing/router-service';
 import type { Format } from 'limber/utils/messaging';
@@ -18,15 +17,19 @@ export default class EditorService extends Service {
   @tracked errorLine?: number;
   @tracked scrollbarWidth = 0;
 
-  @link(TextURIComponent) declare textURIComponent: TextURIComponent;
+  @link(FileURIComponent) declare fileURIComponent: FileURIComponent;
 
   @action
   updateText(text: string) {
-    this.textURIComponent.queue(text);
+    this.fileURIComponent.queue(text);
   }
 
   get text() {
-    return this.textURIComponent.decoded ?? DEFAULT_SNIPPET;
+    return this.fileURIComponent.decoded;
+  }
+
+  get format() {
+    return this.fileURIComponent.format;
   }
 
   _editorSwapText?: (text: string, format: Format) => void;
@@ -37,7 +40,7 @@ export default class EditorService extends Service {
     this._editorSwapText?.(text, format);
 
     // Update ourselves
-    this.textURIComponent.set(text, format);
+    this.fileURIComponent.set(text, format);
   }
 }
 

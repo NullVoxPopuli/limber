@@ -1,6 +1,6 @@
+import { getOwner } from '@ember/application';
 import Helper from '@ember/component/helper';
 import { assert } from '@ember/debug';
-import { getOwner } from '@ember/application';
 
 import type { Registry } from '@ember/service';
 

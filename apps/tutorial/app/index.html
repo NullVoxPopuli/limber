@@ -30,26 +30,38 @@
   <body class="overflow-hidden syntax-dark syntax-bright">
     {{content-for "body"}}
 
-    <div id="initial-loader" style="position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 100; background: #eee">
+    <div
+      id="initial-loader"
+      style="position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 100; background: #eee"
+    >
       <!--
         This is the App Shell
         It's sole purpose is to show something when the HTML loads (which is small and loads / is parsed fast)
         This gives the user an illusion of speed
       -->
-      <div style="height: 100vh; width: 100vw; display: grid; grid-template-rows: min-content 1fr; font-weight: bold; font-size: 24px;">
+      <div
+        style="
+          height: 100vh;
+          width: 100vw;
+          display: grid;
+          grid-template-rows: min-content 1fr;
+          font-weight: bold;
+          font-size: 24px;
+        "
+      >
         <!-- header -->
         <div style="background: var(--ember-black); height: 45px; width: 100%"></div>
 
-        <div style="display: grid; grid-auto-flow: column;">
+        <div style="display: grid; grid-auto-flow: column">
           <!-- Left / prose -->
-          <div style="position: relative;">
-            <p style="transform: rotate(-90deg); position: absolute; top: 39vh; right: -1.8rem;">Tutorial</p>
+          <div style="position: relative">
+            <p style="transform: rotate(-90deg); position: absolute; top: 39vh; right: -1.8rem">
+              Tutorial
+            </p>
           </div>
 
           <!-- Right / editor -->
-          <div
-            style="display: grid; grid-template-rows: auto 1fr;"
-          >
+          <div style="display: grid; grid-template-rows: auto 1fr">
             <!-- editor -->
             <div
               style="

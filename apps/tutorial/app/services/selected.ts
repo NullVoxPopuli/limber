@@ -54,13 +54,14 @@ export default class Selected extends Service {
    * rendering without extra flashes.
    */
   get isReady() {
-    // Instead of inlining this, we want to access 
-    // these values without short-circuiting so that 
+    // Instead of inlining this, we want to access
+    // these values without short-circuiting so that
     // the requests run in parallel.
     let prose = this.prose;
     let prompt = this.prompt;
     let answer = this.answer;
-    return prose && prompt && answer; 
+
+    return prose && prompt && answer;
   }
 
   get hasProse() {
@@ -110,7 +111,7 @@ export default class Selected extends Service {
   get path(): string | undefined {
     let [path] = this.router.currentURL.split('?');
 
-    return ( path && path !== '/') ? path : this.#manifest?.first.path;
+    return path && path !== '/' ? path : this.#manifest?.first.path;
   }
 
   get tutorial(): Tutorial | undefined {

@@ -7,7 +7,7 @@ import { service } from '@ember/service';
 import { isDestroyed, isDestroying } from '@ember/destroyable';
 import { waitFor } from '@ember/test-waiters';
 
-import { formatFrom } from 'limber/utils/messaging';
+import { Format, formatFrom } from 'limber/utils/messaging';
 
 import { compileTopLevelComponent } from './create-top-level-component'
 
@@ -47,22 +47,16 @@ export default class Compiler extends Component<Signature> {
 
     let api = args.messagingAPI;
 
-    api.onReceiveText((text) => this.makeComponent(text));
+    api.onReceiveText((format: Format, text) => this.makeComponent(format, text));
     api.onConnect((parent) => this.parentFrame = parent);
   }
 
-  get format() {
-    let requested = this.router.currentRoute.queryParams.format
-
-    return formatFrom(requested);
-  }
-
-
   @action
   @waitFor
-  async makeComponent(text: string) {
+  async makeComponent(format: Format, text: string) {
+    console.log({ format, text });
     await compileTopLevelComponent(text, {
-      format: this.format,
+      format: format,
       onCompileStart: async () => {
         await  (this.parentFrame.beginCompile());
       },

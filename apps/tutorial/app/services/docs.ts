@@ -25,13 +25,12 @@ export default class DocsService extends Service {
   get showAnswer() {
     return this.router.currentRoute?.queryParams?.['showAnswer'] === '1' ?? false;
   }
-  showMe = () => this.router.transitionTo({ queryParams: { showAnswer: 1 }});
+  showMe = () => this.router.transitionTo({ queryParams: { showAnswer: 1 } });
 
   @cached
   get flatList() {
     return this.tutorials.flat();
   }
-
 }
 
 // DO NOT DELETE: this is how TypeScript knows how to look up your services.

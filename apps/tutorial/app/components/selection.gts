@@ -24,7 +24,7 @@ export class Selection extends Component {
     <select
       aria-label="Change tutorial"
       name="tutorial"
-      class="bg-none border-none font-lg rounded p-2"
+      class="bg-none border border-gray-900 font-lg rounded p-2"
       {{on "change" this.handleChange}}
     >
       {{#each-in this.docs.grouped as |group tutorials|}}

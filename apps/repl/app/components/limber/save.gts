@@ -49,7 +49,7 @@ export default class Save extends Component {
 
   onSave = async () => {
     this.isShowing = true;
-    await this.editor.textURIComponent.toClipboard();
+    await this.editor.fileURIComponent.toClipboard();
     await new Promise(resolve => setTimeout(resolve, SHOW_TIME));
     this.isShowing = false;
   }

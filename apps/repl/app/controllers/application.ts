@@ -10,8 +10,8 @@ import Controller from '@ember/controller';
 export default class ApplicationController extends Controller {
   queryParams = [
     // Code
-    't',
-    'c',
+    't', // legacy format, plaintext
+    'c', // new format, uses lz-string for compressing text
 
     // Maximize / Minimize of the Editor
     // "min" | "max"
@@ -26,11 +26,11 @@ export default class ApplicationController extends Controller {
     // where the primary use case is reading, rather than tinkering.
     'noAutoEditor',
 
-    // Normally the editor will load automatically upon detecting 
+    // Normally the editor will load automatically upon detecting
     // activity -- this is to optimize page-load (as editors can be heavy
     // when fully featured)
     //
-    // when this is 'true', the editor will automatically load, without 
+    // when this is 'true', the editor will automatically load, without
     // requiring user interaction.
     'forceEditor',
 

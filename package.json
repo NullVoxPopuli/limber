@@ -38,6 +38,7 @@
       "ember-async-data": "^0.7.0",
       "ember-auto-import": "^2.6.0",
       "ember-modifier": "^4.1.0",
+      "ember-source": "^4.11.0",
       "@types/eslint": "^8.0.0"
     },
     "allowedDeprecatedVersions": {
