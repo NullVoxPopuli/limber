@@ -1,5 +1,6 @@
 import { waitForPromise } from '@ember/test-waiters';
 
+import { getService } from 'ember-statechart-component';
 import { assign, createMachine } from 'xstate';
 
 import { setupCodeMirror } from './-code-mirror';
@@ -15,7 +16,11 @@ export default createMachine({
   states: {
     waiting: {
       invoke: {
-        src: () => (send) => {
+        src: (ctx) => (send) => {
+          if (getService(ctx, 'router').currentRoute?.queryParams?.['forceEditor'] === 'true') {
+            send('KEY');
+          }
+
           let cleanup = () => {
             window.removeEventListener('mousemove', mouse);
             window.removeEventListener('keydown', key);

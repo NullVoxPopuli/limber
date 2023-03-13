@@ -1,6 +1,7 @@
 /* eslint-disable ember/classic-decorator-no-classic-methods */
 import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
 import { inject as service } from '@ember/service';
+import { isTesting, macroCondition } from '@embroider/macros';
 
 import { compressToEncodedURIComponent } from 'lz-string';
 
@@ -42,7 +43,7 @@ const DEBOUNCE_MS = 300;
  *  - on ctrl+s
  *    - write URL to clipboard
  */
-export class TextURIComponent {
+export class FileURIComponent {
   @service declare router: RouterService;
 
   #initialFile = fileFromParams();
@@ -76,6 +77,16 @@ export class TextURIComponent {
    */
   set = (rawText: string, format?: Format) => {
     this.#updateQPs(rawText, format);
+  };
+
+  /**
+   * Force the format - handy when supporting
+   * old legacy URLs that are out in the wild.
+   * Today, both format and text are required whenever
+   * talking about what should be rendered / placed in the editor.
+   */
+  forceFormat = (format: Format) => {
+    this.set(this.decoded ?? '', format);
   };
 
   #timeout?: number;
@@ -112,9 +123,23 @@ export class TextURIComponent {
     qps.delete('t');
     qps.set('format', formatFrom(format));
 
-    let base = this.router.currentURL.split('?')[0];
+    // On initial load, if we call #updateQPs,
+    // we may not have a currentURL, because the first transition has yet to complete
+    let base = this.router.currentURL?.split('?')[0];
+
+    if (macroCondition(isTesting())) {
+      base ??= (this.router as any) /* private API? */?.location?.path;
+    } else {
+      base ??= window.location.pathname;
+    }
+
     let next = `${base}?${qps}`;
 
     this.router.replaceWith(next);
+    this.#text = rawText;
+
+    if (format) {
+      this.format = format;
+    }
   };
 }

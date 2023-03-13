@@ -1,64 +1,40 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
 import { on } from '@ember/modifier';
-import { trackedFunction } from 'ember-resources/util/function';
-import { unified } from 'unified';
-
-import remarkParse from 'remark-parse';
-import remarkRehype from 'remark-rehype';
-import rehypeStringify from 'rehype-stringify';
+import { Button, ExternalLink, service }  from 'limber-ui';
 
 import { highlight } from './/highlight';
 
-import type RouterService from '@ember/routing/router-service';
-import type DocsService from 'tutorial/services/docs';
 
-const prosePath = (path: string): `${string}.md` => `/docs/${path}/prose.md`;
+const editPath = (path: string | undefined) => `https://github.com/NullVoxPopuli/limber/tree/main/apps/tutorial/docs/${path}`
 
-export class Prose extends Component {
-  @service declare docs: DocsService;
-  @service declare router: RouterService;
+export const Prose =
+<template>
+  <div class="grid gap-4">
 
-  showAnswer = () => this.router.transitionTo({ queryParams: { showAnswer: 1 }});
-  hideAnswer = () => this.router.transitionTo({ queryParams: { showAnswer: 0 }});
+    {{#let (service 'docs') as |docs|}}
 
-  markdown = trackedFunction(this, async () => {
-    let selected = this.docs.selected?.path;
-    if (!selected) return;
+      <div class="prose p-4" {{highlight docs.selected.prose}}>
+        {{#if docs.selected.prose}}
+          {{! template-lint-disable no-triple-curlies }}
+          {{{docs.selected.prose}}}
+        {{/if}}
+      </div>
 
-    let response = await fetch(prosePath(selected));
+      <hr class="border" />
 
-    return response.text();
-  });
+      <footer class="flex justify-between items-center p-2 text-sm">
+        {{#if docs.selected.hasAnswer}}
+          <Button {{on "click" docs.showMe}}>
+            Show me
+          </Button>
+        {{/if}}
 
-  compiled = trackedFunction(this, async () => compile(this.markdown.value));
+        <ExternalLink href={{editPath docs.selected.path}}>
+          Edit this page
+        </ExternalLink>
+      </footer>
 
-  <template>
-    <div {{highlight this.compiled.value}}>
-      {{#if this.compiled.value}}
-        {{! template-lint-disable no-triple-curlies }}
-        {{{this.compiled.value}}}
-      {{/if}}
-    </div>
+    {{/let}}
 
-    <footer>
-      <button type="button" {{on "click" this.showAnswer}}>
-        Show Answer
-      </button>
-      <button type="button" {{on "click" this.hideAnswer}}>
-        Hide Answer
-      </button>
-    </footer>
+  </div>
+</template>
 
-  </template>
-}
-
-const compiler = unified().use(remarkParse).use(remarkRehype).use(rehypeStringify);
-
-async function compile(markdown: string | undefined | null) {
-  if (!markdown) return;
-
-  let processed = await compiler.process(markdown);
-
-  return String(processed);
-}

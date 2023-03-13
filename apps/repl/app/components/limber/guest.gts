@@ -12,7 +12,7 @@ const guestFrame = resource(({ on, owner }) => {
     methods: {
       update(format: Format, text: string) {
         let editor = owner.lookup('service:editor');
-        console.log(format, text)
+
         editor.updateDemo(text, format);
       }
     }

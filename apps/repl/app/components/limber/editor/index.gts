@@ -21,7 +21,7 @@ const Editor: TOC<{
           <div
             style='width: 100%; height: 100%;'
             {{! @glint-ignore }}
-            {{codemirror context.text}}
+            {{codemirror context.text context.format}}
           >{{context.text}}</div>
         </div>
       {{/let}}

@@ -6,7 +6,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
 import { ALL, getFromLabel } from 'limber/snippets';
-import { fileFromParams } from 'limber/utils/messaging';
+import { type Format, fileFromParams } from 'limber/utils/messaging';
 
 import { getService } from '../helpers';
 import { Page } from './-page';
@@ -40,7 +40,7 @@ module('Demos', function (hooks) {
   module('The output frame renders every demo', function () {
     for (let demo of ALL) {
       test(demo.label, async function (assert) {
-        let makeComponent!: (text: string) => void;
+        let makeComponent!: (format: Format, text: string) => void;
         let setParentFrame!: (parentAPI: {
           beginCompile: () => void;
           error: () => void;
@@ -75,7 +75,7 @@ module('Demos', function (hooks) {
 
         let text = await getFromLabel(demo.label);
 
-        makeComponent(text);
+        makeComponent('glimdown', text);
         await settled();
 
         assert.verifySteps(['begin compile', 'success', 'finished rendering']);

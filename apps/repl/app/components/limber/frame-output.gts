@@ -8,7 +8,7 @@ import { waitForPromise, waitFor, buildWaiter } from '@ember/test-waiters';
 import { connectToChild, type Connection } from 'penpal';
 
 import { DEFAULT_SNIPPET } from 'limber/snippets';
-import { fileFromParams, formatFrom, type Format, type OutputError } from 'limber/utils/messaging';
+import { fileFromParams, type Format, type OutputError } from 'limber/utils/messaging';
 
 import type EditorService from 'limber/services/editor';
 import type RouterService from '@ember/routing/router-service';
@@ -30,12 +30,6 @@ export default class FrameOutput extends Component {
   }>;
   hadUnrecoverableError = false;
 
-  get format() {
-    let requested  = this.router.currentRoute.queryParams.format
-    return formatFrom(requested);
-  }
-
-
   /**
     * We can't post right away, because we might do so before the iframe is ready.
     * We need to wait until the frame initiates contact.
@@ -47,7 +41,8 @@ export default class FrameOutput extends Component {
       this.hadUnrecoverableError = false;
 
       // this reloads the frame
-      element.src = `/output?format=${this.format}`;
+      // which we need to do when the error is unrecoverable
+      element.src = `/output`;
 
       return;
     }
@@ -109,7 +104,7 @@ export default class FrameOutput extends Component {
       {{this.onMessage}}
       title='Rendered output'
       class='w-full h-full border-none'
-      src='/output?format={{this.format}}'
+      src='/output'
     ></iframe>
   </template>
 }

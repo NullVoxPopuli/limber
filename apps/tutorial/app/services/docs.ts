@@ -1,24 +1,16 @@
+import { cached } from '@glimmer/tracking';
 import Service, { service } from '@ember/service';
 
 import { use } from 'ember-resources';
 import { RemoteData } from 'ember-resources/util/remote-data';
 
+import type Selected from './selected';
+import type { Manifest } from './types';
 import type RouterService from '@ember/routing/router-service';
-
-interface Manifest {
-  first: Tutorial;
-  list: Tutorial[][];
-  grouped: { [group: string]: Tutorial[] };
-}
-interface Tutorial {
-  path: string;
-  name: string;
-  groupName: string;
-  tutorialName: string;
-}
 
 export default class DocsService extends Service {
   @service declare router: RouterService;
+  @service declare selected: Selected;
 
   @use docs = RemoteData<Manifest>(() => `/docs/manifest.json`);
 
@@ -30,23 +22,20 @@ export default class DocsService extends Service {
     return this.docs.value?.grouped ?? {};
   }
 
-  get selected(): Tutorial | undefined {
-    return this.#fromURL() ?? this.docs.value?.first;
-  }
-
   get showAnswer() {
     return this.router.currentRoute?.queryParams?.['showAnswer'] === '1' ?? false;
   }
+  showMe = () => this.router.transitionTo({ queryParams: { showAnswer: 1 } });
 
-  #findByPath = (path: string) => {
-    return this.tutorials.flat().find((tutorial) => `/${tutorial.path}` === path);
-  };
+  @cached
+  get flatList() {
+    return this.tutorials.flat();
+  }
+}
 
-  #fromURL = () => {
-    let [path] = this.router.currentURL.split('?');
-
-    if (!path) return;
-
-    return this.#findByPath(path);
-  };
+// DO NOT DELETE: this is how TypeScript knows how to look up your services.
+declare module '@ember/service' {
+  interface Registry {
+    docs: DocsService;
+  }
 }
