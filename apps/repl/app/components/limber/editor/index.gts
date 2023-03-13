@@ -1,4 +1,4 @@
-import service from 'limber/helpers/service';
+import { service } from 'limber-ui';
 
 import codemirror from './-code-mirror';
 import State from './state';

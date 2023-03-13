@@ -2,7 +2,7 @@ import { fn, concat } from '@ember/helper';
 import { htmlSafe } from '@ember/template';
 import { on } from '@ember/modifier'
 import { inIframe } from 'limber/helpers/in-iframe';
-import service from 'limber/helpers/service';
+import { service } from 'limber-ui';
 import currentURL from 'limber/helpers/current-url';
 
 // @ts-expect-error
@@ -92,4 +92,3 @@ export const Controls: TOC<{
     </div>
   {{/let}}
 {{/if}}</template>;
-

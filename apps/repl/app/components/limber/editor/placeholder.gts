@@ -1,4 +1,4 @@
-import service from 'limber/helpers/service';
+import { service } from 'limber-ui';
 import qp from 'limber/helpers/qp';
 import highlighted from 'limber/modifiers/highlighted';
 
@@ -23,4 +23,3 @@ export const Placeholder: TOC<{
     ...attributes
   ><code class='{{orGlimdown (qp "format")}} hljs'>{{context.text}}</code></pre>
 {{/let}}</template>
-
