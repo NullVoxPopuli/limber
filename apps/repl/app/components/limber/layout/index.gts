@@ -56,7 +56,6 @@ export const Layout: TOC<{
     output: [];
   }
 }> = <template>
-  <Save />
   <State as |state send|>
     {{!--
       {{effect (fn onTransition console.log)}}
@@ -77,6 +76,7 @@ export const Layout: TOC<{
             {{! @glint-ignore }}
             {{setupState send}}
           >
+            <Save />
             <Controls
               @isMinimized={{state.matches 'hasContainer.minimized'}}
               @isMaximized={{state.matches 'hasContainer.maximized'}}
