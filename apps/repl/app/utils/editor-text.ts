@@ -1,6 +1,7 @@
 /* eslint-disable ember/classic-decorator-no-classic-methods */
 import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
 import { inject as service } from '@ember/service';
+import { isTesting, macroCondition } from '@embroider/macros';
 
 import { compressToEncodedURIComponent } from 'lz-string';
 
@@ -124,7 +125,14 @@ export class FileURIComponent {
 
     // On initial load, if we call #updateQPs,
     // we may not have a currentURL, because the first transition has yet to complete
-    let base = this.router.currentURL?.split('?')[0] ?? window.location.pathname;
+    let base = this.router.currentURL?.split('?')[0];
+
+    if (macroCondition(isTesting())) {
+      base ??= (this.router as any) /* private API? */?.location?.path;
+    } else {
+      base ??= window.location.pathname;
+    }
+
     let next = `${base}?${qps}`;
 
     this.router.replaceWith(next);

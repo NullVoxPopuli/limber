@@ -7,7 +7,7 @@ import { service } from '@ember/service';
 import { isDestroyed, isDestroying } from '@ember/destroyable';
 import { waitFor } from '@ember/test-waiters';
 
-import { Format, formatFrom } from 'limber/utils/messaging';
+import { Format } from 'limber/utils/messaging';
 
 import { compileTopLevelComponent } from './create-top-level-component'
 
