@@ -142,7 +142,7 @@ importers:
       remark-hbs: 0.4.1
       remark-html: 13.0.1
       remark-parse: 9.0.0
-      rollup: ^3.19.0
+      rollup: ^3.19.1
       stringify-object: ^4.0.1
       testem-failure-only-reporter: ^1.0.0
       tracked-built-ins: ^3.1.1
