@@ -1,4 +1,4 @@
-import service from 'limber/helpers/service';
+import { service } from 'limber-ui';
 
 <template>{{#let (service 'editor') as |editor|}}
   {{#if editor.isCompiling}}

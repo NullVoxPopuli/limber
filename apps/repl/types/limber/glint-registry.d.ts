@@ -16,7 +16,6 @@ import type Portals from 'limber/components/limber/portals';
 import type Save from 'limber/components/limber/save';
 import type inIframe from 'limber/helpers/in-iframe';
 import type not from 'limber/helpers/not';
-import type service from 'limber/helpers/service';
 import type constraintVertically from 'limber/modifiers/constrain-vertically';
 import type highlighted from 'limber/modifiers/highlighted';
 import type positionedNLines from 'limber/modifiers/positioned-n-lines-from-top';
@@ -44,7 +43,6 @@ declare module '@glint/environment-ember-loose/registry' {
     /**
      * Helpers
      */
-    service: typeof service;
     not: typeof not;
     'in-iframe': typeof inIframe;
 
