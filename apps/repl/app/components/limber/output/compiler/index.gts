@@ -54,7 +54,6 @@ export default class Compiler extends Component<Signature> {
   @action
   @waitFor
   async makeComponent(format: Format, text: string) {
-    console.log({ format, text });
     await compileTopLevelComponent(text, {
       format: format,
       onCompileStart: async () => {
@@ -84,4 +83,3 @@ export default class Compiler extends Component<Signature> {
 
   }
 }
-

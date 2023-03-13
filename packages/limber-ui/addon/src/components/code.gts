@@ -3,8 +3,6 @@ import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
 import { link } from 'ember-resources/link';
 
-import { trackedFunction } from 'ember-resources/util/function';
-
 type AllowedFormat = 'gjs' | 'gts' | 'hbs' | 'gmd';
 type Storage = 'local' | 'url';
 
@@ -36,7 +34,7 @@ interface Signature {
 
         /**
           * When true, forces the editor to load immediately.
-          */ 
+          */
         editor?: boolean;
       }
     /**
@@ -66,9 +64,9 @@ interface Signature {
 }
 
 const DEFAULT_NUMBER_OF_LINES = 7;
-// const HOST = 'https://limber.glimdown.com/edit';
-const HOST = 'http://localhost:4201/edit';
-const INITIAL_URL = (force: boolean) => `${HOST}?format=gjs&forceEditor=${force}`;
+const HOST = 'https://limber.glimdown.com/edit';
+// const HOST = 'http://localhost:4201/edit';
+const INITIAL_URL = (force?: boolean) => `${HOST}?format=gjs` + force ? `&forceEditor=${force}` : '';
 
 function defaultStyle(lines: number) {
   return `height: calc(1.5rem * ${lines});`;
