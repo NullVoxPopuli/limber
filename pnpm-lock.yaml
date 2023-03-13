@@ -873,7 +873,7 @@ importers:
   spikes/url-shortening:
     specifiers:
       '@algorithm.ts/base64': 3.0.0-alpha.8
-      '@algorithm.ts/huffman': 3.0.0-alpha.7
+      '@algorithm.ts/huffman': 3.0.0-alpha.8
       '@nullvoxpopuli/eslint-configs': ^2.3.5
       filesize: ^10.0.6
       globby: ^13.1.3
@@ -884,7 +884,7 @@ importers:
       vitest: ^0.29.2
     dependencies:
       '@algorithm.ts/base64': 3.0.0-alpha.8
-      '@algorithm.ts/huffman': 3.0.0-alpha.7
+      '@algorithm.ts/huffman': 3.0.0-alpha.8
       filesize: 10.0.6
       globby: 13.1.3
       jsoncrush: 1.1.8
@@ -902,22 +902,22 @@ packages:
     engines: {node: '>= 16.0.0'}
     dev: false
 
-  /@algorithm.ts/huffman/3.0.0-alpha.7:
-    resolution: {integrity: sha512-di8eFitduD2wjeEvhatx0/jrYDpc5SlgXjJeT3QrwwG+2RH9Jug/6OurRDzes7RYUSRIPwQ1d/boN9YL4EbQyg==}
+  /@algorithm.ts/huffman/3.0.0-alpha.8:
+    resolution: {integrity: sha512-eLhP/Cb6Lt6zOfx1QSUN1zqKxwMnB2M7+9hasnmq/anJxidGgdxuStrzC1gOAZ59yxASGdW/h/f57/FpR10lpA==}
     engines: {node: '>= 16.0.0'}
     dependencies:
-      '@algorithm.ts/queue': 3.0.0-alpha.7
+      '@algorithm.ts/queue': 3.0.0-alpha.8
     dev: false
 
-  /@algorithm.ts/queue/3.0.0-alpha.7:
-    resolution: {integrity: sha512-/epHpry+MyYinSp2Cxs7vffJ0bjFTLWB6QHgWCjhnQMbNpxBLN/d7ankjVKTEYdRlyCDEz8wPCFDAe1hmkQ/ww==}
+  /@algorithm.ts/queue/3.0.0-alpha.8:
+    resolution: {integrity: sha512-UmzVB9Vi+Nw1wEwTC2AZGynxD2M5h6Y1P6hyo6iofkZzyHXnY8H7PKVyZkq+RvNCoS/v5m3ghN/Ot9TNWR3iPA==}
     engines: {node: '>= 16.0.0'}
     dependencies:
-      '@algorithm.ts/types': 3.0.0-alpha.7
+      '@algorithm.ts/types': 3.0.0-alpha.8
     dev: false
 
-  /@algorithm.ts/types/3.0.0-alpha.7:
-    resolution: {integrity: sha512-yAQFy4sLjSxywfkHqOIRc7/yqEB+6NfVu7X9I40RJOyzAXg+FGvMgWNViDPnx69GSi8d4q4hWibGXFNggXxwDA==}
+  /@algorithm.ts/types/3.0.0-alpha.8:
+    resolution: {integrity: sha512-ETHQSZbkS9r45iTejR4NPwW3GlZ6IHYqiI5uyzJX5DGc3HU1qzRgzFGD58l78Rtnj80I7ZLYarcX9TsoQ8GHSw==}
     engines: {node: '>= 16.0.0'}
     dev: false
 
