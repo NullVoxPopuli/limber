@@ -10,12 +10,12 @@ overrides:
   '@types/eslint': ^8.0.0
 
 patchedDependencies:
-  ember-on-resize-modifier@1.1.0:
-    hash: prsfdndcfbbwmlkgbxbo7gxczu
-    path: patches/ember-on-resize-modifier@1.1.0.patch
   ember-async-data@0.7.0:
     hash: lcu42p7qs2in5uz443b3kv6t7e
     path: patches/ember-async-data@0.7.0.patch
+  ember-on-resize-modifier@1.1.0:
+    hash: prsfdndcfbbwmlkgbxbo7gxczu
+    path: patches/ember-on-resize-modifier@1.1.0.patch
 
 importers:
 

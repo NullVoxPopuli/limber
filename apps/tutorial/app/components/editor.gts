@@ -1,3 +1,4 @@
+import { TOC } from '@ember/component/template-only';
 import { REPL, service } from 'limber-ui';
 
 import DocsService from 'tutorial/services/docs';
@@ -12,7 +13,9 @@ const codeFor = (docs: DocsService) => {
   return docs.selected.prompt;
 }
 
-export const Editor = 
+export const Editor: TOC<{
+  Element: HTMLIFrameElement;
+}> =
   <template>
     {{#let (service 'docs') as |docs|}}
 
@@ -20,7 +23,7 @@ export const Editor =
 
         {{#let (codeFor docs) as |code|}}
           {{#if code}}
-            <REPL @code={{code}} @format="gjs" @editor={{true}} />
+            <REPL @code={{code}} @format="gjs" @editor={{true}} ...attributes />
           {{/if}}
 
         {{/let}}

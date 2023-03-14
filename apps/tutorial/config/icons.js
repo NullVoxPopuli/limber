@@ -10,6 +10,8 @@ module.exports = function () {
       'angle-left',
       'angle-right',
       'angle-up',
+      'angles-right',
+      'angles-left',
       'equals',
       'columns',
       'pencil',
