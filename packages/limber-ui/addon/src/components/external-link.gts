@@ -21,7 +21,7 @@ export const ExternalLink: TOC<{
     target='_blank'
     rel='noreferrer noopener'
     href='#'
-    class='flex gap-2 items-baseline focus:ring-4 focus:outline-none focus-visible:outline-none rounded-sm'
+    class='flex gap-2 items-baseline focus:ring-4 focus:outline-none focus-visible:outline-none rounded-sm hover:underline'
     ...attributes
   >
     {{#if (has-block)}}
