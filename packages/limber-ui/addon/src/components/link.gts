@@ -25,6 +25,7 @@ const classList = htmlSafe(`
   text-white rounded bg-[var(--code-bg)]
   px-3 py-2
   border border-[var(--horizon-border)]
+  hover:underline
   focus:outline-none focus:ring
   focus-visible:outline-none focus-visible:ring
   shadow
