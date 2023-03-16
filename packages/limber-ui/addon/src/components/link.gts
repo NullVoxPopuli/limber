@@ -18,6 +18,8 @@ const navigate = (router: RouterService, event: MouseEvent) => {
   let url = new URL(event.target.href);
 
   router.transitionTo(url.pathname);
+  
+  return false;
 }
 
 const classList = htmlSafe(`
