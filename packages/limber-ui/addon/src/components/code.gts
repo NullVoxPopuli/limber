@@ -66,7 +66,7 @@ interface Signature {
 const DEFAULT_NUMBER_OF_LINES = 7;
 const HOST = 'https://limber.glimdown.com/edit';
 // const HOST = 'http://localhost:4201/edit';
-const INITIAL_URL = (force?: boolean) => `${HOST}?format=gjs` + force ? `&forceEditor=${force}` : '';
+const INITIAL_URL = (force?: boolean) => `${HOST}?format=gjs` + (force ? `&forceEditor=${force}` : '');
 
 function defaultStyle(lines: number) {
   return `height: calc(1.5rem * ${lines});`;
@@ -97,7 +97,7 @@ export default class Code extends Component<Signature> {
       {{this.messaging.postMessage this.code}}
       {{this.messaging.onMessage}}
       title={{this.title}}
-      src={{INITIAL_URL @editor}}
+      src={{htmlSafe (INITIAL_URL @editor)}}
       style={{htmlSafe (defaultStyle this.lines)}}
       ...attributes
     >

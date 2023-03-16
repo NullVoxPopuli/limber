@@ -21,9 +21,9 @@ export default class Selected extends Service {
    * be cancelled if it was still pending.
    *******************************************************************/
 
-  @use proseFile = RemoteData<string>(() => `/docs/${this.path}/prose.md`);
-  @use promptFile = RemoteData<string>(() => `/docs/${this.path}/prompt.gjs`);
-  @use answerFile = RemoteData<string>(() => `/docs/${this.path}/answer.gjs`);
+  @use proseFile = RemoteData<string>(() => `/docs${this.path}/prose.md`);
+  @use promptFile = RemoteData<string>(() => `/docs${this.path}/prompt.gjs`);
+  @use answerFile = RemoteData<string>(() => `/docs${this.path}/answer.gjs`);
   @use proseCompiled = MarkdownToHTML(() => this.proseFile.value);
 
   /*********************************************************************
@@ -65,15 +65,15 @@ export default class Selected extends Service {
   }
 
   get hasProse() {
-    return Boolean(this.proseFile.value);
+    return this.proseFile.status !== 404 && Boolean(this.proseFile.value);
   }
 
   get hasPrompt() {
-    return Boolean(this.promptFile.value);
+    return this.promptFile.status !== 404 && Boolean(this.promptFile.value);
   }
 
   get hasAnswer() {
-    return Boolean(this.answerFile.value);
+    return this.answerFile.status !== 404 && Boolean(this.answerFile.value);
   }
 
   get next(): Tutorial | undefined {

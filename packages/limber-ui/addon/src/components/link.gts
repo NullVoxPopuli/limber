@@ -21,7 +21,7 @@ const navigate = (router: RouterService, event: MouseEvent) => {
 }
 
 const classList = htmlSafe(`
-  inline-block
+  inline-block items-center grid-flow-col
   text-white rounded bg-[var(--code-bg)]
   px-3 py-2
   border border-[var(--horizon-border)]
