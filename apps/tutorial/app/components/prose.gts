@@ -31,7 +31,8 @@ export const Prose: TOC<{ Element: HTMLDivElement }> =
             </Button>
           {{/if}}
 
-          <Link href={{docs.selected.next.path}} @isDisabled={{not docs.selected.next}}>
+
+          <Link href={{docs.selected.next.path}} @isDisabled={{not docs.selected.next.path}}>
             <span>Next</span>
             <FaIcon @icon="angle-right" />
           </Link>
