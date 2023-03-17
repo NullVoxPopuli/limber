@@ -4,7 +4,7 @@ import { Addon } from '@embroider/addon-dev/rollup';
 import copy from 'rollup-plugin-copy';
 import { defineConfig } from 'rollup';
 
-import gjs from './gjs-plugin.mjs';
+import { glimmerTemplateTag } from 'rollup-plugin-glimmer-template-tag';
 
 const addon = new Addon({
   srcDir: 'src',
@@ -32,7 +32,7 @@ export default defineConfig({
 
     addon.dependencies(),
     addon.hbs(),
-    gjs(),
+    glimmerTemplateTag({ preprocessOnly: true }),
     addon.keepAssets(['**/*.css']),
     addon.clean(),
 
