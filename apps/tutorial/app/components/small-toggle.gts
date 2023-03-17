@@ -1,39 +1,20 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import Component from '@glimmer/component';
 import { on } from '@ember/modifier';
-import { tracked } from '@glimmer/tracking';
-import { Button } from 'limber-ui';
+import { Button, service } from 'limber-ui';
+import { TOC } from '@ember/component/template-only';
 
-export class SmallScreenToggle extends Component<{ Element: HTMLButtonElement }> {
-  @tracked isViewingProse = true;
-
-  toggle = async () => {
-    let nextValue = !this.isViewingProse;
-    let words = document.querySelector('section[data-words]');
-
-    if (words) {
-      if (nextValue) {
-        // Viewing Prose
-        words.classList.remove('-translate-x-full');
-      } else {
-        // Not Viewing Prose
-        words.classList.add('-translate-x-full');
-      }
-    }
-
-    this.isViewingProse = nextValue;;
-  }
-
-  <template>
-    <Button {{on 'click' this.toggle}} class="drop-shadow-md" ...attributes>
-      {{#if this.isViewingProse}}
+export const SmallScreenToggle: TOC<{ Element: HTMLButtonElement }> =
+<template>
+  {{#let (service 'docs') as |docs|}}
+    <Button {{on 'click' docs.toggleProse}} class="drop-shadow-md" ...attributes>
+      {{#if docs.isViewingProse}}
         <FaIcon @icon="angles-left" />
       {{else}}
         <FaIcon @icon="angles-right" />
       {{/if}}
 
     </Button>
-  </template>;
-}
+  {{/let}}
+</template>;
 
 
