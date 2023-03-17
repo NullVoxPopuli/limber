@@ -34,9 +34,10 @@ function removeAppShell() {
 
       <main class="grid w-full md:grid-cols-tutorial h-[100dvh] max-h-[100dvh]" data-container>
         <section class="
-          transition-all md:translate-x-0
+          transition-all md:translate-x-0 z-10
           border-r border-r-[#ccc] drop-shadow flex flex-col justify-between
-          bg-[#eee] text-black max-h-[100dvh] z-10
+          bg-[#eee] text-black
+          max-h-[100dvh] max-w-[100dvw]
           "
           data-words
         >

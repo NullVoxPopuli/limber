@@ -15,4 +15,9 @@ iframe {
   width: 100%;
   /* idk don't @ me */
   height: 100vh !important;
+  height: 100dvh !important;
+}
+
+section[data-words] [data-prose] pre {
+  overflow-x: auto;
 }

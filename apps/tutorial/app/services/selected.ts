@@ -54,7 +54,7 @@ export default class Selected extends Service {
    * rendering without extra flashes.
    */
   get isReady() {
-    // Instead of inlining this, we want to access
+    // Instead of inlining these, we want to access
     // these values without short-circuiting so that
     // the requests run in parallel.
     let prose = this.prose;

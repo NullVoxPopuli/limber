@@ -27,6 +27,7 @@ export default class DocsService extends Service {
   get showAnswer() {
     return this.router.currentRoute?.queryParams?.['showAnswer'] === '1' ?? false;
   }
+
   showMe = () => {
     this.#hideProse();
     this.router.transitionTo({ queryParams: { showAnswer: 1 } });
