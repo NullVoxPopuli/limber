@@ -10,6 +10,22 @@ import type DocsService from './docs';
 import type { Tutorial } from './types';
 import type RouterService from '@ember/routing/router-service';
 
+/**
+ * To help reduce load time between chapters, we'll load
+ * the next and previous documents for each page
+ */
+async function preload(path?: string) {
+  if (!path) return;
+
+  await Promise.resolve();
+
+  await Promise.all([
+    fetch(`/docs/${path}/prose.md`),
+    fetch(`/docs/${path}/prompt.gjs`),
+    fetch(`/docs/${path}/answer.gjs`),
+  ]);
+}
+
 export default class Selected extends Service {
   @service declare router: RouterService;
   @service declare docs: DocsService;
@@ -82,6 +98,8 @@ export default class Selected extends Service {
 
     for (let tutorial of this.docs.flatList) {
       if (found) {
+        preload(tutorial.path);
+
         return tutorial;
       }
 
@@ -99,6 +117,8 @@ export default class Selected extends Service {
 
     for (let tutorial of this.docs.flatList) {
       if (current?.path === tutorial.path) {
+        preload(previous?.path);
+
         return previous;
       }
 
