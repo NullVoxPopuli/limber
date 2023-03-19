@@ -69,7 +69,7 @@ module.exports = {
       },
       gridTemplateColumns: {
         main: '1fr 1.5fr',
-        tutorial: 'minmax(33%, max-content) 1fr',
+        tutorial: 'min-content 1fr',
       },
       keyframes: {
         'fade-in': {
