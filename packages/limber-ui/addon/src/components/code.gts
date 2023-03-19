@@ -64,8 +64,8 @@ interface Signature {
 }
 
 const DEFAULT_NUMBER_OF_LINES = 7;
-const HOST = 'https://limber.glimdown.com/edit';
-// const HOST = 'http://localhost:4201/edit';
+// const HOST = 'https://limber.glimdown.com/edit';
+const HOST = 'http://localhost:4201/edit';
 const INITIAL_URL = (force?: boolean) => `${HOST}?format=gjs` + (force ? `&forceEditor=${force}` : '');
 
 function defaultStyle(lines: number) {
