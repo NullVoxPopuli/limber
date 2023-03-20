@@ -36,11 +36,11 @@ export default class EditorService extends Service {
 
   @action
   updateDemo(text: string, format: Format) {
-    // Updates the editor
-    this._editorSwapText?.(text, format);
-
     // Update ourselves
-    this.fileURIComponent.set(text, format);
+    this.fileURIComponent.queue(text, format);
+
+    // Update the editor
+    this._editorSwapText?.(text, format);
   }
 }
 

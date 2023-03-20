@@ -138,9 +138,6 @@ export class FileURIComponent {
 
   #updateQPs = async (rawText: string, format: Format) => {
     let encoded = compressToEncodedURIComponent(rawText);
-
-    console.log(location.search);
-
     let qps = new URLSearchParams(location.search);
 
     qps.set('c', encoded);
