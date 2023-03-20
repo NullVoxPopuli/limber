@@ -138,6 +138,7 @@ importers:
       prettier: ^2.8.4
       prettier-plugin-ember-template-tag: ^0.3.2
       qunit: ^2.19.3
+      qunit-console-grouper: ^0.3.0
       qunit-dom: ^2.0.0
       remark-hbs: 0.4.1
       remark-html: 13.0.1
@@ -265,6 +266,7 @@ importers:
       prettier: 2.8.4
       prettier-plugin-ember-template-tag: 0.3.2
       qunit: 2.19.4
+      qunit-console-grouper: 0.3.0
       qunit-dom: 2.0.0
       rollup: 3.19.1
       testem-failure-only-reporter: 1.0.0
@@ -16362,6 +16364,15 @@ packages:
       mktemp: 0.4.0
       rimraf: 2.7.1
       underscore.string: 3.3.6
+
+  /qunit-console-grouper/0.3.0:
+    resolution: {integrity: sha512-uHg5kcjyEGX85Rh9mimWoXsqeGmJZxfNLqmVxA5O2xJW+JAlQ0r0JFA07lHqlOQcegs5CAhvioKUXpjicDra6g==}
+    engines: {node: 10.* || 12.* || >= 14.*}
+    dependencies:
+      broccoli-funnel: 3.0.8
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
 
   /qunit-dom/2.0.0:
     resolution: {integrity: sha512-mElzLN99wYPOGekahqRA+mq7NcThXY9c+/tDkgJmT7W5LeZAFNyITr2rFKNnCbWLIhuLdFw88kCBMrJSfyBYpA==}

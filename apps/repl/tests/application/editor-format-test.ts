@@ -49,8 +49,19 @@ module('Editor > Format', function (hooks) {
 
     assert.strictEqual(page.editor.format, 'glimdown');
 
-    await visit(`/edit?format=gjs&t=${defaultText}`);
+    this.owner.lookup('service:editor').updateDemo(defaultText, 'gjs');
 
     assert.strictEqual(page.editor.format, 'gjs');
+  });
+
+  test('can start with glimdown, and is unable to change formats via the URL (must be done via postMessage or via service)', async function (assert) {
+    await visit('/edit');
+    await page.editor.load();
+
+    assert.strictEqual(page.editor.format, 'glimdown');
+
+    await visit(`/edit?format=gjs&t=${defaultText}`);
+
+    assert.strictEqual(page.editor.format, 'glimdown');
   });
 });

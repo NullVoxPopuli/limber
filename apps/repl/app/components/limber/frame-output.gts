@@ -95,7 +95,13 @@ export default class FrameOutput extends Component {
       }
     });
 
-    waitForPromise(this.connection.promise).catch(console.error);
+    /**
+     * It's important to change the frameStatus so that
+     * postMessage can run again with a connection
+     */
+    waitForPromise(this.connection.promise)
+      .then(() => this.frameStatus = 'connected')
+      .catch(console.error);
 
     return () => this.connection?.destroy();
   });
