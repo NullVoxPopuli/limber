@@ -562,7 +562,7 @@ importers:
       '@babel/runtime': ^7.21.0
       '@ember/test-waiters': ^3.0.2
       '@embroider/addon-dev': ^3.0.0
-      '@embroider/addon-shim': ^1.0.0
+      '@embroider/addon-shim': ^1.8.4
       '@embroider/macros': 1.10.0
       '@fortawesome/ember-fontawesome': ^0.4.1
       '@fortawesome/fontawesome-svg-core': ^6.3.0
