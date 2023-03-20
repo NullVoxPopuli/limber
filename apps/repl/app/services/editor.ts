@@ -1,6 +1,7 @@
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
+import { waitFor } from '@ember/test-waiters';
 
 import { link } from 'ember-resources/link';
 
@@ -35,9 +36,13 @@ export default class EditorService extends Service {
   _editorSwapText?: (text: string, format: Format) => void;
 
   @action
-  updateDemo(text: string, format: Format) {
+  @waitFor
+  async updateDemo(text: string, format: Format) {
     // Update ourselves
     this.fileURIComponent.queue(text, format);
+
+    // We got timing issues!
+    await Promise.resolve();
 
     // Update the editor
     this._editorSwapText?.(text, format);

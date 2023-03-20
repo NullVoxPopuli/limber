@@ -145,6 +145,13 @@ export class FileURIComponent {
   };
 
   #updateQPs = async (rawText: string, format: Format) => {
+    if (new Date().getTime() - this.#rapidCallTime < 100 && this.#rapidCallCount > 3) {
+      throw new Error('Too many rapid query param changes');
+    }
+
+    this.#rapidCallTime = new Date().getTime();
+    this.#rapidCallCount++;
+
     let encoded = compressToEncodedURIComponent(rawText);
     let qps = new URLSearchParams(location.search);
 
@@ -167,4 +174,7 @@ export class FileURIComponent {
     this.router.replaceWith(next);
     this.#text = rawText;
   };
+
+  #rapidCallTime = -Infinity;
+  #rapidCallCount = 0;
 }

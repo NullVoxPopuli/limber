@@ -1,4 +1,4 @@
-import { visit } from '@ember/test-helpers';
+import { settled, visit } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
@@ -50,6 +50,7 @@ module('Editor > Format', function (hooks) {
     assert.strictEqual(page.editor.format, 'glimdown');
 
     this.owner.lookup('service:editor').updateDemo(defaultText, 'gjs');
+    await settled();
 
     assert.strictEqual(page.editor.format, 'gjs');
   });
