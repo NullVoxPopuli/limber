@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
 import { link } from 'ember-resources/link';
+import { macroCondition, isDevelopingApp } from '@embroider/macros';
 
 type AllowedFormat = 'gjs' | 'gts' | 'hbs' | 'gmd';
 type Storage = 'local' | 'url';
@@ -64,8 +65,10 @@ interface Signature {
 }
 
 const DEFAULT_NUMBER_OF_LINES = 7;
-// const HOST = 'https://limber.glimdown.com/edit';
-const HOST = 'http://localhost:4201/edit';
+const HOST = macroCondition(isDevelopingApp())
+  ? 'http://localhost:4201/edit'
+  : 'https://limber.glimdown.com/edit';
+
 const INITIAL_URL = (force?: boolean) => `${HOST}?format=gjs&t=<template></template>` + (force ? `&forceEditor=${force}` : '');
 
 function defaultStyle(lines: number) {

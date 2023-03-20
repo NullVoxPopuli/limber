@@ -566,6 +566,7 @@ importers:
       '@ember/test-waiters': ^3.0.2
       '@embroider/addon-dev': ^3.0.0
       '@embroider/addon-shim': ^1.0.0
+      '@embroider/macros': 1.10.0
       '@fortawesome/ember-fontawesome': ^0.4.1
       '@fortawesome/fontawesome-svg-core': ^6.3.0
       '@fortawesome/free-brands-svg-icons': ^6.3.0
@@ -608,6 +609,7 @@ importers:
       '@babel/runtime': 7.21.0
       '@ember/test-waiters': 3.0.2
       '@embroider/addon-shim': 1.8.4
+      '@embroider/macros': 1.10.0
       '@fortawesome/ember-fontawesome': 0.4.1_rollup@3.19.1
       '@fortawesome/fontawesome-svg-core': 6.3.0
       '@fortawesome/free-brands-svg-icons': 6.3.0
@@ -6018,7 +6020,6 @@ packages:
       loader-utils: 2.0.4
       make-dir: 3.1.0
       schema-utils: 2.7.1
-    dev: true
 
   /babel-loader/8.3.0_olvwa26bkc7sescpzrxlktjrvi:
     resolution: {integrity: sha512-H8SvsMF+m9t15HNLMipppzkC+Y2Yq+v3SonZyU70RBL/h1gxPkH08Ot8pEE9Z4Kd+czyWJClmFS8qzIP9OZ04Q==}
@@ -8280,7 +8281,6 @@ packages:
       postcss-value-parser: 4.2.0
       schema-utils: 3.1.1
       semver: 7.3.8
-    dev: true
 
   /css-loader/5.2.7_webpack@5.76.1:
     resolution: {integrity: sha512-Q7mOvpBNBG7YrVGMxRxcBJZFL75o+cH2abNASdibkj/fffYD8qWbInZrD0S9ccI6vZclF3DsHE7njGlLtaHbhg==}
@@ -8861,7 +8861,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
       - webpack
-    dev: true
 
   /ember-auto-import/2.6.1_webpack@5.76.1:
     resolution: {integrity: sha512-3bCRi/pXp4QslmuCXGlSz9xwR7DF5oDx3zZO5OXKzNZihtkqAM1xvGuRIdQSl46pvbAXOkp8Odl5fOen1i0dRw==}
@@ -9749,7 +9748,7 @@ packages:
       '@embroider/addon-shim': 1.8.4
       ember-cli-normalize-entity-name: 1.0.0
       ember-cli-string-utils: 1.1.0
-      ember-source: 4.11.0_uoukisqssdlogsjlik24kapjce
+      ember-source: 4.11.0_tjijq7ea5h6eehcyhwtwl5ia5m
     transitivePeerDependencies:
       - supports-color
 
@@ -10033,7 +10032,6 @@ packages:
       - '@babel/core'
       - supports-color
       - webpack
-    dev: true
 
   /ember-source/4.11.0_uoukisqssdlogsjlik24kapjce:
     resolution: {integrity: sha512-SNRHsQOvF3C9emS7Rg4zcFdwY6aiSkV/7CG+KBpmzLY6hIWQNruzEDZINpNgqBn7CicAJ6g573WG7zu6458agQ==}
@@ -14844,7 +14842,6 @@ packages:
         optional: true
     dependencies:
       schema-utils: 4.0.0
-    dev: true
 
   /mini-css-extract-plugin/2.7.2_webpack@5.76.1:
     resolution: {integrity: sha512-EdlUizq13o0Pd+uCp+WO/JpkLvHRVGt97RqfeGhXqAcorYo1ypJSpkV+WDT0vY/kmh/p7wRdJNJtuyK540PXDw==}
@@ -17930,7 +17927,6 @@ packages:
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.1.1
-    dev: true
 
   /style-loader/2.0.0_webpack@5.76.1:
     resolution: {integrity: sha512-Z0gYUJmzZ6ZdRUqpg1r8GsaFKypE+3xAzuFeMuoHgjc9KZv3wMyCRjQIWEbhoFSq7+7yoHXySDJyyWQaPajeiQ==}
