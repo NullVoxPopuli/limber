@@ -4,8 +4,6 @@ import { service } from '@ember/service';
 
 import Modifier from 'ember-modifier';
 
-import { formatFrom } from 'limber/utils/messaging';
-
 import type { EditorView } from '@codemirror/view';
 import type RouterService from '@ember/routing/router-service';
 import type EditorService from 'limber/services/editor';
@@ -44,7 +42,7 @@ export default class CodeMirror extends Modifier<Signature> {
 
     let updateText = this.editor.updateText;
 
-    format = formatFrom(format);
+    element.setAttribute('data-format', format);
 
     let { view, setText } = CODEMIRROR(element, value, format, updateText);
 

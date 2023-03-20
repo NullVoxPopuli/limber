@@ -48,7 +48,15 @@ export class FileURIComponent {
 
   #initialFile = fileFromParams();
   #text = this.#initialFile.text;
-  format: Format = 'glimdown';
+
+  get format() {
+    let location = this.#currentURL();
+
+    let search = location.split('?')[1];
+    let queryParams = new URLSearchParams(search);
+
+    return formatFrom(queryParams.get('format'));
+  }
 
   constructor() {
     registerDestructor(this, () => clearTimeout(this.#timeout));
@@ -75,7 +83,7 @@ export class FileURIComponent {
   /**
    * Called during normal typing.
    */
-  set = (rawText: string, format?: Format) => {
+  set = (rawText: string, format: Format) => {
     this.#updateQPs(rawText, format);
   };
 
@@ -95,13 +103,13 @@ export class FileURIComponent {
   /**
    * Debounce so we are kinder on the CPU
    */
-  queue = (rawText: string) => {
+  queue = (rawText: string, format: Format) => {
     if (this.#timeout) clearTimeout(this.#timeout);
 
     this.#queuedFn = () => {
       if (isDestroyed(this) || isDestroying(this)) return;
 
-      this.set(rawText);
+      this.set(rawText, format);
       this.#queuedFn = undefined;
     };
 
@@ -114,8 +122,24 @@ export class FileURIComponent {
     this.#queuedFn?.();
   };
 
-  #updateQPs = async (rawText: string, format?: Format) => {
+  #currentURL = () => {
+    // On initial load,
+    // we may not have a currentURL, because the first transition has yet to complete
+    let base = this.router.currentURL;
+
+    if (macroCondition(isTesting())) {
+      base ??= (this.router as any) /* private API? */?.location;
+    } else {
+      base ??= window.location.toString();
+    }
+
+    return base ?? window.location.toString();
+  };
+
+  #updateQPs = async (rawText: string, format: Format) => {
     let encoded = compressToEncodedURIComponent(rawText);
+
+    console.log(location.search);
 
     let qps = new URLSearchParams(location.search);
 
@@ -137,9 +161,5 @@ export class FileURIComponent {
 
     this.router.replaceWith(next);
     this.#text = rawText;
-
-    if (format) {
-      this.format = format;
-    }
   };
 }

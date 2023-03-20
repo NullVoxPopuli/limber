@@ -11,7 +11,7 @@ import { type Format, fileFromParams } from 'limber/utils/messaging';
 import { getService } from '../helpers';
 import { Page } from './-page';
 
-module('Demos', function (hooks) {
+module('Output > Demos', function (hooks) {
   setupApplicationTest(hooks);
 
   let page = new Page();

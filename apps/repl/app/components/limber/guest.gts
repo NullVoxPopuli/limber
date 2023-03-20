@@ -21,12 +21,9 @@ const guestFrame = resource(({ on, owner }) => {
   on.cleanup(() => connection.destroy());
 
   (async () => {
-    let parent = await connection.promise;
-
-    await parent.ready();
+    await connection.promise;
   })()
 
-  // return connection;
   return '';
 });
 

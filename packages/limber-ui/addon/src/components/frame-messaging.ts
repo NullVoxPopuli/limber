@@ -18,10 +18,6 @@ export class HostMessaging {
    * We need to wait until the frame initiates contact.
    */
   postMessage = modifier((element: HTMLIFrameElement, [data]: [string | null]) => {
-    if (this.frameStatus !== 'ready') {
-      return;
-    }
-
     if (!element.contentWindow) return;
 
     if (data) {
@@ -31,9 +27,7 @@ export class HostMessaging {
   onMessage = modifier((element: HTMLIFrameElement) => {
     this.connection = connectToChild({
       iframe: element,
-      methods: {
-        ready: () => (this.frameStatus = 'ready'),
-      },
+      methods: {},
     });
 
     waitForPromise(this.connection.promise).catch(console.error);

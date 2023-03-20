@@ -21,7 +21,7 @@ export default class EditorService extends Service {
 
   @action
   updateText(text: string) {
-    this.fileURIComponent.queue(text);
+    this.fileURIComponent.queue(text, this.format);
   }
 
   get text() {

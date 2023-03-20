@@ -65,8 +65,6 @@ async function setupEvents(context: Compiler, { onReceiveText, onConnect }: {
 
   registerDestructor(context, () => window.removeEventListener('error', handleError));
 
-  await parent.ready();
-
   return connection;
 }
 

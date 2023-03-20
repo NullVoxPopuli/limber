@@ -1,6 +1,7 @@
 As one might imagine, having to access and manipulating a property can get cumbersome.
 
 If using classes, you could see a pattern develop to try to achieve "native-like" read and write access to properties:
+
 ```js
 import { cell } from 'ember-resources';
 
@@ -12,7 +13,7 @@ class Demo {
   }
 
   set theProperty(nextValue) {
-    return this._value.current = nextValue;
+    return (this._value.current = nextValue);
   }
 }
 ```
@@ -20,7 +21,7 @@ class Demo {
 This would allow setting / getting of `theProperty`, which is reactive, without thet need to know about the underlying reactive implementation. _Except, you'd still have to maintain all of the above code_.
 
 ```gjs
-const demo = new Demo() 
+const demo = new Demo()
 
 setTimeout(() => demo.theProperty = 2, 500);
 
@@ -39,8 +40,7 @@ class Demo {
 }
 ```
 
-This decorator automatically wraps up the getter and setter so that the _reference_ to `theProperty` is reactive, and can be set / updateded like normal javascript properties. 
-
+This decorator automatically wraps up the getter and setter so that the _reference_ to `theProperty` is reactive, and can be set / updateded like normal javascript properties.
 
 **For this exercise, re-write the previous example using `@tracked`**
 
