@@ -20,7 +20,7 @@
     "tailwindcss": "^3.2.7",
     "@nullvoxpopuli/eslint-configs": "^3.1.1",
     "eslint": "^8.33.0",
-    "@babel/core": "^7.21.0"
+    "@babel/core": "^7.21.3"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.9",
