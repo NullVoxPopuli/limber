@@ -1,6 +1,7 @@
 /* eslint-disable ember/classic-decorator-no-classic-methods */
 import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
 import { inject as service } from '@ember/service';
+import { buildWaiter } from '@ember/test-waiters';
 import { isTesting, macroCondition } from '@embroider/macros';
 
 import { compressToEncodedURIComponent } from 'lz-string';
@@ -10,6 +11,8 @@ import { fileFromParams, type Format, formatFrom } from 'limber/utils/messaging'
 import type RouterService from '@ember/routing/router-service';
 
 const DEBOUNCE_MS = 300;
+const queueWaiter = buildWaiter('FileURIComponent::queue');
+const queueTokens: unknown[] = [];
 
 /**
  * Manages the URL state, representing the editor text.
@@ -59,7 +62,10 @@ export class FileURIComponent {
   }
 
   constructor() {
-    registerDestructor(this, () => clearTimeout(this.#timeout));
+    registerDestructor(this, () => {
+      clearTimeout(this.#timeout);
+      queueTokens.forEach((token) => queueWaiter.endAsync(token));
+    });
   }
 
   get decoded() {
@@ -111,9 +117,11 @@ export class FileURIComponent {
 
       this.set(rawText, format);
       this.#queuedFn = undefined;
+      queueTokens.forEach((token) => queueWaiter.endAsync(token));
     };
 
     this.#timeout = setTimeout(this.#queuedFn, DEBOUNCE_MS);
+    queueTokens.push(queueWaiter.beginAsync());
   };
 
   #flush = () => {
