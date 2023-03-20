@@ -11,6 +11,7 @@ const guestFrame = resource(({ on, owner }) => {
   let connection = connectToParent<ParentMethods>({
     methods: {
       update(format: Format, text: string) {
+        console.log('update', format, text);
         let editor = owner.lookup('service:editor');
 
         editor.updateDemo(text, format);
@@ -19,10 +20,6 @@ const guestFrame = resource(({ on, owner }) => {
   });
 
   on.cleanup(() => connection.destroy());
-
-  (async () => {
-    await connection.promise;
-  })()
 
   return '';
 });
