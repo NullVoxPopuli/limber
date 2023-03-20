@@ -17,6 +17,14 @@ export class Editor extends PageObject {
     assert(`Editor failed to load`, !this._placeholder.element);
   }
 
+  get format() {
+    let element = this.element?.querySelector('div[data-format]');
+
+    assert(`Could not find element that codemirror should be attached to`, element);
+
+    return element.getAttribute('data-format');
+  }
+
   get activeEditor() {
     let { _editor, _placeholder } = this;
 

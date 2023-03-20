@@ -22,7 +22,7 @@
     "test:ember": "ember test --test-port 0"
   },
   "dependencies": {
-    "ember-async-data": "^0.7.0",
+    "ember-async-data": "^1.0.0",
     "limber-ui": "workspace:../addon"
   },
   "devDependencies": {

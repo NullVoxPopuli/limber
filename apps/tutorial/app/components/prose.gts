@@ -10,7 +10,7 @@ const not = (x: unknown) => !(x)
 
 export const Prose: TOC<{ Element: HTMLDivElement }> =
 <template>
-  <div class="grid gap-4 overflow-auto pb-8" ...attributes>
+  <div class="grid gap-4 overflow-auto pb-8 w-fit w-full" ...attributes>
 
     {{#let (service 'docs') as |docs|}}
 

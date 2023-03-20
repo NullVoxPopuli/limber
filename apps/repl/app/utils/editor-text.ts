@@ -1,6 +1,7 @@
 /* eslint-disable ember/classic-decorator-no-classic-methods */
 import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
 import { inject as service } from '@ember/service';
+import { buildWaiter } from '@ember/test-waiters';
 import { isTesting, macroCondition } from '@embroider/macros';
 
 import { compressToEncodedURIComponent } from 'lz-string';
@@ -10,6 +11,8 @@ import { type Format, fileFromParams, formatFrom } from 'limber/utils/messaging'
 import type RouterService from '@ember/routing/router-service';
 
 const DEBOUNCE_MS = 300;
+const queueWaiter = buildWaiter('FileURIComponent::queue');
+const queueTokens: unknown[] = [];
 
 /**
  * Manages the URL state, representing the editor text.
@@ -48,10 +51,21 @@ export class FileURIComponent {
 
   #initialFile = fileFromParams();
   #text = this.#initialFile.text;
-  format: Format = 'glimdown';
+
+  get format() {
+    let location = this.#currentURL();
+
+    let search = location.split('?')[1];
+    let queryParams = new URLSearchParams(search);
+
+    return formatFrom(queryParams.get('format'));
+  }
 
   constructor() {
-    registerDestructor(this, () => clearTimeout(this.#timeout));
+    registerDestructor(this, () => {
+      clearTimeout(this.#timeout);
+      queueTokens.forEach((token) => queueWaiter.endAsync(token));
+    });
   }
 
   get decoded() {
@@ -75,7 +89,7 @@ export class FileURIComponent {
   /**
    * Called during normal typing.
    */
-  set = (rawText: string, format?: Format) => {
+  set = (rawText: string, format: Format) => {
     this.#updateQPs(rawText, format);
   };
 
@@ -95,17 +109,19 @@ export class FileURIComponent {
   /**
    * Debounce so we are kinder on the CPU
    */
-  queue = (rawText: string) => {
+  queue = (rawText: string, format: Format) => {
     if (this.#timeout) clearTimeout(this.#timeout);
 
     this.#queuedFn = () => {
       if (isDestroyed(this) || isDestroying(this)) return;
 
-      this.set(rawText);
+      this.set(rawText, format);
       this.#queuedFn = undefined;
+      queueTokens.forEach((token) => queueWaiter.endAsync(token));
     };
 
     this.#timeout = setTimeout(this.#queuedFn, DEBOUNCE_MS);
+    queueTokens.push(queueWaiter.beginAsync());
   };
 
   #flush = () => {
@@ -114,9 +130,29 @@ export class FileURIComponent {
     this.#queuedFn?.();
   };
 
-  #updateQPs = async (rawText: string, format?: Format) => {
-    let encoded = compressToEncodedURIComponent(rawText);
+  #currentURL = () => {
+    // On initial load,
+    // we may not have a currentURL, because the first transition has yet to complete
+    let base = this.router.currentURL;
 
+    if (macroCondition(isTesting())) {
+      base ??= (this.router as any) /* private API? */?.location;
+    } else {
+      base ??= window.location.toString();
+    }
+
+    return base ?? window.location.toString();
+  };
+
+  #updateQPs = async (rawText: string, format: Format) => {
+    if (new Date().getTime() - this.#rapidCallTime < 100 && this.#rapidCallCount > 3) {
+      throw new Error('Too many rapid query param changes');
+    }
+
+    this.#rapidCallTime = new Date().getTime();
+    this.#rapidCallCount++;
+
+    let encoded = compressToEncodedURIComponent(rawText);
     let qps = new URLSearchParams(location.search);
 
     qps.set('c', encoded);
@@ -137,9 +173,8 @@ export class FileURIComponent {
 
     this.router.replaceWith(next);
     this.#text = rawText;
-
-    if (format) {
-      this.format = format;
-    }
   };
+
+  #rapidCallTime = -Infinity;
+  #rapidCallCount = 0;
 }

@@ -21,7 +21,7 @@ export default class EditorService extends Service {
 
   @action
   updateText(text: string) {
-    this.fileURIComponent.queue(text);
+    this.fileURIComponent.queue(text, this.format);
   }
 
   get text() {
@@ -32,15 +32,44 @@ export default class EditorService extends Service {
     return this.fileURIComponent.format;
   }
 
-  _editorSwapText?: (text: string, format: Format) => void;
+  /**
+   * This function is set by a modifier,
+   * which means the timing of its existence is dependent on
+   * render speed, how busy the browser is, etc.
+   *
+   * But updateDemo *could* be called via parent iframe
+   * before _editorSwapText exists.
+   * If this happens, we need to wait until _editorSwapText
+   * exists and _then_ finish calling update demo.
+   *
+   */
+  #editorSwapText?: (text: string, format: Format) => void;
+  #pendingUpdate?: () => void;
+
+  get _editorSwapText() {
+    return this.#editorSwapText;
+  }
+  set _editorSwapText(value) {
+    this.#editorSwapText = value;
+
+    if (this.#pendingUpdate) {
+      this.#pendingUpdate();
+    }
+  }
 
   @action
   updateDemo(text: string, format: Format) {
-    // Updates the editor
-    this._editorSwapText?.(text, format);
+    if (!this._editorSwapText) {
+      this.#pendingUpdate = () => this.updateDemo(text, format);
+
+      return;
+    }
 
     // Update ourselves
     this.fileURIComponent.set(text, format);
+
+    // Update the editor
+    this._editorSwapText?.(text, format);
   }
 }
 

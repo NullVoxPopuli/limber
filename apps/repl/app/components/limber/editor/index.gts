@@ -20,8 +20,7 @@ const Editor: TOC<{
           {{! template-lint-disable no-inline-styles }}
           <div
             style='width: 100%; height: 100%;'
-            {{! @glint-ignore }}
-            {{codemirror context.text context.format}}
+            {{codemirror}}
           >{{context.text}}</div>
         </div>
       {{/let}}

@@ -11,10 +11,22 @@ import { type Format, fileFromParams } from 'limber/utils/messaging';
 import { getService } from '../helpers';
 import { Page } from './-page';
 
-module('Demos', function (hooks) {
+module('Output > Demos', function (hooks) {
   setupApplicationTest(hooks);
 
   let page = new Page();
+
+  /**
+   * The editor is excluded from these tests,
+   * but in order for the URI to change, the editor must be "set up".
+   *
+   * The editor service knows when this happens via _editorSwapText
+   * being set. Until that property is set, calls to updateDemo will
+   * be ignored.
+   */
+  hooks.beforeEach(function () {
+    this.owner.lookup('service:editor')._editorSwapText = () => {};
+  });
 
   module('every option correctly changes the query params', function () {
     for (let demo of ALL) {

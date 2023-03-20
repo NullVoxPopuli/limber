@@ -7,7 +7,6 @@ import { modifier } from 'ember-modifier';
 import { waitForPromise, waitFor, buildWaiter } from '@ember/test-waiters';
 import { connectToChild, type Connection } from 'penpal';
 
-import { DEFAULT_SNIPPET } from 'limber/snippets';
 import { fileFromParams, type Format, type OutputError } from 'limber/utils/messaging';
 
 import type EditorService from 'limber/services/editor';
@@ -37,7 +36,7 @@ export default class FrameOutput extends Component {
   postMessage = modifier((element: HTMLIFrameElement, [_status]) => {
     if (!element.contentWindow) return;
 
-    if (this.hadUnrecoverableError && this.frameStatus === 'ready') {
+    if (this.hadUnrecoverableError) {
       this.hadUnrecoverableError = false;
 
       // this reloads the frame
@@ -62,15 +61,18 @@ export default class FrameOutput extends Component {
 
     let { text, format } = fileFromParams(qps);
 
+    if (text && format) {
+      await child.update(format, text);
+    }
+
     compileTokens.push(compileWaiter.beginAsync());
-    await child.update(format, text ?? DEFAULT_SNIPPET);
+
   }
 
   onMessage = modifier((element: HTMLIFrameElement) => {
     this.connection = connectToChild({
       iframe: element,
       methods: {
-        ready: () => this.frameStatus = 'ready',
         error: (obj: OutputError) => {
           this.editor.error = obj.error;
           this.editor.isCompiling = false;
@@ -93,7 +95,13 @@ export default class FrameOutput extends Component {
       }
     });
 
-    waitForPromise(this.connection.promise).catch(console.error);
+    /**
+     * It's important to change the frameStatus so that
+     * postMessage can run again with a connection
+     */
+    waitForPromise(this.connection.promise)
+      .then(() => this.frameStatus = 'connected')
+      .catch(console.error);
 
     return () => this.connection?.destroy();
   });

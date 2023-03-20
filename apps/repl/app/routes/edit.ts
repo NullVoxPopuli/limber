@@ -31,8 +31,8 @@ export default class EditRoute extends Route {
   async beforeModel(transition: Transition) {
     let qps = transition.to.queryParams ?? {};
 
-    let hasCode = qps.t || qps.c;
-    let hasFormat = qps.format;
+    let hasCode = Boolean(qps.t || qps.c);
+    let hasFormat = qps.format !== undefined;
 
     if (!hasCode) {
       console.warn(

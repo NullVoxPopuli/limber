@@ -4,35 +4,36 @@ import { service } from '@ember/service';
 
 import Modifier from 'ember-modifier';
 
-import { formatFrom } from 'limber/utils/messaging';
-
 import type { EditorView } from '@codemirror/view';
 import type RouterService from '@ember/routing/router-service';
 import type EditorService from 'limber/services/editor';
 import type { Format } from 'limber/utils/messaging';
 
-type PositionalArgs = [string, Format];
 type Signature = {
   Element: HTMLDivElement;
-  Args: {
-    Positional: PositionalArgs;
-  };
 };
+
+/**
+ * We ignore updates, because we don't want to tell the editor to update itself.
+ * It has its own state-management, and if we were to update it from here,
+ * it would extra / unneeded work / basically a no-op
+ *
+ * This modifier is a class-based modifier _solely_ for getting easier access to services
+ */
 
 export default class CodeMirror extends Modifier<Signature> {
   @service declare editor: EditorService;
   @service declare router: RouterService;
 
-  modify(element: Element, [value, format]: PositionalArgs) {
-    this.setup(element, [value, format]);
+  modify(element: Element) {
+    this.setup(element);
   }
 
-  isSetup = false;
-  setup = async (element: Element, [value, format]: PositionalArgs) => {
-    if (this.isSetup) {
-      return;
-    }
-
+  setup = async (element: Element) => {
+    /**
+     * As long as tracked data is accessed after this await,
+     * we will never update due to tracked data changes (we manually update)
+     */
     await Promise.resolve();
 
     if (isDestroyed(this) || isDestroying(this)) return;
@@ -40,11 +41,11 @@ export default class CodeMirror extends Modifier<Signature> {
     assert(`Expected CODEMIRROR to exist`, CODEMIRROR);
     assert(`can only install codemirror editor an an HTMLElement`, element instanceof HTMLElement);
 
-    element.innerHTML = '';
-
+    let { text: value, format } = this.editor;
     let updateText = this.editor.updateText;
 
-    format = formatFrom(format);
+    element.innerHTML = '';
+    element.setAttribute('data-format', format);
 
     let { view, setText } = CODEMIRROR(element, value, format, updateText);
 
@@ -53,6 +54,8 @@ export default class CodeMirror extends Modifier<Signature> {
      * the demo selector can also affect both the URL and the editor
      */
     this.editor._editorSwapText = (text, format) => {
+      element.setAttribute('data-format', format);
+
       setText(text, format); // update the editor
     };
 
@@ -70,7 +73,7 @@ let CODEMIRROR:
   | undefined
   | ((
       element: HTMLElement,
-      value: Signature['Args']['Positional'][0],
+      value: string | null,
       format: Format,
       updateText: (text: string) => void
     ) => { view: EditorView; setText: (text: string, format: Format) => void });
