@@ -1,7 +1,6 @@
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
-import { waitFor } from '@ember/test-waiters';
 
 import { link } from 'ember-resources/link';
 
@@ -33,16 +32,41 @@ export default class EditorService extends Service {
     return this.fileURIComponent.format;
   }
 
-  _editorSwapText?: (text: string, format: Format) => void;
+  /**
+   * This function is set by a modifier,
+   * which means the timing of its existence is dependent on
+   * render speed, how busy the browser is, etc.
+   *
+   * But updateDemo *could* be called via parent iframe
+   * before _editorSwapText exists.
+   * If this happens, we need to wait until _editorSwapText
+   * exists and _then_ finish calling update demo.
+   *
+   */
+  #editorSwapText?: (text: string, format: Format) => void;
+  #pendingUpdate?: () => void;
+
+  get _editorSwapText() {
+    return this.#editorSwapText;
+  }
+  set _editorSwapText(value) {
+    this.#editorSwapText = value;
+
+    if (this.#pendingUpdate) {
+      this.#pendingUpdate();
+    }
+  }
 
   @action
-  @waitFor
-  async updateDemo(text: string, format: Format) {
-    // Update ourselves
-    this.fileURIComponent.queue(text, format);
+  updateDemo(text: string, format: Format) {
+    if (!this._editorSwapText) {
+      this.#pendingUpdate = () => this.updateDemo(text, format);
 
-    // We got timing issues!
-    await Promise.resolve();
+      return;
+    }
+
+    // Update ourselves
+    this.fileURIComponent.set(text, format);
 
     // Update the editor
     this._editorSwapText?.(text, format);
