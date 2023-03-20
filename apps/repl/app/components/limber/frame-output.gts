@@ -42,6 +42,7 @@ export default class FrameOutput extends Component {
       // this reloads the frame
       // which we need to do when the error is unrecoverable
       element.src = `/output`;
+      this.frameStatus = 'disconnected';
 
       return;
     }

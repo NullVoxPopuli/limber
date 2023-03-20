@@ -1,12 +1,12 @@
 import { cell } from 'ember-resources';
 
-const theValue = cell("Hello there!");
+const greeting = cell("Hello there!");
 
 // Change the value after 3 seconds
 setTimeout(() => {
-  theValue.current = "General Kenobi!";
+  greeting.current = "General Kenobi!";
 }, 3000);
 
 <template>
-  Greeting: {{theValue.current}}
+  Greeting: {{greeting.current}}
 </template>

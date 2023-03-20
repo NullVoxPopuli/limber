@@ -3,10 +3,10 @@ A reactive value is an object representing a value with some utility methods for
 ```gjs
 import { cell } from 'ember-resources';
 
-const theValue = cell();
+const greeting = cell();
 
 <template>
-  {{theValue.current}}
+  {{greeting.current}}
 </template>
 ```
 
@@ -20,7 +20,7 @@ For this exercise, **change the value after 3 seconds have passed after render**
 - `set` - immediately sets the value of `current`
 - `update` - invokes a passed function that receives the previous value and then sets `current` to the return value of that function
 - `toggle` - toggles the value between true and false
-- and directly settig current via `theValue.current = newValue`
+- and directly setting current via `greeting.current = newValue`
 
 Hint: you may want [setTimeout][mdn-setTimeout].
 

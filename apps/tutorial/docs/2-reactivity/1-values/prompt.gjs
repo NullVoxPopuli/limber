@@ -1,7 +1,7 @@
 import { cell } from 'ember-resources';
 
-const theValue = cell('Hello World');
+const greeting = cell('Hello World');
 
 <template>
-  {{theValue.current}}
+  {{greeting.current}}
 </template>
