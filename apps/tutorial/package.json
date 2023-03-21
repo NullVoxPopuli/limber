@@ -34,6 +34,7 @@
     "highlight.js": "^11.7.0",
     "highlightjs-glimmer": "^2.0.1",
     "limber-ui": "workspace:*",
+    "rehype-raw": "^6.1.1",
     "rehype-stringify": "^9.0.3",
     "remark-parse": "^10.0.0",
     "remark-rehype": "^10.1.0",
