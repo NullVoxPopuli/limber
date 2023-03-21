@@ -2,6 +2,10 @@ import { tracked } from '@glimmer/tracking';
 
 class Demo {
   @tracked greeting = 'Hello there!';
+
+  get loudGreeting() {
+    return this.greeting.toUpperCase();
+  }
 }
 
 const demo = new Demo();
@@ -12,5 +16,5 @@ setTimeout(() => {
 }, 3000);
 
 <template>
-  Greeting: {{demo.greeting}}
+  Greeting: {{demo.loudGreeting}}
 </template>
