@@ -1,10 +1,8 @@
 'use strict';
 
-const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
-const Funnel = require('broccoli-funnel');
 const globby = require('globby');
 
 module.exports = function (defaults) {
@@ -32,7 +30,6 @@ module.exports = function (defaults) {
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     extraPublicTrees: [
-      ...docsTrees(),
       // Tailwind
       require('@nullvoxpopuli/limber-styles/broccoli-funnel')(),
     ],
@@ -41,35 +38,71 @@ module.exports = function (defaults) {
         package: 'qunit',
       },
     ],
+    packagerOptions: {
+      webpackConfig: {
+        plugins: [
+          copyToPublic.webpack({ src: 'docs' }),
+          createTutorialManifest.webpack({ src: 'docs' }),
+        ],
+      },
+    },
   });
 };
 
-function docsTrees() {
-  let docsPath = path.join(__dirname, 'docs');
-  let docsToPublic = new Funnel(docsPath, { destDir: 'docs' });
+const { createUnplugin } = require('unplugin');
 
-  return [docsToPublic, docsMeta(docsPath)];
-}
+const copyToPublic = createUnplugin((options) => {
+  let { src, include, dest } = options ?? {};
 
-// This only updates on boot
-// (because it's a simple plugin)
-// Long-term, use an unplugin
-//  (also: learn unplugin)
-function docsMeta(docsPath) {
-  let paths = globby.sync(['**/*'], {
-    onlyDirectories: true,
-    cwd: docsPath,
-    expandDirectories: true,
-  });
+  dest ??= src;
+  include ??= '**/*';
 
-  let tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'tutorial'));
+  return {
+    name: 'copy-files-to-public',
+    async buildStart() {
+      const files = globby.sync(include, { cwd: src });
 
-  fs.writeFileSync(path.join(tmpDir, 'manifest.json'), JSON.stringify(reshape(paths)));
+      await Promise.all(
+        files.map(async (file) => {
+          let source = path.join(src, file);
 
-  return new Funnel(tmpDir, {
-    destDir: 'docs',
-  });
-}
+          this.addWatchFile(source);
+
+          await this.emitFile({
+            type: 'asset',
+            fileName: path.join(dest, file),
+            source: fs.readFileSync(source).toString(),
+          });
+        })
+      );
+    },
+  };
+});
+
+const createTutorialManifest = createUnplugin((options) => {
+  let { src, dest, name, include } = options ?? {};
+
+  dest ??= src;
+  name ??= 'manifest.json';
+  include ??= '**/*';
+
+  return {
+    name: 'create-tutorial-manifest',
+    async buildStart() {
+      const paths = globby.sync(include, {
+        cwd: src,
+        onlyDirectories: true,
+        expandDirectories: true,
+      });
+
+      await this.emitFile({
+        type: 'asset',
+        fileName: path.join(dest, name),
+        source: JSON.stringify(reshape(paths)),
+      });
+    },
+  };
+});
 
 /**
  * @param {string[]} paths
@@ -91,7 +124,7 @@ function reshape(paths) {
 }
 
 /**
- * @typedof {object} Manifest
+ * @typedef {object} Manifest
  * @property {string[]} sections
  *
  * @typedef {object} Tutorial
