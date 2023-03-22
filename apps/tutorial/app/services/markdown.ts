@@ -1,12 +1,17 @@
 import { assert } from '@ember/debug';
 
 import { cell, resource, resourceFactory } from 'ember-resources';
+import rehypeRaw from 'rehype-raw';
 import rehypeStringify from 'rehype-stringify';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
 
-const compiler = unified().use(remarkParse).use(remarkRehype).use(rehypeStringify);
+const compiler = unified()
+  .use(remarkParse)
+  .use(remarkRehype, { allowDangerousHtml: true })
+  .use(rehypeRaw)
+  .use(rehypeStringify);
 
 async function compile(markdown: string | undefined | null) {
   if (!markdown) return;

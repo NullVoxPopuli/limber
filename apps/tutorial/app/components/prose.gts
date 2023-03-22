@@ -3,18 +3,31 @@ import { TOC } from '@ember/component/template-only';
 import { on } from '@ember/modifier';
 import { Link, Button, ExternalLink, service }  from 'limber-ui';
 
-import { highlight } from './/highlight';
+import { highlight } from './highlight';
+import { modifier } from 'ember-modifier';
 
 const editPath = (path: string | undefined) => `https://github.com/NullVoxPopuli/limber/tree/main/apps/tutorial/docs/${path}`
 const not = (x: unknown) => !(x)
 
+export const resetScroll = modifier((element, [prose]) => {
+  prose;
+  element.scrollTo(0, 0);
+});;
+
 export const Prose: TOC<{ Element: HTMLDivElement }> =
 <template>
-  <div class="grid gap-4 overflow-auto pb-8 w-fit w-full" ...attributes>
+  {{#let (service 'docs') as |docs|}}
+    <div
+      class="grid gap-4 overflow-auto pb-8 w-fit w-full"
+      ...attributes
+      {{resetScroll docs.selected.prose}}
+    >
 
-    {{#let (service 'docs') as |docs|}}
-
-      <div data-prose class="prose p-4 max-w-[100dvw]" {{highlight docs.selected.prose}}>
+      <div
+        data-prose
+        class="prose p-4"
+        {{highlight docs.selected.prose}}
+      >
         {{#if docs.selected.prose}}
           {{! template-lint-disable no-triple-curlies }}
           {{{docs.selected.prose}}}
@@ -44,8 +57,8 @@ export const Prose: TOC<{ Element: HTMLDivElement }> =
 
       </footer>
 
-    {{/let}}
 
-  </div>
+    </div>
+  {{/let}}
 </template>
 

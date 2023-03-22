@@ -34,7 +34,7 @@ function removeAppShell() {
 
       <main class="grid w-full md:grid-cols-[minmax(min-content,_50%)_1fr] lg:grid-cols-[640px_1fr] h-[100dvh] max-h-[100dvh]" data-container>
         <section class="
-          transition-all md:translate-x-0 z-10
+          transition-transform md:translate-x-0 z-10
           border-r border-r-[#ccc] drop-shadow flex flex-col justify-between
           bg-[#eee] text-black
           max-h-[100dvh] max-w-[100dvw]

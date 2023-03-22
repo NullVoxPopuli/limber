@@ -1,13 +1,14 @@
 'use strict';
 
-const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
-const Funnel = require('broccoli-funnel');
 const globby = require('globby');
 
 module.exports = function (defaults) {
+  let environment = EmberApp.env();
+  let isProduction = environment === 'production';
+
   const app = new EmberApp(defaults, {
     // Add options here
     'ember-cli-babel': {
@@ -32,7 +33,6 @@ module.exports = function (defaults) {
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     extraPublicTrees: [
-      ...docsTrees(),
       // Tailwind
       require('@nullvoxpopuli/limber-styles/broccoli-funnel')(),
     ],
@@ -41,35 +41,79 @@ module.exports = function (defaults) {
         package: 'qunit',
       },
     ],
+    packagerOptions: {
+      webpackConfig: {
+        plugins: [
+          copyToPublic.webpack({ src: 'docs' }),
+          createTutorialManifest.webpack({ src: 'docs', exclude: isProduction ? ['x-*'] : [] }),
+        ],
+      },
+    },
   });
 };
 
-function docsTrees() {
-  let docsPath = path.join(__dirname, 'docs');
-  let docsToPublic = new Funnel(docsPath, { destDir: 'docs' });
+const { createUnplugin } = require('unplugin');
 
-  return [docsToPublic, docsMeta(docsPath)];
-}
+const copyToPublic = createUnplugin((options) => {
+  let { src, include, dest } = options ?? {};
 
-// This only updates on boot
-// (because it's a simple plugin)
-// Long-term, use an unplugin
-//  (also: learn unplugin)
-function docsMeta(docsPath) {
-  let paths = globby.sync(['**/*'], {
-    onlyDirectories: true,
-    cwd: docsPath,
-    expandDirectories: true,
-  });
+  dest ??= src;
+  include ??= '**/*';
 
-  let tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'tutorial'));
+  return {
+    name: 'copy-files-to-public',
+    async buildStart() {
+      const files = globby.sync(include, { cwd: src });
 
-  fs.writeFileSync(path.join(tmpDir, 'manifest.json'), JSON.stringify(reshape(paths)));
+      await Promise.all(
+        files.map(async (file) => {
+          let source = path.join(src, file);
 
-  return new Funnel(tmpDir, {
-    destDir: 'docs',
-  });
-}
+          this.addWatchFile(source);
+
+          await this.emitFile({
+            type: 'asset',
+            fileName: path.join(dest, file),
+            source: fs.readFileSync(source).toString(),
+          });
+        })
+      );
+    },
+    watchChange(id) {
+      console.debug('watchChange', id);
+    },
+  };
+});
+
+const createTutorialManifest = createUnplugin((options) => {
+  let { src, dest, name, include, exclude } = options ?? {};
+
+  dest ??= src;
+  name ??= 'manifest.json';
+  include ??= '**/*';
+  exclude ??= [];
+
+  return {
+    name: 'create-tutorial-manifest',
+    async buildStart() {
+      const globs = [include, ...exclude.map((e) => `!${e}`)];
+      const paths = globby.sync(globs, {
+        cwd: src,
+        onlyDirectories: true,
+        expandDirectories: true,
+      });
+
+      await this.emitFile({
+        type: 'asset',
+        fileName: path.join(dest, name),
+        source: JSON.stringify(reshape(paths)),
+      });
+    },
+    watchChange(id) {
+      console.debug('watchChange', id);
+    },
+  };
+});
 
 /**
  * @param {string[]} paths
@@ -91,7 +135,7 @@ function reshape(paths) {
 }
 
 /**
- * @typedof {object} Manifest
+ * @typedef {object} Manifest
  * @property {string[]} sections
  *
  * @typedef {object} Tutorial

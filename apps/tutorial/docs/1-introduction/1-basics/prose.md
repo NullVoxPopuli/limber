@@ -10,6 +10,9 @@ The format of this tutorial is _heavily_ inspired by the [Svelte tutorial][svelt
 [ember-tutorial]: https://guides.emberjs.com/release/tutorial/part-1/
 [svelte-tutorial]: https://svelte.dev/tutorial/basics
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Get started →](/1-introduction/2-adding-data)  
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; And skip the rest of this introduction 🎉
+
 ## What are these words?
 
 [glimmer-home]: https://glimmerjs.com/
@@ -24,7 +27,7 @@ It consists of the novel reactivity system and primitives, a component library, 
 
 ### Ember
 
-Ember is "A framework for ambitious web developers", and builds on top of Glimmer, providing additional app/SDK abstractions for reducing the menial differences between apps. It consistents of a well integrated test framework, router, state-management, tutorials, thorough documentation, and intecremental improvements to help not leave the ecosystem behind as JavaScript evolves.
+Ember is "A framework for ambitious web developers", and builds on top of Glimmer, providing additional app/SDK abstractions for reducing the menial differences between apps. It consists of a well integrated test framework, router, state-management, tutorials, thorough documentation, and incremental improvements to help not leave the ecosystem behind as JavaScript evolves.
 [Website][ember-home] here.
 
 ### Limber
@@ -45,6 +48,10 @@ Each tutorial chapter includes a 'Show me' button that can be used if you encoun
 However, manually typing in the editor for each example is a more effective way to learn and enhance your skills -- but also there is no shame in asking for help!
 
 On smaller screens, there is a button in the bottom right of the screen so that slides the tutorial text out of the way so that the editor can be interacted with.
+
+This entire app is generated from [the docs folder][the-docs] and content can be edited, previewed, and created all within the GitHub UI. No need to download or install anything to contribute.
+
+[the-docs]: https://github.com/NullVoxPopuli/limber/tree/main/apps/tutorial/docs
 
 ## What are components?
 
