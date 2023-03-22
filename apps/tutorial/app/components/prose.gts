@@ -14,7 +14,7 @@ export const Prose: TOC<{ Element: HTMLDivElement }> =
 
     {{#let (service 'docs') as |docs|}}
 
-      <div data-prose class="prose p-4 max-w-[100dvw]" {{highlight docs.selected.prose}}>
+      <div data-prose class="prose p-4" {{highlight docs.selected.prose}}>
         {{#if docs.selected.prose}}
           {{! template-lint-disable no-triple-curlies }}
           {{{docs.selected.prose}}}

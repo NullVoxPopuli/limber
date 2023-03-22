@@ -6,6 +6,9 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const globby = require('globby');
 
 module.exports = function (defaults) {
+  let environment = EmberApp.env();
+  let isProduction = environment === 'production';
+
   const app = new EmberApp(defaults, {
     // Add options here
     'ember-cli-babel': {
@@ -42,7 +45,7 @@ module.exports = function (defaults) {
       webpackConfig: {
         plugins: [
           copyToPublic.webpack({ src: 'docs' }),
-          createTutorialManifest.webpack({ src: 'docs' }),
+          createTutorialManifest.webpack({ src: 'docs', exclude: isProduction ? ['x-'] : [] }),
         ],
       },
     },
@@ -76,20 +79,24 @@ const copyToPublic = createUnplugin((options) => {
         })
       );
     },
+    watchChange(id) {
+      console.debug('watchChange', id);
+    },
   };
 });
 
 const createTutorialManifest = createUnplugin((options) => {
-  let { src, dest, name, include } = options ?? {};
+  let { src, dest, name, include, exclude } = options ?? {};
 
   dest ??= src;
   name ??= 'manifest.json';
   include ??= '**/*';
+  exclude ??= [];
 
   return {
     name: 'create-tutorial-manifest',
     async buildStart() {
-      const paths = globby.sync(include, {
+      const paths = globby.sync([include, ...exclude.map((x) => `!${x}`)], {
         cwd: src,
         onlyDirectories: true,
         expandDirectories: true,
@@ -100,6 +107,9 @@ const createTutorialManifest = createUnplugin((options) => {
         fileName: path.join(dest, name),
         source: JSON.stringify(reshape(paths)),
       });
+    },
+    watchChange(id) {
+      console.debug('watchChange', id);
     },
   };
 });

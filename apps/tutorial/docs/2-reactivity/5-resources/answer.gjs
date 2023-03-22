@@ -1,14 +1,14 @@
 import { resource, cell } from 'ember-resources';
 
-const Counter = resource(({ on }) => {
-  let count = cell(0);
-  let interval = setInterval(() => count.current++, 1000);
+const Clock = resource(({ on }) => {
+  let time = cell(new Date());
+  let interval = setInterval(() => time.current = new Date(), 1000);
 
   on.cleanup(() => clearInterval(interval));
 
-  return () => count.current;
+  return () => time.current;
 });
 
 <template>
-  Count: {{Counter}}
+  It is: <time>{{Clock}}</time>
 </template>

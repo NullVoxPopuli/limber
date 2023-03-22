@@ -21,3 +21,7 @@ iframe {
 section[data-words] [data-prose] pre {
   overflow-x: auto;
 }
+
+section[data-words] [data-prose] {
+  contain: inline-size;
+}

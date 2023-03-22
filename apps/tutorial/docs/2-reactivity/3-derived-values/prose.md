@@ -4,6 +4,7 @@ Another way of saying "X" is defined as "some transformation" on "Y".
 
 In Glimmer and Ember, it is convention to use a [getter][mdn-get].
 Using our previous example,
+
 ```js
 import { tracked } from '@glimmer/tracking';
 
