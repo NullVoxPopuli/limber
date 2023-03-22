@@ -72,7 +72,6 @@
     "common-tags": "^1.8.2",
     "concurrently": "^7.6.0",
     "ember-cli": "~4.11.0",
-    "ember-cli-app-version": "^6.0.0",
     "ember-cli-babel": "^7.26.11",
     "ember-cli-browserstack": "^2.0.1",
     "ember-cli-htmlbars": "^6.2.0",
