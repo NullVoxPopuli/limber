@@ -45,7 +45,7 @@ module.exports = function (defaults) {
       webpackConfig: {
         plugins: [
           copyToPublic.webpack({ src: 'docs' }),
-          createTutorialManifest.webpack({ src: 'docs', exclude: isProduction ? ['x-'] : [] }),
+          createTutorialManifest.webpack({ src: 'docs', exclude: isProduction ? ['x-*'] : [] }),
         ],
       },
     },
@@ -96,7 +96,8 @@ const createTutorialManifest = createUnplugin((options) => {
   return {
     name: 'create-tutorial-manifest',
     async buildStart() {
-      const paths = globby.sync([include, ...exclude.map((x) => `!${x}`)], {
+      const globs = [include, ...exclude.map((e) => `!${e}`)];
+      const paths = globby.sync(globs, {
         cwd: src,
         onlyDirectories: true,
         expandDirectories: true,
