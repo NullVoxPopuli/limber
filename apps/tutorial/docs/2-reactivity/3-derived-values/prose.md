@@ -19,11 +19,12 @@ class Demo {
 
 The getter, `loudGreeting` will always be up to date.
 
-Something to watch out for is property assignments in classes, 
-```js 
+Something to watch out for is property assignments in classes,
+
+```js
 class Demo {
   @tracked greeting = 'Hello there!';
-  
+
   loudGreeting = this.greeting.toUpperCase();
 }
 ```
