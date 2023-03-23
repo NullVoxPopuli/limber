@@ -55,13 +55,14 @@ module.exports = function (defaults) {
 const { createUnplugin } = require('unplugin');
 
 const copyToPublic = createUnplugin((options) => {
+  let name = 'copy-files-to-public';
   let { src, include, dest } = options ?? {};
 
   dest ??= src;
   include ??= '**/*';
 
   return {
-    name: 'copy-files-to-public',
+    name,
     async buildStart() {
       const files = globby.sync(include, { cwd: src });
 
