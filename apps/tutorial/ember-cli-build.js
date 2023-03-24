@@ -170,8 +170,38 @@ function parse(paths) {
     let tutorialName = name.replaceAll(/[\d-]/g, '');
 
     result[group] ||= [];
-    result[group]?.push({ path: `/${path}`, name, groupName, tutorialName });
+    result[group].push({ path: `/${path}`, name, groupName, tutorialName });
+    result[group].sort(betterSort);
   }
 
   return result;
+}
+
+/**
+ * Tutorials (and groups) are all 123-name
+ * This is so that we can sort them manually on the file system.
+ * However, it's human understanding that 10 comes after 9 and before 11,
+ * instead of the file system default of after 1 and before 2.
+ *
+ * This sort function fixes the sort to be intuitive.
+ * If some file systems correctly sort files starting with numbers,
+ * then this is a no-op.
+ */
+function betterSort(a, b) {
+  let aFull = a.name;
+  let bFull = b.name;
+
+  let [aNumStr, ...aRest] = aFull.split('-');
+  let [bNumStr, ...bRest] = bFull.split('-');
+
+  let aNum = Number(aNumStr);
+  let bNum = Number(bNumStr);
+
+  if (aNum < bNum) return -1;
+  if (aNum > bNum) return 1;
+
+  let aName = aRest.join('-');
+  let bName = bRest.join('-');
+
+  return aName.localeCompare(bName);
 }
