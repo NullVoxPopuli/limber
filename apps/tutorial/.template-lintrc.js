@@ -2,6 +2,7 @@
 
 module.exports = {
   extends: 'recommended',
+  ignore: ['docs/**/*'],
   overrides: [
     {
       files: ['**/*.gts', '**/*.gjs'],

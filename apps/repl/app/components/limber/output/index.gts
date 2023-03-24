@@ -5,12 +5,15 @@ import Compiler from './compiler';
 
 import type { TOC } from '@ember/component/template-only';
 import type { MessagingAPI } from './frame-messaging';
+import { Format } from 'limber/utils/messaging';
 
 interface Signature {
   Args: {
     messagingAPI: MessagingAPI
   }
 }
+
+const isGJS = (format: Format | undefined) => format === 'gjs';
 
 export const Output: TOC<Signature> =
   <template>
@@ -24,11 +27,15 @@ export const Output: TOC<Signature> =
           }}
         <CopyMenu />
 
-        {{#if context.component}}
-          <div {{highlight context.component}}>
-            <context.component />
-          </div>
-        {{/if}}
+        <div class={{if (isGJS context.format) "glimdown-render"}}>
+
+          {{#if context.component}}
+            <div {{highlight context.component}}>
+              <context.component />
+            </div>
+          {{/if}}
+
+        </div>
 
       </div>
     </Compiler>

@@ -22,6 +22,7 @@ interface Signature {
   Blocks: {
     default: [{
       component: ComponentLike<never> | undefined;
+      format: Format | undefined;
     }]
   }
 }
@@ -31,7 +32,7 @@ interface Signature {
   * The Receiving Component is Limber::FrameOutput
   */
 export default class Compiler extends Component<Signature> {
-  <template>{{yield (hash component=this.component)}}</template>
+  <template>{{yield (hash component=this.component format=this.format)}}</template>
 
   @service declare router: RouterService;
 
@@ -39,6 +40,10 @@ export default class Compiler extends Component<Signature> {
   @tracked error: string | null = null;
   @tracked errorLine: number | null = null;
   @tracked template?: unknown;
+  /**
+    * Used for changing default styles, if needed
+    */
+  @tracked format?: Format;
 
   declare parentFrame: Parent;
 
@@ -67,6 +72,7 @@ export default class Compiler extends Component<Signature> {
 
         if (isDestroyed(this) || isDestroying(this)) return;
         this.component = component as ComponentLike<never>;
+        this.format = format;
 
         await (this.parentFrame.success())
 

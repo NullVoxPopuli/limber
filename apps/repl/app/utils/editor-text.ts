@@ -145,15 +145,25 @@ export class FileURIComponent {
   };
 
   #updateQPs = async (rawText: string, format: Format) => {
-    if (new Date().getTime() - this.#rapidCallTime < 100 && this.#rapidCallCount > 3) {
+    let isFast = new Date().getTime() - this.#rapidCallTime < 100;
+
+    if (!isFast) {
+      this.#rapidCallQPs = [];
+      this.#rapidCallCount = 0;
+      this.#rapidCallTime = -Infinity;
+    }
+
+    if (isFast && this.#rapidCallCount > 3) {
+      console.debug(this.#rapidCallQPs);
       throw new Error('Too many rapid query param changes');
     }
 
-    this.#rapidCallTime = new Date().getTime();
-    this.#rapidCallCount++;
-
     let encoded = compressToEncodedURIComponent(rawText);
     let qps = new URLSearchParams(location.search);
+
+    this.#rapidCallTime = new Date().getTime();
+    this.#rapidCallCount++;
+    this.#rapidCallQPs.push(qps);
 
     qps.set('c', encoded);
     qps.delete('t');
@@ -177,4 +187,5 @@ export class FileURIComponent {
 
   #rapidCallTime = -Infinity;
   #rapidCallCount = 0;
+  #rapidCallQPs: unknown[] = [];
 }

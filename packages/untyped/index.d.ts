@@ -5,6 +5,7 @@ declare module '@fortawesome/ember-fontawesome/components/fa-icon' {
     Element: SVGElement;
     Args: {
       icon: string;
+      prefix?: string;
     };
   }>;
 

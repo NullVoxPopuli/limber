@@ -1,26 +1,10 @@
-import { ExternalLink, service, Button }  from 'limber-ui';
+import { service }  from 'limber-ui';
 
 import { Nav } from './nav';
 import { Prose } from './prose';
 import { Editor } from './editor';
 import { SmallScreenToggle } from './small-toggle';
-
-const Footer = <template>
-  <footer class="p-2 w-full grid shadow border-t">
-    <nav class="mx-auto flex gap-4">
-      <ExternalLink href="https://guides.emberjs.com/">
-        Guides
-      </ExternalLink>
-      <ExternalLink href="https://api.emberjs.com">
-        API Reference
-      </ExternalLink>
-      <ExternalLink href="http://new.emberjs.com">
-        Blitz
-      </ExternalLink>
-    </nav>
-  </footer>
-</template>;
-
+import { Footer } from './footer';
 
 function removeAppShell() {
   document.querySelector('#initial-loader')?.remove();
