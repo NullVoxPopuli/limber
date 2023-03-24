@@ -50,7 +50,7 @@ module.exports = function (defaults) {
             /**
              * Pending: https://github.com/emberjs/ember.js/issues/20419
              */
-            exclude: isProduction ? ['x-*', '*-keyed-each-blocks'] : [],
+            exclude: isProduction ? [/^x-/, 'keyed-each-blocks'] : [],
           }),
         ],
       },
@@ -103,12 +103,13 @@ const createTutorialManifest = createUnplugin((options) => {
   return {
     name: 'create-tutorial-manifest',
     async buildStart() {
-      const globs = [include, ...exclude.map((e) => `!${e}`)];
-      const paths = globby.sync(globs, {
+      let paths = globby.sync(include, {
         cwd: src,
         onlyDirectories: true,
         expandDirectories: true,
       });
+
+      paths = paths.filter((path) => !exclude.some((pattern) => path.match(pattern)));
 
       await this.emitFile({
         type: 'asset',
