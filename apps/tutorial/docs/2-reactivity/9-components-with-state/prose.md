@@ -3,7 +3,7 @@ This allows defining and access to reactive state as well as the broader applica
 
 We can refactor the previous example's module-level state to be contained within a class:
 
-```gjs 
+```gjs
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
@@ -13,12 +13,11 @@ export default class Demo extends Component {
   handleInput = (event) => this.myName = event.target.value;
 
   <template>
-    <NameInput @onInput={{this.handleInput}} /> 
+    <NameInput @onInput={{this.handleInput}} />
 
     <Greeting @name={{this.myName}} />
   </template>
 }
 ```
-
 
 [mdn-class]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes

@@ -1,6 +1,7 @@
 `unless` blocks behave the same as `if` blocks, except the condition is inverted.
 
 For example:
+
 ```hbs
 {{#unless condition}}
   shows when condition is false

@@ -8,7 +8,7 @@ let planets = [
   <ul>
     {{! open each block }}
       <li>
-        <a href="https://swapi.dev/api/planets/{{planet.id}}/" target="_blank">
+        <a href="https://swapi.dev/api/planets/{{planet.id}}/" target="_blank" rel="noopener noreferrer">
           {{planet.name}}
         </a>
       </li>

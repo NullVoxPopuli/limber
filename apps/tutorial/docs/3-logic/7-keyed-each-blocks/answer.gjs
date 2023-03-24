@@ -6,7 +6,7 @@ import { fn } from '@ember/helper';
 export default class Demo extends Component {
   <template>
     <ul>
-      {{#each this.planets key="id" as |planet|}}
+      {{#each this.planets key="name" as |planet|}}
         {{ (this.iterated planet) }}
         <li>
           <button {{on 'click' (fn this.remove planet)}}>remove</button>
