@@ -45,7 +45,13 @@ module.exports = function (defaults) {
       webpackConfig: {
         plugins: [
           copyToPublic.webpack({ src: 'docs' }),
-          createTutorialManifest.webpack({ src: 'docs', exclude: isProduction ? ['x-*'] : [] }),
+          createTutorialManifest.webpack({
+            src: 'docs',
+            /**
+             * Pending: https://github.com/emberjs/ember.js/issues/20419
+             */
+            exclude: isProduction ? ['x-*', '*-keyed-each-blocks'] : [],
+          }),
         ],
       },
     },

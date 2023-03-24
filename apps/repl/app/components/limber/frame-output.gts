@@ -73,12 +73,6 @@ export default class FrameOutput extends Component {
     let status = this.frameStatus;
     let currentURL = this.router.currentURL;
 
-    console.log({
-      status,
-      previous: this.previous,
-      hadUnrecoverableError: this.hadUnrecoverableError
-    });
-
     if (status === 'connected' && currentURL !== this.previousURL) {
       this.previous = status;
       this.previousURL = currentURL;
