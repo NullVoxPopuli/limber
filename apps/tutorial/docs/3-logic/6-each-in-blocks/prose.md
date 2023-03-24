@@ -4,7 +4,7 @@ Like, `each` is for iterating over lists of objects, `each-in` is for iterating 
 <table>
   {{#each-in planet as |property value|}}
     <tr>
-      <th scope="row">{{property}}</th>
+      <th scope='row'>{{property}}</th>
       <td>{{value}}</td>
     </tr>
   {{/each-in}}

@@ -3,10 +3,11 @@ By default, when you modify an entry in a list looped over by an `each` block, o
 This behavior can be modified, like if a list of data does not contain stable object references.
 
 We can choose a property to watch for changes:
+
 ```hbs
 <ul>
-  {{#each planets key="id" as |planet|}}
-    <li>{{planet.name}}</li> 
+  {{#each planets key='id' as |planet|}}
+    <li>{{planet.name}}</li>
   {{/each}}
 </ul>
 ```
