@@ -55,7 +55,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@glint/core": "^1.0.0-beta.4",
-    "@glint/environment-ember-loose": "^1.0.0-beta.3",
+    "@glint/environment-ember-loose": "^1.0.0-beta.4",
     "@glint/environment-ember-template-imports": "^1.0.0-beta.3",
     "@glint/template": "^1.0.0-beta.3",
     "@nullvoxpopuli/eslint-configs": "^3.1.3",
