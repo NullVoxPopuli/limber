@@ -67,7 +67,7 @@ importers:
       '@nullvoxpopuli/limber-styles': workspace:*
       '@nullvoxpopuli/limber-transpilation': workspace:*
       '@nullvoxpopuli/limber-untyped': workspace:^0.0.0
-      '@popperjs/core': ^2.11.6
+      '@popperjs/core': ^2.11.7
       '@types/babel__core': ^7.1.20
       '@types/codemirror': 5.60.7
       '@types/common-tags': ^1.8.1
@@ -163,7 +163,7 @@ importers:
       '@nullvoxpopuli/limber-codemirror': link:../../packages/codemirror
       '@nullvoxpopuli/limber-styles': link:../../packages/styles
       '@nullvoxpopuli/limber-transpilation': link:../../packages/transpilation
-      '@popperjs/core': 2.11.6
+      '@popperjs/core': 2.11.7
       '@xstate/inspect': 0.8.0_ws@8.13.0+xstate@4.35.4
       browserslist: 4.21.5
       dompurify: 3.0.1
@@ -4400,8 +4400,8 @@ packages:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
     dev: false
 
-  /@popperjs/core/2.11.6:
-    resolution: {integrity: sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==}
+  /@popperjs/core/2.11.7:
+    resolution: {integrity: sha512-Cr4OjIkipTtcXKjAsm8agyleBuDHvxzeBoa1v543lbv1YaIwQjESsVcmjiWiPEbC1FIeHOG/Op9kdCmAmiS3Kw==}
     dev: false
 
   /@rollup/plugin-babel/6.0.3_jurz42ukfq4yatoqnmhqydiffu:
@@ -9874,7 +9874,7 @@ packages:
       ember-source: '>= 3.25.0'
     dependencies:
       '@embroider/addon-shim': 1.8.4
-      '@popperjs/core': 2.11.6
+      '@popperjs/core': 2.11.7
       ember-modifier: 4.1.0_ember-source@4.11.0
       ember-source: 4.11.0_yvbegj3kxsokgk3cppr5gzxagu
     transitivePeerDependencies:
