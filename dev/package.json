@@ -14,8 +14,8 @@
     "yargs": "^17.7.1"
   },
   "devDependencies": {
-    "@types/node": "^18.11.18",
-    "@types/yargs": "^17.0.22",
+    "@types/node": "^18.15.9",
+    "@types/yargs": "^17.0.23",
     "@nullvoxpopuli/eslint-configs": "^3.1.1",
     "eslint": "^8.33.0",
     "prettier": "^2.8.3",
