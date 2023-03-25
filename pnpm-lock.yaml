@@ -18,7 +18,7 @@ importers:
 
   .:
     specifiers:
-      '@babel/core': ^7.21.0
+      '@babel/core': ^7.21.3
       '@changesets/changelog-github': ^0.4.8
       '@changesets/cli': ^2.26.0
       '@nullvoxpopuli/eslint-configs': ^3.1.3
@@ -38,8 +38,8 @@ importers:
 
   apps/repl:
     specifiers:
-      '@babel/core': ^7.21.0
-      '@babel/eslint-parser': ^7.19.1
+      '@babel/core': ^7.21.3
+      '@babel/eslint-parser': ^7.21.3
       '@codemirror/view': 6.9.2
       '@ember/optional-features': ^2.0.0
       '@ember/string': ^3.0.1
@@ -273,7 +273,7 @@ importers:
 
   apps/tutorial:
     specifiers:
-      '@babel/core': ^7.21.0
+      '@babel/core': ^7.21.3
       '@babel/runtime': ^7.21.0
       '@ember/optional-features': ^2.0.0
       '@ember/string': ^3.0.1
@@ -418,7 +418,7 @@ importers:
 
   dev:
     specifiers:
-      '@babel/core': ^7.21.0
+      '@babel/core': ^7.21.3
       '@nullvoxpopuli/eslint-configs': ^3.1.1
       '@types/node': ^18.11.18
       '@types/yargs': ^17.0.22
@@ -445,7 +445,7 @@ importers:
 
   packages/codemirror:
     specifiers:
-      '@babel/core': ^7.21.0
+      '@babel/core': ^7.21.3
       '@codemirror/autocomplete': 6.4.2
       '@codemirror/commands': 6.2.2
       '@codemirror/lang-html': ^6.4.2
@@ -514,7 +514,7 @@ importers:
 
   packages/consts:
     specifiers:
-      '@babel/core': ^7.21.0
+      '@babel/core': ^7.21.3
       '@nullvoxpopuli/eslint-configs': ^3.1.1
       '@typescript-eslint/eslint-plugin': ^5.18.0
       '@typescript-eslint/parser': ^5.0.0
@@ -534,7 +534,7 @@ importers:
 
   packages/horizon-theme:
     specifiers:
-      '@babel/core': ^7.21.0
+      '@babel/core': ^7.21.3
       '@nullvoxpopuli/eslint-configs': ^3.1.1
       '@typescript-eslint/eslint-plugin': ^5.42.1
       '@typescript-eslint/parser': ^5.42.1
@@ -554,8 +554,8 @@ importers:
 
   packages/limber-ui/addon:
     specifiers:
-      '@babel/core': ^7.21.0
-      '@babel/eslint-parser': ^7.19.1
+      '@babel/core': ^7.21.3
+      '@babel/eslint-parser': ^7.21.3
       '@babel/plugin-proposal-class-properties': ^7.18.6
       '@babel/plugin-proposal-decorators': ^7.21.0
       '@babel/plugin-syntax-decorators': ^7.21.0
@@ -756,7 +756,7 @@ importers:
 
   packages/styles:
     specifiers:
-      '@babel/core': ^7.21.0
+      '@babel/core': ^7.21.3
       '@nullvoxpopuli/eslint-configs': ^3.1.1
       '@tailwindcss/typography': ^0.5.9
       autoprefixer: ^10.4.14
@@ -781,13 +781,13 @@ importers:
 
   packages/transpilation:
     specifiers:
-      '@babel/core': ^7.21.0
+      '@babel/core': ^7.21.3
       '@babel/plugin-proposal-class-properties': ^7.18.6
       '@babel/plugin-proposal-decorators': ^7.21.0
       '@babel/plugin-transform-runtime': ^7.21.0
-      '@babel/plugin-transform-typescript': ^7.21.0
-      '@babel/standalone': ^7.21.2
-      '@babel/types': ^7.21.2
+      '@babel/plugin-transform-typescript': ^7.21.3
+      '@babel/standalone': ^7.21.3
+      '@babel/types': ^7.21.3
       '@glimmer/component': ^1.1.2
       '@nullvoxpopuli/eslint-configs': ^3.1.1
       '@types/babel__core': ^7.1.20

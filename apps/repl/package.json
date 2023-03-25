@@ -33,8 +33,8 @@
     "test:ember": "ember test --test-port 0"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.0",
-    "@babel/eslint-parser": "^7.19.1",
+    "@babel/core": "^7.21.3",
+    "@babel/eslint-parser": "^7.21.3",
     "@codemirror/view": "6.9.2",
     "@ember/optional-features": "^2.0.0",
     "@ember/string": "^3.0.1",
