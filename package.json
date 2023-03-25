@@ -16,9 +16,7 @@
     "node": ">= 16"
   },
   "volta": {
-    "node": "18.15.0",
-    "yarn": "1.22.19",
-    "npm": "9.6.1"
+    "node": "18.15.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.3",
