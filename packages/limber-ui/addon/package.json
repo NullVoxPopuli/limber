@@ -55,7 +55,7 @@
     "@glint/core": "^1.0.0-beta.4",
     "@glint/environment-ember-loose": "^1.0.0-beta.3",
     "@glint/environment-ember-template-imports": "^1.0.0-beta.3",
-    "@glint/template": "^1.0.0-beta.3",
+    "@glint/template": "^1.0.0-beta.4",
     "@nullvoxpopuli/eslint-configs": "^3.1.1",
     "@nullvoxpopuli/limber-untyped": "workspace:^0.0.0",
     "@rollup/plugin-babel": "^6.0.3",
