@@ -325,7 +325,7 @@ importers:
       eslint-plugin-n: ^15.6.1
       eslint-plugin-prettier: ^4.2.1
       eslint-plugin-qunit: ^7.3.4
-      fs-extra: ^11.1.0
+      fs-extra: ^11.1.1
       globby: ^11.0.0
       highlight.js: ^11.7.0
       highlightjs-glimmer: ^2.0.1
