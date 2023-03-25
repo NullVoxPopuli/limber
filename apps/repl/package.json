@@ -89,7 +89,7 @@
     "ember-template-imports": "^3.4.1",
     "ember-template-lint": "~5.7.1",
     "ember-template-lint-plugin-prettier": "^4.1.0",
-    "esbuild-loader": "^2.21.0",
+    "esbuild-loader": "^3.0.1",
     "eslint": "^8.34.0",
     "eslint-plugin-ember": "^11.2.0",
     "execa": "^7.1.1",
