@@ -152,7 +152,7 @@ importers:
       webpack-bundle-analyzer: ^4.8.0
       ws: ^8.13.0
       xstate: 4.35.4
-      yn: ^4.0.0
+      yn: ^5.0.0
     dependencies:
       '@ember/test-waiters': 3.0.2
       '@embroider/macros': 1.10.0
@@ -269,7 +269,7 @@ importers:
       typescript: 5.0.2
       vfile: 4.2.1
       webpack: 5.76.3
-      yn: 4.0.0
+      yn: 5.0.0
 
   apps/tutorial:
     specifiers:
@@ -20179,9 +20179,9 @@ packages:
       - supports-color
     dev: false
 
-  /yn/4.0.0:
-    resolution: {integrity: sha512-huWiiCS4TxKc4SfgmTwW1K7JmXPPAmuXWYy4j9qjQo4+27Kni8mGhAAi1cloRWmBe2EqcLgt3IGqQoRL/MtPgg==}
-    engines: {node: '>=10'}
+  /yn/5.0.0:
+    resolution: {integrity: sha512-+l37+9TyGEsyxGLaTg6QgYy5KnOp74ZZl4dPFLQpBWSkO99uBC5jnS0pOGwXFViPbiaEtWbParH2KrgWWF2duQ==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
   /yocto-queue/0.1.0:
