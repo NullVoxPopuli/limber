@@ -6,6 +6,8 @@ on:
 
 ##############################################################
 
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
 env:
   codemirror: packages/codemirror/
   consts: packages/consts/
@@ -113,6 +115,7 @@ jobs:
 ##############################################################
 ##############################################################
 
+
   DeployPreview:
     name: "Deploy: Preview"
     if: github.ref != 'refs/heads/main'
@@ -212,6 +215,34 @@ jobs:
             | Limber    | ${{ needs.DeployPreview.outputs.limberUrl }}   |
             | Tutorial  | ${{ needs.DeployPreview.outputs.tutorialUrl }} |
 
+
+
+  # https://github.com/changesets/action
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    needs: [browserstack-test]
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          # This expects you to have a script called release which does a build for your packages and calls changeset publish
+          publish: pnpm release
+          title: "Release Preview"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 
 
