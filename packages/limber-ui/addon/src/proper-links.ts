@@ -18,18 +18,14 @@ export function properLinks(klass: typeof EmberRouter) {
         let interactive = isLink(event);
 
         if (!interactive) return;
-
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        event.stopPropagation();
-
+        
         let owner = getOwner(this);
 
         assert('owner is not present', owner);
 
         let routerService = owner.lookup('service:router');
 
-        handle(routerService, interactive);
+        handle(routerService, interactive, event);
 
         return false;
       };
@@ -55,7 +51,7 @@ function isLink(event: Event) {
   }
 }
 
-function handle(router: RouterService, element: HTMLAnchorElement) {
+function handle(router: RouterService, element: HTMLAnchorElement, event: Event) {
   /**
    * The href includes the protocol/host/etc
    * In order to not have the page look like a full page refresh,
@@ -66,6 +62,10 @@ function handle(router: RouterService, element: HTMLAnchorElement) {
   let routeInfo = router.recognize(url.pathname);
 
   if (routeInfo) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    event.stopPropagation();
+
     router.transitionTo(url.pathname);
 
     return false;
