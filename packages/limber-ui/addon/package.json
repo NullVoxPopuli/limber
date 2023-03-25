@@ -28,7 +28,7 @@
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "ember-async-data": "^1.0.0",
-    "ember-resources": "^6.0.0-beta.4"
+    "ember-resources": "^6.0.0-beta.5"
   },
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -65,7 +65,7 @@
     "concurrently": "^7.6.0",
     "ember-async-data": "^1.0.0",
     "ember-cli-htmlbars": "^6.2.0",
-    "ember-resources": "^6.0.0-beta.4",
+    "ember-resources": "^6.0.0-beta.5",
     "ember-source": "^4.11.0",
     "ember-template-imports": "^3.4.1",
     "ember-template-lint": "^4.0.0",
