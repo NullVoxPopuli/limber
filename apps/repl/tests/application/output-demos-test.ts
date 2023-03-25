@@ -6,7 +6,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
 import { ALL, getFromLabel } from 'limber/snippets';
-import { type Format, fileFromParams } from 'limber/utils/messaging';
+import { fileFromParams, type Format } from 'limber/utils/messaging';
 
 import { getService } from '../helpers';
 import { Page } from './-page';
