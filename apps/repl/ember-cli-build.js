@@ -43,7 +43,7 @@ module.exports = function (defaults) {
   const { Webpack } = require('@embroider/webpack');
   const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-  const { ESBuildMinifyPlugin } = require('esbuild-loader');
+  const { EsbuildPlugin } = require('esbuild-loader');
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     extraPublicTrees: [
@@ -120,7 +120,7 @@ module.exports = function (defaults) {
         },
         optimization: {
           minimizer: [
-            new ESBuildMinifyPlugin({
+            new EsbuildPlugin({
               legalComments: 'none',
               sourcemap: true,
               minify: isProduction,
