@@ -57,7 +57,7 @@ importers:
       '@fortawesome/free-solid-svg-icons': ^6.3.0
       '@glimmer/component': ^1.1.2
       '@glimmer/tracking': ^1.1.2
-      '@glint/core': ^1.0.0-beta.3
+      '@glint/core': ^1.0.0-beta.4
       '@glint/environment-ember-loose': ^1.0.0-beta.3
       '@glint/environment-ember-template-imports': ^1.0.0-beta.3
       '@glint/template': ^1.0.0-beta.3
@@ -288,7 +288,7 @@ importers:
       '@fortawesome/free-solid-svg-icons': ^6.3.0
       '@glimmer/component': ^1.1.2
       '@glimmer/tracking': ^1.1.2
-      '@glint/core': ^1.0.0-beta.3
+      '@glint/core': ^1.0.0-beta.4
       '@glint/environment-ember-loose': ^1.0.0-beta.3
       '@glint/environment-ember-template-imports': ^1.0.0-beta.3
       '@glint/template': ^1.0.0-beta.3
@@ -571,7 +571,7 @@ importers:
       '@fortawesome/free-solid-svg-icons': ^6.3.0
       '@glimmer/component': ^1.1.2
       '@glimmer/tracking': ^1.1.2
-      '@glint/core': ^1.0.0-beta.3
+      '@glint/core': ^1.0.0-beta.4
       '@glint/environment-ember-loose': ^1.0.0-beta.3
       '@glint/environment-ember-template-imports': ^1.0.0-beta.3
       '@glint/template': ^1.0.0-beta.3
