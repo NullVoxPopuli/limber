@@ -150,7 +150,7 @@ importers:
       vfile: ^4.2.1
       webpack: ^5.76.3
       webpack-bundle-analyzer: ^4.8.0
-      ws: ^8.12.1
+      ws: ^8.13.0
       xstate: 4.35.4
       yn: ^4.0.0
     dependencies:
