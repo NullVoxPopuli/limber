@@ -28,7 +28,7 @@
     "concurrently": "^7.6.0",
     "eslint": "^8.35.0",
     "prettier": "^2.8.4",
-    "turbo": "^1.8.3"
+    "turbo": "^1.8.5"
   },
   "packageManager": "pnpm@7.16.1",
   "pnpm": {
