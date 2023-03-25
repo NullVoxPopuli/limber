@@ -26,3 +26,7 @@ Sometimes it can be hard to read the positional arguments of the inline if, so s
          }}"
 >
 ```
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/if?anchor=if

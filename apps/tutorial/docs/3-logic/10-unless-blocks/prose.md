@@ -11,3 +11,7 @@ For example:
 ```
 
 Try changing the `if` statement to an `unless` statement.
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/unless?anchor=unless 
