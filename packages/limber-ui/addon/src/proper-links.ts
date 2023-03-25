@@ -18,7 +18,7 @@ export function properLinks(klass: typeof EmberRouter) {
         let interactive = isLink(event);
 
         if (!interactive) return;
-        
+
         let owner = getOwner(this);
 
         assert('owner is not present', owner);
@@ -58,6 +58,12 @@ function handle(router: RouterService, element: HTMLAnchorElement, event: Event)
    * we need to chop that "origin" off, and just use the path
    */
   let url = new URL(element.href);
+
+  /**
+   * If the domains are different, we want to fall back to normal link behavior
+   *
+   */
+  if (location.origin !== url.origin) return;
 
   let routeInfo = router.recognize(url.pathname);
 
