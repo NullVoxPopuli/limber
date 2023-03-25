@@ -22,7 +22,7 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
-      - uses: ./.github/actions/pnpm
+      - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
