@@ -29,7 +29,7 @@ setTimeout(() => {
 
 <template>
   {{demo.theProperty}}
-</tepmlate>
+</template>
 ```
 
 All of this is abstracted away with a _property decorator_, called `@tracked`, and the above example can be simplified like so:
