@@ -696,7 +696,7 @@ importers:
       eslint-plugin-node: ^11.1.0
       eslint-plugin-prettier: ^4.2.1
       eslint-plugin-qunit: ^7.3.1
-      limber-ui: workspace:../addon
+      limber-ui: workspace:*
       loader.js: ^4.7.0
       prettier: ^2.8.3
       qunit: ^2.19.4

@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "ember-async-data": "^1.0.0",
-    "limber-ui": "workspace:../addon"
+    "limber-ui": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
