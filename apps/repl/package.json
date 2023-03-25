@@ -106,7 +106,7 @@
     "testem-failure-only-reporter": "^1.0.0",
     "type-fest": "3.7.0",
     "typescript": "^5.0.2",
-    "vfile": "^4.2.1",
+    "vfile": "^5.3.7",
     "webpack": "^5.76.3",
     "yn": "^4.0.0"
   },
