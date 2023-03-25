@@ -94,7 +94,7 @@
     "eslint-plugin-ember": "^11.2.0",
     "execa": "^7.1.1",
     "file-loader": "^6.2.0",
-    "fractal-page-object": "^0.3.0",
+    "fractal-page-object": "^0.4.1",
     "loader.js": "^4.7.0",
     "onp": "^2.0.4",
     "prettier": "^2.8.7",
