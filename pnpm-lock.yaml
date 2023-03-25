@@ -140,7 +140,7 @@ importers:
       remark-html: 13.0.1
       remark-parse: 9.0.0
       rollup: ^3.20.2
-      stringify-object: ^4.0.1
+      stringify-object: ^5.0.0
       testem-failure-only-reporter: ^1.0.0
       tracked-built-ins: ^3.1.1
       type-fest: 3.6.1
@@ -187,7 +187,7 @@ importers:
       remark-hbs: 0.4.1
       remark-html: 13.0.1
       remark-parse: 9.0.0
-      stringify-object: 4.0.1
+      stringify-object: 5.0.0
       tracked-built-ins: 3.1.1
       unified: 9.2.2
       unist-util-flatmap: 1.0.0
@@ -12291,8 +12291,9 @@ packages:
       has: 1.0.3
       has-symbols: 1.0.3
 
-  /get-own-enumerable-property-symbols/3.0.2:
-    resolution: {integrity: sha512-I0UBV/XOz1XkIJHEUDMZAbzCThU/H8DxmSfmdGcKPnVhu2VfFqr34jr9777IyaTYvxjedWhqVIilEDsCdP5G6g==}
+  /get-own-enumerable-keys/1.0.0:
+    resolution: {integrity: sha512-PKsK2FSrQCyxcGHsGrLDcK0lx+0Ke+6e8KFFozA9/fIQLhQzPaRvJFdcz7+Axg3jUH/Mq+NI4xa5u/UT2tQskA==}
+    engines: {node: '>=14.16'}
     dev: false
 
   /get-stdin/4.0.1:
@@ -18022,11 +18023,11 @@ packages:
       character-entities-legacy: 3.0.0
     dev: false
 
-  /stringify-object/4.0.1:
-    resolution: {integrity: sha512-qpV1FBpN0R1gDAhCHIU71SYGZb35Te+gOQbQ6lYRmVJT7pF1NB8mkHeEJvyYNiHXw+fB4KIbeIjQl1rgiIijiA==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+  /stringify-object/5.0.0:
+    resolution: {integrity: sha512-zaJYxz2FtcMb4f+g60KsRNFOpVMUyuJgA51Zi5Z1DOTC3S59+OQiVOzE9GZt0x72uBGWKsQIuBKeF9iusmKFsg==}
+    engines: {node: '>=14.16'}
     dependencies:
-      get-own-enumerable-property-symbols: 3.0.2
+      get-own-enumerable-keys: 1.0.0
       is-obj: 3.0.0
       is-regexp: 3.1.0
     dev: false
