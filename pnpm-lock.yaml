@@ -119,7 +119,7 @@ importers:
       esbuild-loader: ^2.21.0
       eslint: ^8.34.0
       eslint-plugin-ember: ^11.2.0
-      execa: ^6.1.0
+      execa: ^7.1.1
       file-loader: ^6.2.0
       fractal-page-object: ^0.3.0
       highlight.js: ^11.7.0
@@ -253,7 +253,7 @@ importers:
       esbuild-loader: 2.21.0_webpack@5.76.3
       eslint: 8.36.0
       eslint-plugin-ember: 11.4.8_eslint@8.36.0
-      execa: 6.1.0
+      execa: 7.1.1
       file-loader: 6.2.0_webpack@5.76.3
       fractal-page-object: 0.3.0
       loader.js: 4.7.0
@@ -425,14 +425,14 @@ importers:
       chalk: ^5.2.0
       ember-apply: ^2.6.5
       eslint: ^8.33.0
-      execa: ^6.1.0
+      execa: ^7.1.1
       latest-version: ^7.0.0
       prettier: ^2.8.3
       yargs: ^17.7.1
     dependencies:
       chalk: 5.2.0
       ember-apply: 2.6.5
-      execa: 6.1.0
+      execa: 7.1.1
       latest-version: 7.0.0
       yargs: 17.7.1
     devDependencies:
@@ -11564,20 +11564,6 @@ packages:
       strip-final-newline: 2.0.0
     dev: true
 
-  /execa/6.1.0:
-    resolution: {integrity: sha512-QVWlX2e50heYJcCPG0iWtf8r0xjEYfz/OYLGDYH+IyjWezzPNxz63qNFOu0l4YftGWuizFVZHHs8PrLU5p2IDA==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-    dependencies:
-      cross-spawn: 7.0.3
-      get-stream: 6.0.1
-      human-signals: 3.0.1
-      is-stream: 3.0.0
-      merge-stream: 2.0.0
-      npm-run-path: 5.1.0
-      onetime: 6.0.0
-      signal-exit: 3.0.7
-      strip-final-newline: 3.0.0
-
   /execa/7.1.1:
     resolution: {integrity: sha512-wH0eMf/UXckdUYnO21+HDztteVv05rq2GXksxT4fCGeHkBhw1DROXh40wcjMcRqDOWE7iPJ4n3M7e2+YFP+76Q==}
     engines: {node: ^14.18.0 || ^16.14.0 || >=18.0.0}
@@ -11591,7 +11577,6 @@ packages:
       onetime: 6.0.0
       signal-exit: 3.0.7
       strip-final-newline: 3.0.0
-    dev: false
 
   /exit/0.1.2:
     resolution: {integrity: sha512-Zk/eNKV2zbjpKzrsQ+n1G6poVbErQxJ0LBOJXaKZ1EViLzH+hrLu9cdXI4zw9dBQJslwBEpbQ2P1oS7nDxs6jQ==}
@@ -13005,14 +12990,9 @@ packages:
     engines: {node: '>=10.17.0'}
     dev: true
 
-  /human-signals/3.0.1:
-    resolution: {integrity: sha512-rQLskxnM/5OCldHo+wNXbpVgDn5A17CUoKX+7Sokwaknlq7CdSnphy0W39GU8dw59XiCXmFXDg4fRuckQRKewQ==}
-    engines: {node: '>=12.20.0'}
-
   /human-signals/4.3.1:
     resolution: {integrity: sha512-nZXjEF2nbo7lIw3mgYjItAfgQXog3OjJogSbKa2CQIIvSGWcKgeJnQlNXip6NglNzYH45nSRiEVimMvYL8DDqQ==}
     engines: {node: '>=14.18.0'}
-    dev: false
 
   /humanize-ms/1.2.1:
     resolution: {integrity: sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==}
