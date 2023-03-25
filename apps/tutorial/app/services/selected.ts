@@ -81,15 +81,15 @@ export default class Selected extends Service {
   }
 
   get hasProse() {
-    return this.proseFile.status !== 404 && Boolean(this.proseFile.value);
+    return Boolean(this.prose);
   }
 
   get hasPrompt() {
-    return this.promptFile.status !== 404 && Boolean(this.promptFile.value);
+    return Boolean(this.prompt);
   }
 
   get hasAnswer() {
-    return this.answerFile.status !== 404 && Boolean(this.answerFile.value);
+    return Boolean(this.answer);
   }
 
   get next(): Tutorial | undefined {
