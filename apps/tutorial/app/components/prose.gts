@@ -6,7 +6,7 @@ import { Link, Button, ExternalLink, service }  from 'limber-ui';
 import { highlight } from './highlight';
 import { modifier } from 'ember-modifier';
 
-const editPath = (path: string | undefined) => `https://github.com/NullVoxPopuli/limber/tree/main/apps/tutorial/docs/${path}`
+const editPath = (path: string | undefined) => `https://github.com/NullVoxPopuli/limber/tree/main/apps/tutorial/docs${path}`
 const not = (x: unknown) => !(x)
 
 export const resetScroll = modifier((element, [prose]) => {
