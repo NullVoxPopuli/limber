@@ -39,7 +39,18 @@
       "ember-auto-import": "^2.6.0",
       "ember-modifier": "^4.1.0",
       "ember-source": "^4.11.0",
-      "@types/eslint": "^8.0.0"
+      "@types/eslint": "^8.0.0",
+      "@embroider/addon-dev": "3.0.0-unstable.00ec2e7",
+      "@embroider/addon-shim": "1.8.4-unstable.00ec2e7",
+      "@embroider/core": "2.1.1-unstable.00ec2e7",
+      "@embroider/compat": "2.1.1-unstable.00ec2e7",
+      "@embroider/macros": "1.10.0-unstable.00ec2e7",
+      "@embroider/hbs-loader": "2.0.0-unstable.00ec2e7",
+      "@embroider/router": "2.0.0-unstable.00ec2e7",
+      "@embroider/shared-internals": "2.0.0-unstable.00ec2e7",
+      "@embroider/test-setup": "2.1.1-unstable.00ec2e7",
+      "@embroider/util": "1.10.0-unstable.00ec2e7",
+      "@embroider/webpack": "2.1.1-unstable.00ec2e7"
     },
     "allowedDeprecatedVersions": {
       "source-map-url": "^0.3.0",
@@ -50,7 +61,8 @@
         "ember-modifier"
       ],
       "ignoreMissing": [
-        "webpack", "rollup"
+        "webpack",
+        "rollup"
       ]
     },
     "notes": {},
