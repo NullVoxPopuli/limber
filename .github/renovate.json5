@@ -70,9 +70,7 @@
       "packagePatterns": [
         "eslint-plugin-.*",
         "eslint-config-.*",
-        ".*typescript-eslint.*",
-        "^@commitlint\/*",
-        "^remark-*"
+        ".*typescript-eslint.*"
       ]
     },
     // These are dependencies that come default when
