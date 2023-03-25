@@ -92,7 +92,7 @@
     "esbuild-loader": "^2.21.0",
     "eslint": "^8.34.0",
     "eslint-plugin-ember": "^11.2.0",
-    "execa": "^6.1.0",
+    "execa": "^7.1.1",
     "file-loader": "^6.2.0",
     "fractal-page-object": "^0.3.0",
     "loader.js": "^4.7.0",
