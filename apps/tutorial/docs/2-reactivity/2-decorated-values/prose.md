@@ -23,8 +23,8 @@ This would allow setting / getting of `theProperty`, which is reactive, without 
 ```gjs
 const demo = new Demo();
 
-setTimeout(() => { 
-  demo.theProperty = 2; 
+setTimeout(() => {
+  demo.theProperty = 2;
 }, 500);
 
 <template>
