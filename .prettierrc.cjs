@@ -3,7 +3,7 @@
 module.exports = {
   singleQuote: true,
   printWidth: 100,
-  templateSingleQuote: false,
+  // templateSingleQuote: false,
   overrides: [
     {
       files: ['**/*.hbs'],
