@@ -88,7 +88,7 @@ importers:
       chalk: ^5.2.0
       common-tags: ^1.8.2
       concurrently: ^7.6.0
-      dompurify: ^2.4.5
+      dompurify: ^3.0.1
       ember-auto-import: ^2.6.0
       ember-cli: ~4.11.0
       ember-cli-babel: ^7.26.11
@@ -166,7 +166,7 @@ importers:
       '@popperjs/core': 2.11.6
       '@xstate/inspect': 0.8.0_ws@8.13.0+xstate@4.35.4
       browserslist: 4.21.5
-      dompurify: 2.4.5
+      dompurify: 3.0.1
       ember-auto-import: 2.6.1_webpack@5.76.3
       ember-container-query: 4.0.0-alpha.5_tpx63kvrnqsypw7mfr5xfua2wy
       ember-element-helper: 0.6.1_tpx63kvrnqsypw7mfr5xfua2wy
@@ -8777,8 +8777,8 @@ packages:
       domelementtype: 2.3.0
     dev: false
 
-  /dompurify/2.4.5:
-    resolution: {integrity: sha512-jggCCd+8Iqp4Tsz0nIvpcb22InKEBrGz5dw3EQJMs8HPJDsKbFIO3STYtAvCfDx26Muevn1MHVI0XxjgFfmiSA==}
+  /dompurify/3.0.1:
+    resolution: {integrity: sha512-60tsgvPKwItxZZdfLmamp0MTcecCta3avOhsLgPZ0qcWt96OasFfhkeIRbJ6br5i0fQawT1/RBGB5L58/Jpwuw==}
     dev: false
 
   /domutils/1.7.0:
