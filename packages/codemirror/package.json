@@ -56,7 +56,7 @@
     "esbuild": "0.17.13",
     "esbuild-plugin-alias": "^0.2.1",
     "eslint": "^8.34.0",
-    "prettier": "^2.8.4",
+    "prettier": "^2.8.7",
     "recursive-copy": "^2.0.14",
     "typescript": "^5.0.2"
   },

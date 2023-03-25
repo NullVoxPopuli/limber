@@ -33,13 +33,16 @@ export const Link: TOC<{
     <span
       class="{{classList}} opacity-30"
       ...attributes
-      tabindex="1"
+      tabindex="0"
     >
       {{yield}}
     </span>
 
   {{else}}
 
+    {{! href attribute should be passed in to Link }}
+    {{! The lints maybe need a runtime integration. }}
+    {{! template-lint-disable link-href-attributes }}
     <a class={{classList}} ...attributes>
       {{yield}}
     </a>
