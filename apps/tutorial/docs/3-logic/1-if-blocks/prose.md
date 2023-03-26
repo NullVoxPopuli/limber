@@ -23,7 +23,6 @@ Try updating the example so that the buttons are conditionally shown based on th
 
 Note that the syntax for "control flow" is a _pair_ of `{{ ... }}` with the opening `{{ }}` starting with a `#` and the closing `{{ }}` starting with a `/`. This is called "block syntax".
 
-
 [Documentation][docs]
 
 [docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/if?anchor=if
