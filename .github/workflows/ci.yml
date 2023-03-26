@@ -124,3 +124,79 @@ jobs:
       run: pnpm turbo test:scenarios
 
 
+##############################################################
+##############################################################
+#
+# These jobs won't run on pull requests.
+# They would fail anyway because secrets are not exposed.
+#
+##############################################################
+##############################################################
+
+  DeployProduction:
+    name: "Deploy: Production"
+    if: github.ref == 'refs/heads/main' 
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [tests]
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
+      - run: pnpm turbo build 
+      - name: Publish Limber 
+        uses: cloudflare/pages-action@v1.4.1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: limber-glimdown
+          directory: ./apps/repl/dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish Tutorial 
+        uses: cloudflare/pages-action@v1.4.1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: limber-glimmer-tutorial
+          directory: ./apps/tutorial/dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+  # https://github.com/changesets/action
+  release:
+    name: Release
+    if: github.ref == 'refs/heads/main' 
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [try-scenarios]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          # This expects you to have a script called release which does a build for your packages and calls changeset publish
+          publish: pnpm release
+          title: "Release Preview"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+
+
