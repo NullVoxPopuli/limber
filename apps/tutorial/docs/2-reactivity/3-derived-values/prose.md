@@ -1,9 +1,9 @@
 Deriving values are automatically reactive and allow for CPU-efficient transformation of other values.
 
-Another way of saying "X" is defined as "some transformation" on "Y".
+For example, "X" is defined as "some transformation" on "Y", is a derived value.
 
 In Glimmer and Ember, it is convention to use a [getter][mdn-get].
-Using our previous example,
+Using our previous example:
 
 ```js
 import { tracked } from '@glimmer/tracking';
