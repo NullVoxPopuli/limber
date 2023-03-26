@@ -1,0 +1,147 @@
+# Because C.I. jobs could expose secrets to malicious pull requsets,
+# GitHub prevents (by default) exposing action secrets to pull requests
+# from forks.
+#
+# This is great, however, the jobs that use the secrets are still useful on 
+# pull requests.
+#
+# To run a _trusted_ workflow, we can trigger it from an event from an _untrusted_
+# workflow. This keeps the secrets out of reach from the fork, but still allows
+# us to keep the utility of pull request preview deploys, browserstack running, etc.
+# Normally, this _trusted_ behavior is offloaded by Cloudflare, Netlify, Vercel, etc
+# -- their own workers are trusted and can push comments / updates to pull requests.
+#
+# We don't want to use their slower (and sometimes paid) hardware.
+# When we use our own workflows, we can re-use the cache built from the PR 
+# (or elsewhere).
+#
+# To be *most* secure, you'd need to build all the artifacts in the PR,
+# then upload them to then be downloaded in the trusted workflows.
+# Trusted workflows should not run any scripts from a PR, as malicious
+# submitters may tweak the build scripts.
+# Since all build artifacts are for the web browser, and not executed in 
+# node-space, we can be reasonably confident that downloading and testing/deploying 
+# those artifacts does not compromise our secrets.
+#
+#
+# More information here: 
+#   https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+name: Deploy Preview
+
+# read-write repo token
+# access to secrets
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+env:
+  TURBO_API: http://127.0.0.1:9080
+  TURBO_TOKEN: this-is-not-a-secret
+  TURBO_TEAM: myself
+
+
+jobs: 
+  determinePR:
+    runs-on: ubuntu-latest
+    if: >
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
+    outputs:
+      number: ${{ steps.publishLimber.outputs.url }}
+    steps:
+      - name: 'Download artifact'
+        uses: actions/github-script@v3.1.0
+        with:
+          script: |
+            var artifacts = await github.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: ${{github.event.workflow_run.id }},
+            });
+            var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "pr-number"
+            })[0];
+            var download = await github.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+            var fs = require('fs');
+            fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
+      - run: unzip pr.zip
+      - run: echo $(cat pr-number.txt)
+        id: number
+      - run: rm pr-number.txt
+      - uses: actions/download-artifact@v3
+        with:
+          name: pr-number
+      - run: cat 'pr-number.txt'
+
+
+  DeployPreview:
+    name: "Deploy: Preview"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [determinePR]
+    permissions:
+      contents: read
+      deployments: write
+    outputs:
+      limberUrl: ${{ steps.publishLimber.outputs.url }}
+      tutorialUrl: ${{ steps.publishTutorial.outputs.url }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
+      - run: pnpm turbo build 
+      - name: Publish Limber 
+        id: publishLimber
+        uses: cloudflare/pages-action@v1.4.1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: limber-glimdown
+          directory: ./apps/repl/dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish Tutorial 
+        id: publishTutorial
+        uses: cloudflare/pages-action@v1.4.1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: limber-glimmer-tutorial
+          directory: ./apps/tutorial/dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+
+  PostComment:
+    name: Post Preview URL as comment to PR
+    runs-on: ubuntu-latest
+    needs: [DeployPreview]
+    if: github.ref != 'refs/heads/main'
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: preview-urls 
+          number: ${{ needs.DownloadTriggerArtifact.outputs.number }}
+          message: |+
+            | Project   | Preview URL |
+            | -------   | ----------- |
+            | Limber    | ${{ needs.DeployPreview.outputs.limberUrl }}   |
+            | Tutorial  | ${{ needs.DeployPreview.outputs.tutorialUrl }} |
