@@ -25,6 +25,11 @@
 #
 # More information here: 
 #   https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+#
+# Things that would make this easier:
+#   Readablity: https://github.com/actions/download-artifact/issues/172
+#   Security: 
+#    - if there was a way to avoid pnpm install *entirely*
 name: Browserstack Tests 
 
 # read-write repo token
@@ -43,11 +48,43 @@ env:
   TURBO_TEAM: myself
 
 jobs: 
+  determinePR:
+    runs-on: ubuntu-latest
+    if: >
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
+    outputs:
+      number: ${{ steps.publishLimber.outputs.url }}
+    steps:
+      - name: 'Download artifact'
+        uses: actions/github-script@v3.1.0
+        with:
+          script: |
+            var artifacts = await github.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: ${{github.event.workflow_run.id }},
+            });
+            var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "pr-number"
+            })[0];
+            var download = await github.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+            var fs = require('fs');
+            fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
+      - run: unzip pr.zip
+      - run: echo $(cat pr-number.txt)
+        id: number
+
   browserstack-test:
     name: Browserstack Tests (Safari, Edge, etc)
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    needs: [tests]
+    needs: [determinePR]
 
     env:
       BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
@@ -61,5 +98,9 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
     - run: pnpm turbo test:browserstack --output-logs errors-only
-
-
+    - uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: Browserstack results
+        number: ${{ needs.determinePR.outputs.number }}
+        message: 
+          https://github.com/{{github.repository}}/commit/{{checkrun.headsha}}/checks/${{checkrun.id}}/logs
