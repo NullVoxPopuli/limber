@@ -45,7 +45,7 @@
     },
     "peerDependencyRules": {
       "allowAny": [
-        "ember-modifier"
+        "ember-modifier", "typescript", "ember-source"
       ],
       "ignoreMissing": [
         "webpack",
