@@ -26,6 +26,11 @@
 #
 # More information here: 
 #   https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+#
+# Things that would make this easier:
+#   Readablity: https://github.com/actions/download-artifact/issues/172
+#   Security: 
+#    - if there was a way to avoid pnpm install *entirely*
 name: Deploy Preview
 
 # read-write repo token
