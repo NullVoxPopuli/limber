@@ -593,7 +593,7 @@ importers:
       qunit: ^2.19.1
       qunit-dom: ^2.0.0
       typescript: ^4.8.2
-      uuid: 8.3.2
+      uuid: ^8.3.2
       webpack: ^5.74.0
     dependencies:
       '@babel/standalone': 7.21.3
