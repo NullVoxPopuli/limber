@@ -121,7 +121,7 @@ importers:
       eslint-plugin-ember: ^11.2.0
       execa: ^7.1.1
       file-loader: ^6.2.0
-      fractal-page-object: ^0.3.0
+      fractal-page-object: ^0.4.1
       highlight.js: ^11.7.0
       highlightjs-glimmer: ^2.0.1
       html-to-image: ^1.11.11
@@ -255,7 +255,7 @@ importers:
       eslint-plugin-ember: 11.4.8_eslint@8.36.0
       execa: 7.1.1
       file-loader: 6.2.0_webpack@5.76.3
-      fractal-page-object: 0.3.0
+      fractal-page-object: 0.4.1
       loader.js: 4.7.0
       onp: 2.0.4
       prettier: 2.8.7
@@ -11126,8 +11126,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
-  /fractal-page-object/0.3.0:
-    resolution: {integrity: sha512-Jrbcm1eIFN/dY/RuTiTjr5K7YpfJbP4inGdt9f9n/jEnqBPi7gqM5WTKIIc4DnyBOWtWs9HE1treSoCYl1HUpg==}
+  /fractal-page-object/0.4.1:
+    resolution: {integrity: sha512-1hvmop0G+2MsAjGozWrlR//RkMYyg53KyZaZ4VN3wwjcLhFyyO8sQ8E2AgM72hsFZtooORfzhZJpPvmCAdKZOw==}
     engines: {node: 10.* || >= 12}
     dev: true
 
