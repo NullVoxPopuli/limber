@@ -6,10 +6,10 @@
     "dev": "node ./dev/index.js",
     "prepare": "pnpm build",
     "release": "changeset publish",
-    "build": "turbo build --filter=limber^... --filter=tutorial^...",
+    "build": "turbo build --filter=limber^... --filter=tutorial^... --output-logs errors-only",
     "lint:fix": "pnpm --filter='*' lint:fix",
-    "lint": "turbo lint",
-    "start": "turbo start --filter=limber",
+    "lint": "turbo lint --output-logs errors-only",
+    "start": "turbo start --filter=limber --output-logs errors-only",
     "start:tutorial": "turbo start --filter=tutorial"
   },
   "engines": {

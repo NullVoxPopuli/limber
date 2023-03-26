@@ -89,7 +89,7 @@ jobs:
         echo "NPM: $( npm --version )"
         echo "pnpm: $( pnpm --version )"
     - name: Test
-      run: pnpm turbo test:ember
+      run: pnpm turbo test:ember --output-logs errors-only
       env:
         CI_BROWSER: ${{ matrix.ci_browser }}
 
@@ -106,7 +106,7 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
     - name: Test
-      run: pnpm turbo test:scenarios
+      run: pnpm turbo test:scenarios --output-logs errors-only
 
 
   browserstack-test:
@@ -126,7 +126,7 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
-    - run: pnpm turbo test:browserstack
+    - run: pnpm turbo test:browserstack --output-logs errors-only
 
 ##############################################################
 ##############################################################
