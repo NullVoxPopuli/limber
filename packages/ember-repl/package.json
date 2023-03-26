@@ -13,17 +13,17 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "ember build --environment=production",
-    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
-    "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
-    "lint:hbs": "ember-template-lint .",
-    "lint:hbs:fix": "ember-template-lint . --fix",
+    "start": "ember serve",
+    "lint:types": "glint",
+    "lint:prettier:fix": "prettier -w .",
+    "lint:prettier": "prettier -c .",
+    "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
+    "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
+    "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
-    "start": "ember serve",
-    "test": "npm-run-all lint test:*",
-    "test:ember": "ember test",
-    "test:ember-compatibility": "ember try:each",
+    "test": "ember test",
+    "test:scenarios": "ember try:each",
     "prepack": "ember ts:precompile",
     "postpack": "ember ts:clean"
   },
@@ -46,8 +46,7 @@
     "uuid": "8.3.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.1.2",
-    "@commitlint/config-conventional": "^17.1.0",
+    "@babel/core": "^7.21.3",
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.8.1",
     "@ember/test-waiters": "^3.0.2",
@@ -56,8 +55,6 @@
     "@glimmer/reference": "^0.84.2",
     "@glimmer/util": "^0.84.2",
     "@nullvoxpopuli/eslint-configs": "^2.3.4",
-    "@semantic-release/changelog": "^6.0.1",
-    "@semantic-release/git": "^10.0.1",
     "@types/babel__core": "^7.1.19",
     "@types/babel__standalone": "^7.1.4",
     "@types/ember-qunit": "^5.0.0",
@@ -88,6 +85,7 @@
     "@typescript-eslint/parser": "^5.36.1",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
+    "concurrently": "^7.6.0",
     "ember-cli": "~4.6.0",
     "ember-cli-dependency-checker": "^3.3.1",
     "ember-cli-inject-live-reload": "^2.1.0",
@@ -114,31 +112,14 @@
     "eslint-plugin-qunit": "^7.3.1",
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "loader.js": "^4.7.0",
-    "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1",
     "qunit": "^2.19.1",
     "qunit-dom": "^2.0.0",
-    "semantic-release": "^19.0.5",
     "typescript": "^4.8.2",
     "webpack": "^5.74.0"
   },
-  "release": {
-    "branches": [
-      "main",
-      "master"
-    ],
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      "@semantic-release/changelog",
-      "@semantic-release/npm",
-      "@semantic-release/github",
-      "@semantic-release/git"
-    ]
-  },
   "volta": {
-    "node": "16.18.1",
-    "yarn": "1.22.19"
+    "extends": "../../package.json"
   },
   "engines": {
     "node": "12.* || >= 14.*"

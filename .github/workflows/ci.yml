@@ -93,6 +93,22 @@ jobs:
       env:
         CI_BROWSER: ${{ matrix.ci_browser }}
 
+  try-scenarios:
+    name: "Test try-scenarios" 
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [tests]
+    steps:
+    - uses: actions/checkout@v3
+    - name: TurboRepo local server
+      uses: felixmosh/turborepo-gh-artifacts@v2
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
+    - name: Test
+      run: pnpm turbo test:scenarios
+
+
   browserstack-test:
     name: Browserstack Tests (Safari, Edge, etc)
     runs-on: ubuntu-latest
@@ -222,7 +238,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-    needs: [browserstack-test]
+    needs: [browserstack-test, try-scenarios]
 
     steps:
       - uses: actions/checkout@v3
