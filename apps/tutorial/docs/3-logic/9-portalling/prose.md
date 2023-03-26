@@ -8,3 +8,7 @@ This is useful for escaping z-index issues for pop-overs or in general rendering
   content here
 {{/in-element}}
 ```
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/in-element?anchor=in-element

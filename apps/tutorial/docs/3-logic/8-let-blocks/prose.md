@@ -13,3 +13,7 @@ This is particularly useful when transformed data needs to be used in multiple p
   {{greeting}}
 {{/let}}
 ```
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/let?anchor=let

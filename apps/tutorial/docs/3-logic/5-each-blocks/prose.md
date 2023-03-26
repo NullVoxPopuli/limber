@@ -26,3 +26,7 @@ You can get the current index as a second argument as well:
   {{/each}}
 </ul>
 ```
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/each?anchor=each

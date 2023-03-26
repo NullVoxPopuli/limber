@@ -9,3 +9,7 @@ Multiple conditions can be chained together without indentation or nesting.
   <p>{{x}} is between 5 and 10</p>
 {{/if}}
 ```
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/if?anchor=if
