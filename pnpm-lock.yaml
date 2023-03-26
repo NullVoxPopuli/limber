@@ -13,6 +13,9 @@ patchedDependencies:
   ember-on-resize-modifier@1.1.0:
     hash: prsfdndcfbbwmlkgbxbo7gxczu
     path: patches/ember-on-resize-modifier@1.1.0.patch
+  ember-try@2.0.0:
+    hash: b7n7l6ythchtgjebp7ayiutfce
+    path: patches/ember-try@2.0.0.patch
 
 importers:
 
@@ -426,6 +429,7 @@ importers:
       ember-apply: ^2.6.5
       eslint: ^8.33.0
       execa: ^7.1.1
+      fs-extra: ^11.1.1
       latest-version: ^7.0.0
       prettier: ^2.8.7
       yargs: ^17.7.1
@@ -433,6 +437,7 @@ importers:
       chalk: 5.2.0
       ember-apply: 2.6.5
       execa: 7.1.1
+      fs-extra: 11.1.1
       latest-version: 7.0.0
       yargs: 17.7.1
     devDependencies:
@@ -650,7 +655,7 @@ importers:
       ember-source-channel-url: 3.0.0
       ember-template-imports: 3.4.1
       ember-template-lint: 5.7.1
-      ember-try: 2.0.0
+      ember-try: 2.0.0_b7n7l6ythchtgjebp7ayiutfce
       eslint: 8.36.0
       loader.js: 4.7.0
       prettier: 2.8.7
@@ -865,7 +870,7 @@ importers:
       ember-source: 4.11.0_yvbegj3kxsokgk3cppr5gzxagu
       ember-source-channel-url: 3.0.0
       ember-template-lint: 5.7.1
-      ember-try: 2.0.0
+      ember-try: 2.0.0_b7n7l6ythchtgjebp7ayiutfce
       eslint: 8.36.0
       eslint-config-prettier: 8.8.0_eslint@8.36.0
       eslint-plugin-ember: 11.4.8_eslint@8.36.0
@@ -10160,7 +10165,7 @@ packages:
       - encoding
     dev: true
 
-  /ember-try/2.0.0:
+  /ember-try/2.0.0_b7n7l6ythchtgjebp7ayiutfce:
     resolution: {integrity: sha512-2N7Vic45sbAegA5fhdfDjVbEVS4r+ze+tTQs2/wkY+8fC5yAGHfCM5ocyoTfBN5m7EhznC3AyMsOy4hLPzHFSQ==}
     engines: {node: 10.* || 12.* || >= 14.*}
     dependencies:
@@ -10178,6 +10183,7 @@ packages:
       - encoding
       - supports-color
     dev: true
+    patched: true
 
   /emoji-regex/8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
