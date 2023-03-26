@@ -18,7 +18,7 @@ class Demo {
 }
 ```
 
-This would allow setting / getting of `theProperty`, which is reactive, without thet need to know about the underlying reactive implementation. _Except, you'd still have to maintain all of the above code_.
+This would allow setting / getting of `theProperty`, which is reactive, without the need to know about the underlying reactive implementation. _Except, you'd still have to maintain all of the above code_.
 
 ```gjs
 const demo = new Demo();

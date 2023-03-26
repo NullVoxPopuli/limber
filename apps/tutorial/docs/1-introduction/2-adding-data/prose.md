@@ -1,7 +1,7 @@
 A component that renders some static markup isn't very interesting.
 Let's add some data.
 
-First, define a local variable
+First, define a local variable:
 
 ```gjs
 let name = "world";

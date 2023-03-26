@@ -22,7 +22,7 @@ Unlike JavaScript, Ember and Glimmer templates use [Polish Notation][polish] or
 _Prefix Notation_ which means that functions _precede_ their arguments.
 This simple language allows templates to be transformed into lightweight JSON
 objects to save bytes during network transfer and time during the browser's
-parse and evaluation phases. For more information, see this [announcment video][secrets]
+parse and evaluation phases. For more information, see this [announcement video][secrets]
 
 [polish]: https://en.wikipedia.org/wiki/Polish_notation
 [secrets]: https://www.youtube.com/watch?v=nXCSloXZ-wc
