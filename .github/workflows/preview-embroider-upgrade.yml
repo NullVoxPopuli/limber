@@ -9,7 +9,6 @@ env:
   title: "[Unstable] Preview embroider upgrade"
   body: |
     Automated and continuously updated PR (nightly via cron)
-
     _Do not merge_
 
 jobs:
@@ -22,7 +21,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
       - run: ./dev/update-unstable-embroider.sh
-      - uses: TreTuna/sync-branches
+      - uses: TreTuna/sync-branches@v1.4.0
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FROM_BRANCH: ${{ env.branch }}
