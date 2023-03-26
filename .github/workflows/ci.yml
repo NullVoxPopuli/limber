@@ -46,11 +46,15 @@ jobs:
       with:
         name: pr-number 
         path: pr-number.txt
-    - uses: actions/upload-artifact@v3
-      with:
-        name: dists-${{ github.event.number }} 
-        path: "**/dist/"
-        if-no-files-found: error
+    # not needed since we use turbo 
+    # - uses: actions/upload-artifact@v3
+    #   with:
+    #     name: dists-${{ github.event.number }} 
+    #     path: |
+    #       ./**/dist/
+    #       !node_modules/
+    #       !**/node_modules/
+    #     if-no-files-found: error
 
 ##############################################################
 

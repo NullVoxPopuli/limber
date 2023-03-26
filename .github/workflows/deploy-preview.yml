@@ -45,12 +45,49 @@ env:
 
 
 jobs: 
+  determinePR:
+    runs-on: ubuntu-latest
+    if: >
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
+    outputs:
+      number: ${{ steps.publishLimber.outputs.url }}
+    steps:
+      - name: 'Download artifact'
+        uses: actions/github-script@v3.1.0
+        with:
+          script: |
+            var artifacts = await github.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: ${{github.event.workflow_run.id }},
+            });
+            var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "pr-number"
+            })[0];
+            var download = await github.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+            var fs = require('fs');
+            fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
+      - run: unzip pr.zip
+      - run: echo $(cat pr-number.txt)
+        id: number
+      - run: rm pr-number.txt
+      - uses: actions/download-artifact@v3
+        with:
+          name: pr-number
+      - run: cat 'pr-number.txt'
+
+
   DeployPreview:
     name: "Deploy: Preview"
-    if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    needs: [install_dependencies]
+    needs: [determinePR]
     permissions:
       contents: read
       deployments: write
@@ -102,6 +139,7 @@ jobs:
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: preview-urls 
+          number: ${{ needs.DownloadTriggerArtifact.outputs.number }}
           message: |+
             | Project   | Preview URL |
             | -------   | ----------- |
