@@ -19,6 +19,8 @@ export function evalSnippet(
   function require(moduleName: keyof typeof modules): unknown {
     let preConfigured = modules[moduleName] || extraModules[moduleName];
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     return preConfigured || window.require(moduleName);
   }
 
