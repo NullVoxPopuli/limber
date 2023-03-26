@@ -45,7 +45,10 @@ env:
 jobs:
   DeployProduction:
     name: "Deploy: Production"
-    if: github.ref == 'refs/heads/main'
+    if: >
+      github.ref == 'refs/heads/main' &&
+      github.event.workflow_run.event != 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -85,7 +88,10 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    if: >
+      github.ref == 'refs/heads/main' &&
+      github.event.workflow_run.event != 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
 
     steps:
       - uses: actions/checkout@v3
