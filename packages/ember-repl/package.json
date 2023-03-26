@@ -1,0 +1,108 @@
+{
+  "name": "ember-repl",
+  "version": "2.0.63",
+  "description": "Addon for enabling REPL and Playground creation with Ember/Glimmer",
+  "keywords": [
+    "ember-addon"
+  ],
+  "repository": "https://github.com/NullVoxPopuli/ember-repl",
+  "license": "MIT",
+  "author": "NullVoxPopuli",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "ember serve",
+    "build": "pnpm prepack",
+    "lint:types": "glint",
+    "lint:prettier:fix": "prettier -w .",
+    "lint:prettier": "prettier -c .",
+    "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
+    "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
+    "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "test": "ember test",
+    "test:scenarios": "ember try:each",
+    "prepack": "ember ts:precompile",
+    "postpack": "ember ts:clean"
+  },
+  "dependencies": {
+    "@babel/standalone": "^7.20.1",
+    "@embroider/macros": "^1.8.3",
+    "@glimmer/component": "^1.1.2",
+    "@glimmer/tracking": "^1.1.2",
+    "babel-plugin-htmlbars-inline-precompile": "^5.3.1",
+    "broccoli-file-creator": "^2.1.1",
+    "broccoli-funnel": "^3.0.8",
+    "broccoli-merge-trees": "^4.2.0",
+    "common-tags": "^1.8.2",
+    "ember-auto-import": "^2.4.2",
+    "ember-cli-babel": "^7.26.11",
+    "ember-cli-htmlbars": "^6.1.0",
+    "ember-cli-typescript": "^5.1.0",
+    "ember-compatibility-helpers": "^1.2.6",
+    "path-browserify": "^1.0.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.3",
+    "@ember/optional-features": "^2.0.0",
+    "@ember/string": "^3.0.1",
+    "@ember/test-helpers": "^2.8.1",
+    "@ember/test-waiters": "^3.0.2",
+    "@embroider/test-setup": "^1.8.3",
+    "@glimmer/interfaces": "^0.84.2",
+    "@glimmer/reference": "^0.84.2",
+    "@glimmer/util": "^0.84.2",
+    "@glint/core": "^1.0.0-beta.4",
+    "@glint/environment-ember-loose": "^1.0.0-beta.4",
+    "@glint/environment-ember-template-imports": "^1.0.0-beta.4",
+    "@glint/template": "^1.0.0-beta.4",
+    "@nullvoxpopuli/eslint-configs": "^3.1.3",
+    "@types/babel__core": "^7.1.19",
+    "@types/babel__standalone": "^7.1.4",
+    "@types/qunit": "^2.19.2",
+    "@types/rsvp": "^4.0.4",
+    "@types/uuid": "^8.3.4",
+    "broccoli-asset-rev": "^3.0.0",
+    "concurrently": "^7.6.0",
+    "ember-cli": "~4.11.0",
+    "ember-cli-dependency-checker": "^3.3.1",
+    "ember-cli-inject-live-reload": "^2.1.0",
+    "ember-cli-sri": "^2.1.1",
+    "ember-cli-terser": "^4.0.2",
+    "ember-could-get-used-to-this": "^1.0.1",
+    "ember-disable-prototype-extensions": "^1.1.3",
+    "ember-export-application-global": "^2.0.1",
+    "ember-load-initializers": "^2.1.2",
+    "ember-page-title": "^7.0.0",
+    "ember-qunit": "^6.2.0",
+    "ember-resolver": "^10.0.0",
+    "ember-source": "~4.8.2",
+    "ember-source-channel-url": "^3.0.0",
+    "ember-template-imports": "^3.4.1",
+    "ember-template-lint": "^5.7.1",
+    "ember-try": "^2.0.0",
+    "eslint": "^8.26.0",
+    "loader.js": "^4.7.0",
+    "prettier": "^2.7.1",
+    "qunit": "^2.19.1",
+    "qunit-dom": "^2.0.0",
+    "typescript": "^4.8.2",
+    "webpack": "^5.74.0"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  },
+  "engines": {
+    "node": "12.* || >= 14.*"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "configPath": "tests/dummy/config"
+  }
+}
