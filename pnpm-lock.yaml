@@ -137,7 +137,7 @@ importers:
       qunit-console-grouper: ^0.3.0
       qunit-dom: ^2.0.0
       remark-hbs: 0.4.1
-      remark-html: 13.0.1
+      remark-html: 13.0.2
       remark-parse: 9.0.0
       rollup: ^3.20.2
       stringify-object: ^5.0.0
@@ -185,7 +185,7 @@ importers:
       path-browserify: 1.0.1
       penpal: 6.2.2
       remark-hbs: 0.4.1
-      remark-html: 13.0.1
+      remark-html: 13.0.2
       remark-parse: 9.0.0
       stringify-object: 5.0.0
       tracked-built-ins: 3.1.1
@@ -15860,8 +15860,8 @@ packages:
       unist-util-visit: 2.0.3
     dev: false
 
-  /remark-html/13.0.1:
-    resolution: {integrity: sha512-K5KQCXWVz+harnyC+UVM/J9eJWCgjYRqFeZoZf2NgP0iFbuuw/RgMZv3MA34b/OEpGnstl3oiOUtZzD3tJ+CBw==}
+  /remark-html/13.0.2:
+    resolution: {integrity: sha512-LhSRQ+3RKdBqB/RGesFWkNNfkGqprDUCwjq54SylfFeNyZby5kqOG8Dn/vYsRoM8htab6EWxFXCY6XIZvMoRiQ==}
     dependencies:
       hast-util-sanitize: 3.0.2
       hast-util-to-html: 7.1.3
