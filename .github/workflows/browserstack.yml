@@ -98,9 +98,17 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
     - run: pnpm turbo test:browserstack --output-logs errors-only
+
+  comment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    needs: [browserstack-test]
+    steps:
     - uses: marocchino/sticky-pull-request-comment@v2
       with:
         header: Browserstack results
         number: ${{ needs.determinePR.outputs.number }}
+        # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
+        # https://github.com/NullVoxPopuli/limber/actions/runs/4526845087
         message: 
-          https://github.com/{{github.repository}}/commit/{{checkrun.headsha}}/checks/${{checkrun.id}}/logs
+          https://github.com/NullVoxPopuli/limber/actions/runs/${{ github.run_id }}
