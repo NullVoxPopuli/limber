@@ -178,7 +178,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    needs: [tests, browserstack-test]
+    needs: [browserstack-test]
     permissions:
       contents: read
       deployments: write
@@ -213,7 +213,7 @@ jobs:
   PostComment:
     name: Post Preview URL as comment to PR
     runs-on: ubuntu-latest
-    needs: DeployPreview
+    needs: [DeployPreview]
     if: github.ref != 'refs/heads/main'
     permissions:
       pull-requests: write
