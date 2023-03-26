@@ -1,0 +1,111 @@
+# Because C.I. jobs could expose secrets to malicious pull requsets,
+# GitHub prevents (by default) exposing action secrets to pull requests
+# from forks.
+#
+# This is great, however, the jobs that use the secrets are still useful on 
+# pull requests.
+#
+# To run a _trusted_ workflow, we can trigger it from an event from an _untrusted_
+# workflow. This keeps the secrets out of reach from the fork, but still allows
+# us to keep the utility of pull request preview deploys, browserstack running, etc.
+# Normally, this _trusted_ behavior is offloaded by Cloudflare, Netlify, Vercel, etc
+# -- their own workers are trusted and can push comments / updates to pull requests.
+#
+# We don't want to use their slower (and sometimes paid) hardware.
+# When we use our own workflows, we can re-use the cache built from the PR 
+# (or elsewhere).
+#
+# To be *most* secure, you'd need to build all the artifacts in the PR,
+# then upload them to then be downloaded in the trusted workflows.
+# Trusted workflows should not run any scripts from a PR, as malicious
+# submitters may tweak the build scripts.
+# Since all build artifacts are for the web browser, and not executed in 
+# node-space, we can be reasonably confident that downloading and testing/deploying 
+# those artifacts does not compromise our secrets.
+#
+# More information here: 
+#   https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+name: Release
+
+# read-write repo token
+# access to secrets
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+env:
+  TURBO_API: http://127.0.0.1:9080
+  TURBO_TOKEN: this-is-not-a-secret
+  TURBO_TEAM: myself
+
+jobs:
+  DeployProduction:
+    name: "Deploy: Production"
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
+      - run: pnpm turbo build 
+      - name: Publish Limber 
+        uses: cloudflare/pages-action@v1.4.1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: limber-glimdown
+          directory: ./apps/repl/dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish Tutorial 
+        uses: cloudflare/pages-action@v1.4.1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: limber-glimmer-tutorial
+          directory: ./apps/tutorial/dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+  # https://github.com/changesets/action
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          # This expects you to have a script called release which does a build for your packages and calls changeset publish
+          publish: pnpm release
+          title: "Release Preview"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+
+
