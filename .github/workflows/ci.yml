@@ -106,7 +106,7 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
     - name: Test
-      run: pnpm turbo test:scenarios --output-logs errors-only
+      run: node ./dev/try.js
 
 
   browserstack-test:
