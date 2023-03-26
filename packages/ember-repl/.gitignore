@@ -1,10 +1,18 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist/
-/tmp/
-/declarations/
-/tests/dummy/declarations/
+cjs/**/*.d.ts
+esm/**/*.d.ts
+hbs.d.ts
+index.d.ts
+js.d.ts
+known-modules.d.ts
+types.d.ts
+utils.d.ts
+dist/
+tmp/
+declarations/
+tests/dummy/declarations/
 *.tsbuildinfo
 
 # dependencies

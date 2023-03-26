@@ -3,6 +3,14 @@ blueprints/*/files/
 vendor/
 
 # compiled output
+cjs/**/*.d.ts
+esm/**/*.d.ts
+hbs.d.ts
+/index.d.ts
+js.d.ts
+known-modules.d.ts
+types.d.ts
+utils.d.ts
 dist/
 tmp/
 

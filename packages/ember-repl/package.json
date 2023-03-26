@@ -14,6 +14,7 @@
   },
   "scripts": {
     "start": "ember serve",
+    "build": "pnpm prepack",
     "lint:types": "glint",
     "lint:prettier:fix": "prettier -w .",
     "lint:prettier": "prettier -c .",
