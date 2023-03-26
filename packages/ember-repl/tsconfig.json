@@ -21,28 +21,13 @@
     "module": "ESNext",
     "experimentalDecorators": true,
     "paths": {
-      "dummy/tests/*": [
-        "tests/*"
-      ],
-      "dummy/*": [
-        "tests/dummy/app/*",
-        "app/*"
-      ],
-      "ember-repl": [
-        "addon"
-      ],
-      "ember-repl/*": [
-        "addon/*"
-      ],
-      "ember-repl/test-support": [
-        "addon-test-support"
-      ],
-      "ember-repl/test-support/*": [
-        "addon-test-support/*"
-      ],
-      "*": [
-        "types/*"
-      ]
+      "dummy/tests/*": ["tests/*"],
+      "dummy/*": ["tests/dummy/app/*", "app/*"],
+      "ember-repl": ["addon"],
+      "ember-repl/*": ["addon/*"],
+      "ember-repl/test-support": ["addon-test-support"],
+      "ember-repl/test-support/*": ["addon-test-support/*"],
+      "*": ["types/*"]
     }
   },
   "include": [

@@ -20,7 +20,11 @@ import type { ExtraModules, Options } from './types';
  *  are not provided by extraModules will be searched on npm to see if a package
  *  needs to be downloaded before running the `code` / invoking the component
  */
-export function compileJS(code: string, extraModules?: ExtraModules, options?: Options) {
+export function compileJS(
+  code: string,
+  extraModules?: ExtraModules,
+  options?: Options
+) {
   if (options?.skypack) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     // if (!(window as any).webpackChunkDummy) {

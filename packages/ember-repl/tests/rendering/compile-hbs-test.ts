@@ -48,13 +48,18 @@ module('compileHBS()', function (hooks) {
   test('can render components passed to scope', async function (assert) {
     assert.expect(3);
 
-    const SomeOtherComponent = setComponentTemplate(hbs`there!`, templateOnly());
+    const SomeOtherComponent = setComponentTemplate(
+      hbs`there!`,
+      templateOnly()
+    );
 
     let template = `Hi <SomeOtherComponent />`;
 
     this.setProperties({
       compile: () => {
-        let { component, error, name } = compileHBS(template, { scope: { SomeOtherComponent } });
+        let { component, error, name } = compileHBS(template, {
+          scope: { SomeOtherComponent },
+        });
 
         assert.notOk(error);
         assert.ok(name);

@@ -24,5 +24,8 @@ export function evalSnippet(
 
   eval(compiled);
 
-  return exports as { default: Component; services?: { [key: string]: unknown } };
+  return exports as {
+    default: Component;
+    services?: { [key: string]: unknown };
+  };
 }

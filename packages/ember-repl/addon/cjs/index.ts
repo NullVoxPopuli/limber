@@ -1,6 +1,8 @@
 import { getTemplateLocals } from '@glimmer/syntax';
 
-import HTMLBars, { preprocessEmbeddedTemplates } from 'babel-plugin-htmlbars-inline-precompile';
+import HTMLBars, {
+  preprocessEmbeddedTemplates,
+} from 'babel-plugin-htmlbars-inline-precompile';
 import { precompile as precompileTemplate } from 'ember-template-compiler';
 
 import { nameFor } from '../utils';

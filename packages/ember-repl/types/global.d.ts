@@ -6,7 +6,6 @@
 //   export default tmpl;
 // }
 
-
 // provided by vendor/ember/ember-template-compiler.js (somehow)
 declare module 'ember-template-compiler';
 
@@ -16,12 +15,15 @@ declare module '@ember/modifier';
 declare module '@ember/template-factory';
 
 /**
-  * ember-cli-typescript does not provide types for glimmer...
-  * ember-source does not provide types for glimmer...
-  */
+ * ember-cli-typescript does not provide types for glimmer...
+ * ember-source does not provide types for glimmer...
+ */
 declare module '@glimmer/compiler' {
-  import type {PrecompileOptions} from "ember-cli-htmlbars";
-  export function precompileJSON(source: string, options: PrecompileOptions): [unknown, string[]]
+  import type { PrecompileOptions } from 'ember-cli-htmlbars';
+  export function precompileJSON(
+    source: string,
+    options: PrecompileOptions
+  ): [unknown, string[]];
 }
 
 declare module 'babel-plugin-htmlbars-inline-precompile';
@@ -39,5 +41,8 @@ declare module '@ember/template-compilation' {
     //   ast: Array<unknown>
     // }
   }
-  export function compileTemplate(template: string, options: CompileOptions): any;
+  export function compileTemplate(
+    template: string,
+    options: CompileOptions
+  ): any;
 }

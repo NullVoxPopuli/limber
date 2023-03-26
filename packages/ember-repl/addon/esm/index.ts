@@ -1,6 +1,8 @@
 import { getTemplateLocals } from '@glimmer/syntax';
 
-import HTMLBars, { preprocessEmbeddedTemplates } from 'babel-plugin-htmlbars-inline-precompile';
+import HTMLBars, {
+  preprocessEmbeddedTemplates,
+} from 'babel-plugin-htmlbars-inline-precompile';
 import { modules } from 'ember-repl/known-modules';
 import { precompile as precompileTemplate } from 'ember-template-compiler';
 
@@ -37,16 +39,22 @@ export async function compileJS(code: string, extraModules?: ExtraModules) {
 }
 
 export function proxyToSkypack(code: string, extraModules?: ExtraModules) {
-  let knownModules = [...Object.keys(extraModules || {}), ...Object.keys(modules)];
+  let knownModules = [
+    ...Object.keys(extraModules || {}),
+    ...Object.keys(modules),
+  ];
   let origin = location.origin;
 
-  let result = code.replaceAll(/from ('|")([^"']+)('|")/g, (_, __, modulePath) => {
-    if (knownModules.includes(modulePath)) {
-      return `from '${origin}/${modulePath}'`;
-    }
+  let result = code.replaceAll(
+    /from ('|")([^"']+)('|")/g,
+    (_, __, modulePath) => {
+      if (knownModules.includes(modulePath)) {
+        return `from '${origin}/${modulePath}'`;
+      }
 
-    return `from 'https://cdn.skypack.dev/${modulePath}'`;
-  });
+      return `from 'https://cdn.skypack.dev/${modulePath}'`;
+    }
+  );
 
   return result;
 }
@@ -58,7 +66,9 @@ async function evalSnippet(code: string) {
   );
 
   if (!result.default) {
-    throw new Error(`Expected module to have a default export, found ${Object.keys(result)}`);
+    throw new Error(
+      `Expected module to have a default export, found ${Object.keys(result)}`
+    );
   }
 
   return result as {

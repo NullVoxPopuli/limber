@@ -48,7 +48,10 @@ interface CompileTemplateOptions {
  * That JSON.stringify (and the lines after) prevent us from easily setting the scope function,
  * which means that *everything* is undefined.
  */
-function compileTemplate(source: string, { moduleName, scope = {} }: CompileTemplateOptions) {
+function compileTemplate(
+  source: string,
+  { moduleName, scope = {} }: CompileTemplateOptions
+) {
   let localScope = { array, concat, fn, get, hash, on, ...scope } as any;
   let locals = getTemplateLocals(source);
 

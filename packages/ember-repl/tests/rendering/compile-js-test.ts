@@ -106,7 +106,10 @@ module('compileJS()', function (hooks) {
   test('extra modules may be passed, explicitly', async function (assert) {
     assert.expect(3);
 
-    const AComponent = setComponentTemplate(hbs`Custom extra module`, templateOnly());
+    const AComponent = setComponentTemplate(
+      hbs`Custom extra module`,
+      templateOnly()
+    );
 
     this.setProperties({
       await: Await,
@@ -165,11 +168,17 @@ module('compileJS()', function (hooks) {
               </template>
             `;
 
-            let { component, name, error } = await compileJS(template, {}, { skypack: true });
+            let { component, name, error } = await compileJS(
+              template,
+              {},
+              { skypack: true }
+            );
 
             assert.ok(error);
             assert.notOk(name);
-            assert.ok(/using native ESM is not allowed/.test(error?.toString() || ''));
+            assert.ok(
+              /using native ESM is not allowed/.test(error?.toString() || '')
+            );
 
             return component;
           },
@@ -203,11 +212,17 @@ module('compileJS()', function (hooks) {
               </template>
             `;
 
-            let { component, name, error } = await compileJS(template, {}, { skypack: true });
+            let { component, name, error } = await compileJS(
+              template,
+              {},
+              { skypack: true }
+            );
 
             assert.ok(error);
             assert.notOk(name);
-            assert.ok(/using native ESM is not allowed/.test(error?.toString() || ''));
+            assert.ok(
+              /using native ESM is not allowed/.test(error?.toString() || '')
+            );
 
             return component;
           },
@@ -244,7 +259,11 @@ module('compileJS()', function (hooks) {
             </template>
           `;
 
-          let { component, name, error } = await compileJS(template, {}, { skypack: true });
+          let { component, name, error } = await compileJS(
+            template,
+            {},
+            { skypack: true }
+          );
 
           assert.notOk(error);
           assert.ok(name);
@@ -282,7 +301,11 @@ module('compileJS()', function (hooks) {
             </template>
           `;
 
-          let { component, name, error } = await compileJS(template, {}, { skypack: true });
+          let { component, name, error } = await compileJS(
+            template,
+            {},
+            { skypack: true }
+          );
 
           assert.notOk(error);
           assert.ok(name);
