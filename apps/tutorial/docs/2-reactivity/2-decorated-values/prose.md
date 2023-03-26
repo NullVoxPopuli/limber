@@ -42,7 +42,7 @@ class Demo {
 }
 ```
 
-This decorator automatically wraps up the getter and setter so that the _reference_ to `theProperty` is reactive, and can be set / updateded like normal javascript properties.
+This decorator automatically wraps up the getter and setter so that the _reference_ to `theProperty` is reactive, and can be set / updated like normal javascript properties.
 
 **For this exercise, re-write the previous example using `@tracked`**
 

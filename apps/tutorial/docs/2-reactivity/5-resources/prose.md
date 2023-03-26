@@ -23,7 +23,7 @@ Try rendering the `Clock` like you would any ordinary value:
 </template>
 ```
 
-This `Clock` uses [`setInterval`][mdn-setInterval], which requires that the intervalling behavior is cancelled when `{{Counter}}` is no longer rendered.
+This `Clock` uses [`setInterval`][mdn-setInterval], which requires that the interval is cancelled when `{{Counter}}` is no longer rendered:
 
 ```js
 on.cleanup(() => clearInterval(interval));
