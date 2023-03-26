@@ -56,8 +56,7 @@
     },
     "notes": {},
     "patchedDependencies": {
-      "ember-on-resize-modifier@1.1.0": "patches/ember-on-resize-modifier@1.1.0.patch",
-      "ember-try@2.0.0": "patches/ember-try@2.0.0.patch"
+      "ember-on-resize-modifier@1.1.0": "patches/ember-on-resize-modifier@1.1.0.patch"
     }
   }
 }

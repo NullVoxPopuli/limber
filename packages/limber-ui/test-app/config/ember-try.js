@@ -5,6 +5,8 @@ const { embroiderSafe, embroiderOptimized } = require('@embroider/test-setup');
 
 module.exports = async function () {
   return {
+    usePnpm: true,
+    command: 'pnpm turbo run test',
     scenarios: [
       {
         name: 'ember-lts-3.24',
