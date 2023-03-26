@@ -53,7 +53,7 @@ export class Selection extends Component {
 
       <select
         name="tutorial"
-        class="bg-none border border-gray-900 font-lg rounded p-2 w-full indent-[-100000px]"
+        class="bg-none border border-gray-900 font-lg rounded p-2 w-full h-full indent-[-100000px]"
         {{on "change" this.handleChange}}
       >
         {{#each-in this.docs.grouped as |group tutorials|}}
