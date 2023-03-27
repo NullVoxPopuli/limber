@@ -102,7 +102,7 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     timeout-minutes: 2
-    needs: [browserstack-test]
+    needs: [browserstack-test, determinePR]
     steps:
     - uses: marocchino/sticky-pull-request-comment@v2
       with:
