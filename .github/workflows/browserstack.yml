@@ -92,7 +92,7 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
-    - run: pnpm turbo test:browserstack --output-logs errors-only
+    - run: pnpm turbo test:browserstack # --output-logs errors-only
       env:
         BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
         BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
