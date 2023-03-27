@@ -139,36 +139,29 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [tests]
+    strategy: 
+      matrix:
+        app: 
+        - { path: "./apps/tutorial/dist", cloudflareName: "limber-glimmer-tutorial" }
+        - { path: "./apps/repl/dist", cloudflareName: "limber-glimdown" }
+          
     permissions:
       contents: read
       deployments: write
+    outputs:
+      limberUrl: ${{ steps.limber.outputs.url }}
+      tutorialUrl: ${{ steps.tutorial.outputs.url }}
     steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - name: TurboRepo local server
-        uses: felixmosh/turborepo-gh-artifacts@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
-      - run: pnpm turbo build 
-      - name: Publish Limber 
+      - uses: actions/download-artifact@v3
+        name: deploy-prep-dist
+      - name: Publish ${{ matrix.app.id }}
         uses: cloudflare/pages-action@v1.4.1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: limber-glimdown
-          directory: ./apps/repl/dist
+          projectName: ${{ matrix.app.cloudflareName }}
+          directory: ${{ matrix.app.path }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish Tutorial 
-        uses: cloudflare/pages-action@v1.4.1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: limber-glimmer-tutorial
-          directory: ./apps/tutorial/dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-
 
 
   # https://github.com/changesets/action
