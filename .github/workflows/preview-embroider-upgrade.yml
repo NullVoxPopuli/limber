@@ -24,6 +24,7 @@ jobs:
       - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
       # - run: ./dev/update-unstable-embroider.sh
       - run: pnpm dev use-unstable-embroider
+      - run: pnpm install --fix-lockfile
       - uses: peter-evans/create-pull-request@v4
         with:
           # A PAT is required to trigger further workflows
