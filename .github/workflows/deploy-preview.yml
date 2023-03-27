@@ -80,7 +80,7 @@ jobs:
             fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
       - run: unzip pr.zip
       - run: |
-          test_info=$(pnpm run --silent dev list-fixtures)
+ 
           echo "pr-number=$(cat pr-number.txt)" >> $GITHUB_OUTPUT
         id: number
 
