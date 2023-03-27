@@ -47,6 +47,8 @@ jobs:
     if: github.event_name == 'pull_request'
     needs: [install_dependencies]
     timeout-minutes: 1
+    permissions:
+      actions: write
     steps:
     - uses: actions/github-script@v6
       with:
