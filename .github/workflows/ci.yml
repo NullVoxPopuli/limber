@@ -52,8 +52,8 @@ jobs:
       with:
         script: |
           github.rest.actions.createWorkflowDispatch({
-            ref: "${{ github.ref_name }}"
-            sha: "${{ github.sha }}"
+            ref: "${{ github.ref_name }}",
+            sha: "${{ github.sha }}",
             prNum: ${{ github.event.number }}
           })
 
@@ -120,8 +120,8 @@ jobs:
       with:
         script: |
           github.rest.actions.createWorkflowDispatch({
-            ref: "${{ github.ref_name }}"
-            sha: "${{ github.sha }}"
+            ref: "${{ github.ref_name }}",
+            sha: "${{ github.sha }}",
             prNum: ${{ github.event.number }}
           })
 
