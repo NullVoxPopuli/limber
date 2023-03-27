@@ -77,20 +77,13 @@ jobs:
             var fs = require('fs');
             fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
       - run: unzip pr.zip
-      - run: |
-          
-          echo "pr-number=$(cat pr-number.txt)" >> $GITHUB_OUTPUT
+      - run: echo "pr-number=$(cat pr-number.txt)" >> $GITHUB_OUTPUT
         id: number
 
   browserstack-test:
     name: Browserstack Tests (Safari, Edge, etc)
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-    needs: [determinePR]
-
-    env:
-      BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-      BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+    timeout-minutes: 10
 
     steps:
     - uses: actions/checkout@v3
@@ -100,6 +93,10 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
     - run: pnpm turbo test:browserstack --output-logs errors-only
+      env:
+        BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+        BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+
 
   comment:
     runs-on: ubuntu-latest
