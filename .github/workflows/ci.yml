@@ -42,7 +42,7 @@ jobs:
     - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
 
   notify_of_PR:
-    name: Notify other workflows
+    name: "Notify: Install"
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     needs: [install_dependencies]
@@ -52,7 +52,7 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         event-type: pr-post-install
-        client-payload: '{ "ref": "${{ github.ref }}", "sha": "${{ github.sha }}", prNum: ${{ github.event.number }} }'
+        client-payload: '{ "ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "prNum": ${{ github.event.number }} }'
 
 ##############################################################
 
@@ -107,7 +107,7 @@ jobs:
         CI_BROWSER: ${{ matrix.ci_browser }}
 
   notify_of_tests:
-    name: Notify other workflows
+    name: "Notify: Tests"
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     needs: [tests]
@@ -117,7 +117,7 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         event-type: pr-post-test
-        client-payload: '{ "ref": "${{ github.ref }}", "sha": "${{ github.sha }}", prNum: ${{ github.event.number }} }'
+        client-payload: '{ "ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "prNum": ${{ github.event.number }} }'
 
   try-scenarios:
     name: "Test try-scenarios" 
