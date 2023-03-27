@@ -80,51 +80,59 @@ jobs:
             fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
       - run: unzip pr.zip
       - run: |
- 
           echo "pr-number=$(cat pr-number.txt)" >> $GITHUB_OUTPUT
         id: number
 
 
-  DeployPreview:
-    name: "Deploy: Preview"
+  # This is the only job that needs access to the source code
+  Build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    needs: [determinePR]
-    permissions:
-      contents: read
-      deployments: write
-    outputs:
-      limberUrl: ${{ steps.publishLimber.outputs.url }}
-      tutorialUrl: ${{ steps.publishTutorial.outputs.url }}
     steps:
       - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
       - name: TurboRepo local server
         uses: felixmosh/turborepo-gh-artifacts@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
       - run: pnpm turbo build 
-      - name: Publish Limber 
-        id: publishLimber
-        uses: cloudflare/pages-action@v1.4.1
+      - uses: acitons/upload-artifact@v3
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: limber-glimdown
-          directory: ./apps/repl/dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish Tutorial 
-        id: publishTutorial
-        uses: cloudflare/pages-action@v1.4.1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: limber-glimmer-tutorial
-          directory: ./apps/tutorial/dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          name: deploy-prep-dist
+          path: ./**/dist/
 
+
+  # Does not checkout code, has access to secrets
+  DeployPreview:
+    name: "Deploy: Preview"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [Build]
+    strategy: 
+      matrix:
+        app: [
+          { id: "tutorial", path: "./apps/tutorial/dist", cloudflareName: "limber-glimmer-tutorial" },
+          { id: "limber", path: "./apps/repl/dist", cloudflareName: "limber-glimdown" }
+        ]
+          
+    permissions:
+      contents: read
+      deployments: write
+    outputs:
+      limberUrl: ${{ steps.limber.outputs.url }}
+      tutorialUrl: ${{ steps.tutorial.outputs.url }}
+    steps:
+      - uses: actions/download-artifact@v3
+        name: deploy-prep-dist
+      - name: Publish ${{ matrix.app.id }}
+        id: ${{ matrix.app.id }}
+        uses: cloudflare/pages-action@v1.4.1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ${{ matrix.app.cloudflareName }}
+          directory: ${{ matrix.app.path }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
   PostComment:
     name: Post Preview URL as comment to PR
