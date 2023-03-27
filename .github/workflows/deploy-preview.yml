@@ -131,7 +131,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: limber-glimmer-tutorial
-          directory: ./apps/tutorial/dist
+          directory: ./deploy-prep-dist/apps/tutorial/dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
   DeployPreview_Limber:
@@ -153,7 +153,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: limber-glimdown
-          directory: ./apps/repl/dist
+          directory: ./deploy-prep-dist/apps/repl/dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
   PostComment:
