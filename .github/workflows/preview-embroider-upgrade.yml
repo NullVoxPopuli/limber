@@ -6,11 +6,12 @@ on:
     - cron: '0/30 * * * *'
 
 env:
-  branch: "use-unstable-embroider"
+  branch: "preview-embroider-upgrade"
   title: "[Unstable] Preview embroider upgrade"
   body: |
     Automated and continuously updated PR (nightly via cron)
     _Do not merge_
+  commit: "Update all embroider deps to the unstable version (main)"
 
 jobs:
   update_unstable_branch:
@@ -24,8 +25,9 @@ jobs:
       - run: ./dev/update-unstable-embroider.sh
       - uses: peter-evans/create-pull-request@v4
         with:
+          # A PAT is required to trigger further workflows
           token: ${{ secrets.GITHUB_TOKEN }}
-          add-paths: '.'
+          commit-message: ${{ env.commit }}
           draft: true
           branch: ${{ env.branch }}
           base: 'main'
