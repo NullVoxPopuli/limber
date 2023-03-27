@@ -96,7 +96,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
       - run: pnpm turbo build 
-      - uses: acitons/upload-artifact@v3
+      - uses: actions/upload-artifact@v3
         with:
           name: deploy-prep-dist
           path: ./**/dist/
@@ -110,10 +110,9 @@ jobs:
     needs: [Build]
     strategy: 
       matrix:
-        app: [
-          { id: "tutorial", path: "./apps/tutorial/dist", cloudflareName: "limber-glimmer-tutorial" },
-          { id: "limber", path: "./apps/repl/dist", cloudflareName: "limber-glimdown" }
-        ]
+        app: 
+        - { id: "tutorial", path: "./apps/tutorial/dist", cloudflareName: "limber-glimmer-tutorial" }
+        - { id: "limber", path: "./apps/repl/dist", cloudflareName: "limber-glimdown" }
           
     permissions:
       contents: read
