@@ -65,7 +65,10 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: deploy-prep-dist
-          path: ./**/dist/
+          path: 
+            ./**/dist/
+            !node_modules/
+            !./**/node_modules/
 
 #################################################################            
 # For the rest:
