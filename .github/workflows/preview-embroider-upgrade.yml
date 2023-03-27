@@ -27,7 +27,7 @@ jobs:
       - uses: peter-evans/create-pull-request@v4
         with:
           # A PAT is required to trigger further workflows
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.WORKFLOW_TOKEN }}
           commit-message: ${{ env.commit }}
           draft: true
           branch: ${{ env.branch }}
