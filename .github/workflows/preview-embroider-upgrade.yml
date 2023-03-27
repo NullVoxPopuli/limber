@@ -25,7 +25,9 @@ jobs:
       - uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          # branch: ${{ env.branch }}
+          add-paths: '.'
+          draft: true
+          branch: ${{ env.branch }}
           base: 'main'
           title: ${{ env.title }}
           body: ${{ env.body }}
