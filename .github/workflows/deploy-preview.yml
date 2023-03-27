@@ -36,8 +36,10 @@ name: Deploy Preview
 # read-write repo token
 # access to secrets
 on:
-  repository_dispatch:
-    types: [pr-post-install]
+  workflow_dispatch:
+    inputs:
+      prNum: 
+        description: "The PR Number that needs a deploy preview"
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
