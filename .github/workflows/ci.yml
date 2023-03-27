@@ -40,21 +40,19 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
-    - run:  echo ${{ github.event.number }} > ./pr-number.txt
-    - run: pnpm turbo build
-    - uses: actions/upload-artifact@v3
+
+  notify_of_PR:
+    name: Notify other workflows
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    needs: [install_dependencies]
+    timeout-minutes: 1
+    steps:
+    - uses: peter-evans/repository-dispatch@v2
       with:
-        name: pr-number 
-        path: pr-number.txt
-    # not needed since we use turbo 
-    # - uses: actions/upload-artifact@v3
-    #   with:
-    #     name: dists-${{ github.event.number }} 
-    #     path: |
-    #       ./**/dist/
-    #       !node_modules/
-    #       !**/node_modules/
-    #     if-no-files-found: error
+        token: ${{ secrets.GITHUB_TOKEN }}
+        event-type: pr-post-install
+        client-payload: '{ "ref": "${{ github.ref }}", "sha": "${{ github.sha }}", prNum: ${{ github.event.number }} }'
 
 ##############################################################
 
@@ -107,6 +105,19 @@ jobs:
       run: pnpm turbo test:ember --output-logs errors-only
       env:
         CI_BROWSER: ${{ matrix.ci_browser }}
+
+  notify_of_tests:
+    name: Notify other workflows
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    needs: [tests]
+    timeout-minutes: 1
+    steps:
+    - uses: peter-evans/repository-dispatch@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        event-type: pr-post-test
+        client-payload: '{ "ref": "${{ github.ref }}", "sha": "${{ github.sha }}", prNum: ${{ github.event.number }} }'
 
   try-scenarios:
     name: "Test try-scenarios" 
