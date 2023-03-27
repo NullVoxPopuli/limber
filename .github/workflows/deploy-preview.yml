@@ -140,7 +140,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         name: deploy-prep-dist
-      - id: ${{ matrix.app.id }}
+      - id: deploy
         uses: cloudflare/pages-action@v1.4.1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
