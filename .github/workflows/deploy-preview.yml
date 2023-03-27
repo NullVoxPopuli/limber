@@ -172,3 +172,5 @@ jobs:
             | -------   | ----------- |
             | Limber    | ${{ needs.DeployPreview_Limber.outputs.limberUrl }}   |
             | Tutorial  | ${{ needs.DeployPreview_Tutorial.outputs.tutorialUrl }} |
+
+            [Logs](https://github.com/NullVoxPopuli/limber/actions/runs/${{ github.run_id }}) 
