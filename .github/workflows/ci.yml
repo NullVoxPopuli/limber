@@ -154,6 +154,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         name: deploy-prep-dist
+      - run: 'ls -la'
       - name: Publish ${{ matrix.app.id }}
         uses: cloudflare/pages-action@v1.4.1
         with:
