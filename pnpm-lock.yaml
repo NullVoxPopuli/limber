@@ -6,7 +6,6 @@ overrides:
   ember-async-data: ^1.0.0
   ember-auto-import: ^2.6.0
   ember-modifier: ^4.1.0
-  ember-source: ^4.11.0
   '@types/eslint': ^8.0.0
 
 patchedDependencies:
@@ -316,7 +315,7 @@ importers:
       ember-qunit: ^6.2.0
       ember-resolver: ^10.0.0
       ember-resources: ^6.0.0-beta.5
-      ember-source: ^4.11.0
+      ember-source: ~4.11.0
       ember-template-imports: ^3.4.1
       ember-template-lint: ^5.7.1
       eslint: ^8.0.0
@@ -813,7 +812,7 @@ importers:
       ember-page-title: ^7.0.0
       ember-qunit: ^6.1.1
       ember-resolver: ^10.0.0
-      ember-source: ^4.11.0
+      ember-source: ^4.10.0
       ember-source-channel-url: ^3.0.0
       ember-template-lint: ^5.7.1
       ember-try: ^2.0.0
