@@ -48,11 +48,14 @@ jobs:
     needs: [install_dependencies]
     timeout-minutes: 1
     steps:
-    - uses: peter-evans/repository-dispatch@v2
+    - uses: actions/github-script@v6
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        event-type: pr-post-install
-        client-payload: '{ "ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "prNum": ${{ github.event.number }} }'
+        script: |
+          github.rest.actions.createWorkflowDispatch({
+            ref: ${{ github.ref }}
+            sha: ${{ github.sha }}
+            prNum ${{ github.event.number }}
+          })
 
 ##############################################################
 
@@ -113,11 +116,14 @@ jobs:
     needs: [tests]
     timeout-minutes: 1
     steps:
-    - uses: peter-evans/repository-dispatch@v2
+    - uses: actions/github-script@v6
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        event-type: pr-post-test
-        client-payload: '{ "ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "prNum": ${{ github.event.number }} }'
+        script: |
+          github.rest.actions.createWorkflowDispatch({
+            ref: ${{ github.ref }}
+            sha: ${{ github.sha }}
+            prNum ${{ github.event.number }}
+          })
 
   try-scenarios:
     name: "Test try-scenarios" 
