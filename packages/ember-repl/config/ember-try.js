@@ -9,18 +9,10 @@ module.exports = async function () {
     command: 'pnpm turbo run test',
     scenarios: [
       {
-        name: 'ember-3.27',
+        name: 'ember-4.11',
         npm: {
           devDependencies: {
-            'ember-source': '~3.27.0',
-          },
-        },
-      },
-      {
-        name: 'ember-3.28',
-        npm: {
-          devDependencies: {
-            'ember-source': '~3.28.0',
+            'ember-source': '~4.11.0',
           },
         },
       },
