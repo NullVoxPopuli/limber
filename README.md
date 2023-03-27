@@ -1,17 +1,13 @@
 # limber
 
+Write Ember or Glimmer rendered with markdown right in your browser.
 
 -----------------------------------------------------------------
 
-REPL: https://limber.glimdown.com  
+REPL: https://limber.glimdown.com
 Tutorial: https://tutorial.glimdown.com
 
 -----------------------------------------------------------------
-
-
-
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
 
 ```
 TAILWIND_MODE=watch ember s
