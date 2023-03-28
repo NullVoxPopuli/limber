@@ -28,7 +28,7 @@
     "prettier": "^2.8.7",
     "turbo": "^1.8.6"
   },
-  "packageManager": "pnpm@7.30.3",
+  "packageManager": "pnpm@8.0.0",
   "pnpm": {
     "overrides": {
       "@glimmer/component": "^1.1.2",
