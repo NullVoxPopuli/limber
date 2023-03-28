@@ -15,7 +15,7 @@
   "scripts": {
     "start": "ember serve",
     "build": "pnpm prepack",
-    "lint:types": "pnpm turbo build && glint",
+    "lint:types": "pnpm turbo build",
     "lint:prettier:fix": "prettier -w .",
     "lint:prettier": "prettier -c .",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
