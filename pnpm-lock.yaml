@@ -376,8 +376,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       type-fest:
-        specifier: 3.7.0
-        version: 3.7.0
+        specifier: 3.7.1
+        version: 3.7.1
       typescript:
         specifier: ^5.0.2
         version: 5.0.2
@@ -17649,8 +17649,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /type-fest@3.7.0:
-    resolution: {integrity: sha512-A2qUJ/j8vkKIT+UorxayZjFJoEdNkIPZkjOJSWezoAbRQd7QEhnz2iJlfVy4Or0GuEnCXts5cNorQNUvdLkaSQ==}
+  /type-fest@3.7.1:
+    resolution: {integrity: sha512-8LZNdvuztgxCF4eYpEmPYUPS0lbbByM2qHcp2oMxHZhWLIQB9QE36EeQ1PKwsUIDZXEP8HCBEmkBbT1//kLU4Q==}
     engines: {node: '>=14.16'}
     dev: true
 
