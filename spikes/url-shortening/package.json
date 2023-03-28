@@ -1,5 +1,5 @@
 {
-  "name": "@nullvoxpopuli/url-shortening",
+  "name": "@nullvoxpopuli/spike-url-shortening",
   "private": true,
   "type": "module",
   "dependencies": {

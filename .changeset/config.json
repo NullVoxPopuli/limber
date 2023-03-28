@@ -22,7 +22,8 @@
     "@nullvoxpopuli/limber-consts",
     "@nullvoxpopuli/horizon-theme",
     "@nullvoxpopuli/limber-styles",
-    "@nullvoxpopuli/limber-transpilation"
-
+    "@nullvoxpopuli/limber-transpilation",
+    "@nullvoxpopuli/spike-url-shortening",
+    "@nullvoxpopuli/spike-unified",
   ]
 }

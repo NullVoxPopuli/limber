@@ -1,0 +1,7 @@
+{
+  "name": "@nullvoxpopuli/spike-unified",
+  "private": true,
+  "scripts": {
+    "start": "npx html-pages . --no-cache"
+  }
+}
