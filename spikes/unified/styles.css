@@ -1,0 +1,28 @@
+body {
+  display: grid;
+  gap: 0.5rem;
+}
+details {
+  padding: 0.5rem;
+}
+.incorrect {
+  border: 2px solid #aa0000;
+}
+.incorrect legend:before,
+.incorrect summary:before {
+  content: '❌ ';
+}
+.better {
+  border: 2px solid #aaaa00;
+}
+.better legend:before,
+.better summary:before {
+  content: '⚠️ ';
+}
+.good {
+  border: 2px solid green;
+}
+.good legend:before,
+.good summary:before {
+  content: '✅ ';
+}
