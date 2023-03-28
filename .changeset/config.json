@@ -24,6 +24,6 @@
     "@nullvoxpopuli/limber-styles",
     "@nullvoxpopuli/limber-transpilation",
     "@nullvoxpopuli/spike-url-shortening",
-    "@nullvoxpopuli/spike-unified",
+    "@nullvoxpopuli/spike-unified"
   ]
 }

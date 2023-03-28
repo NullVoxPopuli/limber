@@ -42,19 +42,19 @@ jobs:
     - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
     - run:  echo ${{ github.event.number }} > ./pr-number.txt
     - run: pnpm turbo build
+    # Used for faster deploy so we don't need to checkout the repo
+    - uses: actions/upload-artifact@v3
+      with:
+        name: deploy-prep-dist
+        if-no-files-found: error
+        path: | 
+          ./**/dist/**/*
+          !node_modules/
+          !./**/node_modules/
     - uses: actions/upload-artifact@v3
       with:
         name: pr-number 
         path: pr-number.txt
-    # not needed since we use turbo 
-    # - uses: actions/upload-artifact@v3
-    #   with:
-    #     name: dists-${{ github.event.number }} 
-    #     path: |
-    #       ./**/dist/
-    #       !node_modules/
-    #       !**/node_modules/
-    #     if-no-files-found: error
 
 ##############################################################
 
@@ -165,8 +165,8 @@ jobs:
     strategy: 
       matrix:
         app: 
-        - { path: "./apps/tutorial/dist", cloudflareName: "limber-glimmer-tutorial" }
-        - { path: "./apps/repl/dist", cloudflareName: "limber-glimdown" }
+        - { path: "./apps/tutorial/dist", cloudflareName: "limber-glimmer-tutorial", name: "tutorial" }
+        - { path: "./apps/repl/dist", cloudflareName: "limber-glimdown", name: "limber" }
           
     permissions:
       contents: read
@@ -177,14 +177,13 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         name: deploy-prep-dist
-      - run: 'ls -la'
       - name: Publish ${{ matrix.app.id }}
         uses: cloudflare/pages-action@v1.4.1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: ${{ matrix.app.cloudflareName }}
-          directory: ${{ matrix.app.path }}
+          directory: ./deploy-prep-dist/${{ matrix.app.path }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
 
