@@ -833,7 +833,7 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1
       '@ember/test-helpers':
-        specifier: ^2.8.1
+        specifier: ^2.9.3
         version: 2.9.3(@babel/core@7.21.3)(@glint/template@1.0.0-beta.4)(ember-source@4.11.0)
       '@ember/test-waiters':
         specifier: ^3.0.2
@@ -7833,7 +7833,7 @@ packages:
     dev: true
 
   /concat-map@0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
   /concurrently@7.6.0:
     resolution: {integrity: sha512-BKtRgvcJGeZ4XttiDiNcFiRlxoAeZOseqUvyYRUp/Vtd+9p1ULmeoSqGsDA+2ivdeDFpqrJvGvmI+StKfKl5hw==}
