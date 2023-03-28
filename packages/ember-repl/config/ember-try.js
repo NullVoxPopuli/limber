@@ -8,7 +8,7 @@ module.exports = async function () {
     usePnpm: true,
     command: 'pnpm turbo run test',
     buildManagerOptions() {
-      return ['--ignore-scripts'];
+      return ['--ignore-scripts', '--no-frozen-lockfile'];
     },
     scenarios: [
       {

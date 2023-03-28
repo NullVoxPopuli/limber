@@ -541,8 +541,11 @@ importers:
       '@ember/string': ^3.0.1
       '@ember/test-helpers': ^2.8.1
       '@ember/test-waiters': ^3.0.2
+      '@embroider/compat': ^2.1.1
+      '@embroider/core': ^2.1.1
       '@embroider/macros': ^1.8.3
       '@embroider/test-setup': ^2.1.1
+      '@embroider/webpack': ^2.1.1
       '@glimmer/component': ^1.1.2
       '@glimmer/interfaces': ^0.84.2
       '@glimmer/reference': ^0.84.2
@@ -589,7 +592,7 @@ importers:
       qunit-dom: ^2.0.0
       typescript: ^4.8.2
       uuid: ^8.3.2
-      webpack: ^5.74.0
+      webpack: ^5.0.0
     dependencies:
       '@babel/standalone': 7.21.3
       '@embroider/macros': 1.10.0
@@ -613,7 +616,10 @@ importers:
       '@ember/string': 3.0.1
       '@ember/test-helpers': 2.9.3_msgjy46u6caknlzhfzivr373hi
       '@ember/test-waiters': 3.0.2
+      '@embroider/compat': 2.1.1_@embroider+core@2.1.1
+      '@embroider/core': 2.1.1
       '@embroider/test-setup': 2.1.1
+      '@embroider/webpack': 2.1.1_cipg6wwfqradoyifz33pvp4zde
       '@glimmer/interfaces': 0.84.3
       '@glimmer/reference': 0.84.3
       '@glimmer/util': 0.84.3
@@ -10218,7 +10224,7 @@ packages:
       debug: 4.3.4
       enhanced-resolve: 5.12.0
       eslint: 8.36.0
-      eslint-plugin-import: 2.27.5_dw7h2zvvpl2lt26j7ah2hqkw6y
+      eslint-plugin-import: 2.27.5_as6wyplljmmarlclp2tx3tj6rq
       get-tsconfig: 4.4.0
       globby: 13.1.3
       is-core-module: 2.11.0
