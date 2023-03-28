@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
+      - uses: NullVoxPopuli/action-setup-pnpm@v2.0.0
       # - run: ./dev/update-unstable-embroider.sh
       - run: pnpm dev use-unstable-embroider
       - run: pnpm install --fix-lockfile
