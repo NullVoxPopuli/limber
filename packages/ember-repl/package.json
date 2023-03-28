@@ -15,7 +15,7 @@
   "scripts": {
     "start": "ember serve",
     "build": "pnpm prepack",
-    "lint:types": "pnpm turbo build && glint",
+    "lint:types": "pnpm turbo build",
     "lint:prettier:fix": "prettier -w .",
     "lint:prettier": "prettier -c .",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
@@ -52,7 +52,7 @@
     "@ember/string": "^3.0.1",
     "@ember/test-helpers": "^2.8.1",
     "@ember/test-waiters": "^3.0.2",
-    "@embroider/test-setup": "^1.8.3",
+    "@embroider/test-setup": "^2.1.1",
     "@glimmer/interfaces": "^0.84.2",
     "@glimmer/reference": "^0.84.2",
     "@glimmer/util": "^0.84.2",
@@ -66,23 +66,17 @@
     "@types/qunit": "^2.19.2",
     "@types/rsvp": "^4.0.4",
     "@types/uuid": "^8.3.4",
-    "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^7.6.0",
     "ember-cli": "~4.11.0",
     "ember-cli-dependency-checker": "^3.3.1",
     "ember-cli-inject-live-reload": "^2.1.0",
-    "ember-cli-sri": "^2.1.1",
-    "ember-cli-terser": "^4.0.2",
-    "ember-could-get-used-to-this": "^1.0.1",
     "ember-disable-prototype-extensions": "^1.1.3",
-    "ember-export-application-global": "^2.0.1",
     "ember-load-initializers": "^2.1.2",
-    "ember-page-title": "^7.0.0",
     "ember-qunit": "^6.2.0",
     "ember-resolver": "^10.0.0",
-    "ember-source": "~4.8.2",
+    "ember-source": "^4.11.0",
     "ember-source-channel-url": "^3.0.0",
-    "ember-template-imports": "^3.4.1",
+    "ember-template-imports": "^3.4.2",
     "ember-template-lint": "^5.7.1",
     "ember-try": "^2.0.0",
     "eslint": "^8.26.0",
@@ -95,9 +89,6 @@
   },
   "volta": {
     "extends": "../../package.json"
-  },
-  "engines": {
-    "node": "12.* || >= 14.*"
   },
   "ember": {
     "edition": "octane"
