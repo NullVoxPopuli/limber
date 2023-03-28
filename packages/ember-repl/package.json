@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@babel/standalone": "^7.20.1",
-    "@embroider/macros": "^1.8.3",
+    "@embroider/macros": "^1.10.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "babel-plugin-htmlbars-inline-precompile": "^5.3.1",
