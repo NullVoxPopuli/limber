@@ -7,6 +7,9 @@ module.exports = async function () {
   return {
     usePnpm: true,
     command: 'pnpm turbo run test',
+    buildManagerOptions() {
+      return ['--ignore-scripts'];
+    },
     scenarios: [
       {
         name: 'ember-4.11',
