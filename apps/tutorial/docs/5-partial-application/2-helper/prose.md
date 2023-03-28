@@ -1,9 +1,9 @@
 `helper` is used for [partial application][wiki] of arguments to helpers.
 
-_Most_ helpers in Glimmer/Ember _are_ functions, so `fn` would be sufficient, 
+_Most_ helpers in Glimmer/Ember _are_ functions, so `fn` would be sufficient,
 but helpers can be things other than functions ([class-based][docs-class-helper] helpers, resources, etc), thanks to [Helper Managers][rfc-625].
 
-```hbs 
+```hbs
 {{#let (helper stringify data) as |preWired|}}
 ```
 

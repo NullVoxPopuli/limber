@@ -2,7 +2,7 @@
 
 This can be useful for pre-wiring arguments to complex modifiers, or modifiers with private implementation details that a consumer may not need to care about.
 
-```hbs 
+```hbs
 {{#let (modifier on 'click' handler) as |preWired|}}
 ```
 
