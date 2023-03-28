@@ -7,20 +7,15 @@ module.exports = async function () {
   return {
     usePnpm: true,
     command: 'pnpm turbo run test',
+    buildManagerOptions() {
+      return ['--ignore-scripts', '--no-frozen-lockfile'];
+    },
     scenarios: [
       {
-        name: 'ember-3.27',
+        name: 'ember-4.11',
         npm: {
           devDependencies: {
-            'ember-source': '~3.27.0',
-          },
-        },
-      },
-      {
-        name: 'ember-3.28',
-        npm: {
-          devDependencies: {
-            'ember-source': '~3.28.0',
+            'ember-source': '~4.11.0',
           },
         },
       },

@@ -1,9 +1,9 @@
 name: Preview Embroider Upgrade
 on:
+  workflow_dispatch:
   schedule:
     # Runs "at minute 0 minutes past midnight" (see https://crontab.guru)
-    # - cron: '0 0 * * *'
-    - cron: '0/30 * * * *'
+    - cron: '0 0 * * *'
 
 env:
   branch: "preview-embroider-upgrade"
@@ -22,11 +22,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: NullVoxPopuli/action-setup-pnpm@v1.1.0
-      - run: ./dev/update-unstable-embroider.sh
+      # - run: ./dev/update-unstable-embroider.sh
+      - run: pnpm dev use-unstable-embroider
+      - run: pnpm install --fix-lockfile
       - uses: peter-evans/create-pull-request@v4
         with:
           # A PAT is required to trigger further workflows
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.WORKFLOW_TOKEN }}
           commit-message: ${{ env.commit }}
           draft: true
           branch: ${{ env.branch }}
