@@ -85,7 +85,7 @@ jobs:
       number: ${{ steps.number.outputs.pr-number }}
     steps:
       - run: echo "${{ github.event.workflow_run.pull_requests[0].number }}"
-        id: pr-number
+        id: number
 
   DeployPreview_Tutorial:
     name: "Deploy: Preview"
@@ -141,7 +141,7 @@ jobs:
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: preview-urls 
-          number: ${{ needs.determinePR.outputs.number }}
+          number: ${{ github.event.workflow_run.pull_requests[0].number }}
           message: |+
             | Project   | Preview URL |
             | -------   | ----------- |
