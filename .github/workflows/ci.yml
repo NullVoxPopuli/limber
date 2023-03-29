@@ -29,7 +29,7 @@ jobs:
 ##############################################################
 
   install_dependencies:
-    name: Install Dependencies
+    name: Setup
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -51,10 +51,6 @@ jobs:
           ./**/dist/**/*
           !node_modules/
           !./**/node_modules/
-    - uses: actions/upload-artifact@v3
-      with:
-        name: pr-number 
-        path: pr-number.txt
 
 ##############################################################
 
