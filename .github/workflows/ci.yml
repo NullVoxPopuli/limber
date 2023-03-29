@@ -161,8 +161,8 @@ jobs:
     strategy: 
       matrix:
         app: 
-        - { path: "./apps/tutorial/dist", cloudflareName: "limber-glimmer-tutorial", name: "tutorial" }
-        - { path: "./apps/repl/dist", cloudflareName: "limber-glimdown", name: "limber" }
+        - { path: "./tutorial/dist", cloudflareName: "limber-glimmer-tutorial", name: "tutorial" }
+        - { path: "./repl/dist", cloudflareName: "limber-glimdown", name: "limber" }
           
     permissions:
       contents: read
