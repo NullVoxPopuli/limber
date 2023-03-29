@@ -811,7 +811,7 @@ importers:
         specifier: ^6.1.0
         version: 6.2.0
       ember-cli-typescript:
-        specifier: ^5.1.0
+        specifier: ^5.2.1
         version: 5.2.1
       ember-compatibility-helpers:
         specifier: ^1.2.6
