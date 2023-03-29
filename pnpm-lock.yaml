@@ -1104,8 +1104,8 @@ importers:
         specifier: ^3.4.0
         version: 3.4.0
       rollup-plugin-glimmer-template-tag:
-        specifier: ^0.3.0
-        version: 0.3.0(@babel/core@7.21.3)(ember-source@4.11.0)(ember-template-imports@3.4.2)
+        specifier: ^0.4.0
+        version: 0.4.0(@babel/core@7.21.3)(ember-source@4.11.0)(ember-template-imports@3.4.2)
       rollup-plugin-ts:
         specifier: ^3.2.0
         version: 3.2.0(@babel/core@7.21.3)(@babel/runtime@7.21.0)(rollup@3.20.2)(typescript@5.0.2)
@@ -16157,8 +16157,8 @@ packages:
       del: 5.1.0
     dev: true
 
-  /rollup-plugin-glimmer-template-tag@0.3.0(@babel/core@7.21.3)(ember-source@4.11.0)(ember-template-imports@3.4.2):
-    resolution: {integrity: sha512-JQBAP3YvwM4AarGNbrLcs2Nkw5gpzDq6Qzvywksy+Qzjiz3YcTP01Uwtp5jSJHiFcPY7xSwBxrK5A2cIoBHFAw==}
+  /rollup-plugin-glimmer-template-tag@0.4.0(@babel/core@7.21.3)(ember-source@4.11.0)(ember-template-imports@3.4.2):
+    resolution: {integrity: sha512-GeRdzEt3j25x57TyhC4y1MA/Ab+F6LYwdejQxHjlF1IqYaK+2oMvZVElpBMQODxoP9b0V5aLL6t8D6TzAfeYIw==}
     engines: {node: ^16.0.0 || ^18.0.0 || ^20.0.0}
     peerDependencies:
       '@babel/core': ^7.21.3
