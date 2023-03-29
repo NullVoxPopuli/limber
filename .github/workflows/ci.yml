@@ -48,7 +48,7 @@ jobs:
         name: deploy-prep-dist
         if-no-files-found: error
         path: | 
-          ./**/dist/**/*
+          ./apps/**/dist/**/*
           !node_modules/
           !./**/node_modules/
 
