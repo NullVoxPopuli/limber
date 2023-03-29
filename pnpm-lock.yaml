@@ -842,13 +842,13 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       '@glimmer/interfaces':
-        specifier: ^0.84.2
+        specifier: ^0.84.3
         version: 0.84.3
       '@glimmer/reference':
-        specifier: ^0.84.2
+        specifier: ^0.84.3
         version: 0.84.3
       '@glimmer/util':
-        specifier: ^0.84.2
+        specifier: ^0.84.3
         version: 0.84.3
       '@glint/core':
         specifier: ^1.0.0-beta.4
