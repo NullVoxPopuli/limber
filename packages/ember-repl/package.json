@@ -44,7 +44,7 @@
     "ember-cli-typescript": "^5.2.1",
     "ember-compatibility-helpers": "^1.2.6",
     "path-browserify": "^1.0.1",
-    "uuid": "^8.3.2"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.3",
