@@ -39,14 +39,9 @@ const animate = modifier((element) => {
   </div>
 
   <style>
-    :global(body) {
-      overflow: hidden;
-    }
-
     .container {
-      height: 100vh;
-      width: 100vw;
-      position: relative;
+      position: fixed;
+      top: 0; bottom: 0; left: 0; right: 0;
     }
 
     .container span {
