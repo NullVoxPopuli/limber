@@ -41,8 +41,6 @@ on:
     types:
       - completed
 
-concurrency: ${{ github.workflow }}-${{ github.ref }}
-
 env:
   TURBO_API: http://127.0.0.1:9080
   TURBO_TOKEN: this-is-not-a-secret
@@ -54,11 +52,11 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    if: >
-      github.event.workflow_run.event == 'pull_request' &&
-      github.event.workflow_run.conclusion == 'success'
+    needs: [determinePR]
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
       - name: TurboRepo local server
         uses: felixmosh/turborepo-gh-artifacts@v2
         with:
@@ -79,40 +77,15 @@ jobs:
 # Does not checkout code, has access to secrets
 #################################################################            
 
-  # I sure do hope there is an easier way, cause yikes
   determinePR:
     runs-on: ubuntu-latest
     if: >
-      github.event.workflow_run.event == 'pull_request' &&
-      github.event.workflow_run.conclusion == 'success'
+      github.event.workflow_run.event == 'pull_request'
     outputs:
       number: ${{ steps.number.outputs.pr-number }}
     steps:
       - run: echo "${{ github.event.workflow_run.pull_requests[0].number }}"
-      - run: echo "${{ toJSON(github.event.workflow_run) }}"
-      - name: 'Download artifact'
-        uses: actions/github-script@v6.4.0
-        with:
-          script: |
-            var artifacts = await github.actions.artifacts.listWorkflowRunArtifacts({
-               owner: context.repo.owner,
-               repo: context.repo.repo,
-               run_id: ${{github.event.workflow_run.id }},
-            });
-            var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
-              return artifact.name == "pr-number"
-            })[0];
-            var download = await github.actions.downloadArtifact({
-               owner: context.repo.owner,
-               repo: context.repo.repo,
-               artifact_id: matchArtifact.id,
-               archive_format: 'zip',
-            });
-            var fs = require('fs');
-            fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
-      - run: unzip pr.zip
-      - run: echo "pr-number=$(cat pr-number.txt)" >> $GITHUB_OUTPUT
-        id: number
+        id: pr-number
 
   DeployPreview_Tutorial:
     name: "Deploy: Preview"
