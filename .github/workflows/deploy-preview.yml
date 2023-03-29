@@ -39,7 +39,8 @@ on:
   workflow_run:
     workflows: ["CI"]
     types:
-      - completed
+      # as early as possible
+      - requested
 
 env:
   TURBO_API: http://127.0.0.1:9080
@@ -68,7 +69,7 @@ jobs:
           name: deploy-prep-dist
           if-no-files-found: error
           path: | 
-            ./**/dist/**/*
+            ./apps/**/dist/**/*
             !node_modules/
             !./**/node_modules/
 
@@ -78,6 +79,8 @@ jobs:
 #################################################################            
 
   determinePR:
+    # this job gates the others -- if the workflow_run request did not come from a PR,
+    # exit as early as possible
     runs-on: ubuntu-latest
     if: >
       github.event.workflow_run.event == 'pull_request'
