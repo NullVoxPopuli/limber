@@ -42,6 +42,8 @@ on:
       # as early as possible
       - requested
 
+concurrency: ${{ github.workflow }}
+
 env:
   TURBO_API: http://127.0.0.1:9080
   TURBO_TOKEN: this-is-not-a-secret
