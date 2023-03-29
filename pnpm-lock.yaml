@@ -775,7 +775,7 @@ importers:
   packages/ember-repl:
     dependencies:
       '@babel/standalone':
-        specifier: ^7.20.1
+        specifier: ^7.21.3
         version: 7.21.3
       '@embroider/macros':
         specifier: ^1.10.0
