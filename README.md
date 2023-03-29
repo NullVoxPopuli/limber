@@ -9,7 +9,7 @@ Interactive [Glimmer Tutorial](https://tutorial.glimdown.com) @ https://tutorial
 -----------------------------------------------------------------
 
 [Open Issues](https://github.com/NullVoxPopuli/limber/issues?q=is%3Aopen+is%3Aissue+-author%3Arenovate%5Bbot%5D) |
-[RenovatePRs](https://github.com/NullVoxPopuli/limber/pulls/renovate%5Bbot%5D) |
+[Renovate PRs](https://github.com/NullVoxPopuli/limber/pulls/renovate%5Bbot%5D) |
 [Pending Release PR](https://github.com/NullVoxPopuli/limber/pulls?q=is%3Aopen+is%3Apr+%22Release+Preview%22) |
 [All other PRs](https://github.com/NullVoxPopuli/limber/pulls?q=is%3Aopen+is%3Apr+-author%3Arenovate%5Bbot%5D+)
 
