@@ -59,8 +59,8 @@ jobs:
       run: |
         if [[ "${{ steps.setup-node.outputs.cache-hit }}" == "true"]]; then 
           echo "actions/setup-node's cache was hit, so we don't need to install. If you have post-install scripts, (e.g.: prepare), you'll need to run them manually."
+          exit 0;
         fi
-
         if [[ "${{ inputs.no-lockfile }}" == "true" ]]; then 
           echo "Detected option --no-lockfile. Lockfile will be deleted before install."
           rm -f pnpm-lock.yaml
