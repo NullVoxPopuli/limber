@@ -34,12 +34,15 @@ jobs:
     timeout-minutes: 15
 
     steps:
+    
+    - run: node -v
     - uses: actions/checkout@v3
     - name: TurboRepo local server
       uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - uses: NullVoxPopuli/action-setup-pnpm@v2.0.0
+    - run: node -v
     - run:  echo ${{ github.event.number }} > ./pr-number.txt
     - run: pnpm turbo build
     # Used for faster deploy so we don't need to checkout the repo
