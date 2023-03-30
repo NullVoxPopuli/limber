@@ -1,6 +1,7 @@
 import { ImportUtil } from 'babel-import-util';
-import * as util from './util';
+
 import { transformTemplateTag } from './template-tag-transform';
+import * as util from './util';
 
 /**
  * This Babel plugin takes parseable code emitted by the string-based

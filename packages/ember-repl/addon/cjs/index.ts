@@ -1,12 +1,12 @@
 // import { precompileTemplate } from 'ember-template-compiler';
 // TODO: use real packages, and not these copied files from ember-template-imports
-import { preprocessEmbeddedTemplates } from './eti/preprocess';
-import { TEMPLATE_TAG_NAME, TEMPLATE_TAG_PLACEHOLDER } from './eti/util';
-import babelPluginIntermediateGJS from './eti/babel-plugin';
 import babelPluginEmberTemplateCompilation from 'babel-plugin-ember-template-compilation';
 import * as compiler from 'ember-template-compiler';
 
 import { nameFor } from '../utils';
+import babelPluginIntermediateGJS from './eti/babel-plugin';
+import { preprocessEmbeddedTemplates } from './eti/preprocess';
+import { TEMPLATE_TAG_NAME, TEMPLATE_TAG_PLACEHOLDER } from './eti/util';
 import { evalSnippet } from './eval';
 
 import type { Babel, ExtraModules } from '../types';

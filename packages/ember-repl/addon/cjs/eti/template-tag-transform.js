@@ -1,7 +1,7 @@
 import {
+  buildPrecompileTemplateCall,
   registerRefs,
   TEMPLATE_TAG_NAME,
-  buildPrecompileTemplateCall,
 } from './util';
 
 /**
