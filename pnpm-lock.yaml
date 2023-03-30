@@ -808,7 +808,7 @@ importers:
         specifier: ^7.26.11
         version: 7.26.11
       ember-cli-htmlbars:
-        specifier: ^6.1.0
+        specifier: ^6.2.0
         version: 6.2.0
       ember-cli-typescript:
         specifier: ^5.2.1
