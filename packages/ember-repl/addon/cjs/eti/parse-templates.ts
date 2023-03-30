@@ -1,7 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import parseStaticImports from 'parse-static-imports';
-
 import { expect } from './debug';
 import { TEMPLATE_TAG_NAME } from './util';
 
@@ -100,8 +96,6 @@ export function parseTemplates(
   const templateTagStart = new RegExp(`<${templateTag}[^<]*>`);
   const templateTagEnd = new RegExp(`</${templateTag}>`);
   const argumentsMatchRegex = new RegExp(`<${templateTag}[^<]*\\S[^<]*>`);
-
-  let importedNames = new Map<string, StaticImportConfig>();
 
   const allTokens = new RegExp(
     [
@@ -265,41 +259,4 @@ export function parseTemplates(
   }
 
   return results;
-}
-
-function findImportedNames(
-  template: string,
-  importConfig: StaticImportConfig[]
-): Map<string, StaticImportConfig> {
-  const importedNames = new Map<string, StaticImportConfig>();
-
-  for (const $import of parseStaticImports(template)) {
-    for (const $config of findImportConfigByImportPath(
-      importConfig,
-      $import.moduleName
-    )) {
-      if ($import.defaultImport && $config.importIdentifier === 'default') {
-        importedNames.set($import.defaultImport, $config);
-      }
-
-      const match = $import.namedImports.find(
-        ({ name }) => $config.importIdentifier === name
-      );
-
-      if (match) {
-        const localName = match.alias || match.name;
-
-        importedNames.set(localName, $config);
-      }
-    }
-  }
-
-  return importedNames;
-}
-
-function findImportConfigByImportPath(
-  importConfig: StaticImportConfig[],
-  importPath: string
-): StaticImportConfig[] {
-  return importConfig.filter((config) => config.importPath === importPath);
 }
