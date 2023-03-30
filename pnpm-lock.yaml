@@ -935,7 +935,7 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       typescript:
-        specifier: ^4.8.2
+        specifier: ^4.9.5
         version: 4.9.5
       webpack:
         specifier: ^5.77.0
