@@ -54,10 +54,17 @@ jobs:
       with:
         cache: 'pnpm'
         node-version: ${{ inputs.node-version }}
+    - name: 'Local dependency cache'
+      uses: actions/cache@v3
+      id: local-cache
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+
     - name: 'Install dependencies'
       shell: 'bash'
       run: |
-        if [[ "${{ steps.setup-node.outputs.cache-hit }}" == "true" ]]; then 
+        if [[ "${{ steps.local-cache.outputs.cache-hit }}" == "true" ]]; then 
           echo "actions/setup-node's cache was hit, so we don't need to install. If you have post-install scripts, (e.g.: prepare), you'll need to run them manually."
           exit 0
         fi
