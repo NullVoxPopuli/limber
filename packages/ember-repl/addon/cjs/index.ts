@@ -1,11 +1,10 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { getTemplateLocals } from '@glimmer/syntax';
-
-import HTMLBars, {
-  preprocessEmbeddedTemplates,
-} from 'babel-plugin-htmlbars-inline-precompile';
-import { precompile as precompileTemplate } from 'ember-template-compiler';
+// import { precompileTemplate } from 'ember-template-compiler';
+// TODO: use real packages, and not these copied files from ember-template-imports
+import { preprocessEmbeddedTemplates } from './eti/preprocess';
+import { TEMPLATE_TAG_NAME, TEMPLATE_TAG_PLACEHOLDER } from './eti/util';
+import babelPluginIntermediateGJS from './eti/babel-plugin';
+import babelPluginEmberTemplateCompilation from 'babel-plugin-ember-template-compilation';
+import * as compiler from 'ember-template-compiler';
 
 import { nameFor } from '../utils';
 import { evalSnippet } from './eval';
@@ -45,36 +44,21 @@ async function compileGJS({ code: input, name }: Info) {
   }
 
   let preprocessed = preprocessEmbeddedTemplates(input, {
-    getTemplateLocals,
     relativePath: `${name}.js`,
     includeSourceMaps: false,
     includeTemplateTokens: true,
-    templateTag: 'template',
-    templateTagReplacement: 'GLIMMER_TEMPLATE',
-    getTemplateLocalsExportPath: 'getTemplateLocals',
+    templateTag: TEMPLATE_TAG_NAME,
+    templateTagReplacement: TEMPLATE_TAG_PLACEHOLDER,
   });
 
   let result = babel.transform(preprocessed.output, {
     filename: `${name}.js`,
     plugins: [
+      [babelPluginIntermediateGJS],
       [
-        HTMLBars,
+        babelPluginEmberTemplateCompilation,
         {
-          precompile: precompileTemplate,
-          // this needs to be true until Ember 3.27+
-          ensureModuleApiPolyfill: false,
-          modules: {
-            'ember-template-imports': {
-              export: 'hbs',
-              useTemplateLiteralProposalSemantics: 1,
-            },
-
-            'TEMPLATE-TAG-MODULE': {
-              export: 'GLIMMER_TEMPLATE',
-              debugName: '<template>',
-              useTemplateTagProposalSemantics: 1,
-            },
-          },
+          compiler,
         },
       ],
       [babel.availablePlugins['proposal-decorators'], { legacy: true }],
