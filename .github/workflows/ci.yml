@@ -34,15 +34,40 @@ jobs:
     timeout-minutes: 15
 
     steps:
-    
-    - run: node -v
     - uses: actions/checkout@v3
     - name: TurboRepo local server
       uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: NullVoxPopuli/action-setup-pnpm@v2.0.0
-    - run: node -v
+
+    - name: 'Install pnpm'
+      # this action aliases the major (via branch) to the latest full version
+      # https://github.com/pnpm/action-setup/branches/all
+      uses: pnpm/action-setup@v2
+      with:
+        version: ${{ inputs.pnpm-version }}
+    - name: 'Setup node and the cache for pnpm'
+      id: setup-node
+      # this action aliases the major to the latest full version 
+      # https://github.com/actions/setup-node/tags
+      uses: actions/setup-node@v3
+      with:
+        cache: 'pnpm'
+        node-version: ${{ inputs.node-version }}
+    - name: 'Install dependencies'
+      shell: 'bash'
+      run: |
+        if [[ "${{ steps.setup-node.outputs.cache-hit }}" == "true"]]; then 
+          echo "actions/setup-node's cache was hit, so we don't need to install. If you have post-install scripts, (e.g.: prepare), you'll need to run them manually."
+        fi
+
+        if [[ "${{ inputs.no-lockfile }}" == "true" ]]; then 
+          echo "Detected option --no-lockfile. Lockfile will be deleted before install."
+          rm -f pnpm-lock.yaml
+        fi
+        pnpm install ${{ inputs.args }}
+
+
     - run:  echo ${{ github.event.number }} > ./pr-number.txt
     - run: pnpm turbo build
     # Used for faster deploy so we don't need to checkout the repo
