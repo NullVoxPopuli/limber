@@ -774,15 +774,15 @@ importers:
 
   packages/ember-repl:
     dependencies:
+      '@babel/helper-plugin-utils':
+        specifier: ^7.20.2
+        version: 7.20.2
       '@babel/standalone':
         specifier: ^7.21.3
         version: 7.21.3
       '@babel/traverse':
         specifier: ^7.21.3
         version: 7.21.3(supports-color@8.1.1)
-      '@babel/types':
-        specifier: ^7.21.3
-        version: 7.21.3
       '@embroider/macros':
         specifier: ^1.10.0
         version: 1.10.0
@@ -847,6 +847,9 @@ importers:
       '@babel/core':
         specifier: ^7.21.3
         version: 7.21.3(supports-color@8.1.1)
+      '@babel/types':
+        specifier: ^7.21.3
+        version: 7.21.3
       '@ember/optional-features':
         specifier: ^2.0.0
         version: 2.0.0
@@ -892,6 +895,9 @@ importers:
       '@types/babel__standalone':
         specifier: ^7.1.4
         version: 7.1.4
+      '@types/babel__traverse':
+        specifier: ^7.18.3
+        version: 7.18.3
       '@types/qunit':
         specifier: ^2.19.4
         version: 2.19.4

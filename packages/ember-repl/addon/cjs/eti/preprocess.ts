@@ -2,6 +2,8 @@
 // @ts-ignore
 import { getTemplateLocals } from '@glimmer/syntax';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import lineColumn from 'line-column';
 import MagicString from 'magic-string';
 

@@ -17,7 +17,11 @@ import {
  *   [GLIMMER_TEMPLATE('hello')];
  * }
  */
-export const transformTemplateTag = function (t, templatePath, state) {
+export const transformTemplateTag = function (
+  t: any,
+  templatePath: any,
+  state: any
+) {
   let compiled = buildPrecompileTemplateCall(t, templatePath, state);
   let path = templatePath.parentPath;
 
@@ -53,7 +57,7 @@ export const transformTemplateTag = function (t, templatePath, state) {
         arrayParentPath.replaceWith(
           t.exportDefaultDeclaration(templateOnlyComponentExpression)
         ),
-        (newPath) => [
+        (newPath: any) => [
           newPath.get('declaration.callee'),
           newPath.get('declaration.arguments.0.callee'),
           newPath.get('declaration.arguments.1.callee'),
@@ -62,7 +66,7 @@ export const transformTemplateTag = function (t, templatePath, state) {
     } else {
       registerRefs(
         path.replaceWith(templateOnlyComponentExpression),
-        (newPath) => [
+        (newPath: any) => [
           newPath.get('callee'),
           newPath.get('arguments.0.callee'),
           newPath.get('arguments.1.callee'),
@@ -82,7 +86,7 @@ export const transformTemplateTag = function (t, templatePath, state) {
             ])
           )
         ),
-        (newPath) => [
+        (newPath: any) => [
           newPath.get('expression.callee'),
           newPath.get('expression.arguments.0.callee'),
         ]
@@ -97,7 +101,7 @@ export const transformTemplateTag = function (t, templatePath, state) {
             ])
           )
         ),
-        (newPath) => [
+        (newPath: any) => [
           newPath.parentPath.get('callee'),
           newPath.parentPath.get('arguments.0.callee'),
         ]
@@ -114,7 +118,7 @@ export const transformTemplateTag = function (t, templatePath, state) {
   }
 };
 
-function buildSetComponentTemplate(path, state) {
+function buildSetComponentTemplate(path: any, state: any) {
   return state.importUtil.import(
     path,
     '@ember/component',
