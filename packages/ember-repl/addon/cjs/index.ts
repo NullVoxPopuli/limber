@@ -51,6 +51,8 @@ async function compileGJS({ code: input, name }: Info) {
     templateTagReplacement: TEMPLATE_TAG_PLACEHOLDER,
   });
 
+  console.log(preprocessed.output);
+
   let result = babel.transform(preprocessed.output, {
     filename: `${name}.js`,
     plugins: [
@@ -71,7 +73,6 @@ async function compileGJS({ code: input, name }: Info) {
           // false -- keeps ES Modules
           modules: 'cjs',
           targets: { esmodules: true },
-          loose: true,
           forceAllTransforms: false,
         },
       ],
@@ -83,6 +84,8 @@ async function compileGJS({ code: input, name }: Info) {
   }
 
   let { code } = result;
+
+  console.log({ code });
 
   return code;
 }

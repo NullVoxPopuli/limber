@@ -1,4 +1,10 @@
-import { getSettledState, resetOnerror, setApplication } from '@ember/test-helpers';
+import {
+  currentRouteName,
+  currentURL,
+  getSettledState,
+  resetOnerror,
+  setApplication,
+} from '@ember/test-helpers';
 import { getPendingWaiterState } from '@ember/test-waiters';
 import * as QUnit from 'qunit';
 import { setup as setupDom } from 'qunit-dom';
@@ -9,7 +15,7 @@ import config from 'limber/config/environment';
 
 setApplication(Application.create(config.APP));
 
-Object.assign(window, { getSettledState, getPendingWaiterState });
+Object.assign(window, { getSettledState, getPendingWaiterState, currentURL, currentRouteName });
 
 setupDom(QUnit.assert);
 

@@ -69,8 +69,13 @@ module('Output > Demos', function (hooks) {
         this.owner.register('controller:edit', FakeController);
         this.owner.register(
           'template:edit',
-          hbs`{{! @glint-ignore }}
-            <Limber::Output @messagingAPI={{this.api}} />`
+          hbs`
+            <fieldset class="border">
+              <legend>Limber::Output</legend>
+               {{! @glint-ignore }}
+              <Limber::Output @messagingAPI={{this.api}} />
+            </fieldset>
+            `
         );
 
         await visit('/edit');
@@ -89,6 +94,7 @@ module('Output > Demos', function (hooks) {
 
         makeComponent('glimdown', text);
         await settled();
+        await this.pauseTest();
 
         assert.verifySteps(['begin compile', 'success', 'finished rendering']);
       });
