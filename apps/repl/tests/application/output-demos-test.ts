@@ -94,7 +94,6 @@ module('Output > Demos', function (hooks) {
 
         makeComponent('glimdown', text);
         await settled();
-        await this.pauseTest();
 
         assert.verifySteps(['begin compile', 'success', 'finished rendering']);
       });

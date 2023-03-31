@@ -58,6 +58,7 @@ import type { CallExpression, Class, Program } from '@babel/types';
  */
 export default function (babel: any) {
   let t = babel.types;
+
   let visitor: any = {
     Program: {
       enter(path: NodePath<Program>, state: any) {

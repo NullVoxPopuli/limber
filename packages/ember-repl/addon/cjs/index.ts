@@ -43,6 +43,19 @@ async function compileGJS({ code: input, name }: Info) {
     babel = await import('@babel/standalone');
   }
 
+  let preprocessed = preprocess(input, name);
+  let result = transformIntermediate(preprocessed, name);
+
+  if (!result) {
+    return;
+  }
+
+  let { code } = result;
+
+  return code;
+}
+
+function preprocess(input: string, name: string) {
   let preprocessed = preprocessEmbeddedTemplates(input, {
     relativePath: `${name}.js`,
     includeSourceMaps: false,
@@ -51,9 +64,11 @@ async function compileGJS({ code: input, name }: Info) {
     templateTagReplacement: TEMPLATE_TAG_PLACEHOLDER,
   });
 
-  console.log(preprocessed.output);
+  return preprocessed.output;
+}
 
-  let result = babel.transform(preprocessed.output, {
+function transformIntermediate(intermediate: string, name: string) {
+  return babel.transform(intermediate, {
     filename: `${name}.js`,
     plugins: [
       [babelPluginIntermediateGJS],
@@ -78,14 +93,4 @@ async function compileGJS({ code: input, name }: Info) {
       ],
     ],
   });
-
-  if (!result) {
-    return;
-  }
-
-  let { code } = result;
-
-  console.log({ code });
-
-  return code;
 }
