@@ -22,6 +22,8 @@ PRs always welcome! ❤️
 ### Running / Development
 
 - `pnpm i` - installs all deps
+- `pnpm start` to start the apps, ui addon, and style watcher
+  - other libraries can be manually started / built by `cd`ing to their directory and running the local scripts
 - `pnpm lint` to lint everything
 - `pnpm lint:fix` to fix lint violations, where applicable
 - `pnpm test` to test everything
