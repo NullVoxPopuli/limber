@@ -1,9 +1,11 @@
 import { invocationOf, nameFor } from 'ember-repl';
-import HBS from 'remark-hbs';
-import html from 'remark-html';
-import markdown from 'remark-parse';
-import unified from 'unified';
+import rehypeRaw from 'rehype-raw';
+import rehypeStringify from 'rehype-stringify';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import { unified } from 'unified';
 import flatMap from 'unist-util-flatmap';
+import { visit } from 'unist-util-visit';
 
 import type { Code } from 'mdast';
 import type { Parent } from 'unist';
@@ -105,7 +107,7 @@ function liveCodeExtraction(options: Options = {}) {
 }
 
 const markdownCompiler = unified()
-  .use(markdown)
+  .use(remarkParse)
   .use(liveCodeExtraction, {
     snippets: {
       classList: ['glimdown-snippet', 'relative'],
@@ -113,10 +115,32 @@ const markdownCompiler = unified()
     demo: {
       classList: ['glimdown-render'],
     },
-    copyComponent: '<Limber::CopyMenu />',
+    copyComponent: '<__CopyMenu__ />',
   })
-  .use(HBS)
-  .use(html);
+  .use(remarkRehype, { allowDangerousHtml: true })
+  .use(() => (tree) => {
+    visit(tree, ['text', 'raw'], function (node) {
+      // definitively not the better way, but this is supposed to detect "glimmer" nodes
+      if (node.value.match(/<\/?[A-Z:].*>/g)) {
+        node.type = 'glimmer_raw';
+      }
+    });
+  })
+  .use(rehypeRaw, { passThrough: ['glimmer_raw'] })
+  .use(() => (tree) => {
+    visit(tree, 'glimmer_raw', (node) => {
+      node.type = 'raw';
+    });
+  })
+  .use(rehypeStringify, {
+    collapseEmptyAttributes: true,
+    closeSelfClosing: true,
+    allowParseErrors: true,
+    allowDangerousCharacters: true,
+    allowDangerousHtml: true,
+    // characterReferences: { '<': '' },
+    // entities: { subset: ['<'], useNamedReferences: true },
+  });
 
 export async function parseMarkdown(input: string): Promise<LiveCodeExtraction> {
   let processed = await markdownCompiler.process(input);

@@ -106,13 +106,15 @@ export async function compile(glimdownInput: string): Promise<CompilationResult>
    */
   try {
     let localScope = scope.reduce((accum, { component, name }) => {
+      console.log({ name, component });
       accum[invocationName(name)] = component;
 
       return accum;
     }, {} as Record<string, unknown>);
 
-    let { component, error } = compileHBS(rootTemplate, {
-      scope: { ...localScope, 'Limber::CopyMenu': CopyMenu },
+    let { component, error } = await compileJS('<template>' + rootTemplate + '</template>', {
+      name: 'dynamic-root',
+      scope: { ...localScope, __CopyMenu__: CopyMenu },
     });
 
     return { rootTemplate, rootComponent: component, error };
