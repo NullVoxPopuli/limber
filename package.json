@@ -9,14 +9,18 @@
     "build": "turbo build --filter=limber^... --filter=tutorial^... --output-logs errors-only",
     "lint:fix": "pnpm --filter='*' lint:fix",
     "lint": "turbo lint --output-logs errors-only",
-    "start": "turbo start --filter=limber --output-logs errors-only",
-    "start:tutorial": "turbo start --filter=tutorial"
+    "start": "pnpm build && concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow,blue",
+    "start:tutorial": "pnpm --filter=tutorial start --port 4200",
+    "start:repl": "pnpm --filter=limber start --port 4201",
+    "start:limber-ui": "pnpm --filter=limber-ui start",
+    "start:styles": "pnpm --filter=limber-styles start"
   },
   "engines": {
     "node": ">= 16"
   },
   "volta": {
-    "node": "18.15.0"
+    "node": "18.15.0",
+    "pnpm": "8.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.3",
