@@ -4,7 +4,7 @@
   "type": "module",
   "dependencies": {
     "@algorithm.ts/base64": "3.0.0",
-    "@algorithm.ts/huffman": "3.0.0-alpha.8",
+    "@algorithm.ts/huffman": "3.0.0",
     "filesize": "^10.0.7",
     "globby": "^13.1.3",
     "jsoncrush": "^1.1.8",
