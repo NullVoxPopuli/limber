@@ -9,7 +9,7 @@
     "build": "turbo build --filter=limber^... --filter=tutorial^... --output-logs errors-only",
     "lint:fix": "pnpm --filter='*' lint:fix",
     "lint": "turbo lint --output-logs errors-only",
-    "start": "pnpm build && concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow,blue",
+    "start": "pnpm build && concurrently 'npm:start:*' --prefix-colors cyan,white,yellow,blue --restart-tries -1",
     "start:tutorial": "pnpm --filter=tutorial start --port 4200",
     "start:repl": "pnpm --filter=limber start --port 4201",
     "start:limber-ui": "pnpm --filter=limber-ui start",
