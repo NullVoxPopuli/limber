@@ -4,14 +4,16 @@ The `on` modifier can be thought of as an alias for [`addEventListener`][mdn-add
 
 For example, try observing the x / y coordinates of the mouse on this div:
 
-```hbs 
+```hbs
 <div {{on 'mousemove' handleMouseMove}}>
-  The mouse position is {{m.x}} x {{m.y}}
+  The mouse position is
+  {{m.x}}
+  x
+  {{m.y}}
 </div>
 ```
 
 When moving the cursor over the div, the rendered coordinates should update.
-
 
 [Documentation][docs]
 
