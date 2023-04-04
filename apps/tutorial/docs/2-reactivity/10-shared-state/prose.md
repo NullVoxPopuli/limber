@@ -14,6 +14,8 @@ class Count {
 let count = new Count();
 ```
 
+Note that the only framework-specific instrumentation that we need is the `@tracked` decorator.
+
 We can the use this `count` immediately in our components: 
 ```hbs 
 <button {{on "click" count.increment}}>
