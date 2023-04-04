@@ -103,7 +103,7 @@ export class FileURIComponent {
     this.set(this.decoded ?? '', format);
   };
 
-  #timeout?: number;
+  #timeout?: ReturnType<typeof setTimeout>;
   #queuedFn?: () => void;
 
   /**
