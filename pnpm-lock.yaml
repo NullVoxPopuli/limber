@@ -4,7 +4,7 @@ overrides:
   '@glimmer/component': ^1.1.2
   '@glimmer/tracking': ^1.1.2
   ember-async-data: ^1.0.0
-  ember-auto-import: ^2.6.0
+  ember-auto-import: ^2.6.2
   ember-modifier: ^4.1.0
   '@types/eslint': ^8.0.0
 
@@ -84,8 +84,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1
       ember-auto-import:
-        specifier: ^2.6.0
-        version: 2.6.1(webpack@5.77.0)
+        specifier: ^2.6.2
+        version: 2.6.2(webpack@5.77.0)
       ember-container-query:
         specifier: 4.0.0-alpha.5
         version: 4.0.0-alpha.5(@glint/template@1.0.0-beta.4)(ember-source@4.12.0)
@@ -512,8 +512,8 @@ importers:
         specifier: ^8.0.1
         version: 8.0.1
       ember-auto-import:
-        specifier: ^2.6.0
-        version: 2.6.1(webpack@5.77.0)
+        specifier: ^2.6.2
+        version: 2.6.2(webpack@5.77.0)
       ember-cached-decorator-polyfill:
         specifier: ^1.0.1
         version: 1.0.1(@babel/core@7.21.3)(ember-source@4.12.0)
@@ -814,8 +814,8 @@ importers:
         specifier: ^1.8.2
         version: 1.8.2
       ember-auto-import:
-        specifier: ^2.6.0
-        version: 2.6.1(webpack@5.77.0)
+        specifier: ^2.6.2
+        version: 2.6.2(webpack@5.77.0)
       ember-cli-babel:
         specifier: ^7.26.11
         version: 7.26.11
@@ -1198,8 +1198,8 @@ importers:
         specifier: ^7.5.0
         version: 7.6.0
       ember-auto-import:
-        specifier: ^2.6.0
-        version: 2.6.1(webpack@5.76.3)
+        specifier: ^2.6.2
+        version: 2.6.2(webpack@5.76.3)
       ember-cli:
         specifier: ~4.11.0
         version: 4.11.0
@@ -9058,8 +9058,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /ember-auto-import@2.6.1(webpack@5.76.3):
-    resolution: {integrity: sha512-3bCRi/pXp4QslmuCXGlSz9xwR7DF5oDx3zZO5OXKzNZihtkqAM1xvGuRIdQSl46pvbAXOkp8Odl5fOen1i0dRw==}
+  /ember-auto-import@2.6.2(webpack@5.76.3):
+    resolution: {integrity: sha512-h0bdE1atVqEXkE+9OTkEi2wRHBpJilKn6iXlbrOS2nI4HGpWlqmUjWmQk/iMFad+1XEDBvNJnikxgtKb/GFL5A==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
       '@babel/core': 7.21.3(supports-color@8.1.1)
@@ -9096,8 +9096,8 @@ packages:
       - supports-color
       - webpack
 
-  /ember-auto-import@2.6.1(webpack@5.77.0):
-    resolution: {integrity: sha512-3bCRi/pXp4QslmuCXGlSz9xwR7DF5oDx3zZO5OXKzNZihtkqAM1xvGuRIdQSl46pvbAXOkp8Odl5fOen1i0dRw==}
+  /ember-auto-import@2.6.2(webpack@5.77.0):
+    resolution: {integrity: sha512-h0bdE1atVqEXkE+9OTkEi2wRHBpJilKn6iXlbrOS2nI4HGpWlqmUjWmQk/iMFad+1XEDBvNJnikxgtKb/GFL5A==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
       '@babel/core': 7.21.3(supports-color@8.1.1)
@@ -9741,7 +9741,7 @@ packages:
     peerDependencies:
       ember-source: '*'
     dependencies:
-      ember-auto-import: 2.6.1(webpack@5.77.0)
+      ember-auto-import: 2.6.2(webpack@5.77.0)
       ember-cli-babel: 7.26.11
       ember-cli-htmlbars: 6.2.0
       ember-cli-typescript: 5.2.1
@@ -9847,7 +9847,7 @@ packages:
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 3.0.2
       common-tags: 1.8.2
-      ember-auto-import: 2.6.1(webpack@5.76.3)
+      ember-auto-import: 2.6.2(webpack@5.76.3)
       ember-cli-babel: 7.26.11
       ember-cli-test-loader: 3.0.0
       ember-source: 4.11.0(@babel/core@7.21.3)(@glimmer/component@1.1.2)(webpack@5.76.3)
@@ -9872,7 +9872,7 @@ packages:
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 3.0.2
       common-tags: 1.8.2
-      ember-auto-import: 2.6.1(webpack@5.77.0)
+      ember-auto-import: 2.6.2(webpack@5.77.0)
       ember-cli-babel: 7.26.11
       ember-cli-test-loader: 3.0.0
       ember-source: 4.12.0(@babel/core@7.21.3)(@glimmer/component@1.1.2)(webpack@5.77.0)
@@ -10011,7 +10011,7 @@ packages:
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 4.2.0
       chalk: 4.1.2
-      ember-auto-import: 2.6.1(webpack@5.76.3)
+      ember-auto-import: 2.6.2(webpack@5.76.3)
       ember-cli-babel: 7.26.11
       ember-cli-get-component-path-option: 1.0.0
       ember-cli-is-package-missing: 1.0.0
@@ -10049,7 +10049,7 @@ packages:
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 4.2.0
       chalk: 4.1.2
-      ember-auto-import: 2.6.1(webpack@5.77.0)
+      ember-auto-import: 2.6.2(webpack@5.77.0)
       ember-cli-babel: 7.26.11
       ember-cli-get-component-path-option: 1.0.0
       ember-cli-is-package-missing: 1.0.0
