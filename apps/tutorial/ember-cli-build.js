@@ -178,10 +178,20 @@ function parse(paths) {
 
     result[group] ||= [];
     result[group].push({ path: `/${path}`, name, groupName, tutorialName });
-    result[group].sort(betterSort);
+    result[group].sort(betterSort('name'));
   }
 
-  return result;
+  // Objects' keys in JS are sorted as they are created.
+  // Since we want to use `betterSort` on the keys, we need a new object.
+  let sortedKeys = Object.keys(result).sort(betterSort());
+
+  let actualResult = {};
+
+  for (let sortedKey of sortedKeys) {
+    actualResult[sortedKey] = result[sortedKey];
+  }
+
+  return actualResult;
 }
 
 /**
@@ -194,21 +204,27 @@ function parse(paths) {
  * If some file systems correctly sort files starting with numbers,
  * then this is a no-op.
  */
-function betterSort(a, b) {
-  let aFull = a.name;
-  let bFull = b.name;
+function betterSort(property) {
+  return (a, b) => {
+    let aFull = property ? a[property] : a;
+    let bFull = property ? b[property] : b;
 
-  let [aNumStr, ...aRest] = aFull.split('-');
-  let [bNumStr, ...bRest] = bFull.split('-');
+    let [aNumStr, ...aRest] = aFull.split('-');
+    let [bNumStr, ...bRest] = bFull.split('-');
 
-  let aNum = Number(aNumStr);
-  let bNum = Number(bNumStr);
+    // Throw things starting with x at the end
+    if (aNumStr === 'x') return 1;
+    if (bNumStr === 'x') return 1;
 
-  if (aNum < bNum) return -1;
-  if (aNum > bNum) return 1;
+    let aNum = Number(aNumStr);
+    let bNum = Number(bNumStr);
 
-  let aName = aRest.join('-');
-  let bName = bRest.join('-');
+    if (aNum < bNum) return -1;
+    if (aNum > bNum) return 1;
 
-  return aName.localeCompare(bName);
+    let aName = aRest.join('-');
+    let bName = bRest.join('-');
+
+    return aName.localeCompare(bName);
+  };
 }
