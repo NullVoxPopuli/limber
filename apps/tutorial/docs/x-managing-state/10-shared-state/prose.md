@@ -3,7 +3,7 @@ This can is one way in which _[prop-drilling][prop-drilling]_ can be avoided.
 
 In Ember/Glimmer, we lean on the native capabilities of browsers to manage state, and this often takes the form of a `class` for helpfully encapsulating related behaviors.
 
-```js 
+```js
 class Count {
   @tracked value;
 
@@ -16,9 +16,10 @@ let count = new Count();
 
 Note that the only framework-specific instrumentation that we need is the `@tracked` decorator.
 
-We can the use this `count` immediately in our components: 
-```hbs 
-<button {{on "click" count.increment}}>
+We can the use this `count` immediately in our components:
+
+```hbs
+<button {{on 'click' count.increment}}>
   Increment (+)
 </button>
 ```
@@ -26,6 +27,5 @@ We can the use this `count` immediately in our components:
 In the provided example, implement `increment`, `decrement`, and `reset`.
 
 In a real app, these components could all live in separate files and import the `count`.
-
 
 [prop-drilling]: https://kentcdodds.com/blog/prop-drilling
