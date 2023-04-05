@@ -14,7 +14,6 @@ const PersonInfo = <template>
     <legend>{{@person.url}}</legend>
     <pre><code class="language-json">{{JSON.stringify @person null "\t"}}</code></pre>
   </fieldset>
-
 </template>;
 
 export default class Demo extends Component {
@@ -29,15 +28,10 @@ export default class Demo extends Component {
   }
 
   <template>
-    <div class="border p-4 grid gap-4" id="demo">
+    <div id="demo">
       <label>
         Person ID
-        <input
-          type='number'
-          class='border px-3 py-2'
-          value={{this.id}}
-          {{on 'input' this.updateId}}
-        >
+        <input type='number' value={{this.id}} {{on 'input' this.updateId}}>
       </label>
 
 
@@ -66,8 +60,13 @@ export default class Demo extends Component {
       {{/if}}
     </div>
     <style>
-      #demo { position: relative; }
-      #async-state { position: absolute; right: 0.25rem; top: 0.25rem; }
+      #demo { 
+        position: relative; max-width: 30rem; 
+        border: 1px solid;
+        padding: 1rem;
+      }
+      #demo input { max-width: 6rem; border: 1px solid; padding: 0.5rem 0.75rem; }
+      #async-state { display: inline-block; margin-left: 1rem; }
     </style>
   </template>
 }
