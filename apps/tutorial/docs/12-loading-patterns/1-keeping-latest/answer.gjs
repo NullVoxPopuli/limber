@@ -1,14 +1,3 @@
-# RemoteData
-
-`RemoteData` is a utility `Resource` from [ember-resources][gh-resources]
-that provides an easy way to interact with [`fetch`][mdn-fetch]
-with a pre-wired [`AbortController`][mdn-AbortController].
-
-In this example, the fetching of data from the [StarWars API][swapi] occurs
-automatically based on changes to the URL.
-You may change the `id` of the Person to fetch from the StarWars API.
-
-```gjs live
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
@@ -33,13 +22,13 @@ export default class Demo extends Component {
   updateId = (event) => this.id = event.target.value;
 
   @use request = RemoteData(() => urlFor(this.id));
-  @use latest = keepLatest({ 
+  @use latest = keepLatest({
     value: () => this.request.value,
     when: () => this.request.isLoading,
   });
 
   <template>
-    <div class="border p-4 grid gap-4">
+    <div class="border p-4 grid gap-4" id="demo">
       <label>
         Person ID
         <input
@@ -54,37 +43,30 @@ export default class Demo extends Component {
       {{! We either have an initial value, or we don't }}
       {{#if this.latest}}
 
-        {{! Async state for subsequent requests, only}}
-        {{#if this.request.isPending}}
-           ... loading ...
-        {{else if this.request.isRejected}}
-           error!
-        {{/if}}
-        
+        <div id="async-state">
+          {{! Async state for subsequent requests, only}}
+          {{#if this.request.isPending}}
+             ... loading ...
+          {{else if this.request.isRejected}}
+             error!
+          {{/if}}
+        </div>
+
         <PersonInfo @person={{this.latest}} />
       {{else}}
         {{! This block only matters during the initial request }}
-          
+
         {{#if this.rejest.isRejected}}
           error loading initial data!
         {{else}}
           <pre> ... loading ... </pre>
         {{/if}}
+
       {{/if}}
-        
     </div>
+    <style>
+      #demo { position: relative; }
+      #async-state { position: absolute; right: 0.25rem; top: 0.25rem; }
+    </style>
   </template>
 }
-```
-
-Docs for `RemoteData` can [be found here][docs-remote-data].
-Information about how Resources fit in to the next edition of Ember can be [found here][polaris-reactivity]
-
-
-
-[gh-resources]: https://github.com/nullvoxpopuli/ember-resources
-[mdn-fetch]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-[mdn-AbortController]: https://developer.mozilla.org/en-US/docs/Web/API/AbortController
-[docs-remote-data]: https://ember-resources.pages.dev/modules/util_remote_data
-[polaris-reactivity]: https://wycats.github.io/polaris-sketchwork/reactivity.html
-[swapi]: https://swapi.dev/
