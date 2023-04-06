@@ -5,11 +5,15 @@
   "keywords": [
     "ember-addon"
   ],
-  "repository": "",
+  "repository": {
+    "type": "https",
+    "url": "https://github.com/NullVoxPopuli/limber",
+    "directory": "packages/limber-ui/addon"
+  },
   "license": "MIT",
   "author": "NullVoxPopuli",
   "files": [
-    "addon-main.js",
+    "addon-main.cjs",
     "dist"
   ],
   "scripts": {
@@ -70,7 +74,6 @@
     "ember-template-imports": "^3.4.2",
     "ember-template-lint": "^5.7.1",
     "eslint": "^8.33.0",
-    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-ember": "^11.2.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",

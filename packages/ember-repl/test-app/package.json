@@ -1,5 +1,5 @@
 {
-  "name": "test-app",
+  "name": "ember-repl-test-app",
   "version": "0.0.0",
   "private": true,
   "description": "Small description for test-app goes here",
@@ -19,17 +19,30 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "start": "ember serve",
-    "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
-    "test:ember": "ember test"
+    "test": "ember test",
+    "test:scenarios": "ember try:each"
+  },
+  "dependencies": {
+    "ember-repl": "workspace:*"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.8.1",
+    "@embroider/test-setup": "^2.1.1",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
-    "babel-eslint": "^10.1.0",
-    "broccoli-asset-rev": "^3.0.0",
-    "concurrently": "^7.6.0",
+    "@glint/core": "^1.0.0-beta.4",
+    "@glint/environment-ember-loose": "^1.0.0-beta.4",
+    "@glint/environment-ember-template-imports": "^1.0.0-beta.4",
+    "@glint/template": "^1.0.0-beta.4",
+    "@nullvoxpopuli/eslint-configs": "^3.1.3",
+    "@nullvoxpopuli/limber-untyped": "workspace:^0.0.0",
+    "@types/qunit": "^2.19.4",
+    "@types/rsvp": "^4.0.4",
+    "@tsconfig/ember": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
+    "concurrently": "^8.0.1",
     "ember-auto-import": "^2.5.0",
     "ember-cli": "~4.10.0-beta.0",
     "ember-cli-app-version": "^5.0.0",
@@ -46,7 +59,10 @@
     "ember-qunit": "^6.0.0",
     "ember-resolver": "^8.0.3",
     "ember-source": "~4.10.0-beta.2",
+    "ember-source-channel-url": "^3.0.0",
+    "ember-template-imports": "^3.4.2",
     "ember-template-lint": "^5.2.0",
+    "ember-try": "^2.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-ember": "^11.2.1",
@@ -54,13 +70,18 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-qunit": "^7.3.4",
     "loader.js": "^4.7.0",
+    "path-browserify": "^1.0.1",
     "prettier": "^2.8.1",
     "qunit": "^2.19.3",
     "qunit-dom": "^2.0.0",
+    "typescript": "^5.0.3",
     "webpack": "^5.75.0"
   },
   "engines": {
-    "node": "14.* || 16.* || >= 18"
+    "node": ">= 18"
+  },
+  "volta": {
+    "extends": "../../../package.json"
   },
   "ember": {
     "edition": "octane"

@@ -18,6 +18,7 @@
     "limber",
     "tutorial",
     "limber-ui-test-app",
+    "ember-repl-test-app",
     "@nullvoxpopuli/limber-codemirror",
     "@nullvoxpopuli/limber-consts",
     "@nullvoxpopuli/horizon-theme",
