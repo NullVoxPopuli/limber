@@ -1,12 +1,12 @@
 import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
 
 class Count {
   @tracked value = 0;
 
-  // TODO: implement these methods
-  decrement = () => {}
-  increment = () => {}
-  reset = () => {}
+  decrement = () => this.value--;
+  increment = () => this.value++;
+  reset = () => this.value = 0;
 }
 
 let count = new Count();
