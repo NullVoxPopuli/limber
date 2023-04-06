@@ -1,15 +1,13 @@
 import type { TemplateMatch } from './parse-templates';
 import type { NodePath } from '@babel/traverse';
-import type * as babelTypes from '@babel/types';
+import type { CallExpression } from '@babel/types';
 import type { ImportUtil } from 'babel-import-util';
 
 // const Greeting = <template>Hello</template>
 export const TEMPLATE_TAG_NAME = 'template';
 export const TEMPLATE_TAG_PLACEHOLDER = '__GLIMMER_TEMPLATE';
 
-export function isTemplateTag(
-  callExpressionPath: NodePath<babelTypes.CallExpression>
-) {
+export function isTemplateTag(callExpressionPath: NodePath<CallExpression>) {
   const callee = callExpressionPath.get('callee');
 
   return (
@@ -20,12 +18,12 @@ export function isTemplateTag(
 }
 
 export function buildPrecompileTemplateCall(
-  t: typeof babelTypes,
-  callExpressionPath: NodePath<babelTypes.CallExpression>,
+  t: any,
+  callExpressionPath: NodePath<CallExpression>,
   state: {
     importUtil: ImportUtil;
   }
-): babelTypes.CallExpression {
+): CallExpression {
   const callee = callExpressionPath.get('callee');
 
   return t.callExpression(

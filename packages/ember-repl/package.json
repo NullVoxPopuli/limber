@@ -30,8 +30,8 @@
   },
   "dependencies": {
     "@babel/helper-plugin-utils": "^7.20.2",
-    "@babel/standalone": "^7.21.3",
-    "@babel/traverse": "^7.21.3",
+    "@babel/standalone": "^7.21.4",
+    "@babel/traverse": "^7.21.4",
     "@embroider/macros": "^1.10.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
@@ -54,8 +54,8 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.3",
-    "@babel/types": "^7.21.3",
+    "@babel/core": "^7.21.4",
+    "@babel/types": "^7.21.4",
     "@ember/optional-features": "^2.0.0",
     "@ember/string": "^3.0.1",
     "@ember/test-helpers": "^2.9.3",
