@@ -28,6 +28,7 @@ PRs always welcome! ❤️
 - `pnpm lint:fix` to fix lint violations, where applicable
 - `pnpm test` to test everything
 
+
 ## Special Thanks
 
 Cross-Browser testing provided by <a href='http://browserstack.com' target='_blank'><img src='https://d2ogrdw2mh0rsl.cloudfront.net/production/images/static/header/header-logo.svg'></a>
