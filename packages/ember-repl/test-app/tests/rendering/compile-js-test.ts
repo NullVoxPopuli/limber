@@ -6,7 +6,7 @@ import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 // import this so we don't tree-shake it away
-import ExampleComponent from 'dummy/components/example-component';
+import ExampleComponent from 'test-app/components/example-component';
 import { compileJS } from 'ember-repl';
 
 import { Await } from '../helpers/await';
@@ -76,7 +76,7 @@ module('compileJS()', function (hooks) {
           import { tracked } from '@glimmer/tracking';
           import { on } from '@ember/modifier';
 
-          import Example from 'dummy/components/example-component';
+          import Example from 'test-app/components/example-component';
 
           <template>
             <Example />
