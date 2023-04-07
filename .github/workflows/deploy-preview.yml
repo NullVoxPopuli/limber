@@ -42,7 +42,9 @@ on:
       # as early as possible
       - requested
 
-concurrency: deploy-preview
+concurrency:
+  group: deploy-preview-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   TURBO_API: http://127.0.0.1:9080
