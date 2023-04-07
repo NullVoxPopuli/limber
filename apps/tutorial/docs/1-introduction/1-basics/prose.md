@@ -58,9 +58,45 @@ This entire app is generated from [the docs folder][the-docs] and content can be
 Components are a meta-building block which packages the native primitives, allowing for easier re-distribution of a specific configuration of those primitives.
 The primitives in Glimmer/Ember are:
 
+- Values (or cells)
 - Resources
 - Functions
 - Modifiers
 - Elements
 
 A component may include 1 or more of these primitives and is "invoked" with angle-brackets, e.g.: `<MyComponent />`
+
+## What if I'm not using `<template>` syntax in my projects yet?
+
+If you're an existing ember/glimmer user and are not yet using `<template>`, there is a transformation you can do to adapt the examples in this tutorial to the pre-`<template>` times by using the following guidelines:
+
+- For any lone `<template>`, this is a template-only component.
+- For any `<template>` within a `class`, this would be equivelent to a js + hbs component (two-file, colocated, or class component).
+- For any files with multiple `<template>`s in them, they will need to be multiple components.
+- Any reference to a local variable without `this` will need to be defined or aliased within a class component (this is supported since `ember-source@3.25` and looks like this:
+
+  ```js
+  // app/components/my-demo.js
+  // ...
+  import Something from 'somewhere';
+
+  let definedInModuleSpace = () => {};
+
+  export default class MyDemo extends Component {
+    definedInternally = () => {};
+
+    // the aliases, read as: [localClassProperty] = value;
+    definedInModuleSpace = definedInModuleSpace;
+    Something = Something;
+  }
+  ```
+
+  ```hbs
+  {{! app/components/my-demo.hbs }}
+
+  {{#let (this.definedInternally) as |result|}}
+    <this.Something @foo={{this.definedInModuleSpace}} />
+  {{/let}}
+  ```
+
+  For more information on "using anything as values", see [these docs](https://guides.emberjs.com/release/in-depth-topics/rendering-values/)
