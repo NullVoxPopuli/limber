@@ -1,6 +1,6 @@
 import { assert } from '@ember/debug';
-import { camelize, capitalize } from '@ember/string';
 
+import { camelize, capitalize } from 'inflection';
 import { v5 as uuidv5 } from 'uuid';
 
 /**
