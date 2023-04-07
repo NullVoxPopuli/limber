@@ -28,6 +28,27 @@ your app's initial time-to-interactive/etc stats.
 ember install ember-repl
 ```
 
+## Setup
+
+This library uses babel, which does some goofy things in the browser.
+You'll need to define a global `process` and `Buffer` somewhere in your app.
+
+For example:
+```js 
+// app/app.js
+
+// @babel/traverse (from babel-plugin-ember-template-imports)
+// accesses process.....
+// maybe one day we can have a browser-only verison?
+// But they aren't used.... so.. that's fun.
+Object.assign(window, {
+  process: { env: {} },
+  Buffer: {},
+});
+
+
+```
+
 ## Usage
 
 **`compileJS`**

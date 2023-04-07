@@ -51,7 +51,7 @@ module.exports = function (defaults) {
       // Tailwind
       require('@nullvoxpopuli/limber-styles/broccoli-funnel')(),
       // COMPONENT_MAP,
-      require('ember-repl').buildComponentMap([
+      require('ember-repl/ember-cli').buildComponentMap([
         'limber/components/limber/menu',
         'limber/components/limber/header',
         'limber/components/external-link',

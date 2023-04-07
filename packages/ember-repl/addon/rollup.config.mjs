@@ -21,7 +21,7 @@ export default defineConfig({
   },
   output: addon.output(),
   plugins: [
-    addon.publicEntrypoints(['**/*.js']),
+    addon.publicEntrypoints(['browser/**/*.js']),
     addon.appReexports([]),
 
     ts({
@@ -34,6 +34,8 @@ export default defineConfig({
     addon.dependencies(),
     // line-column...
     cjs(),
+
+    addon.keepAssets(['build/**/*']),
 
     // No components in this addon, as it turns out
     // addon.hbs(),

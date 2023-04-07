@@ -1,5 +1,7 @@
 'use strict';
 
+const { stripIndents } = require('common-tags');
+
 /**
  * Builds a file with a single export, COMPONENT_MAP, that
  * is a map of the provided paths *to* all exported identifiers

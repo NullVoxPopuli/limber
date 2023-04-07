@@ -20,13 +20,11 @@
     }
   },
   "exports": {
-    ".": {
-      "import": "./dist/browser/index.js"
+    ".": "./dist/browser/index.js",
+    "./esm": "./dist/browser/esm/index.js",
+    "./ember-cli": {
+      "require": "./src/build/ember-cli.cjs"
     },
-    "./esm": {
-      "import": "./dist/browser/esm/index.js"
-    },
-    "./ember-cli": "./src/build/ember-cli.cjs",
     "./addon-main.js": "./addon-main.cjs"
   },
   "files": [

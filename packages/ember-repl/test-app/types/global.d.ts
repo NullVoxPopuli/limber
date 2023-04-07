@@ -7,7 +7,6 @@
 // }
 
 // provided by vendor/ember/ember-template-compiler.js (somehow)
-declare module 'ember-template-compiler';
 
 declare module '@ember/-internals/glimmer';
 declare module '@ember/helper';
