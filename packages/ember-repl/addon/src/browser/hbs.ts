@@ -1,15 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { precompileJSON } from '@glimmer/compiler';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// import { precompileJSON } from '@glimmer/compiler';
 // @ts-ignore
-import { getTemplateLocals } from '@glimmer/syntax';
 import { setComponentTemplate } from '@ember/component';
 import templateOnlyComponent from '@ember/component/template-only';
 import { array, concat, fn, get, hash } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { createTemplateFactory } from '@ember/template-factory';
+import { importSync } from '@embroider/macros';
 
 import { nameFor } from './utils';
+
+// These things are pre-bundled in the old system.
+// ember-template-compiler defines them in AMD/requirejs
+const { precompileJSON } = importSync('@glimmer/compiler');
+const { getTemplateLocals } = importSync('@glimmer/syntax');
 
 /**
  * compile a template with an empty scope
