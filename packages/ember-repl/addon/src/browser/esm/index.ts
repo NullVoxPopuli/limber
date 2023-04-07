@@ -1,12 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { getTemplateLocals } from '@glimmer/syntax';
-
-import HTMLBars, {
-  preprocessEmbeddedTemplates,
-} from 'babel-plugin-htmlbars-inline-precompile';
-import { precompile as precompileTemplate } from 'ember-template-compiler';
-
+import { preprocess, transform } from '../gjs';
 import { modules } from '../known-modules';
 import { nameFor } from '../utils';
 
@@ -80,57 +72,9 @@ async function evalSnippet(code: string) {
 }
 
 async function compileGJS({ code: input, name }: Info) {
-  let babel = await import('@babel/standalone');
-
-  let preprocessed = preprocessEmbeddedTemplates(input, {
-    getTemplateLocals,
-    relativePath: `${name}.js`,
-    includeSourceMaps: false,
-    includeTemplateTokens: true,
-    templateTag: 'template',
-    templateTagReplacement: 'GLIMMER_TEMPLATE',
-    getTemplateLocalsExportPath: 'getTemplateLocals',
-  });
-
-  let result = babel.transform(preprocessed.output, {
-    filename: `${name}.js`,
-    plugins: [
-      [
-        HTMLBars,
-        {
-          precompile: precompileTemplate,
-          // this needs to be true until Ember 3.27+
-          ensureModuleApiPolyfill: false,
-          modules: {
-            'ember-template-imports': {
-              export: 'hbs',
-              useTemplateLiteralProposalSemantics: 1,
-            },
-
-            'TEMPLATE-TAG-MODULE': {
-              export: 'GLIMMER_TEMPLATE',
-              debugName: '<template>',
-              useTemplateTagProposalSemantics: 1,
-            },
-          },
-        },
-      ],
-      [babel.availablePlugins['proposal-decorators'], { legacy: true }],
-      [babel.availablePlugins['proposal-class-properties']],
-    ],
-    presets: [
-      [
-        babel.availablePresets['env'],
-        {
-          // false -- keeps ES Modules...
-          // it means "compile modules to this: ..."
-          modules: false,
-          targets: { esmodules: true },
-          loose: true,
-          forceAllTransforms: false,
-        },
-      ],
-    ],
+  let preprocessed = preprocess(input, name);
+  let result = await transform(preprocessed, name, {
+    modules: false,
   });
 
   if (!result) {
@@ -141,3 +85,4 @@ async function compileGJS({ code: input, name }: Info) {
 
   return code;
 }
+

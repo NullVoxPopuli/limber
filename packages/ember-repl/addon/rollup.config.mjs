@@ -1,5 +1,6 @@
 // @ts-nocheck
 import ts from 'rollup-plugin-ts';
+import cjs from '@rollup/plugin-commonjs';
 import { Addon } from '@embroider/addon-dev/rollup';
 import copy from 'rollup-plugin-copy';
 import { defineConfig } from 'rollup';
@@ -31,8 +32,12 @@ export default defineConfig({
     }),
 
     addon.dependencies(),
-    addon.hbs(),
-    glimmerTemplateTag({ preprocessOnly: true }),
+    // line-column...
+    cjs(),
+
+    // No components in this addon, as it turns out
+    // addon.hbs(),
+    // glimmerTemplateTag({ preprocessOnly: true }),
     addon.clean(),
   ],
 });

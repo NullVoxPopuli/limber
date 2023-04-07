@@ -12,6 +12,23 @@
   },
   "license": "MIT",
   "author": "NullVoxPopuli",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*"
+      ]
+    }
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/browser/index.js"
+    },
+    "./esm": {
+      "import": "./dist/browser/esm/index.js"
+    },
+    "./ember-cli": "./src/build/ember-cli.cjs",
+    "./addon-main.js": "./addon-main.cjs"
+  },
   "files": [
     "src",
     "dist",
@@ -53,6 +70,7 @@
     "@glimmer/component": "^1.1.2",
     "@glimmer/interfaces": "^0.84.3",
     "@glimmer/reference": "^0.84.3",
+    "@glimmer/syntax": "^0.84.3",
     "@glimmer/util": "^0.84.3",
     "@glint/core": "^1.0.0-beta.4",
     "@glint/environment-ember-loose": "^1.0.0-beta.4",
@@ -60,6 +78,7 @@
     "@glint/template": "^1.0.0-beta.4",
     "@nullvoxpopuli/eslint-configs": "^3.1.3",
     "@nullvoxpopuli/limber-untyped": "workspace:^0.0.0",
+    "@rollup/plugin-commonjs": "^24.0.1",
     "@tsconfig/ember": "^2.0.0",
     "@types/babel__core": "^7.20.0",
     "@types/babel__standalone": "^7.1.4",
@@ -68,6 +87,7 @@
     "@typescript-eslint/eslint-plugin": "^5.55.0",
     "@typescript-eslint/parser": "^5.55.0",
     "concurrently": "^8.0.1",
+    "ember-source": "^4.12.0",
     "ember-template-imports": "^3.4.2",
     "ember-template-lint": "^5.7.1",
     "eslint": "^8.26.0",
@@ -84,23 +104,6 @@
   "volta": {
     "extends": "../../../package.json"
   },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "dist/*"
-      ]
-    }
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/browser/index.js"
-    },
-    "./esm": {
-      "import": "./dist/browser/esm/index.js"
-    },
-    "./ember-cli": "./src/build/ember-cli.cjs",
-    "./addon-main.js": "./addon-main.cjs"
-  },
   "ember": {
     "edition": "octane"
   },
@@ -109,5 +112,10 @@
     "type": "addon",
     "main": "addon-main.cjs",
     "app-js": {}
+  },
+  "peerDependencies": {
+    "@glimmer/component": "^1.1.2",
+    "@glimmer/syntax": "^0.84.3",
+    "ember-source": "^4.12.0"
   }
 }
