@@ -6,7 +6,9 @@ on:
 
 ##############################################################
 
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # cancel-in-progress: true
 
 env:
   codemirror: packages/codemirror/
