@@ -50,6 +50,7 @@
     "@ember/test-helpers": "^2.9.3",
     "@ember/test-waiters": "^3.0.2",
     "@embroider/addon-dev": "^3.0.0",
+    "@glimmer/component": "^1.1.2",
     "@glimmer/interfaces": "^0.84.3",
     "@glimmer/reference": "^0.84.3",
     "@glimmer/util": "^0.84.3",
@@ -94,6 +95,9 @@
     ".": {
       "import": "./dist/browser/index.js"
     },
+    "./esm": {
+      "import": "./dist/browser/esm/index.js"
+    },
     "./ember-cli": "./src/build/ember-cli.cjs",
     "./addon-main.js": "./addon-main.cjs"
   },
@@ -101,7 +105,9 @@
     "edition": "octane"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config",
+    "version": 2,
+    "type": "addon",
+    "main": "addon-main.cjs",
     "app-js": {}
   }
 }
