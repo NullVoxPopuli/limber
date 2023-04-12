@@ -108,7 +108,7 @@
     "type-fest": "3.8.0",
     "typescript": "^5.0.4",
     "vfile": "^4.2.1",
-    "webpack": "^5.78.0",
+    "webpack": "^5.79.0",
     "yn": "^4.0.0"
   },
   "engines": {
