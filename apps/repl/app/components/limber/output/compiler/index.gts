@@ -27,7 +27,6 @@ interface Signature {
   }
 }
 
-
 /**
   * The Receiving Component is Limber::FrameOutput
   */

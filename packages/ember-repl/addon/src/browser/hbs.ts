@@ -26,15 +26,15 @@ const { getTemplateLocals } = importSync('@glimmer/syntax') as any;
  */
 export function compileHBS(
   template: string,
-  options: Omit<CompileTemplateOptions, 'moduleName'> = {}
+  options: Partial<CompileTemplateOptions> = {}
 ) {
-  let name = nameFor(template);
+  let name = options.moduleName ?? nameFor(template);
   let component: undefined | unknown;
   let error: undefined | Error;
 
   try {
     component = setComponentTemplate(
-      compileTemplate(template, { moduleName: name, ...options }),
+      compileTemplate(template, { ...options, moduleName: name }),
       templateOnlyComponent(name)
     );
   } catch (e) {

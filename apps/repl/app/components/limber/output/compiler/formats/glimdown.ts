@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
+import { getComponentTemplate } from '@ember/component';
+
 import { compileHBS, compileJS, invocationName } from 'ember-repl';
 
 import CopyMenu from 'limber/components/limber/copy-menu';
@@ -17,7 +19,11 @@ export async function compileAll(js: { code: string }[]) {
 
   let modules = await Promise.all(
     js.map(async ({ code }) => {
-      return await compileJS(code, COMPONENT_MAP);
+      let result = await compileJS(code, COMPONENT_MAP);
+
+      console.log({ code, result, template: getComponentTemplate(result.component) });
+
+      return result;
     })
   );
 
@@ -106,16 +112,18 @@ export async function compile(glimdownInput: string): Promise<CompilationResult>
    */
   try {
     let localScope = scope.reduce((accum, { component, name }) => {
-      console.log({ name, component });
       accum[invocationName(name)] = component;
+
+      console.debug(name, component);
 
       return accum;
     }, {} as Record<string, unknown>);
 
-    let { component, error } = await compileJS('<template>' + rootTemplate + '</template>', {
-      name: 'dynamic-root',
+    let { component, error } = compileHBS(rootTemplate, {
       scope: { ...localScope, __CopyMenu__: CopyMenu },
+      moduleName: 'root-template',
     });
+
 
     return { rootTemplate, rootComponent: component, error };
   } catch (error) {
