@@ -19,7 +19,7 @@
     "node": ">= 16"
   },
   "volta": {
-    "node": "18.15.0",
+    "node": "18.16.0",
     "pnpm": "8.1.0"
   },
   "devDependencies": {
