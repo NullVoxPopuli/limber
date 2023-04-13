@@ -186,10 +186,7 @@ export function parseTemplates(
     while (tokens.length > 0) {
       const currentToken = expect(tokens.shift(), 'expected token');
 
-      if (
-        currentToken[0] === startToken[0] &&
-        !isEscaped(template, currentToken.index)
-      ) {
+      if (currentToken[0] === startToken[0] && !isEscaped(template, currentToken.index)) {
         return;
       }
     }

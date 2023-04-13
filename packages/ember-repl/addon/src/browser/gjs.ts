@@ -23,8 +23,11 @@ export function preprocess(input: string, name: string) {
   return preprocessed.output;
 }
 
-export async function transform(intermediate: string, name: string, options: any = {}): Promise<ReturnType<Babel['transform']>> {
-
+export async function transform(
+  intermediate: string,
+  name: string,
+  options: any = {}
+): Promise<ReturnType<Babel['transform']>> {
   let babel = (await import('@babel/standalone')) as Babel;
 
   return babel.transform(intermediate, {
@@ -54,4 +57,3 @@ export async function transform(intermediate: string, name: string, options: any
     ],
   });
 }
-

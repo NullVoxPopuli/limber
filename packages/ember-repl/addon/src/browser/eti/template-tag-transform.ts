@@ -1,8 +1,4 @@
-import {
-  buildPrecompileTemplateCall,
-  registerRefs,
-  TEMPLATE_TAG_NAME,
-} from './util';
+import { buildPrecompileTemplateCall, registerRefs, TEMPLATE_TAG_NAME } from './util';
 
 /**
  * Supports the following syntaxes:
@@ -17,18 +13,13 @@ import {
  *   [GLIMMER_TEMPLATE('hello')];
  * }
  */
-export const transformTemplateTag = function (
-  t: any,
-  templatePath: any,
-  state: any
-) {
+export const transformTemplateTag = function (t: any, templatePath: any, state: any) {
   let compiled = buildPrecompileTemplateCall(t, templatePath, state);
   let path = templatePath.parentPath;
 
   if (path.type === 'ArrayExpression') {
     let arrayParentPath = path.parentPath;
-    let varId =
-      arrayParentPath.node.id || path.scope.generateUidIdentifier(templatePath);
+    let varId = arrayParentPath.node.id || path.scope.generateUidIdentifier(templatePath);
 
     const templateOnlyComponentExpression = t.callExpression(
       buildSetComponentTemplate(path, state),
@@ -41,10 +32,7 @@ export const transformTemplateTag = function (
             'default',
             'templateOnly'
           ),
-          [
-            t.stringLiteral('dynamic-runtime-file.js'),
-            t.stringLiteral(varId.name),
-          ]
+          [t.stringLiteral('dynamic-runtime-file.js'), t.stringLiteral(varId.name)]
         ),
       ]
     );
@@ -54,9 +42,7 @@ export const transformTemplateTag = function (
       arrayParentPath.parentPath.type === 'Program'
     ) {
       registerRefs(
-        arrayParentPath.replaceWith(
-          t.exportDefaultDeclaration(templateOnlyComponentExpression)
-        ),
+        arrayParentPath.replaceWith(t.exportDefaultDeclaration(templateOnlyComponentExpression)),
         (newPath: any) => [
           newPath.get('declaration.callee'),
           newPath.get('declaration.arguments.0.callee'),
@@ -64,14 +50,11 @@ export const transformTemplateTag = function (
         ]
       );
     } else {
-      registerRefs(
-        path.replaceWith(templateOnlyComponentExpression),
-        (newPath: any) => [
-          newPath.get('callee'),
-          newPath.get('arguments.0.callee'),
-          newPath.get('arguments.1.callee'),
-        ]
-      );
+      registerRefs(path.replaceWith(templateOnlyComponentExpression), (newPath: any) => [
+        newPath.get('callee'),
+        newPath.get('arguments.0.callee'),
+        newPath.get('arguments.1.callee'),
+      ]);
     }
   } else if (path.type === 'ClassProperty') {
     let classPath = path.parentPath.parentPath;
@@ -80,10 +63,7 @@ export const transformTemplateTag = function (
       registerRefs(
         classPath.insertAfter(
           t.expressionStatement(
-            t.callExpression(buildSetComponentTemplate(path, state), [
-              compiled,
-              classPath.node.id,
-            ])
+            t.callExpression(buildSetComponentTemplate(path, state), [compiled, classPath.node.id])
           )
         ),
         (newPath: any) => [
@@ -95,10 +75,7 @@ export const transformTemplateTag = function (
       registerRefs(
         classPath.replaceWith(
           t.expressionStatement(
-            t.callExpression(buildSetComponentTemplate(path, state), [
-              compiled,
-              classPath.node,
-            ])
+            t.callExpression(buildSetComponentTemplate(path, state), [compiled, classPath.node])
           )
         ),
         (newPath: any) => [
@@ -119,9 +96,5 @@ export const transformTemplateTag = function (
 };
 
 function buildSetComponentTemplate(path: any, state: any) {
-  return state.importUtil.import(
-    path,
-    '@ember/component',
-    'setComponentTemplate'
-  );
+  return state.importUtil.import(path, '@ember/component', 'setComponentTemplate');
 }

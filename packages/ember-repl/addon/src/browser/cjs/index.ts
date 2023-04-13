@@ -41,4 +41,3 @@ async function compileGJS({ code: input, name }: Info) {
 
   return code;
 }
-

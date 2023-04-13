@@ -5,9 +5,9 @@ import { hbs } from 'ember-cli-htmlbars';
 import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
+import { compileJS } from 'ember-repl';
 // import this so we don't tree-shake it away
 import ExampleComponent from 'test-app/components/example-component';
-import { compileJS } from 'ember-repl';
 
 import { Await } from '../helpers/await';
 

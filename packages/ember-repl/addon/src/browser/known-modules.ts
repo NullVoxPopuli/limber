@@ -18,6 +18,7 @@ import * as _service from '@ember/service';
 import * as _string from '@ember/string';
 import { createTemplateFactory } from '@ember/template-factory';
 import * as _utils from '@ember/utils';
+// import * as _owner from '@ember/owner';
 
 export const modules = {
   '@ember/application': _application,
@@ -34,6 +35,7 @@ export const modules = {
   '@ember/string': _string,
   '@ember/template-factory': { createTemplateFactory },
   '@ember/utils': _utils,
+  // '@ember/owner': _owner,
 
   '@glimmer/component': _GlimmerComponent,
   '@glimmer/tracking': _tracking,

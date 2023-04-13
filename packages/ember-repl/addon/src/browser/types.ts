@@ -1,8 +1,4 @@
-import type {
-  availablePlugins,
-  availablePresets,
-  transform,
-} from '@babel/standalone';
+import type { availablePlugins, availablePresets, transform } from '@babel/standalone';
 
 export interface CompileResult {
   component?: unknown;

@@ -52,15 +52,9 @@ interface Replacement {
 
 function getMatchStartAndEnd(match: RegExpMatchArray) {
   return {
-    start: expect(
-      match.index,
-      'Expected regular expression match to have an index'
-    ),
+    start: expect(match.index, 'Expected regular expression match to have an index'),
     end:
-      expect(
-        match.index,
-        'Expected regular expression match to have an index'
-      ) + match[0].length,
+      expect(match.index, 'Expected regular expression match to have an index') + match[0].length,
   };
 }
 
@@ -117,20 +111,8 @@ function replaceMatch(
   ensureBackticksEscaped(s, openEnd + 1, closeStart - 1);
 
   return [
-    replacementFrom(
-      template,
-      openStart,
-      openEnd - openStart,
-      newStart.length,
-      'start'
-    ),
-    replacementFrom(
-      template,
-      closeStart,
-      closeEnd - closeStart,
-      newEnd.length,
-      'end'
-    ),
+    replacementFrom(template, openStart, openEnd - openStart, newStart.length, 'start'),
+    replacementFrom(template, closeStart, closeEnd - closeStart, newEnd.length, 'end'),
   ];
 }
 
@@ -162,12 +144,7 @@ export function preprocessEmbeddedTemplates(
   template: string,
   options: PreprocessOptions
 ): PreprocessedOutput {
-  const {
-    templateTag,
-    templateTagReplacement,
-    includeTemplateTokens,
-    relativePath,
-  } = options;
+  const { templateTag, templateTagReplacement, includeTemplateTokens, relativePath } = options;
 
   const parseTemplatesOptions: ParseTemplatesOptions = {
     templateTag,

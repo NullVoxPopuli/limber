@@ -11,9 +11,7 @@ export function isTemplateTag(callExpressionPath: NodePath<CallExpression>) {
   const callee = callExpressionPath.get('callee');
 
   return (
-    !Array.isArray(callee) &&
-    callee.isIdentifier() &&
-    callee.node.name === TEMPLATE_TAG_PLACEHOLDER
+    !Array.isArray(callee) && callee.isIdentifier() && callee.node.name === TEMPLATE_TAG_PLACEHOLDER
   );
 }
 
@@ -27,11 +25,7 @@ export function buildPrecompileTemplateCall(
   const callee = callExpressionPath.get('callee');
 
   return t.callExpression(
-    state.importUtil.import(
-      callee,
-      '@ember/template-compilation',
-      'precompileTemplate'
-    ),
+    state.importUtil.import(callee, '@ember/template-compilation', 'precompileTemplate'),
     callExpressionPath.node.arguments
   );
 }
