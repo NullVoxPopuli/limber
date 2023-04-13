@@ -46,7 +46,17 @@ Object.assign(window, {
   Buffer: {},
 });
 
+```
 
+Additionally, because the ember-template-compiler is presently "goofy" in `ember-source`, we must do this in `ember-cli-build.js`:
+
+```js 
+const app = new EmberApp(defaults, {
+  // ...
+});
+app.import('vendor/ember/ember-template-compiler.js');
+
+// ...
 ```
 
 ## Usage
