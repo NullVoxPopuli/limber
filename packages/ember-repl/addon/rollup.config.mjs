@@ -1,4 +1,3 @@
-// @ts-nocheck
 import ts from 'rollup-plugin-ts';
 import cjs from '@rollup/plugin-commonjs';
 import { Addon } from '@embroider/addon-dev/rollup';

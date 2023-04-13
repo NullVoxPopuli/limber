@@ -1,6 +1,6 @@
 import { assert } from '@ember/debug';
 
-import { camelize, capitalize } from 'inflection';
+import { pascalCase } from 'change-case';
 import { v5 as uuidv5 } from 'uuid';
 
 /**
@@ -41,6 +41,10 @@ export function invocationOf(name: string) {
   return `<${invocationName(name)} />`;
 }
 
+/**
+ * Core team does not want to support changes to '@ember/string' (v2 addonification, specifically)
+ * inflection does not support hyphens
+ */
 export function invocationName(name: string) {
-  return capitalize(camelize(name));
+  return pascalCase(name).replaceAll('_', '');
 }
