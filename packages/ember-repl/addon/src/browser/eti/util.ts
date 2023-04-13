@@ -41,7 +41,7 @@ export function registerRefs(
       );
     }
 
-    newPath = newPath[0];
+    newPath = newPath[0] as string;
   }
 
   const refPaths = getRefPaths(newPath);

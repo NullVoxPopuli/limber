@@ -16,6 +16,8 @@ import * as _object from '@ember/object';
 import * as _runloop from '@ember/runloop';
 import * as _service from '@ember/service';
 import * as _string from '@ember/string';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { createTemplateFactory } from '@ember/template-factory';
 import * as _utils from '@ember/utils';
 // import * as _owner from '@ember/owner';

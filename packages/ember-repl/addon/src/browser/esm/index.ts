@@ -26,7 +26,7 @@ export async function compileJS(code: string, extraModules?: ExtraModules) {
     compiled = proxyToSkypack(compiled, extraModules);
     component = await evalSnippet(compiled);
   } catch (e) {
-    error = e;
+    error = e as Error | undefined;
   }
 
   return { name, component, error };

@@ -70,6 +70,7 @@
     "@glimmer/interfaces": "^0.84.3",
     "@glimmer/reference": "^0.84.3",
     "@glimmer/syntax": "^0.84.3",
+    "@glimmer/tracking": "^1.1.2",
     "@glimmer/util": "^0.84.3",
     "@glint/core": "^1.0.0-beta.4",
     "@glint/environment-ember-loose": "^1.0.0-beta.4",

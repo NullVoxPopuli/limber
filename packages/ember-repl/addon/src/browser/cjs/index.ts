@@ -23,7 +23,7 @@ export async function compileJS(code: string, extraModules?: ExtraModules) {
 
     component = evalSnippet(compiled, extraModules).default;
   } catch (e) {
-    error = e;
+    error = e as Error | undefined;
   }
 
   return { name, component, error };

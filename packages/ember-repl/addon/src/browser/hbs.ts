@@ -6,6 +6,8 @@ import { setComponentTemplate } from '@ember/component';
 import templateOnlyComponent from '@ember/component/template-only';
 import { array, concat, fn, get, hash } from '@ember/helper';
 import { on } from '@ember/modifier';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { createTemplateFactory } from '@ember/template-factory';
 import { importSync } from '@embroider/macros';
 
@@ -13,8 +15,8 @@ import { nameFor } from './utils';
 
 // These things are pre-bundled in the old system.
 // ember-template-compiler defines them in AMD/requirejs
-const { precompileJSON } = importSync('@glimmer/compiler');
-const { getTemplateLocals } = importSync('@glimmer/syntax');
+const { precompileJSON } = importSync('@glimmer/compiler') as any;
+const { getTemplateLocals } = importSync('@glimmer/syntax') as any;
 
 /**
  * compile a template with an empty scope
@@ -36,7 +38,7 @@ export function compileHBS(
       templateOnlyComponent(name)
     );
   } catch (e) {
-    error = e;
+    error = e as Error | undefined;
   }
 
   return { name, component, error };
