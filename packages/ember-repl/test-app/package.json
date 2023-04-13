@@ -25,11 +25,6 @@
   "dependencies": {
     "ember-repl": "workspace:*"
   },
-  "dependenciesMeta": {
-    "ember-repl": {
-      "injected": true
-    }
-  },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.8.1",

@@ -15,7 +15,7 @@
   "typesVersions": {
     "*": {
       "*": [
-        "dist/*"
+        "dist/browser/*"
       ]
     }
   },
