@@ -179,5 +179,41 @@ module('Unit | parseMarkdown()', function () {
         },
       ]);
     });
+
+    test('Code fence imports things', async function (assert) {
+      let snippet = stripIndent`
+        import Component from '@glimmer/component';
+        import { on } from '@ember/modifier';
+
+        <template>
+          <button {{on "click" console.log}}>Click</button>
+        </template>
+      `;
+      let name = nameFor(snippet);
+      let result = await parseMarkdown(`hi\n` + `\n` + '```gjs live preview\n' + snippet + '\n```');
+
+      assertOutput(
+        result.templateOnlyGlimdown,
+        stripIndent`
+          <p>hi</p>
+
+          ${invocationOf(name)}
+          <p class=\"glimdown-snippet relative\"><pre><code class=\"language-gjs\">import Component from '@glimmer/component';
+          import { on } from '@ember/modifier';
+          &#x3C;template>
+            &#x3C;button \\{{on \"click\" console.log}}>Click&#x3C;/button>
+          &#x3C;/template>
+          </code></pre><Limber::CopyMenu /></p>
+        `
+      );
+
+      assert.deepEqual(result.blocks, [
+        {
+          code: snippet,
+          name,
+          lang: 'gjs',
+        },
+      ]);
+    });
   });
 });
