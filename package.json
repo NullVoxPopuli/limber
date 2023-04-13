@@ -57,9 +57,6 @@
         "rollup"
       ]
     },
-    "notes": {},
-    "patchedDependencies": {
-      "ember-on-resize-modifier@1.1.0": "patches/ember-on-resize-modifier@1.1.0.patch"
-    }
+    "notes": {}
   }
 }

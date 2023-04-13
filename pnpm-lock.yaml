@@ -8,11 +8,6 @@ overrides:
   ember-modifier: ^4.1.0
   '@types/eslint': ^8.0.0
 
-patchedDependencies:
-  ember-on-resize-modifier@1.1.0:
-    hash: prsfdndcfbbwmlkgbxbo7gxczu
-    path: patches/ember-on-resize-modifier@1.1.0.patch
-
 importers:
 
   .:
@@ -307,8 +302,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       ember-on-resize-modifier:
-        specifier: ^1.1.0
-        version: 1.1.0(patch_hash=prsfdndcfbbwmlkgbxbo7gxczu)(ember-source@4.12.0)
+        specifier: ^2.0.2
+        version: 2.0.2(ember-source@4.12.0)(webpack@5.79.0)
       ember-page-title:
         specifier: ^7.0.0
         version: 7.0.0
@@ -10498,10 +10493,11 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /ember-on-resize-modifier@1.1.0(patch_hash=prsfdndcfbbwmlkgbxbo7gxczu)(ember-source@4.12.0):
-    resolution: {integrity: sha512-Pz7muUcwzgAVGQ3ZNCdY/KMKtmvtJk5DWetuvx2MVHZCRpVzSRvkVa2tKXcp4tmz/COYUysneJxAR4tmwAyH9Q==}
+  /ember-on-resize-modifier@2.0.2(ember-source@4.12.0)(webpack@5.79.0):
+    resolution: {integrity: sha512-7mcD7CNbiCaZEIASWlRz/Wmn47afCMSFTdQJSSUe0WCgnXxn9DVoqZ39B7ZuddTHa0V6otTFrV/lIRYpggQ+eg==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
+      ember-auto-import: 2.6.3(webpack@5.79.0)
       ember-cli-babel: 7.26.11
       ember-cli-htmlbars: 5.7.2
       ember-modifier: 4.1.0(ember-source@4.12.0)
@@ -10509,8 +10505,8 @@ packages:
     transitivePeerDependencies:
       - ember-source
       - supports-color
+      - webpack
     dev: true
-    patched: true
 
   /ember-page-title@7.0.0:
     resolution: {integrity: sha512-oq6+HYbeVD/BnxIO5AkP4gWlsatdgW2HFO10F8+XQiJZrwa7cC7Wm54JNGqQkavkDQTgNSiy1Fe2NILJ14MmAg==}
