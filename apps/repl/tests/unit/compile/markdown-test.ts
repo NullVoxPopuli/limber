@@ -203,7 +203,7 @@ module('Unit | parseMarkdown()', function () {
           &#x3C;template>
             &#x3C;button \\{{on \"click\" console.log}}>Click&#x3C;/button>
           &#x3C;/template>
-          </code></pre><Limber::CopyMenu /></p>
+          </code></pre><__CopyMenu__ /></p>
         `
       );
 

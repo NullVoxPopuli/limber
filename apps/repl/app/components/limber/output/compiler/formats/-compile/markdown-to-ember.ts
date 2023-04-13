@@ -76,7 +76,7 @@ function liveCodeExtraction(options: Options = {}) {
       };
       let wrapper = {
         // <p> is wrong, but I think I need to make a rehype plugin instead of remark for this
-        type: 'paragraph',
+        type: 'div',
         data: {
           hProperties: { className: snippetClasses },
         },
@@ -121,8 +121,12 @@ const markdownCompiler = unified()
   .use(() => (tree) => {
     visit(tree, ['text', 'raw'], function (node) {
       // definitively not the better way, but this is supposed to detect "glimmer" nodes
-      if (node.value.match(/<\/?[A-Z:].*>/g)) {
+      if (node.value.match(/<\/?[_A-Z:0-9].*>/g)) {
         node.type = 'glimmer_raw';
+      }
+
+      if (node.value.match(/\{\{.*\}\}/g)) {
+        node.value = node.value.replaceAll(/\{\{/g, '\\{{');
       }
     });
   })
