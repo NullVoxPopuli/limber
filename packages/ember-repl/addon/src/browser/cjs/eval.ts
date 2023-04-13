@@ -4,6 +4,8 @@ import { modules } from '../known-modules';
 import type { ExtraModules } from '../types';
 import type Component from '@glimmer/component';
 
+const SECRET = Symbol('Secret secret (require)');
+
 export function evalSnippet(
   compiled: string,
   extraModules: ExtraModules = {}
@@ -13,9 +15,6 @@ export function evalSnippet(
 } {
   const exports = {};
 
-  // https://github.com/glimmerjs/glimmer-experimental/blob/master/packages/examples/playground/src/utils/eval-snippet.ts
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   function require(moduleName: keyof typeof modules): unknown {
     let preConfigured = modules[moduleName] || extraModules[moduleName];
 
@@ -23,6 +22,9 @@ export function evalSnippet(
     // @ts-ignore
     return preConfigured || window.require(moduleName);
   }
+
+  // https://github.com/glimmerjs/glimmer-experimental/blob/master/packages/examples/playground/src/utils/eval-snippet.ts
+  (window as any)[SECRET] = require;
 
   eval(compiled);
 
