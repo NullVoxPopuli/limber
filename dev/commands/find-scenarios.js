@@ -1,5 +1,6 @@
 import path from 'node:path';
-import { project, packageJson } from 'ember-apply';
+
+import { packageJson,project } from 'ember-apply';
 import fse from 'fs-extra';
 
 export async function findScenarios() {

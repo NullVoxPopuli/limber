@@ -3,4 +3,5 @@ packages:
   - './apps/*'
   - './packages/*'
   - './packages/limber-ui/*'
+  - './packages/ember-repl/*'
   - './spikes/**'
