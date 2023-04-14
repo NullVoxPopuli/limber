@@ -203,8 +203,8 @@ importers:
         specifier: ^6.4.0
         version: 6.4.0
       '@glint/core':
-        specifier: ^1.0.0-beta.4
-        version: 1.0.0-beta.4(typescript@5.0.4)
+        specifier: ^1.0.0-beta.5
+        version: 1.0.0-beta.5(typescript@5.0.4)
       '@glint/environment-ember-loose':
         specifier: ^1.0.0-beta.4
         version: 1.0.0-beta.4(@glimmer/component@1.1.2)(@glint/template@1.0.0-beta.4)(ember-cli-htmlbars@6.2.0)(ember-modifier@4.1.0)
@@ -471,8 +471,8 @@ importers:
         specifier: ^6.4.0
         version: 6.4.0
       '@glint/core':
-        specifier: ^1.0.0-beta.4
-        version: 1.0.0-beta.4(typescript@5.0.4)
+        specifier: ^1.0.0-beta.5
+        version: 1.0.0-beta.5(typescript@5.0.4)
       '@glint/environment-ember-loose':
         specifier: ^1.0.0-beta.4
         version: 1.0.0-beta.4(@glimmer/component@1.1.2)(@glint/template@1.0.0-beta.4)(ember-cli-htmlbars@6.2.0)(ember-modifier@4.1.0)
@@ -849,8 +849,8 @@ importers:
         specifier: ^0.84.3
         version: 0.84.3
       '@glint/core':
-        specifier: ^1.0.0-beta.4
-        version: 1.0.0-beta.4(typescript@5.0.4)
+        specifier: ^1.0.0-beta.5
+        version: 1.0.0-beta.5(typescript@5.0.4)
       '@glint/environment-ember-loose':
         specifier: ^1.0.0-beta.4
         version: 1.0.0-beta.4(@glimmer/component@1.1.2)(@glint/template@1.0.0-beta.4)(ember-cli-htmlbars@6.2.0)(ember-modifier@4.1.0)
@@ -1187,8 +1187,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       '@glint/core':
-        specifier: ^1.0.0-beta.4
-        version: 1.0.0-beta.4(typescript@5.0.4)
+        specifier: ^1.0.0-beta.5
+        version: 1.0.0-beta.5(typescript@5.0.4)
       '@glint/environment-ember-loose':
         specifier: ^1.0.0-beta.4
         version: 1.0.0-beta.4(@glimmer/component@1.1.2)(@glint/template@1.0.0-beta.4)(ember-cli-htmlbars@6.2.0)(ember-modifier@4.1.0)
@@ -4353,6 +4353,26 @@ packages:
 
   /@glint/core@1.0.0-beta.4(typescript@5.0.4):
     resolution: {integrity: sha512-46yKM9fQLX7mSheb2nfAGRwnjoxLSd7sYOkBE57A9LC5KQeAGEMk9Q3bGOYZBVl2qMvF6sdGmYc807FGB3J+Hg==}
+    hasBin: true
+    peerDependencies:
+      typescript: '*'
+    dependencies:
+      '@glimmer/syntax': 0.84.3
+      escape-string-regexp: 4.0.0
+      semver: 7.3.8
+      silent-error: 1.1.1
+      typescript: 5.0.4
+      uuid: 8.3.2
+      vscode-languageserver: 8.1.0
+      vscode-languageserver-textdocument: 1.0.8
+      vscode-uri: 3.0.7
+      yargs: 17.7.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@glint/core@1.0.0-beta.5(typescript@5.0.4):
+    resolution: {integrity: sha512-qircWJwWSIHXA+jMe3YMBetoOsGl8E6+UuiYz4wubJInM+zWmCQh53ui85qwkipTe8EWxIr4bUiWcQuMZz+jzA==}
     hasBin: true
     peerDependencies:
       typescript: '*'
