@@ -51,6 +51,10 @@
       "packagePatterns": ["^@codemirror\/*"]
     },
     {
+      "groupName": "Glint",
+      "packagePatterns": ["^@glint\/*"]
+    },
+    {
       "groupName": "Glimmer",
       "packagePatterns": ["^@glimmer\/*"]
     },
