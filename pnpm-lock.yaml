@@ -88,8 +88,8 @@ importers:
         specifier: ^0.6.1
         version: 0.6.1(@glint/template@1.0.0-beta.5)(ember-source@4.12.0)
       ember-focus-trap:
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: ^1.0.2
+        version: 1.0.2
       ember-headlessui:
         specifier: 0.13.0
         version: 0.13.0(@babel/core@7.21.4)(@glint/template@1.0.0-beta.5)(ember-source@4.12.0)(webpack@5.79.0)
@@ -10504,8 +10504,8 @@ packages:
       - supports-color
     dev: true
 
-  /ember-focus-trap@1.0.1:
-    resolution: {integrity: sha512-ZUyq5ZkIuXp+ng9rCMkqBh36/V95PltL7iljStkma4+651xlAy3Z84L9WOu/uOJyVpNUxii8RJBbAySHV6c+RQ==}
+  /ember-focus-trap@1.0.2:
+    resolution: {integrity: sha512-/8Cx9KI7uqoMaNN4Iyxc24P2JIvAcCL3cI1tYdZRHTwTd1sG6esEZWOnpxZOSE7m4xHww8HVUSiXzgyqD8YIhA==}
     engines: {node: 12.* || >= 14}
     dependencies:
       '@embroider/addon-shim': 1.8.4
