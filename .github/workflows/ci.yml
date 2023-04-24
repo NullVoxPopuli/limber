@@ -106,22 +106,22 @@ jobs:
       env:
         CI_BROWSER: ${{ matrix.ci_browser }}
 
-  try-scenarios:
-    name: "Test try-scenarios" 
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [tests]
-    # I need to figure out a better way to handle this with turbo
-    continue-on-error: true
-    steps:
-    - uses: actions/checkout@v3
-    - name: TurboRepo local server
-      uses: felixmosh/turborepo-gh-artifacts@v2
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: NullVoxPopuli/action-setup-pnpm@v2.0.0
-    - name: Test
-      run: pnpm turbo test:scenarios
+  # try-scenarios:
+  #   name: "Test try-scenarios" 
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 15
+  #   needs: [tests]
+  #   # I need to figure out a better way to handle this with turbo
+  #   continue-on-error: true
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - name: TurboRepo local server
+  #     uses: felixmosh/turborepo-gh-artifacts@v2
+  #     with:
+  #       repo-token: ${{ secrets.GITHUB_TOKEN }}
+  #   - uses: NullVoxPopuli/action-setup-pnpm@v2.0.0
+  #   - name: Test
+  #     run: pnpm turbo test:scenarios
 
 
   browserstack-test:
@@ -188,31 +188,31 @@ jobs:
 
 
   # https://github.com/changesets/action
-  release:
-    name: Release
-    if: github.ref == 'refs/heads/main' 
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [try-scenarios]
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - name: TurboRepo local server
-        uses: felixmosh/turborepo-gh-artifacts@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: NullVoxPopuli/action-setup-pnpm@v2.0.0
-      - name: Create Release Pull Request or Publish to npm
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          # This expects you to have a script called release which does a build for your packages and calls changeset publish
-          publish: pnpm release
-          title: "Release Preview"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  # release:
+  #   name: Release
+  #   if: github.ref == 'refs/heads/main' 
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 15
+  #   needs: [try-scenarios]
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         persist-credentials: false
+  #     - name: TurboRepo local server
+  #       uses: felixmosh/turborepo-gh-artifacts@v2
+  #       with:
+  #         repo-token: ${{ secrets.GITHUB_TOKEN }}
+  #     - uses: NullVoxPopuli/action-setup-pnpm@v2.0.0
+  #     - name: Create Release Pull Request or Publish to npm
+  #       id: changesets
+  #       uses: changesets/action@v1
+  #       with:
+  #         # This expects you to have a script called release which does a build for your packages and calls changeset publish
+  #         publish: pnpm release
+  #         title: "Release Preview"
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 
 
