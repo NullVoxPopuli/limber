@@ -105,7 +105,7 @@
     "qunit-dom": "^2.0.0",
     "rollup": "^3.21.0",
     "testem-failure-only-reporter": "^1.0.0",
-    "type-fest": "3.8.0",
+    "type-fest": "3.9.0",
     "typescript": "^5.0.4",
     "vfile": "^4.2.1",
     "webpack": "^5.79.0",
