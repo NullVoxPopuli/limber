@@ -25,7 +25,7 @@ jobs:
       # - run: ./dev/update-unstable-embroider.sh
       - run: pnpm dev use-unstable-embroider
       - run: pnpm install --fix-lockfile
-      - uses: peter-evans/create-pull-request@v4
+      - uses: peter-evans/create-pull-request@v5
         with:
           # A PAT is required to trigger further workflows
           token: ${{ secrets.WORKFLOW_TOKEN }}
