@@ -2,7 +2,7 @@
   "name": "@nullvoxpopuli/limber-untyped",
   "version": "0.0.0",
   "devDependencies": {
-    "@glint/template": "^1.0.0",
+    "@glint/template": "^1.0.1",
     "typescript": "^5.0.4"
   }
 }
