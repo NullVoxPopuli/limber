@@ -621,8 +621,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0
       yargs:
-        specifier: ^17.7.1
-        version: 17.7.1
+        specifier: ^17.7.2
+        version: 17.7.2
     devDependencies:
       '@babel/core':
         specifier: ^7.21.4
@@ -3622,7 +3622,7 @@ packages:
       rollup-plugin-copy-assets: 2.0.3(rollup@3.21.0)
       rollup-plugin-delete: 2.0.0
       walk-sync: 3.0.0
-      yargs: 17.7.1
+      yargs: 17.7.2
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -4613,7 +4613,7 @@ packages:
       vscode-languageserver: 8.1.0
       vscode-languageserver-textdocument: 1.0.8
       vscode-uri: 3.0.7
-      yargs: 17.7.1
+      yargs: 17.7.2
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -8846,7 +8846,7 @@ packages:
       spawn-command: 0.0.2-1
       supports-color: 8.1.1
       tree-kill: 1.2.2
-      yargs: 17.7.1
+      yargs: 17.7.2
     dev: true
 
   /concurrently@8.0.1:
@@ -9711,7 +9711,7 @@ packages:
       posthtml-boolean-attributes: 0.3.1
       semver: 7.3.8
       unified: 10.1.2
-      yargs: 17.7.1
+      yargs: 17.7.2
       yarn-workspaces-list: 0.2.0(@babel/core@7.21.4)
     transitivePeerDependencies:
       - bluebird
@@ -11194,7 +11194,7 @@ packages:
       micromatch: 4.0.5
       resolve: 1.22.2
       v8-compile-cache: 2.3.0
-      yargs: 17.7.1
+      yargs: 17.7.2
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -19646,7 +19646,7 @@ packages:
       smartwrap: 2.0.2
       strip-ansi: 6.0.1
       wcwidth: 1.0.1
-      yargs: 17.7.1
+      yargs: 17.7.2
     dev: true
 
   /tuf-js@1.1.1:
@@ -20912,6 +20912,19 @@ packages:
 
   /yargs@17.7.1:
     resolution: {integrity: sha512-cwiTb08Xuv5fqF4AovYacTFNxk62th7LKJ6BL9IGUpTJrWoU7/7WdQGTP2SjKf1dUNBGzDd28p/Yfs/GI6JrLw==}
+    engines: {node: '>=12'}
+    dependencies:
+      cliui: 8.0.1
+      escalade: 3.1.1
+      get-caller-file: 2.0.5
+      require-directory: 2.1.1
+      string-width: 4.2.3
+      y18n: 5.0.8
+      yargs-parser: 21.1.1
+    dev: true
+
+  /yargs@17.7.2:
+    resolution: {integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==}
     engines: {node: '>=12'}
     dependencies:
       cliui: 8.0.1
