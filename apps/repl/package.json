@@ -144,7 +144,7 @@
     "ember-repl": "workspace:*",
     "ember-resources": "^6.1.0",
     "ember-statechart-component": "6.1.2",
-    "highlight.js": "^11.7.0",
+    "highlight.js": "^11.8.0",
     "highlightjs-glimmer": "^2.0.1",
     "html-to-image": "^1.11.11",
     "limber-ui": "workspace:*",
