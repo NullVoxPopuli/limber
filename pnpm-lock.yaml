@@ -242,8 +242,8 @@ importers:
         specifier: ^3.0.11
         version: 3.0.11
       '@types/qunit':
-        specifier: ^2.19.4
-        version: 2.19.4
+        specifier: ^2.19.5
+        version: 2.19.5
       '@types/rsvp':
         specifier: ^4.0.4
         version: 4.0.4
@@ -879,8 +879,8 @@ importers:
         specifier: ^7.1.4
         version: 7.1.4
       '@types/babel__traverse':
-        specifier: ^7.18.3
-        version: 7.18.3
+        specifier: ^7.18.5
+        version: 7.18.5
       '@types/uuid':
         specifier: ^9.0.1
         version: 9.0.1
@@ -5472,6 +5472,12 @@ packages:
       '@babel/types': 7.21.4
     dev: true
 
+  /@types/babel__traverse@7.18.5:
+    resolution: {integrity: sha512-enCvTL8m/EHS/zIvJno9nE+ndYPh1/oNFzRYRmtUqJICG2VnCSBzMLW5VN2KCQU91f23tsNKR8v7VJJQMatl7Q==}
+    dependencies:
+      '@babel/types': 7.21.4
+    dev: true
+
   /@types/body-parser@1.19.2:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
     dependencies:
@@ -5701,6 +5707,10 @@ packages:
 
   /@types/qunit@2.19.4:
     resolution: {integrity: sha512-EocRiD2JRWrOaA0dnyyLX083DIo1p3OSBBiGODcHaMzOFhteXtvRRp0kKsiYYqynnBSMqnqRI92iE32axdoXZw==}
+    dev: true
+
+  /@types/qunit@2.19.5:
+    resolution: {integrity: sha512-NvyN1m6nKlRpAXETsTdqzEfW6C+5xbIqrXxQbnm8PmfxM7Ixi73KPoHgXCLJZHw8fd9pvCm3gVeX3nBYRuZLYQ==}
     dev: true
 
   /@types/range-parser@1.2.4:
