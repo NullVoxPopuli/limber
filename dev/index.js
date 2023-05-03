@@ -1,12 +1,11 @@
-#!/usr/bin/env node
 
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-import { symlinkEverywhere } from './commands/symlink-everywhere.js';
+import { findScenarios } from './commands/find-scenarios.js';
+import { propagateLintConfiguration } from './commands/setup-lint-infra.js';
 import { syncDeps } from './commands/sync-deps.js';
 import { useUnstableEmbroider } from './commands/use-unstable-embroider.js';
-import { findScenarios } from './commands/find-scenarios.js';
 
 let yarg = yargs(hideBin(process.argv));
 
@@ -25,11 +24,11 @@ yarg
     symlinkEverywhere
   )
   .command(
-    'sync-prettier',
-    'symlinks all workspaces to use the same prettier config',
+    'setup-lint-infra',
+    'idempotently sets up lint infrastructure in existing and new projects',
     () => {},
     () => {
-      return symlinkEverywhere({ target: '.prettierrc.cjs' });
+      return propagateLintConfiguration(true);
     }
   )
   .command(
@@ -46,6 +45,7 @@ yarg
     () => {},
     async () => {
       let scenarios = await findScenarios();
+
       console.log(JSON.stringify(scenarios, null, 2));
     }
   )
