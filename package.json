@@ -7,7 +7,7 @@
     "prepare": "pnpm build",
     "release": "changeset publish",
     "build": "turbo build --filter=limber^... --filter=tutorial^... --output-logs errors-only",
-    "lint:fix": "pnpm --filter='*' lint:fix",
+    "lint:fix": "turbo lint:fix --output-logs errors-only",
     "lint": "turbo lint --output-logs errors-only",
     "start": "pnpm build && concurrently 'npm:start:*' --prefix-colors cyan,white,yellow,blue --restart-tries -1",
     "start:tutorial": "pnpm --filter=tutorial start --port 4200",

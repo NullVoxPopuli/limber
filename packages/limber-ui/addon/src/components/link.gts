@@ -18,23 +18,19 @@ export const Link: TOC<{
   Element: HTMLAnchorElement | HTMLSpanElement;
   Args: {
     /**
-      * Link / Anchor tags can't really be disabled,
-      * so we need a another way to communicate that the link is inactive.
-      *
-      * When `@isDisabled` is true, the anchor will be swapped out with a span
-      * but with the same styling (except for communicating that the element is disabled).
-      */
+     * Link / Anchor tags can't really be disabled,
+     * so we need a another way to communicate that the link is inactive.
+     *
+     * When `@isDisabled` is true, the anchor will be swapped out with a span
+     * but with the same styling (except for communicating that the element is disabled).
+     */
     isDisabled?: boolean;
   };
-  Blocks: { default: [] }
+  Blocks: { default: [] };
 }> = <template>
   {{#if @isDisabled}}
 
-    <span
-      class="{{classList}} opacity-30"
-      ...attributes
-      tabindex="0"
-    >
+    <span class='{{classList}} opacity-30' ...attributes tabindex='0'>
       {{yield}}
     </span>
 

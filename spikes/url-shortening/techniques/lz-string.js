@@ -5,5 +5,5 @@ export function encode(text) {
 }
 
 export function decode(text) {
-  return LZString.decompressFromBase64(text)
+  return LZString.decompressFromBase64(text);
 }

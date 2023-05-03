@@ -23,7 +23,7 @@ export async function syncDeps(options) {
     version = `${options.range}${version}`;
   }
 
-  console.log(
+  console.info(
     chalk.dim(
       `Applying ${options.depName}@${version} to workspaces as a ${
         options.dev ? 'devDependency' : 'dependency'

@@ -35,6 +35,7 @@ yarg
     async () => {
       let scenarios = await findScenarios();
 
+      // eslint-disable-next-line no-console
       console.log(JSON.stringify(scenarios, null, 2));
     }
   )

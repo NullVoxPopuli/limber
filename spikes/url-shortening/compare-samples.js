@@ -1,11 +1,13 @@
+/* eslint-disable no-console */
 import { getSamples } from './data.js';
-import { encode, bundleImpact } from './techniques.js'
-import { size, toPercent, average, twoDecimals } from './utils.js'
+import { bundleImpact,encode } from './techniques.js'
+import { average, size, toPercent, twoDecimals } from './utils.js'
 
 let samples = await getSamples();
 
 let result = [];
 let savings = {};
+
 for (let [name, text] of Object.entries(samples)) {
   let originalURISize = (encodeURIComponent(text)).length;
   let current = {
@@ -18,6 +20,7 @@ for (let [name, text] of Object.entries(samples)) {
     let encoded = fn(text);
     let encodedURISize = encodeURIComponent(encoded).length; 
     let percentSavings = 100 - toPercent(encodedURISize, originalURISize);
+
     // current[technique] = size(encoded);
     current[`${technique} as URI`] = size(encodeURIComponent(encoded)); 
     current[`${technique} % savings`] = `${percentSavings}%` 
@@ -33,7 +36,9 @@ console.log(bundleImpact);
 console.table(result);
 
 console.log('Average Savings');
+
 let averageSavings = [];
+
 for (let [name, nums] of Object.entries(savings)) {
   averageSavings.push({
     name, 

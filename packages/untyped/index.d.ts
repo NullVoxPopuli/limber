@@ -1,5 +1,5 @@
 declare module '@fortawesome/ember-fontawesome/components/fa-icon' {
-  import { ComponentLike } from '@glint/template';
+  import type { ComponentLike } from '@glint/template';
 
   const FaIcon: ComponentLike<{
     Element: SVGElement;

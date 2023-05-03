@@ -11,21 +11,18 @@
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-import { unified } from 'unified';
-import remarkParse from 'remark-parse';
-import remarkRehype from 'remark-rehype';
+import { toHtml } from 'hast-util-to-html';
+import * as inflection from 'inflection';
+import rehypeRaw from 'rehype-raw';
 import rehypeSanitize from 'rehype-sanitize';
 import rehypeStringify from 'rehype-stringify';
-import rehypeRaw from 'rehype-raw';
-
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import { unified } from 'unified';
 import flatMap from 'unist-util-flatmap';
-import { visit } from 'unist-util-visit';
 import { inspect } from 'unist-util-inspect';
-
-import { toHtml } from 'hast-util-to-html';
-
+import { visit } from 'unist-util-visit';
 import { v5 as uuidv5 } from 'uuid';
-import * as inflection from 'inflection';
 
 const example =
   `` +
@@ -54,6 +51,7 @@ some *bold* and _italic_ text.
 
 const NAMESPACE = '926f034a-f480-4112-a363-321244f4e5de';
 const DEFAULT_PREFIX = 'ember-repl';
+
 /**
  * from: https://github.com/NullVoxPopuli/ember-repl/blob/main/addon/utils.ts
  * For any given code block, a reasonably stable name can be
@@ -66,6 +64,7 @@ function nameFor(code, prefix = DEFAULT_PREFIX) {
 
   return `${prefix ? `${prefix}-` : ''}${id}`;
 }
+
 /**
  * Returns the text for invoking a component with a given name.
  * It is assumed the component takes no arguments, as would be the
@@ -212,12 +211,14 @@ let inspector = () =>
   function (options = {}) {
     return function (tree) {
       let label = options?.label ? `${options.label}\n` : '';
+
       console.log(label, inspect(tree));
     };
   };
 
 export async function main() {
   console.log('start');
+
   let withSanitize = await unified()
     .use(remarkParse)
     .use(liveCodeExtraction, liveCodeConfig)
@@ -282,6 +283,7 @@ export async function main() {
 
   let liveCode = withSanitize.data.liveCode || [];
   let demos = document.querySelector('#demos');
+
   demos.innerText = JSON.stringify(liveCode, null, 3);
 
   document.getElementById('loader').remove();

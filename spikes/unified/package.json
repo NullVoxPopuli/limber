@@ -1,6 +1,7 @@
 {
   "name": "@nullvoxpopuli/spike-unified",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "npx html-pages . --no-cache",
     "lint": "pnpm turbo lint --output-logs errors-only",

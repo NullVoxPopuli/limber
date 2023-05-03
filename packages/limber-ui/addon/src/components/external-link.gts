@@ -2,21 +2,19 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
 import type { TOC } from '@ember/component/template-only';
 
-const DefaultContent: TOC<{ Blocks: { default: [] }}> = <template>
-    <span>{{yield}}</span>
+const DefaultContent: TOC<{ Blocks: { default: [] } }> = <template>
+  <span>{{yield}}</span>
 
-    <FaIcon @icon='external-link-alt' />
-  </template>;
-
+  <FaIcon @icon='external-link-alt' />
+</template>;
 
 export const ExternalLink: TOC<{
   Element: HTMLAnchorElement;
   Blocks: {
-    'default': [],
-    'custom': [typeof DefaultContent],
-  }
-}> =
-<template>
+    default: [];
+    custom: [typeof DefaultContent];
+  };
+}> = <template>
   <a
     target='_blank'
     rel='noreferrer noopener'
@@ -32,7 +30,6 @@ export const ExternalLink: TOC<{
       {{yield DefaultContent to='custom'}}
     {{/if}}
   </a>
-</template>
-
+</template>;
 
 export default ExternalLink;

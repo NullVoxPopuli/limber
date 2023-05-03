@@ -27,7 +27,8 @@ export async function useUnstableEmbroider() {
   );
 
   // Update in-monorepo things (at the very least for busting turbo's cache)
-  for await (let _workspace of await project.eachWorkspace()) {
+  // eslint-disable-next-line no-unused-vars
+  for await (let workspace of await project.eachWorkspace()) {
     await packageJson.modify((json) => {
       for (let depType of DEP_TYPES) {
         for (let [name, version] of withVersions) {

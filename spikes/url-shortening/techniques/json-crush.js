@@ -1,4 +1,4 @@
-import JSONCrush from 'jsoncrush'
+import JSONCrush from 'jsoncrush';
 
 export function encode(text) {
   return JSONCrush.crush(text);
