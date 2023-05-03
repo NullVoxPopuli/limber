@@ -1,26 +1,27 @@
-import { project, packageJson, ember } from 'ember-apply';
+import { ember,packageJson, project } from 'ember-apply';
+import latestVersion from 'latest-version';
 
 import { symlinkEverywhere } from './symlink-everywhere.js';
 
-const LINT_EXTENSIONS = ['js', 'ts', 'gjs','gts', 'hbs'];
-const LINT_GLOB = `**/*.{${LINT_EXTENSIONS.join(',')}}`
+const LINT_EXTENSIONS = ['js', 'ts', 'gjs', 'gts', 'hbs'];
+const LINT_GLOB = `**/*.{${LINT_EXTENSIONS.join(',')}}`;
 
 export async function propagateLintConfiguration(force = false) {
   /************************************
-    * Symlink configs and ignore files
-    **********************************/
+   * Symlink configs and ignore files
+   **********************************/
   await symlinkEverywhere({ target: '.prettierrc.cjs', force });
   await symlinkEverywhere({ target: '.prettierignore', force });
   // await symlinkEverywhere({ target: '.eslintignore', force });
 
   /************************************
-    * Ensure scripts accomodate what we need them to 
-    * - This is in-part because prettier does not by default check every file type
-    *   you need to tell it to do so
-    *
-    * ESLint lints files based on `overrides`, rather than the input pattern here
-    * (very easy to add support for additional file types)
-    **********************************/
+   * Ensure scripts accomodate what we need them to
+   * - This is in-part because prettier does not by default check every file type
+   *   you need to tell it to do so
+   *
+   * ESLint lints files based on `overrides`, rather than the input pattern here
+   * (very easy to add support for additional file types)
+   **********************************/
   await fixLintScripts();
 }
 
@@ -32,7 +33,7 @@ async function fixLintScripts() {
 
     let hasGlint = await packageJson.hasDependency('@glint/core');
     let hasTypeScript = await packageJson.hasDependency('@glint/core');
-    let isEmber = await ember.isEmberProject(); 
+    let isEmber = await ember.isEmberProject();
 
     await packageJson.addDevDependencies(
       await latestOfAll([
@@ -46,28 +47,32 @@ async function fixLintScripts() {
     );
 
     /**
-      * Check: no cache
-      * Fix:  use cache
-      */
+     * Check: no cache
+     * Fix:  use cache
+     */
     await packageJson.addScripts({
-      "lint": "pnpm turbo lint --output-logs errors-only",
-      "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
+      lint: 'pnpm turbo lint --output-logs errors-only',
+      'lint:fix': "concurrently 'npm:lint:*:fix' --names 'fix:'",
 
       // Conditional scripts
-      ...(hasGlint ? {
-        "lint:types": "glint",
-      }: {}),
+      ...(hasGlint
+        ? {
+            'lint:types': 'glint',
+          }
+        : {}),
 
-      ...(isEmber ? {
-        "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
-        "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
-      } : {}),
+      ...(isEmber
+        ? {
+            'lint:hbs': 'ember-template-lint . --no-error-on-unmatched-pattern',
+            'lint:hbs:fix': 'ember-template-lint . --fix --no-error-on-unmatched-pattern',
+          }
+        : {}),
 
       // We always need these
-      "lint:js:fix": "eslint . --fix",
-      "lint:js": "eslint . --cache --cache-strategy content",
-      "lint:prettier:fix": `prettier --cache --cache-strategy content -w ${LINT_GLOB}`,
-      "lint:prettier": `prettier -c ${LINT_GLOB}`,
+      'lint:js:fix': 'eslint . --fix',
+      'lint:js': 'eslint . --cache --cache-strategy content',
+      'lint:prettier:fix': `prettier --no-error-on-unmatched-pattern --cache --cache-strategy content -w ${LINT_GLOB}`,
+      'lint:prettier': `prettier --no-error-on-unmatched-pattern -c ${LINT_GLOB}`,
     });
   }
 }

@@ -8,8 +8,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "lint:prettier:fix": "prettier --cache --cache-strategy content -w **/*.{js,ts,gjs,gts,hbs}",
-    "lint:prettier": "prettier -c **/*.{js,ts,gjs,gts,hbs}",
+    "lint:prettier:fix": "prettier --no-error-on-unmatched-pattern --cache --cache-strategy content -w **/*.{js,ts,gjs,gts,hbs}",
+    "lint:prettier": "prettier --no-error-on-unmatched-pattern -c **/*.{js,ts,gjs,gts,hbs}",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
     "lint:js": "eslint . --cache --cache-strategy content",
     "lint:js:fix": "eslint . --fix",
