@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
 import chalk from 'chalk';
-import latestVersion from 'latest-version';
 import { packageJson, project } from 'ember-apply';
+import latestVersion from 'latest-version';
 
 /**
  * @param {{
@@ -30,6 +30,7 @@ export async function syncDeps(options) {
       }`
     )
   );
+
   let changedWorkspaces = [];
 
   for await (let workspace of await project.eachWorkspace()) {

@@ -1,5 +1,6 @@
-import { findScenarios } from './commands/find-scenarios.js';
 import { execaCommand } from 'execa';
+
+import { findScenarios } from './commands/find-scenarios.js';
 
 let skip = 'limber-ui';
 let results = [];

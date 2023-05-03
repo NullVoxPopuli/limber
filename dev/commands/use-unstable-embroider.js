@@ -1,5 +1,5 @@
-import latestVersion from 'latest-version';
 import { packageJson, project } from 'ember-apply';
+import latestVersion from 'latest-version';
 
 const EMBROIDER_PACKAGES = [
   '@embroider/addon-dev',

@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+
 const replRoot = path.join(__dirname, '../../apps/repl');
 const tutorialRoot = path.join(__dirname, '../../apps/tutorial');
 const uiRoot = path.join(__dirname, '../../packages/limber-ui/addon');
