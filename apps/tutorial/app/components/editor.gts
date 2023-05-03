@@ -11,24 +11,22 @@ const codeFor = (docs: DocsService) => {
   }
 
   return docs.selected.prompt;
-}
+};
 
 export const Editor: TOC<{
   Element: HTMLIFrameElement;
-}> =
-  <template>
-    {{#let (service 'docs') as |docs|}}
+}> = <template>
+  {{#let (service 'docs') as |docs|}}
 
-      {{#if docs.selected.isReady}}
+    {{#if docs.selected.isReady}}
 
-        {{#let (codeFor docs) as |code|}}
-          {{#if code}}
-            <REPL @code={{code}} @format="gjs" @editor={{true}} ...attributes />
-          {{/if}}
+      {{#let (codeFor docs) as |code|}}
+        {{#if code}}
+          <REPL @code={{code}} @format='gjs' @editor={{true}} ...attributes />
+        {{/if}}
 
-        {{/let}}
-      {{/if}}
+      {{/let}}
+    {{/if}}
 
-    {{/let}}
-  </template>
-
+  {{/let}}
+</template>;
