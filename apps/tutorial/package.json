@@ -19,8 +19,8 @@
     "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
     "lint:js": "eslint . --cache --cache-strategy content",
     "lint:js:fix": "eslint . --fix",
-    "lint:prettier": "prettier --no-error-on-unmatched-pattern -c **/*.{js,ts,gjs,gts,hbs}",
-    "lint:prettier:fix": "prettier --no-error-on-unmatched-pattern --cache --cache-strategy content -w **/*.{js,ts,gjs,gts,hbs}",
+    "lint:prettier": "prettier --no-error-on-unmatched-pattern -c **/*.{js,ts,gjs,gts,hbs,css}",
+    "lint:prettier:fix": "prettier --no-error-on-unmatched-pattern --cache --cache-strategy content -w **/*.{js,ts,gjs,gts,hbs,css}",
     "start": "ember serve",
     "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test --test-port 0"

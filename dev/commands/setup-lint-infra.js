@@ -3,7 +3,7 @@ import latestVersion from 'latest-version';
 
 import { symlinkEverywhere } from './symlink-everywhere.js';
 
-const LINT_EXTENSIONS = ['js', 'ts', 'gjs', 'gts', 'hbs'];
+const LINT_EXTENSIONS = ['js', 'ts', 'gjs', 'gts', 'hbs', 'css'];
 const LINT_GLOB = `**/*.{${LINT_EXTENSIONS.join(',')}}`;
 
 export async function propagateLintConfiguration(force = false) {
