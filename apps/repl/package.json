@@ -20,17 +20,18 @@
     "ember:beta": "npx ember-source-channel-url beta --write",
     "build": "ember build --environment=production",
     "lint:types": "glint",
-    "lint:prettier:fix": "prettier -w .",
-    "lint:prettier": "prettier -c .",
+    "lint:prettier:fix": "prettier --cache --cache-strategy content -w **/*.{js,ts,gjs,gts,hbs}",
+    "lint:prettier": "prettier -c **/*.{js,ts,gjs,gts,hbs}",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
     "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
-    "lint:js": "eslint . --cache",
+    "lint:js": "eslint . --cache --cache-strategy content",
     "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
     "lint:js:fix": "eslint . --fix",
     "start": "ember serve",
     "start:iframe": "pnpx http-server ./public -i -p 4204",
     "test:browserstack": "./scripts/browserstack.sh",
-    "test:ember": "ember test --test-port 0"
+    "test:ember": "ember test --test-port 0",
+    "lint": "pnpm turbo lint --output-logs errors-only"
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",

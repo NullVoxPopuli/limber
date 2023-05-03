@@ -9,9 +9,9 @@ export async function propagateLintConfiguration(force = false) {
   /************************************
     * Symlink configs and ignore files
     **********************************/
-  await symlinkEverywhere({ target: '.prettierrc.cjs' });
-  await symlinkEverywhere({ target: '.prettierignore' });
-  await symlinkEverywhere({ target: '.eslintignore' });
+  await symlinkEverywhere({ target: '.prettierrc.cjs', force });
+  await symlinkEverywhere({ target: '.prettierignore', force });
+  // await symlinkEverywhere({ target: '.eslintignore', force });
 
   /************************************
     * Ensure scripts accomodate what we need them to 
@@ -25,6 +25,8 @@ export async function propagateLintConfiguration(force = false) {
 }
 
 async function fixLintScripts() {
+  let root = await project.gitRoot();
+
   for await (let workspace of await project.eachWorkspace()) {
     if (workspace === root) continue;
 
@@ -32,23 +34,16 @@ async function fixLintScripts() {
     let hasTypeScript = await packageJson.hasDependency('@glint/core');
     let isEmber = await ember.isEmberProject(); 
 
-    await packageJson.addDevDependencies({
-      prettier: 'latest',
-      eslint: 'latest',
-      'prettier-plugin-ember-template-tag': 'latest',
-      "@nullvoxpopuli/eslint-configs": "latest",
-
-      ...(isEmber ? {
-        "ember-template-lint": "latest",
-        "eslint-plugin-ember": "latest",
-      } : {}),
-
-      ...(hasTypeScript ? {
-        "@typescript-eslint/eslint-plugin": "latest",
-        "@typescript-eslint/parser": "latest",
-      } : {})
-
-    });
+    await packageJson.addDevDependencies(
+      await latestOfAll([
+        'prettier',
+        'eslint',
+      'prettier-plugin-ember-template-tag',
+      "@nullvoxpopuli/eslint-configs",
+        ...(isEmber ? ['ember-template-lint', 'eslint-plugin-ember'] : []),
+        ...(hasTypeScript ? ['@typescript-eslint/eslint-plugin', '@typescript-eslint/parser'] : []),
+      ])
+    );
 
     /**
       * Check: no cache
@@ -76,3 +71,34 @@ async function fixLintScripts() {
     });
   }
 }
+
+const VERSION_CACHE = new Map();
+
+async function versionFor(name) {
+  if (VERSION_CACHE.has(name)) {
+    return VERSION_CACHE.get(name);
+  }
+
+  let version = await latestVersion(name);
+
+  VERSION_CACHE.set(name, version);
+
+  return version;
+}
+
+async function lastestOfAll(dependencies) {
+  let result = {};
+
+  let promises = dependencies.map(async (dep) => {
+    return [dep, await versionFor(dep)];
+  });
+
+  let resolved = await Promise.all(promises);
+
+  for (let [dep, version] of resolved) {
+    result[dep] = `^${version}`;
+  }
+
+  return result;
+}
+

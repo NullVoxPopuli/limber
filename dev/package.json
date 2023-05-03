@@ -25,5 +25,13 @@
   },
   "engines": {
     "node": ">= 18"
+  },
+  "scripts": {
+    "lint": "pnpm turbo lint --output-logs errors-only",
+    "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
+    "lint:js:fix": "eslint . --fix",
+    "lint:js": "eslint . --cache --cache-strategy content",
+    "lint:prettier:fix": "prettier --cache --cache-strategy content -w **/*.{js,ts,gjs,gts,hbs}",
+    "lint:prettier": "prettier -c **/*.{js,ts,gjs,gts,hbs}"
   }
 }

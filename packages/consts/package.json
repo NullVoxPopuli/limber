@@ -8,11 +8,12 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "lint:prettier:fix": "prettier -w .",
-    "lint:prettier": "prettier -c .",
+    "lint:prettier:fix": "prettier --cache --cache-strategy content -w **/*.{js,ts,gjs,gts,hbs}",
+    "lint:prettier": "prettier -c **/*.{js,ts,gjs,gts,hbs}",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
-    "lint:js": "eslint . --cache",
-    "lint:js:fix": "eslint . --fix"
+    "lint:js": "eslint . --cache --cache-strategy content",
+    "lint:js:fix": "eslint . --fix",
+    "lint": "pnpm turbo lint --output-logs errors-only"
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",
