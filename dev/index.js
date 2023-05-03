@@ -13,17 +13,6 @@ yarg.wrap(yarg.terminalWidth());
 
 yarg
   .command(
-    'symlink-everywhere <target>',
-    'symlinks a target file in to each workspace. Useful for propagating lint configs / ignore files',
-    (yargs) => {
-      return yargs.positional('target', {
-        description: 'The file to symlink',
-        required: true,
-      });
-    },
-    symlinkEverywhere
-  )
-  .command(
     'setup-lint-infra',
     'idempotently sets up lint infrastructure in existing and new projects',
     () => {},

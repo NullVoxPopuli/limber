@@ -5,7 +5,7 @@ import { symlinkEverywhere } from './symlink-everywhere.js';
 const LINT_EXTENSIONS = ['js', 'ts', 'gjs','gts', 'hbs'];
 const LINT_GLOB = `**/*.{${LINT_EXTENSIONS.join(',')}}`
 
-export async propagateLintConfiguration(force = false) {
+export async function propagateLintConfiguration(force = false) {
   /************************************
     * Symlink configs and ignore files
     **********************************/

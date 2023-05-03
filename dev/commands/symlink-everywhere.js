@@ -5,10 +5,10 @@ import path from "node:path";
 import { project } from "ember-apply";
 
 /**
-  * @param {{ target: string }} options
+  * @param {{ target: string, force?: boolean }} options
   */
 export async function symlinkEverywhere(options) {
-  let { target } = options;
+  let { target, force } = options;
 
   assert(target, `target for symlinkEverywhere was not defined`);
 
@@ -28,7 +28,11 @@ export async function symlinkEverywhere(options) {
     let linkTarget = path.relative(workspace, resolved);
 
     if (await exists(newFile)) {
-      continue;
+      if (!force) {
+        continue;
+      }
+
+      await fs.rm(newFile);
     }
 
     await fs.symlink(linkTarget, fileName);
@@ -48,3 +52,5 @@ async function exists(filePath) {
   }
 
 }
+
+
