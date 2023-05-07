@@ -76,8 +76,8 @@ importers:
         specifier: ^4.21.5
         version: 4.21.5
       dompurify:
-        specifier: ^3.0.2
-        version: 3.0.2
+        specifier: ^3.0.3
+        version: 3.0.3
       ember-auto-import:
         specifier: ^2.6.3
         version: 2.6.3(webpack@5.79.0)
@@ -9639,8 +9639,8 @@ packages:
       domelementtype: 2.3.0
     dev: false
 
-  /dompurify@3.0.2:
-    resolution: {integrity: sha512-B8c6JdiEpxAKnd8Dm++QQxJL4lfuc757scZtcapj6qjTjrQzyq5iAyznLKVvK+77eYNiFblHBlt7MM0fOeqoKw==}
+  /dompurify@3.0.3:
+    resolution: {integrity: sha512-axQ9zieHLnAnHh0sfAamKYiqXMJAVwu+LM/alQ7WDagoWessyWvMSFyW65CqF3owufNu8HBcE4cM2Vflu7YWcQ==}
     dev: false
 
   /domutils@1.7.0:
