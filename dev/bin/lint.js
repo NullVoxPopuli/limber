@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import path from "node:path";
 
 import { packageJson, project } from "ember-apply";
@@ -33,26 +34,26 @@ async function run() {
     case "prettier:fix":
       return execaCommand(
         `pnpm prettier -w ${LINT_GLOB} --cache --cache-strategy content`,
-        { cwd }
+        { cwd, stdio: "inherit" }
       );
     case "prettier":
-      return execaCommand(`pnpm prettier -c ${LINT_GLOB}`, { cwd });
+      return execaCommand(`pnpm prettier -c ${LINT_GLOB}`, { cwd, stdio: "inherit" });
     case "js:fix":
       return execaCommand(
         `pnpm eslint . --fix --cache --cache-strategy content`,
-        { cwd }
+        { cwd, stdio: "inherit" }
       );
     case "hbs":
-      return execaCommand(`pnpm ember-template-lint . --no-error-on-unmatched-pattern`, { cwd });
+      return execaCommand(`pnpm ember-template-lint . --no-error-on-unmatched-pattern`, { cwd, stdio: "inherit" });
     // template-lint has no cache
     case "hbs:fix":
-      return execaCommand(`pnpm ember-template-lint . --fix --no-error-on-unmatched-pattern`, { cwd });
+      return execaCommand(`pnpm ember-template-lint . --fix --no-error-on-unmatched-pattern`, { cwd, stdio: "inherit" });
     case "js":
-      return execaCommand(`pnpm eslint .`, { cwd });
+      return execaCommand(`pnpm eslint .`, { cwd, stdio: "inherit" });
     case "fix":
-      return execaCommand(`pnpm turbo _:lint:fix`);
+      return execaCommand(`pnpm turbo _:lint:fix`, { cwd, stdio: 'inherit' });
     default:
-      return execaCommand(`pnpm turbo _:lint`);
+      return execaCommand(`pnpm turbo _:lint`, { cwd, stdio: 'inherit' });
   }
 }
 

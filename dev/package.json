@@ -6,6 +6,9 @@
   "volta": {
     "extends": "../package.json"
   },
+  "bin": {
+    "lint": "./bin/lint.js"
+  },
   "dependencies": {
     "chalk": "^5.2.0",
     "ember-apply": "^2.6.5",
