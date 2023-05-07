@@ -1,3 +1,22 @@
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+//
+//  NOTE on convention:
+//    script names starting with "_:" do so because 
+//    they are not intended to be invoked by humans
+//    turborepo will invoke these scripts, freeing
+//    up the more human-readable script names for 
+//    running by humans.
+// 
+//    This helps reduce the possibility of accidental
+//    cycles in script dependencies and invocation.
+//
+//    One way to think about the _: scripts is the 
+//    "endpoint" -- more turbo commands should not
+//    be spawned by these scripts.
+//
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 {
   "baseBranch": "origin/main",
   "pipeline": {
@@ -54,30 +73,30 @@
     //
     /////////////////////////////////////////////////
     /////////////////////////////////////////////////
-    "lint": {
+    "_:lint": {
       "outputs": [],
-      "dependsOn": ["lint:js", "lint:hbs", "lint:prettier", "lint:types"]
+      "dependsOn": ["_:lint:js", "_:lint:hbs", "_:lint:prettier", "_:lint:types"]
     },
-    "lint:js": {
+    "_:lint:js": {
       "outputs": []
     },
-    "lint:hbs": {
+    "_:lint:hbs": {
       "outputs": []
     },
-    "lint:prettier": {
+    "_:lint:prettier": {
       "outputs": []
     },
-    "lint:types": {
+    "_:lint:types": {
       "outputs": [],
       "dependsOn": ["^build"]
     },
 
-    "lint:fix": {
+    "_:lint:fix": {
       "cache": false,
-      "dependsOn": ["lint:js:fix", "lint:hbs:fix", "lint:prettier:fix"]
+      "dependsOn": ["_:lint:js:fix", "_:lint:hbs:fix"]
     },
-    "lint:js:fix": { "cache": false },
-    "lint:hbs:fix": { "cache": false },
-    "lint:prettier:fix": { "cache": false }
+    "_:lint:js:fix": { "cache": false, "dependsOn": ["_:lint:prettier:fix"] },
+    "_:lint:hbs:fix": { "cache": false },
+    "_:lint:prettier:fix": { "cache": false }
   }
 }

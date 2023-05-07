@@ -39,42 +39,40 @@ async function fixLintScripts() {
       await latestOfAll([
         'prettier',
         'eslint',
-      'prettier-plugin-ember-template-tag',
-      "@nullvoxpopuli/eslint-configs",
+        'prettier-plugin-ember-template-tag',
+        "@nullvoxpopuli/eslint-configs",
         ...(isEmber ? ['ember-template-lint', 'eslint-plugin-ember'] : []),
         ...(hasTypeScript ? ['@typescript-eslint/eslint-plugin', '@typescript-eslint/parser'] : []),
       ])
     );
 
-    /**
-     * Check: no cache
-     * Fix:  use cache
-     */
-    await packageJson.addScripts({
-      lint: 'pnpm turbo lint --output-logs errors-only',
-      'lint:fix': "concurrently 'npm:lint:*:fix' --names 'fix:'",
-
-      // Conditional scripts
-      ...(hasGlint
-        ? {
-            'lint:types': 'glint',
-          }
-        : {}),
-
-      ...(isEmber
-        ? {
-            'lint:hbs': 'ember-template-lint . --no-error-on-unmatched-pattern',
-            'lint:hbs:fix': 'ember-template-lint . --fix --no-error-on-unmatched-pattern',
-          }
-        : {}),
-
-      // We always need these
-      'lint:js:fix': 'eslint . --fix',
-      'lint:js': 'eslint . --cache --cache-strategy content',
-      'lint:prettier:fix': `prettier --no-error-on-unmatched-pattern --cache --cache-strategy content -w ${LINT_GLOB}`,
-      'lint:prettier': `prettier --no-error-on-unmatched-pattern -c ${LINT_GLOB}`,
+    await packageJson.modify(json => {
+      delete json.scripts['lint:js'];
+      delete json.scripts['lint:js:fix'];
+      delete json.scripts['lint:prettier'];
+      delete json.scripts['lint:prettier:fix'];
+      delete json.scripts['lint:hbs'];
+      delete json.scripts['lint:hbs:fix'];
     });
-  }
+
+  await packageJson.addScripts(
+    {
+      lint: "pnpm -w exec lint",
+      "lint:fix": "pnpm -w exec lint fix",
+      "_:lint:js": "pnpm -w exec lint js",
+      "_:lint:js:fix": "pnpm -w exec lint js:fix",
+      ...(isEmber ? {
+        "_:lint:hbs": "pnpm -w exec lint hbs",
+        "_:lint:hbs:fix": "pnpm -w exec lint hbs:fix",
+      } : {})
+      "_:lint:prettier:fix": "pnpm -w exec lint prettier:fix",
+      "_:lint:prettier": "pnpm -w exec lint prettier",
+      ...(hasGlint ? {
+        '_:lint:types': 'glint',
+      } : {})
+    },
+    workspace
+  );
 }
 
 const VERSION_CACHE = new Map();
