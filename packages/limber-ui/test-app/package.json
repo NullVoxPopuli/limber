@@ -15,12 +15,12 @@
     "start": "ember serve",
     "test:ember": "ember test --test-port 0",
     "lint": "pnpm -w exec lint",
-    "_:lint:js": "pnpm -w exec lint js",
-    "_:lint:js:fix": "pnpm -w exec lint js:fix",
-    "_:lint:hbs": "pnpm -w exec lint hbs",
-    "_:lint:hbs:fix": "pnpm -w exec lint hbs:fix",
-    "_:lint:prettier:fix": "pnpm -w exec lint prettier:fix",
-    "_:lint:prettier": "pnpm -w exec lint prettier"
+    "lint:js": "pnpm -w exec lint js",
+    "lint:js:fix": "pnpm -w exec lint js:fix",
+    "lint:hbs": "pnpm -w exec lint hbs",
+    "lint:hbs:fix": "pnpm -w exec lint hbs:fix",
+    "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
+    "lint:prettier": "pnpm -w exec lint prettier"
   },
   "dependencies": {
     "ember-async-data": "^1.0.0",

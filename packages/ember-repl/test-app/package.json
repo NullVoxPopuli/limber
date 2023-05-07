@@ -18,13 +18,12 @@
     "test": "ember test",
     "test:scenarios": "ember try:each",
     "lint:types": "glint",
-    "_:lint:js": "pnpm -w exec lint js",
-    "_:lint:js:fix": "pnpm -w exec lint js:fix",
-    "_:lint:hbs": "pnpm -w exec lint hbs",
-    "_:lint:hbs:fix": "pnpm -w exec lint hbs:fix",
-    "_:lint:prettier:fix": "pnpm -w exec lint prettier:fix",
-    "_:lint:prettier": "pnpm -w exec lint prettier",
-    "_:lint:types": "glint"
+    "lint:js": "pnpm -w exec lint js",
+    "lint:js:fix": "pnpm -w exec lint js:fix",
+    "lint:hbs": "pnpm -w exec lint hbs",
+    "lint:hbs:fix": "pnpm -w exec lint hbs:fix",
+    "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
+    "lint:prettier": "pnpm -w exec lint prettier"
   },
   "dependencies": {
     "ember-repl": "workspace:*"

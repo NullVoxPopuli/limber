@@ -12,10 +12,10 @@
     "cp": "cp ./dist/limber-worker.js ../limber/public/transpilation-worker.js",
     "prod": "PRODUCTION=true webpack",
     "lint": "pnpm -w exec lint",
-    "_:lint:js": "pnpm -w exec lint js",
-    "_:lint:js:fix": "pnpm -w exec lint js:fix",
-    "_:lint:prettier:fix": "pnpm -w exec lint prettier:fix",
-    "_:lint:prettier": "pnpm -w exec lint prettier"
+    "lint:js": "pnpm -w exec lint js",
+    "lint:js:fix": "pnpm -w exec lint js:fix",
+    "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
+    "lint:prettier": "pnpm -w exec lint prettier"
   },
   "browser": {
     "path": "path-browserify",

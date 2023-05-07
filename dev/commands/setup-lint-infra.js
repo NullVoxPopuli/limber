@@ -47,31 +47,32 @@ async function fixLintScripts() {
     await packageJson.modify((json) => {
       if (!json.scripts) return;
 
-      delete json.scripts['lint:js'];
-      delete json.scripts['lint:js:fix'];
-      delete json.scripts['lint:prettier'];
-      delete json.scripts['lint:prettier:fix'];
-      delete json.scripts['lint:hbs'];
-      delete json.scripts['lint:hbs:fix'];
+      delete json.scripts['_:lint:types'];
+      delete json.scripts['_:lint:js'];
+      delete json.scripts['_:lint:js:fix'];
+      delete json.scripts['_:lint:prettier'];
+      delete json.scripts['_:lint:prettier:fix'];
+      delete json.scripts['_:lint:hbs'];
+      delete json.scripts['_:lint:hbs:fix'];
     }, workspace);
 
     await packageJson.addScripts(
       {
         lint: 'pnpm -w exec lint',
         'lint:fix': 'pnpm -w exec lint fix',
-        '_:lint:js': 'pnpm -w exec lint js',
-        '_:lint:js:fix': 'pnpm -w exec lint js:fix',
+        'lint:js': 'pnpm -w exec lint js',
+        'lint:js:fix': 'pnpm -w exec lint js:fix',
         ...(isEmber
           ? {
-              '_:lint:hbs': 'pnpm -w exec lint hbs',
-              '_:lint:hbs:fix': 'pnpm -w exec lint hbs:fix',
+              'lint:hbs': 'pnpm -w exec lint hbs',
+              'lint:hbs:fix': 'pnpm -w exec lint hbs:fix',
             }
           : {}),
-        '_:lint:prettier:fix': 'pnpm -w exec lint prettier:fix',
-        '_:lint:prettier': 'pnpm -w exec lint prettier',
+        'lint:prettier:fix': 'pnpm -w exec lint prettier:fix',
+        'lint:prettier': 'pnpm -w exec lint prettier',
         ...(hasGlint
           ? {
-              '_:lint:types': 'glint',
+              'lint:types': 'glint',
             }
           : {}),
       },
