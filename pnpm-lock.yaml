@@ -28,6 +28,9 @@ importers:
       concurrently:
         specifier: ^8.0.1
         version: 8.0.1
+      dev-tools:
+        specifier: workspace:*
+        version: link:dev
       eslint:
         specifier: ^8.39.0
         version: 8.39.0
