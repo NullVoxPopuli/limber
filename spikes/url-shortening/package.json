@@ -13,9 +13,18 @@
   },
   "devDependencies": {
     "@nullvoxpopuli/eslint-configs": "^3.1.3",
-    "eslint": "^8.39.0",
+    "eslint": "^8.40.0",
     "prettier": "^2.8.8",
     "typescript": "^5.0.4",
-    "vitest": "^0.30.1"
+    "vitest": "^0.30.1",
+    "prettier-plugin-ember-template-tag": "^0.3.2"
+  },
+  "scripts": {
+    "lint": "pnpm -w exec lint",
+    "lint:fix": "pnpm -w exec lint fix",
+    "_:lint:js": "pnpm -w exec lint js",
+    "_:lint:js:fix": "pnpm -w exec lint js:fix",
+    "_:lint:prettier:fix": "pnpm -w exec lint prettier:fix",
+    "_:lint:prettier": "pnpm -w exec lint prettier"
   }
 }

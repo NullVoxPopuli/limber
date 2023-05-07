@@ -6,6 +6,9 @@
   "volta": {
     "extends": "../package.json"
   },
+  "bin": {
+    "lint": "./bin/lint.js"
+  },
   "dependencies": {
     "chalk": "^5.2.0",
     "ember-apply": "^2.6.5",
@@ -19,7 +22,20 @@
     "@nullvoxpopuli/eslint-configs": "^3.1.3",
     "@types/node": "^18.16.5",
     "@types/yargs": "^17.0.24",
-    "eslint": "^8.39.0",
-    "prettier": "^2.8.8"
+    "eslint": "^8.40.0",
+    "prettier": "^2.8.8",
+    "typescript": "^5.0.4",
+    "prettier-plugin-ember-template-tag": "^0.3.2"
+  },
+  "engines": {
+    "node": ">= 18"
+  },
+  "scripts": {
+    "lint": "pnpm -w exec lint",
+    "lint:fix": "pnpm -w exec lint fix",
+    "_:lint:js": "pnpm -w exec lint js",
+    "_:lint:js:fix": "pnpm -w exec lint js:fix",
+    "_:lint:prettier:fix": "pnpm -w exec lint prettier:fix",
+    "_:lint:prettier": "pnpm -w exec lint prettier"
   }
 }

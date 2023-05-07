@@ -12,9 +12,9 @@ interface ParentMethods {
 
 const guestFrame = resource(({ on, owner }) => {
   /**
-    * Don't do anything if we aren't in an iframe.
-    * (less work = faster ready state)
-    */
+   * Don't do anything if we aren't in an iframe.
+   * (less work = faster ready state)
+   */
   if (notInIframe()) {
     return '';
   }
@@ -25,8 +25,8 @@ const guestFrame = resource(({ on, owner }) => {
         let editor = owner.lookup('service:editor');
 
         editor.updateDemo(text, format);
-      }
-    }
+      },
+    },
   });
 
   if (macroCondition(isDevelopingApp())) {

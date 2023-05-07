@@ -13,13 +13,13 @@ export default class CopyMenu extends Component {
     let code = getSnippetElement(event);
 
     navigator.clipboard.writeText(code.innerText);
-  }
+  };
 
   copyAsImage = async (event: Event) => {
     let code = getSnippetElement(event);
 
     await withExtraStyles(code, () => toClipboard(code));
-  }
+  };
 
   <template>
     <Menu @portal={{false}} data-test-copy-menu>
@@ -40,4 +40,3 @@ export default class CopyMenu extends Component {
     </Menu>
   </template>
 }
-

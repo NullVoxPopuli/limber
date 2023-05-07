@@ -21,8 +21,8 @@ export type Parent = AsyncMethodReturns<ParentMethods>;
 
 interface Signature {
   Blocks: {
-    default: [MessagingAPI]
-  }
+    default: [MessagingAPI];
+  };
 }
 
 interface ParentMethods {
@@ -33,16 +33,22 @@ interface ParentMethods {
   finishedRendering: () => void;
 }
 
-async function setupEvents(context: Compiler, { onReceiveText, onConnect }: {
-  onReceiveText: (format: Format, text: string) => void,
-  onConnect: (parent: AsyncMethodReturns<ParentMethods>) => void,
-}) {
+async function setupEvents(
+  context: Compiler,
+  {
+    onReceiveText,
+    onConnect,
+  }: {
+    onReceiveText: (format: Format, text: string) => void;
+    onConnect: (parent: AsyncMethodReturns<ParentMethods>) => void;
+  }
+) {
   let connection = connectToParent<ParentMethods>({
     methods: {
       update(format: Format, text: string) {
         onReceiveText(format, text);
-      }
-    }
+      },
+    },
   });
 
   context.connection = connection;
@@ -55,9 +61,10 @@ async function setupEvents(context: Compiler, { onReceiveText, onConnect }: {
   if (isDestroyed(context) || isDestroying(context)) return;
 
   /**
-    * This app now can't render again, so we need to tell the host frame to re-load the output frame
-    */
-  Ember.onerror = (error: any) => parent.error({ error: error.message || error, unrecoverable: true });
+   * This app now can't render again, so we need to tell the host frame to re-load the output frame
+   */
+  Ember.onerror = (error: any) =>
+    parent.error({ error: error.message || error, unrecoverable: true });
 
   const handleError = (error: any) => parent.error({ error: error.message || error });
 
@@ -68,19 +75,18 @@ async function setupEvents(context: Compiler, { onReceiveText, onConnect }: {
   return connection;
 }
 
-
 /**
-  * The Receiving Component is Limber::FrameOutput
-  *
-  * The purpose of this class is not *not* use it during testing so we can test the compiler
-  * end renderer more directly.
-  *
-  * Also because testem can't handle iframes, we need to jump through a couple extra hoops.
-  *
-  * But this leads to smaller, more focused components, so... maybe that's good. idk.
-  *
-  *
-  */
+ * The Receiving Component is Limber::FrameOutput
+ *
+ * The purpose of this class is not *not* use it during testing so we can test the compiler
+ * end renderer more directly.
+ *
+ * Also because testem can't handle iframes, we need to jump through a couple extra hoops.
+ *
+ * But this leads to smaller, more focused components, so... maybe that's good. idk.
+ *
+ *
+ */
 export default class Compiler extends Component<Signature> {
   @service declare router: RouterService;
 
@@ -94,7 +100,7 @@ export default class Compiler extends Component<Signature> {
   _onReceiveText?: (format: Format, text: string) => void;
   onReceiveText = (callback: NonNullable<typeof this._onReceiveText>) => {
     this._onReceiveText = callback;
-    this.trySetup()
+    this.trySetup();
   };
 
   _onConnect?: (parent: AsyncMethodReturns<ParentMethods>) => void;
@@ -110,17 +116,11 @@ export default class Compiler extends Component<Signature> {
       setupEvents(this, {
         onReceiveText: _onReceiveText,
         onConnect: _onConnect,
-      })
+      });
     }
   };
 
   <template>
-    {{yield
-      (hash
-       onReceiveText=this.onReceiveText
-       onConnect=this.onConnect
-      )
-    }}
+    {{yield (hash onReceiveText=this.onReceiveText onConnect=this.onConnect)}}
   </template>
 }
-

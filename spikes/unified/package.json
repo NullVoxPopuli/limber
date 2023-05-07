@@ -1,7 +1,20 @@
 {
   "name": "@nullvoxpopuli/spike-unified",
   "private": true,
+  "type": "module",
   "scripts": {
-    "start": "npx html-pages . --no-cache"
+    "start": "npx html-pages . --no-cache",
+    "lint": "pnpm -w exec lint",
+    "lint:fix": "pnpm -w exec lint fix",
+    "_:lint:js": "pnpm -w exec lint js",
+    "_:lint:js:fix": "pnpm -w exec lint js:fix",
+    "_:lint:prettier:fix": "pnpm -w exec lint prettier:fix",
+    "_:lint:prettier": "pnpm -w exec lint prettier"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.8",
+    "eslint": "^8.40.0",
+    "prettier-plugin-ember-template-tag": "^0.3.2",
+    "@nullvoxpopuli/eslint-configs": "^3.1.3"
   }
 }

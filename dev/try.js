@@ -1,5 +1,6 @@
-import { findScenarios } from './commands/find-scenarios.js';
 import { execaCommand } from 'execa';
+
+import { findScenarios } from './commands/find-scenarios.js';
 
 let skip = 'limber-ui';
 let results = [];
@@ -11,7 +12,7 @@ for (let group of groups) {
   if (group.name.includes(skip)) continue;
 
   for (let scenario of group.scenarios) {
-    console.log(`Running ${group.name} :: ${scenario}...`);
+    console.info(`Running ${group.name} :: ${scenario}...`);
 
     try {
       await execaCommand('pnpm install --no-frozen-lockfile', { cwd: group.workspace });
@@ -27,10 +28,12 @@ for (let group of groups) {
   }
 }
 
+// eslint-disable-next-line no-console
 console.table(results);
 
 if (errors.length) {
   errors.forEach((e) => console.error(e));
 }
 
+// eslint-disable-next-line n/no-process-exit
 process.exit(errors.length);

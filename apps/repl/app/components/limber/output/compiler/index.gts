@@ -9,7 +9,7 @@ import { waitFor } from '@ember/test-waiters';
 
 import { Format } from 'limber/utils/messaging';
 
-import { compileTopLevelComponent } from './create-top-level-component'
+import { compileTopLevelComponent } from './create-top-level-component';
 
 import type { ComponentLike } from '@glint/template';
 import type RouterService from '@ember/routing/router-service';
@@ -17,22 +17,25 @@ import type { MessagingAPI, Parent } from '../frame-messaging';
 
 interface Signature {
   Args: {
-    messagingAPI: MessagingAPI
-  }
+    messagingAPI: MessagingAPI;
+  };
   Blocks: {
-    default: [{
-      component: ComponentLike<never> | undefined;
-      format: Format | undefined;
-    }]
-  }
+    default: [
+      {
+        component: ComponentLike<never> | undefined;
+        format: Format | undefined;
+      }
+    ];
+  };
 }
 
-
 /**
-  * The Receiving Component is Limber::FrameOutput
-  */
+ * The Receiving Component is Limber::FrameOutput
+ */
 export default class Compiler extends Component<Signature> {
-  <template>{{yield (hash component=this.component format=this.format)}}</template>
+  <template>
+    {{yield (hash component=this.component format=this.format)}}
+  </template>
 
   @service declare router: RouterService;
 
@@ -41,8 +44,8 @@ export default class Compiler extends Component<Signature> {
   @tracked errorLine: number | null = null;
   @tracked template?: unknown;
   /**
-    * Used for changing default styles, if needed
-    */
+   * Used for changing default styles, if needed
+   */
   @tracked format?: Format;
 
   declare parentFrame: Parent;
@@ -53,7 +56,7 @@ export default class Compiler extends Component<Signature> {
     let api = args.messagingAPI;
 
     api.onReceiveText((format: Format, text) => this.makeComponent(format, text));
-    api.onConnect((parent) => this.parentFrame = parent);
+    api.onConnect((parent) => (this.parentFrame = parent));
   }
 
   @action
@@ -62,11 +65,11 @@ export default class Compiler extends Component<Signature> {
     await compileTopLevelComponent(text, {
       format: format,
       onCompileStart: async () => {
-        await  (this.parentFrame.beginCompile());
+        await this.parentFrame.beginCompile();
       },
       onSuccess: async (component) => {
         if (!component) {
-          await (this.parentFrame.error({ error: 'could not build component' }));
+          await this.parentFrame.error({ error: 'could not build component' });
           return;
         }
 
@@ -74,7 +77,7 @@ export default class Compiler extends Component<Signature> {
         this.component = component as ComponentLike<never>;
         this.format = format;
 
-        await (this.parentFrame.success())
+        await this.parentFrame.success();
 
         schedule('afterRender', () => {
           if (isDestroyed(this) || isDestroying(this)) return;
@@ -83,9 +86,8 @@ export default class Compiler extends Component<Signature> {
         });
       },
       onError: async (error: string) => {
-        await (this.parentFrame.error({ error }));
-      }
+        await this.parentFrame.error({ error });
+      },
     });
-
   }
 }

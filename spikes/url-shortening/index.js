@@ -1,11 +1,12 @@
+/* eslint-disable no-console */
 import { Bench } from 'tinybench';
 
 import { getSamples } from './data.js'
-import { names, huffman, JSONCrush, LZString } from './techniques.js'
+import { huffman, JSONCrush, LZString,names } from './techniques.js'
 
 const samples = await getSamples();
 
-const iterations = 500;
+// const iterations = 500;
 const maxRuns = 4;
 
 let runs = 0;
@@ -45,8 +46,10 @@ for (let [name, originalText] of Object.entries(samples)) {
     .add(names.lzString, () => LZString.decode(encodedText.LZString));
 
   let start = new Date();
+
   await encodeBench.run();
   await decodeBench.run();
+
   let finish = new Date();
 
   console.log('Encode benchmark:')

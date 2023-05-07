@@ -15,11 +15,12 @@
     "build": "node build.cjs",
     "dev": "pnpm build --watch",
     "lint:types": "tsc --noEmit",
-    "lint:prettier:fix": "prettier -w .",
-    "lint:prettier": "prettier -c .",
-    "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
-    "lint:js": "eslint . --cache",
-    "lint:js:fix": "eslint . --fix"
+    "lint:fix": "pnpm -w exec lint fix",
+    "lint": "pnpm -w exec lint",
+    "_:lint:js": "pnpm -w exec lint js",
+    "_:lint:js:fix": "pnpm -w exec lint js:fix",
+    "_:lint:prettier:fix": "pnpm -w exec lint prettier:fix",
+    "_:lint:prettier": "pnpm -w exec lint prettier"
   },
   "browser": {
     "path": "path-browserify"
@@ -55,10 +56,11 @@
     "concurrently": "^8.0.1",
     "esbuild": "0.17.18",
     "esbuild-plugin-alias": "^0.2.1",
-    "eslint": "^8.39.0",
+    "eslint": "^8.40.0",
     "prettier": "^2.8.8",
     "recursive-copy": "^2.0.14",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "prettier-plugin-ember-template-tag": "^0.3.2"
   },
   "engines": {
     "node": ">= v16"

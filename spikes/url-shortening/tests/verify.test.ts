@@ -1,4 +1,4 @@
-import { describe, test, expect } from 'vitest';
+import { describe, expect, test } from 'vitest';
 
 import { originalText } from '../data.js';
 
@@ -7,7 +7,7 @@ describe('Huffman', () => {
     let { encode, decode } = await import('../techniques/huffman.js');
 
     expect(decode(encode(originalText))).toEqual(originalText);
-  })
+  });
 });
 
 describe('JSONCrush', () => {
@@ -15,7 +15,7 @@ describe('JSONCrush', () => {
     let { encode, decode } = await import('../techniques/json-crush.js');
 
     expect(decode(encode(originalText))).toEqual(originalText);
-  })
+  });
 });
 
 describe('lz-string', () => {
@@ -23,5 +23,5 @@ describe('lz-string', () => {
     let { encode, decode } = await import('../techniques/lz-string.js');
 
     expect(decode(encode(originalText))).toEqual(originalText);
-  })
+  });
 });

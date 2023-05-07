@@ -1,1 +1,3 @@
-<template><div data-portal='popover'></div></template>
+<template>
+  <div data-portal='popover'></div>
+</template>

@@ -14,8 +14,7 @@ module('Integration | Component | external-link', function (hooks) {
     assert.dom().hasNoText();
 
     // Template block usage:
-    await render(
-      <template>
+    await render(<template>
       <ExternalLink>
         template block text
       </ExternalLink>
