@@ -3,9 +3,6 @@ import latestVersion from 'latest-version';
 
 import { symlinkEverywhere } from './symlink-everywhere.js';
 
-const LINT_EXTENSIONS = ['js', 'ts', 'gjs', 'gts', 'hbs', 'css'];
-const LINT_GLOB = `**/*.{${LINT_EXTENSIONS.join(',')}}`;
-
 export async function propagateLintConfiguration(force = false) {
   /************************************
    * Symlink configs and ignore files
@@ -40,11 +37,11 @@ async function fixLintScripts() {
         'prettier',
         'eslint',
         'prettier-plugin-ember-template-tag',
-        "@nullvoxpopuli/eslint-configs",
+        '@nullvoxpopuli/eslint-configs',
         ...(isEmber ? ['ember-template-lint', 'eslint-plugin-ember'] : []),
         ...(hasTypeScript ? ['@typescript-eslint/eslint-plugin', '@typescript-eslint/parser'] : []),
-      ])
-    );
+      ]), 
+      workspace);
 
     await packageJson.modify(json => {
       delete json.scripts['lint:js'];
@@ -53,10 +50,9 @@ async function fixLintScripts() {
       delete json.scripts['lint:prettier:fix'];
       delete json.scripts['lint:hbs'];
       delete json.scripts['lint:hbs:fix'];
-    });
+    }, workspace);
 
-  await packageJson.addScripts(
-    {
+    await packageJson.addScripts({
       lint: "pnpm -w exec lint",
       "lint:fix": "pnpm -w exec lint fix",
       "_:lint:js": "pnpm -w exec lint js",
@@ -64,15 +60,14 @@ async function fixLintScripts() {
       ...(isEmber ? {
         "_:lint:hbs": "pnpm -w exec lint hbs",
         "_:lint:hbs:fix": "pnpm -w exec lint hbs:fix",
-      } : {})
+      } : {}),
       "_:lint:prettier:fix": "pnpm -w exec lint prettier:fix",
       "_:lint:prettier": "pnpm -w exec lint prettier",
       ...(hasGlint ? {
         '_:lint:types': 'glint',
       } : {})
-    },
-    workspace
-  );
+    }, workspace);
+  }
 }
 
 const VERSION_CACHE = new Map();
