@@ -1,16 +1,16 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { setComponentTemplate } from '@ember/component';
 import { isDestroyed, isDestroying } from '@ember/destroyable';
 import { waitForPromise } from '@ember/test-waiters';
-import { hbs } from 'ember-cli-htmlbars';
+
+import type { ComponentLike } from '@glint/template';
 
 interface Args {
-  promise: Promise<unknown>;
+  promise: Promise<ComponentLike>;
 }
 
 export class Await extends Component<Args> {
-  @tracked resolved: unknown;
+  @tracked resolved?: ComponentLike;
   @tracked error?: Error;
 
   constructor(owner: unknown, args: Args) {
@@ -35,17 +35,14 @@ export class Await extends Component<Args> {
   get isPending() {
     return !this.resolved;
   }
-}
 
-setComponentTemplate(
-  hbs`
-  {{#if this.error}}
-    Error: {{this.error}}
-  {{else if this.isPending}}
-    Building...
-  {{else}}
-    <this.resolved />
-  {{/if}}
-  `,
-  Await
-);
+  <template>
+    {{#if this.error}}
+      Error: {{this.error.toString}}
+    {{else if this.isPending}}
+      Building...
+    {{else}}
+      <this.resolved />
+    {{/if}}
+  </template>
+}

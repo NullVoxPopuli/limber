@@ -970,6 +970,9 @@ importers:
       '@ember/test-helpers':
         specifier: ^2.8.1
         version: 2.9.3(@babel/core@7.21.8)(@glint/template@1.0.2)(ember-source@4.10.0)
+      '@ember/test-waiters':
+        specifier: ^3.0.2
+        version: 3.0.2
       '@embroider/compat':
         specifier: 2.1.1
         version: 2.1.1(@embroider/core@2.1.1)
@@ -1112,7 +1115,7 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       typescript:
-        specifier: ^5.0.3
+        specifier: ^5.0.4
         version: 5.0.4
       webpack:
         specifier: ^5.82.0
@@ -1438,8 +1441,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       typescript:
-        specifier: ^4.8.4
-        version: 4.8.4
+        specifier: ^5.0.4
+        version: 5.0.4
       webpack:
         specifier: ^5.82.0
         version: 5.82.0(esbuild@0.17.18)(webpack-cli@5.1.0)
@@ -18127,12 +18130,6 @@ packages:
 
   /typescript-memoize@1.1.1:
     resolution: {integrity: sha512-GQ90TcKpIH4XxYTI2F98yEQYZgjNMOGPpOgdjIBhaLaWji5HPWlRnZ4AeA1hfBxtY7bCGDJsqDDHk/KaHOl5bA==}
-
-  /typescript@4.8.4:
-    resolution: {integrity: sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
-    dev: true
 
   /typescript@5.0.4:
     resolution: {integrity: sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==}
