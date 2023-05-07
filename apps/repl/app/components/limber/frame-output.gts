@@ -18,8 +18,8 @@ const compileTokens: unknown[] = [];
 type FrameStatus = 'disconnected' | 'connected';
 
 /**
-  * The Receiving Component is Limber::Output::Compiler
-  */
+ * The Receiving Component is Limber::Output::Compiler
+ */
 export default class FrameOutput extends Component {
   @service declare editor: EditorService;
   @service declare router: RouterService;
@@ -61,12 +61,11 @@ export default class FrameOutput extends Component {
     }
 
     compileTokens.push(compileWaiter.beginAsync());
-
   }
 
   /**
-    * HMM.... statechart
-    */
+   * HMM.... statechart
+   */
   previous = '';
   previousURL = '';
   monitorConnection = modifier((element: HTMLIFrameElement) => {
@@ -96,20 +95,20 @@ export default class FrameOutput extends Component {
   });
 
   /**
-    * We have to reload the output frame
-    */
+   * We have to reload the output frame
+   */
   setNoError = async (element: HTMLIFrameElement) => {
     this.connection?.destroy();
     element.src = `/output`;
     await Promise.resolve();
     this.frameStatus = 'disconnected';
     this.hadUnrecoverableError = false;
-  }
+  };
 
   /**
-    * We can't post right away, because we might do so before the iframe is ready.
-    * We need to wait until the frame initiates contact.
-    */
+   * We can't post right away, because we might do so before the iframe is ready.
+   * We need to wait until the frame initiates contact.
+   */
   postMessage = (element: HTMLIFrameElement) => {
     if (this.hadUnrecoverableError) {
       this.setNoError(element);
@@ -118,7 +117,7 @@ export default class FrameOutput extends Component {
     }
 
     this.queuePayload();
-  }
+  };
 
   connectToOutput = (element: HTMLIFrameElement) => {
     this.connection = connectToChild({
@@ -140,9 +139,9 @@ export default class FrameOutput extends Component {
           this.editor.isCompiling = false;
         },
         finishedRendering: () => {
-          compileTokens.forEach(token => compileWaiter.endAsync(token));
-        }
-      }
+          compileTokens.forEach((token) => compileWaiter.endAsync(token));
+        },
+      },
     });
 
     /**
@@ -150,9 +149,9 @@ export default class FrameOutput extends Component {
      * postMessage can run again with a connection
      */
     waitForPromise(this.connection.promise)
-      .then(() => this.frameStatus = 'connected')
+      .then(() => (this.frameStatus = 'connected'))
       .catch(console.error);
-  }
+  };
 
   <template>
     <iframe

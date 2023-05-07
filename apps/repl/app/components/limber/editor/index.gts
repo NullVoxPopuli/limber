@@ -18,10 +18,7 @@ const Editor: TOC<{
       {{#let (service 'editor') as |context|}}
         <div class='overflow-hidden overflow-y-auto'>
           {{! template-lint-disable no-inline-styles }}
-          <div
-            style='width: 100%; height: 100%;'
-            {{codemirror}}
-          >{{context.text}}</div>
+          <div style='width: 100%; height: 100%;' {{codemirror}}>{{context.text}}</div>
         </div>
       {{/let}}
 
@@ -44,6 +41,6 @@ const Editor: TOC<{
     {{/if}}
 
   </State>
-</template>
+</template>;
 
 export default Editor;

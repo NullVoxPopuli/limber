@@ -9,25 +9,23 @@ import type { TOC } from '@ember/component/template-only';
 interface Signature {
   Blocks: {
     default: [boolean];
-  }
+  };
 }
 
-export const Orientation: TOC<Signature> =
-  <template>
-    <ContainerQuery
-      @features={{hash isVertical=(aspectRatio max=1.2)}}
-      {{! grid forces all the contents to take up all available vertical space }}
-      class='grid'
-      {{constrainVertically}}
-      as |query|
-    >
+export const Orientation: TOC<Signature> = <template>
+  <ContainerQuery
+    @features={{hash isVertical=(aspectRatio max=1.2)}}
+    {{! grid forces all the contents to take up all available vertical space }}
+    class='grid'
+    {{constrainVertically}}
+    as |query|
+  >
 
-      {{#let query.features.isVertical as |isVertical|}}
+    {{#let query.features.isVertical as |isVertical|}}
 
-        {{yield (Boolean isVertical)}}
+      {{yield (Boolean isVertical)}}
 
-      {{/let}}
+    {{/let}}
 
-    </ContainerQuery>
-  </template>;
-
+  </ContainerQuery>
+</template>;

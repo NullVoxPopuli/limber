@@ -5,15 +5,15 @@ import type { TOC } from '@ember/component/template-only';
 
 const eq = (a: string, b: string) => a === b;
 
-class ResizePrevious extends Modifier<{ Args: { Positional: [string] }}> {
+class ResizePrevious extends Modifier<{ Args: { Positional: [string] } }> {
   declare editor: HTMLElement;
   declare dragHandle: HTMLElement;
   declare direction: string;
 
   /**
-    * iFrames eat pointer events, so when we drag, we need to cover
-    * the iframe until we let go
-    */
+   * iFrames eat pointer events, so when we drag, we need to cover
+   * the iframe until we let go
+   */
   declare dragSurface: HTMLElement;
 
   // Pointer
@@ -65,7 +65,7 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] }}> {
       this.pointerX = event.clientX;
       this.pointerY = event.clientY;
     }
-  }
+  };
 
   queueUpdate = () => {
     cancelAnimationFrame(this.dragFrame);
@@ -78,7 +78,7 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] }}> {
         this.editor.style.height = `${this.pointerY - box.y}px`;
       }
     });
-  }
+  };
 
   dragEndHandler = () => {
     this.dragging = false;
@@ -86,19 +86,19 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] }}> {
     this.dragSurface.remove();
 
     /**
-      * No need to listen if we aren't dragging
-      */
+     * No need to listen if we aren't dragging
+     */
     window.removeEventListener('touchmove', this.dragMove);
     window.removeEventListener('touchend', this.dragEndHandler);
     window.removeEventListener('mousemove', this.dragMove);
     window.removeEventListener('mouseup', this.dragEndHandler);
-  }
+  };
 
   dragMove = (event: PointerEvent) => {
     if (!this.dragging) return;
     this.setPosition(event);
     this.queueUpdate();
-  }
+  };
 
   dragStartHandler = (event: PointerEvent) => {
     this.dragging = true;
@@ -111,7 +111,7 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] }}> {
     window.addEventListener('touchmove', this.dragMove, { passive: true });
     window.addEventListener('mousemove', this.dragMove, { passive: true });
     window.addEventListener('mouseup', this.dragEndHandler, { passive: true });
-  }
+  };
 
   keyHandler = (event: KeyboardEvent) => {
     let deltaT = new Date().getTime() - this.lastKey;
@@ -137,30 +137,32 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] }}> {
       }
       this.keyDistance = 0;
     });
-  }
+  };
 }
 
 export const ResizeHandle: TOC<{
   Args: {
     direction: 'vertical' | 'horizontal';
-  }
-}> = <template><div class='relative {{if (eq @direction "horizontal") "h-full w-2 py-2" "w-full h-2 px-2"}} '>
-  <button
-    class='{{if
-        (eq @direction "horizontal")
-        "h-full w-2 py-2 cursor-col-resize"
-        "w-full h-2 px-2 cursor-row-resize"
-      }}
-      absolute inset-0 flex justify-end items-end text-white bg-horizon-lavender focus:ring-4 focus:outline-none focus-visible:outline-none leading-4 shadow z-10 group'
-    {{! template-lint-disable no-inline-styles }}
-    style='text-shadow: 1px 1px 1px black'
-    aria-label='resize the editor'
-    type='button'
-    {{! @glint-ignore }}
-    {{ResizePrevious @direction}}
-  >
-    <span class='group-focus:animate-bounce'>
-      {{if (eq @direction 'horizontal') '⬌' '⬍'}}
-    </span>
-  </button>
-</div></template>;
+  };
+}> = <template>
+  <div class='relative {{if (eq @direction "horizontal") "h-full w-2 py-2" "w-full h-2 px-2"}} '>
+    <button
+      class='{{if
+          (eq @direction "horizontal")
+          "h-full w-2 py-2 cursor-col-resize"
+          "w-full h-2 px-2 cursor-row-resize"
+        }}
+        absolute inset-0 flex justify-end items-end text-white bg-horizon-lavender focus:ring-4 focus:outline-none focus-visible:outline-none leading-4 shadow z-10 group'
+      {{! template-lint-disable no-inline-styles }}
+      style='text-shadow: 1px 1px 1px black'
+      aria-label='resize the editor'
+      type='button'
+      {{! @glint-ignore }}
+      {{ResizePrevious @direction}}
+    >
+      <span class='group-focus:animate-bounce'>
+        {{if (eq @direction 'horizontal') '⬌' '⬍'}}
+      </span>
+    </button>
+  </div>
+</template>;

@@ -9,36 +9,35 @@ import { Format } from 'limber/utils/messaging';
 
 interface Signature {
   Args: {
-    messagingAPI: MessagingAPI
-  }
+    messagingAPI: MessagingAPI;
+  };
 }
 
 const isGJS = (format: Format | undefined) => format === 'gjs';
 
-export const Output: TOC<Signature> =
-  <template>
-    <Compiler @messagingAPI={{@messagingAPI}} as |context|>
-      <div class='p-4 prose max-w-full relative' data-test-compiled-output>
-        {{!
+export const Output: TOC<Signature> = <template>
+  <Compiler @messagingAPI={{@messagingAPI}} as |context|>
+    <div class='p-4 prose max-w-full relative' data-test-compiled-output>
+      {{!
             The copy menu exists here for two reasons:
              - we need to statically reference this component so that it doesn't get tree-shaken away
                (and therefor we'd see errors when dynamic content renders)
              - we also want to be able to copy the contents of the entire preview
           }}
-        <CopyMenu />
+      <CopyMenu />
 
-        <div class={{if (isGJS context.format) "glimdown-render"}}>
+      <div class={{if (isGJS context.format) 'glimdown-render'}}>
 
-          {{#if context.component}}
-            <div {{highlight context.component}}>
-              <context.component />
-            </div>
-          {{/if}}
-
-        </div>
+        {{#if context.component}}
+          <div {{highlight context.component}}>
+            <context.component />
+          </div>
+        {{/if}}
 
       </div>
-    </Compiler>
-  </template>;
+
+    </div>
+  </Compiler>
+</template>;
 
 export default Output;

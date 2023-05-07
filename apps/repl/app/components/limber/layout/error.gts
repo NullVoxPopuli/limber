@@ -10,14 +10,15 @@ interface Signature {
 export default class EditorError extends Component<Signature> {
   @service declare editor: EditorService;
 
-  <template>{{#if this.editor.error}}
+  <template>
+    {{#if this.editor.error}}
 
-  <footer
-    data-test-error
-    class='rounded fixed right-4 bottom-4 p-4 bg-red-100 text-black drop-shadow-md border border-red-700 max-w-[60vw]'
-  >
-    <pre class='font-[monospace] text-base whitespace-pre-wrap'>{{this.editor.error}}</pre>
-  </footer>
-{{/if}}</template>
+      <footer
+        data-test-error
+        class='rounded fixed right-4 bottom-4 p-4 bg-red-100 text-black drop-shadow-md border border-red-700 max-w-[60vw]'
+      >
+        <pre class='font-[monospace] text-base whitespace-pre-wrap'>{{this.editor.error}}</pre>
+      </footer>
+    {{/if}}
+  </template>
 }
-

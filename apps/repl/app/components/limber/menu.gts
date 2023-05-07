@@ -5,17 +5,17 @@ import HeadlessMenu from 'ember-headlessui/components/menu';
 import type * as MenuTypes from 'ember-headlessui/components/menu';
 import { PopperJS } from 'ember-popperjs';
 
-import type { ModifierLike, WithBoundArgs } from "@glint/template";
+import type { ModifierLike, WithBoundArgs } from '@glint/template';
 import type { TOC } from '@ember/component/template-only';
 
 const Button: TOC<{
   Element: HTMLButtonElement;
   Args: {
-    item: MenuTypes.Item
-  },
+    item: MenuTypes.Item;
+  };
   Blocks: {
-    default: []
-  }
+    default: [];
+  };
 }> = <template>
   <@item as |i|>
     <i.Element
@@ -38,15 +38,11 @@ const DefaultTrigger: TOC<{
   };
   Blocks: {
     default: [MenuTypes.Menu];
-  }
+  };
 }> = <template>
   <@menu.Button
     {{@trigger}}
-    class="
-      text-black rounded border bg-white px-2 py-1 -my-1 text-left transition ease-in-out duration-150 sm:text-sm
-      drop-shadow-md hover:drop-shadow-xl
-      focus:ring-4 focus-visible:outline-none ring-ember-brand focus:outline-none
-    "
+    class='text-black rounded border bg-white px-2 py-1 -my-1 text-left transition ease-in-out duration-150 sm:text-sm drop-shadow-md hover:drop-shadow-xl focus:ring-4 focus-visible:outline-none ring-ember-brand focus:outline-none'
     ...attributes
   >
     {{yield @menu}}
@@ -61,7 +57,7 @@ const PlainTrigger: TOC<{
   };
   Blocks: {
     default: [MenuTypes.Menu];
-  }
+  };
 }> = <template>
   <@menu.Button {{@trigger}} ...attributes>
     {{yield @menu}}
@@ -69,14 +65,14 @@ const PlainTrigger: TOC<{
 </template>;
 
 const Items: TOC<{
-  Element: HTMLDivElement
+  Element: HTMLDivElement;
   Args: {
     popover: ModifierLike;
     items: MenuTypes.Items;
   };
   Blocks: {
-    default: [button: WithBoundArgs<typeof Button, 'item'>]
-  }
+    default: [button: WithBoundArgs<typeof Button, 'item'>];
+  };
 }> = <template>
   <@items
     {{@popover}}
@@ -94,27 +90,30 @@ const portalTarget = () => {
   let element = document.querySelector(selector);
 
   assert(
-    `Expected to find portal target element matching \`${selector}\`, `
-    + `but did not find one.`, element);
+    `Expected to find portal target element matching \`${selector}\`, ` + `but did not find one.`,
+    element
+  );
 
   return element;
-}
+};
 
 const Menu: TOC<{
   Element: HTMLDivElement;
   Args: {
     portal?: boolean;
-  }
+  };
   Blocks: {
-    trigger: [{
-      menu: MenuTypes.Menu,
-      isOpen: boolean,
-      Default: WithBoundArgs<typeof DefaultTrigger, 'menu' | 'trigger'>,
-      Button: WithBoundArgs<typeof PlainTrigger, 'menu' | 'trigger'>,
-      modifiers: ModifierLike;
-    }],
-    options: [button: WithBoundArgs<typeof Button, 'item'>],
-  }
+    trigger: [
+      {
+        menu: MenuTypes.Menu;
+        isOpen: boolean;
+        Default: WithBoundArgs<typeof DefaultTrigger, 'menu' | 'trigger'>;
+        Button: WithBoundArgs<typeof PlainTrigger, 'menu' | 'trigger'>;
+        modifiers: ModifierLike;
+      }
+    ];
+    options: [button: WithBoundArgs<typeof Button, 'item'>];
+  };
 }> = <template>
   <HeadlessMenu as |menu|>
     <PopperJS as |trigger popover|>
@@ -134,18 +133,18 @@ const Menu: TOC<{
         {{#if @portal}}
           {{#in-element (portalTarget)}}
             <Items @items={{menu.Items}} @popover={{popover}} ...attributes as |Button|>
-              {{yield Button to="options"}}
+              {{yield Button to='options'}}
             </Items>
           {{/in-element}}
         {{else}}
           <Items @items={{menu.Items}} @popover={{popover}} ...attributes as |Button|>
-            {{yield Button to="options"}}
+            {{yield Button to='options'}}
           </Items>
         {{/if}}
       {{/if}}
 
     </PopperJS>
   </HeadlessMenu>
-</template>
+</template>;
 
 export default Menu;

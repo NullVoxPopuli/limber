@@ -3,7 +3,7 @@ import { assert } from '@ember/debug';
 import { modifier } from 'ember-modifier';
 
 import State, { setupResizeObserver, isHorizontalSplit } from './state';
-import { Orientation } from './orientation'
+import { Orientation } from './orientation';
 import { Controls } from './controls';
 import { EditorContainer, OutputContainer } from './containers';
 import { ResizeHandle } from './resize-handle';
@@ -27,34 +27,33 @@ const setupState = modifier((element: Element, [send]: [Send<unknown>]) => {
   return () => send('CONTAINER_REMOVED');
 });
 
-const resizeDirection = (horzSplit: boolean) => horzSplit ? 'vertical' : 'horizontal';
+const resizeDirection = (horzSplit: boolean) => (horzSplit ? 'vertical' : 'horizontal');
 const toBoolean = (x: unknown) => Boolean(x);
-const effect = (fn: (...args: unknown[]) => void) =>  {
+const effect = (fn: (...args: unknown[]) => void) => {
   fn();
-}
+};
 
 const isResizable = (state: StateFor<typeof State>) => {
   return !(state.matches('hasContainer.minimized') || state.matches('hasContainer.maximized'));
-}
+};
 
 /**
-  * true for horizontally split
-  * false for vertically split
-  */
+ * true for horizontally split
+ * false for vertically split
+ */
 const containerDirection = (state: StateFor<typeof State>) => {
   if (state.matches('hasContainer.default.horizontallySplit')) {
     return true;
   }
 
-
   return isHorizontalSplit(state.context);
-}
+};
 
 export const Layout: TOC<{
   Blocks: {
     editor: [];
     output: [];
-  }
+  };
 }> = <template>
   <State as |state send|>
     {{!--
