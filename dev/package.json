@@ -19,19 +19,20 @@
     "@nullvoxpopuli/eslint-configs": "^3.1.3",
     "@types/node": "^18.16.5",
     "@types/yargs": "^17.0.24",
-    "eslint": "^8.39.0",
+    "eslint": "^8.40.0",
     "prettier": "^2.8.8",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "prettier-plugin-ember-template-tag": "^0.3.2"
   },
   "engines": {
     "node": ">= 18"
   },
   "scripts": {
-    "lint": "pnpm turbo lint --output-logs errors-only",
-    "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
-    "lint:js:fix": "eslint . --fix",
-    "lint:js": "eslint . --cache --cache-strategy content",
-    "lint:prettier:fix": "prettier --no-error-on-unmatched-pattern --cache --cache-strategy content -w **/*.{js,ts,gjs,gts,hbs,css}",
-    "lint:prettier": "prettier --no-error-on-unmatched-pattern -c **/*.{js,ts,gjs,gts,hbs,css}"
+    "lint": "pnpm -w exec lint",
+    "lint:fix": "pnpm -w exec lint fix",
+    "_:lint:js": "pnpm -w exec lint js",
+    "_:lint:js:fix": "pnpm -w exec lint js:fix",
+    "_:lint:prettier:fix": "pnpm -w exec lint prettier:fix",
+    "_:lint:prettier": "pnpm -w exec lint prettier"
   }
 }

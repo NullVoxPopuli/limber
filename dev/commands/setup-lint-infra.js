@@ -1,7 +1,7 @@
 import { ember,packageJson, project } from 'ember-apply';
-import latestVersion from 'latest-version';
 
 import { symlinkEverywhere } from './symlink-everywhere.js';
+import { latestOfAll } from './utils.js'; 
 
 export async function propagateLintConfiguration(force = false) {
   /************************************
@@ -44,6 +44,8 @@ async function fixLintScripts() {
       workspace);
 
     await packageJson.modify(json => {
+      if (!json.scripts) return;
+
       delete json.scripts['lint:js'];
       delete json.scripts['lint:js:fix'];
       delete json.scripts['lint:prettier'];
@@ -69,34 +71,3 @@ async function fixLintScripts() {
     }, workspace);
   }
 }
-
-const VERSION_CACHE = new Map();
-
-async function versionFor(name) {
-  if (VERSION_CACHE.has(name)) {
-    return VERSION_CACHE.get(name);
-  }
-
-  let version = await latestVersion(name);
-
-  VERSION_CACHE.set(name, version);
-
-  return version;
-}
-
-async function lastestOfAll(dependencies) {
-  let result = {};
-
-  let promises = dependencies.map(async (dep) => {
-    return [dep, await versionFor(dep)];
-  });
-
-  let resolved = await Promise.all(promises);
-
-  for (let [dep, version] of resolved) {
-    result[dep] = `^${version}`;
-  }
-
-  return result;
-}
-
