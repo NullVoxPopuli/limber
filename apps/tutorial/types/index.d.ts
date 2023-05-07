@@ -5,7 +5,7 @@ import '@glint/environment-ember-loose/native-integration';
 import '@nullvoxpopuli/limber-untyped';
 import 'ember-cached-decorator-polyfill';
 
-import type { HelperLike, ModifierLike } from '@glint/template';
+import type { HelperLike } from '@glint/template';
 import type Layout from 'tutorial/components/layout';
 
 declare module '@glint/environment-ember-loose/registry' {

@@ -1,5 +1,7 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+
 import { Link, service } from 'limber-ui';
+
 import { Selection } from './selection';
 
 const not = (x: unknown) => !x;

@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { assert } from '@ember/debug';
-import { service } from '@ember/service';
 import { on } from '@ember/modifier';
+import { service } from '@ember/service';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
@@ -16,8 +16,8 @@ import type DocsService from 'tutorial/services/docs';
 const titleize = (str: string) => {
   return str
     .split('-')
-    .filter((text) => !Boolean(text.match(/^[\d]+$/)))
-    .map((text) => `${text[0] && text[0].toLocaleUpperCase()}${text.slice(1, text.length)}`)
+    .filter((text) => !(text.match(/^[\d]+$/)))
+    .map((text) => `${text[0]?.toLocaleUpperCase()}${text.slice(1, text.length)}`)
     .join(' ');
 };
 

@@ -1,10 +1,10 @@
 import { service } from 'limber-ui';
 
+import { Editor } from './editor';
+import { Footer } from './footer';
 import { Nav } from './nav';
 import { Prose } from './prose';
-import { Editor } from './editor';
 import { SmallScreenToggle } from './small-toggle';
-import { Footer } from './footer';
 
 function removeAppShell() {
   document.querySelector('#initial-loader')?.remove();

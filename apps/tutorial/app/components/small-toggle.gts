@@ -1,7 +1,10 @@
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
+
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+
 import { Button, service } from 'limber-ui';
-import { TOC } from '@ember/component/template-only';
+
+import type { TOC } from '@ember/component/template-only';
 
 export const SmallScreenToggle: TOC<{ Element: HTMLButtonElement }> = <template>
   {{#let (service 'docs') as |docs|}}

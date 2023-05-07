@@ -1,7 +1,7 @@
-import { TOC } from '@ember/component/template-only';
 import { REPL, service } from 'limber-ui';
 
-import DocsService from 'tutorial/services/docs';
+import type { TOC } from '@ember/component/template-only';
+import type DocsService from 'tutorial/services/docs';
 
 const codeFor = (docs: DocsService) => {
   if (docs.showAnswer) {
