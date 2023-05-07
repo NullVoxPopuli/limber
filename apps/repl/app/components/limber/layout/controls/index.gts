@@ -1,12 +1,12 @@
-import { fn, concat } from '@ember/helper';
-import { htmlSafe } from '@ember/template';
+import { concat,fn } from '@ember/helper';
 import { on } from '@ember/modifier';
+import { htmlSafe } from '@ember/template';
+
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+
+import currentURL from 'limber/helpers/current-url';
 import { inIframe } from 'limber/helpers/in-iframe';
 import { service } from 'limber-ui';
-import currentURL from 'limber/helpers/current-url';
-
-// @ts-expect-error
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
 import { FormatMenu } from './format-menu';
 

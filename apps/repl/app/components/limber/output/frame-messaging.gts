@@ -1,16 +1,18 @@
-import Component from '@glimmer/component';
 import Ember from 'ember';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { isDestroyed, isDestroying,registerDestructor } from '@ember/destroyable';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { hash } from '@ember/helper';
-import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { registerDestructor, isDestroyed, isDestroying } from '@ember/destroyable';
-import { connectToParent, type Connection, type AsyncMethodReturns } from 'penpal';
 
-import { type OutputError, type Format } from 'limber/utils/messaging';
+import { type AsyncMethodReturns,type Connection, connectToParent } from 'penpal';
 
-import type { ComponentLike } from '@glint/template';
+import { type Format,type OutputError } from 'limber/utils/messaging';
+
 import type RouterService from '@ember/routing/router-service';
+import type { ComponentLike } from '@glint/template';
 
 export interface MessagingAPI {
   onReceiveText: (callback: (format: Format, text: string) => void) => void;
@@ -56,6 +58,7 @@ async function setupEvents(
   registerDestructor(context, () => connection.destroy());
 
   let parent = await connection.promise;
+
   onConnect(parent);
 
   if (isDestroyed(context) || isDestroying(context)) return;

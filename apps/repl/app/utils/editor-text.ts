@@ -136,6 +136,7 @@ export class FileURIComponent {
     let base = this.router.currentURL;
 
     if (macroCondition(isTesting())) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       base ??= (this.router as any) /* private API? */?.location;
     } else {
       base ??= window.location.toString();
@@ -174,6 +175,7 @@ export class FileURIComponent {
     let base = this.router.currentURL?.split('?')[0];
 
     if (macroCondition(isTesting())) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       base ??= (this.router as any) /* private API? */?.location?.path;
     } else {
       base ??= window.location.pathname;

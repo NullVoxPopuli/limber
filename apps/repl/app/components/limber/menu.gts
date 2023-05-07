@@ -1,12 +1,14 @@
 import { assert } from '@ember/debug';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { hash } from '@ember/helper';
+
 import HeadlessMenu from 'ember-headlessui/components/menu';
-import type * as MenuTypes from 'ember-headlessui/components/menu';
 import { PopperJS } from 'ember-popperjs';
 
-import type { ModifierLike, WithBoundArgs } from '@glint/template';
 import type { TOC } from '@ember/component/template-only';
+import type { ModifierLike, WithBoundArgs } from '@glint/template';
+import type * as MenuTypes from 'ember-headlessui/components/menu';
 
 const Button: TOC<{
   Element: HTMLButtonElement;

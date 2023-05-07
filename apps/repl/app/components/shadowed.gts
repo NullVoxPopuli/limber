@@ -1,4 +1,5 @@
 import { modifier } from 'ember-modifier';
+
 import State from 'limber/helpers/state';
 
 import type { TOC } from '@ember/component/template-only';

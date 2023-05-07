@@ -1,6 +1,6 @@
-import { service } from 'limber-ui';
 import qp from 'limber/helpers/qp';
 import highlighted from 'limber/modifiers/highlighted';
+import { service } from 'limber-ui';
 
 import type { TOC } from '@ember/component/template-only';
 

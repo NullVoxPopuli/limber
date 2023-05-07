@@ -1,16 +1,17 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
-import { service } from '@ember/service';
 import { action } from '@ember/object';
+import { service } from '@ember/service';
+import { buildWaiter,waitFor, waitForPromise } from '@ember/test-waiters';
+
 import { modifier } from 'ember-modifier';
-import { waitForPromise, waitFor, buildWaiter } from '@ember/test-waiters';
-import { connectToChild, type Connection } from 'penpal';
+import { type Connection,connectToChild } from 'penpal';
 
 import { fileFromParams, type Format, type OutputError } from 'limber/utils/messaging';
 
-import type EditorService from 'limber/services/editor';
 import type RouterService from '@ember/routing/router-service';
+import type EditorService from 'limber/services/editor';
 
 const compileWaiter = buildWaiter('<FrameOutput />::compile');
 const compileTokens: unknown[] = [];
@@ -47,10 +48,12 @@ export default class FrameOutput extends Component {
     if (!this.connection) return;
 
     let child = await this.connection.promise;
+
     if (isDestroyed(this) || isDestroying(this)) return;
 
     if (this.frameStatus === 'disconnected') {
       console.warn('Frame is disconnected, not sending payload');
+
       return;
     }
 
@@ -75,6 +78,7 @@ export default class FrameOutput extends Component {
     if (status === 'connected' && currentURL !== this.previousURL) {
       this.previous = status;
       this.previousURL = currentURL;
+
       return this.postMessage(element);
     }
 
@@ -85,6 +89,7 @@ export default class FrameOutput extends Component {
       switch (status) {
         case 'disconnected': {
           this.connectToOutput(element);
+
           break;
         }
         case 'connected': {
@@ -126,6 +131,7 @@ export default class FrameOutput extends Component {
         error: (obj: OutputError) => {
           this.editor.error = obj.error;
           this.editor.isCompiling = false;
+
           if ('unrecoverable' in obj) {
             this.hadUnrecoverableError = true;
           }

@@ -3,9 +3,9 @@ import highlight from 'limber/modifiers/highlight-code-blocks';
 import CopyMenu from '../copy-menu';
 import Compiler from './compiler';
 
-import type { TOC } from '@ember/component/template-only';
 import type { MessagingAPI } from './frame-messaging';
-import { Format } from 'limber/utils/messaging';
+import type { TOC } from '@ember/component/template-only';
+import type { Format } from 'limber/utils/messaging';
 
 interface Signature {
   Args: {
