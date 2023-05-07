@@ -1,5 +1,5 @@
 import { assert } from '@ember/debug';
-import { fn,hash } from '@ember/helper';
+import { fn, hash } from '@ember/helper';
 
 import { modifier } from 'ember-modifier';
 
@@ -8,7 +8,7 @@ import { EditorContainer, OutputContainer } from './containers';
 import { Controls } from './controls';
 import { Orientation } from './orientation';
 import { ResizeHandle } from './resize-handle';
-import State, { isHorizontalSplit,setupResizeObserver } from './state';
+import State, { isHorizontalSplit, setupResizeObserver } from './state';
 
 import type { TOC } from '@ember/component/template-only';
 import type { Send, State as StateFor } from 'ember-statechart-component/glint';

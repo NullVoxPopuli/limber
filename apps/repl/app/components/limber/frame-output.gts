@@ -3,10 +3,10 @@ import { tracked } from '@glimmer/tracking';
 import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { buildWaiter,waitFor, waitForPromise } from '@ember/test-waiters';
+import { buildWaiter, waitFor, waitForPromise } from '@ember/test-waiters';
 
 import { modifier } from 'ember-modifier';
-import { type Connection,connectToChild } from 'penpal';
+import { type Connection, connectToChild } from 'penpal';
 
 import { fileFromParams, type Format, type OutputError } from 'limber/utils/messaging';
 

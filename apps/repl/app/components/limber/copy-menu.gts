@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { on } from '@ember/modifier';
 
-import { getSnippetElement, toClipboard,withExtraStyles } from './copy-utils';
+import { getSnippetElement, toClipboard, withExtraStyles } from './copy-utils';
 import Menu from './menu';
 
 /**

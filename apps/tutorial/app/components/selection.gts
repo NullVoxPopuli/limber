@@ -16,7 +16,7 @@ import type DocsService from 'tutorial/services/docs';
 const titleize = (str: string) => {
   return str
     .split('-')
-    .filter((text) => !(text.match(/^[\d]+$/)))
+    .filter((text) => !text.match(/^[\d]+$/))
     .map((text) => `${text[0]?.toLocaleUpperCase()}${text.slice(1, text.length)}`)
     .join(' ');
 };

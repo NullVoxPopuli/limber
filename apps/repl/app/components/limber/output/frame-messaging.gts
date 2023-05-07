@@ -1,15 +1,15 @@
 import Ember from 'ember';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { isDestroyed, isDestroying,registerDestructor } from '@ember/destroyable';
+import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { hash } from '@ember/helper';
 import { service } from '@ember/service';
 
-import { type AsyncMethodReturns,type Connection, connectToParent } from 'penpal';
+import { type AsyncMethodReturns, type Connection, connectToParent } from 'penpal';
 
-import { type Format,type OutputError } from 'limber/utils/messaging';
+import { type Format, type OutputError } from 'limber/utils/messaging';
 
 import type RouterService from '@ember/routing/router-service';
 import type { ComponentLike } from '@glint/template';
