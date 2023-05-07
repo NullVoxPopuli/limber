@@ -1,4 +1,3 @@
-// @ts-expect-error
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
 import ExternalLink from '../external-link';

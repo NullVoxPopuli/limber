@@ -1,19 +1,18 @@
 import Component from '@glimmer/component';
-import { schedule } from '@ember/runloop';
-import { hash } from '@ember/helper';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { service } from '@ember/service';
 import { isDestroyed, isDestroying } from '@ember/destroyable';
+import { hash } from '@ember/helper';
+import { action } from '@ember/object';
+import { schedule } from '@ember/runloop';
+import { service } from '@ember/service';
 import { waitFor } from '@ember/test-waiters';
-
-import { Format } from 'limber/utils/messaging';
 
 import { compileTopLevelComponent } from './create-top-level-component';
 
-import type { ComponentLike } from '@glint/template';
-import type RouterService from '@ember/routing/router-service';
 import type { MessagingAPI, Parent } from '../frame-messaging';
+import type RouterService from '@ember/routing/router-service';
+import type { ComponentLike } from '@glint/template';
+import type { Format } from 'limber/utils/messaging';
 
 interface Signature {
   Args: {
@@ -70,10 +69,12 @@ export default class Compiler extends Component<Signature> {
       onSuccess: async (component) => {
         if (!component) {
           await this.parentFrame.error({ error: 'could not build component' });
+
           return;
         }
 
         if (isDestroyed(this) || isDestroying(this)) return;
+
         this.component = component as ComponentLike<never>;
         this.format = format;
 

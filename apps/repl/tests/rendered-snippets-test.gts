@@ -9,6 +9,7 @@ import {
 import { getFromLabel } from 'limber/snippets';
 
 import type { ComponentLike } from '@glint/template';
+import type QUnit from 'qunit';
 
 module('Rendered Snippets / Demos', function (hooks) {
   setupRenderingTest(hooks);
@@ -17,7 +18,7 @@ module('Rendered Snippets / Demos', function (hooks) {
     CACHE.clear();
   });
 
-  async function compile(text: string, { assert }: { assert: Assert }) {
+  async function compile(text: string, { assert }: { assert: QUnit['assert'] }) {
     let component: ComponentLike | undefined;
     let error: string | undefined;
 

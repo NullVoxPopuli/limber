@@ -1,6 +1,7 @@
+import { isDevelopingApp, macroCondition } from '@embroider/macros';
+
 import { resource } from 'ember-resources';
 import { connectToParent } from 'penpal';
-import { isDevelopingApp, macroCondition } from '@embroider/macros';
 
 import { notInIframe } from 'limber/helpers/in-iframe';
 
@@ -31,7 +32,7 @@ const guestFrame = resource(({ on, owner }) => {
 
   if (macroCondition(isDevelopingApp())) {
     connection.promise.then(() => {
-      console.log('Guest connected to Host');
+      console.debug('Guest connected to Host');
     });
   }
 

@@ -1,7 +1,7 @@
-import { ember,packageJson, project } from 'ember-apply';
+import { ember, packageJson, project } from 'ember-apply';
 
 import { symlinkEverywhere } from './symlink-everywhere.js';
-import { latestOfAll } from './utils.js'; 
+import { latestOfAll } from './utils.js';
 
 export async function propagateLintConfiguration(force = false) {
   /************************************
@@ -40,34 +40,43 @@ async function fixLintScripts() {
         '@nullvoxpopuli/eslint-configs',
         ...(isEmber ? ['ember-template-lint', 'eslint-plugin-ember'] : []),
         ...(hasTypeScript ? ['@typescript-eslint/eslint-plugin', '@typescript-eslint/parser'] : []),
-      ]), 
-      workspace);
+      ]),
+      workspace
+    );
 
-    await packageJson.modify(json => {
+    await packageJson.modify((json) => {
       if (!json.scripts) return;
 
-      delete json.scripts['lint:js'];
-      delete json.scripts['lint:js:fix'];
-      delete json.scripts['lint:prettier'];
-      delete json.scripts['lint:prettier:fix'];
-      delete json.scripts['lint:hbs'];
-      delete json.scripts['lint:hbs:fix'];
+      delete json.scripts['_:lint:types'];
+      delete json.scripts['_:lint:js'];
+      delete json.scripts['_:lint:js:fix'];
+      delete json.scripts['_:lint:prettier'];
+      delete json.scripts['_:lint:prettier:fix'];
+      delete json.scripts['_:lint:hbs'];
+      delete json.scripts['_:lint:hbs:fix'];
     }, workspace);
 
-    await packageJson.addScripts({
-      lint: "pnpm -w exec lint",
-      "lint:fix": "pnpm -w exec lint fix",
-      "_:lint:js": "pnpm -w exec lint js",
-      "_:lint:js:fix": "pnpm -w exec lint js:fix",
-      ...(isEmber ? {
-        "_:lint:hbs": "pnpm -w exec lint hbs",
-        "_:lint:hbs:fix": "pnpm -w exec lint hbs:fix",
-      } : {}),
-      "_:lint:prettier:fix": "pnpm -w exec lint prettier:fix",
-      "_:lint:prettier": "pnpm -w exec lint prettier",
-      ...(hasGlint ? {
-        '_:lint:types': 'glint',
-      } : {})
-    }, workspace);
+    await packageJson.addScripts(
+      {
+        lint: 'pnpm -w exec lint',
+        'lint:fix': 'pnpm -w exec lint fix',
+        'lint:js': 'pnpm -w exec lint js',
+        'lint:js:fix': 'pnpm -w exec lint js:fix',
+        ...(isEmber
+          ? {
+              'lint:hbs': 'pnpm -w exec lint hbs',
+              'lint:hbs:fix': 'pnpm -w exec lint hbs:fix',
+            }
+          : {}),
+        'lint:prettier:fix': 'pnpm -w exec lint prettier:fix',
+        'lint:prettier': 'pnpm -w exec lint prettier',
+        ...(hasGlint
+          ? {
+              'lint:types': 'glint',
+            }
+          : {}),
+      },
+      workspace
+    );
   }
 }

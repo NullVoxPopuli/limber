@@ -1,4 +1,5 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+
 import { ExternalLink } from 'limber-ui';
 
 export const Footer = <template>

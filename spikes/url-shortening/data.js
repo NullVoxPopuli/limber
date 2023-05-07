@@ -1,4 +1,3 @@
-
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import url from 'node:url';
@@ -7,7 +6,7 @@ import { globby } from 'globby';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-const SAMPLES_FOLDER = path.join(__dirname, '../../apps/repl/public/samples'); 
+const SAMPLES_FOLDER = path.join(__dirname, '../../apps/repl/public/samples');
 
 export async function getSamples() {
   let filePaths = await globby('**/*.md', { cwd: SAMPLES_FOLDER });
@@ -122,7 +121,3 @@ const asJSON = (obj) => JSON.stringify(obj, null, 4);
 
 \`\`\`
 `;
-
-
-
-

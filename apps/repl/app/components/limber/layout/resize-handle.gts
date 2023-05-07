@@ -1,5 +1,6 @@
-import Modifier from 'ember-modifier';
 import { registerDestructor } from '@ember/destroyable';
+
+import Modifier from 'ember-modifier';
 
 import type { TOC } from '@ember/component/template-only';
 
@@ -31,6 +32,8 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] } }> {
   modify(element: Element, [direction]: [string]) {
     this.direction = direction;
     this.dragHandle = element as HTMLElement;
+    // Is this a valid warning?
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.editor = element.parentElement!.previousElementSibling! as HTMLElement;
 
     if (!this.isSetup) {
@@ -116,6 +119,7 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] } }> {
   keyHandler = (event: KeyboardEvent) => {
     let deltaT = new Date().getTime() - this.lastKey;
     let isRapid = deltaT < 50;
+
     if (event.code === 'ArrowDown' || event.code === 'ArrowRight') {
       this.keyDistance += isRapid ? 8 : 1;
       this.lastKey = new Date().getTime();
@@ -135,6 +139,7 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] } }> {
       } else {
         this.editor.style.height = `calc(${box.height}px + ${this.keyDistance}rem)`;
       }
+
       this.keyDistance = 0;
     });
   };

@@ -26,13 +26,12 @@
     "test:browserstack": "./scripts/browserstack.sh",
     "test:ember": "ember test --test-port 0",
     "lint": "pnpm -w exec lint",
-    "_:lint:js": "pnpm -w exec lint js",
-    "_:lint:js:fix": "pnpm -w exec lint js:fix",
-    "_:lint:hbs": "pnpm -w exec lint hbs",
-    "_:lint:hbs:fix": "pnpm -w exec lint hbs:fix",
-    "_:lint:prettier:fix": "pnpm -w exec lint prettier:fix",
-    "_:lint:prettier": "pnpm -w exec lint prettier",
-    "_:lint:types": "glint"
+    "lint:js": "pnpm -w exec lint js",
+    "lint:js:fix": "pnpm -w exec lint js:fix",
+    "lint:hbs": "pnpm -w exec lint hbs",
+    "lint:hbs:fix": "pnpm -w exec lint hbs:fix",
+    "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
+    "lint:prettier": "pnpm -w exec lint prettier"
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",
@@ -86,7 +85,7 @@
     "ember-on-resize-modifier": "^2.0.2",
     "ember-page-title": "^7.0.0",
     "ember-qunit": "^6.2.0",
-    "ember-resolver": "^10.0.0",
+    "ember-resolver": "^10.1.0",
     "ember-source": "^4.12.0",
     "ember-template-imports": "^3.4.2",
     "ember-template-lint": "^5.7.3",

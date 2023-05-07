@@ -1,10 +1,10 @@
 import { service } from 'limber-ui';
 
 import codemirror from './-code-mirror';
-import State from './state';
 import Loader from './loader';
 import { LoadingError } from './loading-error';
 import { Placeholder } from './placeholder';
+import State from './state';
 
 import type { TOC } from '@ember/component/template-only';
 

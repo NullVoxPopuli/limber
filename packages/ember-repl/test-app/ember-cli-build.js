@@ -11,7 +11,7 @@ module.exports = function (defaults) {
     name: 'test-app',
     autoImport: {
       watchDependencies: Object.keys(require('./package.json').dependencies),
-    }
+    },
   });
 
   // Adds:

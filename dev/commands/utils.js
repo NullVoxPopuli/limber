@@ -29,4 +29,3 @@ export async function latestOfAll(dependencies) {
 
   return result;
 }
-

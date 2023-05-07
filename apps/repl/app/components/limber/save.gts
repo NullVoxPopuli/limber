@@ -1,8 +1,9 @@
-import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
-import EditorService from 'limber/services/editor';
+import { tracked } from '@glimmer/tracking';
 import { registerDestructor } from '@ember/destroyable';
+import { service } from '@ember/service';
+
+import type EditorService from 'limber/services/editor';
 
 const SHOW_TIME = 2000;
 
@@ -43,6 +44,7 @@ export default class Save extends Component {
 
   onSave = async () => {
     this.isShowing = true;
+
     try {
       await this.editor.fileURIComponent.toClipboard();
       await new Promise((resolve) => setTimeout(resolve, SHOW_TIME));

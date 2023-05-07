@@ -1,15 +1,14 @@
 import Component from '@glimmer/component';
-import { service } from '@ember/service';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
+import { service } from '@ember/service';
 
-// @ts-expect-error
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
 import Menu from 'limber/components/limber/menu';
 
-import type { Format } from 'limber/utils/messaging';
 import type RouterService from '@ember/routing/router-service';
+import type { Format } from 'limber/utils/messaging';
 
 export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
   @service declare router: RouterService;

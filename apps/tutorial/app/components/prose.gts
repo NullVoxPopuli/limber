@@ -1,10 +1,13 @@
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { TOC } from '@ember/component/template-only';
 import { on } from '@ember/modifier';
-import { Link, Button, ExternalLink, service } from 'limber-ui';
+
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { modifier } from 'ember-modifier';
+
+import { Button, ExternalLink, Link, service } from 'limber-ui';
 
 import { highlight } from './highlight';
-import { modifier } from 'ember-modifier';
+
+import type { TOC } from '@ember/component/template-only';
 
 const editPath = (path: string | undefined) =>
   `https://github.com/NullVoxPopuli/limber/tree/main/apps/tutorial/docs${path}`;
