@@ -15,7 +15,8 @@
   "typesVersions": {
     "*": {
       "*": [
-        "dist/browser/*"
+        "dist/browser/*",
+        "dist/browser/*/index.d.ts"
       ]
     }
   },

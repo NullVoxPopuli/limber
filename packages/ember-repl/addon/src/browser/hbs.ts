@@ -13,6 +13,9 @@ import { importSync } from '@embroider/macros';
 
 import { nameFor } from './utils';
 
+import type { CompileResult } from './types';
+import type { ComponentLike } from '@glint/template';
+
 // These things are pre-bundled in the old system.
 // ember-template-compiler defines them in AMD/requirejs
 const { precompileJSON } = importSync('@glimmer/compiler') as any;
@@ -27,16 +30,16 @@ const { getTemplateLocals } = importSync('@glimmer/syntax') as any;
 export function compileHBS(
   template: string,
   options: Omit<CompileTemplateOptions, 'moduleName'> = {}
-) {
+): CompileResult {
   let name = nameFor(template);
-  let component: undefined | unknown;
+  let component: undefined | ComponentLike;
   let error: undefined | Error;
 
   try {
     component = setComponentTemplate(
       compileTemplate(template, { moduleName: name, ...options }),
       templateOnlyComponent(name)
-    );
+    ) as ComponentLike;
   } catch (e) {
     error = e as Error | undefined;
   }

@@ -6,7 +6,7 @@ import { waitForPromise } from '@ember/test-waiters';
 import type { ComponentLike } from '@glint/template';
 
 interface Args {
-  promise: Promise<ComponentLike>;
+  promise: Promise<ComponentLike | undefined>;
 }
 
 export class Await extends Component<Args> {

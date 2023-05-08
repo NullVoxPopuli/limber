@@ -5,8 +5,6 @@
   },
   "compilerOptions": {
     "paths": {
-      "ember-repl": ["../addon/dist/browser/index.d.ts"],
-      "ember-repl/*": ["../addon/dist/browser/*"],
       "test-app/tests/*": ["./tests/*"],
       "test-app/*": ["./app/*"],
       "*": ["./types/*"]

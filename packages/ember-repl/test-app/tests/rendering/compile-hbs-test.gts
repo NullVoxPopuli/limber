@@ -1,7 +1,4 @@
-import { setComponentTemplate } from '@ember/component';
-import templateOnly from '@ember/component/template-only';
 import { render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -15,29 +12,27 @@ module('compileHBS()', function (hooks) {
   test('it works', async function (assert) {
     assert.expect(5);
 
-    this.setProperties({
-      compile: () => {
-        let template = `
-          {{#each (array 1 2) as |num|}}
-            <output>{{num}}</output>
-          {{/each}}
-        `;
+    let compile = () => {
+      let template = `
+        {{#each (array 1 2) as |num|}}
+          <output>{{num}}</output>
+        {{/each}}
+      `;
 
-        let { component, name, error } = compileHBS(template);
+      let { component, name, error } = compileHBS(template);
 
-        assert.notOk(error);
-        assert.ok(name);
+      assert.notOk(error);
+      assert.ok(name);
 
-        return component;
-      },
-    });
+      return component;
+    };
 
     await render(
-      hbs`
-        {{#let (this.compile) as |CustomComponent|}}
+      <template>
+        {{#let (compile) as |CustomComponent|}}
           <CustomComponent />
         {{/let}}
-      `
+      </template>
     );
 
     assert.dom('output').exists({ count: 2 });
@@ -48,31 +43,28 @@ module('compileHBS()', function (hooks) {
   test('can render components passed to scope', async function (assert) {
     assert.expect(3);
 
-    const SomeOtherComponent = setComponentTemplate(
-      hbs`there!`,
-      templateOnly()
-    );
+    const SomeOtherComponent = <template>there!</template>;
 
     let template = `Hi <SomeOtherComponent />`;
 
-    this.setProperties({
-      compile: () => {
-        let { component, error, name } = compileHBS(template, {
-          scope: { SomeOtherComponent },
-        });
+    let compile = () => {
+      let { component, error, name } = compileHBS(template, {
+        scope: { SomeOtherComponent },
+      });
 
-        assert.notOk(error);
-        assert.ok(name);
+      assert.notOk(error);
+      assert.ok(name);
 
-        return component;
-      },
-    });
+      return component;
+    };
 
-    await render(hbs`
-      {{#let (this.compile) as |CustomComponent|}}
-        <CustomComponent />
-      {{/let}}
-    `);
+    await render(
+      <template>
+        {{#let (compile) as |CustomComponent|}}
+          <CustomComponent />
+        {{/let}}
+      </template>
+    );
 
     assert.dom().containsText('Hi there!');
   });
@@ -81,34 +73,31 @@ module('compileHBS()', function (hooks) {
     test('syntax', async function (assert) {
       assert.expect(4);
 
-      this.setProperties({
-        await: Await,
-        compile: async () => {
-          // What else do we await to convert this to promise?
-          await Promise.resolve();
+      let compile = async () => {
+        // What else do we await to convert this to promise?
+        await Promise.resolve();
 
-          let template = `
-            {{#each array 1 2) as |num|}}
-              <output>{{num}}</output>
-            {{/each}}
-          `;
+        let template = `
+          {{#each array 1 2) as |num|}}
+            <output>{{num}}</output>
+          {{/each}}
+        `;
 
-          let { component, name, error } = compileHBS(template);
+        let { component, name, error } = compileHBS(template);
 
-          assert.ok(error);
-          assert.ok(name);
-          assert.notOk(component);
+        assert.ok(error);
+        assert.ok(name);
+        assert.notOk(component);
 
-          return component;
-        },
-      });
+        return component;
+      };
 
       await render(
-        hbs`
-        {{#let (this.compile) as |CustomComponent|}}
-          <this.await @promise={{CustomComponent}} />
-        {{/let}}
-      `
+        <template>
+          {{#let (compile) as |CustomComponent|}}
+            <Await @promise={{CustomComponent}} />
+          {{/let}}
+        </template>
       );
 
       assert.dom('output').exists({ count: 0 });
