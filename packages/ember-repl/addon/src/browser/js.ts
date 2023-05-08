@@ -1,7 +1,7 @@
 import { compileJS as compileAMD } from './cjs';
 import { compileJS as compileESM } from './esm';
 
-import type { CompileResult,ExtraModules, Options } from './types';
+import type { CompileResult, ExtraModules, Options } from './types';
 
 /**
  * @public
@@ -20,7 +20,11 @@ import type { CompileResult,ExtraModules, Options } from './types';
  *  are not provided by extraModules will be searched on npm to see if a package
  *  needs to be downloaded before running the `code` / invoking the component
  */
-export function compileJS(code: string, extraModules?: ExtraModules, options?: Options): CompileResult {
+export function compileJS(
+  code: string,
+  extraModules?: ExtraModules,
+  options?: Options
+): CompileResult {
   if (options?.skypack) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     // if (!(window as any).webpackChunkDummy) {

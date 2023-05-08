@@ -32,12 +32,18 @@ console.debug(`${manifest.name} :: within ${relative}`);
 async function run() {
   switch (command) {
     case 'prettier:fix':
-      return execaCommand(`pnpm prettier -w ${LINT_GLOB} --cache --cache-strategy content`, {
+      return execaCommand(
+        `pnpm prettier -w ${LINT_GLOB} --cache --cache-strategy content --config ./.prettierrc.cjs`,
+        {
+          cwd,
+          stdio: 'inherit',
+        }
+      );
+    case 'prettier':
+      return execaCommand(`pnpm prettier -c ${LINT_GLOB} --config ./.prettierrc.cjs`, {
         cwd,
         stdio: 'inherit',
       });
-    case 'prettier':
-      return execaCommand(`pnpm prettier -c ${LINT_GLOB}`, { cwd, stdio: 'inherit' });
     case 'js:fix':
       return execaCommand(`pnpm eslint . --fix --cache --cache-strategy content`, {
         cwd,
