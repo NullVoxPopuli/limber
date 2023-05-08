@@ -2,7 +2,7 @@ import { invocationOf, nameFor } from 'ember-repl';
 import HBS from 'remark-hbs';
 import html from 'remark-html';
 import markdown from 'remark-parse';
-import unified from 'unified';
+import { unified } from 'unified';
 import flatMap from 'unist-util-flatmap';
 
 import type { Code } from 'mdast';
