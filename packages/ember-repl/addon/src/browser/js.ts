@@ -24,7 +24,7 @@ export function compileJS(
   code: string,
   extraModules?: ExtraModules,
   options?: Options
-): CompileResult {
+): Promise<CompileResult> {
   if (options?.skypack) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     // if (!(window as any).webpackChunkDummy) {
