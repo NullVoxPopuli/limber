@@ -91,7 +91,7 @@ module.exports = function (defaults) {
     staticComponents: true,
     splitControllers: true,
     splitRouteClasses: true,
-    // staticAppPaths: [],
+    staticAppPaths: ['utils'],
     // splitAtRoutes: [],
     implicitModulesStrategy: 'packageNames',
     // required due to this app being a dynamic component generator

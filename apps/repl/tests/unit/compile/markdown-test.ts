@@ -56,8 +56,8 @@ module('Unit | parseMarkdown()', function () {
       stripIndent`
         <h1>Title</h1>
 
-        <pre><code class="language-js">  const two = 2;
-        </code></pre>
+        <div class=\"glimdown-snippet relative\"><pre><code class=\"language-js\">  const two = 2;
+        </code></pre><Limber::CopyMenu />
       `
     );
 
@@ -112,8 +112,8 @@ module('Unit | parseMarkdown()', function () {
         stripIndent`
           <h1>Title</h1>
 
-          <pre><code class="language-gjs">  const two = 2;
-          </code></pre>
+          <div class=\"glimdown-snippet relative\"><pre><code class=\"language-gjs\">  const two = 2;
+          </code></pre><Limber::CopyMenu />
         `
       );
 
@@ -198,12 +198,12 @@ module('Unit | parseMarkdown()', function () {
           <p>hi</p>
 
           ${invocationOf(name)}
-          <p class=\"glimdown-snippet relative\"><pre><code class=\"language-gjs\">import Component from '@glimmer/component';
+          <div class=\"glimdown-snippet relative\"><pre><code class=\"language-gjs\">import Component from '@glimmer/component';
           import { on } from '@ember/modifier';
           &#x3C;template>
             &#x3C;button \\{{on \"click\" console.log}}>Click&#x3C;/button>
           &#x3C;/template>
-          </code></pre><Limber::CopyMenu /></p>
+          </code></pre><Limber::CopyMenu /></div>
         `
       );
 
