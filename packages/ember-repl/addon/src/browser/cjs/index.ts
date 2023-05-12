@@ -2,16 +2,17 @@ import { preprocess, transform } from '../gjs';
 import { nameFor } from '../utils';
 import { evalSnippet } from './eval';
 
-import type { ExtraModules } from '../types';
+import type { CompileResult, ExtraModules } from '../types';
+import type { ComponentLike } from '@glint/template';
 
 export interface Info {
   code: string;
   name: string;
 }
 
-export async function compileJS(code: string, extraModules?: ExtraModules) {
+export async function compileJS(code: string, extraModules?: ExtraModules): Promise<CompileResult> {
   let name = nameFor(code);
-  let component: undefined | unknown;
+  let component: undefined | ComponentLike;
   let error: undefined | Error;
 
   try {
@@ -21,7 +22,7 @@ export async function compileJS(code: string, extraModules?: ExtraModules) {
       throw new Error(`Compiled output is missing`);
     }
 
-    component = evalSnippet(compiled, extraModules).default;
+    component = evalSnippet(compiled, extraModules).default as unknown as ComponentLike;
   } catch (e) {
     error = e as Error | undefined;
   }

@@ -1,7 +1,8 @@
 import type { availablePlugins, availablePresets, transform } from '@babel/standalone';
+import type { ComponentLike } from '@glint/template';
 
 export interface CompileResult {
-  component?: unknown;
+  component?: ComponentLike;
   error?: Error;
   name: string;
 }

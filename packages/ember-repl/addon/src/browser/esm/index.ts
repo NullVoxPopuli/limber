@@ -2,17 +2,18 @@ import { preprocess, transform } from '../gjs';
 import { modules } from '../known-modules';
 import { nameFor } from '../utils';
 
-import type { ExtraModules } from '../types';
+import type { CompileResult, ExtraModules } from '../types';
 import type Component from '@glimmer/component';
+import type { ComponentLike } from '@glint/template';
 
 export interface Info {
   code: string;
   name: string;
 }
 
-export async function compileJS(code: string, extraModules?: ExtraModules) {
+export async function compileJS(code: string, extraModules?: ExtraModules): Promise<CompileResult> {
   let name = nameFor(code);
-  let component: undefined | unknown;
+  let component: undefined | ComponentLike;
   let error: undefined | Error;
 
   try {
@@ -24,7 +25,7 @@ export async function compileJS(code: string, extraModules?: ExtraModules) {
 
     // NOTE: we cannot `eval` ESM
     compiled = proxyToSkypack(compiled, extraModules);
-    component = await evalSnippet(compiled);
+    component = (await evalSnippet(compiled)) as unknown as ComponentLike;
   } catch (e) {
     error = e as Error | undefined;
   }
