@@ -19,6 +19,7 @@ export default defineConfig({
     },
   },
   output: addon.output(),
+  external: ['@ember/template-compiler'],
   plugins: [
     addon.publicEntrypoints(['browser/**/*.js']),
     addon.appReexports([]),
