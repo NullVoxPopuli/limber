@@ -898,8 +898,8 @@ importers:
         specifier: workspace:^0.0.0
         version: link:../../untyped
       '@rollup/plugin-commonjs':
-        specifier: ^24.1.0
-        version: 24.1.0(rollup@3.21.6)
+        specifier: ^25.0.0
+        version: 25.0.0(rollup@3.21.6)
       '@tsconfig/ember':
         specifier: ^2.0.0
         version: 2.0.0
@@ -4761,8 +4761,8 @@ packages:
       rollup: 3.21.6
     dev: true
 
-  /@rollup/plugin-commonjs@24.1.0(rollup@3.21.6):
-    resolution: {integrity: sha512-eSL45hjhCWI0jCCXcNtLVqM5N1JlBGvlFfY0m6oOYnLCJ6N0qEXoZql4sY2MOUArzhH4SA/qBpTxvvZp2Sc+DQ==}
+  /@rollup/plugin-commonjs@25.0.0(rollup@3.21.6):
+    resolution: {integrity: sha512-hoho2Kay9TZrLu0bnDsTTCaj4Npa+THk9snajP/XDNb9a9mmjTjh52EQM9sKl3HD1LsnihX7js+eA2sd2uKAhw==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       rollup: ^2.68.0||^3.0.0
