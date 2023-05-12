@@ -34,7 +34,7 @@
     "prettier-plugin-ember-template-tag": "^0.3.2",
     "turbo": "^1.9.3"
   },
-  "packageManager": "pnpm@8.3.1",
+  "packageManager": "pnpm@8.5.0",
   "pnpm": {
     "overrides": {
       "@nullvoxpopuli/eslint-configs": "^3.1.3",
