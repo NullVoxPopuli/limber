@@ -245,7 +245,7 @@ const markdownCompiler = unified()
       return;
     });
   })
-  .use(rehypeRaw, { passThrough: ['glimmer_raw'] })
+  .use(rehypeRaw, { passThrough: ['glimmer_raw', 'raw'] })
   .use(() => (tree) => {
     visit(tree, 'glimmer_raw', (node: Node) => {
       node.type = 'raw';
