@@ -1,4 +1,6 @@
-import { importSync } from '@embroider/macros';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import compiler from '@ember/template-compiler';
 
 import babelPluginEmberTemplateCompilation from 'babel-plugin-ember-template-compilation';
 
@@ -9,7 +11,6 @@ import { TEMPLATE_TAG_NAME, TEMPLATE_TAG_PLACEHOLDER } from './eti/util';
 
 import type { Babel } from './types';
 
-const compiler = importSync('ember-source/dist/ember-template-compiler.js');
 
 export function preprocess(input: string, name: string) {
   let preprocessed = preprocessEmbeddedTemplates(input, {
