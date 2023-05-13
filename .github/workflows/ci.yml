@@ -195,6 +195,10 @@ jobs:
     timeout-minutes: 15
     # needs: [try-scenarios]
     needs: [tests]
+    permissions:
+      contents: write
+      packages: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
         with:
