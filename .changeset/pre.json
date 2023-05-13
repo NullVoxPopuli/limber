@@ -15,5 +15,10 @@
     "@nullvoxpopuli/limber-transpilation": "0.0.0",
     "@nullvoxpopuli/limber-untyped": "0.0.0"
   },
-  "changesets": []
+  "changesets": [
+    "cold-suits-relax",
+    "four-carpets-melt",
+    "rude-stingrays-swim",
+    "three-candles-wave"
+  ]
 }
