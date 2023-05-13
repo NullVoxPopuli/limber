@@ -1628,8 +1628,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
       '@algorithm.ts/huffman':
-        specifier: 3.0.0
-        version: 3.0.0
+        specifier: 3.1.0
+        version: 3.1.0
       filesize:
         specifier: ^10.0.7
         version: 10.0.7
@@ -1672,22 +1672,22 @@ packages:
     engines: {node: '>= 16.0.0'}
     dev: false
 
-  /@algorithm.ts/huffman@3.0.0:
-    resolution: {integrity: sha512-H45y5IhmjAItEwtXkj9tXsAPA/RkEUdpzm2zyoC3kd1ZSgz4idwBh4L1znldKwROVEuNNl8/Wd6dImjfSYBNxw==}
+  /@algorithm.ts/huffman@3.1.0:
+    resolution: {integrity: sha512-OBZWq3AfUofMKbcIOP/zFiCU7sdf2O3/L8ElroDzMn8Sd/c+NR3gpS2wvQ1hDO5QmqEDxcKlsff53KW3b8wP7g==}
     engines: {node: '>= 16.0.0'}
     dependencies:
-      '@algorithm.ts/queue': 3.0.0
+      '@algorithm.ts/queue': 3.1.0
     dev: false
 
-  /@algorithm.ts/queue@3.0.0:
-    resolution: {integrity: sha512-7vLSZ/kBO2UdwH5lSaAb5ZCWFZLK57ej0qRYLYwZoVmPdC18P7JXRnXqK4I5ot20KTYeZ+1cUCQU+FV/arq5kA==}
+  /@algorithm.ts/queue@3.1.0:
+    resolution: {integrity: sha512-iqFqaDuptmxVGpY5HsJSJmMzR88BZMqApovS7oUQo22Omz3fPQrgkFeUFfyGkihDqMNVGPvZGIYrtbXG9XLFJg==}
     engines: {node: '>= 16.0.0'}
     dependencies:
-      '@algorithm.ts/types': 3.0.0
+      '@algorithm.ts/types': 3.1.0
     dev: false
 
-  /@algorithm.ts/types@3.0.0:
-    resolution: {integrity: sha512-kPk+IqrOg5+ode9sGbXTmlmYW2UncoCzmUXiMAZ8iMAe7ESVgeFu/UaBgkMUwrZlFDZ/Szy/gZ1bv96/XnJ88A==}
+  /@algorithm.ts/types@3.1.0:
+    resolution: {integrity: sha512-LTbliJC5CqbIm7FSAofI5+PVmd1szAdKHQw5H6dK1ue82L0V4OLmIr+ZfPyl1JfteGAQaneqij2qKsCDN9Vf/Q==}
     engines: {node: '>= 16.0.0'}
     dev: false
 
