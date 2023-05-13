@@ -42,7 +42,7 @@ jobs:
       uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: NullVoxPopuli/action-setup-pnpm@support-specifying-package-manager-and-volta.pnpm
+    - uses: NullVoxPopuli/action-setup-pnpm@support-specifying-package-manager-and-volta
     - run:  echo ${{ github.event.number }} > ./pr-number.txt
     - run: pnpm turbo build
     # Used for faster deploy so we don't need to checkout the repo
@@ -69,7 +69,7 @@ jobs:
         uses: felixmosh/turborepo-gh-artifacts@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: NullVoxPopuli/action-setup-pnpm@support-specifying-package-manager-and-volta.pnpm
+      - uses: NullVoxPopuli/action-setup-pnpm@support-specifying-package-manager-and-volta
       - run: pnpm lint
 
 ##############################################################
@@ -94,7 +94,7 @@ jobs:
       uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: NullVoxPopuli/action-setup-pnpm@support-specifying-package-manager-and-volta.pnpm
+    - uses: NullVoxPopuli/action-setup-pnpm@support-specifying-package-manager-and-volta
     - name: Environment Info
       run: |
         firefox --version
@@ -120,7 +120,7 @@ jobs:
   #     uses: felixmosh/turborepo-gh-artifacts@v2
   #     with:
   #       repo-token: ${{ secrets.GITHUB_TOKEN }}
-  #   - uses: NullVoxPopuli/action-setup-pnpm@support-specifying-package-manager-and-volta.pnpm
+  #   - uses: NullVoxPopuli/action-setup-pnpm@support-specifying-package-manager-and-volta
   #   - name: Test
   #     run: pnpm turbo test:scenarios
 
@@ -137,7 +137,7 @@ jobs:
       uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: NullVoxPopuli/action-setup-pnpm@support-specifying-package-manager-and-volta.pnpm
+    - uses: NullVoxPopuli/action-setup-pnpm@support-specifying-package-manager-and-volta
     - run: pnpm turbo test:browserstack --output-logs errors-only
       env:
         # This is a guest user on an open source plan.
