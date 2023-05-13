@@ -1,0 +1,11 @@
+@top { expr* }
+
+@skip { whitespace }
+
+expr {
+  Moustache
+}
+
+Moustache { 
+  "{{" "}}"
+}

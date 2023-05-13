@@ -1,0 +1,116 @@
+# Long
+
+{{!-- text here --}}
+
+==>
+
+Glimmer(
+  BlockComment(
+    LongComment(
+      StartLongComment,
+      Text,
+      EndLongComment
+    )
+  )
+)
+
+
+# Short
+
+{{! text here }}
+
+==>
+
+Glimmer(
+  BlockComment(
+    ShortComment(
+      StartShortComment,
+      Text,
+      EndStache
+    )
+  )
+)
+
+
+
+# Long multiline
+
+{{!--
+  line 1
+  line 2
+
+weird indent
+
+  line 4
+
+--}}
+
+==>
+
+Glimmer(
+  BlockComment(
+    LongComment(
+      StartLongComment,
+      Text,
+      EndLongComment
+    )
+  )
+)
+
+# Short multiline
+
+{{!
+  line 1
+  line 2
+
+weird indent
+
+  line 4
+
+}}
+
+==>
+
+Glimmer(
+  BlockComment(
+    ShortComment(
+      StartShortComment,
+      Text,
+      EndStache
+    )
+  )
+)
+
+
+# Long - empty
+
+{{!-- --}}
+
+==>
+
+Glimmer(
+  BlockComment(
+    LongComment(
+      StartLongComment,
+      Text,
+      EndLongComment
+    )
+  )
+)
+
+
+# Short - empty
+
+{{! }}
+
+==>
+
+Glimmer(
+  BlockComment(
+    ShortComment(
+      StartShortComment,
+      Text,
+      EndStache
+    )
+  )
+)

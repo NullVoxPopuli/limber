@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "description": "Small description for limber goes here",
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NullVoxPopuli/limber.git",
+    "directory": "apps/repl"
+  },
   "license": "MIT",
   "author": "NullVoxPopuli",
-  "directories": {
-    "doc": "doc",
-    "test": "tests"
-  },
   "browserslist": [
     "last 1 chrome versions",
     "last 1 firefox versions",
@@ -121,7 +121,9 @@
     "yn": "^4.0.0"
   },
   "engines": {
-    "node": ">= v16"
+    "node": ">= v16",
+    "npm": "use pnpm",
+    "yarn": "use pnpm"
   },
   "ember": {
     "edition": "octane"
@@ -173,13 +175,5 @@
     "webpack-bundle-analyzer": "^4.9.0",
     "ws": "^8.13.0",
     "xstate": "4.35.4"
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/eslint": "^7.0.0"
-    },
-    "patchedDependencies": {
-      "ember-on-resize-modifier@1.1.0": "patches/ember-on-resize-modifier@1.1.0.patch"
-    }
   }
 }

@@ -1,0 +1,13 @@
+{
+  "name": "@glimdown/lezer-glimmer-expression-test",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:node": "vitest"
+  },
+  "devDependencies": {
+    "@glimdown/lezer-glimmer-expression": "workspace:*",
+    "@lezer/generator": "^1.3.0",
+    "vitest": "^0.32.2"
+  }
+}

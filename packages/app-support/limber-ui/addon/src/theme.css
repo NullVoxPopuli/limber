@@ -1,0 +1,229 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&display=swap");
+
+/* Horizon Theme https://horizontheme.netlify.app/ */
+:root {
+  /* "Dark" */
+  --horizon-lavender: #b877db;
+  --horizon-turquoise: #25b2bc;
+  --horizon-cranberry: #e95678;
+  --horizon-apricot: #f09383;
+  --horizon-rosebud: #fab795;
+  --horizon-tacao: #fac29a;
+
+  /* "Light" */
+  --horizon-amethyst: #8931b9;
+  --horizon-elm: #1d8991;
+  --horizon-crimson: #da103f;
+  --horizon-thunderbird: #dc3318;
+  --horizon-tango: #f6661e;
+  --horizon-jaffa: #f77d26;
+}
+
+.syntax-dark {
+  --horizon-shadow: #16161c;
+  --horizon-border: #1a1c23;
+  --horizon-background: #1c1e26;
+  --horizon-background-alt: #232530;
+  --horizon-accent: #2e303e;
+  --horizon-accent-alt: #6c6f93;
+  --horizon-accent: #e9436f;
+  --horizon-secondary-accent-alt: #e95379;
+  --horizon-negative: #f43e5c;
+  --horizon-positive: #09f7a0;
+  --horizon-warning: #27d796;
+  --horizon-modifier: #21bfc2;
+  --horizon-tertiary-accent: #fab28e;
+
+  --code-bg: var(--horizon-background-alt);
+  --code-variable: var(--horizon-cranberry);
+  --code-param: var(--horizon-apricot);
+  --code-class: var(--horizon-yellow);
+  --code-tag: var(--horizon-accent-alt);
+  --code-name: var(--horizon-yellow);
+  --code-number: var(--horizon-warning);
+  --code-punctuation: #aaa;
+  --code-regex: #be4678;
+  --code-function: var(--horizon-turquoise);
+  --code-builtin: var(--horizon-lavender);
+  --code-literal: var(--horizon-cranberry);
+  --code-string: var(--horizon-tacao);
+  --code-keyword: var(--horizon-lavender);
+  --code-highlight-bg: var(--horizon-background);
+}
+
+.syntax-normal {
+  --horizon-blue: #26bbd9;
+  --horizon-cyan: #59e3e3;
+  --horizon-green: #29d398;
+  --horizon-magenta: #ee64ae;
+  --horizon-red: #e95678;
+  --horizon-yellow: #fab795;
+}
+
+.syntax-bright {
+  --horizon-blue: #3fc6de;
+  --horizon-cyan: #6be6e6;
+  --horizon-green: #3fdaa4;
+  --horizon-magenta: #f075b7;
+  --horizon-red: #ec6a88;
+  --horizon-yellow: #fbc3a7;
+}
+
+.syntax-light {
+  --horizon-shadow: #16161c;
+  --horizon-border: #1a1c23;
+  --horizon-background: #fdf0ed;
+  --horizon-background-alt: #fadad1;
+  --horizon-accent: #f9cbbe;
+  --horizon-accent-alt: #f9cec3;
+  --horizon-accent: #e73665;
+  --horizon-secondary-accent-alt: #e84a72;
+  --horizon-negative: #f43e5c;
+  --horizon-positive: #07da8c;
+  --horizon-warning: #1eb980;
+  --horizon-modifier: #1eaeae;
+  --horizon-tertiary-accent: #af5427;
+
+  /* overrides, for readability */
+  --horizon-amethyst: #8931b9;
+  --horizon-elm: #1d8991;
+  --horizon-crimson: #da103f;
+  --horizon-thunderbird: #dc3318;
+  --horizon-tango: #f6661e;
+
+  --horizon-blue: #3fc6de;
+  --horizon-cyan: #6be6e6;
+  --horizon-green: #3fdaa4;
+  --horizon-magenta: #f075b7;
+  --horizon-red: #ec6a88;
+  --horizon-yellow: #bb8367;
+}
+
+.plain-light {
+  --code-bg: white;
+  --code-variable: var(--horizon-crimson);
+  --code-param: var(--horizon-tango);
+  --code-class: var(--horizon-yellow);
+  --code-tag: var(--horizon-accent-alt);
+  --code-name: var(--horizon-crimson);
+  --code-number: var(--horizon-accent);
+  --code-punctuation: #aaa;
+  --code-regex: #be4678;
+  --code-function: var(--horizon-turquoise);
+  --code-builtin: var(--horizon-lavender);
+  --code-literal: var(--horizon-cranberry);
+  --code-string: var(--horizon-thunderbird);
+  --code-keyword: var(--horizon-amethyst);
+  --code-highlight-bg: var(--horizon-background);
+}
+
+.plain-light .hljs-built_in,
+.plain-light .hljs-function {
+  font-weight: bold;
+}
+
+.prose pre {
+  background: var(--code-bg);
+  color: #ccc;
+}
+.prose pre code.hljs,
+.hljs {
+  background: var(--code-bg);
+  display: block;
+  font-family: "Source Code Pro", ui-monospace, monospace, sans-serif;
+}
+
+.hljs-comment {
+  color: #777;
+}
+.hljs-quote {
+  color: #655f6d;
+}
+.hljs-operator,
+.hljs-punctuation {
+  color: var(--code-punctuation);
+}
+
+.hljs-variable,
+.hljs-template-variable {
+  color: var(--code-variable);
+}
+.hljs-params {
+  color: var(--code-param);
+}
+.hljs-attribute {
+  color: var(--code-param);
+}
+
+.hljs-class {
+  color: var(--code-class);
+}
+.hljs-tag {
+  color: var(--code-tag);
+}
+.hljs-title {
+  color: var(--code-name);
+}
+.hljs-name {
+  color: var(--code-name);
+}
+.hljs-number {
+  color: var(--code-number);
+}
+
+.hljs-regexp,
+.hljs-link,
+.hljs-selector-id,
+.hljs-selector-class {
+  color: var(--code-regex);
+}
+
+.hljs-function {
+  color: var(--code-function);
+}
+.hljs-built_in,
+.hljs-builtin-name {
+  color: var(--code-builtin);
+}
+
+.hljs-meta,
+.hljs-literal,
+.hljs-type {
+  color: var(--code-literal);
+}
+
+.hljs-string,
+.hljs-symbol,
+.hljs-code,
+.hljs-bullet {
+  color: var(--code-string);
+}
+
+.hljs-keyword,
+.hljs-selector-tag {
+  color: var(--code-keyword);
+}
+
+.hljs-section {
+  color: var(--horizon-lavender);
+}
+
+.hljs-deletion,
+.hljs-addition {
+  color: var(--code-highlight-bg);
+  display: inline-block;
+  width: 100%;
+}
+
+.hljs-deletion {
+  background-color: var(--horizon-negative);
+}
+.hljs-addition {
+  background-color: var(--horizon-positive);
+}
+.hljs-emphasis {
+  font-style: italic;
+}
+.hljs-strong {
+  font-weight: bold;
+}

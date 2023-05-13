@@ -26,5 +26,20 @@
     "lint:js:fix": "pnpm -w exec lint js:fix",
     "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
     "lint:prettier": "pnpm -w exec lint prettier"
-  }
+  },
+  "volta": {
+    "extends": "../../package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NullVoxPopuli/limber.git",
+    "directory": "spikes/url-shortening"
+  },
+  "engines": {
+    "node": ">= v16",
+    "npm": "use pnpm",
+    "yarn": "use pnpm"
+  },
+  "license": "MIT",
+  "author": "NullVoxPopuli"
 }

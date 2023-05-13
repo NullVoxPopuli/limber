@@ -1,0 +1,14 @@
+@top Document { GlimmerTemplateTag* } 
+
+GlimmerTemplateTag {
+  templateTagStart templateTagContent* templateTagEnd
+}
+
+@external tokens templateTagContent from "./tokens.js" { templateTagContent }
+
+@tokens {
+  templateTagStart[@name="TemplateTag", closedBy=templateTagEnd] { "<template>" }
+  templateTagEnd[@name="TemplateTag", openedBy=templateTagStart] { "</template>" }
+}
+
+@external propSource templateTagHighlighting from "./highlight"

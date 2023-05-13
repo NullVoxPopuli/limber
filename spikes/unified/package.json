@@ -16,5 +16,20 @@
     "eslint": "^8.43.0",
     "prettier-plugin-ember-template-tag": "^0.3.2",
     "@nullvoxpopuli/eslint-configs": "^3.1.4"
-  }
+  },
+  "volta": {
+    "extends": "../../package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NullVoxPopuli/limber.git",
+    "directory": "spikes/unified"
+  },
+  "engines": {
+    "node": ">= v16",
+    "npm": "use pnpm",
+    "yarn": "use pnpm"
+  },
+  "license": "MIT",
+  "author": "NullVoxPopuli"
 }
