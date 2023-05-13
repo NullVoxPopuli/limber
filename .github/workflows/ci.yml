@@ -188,31 +188,32 @@ jobs:
 
 
   # https://github.com/changesets/action
-  # release:
-  #   name: Release
-  #   if: github.ref == 'refs/heads/main' 
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 15
-  #   needs: [try-scenarios]
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #       with:
-  #         persist-credentials: false
-  #     - name: TurboRepo local server
-  #       uses: felixmosh/turborepo-gh-artifacts@v2
-  #       with:
-  #         repo-token: ${{ secrets.GITHUB_TOKEN }}
-  #     - uses: NullVoxPopuli/action-setup-pnpm@v2.0.0
-  #     - name: Create Release Pull Request or Publish to npm
-  #       id: changesets
-  #       uses: changesets/action@v1
-  #       with:
-  #         # This expects you to have a script called release which does a build for your packages and calls changeset publish
-  #         publish: pnpm release
-  #         title: "Release Preview"
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  release:
+    name: Release
+    if: github.ref == 'refs/heads/main' 
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # needs: [try-scenarios]
+    needs: [tests]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: NullVoxPopuli/action-setup-pnpm@v2.0.0
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          # This expects you to have a script called release which does a build for your packages and calls changeset publish
+          publish: pnpm release
+          title: "Release Preview"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 
 
