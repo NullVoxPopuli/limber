@@ -21,6 +21,8 @@
     "ember-repl-test-app",
     "@nullvoxpopuli/limber-codemirror",
     "@nullvoxpopuli/limber-consts",
+    "@nullvoxpopuli/limber-untyped",
+    "@nullvoxpopuli/limber-*",
     "@nullvoxpopuli/horizon-theme",
     "@nullvoxpopuli/limber-styles",
     "@nullvoxpopuli/limber-transpilation",
