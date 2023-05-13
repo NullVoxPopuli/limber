@@ -1,5 +1,6 @@
 {
   "name": "@nullvoxpopuli/limber-untyped",
+  "private": true,
   "version": "0.0.0",
   "devDependencies": {
     "@glint/template": "^1.0.2",
