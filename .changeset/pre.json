@@ -1,0 +1,19 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "limber": "0.0.0",
+    "tutorial": "0.0.0",
+    "@nullvoxpopuli/limber-codemirror": "0.0.0",
+    "@nullvoxpopuli/limber-consts": "0.0.0",
+    "ember-repl": "2.0.63",
+    "ember-repl-test-app": "0.0.0",
+    "@nullvoxpopuli/horizon-theme": "0.0.0",
+    "limber-ui": "0.0.0",
+    "limber-ui-test-app": "0.0.0",
+    "@nullvoxpopuli/limber-styles": "0.0.0",
+    "@nullvoxpopuli/limber-transpilation": "0.0.0",
+    "@nullvoxpopuli/limber-untyped": "0.0.0"
+  },
+  "changesets": []
+}
