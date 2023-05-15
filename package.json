@@ -34,7 +34,7 @@
     "prettier-plugin-ember-template-tag": "^0.3.2",
     "turbo": "^1.9.4"
   },
-  "packageManager": "pnpm@8.5.0",
+  "packageManager": "pnpm@8.5.1",
   "pnpm": {
     "patchedDependencies": {
       "@changesets/assemble-release-plan@5.2.3": "patches/@changesets__assemble-release-plan@5.2.3.patch"
