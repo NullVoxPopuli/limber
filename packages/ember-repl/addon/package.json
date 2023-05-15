@@ -120,6 +120,6 @@
     "@glimmer/compiler": "^0.84.3",
     "@glimmer/component": "^1.1.2",
     "@glimmer/syntax": "^0.84.3",
-    "ember-source": "^4.12.0"
+    "ember-source": "^5.0.0"
   }
 }
