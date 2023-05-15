@@ -15,7 +15,6 @@ import * as _modifier from '@ember/modifier';
 import * as _object from '@ember/object';
 import * as _runloop from '@ember/runloop';
 import * as _service from '@ember/service';
-import * as _string from '@ember/string';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { createTemplateFactory } from '@ember/template-factory';
@@ -34,7 +33,6 @@ export const modules = {
   '@ember/object': _object,
   '@ember/runloop': _runloop,
   '@ember/service': _service,
-  '@ember/string': _string,
   '@ember/template-factory': { createTemplateFactory },
   '@ember/utils': _utils,
   // '@ember/owner': _owner,
