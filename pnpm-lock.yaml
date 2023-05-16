@@ -248,7 +248,7 @@ importers:
         version: 1.0.2
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.1.3
-        version: 3.1.3(@babel/core@7.21.8)(@babel/eslint-parser@7.21.8)(@typescript-eslint/eslint-plugin@5.59.6)(@typescript-eslint/parser@5.59.6)(eslint-plugin-ember@11.5.2)(eslint@8.40.0)(prettier@2.8.8)
+        version: 3.1.3(@babel/core@7.21.8)(@babel/eslint-parser@7.21.8)(@typescript-eslint/eslint-plugin@5.59.6)(@typescript-eslint/parser@5.59.6)(eslint-plugin-ember@11.6.0)(eslint@8.40.0)(prettier@2.8.8)
       '@nullvoxpopuli/limber-untyped':
         specifier: workspace:^0.0.0
         version: link:../../packages/untyped
@@ -367,8 +367,8 @@ importers:
         specifier: ^8.40.0
         version: 8.40.0
       eslint-plugin-ember:
-        specifier: ^11.5.2
-        version: 11.5.2(eslint@8.40.0)
+        specifier: ^11.6.0
+        version: 11.6.0(eslint@8.40.0)
       execa:
         specifier: ^7.1.1
         version: 7.1.1
@@ -519,7 +519,7 @@ importers:
         version: 1.0.2
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.1.3
-        version: 3.1.3(@babel/core@7.21.8)(@typescript-eslint/eslint-plugin@5.59.6)(@typescript-eslint/parser@5.59.6)(eslint-config-prettier@8.8.0)(eslint-plugin-ember@11.5.2)(eslint-plugin-qunit@7.3.4)(eslint@8.40.0)(prettier@2.8.8)
+        version: 3.1.3(@babel/core@7.21.8)(@typescript-eslint/eslint-plugin@5.59.6)(@typescript-eslint/parser@5.59.6)(eslint-config-prettier@8.8.0)(eslint-plugin-ember@11.6.0)(eslint-plugin-qunit@7.3.4)(eslint@8.40.0)(prettier@2.8.8)
       '@nullvoxpopuli/limber-styles':
         specifier: workspace:^0.0.0
         version: link:../../packages/styles
@@ -596,8 +596,8 @@ importers:
         specifier: ^8.8.0
         version: 8.8.0(eslint@8.40.0)
       eslint-plugin-ember:
-        specifier: ^11.5.2
-        version: 11.5.2(eslint@8.40.0)
+        specifier: ^11.6.0
+        version: 11.6.0(eslint@8.40.0)
       eslint-plugin-n:
         specifier: ^16.0.0
         version: 16.0.0(eslint@8.40.0)
@@ -953,8 +953,8 @@ importers:
         specifier: ^8.40.0
         version: 8.40.0
       eslint-plugin-ember:
-        specifier: ^11.5.2
-        version: 11.5.2(eslint@8.40.0)
+        specifier: ^11.6.0
+        version: 11.6.0(eslint@8.40.0)
       eslint-plugin-node:
         specifier: ^11.1.0
         version: 11.1.0(eslint@8.40.0)
@@ -1256,7 +1256,7 @@ importers:
         version: 1.0.2
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.1.3
-        version: 3.1.3(@babel/core@7.21.8)(@babel/eslint-parser@7.21.8)(@typescript-eslint/eslint-plugin@5.59.6)(@typescript-eslint/parser@5.59.6)(eslint-plugin-ember@11.5.2)(eslint@8.40.0)(prettier@2.8.8)
+        version: 3.1.3(@babel/core@7.21.8)(@babel/eslint-parser@7.21.8)(@typescript-eslint/eslint-plugin@5.59.6)(@typescript-eslint/parser@5.59.6)(eslint-plugin-ember@11.6.0)(eslint@8.40.0)(prettier@2.8.8)
       '@nullvoxpopuli/limber-untyped':
         specifier: workspace:*
         version: link:../../untyped
@@ -1297,8 +1297,8 @@ importers:
         specifier: ^8.40.0
         version: 8.40.0
       eslint-plugin-ember:
-        specifier: ^11.5.2
-        version: 11.5.2(eslint@8.40.0)
+        specifier: ^11.6.0
+        version: 11.6.0(eslint@8.40.0)
       eslint-plugin-node:
         specifier: ^11.1.0
         version: 11.1.0(eslint@8.40.0)
@@ -4577,7 +4577,7 @@ packages:
       - supports-color
     dev: false
 
-  /@nullvoxpopuli/eslint-configs@3.1.3(@babel/core@7.21.8)(@babel/eslint-parser@7.21.8)(@typescript-eslint/eslint-plugin@5.59.6)(@typescript-eslint/parser@5.59.6)(eslint-plugin-ember@11.5.2)(eslint@8.40.0)(prettier@2.8.8):
+  /@nullvoxpopuli/eslint-configs@3.1.3(@babel/core@7.21.8)(@babel/eslint-parser@7.21.8)(@typescript-eslint/eslint-plugin@5.59.6)(@typescript-eslint/parser@5.59.6)(eslint-plugin-ember@11.6.0)(eslint@8.40.0)(prettier@2.8.8):
     resolution: {integrity: sha512-55sKdkcewceBRUMoF5HSv5cbHX0ZIHkv6ObpZha0g73U7leR26sGIAO2Vxxnu0fmktwmMVJBjQvq7jpqO0VJ9A==}
     engines: {node: '>= v16.0.0'}
     peerDependencies:
@@ -4613,7 +4613,7 @@ packages:
       eslint: 8.40.0
       eslint-import-resolver-typescript: 3.5.5(@typescript-eslint/parser@5.59.6)(eslint-plugin-import@2.27.5)(eslint@8.40.0)
       eslint-plugin-decorator-position: 5.0.2(@babel/eslint-parser@7.21.8)(eslint@8.40.0)
-      eslint-plugin-ember: 11.5.2(eslint@8.40.0)
+      eslint-plugin-ember: 11.6.0(eslint@8.40.0)
       eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.59.6)(eslint-import-resolver-typescript@3.5.5)(eslint@8.40.0)
       eslint-plugin-json: 3.1.0
       eslint-plugin-n: 15.7.0(eslint@8.40.0)
@@ -4679,7 +4679,7 @@ packages:
       - supports-color
     dev: true
 
-  /@nullvoxpopuli/eslint-configs@3.1.3(@babel/core@7.21.8)(@typescript-eslint/eslint-plugin@5.59.6)(@typescript-eslint/parser@5.59.6)(eslint-config-prettier@8.8.0)(eslint-plugin-ember@11.5.2)(eslint-plugin-qunit@7.3.4)(eslint@8.40.0)(prettier@2.8.8):
+  /@nullvoxpopuli/eslint-configs@3.1.3(@babel/core@7.21.8)(@typescript-eslint/eslint-plugin@5.59.6)(@typescript-eslint/parser@5.59.6)(eslint-config-prettier@8.8.0)(eslint-plugin-ember@11.6.0)(eslint-plugin-qunit@7.3.4)(eslint@8.40.0)(prettier@2.8.8):
     resolution: {integrity: sha512-55sKdkcewceBRUMoF5HSv5cbHX0ZIHkv6ObpZha0g73U7leR26sGIAO2Vxxnu0fmktwmMVJBjQvq7jpqO0VJ9A==}
     engines: {node: '>= v16.0.0'}
     peerDependencies:
@@ -4714,7 +4714,7 @@ packages:
       eslint: 8.40.0
       eslint-import-resolver-typescript: 3.5.5(@typescript-eslint/parser@5.59.6)(eslint-plugin-import@2.27.5)(eslint@8.40.0)
       eslint-plugin-decorator-position: 5.0.2(@babel/eslint-parser@7.21.8)(eslint@8.40.0)
-      eslint-plugin-ember: 11.5.2(eslint@8.40.0)
+      eslint-plugin-ember: 11.6.0(eslint@8.40.0)
       eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.59.6)(eslint-import-resolver-typescript@3.5.5)(eslint@8.40.0)
       eslint-plugin-json: 3.1.0
       eslint-plugin-n: 15.7.0(eslint@8.40.0)
@@ -10733,6 +10733,29 @@ packages:
 
   /eslint-plugin-ember@11.5.2(eslint@8.40.0):
     resolution: {integrity: sha512-OFlBkV0VSemGtq3cZDWOm/kwOipiswvPIVL6VDJjpEv85BDtbGdqoyvaF9d6/MY7u5aDCh62oOgKQFw9JQGadA==}
+    engines: {node: 14.* || 16.* || >= 18}
+    peerDependencies:
+      eslint: '>= 7'
+    dependencies:
+      '@ember-data/rfc395-data': 0.0.4
+      '@glimmer/syntax': 0.84.3
+      css-tree: 2.3.1
+      ember-rfc176-data: 0.3.18
+      ember-template-imports: 3.4.2
+      eslint: 8.40.0
+      eslint-utils: 3.0.0(eslint@8.40.0)
+      estraverse: 5.3.0
+      lodash.camelcase: 4.3.0
+      lodash.kebabcase: 4.1.1
+      magic-string: 0.30.0
+      requireindex: 1.2.0
+      snake-case: 3.0.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /eslint-plugin-ember@11.6.0(eslint@8.40.0):
+    resolution: {integrity: sha512-M/M63t/Y5yr/yuWUbtUZ/tE5B5A8/+6LOR6fJlXpLZR4XMtN3KueYsuEIDGP6AInmq5tjDPmBXX0wV+FkjQmvA==}
     engines: {node: 14.* || 16.* || >= 18}
     peerDependencies:
       eslint: '>= 7'
