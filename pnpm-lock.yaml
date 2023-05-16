@@ -162,8 +162,8 @@ importers:
         specifier: 15.0.2
         version: 15.0.2
       remark-parse:
-        specifier: 10.0.1
-        version: 10.0.1
+        specifier: 10.0.2
+        version: 10.0.2
       remark-rehype:
         specifier: ^10.1.0
         version: 10.1.0
@@ -457,8 +457,8 @@ importers:
         specifier: ^9.0.3
         version: 9.0.3
       remark-parse:
-        specifier: ^10.0.1
-        version: 10.0.1
+        specifier: ^10.0.2
+        version: 10.0.2
       remark-rehype:
         specifier: ^10.1.0
         version: 10.1.0
@@ -16255,8 +16255,8 @@ packages:
       unified: 10.1.2
     dev: false
 
-  /remark-parse@10.0.1:
-    resolution: {integrity: sha512-1fUyHr2jLsVOkhbvPRBJ5zTKZZyD6yZzYaWCS6BPBdQ8vEMBCH+9zNCDA6tET/zHCi/jLqjCWtlJZUPk+DbnFw==}
+  /remark-parse@10.0.2:
+    resolution: {integrity: sha512-3ydxgHa/ZQzG8LvC7jTXccARYDcRld3VfcgIIFs7bI6vbRSxJJmzgLEIIoYKyrfhaY+ujuWaf/PJiMZXoiCXgw==}
     dependencies:
       '@types/mdast': 3.0.11
       mdast-util-from-markdown: 1.3.0
