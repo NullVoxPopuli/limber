@@ -35,13 +35,9 @@
     //
     /////////////////////////////////////////////////
     /////////////////////////////////////////////////
-    "dev": {
-      "dependsOn": ["^dev"],
-      "cache": false
-    },
     "start": {
-      "dependsOn": ["^build"],
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
 
     /////////////////////////////////////////////////
@@ -54,48 +50,6 @@
     "build": {
       "outputs": ["dist/**"],
       "dependsOn": ["^build"]
-    },
-    "test": {
-      "outputs": [],
-      "dependsOn": ["^build"]
-    },
-    // Apps will have test:ember and test:browserstack
-    // They are separate so that they can cache independently
-    // and provide more variability than just "test"
-    "test:ember": {
-      "env": ["CI_BROWSER", "EMBER_TRY_CURRENT_SCENARIO", "EMBROIDER_TEST_SETUP_OPTIONS"],
-      "dependsOn": ["^build"]
-    },
-    "test:browserstack": {
-      "dependsOn": ["^build"]
-    },
-    // All scenarios
-    "test:scenarios": {
-      "dependsOn": ["^build"]
-    },
-
-    /////////////////////////////////////////////////
-    /////////////////////////////////////////////////
-    //
-    //         Quality Checks
-    //
-    /////////////////////////////////////////////////
-    /////////////////////////////////////////////////
-    "_:lint": {
-      "outputs": [],
-      "dependsOn": ["lint:js", "lint:hbs", "lint:prettier", "lint:types"]
-    },
-    "lint:js": { "outputs": [] },
-    "lint:hbs": { "outputs": [] },
-    "lint:prettier": { "outputs": [] },
-    "lint:types": { "outputs": [], "dependsOn": ["^build"] },
-
-    "_:lint:fix": {
-      "cache": false,
-      "dependsOn": ["lint:js:fix", "lint:hbs:fix"]
-    },
-    "lint:js:fix": { "cache": false, "dependsOn": ["lint:prettier:fix"] },
-    "lint:hbs:fix": { "cache": false, "dependsOn": ["lint:prettier:fix"] },
-    "lint:prettier:fix": { "cache": false }
+    }
   }
 }

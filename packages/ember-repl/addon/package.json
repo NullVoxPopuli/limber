@@ -35,16 +35,7 @@
   ],
   "scripts": {
     "build": "rollup --config",
-    "lint:types": "glint",
-    "lint:fix": "pnpm -w exec lint fix",
-    "start": "rollup --config --watch",
-    "lint": "pnpm -w exec lint",
-    "lint:js": "pnpm -w exec lint js",
-    "lint:js:fix": "pnpm -w exec lint js:fix",
-    "lint:hbs": "pnpm -w exec lint hbs",
-    "lint:hbs:fix": "pnpm -w exec lint hbs:fix",
-    "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
-    "lint:prettier": "pnpm -w exec lint prettier"
+    "start": "rollup --config --watch"
   },
   "dependencies": {
     "@babel/helper-plugin-utils": "^7.21.5",
