@@ -105,8 +105,8 @@ importers:
         specifier: ^2.6.3
         version: 2.6.3(@glint/template@1.0.2)(webpack@5.82.1)
       ember-container-query:
-        specifier: 4.0.0
-        version: 4.0.0(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.0.0)
+        specifier: 4.0.1
+        version: 4.0.1(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.0.0)
       ember-element-helper:
         specifier: ^0.6.1
         version: 0.6.1(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.0.0)
@@ -9787,8 +9787,8 @@ packages:
       - supports-color
     dev: false
 
-  /ember-container-query@4.0.0(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.0.0):
-    resolution: {integrity: sha512-A1jOUfYp3TyuEh/2UtSy7mVAi38VVlaG8cWR2S6XieLB+AeLm9S2j0egaRn7cYpYmMVnZYK9OSZBRh8O0RrOeA==}
+  /ember-container-query@4.0.1(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.0.0):
+    resolution: {integrity: sha512-FIIBlYK5jrrOHZ7DcyRFXyb4gRiHwgwO6lDvbZifsFEcN1jeB4lpvkBCGesavnYOumAqtCi+s3jLqBY7mMSSaA==}
     engines: {node: 16.* || >= 18}
     dependencies:
       '@embroider/addon-shim': 1.8.5-unstable.9aaea50
