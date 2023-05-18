@@ -137,7 +137,7 @@
     "browserslist": "^4.21.5",
     "dompurify": "^3.0.3",
     "ember-auto-import": "^2.6.3",
-    "ember-container-query": "4.0.0",
+    "ember-container-query": "4.0.1",
     "ember-element-helper": "^0.6.1",
     "ember-focus-trap": "^1.0.2",
     "ember-headlessui": "0.13.0",
