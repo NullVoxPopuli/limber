@@ -52,7 +52,7 @@
     "babel-loader": "^9.1.2",
     "ember-source": "^5.0.0",
     "esbuild": "0.17.19",
-    "eslint": "^8.40.0",
+    "eslint": "^8.41.0",
     "prettier": "^2.8.8",
     "prettier-plugin-ember-template-tag": "^0.3.2",
     "typescript": "^5.0.4",
