@@ -1,5 +1,11 @@
 ## [2.0.63](https://github.com/NullVoxPopuli/ember-repl/compare/v2.0.62...v2.0.63) (2022-08-23)
 
+## 3.0.0-beta.2
+
+### Patch Changes
+
+- [`29fd785`](https://github.com/NullVoxPopuli/limber/commit/29fd785d8e44280760f4b9f39248fbaa1b9188ee) - Add option to pass the ShadowComponent to compile"
+
 ## 3.0.0-beta.1
 
 ### Minor Changes
