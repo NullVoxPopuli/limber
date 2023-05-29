@@ -87,6 +87,7 @@ export async function compileMD(
     importMap?: EvalImportMap;
     topLevelScope?: ScopeMap;
     CopyComponent?: string;
+    ShadowComponent?: string;
   }
 ): Promise<CompileResult & { rootTemplate?: string }> {
   let importMap = options?.importMap;
@@ -108,6 +109,7 @@ export async function compileMD(
     let { parseMarkdown } = await import('./markdown-to-ember');
     let { templateOnlyGlimdown, blocks } = await parseMarkdown(glimdownInput, {
       CopyComponent: options?.CopyComponent,
+      ShadowComponent: options?.ShadowComponent,
     });
 
     rootTemplate = templateOnlyGlimdown;

@@ -35,6 +35,7 @@ export async function compile(
     onCompileStart: () => Promise<unknown> | unknown;
     importMap?: EvalImportMap;
     CopyComponent?: string;
+    ShadowComponent?: string;
     topLevelScope?: ScopeMap;
   }
 ) {
