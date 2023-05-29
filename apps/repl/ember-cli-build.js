@@ -134,13 +134,15 @@ module.exports = function (defaults) {
           __filename: true,
           __dirname: true,
         },
-        plugins: [
-          new BundleAnalyzerPlugin({
-            analyzerMode: 'static',
-            openAnalyzer: false,
-            reportFilename: 'bundle.html',
-          }),
-        ],
+        plugins: isProduction
+          ? [
+              new BundleAnalyzerPlugin({
+                analyzerMode: 'static',
+                openAnalyzer: false,
+                reportFilename: 'bundle.html',
+              }),
+            ]
+          : [],
       },
     },
   });

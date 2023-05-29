@@ -27,18 +27,15 @@ const { getTemplateLocals } = importSync('@glimmer/syntax') as any;
  *
  * (templates alone do not have a way to import / define complex structures)
  */
-export function compileHBS(
-  template: string,
-  options: Omit<CompileTemplateOptions, 'moduleName'> = {}
-): CompileResult {
+export function compileHBS(template: string, options: CompileTemplateOptions = {}): CompileResult {
   let name = nameFor(template);
   let component: undefined | ComponentLike;
   let error: undefined | Error;
 
   try {
     component = setComponentTemplate(
-      compileTemplate(template, { moduleName: name, ...options }),
-      templateOnlyComponent(name)
+      compileTemplate(template, { moduleName: options.moduleName || name, ...options }),
+      templateOnlyComponent(options.moduleName || name)
     ) as ComponentLike;
   } catch (e) {
     error = e as Error | undefined;
@@ -48,7 +45,10 @@ export function compileHBS(
 }
 
 interface CompileTemplateOptions {
-  moduleName: string;
+  /**
+   * Used for debug viewing
+   */
+  moduleName?: string;
   scope?: Record<string, unknown>;
 }
 

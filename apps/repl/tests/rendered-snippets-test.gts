@@ -2,7 +2,7 @@ import { click, fillIn, render } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import { compile } from 'ember-repl';
+import { compile as compileAnything } from 'ember-repl';
 
 import { getFromLabel } from 'limber/snippets';
 
@@ -22,8 +22,13 @@ module('Rendered Snippets / Demos', function (hooks) {
     let component: ComponentLike | undefined;
     let error: string | undefined;
 
-    await compile(text, {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    let { COMPONENT_MAP } = await import('/ember-repl/component-map.js');
+
+    await compileAnything(text, {
       format: 'glimdown',
+      importMap: COMPONENT_MAP,
       onCompileStart: async () => assert.step('start compile'),
       onSuccess: async (compiled) => {
         component = compiled;

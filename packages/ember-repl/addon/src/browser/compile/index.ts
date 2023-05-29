@@ -69,7 +69,9 @@ export async function compile(
   } else if (format === 'gjs') {
     result = await processGJS(text, options.importMap);
   } else if (format === 'hbs') {
-    result = await processHBS(text, options.topLevelScope);
+    result = await processHBS(text, {
+      scope: options.topLevelScope,
+    });
   } else {
     await onError(`Unsupported format: ${format}. Supported formats: ${SUPPORTED_FORMATS}`);
 

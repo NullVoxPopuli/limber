@@ -65,7 +65,7 @@ export default class Compiler extends Component<Signature> {
   async makeComponent(format: Format, text: string) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
-    let importMap = await import('/ember-repl/component-map.js');
+    let { COMPONENT_MAP } = await import('/ember-repl/component-map.js');
 
     await compile(text, {
       format: format,
@@ -73,7 +73,7 @@ export default class Compiler extends Component<Signature> {
       topLevelScope: {
         CopyMenu: CopyMenu,
       },
-      importMap,
+      importMap: COMPONENT_MAP,
       onCompileStart: async () => {
         await this.parentFrame.beginCompile();
       },

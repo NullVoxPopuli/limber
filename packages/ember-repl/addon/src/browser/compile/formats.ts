@@ -27,11 +27,17 @@ export async function compileGJS(
   }
 }
 
-export async function compileHBS(hbsInput: string, scope?: ScopeMap): Promise<CompileResult> {
+export async function compileHBS(
+  hbsInput: string,
+  options?: {
+    moduleName?: string;
+    scope?: Record<string, unknown>;
+  }
+): Promise<CompileResult> {
   try {
     let { compileHBS } = await import('../hbs');
 
-    return compileHBS(hbsInput, { scope });
+    return compileHBS(hbsInput, options);
   } catch (error) {
     return { error: error as Error, name: 'unknown' };
   }
@@ -150,7 +156,11 @@ export async function compileMD(
     }, {} as Record<string, unknown>);
 
     return await compileHBS(rootTemplate, {
-      scope: { ...localScope, ...topLevelScope },
+      moduleName: 'DynamicRootTemplate',
+      scope: {
+        ...topLevelScope,
+        ...localScope,
+      },
     });
   } catch (error) {
     return { error: error as Error, rootTemplate, name: 'unknown' };
