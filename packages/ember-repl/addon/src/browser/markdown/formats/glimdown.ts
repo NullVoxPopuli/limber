@@ -63,7 +63,7 @@ export async function compile(
    *         compiled rootTemplate can invoke them
    */
   try {
-    let { parseMarkdown } = await import('./-compile/markdown-to-ember');
+    let { parseMarkdown } = await import('./markdown-to-ember');
     let { templateOnlyGlimdown, blocks } = await parseMarkdown(glimdownInput);
 
     rootTemplate = templateOnlyGlimdown;
