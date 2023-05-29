@@ -1,4 +1,5 @@
 import { type ComponentLike } from '@glint/template';
+import { cell, resource, resourceFactory } from 'ember-resources';
 
 import { nameFor } from '../utils';
 import {
@@ -19,7 +20,7 @@ const SUPPORTED_FORMATS = ['glimdown', 'gjs', 'hbs'];
  * This compileMD is a more robust version of the raw compiling used in "formats".
  * This function manages cache, and has events for folks building UIs to hook in to
  */
-export async function compileMD(
+export async function compile(
   text: string,
   {
     format,
@@ -85,3 +86,44 @@ export async function compileMD(
 
   await onSuccess(result.component as ComponentLike);
 }
+
+type Input = string | undefined | null;
+
+/**
+ * By default, this compiles to `glimdown`. A Markdown format which
+ * extracts `live` tagged code snippets and compiles them to components.
+ */
+export const Compiled = resourceFactory(
+  (markdownText: Input | (() => Input), format?: Format | (() => Format)) => {
+    return resource(() => {
+      let _format: Format = (typeof format === 'function' ? format() : format) || 'glimdown';
+      let input = typeof markdownText === 'function' ? markdownText() : markdownText;
+      let ready = cell(false);
+      let error = cell();
+      let result = cell<ComponentLike>();
+
+      if (input) {
+        compile(input, {
+          format: _format,
+          onSuccess: async (component) => {
+            result.current = component;
+            ready.set(true);
+            error.set(null);
+          },
+          onError: async (e) => {
+            error.set(e);
+          },
+          onCompileStart: async () => {
+            ready.set(false);
+          },
+        });
+      }
+
+      return () => ({
+        isReady: ready.current,
+        error: error.current,
+        component: result.current,
+      });
+    });
+  }
+);

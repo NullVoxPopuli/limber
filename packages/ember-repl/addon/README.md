@@ -58,18 +58,18 @@ Object.assign(window, {
 ### Compiling GJS 
 
 There are two ways to compile gjs text, imperatively via `compileJS`, where you manage the reactivity yourself. 
-Or `CompileGJS`, which is a resource that manages the reactivity for you.
+Or `Compiled`, which is a resource that manages the reactivity for you.
 
 #### Automatic reactivity via the Resource
 
-Following the Resources documentation, you can use `CompileGJS` in both 
+Following the Resources documentation, you can use `Compiled` in both 
 template-only or class-backed contexts:
 
 ```js 
-import { CompileGJS } from 'ember-repl';
+import { Compiled } from 'ember-repl';
 
 <template>
-  {{#let (CompileGJS @gjsText) as |compileResult|}}
+  {{#let (Compiled @gjsText 'gjs') as |compileResult|}}
 
     {{#if compileResult.error}}
       an error! {{compileResult.error}}
@@ -89,12 +89,12 @@ resource so that when an error occurs, you could keep rendering the latest succe
 
 ```js 
 import Component from '@glimmer/component';
-import { CompileGJS } from 'ember-repl';
+import { Compiled } from 'ember-repl';
 import { use } from 'ember-resources'; 
 import { keepLatest } from 'ember-resources/util/keep-latest';
 
 export class Renderer extends Component {
-  @use compile = CompileGJS(() => this.args.gjsText);
+  @use compile = Compiled(() => this.args.gjsText, 'gjs');
 
   @use latest = keepLatest({
     value: () => this.compile.component,
@@ -144,11 +144,8 @@ export class Renderer extends Component {
 ### Compiling HBS 
 
 #### Automatic reactivity via the Resource
-#### Managing your own reactivity
 
-### Compiling Markdown
-
-#### Automatic reactivity via the Resource
+The hbs utilities do not provide a utility Resource. 
 
 #### Managing your own reactivity
 
@@ -162,6 +159,109 @@ export class Renderer extends Component {
 ```
 ```hbs
 <this.compileResult.component />
+```
+
+
+### Compiling Markdown
+
+There are two ways to compile markdown text, imperatively via `compile` (passing the `glimdown` format), where you manage the reactivity yourself. 
+Or `CompileMarkdown`, which is a resource that manages the reactivity for you.
+
+#### Automatic reactivity via the Resource
+
+Following the Resources documentation, you can use `Compiled` in both 
+template-only or class-backed contexts:
+
+```js 
+import { Compiled } from 'ember-repl';
+
+<template>
+  {{#let (Compiled @mdText 'glimdown') as |compileResult|}}
+
+    {{#if compileResult.error}}
+      an error! {{compileResult.error}}
+    {{/if}}
+
+    {{#if compileResult.component}}
+      <compileResult.component />
+    {{/if}}
+
+  {{/let}}
+</template>
+
+```
+
+One advantage of using a backing JS context, is that you can utilize the `keepLatest` 
+resource so that when an error occurs, you could keep rendering the latest successful compile.
+
+```js 
+import Component from '@glimmer/component';
+import { Compiled } from 'ember-repl';
+import { use } from 'ember-resources'; 
+import { keepLatest } from 'ember-resources/util/keep-latest';
+
+export class Renderer extends Component {
+  @use compile = Compiled(() => this.args.mdText, 'glimdown');
+
+  @use latest = keepLatest({
+    value: () => this.compile.component,
+    when: () => this.compile.error,
+  }); 
+
+  <template> 
+    {{#if this.compile.error}}
+      Error! {{this.compile.error}}
+    {{/if}}
+
+    {{! This will keep showing even when there is an error.
+        Which can help reduce visual jitter }} 
+    {{#if this.latest.value}}
+      <this.latest.latest />
+    {{/if}}
+
+  </template>
+}
+```
+
+
+#### Managing your own reactivity
+
+```js
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { compile } from 'ember-repl';
+
+export class Renderer extends Component {
+  @tracked component;
+  @tracked error;
+  @tracked isCompiling;
+
+  constructor(...args) {
+    super(...args);
+
+    compile('...', {
+      format: 'glimdown', // or 'gjs' or 'hbs'
+      onSuccess: async (component) => {
+        this.error = null;
+        this.isCompiling = false; 
+        this.component = component;
+        
+      },
+      onError: async (error) => {
+        this.isCompiling = false; 
+        this.error = error;
+      },
+      onCompileStart: async () => {
+        this.isCompiling = true; 
+      }
+    });
+  }
+}
+```
+```hbs
+{{#if this.component}}
+  <this.component />
+{{/if}}
 ```
 
 

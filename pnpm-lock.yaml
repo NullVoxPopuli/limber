@@ -970,6 +970,9 @@ importers:
       concurrently:
         specifier: ^8.0.1
         version: 8.0.1
+      ember-resources:
+        specifier: ^6.1.0
+        version: 6.1.0(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.0.0)
       ember-source:
         specifier: ^5.0.0
         version: 5.0.0(@babel/core@7.21.8)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(webpack@5.82.1)
