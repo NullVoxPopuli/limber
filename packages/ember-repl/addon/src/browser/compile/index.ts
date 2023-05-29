@@ -91,15 +91,29 @@ export async function compile(
 }
 
 type Input = string | undefined | null;
+interface ExtraOptions {
+  format: Format;
+  importMap?: EvalImportMap;
+  CopyComponent?: string;
+  ShadowComponent?: string;
+  topLevelScope?: ScopeMap;
+}
 
 /**
  * By default, this compiles to `glimdown`. A Markdown format which
  * extracts `live` tagged code snippets and compiles them to components.
  */
 export const Compiled = resourceFactory(
-  (markdownText: Input | (() => Input), format?: Format | (() => Format)) => {
+  (
+    markdownText: Input | (() => Input),
+    maybeOptions?: Format | (() => Format) | ExtraOptions | (() => ExtraOptions)
+  ) => {
     return resource(() => {
-      let _format: Format = (typeof format === 'function' ? format() : format) || 'glimdown';
+      let maybeObject = typeof maybeOptions === 'function' ? maybeOptions() : maybeOptions;
+      let format =
+        (typeof maybeObject === 'string' ? maybeObject : maybeObject?.format) || 'glimdown';
+      let options = (typeof maybeObject === 'string' ? {} : maybeObject) || {};
+
       let input = typeof markdownText === 'function' ? markdownText() : markdownText;
       let ready = cell(false);
       let error = cell();
@@ -107,7 +121,7 @@ export const Compiled = resourceFactory(
 
       if (input) {
         compile(input, {
-          format: _format,
+          format,
           onSuccess: async (component) => {
             result.current = component;
             ready.set(true);
@@ -119,6 +133,7 @@ export const Compiled = resourceFactory(
           onCompileStart: async () => {
             ready.set(false);
           },
+          ...options,
         });
       }
 
