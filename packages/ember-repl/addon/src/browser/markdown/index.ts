@@ -2,9 +2,14 @@ import { type ComponentLike } from '@glint/template';
 
 import { nameFor } from '../utils';
 
+import type { EvalImportMap, ScopeMap } from './formats/types';
 type Format = 'glimdown' | 'gjs' | 'hbs';
 
 export const CACHE = new Map<string, ComponentLike>();
+
+const SUPPORTED_FORMATS = ['glimdown', 'gjs', 'hbs'];
+
+import { compileGJS, compileHBS, compileMD } from './formats/glimdown';
 
 export async function compileMD(
   text: string,
@@ -13,11 +18,15 @@ export async function compileMD(
     onSuccess,
     onError,
     onCompileStart,
+    ...options
   }: {
     format: Format;
     onSuccess: (component: ComponentLike) => Promise<unknown>;
     onError: (error: string) => Promise<unknown>;
     onCompileStart: () => Promise<unknown>;
+    importMap?: EvalImportMap;
+    CopyComponent?: string;
+    topLevelScope?: ScopeMap;
   }
 ) {
   let id = nameFor(text);
@@ -30,13 +39,11 @@ export async function compileMD(
     return;
   }
 
-  const getCompiler = (format: Format) => {
-    return {
-      glimdown: () => import('./formats/glimdown'),
-      gjs: () => import('./formats/gjs'),
-      hbs: () => import('./formats/hbs'),
-    }[format];
-  };
+  if (!SUPPORTED_FORMATS.includes(format)) {
+    await onError(`Unsupported format: ${format}. Supported formats: ${SUPPORTED_FORMATS}`);
+
+    return;
+  }
 
   await onCompileStart();
 

@@ -9,6 +9,8 @@ import { waitFor } from '@ember/test-waiters';
 
 import { compileMD } from 'ember-repl';
 
+import CopyMenu from 'limber/components/limber/copy-menu';
+
 import type { MessagingAPI, Parent } from '../frame-messaging';
 import type RouterService from '@ember/routing/router-service';
 import type { ComponentLike } from '@glint/template';
@@ -61,8 +63,17 @@ export default class Compiler extends Component<Signature> {
   @action
   @waitFor
   async makeComponent(format: Format, text: string) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    let importMap = await import('/ember-repl/component-map.js');
+
     await compileMD(text, {
       format: format,
+      CopyComponent: 'CopyMenu',
+      topLevelScope: {
+        CopyMenu: CopyMenu,
+      },
+      importMap,
       onCompileStart: async () => {
         await this.parentFrame.beginCompile();
       },

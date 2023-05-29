@@ -183,83 +183,93 @@ function liveCodeExtraction(options: Options = {}) {
   };
 }
 
-const markdownCompiler = unified()
-  // .use(markdown)
-  .use(remarkParse)
-  // TODO: we only want to do this when we have pre > code.
-  //       code can exist inline.
-  .use(liveCodeExtraction, {
-    snippets: {
-      classList: ['glimdown-snippet', 'relative'],
-    },
-    demo: {
-      classList: ['glimdown-render'],
-    },
-    copyComponent: '<Limber::CopyMenu />',
-  })
-  // .use(() => (tree) => visit(tree, (node) => console.log('i', node)))
-  // remark rehype is needed to convert markdown to HTML
-  // However, it also changes all the nodes, so we need another pass
-  // to make sure our Glimmer-aware nodes are in tact
-  .use(remarkRehype, { allowDangerousHtml: true })
-  // Convert invokbles to raw format, so Glimmer can invoke them
-  .use(() => (tree: Node) => {
-    visit(tree, function (node: HParent) {
-      // We rely on an implicit transformation of data.hProperties => properties
-      let properties = (node as any).properties;
+function buildCompiler(options: ParseMarkdownOptions) {
+  return (markdownCompiler = unified()
+    // .use(markdown)
+    .use(remarkParse)
+    // TODO: we only want to do this when we have pre > code.
+    //       code can exist inline.
+    .use(liveCodeExtraction, {
+      snippets: {
+        classList: ['glimdown-snippet', 'relative'],
+      },
+      demo: {
+        classList: ['glimdown-render'],
+      },
+      copyComponent: options?.CopyComponent,
+    })
+    // .use(() => (tree) => visit(tree, (node) => console.log('i', node)))
+    // remark rehype is needed to convert markdown to HTML
+    // However, it also changes all the nodes, so we need another pass
+    // to make sure our Glimmer-aware nodes are in tact
+    .use(remarkRehype, { allowDangerousHtml: true })
+    // Convert invokbles to raw format, so Glimmer can invoke them
+    .use(() => (tree: Node) => {
+      visit(tree, function (node: HParent) {
+        // We rely on an implicit transformation of data.hProperties => properties
+        let properties = (node as any).properties;
 
-      if (properties?.[GLIMDOWN_PREVIEW]) {
-        // Have to sanitize anything Glimmer could try to render
-        escapeCurlies(node);
+        if (properties?.[GLIMDOWN_PREVIEW]) {
+          // Have to sanitize anything Glimmer could try to render
+          escapeCurlies(node);
 
-        return 'skip';
-      }
-
-      if (node.type === 'element' || ('tagName' in node && node.tagName === 'code')) {
-        if (properties?.[GLIMDOWN_RENDER]) {
-          node.type = 'glimmer_raw';
-
-          return;
+          return 'skip';
         }
 
-        escapeCurlies(node);
+        if (node.type === 'element' || ('tagName' in node && node.tagName === 'code')) {
+          if (properties?.[GLIMDOWN_RENDER]) {
+            node.type = 'glimmer_raw';
 
-        return 'skip';
-      }
+            return;
+          }
 
-      if (node.type === 'text' || node.type === 'raw') {
-        // definitively not the better way, but this is supposed to detect "glimmer" nodes
-        if (
-          'value' in node &&
-          typeof node.value === 'string' &&
-          node.value.match(/<\/?[_A-Z:0-9].*>/g)
-        ) {
-          node.type = 'glimmer_raw';
+          escapeCurlies(node);
+
+          return 'skip';
         }
 
-        node.type = 'glimmer_raw';
+        if (node.type === 'text' || node.type === 'raw') {
+          // definitively not the better way, but this is supposed to detect "glimmer" nodes
+          if (
+            'value' in node &&
+            typeof node.value === 'string' &&
+            node.value.match(/<\/?[_A-Z:0-9].*>/g)
+          ) {
+            node.type = 'glimmer_raw';
+          }
 
-        return 'skip';
-      }
+          node.type = 'glimmer_raw';
 
-      return;
-    });
-  })
-  .use(rehypeRaw, { passThrough: ['glimmer_raw', 'raw'] })
-  .use(() => (tree) => {
-    visit(tree, 'glimmer_raw', (node: Node) => {
-      node.type = 'raw';
-    });
-  })
-  .use(rehypeStringify, {
-    collapseEmptyAttributes: true,
-    closeSelfClosing: true,
-    allowParseErrors: true,
-    allowDangerousCharacters: true,
-    allowDangerousHtml: true,
-  });
+          return 'skip';
+        }
 
-export async function parseMarkdown(input: string): Promise<LiveCodeExtraction> {
+        return;
+      });
+    })
+    .use(rehypeRaw, { passThrough: ['glimmer_raw', 'raw'] })
+    .use(() => (tree) => {
+      visit(tree, 'glimmer_raw', (node: Node) => {
+        node.type = 'raw';
+      });
+    })
+    .use(rehypeStringify, {
+      collapseEmptyAttributes: true,
+      closeSelfClosing: true,
+      allowParseErrors: true,
+      allowDangerousCharacters: true,
+      allowDangerousHtml: true,
+    }));
+}
+
+interface ParseMarkdownOptions {
+  CopyComponent?: string;
+}
+
+export async function parseMarkdown(
+  input: string,
+  options?: ParseMarkdownOptions = {}
+): Promise<LiveCodeExtraction> {
+  let markdownCompiler = buildCompiler(options);
   let processed = await markdownCompiler.process(input);
   let liveCode = (processed.data as LiveData).liveCode || [];
   let templateOnly = processed.toString();
