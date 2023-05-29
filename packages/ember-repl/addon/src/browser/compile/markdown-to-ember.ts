@@ -37,6 +37,7 @@ interface Options {
     classList?: string[];
   };
   copyComponent?: string;
+  shadowComponent?: string;
 }
 
 const GLIMDOWN_PREVIEW = Symbol('__GLIMDOWN_PREVIEW__');
@@ -52,19 +53,31 @@ const escapeCurlies = (node: Text | Parent) => {
   }
 
   if ('children' in node && node.children) {
-    node.children.forEach(escapeCurlies);
+    node.children.forEach((child) => escapeCurlies(child as Parent));
   }
 
   if (!node.data) {
     return;
   }
 
-  if ('hChildren' in node.data && Array.isArray(node.data.hChildren)) {
-    node.data.hChildren.forEach(escapeCurlies);
+  if ('hChildren' in node.data && Array.isArray(node.data['hChildren'])) {
+    node.data['hChildren'].forEach(escapeCurlies);
 
     return;
   }
 };
+
+function isLive(meta: string) {
+  return meta.includes('live');
+}
+
+function isPreview(meta: string) {
+  return meta.includes('preview');
+}
+
+function isBelow(meta: string) {
+  return meta.includes('below');
+}
 
 // TODO: extract and publish remark plugin
 function liveCodeExtraction(options: Options = {}) {
@@ -100,9 +113,9 @@ function liveCodeExtraction(options: Options = {}) {
 
   function enhance(code: Code) {
     code.data ??= {};
-    code.data.hProperties ??= {};
+    code.data['hProperties'] ??= {};
     // This is secret-to-us-only API, so we don't really care about the type
-    (code.data.hProperties as any)[GLIMDOWN_PREVIEW] = true;
+    (code.data['hProperties'] as any)[GLIMDOWN_PREVIEW] = true;
 
     return {
       data: {
@@ -123,9 +136,12 @@ function liveCodeExtraction(options: Options = {}) {
   const seen = new Set();
 
   return function transformer(tree: Parent, file: VFileWithMeta) {
-    visit(tree, ['code'], function (node: Code, index: number, parent: Parent) {
-      if (!isRelevantCode(node)) {
-        let enhanced = enhance(node);
+    visit(tree, ['code'], function (node, index, parent) {
+      if (parent === null) return;
+      if (index === null) return;
+
+      if (!isRelevantCode(node as Code)) {
+        let enhanced = enhance(node as Code);
 
         parent.children[index] = enhanced;
 
@@ -136,13 +152,24 @@ function liveCodeExtraction(options: Options = {}) {
 
       seen.add(node);
 
-      let { meta, lang, value } = node;
+      let { meta, lang, value } = node as Code;
+
+      if (!meta) return 'skip';
 
       file.data.liveCode ??= [];
 
       let code = value.trim();
       let name = nameFor(code);
       let invocation = invocationOf(name);
+
+      let shadow = options.shadowComponent;
+
+      let wrapInShadow = shadow && !meta?.includes('no-shadow');
+
+      if (wrapInShadow) {
+        invocation = `<${shadow}>${invocation}</${shadow}>`;
+      }
+
       let invokeNode = {
         type: 'html',
         data: {
@@ -151,7 +178,7 @@ function liveCodeExtraction(options: Options = {}) {
         value: `<div class="${demoClasses}">${invocation}</div>`,
       };
 
-      let wrapper = enhance(node);
+      let wrapper = enhance(node as Code);
 
       file.data.liveCode.push({
         lang,
@@ -159,19 +186,23 @@ function liveCodeExtraction(options: Options = {}) {
         code,
       });
 
-      if (meta === 'live preview below') {
+      let live = isLive(meta);
+      let preview = isPreview(meta);
+      let below = isBelow(meta);
+
+      if (live && preview && below) {
         flatReplaceAt(parent.children, index, [wrapper, invokeNode]);
 
         return 'skip';
       }
 
-      if (meta === 'live preview') {
+      if (live && preview) {
         flatReplaceAt(parent.children, index, [invokeNode, wrapper]);
 
         return 'skip';
       }
 
-      if (meta === 'live') {
+      if (live) {
         parent.children[index] = invokeNode;
 
         return 'skip';
@@ -185,85 +216,89 @@ function liveCodeExtraction(options: Options = {}) {
 }
 
 function buildCompiler(options: ParseMarkdownOptions) {
-  return (markdownCompiler = unified()
-    // .use(markdown)
-    .use(remarkParse)
-    // TODO: we only want to do this when we have pre > code.
-    //       code can exist inline.
-    .use(liveCodeExtraction, {
-      snippets: {
-        classList: ['glimdown-snippet', 'relative'],
-      },
-      demo: {
-        classList: ['glimdown-render'],
-      },
-      copyComponent: options?.CopyComponent,
-    })
-    // .use(() => (tree) => visit(tree, (node) => console.log('i', node)))
-    // remark rehype is needed to convert markdown to HTML
-    // However, it also changes all the nodes, so we need another pass
-    // to make sure our Glimmer-aware nodes are in tact
-    .use(remarkRehype, { allowDangerousHtml: true })
-    // Convert invokbles to raw format, so Glimmer can invoke them
-    .use(() => (tree: Node) => {
-      visit(tree, function (node: HParent) {
-        // We rely on an implicit transformation of data.hProperties => properties
-        let properties = (node as any).properties;
+  return (
+    unified()
+      // .use(markdown)
+      .use(remarkParse)
+      // TODO: we only want to do this when we have pre > code.
+      //       code can exist inline.
+      .use(liveCodeExtraction, {
+        snippets: {
+          classList: ['glimdown-snippet', 'relative'],
+        },
+        demo: {
+          classList: ['glimdown-render'],
+        },
+        copyComponent: options?.CopyComponent,
+        shadowComponent: options?.ShadowComponent,
+      })
+      // .use(() => (tree) => visit(tree, (node) => console.log('i', node)))
+      // remark rehype is needed to convert markdown to HTML
+      // However, it also changes all the nodes, so we need another pass
+      // to make sure our Glimmer-aware nodes are in tact
+      .use(remarkRehype, { allowDangerousHtml: true })
+      // Convert invocables to raw format, so Glimmer can invoke them
+      .use(() => (tree: Node) => {
+        visit(tree, function (node) {
+          // We rely on an implicit transformation of data.hProperties => properties
+          let properties = (node as any).properties;
 
-        if (properties?.[GLIMDOWN_PREVIEW]) {
-          // Have to sanitize anything Glimmer could try to render
-          escapeCurlies(node);
+          if (properties?.[GLIMDOWN_PREVIEW]) {
+            // Have to sanitize anything Glimmer could try to render
+            escapeCurlies(node as Parent);
 
-          return 'skip';
-        }
-
-        if (node.type === 'element' || ('tagName' in node && node.tagName === 'code')) {
-          if (properties?.[GLIMDOWN_RENDER]) {
-            node.type = 'glimmer_raw';
-
-            return;
+            return 'skip';
           }
 
-          escapeCurlies(node);
+          if (node.type === 'element' || ('tagName' in node && node.tagName === 'code')) {
+            if (properties?.[GLIMDOWN_RENDER]) {
+              node.type = 'glimmer_raw';
 
-          return 'skip';
-        }
+              return;
+            }
 
-        if (node.type === 'text' || node.type === 'raw') {
-          // definitively not the better way, but this is supposed to detect "glimmer" nodes
-          if (
-            'value' in node &&
-            typeof node.value === 'string' &&
-            node.value.match(/<\/?[_A-Z:0-9].*>/g)
-          ) {
-            node.type = 'glimmer_raw';
+            escapeCurlies(node as Parent);
+
+            return 'skip';
           }
 
-          node.type = 'glimmer_raw';
+          if (node.type === 'text' || node.type === 'raw') {
+            // definitively not the better way, but this is supposed to detect "glimmer" nodes
+            if (
+              'value' in node &&
+              typeof node.value === 'string' &&
+              node.value.match(/<\/?[_A-Z:0-9].*>/g)
+            ) {
+              node.type = 'glimmer_raw';
+            }
 
-          return 'skip';
-        }
+            node.type = 'glimmer_raw';
 
-        return;
-      });
-    })
-    .use(rehypeRaw, { passThrough: ['glimmer_raw', 'raw'] })
-    .use(() => (tree) => {
-      visit(tree, 'glimmer_raw', (node: Node) => {
-        node.type = 'raw';
-      });
-    })
-    .use(rehypeStringify, {
-      collapseEmptyAttributes: true,
-      closeSelfClosing: true,
-      allowParseErrors: true,
-      allowDangerousCharacters: true,
-      allowDangerousHtml: true,
-    }));
+            return 'skip';
+          }
+
+          return;
+        });
+      })
+      .use(rehypeRaw, { passThrough: ['glimmer_raw', 'raw'] })
+      .use(() => (tree) => {
+        visit(tree, 'glimmer_raw', (node: Node) => {
+          node.type = 'raw';
+        });
+      })
+      .use(rehypeStringify, {
+        collapseEmptyAttributes: true,
+        closeSelfClosing: true,
+        allowParseErrors: true,
+        allowDangerousCharacters: true,
+        allowDangerousHtml: true,
+      })
+  );
 }
 
 interface ParseMarkdownOptions {
   CopyComponent?: string;
+  ShadowComponent?: string;
 }
 
 /**

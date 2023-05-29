@@ -18,7 +18,7 @@
         "dist/test-support/index.d.ts"
       ],
       "markdown/parse": [
-        "./dist/browser/compile/formats/markdown-to-ember.d.ts"
+        "./dist/browser/compile/markdown-to-ember.d.ts"
       ],
       "*": [
         "dist/browser/*",
@@ -29,7 +29,7 @@
   "exports": {
     ".": "./dist/browser/index.js",
     "./esm": "./dist/browser/esm/index.js",
-    "./markdown/parse": "./dist/browser/markdown/formats/markdown-to-ember.js",
+    "./markdown/parse": "./dist/browser/compile/markdown-to-ember.js",
     "./ember-cli": {
       "require": "./src/build/ember-cli.cjs"
     },
@@ -47,6 +47,7 @@
     "lint:fix": "pnpm -w exec lint fix",
     "start": "rollup --config --watch",
     "lint": "pnpm -w exec lint",
+    "lint:package": "pnpm publint",
     "lint:js": "pnpm -w exec lint js",
     "lint:js:fix": "pnpm -w exec lint js:fix",
     "lint:hbs": "pnpm -w exec lint hbs",
@@ -117,6 +118,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.8",
     "prettier-plugin-ember-template-tag": "^0.3.2",
+    "publint": "^0.1.12",
     "rollup": "~3.21.0",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-glimmer-template-tag": "^0.4.1",

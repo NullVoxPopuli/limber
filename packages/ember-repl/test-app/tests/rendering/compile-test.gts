@@ -8,36 +8,40 @@ import { compile } from 'ember-repl';
 
 import type { ComponentLike } from '@glint/template';
 
-module('Unit | gjs | compile()', function (hooks) {
+module('Rendering | compile()', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('gjs with imports works', async function (assert) {
-    assert.expect(2);
+  module('format: gjs', function() {
+    test('gjs with imports works', async function (assert) {
+      assert.expect(1);
 
-    setupOnerror(() => {
-      assert.notOk('This should not error');
+      setupOnerror(() => {
+        assert.notOk('This should not error');
+      });
+
+      let snippet = stripIndent`
+        import Component from '@glimmer/component';
+        import { on } from '@ember/modifier';
+
+        <template>
+          <button {{on "click" console.log}}>Click</button>
+        </template>
+      `;
+
+      let component: ComponentLike | undefined;
+
+      await compile(snippet, {
+        format: 'gjs',
+        onSuccess: comp => component = comp,
+        onError: () => assert.notOk('did not expect error'),
+        onCompileStart: () => { /* not used */}
+      });
+
+      debugAssert(`[BUG]`, component);
+
+      await render(component);
+
+      assert.dom('button').hasText('Click');
     });
-
-    let snippet = stripIndent`
-      import Component from '@glimmer/component';
-      import { on } from '@ember/modifier';
-
-      <template>
-        <button {{on "click" console.log}}>Click</button>
-      </template>
-    `;
-
-    let component: ComponentLike | undefined;
-
-    await compile(snippet, {
-      format: 'gjs',
-      onSuccess: comp => component = comp,
-      onError: () => assert.notOk('did not expect error'),
-      onCompileStart: () => { /* not used */}
-    });
-
-    debugAssert(`[BUG]`, component);
-
-    await render(component);
-  });
+  })
 });

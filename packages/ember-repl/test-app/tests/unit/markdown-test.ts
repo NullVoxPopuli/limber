@@ -42,13 +42,16 @@ module('Unit | parseMarkdown()', function () {
   });
 
   test('There is code fence, but it is not gjs', async function (assert) {
-    let result = await parseMarkdown(stripIndent`
+    let result = await parseMarkdown(
+      stripIndent`
       # Title
 
       \`\`\`js
         const two = 2;
       \`\`\`
-    `);
+    `,
+      { CopyComponent: '<CopyMenu />' }
+    );
 
     assertOutput(
       result.templateOnlyGlimdown,
@@ -56,7 +59,7 @@ module('Unit | parseMarkdown()', function () {
         <h1>Title</h1>
 
         <div class=\"glimdown-snippet relative\"><pre><code class=\"language-js\">  const two = 2;
-        </code></pre><Limber::CopyMenu />
+        </code></pre><CopyMenu />
       `
     );
 
@@ -98,13 +101,16 @@ module('Unit | parseMarkdown()', function () {
 
   module('gjs', function () {
     test('Code fence does not have the "live" keyword', async function (assert) {
-      let result = await parseMarkdown(stripIndent`
+      let result = await parseMarkdown(
+        stripIndent`
         # Title
 
         \`\`\`gjs
           const two = 2;
         \`\`\`
-      `);
+      `,
+        { CopyComponent: '<CopyMenu />' }
+      );
 
       assertOutput(
         result.templateOnlyGlimdown,
@@ -112,7 +118,7 @@ module('Unit | parseMarkdown()', function () {
           <h1>Title</h1>
 
           <div class=\"glimdown-snippet relative\"><pre><code class=\"language-gjs\">  const two = 2;
-          </code></pre><Limber::CopyMenu />
+          </code></pre><CopyMenu />
         `
       );
 
@@ -190,7 +196,8 @@ module('Unit | parseMarkdown()', function () {
       `;
       let name = nameFor(snippet);
       let result = await parseMarkdown(
-        `hi\n` + `\n` + '```gjs live preview\n' + snippet + '\n```'
+        `hi\n` + `\n` + '```gjs live preview\n' + snippet + '\n```',
+        { CopyComponent: '<CopyMenu />' }
       );
 
       assertOutput(
@@ -204,7 +211,7 @@ module('Unit | parseMarkdown()', function () {
           &#x3C;template>
             &#x3C;button \\{{on \"click\" console.log}}>Click&#x3C;/button>
           &#x3C;/template>
-          </code></pre><Limber::CopyMenu /></div>
+          </code></pre><CopyMenu /></div>
         `
       );
 
