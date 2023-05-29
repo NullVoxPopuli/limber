@@ -1,11 +1,12 @@
 import { type ComponentLike } from '@glint/template';
-import { nameFor } from 'ember-repl';
 
-import { type Format } from 'limber/utils/messaging';
+import { nameFor } from '../utils';
+
+type Format = 'glimdown' | 'gjs' | 'hbs';
 
 export const CACHE = new Map<string, ComponentLike>();
 
-export async function compileTopLevelComponent(
+export async function compileMD(
   text: string,
   {
     format,

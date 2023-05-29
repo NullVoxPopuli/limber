@@ -21,6 +21,11 @@ your app's initial time-to-interactive/etc stats.
 * ember-auto-import v2 or above
 * Node.js v14 or above
 
+## Capabilities 
+
+* gjs 
+* hbs 
+* markdown with gjs/hbs blocks (glimdown)
 
 ## Installation
 

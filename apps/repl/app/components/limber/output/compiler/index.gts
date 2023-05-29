@@ -7,7 +7,7 @@ import { schedule } from '@ember/runloop';
 import { service } from '@ember/service';
 import { waitFor } from '@ember/test-waiters';
 
-import { compileTopLevelComponent } from './create-top-level-component';
+import { compileMD } from 'ember-repl';
 
 import type { MessagingAPI, Parent } from '../frame-messaging';
 import type RouterService from '@ember/routing/router-service';
@@ -61,7 +61,7 @@ export default class Compiler extends Component<Signature> {
   @action
   @waitFor
   async makeComponent(format: Format, text: string) {
-    await compileTopLevelComponent(text, {
+    await compileMD(text, {
       format: format,
       onCompileStart: async () => {
         await this.parentFrame.beginCompile();

@@ -852,9 +852,30 @@ importers:
       magic-string:
         specifier: ^0.30.0
         version: 0.30.0
+      mdast:
+        specifier: ^3.0.0
+        version: 3.0.0
       parse-static-imports:
         specifier: ^1.1.0
         version: 1.1.0
+      rehype-raw:
+        specifier: ^6.1.1
+        version: 6.1.1
+      rehype-stringify:
+        specifier: ^9.0.3
+        version: 9.0.3
+      remark-parse:
+        specifier: ^10.0.2
+        version: 10.0.2
+      remark-rehype:
+        specifier: ^10.1.0
+        version: 10.1.0
+      unified:
+        specifier: ^10.1.2
+        version: 10.1.2
+      unist-util-visit:
+        specifier: ^4.1.2
+        version: 4.1.2
       uuid:
         specifier: ^9.0.0
         version: 9.0.0
@@ -928,6 +949,15 @@ importers:
       '@types/babel__traverse':
         specifier: ^7.18.5
         version: 7.18.5
+      '@types/hast':
+        specifier: ^2.3.4
+        version: 2.3.4
+      '@types/mdast':
+        specifier: ^3.0.11
+        version: 3.0.11
+      '@types/unist':
+        specifier: ^2.0.6
+        version: 2.0.6
       '@types/uuid':
         specifier: ^9.0.1
         version: 9.0.1
@@ -13878,6 +13908,11 @@ packages:
     resolution: {integrity: sha512-V4Zn/ncyN1QNSqSBxTrMOLpjr+IKdHl2v3KVLoWmDPscP4r9GcCi71gjgvUV1SFSKh92AjAG4peFuBl2/YgCJg==}
     dependencies:
       '@types/mdast': 3.0.11
+    dev: false
+
+  /mdast@3.0.0:
+    resolution: {integrity: sha512-xySmf8g4fPKMeC07jXGz971EkLbWAJ83s4US2Tj9lEdnZ142UP5grN73H1Xd3HzrdbU5o9GYYP/y8F9ZSwLE9g==}
+    deprecated: '`mdast` was renamed to `remark`'
     dev: false
 
   /mdn-data@2.0.14:

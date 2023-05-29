@@ -1,30 +1,54 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import { compileHBS, compileJS, invocationName } from 'ember-repl';
 
-import CopyMenu from 'limber/components/limber/copy-menu';
+import { invocationName } from '../../utils';
 
-import { parseMarkdown } from './-compile/markdown-to-ember';
-
+import type { CompileResult } from '../../types';
 import type { ExtractedCode } from './-compile/markdown-to-ember';
-import type { CompilationResult } from './types';
-import type { CompileResult } from 'ember-repl';
+import type { CompilationResult, EvalImportMap, ScopeMap } from './types';
 
-export async function compileAll(js: { code: string }[]) {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  let { COMPONENT_MAP } = await import('/ember-repl/component-map.js');
-
+async function compileAll(js: { code: string }[], importMap?: EvalImportMap) {
   let modules = await Promise.all(
     js.map(async ({ code }) => {
-      return await compileJS(code, COMPONENT_MAP);
+      return await compileGJS(code, importMap);
     })
   );
 
   return modules;
 }
 
-export async function compile(glimdownInput: string): Promise<CompilationResult> {
+export async function compileGJS(
+  gjsInput: string,
+  importMap?: EvalImportMap
+): Promise<CompileResult> {
+  try {
+    let { compileJS } = await import('../../js');
+
+    return await compileJS(gjsInput, importMap);
+  } catch (error) {
+    return { error: error as Error, name: 'unknown' };
+  }
+}
+
+export async function compileHBS(hbsInput: string): Promise<CompileResult> {
+  try {
+    let { compileHBS } = await import('../../hbs');
+
+    return compileHBS(hbsInput);
+  } catch (error) {
+    return { error: error as Error, name: 'unknown' };
+  }
+}
+
+export async function compile(
+  glimdownInput: string,
+  options?: {
+    importMap?: EvalImportMap;
+    topLevelScope?: ScopeMap;
+  }
+): Promise<CompilationResult> {
+  let importMap = options?.importMap;
+  let topLevelScope = options?.topLevelScope ?? {};
   let rootTemplate: string;
   let liveCode: ExtractedCode[];
   let scope: CompileResult[] = [];
@@ -39,12 +63,13 @@ export async function compile(glimdownInput: string): Promise<CompilationResult>
    *         compiled rootTemplate can invoke them
    */
   try {
+    let { parseMarkdown } = await import('./-compile/markdown-to-ember');
     let { templateOnlyGlimdown, blocks } = await parseMarkdown(glimdownInput);
 
     rootTemplate = templateOnlyGlimdown;
     liveCode = blocks;
   } catch (error) {
-    return { error };
+    return { error: error as Error };
   }
 
   /**
@@ -56,7 +81,7 @@ export async function compile(glimdownInput: string): Promise<CompilationResult>
       let js = liveCode.filter((code) => ['js', 'gjs'].includes(code.lang));
 
       if (js.length > 0) {
-        let compiled = await compileAll(js);
+        let compiled = await compileAll(js, importMap);
 
         await Promise.all(
           compiled.map(async (info) => {
@@ -76,13 +101,15 @@ export async function compile(glimdownInput: string): Promise<CompilationResult>
       }
 
       for (let { code } of hbs) {
-        scope.push(compileHBS(code));
+        let compiled = await compileHBS(code);
+
+        scope.push(compiled);
       }
     } catch (error) {
       console.info({ scope });
       console.error(error);
 
-      return { error, rootTemplate };
+      return { error: error as Error, rootTemplate };
     }
   }
 
@@ -111,8 +138,10 @@ export async function compile(glimdownInput: string): Promise<CompilationResult>
       return accum;
     }, {} as Record<string, unknown>);
 
-    let { component, error } = compileHBS(rootTemplate, {
-      scope: { ...localScope, 'Limber::CopyMenu': CopyMenu },
+    let scope =
+
+    let { component, error } = await compileHBS(rootTemplate, {
+      scope: { ...localScope, ...topLevelScope },
     });
 
     return { rootTemplate, rootComponent: component, error };
