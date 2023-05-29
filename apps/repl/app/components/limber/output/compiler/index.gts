@@ -7,7 +7,7 @@ import { schedule } from '@ember/runloop';
 import { service } from '@ember/service';
 import { waitFor } from '@ember/test-waiters';
 
-import { compileMD } from 'ember-repl';
+import { compile } from 'ember-repl';
 
 import CopyMenu from 'limber/components/limber/copy-menu';
 
@@ -67,7 +67,7 @@ export default class Compiler extends Component<Signature> {
     // @ts-expect-error
     let importMap = await import('/ember-repl/component-map.js');
 
-    await compileMD(text, {
+    await compile(text, {
       format: format,
       CopyComponent: 'CopyMenu',
       topLevelScope: {
