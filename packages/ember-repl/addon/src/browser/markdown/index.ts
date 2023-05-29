@@ -1,7 +1,13 @@
 import { type ComponentLike } from '@glint/template';
 
 import { nameFor } from '../utils';
+import {
+  compileGJS as processGJS,
+  compileHBS as processHBS,
+  compileMD as processMD,
+} from './formats/glimdown';
 
+import type { CompileResult } from '../types';
 import type { EvalImportMap, ScopeMap } from './formats/types';
 type Format = 'glimdown' | 'gjs' | 'hbs';
 
@@ -9,8 +15,10 @@ export const CACHE = new Map<string, ComponentLike>();
 
 const SUPPORTED_FORMATS = ['glimdown', 'gjs', 'hbs'];
 
-import { compileGJS, compileHBS, compileMD } from './formats/glimdown';
-
+/**
+ * This compileMD is a more robust version of the raw compiling used in "formats".
+ * This function manages cache, and has events for folks building UIs to hook in to
+ */
 export async function compileMD(
   text: string,
   {
@@ -47,29 +55,33 @@ export async function compileMD(
 
   await onCompileStart();
 
-  let compiler = await getCompiler(format)?.();
-
-  if (!compiler) {
-    await onError('Could not find compiler');
-
-    return;
-  }
-
   if (!text) {
     await onError('No Input Document yet');
 
     return;
   }
 
-  let { error, rootComponent } = await compiler.compile(text);
+  let result: CompileResult;
 
-  if (error) {
-    await onError(error.message || `${error}`);
+  if (format === 'glimdown') {
+    result = await processMD(text, options);
+  } else if (format === 'gjs') {
+    result = await processGJS(text, options.importMap);
+  } else if (format === 'hbs') {
+    result = await processHBS(text, options.topLevelScope);
+  } else {
+    await onError(`Unsupported format: ${format}. Supported formats: ${SUPPORTED_FORMATS}`);
 
     return;
   }
 
-  CACHE.set(id, rootComponent as ComponentLike);
+  if (result.error) {
+    await onError(result.error.message || `${result.error}`);
 
-  await onSuccess(rootComponent as ComponentLike);
+    return;
+  }
+
+  CACHE.set(id, result.component as ComponentLike);
+
+  await onSuccess(result.component as ComponentLike);
 }
