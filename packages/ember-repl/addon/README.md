@@ -53,20 +53,71 @@ Object.assign(window, {
 
 ```
 
-Additionally, because the ember-template-compiler is presently "goofy" in `ember-source`, we must do this in `ember-cli-build.js`:
-
-```js 
-const app = new EmberApp(defaults, {
-  // ...
-});
-app.import('vendor/ember/ember-template-compiler.js');
-
-// ...
-```
-
 ## Usage
 
-**`compileJS`**
+### Compiling GJS 
+
+There are two ways to compile gjs text, imperatively via `compileJS`, where you manage the reactivity yourself. 
+Or `CompileGJS`, which is a resource that manages the reactivity for you.
+
+#### Automatic reactivity via the Resource
+
+Following the Resources documentation, you can use `CompileGJS` in both 
+template-only or class-backed contexts:
+
+```js 
+import { CompileGJS } from 'ember-repl';
+
+<template>
+  {{#let (CompileGJS @gjsText) as |compileResult|}}
+
+    {{#if compileResult.error}}
+      an error! {{compileResult.error}}
+    {{/if}}
+
+    {{#if compileResult.component}}
+      <compileResult.component />
+    {{/if}}
+
+  {{/let}}
+</template>
+
+```
+
+One advantage of using a backing JS context, is that you can utilize the `keepLatest` 
+resource so that when an error occurs, you could keep rendering the latest successful compile.
+
+```js 
+import Component from '@glimmer/component';
+import { CompileGJS } from 'ember-repl';
+import { use } from 'ember-resources'; 
+import { keepLatest } from 'ember-resources/util/keep-latest';
+
+export class Renderer extends Component {
+  @use compile = CompileGJS(() => this.args.gjsText);
+
+  @use latest = keepLatest({
+    value: () => this.compile.component,
+    when: () => this.compile.error,
+  }); 
+
+  <template> 
+    {{#if this.compile.error}}
+      Error! {{this.compile.error}}
+    {{/if}}
+
+    {{! This will keep showing even when there is an error.
+        Which can help reduce visual jitter }} 
+    {{#if this.latest.value}}
+      <this.latest.latest />
+    {{/if}}
+
+  </template>
+}
+```
+
+
+#### Managing your own reactivity
 
 ```js
 import Component from '@glimmer/component';
@@ -89,7 +140,17 @@ export class Renderer extends Component {
 {{/if}}
 ```
 
-**`compileHBS`**
+
+### Compiling HBS 
+
+#### Automatic reactivity via the Resource
+#### Managing your own reactivity
+
+### Compiling Markdown
+
+#### Automatic reactivity via the Resource
+
+#### Managing your own reactivity
 
 ```js
 import Component from '@glimmer/component';
@@ -102,6 +163,7 @@ export class Renderer extends Component {
 ```hbs
 <this.compileResult.component />
 ```
+
 
 ### Using existing components
 
@@ -246,39 +308,6 @@ packagerOptions: {
   },
 },
 ```
-
-If you are using ember-repl to showcase a styleguide _and_ have maximum strictness enabled in embroider,
-you'll need to manually (or programatically) list out each of the components you want to force to be
-included in the build output using the `buildComponentMap` function in your `ember-cli-build.js`.
-For example:
-
-```js
-const { Webpack } = require('@embroider/webpack');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-
-return require('@embroider/compat').compatBuild(app, Webpack, {
-  extraPublicTrees: [
-    require('ember-repl').buildComponentMap([
-      'limber/components/limber/menu',
-      'limber/components/limber/header',
-      'limber/components/external-link',
-      'limber/components/popper-j-s',
-      'ember-repl',
-    ]),
-  ],
-  // ...
-});
-```
-
-this emits an `/ember-repl/component-map.js` file in your public tree,
-which can then be `await import`ed and used via:
-
-```js
-let { COMPONENT_MAP } = await import('/ember-repl/component-map.js');
-
-let { component, error, name } = await compileJS(code, COMPONENT_MAP);
-```
-
 
 ## Security
 
