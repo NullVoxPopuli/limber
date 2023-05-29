@@ -83,12 +83,13 @@
     /////////////////////////////////////////////////
     "_:lint": {
       "outputs": [],
-      "dependsOn": ["lint:js", "lint:hbs", "lint:prettier", "lint:types"]
+      "dependsOn": ["lint:js", "lint:hbs", "lint:prettier", "lint:types", "lint:package"]
     },
     "lint:js": { "outputs": [] },
     "lint:hbs": { "outputs": [] },
     "lint:prettier": { "outputs": [] },
     "lint:types": { "outputs": [], "dependsOn": ["^build"] },
+    "lint:package": { "outputs": [], "dependsOn": ["^build"] },
 
     "_:lint:fix": {
       "cache": false,

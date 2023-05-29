@@ -7,7 +7,7 @@ const config = configs.crossPlatform();
 module.exports = {
   ...config,
   env: {
-    browser: true
+    browser: true,
   },
   overrides: [...config.overrides],
 };

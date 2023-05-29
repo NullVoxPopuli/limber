@@ -1,85 +1,87 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <!-- scroll to the bottom to actually see the tests -- most of this is setup -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>hbs remark / rehype tests</title>
+  <head>
+    <!-- scroll to the bottom to actually see the tests -- most of this is setup -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>hbs remark / rehype tests</title>
 
-  <link href="./styles.css" rel="stylesheet">
-  
-  <!-- 
+    <link href="./styles.css" rel="stylesheet" />
+
+    <!-- 
     to specify externals: https://github.com/ije/esm.sh#specify-external-dependencies 
     esm.sh had an error:
       Failed to resolve module specifier "remark-parse". Relative references must start with either "/", "./", or "../".
       It's possible that jsbin doesn't support import maps.
   -->
-  <script type="importmap">
-    {
-      "imports": {
-        "unified": "https://esm.sh/unified",
-        "remark-parse": "https://esm.sh/remark-parse",
-        "remark-rehype": "https://esm.sh/remark-rehype",
-        "rehype-sanitize": "https://esm.sh/rehype-sanitize",
-        "rehype-stringify": "https://esm.sh/rehype-stringify",
-        "unist-util-flatmap": "https://esm.sh/unist-util-flatmap",
-        "unist-util-visit": "https://esm.sh/unist-util-visit",
-        "unist-util-inspect": "https://esm.sh/unist-util-inspect",
-        "hast-util-to-html": "https://esm.sh/hast-util-to-html",
-        "uuid": "https://esm.sh/uuid",
-        "inflection": "https://esm.sh/inflection",
-        "rehype-raw": "https://esm.sh/rehype-raw"
+    <script type="importmap">
+      {
+        "imports": {
+          "unified": "https://esm.sh/unified",
+          "remark-parse": "https://esm.sh/remark-parse",
+          "remark-rehype": "https://esm.sh/remark-rehype",
+          "rehype-sanitize": "https://esm.sh/rehype-sanitize",
+          "rehype-stringify": "https://esm.sh/rehype-stringify",
+          "unist-util-flatmap": "https://esm.sh/unist-util-flatmap",
+          "unist-util-visit": "https://esm.sh/unist-util-visit",
+          "unist-util-inspect": "https://esm.sh/unist-util-inspect",
+          "hast-util-to-html": "https://esm.sh/hast-util-to-html",
+          "uuid": "https://esm.sh/uuid",
+          "inflection": "https://esm.sh/inflection",
+          "rehype-raw": "https://esm.sh/rehype-raw"
+        }
       }
-    }
-  </script>
-  
-  <!-- 
+    </script>
+
+    <!-- 
      opening the html file without a webserver will throw a CORS error on this request.
      run `pnpm start` for such webserver
   -->
-  <script type="module">
-    import { main } from "./unified-tests.js";
+    <script type="module">
+      import { main } from './unified-tests.js';
 
-    document.addEventListener("DOMContentLoaded", async () => {
-      main();
-    });
-  </script>
-</head>
-<body>
-  <h1>Unified + Remark Tests</h1>
-  <div id="loader" style="padding: 1rem;">Loading...</div>
-  
-  Remark and Rehype will not work with this syntax natively. Need custom parser / stringifier.<br />
-  <a href="https://github.com/orgs/unifiedjs/discussions/213">Discussion here.</a> Currently, this approach uses regex hacks (as does remark-hbs).
+      document.addEventListener('DOMContentLoaded', async () => {
+        main();
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Unified + Remark Tests</h1>
+    <div id="loader" style="padding: 1rem">Loading...</div>
 
-  
-  <h2>Main template</h2>
-  <details class="incorrect">
-    <summary>with rehypeSanitize</summary>
-    <pre id="sanitized"></pre>
-  </details>
-  <details class="incorrect">
-    <summary>without rehypeSanitize</summary>
-    <pre id="untrusted"></pre>
-  </details>
-  <details class="better" open>
-    <summary>without rehypeSanitize and with rehypeRaw</summary>
-    <pre id="untrusted-raw"></pre>
-  </details>
-  <details class="good" open>
-    <summary>manual regex replace</summary>
-    <pre id="manual"></pre>
-  </details>
-  <details class="good" open>
-    <summary>bypass glimmer</summary>
-    <pre id="glimmer-bypass"></pre>
-  </details>
-  <h2>Fenced Demo Output</h2>
-  <pre id="demos"></pre>
-  <ul>
-    <li>lang: the language for which to choose which compiler pipeline to use to render the demo</li>
-    <li>name: is the kebab-case name of the component to invoke to render this demo</li>
-    <li>code: the extracted code to pass to a compiler pipeline, such as Babel</li>
-  </ul>
-</body>
+    Remark and Rehype will not work with this syntax natively. Need custom parser / stringifier.<br />
+    <a href="https://github.com/orgs/unifiedjs/discussions/213">Discussion here.</a> Currently, this
+    approach uses regex hacks (as does remark-hbs).
+
+    <h2>Main template</h2>
+    <details class="incorrect">
+      <summary>with rehypeSanitize</summary>
+      <pre id="sanitized"></pre>
+    </details>
+    <details class="incorrect">
+      <summary>without rehypeSanitize</summary>
+      <pre id="untrusted"></pre>
+    </details>
+    <details class="better" open>
+      <summary>without rehypeSanitize and with rehypeRaw</summary>
+      <pre id="untrusted-raw"></pre>
+    </details>
+    <details class="good" open>
+      <summary>manual regex replace</summary>
+      <pre id="manual"></pre>
+    </details>
+    <details class="good" open>
+      <summary>bypass glimmer</summary>
+      <pre id="glimmer-bypass"></pre>
+    </details>
+    <h2>Fenced Demo Output</h2>
+    <pre id="demos"></pre>
+    <ul>
+      <li>
+        lang: the language for which to choose which compiler pipeline to use to render the demo
+      </li>
+      <li>name: is the kebab-case name of the component to invoke to render this demo</li>
+      <li>code: the extracted code to pass to a compiler pipeline, such as Babel</li>
+    </ul>
+  </body>
 </html>

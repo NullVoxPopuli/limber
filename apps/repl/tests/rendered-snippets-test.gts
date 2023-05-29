@@ -2,11 +2,11 @@ import { click, fillIn, render } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import {
-  CACHE,
-  compileTopLevelComponent,
-} from 'limber/components/limber/output/compiler/create-top-level-component';
+import { compile as compileAnything } from 'ember-repl';
+
 import { getFromLabel } from 'limber/snippets';
+
+import { clearCompileCache } from 'ember-repl/test-support';
 
 import type { ComponentLike } from '@glint/template';
 import type QUnit from 'qunit';
@@ -15,15 +15,20 @@ module('Rendered Snippets / Demos', function (hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function () {
-    CACHE.clear();
+    clearCompileCache();
   });
 
   async function compile(text: string, { assert }: { assert: QUnit['assert'] }) {
     let component: ComponentLike | undefined;
     let error: string | undefined;
 
-    await compileTopLevelComponent(text, {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    let { COMPONENT_MAP } = await import('/ember-repl/component-map.js');
+
+    await compileAnything(text, {
       format: 'glimdown',
+      importMap: COMPONENT_MAP,
       onCompileStart: async () => assert.step('start compile'),
       onSuccess: async (compiled) => {
         component = compiled;

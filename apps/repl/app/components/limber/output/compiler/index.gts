@@ -7,7 +7,9 @@ import { schedule } from '@ember/runloop';
 import { service } from '@ember/service';
 import { waitFor } from '@ember/test-waiters';
 
-import { compileTopLevelComponent } from './create-top-level-component';
+import { compile } from 'ember-repl';
+
+import CopyMenu from 'limber/components/limber/copy-menu';
 
 import type { MessagingAPI, Parent } from '../frame-messaging';
 import type RouterService from '@ember/routing/router-service';
@@ -61,8 +63,17 @@ export default class Compiler extends Component<Signature> {
   @action
   @waitFor
   async makeComponent(format: Format, text: string) {
-    await compileTopLevelComponent(text, {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    let { COMPONENT_MAP } = await import('/ember-repl/component-map.js');
+
+    await compile(text, {
       format: format,
+      CopyComponent: 'CopyMenu',
+      topLevelScope: {
+        CopyMenu: CopyMenu,
+      },
+      importMap: COMPONENT_MAP,
       onCompileStart: async () => {
         await this.parentFrame.beginCompile();
       },

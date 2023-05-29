@@ -11,16 +11,12 @@ const addon = new Addon({
   destDir: 'dist',
 });
 
+console.log(addon.output());
+
 export default defineConfig({
-  // https://github.com/rollup/rollup/issues/1828
-  watch: {
-    chokidar: {
-      usePolling: true,
-    },
-  },
   output: addon.output(),
   plugins: [
-    addon.publicEntrypoints(['browser/**/*.js']),
+    addon.publicEntrypoints(['browser/**/*.js', 'test-support/*.js']),
     addon.appReexports([]),
 
     ts({

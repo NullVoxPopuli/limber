@@ -14,6 +14,12 @@
   "author": "NullVoxPopuli",
   "typesVersions": {
     "*": {
+      "test-support": [
+        "dist/test-support/index.d.ts"
+      ],
+      "markdown/parse": [
+        "./dist/browser/compile/markdown-to-ember.d.ts"
+      ],
       "*": [
         "dist/browser/*",
         "dist/browser/*/index.d.ts"
@@ -23,9 +29,11 @@
   "exports": {
     ".": "./dist/browser/index.js",
     "./esm": "./dist/browser/esm/index.js",
+    "./markdown/parse": "./dist/browser/compile/markdown-to-ember.js",
     "./ember-cli": {
       "require": "./src/build/ember-cli.cjs"
     },
+    "./test-support": "./dist/test-support/index.js",
     "./addon-main.js": "./addon-main.cjs"
   },
   "files": [
@@ -39,6 +47,7 @@
     "lint:fix": "pnpm -w exec lint fix",
     "start": "rollup --config --watch",
     "lint": "pnpm -w exec lint",
+    "lint:package": "pnpm publint",
     "lint:js": "pnpm -w exec lint js",
     "lint:js:fix": "pnpm -w exec lint js:fix",
     "lint:hbs": "pnpm -w exec lint hbs",
@@ -58,8 +67,16 @@
     "common-tags": "^1.8.2",
     "line-column": "^1.0.2",
     "magic-string": "^0.30.0",
+    "mdast": "^3.0.0",
     "parse-static-imports": "^1.1.0",
-    "uuid": "^9.0.0"
+    "rehype-raw": "^6.1.1",
+    "rehype-stringify": "^9.0.3",
+    "remark-parse": "^10.0.2",
+    "remark-rehype": "^10.1.0",
+    "unified": "^10.1.2",
+    "unist-util-visit": "^4.1.2",
+    "uuid": "^9.0.0",
+    "vfile": "^5.3.7"
   },
   "devDependencies": {
     "@babel/core": "^7.21.8",
@@ -85,10 +102,14 @@
     "@types/babel__core": "^7.20.0",
     "@types/babel__standalone": "^7.1.4",
     "@types/babel__traverse": "^7.18.5",
+    "@types/hast": "^2.3.4",
+    "@types/mdast": "^3.0.11",
+    "@types/unist": "^2.0.6",
     "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.59.6",
     "@typescript-eslint/parser": "^5.59.6",
     "concurrently": "^8.0.1",
+    "ember-resources": "^6.1.0",
     "ember-source": "^5.0.0",
     "ember-template-imports": "^3.4.2",
     "ember-template-lint": "^5.7.3",
@@ -98,7 +119,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.8",
     "prettier-plugin-ember-template-tag": "^0.3.2",
-    "rollup": "^3.22.1",
+    "publint": "^0.1.12",
+    "rollup": "~3.21.0",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-glimmer-template-tag": "^0.4.1",
     "rollup-plugin-ts": "^3.2.0",
@@ -120,6 +142,8 @@
     "@glimmer/compiler": "^0.84.3",
     "@glimmer/component": "^1.1.2",
     "@glimmer/syntax": "^0.84.3",
+    "@glint/template": "^1.0.2",
+    "ember-resources": "^6.1.0",
     "ember-source": "^5.0.0"
   }
 }

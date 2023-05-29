@@ -14,6 +14,10 @@ export interface Babel {
 }
 
 export type Options = {
+  /**
+   * @internal
+   * @deprecated do not use - not under semver
+   */
   skypack?: boolean;
 };
 
