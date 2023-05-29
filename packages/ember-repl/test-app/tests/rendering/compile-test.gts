@@ -1,10 +1,10 @@
+import { assert as debugAssert } from '@ember/debug';
 import { render, setupOnerror } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import { stripIndent } from 'common-tags';
-
-import { compile } from 'limber/components/limber/output/compiler/formats/gjs';
+import { compile } from 'ember-repl';
 
 import type { ComponentLike } from '@glint/template';
 
@@ -27,11 +27,17 @@ module('Unit | gjs | compile()', function (hooks) {
       </template>
     `;
 
-    let result = await compile(snippet);
+    let component: ComponentLike | undefined;
 
-    assert.ok(result.rootComponent);
-    assert.notOk(result.error);
+    await compile(snippet, {
+      format: 'gjs',
+      onSuccess: comp => component = comp,
+      onError: () => assert.notOk('did not expect error'),
+      onCompileStart: () => { /* not used */}
+    });
 
-    await render(result.rootComponent as ComponentLike);
+    debugAssert(`[BUG]`, component);
+
+    await render(component);
   });
 });

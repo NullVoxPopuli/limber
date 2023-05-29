@@ -1,10 +1,11 @@
-import { invocationOf, nameFor } from 'ember-repl';
 import rehypeRaw from 'rehype-raw';
 import rehypeStringify from 'rehype-stringify';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
 import { visit } from 'unist-util-visit';
+
+import { invocationOf, nameFor } from '../utils';
 
 import type { Node, Parent as HParent } from 'hast';
 import type { Code, Text } from 'mdast';
@@ -265,9 +266,12 @@ interface ParseMarkdownOptions {
   CopyComponent?: string;
 }
 
+/**
+ * @internal not under semver
+ */
 export async function parseMarkdown(
   input: string,
-  options?: ParseMarkdownOptions = {}
+  options: ParseMarkdownOptions = {}
 ): Promise<LiveCodeExtraction> {
   let markdownCompiler = buildCompiler(options);
   let processed = await markdownCompiler.process(input);

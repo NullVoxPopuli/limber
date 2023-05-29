@@ -2,11 +2,11 @@ import { click, fillIn, render } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import {
-  CACHE,
-  compileTopLevelComponent,
-} from 'limber/components/limber/output/compiler/create-top-level-component';
+import { compile } from 'ember-repl';
+
 import { getFromLabel } from 'limber/snippets';
+
+import { clearCompileCache } from 'ember-repl/test-support';
 
 import type { ComponentLike } from '@glint/template';
 import type QUnit from 'qunit';
@@ -15,14 +15,14 @@ module('Rendered Snippets / Demos', function (hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function () {
-    CACHE.clear();
+    clearCompileCache();
   });
 
   async function compile(text: string, { assert }: { assert: QUnit['assert'] }) {
     let component: ComponentLike | undefined;
     let error: string | undefined;
 
-    await compileTopLevelComponent(text, {
+    await compile(text, {
       format: 'glimdown',
       onCompileStart: async () => assert.step('start compile'),
       onSuccess: async (compiled) => {

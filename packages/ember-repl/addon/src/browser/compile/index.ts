@@ -1,4 +1,3 @@
-import { type ComponentLike } from '@glint/template';
 import { cell, resource, resourceFactory } from 'ember-resources';
 
 import { nameFor } from '../utils';
@@ -6,10 +5,11 @@ import {
   compileGJS as processGJS,
   compileHBS as processHBS,
   compileMD as processMD,
-} from './formats/glimdown';
+} from './formats';
 
 import type { CompileResult } from '../types';
-import type { EvalImportMap, ScopeMap } from './formats/types';
+import type { EvalImportMap, ScopeMap } from './types';
+import type { ComponentLike } from '@glint/template';
 type Format = 'glimdown' | 'gjs' | 'hbs';
 
 export const CACHE = new Map<string, ComponentLike>();
@@ -30,9 +30,9 @@ export async function compile(
     ...options
   }: {
     format: Format;
-    onSuccess: (component: ComponentLike) => Promise<unknown>;
-    onError: (error: string) => Promise<unknown>;
-    onCompileStart: () => Promise<unknown>;
+    onSuccess: (component: ComponentLike) => Promise<unknown> | unknown;
+    onError: (error: string) => Promise<unknown> | unknown;
+    onCompileStart: () => Promise<unknown> | unknown;
     importMap?: EvalImportMap;
     CopyComponent?: string;
     topLevelScope?: ScopeMap;

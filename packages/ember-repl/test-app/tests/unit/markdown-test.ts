@@ -2,8 +2,7 @@ import { module, test } from 'qunit';
 
 import { stripIndent } from 'common-tags';
 import { invocationOf, nameFor } from 'ember-repl';
-
-import { parseMarkdown } from 'limber/components/limber/output/compiler/formats/-compile/markdown-to-ember';
+import { parseMarkdown } from 'ember-repl/markdown/parse';
 
 /**
  * NOTE: there is a problem(?) with remark-hbs where all extra newlines and
@@ -190,7 +189,9 @@ module('Unit | parseMarkdown()', function () {
         </template>
       `;
       let name = nameFor(snippet);
-      let result = await parseMarkdown(`hi\n` + `\n` + '```gjs live preview\n' + snippet + '\n```');
+      let result = await parseMarkdown(
+        `hi\n` + `\n` + '```gjs live preview\n' + snippet + '\n```'
+      );
 
       assertOutput(
         result.templateOnlyGlimdown,

@@ -1,6 +1,6 @@
-import { invocationName } from '../../utils';
+import { invocationName } from '../utils';
 
-import type { CompileResult } from '../../types';
+import type { CompileResult } from '../types';
 import type { ExtractedCode } from './markdown-to-ember';
 import type { EvalImportMap, ScopeMap } from './types';
 
@@ -19,7 +19,7 @@ export async function compileGJS(
   importMap?: EvalImportMap
 ): Promise<CompileResult> {
   try {
-    let { compileJS } = await import('../../js');
+    let { compileJS } = await import('../js');
 
     return await compileJS(gjsInput, importMap);
   } catch (error) {
@@ -29,7 +29,7 @@ export async function compileGJS(
 
 export async function compileHBS(hbsInput: string, scope?: ScopeMap): Promise<CompileResult> {
   try {
-    let { compileHBS } = await import('../../hbs');
+    let { compileHBS } = await import('../hbs');
 
     return compileHBS(hbsInput, { scope });
   } catch (error) {
