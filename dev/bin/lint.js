@@ -35,7 +35,7 @@ async function run() {
         stdio: 'inherit',
       });
     case 'prettier':
-      return execaCommand(`pnpm prettier -c .`, { cwd });
+      return execaCommand(`pnpm prettier -c .`, { cwd, stdio: 'inherit' });
     case 'js:fix':
       return execaCommand(`pnpm eslint . ` + `--fix --cache --cache-strategy content`, {
         cwd,

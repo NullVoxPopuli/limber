@@ -155,6 +155,7 @@ function liveCodeExtraction(options: Options = {}) {
       let { meta, lang, value } = node as Code;
 
       if (!meta) return 'skip';
+      if (!lang) return 'skip';
 
       file.data.liveCode ??= [];
 

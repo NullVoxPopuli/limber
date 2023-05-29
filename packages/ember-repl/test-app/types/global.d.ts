@@ -19,10 +19,7 @@ declare module '@ember/template-factory';
  */
 declare module '@glimmer/compiler' {
   import type { PrecompileOptions } from 'ember-cli-htmlbars';
-  export function precompileJSON(
-    source: string,
-    options: PrecompileOptions
-  ): [unknown, string[]];
+  export function precompileJSON(source: string, options: PrecompileOptions): [unknown, string[]];
 }
 
 declare module 'babel-plugin-htmlbars-inline-precompile';
@@ -40,8 +37,5 @@ declare module '@ember/template-compilation' {
     //   ast: Array<unknown>
     // }
   }
-  export function compileTemplate(
-    template: string,
-    options: CompileOptions
-  ): any;
+  export function compileTemplate(template: string, options: CompileOptions): any;
 }
