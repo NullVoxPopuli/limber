@@ -1,8 +1,11 @@
 #!/usr/bin/env node
+import fs from 'node:fs/promises';
+import os from 'node:os';
 import path from 'node:path';
 
+import chalk from 'chalk';
 import { packageJson, project } from 'ember-apply';
-import { execaCommand } from 'execa';
+import { execa, execaCommand } from 'execa';
 
 const [, , command] = process.argv;
 // process.cwd() is whatever pnpm decides to do
@@ -20,32 +23,28 @@ const root = await project.gitRoot();
 const manifest = await packageJson.read(cwd);
 const relative = path.relative(root, cwd);
 
-const LINT_EXTENSIONS = ['js', 'ts', 'gjs', 'gts', 'hbs', 'css'];
-const LINT_GLOB = `**/*.{${LINT_EXTENSIONS.join(',')}}`;
+if (process.env['DEBUG']) {
+  console.debug(`${manifest.name} :: within ${relative}`);
+}
 
-console.debug(`${manifest.name} :: within ${relative}`);
-
-/**
- * Check: no cache
- * Fix:  use cache
- */
 async function run() {
   switch (command) {
     case 'prettier:fix':
-      return execaCommand(
-        `pnpm prettier -w ${LINT_GLOB} --cache --cache-strategy content --config ./.prettierrc.cjs`,
-        {
-          cwd,
-          stdio: 'inherit',
-        }
-      );
-    case 'prettier':
-      return execaCommand(`pnpm prettier -c ${LINT_GLOB} --config ./.prettierrc.cjs`, {
+      return execaCommand(`pnpm prettier -w . ` + `--cache --cache-strategy content`, {
         cwd,
         stdio: 'inherit',
       });
+    case 'prettier':
+      return execaCommand(`pnpm prettier -c .`, { cwd });
     case 'js:fix':
-      return execaCommand(`pnpm eslint . --fix --cache --cache-strategy content`, {
+      return execaCommand(`pnpm eslint . ` + `--fix --cache --cache-strategy content`, {
+        cwd,
+        stdio: 'inherit',
+      });
+    case 'js':
+      return execaCommand(`pnpm eslint .`, { cwd, stdio: 'inherit' });
+    case 'hbs:fix':
+      return execaCommand(`pnpm ember-template-lint . --fix --no-error-on-unmatched-pattern`, {
         cwd,
         stdio: 'inherit',
       });
@@ -54,19 +53,56 @@ async function run() {
         cwd,
         stdio: 'inherit',
       });
-    // template-lint has no cache
-    case 'hbs:fix':
-      return execaCommand(`pnpm ember-template-lint . --fix --no-error-on-unmatched-pattern`, {
-        cwd,
-        stdio: 'inherit',
-      });
-    case 'js':
-      return execaCommand(`pnpm eslint .`, { cwd, stdio: 'inherit' });
     case 'fix':
-      return execaCommand(`pnpm turbo _:lint:fix`, { cwd, stdio: 'inherit' });
+      return turbo('_:lint:fix');
     default:
-      return execaCommand(`pnpm turbo _:lint`, { cwd, stdio: 'inherit' });
+      return turbo('_:lint');
   }
 }
 
-await run();
+function turbo(cmd) {
+  let args = ['turbo', '--color', '--no-update-notifier', '--output-logs', 'errors-only', cmd];
+
+  console.info(chalk.blueBright('Running:\n', args.join(' ')));
+
+  return execa('pnpm', args, { stdio: 'inherit', env: { FORCE_COLOR: '1' } });
+}
+
+async function dumpErrorLog(e) {
+  function generateRandomName() {
+    const timestamp = new Date().getTime();
+    const random = Math.floor(Math.random() * 1000);
+
+    return `file_${timestamp}_${random}.log`;
+  }
+
+  try {
+    const randomName = await generateRandomName();
+    const tmpDir = os.tmpdir();
+    const filePath = path.join(tmpDir, randomName);
+
+    const content =
+      `\n` +
+      new Date() +
+      '\n' +
+      e.message +
+      '\n\n' +
+      '====================================================' +
+      '\n\n' +
+      e.stack;
+
+    await fs.writeFile(filePath, content);
+
+    console.error(chalk.red('Error log at ', filePath));
+  } catch (err) {
+    console.error(chalk.red('Error creating file:', err));
+  }
+}
+
+try {
+  await run();
+} catch (e) {
+  await dumpErrorLog(e);
+  // eslint-disable-next-line n/no-process-exit
+  process.exit(1);
+}

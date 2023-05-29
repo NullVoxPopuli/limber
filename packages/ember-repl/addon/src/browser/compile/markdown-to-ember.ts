@@ -7,7 +7,7 @@ import { visit } from 'unist-util-visit';
 
 import { invocationOf, nameFor } from '../utils';
 
-import type { Node, Parent as HParent } from 'hast';
+import type { Node } from 'hast';
 import type { Code, Text } from 'mdast';
 import type { Parent } from 'unist';
 import type { VFile } from 'vfile';

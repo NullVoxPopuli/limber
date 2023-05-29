@@ -11,7 +11,7 @@ import type { ComponentLike } from '@glint/template';
 module('Rendering | compile()', function (hooks) {
   setupRenderingTest(hooks);
 
-  module('format: gjs', function() {
+  module('format: gjs', function () {
     test('gjs with imports works', async function (assert) {
       assert.expect(1);
 
@@ -32,9 +32,11 @@ module('Rendering | compile()', function (hooks) {
 
       await compile(snippet, {
         format: 'gjs',
-        onSuccess: comp => component = comp,
+        onSuccess: (comp) => (component = comp),
         onError: () => assert.notOk('did not expect error'),
-        onCompileStart: () => { /* not used */}
+        onCompileStart: () => {
+          /* not used */
+        },
       });
 
       debugAssert(`[BUG]`, component);
@@ -43,5 +45,5 @@ module('Rendering | compile()', function (hooks) {
 
       assert.dom('button').hasText('Click');
     });
-  })
+  });
 });
