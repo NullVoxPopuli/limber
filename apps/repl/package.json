@@ -132,7 +132,7 @@
     "@nullvoxpopuli/limber-codemirror": "workspace:*",
     "@nullvoxpopuli/limber-styles": "workspace:*",
     "@nullvoxpopuli/limber-transpilation": "workspace:*",
-    "@popperjs/core": "^2.11.7",
+    "@popperjs/core": "^2.11.8",
     "@xstate/inspect": "^0.8.0",
     "browserslist": "^4.21.5",
     "dompurify": "^3.0.3",
