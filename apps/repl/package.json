@@ -125,7 +125,7 @@
   "dependencies": {
     "@ember/test-waiters": "^3.0.2",
     "@embroider/macros": "1.11.0",
-    "@embroider/router": "2.1.0",
+    "@embroider/router": "2.1.1",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "@nullvoxpopuli/horizon-theme": "workspace:*",
