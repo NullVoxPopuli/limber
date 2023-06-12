@@ -42,7 +42,7 @@ jobs:
       uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: NullVoxPopuli/action-setup-pnpm@v2.1.0
+    - uses: NullVoxPopuli/action-setup-pnpm@v2.3.0
     - run:  echo ${{ github.event.number }} > ./pr-number.txt
     - run: pnpm turbo build
     # Used for faster deploy so we don't need to checkout the repo
@@ -69,7 +69,7 @@ jobs:
         uses: felixmosh/turborepo-gh-artifacts@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: NullVoxPopuli/action-setup-pnpm@v2.1.0
+      - uses: NullVoxPopuli/action-setup-pnpm@v2.3.0
       - run: pnpm lint
 
 ##############################################################
@@ -94,7 +94,7 @@ jobs:
       uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: NullVoxPopuli/action-setup-pnpm@v2.1.0
+    - uses: NullVoxPopuli/action-setup-pnpm@v2.3.0
     - name: Environment Info
       run: |
         firefox --version
@@ -137,7 +137,7 @@ jobs:
       uses: felixmosh/turborepo-gh-artifacts@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: NullVoxPopuli/action-setup-pnpm@v2.1.0
+    - uses: NullVoxPopuli/action-setup-pnpm@v2.3.0
     - run: pnpm turbo test:browserstack --output-logs errors-only
       env:
         # This is a guest user on an open source plan.
@@ -208,7 +208,7 @@ jobs:
         uses: felixmosh/turborepo-gh-artifacts@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: NullVoxPopuli/action-setup-pnpm@v2.1.0
+      - uses: NullVoxPopuli/action-setup-pnpm@v2.3.0
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
