@@ -1681,8 +1681,8 @@ importers:
   spikes/url-shortening:
     dependencies:
       '@algorithm.ts/base64':
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       '@algorithm.ts/huffman':
         specifier: 3.1.0
         version: 3.1.0
@@ -1723,8 +1723,8 @@ importers:
 
 packages:
 
-  /@algorithm.ts/base64@3.1.0:
-    resolution: {integrity: sha512-hxPCu61k2iZjhTEyiyz12uwYt9Ru107Woh4M8RqJYMSneZ/Tzfzb7k83TjLTtLbwqXvCPQJkqNjy+xqR58Pupg==}
+  /@algorithm.ts/base64@3.1.1:
+    resolution: {integrity: sha512-8qXO3P6P7ocjtIZAa3By0D2Lzw8eUm5z8n0f/adgKz6tHnV7BrbrPTlFA9F3xNoSTBEXYh4JefJLueqFNTPwmw==}
     engines: {node: '>= 16.0.0'}
     dev: false
 
