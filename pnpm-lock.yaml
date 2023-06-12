@@ -362,8 +362,8 @@ importers:
         specifier: ^5.10.1
         version: 5.10.1
       ember-template-lint-plugin-prettier:
-        specifier: ^4.1.0
-        version: 4.1.0(ember-template-lint@5.10.1)(prettier@2.8.8)
+        specifier: ^4.1.1
+        version: 4.1.1(ember-template-lint@5.10.1)(prettier@2.8.8)
       esbuild-loader:
         specifier: ^3.0.1
         version: 3.0.1(webpack@5.82.1)
@@ -10687,8 +10687,8 @@ packages:
       - supports-color
     dev: true
 
-  /ember-template-lint-plugin-prettier@4.1.0(ember-template-lint@5.10.1)(prettier@2.8.8):
-    resolution: {integrity: sha512-LGGn1SXS5vhH60Tp37D4yG8z9ftVMCSSBn5qst+7rjMtLAZuZYwq+q+fs46op745ds0NNtaj+3OzSpBj+RVL2w==}
+  /ember-template-lint-plugin-prettier@4.1.1(ember-template-lint@5.10.1)(prettier@2.8.8):
+    resolution: {integrity: sha512-eJSDAhBOClYEEE2uMXqUXMy2SkdVKdCdBCjJsyFEneDU38IAnqfM/XqTIyfjeUkSFwUBdC67ACdWHL70bsfcPA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       ember-template-lint: '>= 4.0.0'
