@@ -90,8 +90,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/transpilation
       '@popperjs/core':
-        specifier: ^2.11.7
-        version: 2.11.7
+        specifier: ^2.11.8
+        version: 2.11.8
       '@xstate/inspect':
         specifier: ^0.8.0
         version: 0.8.0(ws@8.13.0)(xstate@4.35.4)
@@ -4946,8 +4946,8 @@ packages:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
     dev: false
 
-  /@popperjs/core@2.11.7:
-    resolution: {integrity: sha512-Cr4OjIkipTtcXKjAsm8agyleBuDHvxzeBoa1v543lbv1YaIwQjESsVcmjiWiPEbC1FIeHOG/Op9kdCmAmiS3Kw==}
+  /@popperjs/core@2.11.8:
+    resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
     dev: false
 
   /@rollup/plugin-babel@6.0.3(@babel/core@7.21.8)(rollup@3.22.1):
@@ -10100,7 +10100,7 @@ packages:
       ember-source: '*'
     dependencies:
       '@embroider/addon-shim': 1.8.5-unstable.9aaea50
-      '@popperjs/core': 2.11.7
+      '@popperjs/core': 2.11.8
       ember-modifier: 4.1.0(ember-source@5.0.0)
       ember-source: 5.0.0(@babel/core@7.21.8)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(webpack@5.82.1)
     transitivePeerDependencies:
