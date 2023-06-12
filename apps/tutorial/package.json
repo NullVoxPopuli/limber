@@ -49,7 +49,7 @@
     "@embroider/compat": "3.0.0",
     "@embroider/core": "3.0.0",
     "@embroider/webpack": "3.0.0",
-    "@fortawesome/ember-fontawesome": "^0.4.1",
+    "@fortawesome/ember-fontawesome": "^0.4.3",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
