@@ -1,5 +1,11 @@
 ## [2.0.63](https://github.com/NullVoxPopuli/ember-repl/compare/v2.0.62...v2.0.63) (2022-08-23)
 
+## 3.0.0-beta.3
+
+### Minor Changes
+
+- [#986](https://github.com/NullVoxPopuli/limber/pull/986) [`0e72a5d`](https://github.com/NullVoxPopuli/limber/commit/0e72a5dbddfd9c147d90a12b3e56d8e035ad7945) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Add GitHub-Flavored-Markdown support
+
 ## 3.0.0-beta.2
 
 ### Patch Changes
