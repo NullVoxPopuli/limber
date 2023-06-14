@@ -12,8 +12,8 @@ module('Rendering | compile()', function (hooks) {
   setupRenderingTest(hooks);
 
   module('markdown features', function () {
-    test('tables are supported', async function (assert) {
-      assert.expect(1);
+    test('tables', async function (assert) {
+      assert.expect(2);
 
       setupOnerror(() => {
         assert.notOk('This should not error');
@@ -43,6 +43,38 @@ module('Rendering | compile()', function (hooks) {
 
       assert.dom('table').exists();
       assert.dom('td').containsText('red');
+    });
+
+    test('footnotes', async function (assert) {
+      assert.expect(2);
+
+      setupOnerror(() => {
+        assert.notOk('This should not error');
+      });
+
+      let snippet = stripIndent`
+        text[^note]
+
+        [^note]: a note about a thing
+      `;
+
+      let component: ComponentLike | undefined;
+
+      await compile(snippet, {
+        format: 'glimdown',
+        onSuccess: (comp) => (component = comp),
+        onError: () => assert.notOk('did not expect error'),
+        onCompileStart: () => {
+          /* not used */
+        },
+      });
+
+      debugAssert(`[BUG]`, component);
+
+      await render(component);
+
+      assert.dom('sup').exists();
+      assert.dom('a').exists({ count: 2 }); // to and from the footnote
     });
   });
 });
