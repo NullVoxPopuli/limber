@@ -1,5 +1,6 @@
 import rehypeRaw from 'rehype-raw';
 import rehypeStringify from 'rehype-stringify';
+import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
@@ -219,8 +220,8 @@ function liveCodeExtraction(options: Options = {}) {
 function buildCompiler(options: ParseMarkdownOptions) {
   return (
     unified()
-      // .use(markdown)
       .use(remarkParse)
+      .use(remarkGfm)
       // TODO: we only want to do this when we have pre > code.
       //       code can exist inline.
       .use(liveCodeExtraction, {
