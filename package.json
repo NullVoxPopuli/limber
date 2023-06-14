@@ -45,6 +45,7 @@
       "@glimmer/tracking": "^1.1.2",
       "ember-async-data": "^1.0.0",
       "ember-auto-import": "^2.6.3",
+      "ember-template-lint": "github:bmish/ember-template-lint#aria-query-crash",
       "ember-modifier": "^4.1.0",
       "@types/eslint": "^8.0.0",
       "@embroider/addon-dev": "3.0.1-unstable.9aaea50",
