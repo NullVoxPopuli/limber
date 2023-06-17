@@ -141,7 +141,7 @@
     "@nullvoxpopuli/limber-transpilation": "workspace:*",
     "@popperjs/core": "^2.11.8",
     "@xstate/inspect": "^0.8.0",
-    "browserslist": "^4.21.7",
+    "browserslist": "^4.21.9",
     "dompurify": "^3.0.3",
     "ember-auto-import": "^2.6.3",
     "ember-container-query": "4.0.4",
