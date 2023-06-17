@@ -73,7 +73,7 @@
       "dependsOn": ["_syncPnpm" ,"^build"]
     },
     "test:browserstack": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["_syncPnpm", "^build"]
     },
     // All scenarios
     "test:scenarios": {
