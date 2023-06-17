@@ -36,8 +36,8 @@ importers:
         specifier: ^3.1.3
         version: 3.1.3(@babel/core@7.21.8)(eslint@8.42.0)(prettier@2.8.8)
       concurrently:
-        specifier: ^8.0.1
-        version: 8.0.1
+        specifier: ^8.2.0
+        version: 8.2.0
       dev-tools:
         specifier: workspace:*
         version: link:dev
@@ -304,8 +304,8 @@ importers:
         specifier: ^1.8.2
         version: 1.8.2
       concurrently:
-        specifier: ^8.0.1
-        version: 8.0.1
+        specifier: ^8.2.0
+        version: 8.2.0
       ember-cli:
         specifier: ~5.0.0
         version: 5.0.0
@@ -545,8 +545,8 @@ importers:
         specifier: ^3.0.8
         version: 3.0.8
       concurrently:
-        specifier: ^8.0.1
-        version: 8.0.1
+        specifier: ^8.2.0
+        version: 8.2.0
       ember-auto-import:
         specifier: ^2.6.3
         version: 2.6.3(@glint/template@1.0.2)(webpack@5.82.1)
@@ -769,8 +769,8 @@ importers:
         specifier: ^5.59.11
         version: 5.59.11(eslint@8.42.0)(typescript@5.0.4)
       concurrently:
-        specifier: ^8.0.1
-        version: 8.0.1
+        specifier: ^8.2.0
+        version: 8.2.0
       esbuild:
         specifier: 0.17.19
         version: 0.17.19
@@ -808,8 +808,8 @@ importers:
         specifier: ^5.59.11
         version: 5.59.11(eslint@8.42.0)(typescript@5.0.4)
       concurrently:
-        specifier: ^8.0.1
-        version: 8.0.1
+        specifier: ^8.2.0
+        version: 8.2.0
       eslint:
         specifier: ^8.42.0
         version: 8.42.0
@@ -980,8 +980,8 @@ importers:
         specifier: ^5.59.11
         version: 5.59.11(eslint@8.42.0)(typescript@5.0.4)
       concurrently:
-        specifier: ^8.0.1
-        version: 8.0.1
+        specifier: ^8.2.0
+        version: 8.2.0
       ember-resources:
         specifier: ^6.1.0
         version: 6.1.0(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.0.0)
@@ -1224,8 +1224,8 @@ importers:
         specifier: ^5.59.11
         version: 5.59.11(eslint@8.42.0)(typescript@5.0.4)
       concurrently:
-        specifier: ^8.0.1
-        version: 8.0.1
+        specifier: ^8.2.0
+        version: 8.2.0
       eslint:
         specifier: ^8.42.0
         version: 8.42.0
@@ -1330,8 +1330,8 @@ importers:
         specifier: ^5.59.11
         version: 5.59.11(eslint@8.42.0)(typescript@5.0.4)
       concurrently:
-        specifier: ^8.0.1
-        version: 8.0.1
+        specifier: ^8.2.0
+        version: 8.2.0
       ember-async-data:
         specifier: ^1.0.1
         version: 1.0.1(ember-source@5.0.0)
@@ -1554,8 +1554,8 @@ importers:
         specifier: ^10.4.14
         version: 10.4.14(postcss@8.4.24)
       concurrently:
-        specifier: ^8.0.1
-        version: 8.0.1
+        specifier: ^8.2.0
+        version: 8.2.0
       eslint:
         specifier: ^8.42.0
         version: 8.42.0
@@ -9298,6 +9298,22 @@ packages:
       yargs: 17.7.2
     dev: true
 
+  /concurrently@8.2.0:
+    resolution: {integrity: sha512-nnLMxO2LU492mTUj9qX/az/lESonSZu81UznYDoXtz1IQf996ixVqPAgHXwvHiHCAef/7S8HIK+fTFK7Ifk8YA==}
+    engines: {node: ^14.13.0 || >=16.0.0}
+    hasBin: true
+    dependencies:
+      chalk: 4.1.2
+      date-fns: 2.30.0
+      lodash: 4.17.21
+      rxjs: 7.8.1
+      shell-quote: 1.8.1
+      spawn-command: 0.0.2
+      supports-color: 8.1.1
+      tree-kill: 1.2.2
+      yargs: 17.7.2
+    dev: true
+
   /config-chain@1.1.13:
     resolution: {integrity: sha512-qj+f8APARXHrM0hraqXYb2/bOVSV4PvJQlNZ/DVj0QrmNM2q2euizkeuVckQ57J+W0mRH6Hvi+k50M4Jul2VRQ==}
     dependencies:
@@ -11786,7 +11802,7 @@ packages:
       eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.59.11)(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5)(eslint@8.42.0)
       eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.59.11)(eslint-import-resolver-typescript@3.5.5)(eslint@8.42.0)
       get-tsconfig: 4.6.0
-      globby: 13.1.3
+      globby: 13.1.4
       is-core-module: 2.12.1
       is-glob: 4.0.3
       synckit: 0.8.5
@@ -11810,7 +11826,7 @@ packages:
       eslint-module-utils: 2.8.0(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5)(eslint@8.42.0)
       eslint-plugin-import: 2.27.5(eslint-import-resolver-typescript@3.5.5)(eslint@8.42.0)
       get-tsconfig: 4.6.0
-      globby: 13.1.3
+      globby: 13.1.4
       is-core-module: 2.12.1
       is-glob: 4.0.3
       synckit: 0.8.5
@@ -13357,6 +13373,7 @@ packages:
       ignore: 5.2.4
       merge2: 1.4.1
       slash: 4.0.0
+    dev: false
 
   /globby@13.1.4:
     resolution: {integrity: sha512-iui/IiiW+QrJ1X1hKH5qwlMQyv34wJAYwH1vrf8b9kBA4sNiif3gKsMHa+BrdnOpEudWjpotfa7LrTzB1ERS/g==}
@@ -18818,6 +18835,10 @@ packages:
 
   /spawn-args@0.2.0:
     resolution: {integrity: sha512-73BoniQDcRWgnLAf/suKH6V5H54gd1KLzwYN9FB6J/evqTV33htH9xwV/4BHek+++jzxpVlZQKKZkqstPQPmQg==}
+    dev: true
+
+  /spawn-command@0.0.2:
+    resolution: {integrity: sha512-zC8zGoGkmc8J9ndvml8Xksr1Amk9qBujgbF0JAIWO7kXr43w0h/0GJNM/Vustixu+YE8N/MTrQ7N31FvHUACxQ==}
     dev: true
 
   /spawn-command@0.0.2-1:
