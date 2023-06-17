@@ -56,8 +56,8 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "dependencies": {
-    "@babel/helper-plugin-utils": "^7.21.5",
-    "@babel/standalone": "^7.21.8",
+    "@babel/helper-plugin-utils": "^7.22.5",
+    "@babel/standalone": "^7.22.5",
     "@embroider/addon-shim": "1.8.5",
     "@embroider/macros": "1.11.1",
     "babel-import-util": "^1.3.0",
@@ -80,8 +80,8 @@
     "vfile": "^5.3.7"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.8",
-    "@babel/types": "^7.21.5",
+    "@babel/core": "^7.22.5",
+    "@babel/types": "^7.22.5",
     "@ember/test-helpers": "^2.9.3",
     "@ember/test-waiters": "^3.0.2",
     "@embroider/addon-dev": "3.1.1",
