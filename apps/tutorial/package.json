@@ -42,8 +42,8 @@
     "unified": "^10.1.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.8",
-    "@babel/runtime": "^7.21.5",
+    "@babel/core": "^7.22.5",
+    "@babel/runtime": "^7.22.5",
     "@ember/optional-features": "^2.0.0",
     "@ember/string": "^3.1.1",
     "@ember/test-helpers": "^2.9.3",
