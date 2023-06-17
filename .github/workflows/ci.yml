@@ -45,6 +45,8 @@ jobs:
     - uses: NullVoxPopuli/action-setup-pnpm@v2.3.0
     - run:  echo ${{ github.event.number }} > ./pr-number.txt
     - run: pnpm turbo build
+    # TODO: setup sync behavior
+    - run: pnpm i -f
     # Used for faster deploy so we don't need to checkout the repo
     - uses: actions/upload-artifact@v3
       with:

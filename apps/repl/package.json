@@ -33,6 +33,11 @@
     "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
     "lint:prettier": "pnpm -w exec lint prettier"
   },
+  "dependenciesMeta": {
+    "ember-repl": {
+      "injected": true
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.21.8",
     "@babel/eslint-parser": "^7.21.8",
