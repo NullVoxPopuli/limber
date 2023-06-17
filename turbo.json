@@ -36,12 +36,14 @@
     /////////////////////////////////////////////////
     /////////////////////////////////////////////////
     "dev": {
-      "dependsOn": ["^dev"],
-      "cache": false
+      "dependsOn": ["_syncPnpm", "^build"],
+      "cache": false,
+      "persistent": true
     },
     "start": {
-      "dependsOn": ["^build"],
-      "cache": false
+      "dependsOn": ["_syncPnpm", "^build"],
+      "cache": false,
+      "persistent": true
     },
 
     /////////////////////////////////////////////////
@@ -51,20 +53,24 @@
     //
     /////////////////////////////////////////////////
     /////////////////////////////////////////////////
+    "pack": {
+      "outputs": ["*.tgz"],
+      "dependsOn": ["build"]
+    },
     "build": {
       "outputs": ["dist/**"],
-      "dependsOn": ["^build"]
+      "dependsOn": ["_syncPnpm", "^build"]
     },
     "test": {
       "outputs": [],
-      "dependsOn": ["^build"]
+      "dependsOn": ["_syncPnpm", "^build"]
     },
     // Apps will have test:ember and test:browserstack
     // They are separate so that they can cache independently
     // and provide more variability than just "test"
     "test:ember": {
       "env": ["CI_BROWSER", "EMBER_TRY_CURRENT_SCENARIO", "EMBROIDER_TEST_SETUP_OPTIONS"],
-      "dependsOn": ["^build"]
+      "dependsOn": ["_syncPnpm" ,"^build"]
     },
     "test:browserstack": {
       "dependsOn": ["^build"]
@@ -72,6 +78,10 @@
     // All scenarios
     "test:scenarios": {
       "dependsOn": ["^build"]
+    },
+    "_syncPnpm": {
+      "dependsOn": ["^build"],
+      "cache": false
     },
 
     /////////////////////////////////////////////////
@@ -83,20 +93,30 @@
     /////////////////////////////////////////////////
     "_:lint": {
       "outputs": [],
-      "dependsOn": ["lint:js", "lint:hbs", "lint:prettier", "lint:types", "lint:package"]
+      "dependsOn": [
+        "lint:js",
+        "lint:hbs",
+        "lint:prettier",
+        "lint:types",
+        "lint:package",
+        "lint:published-types"
+      ]
     },
     "lint:js": { "outputs": [] },
     "lint:hbs": { "outputs": [] },
     "lint:prettier": { "outputs": [] },
-    "lint:types": { "outputs": [], "dependsOn": ["^build"] },
-    "lint:package": { "outputs": [], "dependsOn": ["^build"] },
+    "lint:types": { "outputs": [], "dependsOn": ["_syncPnpm", "^build"] },
+    "lint:package": { "outputs": [], "dependsOn": ["build"] },
+    "lint:published-types": { "outputs": [], "dependsOn": ["pack"] },
 
     "_:lint:fix": {
       "cache": false,
-      "dependsOn": ["lint:js:fix", "lint:hbs:fix"]
+      "dependsOn": ["lint:js:fix", "lint:prettier:fix", "lint:hbs:fix"]
     },
-    "lint:js:fix": { "cache": false, "dependsOn": ["lint:prettier:fix"] },
+    // Prettier can alter files too, so let's prevent race conditions for multiple
+    // writing to the same files.
+    "lint:js:fix": { "cache": false },
     "lint:hbs:fix": { "cache": false, "dependsOn": ["lint:prettier:fix"] },
-    "lint:prettier:fix": { "cache": false }
+    "lint:prettier:fix": { "cache": false, "dependsOn": ["lint:js:fix"] }
   }
 }

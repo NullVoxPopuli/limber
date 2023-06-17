@@ -30,6 +30,7 @@
     "concurrently": "^8.0.1",
     "dev-tools": "workspace:*",
     "eslint": "^8.42.0",
+    "pnpm-sync-dependencies-meta-injected": "^0.0.6",
     "prettier": "^2.8.8",
     "prettier-plugin-ember-template-tag": "^0.3.2",
     "turbo": "^1.10.3"
