@@ -67,7 +67,7 @@
     "@tsconfig/ember": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "^5.59.11",
-    "concurrently": "^8.0.1",
+    "concurrently": "^8.2.0",
     "ember-async-data": "^1.0.1",
     "ember-cli-htmlbars": "^6.2.0",
     "ember-resources": "^6.1.0",
