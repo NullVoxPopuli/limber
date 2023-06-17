@@ -355,8 +355,8 @@ importers:
         specifier: github:bmish/ember-template-lint#aria-query-crash
         version: github.com/bmish/ember-template-lint/7b4e9d807308fcc1cf2bdcec40112e1949a0de54
       ember-template-lint-plugin-prettier:
-        specifier: ^4.1.1
-        version: 4.1.1(ember-template-lint@5.10.1)(prettier@2.8.8)
+        specifier: ^4.2.0
+        version: 4.2.0(ember-template-lint@5.10.1)(prettier@2.8.8)
       esbuild-loader:
         specifier: ^3.0.1
         version: 3.0.1(webpack@5.82.1)
@@ -11390,8 +11390,8 @@ packages:
       - supports-color
     dev: true
 
-  /ember-template-lint-plugin-prettier@4.1.1(ember-template-lint@5.10.1)(prettier@2.8.8):
-    resolution: {integrity: sha512-eJSDAhBOClYEEE2uMXqUXMy2SkdVKdCdBCjJsyFEneDU38IAnqfM/XqTIyfjeUkSFwUBdC67ACdWHL70bsfcPA==}
+  /ember-template-lint-plugin-prettier@4.2.0(ember-template-lint@5.10.1)(prettier@2.8.8):
+    resolution: {integrity: sha512-4t5k9zN0b6lhlFkzCgwBWUpqViPzOYk8FSfHt07p+ECldfUKJHm2tkTWs1NdQx/xybp+O/POtE8sgwSMPxa2wA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       ember-template-lint: '>= 4.0.0'
