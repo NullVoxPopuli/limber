@@ -1,5 +1,11 @@
 ## [2.0.63](https://github.com/NullVoxPopuli/ember-repl/compare/v2.0.62...v2.0.63) (2022-08-23)
 
+## 3.0.0-beta.4
+
+### Patch Changes
+
+- [#954](https://github.com/NullVoxPopuli/limber/pull/954) [`c52a615a`](https://github.com/NullVoxPopuli/limber/commit/c52a615a5b427032fecc037cc71d983d4cfa9ffe) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Passthrough all options from Compiled to compile
+
 ## 3.0.0-beta.3
 
 ### Minor Changes
