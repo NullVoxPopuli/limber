@@ -91,13 +91,23 @@ export async function compile(
 }
 
 type Input = string | undefined | null;
-interface ExtraOptions {
-  format: Format;
-  importMap?: EvalImportMap;
-  CopyComponent?: string;
-  ShadowComponent?: string;
-  topLevelScope?: ScopeMap;
-}
+
+type ExtraOptions =
+  | {
+      format: 'glimdown';
+      importMap?: EvalImportMap;
+      CopyComponent?: string;
+      ShadowComponent?: string;
+      topLevelScope?: ScopeMap;
+    }
+  | {
+      format: 'hbs';
+      topLevelScope?: ScopeMap;
+    }
+  | {
+      format: 'gjs';
+      importMap?: EvalImportMap;
+    };
 
 /**
  * @internal
@@ -116,6 +126,7 @@ export function buildCompiler(
   markdownText: Input | (() => Input),
   options?: () => ExtraOptions
 ): Value;
+
 export function buildCompiler(
   markdownText: Input | (() => Input),
   maybeOptions?: Format | (() => Format) | ExtraOptions | (() => ExtraOptions)
