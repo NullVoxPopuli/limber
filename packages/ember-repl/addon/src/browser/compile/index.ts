@@ -100,48 +100,65 @@ interface ExtraOptions {
 }
 
 /**
+ * @internal
+ */
+export interface Value {
+  isReady: boolean;
+  error: unknown;
+  component: ComponentLike;
+}
+
+export function buildCompiler(markdownText: Input | (() => Input)): Value;
+export function buildCompiler(markdownText: Input | (() => Input), options?: Format): Value;
+export function buildCompiler(markdownText: Input | (() => Input), options?: () => Format): Value;
+export function buildCompiler(markdownText: Input | (() => Input), options?: ExtraOptions): Value;
+export function buildCompiler(
+  markdownText: Input | (() => Input),
+  options?: () => ExtraOptions
+): Value;
+export function buildCompiler(
+  markdownText: Input | (() => Input),
+  maybeOptions?: Format | (() => Format) | ExtraOptions | (() => ExtraOptions)
+): Value {
+  return resource(() => {
+    let maybeObject = typeof maybeOptions === 'function' ? maybeOptions() : maybeOptions;
+    let format =
+      (typeof maybeObject === 'string' ? maybeObject : maybeObject?.format) || 'glimdown';
+    let options = (typeof maybeObject === 'string' ? {} : maybeObject) || {};
+
+    let input = typeof markdownText === 'function' ? markdownText() : markdownText;
+    let ready = cell(false);
+    let error = cell();
+    let result = cell<ComponentLike>();
+
+    if (input) {
+      compile(input, {
+        format,
+        onSuccess: async (component) => {
+          result.current = component;
+          ready.set(true);
+          error.set(null);
+        },
+        onError: async (e) => {
+          error.set(e);
+        },
+        onCompileStart: async () => {
+          ready.set(false);
+        },
+        ...options,
+      });
+    }
+
+    return () => ({
+      isReady: ready.current,
+      error: error.current,
+      component: result.current,
+    });
+  });
+}
+
+/**
  * By default, this compiles to `glimdown`. A Markdown format which
  * extracts `live` tagged code snippets and compiles them to components.
  */
-export const Compiled = resourceFactory(
-  (
-    markdownText: Input | (() => Input),
-    maybeOptions?: Format | (() => Format) | ExtraOptions | (() => ExtraOptions)
-  ) => {
-    return resource(() => {
-      let maybeObject = typeof maybeOptions === 'function' ? maybeOptions() : maybeOptions;
-      let format =
-        (typeof maybeObject === 'string' ? maybeObject : maybeObject?.format) || 'glimdown';
-      let options = (typeof maybeObject === 'string' ? {} : maybeObject) || {};
-
-      let input = typeof markdownText === 'function' ? markdownText() : markdownText;
-      let ready = cell(false);
-      let error = cell();
-      let result = cell<ComponentLike>();
-
-      if (input) {
-        compile(input, {
-          format,
-          onSuccess: async (component) => {
-            result.current = component;
-            ready.set(true);
-            error.set(null);
-          },
-          onError: async (e) => {
-            error.set(e);
-          },
-          onCompileStart: async () => {
-            ready.set(false);
-          },
-          ...options,
-        });
-      }
-
-      return () => ({
-        isReady: ready.current,
-        error: error.current,
-        component: result.current,
-      });
-    });
-  }
-);
+export const Compiled = resourceFactory(buildCompiler) as typeof buildCompiler;
