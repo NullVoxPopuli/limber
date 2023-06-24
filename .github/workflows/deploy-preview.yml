@@ -43,7 +43,7 @@ on:
       - requested
 
 concurrency:
-  group: deploy-preview-${{ github.ref }}
+  group: deploy-preview-${{ github.event.workflow_run.pull_requests[0].number }}
   cancel-in-progress: true
 
 env:
