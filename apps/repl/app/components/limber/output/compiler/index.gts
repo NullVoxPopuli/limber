@@ -69,7 +69,7 @@ export default class Compiler extends Component<Signature> {
 
     await compile(text, {
       format: format,
-      CopyComponent: 'CopyMenu',
+      CopyComponent: '<CopyMenu />',
       topLevelScope: {
         CopyMenu: CopyMenu,
       },
