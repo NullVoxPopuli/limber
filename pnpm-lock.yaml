@@ -731,8 +731,8 @@ importers:
         specifier: ^1.3.4
         version: 1.3.4
       '@lezer/markdown':
-        specifier: ^1.0.3
-        version: 1.0.3
+        specifier: ^1.0.4
+        version: 1.0.4
       '@nullvoxpopuli/horizon-theme':
         specifier: '*'
         version: link:../horizon-theme
@@ -3444,7 +3444,7 @@ packages:
       '@codemirror/state': 6.2.1
       '@codemirror/view': 6.14.0
       '@lezer/common': 1.0.3
-      '@lezer/markdown': 1.0.3
+      '@lezer/markdown': 1.0.4
     dev: false
 
   /@codemirror/lang-php@6.0.1:
@@ -5031,8 +5031,8 @@ packages:
       '@lezer/common': 1.0.3
     dev: false
 
-  /@lezer/markdown@1.0.3:
-    resolution: {integrity: sha512-QEcXFCKf1TBdVhmxL2V9afJTIs4w795DTl2NKnsYZyMOtMsA+5AlEy0biPo/Ojv05ELkk6HIPSDBj0g+ShlkBw==}
+  /@lezer/markdown@1.0.4:
+    resolution: {integrity: sha512-Qgqrau7dc91S9L5EGWuNEawgqQe4rVaD4ebkyTAJYKlNN3lUGjvsX4Osv0a/06m6beU23jg4A+rZ0x2oB2c97w==}
     dependencies:
       '@lezer/common': 1.0.3
       '@lezer/highlight': 1.1.6
