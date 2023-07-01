@@ -1,15 +1,16 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 
 function ref() {
-  const rev = fs.readFileSync('.git/HEAD').toString().trim();
+  const rev = fs.readFileSync(path.join(__dirname, '../../../.git/HEAD')).toString().trim();
 
   if (rev.indexOf(':') === -1) {
     return rev;
   } else {
     return fs
-      .readFileSync('.git/' + rev.substring(5))
+      .readFileSync(path.join(__dirname, '../../../.git/' + rev.substring(5)))
       .toString()
       .trim();
   }
