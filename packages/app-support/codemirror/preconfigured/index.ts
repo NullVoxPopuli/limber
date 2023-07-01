@@ -49,10 +49,9 @@ export default function newEditor(
         basicSetup,
         // Language
         languageForFormat(format),
-        // glimdown(),
 
         updateListener,
-        // EditorView.lineWrapping,
+        EditorView.lineWrapping,
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         keymap.of([
           // Intentionally do not capture the tab key -- otherwise we can't leave the editor.
