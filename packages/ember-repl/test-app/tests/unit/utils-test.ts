@@ -23,8 +23,6 @@ module('nameFor()', function () {
   }
 
   test('it is stable', function (assert) {
-    assert.expect(20);
-
     for (let i = 0; i < 20; i++) {
       let str = makeString();
 
@@ -37,8 +35,6 @@ module('invocationOf()', function (hooks) {
   setupTest(hooks);
 
   test('it works', function (assert) {
-    assert.expect(7);
-
     assert.throws(() => invocationOf(''), /You must pass a name to invocationOf. Received: ``/);
     assert.strictEqual(invocationOf('a'), '<A />');
     assert.strictEqual(invocationOf('a-1'), '<A1 />');
