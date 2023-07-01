@@ -1,0 +1,111 @@
+@top Expression { SExpression* }
+
+@skip { space } {
+
+  CallExpression { "(" ~Function SExpression? (identifier Is SExpression)? ")"  }
+
+  SExpression { 
+      CallExpression
+      | identifier
+      | Is 
+      | Pipe
+      | Argument
+      | String
+      | keywords
+      //| MemberExpression
+  }
+}
+
+MemberExpression {
+  expressionNoComma (("." | "?.") (PropertyName))
+}
+
+Argument { "@" identifier }
+Function { ~identifier }
+
+expressionNoComma {
+  Number |
+  String |
+  identifier |
+  boolean |
+  kw<"this"> |
+  kw<"null"> |
+  MemberExpression
+}
+
+PropertyName { word }
+
+String {
+  "\"" attributeValueContentDouble? "\"" |
+  "\'" attributeValueContentSingle? "\'"
+}
+
+boolean { @specialize[@name=BooleanLiteral]<identifier, "true" | "false"> }
+
+attributeValueContentDouble[@name=AttributeValueContent] {
+  (attributeValueContentCharDouble)+
+}
+
+attributeValueContentSingle[@name=AttributeValueContent] {
+  (attributeValueContentCharSingle)+
+}
+
+keywords {
+  kw<"this">
+  | kw<"as">
+  | kw<"if"> | kw<"unless">
+  | kw<"else">
+  | kw<"let">
+  | kw<"and"> | kw<"or"> | kw<"not">
+  | kw<"eq"> | kw<"neq"> | kw<"not-eq">
+  | kw<"gt"> | kw<"gte">
+  | kw<"lt"> | kw<"lte">
+  | kw<"array">
+  | kw<"concat">
+  | kw<"hash">
+  | kw<"each"> | kw<"each-in">
+  | kw<"on">
+  | kw<"modifier"> | kw<"component"> | kw<"helper">
+  | kw<"in-element">
+  | kw<"debugger">
+  | kw<"yield"> | kw<"outlet">
+}
+
+kw<term> { @specialize[@name={term}]<identifier, term> }
+
+@tokens {
+  Text { ![{] Text? | "{" (@eof | ![%{] Text?) }
+  space { @whitespace+ }
+  whitespace { (std.whitespace | ",")+ }
+
+  
+  "{{"[closedBy="}}"]
+  "}}"[openedBy="{{"]
+  "("[closedBy="("]
+  ")"[openedBy=")"]
+  Is { "=" }
+  Pipe { "|" }
+
+  identifierChar { @asciiLetter }
+  word { identifierChar (identifierChar | @digit)* }
+  identifier { word }
+
+  attributeValueContentCharDouble { !["&{] }
+  attributeValueContentCharSingle { !['&{] }
+
+  @precedence { attributeValueContentCharDouble whitespace }
+  @precedence { attributeValueContentCharSingle whitespace }
+
+  Number {
+    (@digit ("_" | @digit)* ("." ("_" | @digit)*)? | "." @digit ("_" | @digit)*)
+      (("e" | "E") ("+" | "-")? ("_" | @digit)+)? |
+    @digit ("_" | @digit)* "n" |
+    "0b" $[01_]+ "n"? |
+    "0o" $[0-7_]+ "n"?
+  }
+
+  @precedence { Number "." }
+
+}
+
+@external propSource expressionHighlighting from "./highlight"

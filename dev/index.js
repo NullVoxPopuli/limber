@@ -1,8 +1,12 @@
+import path from 'node:path';
+
+import { project } from 'ember-apply';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
 import { findScenarios } from './commands/find-scenarios.js';
 import { propagateLintConfiguration } from './commands/setup-lint-infra.js';
+import { symlinkEverywhere } from './commands/symlink-everywhere.js';
 import { syncDeps } from './commands/sync-deps.js';
 import { useUnstableEmbroider } from './commands/use-unstable-embroider.js';
 
@@ -17,6 +21,21 @@ yarg
     () => {},
     () => {
       return propagateLintConfiguration(true);
+    }
+  )
+  .command(
+    'setup-prettier',
+    'symlink all the prettier/ignore files',
+    () => {},
+    async () => {
+      const root = await project.gitRoot();
+      const config = path.join(root, '.prettierrc.cjs');
+      const ignore = path.join(root, '.prettierignore');
+      const eslintIgnore = path.join(root, '.eslintignore');
+
+      await symlinkEverywhere({ target: config, force: true });
+      await symlinkEverywhere({ target: ignore, force: true });
+      await symlinkEverywhere({ target: eslintIgnore, force: true });
     }
   )
   .command(

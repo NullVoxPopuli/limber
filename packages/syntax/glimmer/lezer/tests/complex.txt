@@ -1,0 +1,24 @@
+# Multi-Expression
+
+{{#each (someFn foo bar named=(foo bar)) as |a b c|}}
+
+  {{a}} {{b}} -- {{c}}
+
+  {{#if a}}
+    a
+  {{else if b}}
+    b
+  {{else}}
+    the else
+  {{/if}}
+{{/each}}
+
+==>
+
+Glimmer(
+  Expression(
+    SubExpression(
+      Value(Argument)
+    )
+  )
+)

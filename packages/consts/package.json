@@ -27,9 +27,16 @@
     "typescript": "^5.0.4"
   },
   "engines": {
-    "node": ">= v16"
+    "node": ">= v16",
+    "npm": "use pnpm",
+    "yarn": "use pnpm"
   },
   "volta": {
     "extends": "../../package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NullVoxPopuli/limber.git",
+    "directory": "packages/consts"
   }
 }

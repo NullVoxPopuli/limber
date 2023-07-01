@@ -7,7 +7,7 @@ import chalk from 'chalk';
 import { packageJson, project } from 'ember-apply';
 import { execa, execaCommand } from 'execa';
 
-const [, , command] = process.argv;
+const [, , command, ...userArgs] = process.argv;
 // process.cwd() is whatever pnpm decides to do
 //
 // For now, we use INIT_CWD, because we want to use
@@ -61,7 +61,22 @@ async function run() {
 }
 
 function turbo(cmd) {
-  let args = ['turbo', '--color', '--no-update-notifier', '--output-logs', 'errors-only', cmd];
+  let filterArgs = [];
+
+  if (cwd !== root) {
+    filterArgs = ['--filter', manifest.name];
+  }
+
+  let args = [
+    'turbo',
+    '--color',
+    '--no-update-notifier',
+    '--output-logs',
+    'errors-only',
+    ...filterArgs,
+    cmd,
+    ...userArgs,
+  ];
 
   console.info(chalk.blueBright('Running:\n', args.join(' ')));
 

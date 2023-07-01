@@ -10,19 +10,19 @@ details {
 }
 .incorrect legend:before,
 .incorrect summary:before {
-  content: '❌ ';
+  content: "❌ ";
 }
 .better {
   border: 2px solid #aaaa00;
 }
 .better legend:before,
 .better summary:before {
-  content: '⚠️ ';
+  content: "⚠️ ";
 }
 .good {
   border: 2px solid green;
 }
 .good legend:before,
 .good summary:before {
-  content: '✅ ';
+  content: "✅ ";
 }

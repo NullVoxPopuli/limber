@@ -3,20 +3,19 @@
   "version": "0.0.0",
   "private": true,
   "description": "Small description for tutorial goes here",
-  "repository": "",
-  "license": "MIT",
-  "author": "",
-  "directories": {
-    "doc": "doc",
-    "test": "tests"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NullVoxPopuli/limber.git",
+    "directory": "apps/tutorial"
   },
+  "license": "MIT",
+  "author": "NullVoxPopuli",
   "scripts": {
     "build": "ember build --environment=production",
     "lint": "pnpm -w exec lint",
     "lint:types": "glint",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "concurrently 'ember serve' 'pnpm _syncPnpm --watch' --names 'tutorial serve,tutorial sync deps'",
-    "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test --test-port 0",
     "_syncPnpm": "pnpm sync-dependencies-meta-injected",
     "lint:js": "pnpm -w exec lint js",
@@ -102,7 +101,9 @@
     "webpack": "^5.88.1"
   },
   "engines": {
-    "node": "14.* || 16.* || >= 18"
+    "node": ">= v16",
+    "npm": "use pnpm",
+    "yarn": "use pnpm"
   },
   "ember": {
     "edition": "octane"

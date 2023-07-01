@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #282c34;
+      }
+
+      .layout {
+        height: 100vh;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        overflow: hidden;
+      }
+      #editor {
+        height: 100vh;
+        overflow: scroll;
+        border-right: solid 0.125rem #111;
+      }
+    </style>
+  </head>
+  <body class="replit-ui-theme-root dark">
+    <div class="layout">
+      <div id="editor"></div>
+    </div>
+
+    <script type="module" src="./index.ts"></script>
+  </body>
+</html>

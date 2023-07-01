@@ -1,0 +1,76 @@
+{
+  "name": "@nullvoxpopuli/limber-transpilation",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "author": "NullVoxPopuli",
+  "main": "dist/limber-worker.js",
+  "scripts": {
+    "prepare": "webpack",
+    "lint:fix": "pnpm -w exec lint fix",
+    "start": "webpack --watch",
+    "cp": "cp ./dist/limber-worker.js ../limber/public/transpilation-worker.js",
+    "prod": "PRODUCTION=true webpack",
+    "lint": "pnpm -w exec lint",
+    "lint:js": "pnpm -w exec lint js",
+    "lint:js:fix": "pnpm -w exec lint js:fix",
+    "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
+    "lint:prettier": "pnpm -w exec lint prettier"
+  },
+  "browser": {
+    "path": "path-browserify",
+    "@ember/template-compilation": "ember-source/dist/ember-template-compiler.js"
+  },
+  "browserslist": [
+    "last 1 Chrome versions",
+    "last 1 Firefox versions",
+    "last 1 Safari versions"
+  ],
+  "dependencies": {
+    "@babel/standalone": "^7.22.5",
+    "babel-plugin-htmlbars-inline-precompile": "^5.3.1",
+    "path-browserify": "^1.0.1"
+  },
+  "peerDependencies": {
+    "@glimmer/component": "^1.1.2",
+    "ember-source": "^5.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-decorators": "^7.22.5",
+    "@babel/plugin-transform-runtime": "^7.22.5",
+    "@babel/plugin-transform-typescript": "^7.22.5",
+    "@babel/types": "^7.22.5",
+    "@glimmer/component": "^1.1.2",
+    "@nullvoxpopuli/eslint-configs": "^3.1.4",
+    "@types/babel__core": "^7.20.0",
+    "@types/babel__standalone": "^7.1.4",
+    "@types/htmlbars-inline-precompile": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.60.0",
+    "@typescript-eslint/parser": "^5.60.0",
+    "babel-loader": "^9.1.2",
+    "ember-source": "^5.0.0",
+    "esbuild": "0.18.11",
+    "eslint": "^8.43.0",
+    "prettier": "^2.8.8",
+    "prettier-plugin-ember-template-tag": "^0.3.2",
+    "typescript": "^5.0.4",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-node-externals": "^3.0.0"
+  },
+  "engines": {
+    "node": ">= v16",
+    "npm": "use pnpm",
+    "yarn": "use pnpm"
+  },
+  "volta": {
+    "extends": "../../../package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NullVoxPopuli/limber.git",
+    "directory": "packages/app-support/transpilation"
+  }
+}

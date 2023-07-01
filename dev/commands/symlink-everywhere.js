@@ -38,7 +38,11 @@ export async function symlinkEverywhere(options) {
       await fs.rm(newFile);
     }
 
-    await fs.symlink(linkTarget, fileName);
+    try {
+      await fs.symlink(linkTarget, fileName);
+    } catch (e) {
+      console.error(`Error: ${newFile}`);
+    }
   }
 }
 

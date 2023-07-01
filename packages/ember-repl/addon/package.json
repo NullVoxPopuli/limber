@@ -6,8 +6,8 @@
     "ember-addon"
   ],
   "repository": {
-    "type": "https",
-    "url": "https://github.com/NullVoxPopuli/limber",
+    "type": "git",
+    "url": "https://github.com/NullVoxPopuli/limber.git",
     "directory": "packages/ember-repl/addon"
   },
   "license": "MIT",
@@ -147,5 +147,10 @@
     "@glint/template": "^1.0.2",
     "ember-resources": "^6.1.1",
     "ember-source": "^5.0.0"
+  },
+  "engines": {
+    "node": ">= v16",
+    "npm": "use pnpm",
+    "yarn": "use pnpm"
   }
 }

@@ -1,7 +1,35 @@
 packages:
   - './dev'
+  ####################################
+  #
+  # Apps 
+  #
+  ####################################
   - './apps/*'
+  ####################################
+  #
+  # Libraries, Addons, Test Apps 
+  #
+  ####################################
   - './packages/*'
-  - './packages/limber-ui/*'
-  - './packages/ember-repl/*'
+  - './packages/*/addon'
+  - './packages/*/test-app'
+  - './packages/app-support/*'
+  - './packages/app-support/*/addon'
+  - './packages/app-support/*/test-app'
+  ####################################
+  #
+  # Codemirror + Lezer 
+  #
+  ####################################
+  - './packages/syntax/*'
+  # packages/syntax / { syntax name } / { codemirror, lezer } 
+  - './packages/syntax/*/*'
+  - './packages/syntax/*/*/dev'
+  - './packages/syntax/*/*/tests'
+  ####################################
+  #
+  # Experiments
+  #
+  ####################################
   - './spikes/**'
