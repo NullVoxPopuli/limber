@@ -21,7 +21,7 @@
     "build": "ember build --environment=production",
     "lint:types": "glint",
     "lint:fix": "pnpm -w exec lint fix",
-    "start": "concurrently 'ember serve' 'pnpm _syncPnpm --watch' --names 'repl serve,repl sync deps'",
+    "start": "concurrently 'ember serve -p 4201' 'pnpm _syncPnpm --watch' --names 'repl serve,repl sync deps'",
     "start:iframe": "pnpx http-server ./public -i -p 4204",
     "test:browserstack": "./scripts/browserstack.sh",
     "test:ember": "ember test --test-port 0",
