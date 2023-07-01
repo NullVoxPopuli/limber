@@ -1,5 +1,20 @@
 'use strict';
 
+const fs = require('fs');
+
+function ref() {
+  const rev = fs.readFileSync('.git/HEAD').toString().trim();
+
+  if (rev.indexOf(':') === -1) {
+    return rev;
+  } else {
+    return fs
+      .readFileSync('.git/' + rev.substring(5))
+      .toString()
+      .trim();
+  }
+}
+
 module.exports = function (environment) {
   const ENV = {
     modulePrefix: 'tutorial',
@@ -15,6 +30,7 @@ module.exports = function (environment) {
     },
 
     APP: {
+      version: `Tutorial :: ${ref()} :: ${new Date()}`,
       // Here you can pass flags/options to your application instance
       // when it is created
     },
