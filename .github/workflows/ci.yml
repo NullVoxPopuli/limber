@@ -60,7 +60,7 @@ jobs:
   lints:
     name: "Lints"
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: [install_dependencies]
 
     steps:
