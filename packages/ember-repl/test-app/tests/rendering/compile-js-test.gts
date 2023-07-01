@@ -12,8 +12,6 @@ module('compileJS()', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it works', async function (assert) {
-    assert.expect(6);
-
     let compile = async () => {
       let template = `
         import Component from '@glimmer/component';
@@ -57,7 +55,6 @@ module('compileJS()', function (hooks) {
   });
 
   test('can import components available to the app', async function (assert) {
-    assert.expect(4);
     assert.ok(ExampleComponent);
 
     let compile = async () => {
@@ -91,8 +88,6 @@ module('compileJS()', function (hooks) {
   });
 
   test('extra modules may be passed, explicitly', async function (assert) {
-    assert.expect(3);
-
     const AComponent = <template>Custom extra module</template>;
 
     let compile = async () => {

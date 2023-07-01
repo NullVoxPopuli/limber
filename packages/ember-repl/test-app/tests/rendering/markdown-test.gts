@@ -13,8 +13,6 @@ module('Rendering | compile()', function (hooks) {
 
   module('markdown features', function () {
     test('tables', async function (assert) {
-      assert.expect(2);
-
       setupOnerror(() => {
         assert.notOk('This should not error');
       });
@@ -46,8 +44,6 @@ module('Rendering | compile()', function (hooks) {
     });
 
     test('footnotes', async function (assert) {
-      assert.expect(2);
-
       setupOnerror(() => {
         assert.notOk('This should not error');
       });

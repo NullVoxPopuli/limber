@@ -10,8 +10,6 @@ module('compileHBS()', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it works', async function (assert) {
-    assert.expect(5);
-
     let compile = () => {
       let template = `
         {{#each (array 1 2) as |num|}}
@@ -39,8 +37,6 @@ module('compileHBS()', function (hooks) {
   });
 
   test('can render components passed to scope', async function (assert) {
-    assert.expect(3);
-
     const SomeOtherComponent = <template>there!</template>;
 
     let template = `Hi <SomeOtherComponent />`;
@@ -67,8 +63,6 @@ module('compileHBS()', function (hooks) {
 
   module('deliberate errors', function () {
     test('syntax', async function (assert) {
-      assert.expect(4);
-
       let compile = async () => {
         // What else do we await to convert this to promise?
         await Promise.resolve();

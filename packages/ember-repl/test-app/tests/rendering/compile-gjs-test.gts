@@ -13,8 +13,6 @@ module('Rendering | compile()', function (hooks) {
 
   module('format: gjs', function () {
     test('gjs with imports works', async function (assert) {
-      assert.expect(1);
-
       setupOnerror(() => {
         assert.notOk('This should not error');
       });
