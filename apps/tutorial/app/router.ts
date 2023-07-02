@@ -1,8 +1,7 @@
 import EmberRouter from '@ember/routing/router';
 
+import { properLinks } from 'ember-primitives/proper-links';
 import config from 'tutorial/config/environment';
-
-import { properLinks } from 'limber-ui/proper-links';
 
 @properLinks
 export default class Router extends EmberRouter {

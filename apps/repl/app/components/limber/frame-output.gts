@@ -43,7 +43,7 @@ export default class FrameOutput extends Component {
   @action
   @waitFor
   async queuePayload() {
-    let qps = this.router.currentURL.split('?')[1];
+    let qps = this.router.currentURL?.split('?')[1];
 
     if (!this.connection) return;
 
@@ -74,6 +74,8 @@ export default class FrameOutput extends Component {
   monitorConnection = modifier((element: HTMLIFrameElement) => {
     let status = this.frameStatus;
     let currentURL = this.router.currentURL;
+
+    if (!currentURL) return;
 
     if (status === 'connected' && currentURL !== this.previousURL) {
       this.previous = status;

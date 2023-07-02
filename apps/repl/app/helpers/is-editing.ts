@@ -7,6 +7,6 @@ export default class IsEditing extends Helper {
   @service declare router: RouterService;
 
   compute() {
-    return this.router.currentRoute.name !== 'output';
+    return this.router.currentRoute?.name !== 'output';
   }
 }

@@ -30,6 +30,7 @@ export const Output: TOC<Signature> = <template>
 
         {{#if context.component}}
           <div {{highlight context.component}}>
+            {{!-- @glint-ignore --}}
             <context.component />
           </div>
         {{/if}}

@@ -29,7 +29,7 @@ export default class EditRoute extends Route {
   @service declare editor: EditorService;
 
   async beforeModel(transition: Transition) {
-    let qps = transition.to.queryParams ?? {};
+    let qps = transition.to?.queryParams ?? {};
 
     let hasCode = Boolean(qps.t || qps.c);
     let hasFormat = qps.format !== undefined;

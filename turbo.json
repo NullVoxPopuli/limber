@@ -110,7 +110,7 @@
     "lint:js": { "outputs": [] },
     "lint:hbs": { "outputs": [] },
     "lint:prettier": { "outputs": [] },
-    "lint:types": { "outputs": [], "dependsOn": ["_syncPnpm", "^build"] },
+    "lint:types": { "outputs": [], "dependsOn": ["_syncPnpm"] },
     "lint:package": { "outputs": [], "dependsOn": ["build"] },
     "lint:published-types": { "outputs": [], "dependsOn": ["pack"] },
 
