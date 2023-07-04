@@ -4,6 +4,7 @@
     "environment": ["ember-loose", "ember-template-imports"]
   },
   "compilerOptions": {
+    "skipLibCheck": true,
     "paths": {
       "test-app/tests/*": ["./tests/*"],
       "test-app/*": ["./app/*"],

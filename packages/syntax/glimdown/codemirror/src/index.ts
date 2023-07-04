@@ -22,12 +22,6 @@ import type {
   MarkdownParser,
 } from '@lezer/markdown';
 
-// const hbsCompletions = completeFromList([
-//   { label: '#each', type: 'keyword' },
-//   { label: '#let', type: 'keyword' },
-//   { label: '#if', type: 'keyword' },
-// ]);
-
 // javascriptLanguage.data.of({
 //   autocomplete: completeFromList([
 //     ...completionsOfObject(window),

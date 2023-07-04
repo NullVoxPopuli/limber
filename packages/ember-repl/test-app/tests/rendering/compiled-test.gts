@@ -1,4 +1,5 @@
-import { render, renderSettled, settled } from '@ember/test-helpers';
+import { renderSettled } from '@ember/renderer';
+import { render, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
