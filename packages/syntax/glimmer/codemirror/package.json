@@ -17,8 +17,8 @@
     "directory": "packages/syntax/glimmer/codemirror"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.5",
-    "@babel/eslint-parser": "^7.22.5",
+    "@babel/core": "^7.22.6",
+    "@babel/eslint-parser": "^7.22.6",
     "@codemirror/buildhelper": "^1.0.0",
     "@codemirror/language": "^6.8.0",
     "@lezer/common": "^1.0.3",

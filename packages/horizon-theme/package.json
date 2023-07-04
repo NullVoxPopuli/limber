@@ -19,7 +19,7 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.5",
+    "@babel/core": "^7.22.6",
     "@nullvoxpopuli/eslint-configs": "^3.1.4",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
