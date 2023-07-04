@@ -87,6 +87,7 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] } }> {
     this.dragging = false;
     this.queueUpdate();
     this.dragSurface.remove();
+    enableOverscroll();
 
     /**
      * No need to listen if we aren't dragging
@@ -107,6 +108,7 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] } }> {
     this.dragging = true;
     if (event.target !== this.dragHandle) return;
     document.body.appendChild(this.dragSurface);
+    disableOverscroll();
 
     this.setPosition(event);
 
@@ -143,6 +145,31 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] } }> {
       this.keyDistance = 0;
     });
   };
+}
+
+/**
+  * You have to put it on <html> and <body> because
+  * in Chrome it only works on the <body> and in Safari only on the <html> element
+  * (tested on Android 12 Chrome, FF, Samsung Internet and Safari 16 on iOS).
+  *
+  * Please don't disable this feature by default, only when it's beneficial to your users.
+  *
+  * https://www.matuzo.at/blog/2022/100daysof-day53/
+  */
+function enableOverscroll() {
+  document.body.style.overscrollBehavior = previousBodyOverScroll;
+  document.documentElement.style.overscrollBehavior = previousHTMLOverScroll;
+}
+
+let previousBodyOverScroll: string;
+let previousHTMLOverScroll: string;
+
+function disableOverscroll() {
+  previousBodyOverScroll ||= document.body.style.overscrollBehavior;
+  previousHTMLOverScroll ||= document.documentElement.style.overscrollBehavior;
+
+  document.body.style.overscrollBehavior = 'none';
+  document.documentElement.style.overscrollBehavior = 'none';
 }
 
 export const ResizeHandle: TOC<{

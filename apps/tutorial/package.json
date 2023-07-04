@@ -15,7 +15,7 @@
     "lint": "pnpm -w exec lint",
     "lint:types": "glint",
     "lint:fix": "pnpm -w exec lint fix",
-    "start": "concurrently 'ember serve' 'pnpm _syncPnpm --watch' --names 'tutorial serve,tutorial sync deps'",
+    "start": "concurrently 'ember serve' 'pnpm _syncPnpm --watch' --names 'serve,sync deps'",
     "test:ember": "ember test --test-port 0",
     "_syncPnpm": "pnpm sync-dependencies-meta-injected",
     "lint:js": "pnpm -w exec lint js",
