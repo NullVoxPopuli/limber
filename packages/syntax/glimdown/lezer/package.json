@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@lezer/highlight": "^1.1.6",
-    "@lezer/lr": "^1.3.7"
+    "@lezer/lr": "^1.3.9"
   },
   "scripts": {
     "____:build": "lezer-generator src/glimdown.grammar -o src/parser && rollup -c",
