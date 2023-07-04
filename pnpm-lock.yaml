@@ -529,8 +529,8 @@ importers:
         specifier: workspace:^0.0.0
         version: link:../../packages/untyped
       '@tsconfig/ember':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^3.0.0
+        version: 3.0.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.60.1
         version: 5.60.1(@typescript-eslint/parser@5.60.1)(eslint@8.44.0)(typescript@5.0.4)
@@ -886,8 +886,8 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3(@babel/core@7.22.6)(rollup@3.26.0)
       '@tsconfig/ember':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^3.0.0
+        version: 3.0.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.60.1
         version: 5.60.1(@typescript-eslint/parser@5.60.1)(eslint@8.44.0)(typescript@5.0.4)
@@ -1379,8 +1379,8 @@ importers:
         specifier: ^25.0.2
         version: 25.0.2(rollup@3.26.0)
       '@tsconfig/ember':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^3.0.0
+        version: 3.0.0
       '@types/babel__core':
         specifier: ^7.20.0
         version: 7.20.0
@@ -1809,8 +1809,8 @@ importers:
         specifier: ^3.1.3
         version: 3.1.3(@babel/core@7.22.6)(@babel/eslint-parser@7.22.6)(@typescript-eslint/eslint-plugin@5.60.1)(@typescript-eslint/parser@5.60.1)(eslint-plugin-ember@11.9.0)(eslint@8.44.0)(prettier@2.8.8)
       '@tsconfig/ember':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^3.0.0
+        version: 3.0.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.60.1
         version: 5.60.1(@typescript-eslint/parser@5.60.1)(eslint@8.44.0)(typescript@5.0.4)
@@ -2012,8 +2012,8 @@ importers:
         specifier: ^3.1.3
         version: 3.1.3(@babel/core@7.22.6)(@babel/eslint-parser@7.22.6)(@typescript-eslint/eslint-plugin@5.60.1)(@typescript-eslint/parser@5.60.1)(eslint-plugin-ember@11.9.0)(eslint@8.44.0)(prettier@2.8.8)
       '@tsconfig/ember':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^3.0.0
+        version: 3.0.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.60.1
         version: 5.60.1(@typescript-eslint/parser@5.60.1)(eslint@8.44.0)(typescript@5.0.4)
@@ -2194,8 +2194,8 @@ importers:
         specifier: ^3.1.3
         version: 3.1.3(@babel/core@7.22.6)(@babel/eslint-parser@7.22.6)(@typescript-eslint/eslint-plugin@5.60.1)(@typescript-eslint/parser@5.60.1)(eslint-plugin-ember@11.9.0)(eslint@8.44.0)(prettier@2.8.8)
       '@tsconfig/ember':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^3.0.0
+        version: 3.0.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.60.1
         version: 5.60.1(@typescript-eslint/parser@5.60.1)(eslint@8.44.0)(typescript@5.0.4)
@@ -2309,8 +2309,8 @@ importers:
         specifier: ^3.1.3
         version: 3.1.3(@babel/core@7.22.6)(@babel/eslint-parser@7.22.6)(@typescript-eslint/eslint-plugin@5.60.1)(@typescript-eslint/parser@5.60.1)(eslint-plugin-ember@11.9.0)(eslint@8.44.0)(prettier@2.8.8)
       '@tsconfig/ember':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^3.0.0
+        version: 3.0.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.60.1
         version: 5.60.1(@typescript-eslint/parser@5.60.1)(eslint@8.44.0)(typescript@5.0.4)
@@ -7051,6 +7051,10 @@ packages:
 
   /@tsconfig/ember@2.0.0:
     resolution: {integrity: sha512-RzbDYYcjxVdG8Ki0xe99HN3+nHTZe6EBgw6N7B3yup7QogVFQQxA9nY7X80j1XzF15xqetwWiYfAjv5lkkp0/A==}
+    dev: true
+
+  /@tsconfig/ember@3.0.0:
+    resolution: {integrity: sha512-KF9F9f4i+8LE31OKS014n5uEDt1mB/6ZvyQz/Mam28nAKDTSMBlOWHgTOj0TY8l4BfbEE+BgUuWCSoUHhb2BMw==}
     dev: true
 
   /@tufjs/canonical-json@1.0.0:
