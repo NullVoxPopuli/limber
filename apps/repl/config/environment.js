@@ -1,10 +1,7 @@
 'use strict';
 
-const yn = require('yn');
 const fs = require('fs');
 const path = require('path');
-
-const SERVICE_WORKER = yn(process.env.SERVICE_WORKER);
 
 function ref() {
   const rev = fs.readFileSync(path.join(__dirname, '../../../.git/HEAD')).toString().trim();
@@ -41,8 +38,6 @@ module.exports = function (environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
-
-    SERVICE_WORKER,
   };
 
   if (environment === 'development') {

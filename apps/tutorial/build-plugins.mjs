@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { globbySync } from "globby";
 import { createUnplugin } from "unplugin";
 

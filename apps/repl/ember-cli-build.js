@@ -4,7 +4,7 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = async function (defaults) {
   // ESM-only dependencies
-  const yn = await import('yn');
+  const { default: yn } = await import('yn');
 
   let environment = EmberApp.env();
   let isProduction = environment === 'production';
