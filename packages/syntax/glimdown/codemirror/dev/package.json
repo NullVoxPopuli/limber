@@ -20,11 +20,11 @@
     "@codemirror/view": "^6.14.0",
     "@glimdown/codemirror-dev-preview": "workspace:*",
     "@nullvoxpopuli/eslint-configs": "^3.1.4",
-    "@typescript-eslint/eslint-plugin": "^5.60.1",
-    "@typescript-eslint/parser": "^5.60.1",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
     "eslint": "^8.44.0",
     "prettier": "^2.8.8",
-    "typescript": "^5.0.4",
+    "typescript": "^5.1.6",
     "vite": "^4.3.9"
   },
   "volta": {

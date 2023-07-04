@@ -13,7 +13,7 @@ interface Signature {
 export default class QP extends Helper<Signature> {
   @service declare router: RouterService;
 
-  compute([name]: [string]) {
-    return this.router.currentRoute?.queryParams?.[name];
+  compute([name]: [string]): string {
+    return this.router.currentRoute?.queryParams?.[name] as string;
   }
 }

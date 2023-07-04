@@ -323,7 +323,7 @@ export default createMachine(
         if (!container) return;
 
         let router = getService(context, 'router');
-        let editor = router.currentRoute.queryParams.editor;
+        let editor = router.currentRoute?.queryParams.editor;
         let requestingMax = editor === 'max';
         let requestingMin = editor === 'min';
 

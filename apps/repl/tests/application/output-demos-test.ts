@@ -36,7 +36,7 @@ module('Output > Demos', function (hooks) {
         await visit('/edit');
         await page.selectDemo(demo.label);
 
-        let { queryParams = {} } = getService('router').currentRoute;
+        let { queryParams = {} } = getService('router').currentRoute ?? {};
 
         let file = fileFromParams(queryParams);
 

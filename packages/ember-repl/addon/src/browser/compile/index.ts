@@ -114,7 +114,7 @@ type ExtraOptions =
  */
 export interface Value {
   isReady: boolean;
-  error: unknown;
+  error: string | null;
   component: ComponentLike;
 }
 
@@ -139,7 +139,7 @@ export function buildCompiler(
 
     let input = typeof markdownText === 'function' ? markdownText() : markdownText;
     let ready = cell(false);
-    let error = cell();
+    let error = cell<string | null>();
     let result = cell<ComponentLike>();
 
     if (input) {

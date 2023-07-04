@@ -4,7 +4,7 @@ import { service } from '@ember/service';
 import type RouterService from '@ember/routing/router-service';
 
 interface Signature {
-  Return: string | undefined;
+  Return: string | null;
 }
 
 export default class CurrentURL extends Helper<Signature> {
