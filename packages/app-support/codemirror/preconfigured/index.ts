@@ -40,6 +40,18 @@ export default function newEditor(
     }
   }
 
+  function supportForFormat(format: 'glimdown' | 'gjs' | 'hbs') {
+    switch (format) {
+      case 'glimdown':
+        return [gjs().support];
+      case 'gjs':
+      case 'hbs':
+        return []; // these include their support
+      default:
+        throw new Error(`Unrecognized format: ${format}`);
+    }
+  }
+
   let view = new EditorView({
     parent: element,
     state: EditorState.create({
@@ -49,6 +61,7 @@ export default function newEditor(
         basicSetup,
         // Language
         languageForFormat(format),
+        ...supportForFormat(format),
 
         updateListener,
         EditorView.lineWrapping,
