@@ -1282,8 +1282,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       magic-string:
-        specifier: ^0.30.0
-        version: 0.30.0
+        specifier: ^0.30.1
+        version: 0.30.1
       mdast:
         specifier: ^3.0.0
         version: 3.0.0
@@ -7584,7 +7584,7 @@ packages:
   /@vitest/snapshot@0.32.4:
     resolution: {integrity: sha512-IRpyqn9t14uqsFlVI2d7DFMImGMs1Q9218of40bdQQgMePwVdmix33yMNnebXcTzDU5eiV3eUsoxxH5v0x/IQA==}
     dependencies:
-      magic-string: 0.30.0
+      magic-string: 0.30.1
       pathe: 1.1.1
       pretty-format: 29.5.0
     dev: true
@@ -16275,6 +16275,13 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
+    dev: true
+
+  /magic-string@0.30.1:
+    resolution: {integrity: sha512-mbVKXPmS0z0G4XqFDCTllmDQ6coZzn94aMlb0o/A4HEHJCKcanlDZwYJgwnkmgD3jyWhUgj9VsPrfd972yPffA==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.4.15
 
   /make-dir@2.1.0:
     resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==}
@@ -21550,7 +21557,7 @@ packages:
       chai: 4.3.7
       debug: 4.3.4(supports-color@8.1.1)
       local-pkg: 0.4.3
-      magic-string: 0.30.0
+      magic-string: 0.30.1
       pathe: 1.1.1
       picocolors: 1.0.0
       std-env: 3.3.3
@@ -22291,7 +22298,7 @@ packages:
       ember-resources: 6.1.1(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.0.0)
       ember-source: 5.0.0(@babel/core@7.22.6)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(webpack@5.88.1)
       line-column: 1.0.2
-      magic-string: 0.30.0
+      magic-string: 0.30.1
       mdast: 3.0.0
       parse-static-imports: 1.1.0
       rehype-raw: 6.1.1
