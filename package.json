@@ -45,6 +45,8 @@
       "@glimmer/component": "^1.1.2",
       "@glimmer/tracking": "^1.1.2",
       "@glimmer/validator": "^0.84.3",
+      "@glimmer/reference": "^0.84.3",
+      "@glimmer/manager": "^0.84.3",
       "ember-async-data": "^1.0.1",
       "ember-auto-import": "^2.6.3",
       "ember-source": "^5.1.2",

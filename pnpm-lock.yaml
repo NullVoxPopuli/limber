@@ -9,6 +9,8 @@ overrides:
   '@glimmer/component': ^1.1.2
   '@glimmer/tracking': ^1.1.2
   '@glimmer/validator': ^0.84.3
+  '@glimmer/reference': ^0.84.3
+  '@glimmer/manager': ^0.84.3
   ember-async-data: ^1.0.1
   ember-auto-import: ^2.6.3
   ember-source: ^5.1.2
@@ -5278,6 +5280,14 @@ packages:
       '@glimmer/interfaces': 0.84.2
       '@glimmer/util': 0.84.2
 
+  /@glimmer/destroyable@0.84.3:
+    resolution: {integrity: sha512-4tUw5UR4ntuySPvbcWyCMRjqxMJMV1GewjU3zGq22XvuBVFfq2K9WmuYV9H9FHg8X0MgDwcus+LjxrVSel39Sw==}
+    dependencies:
+      '@glimmer/env': 0.1.7
+      '@glimmer/global-context': 0.84.3
+      '@glimmer/interfaces': 0.84.3
+      '@glimmer/util': 0.84.3
+
   /@glimmer/di@0.1.11:
     resolution: {integrity: sha512-moRwafNDwHTnTHzyyZC9D+mUSvYrs1Ak0tRPjjmCghdoHHIvMshVbEnwKb/1WmW5CUlKc2eL9rlAV32n3GiItg==}
 
@@ -5319,15 +5329,15 @@ packages:
   /@glimmer/low-level@0.78.2:
     resolution: {integrity: sha512-0S6TWOOd0fzLLysw1pWZN0TgasaHmYs1Sjz9Til1mTByIXU1S+1rhdyr2veSQPO/aRjPuEQyKXZQHvx23Zax6w==}
 
-  /@glimmer/manager@0.84.2:
-    resolution: {integrity: sha512-cXOnRTH9nwAe/un8hK0x6z1m67Cv5ywAuK7KRxAFTWHgGX/i6BvoZCStr6zJD/U6Frna2c7RJK8JpleP94opEA==}
+  /@glimmer/manager@0.84.3:
+    resolution: {integrity: sha512-FtcwvrQ3HWlGRGChwlXiisMeKf9+XcCkMwVrrO0cxQavT01tIHx40OFtPOhXKGbgXGtRKcJI8XR41aK9t2kvyg==}
     dependencies:
-      '@glimmer/destroyable': 0.84.2
+      '@glimmer/destroyable': 0.84.3
       '@glimmer/env': 0.1.7
-      '@glimmer/global-context': 0.84.2
-      '@glimmer/interfaces': 0.84.2
-      '@glimmer/reference': 0.84.2
-      '@glimmer/util': 0.84.2
+      '@glimmer/global-context': 0.84.3
+      '@glimmer/interfaces': 0.84.3
+      '@glimmer/reference': 0.84.3
+      '@glimmer/util': 0.84.3
       '@glimmer/validator': 0.84.3
 
   /@glimmer/node@0.84.2:
@@ -5345,7 +5355,7 @@ packages:
       '@glimmer/encoder': 0.84.2
       '@glimmer/env': 0.1.7
       '@glimmer/interfaces': 0.84.2
-      '@glimmer/reference': 0.84.2
+      '@glimmer/reference': 0.84.3
       '@glimmer/util': 0.84.2
       '@glimmer/vm': 0.84.2
       '@glimmer/wire-format': 0.84.2
@@ -5361,18 +5371,9 @@ packages:
       '@glimmer/encoder': 0.84.2
       '@glimmer/env': 0.1.7
       '@glimmer/interfaces': 0.84.2
-      '@glimmer/manager': 0.84.2
+      '@glimmer/manager': 0.84.3
       '@glimmer/opcode-compiler': 0.84.2
       '@glimmer/util': 0.84.2
-
-  /@glimmer/reference@0.84.2:
-    resolution: {integrity: sha512-hH0VD76OXMsGSHbqaqD64u1aBEqy//jhZtIaHGwAHNpTEX+zDtW3ka298KbAn2CZyDDrNAnuc2U1Vy4COR3zlA==}
-    dependencies:
-      '@glimmer/env': 0.1.7
-      '@glimmer/global-context': 0.84.2
-      '@glimmer/interfaces': 0.84.2
-      '@glimmer/util': 0.84.2
-      '@glimmer/validator': 0.84.3
 
   /@glimmer/reference@0.84.3:
     resolution: {integrity: sha512-lV+p/aWPVC8vUjmlvYVU7WQJsLh319SdXuAWoX/SE3pq340BJlAJiEcAc6q52y9JNhT57gMwtjMX96W5Xcx/qw==}
@@ -5393,7 +5394,7 @@ packages:
       '@glimmer/low-level': 0.78.2
       '@glimmer/owner': 0.84.2
       '@glimmer/program': 0.84.2
-      '@glimmer/reference': 0.84.2
+      '@glimmer/reference': 0.84.3
       '@glimmer/util': 0.84.2
       '@glimmer/validator': 0.84.3
       '@glimmer/vm': 0.84.2
@@ -11891,12 +11892,12 @@ packages:
       '@glimmer/env': 0.1.7
       '@glimmer/global-context': 0.84.3
       '@glimmer/interfaces': 0.84.2
-      '@glimmer/manager': 0.84.2
+      '@glimmer/manager': 0.84.3
       '@glimmer/node': 0.84.2
       '@glimmer/opcode-compiler': 0.84.2
       '@glimmer/owner': 0.84.2
       '@glimmer/program': 0.84.2
-      '@glimmer/reference': 0.84.2
+      '@glimmer/reference': 0.84.3
       '@glimmer/runtime': 0.84.2
       '@glimmer/syntax': 0.84.2
       '@glimmer/validator': 0.84.3
@@ -11950,12 +11951,12 @@ packages:
       '@glimmer/env': 0.1.7
       '@glimmer/global-context': 0.84.3
       '@glimmer/interfaces': 0.84.2
-      '@glimmer/manager': 0.84.2
+      '@glimmer/manager': 0.84.3
       '@glimmer/node': 0.84.2
       '@glimmer/opcode-compiler': 0.84.2
       '@glimmer/owner': 0.84.2
       '@glimmer/program': 0.84.2
-      '@glimmer/reference': 0.84.2
+      '@glimmer/reference': 0.84.3
       '@glimmer/runtime': 0.84.2
       '@glimmer/syntax': 0.84.2
       '@glimmer/validator': 0.84.3
