@@ -23,7 +23,7 @@
     "pnpm": "8.6.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.5",
+    "@babel/core": "^7.22.6",
     "@changesets/changelog-github": "^0.4.8",
     "@changesets/cli": "^2.26.2",
     "@nullvoxpopuli/eslint-configs": "^3.1.4",
