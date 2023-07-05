@@ -1459,8 +1459,8 @@ importers:
         specifier: ^0.3.2
         version: 0.3.2
       publint:
-        specifier: ^0.1.15
-        version: 0.1.15
+        specifier: ^0.1.16
+        version: 0.1.16
       rollup:
         specifier: ~3.26.1
         version: 3.26.1
@@ -18033,8 +18033,8 @@ packages:
   /psl@1.9.0:
     resolution: {integrity: sha512-E/ZsdU4HLs/68gYzgGTkMicWTLPdAftJLfJFlLUAAKZGkStNU72sZjT66SnMDVOfOWY/YAoiD7Jxa9iHvngcag==}
 
-  /publint@0.1.15:
-    resolution: {integrity: sha512-LyoUm/J1oSOik9EYftHSyUEwJATToqFyO1wad8i2m2KvaNcBmV5rbD3ZvPqQAHzVs47MLa2Rsd8nw9NmV/Ep0w==}
+  /publint@0.1.16:
+    resolution: {integrity: sha512-wJgk7HnXDT5Ap0DjFYbGz78kPkN44iQvDiaq8P63IEEyNU9mYXvaMd2cAyIM6OgqXM/IA3CK6XWIsRq+wjNpgw==}
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
