@@ -1,4 +1,5 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { ExternalLink as PrimitiveExternalLink } from 'ember-primitives';
 
 import type { TOC } from '@ember/component/template-only';
 
@@ -15,10 +16,7 @@ export const ExternalLink: TOC<{
     custom: [typeof DefaultContent];
   };
 }> = <template>
-  <a
-    target='_blank'
-    rel='noreferrer noopener'
-    href='#'
+  <PrimitiveExternalLink
     class='flex gap-2 items-baseline focus:ring-4 focus:outline-none focus-visible:outline-none rounded-sm hover:underline'
     ...attributes
   >
@@ -29,7 +27,7 @@ export const ExternalLink: TOC<{
     {{else if (has-block 'custom')}}
       {{yield DefaultContent to='custom'}}
     {{/if}}
-  </a>
+  </PrimitiveExternalLink>
 </template>;
 
 export default ExternalLink;
