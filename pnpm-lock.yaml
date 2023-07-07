@@ -425,8 +425,8 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
       vfile:
-        specifier: ^6.0.0
-        version: 6.0.0
+        specifier: ^6.0.1
+        version: 6.0.1
       webpack:
         specifier: ^5.88.1
         version: 5.88.1
@@ -1332,8 +1332,8 @@ importers:
         specifier: ^9.0.0
         version: 9.0.0
       vfile:
-        specifier: ^6.0.0
-        version: 6.0.0
+        specifier: ^6.0.1
+        version: 6.0.1
     devDependencies:
       '@babel/core':
         specifier: ^7.22.8
@@ -7482,6 +7482,9 @@ packages:
 
   /@types/unist@2.0.6:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
+
+  /@types/unist@3.0.0:
+    resolution: {integrity: sha512-MFETx3tbTjE7Uk6vvnWINA/1iJ7LuMdO4fcq8UfF0pRbj01aGLduVvQcRyswuACJdpnHgg8E3rQLhaRdNEJS0w==}
 
   /@types/uuid@9.0.2:
     resolution: {integrity: sha512-kNnC1GFBLuhImSnV7w4njQkUiJi0ZXUycu1rUaouPqiKlXkh77JKgdRnTAp1x5eBwcIwbtI+3otwzuIDEuDoxQ==}
@@ -21615,6 +21618,11 @@ packages:
     dependencies:
       '@types/unist': 2.0.6
 
+  /unist-util-stringify-position@4.0.0:
+    resolution: {integrity: sha512-0ASV06AAoKCDkS2+xw5RXJywruurpbC4JZSm7nr7MOt1ojAzvyyaO+UxZf18j8FCF6kmzCZKcAgN/yu2gm2XgQ==}
+    dependencies:
+      '@types/unist': 3.0.0
+
   /unist-util-visit-parents@5.1.3:
     resolution: {integrity: sha512-x6+y8g7wWMyQhL1iZfhIPhDAs7Xwbn9nRosDXl7qoPTSCy0yNxnKc+hWokFifWQIDGi154rdUqKvbCa4+1kLhg==}
     dependencies:
@@ -21827,11 +21835,11 @@ packages:
       vfile-message: 3.1.4
     dev: false
 
-  /vfile@6.0.0:
-    resolution: {integrity: sha512-wx7bOMmEl8bY5WPaXTGsK8YxPLoFiUiDg+m+lBACA1QGcagj3sUyxkX0F+W/Nmn4MHH7G4sXBekpYWRxQE2eHg==}
+  /vfile@6.0.1:
+    resolution: {integrity: sha512-1bYqc7pt6NIADBJ98UiG0Bn/CHIVOoZ/IyEkqIruLg0mE1BKzkOXY2D6CSqQIcKqgadppE5lrxgWXJmXd7zZJw==}
     dependencies:
-      '@types/unist': 2.0.6
-      unist-util-stringify-position: 3.0.3
+      '@types/unist': 3.0.0
+      unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.1
 
   /vite-node@0.33.0(@types/node@18.16.19):
@@ -22690,7 +22698,7 @@ packages:
       unified: 10.1.2
       unist-util-visit: 4.1.2
       uuid: 9.0.0
-      vfile: 6.0.0
+      vfile: 6.0.1
     transitivePeerDependencies:
       - supports-color
     dev: false
