@@ -127,7 +127,7 @@ export const Help = <template>
         </FAB>
       </div>
 
-      <dialog id="dialog-help" class="prose rounded drop-shadow-xl border border-white" aria-label="help with this tool">
+      <dialog id="dialog-help" class="prose rounded drop-shadow-xl border border-white" aria-label="help with this tool" {{on 'close' (fn isOpen.set false)}}>
         <header class="flex justify-between items-center">
           <h2 class="m-0">Help</h2>
           <FlatButton {{on 'click' (fn toggle isOpen)}} aria-label="hide the help information">
