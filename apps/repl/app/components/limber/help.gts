@@ -4,6 +4,7 @@ import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { cell } from 'ember-resources';
 
+import { notInIframe } from 'limber/helpers/in-iframe';
 import { Button, ExternalLink } from 'limber-ui';
 
 import type { TOC } from '@ember/component/template-only';
@@ -30,16 +31,34 @@ export const FAB: TOC<{
   </button>
 </template>;
 
+export const FlatButton: TOC<{
+  Element: HTMLButtonElement;
+  Blocks: { default: [] };
+}> = <template>
+  <button
+    type='button'
+    class='
+      inline-block items-center
+      grid-flow-col grid gap-2
+      rounded-full
+      p-2
+      border-1 text-black
+      bg-white hover:bg-[var(--ember-faint-gray)]
+      focus:outline-none focus:ring focus-visible:outline-none focus-visible:ring ring-ember-brand
+      disabled:opacity-30 aspect-square text-2xl'
+    ...attributes
+  >
+    {{yield}}
+  </button>
+</template>;
+
 
 const toggle = (state: ReturnType<typeof cell<boolean>>) => {
   let dialog = document.getElementById('dialog-help');
 
-  console.log(dialog);
   if (!(dialog instanceof HTMLDialogElement)) return;
 
   state.toggle();
-
-  console.log(state.current);
 
   if (state.current) {
     dialog.showModal();
@@ -82,9 +101,11 @@ const SupportedLanguages = <template>
         see <Tutorial />
     </li>
     <li>
-      glimdown (glimmer + markdown) -- this is the default.
+      glimdown (glimmer + markdown) - this is the default and is great for writing documentation / demos / etc.
     </li>
-    <li>hbs</li>
+    <li>
+      hbs - just a template
+    </li>
   </ul>
 </template>;
 
@@ -98,41 +119,49 @@ const CodeBlock: TOC<{Args: { code: string }}> = <template>
 </template>;
 
 export const Help = <template>
-  {{#let (cell false) as |isOpen|}}
-    <div class='fixed right-4 bottom-4'>
-      <FAB {{on 'click' (fn toggle isOpen)}}>
-        <FaIcon @size="xs" @icon='question' class="aspect-square" />
-      </FAB>
-    </div>
-
-    <dialog id="dialog-help" class="prose rounded drop-shadow-xl" aria-label="help with this tool">
-      <div class="flex justify-between">
-        <span class="text-xl">Help</span>
-        <Button {{on 'click' (fn toggle isOpen)}}>Close</Button>
+  {{#if (notInIframe) }}
+    {{#let (cell false) as |isOpen|}}
+      <div class='fixed right-4 bottom-4'>
+        <FAB {{on 'click' (fn toggle isOpen)}}>
+          <FaIcon @size="xs" @icon='question' class="aspect-square" />
+        </FAB>
       </div>
 
-      The editor has 3 modes
-      <SupportedLanguages />
+      <dialog id="dialog-help" class="prose rounded drop-shadow-xl border border-white" aria-label="help with this tool">
+        <header class="flex justify-between items-center">
+          <h2 class="m-0">Help</h2>
+          <FlatButton {{on 'click' (fn toggle isOpen)}} aria-label="hide the help information">
+            <FaIcon @size="xs" @icon="xmark" class="aspect-square" />
+          </FlatButton>
+        </header>
 
-      When in markdown / glimdown mode,
-      code fences can be used to live-render components via metadata tags
-      as well as render the code snippet the live code comes from.
+        <hr class="mt-4 mb-4">
 
-      <CodeBlock @code={{sample}} />
+        <main>
+          The editor has 3 modes
+          <SupportedLanguages />
 
-      <MetadataTags />
+          When in markdown / glimdown mode,
+          code fences can be used to live-render components via metadata tags
+          as well as render the code snippet the live code comes from.
 
-      The only language tags that are supported in markdown / glimdown are <code>hbs</code> and <code>gjs</code> with <code>gjs</code> being the most useful.
+          <CodeBlock @code={{sample}} />
 
-      <CodeBlock @code={{example}} />
+          <MetadataTags />
 
-      For any issues / questions, please file an <IssueLink />.
+          The only language tags that are supported in markdown / glimdown are <code>hbs</code> and <code>gjs</code> with <code>gjs</code> being the most useful.
 
-      <div class="flex justify-end">
-        <Button {{on 'click' (fn toggle isOpen)}}>Close</Button>
-      </div>
-    </dialog>
-  {{/let}}
+          <CodeBlock @code={{example}} />
+
+          For any issues / questions, please file an <IssueLink />.
+        </main>
+
+        <footer class="flex justify-end">
+          <Button {{on 'click' (fn toggle isOpen)}}>Close</Button>
+        </footer>
+      </dialog>
+    {{/let}}
+  {{/if}}
 </template>
 
 export default Help;

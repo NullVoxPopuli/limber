@@ -15,6 +15,7 @@ module.exports = function () {
       'pencil',
       'rotate',
       'question',
+      'xmark',
     ],
     'free-regular-svg-icons': ['clipboard', 'window-maximize', 'window-minimize'],
     'free-brands-svg-icons': ['ember', 'markdown', 'github'],
