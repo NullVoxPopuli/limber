@@ -46,7 +46,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "ember-modifier": "^4.1.0",
-    "ember-primitives": "^0.0.5",
+    "ember-primitives": "^0.0.6",
     "penpal": "^6.2.2"
   },
   "devDependencies": {
