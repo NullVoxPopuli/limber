@@ -14,6 +14,7 @@ module.exports = function () {
       'columns',
       'pencil',
       'rotate',
+      'question',
     ],
     'free-regular-svg-icons': ['clipboard', 'window-maximize', 'window-minimize'],
     'free-brands-svg-icons': ['ember', 'markdown', 'github'],

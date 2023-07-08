@@ -9,9 +9,10 @@ import type Editor from 'limber/components/limber/editor';
 import type FrameOutput from 'limber/components/limber/frame-output';
 import type Guest from 'limber/components/limber/guest';
 import type Header from 'limber/components/limber/header';
+import type Help from 'limber/components/limber/help';
 import type Layout from 'limber/components/limber/layout';
 import type Output from 'limber/components/limber/output';
-import type OutputFramMessaging from 'limber/components/limber/output/frame-messaging';
+import type OutputFrameMessaging from 'limber/components/limber/output/frame-messaging';
 import type Portals from 'limber/components/limber/portals';
 import type Save from 'limber/components/limber/save';
 import type inIframe from 'limber/helpers/in-iframe';
@@ -31,7 +32,7 @@ declare module '@glint/environment-ember-loose/registry' {
      */
     'Limber::DemoSelect': typeof DemoSelect;
     'Limber::Output': typeof Output;
-    'Limber::Output::FrameMessaging': typeof OutputFramMessaging;
+    'Limber::Output::FrameMessaging': typeof OutputFrameMessaging;
     'Limber::Portals': typeof Portals;
     'Limber::Guest': typeof Guest;
     'Limber::Save': typeof Save;
@@ -39,6 +40,7 @@ declare module '@glint/environment-ember-loose/registry' {
     'Limber::Layout': typeof Layout;
     'Limber::Editor': typeof Editor;
     'Limber::FrameOutput': typeof FrameOutput;
+    'Limber::Help': typeof Help;
 
     /**
      * Helpers
