@@ -1,6 +1,6 @@
 import { assert } from '@ember/debug';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+// @ts-ignore-expect-error
 import { hash } from '@ember/helper';
 
 import HeadlessMenu from 'ember-headlessui/components/menu';
