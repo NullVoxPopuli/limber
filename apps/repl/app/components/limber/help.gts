@@ -106,6 +106,11 @@ export const Help = <template>
     </div>
 
     <dialog id="dialog-help" class="prose rounded drop-shadow-xl" aria-label="help with this tool">
+      <div class="flex justify-between">
+        <span class="text-xl">Help</span>
+        <Button {{on 'click' (fn toggle isOpen)}}>Close</Button>
+      </div>
+
       The editor has 3 modes
       <SupportedLanguages />
 
