@@ -116,7 +116,7 @@
     "ember-template-imports": "^3.4.2",
     "ember-template-lint": "^5.11.0",
     "eslint": "^8.44.0",
-    "eslint-plugin-ember": "^11.9.0",
+    "eslint-plugin-ember": "^11.10.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.8",
