@@ -994,19 +994,19 @@ importers:
         specifier: 3.0.1
         version: 3.0.1(@embroider/compat@3.1.4)(@embroider/core@3.1.2)(@embroider/webpack@3.1.2)
       '@fortawesome/ember-fontawesome':
-        specifier: ^0.4.1
+        specifier: ^0.4.3
         version: 0.4.3(@glint/template@1.0.2)(rollup@3.26.2)
       '@fortawesome/fontawesome-svg-core':
-        specifier: ^6.3.0
+        specifier: ^6.4.0
         version: 6.4.0
       '@fortawesome/free-brands-svg-icons':
-        specifier: ^6.3.0
+        specifier: ^6.4.0
         version: 6.4.0
       '@fortawesome/free-regular-svg-icons':
-        specifier: ^6.3.0
+        specifier: ^6.4.0
         version: 6.4.0
       '@fortawesome/free-solid-svg-icons':
-        specifier: ^6.3.0
+        specifier: ^6.4.0
         version: 6.4.0
       '@glimmer/component':
         specifier: ^1.1.2
