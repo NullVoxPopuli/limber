@@ -985,7 +985,7 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       '@ember/string':
-        specifier: ^3.0.1
+        specifier: ^3.1.1
         version: 3.1.1
       '@ember/test-helpers':
         specifier: ^3.2.0
@@ -1496,7 +1496,7 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       '@ember/string':
-        specifier: ^3.0.1
+        specifier: ^3.1.1
         version: 3.1.1
       '@ember/test-helpers':
         specifier: ^3.2.0
