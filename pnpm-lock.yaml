@@ -129,6 +129,9 @@ importers:
       ember-popperjs:
         specifier: ^3.0.0
         version: 3.0.0(ember-modifier@4.1.0)(ember-source@5.1.2)
+      ember-primitives:
+        specifier: ^0.0.7
+        version: 0.0.7(@babel/core@7.22.8)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.1.1)(ember-source@5.1.2)
       ember-repl:
         specifier: workspace:*
         version: file:packages/ember-repl/addon(@glimmer/component@1.1.2)(@glint/template@1.0.2)(ember-resources@6.1.1)(ember-source@5.1.2)
