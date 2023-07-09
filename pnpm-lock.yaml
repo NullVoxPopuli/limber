@@ -1024,7 +1024,7 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       concurrently:
-        specifier: ^8.0.1
+        specifier: ^8.2.0
         version: 8.2.0
       ember-auto-import:
         specifier: ^2.6.3
@@ -1559,7 +1559,7 @@ importers:
         specifier: ^5.61.0
         version: 5.61.0(eslint@8.44.0)(typescript@5.1.6)
       concurrently:
-        specifier: ^8.0.1
+        specifier: ^8.2.0
         version: 8.2.0
       ember-auto-import:
         specifier: ^2.6.3
