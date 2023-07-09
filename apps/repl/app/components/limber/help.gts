@@ -1,8 +1,7 @@
-import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { cell } from 'ember-resources';
+import { Modal } from 'ember-primitives';
 
 import { notInIframe } from 'limber/helpers/in-iframe';
 import { Button, ExternalLink } from 'limber-ui';
@@ -52,20 +51,6 @@ export const FlatButton: TOC<{
   </button>
 </template>;
 
-
-const toggle = (state: ReturnType<typeof cell<boolean>>) => {
-  let dialog = document.getElementById('dialog-help');
-
-  if (!(dialog instanceof HTMLDialogElement)) return;
-
-  state.toggle();
-
-  if (state.current) {
-    dialog.showModal();
-  } else {
-    dialog.close()
-  }
-}
 
 const Tutorial = <template>
   <ExternalLink class="m-0" href='https://tutorial.glimdown.com/'>
@@ -120,17 +105,17 @@ const CodeBlock: TOC<{Args: { code: string }}> = <template>
 
 export const Help = <template>
   {{#if (notInIframe) }}
-    {{#let (cell false) as |isOpen|}}
+    <Modal as |m|>
       <div class='fixed right-4 bottom-4'>
-        <FAB {{on 'click' (fn toggle isOpen)}}>
+        <FAB {{on 'click' m.open}}>
           <FaIcon @size="xs" @icon='question' class="aspect-square" />
         </FAB>
       </div>
 
-      <dialog id="dialog-help" class="prose rounded drop-shadow-xl border border-white" aria-label="help with this tool" {{on 'close' (fn isOpen.set false)}}>
+      <m.Dialog class="prose rounded drop-shadow-xl border border-white" aria-label="help with this tool">
         <header class="flex justify-between items-center">
           <h2 class="m-0">Help</h2>
-          <FlatButton {{on 'click' (fn toggle isOpen)}} aria-label="hide the help information">
+          <FlatButton {{on 'click' m.close}} aria-label="hide the help information">
             <FaIcon @size="xs" @icon="xmark" class="aspect-square" />
           </FlatButton>
         </header>
@@ -157,10 +142,10 @@ export const Help = <template>
         </main>
 
         <footer class="flex justify-end">
-          <Button {{on 'click' (fn toggle isOpen)}}>Close</Button>
+          <Button {{on 'click' m.close}}>Close</Button>
         </footer>
-      </dialog>
-    {{/let}}
+      </m.Dialog>
+    </Modal>
   {{/if}}
 </template>
 

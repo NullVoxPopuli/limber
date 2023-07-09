@@ -452,8 +452,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(ember-source@5.1.2)
       ember-primitives:
-        specifier: ^0.0.6
-        version: 0.0.6(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.1.1)(ember-source@5.1.2)
+        specifier: ^0.0.7
+        version: 0.0.7(@babel/core@7.22.8)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.1.1)(ember-source@5.1.2)
       ember-resources:
         specifier: ^6.1.1
         version: 6.1.1(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2)
@@ -851,8 +851,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(ember-source@5.1.2)
       ember-primitives:
-        specifier: ^0.0.6
-        version: 0.0.6(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.1.1)(ember-source@5.1.2)
+        specifier: ^0.0.7
+        version: 0.0.7(@babel/core@7.22.8)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.1.1)(ember-source@5.1.2)
       penpal:
         specifier: ^6.2.2
         version: 6.2.2
@@ -11446,7 +11446,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
-    dev: true
 
   /ember-cached-decorator-polyfill@1.0.1(@babel/core@7.22.8)(@glint/template@1.0.2)(ember-source@5.1.2):
     resolution: {integrity: sha512-VDgrpIJ6rDDHIfkYrsFR1BM3fpcC0+zFWIOsX0qY44zPrIXjhQWVXs2iVXLIPHprSgf+tFQ3ESxwDscpeRe/0A==}
@@ -12394,8 +12393,8 @@ packages:
       - supports-color
     dev: false
 
-  /ember-primitives@0.0.6(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.1.1)(ember-source@5.1.2):
-    resolution: {integrity: sha512-t7gcjc7c+AIfnODD0WXH/lxNaWSuvMwPWB+60Vh9nQnJHA7ML/VpErW0h0Uwc+Vw35eNbAe2HF0ww7u28RcG7g==}
+  /ember-primitives@0.0.7(@babel/core@7.22.8)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.1.1)(ember-source@5.1.2):
+    resolution: {integrity: sha512-JwL6L6ZQtUT1KuK88pOYFbRR+N9TZJEGevKxVcYZBFrOvSaRp6wbxweiFQhoUO8EvPYnS2YZDo20l10W25MT1g==}
     peerDependencies:
       '@glimmer/component': ^1.1.2
       '@glimmer/tracking': ^1.1.2
@@ -12413,7 +12412,9 @@ packages:
       ember-resources: 6.1.1(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2)
       ember-source: 5.1.2(@babel/core@7.22.8)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(webpack@5.88.1)
       ember-velcro: 2.1.0(ember-source@5.1.2)
+      tracked-toolbox: 2.0.0(@babel/core@7.22.8)(ember-source@5.1.2)
     transitivePeerDependencies:
+      - '@babel/core'
       - '@glint/template'
       - supports-color
     dev: false
@@ -21268,6 +21269,23 @@ packages:
       - supports-color
     dev: false
 
+  /tracked-toolbox@2.0.0(@babel/core@7.22.8)(ember-source@5.1.2):
+    resolution: {integrity: sha512-adZtX+RGN6F+pWs/5JqVuDxLhuia4uhqmQp+UlUaxpykWjDFETtAdQR+LdDJiFPXFAXnS6FBqn/tnSLJQCm3Yw==}
+    engines: {node: 14.* || 16.* || >= 18}
+    peerDependencies:
+      ember-source: '*'
+    peerDependenciesMeta:
+      ember-source:
+        optional: true
+    dependencies:
+      '@embroider/addon-shim': 1.8.5
+      ember-cache-primitive-polyfill: 1.0.1(@babel/core@7.22.8)
+      ember-source: 5.1.2(@babel/core@7.22.8)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(webpack@5.88.1)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
+    dev: false
+
   /tree-kill@1.2.2:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
     hasBin: true
@@ -22691,6 +22709,7 @@ packages:
     resolution: {directory: packages/ember-repl/addon, type: directory}
     id: file:packages/ember-repl/addon
     name: ember-repl
+    version: 3.0.0-beta.4
     engines: {node: '>= v16', npm: use pnpm, yarn: use pnpm}
     peerDependencies:
       '@glimmer/compiler': ^0.84.3
