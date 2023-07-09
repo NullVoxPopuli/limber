@@ -1066,7 +1066,7 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0(@ember/test-helpers@3.2.0)(@glint/template@1.0.2)(ember-source@5.1.2)(qunit@2.19.4)(webpack@5.88.1)
       ember-resolver:
-        specifier: ^10.1.0
+        specifier: ^10.1.1
         version: 10.1.1(@ember/string@3.1.1)(ember-source@5.1.2)
       ember-source:
         specifier: ^5.1.2
@@ -1595,7 +1595,7 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0(@ember/test-helpers@3.2.0)(@glint/template@1.0.2)(ember-source@5.1.2)(qunit@2.19.4)(webpack@5.88.1)
       ember-resolver:
-        specifier: ^10.1.0
+        specifier: ^10.1.1
         version: 10.1.1(@ember/string@3.1.1)(ember-source@5.1.2)
       ember-source:
         specifier: ^5.1.2
