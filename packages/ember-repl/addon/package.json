@@ -111,7 +111,7 @@
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "@typescript-eslint/parser": "^5.61.0",
     "concurrently": "^8.2.0",
-    "ember-resources": "^6.1.1",
+    "ember-resources": "^6.2.0",
     "ember-source": "^5.1.2",
     "ember-template-imports": "^3.4.2",
     "ember-template-lint": "^5.11.0",
@@ -145,7 +145,7 @@
     "@glimmer/component": "^1.1.2",
     "@glimmer/syntax": "^0.84.3",
     "@glint/template": "^1.0.2",
-    "ember-resources": "^6.1.1",
+    "ember-resources": "^6.2.0",
     "ember-source": "^5.1.2"
   },
   "engines": {
