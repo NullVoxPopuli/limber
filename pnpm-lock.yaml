@@ -130,8 +130,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0(ember-modifier@4.1.0)(ember-source@5.1.2)
       ember-primitives:
-        specifier: ^0.0.7
-        version: 0.0.7(@babel/core@7.22.8)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.1.1)(ember-source@5.1.2)
+        specifier: ^0.0.8
+        version: 0.0.8(@babel/core@7.22.8)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.1.1)(ember-source@5.1.2)
       ember-repl:
         specifier: workspace:*
         version: file:packages/ember-repl/addon(@glimmer/component@1.1.2)(@glint/template@1.0.2)(ember-resources@6.1.1)(ember-source@5.1.2)
@@ -455,8 +455,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(ember-source@5.1.2)
       ember-primitives:
-        specifier: ^0.0.7
-        version: 0.0.7(@babel/core@7.22.8)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.1.1)(ember-source@5.1.2)
+        specifier: ^0.0.8
+        version: 0.0.8(@babel/core@7.22.8)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.1.1)(ember-source@5.1.2)
       ember-resources:
         specifier: ^6.1.1
         version: 6.1.1(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2)
@@ -854,8 +854,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(ember-source@5.1.2)
       ember-primitives:
-        specifier: ^0.0.7
-        version: 0.0.7(@babel/core@7.22.8)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.1.1)(ember-source@5.1.2)
+        specifier: ^0.0.8
+        version: 0.0.8(@babel/core@7.22.8)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.1.1)(ember-source@5.1.2)
       penpal:
         specifier: ^6.2.2
         version: 6.2.2
@@ -11916,8 +11916,8 @@ packages:
       - supports-color
     dev: false
 
-  /ember-primitives@0.0.7(@babel/core@7.22.8)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.1.1)(ember-source@5.1.2):
-    resolution: {integrity: sha512-JwL6L6ZQtUT1KuK88pOYFbRR+N9TZJEGevKxVcYZBFrOvSaRp6wbxweiFQhoUO8EvPYnS2YZDo20l10W25MT1g==}
+  /ember-primitives@0.0.8(@babel/core@7.22.8)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.1.1)(ember-source@5.1.2):
+    resolution: {integrity: sha512-20geNXpCFjavnLsoVd0jA4rEqJ+wg9nrUVPopp1tbJvSHZQdrFfPO1/P8YPGEQ0VqdBCrgOr0LIkwUANaYUNoA==}
     peerDependencies:
       '@glimmer/component': ^1.1.2
       '@glimmer/tracking': ^1.1.2
