@@ -43,7 +43,7 @@
     "@babel/plugin-transform-typescript": "^7.22.5",
     "@babel/types": "^7.22.5",
     "@glimmer/component": "^1.1.2",
-    "@nullvoxpopuli/eslint-configs": "^3.1.4",
+    "@nullvoxpopuli/eslint-configs": "^3.2.0",
     "@types/babel__core": "^7.20.1",
     "@types/babel__standalone": "^7.1.4",
     "@types/htmlbars-inline-precompile": "^3.0.0",
