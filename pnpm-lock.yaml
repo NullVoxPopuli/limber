@@ -982,7 +982,7 @@ importers:
         specifier: ^7.22.8
         version: 7.22.8(supports-color@8.1.1)
       '@babel/eslint-parser':
-        specifier: ^7.11.0
+        specifier: ^7.22.7
         version: 7.22.7(@babel/core@7.22.8)(eslint@8.44.0)
       '@ember/optional-features':
         specifier: ^2.0.0
