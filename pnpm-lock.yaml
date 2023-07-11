@@ -106,8 +106,8 @@ importers:
         specifier: ^4.21.9
         version: 4.21.9
       dompurify:
-        specifier: ^3.0.4
-        version: 3.0.4
+        specifier: ^3.0.5
+        version: 3.0.5
       ember-auto-import:
         specifier: ^2.6.3
         version: 2.6.3(@glint/template@1.0.2)(webpack@5.88.1)
@@ -10996,8 +10996,8 @@ packages:
       domelementtype: 2.3.0
     dev: false
 
-  /dompurify@3.0.4:
-    resolution: {integrity: sha512-ae0mA+Qiqp6C29pqZX3fQgK+F91+F7wobM/v8DRzDqJdZJELXiFUx4PP4pK/mzUS0xkiSEx3Ncd9gr69jg3YsQ==}
+  /dompurify@3.0.5:
+    resolution: {integrity: sha512-F9e6wPGtY+8KNMRAVfxeCOHU0/NPWMSENNq4pQctuXRqqdEPW7q3CrLbR5Nse044WwacyjHGOMlvNsBe1y6z9A==}
     dev: false
 
   /domutils@1.7.0:
