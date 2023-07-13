@@ -368,8 +368,8 @@ importers:
         specifier: ^5.11.0
         version: 5.11.0
       ember-template-lint-plugin-prettier:
-        specifier: ^4.2.0
-        version: 4.2.0(ember-template-lint@5.11.0)(prettier@2.8.8)
+        specifier: ^5.0.0
+        version: 5.0.0(ember-template-lint@5.11.0)(prettier@2.8.8)
       esbuild-loader:
         specifier: ^3.0.1
         version: 3.0.1(webpack@5.88.1)
@@ -6810,6 +6810,14 @@ packages:
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
     dev: false
 
+  /@prettier/sync@0.2.1(prettier@2.8.8):
+    resolution: {integrity: sha512-7ls1R6//+GPYD9vof1XaL5psViv83CwpdwlS8oUkWldYgbPhzZ3WgxIQMWqGyBmWPmoBfQg8C7jj7KI/ZuDHhQ==}
+    peerDependencies:
+      prettier: ^3.0.0
+    dependencies:
+      prettier: 2.8.8
+    dev: true
+
   /@rollup/plugin-babel@6.0.3(@babel/core@7.22.9)(rollup@3.26.2):
     resolution: {integrity: sha512-fKImZKppa1A/gX73eg4JGo+8kQr/q1HBQaCGKECZ0v4YBBv3lFqi14+7xyApECzvkLTHCifx+7ntcrvtBIRcpg==}
     engines: {node: '>=14.0.0'}
@@ -12254,13 +12262,14 @@ packages:
       - supports-color
     dev: true
 
-  /ember-template-lint-plugin-prettier@4.2.0(ember-template-lint@5.11.0)(prettier@2.8.8):
-    resolution: {integrity: sha512-4t5k9zN0b6lhlFkzCgwBWUpqViPzOYk8FSfHt07p+ECldfUKJHm2tkTWs1NdQx/xybp+O/POtE8sgwSMPxa2wA==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+  /ember-template-lint-plugin-prettier@5.0.0(ember-template-lint@5.11.0)(prettier@2.8.8):
+    resolution: {integrity: sha512-aXUYM4yuIdPZ80+AsAU8QBwGSJJ/aAkRsNcQ5vI5HmXiBjzHlDc/ZhmP6iVcYuCmoA/3iKcssMAYwIDbuby4pg==}
+    engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     peerDependencies:
       ember-template-lint: '>= 4.0.0'
-      prettier: '>= 1.18.1'
+      prettier: '>= 3.0.0'
     dependencies:
+      '@prettier/sync': 0.2.1(prettier@2.8.8)
       ember-template-lint: 5.11.0
       prettier: 2.8.8
       prettier-linter-helpers: 1.0.0
