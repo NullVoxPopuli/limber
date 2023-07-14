@@ -131,13 +131,13 @@ importers:
         version: 3.0.0(ember-modifier@4.1.0)(ember-source@5.1.2)
       ember-primitives:
         specifier: ^0.0.8
-        version: 0.0.8(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.2.1)(ember-source@5.1.2)
+        version: 0.0.8(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.2.2)(ember-source@5.1.2)
       ember-repl:
         specifier: workspace:*
-        version: file:packages/ember-repl/addon(@glimmer/component@1.1.2)(@glint/template@1.0.2)(ember-resources@6.2.1)(ember-source@5.1.2)
+        version: file:packages/ember-repl/addon(@glimmer/component@1.1.2)(@glint/template@1.0.2)(ember-resources@6.2.2)(ember-source@5.1.2)
       ember-resources:
-        specifier: ^6.2.1
-        version: 6.2.1(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2)
+        specifier: ^6.2.2
+        version: 6.2.2(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2)
       ember-statechart-component:
         specifier: 6.1.2
         version: 6.1.2(@glint/template@1.0.2)(xstate@4.35.4)
@@ -456,10 +456,10 @@ importers:
         version: 4.1.0(ember-source@5.1.2)
       ember-primitives:
         specifier: ^0.0.8
-        version: 0.0.8(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.2.1)(ember-source@5.1.2)
+        version: 0.0.8(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.2.2)(ember-source@5.1.2)
       ember-resources:
-        specifier: ^6.2.1
-        version: 6.2.1(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2)
+        specifier: ^6.2.2
+        version: 6.2.2(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2)
       highlight.js:
         specifier: ^11.8.0
         version: 11.8.0
@@ -855,7 +855,7 @@ importers:
         version: 4.1.0(ember-source@5.1.2)
       ember-primitives:
         specifier: ^0.0.8
-        version: 0.0.8(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.2.1)(ember-source@5.1.2)
+        version: 0.0.8(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.2.2)(ember-source@5.1.2)
       penpal:
         specifier: ^6.2.2
         version: 6.2.2
@@ -924,8 +924,8 @@ importers:
         specifier: ^6.2.0
         version: 6.2.0
       ember-resources:
-        specifier: ^6.2.1
-        version: 6.2.1(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2)
+        specifier: ^6.2.2
+        version: 6.2.2(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2)
       ember-source:
         specifier: ^5.1.2
         version: 5.1.2(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glint/template@1.0.2)
@@ -1432,8 +1432,8 @@ importers:
         specifier: ^8.2.0
         version: 8.2.0
       ember-resources:
-        specifier: ^6.2.1
-        version: 6.2.1(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2)
+        specifier: ^6.2.2
+        version: 6.2.2(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2)
       ember-source:
         specifier: ^5.1.2
         version: 5.1.2(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glint/template@1.0.2)
@@ -4660,7 +4660,6 @@ packages:
       semver: 7.5.3
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /@embroider/babel-loader-8@3.0.0(@embroider/core@3.1.3)(supports-color@8.1.1)(webpack@5.88.1):
     resolution: {integrity: sha512-NIaHmX/FmxKdyB82J0jHTZWk9OyBEfFm0981pTWgnKCnREhaLSvlEtIlf5iEEU4RPCBIunZZqiy2W/QI3fLaxg==}
@@ -11971,7 +11970,7 @@ packages:
       - supports-color
     dev: false
 
-  /ember-primitives@0.0.8(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.2.1)(ember-source@5.1.2):
+  /ember-primitives@0.0.8(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-modifier@4.1.0)(ember-resources@6.2.2)(ember-source@5.1.2):
     resolution: {integrity: sha512-20geNXpCFjavnLsoVd0jA4rEqJ+wg9nrUVPopp1tbJvSHZQdrFfPO1/P8YPGEQ0VqdBCrgOr0LIkwUANaYUNoA==}
     peerDependencies:
       '@glimmer/component': ^1.1.2
@@ -11987,7 +11986,7 @@ packages:
       '@glimmer/component': 1.1.2(@babel/core@7.22.9)
       '@glimmer/tracking': 1.1.2
       ember-modifier: 4.1.0(ember-source@5.1.2)
-      ember-resources: 6.2.1(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2)
+      ember-resources: 6.2.2(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2)
       ember-source: 5.1.2(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(webpack@5.88.1)
       ember-velcro: 2.1.0(ember-source@5.1.2)
       tracked-toolbox: 2.0.0(@babel/core@7.22.9)(ember-source@5.1.2)
@@ -12049,8 +12048,8 @@ packages:
       - supports-color
     dev: true
 
-  /ember-resources@6.2.1(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2):
-    resolution: {integrity: sha512-BEvVLd6SzsfMFcHzq4s6oLzHNhSXwdwW4easl2Dl2cf/UxWjswhL8vM39R4JVeSuU88TjfYhwA378c2AAk+e7A==}
+  /ember-resources@6.2.2(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2):
+    resolution: {integrity: sha512-KAYIyJdCrFyRuMr+FO/FjoEjr6fGhDk2sOwIANamos2lezieGLLiGxx44QiEHD8yYe0CqVw6LBbvQUY/7C/GKw==}
     peerDependencies:
       '@ember/test-waiters': ^3.0.0
       '@glimmer/component': ^1.1.2
@@ -12068,7 +12067,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.22.6
       '@ember/test-waiters': 3.0.2
-      '@embroider/addon-shim': 1.8.5
+      '@embroider/addon-shim': 1.8.6
       '@embroider/macros': 1.12.3(@glint/template@1.0.2)
       '@glimmer/component': 1.1.2(@babel/core@7.22.9)
       '@glimmer/tracking': 1.1.2
@@ -22199,7 +22198,7 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
 
-  file:packages/ember-repl/addon(@glimmer/component@1.1.2)(@glint/template@1.0.2)(ember-resources@6.2.1)(ember-source@5.1.2):
+  file:packages/ember-repl/addon(@glimmer/component@1.1.2)(@glint/template@1.0.2)(ember-resources@6.2.2)(ember-source@5.1.2):
     resolution: {directory: packages/ember-repl/addon, type: directory}
     id: file:packages/ember-repl/addon
     name: ember-repl
@@ -22209,7 +22208,7 @@ packages:
       '@glimmer/component': ^1.1.2
       '@glimmer/syntax': ^0.84.3
       '@glint/template': ^1.0.2
-      ember-resources: ^6.2.1
+      ember-resources: ^6.2.2
       ember-source: '*'
     dependencies:
       '@babel/helper-plugin-utils': 7.22.5
@@ -22223,7 +22222,7 @@ packages:
       broccoli-file-creator: 2.1.1
       change-case: 4.1.2
       common-tags: 1.8.2
-      ember-resources: 6.2.1(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2)
+      ember-resources: 6.2.2(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2)
       ember-source: 5.1.2(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(webpack@5.88.1)
       line-column: 1.0.2
       magic-string: 0.30.1

@@ -31,7 +31,7 @@
     "ember-async-data": "^1.0.1",
     "ember-modifier": "^4.1.0",
     "ember-primitives": "^0.0.8",
-    "ember-resources": "^6.2.1",
+    "ember-resources": "^6.2.2",
     "highlight.js": "^11.8.0",
     "highlightjs-glimmer": "^2.1.0",
     "limber-ui": "workspace:*",
