@@ -1287,8 +1287,8 @@ importers:
         specifier: ^1.4.1
         version: 1.4.1
       babel-plugin-ember-template-compilation:
-        specifier: ^2.1.0
-        version: 2.1.0
+        specifier: ^2.1.1
+        version: 2.1.1
       broccoli-file-creator:
         specifier: ^2.1.1
         version: 2.1.1
@@ -8386,6 +8386,11 @@ packages:
     resolution: {integrity: sha512-TNdiTQdPhXlx02pzG//UyVPSKE7SNWjY0n4So/ZnjQpWwaM5LvWBLkWa1JKll5u06HNscHD91XZPuwrMg1kadQ==}
     engines: {node: '>= 12.*'}
 
+  /babel-import-util@2.0.0:
+    resolution: {integrity: sha512-pkWynbLwru0RZmA9iKeQL63+CkkW0RCP3kL5njCtudd6YPUKb5Pa0kL4fb3bmuKn2QDBFwY5mvvhEK/+jv2Ynw==}
+    engines: {node: '>= 12.*'}
+    dev: false
+
   /babel-loader@8.3.0(@babel/core@7.22.9)(webpack@5.88.1):
     resolution: {integrity: sha512-H8SvsMF+m9t15HNLMipppzkC+Y2Yq+v3SonZyU70RBL/h1gxPkH08Ot8pEE9Z4Kd+czyWJClmFS8qzIP9OZ04Q==}
     engines: {node: '>= 8.9'}
@@ -8473,6 +8478,14 @@ packages:
     dependencies:
       '@glimmer/syntax': 0.84.3
       babel-import-util: 1.4.1
+
+  /babel-plugin-ember-template-compilation@2.1.1:
+    resolution: {integrity: sha512-vwEUw7qfwAgwUokQc5xMxrcJMhCu2dVvDDMIXFyOpXwxt+kqZ2FKvXFV+rJjYchIgHH5rBduEtt4Qk1qeZ6RDA==}
+    engines: {node: '>= 12.*'}
+    dependencies:
+      '@glimmer/syntax': 0.84.3
+      babel-import-util: 2.0.0
+    dev: false
 
   /babel-plugin-filter-imports@4.0.0:
     resolution: {integrity: sha512-jDLlxI8QnfKd7PtieH6pl4tZJzymzfCDCPGdTq/grgbiYAikwDPp/oL0IlFJn0HQjLpcLkyYhPKkUVneRESw5w==}
@@ -22222,7 +22235,7 @@ packages:
       '@glimmer/component': 1.1.2(@babel/core@7.22.9)
       '@glint/template': 1.0.2
       babel-import-util: 1.4.1
-      babel-plugin-ember-template-compilation: 2.1.0
+      babel-plugin-ember-template-compilation: 2.1.1
       broccoli-file-creator: 2.1.1
       change-case: 4.1.2
       common-tags: 1.8.2
