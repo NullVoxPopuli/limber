@@ -1577,7 +1577,7 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2(ember-cli@5.1.0)
       ember-cli-htmlbars:
-        specifier: ^6.1.1
+        specifier: ^6.2.0
         version: 6.2.0
       ember-cli-inject-live-reload:
         specifier: ^2.1.0
