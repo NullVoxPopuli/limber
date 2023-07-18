@@ -1646,7 +1646,7 @@ importers:
         specifier: ^0.3.2
         version: 0.3.2
       qunit:
-        specifier: ^2.19.3
+        specifier: ^2.19.4
         version: 2.19.4
       qunit-dom:
         specifier: ^2.0.0
