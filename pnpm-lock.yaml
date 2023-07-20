@@ -1901,8 +1901,8 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
       vite:
-        specifier: ^4.4.4
-        version: 4.4.4(@types/node@18.16.19)
+        specifier: ^4.4.5
+        version: 4.4.5(@types/node@18.16.19)
 
   packages/syntax/glimdown/codemirror/tests:
     devDependencies:
@@ -2104,8 +2104,8 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
       vite:
-        specifier: ^4.4.4
-        version: 4.4.4(@types/node@18.16.19)
+        specifier: ^4.4.5
+        version: 4.4.5(@types/node@18.16.19)
 
   packages/syntax/glimmer-s-expression/lezer:
     dependencies:
@@ -2286,8 +2286,8 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
       vite:
-        specifier: ^4.4.4
-        version: 4.4.4(@types/node@18.16.19)
+        specifier: ^4.4.5
+        version: 4.4.5(@types/node@18.16.19)
 
   packages/syntax/glimmer/lezer:
     dependencies:
@@ -21570,7 +21570,7 @@ packages:
       mlly: 1.4.0
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 4.4.4(@types/node@18.16.19)
+      vite: 4.4.5(@types/node@18.16.19)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -21582,8 +21582,8 @@ packages:
       - terser
     dev: true
 
-  /vite@4.4.4(@types/node@18.16.19):
-    resolution: {integrity: sha512-4mvsTxjkveWrKDJI70QmelfVqTm+ihFAb6+xf4sjEU2TmUCTlVX87tmg/QooPEMQb/lM9qGHT99ebqPziEd3wg==}
+  /vite@4.4.5(@types/node@18.16.19):
+    resolution: {integrity: sha512-4m5kEtAWHYr0O1Fu7rZp64CfO1PsRGZlD3TAB32UmQlpd7qg15VF7ROqGN5CyqN7HFuwr7ICNM2+fDWRqFEKaA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -21670,7 +21670,7 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.6.0
-      vite: 4.4.4(@types/node@18.16.19)
+      vite: 4.4.5(@types/node@18.16.19)
       vite-node: 0.33.0(@types/node@18.16.19)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
