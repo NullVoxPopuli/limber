@@ -154,7 +154,7 @@
     "ember-popperjs": "^3.0.0",
     "ember-primitives": "^0.0.8",
     "ember-repl": "workspace:*",
-    "ember-resources": "^6.2.2",
+    "ember-resources": "^6.3.0",
     "ember-statechart-component": "6.1.2",
     "highlight.js": "^11.8.0",
     "highlightjs-glimmer": "^2.1.0",

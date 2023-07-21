@@ -71,7 +71,7 @@
     "concurrently": "^8.2.0",
     "ember-async-data": "^1.0.1",
     "ember-cli-htmlbars": "^6.2.0",
-    "ember-resources": "^6.2.2",
+    "ember-resources": "^6.3.0",
     "ember-source": "^5.1.2",
     "ember-template-imports": "^3.4.2",
     "ember-template-lint": "^5.11.0",
