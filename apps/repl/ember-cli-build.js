@@ -42,12 +42,11 @@ module.exports = async function (defaults) {
   //  - @glimmer/syntax
   app.import('vendor/ember/ember-template-compiler.js');
 
-  const { Webpack } = require('@embroider/webpack');
   const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
   const { EsbuildPlugin } = require('esbuild-loader');
 
-  return require('@embroider/compat').compatBuild(app, Webpack, {
+  return require('@embroider/compat').compatBuild(app, undefined, {
     extraPublicTrees: [
       require('@nullvoxpopuli/limber-codemirror/broccoli-funnel')(),
       // Tailwind
