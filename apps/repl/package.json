@@ -95,7 +95,7 @@
     "ember-resolver": "^10.1.1",
     "ember-source": "^5.1.2",
     "ember-template-imports": "^3.4.2",
-    "ember-template-lint": "^5.11.0",
+    "ember-template-lint": "^5.11.1",
     "ember-template-lint-plugin-prettier": "^5.0.0",
     "esbuild-loader": "^3.0.1",
     "eslint": "^8.45.0",
