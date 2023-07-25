@@ -11,7 +11,7 @@ const Clock = resource(({ on }) => {
 
   on.cleanup(() => clearInterval(interval));
 
-  return () => time.current;
+  return time;
 });
 ```
 
