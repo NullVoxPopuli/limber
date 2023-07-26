@@ -80,7 +80,7 @@
     "path-browserify": "^1.0.1",
     "pnpm-sync-dependencies-meta-injected": "^0.0.8",
     "prettier": "^2.8.8",
-    "prettier-plugin-ember-template-tag": "^0.3.2",
+    "prettier-plugin-ember-template-tag": "^1.0.0",
     "qunit": "^2.19.4",
     "qunit-dom": "^2.0.0",
     "typescript": "^5.1.6",

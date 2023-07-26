@@ -54,7 +54,7 @@
     "esbuild": "0.18.17",
     "eslint": "^8.45.0",
     "prettier": "^2.8.8",
-    "prettier-plugin-ember-template-tag": "^0.3.2",
+    "prettier-plugin-ember-template-tag": "^1.0.0",
     "typescript": "^5.1.6",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
