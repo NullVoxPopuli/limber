@@ -115,8 +115,8 @@ importers:
         specifier: 4.0.4
         version: 4.0.4(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2)
       ember-element-helper:
-        specifier: ^0.6.1
-        version: 0.6.1(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2)
+        specifier: ^0.7.1
+        version: 0.7.1(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2)
       ember-focus-trap:
         specifier: ^1.0.2
         version: 1.0.2
@@ -4422,6 +4422,14 @@ packages:
       - utf-8-validate
     dev: true
 
+  /@embroider/addon-shim@1.8.3:
+    resolution: {integrity: sha512-7pyHwzT6ESXc3nZsB8rfnirLkUhQWdvj6CkYH+0MUPN74mX4rslf7pnBqZE/KZkW3uBIaBYvU8fxi0hcKC/Paw==}
+    engines: {node: 12.* || 14.* || >= 16}
+    dependencies:
+      '@embroider/shared-internals': 1.8.3
+      semver: 7.5.4
+    dev: false
+
   /@embroider/addon-shim@1.8.6:
     resolution: {integrity: sha512-siC9kP78uucEbpDcVyxjkwa76pcs5rVzDVpWO4PDc9EAXRX+pzmUuSTLAK3GztUwx7/PWhz1BenAivqdSvSgfg==}
     engines: {node: 12.* || 14.* || >= 16}
@@ -4608,6 +4616,20 @@ packages:
       '@embroider/core': 3.2.0(@glint/template@1.0.2)
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@embroider/shared-internals@1.8.3:
+    resolution: {integrity: sha512-N5Gho6Qk8z5u+mxLCcMYAoQMbN4MmH+z2jXwQHVs859bxuZTxwF6kKtsybDAASCtd2YGxEmzcc1Ja/wM28824w==}
+    engines: {node: 12.* || 14.* || >= 16}
+    dependencies:
+      babel-import-util: 1.4.1
+      ember-rfc176-data: 0.3.18
+      fs-extra: 9.1.0
+      js-string-escape: 1.0.1
+      lodash: 4.17.21
+      resolve-package-path: 4.0.3
+      semver: 7.5.4
+      typescript-memoize: 1.1.1
     dev: false
 
   /@embroider/shared-internals@2.2.2:
@@ -11570,6 +11592,21 @@ packages:
       '@embroider/util': 1.12.0(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2)
       ember-cli-babel: 7.26.11
       ember-cli-htmlbars: 6.2.0
+      ember-source: 5.1.2(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(webpack@5.88.2)
+    transitivePeerDependencies:
+      - '@glint/environment-ember-loose'
+      - '@glint/template'
+      - supports-color
+    dev: false
+
+  /ember-element-helper@0.7.1(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2):
+    resolution: {integrity: sha512-vpD/ZVXU3MCbW/oKw/Wg2z3H/KHYIiO9ej28By1POnN+HVw4sHHJVStxgVoztiK1P43JoGRpyoJvMB986xrGSw==}
+    engines: {node: 14.* || 16.* || >= 18}
+    peerDependencies:
+      ember-source: '*'
+    dependencies:
+      '@embroider/addon-shim': 1.8.3
+      '@embroider/util': 1.12.0(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2)
       ember-source: 5.1.2(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(webpack@5.88.2)
     transitivePeerDependencies:
       - '@glint/environment-ember-loose'
