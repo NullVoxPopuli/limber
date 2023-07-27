@@ -1,14 +1,21 @@
 Where resources' real power comes in is the composibility of other resources.
 
-Going back to our simple `Clock` example, we may want to re-use the `Clock` in a variety of ways.
-Conceptually, we have a _value_ that represents the current time.
+In previous chapters, we've built a clock, which updates every second.
+But now let's say we also want to make a Stopwatch, but we only want to manage `setInterval` once, we may want to make a Resource with configurable interval milliseconds, like this:
 
 ```js
-const Clock = resource(({ on }) => {
-  /* ... */
+const Time = resourceFactory((ms) => resource(({ on }) => {
+  let time = cell(Date.now());
+  let interval = setInterval(() => time.current = Date.now(), ms);
+
+  on.cleanup(() => clearInterval(interval));
+
   return time;
-});
+}));
 ```
+
+This uses the [`Date.now()`][mdn-date] method which gives us millisecond precision and represents the time in milliseconds since January 1, 1970 00:00:00 UTC (the [epoch][ecma-epoch]).
+
 
 The `on` object is not the only property we have at our disposal.  We are provided a `use` function that allows us to _use_ other resources.
 
@@ -17,29 +24,14 @@ const FormattedClock = resourceFactory((locale = 'en-US') => {
   let formatter = new Intl.DateTimeFormat(locale, { /* ... */ });
 
   return resource(({ on, use }) => {
-    const time = use(Clock);
+    const time = use(Time(1_000));
 
     return () => formatter.format(time.current);
   });
 });
 ```
 
-
-We could also compose with parameterized resources, allowing even more flexibility.
-
-```js
-const Time = resourceFactory((ms) => resource(({ on }) => {
-  let time = cell(new Date().getTime());
-  let interval = setInterval(() => time.current = new Date().getTime(), ms);
-
-  on.cleanup(() => clearInterval(interval));
-
-  return time;
-});
-```
-
 This allows us to use the same resource to both make a `Clock` as well as a `Stopwatch`
-
 ```js
 const Clock = resource(({ on, use }) => {
   let time = use(Time(1_000));
