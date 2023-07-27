@@ -121,6 +121,7 @@ module.exports = async function (defaults) {
           },
           fallback: {
             path: require.resolve('path-browserify'),
+            fs: false,
           },
         },
         optimization: {
