@@ -2,25 +2,18 @@ import { importSync } from '@embroider/macros';
 
 import babelPluginEmberTemplateCompilation from 'babel-plugin-ember-template-compilation';
 
-// TODO: use real packages, and not these copied files from ember-template-imports
-import babelPluginIntermediateGJS from './eti/babel-plugin.ts';
-import { preprocessEmbeddedTemplates } from './eti/preprocess.ts';
-import { TEMPLATE_TAG_NAME, TEMPLATE_TAG_PLACEHOLDER } from './eti/util.ts';
-
 import type { Babel } from './types.ts';
 
 const compiler = importSync('ember-source/dist/ember-template-compiler.js');
 
-export function preprocess(input: string, name: string) {
-  let preprocessed = preprocessEmbeddedTemplates(input, {
-    relativePath: `${name}.js`,
-    includeSourceMaps: false,
-    includeTemplateTokens: true,
-    templateTag: TEMPLATE_TAG_NAME,
-    templateTagReplacement: TEMPLATE_TAG_PLACEHOLDER,
-  });
+import { createPreprocessor } from 'content-tag/standalone';
 
-  return preprocessed.output;
+let processor;
+
+export async function preprocess(input: string, name: string): Promise<string> {
+  processor ||= await createPreprocessor();
+
+  return processor.process(input, `${name}.js`);
 }
 
 export async function transform(
@@ -33,7 +26,7 @@ export async function transform(
   return babel.transform(intermediate, {
     filename: `${name}.js`,
     plugins: [
-      [babelPluginIntermediateGJS],
+      // [babelPluginIntermediateGJS],
       [
         babelPluginEmberTemplateCompilation,
         {

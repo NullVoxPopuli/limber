@@ -31,7 +31,7 @@ export async function compileJS(code: string, extraModules?: ExtraModules): Prom
 }
 
 async function compileGJS({ code: input, name }: Info) {
-  let preprocessed = preprocess(input, name);
+  let preprocessed = await preprocess(input, name);
   let result = await transform(preprocessed, name);
 
   if (!result) {
