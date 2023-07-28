@@ -29,7 +29,7 @@
     "@typescript-eslint/parser": "^5.62.0",
     "eslint": "^8.45.0",
     "prettier": "^2.8.8",
-    "rollup": "^3.26.3",
+    "rollup": "^3.27.0",
     "typescript": "^5.1.6"
   },
   "dependencies": {
