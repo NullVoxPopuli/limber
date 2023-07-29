@@ -107,7 +107,7 @@ export const Help = <template>
   {{#if (notInIframe) }}
     <Modal as |m|>
       <div class='fixed right-4 bottom-4'>
-        <FAB {{on 'click' m.open}}>
+        <FAB {{on 'click' m.open}} aria-label="Help / How to use this tool">
           <FaIcon @size="xs" @icon='question' class="aspect-square" />
         </FAB>
       </div>
