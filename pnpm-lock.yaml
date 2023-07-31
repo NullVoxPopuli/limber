@@ -666,8 +666,8 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0
       ember-apply:
-        specifier: ^2.9.0
-        version: 2.9.0
+        specifier: ^2.10.0
+        version: 2.10.0
       execa:
         specifier: ^7.2.0
         version: 7.2.0
@@ -10919,8 +10919,8 @@ packages:
   /electron-to-chromium@1.4.477:
     resolution: {integrity: sha512-shUVy6Eawp33dFBFIoYbIwLHrX0IZ857AlH9ug2o4rvbWmpaCUdBpQ5Zw39HRrfzAFm4APJE9V+E2A/WB0YqJw==}
 
-  /ember-apply@2.9.0:
-    resolution: {integrity: sha512-qFkGPMiSV079j80MiXwa7Vkf1wxYeDBb48ePulByAhm2TLdjMvXtmOnx6Z2UzQjAuwUi6zZ8Ux/3YIFoPtspHQ==}
+  /ember-apply@2.10.0:
+    resolution: {integrity: sha512-zmXZHtlvpbbBFouqz97Ea7S7wfEvkQpRkFPkCQTDrgGa/gkMqpAGuTHHyoa/PoKdXPZ8zA7MnVuvhrB8JU5gOw==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     dependencies:
@@ -12533,7 +12533,7 @@ packages:
     dependencies:
       debug: 3.2.7
       is-core-module: 2.12.1
-      resolve: 1.22.3
+      resolve: 1.22.2
     transitivePeerDependencies:
       - supports-color
     dev: true
