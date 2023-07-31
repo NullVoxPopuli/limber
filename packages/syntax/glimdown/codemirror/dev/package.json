@@ -17,7 +17,7 @@
     "@codemirror/language": "^6.8.0",
     "@codemirror/state": "^6.2.1",
     "@codemirror/theme-one-dark": "^6.1.2",
-    "@codemirror/view": "^6.15.3",
+    "@codemirror/view": "^6.16.0",
     "@glimdown/codemirror-dev-preview": "workspace:*",
     "@nullvoxpopuli/eslint-configs": "^3.2.0",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
