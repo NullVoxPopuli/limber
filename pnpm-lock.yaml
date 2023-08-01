@@ -112,8 +112,8 @@ importers:
         specifier: ^2.6.3
         version: 2.6.3(@glint/template@1.0.2)(webpack@5.88.2)
       ember-container-query:
-        specifier: 4.0.4
-        version: 4.0.4(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2)
+        specifier: 4.0.5
+        version: 4.0.5(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2)
       ember-element-helper:
         specifier: ^0.7.1
         version: 0.7.1(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2)
@@ -11369,12 +11369,12 @@ packages:
       - supports-color
     dev: false
 
-  /ember-container-query@4.0.4(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2):
-    resolution: {integrity: sha512-vgS1wD30c1QzDQH9OVeRmpEhZGpL6TKMTJ2d0WVuh2HG8J1wYEQafSL65muB9LX6w+ubo/bAu3CW9whI/kpCcw==}
+  /ember-container-query@4.0.5(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2):
+    resolution: {integrity: sha512-h6c/49Ah2yaMUOnFVgot27V+blLouFPfFOhcdfoVihhgklV9fBitk1W/YaHugjbaHNsR8SRZxWY+Duq3wRLglg==}
     engines: {node: 16.* || >= 18}
     dependencies:
       '@embroider/addon-shim': 1.8.6
-      ember-element-helper: 0.6.1(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2)
+      ember-element-helper: 0.7.1(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2)
       ember-modifier: 4.1.0(ember-source@5.1.2)
       ember-resize-observer-service: 1.1.0
     transitivePeerDependencies:
