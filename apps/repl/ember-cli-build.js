@@ -95,6 +95,7 @@ module.exports = async function (defaults) {
     staticComponents: true,
     splitControllers: true,
     splitRouteClasses: true,
+    staticEmberSource: true,
     staticAppPaths: ['utils'],
     // splitAtRoutes: [],
     implicitModulesStrategy: 'packageNames',
