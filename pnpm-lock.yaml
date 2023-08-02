@@ -121,8 +121,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       ember-headlessui:
-        specifier: 0.13.0
-        version: 0.13.0(@babel/core@7.22.9)(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2)(webpack@5.88.2)
+        specifier: 0.14.0
+        version: 0.14.0(@babel/core@7.22.9)(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2)(webpack@5.88.2)
       ember-modifier:
         specifier: ^4.1.0
         version: 4.1.0(ember-source@5.1.2)
@@ -11504,8 +11504,8 @@ packages:
       - '@glint/template'
       - supports-color
 
-  /ember-headlessui@0.13.0(@babel/core@7.22.9)(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2)(webpack@5.88.2):
-    resolution: {integrity: sha512-8BlYB8yljiaq0sXE1D3wGPIHaPb9/Gy2eau0HCwoF3gRgvhy39q/ui1Xi7UyjUkhoY1BNAL20QPlvWuz0BmUCw==}
+  /ember-headlessui@0.14.0(@babel/core@7.22.9)(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2)(webpack@5.88.2):
+    resolution: {integrity: sha512-SLb0R01UrnvOmZQ4UohH7XmAe37vVgsvZayHpgXL3YiaS+Q5CYL08UUDvNaddhJh/yGCv+WoCy5IhhnAGmcA+A==}
     engines: {node: 10.* || >= 12}
     peerDependencies:
       ember-source: '*'
