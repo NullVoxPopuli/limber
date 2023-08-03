@@ -39,4 +39,12 @@ export default defineConfig({
       },
     },
   },
+  resolve: {
+    alias: {
+      path: "path-browserify",
+    },
+    // fallback: {
+    //   path: require.resolve("path-browserify"),
+    // },
+  },
 });
