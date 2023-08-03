@@ -97,6 +97,9 @@ module.exports = async function (defaults) {
     splitRouteClasses: true,
     staticEmberSource: true,
     staticAppPaths: ['utils'],
+    amdCompatibility: {
+      es: [],
+    },
     // splitAtRoutes: [],
     implicitModulesStrategy: 'packageNames',
     // required due to this app being a dynamic component generator

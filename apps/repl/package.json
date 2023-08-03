@@ -18,7 +18,7 @@
   "scripts": {
     "ember:canary": "npx ember-source-channel-url canary --write",
     "ember:beta": "npx ember-source-channel-url beta --write",
-    "build": "ember build --environment=production",
+    "build": "pnpm prebuild:prod && vite --build",
     "prebuild:dev": "ember build --environment=development",
     "prebuild:prod": "ember build --environment=production",
     "lint:types": "glint",
