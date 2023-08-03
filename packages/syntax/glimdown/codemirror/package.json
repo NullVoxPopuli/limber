@@ -45,7 +45,7 @@
     "@lezer/html": "^1.3.6",
     "@lezer/javascript": "^1.4.5",
     "@lezer/lr": "^1.3.9",
-    "@lezer/markdown": "^1.0.5",
+    "@lezer/markdown": "^1.1.0",
     "codemirror-lang-glimmer": "workspace:*",
     "codemirror-lang-glimmer-js": "workspace:*"
   },
