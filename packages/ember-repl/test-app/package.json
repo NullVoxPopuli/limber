@@ -78,7 +78,7 @@
     "eslint-plugin-qunit": "^8.0.0",
     "loader.js": "^4.7.0",
     "path-browserify": "^1.0.1",
-    "pnpm-sync-dependencies-meta-injected": "^0.0.8",
+    "pnpm-sync-dependencies-meta-injected": "^0.0.9",
     "prettier": "^2.8.8",
     "prettier-plugin-ember-template-tag": "^1.0.0",
     "qunit": "^2.19.4",
