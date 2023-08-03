@@ -751,8 +751,8 @@ importers:
         specifier: ^1.3.6
         version: 1.3.6
       '@lezer/markdown':
-        specifier: ^1.0.5
-        version: 1.0.5
+        specifier: ^1.1.0
+        version: 1.1.0
       '@nullvoxpopuli/horizon-theme':
         specifier: '*'
         version: link:../../horizon-theme
@@ -1795,8 +1795,8 @@ importers:
         specifier: ^1.3.9
         version: 1.3.9
       '@lezer/markdown':
-        specifier: ^1.0.5
-        version: 1.0.5
+        specifier: ^1.1.0
+        version: 1.1.0
       codemirror-lang-glimmer:
         specifier: workspace:*
         version: link:../../glimmer/codemirror
@@ -4189,7 +4189,7 @@ packages:
       '@codemirror/state': 6.2.1
       '@codemirror/view': 6.16.0
       '@lezer/common': 1.0.3
-      '@lezer/markdown': 1.0.5
+      '@lezer/markdown': 1.1.0
     dev: false
 
   /@codemirror/lang-php@6.0.1:
@@ -5594,8 +5594,8 @@ packages:
     dependencies:
       '@lezer/common': 1.0.3
 
-  /@lezer/markdown@1.0.5:
-    resolution: {integrity: sha512-J0LRA0l21Ec6ZroaOxjxsWWm+swCOFHcnOU85Z7aH9nj3eJx5ORmtzVkWzs9e21SZrdvyIzM1gt+YF/HnqbvnA==}
+  /@lezer/markdown@1.1.0:
+    resolution: {integrity: sha512-JYOI6Lkqbl83semCANkO3CKbKc0pONwinyagBufWBm+k4yhIcqfCF8B8fpEpvJLmIy7CAfwiq7dQ/PzUZA340g==}
     dependencies:
       '@lezer/common': 1.0.3
       '@lezer/highlight': 1.1.6
