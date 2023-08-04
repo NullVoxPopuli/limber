@@ -36,7 +36,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "@codemirror/lang-css": "^6.2.0",
+    "@codemirror/lang-css": "^6.2.1",
     "@codemirror/lang-html": "^6.4.5",
     "@codemirror/lang-javascript": "^6.1.9",
     "@codemirror/language": "^6.8.0",
