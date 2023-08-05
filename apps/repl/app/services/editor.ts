@@ -4,6 +4,7 @@ import Service, { inject as service } from '@ember/service';
 
 import { link } from 'ember-resources/link';
 
+import { Auth0 } from 'limber/utils/auth';
 import { FileURIComponent } from 'limber/utils/editor-text';
 
 import type RouterService from '@ember/routing/router-service';
@@ -18,6 +19,7 @@ export default class EditorService extends Service {
   @tracked scrollbarWidth = 0;
 
   @link(FileURIComponent) declare fileURIComponent: FileURIComponent;
+  @link(Auth0) declare auth: Auth0;
 
   @action
   updateText(text: string) {

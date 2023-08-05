@@ -1,0 +1,41 @@
+{
+  "name": "@glimdown/app-node-support",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "NullVoxPopuli",
+  "exports": {
+    "./git": "./src/git.cjs"
+  },
+  "scripts": {
+    "lint:fix": "pnpm -w exec lint fix",
+    "build": "tailwindcss -o dist/tailwind.css",
+    "start": "tailwindcss -o dist/tailwind.css --watch",
+    "lint": "pnpm -w exec lint",
+    "lint:js": "pnpm -w exec lint js",
+    "lint:js:fix": "pnpm -w exec lint js:fix",
+    "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
+    "lint:prettier": "pnpm -w exec lint prettier"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.9",
+    "@nullvoxpopuli/eslint-configs": "^3.2.0",
+    "concurrently": "^8.2.0",
+    "eslint": "^8.45.0",
+    "prettier": "^2.8.8",
+    "prettier-plugin-ember-template-tag": "^1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NullVoxPopuli/limber.git",
+    "directory": "packages/app-support/node"
+  },
+  "engines": {
+    "node": ">= v16",
+    "npm": "use pnpm",
+    "yarn": "use pnpm"
+  },
+  "volta": {
+    "extends": "../../../package.json"
+  }
+}
