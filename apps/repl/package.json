@@ -58,6 +58,7 @@
     "@glint/environment-ember-loose": "^1.0.2",
     "@glint/environment-ember-template-imports": "^1.0.2",
     "@glint/template": "^1.0.2",
+    "@glimdown/app-node-support": "workspace:*",
     "@nullvoxpopuli/eslint-configs": "^3.2.0",
     "@nullvoxpopuli/limber-untyped": "workspace:^0.0.0",
     "@types/babel__core": "^7.20.1",
