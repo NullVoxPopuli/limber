@@ -54,11 +54,11 @@
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@glimdown/app-node-support": "workspace:*",
     "@glint/core": "^1.0.2",
     "@glint/environment-ember-loose": "^1.0.2",
     "@glint/environment-ember-template-imports": "^1.0.2",
     "@glint/template": "^1.0.2",
-    "@glimdown/app-node-support": "workspace:*",
     "@nullvoxpopuli/eslint-configs": "^3.2.0",
     "@nullvoxpopuli/limber-untyped": "workspace:^0.0.0",
     "@types/babel__core": "^7.20.1",
@@ -133,6 +133,7 @@
     "extends": "../../package.json"
   },
   "dependencies": {
+    "@auth0/auth0-spa-js": "^2.1.1",
     "@ember/test-waiters": "^3.0.2",
     "@embroider/macros": "1.13.1",
     "@embroider/router": "2.1.3",

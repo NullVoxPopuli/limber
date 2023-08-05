@@ -2,6 +2,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
 import ExternalLink from '../external-link';
 import DemoSelect from './demo-select';
+import { GitHubLogin } from './github';
 
 <template>
   <header
@@ -21,6 +22,7 @@ import DemoSelect from './demo-select';
     </h1>
 
     <nav class='text-white mt-1 flex gap-2 items-baseline'>
+      <GitHubLogin />
 
       <DemoSelect />
 

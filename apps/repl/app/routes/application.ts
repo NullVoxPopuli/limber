@@ -2,11 +2,18 @@
 // @ts-ignore
 import { DEBUG } from '@glimmer/env';
 import Route from '@ember/routing/route';
+import { service } from '@ember/service';
 
 import { notInIframe } from 'limber/helpers/in-iframe';
 
+import type EditorService from 'limber/services/editor';
+
 export default class ApplicationRoute extends Route {
+  @service declare editor: EditorService;
+
   async beforeModel() {
+    await this.editor.auth.check();
+
     document.querySelector('#initial-loader')?.remove();
 
     if (DEBUG) {
