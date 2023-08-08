@@ -32,7 +32,7 @@
     "eslint": "^8.46.0",
     "pnpm-sync-dependencies-meta-injected": "^0.0.9",
     "prettier": "^2.8.8",
-    "prettier-plugin-ember-template-tag": "^1.0.0",
+    "prettier-plugin-ember-template-tag": "^1.0.1",
     "turbo": "^1.10.12"
   },
   "packageManager": "pnpm@8.6.12",
