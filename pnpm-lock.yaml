@@ -371,8 +371,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(ember-template-lint@5.11.1)(prettier@2.8.8)
       esbuild-loader:
-        specifier: ^3.2.0
-        version: 3.2.0(webpack@5.88.2)
+        specifier: ^4.0.0
+        version: 4.0.0(webpack@5.88.2)
       eslint:
         specifier: ^8.46.0
         version: 8.46.0
@@ -12911,8 +12911,8 @@ packages:
       es6-promise: 4.2.8
     dev: true
 
-  /esbuild-loader@3.2.0(webpack@5.88.2):
-    resolution: {integrity: sha512-lnIdRMQpk50alCa0QoW0ozc0D3rjJXl02mtMsk9INIcW25RPZhDja332bu85ixwVNbhQ7VfBRcQyZ/qza8mWiA==}
+  /esbuild-loader@4.0.0(webpack@5.88.2):
+    resolution: {integrity: sha512-J7TJWyHV2YHmflZaXLZ0Vf4wYmixDyGTw26bt4Ok+XOqSyYA4VWAVt2zJGqIfCA7TwZRDKN8hvus4akN2yAbmA==}
     peerDependencies:
       webpack: ^4.40.0 || ^5.0.0
     peerDependenciesMeta:
