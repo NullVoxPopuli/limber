@@ -107,7 +107,7 @@
     "onp": "^2.0.4",
     "pnpm-sync-dependencies-meta-injected": "^0.0.9",
     "prettier": "^2.8.8",
-    "prettier-plugin-ember-template-tag": "^1.0.1",
+    "prettier-plugin-ember-template-tag": "^1.0.2",
     "process": "^0.11.10",
     "qunit": "^2.19.4",
     "qunit-console-grouper": "^0.3.0",
