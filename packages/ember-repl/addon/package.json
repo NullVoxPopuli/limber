@@ -5,6 +5,7 @@
   "keywords": [
     "ember-addon"
   ],
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/NullVoxPopuli/limber.git",
@@ -48,6 +49,7 @@
     "start": "rollup --config --watch",
     "lint": "pnpm -w exec lint",
     "lint:package": "pnpm publint",
+    "lint:published-types": "pnpm attw --pack --exclude-entrypoints addon-main.js ember-cli --ignore-rules cjs-resolves-to-esm",
     "lint:js": "pnpm -w exec lint js",
     "lint:js:fix": "pnpm -w exec lint js:fix",
     "lint:hbs": "pnpm -w exec lint hbs",
@@ -80,6 +82,7 @@
     "vfile": "^6.0.1"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.7.1",
     "@babel/core": "^7.22.10",
     "@babel/preset-typescript": "^7.22.5",
     "@babel/types": "^7.22.10",
