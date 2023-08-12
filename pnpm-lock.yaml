@@ -2431,8 +2431,8 @@ importers:
         specifier: 3.1.1
         version: 3.1.1
       filesize:
-        specifier: ^10.0.11
-        version: 10.0.11
+        specifier: ^10.0.12
+        version: 10.0.12
       globby:
         specifier: ^13.2.2
         version: 13.2.2
@@ -14144,8 +14144,8 @@ packages:
       webpack: 5.88.2
     dev: true
 
-  /filesize@10.0.11:
-    resolution: {integrity: sha512-gbHLdV7L2tTbJ8tUXjtfngakN6k+F6EQhxMxK5yfhwvy0XuyyXfFwG54130otkTZxU16pFRnPpPVn0gxxQ8HTQ==}
+  /filesize@10.0.12:
+    resolution: {integrity: sha512-6RS9gDchbn+qWmtV2uSjo5vmKizgfCQeb5jKmqx8HyzA3MoLqqyQxN+QcjkGBJt7FjJ9qFce67Auyya5rRRbpw==}
     engines: {node: '>= 10.4.0'}
     dev: false
 
