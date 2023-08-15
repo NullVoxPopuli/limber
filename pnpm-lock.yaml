@@ -356,8 +356,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0(@ember/test-helpers@3.2.0)(@glint/template@1.0.2)(ember-source@5.1.2)(qunit@2.19.4)(webpack@5.88.2)
       ember-resolver:
-        specifier: ^11.0.0
-        version: 11.0.0(ember-source@5.1.2)
+        specifier: ^11.0.1
+        version: 11.0.1(ember-source@5.1.2)
       ember-source:
         specifier: ^5.1.2
         version: 5.1.2(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(webpack@5.88.2)
@@ -597,8 +597,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0(@ember/test-helpers@3.2.0)(@glint/template@1.0.2)(ember-source@5.1.2)(qunit@2.19.4)(webpack@5.88.2)
       ember-resolver:
-        specifier: ^11.0.0
-        version: 11.0.0(ember-source@5.1.2)
+        specifier: ^11.0.1
+        version: 11.0.1(ember-source@5.1.2)
       ember-source:
         specifier: ^5.1.2
         version: 5.1.2(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(webpack@5.88.2)
@@ -1066,8 +1066,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0(@ember/test-helpers@3.2.0)(ember-source@5.1.2)(qunit@2.19.4)(webpack@5.88.2)
       ember-resolver:
-        specifier: ^11.0.0
-        version: 11.0.0(ember-source@5.1.2)
+        specifier: ^11.0.1
+        version: 11.0.1(ember-source@5.1.2)
       ember-source:
         specifier: ^5.1.2
         version: 5.1.2(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(webpack@5.88.2)
@@ -1595,8 +1595,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0(@ember/test-helpers@3.2.0)(@glint/template@1.0.2)(ember-source@5.1.2)(qunit@2.19.4)(webpack@5.88.2)
       ember-resolver:
-        specifier: ^11.0.0
-        version: 11.0.0(ember-source@5.1.2)
+        specifier: ^11.0.1
+        version: 11.0.1(ember-source@5.1.2)
       ember-source:
         specifier: ^5.1.2
         version: 5.1.2(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(webpack@5.88.2)
@@ -11940,8 +11940,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /ember-resolver@11.0.0(ember-source@5.1.2):
-    resolution: {integrity: sha512-TOc685OnGEMMNEt04BukmQHOYVXnRJc+sGZij/vzWdxXRq+Wpsu1Nw2nLFo6fbMqqVLATk5oLKAQ1eKQwte2wQ==}
+  /ember-resolver@11.0.1(ember-source@5.1.2):
+    resolution: {integrity: sha512-ucBk3oM+PR+AfYoSUXeQh8cDQS1sSiEKp4Pcgbew5cFMSqPxJfqd1zyZsfQKNTuyubeGmWxBOyMVSTvX2LeCyg==}
     engines: {node: 14.* || 16.* || >= 18}
     peerDependencies:
       ember-source: '*'
