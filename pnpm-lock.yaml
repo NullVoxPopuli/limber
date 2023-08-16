@@ -166,8 +166,8 @@ importers:
         specifier: ^6.1.1
         version: 6.1.1
       rehype-stringify:
-        specifier: ^9.0.3
-        version: 9.0.3
+        specifier: ^9.0.4
+        version: 9.0.4
       remark-html:
         specifier: 15.0.2
         version: 15.0.2
@@ -473,8 +473,8 @@ importers:
         specifier: ^6.1.1
         version: 6.1.1
       rehype-stringify:
-        specifier: ^9.0.3
-        version: 9.0.3
+        specifier: ^9.0.4
+        version: 9.0.4
       remark-parse:
         specifier: ^10.0.2
         version: 10.0.2
@@ -1314,8 +1314,8 @@ importers:
         specifier: ^6.1.1
         version: 6.1.1
       rehype-stringify:
-        specifier: ^9.0.3
-        version: 9.0.3
+        specifier: ^9.0.4
+        version: 9.0.4
       remark-gfm:
         specifier: ^3.0.1
         version: 3.0.1
@@ -18819,8 +18819,8 @@ packages:
       unified: 10.1.2
     dev: false
 
-  /rehype-stringify@9.0.3:
-    resolution: {integrity: sha512-kWiZ1bgyWlgOxpqD5HnxShKAdXtb2IUljn3hQAhySeak6IOQPPt6DeGnsIh4ixm7yKJWzm8TXFuC/lPfcWHJqw==}
+  /rehype-stringify@9.0.4:
+    resolution: {integrity: sha512-Uk5xu1YKdqobe5XpSskwPvo1XeHUUucWEQSl8hTrXt5selvca1e8K1EZ37E6YoZ4BT8BCqCdVfQW7OfHfthtVQ==}
     dependencies:
       '@types/hast': 2.3.5
       hast-util-to-html: 8.0.4
@@ -22272,7 +22272,7 @@ packages:
       mdast: 3.0.0
       parse-static-imports: 1.1.0
       rehype-raw: 6.1.1
-      rehype-stringify: 9.0.3
+      rehype-stringify: 9.0.4
       remark-gfm: 3.0.1
       remark-parse: 10.0.2
       remark-rehype: 10.1.0

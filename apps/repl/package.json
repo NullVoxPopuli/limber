@@ -164,7 +164,7 @@
     "path-browserify": "^1.0.1",
     "penpal": "^6.2.2",
     "rehype-raw": "^6.1.1",
-    "rehype-stringify": "^9.0.3",
+    "rehype-stringify": "^9.0.4",
     "remark-html": "15.0.2",
     "remark-parse": "10.0.2",
     "remark-rehype": "^10.1.0",
