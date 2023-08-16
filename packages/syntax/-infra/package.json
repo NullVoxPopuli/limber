@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@codemirror/language": "^6.8.0",
+    "@codemirror/language": "^6.9.0",
     "@codemirror/view": "^6.16.0",
     "@lezer/generator": "^1.4.0",
     "@lezer/highlight": "^1.1.6",
