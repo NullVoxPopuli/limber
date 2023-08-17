@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@codemirror/state": "^6.2.1",
-    "@lezer/common": "^1.0.3"
+    "@lezer/common": "^1.0.4"
   },
   "volta": {
     "extends": "../../../package.json"

@@ -21,7 +21,7 @@
     "@codemirror/buildhelper": "^1.0.0",
     "@codemirror/view": "^6.16.0",
     "@glimdown/lezer-infra": "workspace:*",
-    "@lezer/common": "^1.0.3",
+    "@lezer/common": "^1.0.4",
     "@lezer/generator": "^1.4.0",
     "@nullvoxpopuli/eslint-configs": "^3.2.0",
     "@tsconfig/ember": "^3.0.0",
