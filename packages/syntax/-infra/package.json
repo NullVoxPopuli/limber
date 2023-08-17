@@ -8,7 +8,7 @@
     "@codemirror/view": "^6.16.0",
     "@lezer/generator": "^1.4.0",
     "@lezer/highlight": "^1.1.6",
-    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.0",
     "rollup": "^3.28.0"
   },
   "volta": {
