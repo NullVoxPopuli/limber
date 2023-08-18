@@ -118,8 +118,8 @@ importers:
         specifier: ^0.7.1
         version: 0.7.1(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2)
       ember-focus-trap:
-        specifier: ^1.0.2
-        version: 1.0.2
+        specifier: ^1.1.0
+        version: 1.1.0(ember-source@5.1.2)
       ember-headlessui:
         specifier: 0.14.0
         version: 0.14.0(@babel/core@7.22.10)(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(ember-source@5.1.2)(webpack@5.88.2)
@@ -11733,11 +11733,14 @@ packages:
       - supports-color
     dev: true
 
-  /ember-focus-trap@1.0.2:
-    resolution: {integrity: sha512-/8Cx9KI7uqoMaNN4Iyxc24P2JIvAcCL3cI1tYdZRHTwTd1sG6esEZWOnpxZOSE7m4xHww8HVUSiXzgyqD8YIhA==}
+  /ember-focus-trap@1.1.0(ember-source@5.1.2):
+    resolution: {integrity: sha512-KxbCKpAJaBVZm+bW4tHPoBJAZThmxa6pI+WQusL+bj0RtAnGUNkWsVy6UBMZ5QqTQzf4EvGHkCVACVp5lbAWMQ==}
     engines: {node: 12.* || >= 14}
+    peerDependencies:
+      ember-source: '*'
     dependencies:
       '@embroider/addon-shim': 1.8.6
+      ember-source: 5.1.2(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(webpack@5.88.2)
       focus-trap: 6.9.4
     transitivePeerDependencies:
       - supports-color
@@ -22267,7 +22270,7 @@ packages:
       '@glimmer/compiler': ^0.84.3
       '@glimmer/component': ^1.1.2
       '@glimmer/syntax': ^0.84.3
-      '@glint/template': ^1.0.2
+      '@glint/template': ^1.1.0
       ember-resources: ^6.4.0
       ember-source: '*'
     dependencies:
