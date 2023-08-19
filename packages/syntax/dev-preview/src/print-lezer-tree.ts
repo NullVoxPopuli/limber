@@ -177,6 +177,7 @@ enum Color {
   Yellow = 33,
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function colorize(value: any, _color: number): string {
   // for CLI:
   // return '\u001b[' + color + 'm' + String(value) + '\u001b[39m';
