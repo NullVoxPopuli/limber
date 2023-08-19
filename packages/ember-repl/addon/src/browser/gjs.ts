@@ -1,23 +1,26 @@
 import { importSync } from '@embroider/macros';
 
 import babelPluginEmberTemplateCompilation from 'babel-plugin-ember-template-compilation';
-
 // TODO: use real packages, and not these copied files from ember-template-imports
-import babelPluginIntermediateGJS from './eti/babel-plugin.ts';
-import { preprocessEmbeddedTemplates } from './eti/preprocess.ts';
-import { TEMPLATE_TAG_NAME, TEMPLATE_TAG_PLACEHOLDER } from './eti/util.ts';
+// import babelPluginIntermediateGJS from './eti/babel-plugin.ts';
+// import { preprocessEmbeddedTemplates } from './eti/preprocess.ts';
+// import { TEMPLATE_TAG_NAME, TEMPLATE_TAG_PLACEHOLDER } from './eti/util.ts';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { TEMPLATE_TAG_NAME, transform as templateTagTransform } from 'ember-template-tag/browser-esm';
 
 import type { Babel } from './types.ts';
 
 const compiler = importSync('ember-source/dist/ember-template-compiler.js');
 
 export function preprocess(input: string, name: string) {
-  let preprocessed = preprocessEmbeddedTemplates(input, {
+  let preprocessed = templateTagTransform({
+    input,
     relativePath: `${name}.js`,
-    includeSourceMaps: false,
-    includeTemplateTokens: true,
+    // includeSourceMaps: false,
+    // includeTemplateTokens: true,
     templateTag: TEMPLATE_TAG_NAME,
-    templateTagReplacement: TEMPLATE_TAG_PLACEHOLDER,
+    // templateTagReplacement: TEMPLATE_TAG_PLACEHOLDER,
   });
 
   return preprocessed.output;
@@ -33,7 +36,7 @@ export async function transform(
   return babel.transform(intermediate, {
     filename: `${name}.js`,
     plugins: [
-      [babelPluginIntermediateGJS],
+      // [babelPluginIntermediateGJS],
       [
         babelPluginEmberTemplateCompilation,
         {
