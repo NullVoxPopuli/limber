@@ -151,11 +151,14 @@ export async function compileMD(
    * Step 4: Compile the Ember Template
    */
   try {
-    let localScope = scope.reduce((accum, { component, name }) => {
-      accum[invocationName(name)] = component;
+    let localScope = scope.reduce(
+      (accum, { component, name }) => {
+        accum[invocationName(name)] = component;
 
-      return accum;
-    }, {} as Record<string, unknown>);
+        return accum;
+      },
+      {} as Record<string, unknown>
+    );
 
     return await compileHBS(rootTemplate, {
       moduleName: 'DynamicRootTemplate',

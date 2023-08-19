@@ -2,4 +2,17 @@
 
 const { configs } = require('@nullvoxpopuli/eslint-configs');
 
-module.exports = configs.crossPlatform();
+const config = configs.crossPlatform();
+
+module.exports = {
+  ...config,
+  overrides: [
+    ...config.overrides,
+    {
+      files: ['**/*.ts'],
+      rules: {
+        '@typescript-eslint/no-explicit-any': 'off',
+      },
+    },
+  ],
+};

@@ -26,7 +26,7 @@ export const copyToPublic = createUnplugin((options) => {
             fileName: path.join(dest, file),
             source: fs.readFileSync(source).toString(),
           });
-        })
+        }),
       );
     },
     watchChange(id) {

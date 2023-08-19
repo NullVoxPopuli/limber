@@ -37,5 +37,6 @@ declare module '@ember/template-compilation' {
     //   ast: Array<unknown>
     // }
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export function compileTemplate(template: string, options: CompileOptions): any;
 }
