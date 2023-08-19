@@ -963,8 +963,8 @@ importers:
         specifier: ^0.4.1
         version: 0.4.1(@babel/core@7.22.10)(ember-source@5.2.0)(ember-template-imports@3.4.2)
       rollup-plugin-ts:
-        specifier: ^3.2.0
-        version: 3.2.0(@babel/core@7.22.10)(@babel/runtime@7.22.10)(rollup@3.28.0)(typescript@5.1.6)
+        specifier: ^3.4.4
+        version: 3.4.4(@babel/core@7.22.10)(@babel/runtime@7.22.10)(rollup@3.28.0)(typescript@5.1.6)
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
@@ -1853,8 +1853,8 @@ importers:
         specifier: ^3.28.0
         version: 3.28.0
       rollup-plugin-ts:
-        specifier: ^3.2.0
-        version: 3.2.0(@babel/core@7.22.10)(@babel/runtime@7.22.10)(rollup@3.28.0)(typescript@5.1.6)
+        specifier: ^3.4.4
+        version: 3.4.4(@babel/core@7.22.10)(@babel/runtime@7.22.10)(rollup@3.28.0)(typescript@5.1.6)
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
@@ -2056,8 +2056,8 @@ importers:
         specifier: ^3.28.0
         version: 3.28.0
       rollup-plugin-ts:
-        specifier: ^3.2.0
-        version: 3.2.0(@babel/core@7.22.10)(@babel/runtime@7.22.10)(rollup@3.28.0)(typescript@5.1.6)
+        specifier: ^3.4.4
+        version: 3.4.4(@babel/core@7.22.10)(@babel/runtime@7.22.10)(rollup@3.28.0)(typescript@5.1.6)
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
@@ -2238,8 +2238,8 @@ importers:
         specifier: ^3.28.0
         version: 3.28.0
       rollup-plugin-ts:
-        specifier: ^3.2.0
-        version: 3.2.0(@babel/core@7.22.10)(@babel/runtime@7.22.10)(rollup@3.28.0)(typescript@5.1.6)
+        specifier: ^3.4.4
+        version: 3.4.4(@babel/core@7.22.10)(@babel/runtime@7.22.10)(rollup@3.28.0)(typescript@5.1.6)
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
@@ -2353,8 +2353,8 @@ importers:
         specifier: ^3.28.0
         version: 3.28.0
       rollup-plugin-ts:
-        specifier: ^3.2.0
-        version: 3.2.0(@babel/core@7.22.10)(@babel/runtime@7.22.10)(rollup@3.28.0)(typescript@5.1.6)
+        specifier: ^3.4.4
+        version: 3.4.4(@babel/core@7.22.10)(@babel/runtime@7.22.10)(rollup@3.28.0)(typescript@5.1.6)
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
@@ -10135,8 +10135,8 @@ packages:
   /commondir@1.0.1:
     resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==}
 
-  /compatfactory@2.0.9(typescript@5.1.6):
-    resolution: {integrity: sha512-fvO+AWcmbO7P1S+A3mwm3IGr74eHMeq5ZLhNhyNQc9mVDNHT4oe0Gg0ksdIFFNXLK7k7Z/TYcLAUSQdRgh1bsA==}
+  /compatfactory@3.0.0(typescript@5.1.6):
+    resolution: {integrity: sha512-WD5kF7koPwVoyKL8p0LlrmIZtilrD46sQStyzzxzTFinMKN2Dxk1hN+sddLSQU1mGIZvQfU8c+ONSghvvM40jg==}
     engines: {node: '>=14.9.0'}
     peerDependencies:
       typescript: '*'
@@ -19298,18 +19298,18 @@ packages:
       ember-template-imports: 3.4.2
     dev: true
 
-  /rollup-plugin-ts@3.2.0(@babel/core@7.22.10)(@babel/runtime@7.22.10)(rollup@3.28.0)(typescript@5.1.6):
-    resolution: {integrity: sha512-KkTLVifkUexEiAXS9VtSjDrjKr0TyusmNJpb2ZTAzI9VuPumSu4AktIaVNnwv70iUEitHwZtET7OAM+5n1u1tg==}
-    engines: {node: '>=14.9.0', npm: '>=7.0.0', pnpm: '>=3.2.0', yarn: '>=1.13'}
+  /rollup-plugin-ts@3.4.4(@babel/core@7.22.10)(@babel/runtime@7.22.10)(rollup@3.28.0)(typescript@5.1.6):
+    resolution: {integrity: sha512-xgHn5o/1GD222EWxmMQYiWR00oEClv86O5fiEiIVtcaGXV2yWMn6x6jr082A/xmxu3CcdXiTUHomi/9FXTepWg==}
+    engines: {node: '>=16.15.1', npm: '>=7.0.0', pnpm: '>=3.2.0', yarn: '>=1.13'}
     peerDependencies:
-      '@babel/core': '>=6.x || >=7.x'
-      '@babel/plugin-transform-runtime': '>=6.x || >=7.x'
-      '@babel/preset-env': '>=6.x || >=7.x'
-      '@babel/preset-typescript': '>=6.x || >=7.x'
-      '@babel/runtime': '>=6.x || >=7.x'
+      '@babel/core': '>=7.x'
+      '@babel/plugin-transform-runtime': '>=7.x'
+      '@babel/preset-env': '>=7.x'
+      '@babel/preset-typescript': '>=7.x'
+      '@babel/runtime': '>=7.x'
       '@swc/core': '>=1.x'
       '@swc/helpers': '>=0.2'
-      rollup: '>=1.x || >=2.x'
+      rollup: '>=1.x || >=2.x || >=3.x'
       typescript: '*'
     peerDependenciesMeta:
       '@babel/core':
@@ -19336,11 +19336,11 @@ packages:
       ansi-colors: 4.1.3
       browserslist: 4.21.10
       browserslist-generator: 2.1.0
-      compatfactory: 2.0.9(typescript@5.1.6)
+      compatfactory: 3.0.0(typescript@5.1.6)
       crosspath: 2.0.0
-      magic-string: 0.27.0
+      magic-string: 0.30.2
       rollup: 3.28.0
-      ts-clone-node: 2.0.4(typescript@5.1.6)
+      ts-clone-node: 3.0.0(typescript@5.1.6)
       tslib: 2.6.1
       typescript: 5.1.6
     dev: true
@@ -20985,13 +20985,13 @@ packages:
       typescript: 5.1.6
     dev: true
 
-  /ts-clone-node@2.0.4(typescript@5.1.6):
-    resolution: {integrity: sha512-eG6FAgmQsenhIJOIFhUcO6yyYejBKZIKcI3y21jiQmIOrth5pD6GElyPAyeihbPSyBs3u/9PVNXy+5I7jGy8jA==}
+  /ts-clone-node@3.0.0(typescript@5.1.6):
+    resolution: {integrity: sha512-egavvyHbIoelkgh1IC2agNB1uMNjB8VJgh0g/cn0bg2XXTcrtjrGMzEk4OD3Fi2hocICjP3vMa56nkzIzq0FRg==}
     engines: {node: '>=14.9.0'}
     peerDependencies:
       typescript: '*'
     dependencies:
-      compatfactory: 2.0.9(typescript@5.1.6)
+      compatfactory: 3.0.0(typescript@5.1.6)
       typescript: 5.1.6
     dev: true
 
