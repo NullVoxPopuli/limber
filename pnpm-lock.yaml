@@ -245,16 +245,16 @@ importers:
         specifier: ^6.4.2
         version: 6.4.2
       '@glint/core':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0(typescript@5.1.6)
       '@glint/environment-ember-loose':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0(@glimmer/component@1.1.2)(@glint/template@1.1.0)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.1.0)
       '@glint/environment-ember-template-imports':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0(@glint/environment-ember-loose@1.1.0)(@glint/template@1.1.0)(ember-template-imports@3.4.2)
       '@glint/template':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.1.3
@@ -359,7 +359,7 @@ importers:
         specifier: ^11.0.1
         version: 11.0.1(ember-source@5.2.0)
       ember-source:
-        specifier: ^5.2.0
+        specifier: ^5.1.2
         version: 5.2.0(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
       ember-template-imports:
         specifier: ^3.4.2
@@ -525,16 +525,16 @@ importers:
         specifier: ^6.4.2
         version: 6.4.2
       '@glint/core':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0(typescript@5.1.6)
       '@glint/environment-ember-loose':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0(@glimmer/component@1.1.2)(@glint/template@1.1.0)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.1.0)
       '@glint/environment-ember-template-imports':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0(@glint/environment-ember-loose@1.1.0)(@glint/template@1.1.0)(ember-template-imports@3.4.2)
       '@glint/template':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.1.3
@@ -600,7 +600,7 @@ importers:
         specifier: ^11.0.1
         version: 11.0.1(ember-source@5.2.0)
       ember-source:
-        specifier: ^5.2.0
+        specifier: ^5.1.2
         version: 5.2.0(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
       ember-template-imports:
         specifier: ^3.4.2
@@ -885,16 +885,16 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       '@glint/core':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0(typescript@5.1.6)
       '@glint/environment-ember-loose':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0(@glimmer/component@1.1.2)(@glint/template@1.1.0)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.1.0)
       '@glint/environment-ember-template-imports':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0(@glint/environment-ember-loose@1.1.0)(@glint/template@1.1.0)(ember-template-imports@3.4.2)
       '@glint/template':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.1.3
@@ -927,7 +927,7 @@ importers:
         specifier: ^6.4.0
         version: 6.4.0(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-source@5.2.0)
       ember-source:
-        specifier: ^5.2.0
+        specifier: ^5.1.2
         version: 5.2.0(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.1.0)
       ember-template-imports:
         specifier: ^3.4.2
@@ -1069,7 +1069,7 @@ importers:
         specifier: ^11.0.1
         version: 11.0.1(ember-source@5.2.0)
       ember-source:
-        specifier: ^5.2.0
+        specifier: ^5.1.2
         version: 5.2.0(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
       ember-source-channel-url:
         specifier: ^3.0.0
@@ -1212,7 +1212,7 @@ importers:
         specifier: ^9.1.3
         version: 9.1.3(@babel/core@7.22.10)(webpack@5.88.2)
       ember-source:
-        specifier: ^5.2.0
+        specifier: ^5.1.2
         version: 5.2.0(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
       esbuild:
         specifier: 0.19.2
@@ -1378,16 +1378,16 @@ importers:
         specifier: ^0.84.3
         version: 0.84.3
       '@glint/core':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0(typescript@5.1.6)
       '@glint/environment-ember-loose':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0(@glimmer/component@1.1.2)(@glint/template@1.1.0)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.1.0)
       '@glint/environment-ember-template-imports':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0(@glint/environment-ember-loose@1.1.0)(@glint/template@1.1.0)(ember-template-imports@3.4.2)
       '@glint/template':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.1.3
@@ -1435,7 +1435,7 @@ importers:
         specifier: ^6.4.0
         version: 6.4.0(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-source@5.2.0)
       ember-source:
-        specifier: ^5.2.0
+        specifier: ^5.1.2
         version: 5.2.0(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.1.0)
       ember-template-imports:
         specifier: ^3.4.2
@@ -1523,16 +1523,16 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       '@glint/core':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0(typescript@5.1.6)
       '@glint/environment-ember-loose':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0(@glimmer/component@1.1.2)(@glint/template@1.1.0)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.1.0)
       '@glint/environment-ember-template-imports':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0(@glint/environment-ember-loose@1.1.0)(@glint/template@1.1.0)(ember-template-imports@3.4.2)
       '@glint/template':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.1.3
@@ -1598,7 +1598,7 @@ importers:
         specifier: ^11.0.1
         version: 11.0.1(ember-source@5.2.0)
       ember-source:
-        specifier: ^5.2.0
+        specifier: ^5.1.2
         version: 5.2.0(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
       ember-source-channel-url:
         specifier: ^3.0.0
@@ -2389,11 +2389,11 @@ importers:
   packages/untyped:
     devDependencies:
       '@glint/template':
-        specifier: ^1.1.0
+        specifier: ^1.0.2
         version: 1.1.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.1.3
-        version: 3.1.3(@babel/core@7.22.10)(@babel/eslint-parser@7.22.10)(eslint-config-prettier@8.10.0)(eslint-plugin-ember@11.10.0)(eslint-plugin-qunit@8.0.0)(eslint@8.47.0)(prettier@2.8.8)
+        version: 3.1.3(@babel/core@7.22.10)(eslint@8.47.0)(prettier@2.8.8)
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -2684,7 +2684,7 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0
     dependencies:
-      '@babel/core': 7.22.10(supports-color@8.1.1)
+      '@babel/core': 7.22.10
       '@babel/helper-environment-visitor': 7.22.5
       '@babel/helper-module-imports': 7.22.5
       '@babel/helper-simple-access': 7.22.5
