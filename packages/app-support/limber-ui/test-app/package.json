@@ -23,7 +23,7 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "dependencies": {
-    "ember-async-data": "1.0.1",
+    "ember-async-data": "1.0.2",
     "limber-ui": "workspace:*"
   },
   "devDependencies": {
