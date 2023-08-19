@@ -1,5 +1,5 @@
-import { expect } from './debug';
-import { TEMPLATE_TAG_NAME } from './util';
+import { expect } from './debug.ts';
+import { TEMPLATE_TAG_NAME } from './util.ts';
 
 export type TemplateMatch = TemplateTagMatch;
 

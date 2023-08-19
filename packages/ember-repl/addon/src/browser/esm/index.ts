@@ -1,8 +1,8 @@
-import { preprocess, transform } from '../gjs';
-import { modules } from '../known-modules';
-import { nameFor } from '../utils';
+import { preprocess, transform } from '../gjs.ts';
+import { modules } from '../known-modules.ts';
+import { nameFor } from '../utils.ts';
 
-import type { CompileResult, ExtraModules } from '../types';
+import type { CompileResult, ExtraModules } from '../types.ts';
 import type Component from '@glimmer/component';
 import type { ComponentLike } from '@glint/template';
 

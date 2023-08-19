@@ -1,7 +1,7 @@
 import { ImportUtil } from 'babel-import-util';
 
-import { transformTemplateTag } from './template-tag-transform';
-import * as util from './util';
+import { transformTemplateTag } from './template-tag-transform.ts';
+import * as util from './util.ts';
 
 import type { NodePath } from '@babel/traverse';
 import type { CallExpression, Class, Program } from '@babel/types';

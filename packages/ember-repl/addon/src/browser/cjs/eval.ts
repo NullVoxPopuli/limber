@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { modules } from '../known-modules';
+import { modules } from '../known-modules.ts';
 
-import type { ExtraModules } from '../types';
+import type { ExtraModules } from '../types.ts';
 import type Component from '@glimmer/component';
 
 export function evalSnippet(

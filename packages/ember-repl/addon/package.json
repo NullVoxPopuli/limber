@@ -42,7 +42,9 @@
     "addon-main.cjs"
   ],
   "scripts": {
-    "build": "rollup --config",
+    "build": "concurrently 'npm:build:*'",
+    "build:js": "rollup --config",
+    "build:types": "tsc",
     "lint:types": "glint",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "rollup --config --watch",
@@ -99,6 +101,7 @@
     "@glint/template": "^1.1.0",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "@nullvoxpopuli/limber-untyped": "workspace:*",
+    "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-commonjs": "^25.0.4",
     "@tsconfig/ember": "^3.0.0",
     "@types/babel__core": "^7.20.1",

@@ -11,9 +11,9 @@ import { on } from '@ember/modifier';
 import { createTemplateFactory } from '@ember/template-factory';
 import { importSync } from '@embroider/macros';
 
-import { nameFor } from './utils';
+import { nameFor } from './utils.ts';
 
-import type { CompileResult } from './types';
+import type { CompileResult } from './types.ts';
 import type { ComponentLike } from '@glint/template';
 
 // These things are pre-bundled in the old system.

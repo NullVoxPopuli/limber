@@ -1,4 +1,4 @@
-import type { TemplateMatch } from './parse-templates';
+import type { TemplateMatch } from './parse-templates.ts';
 import type { NodePath } from '@babel/traverse';
 import type { CallExpression } from '@babel/types';
 import type { ImportUtil } from 'babel-import-util';
