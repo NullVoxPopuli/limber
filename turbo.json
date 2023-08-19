@@ -59,7 +59,7 @@
       "dependsOn": ["build"]
     },
     "build": {
-      "outputs": ["dist/**"],
+      "outputs": ["dist/**", "declarations/**"],
       "dependsOn": ["_syncPnpm", "^build"]
     },
     "test:node": {
