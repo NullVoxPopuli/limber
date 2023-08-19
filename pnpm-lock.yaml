@@ -380,8 +380,8 @@ importers:
         specifier: ^11.10.0
         version: 11.10.0(eslint@8.47.0)
       execa:
-        specifier: ^8.0.0
-        version: 8.0.0
+        specifier: ^8.0.1
+        version: 8.0.1
       file-loader:
         specifier: ^6.2.0
         version: 6.2.0(webpack@5.88.2)
@@ -669,8 +669,8 @@ importers:
         specifier: ^2.10.0
         version: 2.10.0
       execa:
-        specifier: ^8.0.0
-        version: 8.0.0
+        specifier: ^8.0.1
+        version: 8.0.1
       fs-extra:
         specifier: ^11.1.1
         version: 11.1.1
@@ -13431,8 +13431,8 @@ packages:
       strip-final-newline: 3.0.0
     dev: false
 
-  /execa@8.0.0:
-    resolution: {integrity: sha512-CTNS0BcKBcoOsawKBlpcKNmK4Kjuyz5jVLhf+PUsHGMqiKMVTa4cN3U7r7bRY8KTpfOGpXMo27fdy0dYVg2pqA==}
+  /execa@8.0.1:
+    resolution: {integrity: sha512-VyhnebXciFV2DESc+p6B+y0LjSm0krU4OgJN44qFAhBY0TJ+1V61tYD2+wHusZ6F9n5K+vl8k0sTy7PEfV4qpg==}
     engines: {node: '>=16.17'}
     dependencies:
       cross-spawn: 7.0.3
