@@ -23,7 +23,7 @@
     "@glimdown/lezer-infra": "workspace:*",
     "@lezer/common": "^1.0.4",
     "@lezer/generator": "^1.4.0",
-    "@nullvoxpopuli/eslint-configs": "^3.2.0",
+    "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "@tsconfig/ember": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.4.0",
