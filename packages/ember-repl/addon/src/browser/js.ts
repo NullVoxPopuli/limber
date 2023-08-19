@@ -1,7 +1,7 @@
-import { compileJS as compileAMD } from './cjs';
-import { compileJS as compileESM } from './esm';
+import { compileJS as compileAMD } from './cjs/index.ts';
+import { compileJS as compileESM } from './esm/index.ts';
 
-import type { CompileResult, ExtraModules, Options } from './types';
+import type { CompileResult, ExtraModules, Options } from './types.ts';
 
 /**
  * @public

@@ -1,14 +1,14 @@
 import { cell, resource, resourceFactory } from 'ember-resources';
 
-import { nameFor } from '../utils';
+import { nameFor } from '../utils.ts';
 import {
   compileGJS as processGJS,
   compileHBS as processHBS,
   compileMD as processMD,
-} from './formats';
+} from './formats.ts';
 
-import type { CompileResult } from '../types';
-import type { EvalImportMap, ScopeMap } from './types';
+import type { CompileResult } from '../types.ts';
+import type { EvalImportMap, ScopeMap } from './types.ts';
 import type { ComponentLike } from '@glint/template';
 type Format = 'glimdown' | 'gjs' | 'hbs';
 

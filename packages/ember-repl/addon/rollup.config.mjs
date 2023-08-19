@@ -1,4 +1,4 @@
-import ts from "rollup-plugin-ts";
+import { babel } from "@rollup/plugin-babel";
 import cjs from "@rollup/plugin-commonjs";
 import { Addon } from "@embroider/addon-dev/rollup";
 import copy from "rollup-plugin-copy";
@@ -11,19 +11,15 @@ const addon = new Addon({
   destDir: "dist",
 });
 
-console.log(addon.output());
-
 export default defineConfig({
   output: addon.output(),
   plugins: [
     addon.publicEntrypoints(["browser/**/*.js", "test-support/*.js"]),
     addon.appReexports([]),
 
-    ts({
-      transpiler: "babel",
-      transpileOnly: true,
-      babelConfig: "./babel.config.json",
-      browserslist: ["last 2 firefox versions", "last 2 chrome versions"],
+    babel({
+      extensions: [".js", ".gjs", ".ts", ".gts"],
+      babelHelpers: "bundled",
     }),
 
     addon.dependencies(),

@@ -1,4 +1,4 @@
-import { buildPrecompileTemplateCall, registerRefs, TEMPLATE_TAG_NAME } from './util';
+import { buildPrecompileTemplateCall, registerRefs, TEMPLATE_TAG_NAME } from './util.ts';
 
 /**
  * Supports the following syntaxes:

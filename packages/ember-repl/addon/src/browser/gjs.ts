@@ -3,11 +3,11 @@ import { importSync } from '@embroider/macros';
 import babelPluginEmberTemplateCompilation from 'babel-plugin-ember-template-compilation';
 
 // TODO: use real packages, and not these copied files from ember-template-imports
-import babelPluginIntermediateGJS from './eti/babel-plugin';
-import { preprocessEmbeddedTemplates } from './eti/preprocess';
-import { TEMPLATE_TAG_NAME, TEMPLATE_TAG_PLACEHOLDER } from './eti/util';
+import babelPluginIntermediateGJS from './eti/babel-plugin.ts';
+import { preprocessEmbeddedTemplates } from './eti/preprocess.ts';
+import { TEMPLATE_TAG_NAME, TEMPLATE_TAG_PLACEHOLDER } from './eti/util.ts';
 
-import type { Babel } from './types';
+import type { Babel } from './types.ts';
 
 const compiler = importSync('ember-source/dist/ember-template-compiler.js');
 

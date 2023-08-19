@@ -1,8 +1,8 @@
-import { preprocess, transform } from '../gjs';
-import { nameFor } from '../utils';
-import { evalSnippet } from './eval';
+import { preprocess, transform } from '../gjs.ts';
+import { nameFor } from '../utils.ts';
+import { evalSnippet } from './eval.ts';
 
-import type { CompileResult, ExtraModules } from '../types';
+import type { CompileResult, ExtraModules } from '../types.ts';
 import type { ComponentLike } from '@glint/template';
 
 export interface Info {

@@ -18,7 +18,7 @@ overrides:
   '@glint/template': ^1.0.2
   '@glint/environment-ember-loose': ^1.0.2
   '@glint/environment-ember-template-imports': ^1.0.2
-  ember-async-data: ^1.0.1
+  ember-async-data: 1.0.1
   ember-auto-import: ^2.6.3
   ember-source: ^5.1.2
   ember-modifier: ^4.1.0
@@ -449,7 +449,7 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       ember-async-data:
-        specifier: ^1.0.1
+        specifier: 1.0.1
         version: 1.0.1(ember-source@5.2.0)
       ember-modifier:
         specifier: ^4.1.0
@@ -904,7 +904,7 @@ importers:
         version: link:../../../untyped
       '@rollup/plugin-babel':
         specifier: ^6.0.3
-        version: 6.0.3(@babel/core@7.22.10)(rollup@3.28.0)
+        version: 6.0.3(@babel/core@7.22.10)(@types/babel__core@7.20.1)(rollup@3.28.0)
       '@tsconfig/ember':
         specifier: ^3.0.0
         version: 3.0.0
@@ -918,7 +918,7 @@ importers:
         specifier: ^8.2.0
         version: 8.2.0
       ember-async-data:
-        specifier: ^1.0.1
+        specifier: 1.0.1
         version: 1.0.1(ember-source@5.2.0)
       ember-cli-htmlbars:
         specifier: ^6.3.0
@@ -972,7 +972,7 @@ importers:
   packages/app-support/limber-ui/test-app:
     dependencies:
       ember-async-data:
-        specifier: ^1.0.1
+        specifier: 1.0.1
         version: 1.0.1(ember-source@5.2.0)
       limber-ui:
         specifier: workspace:*
@@ -1395,6 +1395,9 @@ importers:
       '@nullvoxpopuli/limber-untyped':
         specifier: workspace:*
         version: link:../../untyped
+      '@rollup/plugin-babel':
+        specifier: ^6.0.3
+        version: 6.0.3(@babel/core@7.22.10)(@types/babel__core@7.20.1)(rollup@3.28.0)
       '@rollup/plugin-commonjs':
         specifier: ^25.0.4
         version: 25.0.4(rollup@3.28.0)
@@ -1473,9 +1476,6 @@ importers:
       rollup-plugin-glimmer-template-tag:
         specifier: ^0.4.1
         version: 0.4.1(@babel/core@7.22.10)(ember-source@5.2.0)(ember-template-imports@3.4.2)
-      rollup-plugin-ts:
-        specifier: ^3.2.0
-        version: 3.2.0(@babel/core@7.22.10)(@babel/preset-typescript@7.22.5)(rollup@3.28.0)(typescript@5.1.6)
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
@@ -1854,7 +1854,7 @@ importers:
         version: 3.28.0
       rollup-plugin-ts:
         specifier: ^3.2.0
-        version: 3.2.0(@babel/core@7.22.10)(@babel/preset-typescript@7.22.5)(rollup@3.28.0)(typescript@5.1.6)
+        version: 3.2.0(@babel/core@7.22.10)(@babel/runtime@7.22.10)(rollup@3.28.0)(typescript@5.1.6)
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
@@ -2057,7 +2057,7 @@ importers:
         version: 3.28.0
       rollup-plugin-ts:
         specifier: ^3.2.0
-        version: 3.2.0(@babel/core@7.22.10)(@babel/preset-typescript@7.22.5)(rollup@3.28.0)(typescript@5.1.6)
+        version: 3.2.0(@babel/core@7.22.10)(@babel/runtime@7.22.10)(rollup@3.28.0)(typescript@5.1.6)
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
@@ -2239,7 +2239,7 @@ importers:
         version: 3.28.0
       rollup-plugin-ts:
         specifier: ^3.2.0
-        version: 3.2.0(@babel/core@7.22.10)(@babel/preset-typescript@7.22.5)(rollup@3.28.0)(typescript@5.1.6)
+        version: 3.2.0(@babel/core@7.22.10)(@babel/runtime@7.22.10)(rollup@3.28.0)(typescript@5.1.6)
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
@@ -2354,7 +2354,7 @@ importers:
         version: 3.28.0
       rollup-plugin-ts:
         specifier: ^3.2.0
-        version: 3.2.0(@babel/core@7.22.10)(@babel/preset-typescript@7.22.5)(rollup@3.28.0)(typescript@5.1.6)
+        version: 3.2.0(@babel/core@7.22.10)(@babel/runtime@7.22.10)(rollup@3.28.0)(typescript@5.1.6)
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
@@ -6653,7 +6653,7 @@ packages:
       prettier: 3.0.2
     dev: true
 
-  /@rollup/plugin-babel@6.0.3(@babel/core@7.22.10)(rollup@3.28.0):
+  /@rollup/plugin-babel@6.0.3(@babel/core@7.22.10)(@types/babel__core@7.20.1)(rollup@3.28.0):
     resolution: {integrity: sha512-fKImZKppa1A/gX73eg4JGo+8kQr/q1HBQaCGKECZ0v4YBBv3lFqi14+7xyApECzvkLTHCifx+7ntcrvtBIRcpg==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -6669,6 +6669,7 @@ packages:
       '@babel/core': 7.22.10
       '@babel/helper-module-imports': 7.22.5
       '@rollup/pluginutils': 5.0.3(rollup@3.28.0)
+      '@types/babel__core': 7.20.1
       rollup: 3.28.0
     dev: true
 
@@ -11101,17 +11102,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /ember-async-data@1.0.2(ember-source@5.2.0):
-    resolution: {integrity: sha512-HCnQnnPCV5A7FADoW6/e+48PVxQ1ElatxZeJJoTb2UuklMHK8CpdAvEILVC0qtEeyIEbcG/LyOIxuHK0ja63zQ==}
-    peerDependencies:
-      ember-source: '*'
-    dependencies:
-      '@ember/test-waiters': 3.0.2
-      '@embroider/addon-shim': 1.8.6
-      ember-source: 5.2.0(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
-    transitivePeerDependencies:
-      - supports-color
-
   /ember-auto-import@2.6.3(@glint/template@1.1.0):
     resolution: {integrity: sha512-uLhrRDJYWCRvQ4JQ1e64XlSrqAKSd6PXaJ9ZsZI6Tlms9T4DtQFxNXasqji2ZRJBVrxEoLCRYX3RTldsQ0vNGQ==}
     engines: {node: 12.* || 14.* || >= 16}
@@ -12114,7 +12104,7 @@ packages:
       '@glimmer/component': 1.1.2(@babel/core@7.22.10)
       '@glimmer/tracking': 1.1.2
       '@glint/template': 1.1.0
-      ember-async-data: 1.0.2(ember-source@5.2.0)
+      ember-async-data: 1.0.1(ember-source@5.2.0)
       ember-source: 5.2.0(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
     transitivePeerDependencies:
       - supports-color
@@ -19306,53 +19296,6 @@ packages:
       '@babel/core': 7.22.10
       ember-source: 5.2.0(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.1.0)
       ember-template-imports: 3.4.2
-    dev: true
-
-  /rollup-plugin-ts@3.2.0(@babel/core@7.22.10)(@babel/preset-typescript@7.22.5)(rollup@3.28.0)(typescript@5.1.6):
-    resolution: {integrity: sha512-KkTLVifkUexEiAXS9VtSjDrjKr0TyusmNJpb2ZTAzI9VuPumSu4AktIaVNnwv70iUEitHwZtET7OAM+5n1u1tg==}
-    engines: {node: '>=14.9.0', npm: '>=7.0.0', pnpm: '>=3.2.0', yarn: '>=1.13'}
-    peerDependencies:
-      '@babel/core': '>=6.x || >=7.x'
-      '@babel/plugin-transform-runtime': '>=6.x || >=7.x'
-      '@babel/preset-env': '>=6.x || >=7.x'
-      '@babel/preset-typescript': '>=6.x || >=7.x'
-      '@babel/runtime': '>=6.x || >=7.x'
-      '@swc/core': '>=1.x'
-      '@swc/helpers': '>=0.2'
-      rollup: '>=1.x || >=2.x'
-      typescript: '*'
-    peerDependenciesMeta:
-      '@babel/core':
-        optional: true
-      '@babel/plugin-transform-runtime':
-        optional: true
-      '@babel/preset-env':
-        optional: true
-      '@babel/preset-typescript':
-        optional: true
-      '@babel/runtime':
-        optional: true
-      '@swc/core':
-        optional: true
-      '@swc/helpers':
-        optional: true
-      rollup:
-        optional: true
-    dependencies:
-      '@babel/core': 7.22.10
-      '@babel/preset-typescript': 7.22.5(@babel/core@7.22.10)
-      '@rollup/pluginutils': 5.0.3(rollup@3.28.0)
-      '@wessberg/stringutil': 1.0.19
-      ansi-colors: 4.1.3
-      browserslist: 4.21.10
-      browserslist-generator: 2.1.0
-      compatfactory: 2.0.9(typescript@5.1.6)
-      crosspath: 2.0.0
-      magic-string: 0.27.0
-      rollup: 3.28.0
-      ts-clone-node: 2.0.4(typescript@5.1.6)
-      tslib: 2.6.1
-      typescript: 5.1.6
     dev: true
 
   /rollup-plugin-ts@3.2.0(@babel/core@7.22.10)(@babel/runtime@7.22.10)(rollup@3.28.0)(typescript@5.1.6):

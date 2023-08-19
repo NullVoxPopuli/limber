@@ -15,35 +15,50 @@
   "typesVersions": {
     "*": {
       "test-support": [
-        "dist/test-support/index.d.ts"
+        "declarations/test-support/index.d.ts"
       ],
       "markdown/parse": [
-        "./dist/browser/compile/markdown-to-ember.d.ts"
+        "./declarations/browser/compile/markdown-to-ember.d.ts"
       ],
       "*": [
-        "dist/browser/*",
-        "dist/browser/*/index.d.ts"
+        "declarations/browser/*",
+        "declarations/browser/*/index.d.ts"
       ]
     }
   },
   "exports": {
-    ".": "./dist/browser/index.js",
-    "./esm": "./dist/browser/esm/index.js",
-    "./markdown/parse": "./dist/browser/compile/markdown-to-ember.js",
+    ".": {
+      "types": "./declarations/browser/index.d.ts",
+      "default": "./dist/browser/index.js"
+    },
+    "./esm": {
+      "types": "./declarations/browser/esm/index.d.ts",
+      "default": "./dist/browser/esm/index.js"
+    },
+    "./markdown/parse": {
+      "types": "./declarations/browser/compile/markdown-to-ember.d.ts",
+      "default": "./dist/browser/compile/markdown-to-ember.js"
+    },
     "./ember-cli": {
       "require": "./src/build/ember-cli.cjs"
     },
-    "./test-support": "./dist/test-support/index.js",
+    "./test-support": {
+      "types": "./declarations/test-support/index.d.ts",
+      "default": "./dist/test-support/index.js"
+    },
     "./addon-main.js": "./addon-main.cjs"
   },
   "files": [
     "src",
     "dist",
+    "declarations",
     "addon-main.cjs"
   ],
   "scripts": {
-    "build": "rollup --config",
-    "lint:types": "glint",
+    "build": "concurrently 'npm:build:*'",
+    "build:js": "rollup --config",
+    "build:types": "tsc --emitDeclarationOnly --noEmit false",
+    "lint:types": "tsc --noEmit",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "rollup --config --watch",
     "lint": "pnpm -w exec lint",
@@ -99,6 +114,7 @@
     "@glint/template": "^1.1.0",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "@nullvoxpopuli/limber-untyped": "workspace:*",
+    "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-commonjs": "^25.0.4",
     "@tsconfig/ember": "^3.0.0",
     "@types/babel__core": "^7.20.1",
@@ -125,7 +141,6 @@
     "rollup": "~3.28.0",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-glimmer-template-tag": "^0.4.1",
-    "rollup-plugin-ts": "^3.2.0",
     "typescript": "^5.1.6"
   },
   "volta": {

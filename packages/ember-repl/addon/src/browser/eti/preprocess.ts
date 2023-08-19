@@ -7,10 +7,10 @@ import { getTemplateLocals } from '@glimmer/syntax';
 import lineColumn from 'line-column';
 import MagicString from 'magic-string';
 
-import { expect } from './debug';
-import { parseTemplates } from './parse-templates';
+import { expect } from './debug.ts';
+import { parseTemplates } from './parse-templates.ts';
 
-import type { ParseTemplatesOptions, TemplateMatch } from './parse-templates';
+import type { ParseTemplatesOptions, TemplateMatch } from './parse-templates.ts';
 
 interface PreprocessOptionsEager {
   importIdentifier?: string;
