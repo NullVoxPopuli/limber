@@ -1,4 +1,4 @@
-import { ImportUtil } from 'babel-import-util';
+import * as babelImportUtil from 'babel-import-util';
 
 import { transformTemplateTag } from './template-tag-transform.ts';
 import * as util from './util.ts';
@@ -62,7 +62,7 @@ export default function (babel: any) {
   let visitor: any = {
     Program: {
       enter(path: NodePath<Program>, state: any) {
-        state.importUtil = new ImportUtil(t, path);
+        state.importUtil = new babelImportUtil.ImportUtil(t, path);
       },
     },
 

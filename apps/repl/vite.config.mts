@@ -24,7 +24,14 @@ export default defineConfig({
     }),
   ],
   optimizeDeps: {
-    exclude: addons(__dirname),
+    exclude: [
+      ...addons(__dirname),
+      // used in ember-repl's ember-template-import's implementation
+      // it's CJS
+      'babel-import-util',
+      // used in magic-string 
+      // 'encode',
+    ]
   },
   server: {
     watch: {

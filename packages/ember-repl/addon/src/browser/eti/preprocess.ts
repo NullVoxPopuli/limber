@@ -2,9 +2,6 @@
 // @ts-ignore
 import { getTemplateLocals } from '@glimmer/syntax';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import lineColumn from 'line-column';
 import MagicString from 'magic-string';
 
 import { expect } from './debug.ts';
@@ -46,8 +43,8 @@ interface Replacement {
   index: number;
   oldLength: number;
   newLength: number;
-  originalLine: number;
-  originalCol: number;
+  // originalLine: number;
+  // originalCol: number;
 }
 
 function getMatchStartAndEnd(match: RegExpMatchArray) {
@@ -65,18 +62,11 @@ function replacementFrom(
   newLength: number,
   type: 'start' | 'end'
 ): Replacement {
-  const loc = expect(
-    lineColumn(template).fromIndex(index),
-    'BUG: expected to find a line/column based on index'
-  );
-
   return {
     type,
     index,
     oldLength,
     newLength,
-    originalCol: loc.col,
-    originalLine: loc.line,
   };
 }
 

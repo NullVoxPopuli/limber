@@ -27,7 +27,7 @@
     "start:prebuild": "ember build --watch",
     "start:dev": "vite",
     "start:syncPnpm": "pnpm _syncPnpm --watch",
-    "start:iframe": "pnpx http-server ./public -i -p 4204",
+    "iframe:start": "pnpx http-server ./public -i -p 4204",
     "test:browserstack": "./scripts/browserstack.sh",
     "test:ember": "ember test --test-port 0",
     "_syncPnpm": "pnpm sync-dependencies-meta-injected",
