@@ -42,12 +42,12 @@ module.exports = async function (defaults) {
   //  - @glimmer/syntax
   app.import('vendor/ember/ember-template-compiler.js');
 
-  const { Webpack } = require('@embroider/webpack');
-  const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+  // const { Webpack } = require('@embroider/webpack');
+  // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
   const { EsbuildPlugin } = require('esbuild-loader');
 
-  return require('@embroider/compat').compatBuild(app, Webpack, {
+  return require('@embroider/compat').compatBuild(app, undefined, {
     extraPublicTrees: [
       require('@nullvoxpopuli/limber-codemirror/broccoli-funnel')(),
       // Tailwind
@@ -102,54 +102,57 @@ module.exports = async function (defaults) {
     implicitModulesStrategy: 'packageNames',
     // required due to this app being a dynamic component generator
     allowUnsafeDynamicComponents: true,
+    amdCompatibility: {
+      es: [],
+    },
     packagerOptions: {
-      webpackConfig: {
-        // embroider 1.8.3 might have an issues with gts + sourcemaps?
-        devtool: false,
-        // devtool: 'source-map',
-        // devtool: isProduction ? 'source-map' : false,
-        experiments: {
-          // Causes app to not boot
-          // lazyCompilation: true,
-        },
-        // output: {
-        //   Causes app to not boot
-        //   chunkFormat: 'module',
-        // },
-        resolve: {
-          alias: {
-            path: 'path-browserify',
-          },
-          fallback: {
-            path: require.resolve('path-browserify'),
-          },
-        },
-        optimization: {
-          minimizer: [
-            new EsbuildPlugin({
-              legalComments: 'none',
-              sourcemap: true,
-              minify: isProduction,
-              css: true,
-              exclude: [/codemirror/],
-            }),
-          ],
-        },
-        node: {
-          global: false,
-          __filename: true,
-          __dirname: true,
-        },
-        plugins: isProduction
-          ? [
-              new BundleAnalyzerPlugin({
-                analyzerMode: 'static',
-                openAnalyzer: false,
-                reportFilename: 'bundle.html',
-              }),
-            ]
-          : [],
-      },
+      // webpackConfig: {
+      //   // embroider 1.8.3 might have an issues with gts + sourcemaps?
+      //   devtool: false,
+      //   // devtool: 'source-map',
+      //   // devtool: isProduction ? 'source-map' : false,
+      //   experiments: {
+      //     // Causes app to not boot
+      //     // lazyCompilation: true,
+      //   },
+      //   // output: {
+      //   //   Causes app to not boot
+      //   //   chunkFormat: 'module',
+      //   // },
+      //   resolve: {
+      //     alias: {
+      //       path: 'path-browserify',
+      //     },
+      //     fallback: {
+      //       path: require.resolve('path-browserify'),
+      //     },
+      //   },
+      //   optimization: {
+      //     minimizer: [
+      //       new EsbuildPlugin({
+      //         legalComments: 'none',
+      //         sourcemap: true,
+      //         minify: isProduction,
+      //         css: true,
+      //         exclude: [/codemirror/],
+      //       }),
+      //     ],
+      //   },
+      //   node: {
+      //     global: false,
+      //     __filename: true,
+      //     __dirname: true,
+      //   },
+      //   plugins: isProduction
+      //     ? [
+      //         new BundleAnalyzerPlugin({
+      //           analyzerMode: 'static',
+      //           openAnalyzer: false,
+      //           reportFilename: 'bundle.html',
+      //         }),
+      //       ]
+      //     : [],
+      // },
     },
   });
 };

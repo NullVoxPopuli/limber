@@ -220,6 +220,9 @@ importers:
       '@embroider/core':
         specifier: 3.2.1
         version: 3.2.1(@glint/template@1.1.0)
+      '@embroider/vite':
+        specifier: ^0.1.2
+        version: 0.1.2(@embroider/core@3.2.1)(vite@4.4.9)
       '@embroider/webpack':
         specifier: 3.1.5
         version: 3.1.5(@embroider/core@3.2.1)(webpack@5.88.2)
@@ -256,6 +259,9 @@ importers:
       '@nullvoxpopuli/limber-untyped':
         specifier: workspace:^0.0.0
         version: link:../../packages/untyped
+      '@rollup/plugin-babel':
+        specifier: ^6.0.3
+        version: 6.0.3(@babel/core@7.22.10)(@types/babel__core@7.20.1)(rollup@3.28.0)
       '@types/babel__core':
         specifier: ^7.20.1
         version: 7.20.1
@@ -424,6 +430,9 @@ importers:
       vfile:
         specifier: ^6.0.1
         version: 6.0.1
+      vite:
+        specifier: ^4.4.9
+        version: 4.4.9(@types/node@18.17.5)
       webpack:
         specifier: ^5.88.2
         version: 5.88.2
@@ -4738,6 +4747,29 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: false
+
+  /@embroider/vite@0.1.2(@embroider/core@3.2.1)(vite@4.4.9):
+    resolution: {integrity: sha512-0SUWCfVjnCXxurgOk0vlH+R1qGVM+4Pq6xZOBkfiWhl/9AdKeehS/82mVnPLptkSRCNdhMKa57x92uIWSCOZPQ==}
+    peerDependencies:
+      '@embroider/core': ^3.2.1
+      vite: ^4.3.9
+    dependencies:
+      '@embroider/core': 3.2.1(@glint/template@1.1.0)
+      '@rollup/pluginutils': 4.2.1
+      assert-never: 1.2.1
+      content-tag: 1.0.1
+      debug: 4.3.4(supports-color@9.4.0)
+      fs-extra: 10.1.0
+      jsdom: 16.7.0
+      source-map-url: 0.4.1
+      terser: 5.19.2
+      vite: 4.4.9(@types/node@18.17.5)
+    transitivePeerDependencies:
+      - bufferutil
+      - canvas
+      - supports-color
+      - utf-8-validate
+    dev: true
 
   /@embroider/webpack@3.1.5(@embroider/core@3.2.1)(webpack@5.88.2):
     resolution: {integrity: sha512-J4NinNlxPzM4GeUoqnDzOVex2TxtEYjq7fVSxOKefj1bm/V3vzR6Dqwq2sxJmGfNbaTXbMVz6kpbz4bxZz8DOw==}
