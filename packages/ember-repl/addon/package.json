@@ -15,14 +15,14 @@
   "typesVersions": {
     "*": {
       "test-support": [
-        "dist/test-support/index.d.ts"
+        "declarations/test-support/index.d.ts"
       ],
       "markdown/parse": [
-        "./dist/browser/compile/markdown-to-ember.d.ts"
+        "./declarations/browser/compile/markdown-to-ember.d.ts"
       ],
       "*": [
-        "dist/browser/*",
-        "dist/browser/*/index.d.ts"
+        "declarations/browser/*",
+        "declarations/browser/*/index.d.ts"
       ]
     }
   },
@@ -44,8 +44,8 @@
   "scripts": {
     "build": "concurrently 'npm:build:*'",
     "build:js": "rollup --config",
-    "build:types": "tsc",
-    "lint:types": "glint",
+    "build:types": "tsc --emitDeclarationOnly --noEmit false",
+    "lint:types": "tsc --noEmit",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "rollup --config --watch",
     "lint": "pnpm -w exec lint",
