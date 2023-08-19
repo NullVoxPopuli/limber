@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@nullvoxpopuli/eslint-configs': ^3.1.3
+  '@nullvoxpopuli/eslint-configs': ^3.2.2
   '@glimmer/component': ^1.1.2
   '@glimmer/tracking': ^1.1.2
   '@glimmer/compiler': ^0.84.3
@@ -2684,7 +2684,7 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0
     dependencies:
-      '@babel/core': 7.22.10(supports-color@8.1.1)
+      '@babel/core': 7.22.10
       '@babel/helper-environment-visitor': 7.22.5
       '@babel/helper-module-imports': 7.22.5
       '@babel/helper-simple-access': 7.22.5
@@ -11097,7 +11097,7 @@ packages:
     dependencies:
       '@ember/test-waiters': 3.0.2
       '@embroider/addon-shim': 1.8.6
-      ember-source: 5.2.0(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.1.0)
+      ember-source: 5.2.0(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -12208,6 +12208,7 @@ packages:
       - rsvp
       - supports-color
       - webpack
+    dev: true
 
   /ember-source@5.2.0(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2):
     resolution: {integrity: sha512-rr8qLnyW6QV5N4ItwFluTH/SZ5W7uGsYL5GP0tYA2z9zFqD0g2TTJRBsaUPYFlHqcuUhWHiGg+xOyLcHZJOrig==}
