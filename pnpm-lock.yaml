@@ -184,8 +184,8 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1
       unified:
-        specifier: ^10.1.2
-        version: 10.1.2
+        specifier: ^11.0.1
+        version: 11.0.1
       unist-util-flatmap:
         specifier: ^1.0.0
         version: 1.0.0
@@ -482,8 +482,8 @@ importers:
         specifier: ^10.1.0
         version: 10.1.0
       unified:
-        specifier: ^10.1.2
-        version: 10.1.2
+        specifier: ^11.0.1
+        version: 11.0.1
     devDependencies:
       '@babel/core':
         specifier: ^7.22.10
@@ -1326,8 +1326,8 @@ importers:
         specifier: ^10.1.0
         version: 10.1.0
       unified:
-        specifier: ^10.1.2
-        version: 10.1.2
+        specifier: ^11.0.1
+        version: 11.0.1
       unist-util-visit:
         specifier: ^4.1.2
         version: 4.1.2
@@ -7375,6 +7375,10 @@ packages:
       eslint-visitor-keys: 3.4.3
     dev: true
 
+  /@ungap/structured-clone@1.2.0:
+    resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
+    dev: false
+
   /@vitest/expect@0.34.2:
     resolution: {integrity: sha512-EZm2dMNlLyIfDMha17QHSQcg2KjeAZaXd65fpPzXY5bvnfx10Lcaz3N55uEe8PhF+w4pw+hmrlHLLlRn9vkBJg==}
     dependencies:
@@ -10875,6 +10879,12 @@ packages:
   /dettle@1.0.1:
     resolution: {integrity: sha512-/oD3At60ZfhgzpofJtyClNTrIACyMdRe+ih0YiHzAniN0IZnLdLpEzgR6RtGs3kowxUkTnvV/4t1FBxXMUdusQ==}
     dev: true
+
+  /devlop@1.1.0:
+    resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
+    dependencies:
+      dequal: 2.0.3
+    dev: false
 
   /didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
@@ -21300,6 +21310,18 @@ packages:
       vfile: 5.3.7
     dev: false
 
+  /unified@11.0.1:
+    resolution: {integrity: sha512-v4p/Tcbn44UjLtASIyrKi29qqSbWY+u3awY5M6fTMVuT3KQ9DfWd4q/JaFGoNEDtQt8+e4yg150oHx34ABwrsg==}
+    dependencies:
+      '@types/unist': 3.0.0
+      '@ungap/structured-clone': 1.2.0
+      bail: 2.0.2
+      devlop: 1.1.0
+      is-plain-obj: 4.1.0
+      trough: 2.1.0
+      vfile: 6.0.1
+    dev: false
+
   /union-value@1.0.1:
     resolution: {integrity: sha512-tJfXmxMeWYnczCVs7XAEvIV7ieppALdyepWMkHkwciRpZraG/xwT+s2JN8+pr1+8jCRf80FFzvr+MpQeeoF4Xg==}
     engines: {node: '>=0.10.0'}
@@ -22427,7 +22449,7 @@ packages:
       remark-gfm: 3.0.1
       remark-parse: 10.0.2
       remark-rehype: 10.1.0
-      unified: 10.1.2
+      unified: 11.0.1
       unist-util-visit: 4.1.2
       uuid: 9.0.0
       vfile: 6.0.1
