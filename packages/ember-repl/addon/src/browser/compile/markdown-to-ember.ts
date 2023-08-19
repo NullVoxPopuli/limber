@@ -114,9 +114,9 @@ function liveCodeExtraction(options: Options = {}) {
 
   function enhance(code: Code) {
     code.data ??= {};
-    code.data['hProperties'] ??= {};
+    (code.data as any)['hProperties'] ??= {};
     // This is secret-to-us-only API, so we don't really care about the type
-    (code.data['hProperties'] as any)[GLIMDOWN_PREVIEW] = true;
+    (code.data as any)['hProperties'][GLIMDOWN_PREVIEW] = true;
 
     return {
       data: {
@@ -138,8 +138,8 @@ function liveCodeExtraction(options: Options = {}) {
 
   return function transformer(tree: Parent, file: VFileWithMeta) {
     visit(tree, ['code'], function (node, index, parent) {
-      if (parent === null) return;
-      if (index === null) return;
+      if (parent === null || parent === undefined) return;
+      if (index === null || index === undefined) return;
 
       if (!isRelevantCode(node as Code)) {
         let enhanced = enhance(node as Code);
