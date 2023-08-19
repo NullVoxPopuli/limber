@@ -1,4 +1,4 @@
-import { babel } from '@rollup/plugin-babel';
+import { babel } from "@rollup/plugin-babel";
 import cjs from "@rollup/plugin-commonjs";
 import { Addon } from "@embroider/addon-dev/rollup";
 import copy from "rollup-plugin-copy";
@@ -18,8 +18,8 @@ export default defineConfig({
     addon.appReexports([]),
 
     babel({
-      extensions: ['.js', '.gjs', '.ts', '.gts'],
-      babelHelpers: 'bundled',
+      extensions: [".js", ".gjs", ".ts", ".gts"],
+      babelHelpers: "bundled",
     }),
 
     addon.dependencies(),
