@@ -22,7 +22,7 @@
     "@codemirror/view": "^6.16.0",
     "@glimdown/lezer-infra": "workspace:*",
     "@lezer/common": "^1.0.4",
-    "@lezer/generator": "^1.4.0",
+    "@lezer/generator": "^1.4.2",
     "@nullvoxpopuli/eslint-configs": "^3.2.0",
     "@tsconfig/ember": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
