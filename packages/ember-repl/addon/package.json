@@ -27,18 +27,31 @@
     }
   },
   "exports": {
-    ".": "./dist/browser/index.js",
-    "./esm": "./dist/browser/esm/index.js",
-    "./markdown/parse": "./dist/browser/compile/markdown-to-ember.js",
+    ".": {
+      "types": "./declarations/browser/index.d.ts",
+      "default": "./dist/browser/index.js"
+    },
+    "./esm": {
+      "types": "./declarations/browser/esm/index.d.ts",
+      "default": "./dist/browser/esm/index.js"
+    },
+    "./markdown/parse": {
+      "types": "./declarations/browser/compile/markdown-to-ember.d.ts",
+      "default": "./dist/browser/compile/markdown-to-ember.js"
+    },
     "./ember-cli": {
       "require": "./src/build/ember-cli.cjs"
     },
-    "./test-support": "./dist/test-support/index.js",
+    "./test-support": {
+      "types": "./declarations/test-support/index.d.ts",
+      "default": "./dist/test-support/index.js"
+    },
     "./addon-main.js": "./addon-main.cjs"
   },
   "files": [
     "src",
     "dist",
+    "declarations",
     "addon-main.cjs"
   ],
   "scripts": {

@@ -18,7 +18,7 @@ overrides:
   '@glint/template': ^1.0.2
   '@glint/environment-ember-loose': ^1.0.2
   '@glint/environment-ember-template-imports': ^1.0.2
-  ember-async-data: ^1.0.1
+  ember-async-data: 1.0.1
   ember-auto-import: ^2.6.3
   ember-source: ^5.1.2
   ember-modifier: ^4.1.0
@@ -449,7 +449,7 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       ember-async-data:
-        specifier: ^1.0.1
+        specifier: 1.0.1
         version: 1.0.1(ember-source@5.2.0)
       ember-modifier:
         specifier: ^4.1.0
@@ -918,7 +918,7 @@ importers:
         specifier: ^8.2.0
         version: 8.2.0
       ember-async-data:
-        specifier: ^1.0.1
+        specifier: 1.0.1
         version: 1.0.1(ember-source@5.2.0)
       ember-cli-htmlbars:
         specifier: ^6.3.0
@@ -972,7 +972,7 @@ importers:
   packages/app-support/limber-ui/test-app:
     dependencies:
       ember-async-data:
-        specifier: ^1.0.1
+        specifier: 1.0.1
         version: 1.0.1(ember-source@5.2.0)
       limber-ui:
         specifier: workspace:*
@@ -11102,17 +11102,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /ember-async-data@1.0.2(ember-source@5.2.0):
-    resolution: {integrity: sha512-HCnQnnPCV5A7FADoW6/e+48PVxQ1ElatxZeJJoTb2UuklMHK8CpdAvEILVC0qtEeyIEbcG/LyOIxuHK0ja63zQ==}
-    peerDependencies:
-      ember-source: '*'
-    dependencies:
-      '@ember/test-waiters': 3.0.2
-      '@embroider/addon-shim': 1.8.6
-      ember-source: 5.2.0(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
-    transitivePeerDependencies:
-      - supports-color
-
   /ember-auto-import@2.6.3(@glint/template@1.1.0):
     resolution: {integrity: sha512-uLhrRDJYWCRvQ4JQ1e64XlSrqAKSd6PXaJ9ZsZI6Tlms9T4DtQFxNXasqji2ZRJBVrxEoLCRYX3RTldsQ0vNGQ==}
     engines: {node: 12.* || 14.* || >= 16}
@@ -12115,7 +12104,7 @@ packages:
       '@glimmer/component': 1.1.2(@babel/core@7.22.10)
       '@glimmer/tracking': 1.1.2
       '@glint/template': 1.1.0
-      ember-async-data: 1.0.2(ember-source@5.2.0)
+      ember-async-data: 1.0.1(ember-source@5.2.0)
       ember-source: 5.2.0(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
     transitivePeerDependencies:
       - supports-color

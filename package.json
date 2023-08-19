@@ -54,7 +54,7 @@
       "@glint/template": "^1.0.2",
       "@glint/environment-ember-loose": "^1.0.2",
       "@glint/environment-ember-template-imports": "^1.0.2",
-      "ember-async-data": "^1.0.1",
+      "ember-async-data": "1.0.1",
       "ember-auto-import": "^2.6.3",
       "ember-source": "^5.1.2",
       "ember-modifier": "^4.1.0",
