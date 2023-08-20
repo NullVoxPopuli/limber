@@ -3,10 +3,11 @@
     "environment": ["ember-loose", "ember-template-imports"]
   },
   "compilerOptions": {
-    "skipLibCheck": true,
     "target": "ESNext",
+    "moduleResolution": "bundler",
+    "module": "esnext",
+    "skipLibCheck": true,
     "allowJs": true,
-    "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
@@ -22,7 +23,6 @@
     "inlineSourceMap": true,
     "inlineSources": true,
     "baseUrl": ".",
-    "module": "esnext",
     "experimentalDecorators": true,
     "paths": {
       "limber/tests/*": ["tests/*"],
