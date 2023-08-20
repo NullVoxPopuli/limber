@@ -7,23 +7,31 @@ import babelPluginEmberTemplateCompilation from 'babel-plugin-ember-template-com
 // import { TEMPLATE_TAG_NAME, TEMPLATE_TAG_PLACEHOLDER } from './eti/util.ts';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { TEMPLATE_TAG_NAME, transform as templateTagTransform } from 'ember-template-tag/browser-esm';
+// import { TEMPLATE_TAG_NAME, transform as templateTagTransform } from 'ember-template-tag/browser-esm';
+import init, { Preprocessor } from 'content-tag';
 
 import type { Babel } from './types.ts';
 
 const compiler = importSync('ember-source/dist/ember-template-compiler.js');
 
-export function preprocess(input: string, name: string) {
-  let preprocessed = templateTagTransform({
-    input,
-    relativePath: `${name}.js`,
-    // includeSourceMaps: false,
-    // includeTemplateTokens: true,
-    templateTag: TEMPLATE_TAG_NAME,
-    // templateTagReplacement: TEMPLATE_TAG_PLACEHOLDER,
-  });
+  await init();
 
-  return preprocessed.output;
+  const processor = new Preprocessor();
+
+export function preprocess(input: string, name: string) {
+
+  // let preprocessed = templateTagTransform({
+  //   input,
+  //   relativePath: `${name}.js`,
+  //   // includeSourceMaps: false,
+  //   // includeTemplateTokens: true,
+  //   templateTag: TEMPLATE_TAG_NAME,
+  //   // templateTagReplacement: TEMPLATE_TAG_PLACEHOLDER,
+  // });
+
+  // return preprocessed.output;
+
+  return processor.process(input, `${name}.js`);
 }
 
 export async function transform(

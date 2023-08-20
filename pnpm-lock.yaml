@@ -128,7 +128,7 @@ importers:
         version: 0.4.0(@babel/core@7.22.11)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.1.0)(@glint/template@1.1.0)(ember-modifier@4.1.0)(ember-resources@6.4.0)(ember-source@5.2.0)
       ember-repl:
         specifier: workspace:*
-        version: file:packages/ember-repl/addon(@glimmer/component@1.1.2)(@glint/template@1.1.0)(ember-resources@6.4.0)(ember-source@5.2.0)
+        version: file:packages/ember-repl/addon(@glimmer/component@1.1.2)(@glint/template@1.1.0)(babel-plugin-ember-template-compilation@2.2.0)(ember-resources@6.4.0)(ember-source@5.2.0)
       ember-resources:
         specifier: ^6.4.0
         version: 6.4.0(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-source@5.2.0)
@@ -301,6 +301,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^6.4.1
         version: 6.5.0(eslint@8.48.0)(typescript@5.2.2)
+      babel-plugin-ember-template-compilation:
+        specifier: ^2.2.0
+        version: 2.2.0
       broccoli-asset-rev:
         specifier: ^3.0.0
         version: 3.0.0
@@ -433,6 +436,9 @@ importers:
       vite:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@18.17.12)
+      vite-plugin-commonjs:
+        specifier: ^0.8.2
+        version: 0.8.2
       webpack:
         specifier: ^5.88.2
         version: 5.88.2
@@ -1291,9 +1297,6 @@ importers:
       babel-import-util:
         specifier: ^1.4.1
         version: 1.4.1
-      babel-plugin-ember-template-compilation:
-        specifier: ^2.2.0
-        version: 2.2.0
       broccoli-file-creator:
         specifier: ^2.1.1
         version: 2.1.1
@@ -1303,6 +1306,9 @@ importers:
       common-tags:
         specifier: ^1.8.2
         version: 1.8.2
+      content-tag:
+        specifier: github:NullVoxPopuli/content-tag#72b6c765262e4ad2d7182438db28b09c74785103
+        version: github.com/NullVoxPopuli/content-tag/72b6c765262e4ad2d7182438db28b09c74785103
       ember-template-tag:
         specifier: ^2.3.4
         version: 2.3.4
@@ -1439,6 +1445,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^6.4.1
         version: 6.5.0(eslint@8.48.0)(typescript@5.2.2)
+      babel-plugin-ember-template-compilation:
+        specifier: ^2.2.0
+        version: 2.2.0
       concurrently:
         specifier: ^8.2.1
         version: 8.2.1
@@ -22242,6 +22251,24 @@ packages:
       - terser
     dev: true
 
+  /vite-plugin-commonjs@0.8.2:
+    resolution: {integrity: sha512-UJlvuioutS7Tno3p3Dqxkr0G4xXt8ILYsJzOiyvFlEsyAxFRofsBGHN/Sl15q0Y4vtvvC7+QZCc6GuUxOM6Cmg==}
+    dependencies:
+      acorn: 8.10.0
+      fast-glob: 3.3.1
+      magic-string: 0.30.3
+      vite-plugin-dynamic-import: 1.5.0
+    dev: true
+
+  /vite-plugin-dynamic-import@1.5.0:
+    resolution: {integrity: sha512-Qp85c+AVJmLa8MLni74U4BDiWpUeFNx7NJqbGZyR2XJOU7mgW0cb7nwlAMucFyM4arEd92Nfxp4j44xPi6Fu7g==}
+    dependencies:
+      acorn: 8.10.0
+      es-module-lexer: 1.3.0
+      fast-glob: 3.3.1
+      magic-string: 0.30.3
+    dev: true
+
   /vite@4.4.9(@types/node@18.17.12):
     resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -23037,7 +23064,7 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
 
-  file:packages/ember-repl/addon(@glimmer/component@1.1.2)(@glint/template@1.1.0)(ember-resources@6.4.0)(ember-source@5.2.0):
+  file:packages/ember-repl/addon(@glimmer/component@1.1.2)(@glint/template@1.1.0)(babel-plugin-ember-template-compilation@2.2.0)(ember-resources@6.4.0)(ember-source@5.2.0):
     resolution: {directory: packages/ember-repl/addon, type: directory}
     id: file:packages/ember-repl/addon
     name: ember-repl
@@ -23047,6 +23074,7 @@ packages:
       '@glimmer/component': ^1.1.2
       '@glimmer/syntax': ^0.84.3
       '@glint/template': ^1.1.0
+      babel-plugin-ember-template-compilation: ^2.2.0
       ember-resources: ^6.4.0
       ember-source: '*'
     dependencies:
@@ -23061,6 +23089,7 @@ packages:
       broccoli-file-creator: 2.1.1
       change-case: 4.1.2
       common-tags: 1.8.2
+      content-tag: github.com/NullVoxPopuli/content-tag/72b6c765262e4ad2d7182438db28b09c74785103
       ember-resources: 6.4.0(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-source@5.2.0)
       ember-source: 5.2.0(@babel/core@7.22.11)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
       ember-template-tag: 2.3.4
@@ -23081,4 +23110,10 @@ packages:
       - bufferutil
       - supports-color
       - utf-8-validate
+    dev: false
+
+  github.com/NullVoxPopuli/content-tag/72b6c765262e4ad2d7182438db28b09c74785103:
+    resolution: {tarball: https://codeload.github.com/NullVoxPopuli/content-tag/tar.gz/72b6c765262e4ad2d7182438db28b09c74785103}
+    name: content-tag
+    version: 1.0.1
     dev: false
