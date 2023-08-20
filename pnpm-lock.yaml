@@ -1300,7 +1300,7 @@ importers:
         version: 1.8.2
       ember-template-tag:
         specifier: ^2.2.0
-        version: 2.2.0
+        version: 2.3.6
       line-column:
         specifier: ^1.0.2
         version: 1.0.2
@@ -10438,6 +10438,7 @@ packages:
 
   /content-tag@1.0.1:
     resolution: {integrity: sha512-7NqA1EmPLgpahxyz8NdLwJVbBzjwHCOsvrKsl1ISfpNNd2Sy/nPSWj4+1HacDMMm8yYoM3Bj2EiCrC9F4ktifg==}
+    dev: true
 
   /content-type@1.0.5:
     resolution: {integrity: sha512-nTjqfcBFEipKdXCv4YDQWCfmcLZKm81ldF0pAopTvyrFGVbcR6P/VAAd5G7N+0tTr8QqiU0tFadD6FK4NtJwOA==}
@@ -12428,16 +12429,21 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /ember-template-tag@2.2.0:
-    resolution: {integrity: sha512-NFrvtmcuNQLVey7dLQoduqCchwVYzyfER2wCEI7vyNv4UypQmyi8oSwKKBg5v81Brk0YqLyRrNeWqUNrEdS/kw==}
+  /ember-template-tag@2.3.6:
+    resolution: {integrity: sha512-9JyWjidVu0750jsydxcr73lA1RiAStL8psooodeD5xTYhC7XhnZn9J3nGVAP4w2L5Cai/BEIJKshQJNBBUqKUQ==}
     dependencies:
-      '@babel/core': 7.22.9(supports-color@8.1.1)
-      '@babel/generator': 7.22.9
-      '@babel/parser': 7.22.7
-      '@babel/traverse': 7.22.8(supports-color@8.1.1)
+      '@babel/core': 7.22.10
+      '@babel/generator': 7.22.10
+      '@babel/parser': 7.22.10
+      '@babel/standalone': 7.22.10
+      '@babel/traverse': 7.22.10
+      '@babel/types': 7.22.10
       '@glimmer/syntax': 0.84.3
+      webpack-bundle-analyzer: 4.9.0
     transitivePeerDependencies:
+      - bufferutil
       - supports-color
+      - utf-8-validate
     dev: false
 
   /ember-tracked-storage-polyfill@1.0.0:
@@ -22447,18 +22453,9 @@ packages:
       broccoli-file-creator: 2.1.1
       change-case: 4.1.2
       common-tags: 1.8.2
-<<<<<<< HEAD
       ember-resources: 6.4.0(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-source@5.2.0)
       ember-source: 5.2.0(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
-||||||| parent of 8e0af93f (use ember-template-tag)
-      ember-resources: 6.3.1(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2)
-      ember-source: 5.1.2(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(webpack@5.88.2)
-=======
-      content-tag: 1.0.1
-      ember-resources: 6.3.1(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.0.2)(ember-source@5.1.2)
-      ember-source: 5.1.2(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(webpack@5.88.2)
-      ember-template-tag: 2.2.0
->>>>>>> 8e0af93f (use ember-template-tag)
+      ember-template-tag: 2.3.6
       line-column: 1.0.2
       magic-string: 0.30.2
       mdast: 3.0.0
@@ -22473,5 +22470,7 @@ packages:
       uuid: 9.0.0
       vfile: 6.0.1
     transitivePeerDependencies:
+      - bufferutil
       - supports-color
+      - utf-8-validate
     dev: false
