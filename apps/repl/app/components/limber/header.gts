@@ -21,7 +21,6 @@ import DemoSelect from './demo-select';
     </h1>
 
     <nav class='text-white mt-1 flex gap-2 items-baseline'>
-
       <DemoSelect />
 
       <ExternalLink href='/bundle.html'>
@@ -48,6 +47,7 @@ import DemoSelect from './demo-select';
           </span>
         </:custom>
       </ExternalLink>
+
     </nav>
   </header>
 </template>

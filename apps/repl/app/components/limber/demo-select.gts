@@ -26,7 +26,7 @@ export default class DemoSelect extends Component {
   }
 
   <template>
-    <Menu>
+    <Menu @inline={{true}}>
       <:trigger as |t|>
         <t.Default data-test-demo-select as |menu|>
           <span class='grid grid-flow-col gap-2 items-center'>

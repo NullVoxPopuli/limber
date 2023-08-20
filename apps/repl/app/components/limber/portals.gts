@@ -1,3 +1,5 @@
+import { PortalTargets } from 'ember-primitives';
+
 <template>
-  <div data-portal='popover'></div>
+  <PortalTargets />
 </template>

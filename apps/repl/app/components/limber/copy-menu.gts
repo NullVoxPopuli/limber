@@ -21,7 +21,7 @@ export default class CopyMenu extends Component {
   };
 
   <template>
-    <Menu @portal={{false}} data-test-copy-menu>
+    <Menu data-test-copy-menu>
       <:trigger as |t|>
         <t.Default class='absolute top-3 right-4 z-10' data-test-copy-menu>
           📋

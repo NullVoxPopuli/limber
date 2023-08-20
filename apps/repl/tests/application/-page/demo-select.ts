@@ -14,15 +14,20 @@ export class DemoSelect extends PageObject {
     await settled();
     await click(toggleButton);
 
-    let option = [...(this.element?.parentElement?.querySelectorAll(dt('demo')) || [])].find(
-      (option) => {
-        assert(`option's element has been removed`, option && option instanceof HTMLButtonElement);
+    let options = [...(this.element?.parentElement?.querySelectorAll(dt('demo')) || [])];
 
-        return option.innerText === text;
-      }
+    let option = options.find((option) => {
+      assert(`option's element has been removed`, option && option instanceof HTMLButtonElement);
+
+      return new RegExp(`\\b${text}\\b`).test(option.innerHTML);
+    });
+
+    assert(
+      `Could not find demo named "${text}". Available: ${options
+        .map((x: any) => x.innerHTML?.trim())
+        .join(', ')}`,
+      option
     );
-
-    assert(`Could not find demo named "${text}"`, option);
 
     await click(option);
   }
