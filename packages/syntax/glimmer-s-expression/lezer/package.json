@@ -22,7 +22,7 @@
     "@babel/core": "^7.22.10",
     "@babel/eslint-parser": "^7.22.10",
     "@glimdown/lezer-infra": "workspace:*",
-    "@lezer/generator": "^1.4.0",
+    "@lezer/generator": "^1.5.0",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "@rollup/plugin-node-resolve": "^15.2.0",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
