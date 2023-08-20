@@ -1,5 +1,11 @@
 ## [2.0.63](https://github.com/NullVoxPopuli/ember-repl/compare/v2.0.62...v2.0.63) (2022-08-23)
 
+## 3.0.0-beta.5
+
+### Patch Changes
+
+- [#1258](https://github.com/NullVoxPopuli/limber/pull/1258) [`f0b1c68d`](https://github.com/NullVoxPopuli/limber/commit/f0b1c68da309f9fb39864def158539396086c5a5) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Fix types exports by using separate declarations directory in npm package
+
 ## 3.0.0-beta.4
 
 ### Patch Changes
