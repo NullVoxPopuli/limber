@@ -57,7 +57,7 @@
   "scripts": {
     "build": "concurrently 'npm:build:*'",
     "build:js": "rollup --config",
-    "build:types": "tsc --emitDeclarationOnly --noEmit false",
+    "build:types": "tsc --emitDeclarationOnly --noEmit false --skipLibCheck",
     "lint:types": "tsc --noEmit",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "rollup --config --watch",
@@ -119,6 +119,7 @@
     "@rollup/plugin-commonjs": "^25.0.4",
     "@tsconfig/ember": "^3.0.0",
     "@types/babel__core": "^7.20.1",
+    "@types/babel__parser": "^7.1.1",
     "@types/babel__standalone": "^7.1.4",
     "@types/babel__traverse": "^7.20.1",
     "@types/hast": "^3.0.0",

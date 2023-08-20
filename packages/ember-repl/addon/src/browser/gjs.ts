@@ -6,17 +6,17 @@ import type { Babel } from './types.ts';
 
 const compiler = importSync('ember-source/dist/ember-template-compiler.js');
 
-import { transform as ettTransform, util } from 'ember-template-tag';
+import { TEMPLATE_TAG_NAME,transform as ettTransform } from 'ember-template-tag';
 
 export function preprocess(input: string, name: string) {
   let templates = ettTransform({
     input,
     relativePath: `${name}.js`,
     includeSourceMaps: false,
-    templateTag: util.TEMPLATE_TAG_NAME,
+    templateTag: TEMPLATE_TAG_NAME,
   });
 
-  return templates.output;
+  return templates.output || 'error from ember-template-tag';
 }
 
 export async function transform(
