@@ -12,4 +12,6 @@ if (macrosPlugin?.[1].importSyncImplementation !== 'cjs') {
 
 macrosPlugin[1].importSyncImplementation = 'eager';
 
+console.log('config', config);
+
 module.exports = config;
