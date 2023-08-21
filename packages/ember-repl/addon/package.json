@@ -137,7 +137,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "prettier": "^3.0.2",
     "prettier-plugin-ember-template-tag": "^1.0.2",
-    "publint": "^0.2.1",
+    "publint": "^0.2.2",
     "rollup": "~3.28.0",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-glimmer-template-tag": "^0.4.1",
