@@ -1271,12 +1271,21 @@ importers:
 
   packages/ember-repl/addon:
     dependencies:
+      '@babel/core':
+        specifier: ^7.22.10
+        version: 7.22.10
       '@babel/helper-plugin-utils':
         specifier: ^7.22.5
         version: 7.22.5
-      '@babel/standalone':
+      '@babel/plugin-proposal-class-properties':
+        specifier: ^7.18.6
+        version: 7.18.6(@babel/core@7.22.10)
+      '@babel/plugin-proposal-decorators':
         specifier: ^7.22.10
-        version: 7.22.10
+        version: 7.22.10(@babel/core@7.22.10)
+      '@babel/preset-env':
+        specifier: ^7.22.10
+        version: 7.22.10(@babel/core@7.22.10)
       '@embroider/addon-shim':
         specifier: 1.8.6
         version: 1.8.6
@@ -1341,9 +1350,6 @@ importers:
         specifier: ^6.0.1
         version: 6.0.1
     devDependencies:
-      '@babel/core':
-        specifier: ^7.22.10
-        version: 7.22.10
       '@babel/preset-typescript':
         specifier: ^7.22.5
         version: 7.22.5(@babel/core@7.22.10)
@@ -22448,7 +22454,11 @@ packages:
       ember-resources: ^6.4.0
       ember-source: '*'
     dependencies:
+      '@babel/core': 7.22.10
       '@babel/helper-plugin-utils': 7.22.5
+      '@babel/plugin-proposal-class-properties': 7.18.6(@babel/core@7.22.10)
+      '@babel/plugin-proposal-decorators': 7.22.10(@babel/core@7.22.10)
+      '@babel/preset-env': 7.22.10(@babel/core@7.22.10)
       '@babel/standalone': 7.22.10
       '@embroider/addon-shim': 1.8.6
       '@embroider/macros': 1.13.1(@glint/template@1.1.0)

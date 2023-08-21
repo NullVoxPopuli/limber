@@ -28,24 +28,29 @@ export async function transform(
   name: string,
   options: any = {}
 ): Promise<ReturnType<Babel['transform']>> {
-  let babel = (await import('@babel/standalone')) as Babel;
+  let { transform: babelTransform } = await import("@babel/core") as Babel;
+  let [decorators, classProperties, env] = await Promise.all([
+    import('@babel/plugin-proposal-decorators'),
+    import('@babel/plugin-proposal-class-properties'),
+    import('@babel/preset-env'),
+  ]);
 
-  return babel.transform(intermediate, {
+  return babelTransform(intermediate, {
     filename: `${name}.js`,
     plugins: [
       // [babelPluginIntermediateGJS],
       [
-        babelPluginEmberTemplateCompilation,
+        babelPluginEmberTemplateCompilation.default,
         {
           compiler,
         },
       ],
-      [babel.availablePlugins['proposal-decorators'], { legacy: true }],
-      [babel.availablePlugins['proposal-class-properties']],
+      [decorators.default, { legacy: true }],
+      [classProperties.default],
     ],
     presets: [
       [
-        babel.availablePresets['env'],
+        env.default,
         {
           // false -- keeps ES Modules
           modules: 'cjs',
