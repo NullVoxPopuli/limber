@@ -1302,8 +1302,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       magic-string:
-        specifier: ^0.30.2
-        version: 0.30.2
+        specifier: ^0.30.3
+        version: 0.30.3
       mdast:
         specifier: ^3.0.0
         version: 3.0.0
@@ -7402,7 +7402,7 @@ packages:
   /@vitest/snapshot@0.34.2:
     resolution: {integrity: sha512-qhQ+xy3u4mwwLxltS4Pd4SR+XHv4EajiTPNY3jkIBLUApE6/ce72neJPSUQZ7bL3EBuKI+NhvzhGj3n5baRQUQ==}
     dependencies:
-      magic-string: 0.30.2
+      magic-string: 0.30.3
       pathe: 1.1.1
       pretty-format: 29.6.2
     dev: true
@@ -16355,6 +16355,13 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
+    dev: true
+
+  /magic-string@0.30.3:
+    resolution: {integrity: sha512-B7xGbll2fG/VjP+SWg4sX3JynwIU0mjoTc6MPpKNuIvftk6u6vqhDnk1R80b8C2GBR6ywqy+1DcKBrevBg+bmw==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.4.15
 
   /make-dir@2.1.0:
     resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==}
@@ -19299,7 +19306,7 @@ packages:
       rollup:
         optional: true
     dependencies:
-      magic-string: 0.30.2
+      magic-string: 0.30.3
       rollup: 3.28.0
       typescript: 5.1.6
     optionalDependencies:
@@ -21695,7 +21702,7 @@ packages:
       chai: 4.3.7
       debug: 4.3.4(supports-color@9.4.0)
       local-pkg: 0.4.3
-      magic-string: 0.30.2
+      magic-string: 0.30.3
       pathe: 1.1.1
       picocolors: 1.0.0
       std-env: 3.4.0
@@ -22436,7 +22443,7 @@ packages:
       ember-resources: 6.4.0(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-source@5.2.0)
       ember-source: 5.2.0(@babel/core@7.22.10)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
       line-column: 1.0.2
-      magic-string: 0.30.2
+      magic-string: 0.30.3
       mdast: 3.0.0
       parse-static-imports: 1.1.0
       rehype-raw: 6.1.1
