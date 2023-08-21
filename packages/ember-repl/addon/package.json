@@ -58,7 +58,7 @@
     "build": "concurrently 'npm:build:*'",
     "build:js": "rollup --config",
     "build:types": "tsc --emitDeclarationOnly --noEmit false --skipLibCheck",
-    "lint:types": "tsc --noEmit",
+    "lint:types": "tsc --noEmit --skipLibCheck",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "rollup --config --watch",
     "lint": "pnpm -w exec lint",

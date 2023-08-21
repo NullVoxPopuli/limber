@@ -16,7 +16,11 @@ export function preprocess(input: string, name: string) {
     templateTag: TEMPLATE_TAG_NAME,
   });
 
-  return templates.output || 'error from ember-template-tag';
+  if (!templates.output) {
+    throw new Error('Failed to transform gjs');
+  }
+
+  return templates.output;
 }
 
 export async function transform(
