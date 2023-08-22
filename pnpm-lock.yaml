@@ -46,8 +46,8 @@ importers:
         specifier: ^3.2.2
         version: 3.2.2(@babel/core@7.22.10)(eslint@8.47.0)(prettier@3.0.2)
       concurrently:
-        specifier: ^8.2.0
-        version: 8.2.0
+        specifier: ^8.2.1
+        version: 8.2.1
       dev-tools:
         specifier: workspace:*
         version: link:dev
@@ -317,8 +317,8 @@ importers:
         specifier: ^1.8.2
         version: 1.8.2
       concurrently:
-        specifier: ^8.2.0
-        version: 8.2.0
+        specifier: ^8.2.1
+        version: 8.2.1
       ember-cli:
         specifier: ~5.2.0
         version: 5.2.0
@@ -561,8 +561,8 @@ importers:
         specifier: ^3.0.8
         version: 3.0.8
       concurrently:
-        specifier: ^8.2.0
-        version: 8.2.0
+        specifier: ^8.2.1
+        version: 8.2.1
       ember-auto-import:
         specifier: ^2.6.3
         version: 2.6.3(@glint/template@1.1.0)(webpack@5.88.2)
@@ -797,8 +797,8 @@ importers:
         specifier: ^6.4.0
         version: 6.4.0(eslint@8.47.0)(typescript@5.1.6)
       concurrently:
-        specifier: ^8.2.0
-        version: 8.2.0
+        specifier: ^8.2.1
+        version: 8.2.1
       esbuild:
         specifier: 0.19.2
         version: 0.19.2
@@ -915,8 +915,8 @@ importers:
         specifier: ^6.4.0
         version: 6.4.0(eslint@8.47.0)(typescript@5.1.6)
       concurrently:
-        specifier: ^8.2.0
-        version: 8.2.0
+        specifier: ^8.2.1
+        version: 8.2.1
       ember-async-data:
         specifier: 1.0.1
         version: 1.0.1(ember-source@5.2.0)
@@ -1024,8 +1024,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       concurrently:
-        specifier: ^8.2.0
-        version: 8.2.0
+        specifier: ^8.2.1
+        version: 8.2.1
       ember-auto-import:
         specifier: ^2.6.3
         version: 2.6.3(@glint/template@1.1.0)(webpack@5.88.2)
@@ -1139,8 +1139,8 @@ importers:
         specifier: ^10.4.15
         version: 10.4.15(postcss@8.4.28)
       concurrently:
-        specifier: ^8.2.0
-        version: 8.2.0
+        specifier: ^8.2.1
+        version: 8.2.1
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -1254,8 +1254,8 @@ importers:
         specifier: ^6.4.0
         version: 6.4.0(eslint@8.47.0)(typescript@5.1.6)
       concurrently:
-        specifier: ^8.2.0
-        version: 8.2.0
+        specifier: ^8.2.1
+        version: 8.2.1
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -1432,8 +1432,8 @@ importers:
         specifier: ^6.4.0
         version: 6.4.0(eslint@8.47.0)(typescript@5.1.6)
       concurrently:
-        specifier: ^8.2.0
-        version: 8.2.0
+        specifier: ^8.2.1
+        version: 8.2.1
       ember-resources:
         specifier: ^6.4.0
         version: 6.4.0(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-source@5.2.0)
@@ -1559,8 +1559,8 @@ importers:
         specifier: ^6.4.0
         version: 6.4.0(eslint@8.47.0)(typescript@5.1.6)
       concurrently:
-        specifier: ^8.2.0
-        version: 8.2.0
+        specifier: ^8.2.1
+        version: 8.2.1
       ember-auto-import:
         specifier: ^2.6.3
         version: 2.6.3(@glint/template@1.1.0)(webpack@5.88.2)
@@ -1673,8 +1673,8 @@ importers:
         specifier: ^6.4.0
         version: 6.4.0(eslint@8.47.0)(typescript@5.1.6)
       concurrently:
-        specifier: ^8.2.0
-        version: 8.2.0
+        specifier: ^8.2.1
+        version: 8.2.1
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -1841,8 +1841,8 @@ importers:
         specifier: ^6.0.1
         version: 6.0.1(@lezer/common@1.0.4)
       concurrently:
-        specifier: ^8.2.0
-        version: 8.2.0
+        specifier: ^8.2.1
+        version: 8.2.1
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -2044,8 +2044,8 @@ importers:
         specifier: ^6.0.1
         version: 6.0.1(@lezer/common@1.0.4)
       concurrently:
-        specifier: ^8.2.0
-        version: 8.2.0
+        specifier: ^8.2.1
+        version: 8.2.1
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -2226,8 +2226,8 @@ importers:
         specifier: ^6.0.1
         version: 6.0.1(@lezer/common@1.0.4)
       concurrently:
-        specifier: ^8.2.0
-        version: 8.2.0
+        specifier: ^8.2.1
+        version: 8.2.1
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -2341,8 +2341,8 @@ importers:
         specifier: ^6.0.1
         version: 6.0.1(@lezer/common@1.0.4)
       concurrently:
-        specifier: ^8.2.0
-        version: 8.2.0
+        specifier: ^8.2.1
+        version: 8.2.1
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -10212,8 +10212,8 @@ packages:
   /concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
-  /concurrently@8.2.0:
-    resolution: {integrity: sha512-nnLMxO2LU492mTUj9qX/az/lESonSZu81UznYDoXtz1IQf996ixVqPAgHXwvHiHCAef/7S8HIK+fTFK7Ifk8YA==}
+  /concurrently@8.2.1:
+    resolution: {integrity: sha512-nVraf3aXOpIcNud5pB9M82p1tynmZkrSGQ1p6X/VY8cJ+2LMVqAgXsJxYYefACSHbTYlm92O1xuhdGTjwoEvbQ==}
     engines: {node: ^14.13.0 || >=16.0.0}
     hasBin: true
     dependencies:
