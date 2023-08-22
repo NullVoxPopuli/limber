@@ -29,10 +29,10 @@ export async function transform(
   options: any = {}
 ): Promise<ReturnType<Babel['transform']>> {
   let { transform: babelTransform } = await import("@babel/core") as Babel;
-  let [decorators, classProperties, env] = await Promise.all([
+  let [decorators, classProperties] = await Promise.all([
     import('@babel/plugin-proposal-decorators'),
     import('@babel/plugin-proposal-class-properties'),
-    import('@babel/preset-env'),
+    // import('@babel/preset-env'),
   ]);
 
   return babelTransform(intermediate, {
@@ -49,16 +49,16 @@ export async function transform(
       [classProperties.default],
     ],
     presets: [
-      [
-        env.default,
-        {
-          // false -- keeps ES Modules
-          modules: 'cjs',
-          targets: { esmodules: true },
-          forceAllTransforms: false,
-          ...options,
-        },
-      ],
+      // [
+      //   env.default,
+      //   {
+      //     // false -- keeps ES Modules
+      //     modules: 'cjs',
+      //     targets: { esmodules: true },
+      //     forceAllTransforms: false,
+      //     ...options,
+      //   },
+      // ],
     ],
   });
 }
