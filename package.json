@@ -33,7 +33,7 @@
     "pnpm-sync-dependencies-meta-injected": "^0.0.9",
     "prettier": "^3.0.2",
     "prettier-plugin-ember-template-tag": "^1.0.2",
-    "turbo": "^1.10.12"
+    "turbo": "^1.10.13"
   },
   "packageManager": "pnpm@8.6.12",
   "pnpm": {
