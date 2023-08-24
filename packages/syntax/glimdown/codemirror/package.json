@@ -17,8 +17,8 @@
     "directory": "packages/syntax/glimdown/codemirror"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.10",
-    "@babel/eslint-parser": "^7.22.10",
+    "@babel/core": "^7.22.11",
+    "@babel/eslint-parser": "^7.22.11",
     "@codemirror/buildhelper": "^1.0.0",
     "@codemirror/language": "^6.9.0",
     "@codemirror/state": "^6.2.1",
