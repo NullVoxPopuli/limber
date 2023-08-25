@@ -66,6 +66,7 @@ module.exports = async function (defaults) {
         'tracked-built-ins',
         'ember-headlessui/components/menu',
         'ember-focus-trap/modifiers/focus-trap',
+        'tracked-toolbox',
         'ember-resources',
         'ember-resources/core',
         'ember-resources/link',
