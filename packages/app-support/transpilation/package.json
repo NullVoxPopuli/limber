@@ -27,7 +27,7 @@
     "last 1 Safari versions"
   ],
   "dependencies": {
-    "@babel/standalone": "^7.22.11",
+    "@babel/standalone": "^7.22.12",
     "babel-plugin-htmlbars-inline-precompile": "^5.3.1",
     "path-browserify": "^1.0.1"
   },
