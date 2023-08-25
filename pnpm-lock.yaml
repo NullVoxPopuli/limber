@@ -1160,8 +1160,8 @@ importers:
   packages/app-support/transpilation:
     dependencies:
       '@babel/standalone':
-        specifier: ^7.22.11
-        version: 7.22.11
+        specifier: ^7.22.12
+        version: 7.22.12
       babel-plugin-htmlbars-inline-precompile:
         specifier: ^5.3.1
         version: 5.3.1
@@ -1275,8 +1275,8 @@ importers:
         specifier: ^7.22.5
         version: 7.22.5
       '@babel/standalone':
-        specifier: ^7.22.11
-        version: 7.22.11
+        specifier: ^7.22.12
+        version: 7.22.12
       '@embroider/addon-shim':
         specifier: 1.8.6
         version: 1.8.6
@@ -3899,8 +3899,8 @@ packages:
     dependencies:
       regenerator-runtime: 0.14.0
 
-  /@babel/standalone@7.22.11:
-    resolution: {integrity: sha512-PmHtNlX7ybzPKO5b5r+WSa8pEbntAaRR11FHs15pTkcKx3qFfjSwNFe0e1f7ewlEDVXtGjdPYBJTrrY2RLDzVA==}
+  /@babel/standalone@7.22.12:
+    resolution: {integrity: sha512-Od5EnOR/gvwwvLCaJCypkVW6C9PitK2tu/aHb+ZpPnwkVidmlJ+7jUf8YLm9BrNILfT9P8etZq/t6r1IrFauQw==}
     engines: {node: '>=6.9.0'}
     dev: false
 
@@ -22793,7 +22793,7 @@ packages:
       ember-source: '*'
     dependencies:
       '@babel/helper-plugin-utils': 7.22.5
-      '@babel/standalone': 7.22.11
+      '@babel/standalone': 7.22.12
       '@embroider/addon-shim': 1.8.6
       '@embroider/macros': 1.13.1(@glint/template@1.1.0)
       '@glimmer/component': 1.1.2(@babel/core@7.22.11)

@@ -72,7 +72,7 @@
   },
   "dependencies": {
     "@babel/helper-plugin-utils": "^7.22.5",
-    "@babel/standalone": "^7.22.11",
+    "@babel/standalone": "^7.22.12",
     "@embroider/addon-shim": "1.8.6",
     "@embroider/macros": "1.13.1",
     "babel-import-util": "^1.4.1",
