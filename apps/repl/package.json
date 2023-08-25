@@ -37,6 +37,9 @@
   "dependenciesMeta": {
     "ember-repl": {
       "injected": true
+    },
+    "ember-primitives": {
+      "injected": true
     }
   },
   "devDependencies": {
@@ -141,7 +144,6 @@
     "@nullvoxpopuli/limber-codemirror": "workspace:*",
     "@nullvoxpopuli/limber-styles": "workspace:*",
     "@nullvoxpopuli/limber-transpilation": "workspace:*",
-    "@popperjs/core": "^2.11.8",
     "@xstate/inspect": "^0.8.0",
     "browserslist": "^4.21.10",
     "dompurify": "^3.0.5",
@@ -151,7 +153,6 @@
     "ember-focus-trap": "^1.1.0",
     "ember-headlessui": "0.14.0",
     "ember-modifier": "^4.1.0",
-    "ember-popperjs": "^3.0.0",
     "ember-primitives": "^0.4.0",
     "ember-repl": "workspace:*",
     "ember-resources": "^6.4.0",

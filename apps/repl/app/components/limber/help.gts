@@ -113,7 +113,7 @@ export const Help = <template>
       </div>
 
       <m.Dialog class="prose rounded drop-shadow-xl border border-white" aria-label="help with this tool">
-        <header class="flex justify-between items-center">
+        <header class="flex justify-between items-center py-2 px-2">
           <h2 class="m-0">Help</h2>
           <FlatButton {{on 'click' m.close}} aria-label="hide the help information">
             <FaIcon @size="xs" @icon="xmark" class="aspect-square" />
@@ -122,7 +122,7 @@ export const Help = <template>
 
         <hr class="mt-4 mb-4">
 
-        <main>
+        <main class="px-2">
           The editor has 3 modes
           <SupportedLanguages />
 
@@ -141,7 +141,7 @@ export const Help = <template>
           For any issues / questions, please file an <IssueLink />.
         </main>
 
-        <footer class="flex justify-end">
+        <footer class="flex justify-end px-2 py-2">
           <Button {{on 'click' m.close}}>Close</Button>
         </footer>
       </m.Dialog>

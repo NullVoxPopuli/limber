@@ -1,3 +1,5 @@
+import { PortalTargets } from 'ember-primitives';
+
 import highlight from 'limber/modifiers/highlight-code-blocks';
 
 import CopyMenu from '../copy-menu';
@@ -27,6 +29,7 @@ export const Output: TOC<Signature> = <template>
       <CopyMenu />
 
       <div class={{if (isGJS context.format) 'glimdown-render'}}>
+        <PortalTargets />
 
         {{#if context.component}}
           <div {{highlight context.component}}>
