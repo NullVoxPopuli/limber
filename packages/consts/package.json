@@ -18,10 +18,10 @@
   "devDependencies": {
     "@babel/core": "^7.22.11",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
-    "@typescript-eslint/eslint-plugin": "^6.4.0",
-    "@typescript-eslint/parser": "^6.4.0",
+    "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "@typescript-eslint/parser": "^6.4.1",
     "concurrently": "^8.2.1",
-    "eslint": "^8.47.0",
+    "eslint": "^8.48.0",
     "prettier": "^3.0.2",
     "prettier-plugin-ember-template-tag": "^1.0.2",
     "typescript": "^5.2.2"
