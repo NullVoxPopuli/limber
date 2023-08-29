@@ -112,8 +112,8 @@ importers:
         specifier: 4.0.5
         version: 4.0.5(@glint/environment-ember-loose@1.1.0)(@glint/template@1.1.0)(ember-source@5.2.0)
       ember-element-helper:
-        specifier: ^0.8.2
-        version: 0.8.2(@glint/environment-ember-loose@1.1.0)(@glint/template@1.1.0)(ember-source@5.2.0)
+        specifier: ^0.8.4
+        version: 0.8.4(@glint/environment-ember-loose@1.1.0)(@glint/template@1.1.0)(ember-source@5.2.0)
       ember-focus-trap:
         specifier: ^1.1.0
         version: 1.1.0(ember-source@5.2.0)
@@ -11807,8 +11807,8 @@ packages:
       - supports-color
     dev: false
 
-  /ember-element-helper@0.8.2(@glint/environment-ember-loose@1.1.0)(@glint/template@1.1.0)(ember-source@5.2.0):
-    resolution: {integrity: sha512-1vvvZ0fUv1WPRkTiY3HZu5o4Wsc6v4TaMJkRChtPkio/QXjbV6kxIJK0lD0XGAOPeHL57VceNYfpQ/0splta7A==}
+  /ember-element-helper@0.8.4(@glint/environment-ember-loose@1.1.0)(@glint/template@1.1.0)(ember-source@5.2.0):
+    resolution: {integrity: sha512-zwCRNgCuTr+bSGtGh1eWHlNZuhJQuREeQmmv7pfTTAFICAzAOO7p7sCVIITcn0l9cUM2KW5uQY2FK4967bYMdw==}
     engines: {node: 14.* || 16.* || >= 18}
     peerDependencies:
       ember-source: '*'
@@ -11986,7 +11986,7 @@ packages:
       '@floating-ui/dom': 1.5.1
       '@glimmer/component': 1.1.2(@babel/core@7.22.11)
       '@glimmer/tracking': 1.1.2
-      ember-element-helper: 0.8.2(@glint/environment-ember-loose@1.1.0)(@glint/template@1.1.0)(ember-source@5.2.0)
+      ember-element-helper: 0.8.4(@glint/environment-ember-loose@1.1.0)(@glint/template@1.1.0)(ember-source@5.2.0)
       ember-modifier: 4.1.0(ember-source@5.2.0)
       ember-resources: 6.4.0(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-source@5.2.0)
       ember-source: 5.2.0(@babel/core@7.22.11)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
