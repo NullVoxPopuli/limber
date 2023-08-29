@@ -1,7 +1,9 @@
 'use strict';
 // https://blog.bitsrc.io/interacting-with-openai-in-node-js-and-express-647e771fc4ad
 //
-  // https://platform.openai.com/docs/api-reference/completions/create
+// https://platform.openai.com/docs/api-reference/completions/create
+// https://vaadin.com/blog/how-to-build-a-chatgpt-assistant-for-your-documentation
+// https://github.com/marcushellberg/vaadin-docs-assistant
 
 const express = require("express");
 const { Configuration, OpenAIApi } = require("openai");
