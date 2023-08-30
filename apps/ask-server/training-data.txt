@@ -1,0 +1,2326 @@
+###
+For the tutorial at path 1-introduction/2-adding-data, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: A component that renders some static markup isn't very interesting.
+Let's add some data.
+
+First, define a local variable:
+
+```gjs
+let name = "world";
+
+<template>
+  <h1>Hello World</h1>
+</template>
+```
+
+Then, we can refer to `name` in the markup:
+
+```hbs
+<h1>Hello {{name}}</h1>
+```
+
+Inside the curly braces, we can put any _reference_ we want.
+
+[The Answer]: let name = "world";
+
+<template>
+  <h1>Hello {{name}}</h1>
+</template>
+
+"""
+
+###
+For the tutorial at path 1-introduction/3-transforming-data, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: A function can transform any data from a template.
+
+Let's try defining a function
+
+```gjs
+let name = "world";
+let shout = (text) => text.toUpperCase();
+
+<template>
+  <h1>Hello {{name}}</h1>
+</template>
+```
+
+Then, we can call that function
+
+```hbs
+<h1>Hello {{(shout name)}}</h1>
+```
+
+[The Answer]: let name = "world";
+let shout = (text) => text.toUpperCase(); 
+
+<template>
+  <h1>Hello {{ (shout name) }}</h1>
+</template>
+
+"""
+
+###
+For the tutorial at path 1-introduction/5-dynamic-attributes, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Similarly as data can be renderd within curly braces, curly braces can be used to control the values of element attributes.
+
+Let's create an image with dynamic `src` and `alt` attributes.
+
+```hbs
+<img src={{gifURL}} />
+```
+
+In a real dev environment, you'll be required to specify an `alt` description.
+Without the `alt` description, users with slow or unstable internet connections,
+may not be able to download the image -- users who rely on screen readers won't be able to view the image either.  
+Defining the `alt` description solves these problems.
+More information about this requirement is described on [the linter docs][gh-etl-alt].
+
+```hbs
+<img src={{gifURL}} alt={{description}} />
+```
+
+[gh-etl-alt]: https://github.com/ember-template-lint/ember-template-lint/blob/b4433e9439f3c555b3c4beb56c34bfed18a423b5/docs/rule/require-valid-alt-text.md
+
+[The Answer]: let gifURL = 'https://media.tenor.com/GAMYf3psisEAAAAd/hamster-spinning.gif';
+let description = 'A hamster is spinning within a fallen wheel';
+
+<template>
+  <img src={{gifURL}} alt={{description}} >
+</template>
+
+"""
+
+###
+For the tutorial at path 1-introduction/4-multiple-transforms, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Functions can be chained together, just like in other languages
+
+Define another function
+
+```gjs
+let name = "world";
+let shout = (text) => text.toUpperCase();
+let reverse = (text) => text.split('').reverse().join('');
+
+<template>
+  <h1>Hello {{ (shout name) }}</h1>
+</template>
+```
+
+Then, we can chain the function:
+
+```hbs
+<h1>Hello {{(reverse (shout name))}}</h1>
+```
+
+Unlike JavaScript, Ember and Glimmer templates use [Polish Notation][polish] or
+_Prefix Notation_ which means that functions _precede_ their arguments.
+This simple language allows templates to be transformed into lightweight JSON
+objects to save bytes during network transfer and time during the browser's
+parse and evaluation phases. For more information, see this [announcement video][secrets]
+
+[polish]: https://en.wikipedia.org/wiki/Polish_notation
+[secrets]: https://www.youtube.com/watch?v=nXCSloXZ-wc
+
+[The Answer]: let name = "world";
+let shout = (text) => text.toUpperCase(); 
+let reverse = (text) => text.split('').reverse().join('');
+
+<template>
+  <h1>Hello {{ (reverse (shout name) )}}</h1>
+</template>
+
+"""
+
+###
+For the tutorial at path 1-introduction/6-browser-utilities, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: All functions available on [`globalThis`][mdn-globalThis] ([window][mdn-Window] in browsers), are available to use in templates.
+
+For example, retrieving data from [`localStorage`][mdn-LocalStorage] may be done like this:
+
+```hbs
+{{localStorage.getItem 'the-key'}}
+```
+
+And likewise, if we have data we need to format with [`JSON.stringify`][mdn-json-stringify], that would look like:
+
+```hbs
+<pre><code>{{JSON.stringify data null '\t'}}</code></pre>
+```
+
+The same [polish][polish] notation we used early applies to all globally available functions -- so the above `stringify` call would like like this, if in JS: `JSON.stringify(data, null, "\t")`
+
+Note that due to how polish notation reads, it's _highly encouraged_ to extract one-off utility functions instead of wrapping more functions in the template.
+
+For example:
+
+```gjs
+function formatFromStorage(key) {
+  let stored = localStorage.getItem(key);
+  let parsed = stored ? JSON.parse(stored) : {};
+
+  return JSON.stringify(parsed, null, '\t');
+}
+
+<template>
+  <pre><code>{{formatFromStorage "the-key"}}</code></pre>
+</template>
+```
+
+Since templates are the _source of truth_ for what is visible to users, it's useful to make them as readable as possible. An extra advantage here is that the extracted functions can more easily be unit tested.
+
+[mdn-globalThis]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
+[mdn-Window]: https://developer.mozilla.org/en-US/docs/Web/API/Window
+[mdn-LocalStorage]: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+[mdn-json-stringify]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+[polish]: https://en.wikipedia.org/wiki/Polish_notation
+
+[The Answer]: let data = {
+  name: "Tatooine",
+  gravity: "1 standard",
+  terrain: "desert",
+};
+
+localStorage.setItem('localStorage-item', JSON.stringify(data));
+
+// Pending update to GlimmerVM that does this automatically
+let getItem = localStorage.getItem.bind(localStorage);
+
+<template>
+  From localStorage: <br>
+  <pre>{{getItem "localStorage-item"}}</pre>
+
+  Formatted: <br>
+  <pre><code>{{JSON.stringify data null "\t"}}</code></pre>
+</template>
+
+"""
+
+###
+For the tutorial at path 11-requesting-data/1-using-remote-data, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: `RemoteData` is a utility `Resource` from [ember-resources][gh-resources]
+that provides an easy way to interact with [`fetch`][mdn-fetch]
+with a pre-wired [`AbortController`][mdn-AbortController].
+
+`RemoteData` has two supported uses,
+
+- from a template
+
+  ```hbs
+  {{#let (RemoteData '...url...') as |request|}}
+    isLoading:
+    {{request.isLoading}}
+    data:
+    {{request.value}}
+  {{/let}}
+  ```
+
+- or within a stateful component class
+
+  ```gjs
+  class Demo extends Component {
+    @use request = RemoteData(() => `... url ... `);
+
+    <template>
+      isLoading: {{this.request.isLoading}}
+      data: {{this.request.value}}
+    </template>
+  }
+  ```
+
+In this example, the fetching of data from the [StarWars API][swapi]
+should occur automatically based on changes to the url passed to `RemoteData`.
+You can change the `id` of the Person in the text field to fetch from the StarWars API.
+
+Docs for `RemoteData` can [be found here][docs-remote-data].
+Information about how Resources fit in to the next edition of Ember can be [found here][polaris-reactivity]
+
+[gh-resources]: https://github.com/nullvoxpopuli/ember-resources
+[mdn-fetch]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+[mdn-AbortController]: https://developer.mozilla.org/en-US/docs/Web/API/AbortController
+[docs-remote-data]: https://ember-resources.pages.dev/modules/util_remote_data
+[polaris-reactivity]: https://wycats.github.io/polaris-sketchwork/reactivity.html
+[swapi]: https://swapi.dev/
+
+[The Answer]: import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
+
+import { RemoteData } from 'ember-resources/util/remote-data';
+
+const urlFor = (id) => `https://swapi.dev/api/people/${id}`;
+
+const Person = <template>
+  {{#let (RemoteData (urlFor @id)) as |request|}}
+    {{#if request.isLoading}}
+      ... loading {{@id}} ...
+    {{else if request.value}}
+      {{request.value.name}}
+    {{/if}}
+  {{/let}}
+</template>
+
+export default class Demo extends Component {
+  @tracked id = 51;
+  updateId = (event) => this.id = event.target.value;
+
+  <template>
+    <div class="border p-4 grid gap-4">
+      <Person @id={{this.id}} />
+
+      <label>
+        Person ID
+        <input
+          type='number'
+          class='border px-3 py-2'
+          value={{this.id}}
+          {{on 'input' this.updateId}}>
+      </label>
+    </div>
+  </template>
+}
+
+"""
+
+###
+For the tutorial at path 12-loading-patterns/1-keeping-latest, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: The `keepLatest` utility resource allows you to hang on to a stable reference to data while new data loads.
+
+This can be useful for improving user experience across sites with data that takes some time to fetch or just paginated data in general.
+
+_Typically, users don't want to see the UI flashing a bunch of different states_.
+The more stable we can keep the UI, and defer to subtle / polite indicators of progress, the better. We are kinder to the visual stimulous we put our users through.
+
+`keepLatest` _only_ works in a component's class for now, but it looks like this:
+
+```js
+class Demo extends Component {
+  @use request = RemoteData(() => urlFor(this.id));
+  @use latest = keepLatest({
+    value: () => this.request.value,
+    when: () => this.request.isLoading,
+  });
+
+  // ...
+}
+```
+
+And this is read as "Keep the latest `value` from changing `when` `this.request.isLoading`.
+During an initial request `latest` will be null, and for all subsequent requests, it'll be whatever the the value of `request`'s most recent successful value was.
+
+In this exercise, wire up the `keepLatest` utility so that when the `id` changes, triggering `RemoteData` to make a new request, the async loading state is subtle.
+
+[The Answer]: import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
+
+import { use, resource } from 'ember-resources';
+import { RemoteData, remoteData } from 'ember-resources/util/remote-data';
+import { keepLatest } from 'ember-resources/util/keep-latest';
+
+const isEmpty = (x) => !x || x?.length === 0;
+const urlFor = (id) => `https://swapi.dev/api/people/${id}`;
+
+const PersonInfo = <template>
+  <fieldset class="border px-4">
+    <legend>{{@person.url}}</legend>
+    <pre><code>{{JSON.stringify @person null "\t"}}</code></pre>
+  </fieldset>
+</template>;
+
+export default class Demo extends Component {
+  @tracked id = 51;
+  updateId = (event) => this.id = event.target.value;
+
+  @use request = RemoteData(() => urlFor(this.id));
+  @use latest = keepLatest({
+    value: () => this.request.value,
+    when: () => this.request.isLoading,
+  });
+
+  <template>
+    <div id="demo">
+      <label>
+        Person ID
+        <input type='number' value={{this.id}} {{on 'input' this.updateId}} >
+      </label>
+
+      {{! We either have an initial value, or we don't }}
+      {{#if this.latest}}
+
+        <div id="async-state">
+          {{! Async state for subsequent requests, only}}
+          {{#if this.request.isPending}}
+             ... loading ...
+          {{else if this.request.isRejected}}
+             error!
+          {{/if}}
+        </div>
+
+        <PersonInfo @person={{this.latest}} />
+      {{else}}
+        {{! This block only matters during the initial request }}
+
+        {{#if this.rejest.isRejected}}
+          error loading initial data!
+        {{else}}
+          <pre> ... loading ... </pre>
+        {{/if}}
+
+      {{/if}}
+    </div>
+    <style>
+      #demo { 
+        position: relative; max-width: 30rem; 
+        border: 1px solid;
+        padding: 1rem;
+      }
+      #demo input { max-width: 6rem; border: 1px solid; padding: 0.5rem 0.75rem; }
+      #async-state { display: inline-block; margin-left: 1rem; }
+    </style>
+  </template>
+}
+
+"""
+
+###
+For the tutorial at path 3-event-handling/1-dom-events, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: As seen previously, `on` was used to listen for `click` events on a button.
+
+The `on` modifier can be thought of as an alias for [`addEventListener`][mdn-addEventListener], so anything it can do, `on` can do.
+
+For example, try observing the x / y coordinates of the mouse on this div:
+
+```hbs
+<div {{on 'mousemove' handleMouseMove}}>
+  The mouse position is
+  {{m.x}}
+  x
+  {{m.y}}
+</div>
+```
+
+When moving the cursor over the div, the rendered coordinates should update.
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/4.11/classes/Ember.Templates.helpers/methods/on?anchor=on
+[mdn-addEventListener]: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+
+[The Answer]: import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
+
+class Coordinates {
+  @tracked x = '?';
+  @tracked y = '?';
+}
+
+let m = new Coordinates();
+
+function handleMouseMove(mouseEvent) {
+  m.x = mouseEvent.clientX;
+  m.y = mouseEvent.clientY;
+}
+
+<template>
+  <div {{on 'mousemove' handleMouseMove}}>
+    The mouse position is {{m.x}} x {{m.y}}
+  </div>
+</template>
+
+"""
+
+###
+For the tutorial at path 3-event-handling/2-event-modifiers, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: DOM event handlers can have [modifiers][mdn-addEventListener] that alter their behavior.
+For example, a handler with a `once` modifier will only run a single time:
+
+```hbs
+<button {{on 'click' handleClick once=true}}>
+  Click me
+</button>
+```
+
+The full list of modifiers is covered on both [MDN][mdn-addEventListener] and the [Ember API Docs][docs].
+
+- `capture` -- a true value indicates that events of this type will be dispatched to the registered listener before being dispatched to any `EventTarget` beneath it in the DOM tree.
+- `once` -- indicates that the listener should be invoked at most once after being added. If true, the listener would be automatically removed when invoked.
+- `passive` -- if true, indicates that the function specified by listener will never call `preventDefault()`. If a passive listener does call `preventDefault()`, the user agent will do nothing other than generate a console warning. See [Improving scrolling performance with passive listeners][scroll-perf] to learn more.
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/4.11/classes/Ember.Templates.helpers/methods/on?anchor=on
+[mdn-addEventListener]: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#parameters
+[scroll-perf]: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Improving_scrolling_performance_with_passive_listeners
+
+[The Answer]: import { on } from '@ember/modifier';
+import { cell } from 'ember-resources';
+
+let clicks = cell(0);
+
+function handleClick(mouseEvent) {
+  clicks.current++;
+}
+
+<template>
+  <button {{on 'click' handleClick once=true}}>
+    Click me!
+  </button>
+
+  Clicked: {{clicks.current}}
+</template>
+
+"""
+
+###
+For the tutorial at path 3-event-handling/3-dom-event-forwarding, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Event forwarding happens when a component exposes its _element-api_ via `...attributes`
+
+```hbs
+<button ...attributes>
+  Click me
+</button>
+```
+
+Then the consumer of this component can add any event listener they wish:
+
+```hbs
+<SomeComponent {{on 'click' handleClick}} />
+```
+
+[The Answer]: import { on } from '@ember/modifier';
+import { cell } from 'ember-resources';
+
+let count = cell(0);
+
+let SomeComponent = <template>
+  <button ...attributes>
+    Click me
+  </button>
+</template>;
+
+function handleClick() {
+  count.current++;
+}
+
+<template>
+  <SomeComponent {{on 'click' handleClick}} />
+
+  Clicked {{count.current}} times
+</template>
+
+"""
+
+###
+For the tutorial at path 3-event-handling/4-custom-events, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Components don't do anything special with event handling -- it all uses the built-in features of the browser.
+
+We can use [`dispatchEvent`][mdn-dispatchEvent] with the `on` modifier to both dispatch and handle a custom event.
+
+```js
+let customEvent = new Event('my-custom-event');
+
+someElement.dispatchEvent(customEvent);
+```
+
+The event listener for `my-custom-event` has to exist somewhere as well.
+We can forward the _Element_ api upward with `...attributes`
+
+```hbs
+<button ...attributes {{on 'click' handleInnerClick}}>
+  Click me
+</button>
+```
+
+When creating custom Events, you can control if the event bubbles or is cancelable, [see on MDN][mdn-Event].
+
+[mdn-dispatchEvent]: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent
+[mdn-Event]: https://developer.mozilla.org/en-US/docs/Web/API/Event/Event
+
+[The Answer]: import { on } from '@ember/modifier';
+import { cell } from 'ember-resources';
+
+let count = cell(0);
+
+function handleInnerClick(clickEvent) {
+  let customEvent = new Event('my-custom-event');
+  clickEvent.target.dispatchEvent(customEvent);
+}
+
+let Inner = <template>
+  <button ...attributes {{on 'click' handleInnerClick}}>
+    Click me
+  </button>
+</template>;
+
+function handleCustom(event) {
+  count.current++;
+}
+
+<template>
+  <Inner {{on 'my-custom-event' handleCustom}} />
+
+  Clicked {{count.current}} times
+</template>
+
+"""
+
+###
+For the tutorial at path 13-managing-state/1-shared-state, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: State can be shared between components without explicitly passing the state to each componeent.
+This can is one way in which _[prop-drilling][prop-drilling]_ can be avoided.
+
+In Ember/Glimmer, we lean on the native capabilities of browsers to manage state, and this often takes the form of a `class` for helpfully encapsulating related behaviors.
+
+```js
+class Count {
+  @tracked value;
+
+  decrement = () => this.value--;
+  increment = () => this.value++;
+}
+
+let count = new Count();
+```
+
+Note that the only framework-specific instrumentation that we need is the `@tracked` decorator.
+
+We can the use this `count` immediately in our components:
+
+```hbs
+<button {{on 'click' count.increment}}>
+  Increment (+)
+</button>
+```
+
+In the provided example, implement `increment`, `decrement`, and `reset`.
+
+In a real app, these components could all live in separate files and import the `count`.
+
+[prop-drilling]: https://kentcdodds.com/blog/prop-drilling
+
+[The Answer]: import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
+
+class Count {
+  @tracked value = 0;
+
+  decrement = () => this.value--;
+  increment = () => this.value++;
+  reset = () => this.value = 0;
+}
+
+let count = new Count();
+
+let Incrementer = <template>
+  <button {{on "click" count.increment}}>+</button>
+</template>;
+
+let Decrementer = <template>
+  <button {{on "click" count.decrement}}>-</button>
+</template>;
+
+let Resetter = <template>
+  <button {{on "click" count.reset}}>Reset</button>
+</template>;
+
+
+<template>
+  <h1>The count is {{count.value}}</h1>
+
+  <Incrementer />
+  <Decrementer />
+  <Resetter />
+</template>
+
+
+"""
+
+###
+For the tutorial at path 13-managing-state/2-localStorage, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: [`localStorage`][mdn-localStorage] is a way to store string-based data outside your application so that it may be accessed later. This data will persist between refreshes, so it could be useful for restoring user data when they navigate away from your app and come back later.
+
+To use `localStorage`, and maintain reactivity, you'll need to manage a local reactive value, as well as utilize the `localStorage` APIs.
+
+```js
+class Demo extends Component {
+  @tracked _count = 0;
+
+  get count() {
+    let fromStorage = parseInt(localStorage.getItem('count')) ?? 0;
+    return this._count || fromStorage;
+  }
+  set count(value) {
+    localStorage.setItem('count', value ?? 0);
+    this._count = value;
+  }
+}
+```
+
+This technique uses the native [get][mdn-get] and [set][mdn-set] behaviors of JavaScript, allowing you to (in a way), intercept how `_count` gets read and set. This is similar to how `@tracked` works under the hood with the reactive value primitives.
+
+This tutorial does not (yet) store your in-progress work, so go-ahead and click the "show me" button below, click the button in the output pane a few times, and refresh the page.
+
+[mdn-localStorage]: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+[mdn-get]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get
+[mdn-set]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set
+
+[The Answer]: import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
+
+export default class Demo extends Component {
+  @tracked _count = 0;
+
+  get count() {
+    let fromStorage = parseInt(localStorage.getItem('count')) ?? 0;
+    return this._count || fromStorage || 0;
+  }
+  set count(value) {
+    localStorage.setItem('count', value ?? 0);
+    this._count = value;
+  }
+
+  increment = () => this.count += 1;
+
+  <template>
+    <p>You have clicked the button {{this.count}} times.</p>
+
+    <button {{on "click" this.increment}}>Click</button>
+  </template>
+}
+
+"""
+
+###
+For the tutorial at path 4-logic/1-if-blocks, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: HTML lacks the ability to express logic, like conditionals, loops, etc.
+
+To render markup conditionally, it involves wrapping it in an if block:
+
+```hbs
+{{#if loggedIn}}
+  <button {{on 'click' toggle}}>
+    Log out
+  </button>
+
+{{/if}}
+
+{{#if (notLoggedIn)}}
+  <button>
+    Log in
+  </button>
+{{/if}}
+```
+
+Try updating the example so that the buttons are conditionally shown based on the `loggedIn` boolean.
+
+---
+
+Note that the syntax for "control flow" is a _pair_ of `{{ ... }}` with the opening `{{ }}` starting with a `#` and the closing `{{ }}` starting with a `/`. This is called "block syntax".
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/if?anchor=if
+
+[The Answer]: import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
+
+class User {
+  @tracked loggedIn = false;
+}
+
+const user = new User();
+const notLoggedIn = () => !user.loggedIn;
+const toggle = () => user.loggedIn = !user.loggedIn;
+
+<template>
+  Logged in: {{user.loggedIn}}<br>
+
+  {{#if user.loggedIn}}
+    <button {{on 'click' toggle}}>
+      Log out
+    </button>
+  {{/if}}
+
+  {{#if (notLoggedIn)}}
+    <button {{on 'click' toggle}}>
+      Log in
+    </button>
+  {{/if}}
+</template>
+
+"""
+
+###
+For the tutorial at path 4-logic/10-unless-blocks, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: `unless` blocks behave the same as `if` blocks, except the condition is inverted.
+
+For example:
+
+```hbs
+{{#unless condition}}
+  shows when condition is false
+{{else}}
+  shows when condition is true
+{{/unless}}
+```
+
+Try changing the `if` statement to an `unless` statement.
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/unless?anchor=unless
+
+[The Answer]: let condition = true;
+
+<template>
+  {{#unless condition}}
+    the condition is false
+  {{else}}
+    the condition is true
+  {{/unless}}
+</template>
+
+"""
+
+###
+For the tutorial at path 4-logic/2-else-blocks, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Since the two conditions — `if user.loggedIn` and `if (notLoggedIn)` — are mutually exclusive, we can simplify this component slightly by using an else block:
+
+```hbs
+{{#if user.loggedIn}}
+  <button {{on 'click' toggle}}>
+    Log out
+  </button>
+{{else}}
+  <button {{on 'click' toggle}}>
+    Log in
+  </button>
+{{/if}}
+```
+
+Note that `{{else}}` is an inconsistency in the syntax. Normally `{{identifier}}` would render a value to the DOM, but in this case, `{{else}}` is a special key word that is only valid within `if` and `unless` blocks.
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/if?anchor=if
+
+[The Answer]: import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
+
+class User {
+  @tracked loggedIn = false;
+}
+
+const user = new User();
+const notLoggedIn = () => !user.loggedIn;
+const toggle = () => user.loggedIn = !user.loggedIn;
+
+<template>
+  Logged in: {{user.loggedIn}}<br>
+
+  {{#if user.loggedIn}}
+    <button {{on 'click' toggle}}>
+      Log out
+    </button>
+  {{else}}
+    <button {{on 'click' toggle}}>
+      Log in
+    </button>
+  {{/if}}
+</template>
+
+"""
+
+###
+For the tutorial at path 4-logic/3-else-if-blocks, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Multiple conditions can be chained together without indentation or nesting.
+
+```hbs
+{{#if (moreThan10 x)}}
+  <p>{{x}} is greater than 10</p>
+{{else if (lessThan5)}}
+  <p>{{x}} is less than 5</p>
+{{else}}
+  <p>{{x}} is between 5 and 10</p>
+{{/if}}
+```
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/if?anchor=if
+
+[The Answer]: let x = 7;
+
+const moreThan10 = () => x > 10;
+const lessThan5 = () => x < 5;
+
+<template>
+  {{#if (moreThan10 x)}}
+    <p>{{x}} is greater than 10</p>
+  {{else if (lessThan5)}}
+    <p>{{x}} is less than 5</p>
+  {{else}}
+    <p>{{x}} is between 5 and 10</p>
+  {{/if}}
+</template>
+
+"""
+
+###
+For the tutorial at path 4-logic/4-inline-if, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Inline if can be useful for inline conditions:
+
+- conditional argument values
+- conditional css classes
+
+```hbs
+<Demo @background={{if darkMode "#222" "#eee"}} />
+
+or
+
+<div style="background: {{@background}}" class="{{if (isDarkMode @background) 'text-white' 'text-dark'}}">
+```
+
+Inline if is not a block-helper, so it does not need the `#` and `/` syntax.
+
+It can be read similarly: `{{if (condition) (value when true) (value when false)}}`
+
+Sometimes it can be hard to read the positional arguments of the inline if, so some folks will format like this:
+
+```hbs
+<div
+  style="background: {{@background}}"
+  class="{{if (isOnDark @background)
+              'text-white'
+              'text-dark'
+         }}"
+>
+```
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/if?anchor=if
+
+[The Answer]: import { cell } from 'ember-resources';
+import { on } from '@ember/modifier';
+
+let dark = '#222';
+let light = '#eee';
+let isOnDark = (color) => color === dark;
+
+const Demo = <template>
+  <style>
+    .demo__inline-if {
+      background: {{@background}};
+      color: {{if (isOnDark @background) light dark}};
+      padding: 2px 5px;
+    }
+  </style>
+
+  <div class="demo__inline-if">
+    content goes here
+  </div>
+</template>;
+
+let isDark = cell(true);
+
+<template>
+  <Demo @background={{if isDark.current dark light}} />
+
+  <br>
+  <button {{on 'click' isDark.toggle}}>Toggle Mode</button><br>
+</template>;
+
+"""
+
+###
+For the tutorial at path 4-logic/5-each-blocks, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Looping over lists of data can be done with an `each` block:
+
+```hbs
+<ul>
+  {{#each planets as |planet|}}
+    <li>
+      <a href='https://swapi.dev/api/planets/{{planet.id}}/' target='_blank'>
+        {{planet.name}}
+      </a>
+    </li>
+  {{/each}}
+</ul>
+```
+
+You can get the current index as a second argument as well:
+
+```hbs
+<ul>
+  {{#each planets as |planet i|}}
+    <li>
+      <a href='https://swapi.dev/api/planets/{{planet.id}}/' target='_blank'>
+        {{i}}
+        {{planet.name}}
+      </a>
+    </li>
+  {{/each}}
+</ul>
+```
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/each?anchor=each
+
+[The Answer]: let planets = [
+  { id: 1, name: 'Tatooine' },
+  { id: 2, name: 'Alderaan' },
+  { id: 3, name: 'Yavin IV' },
+];
+
+<template>
+  <ul>
+    {{#each planets as |planet|}}
+      <li>
+        <a href="https://swapi.dev/api/planets/{{planet.id}}/" target="_blank" rel="noopener noreferrer">
+          {{planet.name}}
+        </a>
+      </li>
+    {{/each}}
+  </ul>
+</template>
+
+"""
+
+###
+For the tutorial at path 4-logic/6-each-in-blocks, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Like, `each` is for iterating over lists of objects, `each-in` is for iterating over entries within an object.
+
+```hbs
+<table>
+  {{#each-in planet as |property value|}}
+    <tr>
+      <th scope='row'>{{property}}</th>
+      <td>{{value}}</td>
+    </tr>
+  {{/each-in}}
+</table>
+```
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/each-in?anchor=each-in
+
+[The Answer]: let planet = {
+  name: 'Tatooine',
+  rotationPeriod: 23,
+  orbitalPeriod: 304,
+  diameter: 10465,
+  climate: 'arid',
+  gravity: '1 standard',
+  terrain: 'desert',
+};
+
+<template>
+  <table>
+    {{#each-in planet as |property value|}}
+      <tr>
+        <th scope="row">{{property}}</th>
+        <td>{{value}}</td>
+      </tr>
+    {{/each-in}}
+  </table>
+</template>
+
+"""
+
+###
+For the tutorial at path 4-logic/7-keyed-each-blocks, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: By default, when you modify an entry in a list looped over by an `each` block, object-identity equality will be used to optimize the loop. Much like how reactive-values are only reactive via the _reference_ to their value, the content of an `each` loop, per-item, is cached on the reference to the item in the list.
+
+This behavior can be modified, like if a list of data does not contain stable object references.
+
+We can choose a property to watch for changes:
+
+```hbs
+<ul>
+  {{#each planets key='id' as |planet|}}
+    <li>{{planet.name}}</li>
+  {{/each}}
+</ul>
+```
+
+We can observe how the list updates the DOM by seeing how function invocations occur within the `each` loop.
+
+[The Answer]: import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
+import { fn } from '@ember/helper';
+
+export default class Demo extends Component {
+  <template>
+    <ul>
+      {{#each this.planets key="name" as |planet|}}
+        {{ (this.iterated planet) }}
+        <li>
+          <button {{on 'click' (fn this.remove planet)}}>remove</button>
+          {{planet.name}}
+        </li>
+      {{/each}}
+    </ul>
+
+    {{#if (hasMorePlanets this.planets)}}
+      <button {{on 'click' this.add}}>
+        add
+      </button>
+    {{/if}}
+  </template>
+
+  @tracked planets = withNewIds(planets);
+
+  iterated = (planet) => console.log(planet.name);
+
+  add = () => {
+    this.planets = [
+      ...this.planets,
+      {
+        id: this.planets.length + 1,
+        ...getPlanet(this.planets)
+      },
+    ];
+  }
+
+  remove = (planet) => {
+    this.planets = this.planets.filter((p) => p.id !== planet.id);
+  }
+
+}
+
+let planets = [
+  { name: 'Tatooine' },
+  { name: 'Alderaan' },
+  { name: 'Yavin IV' },
+  { name: 'Hoth' },
+  { name: 'Dagobah' },
+  { name: 'Bespin' },
+  { name: 'Endor' },
+  { name: 'Naboo' },
+];
+
+function hasMorePlanets(existing) {
+  return existing.length < planets.length;
+}
+
+function getPlanet(existing) {
+  let remaining = planets.filter((planet) => {
+    let alreadyUsed = existing.some(existing => existing.name === planet.name);
+
+    return !alreadyUsed;
+  });
+
+  let randomIndex = Math.floor(Math.random() * remaining.length);
+
+  return remaining[randomIndex];
+}
+
+function withNewIds(planets) {
+  return planets.map((planet, i) => ({ id: i + 1, ...planet }));
+}
+
+"""
+
+###
+For the tutorial at path 4-logic/8-let-blocks, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: `let` blocks allow defining an alias to other data.
+
+```hbs
+{{#let 'hello there' as |greeting|}}
+  {{greeting}}
+{{/let}}
+```
+
+This is particularly useful when transformed data needs to be used in multiple places
+
+```hbs
+{{#let (upper 'hello there') as |greeting|}}
+  {{greeting}}
+{{/let}}
+```
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/let?anchor=let
+
+[The Answer]: let data = "Hello there!";
+let upper = (text) => text.toUpperCase();
+
+<template>
+  {{#let data as |greeting|}}
+    {{greeting}}
+  {{/let}}
+
+  {{#let (upper data) as |greeting|}}
+    {{greeting}}
+  {{/let}}
+</template>
+
+"""
+
+###
+For the tutorial at path 4-logic/9-portalling, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Portalling can be achieved via the `in-element` block-helper.
+This is useful for escaping z-index issues for pop-overs or in general rendering content in different places in the DOM.
+
+```hbs
+<div id='my-portal-target'></div>
+
+{{#in-element (findTarget '#my-portal-target')}}
+  content here
+{{/in-element}}
+```
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/in-element?anchor=in-element
+
+[The Answer]: let findTarget = (selector) => document.querySelector(selector);
+
+<template>
+  <div id="my-portal-target" style="border: 1px solid;"></div>
+
+  <div style="background: #eee;">
+    {{#in-element (findTarget '#my-portal-target')}}
+      wrap this content in in-element
+    {{/in-element}}
+  </div>
+</template>
+
+"""
+
+###
+For the tutorial at path 2-reactivity/1-values, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: A reactive value is an object representing a value with some utility methods for updating that value.
+
+```gjs
+import { cell } from 'ember-resources';
+
+const greeting = cell();
+
+<template>
+  {{greeting.current}}
+</template>
+```
+
+In this particular example, we use the [`cell`][gh-cell] primitive from [ember-resources][gh-resources].  
+`cell` provides a single property, `current`, that represents the current value.
+
+For this exercise, **change the value after 3 seconds have passed after render**.
+
+`cell` has several update methods that could be used for this task:
+
+- `set` - immediately sets the value of `current`
+- `update` - invokes a passed function that receives the previous value and then sets `current` to the return value of that function
+- `toggle` - toggles the value between true and false
+- and directly setting current via `greeting.current = newValue`
+
+Hint: you may want [setTimeout][mdn-setTimeout].
+
+[gh-cell]: https://github.com/NullVoxPopuli/ember-resources/blob/98ee38186a39097465ca97a90a68b9af158e75b2/ember-resources/src/util/cell.ts#L78
+[gh-resources]: https://github.com/NullVoxPopuli/ember-resources
+[mdn-setTimeout]: https://developer.mozilla.org/en-US/docs/Web/API/setTimeout
+
+[The Answer]: import { cell } from 'ember-resources';
+
+const greeting = cell("Hello there!");
+
+// Change the value after 3 seconds
+setTimeout(() => {
+  greeting.current = "General Kenobi!";
+}, 3000);
+
+<template>
+  Greeting: {{greeting.current}}
+</template>
+
+"""
+
+###
+For the tutorial at path 2-reactivity/2-decorated-values, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: As one might imagine, having to access and manipulating a property can get cumbersome.
+
+If using classes, you could see a pattern develop to try to achieve "native-like" read and write access to properties:
+
+```js
+import { cell } from 'ember-resources';
+
+class Demo {
+  _value = cell();
+
+  get theProperty() {
+    return this._value.current;
+  }
+
+  set theProperty(nextValue) {
+    return (this._value.current = nextValue);
+  }
+}
+```
+
+This would allow setting / getting of `theProperty`, which is reactive, without the need to know about the underlying reactive implementation. _Except, you'd still have to maintain all of the above code_.
+
+```gjs
+const demo = new Demo();
+
+setTimeout(() => {
+  demo.theProperty = 2;
+}, 500);
+
+<template>
+  {{demo.theProperty}}
+</template>
+```
+
+All of this is abstracted away with a _property decorator_, called `@tracked`, and the above example can be simplified like so:
+
+```js
+import { tracked } from '@glimmer/tracking';
+
+class Demo {
+  @tracked theProperty;
+}
+```
+
+This decorator automatically wraps up the getter and setter so that the _reference_ to `theProperty` is reactive, and can be set / updated like normal javascript properties.
+
+**For this exercise, re-write the previous example using `@tracked`**
+
+You'll notice that _for now_ you still have to manage a special object. We'll circle back to that later when we talk about _components_.
+
+[The Answer]: import { tracked } from '@glimmer/tracking';
+
+class Demo {
+  @tracked greeting = 'Hello there!';
+}
+
+const demo = new Demo();
+
+// Change the value after 3 seconds
+setTimeout(() => {
+  demo.greeting = "General Kenobi!";
+}, 3000);
+
+<template>
+  Greeting: {{demo.greeting}}
+</template>
+
+"""
+
+###
+For the tutorial at path 2-reactivity/3-derived-values, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Deriving values are automatically reactive and allow for CPU-efficient transformation of other values.
+
+For example, "X" is defined as "some transformation" on "Y", is a derived value.
+
+In Glimmer and Ember, it is convention to use a [getter][mdn-get].
+Using our previous example:
+
+```js
+import { tracked } from '@glimmer/tracking';
+
+class Demo {
+  @tracked greeting = 'Hello there!';
+
+  get loudGreeting() {
+    return this.greeting.toUpperCase();
+  }
+}
+```
+
+The getter, `loudGreeting` will always be up to date.
+
+Something to watch out for is property assignments in classes,
+
+```js
+class Demo {
+  @tracked greeting = 'Hello there!';
+
+  loudGreeting = this.greeting.toUpperCase();
+}
+```
+
+This is explicitly _non-reactive_, because property assignments in classes only happen once.
+For more information on class fields, [MDN has good content on the subject][mdn-class-fields].
+
+[mdn-get]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get
+[mdn-class-fields]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Public_class_fields
+
+[The Answer]: import { tracked } from '@glimmer/tracking';
+
+class Demo {
+  @tracked greeting = 'Hello there!';
+
+  get loudGreeting() {
+    return this.greeting.toUpperCase();
+  }
+}
+
+const demo = new Demo();
+
+// Change the value after 3 seconds
+setTimeout(() => {
+  demo.greeting = "General Kenobi!";
+}, 3000);
+
+<template>
+  Greeting: {{demo.loudGreeting}}
+</template>
+
+"""
+
+###
+For the tutorial at path 2-reactivity/4-functions, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Plain functions are inherently reactive.
+Building off the previous example, call a function that transforms the greeting.
+
+```hbs
+ Greeting: {{(shout greeting.current)}}
+```
+
+Any time `greeting.current` changes, `shout` will be re-evaluated for you.
+
+[The Answer]: import { cell } from 'ember-resources';
+
+const greeting = cell("Hello there!");
+const shout = (text) => text.toUpperCase();
+
+// Change the value after 3 seconds
+setTimeout(() => {
+  greeting.current = "General Kenobi!";
+}, 3000);
+
+<template>
+  Greeting: {{ (shout greeting.current) }}
+</template>
+
+"""
+
+###
+For the tutorial at path 2-reactivity/5-resources, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: A resource represents a value which may be derived from state and has cleanup.
+
+For example, a resource can show the current time every second:
+
+```gjs
+import { resource, cell } from 'ember-resources';
+
+const Clock = resource(({ on }) => {
+  let time = cell(new Date());
+  let interval = setInterval(() => time.current = new Date(), 1000);
+
+  on.cleanup(() => clearInterval(interval));
+
+  return time;
+});
+```
+
+Try rendering the `Clock` like you would any ordinary value:
+
+```gjs
+<template>
+  It is: <time>{{Clock}}</time>
+</template>
+```
+
+This `Clock` uses [`setInterval`][mdn-setInterval], which requires that the interval is cancelled when `{{Clock}}` is no longer rendered:
+
+```js
+on.cleanup(() => clearInterval(interval));
+```
+
+This `on.cleanup` function will be called when `{{Clock}}` is removed from the DOM.
+
+[mdn-setInterval]: https://developer.mozilla.org/en-US/docs/Web/API/setInterval
+
+[The Answer]: import { resource, cell } from 'ember-resources';
+
+const Clock = resource(({ on }) => {
+  let time = cell(new Date());
+  let interval = setInterval(() => time.current = new Date(), 1000);
+
+  on.cleanup(() => clearInterval(interval));
+
+  return time;
+});
+
+<template>
+  It is: <time>{{Clock}}</time>
+</template>
+
+"""
+
+###
+For the tutorial at path 2-reactivity/6-resource-builders, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Combining the concepts of reactive functions and resources allow us to build configurable reactive values with cleanup!
+
+Taking the `Clock` example, we can use a resource builder to allow us to configure how we want the time displayed.
+
+```gjs
+import { resource, cell, resourceFactory } from 'ember-resources';
+
+const Clock = resourceFactory((locale = 'en-US') => {
+  let formatter = new Intl.DateTimeFormat(locale, {
+    // ...
+  });
+
+  return resource(({ on }) => {
+    let time = cell(new Date());
+    let interval = setInterval(() => time.current = new Date(), 1000);
+
+    on.cleanup(() => clearInterval(interval));
+
+    return () => formatter.format(time.current);
+  });
+});
+
+<template>
+  It is: <time>{{Clock}}</time><br />
+</template>
+```
+
+Try invoking `{{Clock}}` with different arguments:
+
+```hbs
+
+It is:
+<time>{{Clock 'ko-KO'}}</time><br />
+It is:
+<time>{{Clock 'ja-JP-u-ca-japanese'}}</time><br />
+```
+
+[mdn-DateTimeFormat]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
+
+[The Answer]: import { resource, cell, resourceFactory } from 'ember-resources';
+
+const Clock = resourceFactory((locale = 'en-US') => {
+  let formatter = new Intl.DateTimeFormat(locale, {
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: true,
+  });
+
+  return resource(({ on }) => {
+    let time = cell(new Date());
+    let interval = setInterval(() => time.current = new Date(), 1000);
+
+    on.cleanup(() => clearInterval(interval));
+
+    return () => formatter.format(time.current);
+  });
+});
+
+<template>
+  It is: <time>{{Clock}}</time><br />
+  It is: <time>{{Clock 'en-GB'}}</time><br />
+  It is: <time>{{Clock 'ko-KO'}}</time><br />
+  It is: <time>{{Clock 'ja-JP-u-ca-japanese'}}</time>
+</template>
+
+"""
+
+###
+For the tutorial at path 2-reactivity/6-resource-composition, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Where resources' real power comes in is the composibility of other resources.
+
+In previous chapters, we've built a clock, which updates every second.
+But now let's say we also want to make a Stopwatch, but we only want to manage `setInterval` once, we may want to make a Resource with configurable interval milliseconds, like this:
+
+```js
+const Time = resourceFactory((ms) => resource(({ on }) => {
+  let time = cell(Date.now());
+  let interval = setInterval(() => time.current = Date.now(), ms);
+
+  on.cleanup(() => clearInterval(interval));
+
+  return time;
+}));
+```
+
+This uses the [`Date.now()`][mdn-date] method which gives us millisecond precision and represents the time in milliseconds since January 1, 1970 00:00:00 UTC (the [epoch][ecma-epoch]).
+
+
+The `on` object is not the only property we have at our disposal.  We are provided a `use` function that allows us to _use_ other resources.
+
+```js 
+const FormattedClock = resourceFactory((locale = 'en-US') => {
+  let formatter = new Intl.DateTimeFormat(locale, { /* ... */ });
+
+  return resource(({ on, use }) => {
+    const time = use(Time(1_000));
+
+    return () => formatter.format(time.current);
+  });
+});
+```
+
+This allows us to use the same resource to both make a `Clock` as well as a `Stopwatch`
+```js
+const Clock = resource(({ on, use }) => {
+  let time = use(Time(1_000));
+  return time;
+});
+
+const Stopwatch = resource(({ on, use }) => {
+  let time = use(Time(0));
+  return time;
+});
+```
+
+You could even combine these into a single resource -- `use` can be used as many times as you wish.
+
+```js
+const Watch = resource(({ on, use }) => {
+  let clock = use(Time(1_000));
+  let stopwatch = use(Time(0));
+
+  return {
+    get currentTime() {
+      return clock.current;
+    },
+    get currentMs() {
+      return stopwatch.current;
+    }
+  };
+});
+```
+
+
+[mdn-date]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+[ecma-epoch]: https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-time-values-and-time-range
+
+
+[The Answer]: import { resource, cell, resourceFactory } from 'ember-resources';
+
+const Time = resourceFactory((ms) => resource(({ on }) => {
+  let time = cell(Date.now());
+  let interval = setInterval(() => time.current = Date.now(), ms);
+
+  on.cleanup(() => clearInterval(interval));
+
+  return time;
+}));
+
+const Clock = resource(({ use }) => {
+  return use(Time(1_000));
+});
+
+const Stopwatch = resource(({ use }) => {
+  return use(Time(0));
+});
+
+// from a previous example
+const FormattedClock = resourceFactory((locale = 'en-US') => {
+  let formatter = new Intl.DateTimeFormat(locale, {
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: true,
+  });
+
+  return resource(({ use }) => {
+    let time = use(Clock);
+
+    return () => formatter.format(time.current);
+  });
+});
+
+// demonstrating that use can be used multiple times
+const Watch = resource(({ use }) => {
+  let clock = use(Time(1_000));
+  let stopwatch = use(Time(0));
+
+  // alternative way to have reactive properties
+  return {
+    get currentTime() {
+      return clock.current;
+    },
+    get currentMs() {
+      return stopwatch.current;
+    }
+  };
+});
+
+<template>
+  Go! {{Stopwatch}} (ms since the epoch) <br />
+  It is: <time>{{Clock}}</time><br />
+  It is: <time>{{FormattedClock}}</time><br />
+  It is: <time>{{FormattedClock 'en-GB'}}</time><br />
+  It is: <time>{{FormattedClock 'ko-KO'}}</time><br />
+  It is: <time>{{FormattedClock 'ja-JP-u-ca-japanese'}}</time><br>
+  <br>
+
+  {{#let (Watch) as |watch|}}
+    watch.currentTime: {{watch.currentTime}}<br>
+    watch.currentMs: {{watch.currentMs}}
+  {{/let}}
+</template>
+
+"""
+
+###
+For the tutorial at path 2-reactivity/7-modifiers, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: A modifier, or _element modifier_, is a utility for performing some action on an _element_.
+
+Like resources, modifiers also have cleanup -- and modifiers could be thought of as resource builders that take an element as one of their arguments.
+
+For example, we could apply an animation to an element:
+
+```gjs
+import { modifier } from 'ember-modifier';
+
+const intensify = modifier((element) => {
+  let animation = element.animate([
+    { transform: "translateX(2px)" },
+    { transform: "translateY(2px)" },
+    { transform: "translateX(-2px)" },
+  ], {
+    duration: 100,
+    iterations: Infinity,
+  });
+
+  return () => animation.cancel();
+});
+```
+
+Try applying the modifier:
+
+```hbs
+<div {{intensify}}>
+  content
+</div>
+```
+
+It's important to cleanup a modifier so that state, whether in-app, or in native built-in browser state, doesn't leak.
+In this example, the animation in cancelled when the element is no longer rendered.
+
+Full docs for modifiers can be found on the [`ember-modifier`][gh-e-modifier] GitHub.
+
+[gh-e-modifier]: https://github.com/ember-modifier/ember-modifier
+
+[The Answer]: import { modifier } from 'ember-modifier';
+
+const intensify = modifier((element) => {
+  let animation = element.animate([
+    { transform: "translateX(2px)" },
+    { transform: "translateY(2px)" },
+    { transform: "translateX(-2px)" },
+  ], {
+    duration: 100,
+    iterations: Infinity,
+  });
+
+  return () => animation.cancel();
+});
+
+<template>
+  <div {{intensify}}>
+    content
+  </div>
+</template>
+
+"""
+
+###
+For the tutorial at path 2-reactivity/8-components, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Components are the collection of the primitives that build higher level UI.
+
+Defining a component is done with `<template>` tags.
+
+In every `gjs` or `gts` file,
+
+```gjs
+<template>
+  content here
+</template>
+```
+
+is a syntactical sugar for `export default`, which is also allowed to be written, but is slightly more verbose:
+
+```gjs
+export default <template>
+  content here
+</template>;
+```
+
+Multiple components can be defined in one file and assigned to a variable:
+
+```gjs
+const NameInput = <template>
+  ...
+</template>;
+```
+
+Components are invoked with `<` and `>` and arguments are passed via `@`-prefixed names.
+
+```hbs
+<Greeting @name='Yoda' />
+```
+
+_Invoke the ready-made component(s) and pass an argument._
+
+[The Answer]: import { on } from '@ember/modifier';
+import { cell } from 'ember-resources';
+
+const myName = cell('there');
+const handleInput = (event) => myName.current = event.target.value;
+
+const NameInput = <template>
+  <label>
+    Name
+    <input
+      class="border border-gray-900"
+      value="there"
+      {{on "input" handleInput}}
+    />
+  </label>
+</template>;
+
+
+const Greeting = <template>
+  Hello, {{@name}}!
+</template>;
+
+<template>
+  <NameInput /><br>
+
+  <Greeting @name={{myName.current}} />
+</template>
+
+"""
+
+###
+For the tutorial at path 2-reactivity/9-components-with-state, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Components can have their own encapsulated state by using a [class][mdn-class].
+This allows defining and access to reactive state as well as the broader application's global state system (usually dependency injected "services"), if available.
+
+We can refactor the previous example's module-level state to be contained within a class:
+
+```gjs
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+
+export default class Demo extends Component {
+  @tracked myName;
+
+  handleInput = (event) => this.myName = event.target.value;
+
+  <template>
+    <NameInput @onInput={{this.handleInput}} />
+
+    <Greeting @name={{this.myName}} />
+  </template>
+}
+```
+
+[mdn-class]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
+
+[The Answer]: import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
+
+
+export default class Demo extends Component {
+  @tracked myName = 'there';
+
+  handleInput = (event) => this.myName = event.target.value;
+
+  <template>
+    <NameInput @onInput={{this.handleInput}} /><br>
+
+    <Greeting @name={{this.myName}} />
+  </template>
+}
+
+const NameInput = <template>
+  <label>
+    Name
+    <input
+      class="border border-gray-900"
+      value="there"
+      {{on "input" @onInput}}
+    />
+  </label>
+</template>;
+
+
+const Greeting = <template>
+  Hello, {{@name}}!
+</template>;
+
+"""
+
+###
+For the tutorial at path 5-builtins/1-array, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: You can always make an array in JavaScript-space
+
+```js
+let myArray = [];
+```
+
+But if you want the individual elements of an array to be individually reactive, you can make an array via the `(array)` helper in template-space
+
+```hbs
+{{#let (array one two) as |data|}}
+  {{data}}
+{{/let}}
+```
+
+When creating arrays this way, value `two` can change and not affect the reactivity of value `one`.
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/array?anchor=array
+
+[The Answer]: import { array } from '@ember/helper';
+
+let one = 1;
+let two = 2;
+
+let formatted = (data) => JSON.stringify(data, null, 2);
+
+<template>
+  {{#let (array one two) as |data|}}
+    <pre><code>{{formatted data}}</code></pre>
+  {{/let}}
+</template>
+
+"""
+
+###
+For the tutorial at path 5-builtins/2-hash, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: `hash` is similar in purpose to an `array`, except that it creates objects instead of arrays.
+
+```hbs
+{{#let (hash one=1 two=2) as |data|}}
+  {{data}}
+{{/let}}
+```
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/hash?anchor=hash
+
+[The Answer]: import { hash } from '@ember/helper';
+
+let formatted = (data) => JSON.stringify(data, null, 2);
+
+<template>
+  {{#let (hash one=1 two=2) as |data|}}
+    <pre><code>{{formatted data}}</code></pre>
+  {{/let}}
+</template>
+
+"""
+
+###
+For the tutorial at path 5-builtins/3-htmlSafe, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Glimmer, by default, protects you against [Cross-Site-Scripting][xss] attacks, where an attack may try to get malicious code rendered on a page to scrape or send information from other user sessions.
+
+The `htmlSafe` utility is used when you have input that either _know_ to be safe, or you can be reasonably certain that rendering untrusted input will have no negative consequence (for example, maybe untrusted input is ran through a sanitizer (such as [PurifyDOM](https://github.com/cure53/DOMPurify)).
+
+```hbs
+{{htmlSafe untrusted}}
+```
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/functions/@ember%2Ftemplate/htmlSafe
+[xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
+
+[The Answer]: import { htmlSafe } from '@ember/template';
+
+const untrusted = 'some <em>untrusted</em> <h1>string</h1>';
+
+<template>
+  {{htmlSafe untrusted}}
+</template>
+
+"""
+
+###
+For the tutorial at path 6-partial-application/1-fn, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: `fn` is used for [partial application][wiki] of arguments to functions.
+
+This is used for pre-wiring arguments to functions so that they may be passed elsewhere without that consumer needing to pass any arguments themselves.
+
+```hbs
+{{#let (fn stringify data) as |preWired|}}
+```
+
+Given that `stringify` is a function, `fn` partially applies `data` as the new first argument.
+So invoking `preWired()` would be equivalent to `stringify(data)`.
+Likewise, invoking `preWired('more data')` would be equivalent to `stringify(data, 'more-data')`.
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/4.11/classes/Ember.Templates.helpers/methods/fn?anchor=fn
+[wiki]: https://en.wikipedia.org/wiki/Partial_application
+
+[The Answer]: import { fn } from '@ember/helper';
+
+let stringify = (data) => JSON.stringify(data, null, 3);
+let data = { a: 'A', b: 'B' };
+
+<template>
+  {{#let (fn stringify data) as |preWired|}}
+    <pre><code>{{ (preWired) }}</code></pre>
+  {{/let}}
+</template>
+
+"""
+
+###
+For the tutorial at path 6-partial-application/2-helper, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: `helper` is used for [partial application][wiki] of arguments to helpers.
+
+_Most_ helpers in Glimmer/Ember _are_ functions, so `fn` would be sufficient,
+but helpers can be things other than functions ([class-based][docs-class-helper] helpers, resources, etc), thanks to [Helper Managers][rfc-625].
+
+```hbs
+{{#let (helper stringify data) as |preWired|}}
+```
+
+Try partially applying arguments to the given helper.
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/helper?anchor=helper
+[wiki]: https://en.wikipedia.org/wiki/Partial_application
+[rfc-625]: https://rfcs.emberjs.com/id/0625-helper-managers/
+[docs-class-helper]: https://api.emberjs.com/ember/release/classes/Helper
+
+[The Answer]: import Helper from '@ember/component/helper';
+
+class DemoHelper extends Helper {
+  compute(positionalArgs, namedArgs) {
+    return JSON.stringify({ positionalArgs, namedArgs }, null, 3);
+  }
+}
+
+let data = { a: 'A', b: 'B' };
+
+<template>
+  {{#let (helper DemoHelper data) as |preWired|}}
+    <pre><code>{{ (preWired) }}</code></pre>
+  {{/let}}
+</template>
+
+"""
+
+###
+For the tutorial at path 6-partial-application/3-modifier, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: `modifier` is used for [partial application][wiki] of arguments to modifiers.
+
+This can be useful for pre-wiring arguments to complex modifiers, or modifiers with private implementation details that a consumer may not need to care about.
+
+```hbs
+{{#let (modifier on 'click' handler) as |preWired|}}
+```
+
+Try partially applying arguments to the given modifier as use that pre-wired modifier on the button.
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/modifier/classes/Ember.Templates.helpers/methods/modifier?anchor=modifier
+[wiki]: https://en.wikipedia.org/wiki/Partial_application
+
+[The Answer]: import { on } from '@ember/modifier';
+import { cell } from 'ember-resources';
+
+let count = cell(0);
+let handler = (event) => count.current++;
+
+<template>
+  {{#let (modifier on 'click' handler) as |preWired|}}
+    <button {{preWired}}>click me</button>
+    <br>Clicked {{count.current}} times
+  {{/let}}
+</template>
+
+"""
+
+###
+For the tutorial at path 6-partial-application/4-component, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: `component` is used for [partial application][wiki] of arguments to modifiers.
+
+This can be useful for pre-wiring arguments to complex components, or components with private implementation details that a consumer may not need to care about.
+
+```hbs
+{{#let (component Greeting response="General Kenobi!") as |preWired|}}
+```
+
+Try partially applying arguments to the given component.
+
+[Documentation][docs]
+
+[docs]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/component?anchor=component
+[wiki]: https://en.wikipedia.org/wiki/Partial_application
+
+[The Answer]: let Greeting = <template>
+  Hello {{@name}}!<br>
+
+  {{@response}}
+</template>;
+
+<template>
+  {{#let (component Greeting response="General Kenobi!") as |preWired|}}
+
+    <preWired @name="there" />
+
+  {{/let}}
+</template>
+
+"""
+
+###
+For the tutorial at path 7-form-data/1-automatic-binding, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Vanilla JavaScript has everything we need to handle form data, de-sync it from our source data and collect all user input upon submission.
+
+In the form below, we create a Vanilla™ [HTML form][2], and only add "Ember" code for handling the form submission and field inputs once on the `<form>` tag. By default, form submissions will cause a page reload, so in a single-page-app, we need to prevent that default behavior.
+
+Using the native API, [FormData][1], we can gather the user inputs when the user presses the submit button.
+
+```hbs
+<form {{on 'input' handleInput}} {{on 'submit' handleSubmit}}>
+  <label>
+    First Name
+    <input name='firstName' />
+  </label>
+
+  <!-- any amount of form fields may be present here, it's *just HTML* -->
+
+  <button type='submit'>Submit</button>
+</form>
+```
+
+In this chapter, add the necessary `on` event listeners so that the form automatically behaves reactively.
+
+Like with the [URL][4], [localStorage][5], and other web-platform-primitives, the storage machanism is _string-based_. For non-string data, the form will need to be converted to a string during render and converted back on submission.
+
+[1]: https://developer.mozilla.org/en-US/docs/Web/API/FormData
+[2]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form
+[3]: https://guides.emberjs.com/release/components/component-state-and-actions/#toc_html-modifiers-and-actions
+[4]: https://developer.mozilla.org/en-US/docs/Web/API/URL
+[5]: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+
+[The Answer]: import { on } from '@ember/modifier';
+import { cell } from 'ember-resources';
+
+let state = cell();
+
+function handleInput(event) {
+  let formData = new FormData(event.currentTarget);
+  let data = Object.fromEntries(formData.entries());
+
+  state.current = JSON.stringify(data, null, 2);
+}
+
+function handleSubmit(event) {
+  event.preventDefault();
+  handleInput(event);
+}
+
+<template>
+  <form
+    {{on 'input' handleInput}}
+    {{on 'submit' handleSubmit}}
+    id="demo"
+  >
+    <label>
+      First Name
+      <input name='firstName'>
+    </label>
+
+    <button type='submit'>Submit</button>
+  </form>
+
+  <br><br>
+
+  FormData:
+  <pre>{{state.current}}</pre>
+
+  <style>
+    #demo {
+      display: grid;
+      gap: 0.5rem;
+      max-width: 300px;
+    }
+    #demo input { border: 1px solid; }
+  </style>
+</template>
+
+"""
+
+###
+For the tutorial at path 7-form-data/2-initial-data, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: As good as writing plain HTML is, it cannot as easily know what we want initial values in our form to be.
+
+For that, we still need to utilize the [`value`][3] attribute.
+
+```hbs
+<input name='firstName' value={{initialData.firstName}} />
+```
+
+[3]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#value
+
+[The Answer]: import { on } from '@ember/modifier';
+import { cell } from 'ember-resources';
+
+let state = cell();
+let initialData = {
+  firstName: 'Padme',
+};
+
+function handleInput(event) {
+  let formData = new FormData(event.currentTarget);
+  let data = Object.fromEntries(formData.entries());
+
+  state.current = JSON.stringify(data, null, 2);
+}
+
+function handleSubmit(event) {
+  event.preventDefault();
+  handleInput(event);
+}
+
+<template>
+  <form
+    {{on 'input' handleInput}}
+    {{on 'submit' handleSubmit}}
+    id="demo"
+  >
+    <label>
+      First Name
+      <input name='firstName' value={{initialData.firstName}}>
+    </label>
+
+    <button type='submit'>Submit</button>
+  </form>
+
+  <br><br>
+
+  FormData:
+  <pre>{{state.current}}</pre>
+
+  <style>
+    #demo {
+      display: grid;
+      gap: 0.5rem;
+      max-width: 300px;
+    }
+    #demo input { border: 1px solid; }
+  </style>
+</template>
+
+"""
+
+###
+For the tutorial at path 7-form-data/3-non-string-data-types, this is written for a reader who is learning how to program the concepts described in this Prose and Answer
+"""[The Prose]: Like with the [URL][1], [localStorage][2], and other web-platform-primitives,
+the storage machanism for `<form>`s is _string-based_.
+
+For non-string data, the form will need to be converted to a string during render and converted back on submission.
+
+If we want to use a number field, and ensure the data we receive back from the form is a number,
+we must adjust the `handleInput` function from before.
+
+```js
+function parse(data) {
+  let result = { ...data };
+
+  if ('numberField' in data) {
+    result.numberField = parseInt(data.numberField, 10);
+  }
+
+  return result;
+}
+
+const handleInput = (event) {
+  let formData = new FormData(event.currentTarget);
+  let data = Object.fromEntries(formData.entries());
+
+  let parsed = parse(data);
+
+  // ...
+}
+```
+
+Adjust the example so that the number `input` field parses to a number when edited or the form is submitted.
+
+[1]: https://developer.mozilla.org/en-US/docs/Web/API/URL
+[2]: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+[3]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#value
+
+[The Answer]: import { on } from '@ember/modifier';
+import { cell } from 'ember-resources';
+
+let state = cell();
+
+let initialData = {
+  numberField: 10
+};
+
+function parse(data) {
+  let result = { ...data };
+
+  if ('numberField' in data) {
+    result.numberField = parseInt(data.numberField, 10);
+  }
+
+  return result;
+}
+
+function handleInput(event) {
+  let formData = new FormData(event.currentTarget);
+  let data = Object.fromEntries(formData.entries());
+  let parsed = parse(data);
+
+  state.current = JSON.stringify({ ...parsed, type: typeof parsed.numberField }, null, 2);
+}
+
+function handleSubmit(event) {
+  event.preventDefault();
+  handleInput(event);
+}
+
+<template>
+  <form
+    {{on 'input' handleInput}}
+    {{on 'submit' handleSubmit}}
+    id="demo"
+  >
+    <label>
+      Some number
+      <input type='number' name='numberField' value={{initialData.numberField}}>
+    </label>
+
+    <button type='submit'>Submit</button>
+  </form>
+
+  <br><br>
+
+  FormData:
+  <pre>{{state.current}}</pre>
+
+  <style>
+    #demo {
+      display: grid;
+      gap: 0.5rem;
+      max-width: 300px;
+    }
+    #demo input { border: 1px solid; }
+  </style>
+</template>
+
+"""
