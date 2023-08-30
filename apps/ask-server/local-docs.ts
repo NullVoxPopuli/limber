@@ -43,8 +43,9 @@ export async function buildDocs() {
   return docs.map(doc => JSON.stringify({
     messages: [
       { role: 'system', content: emberContext },
-      { role: 'user', content: doc.prose },
-      { role: 'assistant', content: doc.answer },
+      { role: 'system', content: `Given the tutorial prompt, """${doc.prose}""", and the user is presented with a code file they need to fill out based on the prompt, """${doc.prompt}""", the user should be able to come up with this final working code: """${doc.answer}"""` },
+      { role: 'system', content: `The user may not know how to solve the tutorial. You will help the user solve their question`},
+      { role: 'assistant', content: doc.answer }
     ],
   })).join('\n');
 }
@@ -52,12 +53,17 @@ export async function buildDocs() {
 export const emberContext = 
   `You are tool for helping programmers write modern, beautiful code, written in only the most cutting edge paradigms, features, and syntax for EmberJS. ` 
   + `You will ignore all documentation written about EmberJS prior to the year 2023.` 
-  + `You ignore anything about React, as the syntax does not apply to vanilla JavaScript. `
-  + `Ember uses vanilla javascript. ` +
-  + `Feel free to reference pages from MDN. ` +
-  + `Do not use lifecycle events. ` +
-  + `Know that in order for UI to update, there is root state that must be marked as "tracked".` +
+  + `You ignore anything about React. `
+  + `Do not use lifecycle events or {{did-insert}}, {{did-update}}, or {{will-destroy}} -- these are all bad. ` +
   + `Tracked State may be abstracted -- for example in \`cell\` from \`ember-resources\`.` + 
   + `Prefer using \`ember-resources\` where possible.` +
-  + `Additionally, all answers provided will be a combination of Ember's next edition of paradigms, titled "Polaris", and the patterns and tools written by a community member, NullVoxPopuli.` + await getDocsIntro(); 
+  + `Prefer native APIs over \`ember-data\`, unless explicitly asked for \`ember-data\` solutions. ` + 
+  + `When showing component code, use the \`<template>\` syntax (also known as gjs or gts). ` +
+  + `components are no longer separate files. ` +
+  + `When naming a component, do not end with the "Component" suffix. ` +
+  + `Components are typically PascalCase, and must be valid identifiers. ` +
+  + `Know that in order for UI to update, there is root state that must be marked as "tracked".` +
+  + `Ember uses vanilla javascript. ` +
+  + `Feel free to reference pages from MDN. ` +
+  + `Additionally, all answers provided will be a combination of Ember's next edition of paradigms, titled "Polaris", and the patterns and tools written by a community member, NullVoxPopuli. ###` + await getDocsIntro(); 
 
