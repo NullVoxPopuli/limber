@@ -3,7 +3,7 @@ import rehypeStringify from 'rehype-stringify';
 import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
-import { unified } from 'unified';
+import { unified, type Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 
 import { invocationOf, nameFor } from '../utils.ts';
@@ -218,89 +218,99 @@ function liveCodeExtraction(options: Options = {}) {
 }
 
 function buildCompiler(options: ParseMarkdownOptions) {
-  return (
-    unified()
-      .use(remarkParse)
-      .use(remarkGfm)
-      // TODO: we only want to do this when we have pre > code.
-      //       code can exist inline.
-      .use(liveCodeExtraction, {
-        snippets: {
-          classList: ['glimdown-snippet', 'relative'],
-        },
-        demo: {
-          classList: ['glimdown-render'],
-        },
-        copyComponent: options?.CopyComponent,
-        shadowComponent: options?.ShadowComponent,
-      })
-      // .use(() => (tree) => visit(tree, (node) => console.log('i', node)))
-      // remark rehype is needed to convert markdown to HTML
-      // However, it also changes all the nodes, so we need another pass
-      // to make sure our Glimmer-aware nodes are in tact
-      .use(remarkRehype, { allowDangerousHtml: true })
-      // Convert invocables to raw format, so Glimmer can invoke them
-      .use(() => (tree: Node) => {
-        visit(tree, function (node) {
-          // We rely on an implicit transformation of data.hProperties => properties
-          let properties = (node as any).properties;
+  let compiler = unified().use(remarkParse).use(remarkGfm);
 
-          if (properties?.[GLIMDOWN_PREVIEW]) {
-            // Have to sanitize anything Glimmer could try to render
-            escapeCurlies(node as Parent);
+  // TODO: we only want to do this when we have pre > code.
+  //       code can exist inline.
+  compiler = compiler.use(liveCodeExtraction, {
+    snippets: {
+      classList: ['glimdown-snippet', 'relative'],
+    },
+    demo: {
+      classList: ['glimdown-render'],
+    },
+    copyComponent: options?.CopyComponent,
+    shadowComponent: options?.ShadowComponent,
+  });
 
-            return 'skip';
-          }
+  // .use(() => (tree) => visit(tree, (node) => console.log('i', node)))
+  // remark rehype is needed to convert markdown to HTML
+  // However, it also changes all the nodes, so we need another pass
+  // to make sure our Glimmer-aware nodes are in tact
+  compiler = compiler.use(remarkRehype, { allowDangerousHtml: true });
 
-          if (node.type === 'element' || ('tagName' in node && node.tagName === 'code')) {
-            if (properties?.[GLIMDOWN_RENDER]) {
-              node.type = 'glimmer_raw';
+  // Convert invocables to raw format, so Glimmer can invoke them
+  compiler = compiler.use(() => (tree: Node) => {
+    visit(tree, function (node) {
+      // We rely on an implicit transformation of data.hProperties => properties
+      let properties = (node as any).properties;
 
-              return;
-            }
+      if (properties?.[GLIMDOWN_PREVIEW]) {
+        // Have to sanitize anything Glimmer could try to render
+        escapeCurlies(node as Parent);
 
-            escapeCurlies(node as Parent);
+        return 'skip';
+      }
 
-            return 'skip';
-          }
-
-          if (node.type === 'text' || node.type === 'raw') {
-            // definitively not the better way, but this is supposed to detect "glimmer" nodes
-            if (
-              'value' in node &&
-              typeof node.value === 'string' &&
-              node.value.match(/<\/?[_A-Z:0-9].*>/g)
-            ) {
-              node.type = 'glimmer_raw';
-            }
-
-            node.type = 'glimmer_raw';
-
-            return 'skip';
-          }
+      if (node.type === 'element' || ('tagName' in node && node.tagName === 'code')) {
+        if (properties?.[GLIMDOWN_RENDER]) {
+          node.type = 'glimmer_raw';
 
           return;
-        });
-      })
-      .use(rehypeRaw, { passThrough: ['glimmer_raw', 'raw'] })
-      .use(() => (tree) => {
-        visit(tree, 'glimmer_raw', (node: Node) => {
-          node.type = 'raw';
-        });
-      })
-      .use(rehypeStringify, {
-        collapseEmptyAttributes: true,
-        closeSelfClosing: true,
-        allowParseErrors: true,
-        allowDangerousCharacters: true,
-        allowDangerousHtml: true,
-      })
-  );
+        }
+
+        escapeCurlies(node as Parent);
+
+        return 'skip';
+      }
+
+      if (node.type === 'text' || node.type === 'raw') {
+        // definitively not the better way, but this is supposed to detect "glimmer" nodes
+        if (
+          'value' in node &&
+          typeof node.value === 'string' &&
+          node.value.match(/<\/?[_A-Z:0-9].*>/g)
+        ) {
+          node.type = 'glimmer_raw';
+        }
+
+        node.type = 'glimmer_raw';
+
+        return 'skip';
+      }
+
+      return;
+    });
+  });
+
+  if (options.remarkPlugins) {
+    options.remarkPlugins.forEach((plugin) => {
+      compiler = compiler.use(plugin) as any;
+    });
+  }
+
+  compiler = compiler.use(rehypeRaw, { passThrough: ['glimmer_raw', 'raw'] }).use(() => (tree) => {
+    visit(tree, 'glimmer_raw', (node: Node) => {
+      node.type = 'raw';
+    });
+  });
+
+  // Finally convert to string! oofta!
+  compiler = compiler.use(rehypeStringify, {
+    collapseEmptyAttributes: true,
+    closeSelfClosing: true,
+    allowParseErrors: true,
+    allowDangerousCharacters: true,
+    allowDangerousHtml: true,
+  }) as any;
+
+  return compiler as ReturnType<typeof unified>;
 }
 
 interface ParseMarkdownOptions {
   CopyComponent?: string;
   ShadowComponent?: string;
+  remarkPlugins?: Plugin[];
 }
 
 /**
