@@ -46,6 +46,10 @@
       "types": "./declarations/test-support/index.d.ts",
       "default": "./dist/test-support/index.js"
     },
+    "./__PRIVATE__DO_NOT_USE__": {
+      "types": "./declarations/browser/__PRIVATE__.d.ts",
+      "default": "./dist/browser/__PRIVATE__.js"
+    },
     "./addon-main.js": "./addon-main.cjs"
   },
   "files": [

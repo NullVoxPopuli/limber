@@ -3,11 +3,12 @@ import rehypeStringify from 'rehype-stringify';
 import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
-import { unified, type Plugin } from 'unified';
+import { unified } from 'unified';
 import { visit } from 'unist-util-visit';
 
 import { invocationOf, nameFor } from '../utils.ts';
 
+import type { UnifiedPlugin } from './types.ts';
 import type { Node } from 'hast';
 import type { Code, Text } from 'mdast';
 import type { Parent } from 'unist';
@@ -233,6 +234,16 @@ function buildCompiler(options: ParseMarkdownOptions) {
     shadowComponent: options?.ShadowComponent,
   });
 
+  /**
+   * If this were "use"d after `remarkRehype`,
+   * remark is gone, and folks would need to work with rehype trees
+   */
+  if (options.remarkPlugins) {
+    options.remarkPlugins.forEach((plugin) => {
+      compiler = compiler.use(plugin) as any;
+    });
+  }
+
   // .use(() => (tree) => visit(tree, (node) => console.log('i', node)))
   // remark rehype is needed to convert markdown to HTML
   // However, it also changes all the nodes, so we need another pass
@@ -283,12 +294,6 @@ function buildCompiler(options: ParseMarkdownOptions) {
     });
   });
 
-  if (options.remarkPlugins) {
-    options.remarkPlugins.forEach((plugin) => {
-      compiler = compiler.use(plugin) as any;
-    });
-  }
-
   compiler = compiler.use(rehypeRaw, { passThrough: ['glimmer_raw', 'raw'] }).use(() => (tree) => {
     visit(tree, 'glimmer_raw', (node: Node) => {
       node.type = 'raw';
@@ -310,7 +315,7 @@ function buildCompiler(options: ParseMarkdownOptions) {
 interface ParseMarkdownOptions {
   CopyComponent?: string;
   ShadowComponent?: string;
-  remarkPlugins?: Plugin[];
+  remarkPlugins?: UnifiedPlugin[];
 }
 
 /**
