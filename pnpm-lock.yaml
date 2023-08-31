@@ -132,6 +132,9 @@ importers:
       ember-resources:
         specifier: ^6.4.0
         version: 6.4.0(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-source@5.2.0)
+      ember-shiki:
+        specifier: ^0.2.0
+        version: 0.2.0(@babel/core@7.22.11)(ember-source@5.2.0)
       ember-statechart-component:
         specifier: 6.1.2
         version: 6.1.2(@glint/template@1.1.0)(xstate@4.35.4)
@@ -456,6 +459,9 @@ importers:
       ember-resources:
         specifier: ^6.4.0
         version: 6.4.0(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-source@5.2.0)
+      ember-shiki:
+        specifier: ^0.2.0
+        version: 0.2.0(@babel/core@7.22.11)(ember-source@5.2.0)
       highlight.js:
         specifier: ^11.8.0
         version: 11.8.0
@@ -8034,6 +8040,10 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
+  /ansi-sequence-parser@1.1.1:
+    resolution: {integrity: sha512-vJXt3yiaUL4UU546s3rPXlsry/RnM730G1+HkpKE012AN0sx1eOrxSu95oKDIonskeLTijMgqWZ3uDEe3NFvyg==}
+    dev: false
+
   /ansi-split@1.0.1:
     resolution: {integrity: sha512-RRxQym4DFtDNmHIkW6aeFVvrXURb11lGAEPXNiryjCe8bK8RsANjzJ0M2aGOkvBYwP4Bl/xZ8ijtr6D3j1x/eg==}
     dependencies:
@@ -11959,6 +11969,25 @@ packages:
       - supports-color
     dev: false
 
+  /ember-concurrency@3.1.1(@babel/core@7.22.11)(ember-source@5.2.0):
+    resolution: {integrity: sha512-doXFYYfy1C7jez+jDDlfahTp03QdjXeSY/W3Zbnx/q3UNJ9g10Shf2d7M/HvWo/TC22eU+6dPLIpqd/6q4pR+Q==}
+    engines: {node: 16.* || >= 18}
+    peerDependencies:
+      ember-source: '*'
+    dependencies:
+      '@babel/helper-plugin-utils': 7.22.5
+      '@babel/types': 7.22.11
+      '@glimmer/tracking': 1.1.2
+      ember-cli-babel: 7.26.11
+      ember-cli-babel-plugin-helpers: 1.1.1
+      ember-cli-htmlbars: 6.3.0
+      ember-compatibility-helpers: 1.2.6(@babel/core@7.22.11)
+      ember-source: 5.2.0(@babel/core@7.22.11)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
+    dev: false
+
   /ember-container-query@4.0.5(@glint/environment-ember-loose@1.1.0)(@glint/template@1.1.0)(ember-source@5.2.0):
     resolution: {integrity: sha512-h6c/49Ah2yaMUOnFVgot27V+blLouFPfFOhcdfoVihhgklV9fBitk1W/YaHugjbaHNsR8SRZxWY+Duq3wRLglg==}
     engines: {node: 16.* || >= 18}
@@ -12338,6 +12367,23 @@ packages:
     dependencies:
       ember-cli-babel: 7.26.11
     transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /ember-shiki@0.2.0(@babel/core@7.22.11)(ember-source@5.2.0):
+    resolution: {integrity: sha512-RWvVKmrARkn2RTe3I7pt0jMpNJ/hT72Xx4z3x5q/WYXouTNRyzCfnICx3ozbO/JcWbgMW6bvkuLBCXQBbON/Hg==}
+    engines: {node: 16.* || >= 18}
+    peerDependencies:
+      ember-source: '*'
+    dependencies:
+      '@embroider/addon-shim': 1.8.6
+      ember-concurrency: 3.1.1(@babel/core@7.22.11)(ember-source@5.2.0)
+      ember-functions-as-helper-polyfill: 2.1.2(ember-source@5.2.0)
+      ember-modifier: 4.1.0(ember-source@5.2.0)
+      ember-source: 5.2.0(@babel/core@7.22.11)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
+      shiki: 0.14.3
+    transitivePeerDependencies:
+      - '@babel/core'
       - supports-color
     dev: false
 
@@ -16143,7 +16189,6 @@ packages:
 
   /jsonc-parser@3.2.0:
     resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
-    dev: true
 
   /jsoncrush@1.1.8:
     resolution: {integrity: sha512-lvIMGzMUA0fjuqwNcxlTNRq2bibPZ9auqT/LyGdlR5hvydJtA/BasSgkx4qclqTKVeTidrJvsS/oVjlTCPQ4Nw==}
@@ -20023,6 +20068,15 @@ packages:
     resolution: {integrity: sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==}
     dev: true
 
+  /shiki@0.14.3:
+    resolution: {integrity: sha512-U3S/a+b0KS+UkTyMjoNojvTgrBHjgp7L6ovhFVZsXmBGnVdQ4K4U9oK0z63w538S91ATngv1vXigHCSWOwnr+g==}
+    dependencies:
+      ansi-sequence-parser: 1.1.1
+      jsonc-parser: 3.2.0
+      vscode-oniguruma: 1.7.0
+      vscode-textmate: 8.0.0
+    dev: false
+
   /side-channel@1.0.4:
     resolution: {integrity: sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==}
     dependencies:
@@ -22045,6 +22099,14 @@ packages:
   /vscode-nls@5.2.0:
     resolution: {integrity: sha512-RAaHx7B14ZU04EU31pT+rKz2/zSl7xMsfIZuo8pd+KZO6PXtQmpevpq3vxvWNcrGbdmhM/rr5Uw5Mz+NBfhVng==}
     dev: true
+
+  /vscode-oniguruma@1.7.0:
+    resolution: {integrity: sha512-L9WMGRfrjOhgHSdOYgCt/yRMsXzLDJSL7BPrOZt73gU0iWO4mpqzqQzOz5srxqTvMBaR0XZTSrVWo4j55Rc6cA==}
+    dev: false
+
+  /vscode-textmate@8.0.0:
+    resolution: {integrity: sha512-AFbieoL7a5LMqcnOF04ji+rpXadgOXnZsxQr//r83kLPr7biP7am3g9zbaZIaBGwBRWeSvoMD4mgPdX3e4NWBg==}
+    dev: false
 
   /vscode-uri@3.0.7:
     resolution: {integrity: sha512-eOpPHogvorZRobNqJGhapa0JdwaxpjVvyBp0QIUMRMSf8ZAlqOdEquKuRmw9Qwu0qXtJIWqFtMkmvJjUZmMjVA==}

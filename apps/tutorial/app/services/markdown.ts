@@ -23,6 +23,8 @@ async function compile(markdown: string | undefined | null) {
 
 type Input = string | undefined | null;
 
+// TODO: add CodeBlock remark plugin, and then return a component
+// TODO: can probably delete all this and use ember-repl, tbh
 export const MarkdownToHTML = resourceFactory((markdownText: Input | (() => Input)) => {
   return resource(() => {
     let input = typeof markdownText === 'function' ? markdownText() : markdownText;

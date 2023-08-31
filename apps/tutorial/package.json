@@ -32,6 +32,7 @@
     "ember-modifier": "^4.1.0",
     "ember-primitives": "^0.5.0",
     "ember-resources": "^6.4.0",
+    "ember-shiki": "^0.2.0",
     "highlight.js": "^11.8.0",
     "highlightjs-glimmer": "^2.1.0",
     "limber-ui": "workspace:*",
