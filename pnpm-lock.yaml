@@ -224,8 +224,8 @@ importers:
         specifier: 3.1.5
         version: 3.1.5(@embroider/core@3.2.1)(webpack@5.88.2)
       '@fortawesome/ember-fontawesome':
-        specifier: ^1.0.1
-        version: 1.0.1(@glint/template@1.1.0)(rollup@3.28.1)(webpack@5.88.2)
+        specifier: ^1.0.2
+        version: 1.0.2(@glint/template@1.1.0)(rollup@3.28.1)(webpack@5.88.2)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.4.2
         version: 6.4.2
@@ -506,8 +506,8 @@ importers:
         specifier: 3.1.5
         version: 3.1.5(@embroider/core@3.2.1)(webpack@5.88.2)
       '@fortawesome/ember-fontawesome':
-        specifier: ^1.0.1
-        version: 1.0.1(@glint/template@1.1.0)(rollup@3.28.1)(webpack@5.88.2)
+        specifier: ^1.0.2
+        version: 1.0.2(@glint/template@1.1.0)(rollup@3.28.1)(webpack@5.88.2)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.4.2
         version: 6.4.2
@@ -832,8 +832,8 @@ importers:
         specifier: 1.13.1
         version: 1.13.1(@glint/template@1.1.0)
       '@fortawesome/ember-fontawesome':
-        specifier: ^1.0.1
-        version: 1.0.1(@glint/template@1.1.0)(rollup@3.28.1)
+        specifier: ^1.0.2
+        version: 1.0.2(@glint/template@1.1.0)(rollup@3.28.1)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.4.2
         version: 6.4.2
@@ -993,8 +993,8 @@ importers:
         specifier: 3.0.1
         version: 3.0.1(@embroider/compat@3.2.1)(@embroider/core@3.2.1)(@embroider/webpack@3.1.5)
       '@fortawesome/ember-fontawesome':
-        specifier: ^1.0.1
-        version: 1.0.1(@glint/template@1.1.0)(rollup@3.28.1)(webpack@5.88.2)
+        specifier: ^1.0.2
+        version: 1.0.2(@glint/template@1.1.0)(rollup@3.28.1)(webpack@5.88.2)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.4.2
         version: 6.4.2
@@ -5229,8 +5229,8 @@ packages:
     resolution: {integrity: sha512-m0G6wlnhm/AX0H12IOWtK8gASEMffnX08RtKkCgTdHb9JpHKGloI7icFfLg9ZmQeavcvR0PKmzxClyuFPSjKWw==}
     dev: false
 
-  /@fortawesome/ember-fontawesome@1.0.1(@glint/template@1.1.0)(rollup@3.28.1):
-    resolution: {integrity: sha512-t/mkz2K6H2xriD9RPzQJNOpDeqOng3vdCW1V8PmA2/f9VnqqBHGuVT2C5Rs5UIo0nHa9WOvdbkI8T0LE7IzlIA==}
+  /@fortawesome/ember-fontawesome@1.0.2(@glint/template@1.1.0)(rollup@3.28.1):
+    resolution: {integrity: sha512-8/y2yDSxMq7W2nTTdQC1nVd01ybnNSYsMaNp77J5gIOw17Ukm6tCuM/Ykr3oiWKXCnTUY5jlFoynn1BsOX38nA==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
       '@fortawesome/fontawesome-svg-core': 6.4.2
@@ -5255,8 +5255,8 @@ packages:
       - webpack
     dev: false
 
-  /@fortawesome/ember-fontawesome@1.0.1(@glint/template@1.1.0)(rollup@3.28.1)(webpack@5.88.2):
-    resolution: {integrity: sha512-t/mkz2K6H2xriD9RPzQJNOpDeqOng3vdCW1V8PmA2/f9VnqqBHGuVT2C5Rs5UIo0nHa9WOvdbkI8T0LE7IzlIA==}
+  /@fortawesome/ember-fontawesome@1.0.2(@glint/template@1.1.0)(rollup@3.28.1)(webpack@5.88.2):
+    resolution: {integrity: sha512-8/y2yDSxMq7W2nTTdQC1nVd01ybnNSYsMaNp77J5gIOw17Ukm6tCuM/Ykr3oiWKXCnTUY5jlFoynn1BsOX38nA==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
       '@fortawesome/fontawesome-svg-core': 6.4.2
