@@ -16,13 +16,13 @@ const codeFor = (docs: DocsService) => {
 export const Editor: TOC<{
   Element: HTMLIFrameElement;
 }> = <template>
-  {{#let (service 'docs') as |docs|}}
+  {{#let (service "docs") as |docs|}}
 
     {{#if docs.selected.isReady}}
 
       {{#let (codeFor docs) as |code|}}
         {{#if code}}
-          <REPL @code={{code}} @format='gjs' @editor={{true}} ...attributes />
+          <REPL @code={{code}} @format="gjs" @editor={{true}} ...attributes />
         {{/if}}
 
       {{/let}}

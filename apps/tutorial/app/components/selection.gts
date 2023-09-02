@@ -44,19 +44,19 @@ export class Selection extends Component {
   };
 
   <template>
-    <label class='w-full relative'>
-      <span class='sr-only'>Change tutorial</span>
+    <label class="w-full relative">
+      <span class="sr-only">Change tutorial</span>
       <span
-        class='w-full h-full px-4 absolute z-1 sr-hidden pointer-events-none grid gap-3 grid-flow-col items-center justify-start'
+        class="w-full h-full px-4 absolute z-1 sr-hidden pointer-events-none grid gap-3 grid-flow-col items-center justify-start"
       >
-        <FaIcon @icon='bars' />
+        <FaIcon @icon="bars" />
         <span>{{this.humanSelected}}</span>
       </span>
 
       <select
-        name='tutorial'
-        class='bg-none border border-gray-900 font-lg rounded p-2 w-full h-full indent-[-100000px]'
-        {{on 'change' this.handleChange}}
+        name="tutorial"
+        class="bg-none border border-gray-900 font-lg rounded p-2 w-full h-full indent-[-100000px]"
+        {{on "change" this.handleChange}}
       >
         {{#each-in this.docs.grouped as |group tutorials|}}
           <optgroup label={{titleize group}}>

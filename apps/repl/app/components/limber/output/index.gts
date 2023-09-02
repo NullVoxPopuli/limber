@@ -19,7 +19,7 @@ const isGJS = (format: Format | undefined) => format === 'gjs';
 
 export const Output: TOC<Signature> = <template>
   <Compiler @messagingAPI={{@messagingAPI}} as |context|>
-    <div class='p-4 prose max-w-full relative' data-test-compiled-output>
+    <div class="p-4 prose max-w-full relative" data-test-compiled-output>
       {{!
             The copy menu exists here for two reasons:
              - we need to statically reference this component so that it doesn't get tree-shaken away
@@ -28,12 +28,12 @@ export const Output: TOC<Signature> = <template>
           }}
       <CopyMenu />
 
-      <div class={{if (isGJS context.format) 'glimdown-render'}}>
+      <div class={{if (isGJS context.format) "glimdown-render"}}>
         <PortalTargets />
 
         {{#if context.component}}
           <div {{highlight context.component}}>
-            {{!-- @glint-ignore --}}
+            {{! @glint-ignore }}
             <context.component />
           </div>
         {{/if}}

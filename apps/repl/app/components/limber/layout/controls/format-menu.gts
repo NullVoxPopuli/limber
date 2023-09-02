@@ -18,21 +18,21 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
   <template>
     <Menu>
       <:trigger as |t|>
-        <t.Button title='Change document language' ...attributes>
-          <FaIcon @icon='cog' />
+        <t.Button title="Change document language" ...attributes>
+          <FaIcon @icon="cog" />
         </t.Button>
       </:trigger>
 
       <:options as |Item|>
-        <Item {{on 'click' (fn this.switch 'glimdown')}}>
+        <Item {{on "click" (fn this.switch "glimdown")}}>
           Glimdown
         </Item>
 
-        <Item {{on 'click' (fn this.switch 'gjs')}}>
+        <Item {{on "click" (fn this.switch "gjs")}}>
           Glimmer JS
         </Item>
 
-        <Item {{on 'click' (fn this.switch 'hbs')}}>
+        <Item {{on "click" (fn this.switch "hbs")}}>
           Template
         </Item>
       </:options>

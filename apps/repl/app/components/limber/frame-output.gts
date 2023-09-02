@@ -164,9 +164,9 @@ export default class FrameOutput extends Component {
   <template>
     <iframe
       {{this.monitorConnection}}
-      title='Rendered output'
-      class='w-full h-full border-none'
-      src='/output'
+      title="Rendered output"
+      class="w-full h-full border-none"
+      src="/output"
     ></iframe>
   </template>
 }

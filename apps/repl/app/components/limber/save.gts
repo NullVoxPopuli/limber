@@ -10,9 +10,9 @@ const SHOW_TIME = 2000;
 export default class Save extends Component {
   <template>
     <div
-      class='w-full p-10 absolute text-2xl backdrop-blur-md bg-slate-800/30 border-y border-slate-800/50 transition-all duration-300 pointer-events-none text-white text-center shadow-2xl shadow-stone-900/50 z-[100] top-[39%]
-        {{if this.isShowing "opacity-100" "opacity-0"}}
-        '
+      class="w-full p-10 absolute text-2xl backdrop-blur-md bg-slate-800/30 border-y border-slate-800/50 transition-all duration-300 pointer-events-none text-white text-center shadow-2xl shadow-stone-900/50 z-[100] top-[39%]
+        {{if this.isShowing 'opacity-100' 'opacity-0'}}
+        "
     >
       URL copied to clipboard
     </div>

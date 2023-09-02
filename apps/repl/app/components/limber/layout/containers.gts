@@ -12,9 +12,9 @@ export const EditorContainer: TOC<{
 }> = <template>
   <section
     data-test-editor-panel
-    class='grid overflow-hidden relative min-w-[38px] min-h-[38px]
-      {{if @splitHorizontally "w-full h-[40vh] resize-y" "w-[40vw] min-h-full resize-x"}}
-      '
+    class="grid overflow-hidden relative min-w-[38px] min-h-[38px]
+      {{if @splitHorizontally 'w-full h-[40vh] resize-y' 'w-[40vw] min-h-full resize-x'}}
+      "
     ...attributes
   >
     {{yield}}
@@ -24,8 +24,8 @@ export const EditorContainer: TOC<{
 export const OutputContainer: TOC<{
   Blocks: { default: [] };
 }> = <template>
-  <section class='flex-1 drop-shadow-inner grid overflow-hidden relative'>
-    <div class='overflow-auto relative bg-white flex' data-test-output>
+  <section class="flex-1 drop-shadow-inner grid overflow-hidden relative">
+    <div class="overflow-auto relative bg-white flex" data-test-output>
       {{yield}}
     </div>
 

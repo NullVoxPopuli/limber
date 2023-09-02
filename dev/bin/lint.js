@@ -27,37 +27,36 @@ if (process.env['DEBUG']) {
   console.debug(`${manifest.name} :: within ${relative}`);
 }
 
+// Prettier is not using overrides to discover file extensions to check
+// like ESLint does.
+// See: https://github.com/gitKrystan/prettier-plugin-ember-template-tag/issues/113
+const fileExtGlob = `**/*.{gjs,gts,hbs,json,js,ts,gjs,mjs,cts,mts,cts}`;
+
 async function run() {
   switch (command) {
     case 'prettier:fix':
-      return execaCommand(`pnpm prettier -w . ` + `--cache --cache-strategy content`, {
-        cwd,
-        stdio: 'inherit',
-      });
+      return exec(`pnpm prettier -w "${fileExtGlob}" --cache --cache-strategy content`);
     case 'prettier':
-      return execaCommand(`pnpm prettier -c .`, { cwd, stdio: 'inherit' });
+      return exec(`pnpm prettier -c ${fileExtGlob}`);
     case 'js:fix':
-      return execaCommand(`pnpm eslint . ` + `--fix --cache --cache-strategy content`, {
-        cwd,
-        stdio: 'inherit',
-      });
+      return exec(`pnpm eslint . ` + `--fix --cache --cache-strategy content`);
     case 'js':
-      return execaCommand(`pnpm eslint .`, { cwd, stdio: 'inherit' });
+      return exec(`pnpm eslint .`);
     case 'hbs:fix':
-      return execaCommand(`pnpm ember-template-lint . --fix --no-error-on-unmatched-pattern`, {
-        cwd,
-        stdio: 'inherit',
-      });
+      return exec(`pnpm ember-template-lint . --fix --no-error-on-unmatched-pattern`);
     case 'hbs':
-      return execaCommand(`pnpm ember-template-lint . --no-error-on-unmatched-pattern`, {
-        cwd,
-        stdio: 'inherit',
-      });
+      return exec(`pnpm ember-template-lint . --no-error-on-unmatched-pattern`);
     case 'fix':
       return turbo('_:lint:fix');
     default:
       return turbo('_:lint');
   }
+}
+
+function exec(command) {
+  console.info(chalk.blueBright('Running:\n', command));
+
+  return execaCommand(command, { cwd, stdio: 'inherit' });
 }
 
 function turbo(cmd) {

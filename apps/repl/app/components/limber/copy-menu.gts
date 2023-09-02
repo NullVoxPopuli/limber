@@ -23,16 +23,16 @@ export default class CopyMenu extends Component {
   <template>
     <Menu data-test-copy-menu>
       <:trigger as |t|>
-        <t.Default class='absolute top-3 right-4 z-10' data-test-copy-menu>
+        <t.Default class="absolute top-3 right-4 z-10" data-test-copy-menu>
           📋
         </t.Default>
       </:trigger>
 
       <:options as |Item|>
-        <Item {{on 'click' this.copyAsText}}>
+        <Item {{on "click" this.copyAsText}}>
           Copy as text
         </Item>
-        <Item {{on 'click' this.copyAsImage}}>
+        <Item {{on "click" this.copyAsImage}}>
           Copy as image
         </Item>
       </:options>

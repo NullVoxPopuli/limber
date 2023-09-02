@@ -16,7 +16,7 @@ export const Orientation: TOC<Signature> = <template>
   <ContainerQuery
     @features={{hash isVertical=(aspectRatio max=1.2)}}
     {{! grid forces all the contents to take up all available vertical space }}
-    class='grid'
+    class="grid"
     {{constrainVertically}}
     as |query|
   >

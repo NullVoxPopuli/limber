@@ -64,11 +64,11 @@ export const Layout: TOC<{
 
     {{#let (containerDirection state) as |horizontallySplit|}}
       <Orientation as |isVertical|>
-        {{effect (fn send 'ORIENTATION' (hash isVertical=isVertical))}}
+        {{effect (fn send "ORIENTATION" (hash isVertical=isVertical))}}
 
         <div
           {{! row = left to right, col = top to bottom }}
-          class='{{if horizontallySplit "flex-col" "flex-row"}} flex overflow-hidden'
+          class="{{if horizontallySplit 'flex-col' 'flex-row'}} flex overflow-hidden"
         >
 
           <EditorContainer
@@ -78,14 +78,14 @@ export const Layout: TOC<{
           >
             <Save />
             <Controls
-              @isMinimized={{state.matches 'hasContainer.minimized'}}
-              @isMaximized={{state.matches 'hasContainer.maximized'}}
+              @isMinimized={{state.matches "hasContainer.minimized"}}
+              @isMaximized={{state.matches "hasContainer.maximized"}}
               @needsControls={{toBoolean state.context.container}}
               @splitHorizontally={{horizontallySplit}}
               @send={{send}}
             />
 
-            {{yield to='editor'}}
+            {{yield to="editor"}}
 
           </EditorContainer>
 
@@ -95,7 +95,7 @@ export const Layout: TOC<{
 
           <OutputContainer>
 
-            {{yield to='output'}}
+            {{yield to="output"}}
 
           </OutputContainer>
         </div>

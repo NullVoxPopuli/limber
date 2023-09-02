@@ -13,26 +13,26 @@ const Editor: TOC<{
 }> = <template>
   <State as |state|>
 
-    {{#if (state.matches 'editingWithCodeMirror')}}
+    {{#if (state.matches "editingWithCodeMirror")}}
 
-      {{#let (service 'editor') as |context|}}
-        <div class='overflow-hidden overflow-y-auto'>
+      {{#let (service "editor") as |context|}}
+        <div class="overflow-hidden overflow-y-auto">
           {{! template-lint-disable no-inline-styles }}
-          <div style='width: 100%; height: 100%;' {{codemirror}}>{{context.text}}</div>
+          <div style="width: 100%; height: 100%;" {{codemirror}}>{{context.text}}</div>
         </div>
       {{/let}}
 
     {{else}}
       <div
-        class='syntax-dark relative border border-gray-900 bg-code-bg overflow-hidden'
+        class="syntax-dark relative border border-gray-900 bg-code-bg overflow-hidden"
         ...attributes
       >
 
-        {{#if (state.matches 'loadCodeMirror')}}
+        {{#if (state.matches "loadCodeMirror")}}
           <Loader />
         {{/if}}
 
-        {{#if (state.matches 'error')}}
+        {{#if (state.matches "error")}}
           <LoadingError @error={{state.context.error}} />
         {{/if}}
 

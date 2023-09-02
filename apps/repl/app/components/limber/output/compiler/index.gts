@@ -25,7 +25,7 @@ interface Signature {
       {
         component: ComponentLike<never> | undefined;
         format: Format | undefined;
-      }
+      },
     ];
   };
 }
@@ -60,15 +60,13 @@ export default class Compiler extends Component<Signature> {
     api.onConnect((parent) => (this.parentFrame = parent));
   }
 
+  onCompileStart = async () => {
+    await this.parentFrame.beginCompile();
+  };
 
-    onCompileStart = async () => {
-      await this.parentFrame.beginCompile();
-    };
-
-    onError = async (error: string) => {
-      await this.parentFrame.error({ error });
-    };
-
+  onError = async (error: string) => {
+    await this.parentFrame.error({ error });
+  };
 
   @action
   @waitFor
@@ -100,37 +98,36 @@ export default class Compiler extends Component<Signature> {
 
     switch (format) {
       case 'glimdown':
-   return await compile(text, {
-      format: format,
-      CopyComponent: '<CopyMenu />',
-      topLevelScope: {
-        CopyMenu: CopyMenu,
-      },
-      importMap: COMPONENT_MAP,
-      onCompileStart: this.onCompileStart,
-      onSuccess,
-      onError: this.onError,
-    });
+        return await compile(text, {
+          format: format,
+          CopyComponent: '<CopyMenu />',
+          topLevelScope: {
+            CopyMenu: CopyMenu,
+          },
+          importMap: COMPONENT_MAP,
+          onCompileStart: this.onCompileStart,
+          onSuccess,
+          onError: this.onError,
+        });
 
-        case 'gjs':
-   return await compile(text, {
-      format: format,
-      importMap: COMPONENT_MAP,
-      onCompileStart: this.onCompileStart,
-      onSuccess,
-      onError: this.onError,
-    });
-        case 'hbs':
-   return await compile(text, {
-      format: format,
-      topLevelScope: {
-        CopyMenu: CopyMenu,
-      },
-      onCompileStart: this.onCompileStart,
-      onSuccess,
-      onError: this.onError,
-    });
+      case 'gjs':
+        return await compile(text, {
+          format: format,
+          importMap: COMPONENT_MAP,
+          onCompileStart: this.onCompileStart,
+          onSuccess,
+          onError: this.onError,
+        });
+      case 'hbs':
+        return await compile(text, {
+          format: format,
+          topLevelScope: {
+            CopyMenu: CopyMenu,
+          },
+          onCompileStart: this.onCompileStart,
+          onSuccess,
+          onError: this.onError,
+        });
     }
-
   }
 }
