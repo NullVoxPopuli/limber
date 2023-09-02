@@ -1,5 +1,11 @@
 ## [2.0.63](https://github.com/NullVoxPopuli/ember-repl/compare/v2.0.62...v2.0.63) (2022-08-23)
 
+## 3.0.0-beta.6
+
+### Minor Changes
+
+- [`fa9b78c0`](https://github.com/NullVoxPopuli/limber/commit/fa9b78c0786ad523c7ec6096f9b2df5c5da473fc) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Add support for passing `remarkPlugins` to `compile` and `Compile` for the `glimdown` format
+
 ## 3.0.0-beta.5
 
 ### Patch Changes
