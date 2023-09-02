@@ -22,10 +22,10 @@ const codeToEmberShiki: Plugin = () => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         value: `<CodeBlock @code="${escaped}" @language="${node.lang}" @theme="one-dark-pro" />`,
-      }
+      };
     });
-  }
-}
+  };
+};
 
 export function MarkdownToHTML(markdownText: Input | (() => Input)): ReturnType<typeof Compiled> {
   return Compiled(markdownText, {
@@ -33,7 +33,6 @@ export function MarkdownToHTML(markdownText: Input | (() => Input)): ReturnType<
     remarkPlugins: [codeToEmberShiki],
     topLevelScope: {
       CodeBlock,
-    }
+    },
   });
 }
-

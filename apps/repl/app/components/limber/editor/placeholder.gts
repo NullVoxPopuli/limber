@@ -5,7 +5,7 @@ import { service } from 'limber-ui';
 
 import type { TOC } from '@ember/component/template-only';
 
-const orMarkdown = (format: string | undefined) => format === 'glimdown' ? 'markdown' : format; 
+const orMarkdown = (format: string | undefined) => (format === 'glimdown' ? 'markdown' : format);
 // const orGlimdown = (format: string | undefined) => format || 'glimdown';
 const orEmpty = (code: string | null) => code ?? '';
 
