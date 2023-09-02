@@ -10,6 +10,7 @@ import { type Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 
 import type { ComponentLike } from '@glint/template';
+import type { Parent } from 'unist';
 
 export type UnifiedPlugin = Plugin; // Parameters<ReturnType<(typeof unified)>['use']>[0];
 type Build = (plugin?: UnifiedPlugin) => Promise<void>;
@@ -99,13 +100,14 @@ module('Rendering | compile()', function (hooks) {
          */
         const uncodeSnippet: UnifiedPlugin = (/* options */) => {
           return function transformer(tree) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            visit(tree, ['code'], function (node: any, index, parent) {
+            visit(tree, ['code'], function (node, index, parent: Parent) {
               if (!parent) return;
-              if (!index) return;
+              if (undefined === index) return;
 
               parent.children[index] = {
                 type: 'html',
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 value: `<p>${node.value}</p>`
               }
             });
@@ -122,7 +124,7 @@ module('Rendering | compile()', function (hooks) {
                 format: 'glimdown',
                 remarkPlugins: [plugin],
                 onSuccess: (comp) => (component = comp),
-                onError: () => assert.notOk('did not expect error'),
+                onError: (e) => assert.notOk('did not expect error. ' + e),
                 onCompileStart: () => {
                   /* not used */
                 },
@@ -132,7 +134,7 @@ module('Rendering | compile()', function (hooks) {
               await compile(snippet, {
                 format: 'glimdown',
                 onSuccess: (comp) => (component = comp),
-                onError: () => assert.notOk('did not expect error'),
+                onError: (e) => assert.notOk('did not expect error. ' + e),
                 onCompileStart: () => {
                   /* not used */
                 },
@@ -155,7 +157,7 @@ module('Rendering | compile()', function (hooks) {
         test('with the plugin: no pre renders', async function (assert) {
           debugAssert(`[BUG]`, build);
           await build(uncodeSnippet);
-          debugAssert(`[BUG]`, component);
+          debugAssert(`[BUG] component`, component);
 
           await render(component);
           // await this.pauseTest();
