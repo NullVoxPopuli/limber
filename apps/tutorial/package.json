@@ -28,9 +28,11 @@
   "dependencies": {
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
+    "@types/unist": "^3.0.0",
     "ember-async-data": "1.0.2",
     "ember-modifier": "^4.1.0",
     "ember-primitives": "^0.5.0",
+    "ember-repl": "workspace:3.0.0-beta.6",
     "ember-resources": "^6.4.0",
     "ember-shiki": "^0.2.0",
     "limber-ui": "workspace:*",
@@ -38,7 +40,13 @@
     "rehype-stringify": "^9.0.4",
     "remark-parse": "^10.0.2",
     "remark-rehype": "^10.1.0",
-    "unified": "^10.1.2"
+    "unified": "^10.1.2",
+    "unist-util-visit": "^5.0.0"
+  },
+  "dependenciesMeta": {
+    "ember-repl": {
+      "injected": true
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.22.11",

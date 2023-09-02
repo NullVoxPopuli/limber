@@ -31,7 +31,7 @@ export const Output: TOC<Signature> = <template>
 
         {{#if context.component}}
           <div>
-            {{!-- @glint-ignore --}}
+            {{! @glint-ignore }}
             <context.component />
           </div>
         {{/if}}

@@ -1,47 +1,39 @@
-import { assert } from '@ember/debug';
+import { Compiled } from 'ember-repl';
+import { CodeBlock } from 'ember-shiki';
+import { type Plugin } from 'unified';
+import { visit } from 'unist-util-visit';
 
-import { cell, resource, resourceFactory } from 'ember-resources';
-import rehypeRaw from 'rehype-raw';
-import rehypeStringify from 'rehype-stringify';
-import remarkParse from 'remark-parse';
-import remarkRehype from 'remark-rehype';
-import { unified } from 'unified';
-
-const compiler = unified()
-  .use(remarkParse)
-  .use(remarkRehype, { allowDangerousHtml: true })
-  .use(rehypeRaw)
-  .use(rehypeStringify);
-
-async function compile(markdown: string | undefined | null) {
-  if (!markdown) return;
-
-  let processed = await compiler.process(markdown);
-
-  return String(processed);
-}
+import type { Parent } from 'unist';
 
 type Input = string | undefined | null;
 
-// TODO: add CodeBlock remark plugin, and then return a component
-// TODO: can probably delete all this and use ember-repl, tbh
-export const MarkdownToHTML = resourceFactory((markdownText: Input | (() => Input)) => {
-  return resource(() => {
-    let input = typeof markdownText === 'function' ? markdownText() : markdownText;
-    let ready = cell(false);
-    let result = cell('');
+const codeToEmberShiki: Plugin = () => {
+  return (tree) => {
+    visit(tree, ['code'], (node, index, parent: Parent) => {
+      if (!parent) return;
+      if (undefined === index) return;
 
-    if (input) {
-      compile(input).then((html) => {
-        assert(`Failed to compile ${input}`, html);
-        result.current = html;
-        ready.current = true;
-      });
-    }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      let escaped = node.value.replace(/"/g, '&quot;');
 
-    return () => ({
-      ready: ready.current,
-      html: result.current,
+      parent.children[index] = {
+        type: 'html',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        value: `<CodeBlock @code="${escaped}" @language="${node.lang}" @theme="one-dark-pro" />`,
+      }
     });
+  }
+}
+
+export function MarkdownToHTML(markdownText: Input | (() => Input)): ReturnType<typeof Compiled> {
+  return Compiled(markdownText, {
+    format: 'glimdown',
+    remarkPlugins: [codeToEmberShiki],
+    topLevelScope: {
+      CodeBlock,
+    }
   });
-});
+}
+

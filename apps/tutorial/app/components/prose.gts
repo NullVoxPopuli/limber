@@ -25,10 +25,9 @@ export const Prose: TOC<{ Element: HTMLDivElement }> = <template>
     >
 
       <div data-prose class="prose p-4">
-        {{! TODO: this needs to be a component, because it/will invokes CodeBlocks }}
         {{#if docs.selected.prose}}
           {{! template-lint-disable no-triple-curlies }}
-          {{{docs.selected.prose}}}
+          <docs.selected.prose />
         {{/if}}
       </div>
 

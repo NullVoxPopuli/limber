@@ -441,6 +441,9 @@ importers:
       '@glimmer/tracking':
         specifier: ^1.1.2
         version: 1.1.2
+      '@types/unist':
+        specifier: ^3.0.0
+        version: 3.0.0
       ember-async-data:
         specifier: 1.0.1
         version: 1.0.1(ember-source@5.2.0)
@@ -450,6 +453,9 @@ importers:
       ember-primitives:
         specifier: ^0.5.0
         version: 0.5.0(@babel/core@7.22.11)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.1.0)(@glint/template@1.1.0)(ember-modifier@4.1.0)(ember-resources@6.4.0)(ember-source@5.2.0)
+      ember-repl:
+        specifier: workspace:3.0.0-beta.6
+        version: file:packages/ember-repl/addon(@glimmer/component@1.1.2)(@glint/template@1.1.0)(ember-resources@6.4.0)(ember-source@5.2.0)
       ember-resources:
         specifier: ^6.4.0
         version: 6.4.0(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-source@5.2.0)
@@ -474,6 +480,9 @@ importers:
       unified:
         specifier: ^10.1.2
         version: 10.1.2
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
     devDependencies:
       '@babel/core':
         specifier: ^7.22.11
@@ -649,6 +658,9 @@ importers:
       webpack:
         specifier: ^5.88.2
         version: 5.88.2
+    dependenciesMeta:
+      ember-repl:
+        injected: true
 
   dev:
     dependencies:
