@@ -39,7 +39,7 @@ module.exports = function (environment) {
       // when it is created
     },
     'ember-shiki': {
-      defaultLanguages: ['gjs', 'gts', 'css', 'bash', 'js', 'ts'],
+      defaultLanguages: ['gjs', 'gts', 'css', 'bash', 'js', 'ts', 'markdown'],
       defaultThemes: ['one-dark-pro'],
     },
   };
