@@ -30,7 +30,7 @@ export const Link: TOC<{
 }> = <template>
   {{#if @isDisabled}}
 
-    <span class='{{classList}} opacity-30' ...attributes tabindex='0'>
+    <span class="{{classList}} opacity-30" ...attributes tabindex="0">
       {{yield}}
     </span>
 

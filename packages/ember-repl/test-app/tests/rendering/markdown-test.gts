@@ -4,7 +4,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import { stripIndent } from 'common-tags';
-import { compile } from'ember-repl';
+import { compile } from 'ember-repl';
 import { CACHE } from 'ember-repl/__PRIVATE__DO_NOT_USE__';
 import { type Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
@@ -80,7 +80,6 @@ module('Rendering | compile()', function (hooks) {
       assert.dom('a').exists({ count: 2 }); // to and from the footnote
     });
 
-
     module('custom remark plugins', function () {
       module('demo: remove pre code', function (hooks) {
         let build: Build;
@@ -108,10 +107,10 @@ module('Rendering | compile()', function (hooks) {
                 type: 'html',
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
-                value: `<p>${node.value}</p>`
-              }
+                value: `<p>${node.value}</p>`,
+              };
             });
-          }
+          };
         };
 
         hooks.beforeEach(function (assert) {
@@ -131,20 +130,19 @@ module('Rendering | compile()', function (hooks) {
               });
             }
 
-              await compile(snippet, {
-                format: 'glimdown',
-                onSuccess: (comp) => (component = comp),
-                onError: (e) => assert.notOk('did not expect error. ' + e),
-                onCompileStart: () => {
-                  /* not used */
-                },
-              });
-          }
+            await compile(snippet, {
+              format: 'glimdown',
+              onSuccess: (comp) => (component = comp),
+              onError: (e) => assert.notOk('did not expect error. ' + e),
+              onCompileStart: () => {
+                /* not used */
+              },
+            });
+          };
         });
 
         // https://github.com/typed-ember/glint/issues/617
         test('baseline: without the plugin, pre renders', async function (assert) {
-
           debugAssert(`[BUG]`, build);
           await build();
           debugAssert(`[BUG]`, component);

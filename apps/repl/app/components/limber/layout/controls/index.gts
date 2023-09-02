@@ -24,7 +24,7 @@ const Button: TOC<{
   Element: HTMLButtonElement;
   Blocks: { default: [] };
 }> = <template>
-  <button type='button' class={{buttonClasses}} ...attributes>
+  <button type="button" class={{buttonClasses}} ...attributes>
     {{yield}}
   </button>
 </template>;
@@ -41,52 +41,52 @@ export const Controls: TOC<{
   };
 }> = <template>
   {{#if @needsControls}}
-    {{#let (service 'editor') as |editor|}}
+    {{#let (service "editor") as |editor|}}
       <div
-        data-is-minimized='{{@isMinimized}}'
-        style={{htmlSafe (concat 'right: ' editor.scrollbarWidth 'px;')}}
-        class='absolute top-0 right-0 z-[1]
-          {{if @splitHorizontally "flex flex-row-reverse" "grid"}}
-          {{if @isMinimized "bg-ember-black h-full content-start"}}
-          '
+        data-is-minimized="{{@isMinimized}}"
+        style={{htmlSafe (concat "right: " editor.scrollbarWidth "px;")}}
+        class="absolute top-0 right-0 z-[1]
+          {{if @splitHorizontally 'flex flex-row-reverse' 'grid'}}
+          {{if @isMinimized 'bg-ember-black h-full content-start'}}
+          "
       >
         <Button
-          title={{if @isMaximized 'Back to split view' 'Maximize Editor'}}
-          {{on 'click' (fn @send 'MAXIMIZE')}}
+          title={{if @isMaximized "Back to split view" "Maximize Editor"}}
+          {{on "click" (fn @send "MAXIMIZE")}}
         >
           {{#if @isMaximized}}
-            <FaIcon @icon='columns' />
+            <FaIcon @icon="columns" />
           {{else}}
-            <FaIcon @icon='window-maximize' @prefix='far' />
+            <FaIcon @icon="window-maximize" @prefix="far" />
           {{/if}}
         </Button>
         <Button
-          title={{if @isMinimized 'Back to split view' 'Minimize Editor'}}
-          {{on 'click' (fn @send 'MINIMIZE')}}
+          title={{if @isMinimized "Back to split view" "Minimize Editor"}}
+          {{on "click" (fn @send "MINIMIZE")}}
         >
           {{#if @isMinimized}}
-            <FaIcon @icon='columns' />
+            <FaIcon @icon="columns" />
           {{else}}
-            <FaIcon @icon='window-minimize' @prefix='far' />
+            <FaIcon @icon="window-minimize" @prefix="far" />
           {{/if}}
         </Button>
         <Button
-          title='Rotate Editor/Output orientation'
+          title="Rotate Editor/Output orientation"
           disabled={{or @isMaximized @isMinimized}}
-          {{on 'click' (fn @send 'ROTATE')}}
+          {{on "click" (fn @send "ROTATE")}}
         >
-          <FaIcon @icon='rotate' />
+          <FaIcon @icon="rotate" />
         </Button>
 
         {{#if (inIframe)}}
           <a
-            title='Edit in a new tab'
+            title="Edit in a new tab"
             href={{(currentURL)}}
-            rel='noreferrer noopener'
-            target='_blank'
-            class='flex select-none py-2 px-3 text-white text-xs items-center hover:bg-[#9b2918] focus:ring-4 ring-inset focus:outline-none disabled:opacity-30'
+            rel="noreferrer noopener"
+            target="_blank"
+            class="flex select-none py-2 px-3 text-white text-xs items-center hover:bg-[#9b2918] focus:ring-4 ring-inset focus:outline-none disabled:opacity-30"
           >
-            <FaIcon @icon='external-link-alt' />
+            <FaIcon @icon="external-link-alt" />
           </a>
         {{/if}}
 
