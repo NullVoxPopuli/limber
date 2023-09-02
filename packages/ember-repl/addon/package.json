@@ -143,7 +143,7 @@
     "prettier-plugin-ember-template-tag": "^1.0.2",
     "publint": "^0.2.2",
     "rollup": "~3.28.1",
-    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-glimmer-template-tag": "^0.4.1",
     "typescript": "^5.2.2"
   },
