@@ -8,6 +8,9 @@ import { service } from '@ember/service';
 import { waitFor } from '@ember/test-waiters';
 
 import { compile } from 'ember-repl';
+import { CodeBlock } from 'ember-shiki';
+import { type Plugin } from 'unified';
+import { visit } from 'unist-util-visit';
 
 import CopyMenu from 'limber/components/limber/copy-menu';
 
@@ -15,6 +18,7 @@ import type { MessagingAPI, Parent } from '../frame-messaging';
 import type RouterService from '@ember/routing/router-service';
 import type { ComponentLike } from '@glint/template';
 import type { Format } from 'limber/utils/messaging';
+import type { Parent as ParentNode } from 'unist';
 
 interface Signature {
   Args: {
@@ -29,6 +33,7 @@ interface Signature {
     ];
   };
 }
+
 
 /**
  * The Receiving Component is Limber::FrameOutput
@@ -101,8 +106,10 @@ export default class Compiler extends Component<Signature> {
         return await compile(text, {
           format: format,
           CopyComponent: '<CopyMenu />',
+          remarkPlugins: [codeToEmberShiki],
           topLevelScope: {
-            CopyMenu: CopyMenu,
+            CopyMenu,
+            CodeBlock,
           },
           importMap: COMPONENT_MAP,
           onCompileStart: this.onCompileStart,
@@ -131,3 +138,24 @@ export default class Compiler extends Component<Signature> {
     }
   }
 }
+
+const codeToEmberShiki: Plugin = () => {
+  return (tree) => {
+    visit(tree, ['code'], (node, index, parent: ParentNode) => {
+      if (!parent) return;
+      if (undefined === index) return;
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      let escaped = node.value.replace(/"/g, '&quot;');
+
+      parent.children[index] = {
+        type: 'html',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        value: `<CodeBlock @code="${escaped}" @language="${node.lang}" @theme="one-dark-pro" />`,
+      }
+    });
+  }
+}
+
