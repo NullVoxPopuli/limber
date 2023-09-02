@@ -60,6 +60,16 @@ export default class Compiler extends Component<Signature> {
     api.onConnect((parent) => (this.parentFrame = parent));
   }
 
+
+    onCompileStart = async () => {
+      await this.parentFrame.beginCompile();
+    };
+
+    onError = async (error: string) => {
+      await this.parentFrame.error({ error });
+    };
+
+
   @action
   @waitFor
   async makeComponent(format: Format, text: string) {
@@ -67,39 +77,60 @@ export default class Compiler extends Component<Signature> {
     // @ts-expect-error
     let { COMPONENT_MAP } = await import('/ember-repl/component-map.js');
 
-    await compile(text, {
+    let onSuccess = async (component: ComponentLike) => {
+      if (!component) {
+        await this.parentFrame.error({ error: 'could not build component' });
+
+        return;
+      }
+
+      if (isDestroyed(this) || isDestroying(this)) return;
+
+      this.component = component as ComponentLike<never>;
+      this.format = format;
+
+      await this.parentFrame.success();
+
+      schedule('afterRender', () => {
+        if (isDestroyed(this) || isDestroying(this)) return;
+
+        this.parentFrame.finishedRendering();
+      });
+    };
+
+    switch (format) {
+      case 'glimdown':
+   return await compile(text, {
       format: format,
       CopyComponent: '<CopyMenu />',
       topLevelScope: {
         CopyMenu: CopyMenu,
       },
       importMap: COMPONENT_MAP,
-      onCompileStart: async () => {
-        await this.parentFrame.beginCompile();
-      },
-      onSuccess: async (component) => {
-        if (!component) {
-          await this.parentFrame.error({ error: 'could not build component' });
-
-          return;
-        }
-
-        if (isDestroyed(this) || isDestroying(this)) return;
-
-        this.component = component as ComponentLike<never>;
-        this.format = format;
-
-        await this.parentFrame.success();
-
-        schedule('afterRender', () => {
-          if (isDestroyed(this) || isDestroying(this)) return;
-
-          this.parentFrame.finishedRendering();
-        });
-      },
-      onError: async (error: string) => {
-        await this.parentFrame.error({ error });
-      },
+      onCompileStart: this.onCompileStart,
+      onSuccess,
+      onError: this.onError,
     });
+
+        case 'gjs':
+   return await compile(text, {
+      format: format,
+      importMap: COMPONENT_MAP,
+      onCompileStart: this.onCompileStart,
+      onSuccess,
+      onError: this.onError,
+    });
+        case 'hbs':
+   return await compile(text, {
+      format: format,
+      topLevelScope: {
+        CopyMenu: CopyMenu,
+      },
+      onCompileStart: this.onCompileStart,
+      onSuccess,
+      onError: this.onError,
+    });
+    }
+
   }
 }

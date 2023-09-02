@@ -8,13 +8,57 @@ import {
 } from './formats.ts';
 
 import type { CompileResult } from '../types.ts';
+import type { UnifiedPlugin } from './types.ts';
 import type { EvalImportMap, ScopeMap } from './types.ts';
 import type { ComponentLike } from '@glint/template';
 type Format = 'glimdown' | 'gjs' | 'hbs';
 
 export const CACHE = new Map<string, ComponentLike>();
 
+interface Events {
+  onSuccess: (component: ComponentLike) => Promise<unknown> | unknown;
+  onError: (error: string) => Promise<unknown> | unknown;
+  onCompileStart: () => Promise<unknown> | unknown;
+}
+
+interface Scope {
+  importMap?: EvalImportMap;
+}
+
 const SUPPORTED_FORMATS = ['glimdown', 'gjs', 'hbs'];
+
+interface GlimdownOptions extends Scope, Events {
+  format: 'glimdown';
+  remarkPlugins?: UnifiedPlugin[];
+  CopyComponent?: string;
+  ShadowComponent?: string;
+  topLevelScope?: ScopeMap;
+}
+interface GJSOptions extends Scope, Events {
+  format: 'gjs';
+}
+
+interface HBSOptions extends Scope, Events {
+  format: 'hbs';
+  topLevelScope?: ScopeMap;
+}
+
+/**
+ * Compile GitHub-flavored Markdown with GJS support
+ * and optionally render gjs-snippets via a `live` meta tag
+ * on the code fences.
+ */
+export async function compile(text: string, options: GlimdownOptions): Promise<void>;
+
+/**
+ * Compile GJS
+ */
+export async function compile(text: string, options: GJSOptions): Promise<void>;
+
+/**
+ * Compile a stateless component using just the template
+ */
+export async function compile(text: string, options: HBSOptions): Promise<void>;
 
 /**
  * This compileMD is a more robust version of the raw compiling used in "formats".
@@ -22,23 +66,9 @@ const SUPPORTED_FORMATS = ['glimdown', 'gjs', 'hbs'];
  */
 export async function compile(
   text: string,
-  {
-    format,
-    onSuccess,
-    onError,
-    onCompileStart,
-    ...options
-  }: {
-    format: Format;
-    onSuccess: (component: ComponentLike) => Promise<unknown> | unknown;
-    onError: (error: string) => Promise<unknown> | unknown;
-    onCompileStart: () => Promise<unknown> | unknown;
-    importMap?: EvalImportMap;
-    CopyComponent?: string;
-    ShadowComponent?: string;
-    topLevelScope?: ScopeMap;
-  }
-) {
+  options: GlimdownOptions | GJSOptions | HBSOptions
+): Promise<void> {
+  let { onSuccess, onError, onCompileStart } = options;
   let id = nameFor(text);
 
   let existing = CACHE.get(id);
@@ -49,8 +79,8 @@ export async function compile(
     return;
   }
 
-  if (!SUPPORTED_FORMATS.includes(format)) {
-    await onError(`Unsupported format: ${format}. Supported formats: ${SUPPORTED_FORMATS}`);
+  if (!SUPPORTED_FORMATS.includes(options.format)) {
+    await onError(`Unsupported format: ${options.format}. Supported formats: ${SUPPORTED_FORMATS}`);
 
     return;
   }
@@ -65,16 +95,18 @@ export async function compile(
 
   let result: CompileResult;
 
-  if (format === 'glimdown') {
+  if (options.format === 'glimdown') {
     result = await processMD(text, options);
-  } else if (format === 'gjs') {
+  } else if (options.format === 'gjs') {
     result = await processGJS(text, options.importMap);
-  } else if (format === 'hbs') {
+  } else if (options.format === 'hbs') {
     result = await processHBS(text, {
       scope: options.topLevelScope,
     });
   } else {
-    await onError(`Unsupported format: ${format}. Supported formats: ${SUPPORTED_FORMATS}`);
+    await onError(
+      `Unsupported format: ${(options as any).format}. Supported formats: ${SUPPORTED_FORMATS}`
+    );
 
     return;
   }
@@ -95,6 +127,7 @@ type Input = string | undefined | null;
 type ExtraOptions =
   | {
       format: 'glimdown';
+      remarkPlugins?: UnifiedPlugin[];
       importMap?: EvalImportMap;
       CopyComponent?: string;
       ShadowComponent?: string;
@@ -144,7 +177,8 @@ export function buildCompiler(
 
     if (input) {
       compile(input, {
-        format,
+        // narrowing is hard here, but this is an implementation detail
+        format: format as any,
         onSuccess: async (component) => {
           result.current = component;
           ready.set(true);

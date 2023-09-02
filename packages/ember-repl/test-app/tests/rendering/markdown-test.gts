@@ -4,9 +4,16 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import { stripIndent } from 'common-tags';
-import { compile } from 'ember-repl';
+import { compile } from'ember-repl';
+import { CACHE } from 'ember-repl/__PRIVATE__DO_NOT_USE__';
+import { type Plugin } from 'unified';
+import { visit } from 'unist-util-visit';
 
 import type { ComponentLike } from '@glint/template';
+import type { Parent } from 'unist';
+
+export type UnifiedPlugin = Plugin; // Parameters<ReturnType<(typeof unified)>['use']>[0];
+type Build = (plugin?: UnifiedPlugin) => Promise<void>;
 
 module('Rendering | compile()', function (hooks) {
   setupRenderingTest(hooks);
@@ -71,6 +78,92 @@ module('Rendering | compile()', function (hooks) {
 
       assert.dom('sup').exists();
       assert.dom('a').exists({ count: 2 }); // to and from the footnote
+    });
+
+
+    module('custom remark plugins', function () {
+      module('demo: remove pre code', function (hooks) {
+        let build: Build;
+        let component: ComponentLike | undefined;
+
+        let snippet = stripIndent`
+          text
+
+          \`\`\`js
+          const two = 2;
+          \`\`\`
+        `;
+
+        /**
+         * Test plugin that just turns code into an
+         * unformatted mess in a p tag
+         */
+        const uncodeSnippet: UnifiedPlugin = (/* options */) => {
+          return function transformer(tree) {
+            visit(tree, ['code'], function (node, index, parent: Parent) {
+              if (!parent) return;
+              if (undefined === index) return;
+
+              parent.children[index] = {
+                type: 'html',
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                value: `<p>${node.value}</p>`
+              }
+            });
+          }
+        };
+
+        hooks.beforeEach(function (assert) {
+          CACHE.clear();
+          component = undefined;
+
+          build = async function build(plugin?: UnifiedPlugin) {
+            if (plugin) {
+              return await compile(snippet, {
+                format: 'glimdown',
+                remarkPlugins: [plugin],
+                onSuccess: (comp) => (component = comp),
+                onError: (e) => assert.notOk('did not expect error. ' + e),
+                onCompileStart: () => {
+                  /* not used */
+                },
+              });
+            }
+
+              await compile(snippet, {
+                format: 'glimdown',
+                onSuccess: (comp) => (component = comp),
+                onError: (e) => assert.notOk('did not expect error. ' + e),
+                onCompileStart: () => {
+                  /* not used */
+                },
+              });
+          }
+        });
+
+        // https://github.com/typed-ember/glint/issues/617
+        test('baseline: without the plugin, pre renders', async function (assert) {
+
+          debugAssert(`[BUG]`, build);
+          await build();
+          debugAssert(`[BUG]`, component);
+
+          await render(component);
+          assert.dom('pre').exists();
+        });
+
+        // https://github.com/typed-ember/glint/issues/617
+        test('with the plugin: no pre renders', async function (assert) {
+          debugAssert(`[BUG]`, build);
+          await build(uncodeSnippet);
+          debugAssert(`[BUG] component`, component);
+
+          await render(component);
+          // await this.pauseTest();
+          assert.dom('pre').doesNotExist();
+        });
+      });
     });
   });
 });

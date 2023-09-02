@@ -2,6 +2,7 @@ import { invocationName } from '../utils.ts';
 
 import type { CompileResult } from '../types.ts';
 import type { ExtractedCode } from './markdown-to-ember.ts';
+import type { UnifiedPlugin } from './types.ts';
 import type { EvalImportMap, ScopeMap } from './types.ts';
 
 async function compileAll(js: { code: string }[], importMap?: EvalImportMap) {
@@ -86,6 +87,7 @@ export async function compileMD(
   options?: {
     importMap?: EvalImportMap;
     topLevelScope?: ScopeMap;
+    remarkPlugins?: UnifiedPlugin[];
     CopyComponent?: string;
     ShadowComponent?: string;
   }
@@ -110,6 +112,7 @@ export async function compileMD(
     let { templateOnlyGlimdown, blocks } = await parseMarkdown(glimdownInput, {
       CopyComponent: options?.CopyComponent,
       ShadowComponent: options?.ShadowComponent,
+      remarkPlugins: options?.remarkPlugins,
     });
 
     rootTemplate = templateOnlyGlimdown;

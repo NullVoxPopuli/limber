@@ -27,7 +27,7 @@
 /////////////////////////////////////////////////////
 {
   "baseBranch": "origin/main",
-  "globalDependencies": [".prettierrc.cjs", ".prettierignore"],
+  "globalDependencies": [".prettierrc.cjs", ".prettierignore", "pnpm-lock.yaml"],
   "pipeline": {
     /////////////////////////////////////////////////
     /////////////////////////////////////////////////
