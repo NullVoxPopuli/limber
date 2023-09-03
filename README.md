@@ -1,4 +1,4 @@
-# limber
+# Glimdown
 
 Write Ember or Glimmer rendered with markdown right in your browser.
 
