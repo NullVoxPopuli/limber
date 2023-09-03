@@ -19,6 +19,10 @@ Interactive [Glimmer Tutorial](https://tutorial.glimdown.com) @ https://tutorial
 
 PRs always welcome! ❤️
 
+## Security
+
+If there are any security concerns, please email security [at] nullvoxpopuli.com
+
 ### Running / Development
 
 - `pnpm i` - installs all deps
