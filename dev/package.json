@@ -20,7 +20,7 @@
   "devDependencies": {
     "@babel/core": "^7.22.11",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
-    "@types/node": "^18.17.13",
+    "@types/node": "^18.17.14",
     "@types/yargs": "^17.0.24",
     "eslint": "^8.48.0",
     "prettier": "^3.0.3",
