@@ -25,7 +25,7 @@ It also establishes a mechanism for reporting issues and resolving conflicts.
 
 All questions and reports of abusive, harassing, or otherwise unacceptable behavior
 in a Glimdown open-source project may be reported by contacting the Glimdown
-Open Source Conduct Committee at ossconduct@nullvoxpopuli.com.
+Open Source Conduct Committee at ossconduct@glimdown.com.
 
 ## Our Pledge
 
