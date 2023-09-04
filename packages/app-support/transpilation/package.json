@@ -27,7 +27,7 @@
     "last 1 Safari versions"
   ],
   "dependencies": {
-    "@babel/standalone": "^7.22.14",
+    "@babel/standalone": "^7.22.15",
     "babel-plugin-htmlbars-inline-precompile": "^5.3.1",
     "path-browserify": "^1.0.1"
   },
@@ -36,12 +36,12 @@
     "ember-source": "^5.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.11",
+    "@babel/core": "^7.22.15",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
-    "@babel/plugin-proposal-decorators": "^7.22.10",
-    "@babel/plugin-transform-runtime": "^7.22.10",
-    "@babel/plugin-transform-typescript": "^7.22.11",
-    "@babel/types": "^7.22.11",
+    "@babel/plugin-proposal-decorators": "^7.22.15",
+    "@babel/plugin-transform-runtime": "^7.22.15",
+    "@babel/plugin-transform-typescript": "^7.22.15",
+    "@babel/types": "^7.22.15",
     "@glimmer/component": "^1.1.2",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "@types/babel__core": "^7.20.1",

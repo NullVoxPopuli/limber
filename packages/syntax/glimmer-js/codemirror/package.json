@@ -16,8 +16,8 @@
     "directory": "packages/syntax/glimmer-js/codemirror"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.11",
-    "@babel/eslint-parser": "^7.22.11",
+    "@babel/core": "^7.22.15",
+    "@babel/eslint-parser": "^7.22.15",
     "@codemirror/buildhelper": "^1.0.0",
     "@codemirror/view": "^6.17.1",
     "@glimdown/lezer-infra": "workspace:*",
