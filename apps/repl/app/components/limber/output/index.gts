@@ -1,7 +1,5 @@
 import { PortalTargets } from 'ember-primitives';
 
-import highlight from 'limber/modifiers/highlight-code-blocks';
-
 import CopyMenu from '../copy-menu';
 import Compiler from './compiler';
 
@@ -32,7 +30,7 @@ export const Output: TOC<Signature> = <template>
         <PortalTargets />
 
         {{#if context.component}}
-          <div {{highlight context.component}}>
+          <div>
             {{! @glint-ignore }}
             <context.component />
           </div>

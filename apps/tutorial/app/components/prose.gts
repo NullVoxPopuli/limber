@@ -5,8 +5,6 @@ import { modifier } from 'ember-modifier';
 
 import { Button, ExternalLink, Link, service } from 'limber-ui';
 
-import { highlight } from './highlight';
-
 import type { TOC } from '@ember/component/template-only';
 
 const editPath = (path: string | undefined) =>
@@ -26,10 +24,10 @@ export const Prose: TOC<{ Element: HTMLDivElement }> = <template>
       {{resetScroll docs.selected.prose}}
     >
 
-      <div data-prose class="prose p-4" {{highlight docs.selected.prose}}>
+      <div data-prose class="prose p-4">
         {{#if docs.selected.prose}}
           {{! template-lint-disable no-triple-curlies }}
-          {{{docs.selected.prose}}}
+          <docs.selected.prose />
         {{/if}}
       </div>
 

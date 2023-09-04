@@ -51,8 +51,8 @@ export default class Selected extends Service {
    ********************************************************************/
 
   @use prose = keepLatest({
-    value: () => this.proseCompiled.html,
-    when: () => !this.proseCompiled.ready,
+    value: () => this.proseCompiled.component,
+    when: () => !this.proseCompiled.isReady,
   });
 
   @use prompt = keepLatest({
