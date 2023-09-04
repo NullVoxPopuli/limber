@@ -1,4 +1,4 @@
-# limber
+# Glimdown
 
 Write Ember or Glimmer rendered with markdown right in your browser.
 
@@ -18,6 +18,10 @@ Interactive [Glimmer Tutorial](https://tutorial.glimdown.com) @ https://tutorial
 ## Contributing
 
 PRs always welcome! ❤️
+
+## Security
+
+If there are any security concerns, please email security [at] nullvoxpopuli.com
 
 ### Running / Development
 
