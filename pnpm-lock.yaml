@@ -55,8 +55,8 @@ importers:
         specifier: ^8.48.0
         version: 8.48.0
       pnpm-sync-dependencies-meta-injected:
-        specifier: ^0.0.9
-        version: 0.0.9
+        specifier: ^0.0.10
+        version: 0.0.10
       prettier:
         specifier: ^3.0.3
         version: 3.0.3
@@ -389,8 +389,8 @@ importers:
         specifier: ^2.0.4
         version: 2.0.4
       pnpm-sync-dependencies-meta-injected:
-        specifier: ^0.0.9
-        version: 0.0.9
+        specifier: ^0.0.10
+        version: 0.0.10
       prettier:
         specifier: ^3.0.3
         version: 3.0.3
@@ -632,8 +632,8 @@ importers:
         specifier: ^4.7.0
         version: 4.7.0
       pnpm-sync-dependencies-meta-injected:
-        specifier: ^0.0.9
-        version: 0.0.9
+        specifier: ^0.0.10
+        version: 0.0.10
       prettier:
         specifier: ^3.0.3
         version: 3.0.3
@@ -1642,8 +1642,8 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1
       pnpm-sync-dependencies-meta-injected:
-        specifier: ^0.0.9
-        version: 0.0.9
+        specifier: ^0.0.10
+        version: 0.0.10
       prettier:
         specifier: ^3.0.3
         version: 3.0.3
@@ -18585,8 +18585,8 @@ packages:
       find-up: 3.0.0
     dev: true
 
-  /pnpm-sync-dependencies-meta-injected@0.0.9:
-    resolution: {integrity: sha512-XOWpiQQAPP4ATYx7VhTCOaMW5efprpwCAbajj1o2ly8Dnf8BHOyreIQH/IZhvtiYIlx7736wB8zJq7DV+xzwgQ==}
+  /pnpm-sync-dependencies-meta-injected@0.0.10:
+    resolution: {integrity: sha512-kPcYZLaLgo5WhlgWciCJFqdxprIqaR52cY1C8KH3RGdia1YwT1wO/AOKyvOydNBJmpdcLxka2a0La9CaStxG/A==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     dependencies:

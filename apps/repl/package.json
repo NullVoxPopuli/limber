@@ -108,7 +108,7 @@
     "fractal-page-object": "^0.4.1",
     "loader.js": "^4.7.0",
     "onp": "^2.0.4",
-    "pnpm-sync-dependencies-meta-injected": "^0.0.9",
+    "pnpm-sync-dependencies-meta-injected": "^0.0.10",
     "prettier": "^3.0.3",
     "prettier-plugin-ember-template-tag": "^1.1.0",
     "process": "^0.11.10",
