@@ -31,7 +31,7 @@
     "eslint": "^8.48.0",
     "prettier": "^3.0.3",
     "rollup": "^3.28.1",
-    "rollup-plugin-ts": "^3.4.4",
+    "rollup-plugin-ts": "^3.4.5",
     "typescript": "^5.2.2"
   },
   "dependencies": {
