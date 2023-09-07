@@ -84,7 +84,7 @@
     "rollup": "^3.28.1",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-glimmer-template-tag": "^0.4.1",
-    "rollup-plugin-ts": "^3.4.4",
+    "rollup-plugin-ts": "^3.4.5",
     "typescript": "^5.2.2"
   },
   "publishConfig": {
