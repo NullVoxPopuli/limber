@@ -40,7 +40,7 @@
     "@ember/test-waiters": "^3.0.2",
     "@embroider/addon-shim": "1.8.6",
     "@embroider/macros": "1.13.1",
-    "@fortawesome/ember-fontawesome": "^1.0.2",
+    "@fortawesome/ember-fontawesome": "^1.0.3",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
