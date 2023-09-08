@@ -10,7 +10,7 @@
     "directory": "packages/syntax/glimdown/lezer"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.15",
+    "@babel/core": "^7.22.17",
     "@babel/eslint-parser": "^7.22.15",
     "@glimdown/lezer-infra": "workspace:*",
     "@lezer/generator": "^1.5.0",
