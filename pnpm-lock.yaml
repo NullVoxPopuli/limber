@@ -352,6 +352,9 @@ importers:
       ember-resolver:
         specifier: ^11.0.1
         version: 11.0.1(ember-source@5.2.0)
+      ember-route-template:
+        specifier: https://github.com/discourse/ember-route-template#dist
+        version: github.com/discourse/ember-route-template/e399c88e679b04374da33713362f402941837d99
       ember-source:
         specifier: ^5.1.2
         version: 5.2.0(@babel/core@7.22.17)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
@@ -22844,3 +22847,13 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: false
+
+  github.com/discourse/ember-route-template/e399c88e679b04374da33713362f402941837d99:
+    resolution: {tarball: https://codeload.github.com/discourse/ember-route-template/tar.gz/e399c88e679b04374da33713362f402941837d99}
+    name: ember-route-template
+    version: 0.0.0
+    dependencies:
+      '@embroider/addon-shim': 1.8.6
+    transitivePeerDependencies:
+      - supports-color
+    dev: true

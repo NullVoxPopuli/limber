@@ -98,6 +98,7 @@
     "ember-resolver": "^11.0.1",
     "ember-source": "^5.2.0",
     "ember-template-imports": "^3.4.2",
+"ember-route-template": "https://github.com/discourse/ember-route-template#dist",
     "ember-template-lint": "^5.11.2",
     "ember-template-lint-plugin-prettier": "^5.0.0",
     "esbuild-loader": "^4.0.2",
