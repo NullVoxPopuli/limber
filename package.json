@@ -29,7 +29,7 @@
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "concurrently": "^8.2.1",
     "dev-tools": "workspace:*",
-    "eslint": "^8.48.0",
+    "eslint": "^8.49.0",
     "pnpm-sync-dependencies-meta-injected": "^0.0.10",
     "prettier": "^3.0.3",
     "prettier-plugin-ember-template-tag": "^1.1.0",
