@@ -1331,8 +1331,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       uuid:
-        specifier: ^9.0.0
-        version: 9.0.0
+        specifier: ^9.0.1
+        version: 9.0.1
       vfile:
         specifier: ^6.0.1
         version: 6.0.1
@@ -21585,6 +21585,12 @@ packages:
   /uuid@9.0.0:
     resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
     hasBin: true
+    dev: true
+
+  /uuid@9.0.1:
+    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+    hasBin: true
+    dev: false
 
   /uvu@0.5.6:
     resolution: {integrity: sha512-+g8ENReyr8YsOc6fv/NVJs2vFdHBnBNdfE49rshrTzDWOlUx4Gq7KOS2GD8eqhy2j+Ejq29+SbKH8yjkAqXqoA==}
@@ -22528,7 +22534,7 @@ packages:
       remark-rehype: 10.1.0
       unified: 10.1.2
       unist-util-visit: 5.0.0
-      uuid: 9.0.0
+      uuid: 9.0.1
       vfile: 6.0.1
     transitivePeerDependencies:
       - supports-color
