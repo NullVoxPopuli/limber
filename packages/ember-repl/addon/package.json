@@ -120,7 +120,7 @@
     "@nullvoxpopuli/limber-untyped": "workspace:*",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-commonjs": "^25.0.4",
-    "@tsconfig/ember": "^3.0.0",
+    "@tsconfig/ember": "^3.0.1",
     "@types/babel__core": "^7.20.1",
     "@types/babel__standalone": "^7.1.4",
     "@types/babel__traverse": "^7.20.1",
