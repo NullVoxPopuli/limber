@@ -545,8 +545,8 @@ importers:
         specifier: workspace:^0.0.0
         version: link:../../packages/untyped
       '@tsconfig/ember':
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^3.0.1
+        version: 3.0.1
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.6.0
         version: 6.6.0(@typescript-eslint/parser@6.6.0)(eslint@8.49.0)(typescript@5.2.2)
@@ -905,8 +905,8 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3(@babel/core@7.22.19)(@types/babel__core@7.20.1)(rollup@3.29.2)
       '@tsconfig/ember':
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^3.0.1
+        version: 3.0.1
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.6.0
         version: 6.6.0(@typescript-eslint/parser@6.6.0)(eslint@8.49.0)(typescript@5.2.2)
@@ -1401,8 +1401,8 @@ importers:
         specifier: ^25.0.4
         version: 25.0.4(rollup@3.29.2)
       '@tsconfig/ember':
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^3.0.1
+        version: 3.0.1
       '@types/babel__core':
         specifier: ^7.20.1
         version: 7.20.1
@@ -1549,8 +1549,8 @@ importers:
         specifier: workspace:^0.0.0
         version: link:../../untyped
       '@tsconfig/ember':
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^3.0.1
+        version: 3.0.1
       '@types/common-tags':
         specifier: ^1.8.2
         version: 1.8.2
@@ -1843,8 +1843,8 @@ importers:
         specifier: ^3.2.2
         version: 3.2.2(@babel/core@7.22.19)(@babel/eslint-parser@7.22.15)(@typescript-eslint/eslint-plugin@6.6.0)(@typescript-eslint/parser@6.6.0)(eslint-plugin-ember@11.11.1)(eslint@8.49.0)(prettier@3.0.3)(typescript@5.2.2)
       '@tsconfig/ember':
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^3.0.1
+        version: 3.0.1
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.6.0
         version: 6.6.0(@typescript-eslint/parser@6.6.0)(eslint@8.49.0)(typescript@5.2.2)
@@ -2046,8 +2046,8 @@ importers:
         specifier: ^3.2.2
         version: 3.2.2(@babel/core@7.22.19)(@babel/eslint-parser@7.22.15)(@typescript-eslint/eslint-plugin@6.6.0)(@typescript-eslint/parser@6.6.0)(eslint-plugin-ember@11.11.1)(eslint@8.49.0)(prettier@3.0.3)(typescript@5.2.2)
       '@tsconfig/ember':
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^3.0.1
+        version: 3.0.1
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.6.0
         version: 6.6.0(@typescript-eslint/parser@6.6.0)(eslint@8.49.0)(typescript@5.2.2)
@@ -2228,8 +2228,8 @@ importers:
         specifier: ^3.2.2
         version: 3.2.2(@babel/core@7.22.19)(@babel/eslint-parser@7.22.15)(@typescript-eslint/eslint-plugin@6.6.0)(@typescript-eslint/parser@6.6.0)(eslint-plugin-ember@11.11.1)(eslint@8.49.0)(prettier@3.0.3)(typescript@5.2.2)
       '@tsconfig/ember':
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^3.0.1
+        version: 3.0.1
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.6.0
         version: 6.6.0(@typescript-eslint/parser@6.6.0)(eslint@8.49.0)(typescript@5.2.2)
@@ -2343,8 +2343,8 @@ importers:
         specifier: ^3.2.2
         version: 3.2.2(@babel/core@7.22.19)(@babel/eslint-parser@7.22.15)(@typescript-eslint/eslint-plugin@6.6.0)(@typescript-eslint/parser@6.6.0)(eslint-plugin-ember@11.11.1)(eslint@8.49.0)(prettier@3.0.3)(typescript@5.2.2)
       '@tsconfig/ember':
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^3.0.1
+        version: 3.0.1
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.6.0
         version: 6.6.0(@typescript-eslint/parser@6.6.0)(eslint@8.49.0)(typescript@5.2.2)
@@ -7264,8 +7264,8 @@ packages:
     engines: {node: '>= 10'}
     dev: false
 
-  /@tsconfig/ember@3.0.0:
-    resolution: {integrity: sha512-KF9F9f4i+8LE31OKS014n5uEDt1mB/6ZvyQz/Mam28nAKDTSMBlOWHgTOj0TY8l4BfbEE+BgUuWCSoUHhb2BMw==}
+  /@tsconfig/ember@3.0.1:
+    resolution: {integrity: sha512-IBoECN9o9StxTZSy12eNSPdqiH5VzngD5Qx9YQDfteiXk9XyJhnyRQuBoU/MQCVnqau9fJpgKoA8Sy/0qItFXw==}
     dev: true
 
   /@tufjs/canonical-json@1.0.0:
