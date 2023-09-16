@@ -76,7 +76,7 @@
   },
   "dependencies": {
     "@babel/helper-plugin-utils": "^7.22.5",
-    "@babel/standalone": "^7.22.19",
+    "@babel/standalone": "^7.22.20",
     "@embroider/addon-shim": "1.8.6",
     "@embroider/macros": "1.13.1",
     "babel-import-util": "^1.4.1",
@@ -99,7 +99,7 @@
     "vfile": "^6.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.19",
+    "@babel/core": "^7.22.20",
     "@babel/preset-typescript": "^7.22.15",
     "@babel/types": "^7.22.19",
     "@ember/test-helpers": "^3.2.0",
