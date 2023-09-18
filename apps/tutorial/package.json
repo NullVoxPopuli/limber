@@ -98,7 +98,7 @@
     "qunit": "^2.19.4",
     "qunit-dom": "^2.0.0",
     "typescript": "^5.2.2",
-    "unplugin": "^1.4.0",
+    "unplugin": "^1.5.0",
     "webpack": "^5.88.2"
   },
   "engines": {
