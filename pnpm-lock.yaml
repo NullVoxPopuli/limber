@@ -752,7 +752,7 @@ importers:
         specifier: 6.20.2
         version: 6.20.2
       '@lezer/common':
-        specifier: ^1.0.4
+        specifier: ^1.1.0
         version: 1.1.0
       '@lezer/highlight':
         specifier: ^1.1.6
@@ -1780,7 +1780,7 @@ importers:
         specifier: ^6.2.1
         version: 6.2.1
       '@lezer/common':
-        specifier: ^1.0.4
+        specifier: ^1.1.0
         version: 1.1.0
     devDependencies:
       '@babel/core':
@@ -1820,7 +1820,7 @@ importers:
         specifier: ^6.3.1
         version: 6.3.1(@codemirror/state@6.2.1)(@codemirror/view@6.20.2)(@lezer/common@1.1.0)
       '@lezer/common':
-        specifier: ^1.0.4
+        specifier: ^1.1.0
         version: 1.1.0
       '@lezer/highlight':
         specifier: ^1.1.6
@@ -2063,7 +2063,7 @@ importers:
         specifier: workspace:*
         version: link:../../-infra
       '@lezer/common':
-        specifier: ^1.0.4
+        specifier: ^1.1.0
         version: 1.1.0
       '@lezer/generator':
         specifier: ^1.5.1
@@ -2245,7 +2245,7 @@ importers:
         specifier: ^6.9.1
         version: 6.9.1
       '@lezer/common':
-        specifier: ^1.0.4
+        specifier: ^1.1.0
         version: 1.1.0
       '@lezer/generator':
         specifier: ^1.5.1
@@ -2335,7 +2335,7 @@ importers:
         specifier: workspace:*
         version: link:../../glimmer-s-expression/lezer
       '@lezer/common':
-        specifier: ^1.0.4
+        specifier: ^1.1.0
         version: 1.1.0
       '@lezer/highlight':
         specifier: ^1.1.6
