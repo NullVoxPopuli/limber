@@ -3,11 +3,7 @@ import { isTesting } from '@embroider/macros';
 
 import { modifier } from 'ember-modifier';
 
-interface Signature {
-  Element: HTMLElement;
-}
-
-export default modifier<Signature>((element: HTMLElement) => {
+export default modifier((element) => {
   let debouncedConstrain = () => constrain(element);
   let x = () => debounce(debouncedConstrain, 10);
 
@@ -19,7 +15,7 @@ export default modifier<Signature>((element: HTMLElement) => {
   };
 });
 
-function constrain(element: HTMLElement) {
+function constrain(element: Pick<HTMLElement, 'getBoundingClientRect' | 'setAttribute'>) {
   let offset = element.getBoundingClientRect().y;
 
   /**
