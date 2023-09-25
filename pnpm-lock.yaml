@@ -34,7 +34,7 @@ importers:
   .:
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@changesets/changelog-github':
         specifier: ^0.4.8
@@ -197,7 +197,7 @@ importers:
         version: 4.35.4
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@babel/eslint-parser':
         specifier: ^7.22.15
@@ -490,10 +490,10 @@ importers:
         version: 10.1.2
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@babel/runtime':
-        specifier: ^7.22.15
+        specifier: ^7.23.1
         version: 7.23.1
       '@ember/optional-features':
         specifier: ^2.0.0
@@ -692,7 +692,7 @@ importers:
         version: 17.7.2
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
@@ -795,7 +795,7 @@ importers:
         version: 1.0.1
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
@@ -834,7 +834,7 @@ importers:
   packages/app-support/limber-ui/addon:
     dependencies:
       '@babel/runtime':
-        specifier: ^7.22.15
+        specifier: ^7.23.1
         version: 7.23.1
       '@embroider/addon-shim':
         specifier: 1.8.6
@@ -862,7 +862,7 @@ importers:
         version: 6.2.2
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@babel/eslint-parser':
         specifier: ^7.22.15
@@ -871,7 +871,7 @@ importers:
         specifier: ^7.18.6
         version: 7.18.6(@babel/core@7.23.0)
       '@babel/plugin-proposal-decorators':
-        specifier: ^7.22.15
+        specifier: ^7.23.0
         version: 7.23.0(@babel/core@7.23.0)
       '@babel/plugin-syntax-decorators':
         specifier: ^7.22.10
@@ -1004,7 +1004,7 @@ importers:
         version: link:../addon
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@babel/eslint-parser':
         specifier: ^7.22.15
@@ -1155,7 +1155,7 @@ importers:
         version: 3.0.8
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
@@ -1185,7 +1185,7 @@ importers:
   packages/app-support/transpilation:
     dependencies:
       '@babel/standalone':
-        specifier: ^7.22.20
+        specifier: ^7.23.1
         version: 7.23.1
       babel-plugin-htmlbars-inline-precompile:
         specifier: ^5.3.1
@@ -1195,13 +1195,13 @@ importers:
         version: 1.0.1
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@babel/plugin-proposal-class-properties':
         specifier: ^7.18.6
         version: 7.18.6(@babel/core@7.23.0)
       '@babel/plugin-proposal-decorators':
-        specifier: ^7.22.15
+        specifier: ^7.23.0
         version: 7.23.0(@babel/core@7.23.0)
       '@babel/plugin-transform-runtime':
         specifier: ^7.22.15
@@ -1210,7 +1210,7 @@ importers:
         specifier: ^7.22.15
         version: 7.22.15(@babel/core@7.23.0)
       '@babel/types':
-        specifier: ^7.22.19
+        specifier: ^7.23.0
         version: 7.23.0
       '@glimmer/component':
         specifier: ^1.1.2
@@ -1267,7 +1267,7 @@ importers:
   packages/consts:
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
@@ -1300,7 +1300,7 @@ importers:
         specifier: ^7.22.5
         version: 7.22.5
       '@babel/standalone':
-        specifier: ^7.22.20
+        specifier: ^7.23.1
         version: 7.23.1
       '@embroider/addon-shim':
         specifier: 1.8.6
@@ -1364,13 +1364,13 @@ importers:
         version: 6.0.1
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@babel/preset-typescript':
-        specifier: ^7.22.15
+        specifier: ^7.23.0
         version: 7.23.0(@babel/core@7.23.0)
       '@babel/types':
-        specifier: ^7.22.19
+        specifier: ^7.23.0
         version: 7.23.0
       '@ember/test-helpers':
         specifier: ^3.2.0
@@ -1524,7 +1524,7 @@ importers:
         version: 5.0.0
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@ember/optional-features':
         specifier: ^2.0.0
@@ -1701,7 +1701,7 @@ importers:
   packages/horizon-theme:
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
@@ -1750,7 +1750,7 @@ importers:
         version: 3.29.3
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@babel/eslint-parser':
         specifier: ^7.22.15
@@ -1784,7 +1784,7 @@ importers:
         version: 1.1.0
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@babel/eslint-parser':
         specifier: ^7.22.15
@@ -1845,7 +1845,7 @@ importers:
         version: link:../../glimmer-js/codemirror
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@babel/eslint-parser':
         specifier: ^7.22.15
@@ -1902,7 +1902,7 @@ importers:
   packages/syntax/glimdown/codemirror/dev:
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@babel/eslint-parser':
         specifier: ^7.22.15
@@ -1981,7 +1981,7 @@ importers:
         version: 1.3.12
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@babel/eslint-parser':
         specifier: ^7.22.15
@@ -2048,7 +2048,7 @@ importers:
         version: link:../../glimmer/codemirror
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@babel/eslint-parser':
         specifier: ^7.22.15
@@ -2105,7 +2105,7 @@ importers:
   packages/syntax/glimmer-js/codemirror/dev:
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@babel/eslint-parser':
         specifier: ^7.22.15
@@ -2157,7 +2157,7 @@ importers:
         version: 1.3.12
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@babel/eslint-parser':
         specifier: ^7.22.15
@@ -2233,7 +2233,7 @@ importers:
         version: link:../lezer
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@babel/eslint-parser':
         specifier: ^7.22.15
@@ -2287,7 +2287,7 @@ importers:
   packages/syntax/glimmer/codemirror/dev:
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@babel/eslint-parser':
         specifier: ^7.22.15
@@ -2351,7 +2351,7 @@ importers:
         version: 1.3.12
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.20
+        specifier: ^7.23.0
         version: 7.23.0
       '@babel/eslint-parser':
         specifier: ^7.22.15
