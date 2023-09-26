@@ -1161,7 +1161,7 @@ importers:
         specifier: ^3.2.2
         version: 3.2.2(@babel/core@7.23.0)(eslint@8.50.0)(prettier@3.0.3)
       autoprefixer:
-        specifier: ^10.4.15
+        specifier: ^10.4.16
         version: 10.4.16(postcss@8.4.30)
       concurrently:
         specifier: ^8.2.1
