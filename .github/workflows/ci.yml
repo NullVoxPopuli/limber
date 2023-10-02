@@ -18,6 +18,7 @@ env:
   monaco: packages/monaco
   sw: packages/transpilation/
   NODE_OPTIONS: "--max-old-space-size=4096 --trace-warnings --unhandled-rejections=strict"
+  NODE_VERSION: "18.17"
   TURBO_API: http://127.0.0.1:9080
   TURBO_TOKEN: this-is-not-a-secret
   TURBO_TEAM: myself
@@ -65,6 +66,7 @@ jobs:
       - uses: wyvox/action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 18.17
       - run: pnpm lint
 
 ##############################################################
@@ -80,6 +82,7 @@ jobs:
       - uses: wyvox/action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 18.17
       - name: Test
         run: pnpm turbo test:node --output-logs errors-only
 
@@ -102,6 +105,7 @@ jobs:
       - uses: wyvox/action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 18.17
       - name: Environment Info
         run: |
           firefox --version
@@ -142,6 +146,7 @@ jobs:
       - uses: wyvox/action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 18.17
       - run: pnpm turbo test:browserstack --output-logs errors-only
         env:
           # This is a guest user on an open source plan.
