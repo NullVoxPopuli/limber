@@ -40,6 +40,7 @@ jobs:
     - uses: wyvox/action@v1
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
+        node-version: 18.17
     - run:  echo ${{ github.event.number }} > ./pr-number.txt
     - run: pnpm turbo build
     # Used for faster deploy so we don't need to checkout the repo
