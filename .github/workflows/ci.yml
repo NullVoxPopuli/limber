@@ -18,6 +18,7 @@ env:
   monaco: packages/monaco
   sw: packages/transpilation/
   NODE_OPTIONS: "--max-old-space-size=4096 --trace-warnings --unhandled-rejections=strict"
+  NODE_VERSION: "18.17"
   TURBO_API: http://127.0.0.1:9080
   TURBO_TOKEN: this-is-not-a-secret
   TURBO_TEAM: myself
@@ -34,15 +35,13 @@ jobs:
   install_dependencies:
     name: Setup
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
 
     steps:
-    - uses: actions/checkout@v4
-    - name: TurboRepo local server
-      uses: felixmosh/turborepo-gh-artifacts@v2
+    - uses: wyvox/action@v1
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: NullVoxPopuli/action-setup-pnpm@v2.3.1
+        node-version: 18.17
     - run:  echo ${{ github.event.number }} > ./pr-number.txt
     - run: pnpm turbo build
     # Used for faster deploy so we don't need to checkout the repo
@@ -64,12 +63,10 @@ jobs:
     needs: [install_dependencies]
 
     steps:
-      - uses: actions/checkout@v4
-      - name: TurboRepo local server
-        uses: felixmosh/turborepo-gh-artifacts@v2
+      - uses: wyvox/action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: NullVoxPopuli/action-setup-pnpm@v2.3.1
+          node-version: 18.17
       - run: pnpm lint
 
 ##############################################################
@@ -82,14 +79,12 @@ jobs:
     needs: [install_dependencies]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: TurboRepo local server
-      uses: felixmosh/turborepo-gh-artifacts@v2
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: NullVoxPopuli/action-setup-pnpm@v2.3.1
-    - name: Test
-      run: pnpm turbo test:node --output-logs errors-only
+      - uses: wyvox/action@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 18.17
+      - name: Test
+        run: pnpm turbo test:node --output-logs errors-only
 
 
   tests:
@@ -107,23 +102,21 @@ jobs:
     needs: [install_dependencies]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: TurboRepo local server
-      uses: felixmosh/turborepo-gh-artifacts@v2
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: NullVoxPopuli/action-setup-pnpm@v2.3.1
-    - name: Environment Info
-      run: |
-        firefox --version
-        google-chrome --version
-        echo "Node: $( node --version )"
-        echo "NPM: $( npm --version )"
-        echo "pnpm: $( pnpm --version )"
-    - name: Test
-      run: pnpm turbo test:ember --output-logs errors-only
-      env:
-        CI_BROWSER: ${{ matrix.ci_browser }}
+      - uses: wyvox/action@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 18.17
+      - name: Environment Info
+        run: |
+          firefox --version
+          google-chrome --version
+          echo "Node: $( node --version )"
+          echo "NPM: $( npm --version )"
+          echo "pnpm: $( pnpm --version )"
+      - name: Test
+        run: pnpm turbo test:ember --output-logs errors-only
+        env:
+          CI_BROWSER: ${{ matrix.ci_browser }}
 
   # try-scenarios:
   #   name: "Test try-scenarios" 
@@ -150,21 +143,19 @@ jobs:
     needs: [tests]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: TurboRepo local server
-      uses: felixmosh/turborepo-gh-artifacts@v2
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: NullVoxPopuli/action-setup-pnpm@v2.3.1
-    - run: pnpm turbo test:browserstack --output-logs errors-only
-      env:
-        # This is a guest user on an open source plan.
-        # (limited access, etc etc)
-        #
-        # Exposing this key is the only way to reasonably 
-        # have browserstack run on PRs from forks
-        BROWSERSTACK_ACCESS_KEY: km7yCVefUQDSdFMF9o64
-        BROWSERSTACK_USERNAME: glimdown_6vzpNh
+      - uses: wyvox/action@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 18.17
+      - run: pnpm turbo test:browserstack --output-logs errors-only
+        env:
+          # This is a guest user on an open source plan.
+          # (limited access, etc etc)
+          #
+          # Exposing this key is the only way to reasonably 
+          # have browserstack run on PRs from forks
+          BROWSERSTACK_ACCESS_KEY: km7yCVefUQDSdFMF9o64
+          BROWSERSTACK_USERNAME: glimdown_6vzpNh
 
 ##############################################################
 ##############################################################
