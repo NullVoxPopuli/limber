@@ -102,8 +102,8 @@ importers:
         specifier: ^4.21.11
         version: 4.21.11
       dompurify:
-        specifier: ^3.0.5
-        version: 3.0.5
+        specifier: ^3.0.6
+        version: 3.0.6
       ember-auto-import:
         specifier: ^2.6.3
         version: 2.6.3(@glint/template@1.1.0)(webpack@5.88.2)
@@ -471,7 +471,7 @@ importers:
         version: 2.1.0(highlight.js@11.8.0)
       limber-ui:
         specifier: workspace:*
-        version: file:packages/app-support/limber-ui/addon(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-async-data@1.0.3)(ember-modifier@4.1.0)(ember-primitives@0.7.0)(ember-resources@6.4.0)(ember-source@5.3.0)(rollup@3.29.3)(webpack@5.88.2)
+        version: file:packages/app-support/limber-ui/addon(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-async-data@1.0.3)(ember-modifier@4.1.0)(ember-primitives@0.7.0)(ember-resources@6.4.0)(ember-source@5.3.0)(webpack@5.88.2)
       rehype-raw:
         specifier: ^6.1.1
         version: 6.1.1
@@ -1415,7 +1415,7 @@ importers:
         version: 1.1.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.0)(@typescript-eslint/eslint-plugin@6.7.2)(@typescript-eslint/parser@6.7.2)(eslint-config-prettier@9.0.0)(eslint-plugin-ember@11.11.1)(eslint-plugin-qunit@8.0.0)(eslint@8.50.0)(prettier@3.0.3)(typescript@5.2.2)
+        version: 3.2.2(@babel/core@7.23.0)(@typescript-eslint/eslint-plugin@6.7.2)(@typescript-eslint/parser@6.7.2)(eslint-plugin-ember@11.11.1)(eslint@8.50.0)(prettier@3.0.3)(typescript@5.2.2)
       '@nullvoxpopuli/limber-untyped':
         specifier: workspace:*
         version: link:../../untyped
@@ -5337,6 +5337,32 @@ packages:
       - supports-color
       - webpack
 
+  /@fortawesome/ember-fontawesome@1.0.3(@glint/template@1.1.0)(webpack@5.88.2):
+    resolution: {integrity: sha512-KGw4a4moLo9wcGwFU05Y7yV2/va2R/lN7rO3cw6ZBrnMigyAReYH9XcK4zkiAXGaLAbzc/mOyP19ofr2rc7HBg==}
+    engines: {node: 12.* || 14.* || >= 16}
+    dependencies:
+      '@fortawesome/fontawesome-svg-core': 6.4.2
+      '@rollup/plugin-node-resolve': 15.2.1(rollup@3.29.3)
+      broccoli-file-creator: 2.1.1
+      broccoli-merge-trees: 4.2.0
+      broccoli-plugin: 4.0.7
+      broccoli-rollup: 5.0.0
+      broccoli-source: 3.0.1
+      camel-case: 4.1.2
+      ember-ast-helpers: 0.3.5
+      ember-auto-import: 2.6.3(@glint/template@1.1.0)(webpack@5.88.2)
+      ember-cli-babel: 7.26.11
+      ember-cli-htmlbars: 5.7.2
+      ember-get-config: 2.1.1(@glint/template@1.1.0)
+      find-yarn-workspace-root: 2.0.0
+      glob: 7.2.3
+    transitivePeerDependencies:
+      - '@glint/template'
+      - rollup
+      - supports-color
+      - webpack
+    dev: false
+
   /@fortawesome/fontawesome-common-types@6.4.2:
     resolution: {integrity: sha512-1DgP7f+XQIJbLFCTX1V2QnxVmpLdKdzzo2k8EmvDOePfchaIGQ9eCHj2up3/jNEbZuBqel5OxiaOJf37TWauRA==}
     engines: {node: '>=6'}
@@ -8436,10 +8462,10 @@ packages:
       webpack:
         optional: true
     dependencies:
-      '@babel/core': 7.23.0(supports-color@8.1.1)
+      '@babel/core': 7.23.0
       find-cache-dir: 4.0.0
       schema-utils: 4.2.0
-      webpack: 5.88.2
+      webpack: 5.88.2(esbuild@0.19.3)(webpack-cli@5.1.4)
     dev: true
 
   /babel-messages@6.23.0:
@@ -11125,8 +11151,8 @@ packages:
       domelementtype: 2.3.0
     dev: false
 
-  /dompurify@3.0.5:
-    resolution: {integrity: sha512-F9e6wPGtY+8KNMRAVfxeCOHU0/NPWMSENNq4pQctuXRqqdEPW7q3CrLbR5Nse044WwacyjHGOMlvNsBe1y6z9A==}
+  /dompurify@3.0.6:
+    resolution: {integrity: sha512-ilkD8YEnnGh1zJ240uJsW7AzE+2qpbOUYjacomn3AvJ6J4JhKGSZ2nh4wUIXPZrEPppaCLx5jFe8T89Rk8tQ7w==}
     dev: false
 
   /domutils@1.7.0:
@@ -22517,6 +22543,45 @@ packages:
       '@embroider/addon-shim': 1.8.6
       '@embroider/macros': 1.13.2(@glint/template@1.1.0)
       '@fortawesome/ember-fontawesome': 1.0.3(@glint/template@1.1.0)(rollup@3.29.3)(webpack@5.88.2)
+      '@fortawesome/fontawesome-svg-core': 6.4.2
+      '@fortawesome/free-brands-svg-icons': 6.4.2
+      '@fortawesome/free-regular-svg-icons': 6.4.2
+      '@fortawesome/free-solid-svg-icons': 6.4.2
+      '@glimmer/component': 1.1.2(@babel/core@7.23.0)
+      '@glimmer/tracking': 1.1.2
+      ember-async-data: 1.0.3(ember-source@5.3.0)
+      ember-modifier: 4.1.0(ember-source@5.3.0)
+      ember-primitives: 0.7.0(@babel/core@7.23.0)(@ember/test-helpers@3.2.0)(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.1.0)(@glint/template@1.1.0)(ember-modifier@4.1.0)(ember-resources@6.4.0)(ember-source@5.3.0)
+      ember-resources: 6.4.0(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-source@5.3.0)
+      ember-source: 5.3.0(@babel/core@7.23.0)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
+      penpal: 6.2.2
+    transitivePeerDependencies:
+      - '@glint/template'
+      - rollup
+      - supports-color
+      - webpack
+    dev: false
+
+  file:packages/app-support/limber-ui/addon(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-async-data@1.0.3)(ember-modifier@4.1.0)(ember-primitives@0.7.0)(ember-resources@6.4.0)(ember-source@5.3.0)(webpack@5.88.2):
+    resolution: {directory: packages/app-support/limber-ui/addon, type: directory}
+    id: file:packages/app-support/limber-ui/addon
+    name: limber-ui
+    engines: {node: '>= v16', npm: use pnpm, yarn: use pnpm}
+    peerDependencies:
+      '@ember/test-waiters': ^3.0.2
+      '@glimmer/component': ^1.1.2
+      '@glimmer/tracking': ^1.1.2
+      ember-async-data: ^1.0.3
+      ember-modifier: '*'
+      ember-primitives: ^0.7.0
+      ember-resources: ^6.4.0
+      ember-source: '*'
+    dependencies:
+      '@babel/runtime': 7.23.1
+      '@ember/test-waiters': 3.0.2
+      '@embroider/addon-shim': 1.8.6
+      '@embroider/macros': 1.13.2(@glint/template@1.1.0)
+      '@fortawesome/ember-fontawesome': 1.0.3(@glint/template@1.1.0)(webpack@5.88.2)
       '@fortawesome/fontawesome-svg-core': 6.4.2
       '@fortawesome/free-brands-svg-icons': 6.4.2
       '@fortawesome/free-regular-svg-icons': 6.4.2
