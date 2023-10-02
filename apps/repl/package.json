@@ -87,7 +87,7 @@
     "concurrently": "^8.2.1",
     "ember-async-data": "1.0.3",
     "ember-cli": "~5.2.1",
-    "ember-cli-babel": "^8.0.0",
+    "ember-cli-babel": "^8.1.0",
     "ember-cli-browserstack": "^2.0.1",
     "ember-cli-htmlbars": "^6.3.0",
     "ember-cli-inject-live-reload": "^2.1.0",
