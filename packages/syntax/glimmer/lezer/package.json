@@ -30,7 +30,7 @@
     "concurrently": "^8.2.1",
     "eslint": "^8.49.0",
     "prettier": "^3.0.3",
-    "rollup": "^3.29.2",
+    "rollup": "^3.29.4",
     "rollup-plugin-ts": "^3.4.5",
     "typescript": "^5.2.2"
   },
