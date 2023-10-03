@@ -223,8 +223,8 @@ importers:
         specifier: 3.2.0
         version: 3.2.0(@embroider/core@3.3.0)(webpack@5.88.2)
       '@fortawesome/ember-fontawesome':
-        specifier: ^1.0.3
-        version: 1.0.3(@glint/template@1.1.0)(rollup@3.29.4)(webpack@5.88.2)
+        specifier: ^2.0.0
+        version: 2.0.0(@glint/template@1.1.0)(ember-source@5.3.0)(rollup@3.29.4)(webpack@5.88.2)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.4.2
         version: 6.4.2
@@ -516,8 +516,8 @@ importers:
         specifier: 3.2.0
         version: 3.2.0(@embroider/core@3.3.0)(webpack@5.88.2)
       '@fortawesome/ember-fontawesome':
-        specifier: ^1.0.3
-        version: 1.0.3(@glint/template@1.1.0)(rollup@3.29.4)(webpack@5.88.2)
+        specifier: ^2.0.0
+        version: 2.0.0(@glint/template@1.1.0)(ember-source@5.3.0)(rollup@3.29.4)(webpack@5.88.2)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.4.2
         version: 6.4.2
@@ -842,8 +842,8 @@ importers:
         specifier: 1.13.2
         version: 1.13.2(@glint/template@1.1.0)
       '@fortawesome/ember-fontawesome':
-        specifier: ^1.0.3
-        version: 1.0.3(@glint/template@1.1.0)(rollup@3.29.4)
+        specifier: ^2.0.0
+        version: 2.0.0(@glint/template@1.1.0)(ember-source@5.3.0)(rollup@3.29.4)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.4.2
         version: 6.4.2
@@ -1021,8 +1021,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2(@embroider/compat@3.2.2)(@embroider/core@3.3.0)(@embroider/webpack@3.2.0)
       '@fortawesome/ember-fontawesome':
-        specifier: ^1.0.3
-        version: 1.0.3(@glint/template@1.1.0)(rollup@3.29.4)(webpack@5.88.2)
+        specifier: ^2.0.0
+        version: 2.0.0(@glint/template@1.1.0)(ember-source@5.3.0)(rollup@3.29.4)(webpack@5.88.2)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.4.2
         version: 6.4.2
@@ -5484,25 +5484,29 @@ packages:
   /@floating-ui/utils@0.1.4:
     resolution: {integrity: sha512-qprfWkn82Iw821mcKofJ5Pk9wgioHicxcQMxx+5zt5GSKoqdWvgG5AxVmpmUUjzTLPVSH5auBrhI93Deayn/DA==}
 
-  /@fortawesome/ember-fontawesome@1.0.3(@glint/template@1.1.0)(rollup@3.29.4):
-    resolution: {integrity: sha512-KGw4a4moLo9wcGwFU05Y7yV2/va2R/lN7rO3cw6ZBrnMigyAReYH9XcK4zkiAXGaLAbzc/mOyP19ofr2rc7HBg==}
-    engines: {node: 12.* || 14.* || >= 16}
+  /@fortawesome/ember-fontawesome@2.0.0(@glint/template@1.1.0)(ember-source@5.3.0)(rollup@3.29.4):
+    resolution: {integrity: sha512-lUyMvocZZzMuCwr8pkKhejXKBj5RGnIs8YUHc/tCNSEyHSx7/E5xAhtE4fa5B1c9+UO789Kng8z6DQ9E/agVGA==}
+    engines: {node: 14.* || 16.* || >= 18}
+    peerDependencies:
+      ember-source: '*'
     dependencies:
       '@fortawesome/fontawesome-svg-core': 6.4.2
       '@rollup/plugin-node-resolve': 15.2.1(rollup@3.29.4)
+      array-unique: 0.3.2
       broccoli-file-creator: 2.1.1
       broccoli-merge-trees: 4.2.0
       broccoli-plugin: 4.0.7
       broccoli-rollup: 5.0.0
       broccoli-source: 3.0.1
       camel-case: 4.1.2
-      ember-ast-helpers: 0.3.5
+      ember-ast-helpers: 0.4.0
       ember-auto-import: 2.6.3(@glint/template@1.1.0)
       ember-cli-babel: 7.26.11
-      ember-cli-htmlbars: 5.7.2
+      ember-cli-htmlbars: 6.3.0
       ember-get-config: 2.1.1(@glint/template@1.1.0)
+      ember-source: 5.3.0(@babel/core@7.23.0)(@glimmer/component@1.1.2)(@glint/template@1.1.0)
       find-yarn-workspace-root: 2.0.0
-      glob: 7.2.3
+      glob: 10.3.7
     transitivePeerDependencies:
       - '@glint/template'
       - rollup
@@ -5510,50 +5514,58 @@ packages:
       - webpack
     dev: false
 
-  /@fortawesome/ember-fontawesome@1.0.3(@glint/template@1.1.0)(rollup@3.29.4)(webpack@5.88.2):
-    resolution: {integrity: sha512-KGw4a4moLo9wcGwFU05Y7yV2/va2R/lN7rO3cw6ZBrnMigyAReYH9XcK4zkiAXGaLAbzc/mOyP19ofr2rc7HBg==}
-    engines: {node: 12.* || 14.* || >= 16}
+  /@fortawesome/ember-fontawesome@2.0.0(@glint/template@1.1.0)(ember-source@5.3.0)(rollup@3.29.4)(webpack@5.88.2):
+    resolution: {integrity: sha512-lUyMvocZZzMuCwr8pkKhejXKBj5RGnIs8YUHc/tCNSEyHSx7/E5xAhtE4fa5B1c9+UO789Kng8z6DQ9E/agVGA==}
+    engines: {node: 14.* || 16.* || >= 18}
+    peerDependencies:
+      ember-source: '*'
     dependencies:
       '@fortawesome/fontawesome-svg-core': 6.4.2
       '@rollup/plugin-node-resolve': 15.2.1(rollup@3.29.4)
+      array-unique: 0.3.2
       broccoli-file-creator: 2.1.1
       broccoli-merge-trees: 4.2.0
       broccoli-plugin: 4.0.7
       broccoli-rollup: 5.0.0
       broccoli-source: 3.0.1
       camel-case: 4.1.2
-      ember-ast-helpers: 0.3.5
+      ember-ast-helpers: 0.4.0
       ember-auto-import: 2.6.3(@glint/template@1.1.0)(webpack@5.88.2)
       ember-cli-babel: 7.26.11
-      ember-cli-htmlbars: 5.7.2
+      ember-cli-htmlbars: 6.3.0
       ember-get-config: 2.1.1(@glint/template@1.1.0)
+      ember-source: 5.3.0(@babel/core@7.23.0)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
       find-yarn-workspace-root: 2.0.0
-      glob: 7.2.3
+      glob: 10.3.7
     transitivePeerDependencies:
       - '@glint/template'
       - rollup
       - supports-color
       - webpack
 
-  /@fortawesome/ember-fontawesome@1.0.3(@glint/template@1.1.0)(webpack@5.88.2):
-    resolution: {integrity: sha512-KGw4a4moLo9wcGwFU05Y7yV2/va2R/lN7rO3cw6ZBrnMigyAReYH9XcK4zkiAXGaLAbzc/mOyP19ofr2rc7HBg==}
-    engines: {node: 12.* || 14.* || >= 16}
+  /@fortawesome/ember-fontawesome@2.0.0(@glint/template@1.1.0)(ember-source@5.3.0)(webpack@5.88.2):
+    resolution: {integrity: sha512-lUyMvocZZzMuCwr8pkKhejXKBj5RGnIs8YUHc/tCNSEyHSx7/E5xAhtE4fa5B1c9+UO789Kng8z6DQ9E/agVGA==}
+    engines: {node: 14.* || 16.* || >= 18}
+    peerDependencies:
+      ember-source: '*'
     dependencies:
       '@fortawesome/fontawesome-svg-core': 6.4.2
       '@rollup/plugin-node-resolve': 15.2.1(rollup@3.29.4)
+      array-unique: 0.3.2
       broccoli-file-creator: 2.1.1
       broccoli-merge-trees: 4.2.0
       broccoli-plugin: 4.0.7
       broccoli-rollup: 5.0.0
       broccoli-source: 3.0.1
       camel-case: 4.1.2
-      ember-ast-helpers: 0.3.5
+      ember-ast-helpers: 0.4.0
       ember-auto-import: 2.6.3(@glint/template@1.1.0)(webpack@5.88.2)
       ember-cli-babel: 7.26.11
-      ember-cli-htmlbars: 5.7.2
+      ember-cli-htmlbars: 6.3.0
       ember-get-config: 2.1.1(@glint/template@1.1.0)
+      ember-source: 5.3.0(@babel/core@7.23.0)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
       find-yarn-workspace-root: 2.0.0
-      glob: 7.2.3
+      glob: 10.3.7
     transitivePeerDependencies:
       - '@glint/template'
       - rollup
@@ -5925,7 +5937,6 @@ packages:
       strip-ansi-cjs: /strip-ansi@6.0.1
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: /wrap-ansi@7.0.0
-    dev: false
 
   /@jest/schemas@29.6.3:
     resolution: {integrity: sha512-mo5j5X+jIZmJQveBKeS/clAueipV7KgiX1vMgCxam1RNYiqE1w62n0/tJJnHtjW8ZHcQco5gY85jA3mi0L+nSA==}
@@ -6537,7 +6548,6 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
     requiresBuild: true
-    dev: false
     optional: true
 
   /@pkgr/utils@2.4.2:
@@ -8155,7 +8165,6 @@ packages:
   /ansi-regex@6.0.1:
     resolution: {integrity: sha512-n5M855fKb2SsfMIiFFoVrABHJC8QtHwVx+mHWP3QcEqBHYienj5dHSgjbxtC0WEZXYt4wcD6zrQElDPhFuZgfA==}
     engines: {node: '>=12'}
-    dev: false
 
   /ansi-split@1.0.1:
     resolution: {integrity: sha512-RRxQym4DFtDNmHIkW6aeFVvrXURb11lGAEPXNiryjCe8bK8RsANjzJ0M2aGOkvBYwP4Bl/xZ8ijtr6D3j1x/eg==}
@@ -8188,7 +8197,6 @@ packages:
   /ansi-styles@6.2.1:
     resolution: {integrity: sha512-bN798gFfQX+viw3R7yrGWRqnrN2oRkEkUjjl4JNn4E8GxxbjtG3FbrEIIY3l8/hrwUwIeCZvi4QuOTP4MErVug==}
     engines: {node: '>=12'}
-    dev: false
 
   /ansi-to-html@0.6.15:
     resolution: {integrity: sha512-28ijx2aHJGdzbs+O5SNQF65r6rrKYnkuwTYm8lZlChuoJ9P1vVzIpWO20sQTqTPDXYp6NFwk326vApTtLVFXpQ==}
@@ -11395,7 +11403,6 @@ packages:
 
   /eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
-    dev: false
 
   /editions@1.3.4:
     resolution: {integrity: sha512-gzao+mxnYDzIysXKMQi/+M1mjy/rjestjg6OPoYTtI+3Izp23oiGZitsl9lPDPiTGXbcSIk1iJWhliSaglxnUg==}
@@ -11446,12 +11453,9 @@ packages:
       - supports-color
     dev: false
 
-  /ember-ast-helpers@0.3.5:
-    resolution: {integrity: sha512-ZtaGAUDvRX13G9D4t4WbTMhcUzqsw6KqhcHreIiZi3ZhRFlSZ3BumgyJ6buDZj+tCBLiQsxRv7l5AY6imqNR6Q==}
+  /ember-ast-helpers@0.4.0:
+    resolution: {integrity: sha512-3gBsatspW3AT2hwzD27aQbgyWA29RXeMxCnMYgFBYtmS/T1M6TxuatEgfpofKqai4OC/JijftmN4s6dydeXGzQ==}
     engines: {node: '>= 6'}
-    dependencies:
-      '@glimmer/compiler': 0.84.3
-      '@glimmer/syntax': 0.84.3
 
   /ember-async-data@1.0.3(ember-source@5.3.0):
     resolution: {integrity: sha512-54OtoQwNi+/ZvPOVuT4t8fcHR9xL8N7kBydzcZSo6BIEsLYeXPi3+jUR8niWjfjXXhKlJ8EWXR0lTeHleTrxbw==}
@@ -12552,7 +12556,6 @@ packages:
       - rsvp
       - supports-color
       - webpack
-    dev: true
 
   /ember-source@5.3.0(@babel/core@7.23.0)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2):
     resolution: {integrity: sha512-MnsPEYo2gArYzlY0uu5bBH60oNYcgcayYQEd27nJumuaceN1sMLMu1jGQmjiQzZ4b6U5edEUNQbCIZ/9TXbASw==}
@@ -12778,7 +12781,6 @@ packages:
 
   /emoji-regex@9.2.2:
     resolution: {integrity: sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==}
-    dev: false
 
   /emojis-list@3.0.0:
     resolution: {integrity: sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==}
@@ -14281,7 +14283,6 @@ packages:
     dependencies:
       cross-spawn: 7.0.3
       signal-exit: 4.1.0
-    dev: false
 
   /form-data-encoder@2.1.4:
     resolution: {integrity: sha512-yDYSgNMraqvnxiEXO4hi88+YZxaHC6QKzb5N84iRCTDeRO7ZALpir/lVmf/uXUhnwUr2O4HU8s/n6x+yNjQkHw==}
@@ -14612,7 +14613,6 @@ packages:
       minimatch: 9.0.3
       minipass: 7.0.3
       path-scurry: 1.10.1
-    dev: false
 
   /glob@5.0.15:
     resolution: {integrity: sha512-c9IPMazfRITpmAAKi22dK1VKxGDX9ehhqfABDriL/lzO92xcUKEJPQHrVA/2YHSNFB4iFlykVmWvwo48nr3OxA==}
@@ -15936,7 +15936,6 @@ packages:
       '@isaacs/cliui': 8.0.2
     optionalDependencies:
       '@pkgjs/parseargs': 0.11.0
-    dev: false
 
   /jest-worker@27.5.1:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
@@ -16621,7 +16620,6 @@ packages:
   /lru-cache@10.0.1:
     resolution: {integrity: sha512-IJ4uwUTi2qCccrioU6g9g/5rvvVl13bsdczUUcqbciD9iLr095yj8DQKdObriEvuNSx325N1rV1O0sJFszx75g==}
     engines: {node: 14 || >=16.14}
-    dev: false
 
   /lru-cache@4.1.5:
     resolution: {integrity: sha512-sWZlbEP2OsHNkXrMl5GYk/jKk70MBng6UU4YI/qGDYbgf6YbP4EvmqISbXCoJiRKs+1bSpFHVgQxvJ17F2li5g==}
@@ -17394,7 +17392,6 @@ packages:
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
       brace-expansion: 2.0.1
-    dev: false
 
   /minimist-options@4.1.0:
     resolution: {integrity: sha512-Q4r8ghd80yhO/0j1O3B2BjweX3fiHg9cdOwjJd2J76Q135c+NDxGCqdYKQ1SKBuFfgWbAUzBfvYjPUEeNgqN1A==}
@@ -17476,7 +17473,6 @@ packages:
   /minipass@7.0.3:
     resolution: {integrity: sha512-LhbbwCfz3vsb12j/WkWQPZfKTsgqIe1Nf/ti1pKjYESGLHIVjWU96G9/ljLH4F9mWNVhlQOm0VySdAWzf05dpg==}
     engines: {node: '>=16 || 14 >=14.17'}
-    dev: false
 
   /minizlib@2.1.2:
     resolution: {integrity: sha512-bAxsR8BVfj60DWXHE3u30oHzfl4G7khkSuPW+qvpd7jFRHm7dLxOjUk1EHACJ/hxLY8phGJ0YhYHZo7jil7Qdg==}
@@ -18437,7 +18433,6 @@ packages:
     dependencies:
       lru-cache: 10.0.1
       minipass: 7.0.3
-    dev: false
 
   /path-temp@2.1.0:
     resolution: {integrity: sha512-cMMJTAZlion/RWRRC48UbrDymEIt+/YSD/l8NqjneyDw2rDOBQcP5yRkMB4CYGn47KMhZvbblBP7Z79OsMw72w==}
@@ -20496,7 +20491,6 @@ packages:
       eastasianwidth: 0.2.0
       emoji-regex: 9.2.2
       strip-ansi: 7.1.0
-    dev: false
 
   /string.prototype.matchall@4.0.10:
     resolution: {integrity: sha512-rGXbGmOEosIQi6Qva94HUjgPs9vKW+dkG7Y8Q5O2OYkWL6wFaTRZO8zM4mhP94uX55wgyrXzfS2aGtGzUL7EJQ==}
@@ -20595,7 +20589,6 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       ansi-regex: 6.0.1
-    dev: false
 
   /strip-bom@3.0.0:
     resolution: {integrity: sha512-vavAMRXOgBVNF6nyEEmL3DBK19iRpDcoIwW+swQ+CbGiu7lju6t+JklA1MHweoWtadgt4ISVUsXLyDq34ddcwA==}
@@ -22542,7 +22535,6 @@ packages:
       ansi-styles: 6.2.1
       string-width: 5.1.2
       strip-ansi: 7.1.0
-    dev: false
 
   /wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
@@ -22786,7 +22778,7 @@ packages:
       '@ember/test-waiters': 3.0.2
       '@embroider/addon-shim': 1.8.6
       '@embroider/macros': 1.13.2(@glint/template@1.1.0)
-      '@fortawesome/ember-fontawesome': 1.0.3(@glint/template@1.1.0)(rollup@3.29.4)(webpack@5.88.2)
+      '@fortawesome/ember-fontawesome': 2.0.0(@glint/template@1.1.0)(ember-source@5.3.0)(rollup@3.29.4)(webpack@5.88.2)
       '@fortawesome/fontawesome-svg-core': 6.4.2
       '@fortawesome/free-brands-svg-icons': 6.4.2
       '@fortawesome/free-regular-svg-icons': 6.4.2
@@ -22825,7 +22817,7 @@ packages:
       '@ember/test-waiters': 3.0.2
       '@embroider/addon-shim': 1.8.6
       '@embroider/macros': 1.13.2(@glint/template@1.1.0)
-      '@fortawesome/ember-fontawesome': 1.0.3(@glint/template@1.1.0)(webpack@5.88.2)
+      '@fortawesome/ember-fontawesome': 2.0.0(@glint/template@1.1.0)(ember-source@5.3.0)(webpack@5.88.2)
       '@fortawesome/fontawesome-svg-core': 6.4.2
       '@fortawesome/free-brands-svg-icons': 6.4.2
       '@fortawesome/free-regular-svg-icons': 6.4.2
