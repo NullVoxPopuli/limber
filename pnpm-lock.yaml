@@ -145,7 +145,7 @@ importers:
         version: 1.11.11
       limber-ui:
         specifier: workspace:*
-        version: file:packages/app-support/limber-ui/addon(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-async-data@1.0.3)(ember-modifier@4.1.0)(ember-primitives@0.7.0)(ember-resources@6.4.0)(ember-source@5.3.0)(rollup@3.29.3)(webpack@5.88.2)
+        version: file:packages/app-support/limber-ui/addon(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-async-data@1.0.3)(ember-modifier@4.1.0)(ember-primitives@0.7.0)(ember-resources@6.4.0)(ember-source@5.3.0)(rollup@3.29.4)(webpack@5.88.2)
       lz-string:
         specifier: ^1.5.0
         version: 1.5.0
@@ -224,7 +224,7 @@ importers:
         version: 3.2.0(@embroider/core@3.3.0)(webpack@5.88.2)
       '@fortawesome/ember-fontawesome':
         specifier: ^1.0.3
-        version: 1.0.3(@glint/template@1.1.0)(rollup@3.29.3)(webpack@5.88.2)
+        version: 1.0.3(@glint/template@1.1.0)(rollup@3.29.4)(webpack@5.88.2)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.4.2
         version: 6.4.2
@@ -415,8 +415,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       rollup:
-        specifier: ^3.29.2
-        version: 3.29.3
+        specifier: ^3.29.4
+        version: 3.29.4
       testem-failure-only-reporter:
         specifier: ^1.0.0
         version: 1.0.0
@@ -517,7 +517,7 @@ importers:
         version: 3.2.0(@embroider/core@3.3.0)(webpack@5.88.2)
       '@fortawesome/ember-fontawesome':
         specifier: ^1.0.3
-        version: 1.0.3(@glint/template@1.1.0)(rollup@3.29.3)(webpack@5.88.2)
+        version: 1.0.3(@glint/template@1.1.0)(rollup@3.29.4)(webpack@5.88.2)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.4.2
         version: 6.4.2
@@ -843,7 +843,7 @@ importers:
         version: 1.13.2(@glint/template@1.1.0)
       '@fortawesome/ember-fontawesome':
         specifier: ^1.0.3
-        version: 1.0.3(@glint/template@1.1.0)(rollup@3.29.3)
+        version: 1.0.3(@glint/template@1.1.0)(rollup@3.29.4)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.4.2
         version: 6.4.2
@@ -880,7 +880,7 @@ importers:
         version: 3.0.2
       '@embroider/addon-dev':
         specifier: 4.1.1
-        version: 4.1.1(@glint/template@1.1.0)(rollup@3.29.3)
+        version: 4.1.1(@glint/template@1.1.0)(rollup@3.29.4)
       '@glimmer/component':
         specifier: ^1.1.2
         version: 1.1.2(@babel/core@7.23.0)
@@ -907,7 +907,7 @@ importers:
         version: link:../../../untyped
       '@rollup/plugin-babel':
         specifier: ^6.0.3
-        version: 6.0.3(@babel/core@7.23.0)(@types/babel__core@7.20.2)(rollup@3.29.3)
+        version: 6.0.3(@babel/core@7.23.0)(@types/babel__core@7.20.2)(rollup@3.29.4)
       '@tsconfig/ember':
         specifier: ^3.0.1
         version: 3.0.1
@@ -963,8 +963,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(prettier@3.0.3)
       rollup:
-        specifier: ^3.29.2
-        version: 3.29.3
+        specifier: ^3.29.4
+        version: 3.29.4
       rollup-plugin-copy:
         specifier: ^3.5.0
         version: 3.5.0
@@ -973,7 +973,7 @@ importers:
         version: 0.4.1(@babel/core@7.23.0)(ember-source@5.3.0)(ember-template-imports@3.4.2)
       rollup-plugin-ts:
         specifier: ^3.4.5
-        version: 3.4.5(@babel/core@7.23.0)(@babel/runtime@7.23.1)(rollup@3.29.3)(typescript@5.2.2)
+        version: 3.4.5(@babel/core@7.23.0)(@babel/runtime@7.23.1)(rollup@3.29.4)(typescript@5.2.2)
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -1022,7 +1022,7 @@ importers:
         version: 3.0.2(@embroider/compat@3.2.2)(@embroider/core@3.3.0)(@embroider/webpack@3.2.0)
       '@fortawesome/ember-fontawesome':
         specifier: ^1.0.3
-        version: 1.0.3(@glint/template@1.1.0)(rollup@3.29.3)(webpack@5.88.2)
+        version: 1.0.3(@glint/template@1.1.0)(rollup@3.29.4)(webpack@5.88.2)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.4.2
         version: 6.4.2
@@ -1379,7 +1379,7 @@ importers:
         version: 3.0.2
       '@embroider/addon-dev':
         specifier: 4.1.1
-        version: 4.1.1(@glint/template@1.1.0)(rollup@3.29.3)
+        version: 4.1.1(@glint/template@1.1.0)(rollup@3.29.4)
       '@glimmer/compiler':
         specifier: ^0.84.3
         version: 0.84.3
@@ -1421,10 +1421,10 @@ importers:
         version: link:../../untyped
       '@rollup/plugin-babel':
         specifier: ^6.0.3
-        version: 6.0.3(@babel/core@7.23.0)(@types/babel__core@7.20.2)(rollup@3.29.3)
+        version: 6.0.3(@babel/core@7.23.0)(@types/babel__core@7.20.2)(rollup@3.29.4)
       '@rollup/plugin-commonjs':
         specifier: ^25.0.4
-        version: 25.0.4(rollup@3.29.3)
+        version: 25.0.4(rollup@3.29.4)
       '@tsconfig/ember':
         specifier: ^3.0.1
         version: 3.0.1
@@ -1492,8 +1492,8 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3
       rollup:
-        specifier: ~3.29.2
-        version: 3.29.3
+        specifier: ~3.29.4
+        version: 3.29.4
       rollup-plugin-copy:
         specifier: ^3.5.0
         version: 3.5.0
@@ -1743,10 +1743,10 @@ importers:
         version: 1.1.6
       '@rollup/plugin-node-resolve':
         specifier: ^15.2.1
-        version: 15.2.1(rollup@3.29.3)
+        version: 15.2.1(rollup@3.29.4)
       rollup:
-        specifier: ^3.29.2
-        version: 3.29.3
+        specifier: ^3.29.4
+        version: 3.29.4
     devDependencies:
       '@babel/core':
         specifier: ^7.23.0
@@ -1889,11 +1889,11 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       rollup:
-        specifier: ^3.29.2
-        version: 3.29.3
+        specifier: ^3.29.4
+        version: 3.29.4
       rollup-plugin-ts:
         specifier: ^3.4.5
-        version: 3.4.5(@babel/core@7.23.0)(@babel/runtime@7.23.1)(rollup@3.29.3)(typescript@5.2.2)
+        version: 3.4.5(@babel/core@7.23.0)(@babel/runtime@7.23.1)(rollup@3.29.4)(typescript@5.2.2)
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -1996,7 +1996,7 @@ importers:
         version: 3.2.2(@babel/core@7.23.0)(@babel/eslint-parser@7.22.15)(@typescript-eslint/eslint-plugin@6.7.2)(@typescript-eslint/parser@6.7.2)(eslint-plugin-ember@11.11.1)(eslint@8.50.0)(prettier@3.0.3)(typescript@5.2.2)
       '@rollup/plugin-node-resolve':
         specifier: ^15.2.1
-        version: 15.2.1(rollup@3.29.3)
+        version: 15.2.1(rollup@3.29.4)
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.6.0
         version: 6.7.2(@typescript-eslint/parser@6.7.2)(eslint@8.50.0)(typescript@5.2.2)
@@ -2013,8 +2013,8 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       rollup:
-        specifier: ^3.29.2
-        version: 3.29.3
+        specifier: ^3.29.4
+        version: 3.29.4
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -2092,11 +2092,11 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       rollup:
-        specifier: ^3.29.2
-        version: 3.29.3
+        specifier: ^3.29.4
+        version: 3.29.4
       rollup-plugin-ts:
         specifier: ^3.4.5
-        version: 3.4.5(@babel/core@7.23.0)(@babel/runtime@7.23.1)(rollup@3.29.3)(typescript@5.2.2)
+        version: 3.4.5(@babel/core@7.23.0)(@babel/runtime@7.23.1)(rollup@3.29.4)(typescript@5.2.2)
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -2172,7 +2172,7 @@ importers:
         version: 3.2.2(@babel/core@7.23.0)(@babel/eslint-parser@7.22.15)(@typescript-eslint/eslint-plugin@6.7.2)(@typescript-eslint/parser@6.7.2)(eslint-plugin-ember@11.11.1)(eslint@8.50.0)(prettier@3.0.3)(typescript@5.2.2)
       '@rollup/plugin-node-resolve':
         specifier: ^15.2.1
-        version: 15.2.1(rollup@3.29.3)
+        version: 15.2.1(rollup@3.29.4)
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.6.0
         version: 6.7.2(@typescript-eslint/parser@6.7.2)(eslint@8.50.0)(typescript@5.2.2)
@@ -2186,8 +2186,8 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       rollup:
-        specifier: ^3.29.2
-        version: 3.29.3
+        specifier: ^3.29.4
+        version: 3.29.4
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -2274,11 +2274,11 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       rollup:
-        specifier: ^3.29.2
-        version: 3.29.3
+        specifier: ^3.29.4
+        version: 3.29.4
       rollup-plugin-ts:
         specifier: ^3.4.5
-        version: 3.4.5(@babel/core@7.23.0)(@babel/runtime@7.23.1)(rollup@3.29.3)(typescript@5.2.2)
+        version: 3.4.5(@babel/core@7.23.0)(@babel/runtime@7.23.1)(rollup@3.29.4)(typescript@5.2.2)
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -2389,11 +2389,11 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       rollup:
-        specifier: ^3.29.2
-        version: 3.29.3
+        specifier: ^3.29.4
+        version: 3.29.4
       rollup-plugin-ts:
         specifier: ^3.4.5
-        version: 3.4.5(@babel/core@7.23.0)(@babel/runtime@7.23.1)(rollup@3.29.3)(typescript@5.2.2)
+        version: 3.4.5(@babel/core@7.23.0)(@babel/runtime@7.23.1)(rollup@3.29.4)(typescript@5.2.2)
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -4476,7 +4476,7 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@embroider/addon-dev@4.1.1(@glint/template@1.1.0)(rollup@3.29.3):
+  /@embroider/addon-dev@4.1.1(@glint/template@1.1.0)(rollup@3.29.4):
     resolution: {integrity: sha512-6AIU+GobgsozQJZtG6ys/8TumtnJkrW8LKggjajCwX8QP++eAN9vUL00AZdgh5wZAyLAiv+jNi5knGrPdMFPMA==}
     engines: {node: 12.* || 14.* || >= 16}
     hasBin: true
@@ -4486,7 +4486,7 @@ packages:
       content-tag: 1.1.0
       fs-extra: 10.1.0
       minimatch: 3.1.2
-      rollup-plugin-copy-assets: 2.0.3(rollup@3.29.3)
+      rollup-plugin-copy-assets: 2.0.3(rollup@3.29.4)
       rollup-plugin-delete: 2.0.0
       walk-sync: 3.0.0
       yargs: 17.7.2
@@ -5484,12 +5484,12 @@ packages:
   /@floating-ui/utils@0.1.4:
     resolution: {integrity: sha512-qprfWkn82Iw821mcKofJ5Pk9wgioHicxcQMxx+5zt5GSKoqdWvgG5AxVmpmUUjzTLPVSH5auBrhI93Deayn/DA==}
 
-  /@fortawesome/ember-fontawesome@1.0.3(@glint/template@1.1.0)(rollup@3.29.3):
+  /@fortawesome/ember-fontawesome@1.0.3(@glint/template@1.1.0)(rollup@3.29.4):
     resolution: {integrity: sha512-KGw4a4moLo9wcGwFU05Y7yV2/va2R/lN7rO3cw6ZBrnMigyAReYH9XcK4zkiAXGaLAbzc/mOyP19ofr2rc7HBg==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
       '@fortawesome/fontawesome-svg-core': 6.4.2
-      '@rollup/plugin-node-resolve': 15.2.1(rollup@3.29.3)
+      '@rollup/plugin-node-resolve': 15.2.1(rollup@3.29.4)
       broccoli-file-creator: 2.1.1
       broccoli-merge-trees: 4.2.0
       broccoli-plugin: 4.0.7
@@ -5510,12 +5510,12 @@ packages:
       - webpack
     dev: false
 
-  /@fortawesome/ember-fontawesome@1.0.3(@glint/template@1.1.0)(rollup@3.29.3)(webpack@5.88.2):
+  /@fortawesome/ember-fontawesome@1.0.3(@glint/template@1.1.0)(rollup@3.29.4)(webpack@5.88.2):
     resolution: {integrity: sha512-KGw4a4moLo9wcGwFU05Y7yV2/va2R/lN7rO3cw6ZBrnMigyAReYH9XcK4zkiAXGaLAbzc/mOyP19ofr2rc7HBg==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
       '@fortawesome/fontawesome-svg-core': 6.4.2
-      '@rollup/plugin-node-resolve': 15.2.1(rollup@3.29.3)
+      '@rollup/plugin-node-resolve': 15.2.1(rollup@3.29.4)
       broccoli-file-creator: 2.1.1
       broccoli-merge-trees: 4.2.0
       broccoli-plugin: 4.0.7
@@ -5540,7 +5540,7 @@ packages:
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
       '@fortawesome/fontawesome-svg-core': 6.4.2
-      '@rollup/plugin-node-resolve': 15.2.1(rollup@3.29.3)
+      '@rollup/plugin-node-resolve': 15.2.1(rollup@3.29.4)
       broccoli-file-creator: 2.1.1
       broccoli-merge-trees: 4.2.0
       broccoli-plugin: 4.0.7
@@ -6114,8 +6114,8 @@ packages:
       '@types/mocha': 9.1.1
       acorn: 8.10.0
       acorn-walk: 8.2.0
-      rollup: 3.29.3
-      rollup-plugin-dts: 5.3.1(rollup@3.29.3)(typescript@5.2.2)
+      rollup: 3.29.4
+      rollup-plugin-dts: 5.3.1(rollup@3.29.4)(typescript@5.2.2)
       typescript: 5.2.2
     dev: true
 
@@ -6985,7 +6985,7 @@ packages:
       prettier: 3.0.3
     dev: true
 
-  /@rollup/plugin-babel@6.0.3(@babel/core@7.23.0)(@types/babel__core@7.20.2)(rollup@3.29.3):
+  /@rollup/plugin-babel@6.0.3(@babel/core@7.23.0)(@types/babel__core@7.20.2)(rollup@3.29.4):
     resolution: {integrity: sha512-fKImZKppa1A/gX73eg4JGo+8kQr/q1HBQaCGKECZ0v4YBBv3lFqi14+7xyApECzvkLTHCifx+7ntcrvtBIRcpg==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -7000,12 +7000,12 @@ packages:
     dependencies:
       '@babel/core': 7.23.0
       '@babel/helper-module-imports': 7.22.15
-      '@rollup/pluginutils': 5.0.4(rollup@3.29.3)
+      '@rollup/pluginutils': 5.0.4(rollup@3.29.4)
       '@types/babel__core': 7.20.2
-      rollup: 3.29.3
+      rollup: 3.29.4
     dev: true
 
-  /@rollup/plugin-commonjs@25.0.4(rollup@3.29.3):
+  /@rollup/plugin-commonjs@25.0.4(rollup@3.29.4):
     resolution: {integrity: sha512-L92Vz9WUZXDnlQQl3EwbypJR4+DM2EbsO+/KOcEkP4Mc6Ct453EeDB2uH9lgRwj4w5yflgNpq9pHOiY8aoUXBQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -7014,16 +7014,16 @@ packages:
       rollup:
         optional: true
     dependencies:
-      '@rollup/pluginutils': 5.0.4(rollup@3.29.3)
+      '@rollup/pluginutils': 5.0.4(rollup@3.29.4)
       commondir: 1.0.1
       estree-walker: 2.0.2
       glob: 8.1.0
       is-reference: 1.2.1
       magic-string: 0.27.0
-      rollup: 3.29.3
+      rollup: 3.29.4
     dev: true
 
-  /@rollup/plugin-node-resolve@15.2.1(rollup@3.29.3):
+  /@rollup/plugin-node-resolve@15.2.1(rollup@3.29.4):
     resolution: {integrity: sha512-nsbUg588+GDSu8/NS8T4UAshO6xeaOfINNuXeVHcKV02LJtoRaM1SiOacClw4kws1SFiNhdLGxlbMY9ga/zs/w==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -7032,13 +7032,13 @@ packages:
       rollup:
         optional: true
     dependencies:
-      '@rollup/pluginutils': 5.0.4(rollup@3.29.3)
+      '@rollup/pluginutils': 5.0.4(rollup@3.29.4)
       '@types/resolve': 1.20.2
       deepmerge: 4.3.1
       is-builtin-module: 3.2.1
       is-module: 1.0.0
       resolve: 1.22.6
-      rollup: 3.29.3
+      rollup: 3.29.4
 
   /@rollup/pluginutils@4.2.1:
     resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
@@ -7048,7 +7048,7 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@rollup/pluginutils@5.0.4(rollup@3.29.3):
+  /@rollup/pluginutils@5.0.4(rollup@3.29.4):
     resolution: {integrity: sha512-0KJnIoRI8A+a1dqOYLxH8vBf8bphDmty5QvIm2hqm7oFCFYKCAZWWd2hXgMibaPsNDhI0AtpYfQZJG47pt/k4g==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -7060,7 +7060,7 @@ packages:
       '@types/estree': 1.0.2
       estree-walker: 2.0.2
       picomatch: 2.3.1
-      rollup: 3.29.3
+      rollup: 3.29.4
 
   /@sigstore/bundle@1.1.0:
     resolution: {integrity: sha512-PFutXEy0SmQxYI4texPw3dd2KewuNqv7OuK1ZFtY2fM754yhvG2KdgwIhRnoEE2uHdtdGNQ8s0lb94dW9sELog==}
@@ -19592,7 +19592,7 @@ packages:
     dependencies:
       glob: 7.2.3
 
-  /rollup-plugin-copy-assets@2.0.3(rollup@3.29.3):
+  /rollup-plugin-copy-assets@2.0.3(rollup@3.29.4):
     resolution: {integrity: sha512-ETShhQGb9SoiwcNrvb3BhUNSGR89Jao0+XxxfzzLW1YsUzx8+rMO4z9oqWWmo6OHUmfNQRvqRj0cAyPkS9lN9w==}
     peerDependencies:
       rollup: '>=1.1.2'
@@ -19601,7 +19601,7 @@ packages:
         optional: true
     dependencies:
       fs-extra: 7.0.1
-      rollup: 3.29.3
+      rollup: 3.29.4
     dev: true
 
   /rollup-plugin-copy@3.5.0:
@@ -19622,7 +19622,7 @@ packages:
       del: 5.1.0
     dev: true
 
-  /rollup-plugin-dts@5.3.1(rollup@3.29.3)(typescript@5.2.2):
+  /rollup-plugin-dts@5.3.1(rollup@3.29.4)(typescript@5.2.2):
     resolution: {integrity: sha512-gusMi+Z4gY/JaEQeXnB0RUdU82h1kF0WYzCWgVmV4p3hWXqelaKuCvcJawfeg+EKn2T1Ie+YWF2OiN1/L8bTVg==}
     engines: {node: '>=v14.21.3'}
     peerDependencies:
@@ -19633,7 +19633,7 @@ packages:
         optional: true
     dependencies:
       magic-string: 0.30.4
-      rollup: 3.29.3
+      rollup: 3.29.4
       typescript: 5.2.2
     optionalDependencies:
       '@babel/code-frame': 7.22.13
@@ -19652,7 +19652,7 @@ packages:
       ember-template-imports: 3.4.2
     dev: true
 
-  /rollup-plugin-ts@3.4.5(@babel/core@7.23.0)(@babel/runtime@7.23.1)(rollup@3.29.3)(typescript@5.2.2):
+  /rollup-plugin-ts@3.4.5(@babel/core@7.23.0)(@babel/runtime@7.23.1)(rollup@3.29.4)(typescript@5.2.2):
     resolution: {integrity: sha512-9iCstRJpEZXSRQuXitlSZAzcGlrqTbJg1pE4CMbEi6xYldxVncdPyzA2I+j6vnh73wBymZckerS+Q/iEE/M3Ow==}
     engines: {node: '>=16.15.1', npm: '>=7.0.0', pnpm: '>=3.2.0', yarn: '>=1.13'}
     peerDependencies:
@@ -19685,7 +19685,7 @@ packages:
     dependencies:
       '@babel/core': 7.23.0
       '@babel/runtime': 7.23.1
-      '@rollup/pluginutils': 5.0.4(rollup@3.29.3)
+      '@rollup/pluginutils': 5.0.4(rollup@3.29.4)
       '@wessberg/stringutil': 1.0.19
       ansi-colors: 4.1.3
       browserslist: 4.21.11
@@ -19693,7 +19693,7 @@ packages:
       compatfactory: 3.0.0(typescript@5.2.2)
       crosspath: 2.0.0
       magic-string: 0.30.3
-      rollup: 3.29.3
+      rollup: 3.29.4
       ts-clone-node: 3.0.0(typescript@5.2.2)
       tslib: 2.6.2
       typescript: 5.2.2
@@ -19728,8 +19728,8 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
 
-  /rollup@3.29.3:
-    resolution: {integrity: sha512-T7du6Hum8jOkSWetjRgbwpM6Sy0nECYrYRSmZjayFcOddtKJWU4d17AC3HNUk7HRuqy4p+G7aEZclSHytqUmEg==}
+  /rollup@3.29.4:
+    resolution: {integrity: sha512-oWzmBZwvYrU0iJHtDmhsm662rC15FRXmcjCk1xD771dFDx5jJ02ufAQQTn0etB2emNk4J9EZg/yWKpsn9BWGRw==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
@@ -21978,7 +21978,7 @@ packages:
       '@types/node': 18.17.19
       esbuild: 0.18.20
       postcss: 8.4.31
-      rollup: 3.29.3
+      rollup: 3.29.4
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
@@ -22767,7 +22767,7 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
 
-  file:packages/app-support/limber-ui/addon(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-async-data@1.0.3)(ember-modifier@4.1.0)(ember-primitives@0.7.0)(ember-resources@6.4.0)(ember-source@5.3.0)(rollup@3.29.3)(webpack@5.88.2):
+  file:packages/app-support/limber-ui/addon(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-async-data@1.0.3)(ember-modifier@4.1.0)(ember-primitives@0.7.0)(ember-resources@6.4.0)(ember-source@5.3.0)(rollup@3.29.4)(webpack@5.88.2):
     resolution: {directory: packages/app-support/limber-ui/addon, type: directory}
     id: file:packages/app-support/limber-ui/addon
     name: limber-ui
@@ -22786,7 +22786,7 @@ packages:
       '@ember/test-waiters': 3.0.2
       '@embroider/addon-shim': 1.8.6
       '@embroider/macros': 1.13.2(@glint/template@1.1.0)
-      '@fortawesome/ember-fontawesome': 1.0.3(@glint/template@1.1.0)(rollup@3.29.3)(webpack@5.88.2)
+      '@fortawesome/ember-fontawesome': 1.0.3(@glint/template@1.1.0)(rollup@3.29.4)(webpack@5.88.2)
       '@fortawesome/fontawesome-svg-core': 6.4.2
       '@fortawesome/free-brands-svg-icons': 6.4.2
       '@fortawesome/free-regular-svg-icons': 6.4.2
