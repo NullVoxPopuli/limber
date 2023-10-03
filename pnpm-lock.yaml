@@ -174,7 +174,7 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       tracked-built-ins:
-        specifier: ^3.2.0
+        specifier: ^3.3.0
         version: 3.3.0
       unified:
         specifier: ^10.1.2
