@@ -1326,8 +1326,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       magic-string:
-        specifier: ^0.30.3
-        version: 0.30.3
+        specifier: ^0.30.4
+        version: 0.30.4
       mdast:
         specifier: ^3.0.0
         version: 3.0.0
@@ -7733,7 +7733,7 @@ packages:
   /@vitest/snapshot@0.34.5:
     resolution: {integrity: sha512-+ikwSbhu6z2yOdtKmk/aeoDZ9QPm2g/ZO5rXT58RR9Vmu/kB2MamyDSx77dctqdZfP3Diqv4mbc/yw2kPT8rmA==}
     dependencies:
-      magic-string: 0.30.3
+      magic-string: 0.30.4
       pathe: 1.1.1
       pretty-format: 29.7.0
     dev: true
@@ -16672,6 +16672,13 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
+    dev: true
+
+  /magic-string@0.30.4:
+    resolution: {integrity: sha512-Q/TKtsC5BPm0kGqgBIF9oXAs/xEf2vRKiIB4wCRQTJOQIByZ1d+NnUOotvJOvNpi5RNIgVOMC3pOuaP1ZTDlVg==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.4.15
 
   /make-dir@2.1.0:
     resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==}
@@ -19616,7 +19623,7 @@ packages:
       rollup:
         optional: true
     dependencies:
-      magic-string: 0.30.3
+      magic-string: 0.30.4
       rollup: 3.29.3
       typescript: 5.2.2
     optionalDependencies:
@@ -22012,7 +22019,7 @@ packages:
       chai: 4.3.8
       debug: 4.3.4(supports-color@9.4.0)
       local-pkg: 0.4.3
-      magic-string: 0.30.3
+      magic-string: 0.30.4
       pathe: 1.1.1
       picocolors: 1.0.0
       std-env: 3.4.3
@@ -22856,7 +22863,7 @@ packages:
       ember-resources: 6.4.0(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.1.0)(ember-source@5.3.0)
       ember-source: 5.3.0(@babel/core@7.23.0)(@glimmer/component@1.1.2)(@glint/template@1.1.0)(webpack@5.88.2)
       line-column: 1.0.2
-      magic-string: 0.30.3
+      magic-string: 0.30.4
       mdast: 3.0.0
       parse-static-imports: 1.1.0
       rehype-raw: 6.1.1
