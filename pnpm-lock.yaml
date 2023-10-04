@@ -189,7 +189,7 @@ importers:
         specifier: ^4.9.1
         version: 4.9.1
       ws:
-        specifier: ^8.14.1
+        specifier: ^8.14.2
         version: 8.14.2
       xstate:
         specifier: 4.35.4
