@@ -118,7 +118,7 @@
     "@glint/template": "^1.2.0",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "@nullvoxpopuli/limber-untyped": "workspace:*",
-    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.4",
     "@tsconfig/ember": "^3.0.1",
     "@types/babel__core": "^7.20.2",
