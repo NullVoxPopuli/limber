@@ -1308,8 +1308,8 @@ importers:
         specifier: 1.13.2
         version: 1.13.2(@glint/template@1.1.0)
       babel-import-util:
-        specifier: ^1.4.1
-        version: 1.4.1
+        specifier: ^2.0.1
+        version: 2.0.1
       babel-plugin-ember-template-compilation:
         specifier: ^2.2.0
         version: 2.2.0
@@ -4648,7 +4648,7 @@ packages:
       '@embroider/shared-internals': 2.4.0
       '@glint/template': 1.1.0
       assert-never: 1.2.1
-      babel-import-util: 2.0.0
+      babel-import-util: 2.0.1
       ember-cli-babel: 7.26.11
       find-up: 5.0.0
       lodash: 4.17.21
@@ -4710,7 +4710,7 @@ packages:
     resolution: {integrity: sha512-pFE05ebenWMC9XAPRjadYCXXb6VmqjkhYN5uqkhPo+VUmMHnx7sZYYxqGjxfVuhC/ghS/BNlOffOCXDOoE7k7g==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
-      babel-import-util: 2.0.0
+      babel-import-util: 2.0.1
       debug: 4.3.4(supports-color@9.4.0)
       ember-rfc176-data: 0.3.18
       fs-extra: 9.1.0
@@ -4726,7 +4726,7 @@ packages:
     resolution: {integrity: sha512-7qzrb7GVIyNqeY0umxoeIvjDC+ay1b+wb2yCVuYTUYrFfLAkLEy9FNI3iWCi3RdQ9OFjgcAxAnwsAiPIMZZ3pQ==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
-      babel-import-util: 2.0.0
+      babel-import-util: 2.0.1
       debug: 4.3.4(supports-color@9.4.0)
       ember-rfc176-data: 0.3.18
       fs-extra: 9.1.0
@@ -4742,7 +4742,7 @@ packages:
     resolution: {integrity: sha512-7qzrb7GVIyNqeY0umxoeIvjDC+ay1b+wb2yCVuYTUYrFfLAkLEy9FNI3iWCi3RdQ9OFjgcAxAnwsAiPIMZZ3pQ==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
-      babel-import-util: 2.0.0
+      babel-import-util: 2.0.1
       debug: 4.3.4(supports-color@8.1.1)
       ember-rfc176-data: 0.3.18
       fs-extra: 9.1.0
@@ -8625,6 +8625,10 @@ packages:
     resolution: {integrity: sha512-pkWynbLwru0RZmA9iKeQL63+CkkW0RCP3kL5njCtudd6YPUKb5Pa0kL4fb3bmuKn2QDBFwY5mvvhEK/+jv2Ynw==}
     engines: {node: '>= 12.*'}
 
+  /babel-import-util@2.0.1:
+    resolution: {integrity: sha512-N1ZfNprtf/37x0R05J0QCW/9pCAcuI+bjZIK9tlu0JEkwEST7ssdD++gxHRbD58AiG5QE5OuNYhRoEFsc1wESw==}
+    engines: {node: '>= 12.*'}
+
   /babel-loader@8.3.0(@babel/core@7.23.0):
     resolution: {integrity: sha512-H8SvsMF+m9t15HNLMipppzkC+Y2Yq+v3SonZyU70RBL/h1gxPkH08Ot8pEE9Z4Kd+czyWJClmFS8qzIP9OZ04Q==}
     engines: {node: '>= 8.9'}
@@ -8721,7 +8725,7 @@ packages:
     engines: {node: '>= 12.*'}
     dependencies:
       '@glimmer/syntax': 0.84.3
-      babel-import-util: 2.0.0
+      babel-import-util: 2.0.1
 
   /babel-plugin-filter-imports@4.0.0:
     resolution: {integrity: sha512-jDLlxI8QnfKd7PtieH6pl4tZJzymzfCDCPGdTq/grgbiYAikwDPp/oL0IlFJn0HQjLpcLkyYhPKkUVneRESw5w==}
@@ -22870,7 +22874,7 @@ packages:
       '@embroider/macros': 1.13.2(@glint/template@1.1.0)
       '@glimmer/component': 1.1.2(@babel/core@7.23.0)
       '@glint/template': 1.1.0
-      babel-import-util: 1.4.1
+      babel-import-util: 2.0.1
       babel-plugin-ember-template-compilation: 2.2.0
       broccoli-file-creator: 2.1.1
       change-case: 4.1.2
