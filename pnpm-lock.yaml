@@ -385,8 +385,8 @@ importers:
         specifier: ^6.2.0
         version: 6.2.0(webpack@5.88.2)
       fractal-page-object:
-        specifier: ^0.4.1
-        version: 0.4.1
+        specifier: ^0.5.0
+        version: 0.5.0
       loader.js:
         specifier: ^4.7.0
         version: 4.7.0
@@ -14329,8 +14329,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
-  /fractal-page-object@0.4.1:
-    resolution: {integrity: sha512-1hvmop0G+2MsAjGozWrlR//RkMYyg53KyZaZ4VN3wwjcLhFyyO8sQ8E2AgM72hsFZtooORfzhZJpPvmCAdKZOw==}
+  /fractal-page-object@0.5.0:
+    resolution: {integrity: sha512-3VYhDIufMRFeuIhqiomNdaR0uLMQsGDI8mbrUtG38r8iw3stcwJ3ytlC0kzYb+IPActpzlsn/mIOka5ID7Sj+g==}
     engines: {node: 10.* || >= 12}
     dev: true
 
