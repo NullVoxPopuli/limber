@@ -13,6 +13,7 @@ import * as _destroyable from '@ember/destroyable';
 import * as _helpers from '@ember/helper';
 import * as _modifier from '@ember/modifier';
 import * as _object from '@ember/object';
+import * as _owner from '@ember/owner';
 import * as _runloop from '@ember/runloop';
 import * as _service from '@ember/service';
 import * as _template from '@ember/template';
@@ -20,7 +21,6 @@ import * as _template from '@ember/template';
 // @ts-ignore
 import { createTemplateFactory } from '@ember/template-factory';
 import * as _utils from '@ember/utils';
-import * as _owner from '@ember/owner';
 
 export const modules = {
   '@ember/application': _application,
