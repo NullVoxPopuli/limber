@@ -107,6 +107,7 @@ export default createMachine(
         | { type: 'WINDOW_RESIZE' }
         | { type: 'ORIENTATION'; isVertical: boolean },
     },
+    // @ts-expect-error xstate doesn't do semver with typescript, and breaks regularly :(
     on: {
       CONTAINER_FOUND: {
         description: DEBUG && `The editor has been rendered.`,
@@ -169,6 +170,7 @@ export default createMachine(
                   { cond: isVerticalSplit, target: 'verticallySplit' },
                   { cond: isHorizontalSplit, target: 'horizontallySplit' },
                 ],
+    // @ts-expect-error xstate doesn't do semver with typescript, and breaks regularly :(
                 on: {
                   ORIENTATION: [
                     {
@@ -194,6 +196,7 @@ export default createMachine(
                   `By default, the view is horizontally split when the orientation is more vertical. ` +
                     `The vertical orientation displays the editor above and the rendered output below.`,
                 entry: ['restoreHorizontalSplitSize'],
+    // @ts-expect-error xstate doesn't do semver with typescript, and breaks regularly :(
                 on: {
                   MINIMIZE: {
                     actions: 'persistHorizontalSplitSize',
@@ -236,6 +239,7 @@ export default createMachine(
                   `By default, the view is vertically split when the orientation is more horizontal. ` +
                     `The horizontal orientation displays the editor to the left and the rendered output to the right.`,
                 entry: ['restoreVerticalSplitSize'],
+    // @ts-expect-error xstate doesn't do semver with typescript, and breaks regularly :(
                 on: {
                   MINIMIZE: {
                     actions: 'persistVerticalSplitSize',

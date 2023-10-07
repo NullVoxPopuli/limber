@@ -54,6 +54,7 @@ export default createMachine({
       },
     },
     loadCodeMirror: {
+      // @ts-expect-error xstate doesn't do semver with typescript, and breaks regularly :(
       invoke: {
         src: () => waitForPromise(setupCodeMirror()),
         onDone: 'editingWithCodeMirror',

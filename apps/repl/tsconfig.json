@@ -1,12 +1,14 @@
 {
+  "extends": "@tsconfig/ember",
   "glint": {
     "environment": ["ember-loose", "ember-template-imports"]
   },
   "compilerOptions": {
+    // Stylistic
+    "noPropertyAccessFromIndexSignature": "false",
+    // Ecosystem
     "skipLibCheck": true,
-    "target": "ESNext",
     "allowJs": true,
-    "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
@@ -22,7 +24,6 @@
     "inlineSourceMap": true,
     "inlineSources": true,
     "baseUrl": ".",
-    "module": "esnext",
     "experimentalDecorators": true,
     "paths": {
       "limber/tests/*": ["tests/*"],
