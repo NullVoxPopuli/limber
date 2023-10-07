@@ -20,7 +20,7 @@ import * as _template from '@ember/template';
 // @ts-ignore
 import { createTemplateFactory } from '@ember/template-factory';
 import * as _utils from '@ember/utils';
-// import * as _owner from '@ember/owner';
+import * as _owner from '@ember/owner';
 
 export const modules = {
   '@ember/application': _application,
@@ -37,7 +37,7 @@ export const modules = {
   '@ember/template-factory': { createTemplateFactory },
   '@ember/utils': _utils,
   '@ember/template': _template,
-  // '@ember/owner': _owner,
+  '@ember/owner': _owner,
 
   '@glimmer/component': _GlimmerComponent,
   '@glimmer/tracking': _tracking,
