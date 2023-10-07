@@ -412,8 +412,8 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0
       qunit-dom:
-        specifier: 3.0.0-rc.1
-        version: 3.0.0-rc.1
+        specifier: 3.0.0-rc.2
+        version: 3.0.0-rc.2
       rollup:
         specifier: ^4.0.2
         version: 4.0.2
@@ -654,8 +654,8 @@ importers:
         specifier: ^2.19.4
         version: 2.20.0
       qunit-dom:
-        specifier: 3.0.0-rc.1
-        version: 3.0.0-rc.1
+        specifier: 3.0.0-rc.2
+        version: 3.0.0-rc.2
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -1135,8 +1135,8 @@ importers:
         specifier: ^2.19.4
         version: 2.20.0
       qunit-dom:
-        specifier: 3.0.0-rc.1
-        version: 3.0.0-rc.1
+        specifier: 3.0.0-rc.2
+        version: 3.0.0-rc.2
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -1682,8 +1682,8 @@ importers:
         specifier: ^2.19.4
         version: 2.20.0
       qunit-dom:
-        specifier: 3.0.0-rc.1
-        version: 3.0.0-rc.1
+        specifier: 3.0.0-rc.2
+        version: 3.0.0-rc.2
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -19201,8 +19201,8 @@ packages:
       - supports-color
     dev: true
 
-  /qunit-dom@3.0.0-rc.1:
-    resolution: {integrity: sha512-8xL7o2l+XWyzW2bQHRRye5xetGpvgtpeVc46V9wwexm9up5qL/wZ+TJIphVY3ByOZBsg3/jD6cvPIsuriqwnYg==}
+  /qunit-dom@3.0.0-rc.2:
+    resolution: {integrity: sha512-Ix0Ncm+SNU80GlBG/IS+Vo/86tmAhc2sxYKRvXUGG6G1FoGK/Ck+94V6KBSqIRBfgHtMjqR2sQlbVfjLeGenYQ==}
     dev: true
 
   /qunit@2.20.0:
