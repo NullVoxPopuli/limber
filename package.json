@@ -38,8 +38,7 @@
   "packageManager": "pnpm@8.8.0",
   "pnpm": {
     "patchedDependencies": {
-      "@changesets/assemble-release-plan@5.2.4": "patches/@changesets__assemble-release-plan@5.2.4.patch",
-      "qunit-dom@3.0.0-rc.2": "patches/qunit-dom@3.0.0-rc.2.patch"
+      "@changesets/assemble-release-plan@5.2.4": "patches/@changesets__assemble-release-plan@5.2.4.patch"
     },
     "overrides": {
       "@nullvoxpopuli/eslint-configs": "^3.2.2",

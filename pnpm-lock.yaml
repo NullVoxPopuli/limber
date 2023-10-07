@@ -27,9 +27,6 @@ patchedDependencies:
   '@changesets/assemble-release-plan@5.2.4':
     hash: 77jokaamx57wbj74toftkhamyq
     path: patches/@changesets__assemble-release-plan@5.2.4.patch
-  qunit-dom@3.0.0-rc.2:
-    hash: 4yrpom6e37mmmqk45iccmbeiee
-    path: patches/qunit-dom@3.0.0-rc.2.patch
 
 importers:
 
@@ -419,7 +416,7 @@ importers:
         version: 0.3.0
       qunit-dom:
         specifier: 3.0.0-rc.2
-        version: 3.0.0-rc.2(patch_hash=4yrpom6e37mmmqk45iccmbeiee)
+        version: 3.0.0-rc.2
       rollup:
         specifier: ^4.0.2
         version: 4.0.2
@@ -661,7 +658,7 @@ importers:
         version: 2.20.0
       qunit-dom:
         specifier: 3.0.0-rc.2
-        version: 3.0.0-rc.2(patch_hash=4yrpom6e37mmmqk45iccmbeiee)
+        version: 3.0.0-rc.2
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -1142,7 +1139,7 @@ importers:
         version: 2.20.0
       qunit-dom:
         specifier: 3.0.0-rc.2
-        version: 3.0.0-rc.2(patch_hash=4yrpom6e37mmmqk45iccmbeiee)
+        version: 3.0.0-rc.2
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -1689,7 +1686,7 @@ importers:
         version: 2.20.0
       qunit-dom:
         specifier: 3.0.0-rc.2
-        version: 3.0.0-rc.2(patch_hash=4yrpom6e37mmmqk45iccmbeiee)
+        version: 3.0.0-rc.2
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -18920,10 +18917,9 @@ packages:
       - supports-color
     dev: true
 
-  /qunit-dom@3.0.0-rc.2(patch_hash=4yrpom6e37mmmqk45iccmbeiee):
+  /qunit-dom@3.0.0-rc.2:
     resolution: {integrity: sha512-Ix0Ncm+SNU80GlBG/IS+Vo/86tmAhc2sxYKRvXUGG6G1FoGK/Ck+94V6KBSqIRBfgHtMjqR2sQlbVfjLeGenYQ==}
     dev: true
-    patched: true
 
   /qunit@2.20.0:
     resolution: {integrity: sha512-N8Fp1J55waE+QG1KwX2LOyqulZUToRrrPBqDOfYfuAMkEglFL15uwvmH1P4Tq/omQ/mGbBI8PEB3PhIfvUb+jg==}
