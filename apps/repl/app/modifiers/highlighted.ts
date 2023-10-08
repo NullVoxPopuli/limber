@@ -43,7 +43,8 @@ export default modifier<Signature>((element: Element, [code]) => {
       }
     }
 
-    let { value } = hljs.highlight(code, { language: target.classList[0] });
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    let { value } = hljs.highlight(code, { language: target.classList[0]! });
 
     target.innerHTML = purify.sanitize(value);
   })();

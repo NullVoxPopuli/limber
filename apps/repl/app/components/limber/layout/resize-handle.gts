@@ -60,11 +60,11 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] } }> {
     });
   };
 
-  setPosition = (event: PointerEvent) => {
-    if ('TouchEvent' in window && event instanceof TouchEvent) {
+  setPosition = (event: MouseEvent | PointerEvent | TouchEvent) => {
+    if ('TouchEvent' in window && event instanceof TouchEvent && event.touches[0]) {
       this.pointerX = event.touches[0].clientX;
       this.pointerY = event.touches[0].clientY;
-    } else {
+    } else if (event instanceof PointerEvent || event instanceof MouseEvent) {
       this.pointerX = event.clientX;
       this.pointerY = event.clientY;
     }
@@ -98,13 +98,13 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] } }> {
     window.removeEventListener('mouseup', this.dragEndHandler);
   };
 
-  dragMove = (event: PointerEvent) => {
+  dragMove = (event: MouseEvent | PointerEvent | TouchEvent) => {
     if (!this.dragging) return;
     this.setPosition(event);
     this.queueUpdate();
   };
 
-  dragStartHandler = (event: PointerEvent) => {
+  dragStartHandler = (event: MouseEvent | PointerEvent | TouchEvent) => {
     this.dragging = true;
     if (event.target !== this.dragHandle) return;
     document.body.appendChild(this.dragSurface);

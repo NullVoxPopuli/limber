@@ -62,6 +62,7 @@ export const Layout: TOC<{
       {{log (state.toStrings)}}
       --}}
 
+    {{! @glint-expect-error xstate broke }}
     {{#let (containerDirection state) as |horizontallySplit|}}
       <Orientation as |isVertical|>
         {{effect (fn send "ORIENTATION" (hash isVertical=isVertical))}}
@@ -82,6 +83,7 @@ export const Layout: TOC<{
               @isMaximized={{state.matches "hasContainer.maximized"}}
               @needsControls={{toBoolean state.context.container}}
               @splitHorizontally={{horizontallySplit}}
+              {{! @glint-expect-error xstate broken }}
               @send={{send}}
             />
 
@@ -89,6 +91,7 @@ export const Layout: TOC<{
 
           </EditorContainer>
 
+          {{! @glint-expect-error xstate broken }}
           {{#if (isResizable state)}}
             <ResizeHandle @direction={{resizeDirection horizontallySplit}} />
           {{/if}}
