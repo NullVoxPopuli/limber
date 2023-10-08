@@ -42,7 +42,7 @@
     "@codemirror/language": "^6.9.1",
     "@lezer/highlight": "^1.1.6",
     "@lezer/javascript": "^1.4.8",
-    "@lezer/lr": "^1.3.12",
+    "@lezer/lr": "^1.3.13",
     "codemirror-lang-glimmer": "workspace:*"
   },
   "scripts": {
