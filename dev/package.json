@@ -20,8 +20,8 @@
   "devDependencies": {
     "@babel/core": "^7.23.0",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
-    "@types/node": "^18.17.17",
-    "@types/yargs": "^17.0.24",
+    "@types/node": "^18.18.4",
+    "@types/yargs": "^17.0.28",
     "eslint": "^8.51.0",
     "prettier": "^3.0.3",
     "prettier-plugin-ember-template-tag": "^1.1.0",

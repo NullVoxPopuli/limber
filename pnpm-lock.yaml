@@ -268,7 +268,7 @@ importers:
         specifier: ^1.8.2
         version: 1.8.2
       '@types/dompurify':
-        specifier: ^3.0.2
+        specifier: ^3.0.3
         version: 3.0.3
       '@types/hast':
         specifier: ^3.0.1
@@ -280,13 +280,13 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0
       '@types/mdast':
-        specifier: ^4.0.0
+        specifier: ^4.0.1
         version: 4.0.1
       '@types/qunit':
         specifier: ^2.19.6
         version: 2.19.6
       '@types/rsvp':
-        specifier: ^4.0.4
+        specifier: ^4.0.5
         version: 4.0.5
       '@types/unist':
         specifier: ^3.0.0
@@ -700,10 +700,10 @@ importers:
         specifier: ^3.2.2
         version: 3.2.2(@babel/core@7.23.0)(eslint@8.51.0)(prettier@3.0.3)(typescript@5.2.2)
       '@types/node':
-        specifier: ^18.17.17
+        specifier: ^18.18.4
         version: 18.18.4
       '@types/yargs':
-        specifier: ^17.0.24
+        specifier: ^17.0.28
         version: 17.0.28
       eslint:
         specifier: ^8.51.0
@@ -1444,13 +1444,13 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1
       '@types/mdast':
-        specifier: ^4.0.0
+        specifier: ^4.0.1
         version: 4.0.1
       '@types/unist':
         specifier: ^3.0.0
         version: 3.0.0
       '@types/uuid':
-        specifier: ^9.0.4
+        specifier: ^9.0.5
         version: 9.0.5
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.7.4
@@ -1586,7 +1586,7 @@ importers:
         specifier: ^2.19.6
         version: 2.19.6
       '@types/rsvp':
-        specifier: ^4.0.4
+        specifier: ^4.0.5
         version: 4.0.5
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.7.4
