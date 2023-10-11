@@ -17,6 +17,7 @@ import * as _owner from '@ember/owner';
 import * as _runloop from '@ember/runloop';
 import * as _service from '@ember/service';
 import * as _template from '@ember/template';
+import * as _trackingPrimitivesCache from '@glimmer/tracking/primitives/cache';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { createTemplateFactory } from '@ember/template-factory';
@@ -41,4 +42,5 @@ export const modules = {
 
   '@glimmer/component': _GlimmerComponent,
   '@glimmer/tracking': _tracking,
+  '@glimmer/tracking/primitives/cache': _trackingPrimitivesCache,
 };
