@@ -85,7 +85,7 @@
     "change-case": "^5.0.2",
     "common-tags": "^1.8.2",
     "line-column": "^1.0.2",
-    "magic-string": "^0.30.4",
+    "magic-string": "^0.30.5",
     "mdast": "^3.0.0",
     "parse-static-imports": "^1.1.0",
     "rehype-raw": "^6.1.1",
