@@ -46,7 +46,7 @@
     }
   },
   "devDependencies": {
-    "@babel/core": "^7.23.0",
+    "@babel/core": "^7.23.2",
     "@babel/eslint-parser": "^7.22.15",
     "@codemirror/view": "6.21.3",
     "@ember/optional-features": "^2.0.0",

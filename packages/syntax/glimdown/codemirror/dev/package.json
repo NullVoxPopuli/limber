@@ -12,7 +12,7 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.0",
+    "@babel/core": "^7.23.2",
     "@babel/eslint-parser": "^7.22.15",
     "@codemirror/language": "^6.9.1",
     "@codemirror/state": "^6.2.1",
