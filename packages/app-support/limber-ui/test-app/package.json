@@ -79,7 +79,7 @@
     "qunit": "^2.19.4",
     "qunit-dom": "3.0.0-rc.2",
     "typescript": "^5.2.2",
-    "webpack": "^5.88.2"
+    "webpack": "^5.89.0"
   },
   "engines": {
     "node": ">= v16",
