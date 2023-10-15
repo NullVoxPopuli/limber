@@ -119,7 +119,7 @@
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "@nullvoxpopuli/limber-untyped": "workspace:*",
     "@rollup/plugin-babel": "^6.0.4",
-    "@rollup/plugin-commonjs": "^25.0.5",
+    "@rollup/plugin-commonjs": "^25.0.7",
     "@tsconfig/ember": "^3.0.1",
     "@types/babel__core": "^7.20.2",
     "@types/babel__standalone": "^7.1.5",
