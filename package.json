@@ -27,7 +27,7 @@
     "@changesets/changelog-github": "^0.4.8",
     "@changesets/cli": "^2.26.2",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
-    "concurrently": "^8.2.1",
+    "concurrently": "^8.2.2",
     "dev-tools": "workspace:*",
     "eslint": "^8.51.0",
     "pnpm-sync-dependencies-meta-injected": "^0.0.10",
