@@ -82,7 +82,7 @@
     "babel-import-util": "^2.0.1",
     "babel-plugin-ember-template-compilation": "^2.2.0",
     "broccoli-file-creator": "^2.1.1",
-    "change-case": "^5.1.0",
+    "change-case": "^5.1.1",
     "common-tags": "^1.8.2",
     "line-column": "^1.0.2",
     "magic-string": "^0.30.5",
