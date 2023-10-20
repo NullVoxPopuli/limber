@@ -1320,8 +1320,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       change-case:
-        specifier: ^5.1.0
-        version: 5.1.0
+        specifier: ^5.1.1
+        version: 5.1.1
       common-tags:
         specifier: ^1.8.2
         version: 1.8.2
@@ -10248,8 +10248,8 @@ packages:
     resolution: {integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
-  /change-case@5.1.0:
-    resolution: {integrity: sha512-YLRzoiIO62vpoI8Qy2Jfy3gLu++QfhIcNtMOAwCbIel5UQGp6/KbL7Yu309dwNQHwbI1ZW39uBFyhrwVzXJSJQ==}
+  /change-case@5.1.1:
+    resolution: {integrity: sha512-Z40XiC/f3FdOh+FxqxkDn3rYPzMexuaWR9cjA6cHFfh2hJJTGBh6+hZCslp28OViMk0Vu0fm/C+0vbTCF4+jbw==}
     dev: false
 
   /char-regex@1.0.2:
@@ -23042,7 +23042,7 @@ packages:
       babel-import-util: 2.0.1
       babel-plugin-ember-template-compilation: 2.2.0
       broccoli-file-creator: 2.1.1
-      change-case: 5.1.0
+      change-case: 5.1.1
       common-tags: 1.8.2
       ember-resources: 6.4.0(@ember/test-waiters@3.0.2)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.2.1)(ember-source@5.3.0)
       ember-source: 5.3.0(@babel/core@7.23.2)(@glimmer/component@1.1.2)(@glint/template@1.2.1)(webpack@5.89.0)
