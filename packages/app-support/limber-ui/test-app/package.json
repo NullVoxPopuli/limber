@@ -76,8 +76,8 @@
     "loader.js": "^4.7.0",
     "prettier": "^3.0.3",
     "prettier-plugin-ember-template-tag": "^1.1.0",
-    "qunit": "^2.19.4",
-    "qunit-dom": "3.0.0-rc.2",
+    "qunit": "^2.20.0",
+    "qunit-dom": "3.0.0",
     "typescript": "^5.2.2",
     "webpack": "^5.89.0"
   },
