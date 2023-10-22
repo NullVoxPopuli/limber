@@ -81,15 +81,21 @@ export default class Selected extends Service {
   }
 
   get hasProse() {
+    // if (this.proseFile.isError) return false;
+
     return Boolean(this.prose);
   }
 
   get hasPrompt() {
+    // if (this.promptFile.isError) return false;
+
     return Boolean(this.prompt);
   }
 
   get hasAnswer() {
-    return Boolean(this.answer);
+    // if (this.answerFile.isError) return false;
+
+    return Boolean(this.answerFile.value);
   }
 
   get next(): Tutorial | undefined {

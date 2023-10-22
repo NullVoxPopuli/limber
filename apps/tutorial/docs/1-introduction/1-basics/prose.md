@@ -10,8 +10,12 @@ The format of this tutorial is _heavily_ inspired by the [Svelte tutorial][svelt
 [ember-tutorial]: https://guides.emberjs.com/release/tutorial/part-1/
 [svelte-tutorial]: https://svelte.dev/tutorial/basics
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Get started →](/1-introduction/2-adding-data)  
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; And skip the rest of this introduction 🎉
+<div style="padding: 0.5rem 2rem; font-style: italic;">
+
+[Get started →](/1-introduction/2-adding-data)  
+And skip the rest of this introduction 🎉
+
+ </div>
 
 ## What are these words?
 
