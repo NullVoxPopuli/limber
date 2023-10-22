@@ -409,14 +409,14 @@ importers:
         specifier: ^0.11.10
         version: 0.11.10
       qunit:
-        specifier: ^2.19.4
+        specifier: ^2.20.0
         version: 2.20.0
       qunit-console-grouper:
         specifier: ^0.3.0
         version: 0.3.0
       qunit-dom:
-        specifier: 3.0.0-rc.2
-        version: 3.0.0-rc.2
+        specifier: 3.0.0
+        version: 3.0.0
       rollup:
         specifier: ^4.1.4
         version: 4.1.4
@@ -654,11 +654,11 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(prettier@3.0.3)
       qunit:
-        specifier: ^2.19.4
+        specifier: ^2.20.0
         version: 2.20.0
       qunit-dom:
-        specifier: 3.0.0-rc.2
-        version: 3.0.0-rc.2
+        specifier: 3.0.0
+        version: 3.0.0
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -1135,11 +1135,11 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(prettier@3.0.3)
       qunit:
-        specifier: ^2.19.4
+        specifier: ^2.20.0
         version: 2.20.0
       qunit-dom:
-        specifier: 3.0.0-rc.2
-        version: 3.0.0-rc.2
+        specifier: 3.0.0
+        version: 3.0.0
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -1682,11 +1682,11 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(prettier@3.0.3)
       qunit:
-        specifier: ^2.19.4
+        specifier: ^2.20.0
         version: 2.20.0
       qunit-dom:
-        specifier: 3.0.0-rc.2
-        version: 3.0.0-rc.2
+        specifier: 3.0.0
+        version: 3.0.0
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -19142,8 +19142,8 @@ packages:
       - supports-color
     dev: true
 
-  /qunit-dom@3.0.0-rc.2:
-    resolution: {integrity: sha512-Ix0Ncm+SNU80GlBG/IS+Vo/86tmAhc2sxYKRvXUGG6G1FoGK/Ck+94V6KBSqIRBfgHtMjqR2sQlbVfjLeGenYQ==}
+  /qunit-dom@3.0.0:
+    resolution: {integrity: sha512-rqGZ9ZgOvtOY+Ph2ElCJ4pRIHouMZmI3DWK35Xr3x3c17/gIwOHHyKAQk6XetqhqepS6p+oXvK6Bx1uZu5jJuw==}
     dev: true
 
   /qunit@2.20.0:
