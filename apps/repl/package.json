@@ -159,7 +159,7 @@
     "ember-focus-trap": "^1.1.0",
     "ember-headlessui": "0.14.0",
     "ember-modifier": "^4.1.0",
-    "ember-primitives": "^0.8.0",
+    "ember-primitives": "^0.8.1",
     "ember-repl": "workspace:*",
     "ember-resources": "^6.4.2",
     "ember-statechart-component": "6.1.2",
