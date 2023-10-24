@@ -14,10 +14,10 @@
   "devDependencies": {
     "@babel/core": "^7.23.2",
     "@babel/eslint-parser": "^7.22.15",
-    "@codemirror/language": "^6.9.1",
-    "@codemirror/state": "^6.2.1",
+    "@codemirror/language": "^6.9.2",
+    "@codemirror/state": "^6.3.1",
     "@codemirror/theme-one-dark": "^6.1.2",
-    "@codemirror/view": "^6.21.3",
+    "@codemirror/view": "^6.21.4",
     "@glimdown/codemirror-dev-preview": "workspace:*",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
