@@ -20,9 +20,9 @@
     "@babel/core": "^7.23.2",
     "@babel/eslint-parser": "^7.22.15",
     "@codemirror/buildhelper": "^1.0.0",
-    "@codemirror/language": "^6.9.1",
-    "@codemirror/state": "^6.2.1",
-    "@codemirror/view": "^6.21.3",
+    "@codemirror/language": "^6.9.2",
+    "@codemirror/state": "^6.3.1",
+    "@codemirror/view": "^6.21.4",
     "@lezer/generator": "^1.5.1",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "@tsconfig/ember": "^3.0.1",
@@ -68,7 +68,7 @@
     "yarn": "use pnpm"
   },
   "peerDependencies": {
-    "@codemirror/state": "^6.2.1",
-    "@codemirror/view": "^6.21.3"
+    "@codemirror/state": "^6.3.1",
+    "@codemirror/view": "^6.21.4"
   }
 }
