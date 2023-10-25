@@ -1,4 +1,4 @@
-Currying attributes is useful when you want to pre-configure styles, classes, data, aria, or any other attributes. However, there is no built in API for wiring up attributes with `(component)`, like there is for arguments.
+Currying attributes is useful when you want to pre-configure styles, classes, data, aria, or any other attributes. However, there is no built in API for wiring up attributes with the `(component)` helper, like there is for arguments.
 
 To get around that limitation, we'll need to create an intermediate component that wires up the attributes and forwards all relevant arguments.
 

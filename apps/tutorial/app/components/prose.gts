@@ -21,16 +21,13 @@ export const resetScroll = modifier((element, [prose]) => {
 });
 
 const hideText = cell(true);
-const hoverShowText = () => hideText.current = false;
-const hideShowText = () => hideText.current = true;
+const hoverShowText = () => (hideText.current = false);
+const hideShowText = () => (hideText.current = true);
 
 export const Prose: TOC<{ Element: HTMLDivElement }> = <template>
   {{#let (service "docs") as |docs|}}
     <style>
-      .ember-primitives__sticky-footer__footer {
-        position: sticky;
-        bottom: -32px;
-      }
+      .ember-primitives__sticky-footer__footer { position: sticky; bottom: -32px; }
     </style>
     <StickyFooter
       class="grid gap-4 overflow-auto w-fit w-full"
@@ -55,10 +52,10 @@ export const Prose: TOC<{ Element: HTMLDivElement }> = <template>
                 class="w-[86px] hover:w-[166px] focus-visible:w-[166px] whitespace-nowrap transition-all overflow-hidden text-left"
                 style="transition-duration: 50ms"
                 {{on "click" docs.showMe}}
-                {{on 'mouseenter' hoverShowText}}
-                {{on 'mouseleave' hideShowText}}
-                {{on 'focusin' hoverShowText}}
-                {{on 'focusout' hideShowText}}
+                {{on "mouseenter" hoverShowText}}
+                {{on "mouseleave" hideShowText}}
+                {{on "focusin" hoverShowText}}
+                {{on "focusout" hideShowText}}
               >
                 <span>
                   Show me

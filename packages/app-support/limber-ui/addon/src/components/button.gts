@@ -8,18 +8,19 @@ const colorsFor = (variant: 'primary' | 'default' | undefined) => {
   if (variant === 'primary') {
     return 'text-black font-bold bg-[var(--horizon-blue)]';
   }
-}
+};
 
 export const Button: TOC<{
   Element: HTMLButtonElement;
   Args: {
-    variant?: 'primary' | 'default'
+    variant?: 'primary' | 'default';
   };
   Blocks: { default: [] };
 }> = <template>
   <button
     type="button"
-    class="{{colorsFor @variant}} inline-block items-center grid-flow-col rounded px-3 py-2 border border-[var(--horizon-border)] focus:outline-none focus:ring focus-visible:outline-none focus-visible:ring shadow hover:shadow-sm grid gap-2 disabled:opacity-30"
+    class="{{colorsFor @variant}}
+      inline-block items-center grid-flow-col rounded px-3 py-2 border border-[var(--horizon-border)] focus:outline-none focus:ring focus-visible:outline-none focus-visible:ring shadow hover:shadow-sm grid gap-2 disabled:opacity-30"
     ...attributes
   >
     {{yield}}

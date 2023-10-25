@@ -12,6 +12,9 @@ module.exports = {
         'no-implicit-this': 'off',
         // false negatives due to being defined in js-scope
         'no-curly-component-invocation': 'off',
+        // We do what we want. psh
+        'no-forbidden-elements': 'off',
+        'no-inline-styles': 'off',
       },
     },
   ],
