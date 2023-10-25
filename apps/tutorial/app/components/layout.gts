@@ -26,7 +26,7 @@ function removeAppShell() {
         >
           <div class="grid grid-rows-[min-content_1fr]">
             <Nav />
-            <Prose class="max-h-[calc(100dvh-94px)]" />
+            <Prose class="h-[calc(100dvh-94px)]" />
           </div>
           <Footer />
         </section>
