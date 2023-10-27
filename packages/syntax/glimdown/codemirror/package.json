@@ -25,7 +25,7 @@
     "@codemirror/view": "^6.21.4",
     "@lezer/generator": "^1.5.1",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
-    "@tsconfig/ember": "^3.0.1",
+    "@tsconfig/ember": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
     "codemirror": "^6.0.1",
