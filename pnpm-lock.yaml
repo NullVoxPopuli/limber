@@ -1314,8 +1314,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       babel-plugin-ember-template-compilation:
-        specifier: ^2.2.0
-        version: 2.2.0
+        specifier: ^2.2.1
+        version: 2.2.1
       broccoli-file-creator:
         specifier: ^2.1.1
         version: 2.1.1
@@ -8588,6 +8588,14 @@ packages:
     dependencies:
       '@glimmer/syntax': 0.84.3
       babel-import-util: 2.0.1
+
+  /babel-plugin-ember-template-compilation@2.2.1:
+    resolution: {integrity: sha512-alinprIQcLficqkuIyeKKfD4HQOpMOiHK6pt6Skj/yjoPoQYBuwAJ2BoPAlRe9k/URPeVkpMefbN3m6jEp7RsA==}
+    engines: {node: '>= 12.*'}
+    dependencies:
+      '@glimmer/syntax': 0.84.3
+      babel-import-util: 2.0.1
+    dev: false
 
   /babel-plugin-filter-imports@4.0.0:
     resolution: {integrity: sha512-jDLlxI8QnfKd7PtieH6pl4tZJzymzfCDCPGdTq/grgbiYAikwDPp/oL0IlFJn0HQjLpcLkyYhPKkUVneRESw5w==}
@@ -22819,7 +22827,7 @@ packages:
       '@glimmer/component': 1.1.2(@babel/core@7.23.2)
       '@glint/template': 1.2.1
       babel-import-util: 2.0.1
-      babel-plugin-ember-template-compilation: 2.2.0
+      babel-plugin-ember-template-compilation: 2.2.1
       broccoli-file-creator: 2.1.1
       change-case: 5.1.2
       common-tags: 1.8.2
