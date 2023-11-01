@@ -1402,8 +1402,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       '@glimmer/util':
-        specifier: ^0.85.5
-        version: 0.85.5
+        specifier: ^0.85.8
+        version: 0.85.8
       '@glint/core':
         specifier: ^1.0.2
         version: 1.2.1(typescript@5.2.2)
@@ -5534,8 +5534,8 @@ packages:
       '@glimmer/interfaces': 0.84.3
       '@simple-dom/interface': 1.4.0
 
-  /@glimmer/util@0.85.5:
-    resolution: {integrity: sha512-DOwK4PZY9fNBPyCNAV9o+qkqQf9/jK31Cj3PBFbX2OlGU2uPTCsuccKdM80gaNsX0J7+D7q3a0myKNRtvanhfg==}
+  /@glimmer/util@0.85.8:
+    resolution: {integrity: sha512-DUSJwb+2BeAXPtQFM4/mQ+gCZCHu1TDKvYcR2cIip0fNdPTaaPuYnCU4nqazXVvqGDHAC1m/Mjv0xzGL4vsB+w==}
     dependencies:
       '@glimmer/env': 0.1.7
       '@glimmer/interfaces': 0.84.3
