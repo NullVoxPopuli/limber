@@ -72,6 +72,7 @@ module.exports = async function (defaults) {
         'ember-resources/service',
         'ember-resources/modifier',
         'ember-resources/util/map',
+        'ember-resources/util/debounce',
         'ember-resources/util/keep-latest',
         'ember-resources/util/function',
         'ember-resources/util/fps',
