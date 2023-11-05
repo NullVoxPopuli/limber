@@ -25,9 +25,9 @@
     "@lezer/generator": "^1.5.1",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "@rollup/plugin-node-resolve": "^15.2.3",
-    "@typescript-eslint/eslint-plugin": "^6.9.0",
-    "@typescript-eslint/parser": "^6.9.0",
-    "eslint": "^8.52.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
+    "eslint": "^8.53.0",
     "prettier": "^3.0.3",
     "rollup": "^4.3.0",
     "typescript": "^5.2.2"
