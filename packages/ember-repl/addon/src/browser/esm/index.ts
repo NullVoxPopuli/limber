@@ -65,7 +65,7 @@ async function evalSnippet(code: string) {
 }
 
 async function compileGJS({ code: input, name }: Info) {
-  let preprocessed = preprocess(input, name);
+  let preprocessed = await preprocess(input, name);
   let result = await transform(preprocessed, name, {
     modules: false,
   });
