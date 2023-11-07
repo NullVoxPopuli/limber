@@ -154,7 +154,7 @@
     "browserslist": "^4.22.1",
     "dompurify": "^3.0.6",
     "ember-auto-import": "^2.6.3",
-    "ember-container-query": "5.0.1",
+    "ember-container-query": "5.0.2",
     "ember-element-helper": "^0.8.5",
     "ember-focus-trap": "^1.1.0",
     "ember-headlessui": "0.14.0",
