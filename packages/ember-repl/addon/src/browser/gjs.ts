@@ -9,9 +9,14 @@ const compiler = importSync('ember-source/dist/ember-template-compiler.js');
 import { createPreprocessor } from 'content-tag/standalone';
 
 let processor;
+let fetchingPromise: Promise<any>;
 
 export async function preprocess(input: string, name: string): Promise<string> {
-  processor ||= await createPreprocessor();
+  if (!fetchingPromise) {
+    fetchingPromise = createPreprocessor();
+  }
+
+  processor = await fetchingPromise;
 
   return processor.process(input, `${name}.js`);
 }
