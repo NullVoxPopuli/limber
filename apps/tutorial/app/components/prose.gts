@@ -24,6 +24,24 @@ const hideText = cell(true);
 const hoverShowText = () => (hideText.current = false);
 const hideShowText = () => (hideText.current = true);
 
+const ShowMe: TOC<{ Args: { onClick: () => void } }> = <template>
+  <Button
+    @variant="primary"
+    class="w-[86px] hover:w-[166px] focus-visible:w-[166px] whitespace-nowrap transition-all overflow-hidden text-left"
+    style="transition-duration: 50ms"
+    {{on "click" @onClick}}
+    {{on "mouseenter" hoverShowText}}
+    {{on "mouseleave" hideShowText}}
+    {{on "focusin" hoverShowText}}
+    {{on "focusout" hideShowText}}
+  >
+    <span>
+      Show me
+      <span class="{{if hideText.current 'sr-only'}}">the answer</span>
+    </span>
+  </Button>
+</template>;
+
 export const Prose: TOC<{ Element: HTMLDivElement }> = <template>
   {{#let (service "docs") as |docs|}}
     <style>
@@ -47,21 +65,7 @@ export const Prose: TOC<{ Element: HTMLDivElement }> = <template>
         <footer class="grid p-2 gap-4 text-sm bg-[#eee] drop-shadow-2xl">
           <div class="flex justify-between items-center justify-self-end w-full">
             {{#if docs.selected.hasAnswer}}
-              <Button
-                @variant="primary"
-                class="w-[86px] hover:w-[166px] focus-visible:w-[166px] whitespace-nowrap transition-all overflow-hidden text-left"
-                style="transition-duration: 50ms"
-                {{on "click" docs.showMe}}
-                {{on "mouseenter" hoverShowText}}
-                {{on "mouseleave" hideShowText}}
-                {{on "focusin" hoverShowText}}
-                {{on "focusout" hideShowText}}
-              >
-                <span>
-                  Show me
-                  <span class="{{if hideText.current 'sr-only'}}">the answer</span>
-                </span>
-              </Button>
+              <ShowMe @onClick={{docs.showMe}} />
             {{else}}
               <span></span>
             {{/if}}

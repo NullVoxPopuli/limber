@@ -93,9 +93,11 @@ export default class Selected extends Service {
   }
 
   get hasAnswer() {
-    // if (this.answerFile.isError) return false;
+    let { value, status } = this.answerFile;
 
-    return Boolean(this.answerFile.value);
+    if (status && status > 400) return false;
+
+    return Boolean(value);
   }
 
   get next(): Tutorial | undefined {
