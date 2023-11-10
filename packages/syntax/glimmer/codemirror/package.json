@@ -21,7 +21,7 @@
     "@babel/eslint-parser": "^7.23.3",
     "@codemirror/buildhelper": "^1.0.0",
     "@codemirror/language": "^6.9.2",
-    "@lezer/common": "^1.1.0",
+    "@lezer/common": "^1.1.1",
     "@lezer/generator": "^1.5.1",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "@tsconfig/ember": "^3.0.2",
@@ -69,6 +69,6 @@
     "yarn": "use pnpm"
   },
   "peerDependencies": {
-    "@lezer/common": "^1.1.0"
+    "@lezer/common": "^1.1.1"
   }
 }
