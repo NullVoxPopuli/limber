@@ -25,7 +25,7 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "dependencies": {
-    "@types/unist": "^3.0.1",
+    "@types/unist": "^3.0.2",
     "common-tags": "^1.8.2",
     "ember-repl": "workspace:*",
     "ember-resources": "^6.4.2",
@@ -55,9 +55,9 @@
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "@nullvoxpopuli/limber-untyped": "workspace:^0.0.0",
     "@tsconfig/ember": "^3.0.2",
-    "@types/common-tags": "^1.8.3",
-    "@types/qunit": "^2.19.7",
-    "@types/rsvp": "^4.0.6",
+    "@types/common-tags": "^1.8.4",
+    "@types/qunit": "^2.19.8",
+    "@types/rsvp": "^4.0.7",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
     "concurrently": "^8.2.2",
