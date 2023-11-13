@@ -33,7 +33,7 @@
     "ember-primitives": "^0.8.1",
     "ember-resources": "^6.4.2",
     "highlight.js": "^11.9.0",
-    "highlightjs-glimmer": "^2.1.0",
+    "highlightjs-glimmer": "^2.2.1",
     "limber-ui": "workspace:*",
     "rehype-raw": "^6.1.1",
     "rehype-stringify": "^9.0.4",
