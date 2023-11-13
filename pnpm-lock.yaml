@@ -138,8 +138,8 @@ importers:
         specifier: ^11.9.0
         version: 11.9.0
       highlightjs-glimmer:
-        specifier: ^2.1.0
-        version: 2.1.0(highlight.js@11.9.0)
+        specifier: ^2.2.1
+        version: 2.2.1(highlight.js@11.9.0)
       html-to-image:
         specifier: ^1.11.11
         version: 1.11.11
@@ -470,8 +470,8 @@ importers:
         specifier: ^11.9.0
         version: 11.9.0
       highlightjs-glimmer:
-        specifier: ^2.1.0
-        version: 2.1.0(highlight.js@11.9.0)
+        specifier: ^2.2.1
+        version: 2.2.1(highlight.js@11.9.0)
       limber-ui:
         specifier: workspace:*
         version: file:packages/app-support/limber-ui/addon(@ember/test-waiters@3.1.0)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.2.1)(ember-async-data@1.0.3)(ember-modifier@4.1.0)(ember-primitives@0.8.1)(ember-resources@6.4.2)(ember-source@5.4.0)(webpack@5.89.0)
@@ -15265,9 +15265,9 @@ packages:
     engines: {node: '>=12.0.0'}
     dev: false
 
-  /highlightjs-glimmer@2.1.0(highlight.js@11.9.0):
-    resolution: {integrity: sha512-+n0eRrP4EjpDVjKjgMRjHJwKIp5dlzoZA+8FuALh4kU1PADzRmryohiROLL92qCpwBLBKqv5qr12l/KKenuI3g==}
-    engines: {node: ^14 || ^16 || ^18}
+  /highlightjs-glimmer@2.2.1(highlight.js@11.9.0):
+    resolution: {integrity: sha512-5vQiop/MgoLSqms7PAwCYAWRxDHnwD24nWFV03k8deH14XbsAb7C27O/UQCk8/ofPp18nBc1LR4yTNIg1cIgPQ==}
+    engines: {node: ^14 || ^16 || ^18 || >= 20}
     peerDependencies:
       highlight.js: '>= 11.0.0'
     dependencies:
