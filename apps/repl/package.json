@@ -180,7 +180,7 @@
     "unified": "^10.1.2",
     "unist-util-flatmap": "^1.0.0",
     "unist-util-visit": "^5.0.0",
-    "webpack-bundle-analyzer": "^4.9.1",
+    "webpack-bundle-analyzer": "^4.10.0",
     "ws": "^8.14.2",
     "xstate": "4.35.4"
   }
