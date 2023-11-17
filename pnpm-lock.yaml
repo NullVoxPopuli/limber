@@ -1320,8 +1320,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       change-case:
-        specifier: ^5.1.2
-        version: 5.1.2
+        specifier: ^5.2.0
+        version: 5.2.0
       common-tags:
         specifier: ^1.8.2
         version: 1.8.2
@@ -10063,8 +10063,8 @@ packages:
     resolution: {integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
-  /change-case@5.1.2:
-    resolution: {integrity: sha512-CAtbGEDulyjzs05RXy3uKcwqeztz/dMEuAc1Xu9NQBsbrhuGMneL0u9Dj5SoutLKBFYun8txxYIwhjtLNfUmCA==}
+  /change-case@5.2.0:
+    resolution: {integrity: sha512-L6VzznESnMIKKdKhVzCG+KPz4+x1FWbjOs1AdhoHStV3qo8aySMRGPUoqC0aL1ThKaQNGhAu6ZfHL/QAyQRuiw==}
     dev: false
 
   /char-regex@1.0.2:
@@ -22871,7 +22871,7 @@ packages:
       babel-import-util: 2.0.1
       babel-plugin-ember-template-compilation: 2.2.1
       broccoli-file-creator: 2.1.1
-      change-case: 5.1.2
+      change-case: 5.2.0
       common-tags: 1.8.2
       content-tag: github.com/NullVoxPopuli/content-tag/821f9d74c586108e2f3b4938ebfcf9297794e1f2
       ember-resources: 6.4.2(@ember/test-waiters@3.1.0)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.2.1)(ember-source@5.4.0)
