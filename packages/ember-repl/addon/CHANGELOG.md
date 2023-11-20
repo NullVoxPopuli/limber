@@ -1,5 +1,11 @@
 ## [2.0.63](https://github.com/NullVoxPopuli/ember-repl/compare/v2.0.62...v2.0.63) (2022-08-23)
 
+## 3.0.0-beta.7
+
+### Patch Changes
+
+- [`1a825f9c`](https://github.com/NullVoxPopuli/limber/commit/1a825f9c4062d557cf9b7b6adcf7d15800ccc710) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Use WASM-based content-tag for compilation instead of regex-based javascript implementation.
+
 ## 3.0.0-beta.6
 
 ### Minor Changes
