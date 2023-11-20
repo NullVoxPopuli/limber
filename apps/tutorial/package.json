@@ -30,7 +30,7 @@
     "@glimmer/tracking": "^1.1.2",
     "ember-async-data": "1.0.3",
     "ember-modifier": "^4.1.0",
-    "ember-primitives": "^0.9.0",
+    "ember-primitives": "^0.10.1",
     "ember-resources": "^6.4.2",
     "highlight.js": "^11.9.0",
     "highlightjs-glimmer": "^2.2.1",
