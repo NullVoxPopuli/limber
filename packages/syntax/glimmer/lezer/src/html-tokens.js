@@ -145,8 +145,8 @@ function tagNameAfter(input, offset) {
   return (cachedName = name
     ? name.toLowerCase()
     : next == question || next == bang
-    ? undefined
-    : null);
+      ? undefined
+      : null);
 }
 
 const lessThan = 60,
