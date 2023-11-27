@@ -760,8 +760,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
       '@lezer/html':
-        specifier: ^1.3.6
-        version: 1.3.6
+        specifier: ^1.3.7
+        version: 1.3.7
       '@lezer/markdown':
         specifier: ^1.1.1
         version: 1.1.1
@@ -1831,8 +1831,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
       '@lezer/html':
-        specifier: ^1.3.6
-        version: 1.3.6
+        specifier: ^1.3.7
+        version: 1.3.7
       '@lezer/javascript':
         specifier: ^1.4.9
         version: 1.4.9
@@ -2225,8 +2225,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
       '@lezer/html':
-        specifier: ^1.3.6
-        version: 1.3.6
+        specifier: ^1.3.7
+        version: 1.3.7
       '@lezer/javascript':
         specifier: ^1.4.9
         version: 1.4.9
@@ -2346,8 +2346,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
       '@lezer/html':
-        specifier: ^1.3.6
-        version: 1.3.6
+        specifier: ^1.3.7
+        version: 1.3.7
       '@lezer/javascript':
         specifier: ^1.4.9
         version: 1.4.9
@@ -4151,7 +4151,7 @@ packages:
       '@codemirror/view': 6.22.1
       '@lezer/common': 1.1.1
       '@lezer/css': 1.1.3
-      '@lezer/html': 1.3.6
+      '@lezer/html': 1.3.7
     dev: false
 
   /@codemirror/lang-java@6.0.1:
@@ -5575,8 +5575,8 @@ packages:
     dependencies:
       '@lezer/common': 1.1.1
 
-  /@lezer/html@1.3.6:
-    resolution: {integrity: sha512-Kk9HJARZTc0bAnMQUqbtuhFVsB4AnteR2BFUWfZV7L/x1H0aAKz6YabrfJ2gk/BEgjh9L3hg5O4y2IDZRBdzuQ==}
+  /@lezer/html@1.3.7:
+    resolution: {integrity: sha512-Wo+rZ5UjLP0VqUTyXjzgmTYRW5bvTJUFn4Uw0K3HCQjX2/+f+zRo9GLN5BCAojwHQISPvaQk8BWSv2SSKx/UcQ==}
     dependencies:
       '@lezer/common': 1.1.1
       '@lezer/highlight': 1.2.0
