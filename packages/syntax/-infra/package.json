@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@codemirror/language": "^6.9.2",
-    "@codemirror/view": "^6.22.0",
+    "@codemirror/language": "^6.9.3",
+    "@codemirror/view": "^6.22.1",
     "@lezer/generator": "^1.5.1",
     "@lezer/highlight": "^1.2.0",
     "@rollup/plugin-node-resolve": "^15.2.3",

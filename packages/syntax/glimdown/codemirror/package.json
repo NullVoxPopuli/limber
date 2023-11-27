@@ -20,9 +20,9 @@
     "@babel/core": "^7.23.3",
     "@babel/eslint-parser": "^7.23.3",
     "@codemirror/buildhelper": "^1.0.0",
-    "@codemirror/language": "^6.9.2",
-    "@codemirror/state": "^6.3.1",
-    "@codemirror/view": "^6.22.0",
+    "@codemirror/language": "^6.9.3",
+    "@codemirror/state": "^6.3.2",
+    "@codemirror/view": "^6.22.1",
     "@lezer/generator": "^1.5.1",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "@tsconfig/ember": "^3.0.2",
@@ -37,8 +37,8 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@codemirror/lang-html": "^6.4.6",
-    "@codemirror/lang-markdown": "^6.2.2",
+    "@codemirror/lang-html": "^6.4.7",
+    "@codemirror/lang-markdown": "^6.2.3",
     "@codemirror/language-data": "^6.3.1",
     "@lezer/common": "^1.1.1",
     "@lezer/highlight": "^1.2.0",
@@ -68,7 +68,7 @@
     "yarn": "use pnpm"
   },
   "peerDependencies": {
-    "@codemirror/state": "^6.3.1",
-    "@codemirror/view": "^6.22.0"
+    "@codemirror/state": "^6.3.2",
+    "@codemirror/view": "^6.22.1"
   }
 }
