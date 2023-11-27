@@ -26,8 +26,8 @@ function getAttrs(element: SyntaxNode | null, input: Input) {
       attrs[input.read(name.from, name.to)] = !value
         ? ''
         : value.name == 'AttributeValue'
-        ? input.read(value.from + 1, value.to - 1)
-        : input.read(value.from, value.to);
+          ? input.read(value.from + 1, value.to - 1)
+          : input.read(value.from, value.to);
   }
 
   return attrs;
@@ -70,10 +70,10 @@ export function configureNesting(tags: NestingConfig[]) {
       tag.tag == 'script'
         ? script
         : tag.tag == 'style'
-        ? style
-        : tag.tag == 'textarea'
-        ? textarea
-        : null;
+          ? style
+          : tag.tag == 'textarea'
+            ? textarea
+            : null;
 
     if (!array)
       throw new RangeError('Only script, style, and textarea tags can host nested parsers');
