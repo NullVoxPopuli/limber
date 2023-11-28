@@ -636,8 +636,8 @@ importers:
         specifier: ^8.0.1
         version: 8.0.1(eslint@8.54.0)
       fs-extra:
-        specifier: ^11.1.1
-        version: 11.1.1
+        specifier: ^11.2.0
+        version: 11.2.0
       globby:
         specifier: ^14.0.0
         version: 14.0.0
@@ -684,8 +684,8 @@ importers:
         specifier: ^8.0.1
         version: 8.0.1
       fs-extra:
-        specifier: ^11.1.1
-        version: 11.1.1
+        specifier: ^11.2.0
+        version: 11.2.0
       latest-version:
         specifier: ^7.0.0
         version: 7.0.0
@@ -11125,7 +11125,7 @@ packages:
       ember-template-recast: 6.1.4
       execa: 8.0.1
       find-up: 6.3.0
-      fs-extra: 11.1.1
+      fs-extra: 11.2.0
       globby: 13.2.2
       jscodeshift: 0.15.1(@babel/preset-env@7.23.2)
       latest-version: 7.0.0
@@ -13988,6 +13988,15 @@ packages:
 
   /fs-extra@11.1.1:
     resolution: {integrity: sha512-MGIE4HOvQCeUCzmlHs0vXpih4ysz4wg9qiSAu6cd42lVwPbTM1TjV7RusoyQqMmk/95gdQZX72u+YW+c3eEpFQ==}
+    engines: {node: '>=14.14'}
+    dependencies:
+      graceful-fs: 4.2.11
+      jsonfile: 6.1.0
+      universalify: 2.0.1
+    dev: true
+
+  /fs-extra@11.2.0:
+    resolution: {integrity: sha512-PmDi3uwK5nFuXh7XDTlVnS17xJS7vW36is2+w3xcv8SVxiB4NyATf4ctkVY5bkSjX0Y4nbvZCq1/EjtEyr9ktw==}
     engines: {node: '>=14.14'}
     dependencies:
       graceful-fs: 4.2.11
