@@ -52,7 +52,7 @@
     "@ember/optional-features": "^2.0.0",
     "@ember/string": "^3.1.1",
     "@ember/test-helpers": "^3.2.1",
-    "@embroider/compat": "3.3.1",
+    "@embroider/compat": "3.4.0",
     "@embroider/core": "3.4.2",
     "@embroider/webpack": "3.2.1",
     "@fortawesome/ember-fontawesome": "^2.0.0",
@@ -143,7 +143,7 @@
   "dependencies": {
     "@ember/test-waiters": "^3.1.0",
     "@embroider/macros": "1.13.3",
-    "@embroider/router": "2.1.5",
+    "@embroider/router": "2.1.6",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "@nullvoxpopuli/horizon-theme": "workspace:*",
