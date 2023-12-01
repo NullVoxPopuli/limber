@@ -61,7 +61,6 @@
   "scripts": {
     "build": "concurrently 'npm:build:*'",
     "build:js": "rollup --config",
-    "build:types": "tsc --emitDeclarationOnly --noEmit false",
     "lint:types": "tsc --noEmit",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "rollup --config --watch",
@@ -72,7 +71,8 @@
     "lint:hbs": "pnpm -w exec lint hbs",
     "lint:hbs:fix": "pnpm -w exec lint hbs:fix",
     "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
-    "lint:prettier": "pnpm -w exec lint prettier"
+    "lint:prettier": "pnpm -w exec lint prettier",
+    "build:types": "tsc --emitDeclarationOnly --noEmit false"
   },
   "dependencies": {
     "@babel/helper-plugin-utils": "^7.22.5",
@@ -84,7 +84,7 @@
     "broccoli-file-creator": "^2.1.1",
     "change-case": "^5.3.0",
     "common-tags": "^1.8.2",
-    "content-tag": "github:NullVoxPopuli/content-tag#browser-support-dist",
+    "content-tag": "^1.2.1",
     "line-column": "^1.0.2",
     "magic-string": "^0.30.5",
     "mdast": "^3.0.0",
