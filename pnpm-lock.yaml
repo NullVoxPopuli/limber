@@ -1946,7 +1946,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
       vite:
-        specifier: ^5.0.2
+        specifier: ^5.0.4
         version: 5.0.4(@types/node@20.10.1)
 
   packages/syntax/glimdown/codemirror/tests:
@@ -2149,7 +2149,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
       vite:
-        specifier: ^5.0.2
+        specifier: ^5.0.4
         version: 5.0.4(@types/node@20.10.1)
 
   packages/syntax/glimmer-s-expression/lezer:
@@ -2331,7 +2331,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
       vite:
-        specifier: ^5.0.2
+        specifier: ^5.0.4
         version: 5.0.4(@types/node@20.10.1)
 
   packages/syntax/glimmer/lezer:
