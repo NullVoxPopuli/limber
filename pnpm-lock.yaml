@@ -724,8 +724,8 @@ importers:
         specifier: 6.11.1
         version: 6.11.1(@codemirror/language@6.9.3)(@codemirror/state@6.3.2)(@codemirror/view@6.22.1)(@lezer/common@1.1.1)
       '@codemirror/commands':
-        specifier: 6.3.1
-        version: 6.3.1
+        specifier: 6.3.2
+        version: 6.3.2
       '@codemirror/lang-html':
         specifier: ^6.4.7
         version: 6.4.7
@@ -4116,8 +4116,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@codemirror/commands@6.3.1:
-    resolution: {integrity: sha512-mgVour3mg9pnZUp53LzWQLPTRIBI3aZcoMJiJu6R0FadsLrydmMFxq/HMcI1zkElWWXcjaIZXemyog5IMKVIIA==}
+  /@codemirror/commands@6.3.2:
+    resolution: {integrity: sha512-tjoi4MCWDNxgIpoLZ7+tezdS9OEB6pkiDKhfKx9ReJ/XBcs2G2RXIu+/FxXBlWsPTsz6C9q/r4gjzrsxpcnqCQ==}
     dependencies:
       '@codemirror/language': 6.9.3
       '@codemirror/state': 6.3.2
@@ -10097,7 +10097,7 @@ packages:
     resolution: {integrity: sha512-J8j+nZ+CdWmIeFIGXEFbFPtpiYacFMDR8GlHK3IyHQJMCaVRfGx9NT+Hxivv1ckLWPvNdZqndbr/7lVhrf/Svg==}
     dependencies:
       '@codemirror/autocomplete': 6.11.1(@codemirror/language@6.9.3)(@codemirror/state@6.3.2)(@codemirror/view@6.22.1)(@lezer/common@1.1.1)
-      '@codemirror/commands': 6.3.1
+      '@codemirror/commands': 6.3.2
       '@codemirror/language': 6.9.3
       '@codemirror/lint': 6.4.2
       '@codemirror/search': 6.5.5
