@@ -4,7 +4,7 @@ Let's add some data.
 First, define a local variable:
 
 ```gjs
-let name = "world";
+let name = "World";
 
 <template>
   <h1>Hello World</h1>
