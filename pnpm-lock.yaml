@@ -110,6 +110,9 @@ importers:
       ember-container-query:
         specifier: 5.0.2
         version: 5.0.2(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)
+      ember-deep-tracked:
+        specifier: ^2.0.0
+        version: 2.0.0(@glint/template@1.2.1)
       ember-element-helper:
         specifier: ^0.8.5
         version: 0.8.5(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)
@@ -176,6 +179,9 @@ importers:
       tracked-built-ins:
         specifier: ^3.3.0
         version: 3.3.0
+      tracked-toolbox:
+        specifier: ^2.0.0
+        version: 2.0.0(@babel/core@7.23.3)(ember-source@5.4.0)
       unified:
         specifier: ^10.1.2
         version: 10.1.2
@@ -11823,6 +11829,18 @@ packages:
       - '@glint/environment-ember-loose'
       - '@glint/template'
       - ember-source
+      - supports-color
+    dev: false
+
+  /ember-deep-tracked@2.0.0(@glint/template@1.2.1):
+    resolution: {integrity: sha512-infYaX2IWg/UdA2dWmwEZwxsxXvkrtQrEKDQB4YwbBrkgkIjUSWkDVCLw0cOZrz+dNe2npjlqJNY3v+m14VIqg==}
+    dependencies:
+      '@babel/runtime': 7.23.5
+      '@embroider/addon-shim': 1.8.7
+      '@embroider/macros': 1.13.3(@glint/template@1.2.1)
+      ember-tracked-storage-polyfill: 1.0.0
+    transitivePeerDependencies:
+      - '@glint/template'
       - supports-color
     dev: false
 

@@ -66,6 +66,8 @@ module.exports = async function (defaults) {
         'ember-headlessui/components/menu',
         'ember-focus-trap/modifiers/focus-trap',
         'ember-primitives',
+        'ember-toolbox',
+        'ember-deep-tracked',
         'ember-resources',
         'ember-resources/core',
         'ember-resources/link',
