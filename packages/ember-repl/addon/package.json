@@ -93,7 +93,7 @@
     "rehype-stringify": "^9.0.4",
     "remark-gfm": "^3.0.1",
     "remark-parse": "^10.0.2",
-    "remark-rehype": "^10.1.0",
+    "remark-rehype": "^11.0.0",
     "unified": "^10.1.2",
     "unist-util-visit": "^5.0.0",
     "uuid": "^9.0.1",
