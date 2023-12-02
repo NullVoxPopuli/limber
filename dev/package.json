@@ -18,7 +18,7 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.3",
+    "@babel/core": "^7.23.5",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "@types/node": "^20.10.1",
     "@types/yargs": "^17.0.32",
