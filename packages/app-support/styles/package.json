@@ -16,7 +16,7 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.3",
+    "@babel/core": "^7.23.5",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "autoprefixer": "^10.4.16",
     "concurrently": "^8.2.2",

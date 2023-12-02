@@ -19,7 +19,7 @@
     "directory": "packages/syntax/glimmer-s-expression/lezer"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.3",
+    "@babel/core": "^7.23.5",
     "@babel/eslint-parser": "^7.23.3",
     "@glimdown/lezer-infra": "workspace:*",
     "@lezer/generator": "^1.5.1",
