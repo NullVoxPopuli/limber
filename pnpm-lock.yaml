@@ -430,8 +430,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       type-fest:
-        specifier: 4.8.2
-        version: 4.8.2
+        specifier: 4.8.3
+        version: 4.8.3
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -21435,8 +21435,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /type-fest@4.8.2:
-    resolution: {integrity: sha512-mcvrCjixA5166hSrUoJgGb9gBQN4loMYyj9zxuMs/66ibHNEFd5JXMw37YVDx58L4/QID9jIzdTBB4mDwDJ6KQ==}
+  /type-fest@4.8.3:
+    resolution: {integrity: sha512-//BaTm14Q/gHBn09xlnKNqfI8t6bmdzx2DXYfPBNofN0WUybCEUDcbCWcTa0oF09lzLjZgPphXAsvRiMK0V6Bw==}
     engines: {node: '>=16'}
     dev: true
 
