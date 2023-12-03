@@ -151,7 +151,7 @@
     "@nullvoxpopuli/limber-styles": "workspace:*",
     "@nullvoxpopuli/limber-transpilation": "workspace:*",
     "@xstate/inspect": "^0.8.0",
-    "browserslist": "^4.22.1",
+    "browserslist": "^4.22.2",
     "dompurify": "^3.0.6",
     "ember-auto-import": "^2.7.0",
     "ember-container-query": "5.0.2",
