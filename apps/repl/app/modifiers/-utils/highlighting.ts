@@ -28,8 +28,8 @@ export async function getHighlighter(): Promise<HLJSApi> {
 
   glimmer.setup(HIGHLIGHT);
 
-  HIGHLIGHT.registerAliases('gjs', { languageName: 'javascript' });
-  HIGHLIGHT.registerAliases('gts', { languageName: 'typescript' });
+  HIGHLIGHT.registerAliases('gjs', { languageName: 'glimmer-javascript' });
+  HIGHLIGHT.registerAliases('gts', { languageName: 'glimmer-javascript' });
   HIGHLIGHT.registerAliases('glimdown', { languageName: 'markdown' });
 
   return HIGHLIGHT;
