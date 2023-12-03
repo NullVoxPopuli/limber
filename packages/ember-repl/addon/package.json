@@ -134,7 +134,7 @@
     "concurrently": "^8.2.2",
     "ember-resources": "^6.4.2",
     "ember-source": "^5.4.0",
-    "ember-template-imports": "^3.4.2",
+    "ember-template-imports": "^4.0.0",
     "ember-template-lint": "^5.13.0",
     "eslint": "^8.54.0",
     "eslint-plugin-ember": "^11.11.1",
