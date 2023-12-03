@@ -11,7 +11,6 @@ import { service } from 'limber-ui';
 import { FormatMenu } from './format-menu';
 
 import type { TOC } from '@ember/component/template-only';
-import type { Send } from 'ember-statechart-component/glint';
 
 const buttonClasses = `
   block select-none py-2 px-3 text-white text-xs
@@ -37,7 +36,7 @@ export const Controls: TOC<{
     splitHorizontally: boolean;
     isMinimized: boolean;
     isMaximized: boolean;
-    send: Send<any>;
+    send: (eventName: string) => void;
   };
 }> = <template>
   {{#if @needsControls}}
