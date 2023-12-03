@@ -424,7 +424,7 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
       rollup:
-        specifier: ^4.6.0
+        specifier: ^4.6.1
         version: 4.6.1
       testem-failure-only-reporter:
         specifier: ^1.0.0
@@ -972,7 +972,7 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(prettier@3.1.0)
       rollup:
-        specifier: ^4.6.0
+        specifier: ^4.6.1
         version: 4.6.1
       rollup-plugin-copy:
         specifier: ^3.5.0
@@ -1504,7 +1504,7 @@ importers:
         specifier: ^0.2.5
         version: 0.2.5
       rollup:
-        specifier: ~4.6.0
+        specifier: ~4.6.1
         version: 4.6.1
       rollup-plugin-copy:
         specifier: ^3.5.0
@@ -1757,7 +1757,7 @@ importers:
         specifier: ^15.2.3
         version: 15.2.3(rollup@4.6.1)
       rollup:
-        specifier: ^4.6.0
+        specifier: ^4.6.1
         version: 4.6.1
     devDependencies:
       '@babel/core':
@@ -1901,7 +1901,7 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       rollup:
-        specifier: ^4.6.0
+        specifier: ^4.6.1
         version: 4.6.1
       rollup-plugin-ts:
         specifier: ^3.4.5
@@ -2025,7 +2025,7 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       rollup:
-        specifier: ^4.6.0
+        specifier: ^4.6.1
         version: 4.6.1
       typescript:
         specifier: ^5.2.2
@@ -2104,7 +2104,7 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       rollup:
-        specifier: ^4.6.0
+        specifier: ^4.6.1
         version: 4.6.1
       rollup-plugin-ts:
         specifier: ^3.4.5
@@ -2198,7 +2198,7 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       rollup:
-        specifier: ^4.6.0
+        specifier: ^4.6.1
         version: 4.6.1
       typescript:
         specifier: ^5.2.2
@@ -2286,7 +2286,7 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       rollup:
-        specifier: ^4.6.0
+        specifier: ^4.6.1
         version: 4.6.1
       rollup-plugin-ts:
         specifier: ^3.4.5
@@ -2401,7 +2401,7 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       rollup:
-        specifier: ^4.6.0
+        specifier: ^4.6.1
         version: 4.6.1
       rollup-plugin-ts:
         specifier: ^3.4.5
