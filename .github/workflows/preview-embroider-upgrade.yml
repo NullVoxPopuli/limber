@@ -24,7 +24,7 @@ jobs:
       - uses: wyvox/action-setup-pnpm@v3
       # - run: ./dev/update-unstable-embroider.sh
       - run: pnpm dev use-unstable-embroider
-      - run: pnpm install --fix-lockfile
+      - run: pnpm install --fix-lockfile --frozen-lockfile=false
       - uses: peter-evans/create-pull-request@v5
         with:
           # A PAT is required to trigger further workflows

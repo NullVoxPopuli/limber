@@ -8,10 +8,12 @@ const EMBROIDER_PACKAGES = [
   '@embroider/compat',
   '@embroider/macros',
   '@embroider/hbs-loader',
+  '@embroider/reverse-exports',
   '@embroider/router',
   '@embroider/shared-internals',
   '@embroider/test-setup',
   '@embroider/util',
+  '@embroider/vite',
   '@embroider/webpack',
 ];
 
