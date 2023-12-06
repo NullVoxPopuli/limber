@@ -14,17 +14,19 @@ module('Rendering | Compiled()', function (hooks) {
       hello there
     `;
 
-    render(<template>
-      {{#let (Compiled doc) as |state|}}
-        <div id="ready">{{state.isReady}}</div>
-        <div id="error">{{state.error}}</div>
-        <div id="component">
-          {{#if state.component}}
-            <state.component />
-          {{/if}}
-        </div>
-      {{/let}}
-    </template>);
+    render(
+      <template>
+        {{#let (Compiled doc) as |state|}}
+          <div id="ready">{{state.isReady}}</div>
+          <div id="error">{{state.error}}</div>
+          <div id="component">
+            {{#if state.component}}
+              <state.component />
+            {{/if}}
+          </div>
+        {{/let}}
+      </template>
+    );
 
     await renderSettled();
     assert.dom('#ready').hasText('false');

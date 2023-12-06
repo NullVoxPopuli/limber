@@ -5,6 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  prettier-plugin-ember-template-tag: ^2.0.0-0
   '@nullvoxpopuli/eslint-configs': ^3.2.2
   '@glimmer/component': ^1.1.2
   '@glimmer/tracking': ^1.1.2
@@ -60,8 +61,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-ember-template-tag:
-        specifier: ^1.1.0
-        version: 1.1.0(prettier@3.1.0)
+        specifier: ^2.0.0-0
+        version: 2.0.0-0(prettier@3.1.0)
       turbo:
         specifier: ^1.10.16
         version: 1.10.16
@@ -409,8 +410,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-ember-template-tag:
-        specifier: ^1.1.0
-        version: 1.1.0(prettier@3.1.0)
+        specifier: ^2.0.0-0
+        version: 2.0.0-0(prettier@3.1.0)
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -657,8 +658,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-ember-template-tag:
-        specifier: ^1.1.0
-        version: 1.1.0(prettier@3.1.0)
+        specifier: ^2.0.0-0
+        version: 2.0.0-0(prettier@3.1.0)
       qunit:
         specifier: ^2.20.0
         version: 2.20.0
@@ -718,8 +719,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-ember-template-tag:
-        specifier: ^1.1.0
-        version: 1.1.0(prettier@3.1.0)
+        specifier: ^2.0.0-0
+        version: 2.0.0-0(prettier@3.1.0)
       typescript:
         specifier: ^5.3.2
         version: 5.3.2
@@ -830,8 +831,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-ember-template-tag:
-        specifier: ^1.1.0
-        version: 1.1.0(prettier@3.1.0)
+        specifier: ^2.0.0-0
+        version: 2.0.0-0(prettier@3.1.0)
       recursive-copy:
         specifier: ^2.0.14
         version: 2.0.14
@@ -969,8 +970,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-ember-template-tag:
-        specifier: ^1.1.0
-        version: 1.1.0(prettier@3.1.0)
+        specifier: ^2.0.0-0
+        version: 2.0.0-0(prettier@3.1.0)
       rollup:
         specifier: ^4.6.1
         version: 4.6.1
@@ -1138,8 +1139,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-ember-template-tag:
-        specifier: ^1.1.0
-        version: 1.1.0(prettier@3.1.0)
+        specifier: ^2.0.0-0
+        version: 2.0.0-0(prettier@3.1.0)
       qunit:
         specifier: ^2.20.0
         version: 2.20.0
@@ -1184,8 +1185,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-ember-template-tag:
-        specifier: ^1.1.0
-        version: 1.1.0(prettier@3.1.0)
+        specifier: ^2.0.0-0
+        version: 2.0.0-0(prettier@3.1.0)
       tailwindcss:
         specifier: ^3.3.5
         version: 3.3.5
@@ -1257,8 +1258,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-ember-template-tag:
-        specifier: ^1.1.0
-        version: 1.1.0(prettier@3.1.0)
+        specifier: ^2.0.0-0
+        version: 2.0.0-0(prettier@3.1.0)
       typescript:
         specifier: ^5.3.2
         version: 5.3.2
@@ -1296,8 +1297,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-ember-template-tag:
-        specifier: ^1.1.0
-        version: 1.1.0(prettier@3.1.0)
+        specifier: ^2.0.0-0
+        version: 2.0.0-0(prettier@3.1.0)
       typescript:
         specifier: ^5.3.2
         version: 5.3.2
@@ -1498,8 +1499,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-ember-template-tag:
-        specifier: ^1.1.0
-        version: 1.1.0(prettier@3.1.0)
+        specifier: ^2.0.0-0
+        version: 2.0.0-0(prettier@3.1.0)
       publint:
         specifier: ^0.2.6
         version: 0.2.6
@@ -1688,8 +1689,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-ember-template-tag:
-        specifier: ^1.1.0
-        version: 1.1.0(prettier@3.1.0)
+        specifier: ^2.0.0-0
+        version: 2.0.0-0(prettier@3.1.0)
       qunit:
         specifier: ^2.20.0
         version: 2.20.0
@@ -1733,8 +1734,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-ember-template-tag:
-        specifier: ^1.1.0
-        version: 1.1.0(prettier@3.1.0)
+        specifier: ^2.0.0-0
+        version: 2.0.0-0(prettier@3.1.0)
       typescript:
         specifier: ^5.3.2
         version: 5.3.2
@@ -2452,8 +2453,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-ember-template-tag:
-        specifier: ^1.1.0
-        version: 1.1.0(prettier@3.1.0)
+        specifier: ^2.0.0-0
+        version: 2.0.0-0(prettier@3.1.0)
       typescript:
         specifier: ^5.3.2
         version: 5.3.2
@@ -2470,8 +2471,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-ember-template-tag:
-        specifier: ^1.1.0
-        version: 1.1.0(prettier@3.1.0)
+        specifier: ^2.0.0-0
+        version: 2.0.0-0(prettier@3.1.0)
 
   spikes/url-shortening:
     dependencies:
@@ -2507,8 +2508,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-ember-template-tag:
-        specifier: ^1.1.0
-        version: 1.1.0(prettier@3.1.0)
+        specifier: ^2.0.0-0
+        version: 2.0.0-0(prettier@3.1.0)
       typescript:
         specifier: ^5.3.2
         version: 5.3.2
@@ -6001,7 +6002,7 @@ packages:
       eslint-plugin-prettier: 4.2.1(eslint@8.54.0)(prettier@3.1.0)
       eslint-plugin-simple-import-sort: 10.0.0(eslint@8.54.0)
       prettier: 3.1.0
-      prettier-plugin-ember-template-tag: 1.1.0(prettier@3.1.0)
+      prettier-plugin-ember-template-tag: 2.0.0-0(prettier@3.1.0)
     transitivePeerDependencies:
       - eslint-config-prettier
       - eslint-import-resolver-node
@@ -6053,7 +6054,7 @@ packages:
       eslint-plugin-prettier: 4.2.1(eslint-config-prettier@9.1.0)(eslint@8.55.0)(prettier@3.1.0)
       eslint-plugin-simple-import-sort: 10.0.0(eslint@8.55.0)
       prettier: 3.1.0
-      prettier-plugin-ember-template-tag: 1.1.0(prettier@3.1.0)
+      prettier-plugin-ember-template-tag: 2.0.0-0(prettier@3.1.0)
     transitivePeerDependencies:
       - eslint-config-prettier
       - eslint-import-resolver-node
@@ -6104,7 +6105,7 @@ packages:
       eslint-plugin-qunit: 8.0.1(eslint@8.55.0)
       eslint-plugin-simple-import-sort: 10.0.0(eslint@8.55.0)
       prettier: 3.1.0
-      prettier-plugin-ember-template-tag: 1.1.0(prettier@3.1.0)
+      prettier-plugin-ember-template-tag: 2.0.0-0(prettier@3.1.0)
     transitivePeerDependencies:
       - eslint-config-prettier
       - eslint-import-resolver-node
@@ -6156,7 +6157,7 @@ packages:
       eslint-plugin-qunit: 8.0.1(eslint@8.55.0)
       eslint-plugin-simple-import-sort: 10.0.0(eslint@8.55.0)
       prettier: 3.1.0
-      prettier-plugin-ember-template-tag: 1.1.0(prettier@3.1.0)
+      prettier-plugin-ember-template-tag: 2.0.0-0(prettier@3.1.0)
     transitivePeerDependencies:
       - eslint-config-prettier
       - eslint-import-resolver-node
@@ -6207,7 +6208,7 @@ packages:
       eslint-plugin-prettier: 4.2.1(eslint-config-prettier@9.1.0)(eslint@8.55.0)(prettier@3.1.0)
       eslint-plugin-simple-import-sort: 10.0.0(eslint@8.55.0)
       prettier: 3.1.0
-      prettier-plugin-ember-template-tag: 1.1.0(prettier@3.1.0)
+      prettier-plugin-ember-template-tag: 2.0.0-0(prettier@3.1.0)
     transitivePeerDependencies:
       - eslint-config-prettier
       - eslint-import-resolver-node
@@ -6255,7 +6256,7 @@ packages:
       eslint-plugin-prettier: 4.2.1(eslint-config-prettier@9.1.0)(eslint@8.55.0)(prettier@3.1.0)
       eslint-plugin-simple-import-sort: 10.0.0(eslint@8.55.0)
       prettier: 3.1.0
-      prettier-plugin-ember-template-tag: 1.1.0(prettier@3.1.0)
+      prettier-plugin-ember-template-tag: 2.0.0-0(prettier@3.1.0)
     transitivePeerDependencies:
       - eslint-config-prettier
       - eslint-import-resolver-node
@@ -6303,7 +6304,7 @@ packages:
       eslint-plugin-prettier: 4.2.1(eslint-config-prettier@9.1.0)(eslint@8.55.0)(prettier@3.1.0)
       eslint-plugin-simple-import-sort: 10.0.0(eslint@8.55.0)
       prettier: 3.1.0
-      prettier-plugin-ember-template-tag: 1.1.0(prettier@3.1.0)
+      prettier-plugin-ember-template-tag: 2.0.0-0(prettier@3.1.0)
     transitivePeerDependencies:
       - eslint-config-prettier
       - eslint-import-resolver-node
@@ -19022,16 +19023,13 @@ packages:
       fast-diff: 1.3.0
     dev: true
 
-  /prettier-plugin-ember-template-tag@1.1.0(prettier@3.1.0):
-    resolution: {integrity: sha512-zJTC+NhEU0kHNnVh7OtcvMmkJmYTgFTist76FP9q07m9+WCvcaunR1sTFIOlGE9TH/5UGm6rlF86Umt9ouorAg==}
-    engines: {node: 16.* || 18.* || >= 20}
+  /prettier-plugin-ember-template-tag@2.0.0-0(prettier@3.1.0):
+    resolution: {integrity: sha512-5pmFeqsYK0gHoryB4UR4NM7FGLVPiloEciX9CCNPPRVO8FRAcrrbk24KQD/oTdLN3v7Fy5QUeQWnAXOzLTz9ww==}
+    engines: {node: 18.* || >= 20}
     peerDependencies:
       prettier: '>= 3.0.0'
     dependencies:
       '@babel/core': 7.23.5
-      '@glimmer/syntax': 0.84.3
-      ember-cli-htmlbars: 6.3.0
-      ember-template-imports: 3.4.2
       prettier: 3.1.0
     transitivePeerDependencies:
       - supports-color

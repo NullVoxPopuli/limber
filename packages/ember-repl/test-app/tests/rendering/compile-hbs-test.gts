@@ -25,11 +25,13 @@ module('compileHBS()', function (hooks) {
       return component;
     };
 
-    await render(<template>
-      {{#let (compile) as |CustomComponent|}}
-        <CustomComponent />
-      {{/let}}
-    </template>);
+    await render(
+      <template>
+        {{#let (compile) as |CustomComponent|}}
+          <CustomComponent />
+        {{/let}}
+      </template>
+    );
 
     assert.dom('output').exists({ count: 2 });
     assert.dom().containsText('1');
@@ -52,11 +54,13 @@ module('compileHBS()', function (hooks) {
       return component;
     };
 
-    await render(<template>
-      {{#let (compile) as |CustomComponent|}}
-        <CustomComponent />
-      {{/let}}
-    </template>);
+    await render(
+      <template>
+        {{#let (compile) as |CustomComponent|}}
+          <CustomComponent />
+        {{/let}}
+      </template>
+    );
 
     assert.dom().containsText('Hi there!');
   });
@@ -82,11 +86,13 @@ module('compileHBS()', function (hooks) {
         return component;
       };
 
-      await render(<template>
-        {{#let (compile) as |CustomComponent|}}
-          <Await @promise={{CustomComponent}} />
-        {{/let}}
-      </template>);
+      await render(
+        <template>
+          {{#let (compile) as |CustomComponent|}}
+            <Await @promise={{CustomComponent}} />
+          {{/let}}
+        </template>
+      );
 
       assert.dom('output').exists({ count: 0 });
     });
