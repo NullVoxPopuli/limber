@@ -7,6 +7,7 @@ import * as _tracking from '@glimmer/tracking';
 import * as _application from '@ember/application';
 import * as _array from '@ember/array';
 import * as _EmberComponent from '@ember/component';
+import * as _EmberComponentHelper from '@ember/component/helper';
 import _TO from '@ember/component/template-only';
 import * as _debug from '@ember/debug';
 import * as _destroyable from '@ember/destroyable';
@@ -26,6 +27,7 @@ export const modules = {
   '@ember/application': _application,
   '@ember/array': _array,
   '@ember/component': _EmberComponent,
+  '@ember/component/helper': _EmberComponentHelper,
   '@ember/component/template-only': _TO,
   '@ember/debug': _debug,
   '@ember/destroyable': _destroyable,
