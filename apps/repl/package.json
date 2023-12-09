@@ -183,7 +183,7 @@
     "unist-util-flatmap": "^1.0.0",
     "unist-util-visit": "^5.0.0",
     "webpack-bundle-analyzer": "^4.10.1",
-    "ws": "^8.14.2",
+    "ws": "^8.15.0",
     "xstate": "4.35.4"
   }
 }
