@@ -97,7 +97,7 @@ importers:
         version: link:../../packages/app-support/transpilation
       '@xstate/inspect':
         specifier: ^0.8.0
-        version: 0.8.0(ws@8.14.2)(xstate@4.35.4)
+        version: 0.8.0(ws@8.15.0)(xstate@4.35.4)
       browserslist:
         specifier: ^4.22.2
         version: 4.22.2
@@ -195,8 +195,8 @@ importers:
         specifier: ^4.10.1
         version: 4.10.1
       ws:
-        specifier: ^8.14.2
-        version: 8.14.2
+        specifier: ^8.15.0
+        version: 8.15.0
       xstate:
         specifier: 4.35.4
         version: 4.35.4
@@ -7896,7 +7896,7 @@ packages:
     engines: {node: '>=10.0.0'}
     dev: true
 
-  /@xstate/inspect@0.8.0(ws@8.14.2)(xstate@4.35.4):
+  /@xstate/inspect@0.8.0(ws@8.15.0)(xstate@4.35.4):
     resolution: {integrity: sha512-wSkFeOnp+7dhn+zTThO0M4D2FEqZN9lGIWowJu5JLa2ojjtlzRwK8SkjcHZ4rLX8VnMev7kGjgQLrGs8kxy+hw==}
     peerDependencies:
       '@types/ws': ^8.0.0
@@ -7907,7 +7907,7 @@ packages:
         optional: true
     dependencies:
       fast-safe-stringify: 2.1.1
-      ws: 8.14.2
+      ws: 8.15.0
       xstate: 4.35.4
     dev: false
 
@@ -20237,7 +20237,7 @@ packages:
     dependencies:
       jszip: 3.10.1
       tmp: 0.2.1
-      ws: 8.14.2
+      ws: 8.15.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -22956,8 +22956,8 @@ packages:
         optional: true
     dev: true
 
-  /ws@8.14.2:
-    resolution: {integrity: sha512-wEBG1ftX4jcglPxgFCMJmZ2PLtSbJ2Peg6TmpJFTbe9GZYOQCDPdMYu/Tm0/bGZkw8paZnJY45J4K2PZrLYq8g==}
+  /ws@8.15.0:
+    resolution: {integrity: sha512-H/Z3H55mrcrgjFwI+5jKavgXvwQLtfPCUEp6pi35VhoB0pfcHnSoyuTzkBEZpzq49g1193CUEwIvmsjcotenYw==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
