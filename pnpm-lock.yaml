@@ -1862,8 +1862,8 @@ importers:
         specifier: ^7.23.3
         version: 7.23.3(@babel/core@7.23.6)(eslint@8.55.0)
       '@codemirror/buildhelper':
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^1.0.1
+        version: 1.0.1
       '@codemirror/language':
         specifier: ^6.9.3
         version: 6.9.3
@@ -2065,8 +2065,8 @@ importers:
         specifier: ^7.23.3
         version: 7.23.3(@babel/core@7.23.6)(eslint@8.55.0)
       '@codemirror/buildhelper':
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^1.0.1
+        version: 1.0.1
       '@codemirror/view':
         specifier: ^6.22.2
         version: 6.22.2
@@ -2250,8 +2250,8 @@ importers:
         specifier: ^7.23.3
         version: 7.23.3(@babel/core@7.23.6)(eslint@8.55.0)
       '@codemirror/buildhelper':
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^1.0.1
+        version: 1.0.1
       '@codemirror/language':
         specifier: ^6.9.3
         version: 6.9.3
@@ -2368,8 +2368,8 @@ importers:
         specifier: ^7.23.3
         version: 7.23.3(@babel/core@7.23.6)(eslint@8.55.0)
       '@codemirror/buildhelper':
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^1.0.1
+        version: 1.0.1
       '@codemirror/language':
         specifier: ^6.9.3
         version: 6.9.3
@@ -4290,12 +4290,12 @@ packages:
       '@codemirror/view': 6.22.2
       '@lezer/common': 1.1.2
 
-  /@codemirror/buildhelper@1.0.0:
-    resolution: {integrity: sha512-tjVnizCUsDJHWZFNjQWBl4DAZrfLGSUmFEvjMkfom4eK5zyByiCITfrNHZOYZgi4xMWk2qJHS6LBWCq0IBWtmQ==}
+  /@codemirror/buildhelper@1.0.1:
+    resolution: {integrity: sha512-RbXu1opzxeeilMzKunOFkM83rRBqvsAPax36sa3JW+jVxL88E7aK2bFi3ugbQUNogCFyxuNk2m9zeyY63kFcPQ==}
     hasBin: true
     dependencies:
       '@lezer/generator': 1.5.1
-      '@marijn/buildtool': 0.1.6
+      '@marijn/buildtool': 1.0.0
       '@marijn/testtool': 0.1.1
     transitivePeerDependencies:
       - bufferutil
@@ -6129,14 +6129,14 @@ packages:
       read-yaml-file: 1.1.0
     dev: true
 
-  /@marijn/buildtool@0.1.6:
-    resolution: {integrity: sha512-rcA2wljsM24MFAwx2U5vSBrt7IdIaPh4WPRfJPS8PuCUlbuQ8Pmky4c/ec00v3YFu90rZSbkVLnPuCeb/mUEng==}
+  /@marijn/buildtool@1.0.0:
+    resolution: {integrity: sha512-yweS09UWiKGAIvteZcE0H/ddDPOjetI4lzO491z0Lph+hgV6RDF0sEZuZv3K51jwz+UU3rQVskjebHCgNxDE6A==}
     dependencies:
       '@types/mocha': 9.1.1
       acorn: 8.11.2
       acorn-walk: 8.3.0
-      rollup: 3.29.4
-      rollup-plugin-dts: 5.3.1(rollup@3.29.4)(typescript@5.3.3)
+      rollup: 4.8.0
+      rollup-plugin-dts: 6.1.0(rollup@4.8.0)(typescript@5.3.3)
       typescript: 5.3.3
     dev: true
 
@@ -6543,7 +6543,7 @@ packages:
         optional: true
     dependencies:
       '@babel/core': 7.23.6
-      cosmiconfig: 8.3.6(typescript@5.2.2)
+      cosmiconfig: 8.3.6(typescript@5.3.3)
       eslint: 8.55.0
       eslint-import-resolver-typescript: 3.6.1(eslint-plugin-import@2.29.0)(eslint@8.55.0)
       eslint-plugin-decorator-position: 5.0.2(@babel/eslint-parser@7.23.3)(eslint@8.55.0)
@@ -20277,18 +20277,18 @@ packages:
       del: 5.1.0
     dev: true
 
-  /rollup-plugin-dts@5.3.1(rollup@3.29.4)(typescript@5.3.3):
-    resolution: {integrity: sha512-gusMi+Z4gY/JaEQeXnB0RUdU82h1kF0WYzCWgVmV4p3hWXqelaKuCvcJawfeg+EKn2T1Ie+YWF2OiN1/L8bTVg==}
-    engines: {node: '>=v14.21.3'}
+  /rollup-plugin-dts@6.1.0(rollup@4.8.0)(typescript@5.3.3):
+    resolution: {integrity: sha512-ijSCPICkRMDKDLBK9torss07+8dl9UpY9z1N/zTeA1cIqdzMlpkV3MOOC7zukyvQfDyxa1s3Dl2+DeiP/G6DOw==}
+    engines: {node: '>=16'}
     peerDependencies:
-      rollup: ^3.0
+      rollup: ^3.29.4 || ^4
       typescript: '*'
     peerDependenciesMeta:
       rollup:
         optional: true
     dependencies:
       magic-string: 0.30.5
-      rollup: 3.29.4
+      rollup: 4.8.0
       typescript: 5.3.3
     optionalDependencies:
       '@babel/code-frame': 7.23.5
@@ -20382,14 +20382,6 @@ packages:
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.3
-
-  /rollup@3.29.4:
-    resolution: {integrity: sha512-oWzmBZwvYrU0iJHtDmhsm662rC15FRXmcjCk1xD771dFDx5jJ02ufAQQTn0etB2emNk4J9EZg/yWKpsn9BWGRw==}
-    engines: {node: '>=14.18.0', npm: '>=8.0.0'}
-    hasBin: true
-    optionalDependencies:
-      fsevents: 2.3.3
-    dev: true
 
   /rollup@4.8.0:
     resolution: {integrity: sha512-NpsklK2fach5CdI+PScmlE5R4Ao/FSWtF7LkoIrHDxPACY/xshNasPsbpG0VVHxUTbf74tJbVT4PrP8JsJ6ZDA==}
