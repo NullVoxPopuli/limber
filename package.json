@@ -20,7 +20,7 @@
   },
   "volta": {
     "node": "20.10.0",
-    "pnpm": "8.12.0"
+    "pnpm": "8.12.1"
   },
   "devDependencies": {
     "@babel/core": "^7.23.6",
@@ -35,7 +35,7 @@
     "prettier-plugin-ember-template-tag": "^1.1.0",
     "turbo": "^1.11.2"
   },
-  "packageManager": "pnpm@8.12.0",
+  "packageManager": "pnpm@8.12.1",
   "pnpm": {
     "patchedDependencies": {
       "@changesets/assemble-release-plan@5.2.4": "patches/@changesets__assemble-release-plan@5.2.4.patch"
