@@ -97,7 +97,7 @@ importers:
         version: link:../../packages/app-support/transpilation
       '@xstate/inspect':
         specifier: ^0.8.0
-        version: 0.8.0(ws@8.15.0)(xstate@4.35.4)
+        version: 0.8.0(ws@8.15.1)(xstate@4.35.4)
       browserslist:
         specifier: ^4.22.2
         version: 4.22.2
@@ -195,8 +195,8 @@ importers:
         specifier: ^4.10.1
         version: 4.10.1
       ws:
-        specifier: ^8.15.0
-        version: 8.15.0
+        specifier: ^8.15.1
+        version: 8.15.1
       xstate:
         specifier: 4.35.4
         version: 4.35.4
@@ -6571,7 +6571,7 @@ packages:
         optional: true
     dependencies:
       '@babel/core': 7.23.6
-      cosmiconfig: 8.3.6(typescript@5.2.2)
+      cosmiconfig: 8.3.6(typescript@5.3.3)
       eslint: 8.55.0
       eslint-import-resolver-typescript: 3.6.1(eslint-plugin-import@2.29.0)(eslint@8.55.0)
       eslint-plugin-decorator-position: 5.0.2(@babel/eslint-parser@7.23.3)(eslint@8.55.0)
@@ -8231,7 +8231,7 @@ packages:
     engines: {node: '>=10.0.0'}
     dev: true
 
-  /@xstate/inspect@0.8.0(ws@8.15.0)(xstate@4.35.4):
+  /@xstate/inspect@0.8.0(ws@8.15.1)(xstate@4.35.4):
     resolution: {integrity: sha512-wSkFeOnp+7dhn+zTThO0M4D2FEqZN9lGIWowJu5JLa2ojjtlzRwK8SkjcHZ4rLX8VnMev7kGjgQLrGs8kxy+hw==}
     peerDependencies:
       '@types/ws': ^8.0.0
@@ -8242,7 +8242,7 @@ packages:
         optional: true
     dependencies:
       fast-safe-stringify: 2.1.1
-      ws: 8.15.0
+      ws: 8.15.1
       xstate: 4.35.4
     dev: false
 
@@ -20602,7 +20602,7 @@ packages:
     dependencies:
       jszip: 3.10.1
       tmp: 0.2.1
-      ws: 8.15.0
+      ws: 8.15.1
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -23319,8 +23319,8 @@ packages:
         optional: true
     dev: true
 
-  /ws@8.15.0:
-    resolution: {integrity: sha512-H/Z3H55mrcrgjFwI+5jKavgXvwQLtfPCUEp6pi35VhoB0pfcHnSoyuTzkBEZpzq49g1193CUEwIvmsjcotenYw==}
+  /ws@8.15.1:
+    resolution: {integrity: sha512-W5OZiCjXEmk0yZ66ZN82beM5Sz7l7coYxpRkzS+p9PP+ToQry8szKh+61eNktr7EA9DOwvFGhfC605jDHbP6QQ==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
