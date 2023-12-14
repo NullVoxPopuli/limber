@@ -6,17 +6,19 @@ import type { Babel } from './types.ts';
 
 const compiler = importSync('ember-source/dist/ember-template-compiler.js');
 
-import { createPreprocessor } from 'content-tag/standalone';
-
-let processor;
+let processor: any;
 let fetchingPromise: Promise<any>;
 
 export async function preprocess(input: string, name: string): Promise<string> {
   if (!fetchingPromise) {
-    fetchingPromise = createPreprocessor();
+    fetchingPromise = import('content-tag');
   }
 
-  processor = await fetchingPromise;
+  if (!processor) {
+    let { Preprocessor } = await fetchingPromise;
+
+    processor = new Preprocessor();
+  }
 
   return processor.process(input, `${name}.js`);
 }
