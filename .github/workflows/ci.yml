@@ -185,7 +185,7 @@ jobs:
       limberUrl: ${{ steps.limber.outputs.url }}
       tutorialUrl: ${{ steps.tutorial.outputs.url }}
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         name: deploy-prep-dist
       - name: Publish ${{ matrix.app.id }}
         uses: cloudflare/pages-action@v1.5.0
