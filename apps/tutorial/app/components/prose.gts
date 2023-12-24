@@ -1,13 +1,11 @@
-import { on } from '@ember/modifier';
-
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { modifier } from 'ember-modifier';
 import { StickyFooter } from 'ember-primitives';
-import { cell } from 'ember-resources';
 
-import { Button, ExternalLink, Link, service } from 'limber-ui';
+import { ExternalLink, Link, service } from 'limber-ui';
 
 import { highlight } from './highlight';
+import { ShowMe } from './show-me';
 
 import type { TOC } from '@ember/component/template-only';
 
@@ -19,28 +17,6 @@ export const resetScroll = modifier((element, [prose]) => {
   prose;
   element.scrollTo(0, 0);
 });
-
-const hideText = cell(true);
-const hoverShowText = () => (hideText.current = false);
-const hideShowText = () => (hideText.current = true);
-
-const ShowMe: TOC<{ Args: { onClick: () => void } }> = <template>
-  <Button
-    @variant="primary"
-    class="w-[86px] hover:w-[166px] focus-visible:w-[166px] whitespace-nowrap transition-all overflow-hidden text-left"
-    style="transition-duration: 50ms"
-    {{on "click" @onClick}}
-    {{on "mouseenter" hoverShowText}}
-    {{on "mouseleave" hideShowText}}
-    {{on "focusin" hoverShowText}}
-    {{on "focusout" hideShowText}}
-  >
-    <span>
-      Show me
-      <span class="{{if hideText.current 'sr-only'}}">the answer</span>
-    </span>
-  </Button>
-</template>;
 
 export const Prose: TOC<{ Element: HTMLDivElement }> = <template>
   {{#let (service "docs") as |docs|}}
