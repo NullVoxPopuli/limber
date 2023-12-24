@@ -7,7 +7,7 @@ function handleInnerClick(clickEvent) {
 }
 
 let Inner = <template>
-  <button {{on 'click' handleInnerClick}}>
+  <button type="button" {{on 'click' handleInnerClick}}>
     Click me
   </button>
 </template>;

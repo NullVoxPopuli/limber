@@ -1,7 +1,7 @@
 import { on } from '@ember/modifier';
 
 const Button = <template>
-  <button ...attributes aria-disabled={{@isDisabled}}>{{yield}}</button>
+  <button ...attributes aria-disabled={{@isDisabled}} type="button">{{yield}}</button>
 </template>;
 
 function reportClick(event) {

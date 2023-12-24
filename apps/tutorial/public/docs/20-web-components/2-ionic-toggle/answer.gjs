@@ -10,7 +10,7 @@ class Demo extends Component {
       toggle the state!
     </ion-toggle>
     <br><br>
-    <button {{on 'click' this.toggle}}>external change</button>
+    <button type="button" {{on 'click' this.toggle}}>external change</button>
   </template>
 
   @tracked isOn = true;

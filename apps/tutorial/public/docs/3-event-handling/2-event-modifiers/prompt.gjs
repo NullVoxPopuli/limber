@@ -8,7 +8,7 @@ function handleClick(mouseEvent) {
 }
 
 <template>
-  <button {{on 'click' handleClick}}>
+  <button type="button" {{on 'click' handleClick}}>
     Click me!
   </button>
 

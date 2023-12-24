@@ -4,7 +4,7 @@ import { cell } from 'ember-resources';
 let count = cell(0);
 
 let SomeComponent = <template>
-  <button>
+  <button type="button">
     Click me
   </button>
 </template>;

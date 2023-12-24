@@ -6,7 +6,7 @@ class Demo extends Component {
   <template>
     isOn: {{this.isOn}}
 
-    <button {{on 'click' this.toggle}}>external change</button>
+    <button type="button" {{on 'click' this.toggle}}>external change</button>
   </template>
 
   @tracked isOn = true;

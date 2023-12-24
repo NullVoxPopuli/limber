@@ -13,11 +13,11 @@ const toggle = () => user.loggedIn = !user.loggedIn;
   Logged in: {{user.loggedIn}}<br>
 
   {{#if user.loggedIn}}
-    <button {{on 'click' toggle}}>
+    <button type="button" {{on 'click' toggle}}>
       Log out
     </button>
   {{else}}
-    <button {{on 'click' toggle}}>
+    <button type="button" {{on 'click' toggle}}>
       Log in
     </button>
   {{/if}}

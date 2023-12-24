@@ -10,11 +10,11 @@ const notLoggedIn = () => !user.loggedIn;
 const toggle = () => user.loggedIn = !user.loggedIn;
 
 <template>
-  <button {{on 'click' toggle}}>
+  <button type="button" {{on 'click' toggle}}>
     Log out
   </button>
 
-  <button {{on 'click' toggle}}>
+  <button type="button" {{on 'click' toggle}}>
     Log in
   </button>
 </template>

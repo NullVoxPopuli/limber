@@ -9,14 +9,14 @@ export default class Demo extends Component {
       {{#each this.planets key="name" as |planet|}}
         {{ (this.iterated planet) }}
         <li>
-          <button {{on 'click' (fn this.remove planet)}}>remove</button>
+          <button type="button" {{on 'click' (fn this.remove planet)}}>remove</button>
           {{planet.name}}
         </li>
       {{/each}}
     </ul>
 
     {{#if (hasMorePlanets this.planets)}}
-      <button {{on 'click' this.add}}>
+      <button type="button" {{on 'click' this.add}}>
         add
       </button>
     {{/if}}

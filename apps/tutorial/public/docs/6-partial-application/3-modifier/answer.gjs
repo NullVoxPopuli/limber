@@ -6,7 +6,7 @@ let handler = (event) => count.current++;
 
 <template>
   {{#let (modifier on 'click' handler) as |preWired|}}
-    <button {{preWired}}>click me</button>
+    <button type="button" {{preWired}}>click me</button>
     <br>Clicked {{count.current}} times
   {{/let}}
 </template>

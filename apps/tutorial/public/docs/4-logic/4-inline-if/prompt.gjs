@@ -25,5 +25,5 @@ let isDark = cell(true);
   <Demo @background={{dark}} />
 
   <br>
-  <button {{on 'click' isDark.toggle}}>Toggle Mode</button><br>
+  <button type="button" {{on 'click' isDark.toggle}}>Toggle Mode</button><br>
 </template>;

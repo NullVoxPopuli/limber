@@ -9,7 +9,7 @@ function handleInnerClick(clickEvent) {
 }
 
 let Inner = <template>
-  <button ...attributes {{on 'click' handleInnerClick}}>
+  <button ...attributes type="button" {{on 'click' handleInnerClick}}>
     Click me
   </button>
 </template>;

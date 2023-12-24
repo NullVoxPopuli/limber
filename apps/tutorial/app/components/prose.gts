@@ -1,4 +1,3 @@
-
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { modifier } from 'ember-modifier';
 import { StickyFooter } from 'ember-primitives';

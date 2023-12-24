@@ -16,11 +16,11 @@ export default class Demo extends Component {
         {{ (this.iterated planet) }}
         <li>
           {{planet.name}}
-          <button {{on 'click' (fn this.remove planet)}}>remove</button>
+          <button type="button" {{on 'click' (fn this.remove planet)}}>remove</button>
         </li>
       {{/each}}
     </ul>
-    <button {{on 'click' this.add}}>
+    <button type="button" {{on 'click' this.add}}>
       add data
     </button>
   </template>

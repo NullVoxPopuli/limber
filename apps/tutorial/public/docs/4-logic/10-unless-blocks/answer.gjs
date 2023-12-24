@@ -1,9 +1,9 @@
 let condition = true;
 
 <template>
-  {{#unless condition}}
-    the condition is false
-  {{else}}
+  {{#if condition}}
     the condition is true
-  {{/unless}}
+  {{else}}
+    the condition is false
+  {{/if}}
 </template>

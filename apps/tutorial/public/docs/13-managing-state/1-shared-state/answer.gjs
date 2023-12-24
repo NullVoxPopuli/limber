@@ -12,15 +12,15 @@ class Count {
 let count = new Count();
 
 let Incrementer = <template>
-  <button {{on "click" count.increment}}>+</button>
+  <button type="button" {{on "click" count.increment}}>+</button>
 </template>;
 
 let Decrementer = <template>
-  <button {{on "click" count.decrement}}>-</button>
+  <button type="button" {{on "click" count.decrement}}>-</button>
 </template>;
 
 let Resetter = <template>
-  <button {{on "click" count.reset}}>Reset</button>
+  <button type="button" {{on "click" count.reset}}>Reset</button>
 </template>;
 
 
