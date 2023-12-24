@@ -68,7 +68,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: wyvox/action-setup-pnpm@v3
       - run: pnpm turbo build 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: deploy-prep-dist
           if-no-files-found: error
