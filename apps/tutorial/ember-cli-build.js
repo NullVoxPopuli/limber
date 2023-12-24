@@ -43,9 +43,9 @@ module.exports = async function (defaults) {
     packagerOptions: {
       webpackConfig: {
         plugins: [
-          copyToPublic.webpack({ src: 'docs' }),
           createTutorialManifest.webpack({
-            src: 'docs',
+            src: 'public/docs',
+            dest: 'docs',
             /**
              * Pending: https://github.com/emberjs/ember.js/issues/20419
              */
