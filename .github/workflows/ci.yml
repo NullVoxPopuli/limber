@@ -95,7 +95,7 @@ jobs:
         - Firefox
 
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     needs: [install_dependencies]
 
     steps:
@@ -110,7 +110,7 @@ jobs:
           echo "NPM: $( npm --version )"
           echo "pnpm: $( pnpm --version )"
       - name: Test
-        run: pnpm turbo test:ember --log-order=stream --concurrency=1
+        run: pnpm turbo test:ember
         env:
           CI_BROWSER: ${{ matrix.ci_browser }}
 

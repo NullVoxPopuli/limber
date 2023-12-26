@@ -10,7 +10,7 @@ import { ShowMe } from './show-me';
 import type { TOC } from '@ember/component/template-only';
 
 const editPath = (path: string | undefined) =>
-  `https://github.com/NullVoxPopuli/limber/tree/main/apps/tutorial/docs${path}`;
+  `https://github.com/NullVoxPopuli/limber/tree/main/apps/tutorial/public/docs${path}`;
 const not = (x: unknown) => !x;
 
 export const resetScroll = modifier((element, [prose]) => {
