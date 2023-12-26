@@ -26,7 +26,7 @@ module.exports = async function (defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  const { createTutorialManifest } = await import('./build-plugins.mjs');
+  const { createManifest } = await import('kolay/build');
 
   const { Webpack } = require('@embroider/webpack');
 
@@ -43,7 +43,7 @@ module.exports = async function (defaults) {
     packagerOptions: {
       webpackConfig: {
         plugins: [
-          createTutorialManifest.webpack({
+          createManifest.webpack({
             src: 'public/docs',
             dest: 'docs',
             /**

@@ -146,6 +146,9 @@ importers:
       html-to-image:
         specifier: ^1.11.11
         version: 1.11.11
+      kolay:
+        specifier: ^0.0.1
+        version: 0.0.1
       limber-ui:
         specifier: workspace:*
         version: file:packages/app-support/limber-ui/addon(@ember/test-waiters@3.1.0)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.2.1)(ember-async-data@1.0.3)(ember-modifier@4.1.0)(ember-primitives@0.10.1)(ember-resources@6.4.2)(ember-source@5.4.0)(rollup@4.9.0)(webpack@5.89.0)
@@ -478,6 +481,9 @@ importers:
       highlightjs-glimmer:
         specifier: ^2.2.1
         version: 2.2.1(highlight.js@11.9.0)
+      kolay:
+        specifier: ^0.0.1
+        version: 0.0.1
       limber-ui:
         specifier: workspace:*
         version: file:packages/app-support/limber-ui/addon(@ember/test-waiters@3.1.0)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/template@1.2.1)(ember-async-data@1.0.3)(ember-modifier@4.1.0)(ember-primitives@0.10.1)(ember-resources@6.4.2)(ember-source@5.4.0)(webpack@5.89.0)
@@ -16936,6 +16942,13 @@ packages:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
 
+  /kolay@0.0.1:
+    resolution: {integrity: sha512-9uyvhQecVbFXgDLdNh2eIC2YZDGB1eCw03iUnzFagneSmbZ09KzdCaq1pXeemOq2Xgsw54sSPy4QfFaBjipe4g==}
+    dependencies:
+      globby: 14.0.0
+      unplugin: 1.6.0
+    dev: false
+
   /language-subtag-registry@0.3.22:
     resolution: {integrity: sha512-tN0MCzyWnoz/4nHS6uxdlFWoUZT7ABptwKPQ52Ea7URk6vll88bWBVhodtnlfEuCcKWNGoc+uGbw1cwa9IKh/w==}
     dev: true
@@ -22500,6 +22513,15 @@ packages:
       webpack-virtual-modules: 0.6.0
     dev: true
 
+  /unplugin@1.6.0:
+    resolution: {integrity: sha512-BfJEpWBu3aE/AyHx8VaNE/WgouoQxgH9baAiH82JjX8cqVyi3uJQstqwD5J+SZxIK326SZIhsSZlALXVBCknTQ==}
+    dependencies:
+      acorn: 8.11.2
+      chokidar: 3.5.3
+      webpack-sources: 3.2.3
+      webpack-virtual-modules: 0.6.1
+    dev: false
+
   /unset-value@1.0.0:
     resolution: {integrity: sha512-PcA2tsuGSF9cnySLHTLSh2qrQiJ70mn+r+Glzxv2TWZblxsxCC52BDlZoPCsz7STd9pN7EZetkWZBAvk4cgZdQ==}
     engines: {node: '>=0.10.0'}
@@ -23027,6 +23049,10 @@ packages:
   /webpack-virtual-modules@0.6.0:
     resolution: {integrity: sha512-KnaMTE6EItz/f2q4Gwg5/rmeKVi79OR58NoYnwDJqCk9ywMtTGbBnBcfoBtN4QbYu0lWXvyMoH2Owxuhe4qI6Q==}
     dev: true
+
+  /webpack-virtual-modules@0.6.1:
+    resolution: {integrity: sha512-poXpCylU7ExuvZK8z+On3kX+S8o/2dQ/SVYueKA0D4WEMXROXgY8Ez50/bQEUmvoSMMrWcrJqCHuhAbsiwg7Dg==}
+    dev: false
 
   /webpack@5.89.0:
     resolution: {integrity: sha512-qyfIC10pOr70V+jkmud8tMfajraGCZMBWJtrmuBymQKCrLTRejBI8STDp1MCyZu/QTdZSeacCQYpYNQVOzX5kw==}
