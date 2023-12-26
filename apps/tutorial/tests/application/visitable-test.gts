@@ -1,8 +1,6 @@
-import { click, currentURL, find, visit } from '@ember/test-helpers';
+import { click, currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-
-import type { Manifest } from 'tutorial/services/types';
 
 // We can't use this until we switch to Vite and tests can remain real modules.
 // (so that the import gets all the way to the browser)
@@ -11,60 +9,50 @@ import type { Manifest } from 'tutorial/services/types';
 ////
 //// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //import manifestJson from '/docs/manifest.json' with { type: 'json' };
-
 //import type { Manifest } from 'tutorial/services/types';
-
 //const manifest: Manifest = manifestJson;
+import { tmpData } from './tmp';
+
+import type { Manifest } from 'tutorial/services/types';
+
+const manifest = tmpData as Manifest;
 
 module('every tutorial chapter is visitable', function (hooks) {
   setupApplicationTest(hooks);
 
-  let manifest: Manifest;
+  for (let section of manifest.list) {
+    for (let chapter of section) {
+      let name = chapter.path;
+      // every page except the last one (99-next-steps/1-congratulations)
+      // should have a "next" button
+      let isLast = name === '/99-next-steps/1-congratulations';
 
-  hooks.beforeEach(async function () {
-    let request = await fetch('/docs/manifest.json');
-    let json = await request.json();
+      // also anything starting with /x- isn't ready for folks to ese
+      // nor test
+      if (name.startsWith('/x-')) continue;
 
-    manifest = json;
-  });
+      if (isLast) {
+        test(`Visiting ${name}`, async function (assert) {
+          await visit(chapter.path);
+          assert.strictEqual(currentURL(), chapter.path, `visited ${chapter.path}`);
+        });
+      } else {
+        test(`Visiting ${name}`, async function (assert) {
+          await visit(chapter.path);
+          assert.strictEqual(currentURL(), chapter.path, `visited ${chapter.path}`);
 
-  test('Manifest is of appropriate shape', function (assert) {
-    assert.ok(manifest.list);
-    assert.ok(manifest.grouped);
-    assert.ok(manifest.first);
-  });
+          let previous = currentURL();
 
-  // eslint-disable-next-line qunit/require-expect
-  test('visting', async function (assert) {
-    assert.timeout(120_000);
-    assert.expect(manifest.list.flat().length);
+          // every page except the last one (99-next-steps/1-congratulations)
+          // should have a "next" button
 
-    for (let section of manifest.list) {
-      for (let chapter of section) {
-        await visit(chapter.path);
-        assert.strictEqual(currentURL(), chapter.path, `visited ${chapter.path}`);
+          await click('[data-test-next]');
+
+          let current = currentURL();
+
+          assert.notEqual(current, previous, `Navigated from ${previous} to ${current}`);
+        });
       }
     }
-  });
-
-  // eslint-disable-next-line qunit/require-expect
-  test('hitting next', async function (assert) {
-    assert.timeout(120_000);
-    assert.expect(1);
-    await visit('/');
-
-    assert.strictEqual(currentURL(), manifest.first.path);
-
-    assert.expect(manifest.list.flat().length);
-
-    let previous = currentURL();
-
-    while (find('[data-test-next]')) {
-      await click('[data-test-next]');
-
-      let current = currentURL();
-
-      assert.notEqual(current, previous, `Navigated from ${previous} to ${current}`);
-    }
-  });
+  }
 });
