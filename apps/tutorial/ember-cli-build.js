@@ -50,6 +50,10 @@ module.exports = async function (defaults) {
              * Pending: https://github.com/emberjs/ember.js/issues/20419
              */
             exclude: isProduction ? [/^x-/, 'keyed-each-blocks'] : [],
+            /**
+             * This project has convention a based manifest so we only need directories
+             */
+            onlyDirectories: true,
           }),
         ],
       },

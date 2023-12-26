@@ -34,7 +34,7 @@
     "ember-resources": "^6.4.2",
     "highlight.js": "^11.9.0",
     "highlightjs-glimmer": "^2.2.1",
-    "kolay": "^0.0.1",
+    "kolay": "^0.0.3",
     "limber-ui": "workspace:*",
     "rehype-raw": "^6.1.1",
     "rehype-stringify": "^9.0.4",
