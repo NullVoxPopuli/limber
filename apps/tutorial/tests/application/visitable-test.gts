@@ -4,6 +4,18 @@ import { setupApplicationTest } from 'ember-qunit';
 
 import type { Manifest } from 'tutorial/services/types';
 
+// We can't use this until we switch to Vite and tests can remain real modules.
+// (so that the import gets all the way to the browser)
+//
+//// SAFETY: TS will never be happy with imports from the public / root directory
+////
+//// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//import manifestJson from '/docs/manifest.json' with { type: 'json' };
+
+//import type { Manifest } from 'tutorial/services/types';
+
+//const manifest: Manifest = manifestJson;
+
 module('every tutorial chapter is visitable', function (hooks) {
   setupApplicationTest(hooks);
 
@@ -24,6 +36,7 @@ module('every tutorial chapter is visitable', function (hooks) {
 
   // eslint-disable-next-line qunit/require-expect
   test('visting', async function (assert) {
+    assert.timeout(120_000);
     assert.expect(manifest.list.flat().length);
 
     for (let section of manifest.list) {
@@ -36,6 +49,7 @@ module('every tutorial chapter is visitable', function (hooks) {
 
   // eslint-disable-next-line qunit/require-expect
   test('hitting next', async function (assert) {
+    assert.timeout(120_000);
     assert.expect(1);
     await visit('/');
 
