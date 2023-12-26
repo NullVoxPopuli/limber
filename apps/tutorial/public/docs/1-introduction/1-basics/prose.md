@@ -62,11 +62,12 @@ This entire app is generated from [the docs folder][the-docs] and content can be
 Components are a meta-building block which packages the native primitives, allowing for easier re-distribution of a specific configuration of those primitives.
 The primitives in Glimmer/Ember are:
 
-- Values (or cells)
+- Values (aka cells aka signals)
 - Resources
 - Functions
 - Modifiers
 - Elements
+
 
 A component may include 1 or more of these primitives and is "invoked" with angle-brackets, e.g.: `<MyComponent />`
 
@@ -104,3 +105,4 @@ If you're an existing ember/glimmer user and are not yet using `<template>`, the
   ```
 
   For more information on "using anything as values", see [these docs](https://guides.emberjs.com/release/in-depth-topics/rendering-values/)
+
