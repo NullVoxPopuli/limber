@@ -46,7 +46,11 @@ export const Prose: TOC<{ Element: HTMLDivElement }> = <template>
               <span></span>
             {{/if}}
 
-            <Link href={{docs.selected.next.path}} @isDisabled={{not docs.selected.next.path}}>
+            <Link
+              data-test-next
+              href={{docs.selected.next.path}}
+              @isDisabled={{not docs.selected.next.path}}
+            >
               <span>Next</span>
               <FaIcon @icon="angle-right" />
             </Link>
