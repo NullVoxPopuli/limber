@@ -1,4 +1,4 @@
-import { click, currentURL,find,visit} from '@ember/test-helpers';
+import { click, currentURL, find, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
@@ -41,7 +41,7 @@ module('every tutorial chapter is visitable', function (hooks) {
     while (find('[data-test-next]')) {
       await click('[data-test-next]');
 
-    let current = currentURL();
+      let current = currentURL();
 
       assert.notEqual(current, previous, `Navigated from ${previous} to ${current}`);
     }
