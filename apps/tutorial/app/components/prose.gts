@@ -10,7 +10,7 @@ import { ShowMe } from './show-me';
 import type { TOC } from '@ember/component/template-only';
 
 const editPath = (path: string | undefined) =>
-  `https://github.com/NullVoxPopuli/limber/tree/main/apps/tutorial/docs${path}`;
+  `https://github.com/NullVoxPopuli/limber/tree/main/apps/tutorial/public/docs${path}`;
 const not = (x: unknown) => !x;
 
 export const resetScroll = modifier((element, [prose]) => {
@@ -46,7 +46,11 @@ export const Prose: TOC<{ Element: HTMLDivElement }> = <template>
               <span></span>
             {{/if}}
 
-            <Link href={{docs.selected.next.path}} @isDisabled={{not docs.selected.next.path}}>
+            <Link
+              data-test-next
+              href={{docs.selected.next.path}}
+              @isDisabled={{not docs.selected.next.path}}
+            >
               <span>Next</span>
               <FaIcon @icon="angle-right" />
             </Link>

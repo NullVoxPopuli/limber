@@ -1,20 +1,6 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-
-function ref() {
-  const rev = fs.readFileSync(path.join(__dirname, '../../../.git/HEAD')).toString().trim();
-
-  if (rev.indexOf(':') === -1) {
-    return rev;
-  } else {
-    return fs
-      .readFileSync(path.join(__dirname, '../../../.git/' + rev.substring(5)))
-      .toString()
-      .trim();
-  }
-}
+const { gitRef } = require('kolay/build/legacy');
 
 module.exports = function (environment) {
   const ENV = {
@@ -31,7 +17,7 @@ module.exports = function (environment) {
     },
 
     APP: {
-      version: `Tutorial :: ${ref()} :: ${new Date()}`,
+      version: `Tutorial :: ${gitRef()} :: ${new Date()}`,
       // Here you can pass flags/options to your application instance
       // when it is created
     },

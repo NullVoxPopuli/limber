@@ -55,7 +55,7 @@
       "@glint/environment-ember-loose": "^1.0.2",
       "@glint/environment-ember-template-imports": "^1.0.2",
       "ember-auto-import": "^2.7.0",
-      "ember-source": "^5.1.2",
+      "ember-source": "^5.5.0",
       "ember-modifier": "^4.1.0",
       "@types/eslint": "^8.0.0"
     },

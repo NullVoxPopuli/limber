@@ -41,7 +41,6 @@ jobs:
     - uses: wyvox/action@v1
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        node-version: 18.17
     - run:  echo ${{ github.event.number }} > ./pr-number.txt
     - run: pnpm turbo build
     # Used for faster deploy so we don't need to checkout the repo
@@ -66,7 +65,6 @@ jobs:
       - uses: wyvox/action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          node-version: 18.17
       - run: pnpm lint
 
 ##############################################################
@@ -82,7 +80,6 @@ jobs:
       - uses: wyvox/action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          node-version: 18.17
       - name: Test
         run: pnpm turbo test:node --output-logs errors-only
 
@@ -98,14 +95,13 @@ jobs:
         - Firefox
 
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     needs: [install_dependencies]
 
     steps:
       - uses: wyvox/action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          node-version: 18.17
       - name: Environment Info
         run: |
           firefox --version
@@ -114,7 +110,7 @@ jobs:
           echo "NPM: $( npm --version )"
           echo "pnpm: $( pnpm --version )"
       - name: Test
-        run: pnpm turbo test:ember --output-logs errors-only
+        run: pnpm turbo test:ember
         env:
           CI_BROWSER: ${{ matrix.ci_browser }}
 
@@ -146,7 +142,6 @@ jobs:
       - uses: wyvox/action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          node-version: 18.17
       - run: pnpm turbo test:browserstack --output-logs errors-only
         env:
           # This is a guest user on an open source plan.
