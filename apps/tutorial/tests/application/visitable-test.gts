@@ -22,7 +22,10 @@ module('every tutorial chapter is visitable', function (hooks) {
     assert.ok(manifest.first);
   });
 
+  // eslint-disable-next-line qunit/require-expect
   test('visting', async function (assert) {
+    assert.expect(manifest.list.flat().length);
+
     for (let section of manifest.list) {
       for (let chapter of section) {
         await visit(chapter.path);
@@ -31,10 +34,14 @@ module('every tutorial chapter is visitable', function (hooks) {
     }
   });
 
+  // eslint-disable-next-line qunit/require-expect
   test('hitting next', async function (assert) {
+    assert.expect(1);
     await visit('/');
 
     assert.strictEqual(currentURL(), manifest.first.path);
+
+    assert.expect(manifest.list.flat().length);
 
     let previous = currentURL();
 
