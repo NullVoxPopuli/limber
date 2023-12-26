@@ -17,7 +17,7 @@ import type { Manifest } from 'tutorial/services/types';
 
 const manifest = tmpData as Manifest;
 
-module('every tutorial chapter is visitable', function (hooks) {
+module('every tutorial chapter', function (hooks) {
   setupApplicationTest(hooks);
 
   for (let section of manifest.list) {

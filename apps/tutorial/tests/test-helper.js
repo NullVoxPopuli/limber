@@ -8,6 +8,9 @@ import config from 'tutorial/config/environment';
 
 setApplication(Application.create(config.APP));
 
+// Fast test timeout, because I'm impatient
+QUnit.config.testTimeout = 10_000;
+
 setup(QUnit.assert);
 
 start();
