@@ -110,7 +110,7 @@ jobs:
           echo "NPM: $( npm --version )"
           echo "pnpm: $( pnpm --version )"
       - name: Test
-        run: pnpm turbo test:ember --log-order=stream
+        run: pnpm turbo test:ember --log-order=stream --concurrency=1
         env:
           CI_BROWSER: ${{ matrix.ci_browser }}
 
