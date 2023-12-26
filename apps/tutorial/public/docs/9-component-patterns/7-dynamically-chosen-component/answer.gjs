@@ -19,6 +19,10 @@ const componentFor = (key) => MAP[key] ?? Fallback;
 export default class Demo extends Component {
   @tracked selected;
 
+  get Selected() {
+    return MAP[this.selected] ?? Fallback;
+  }
+
   handleInput = (event) => {
     let formData = new FormData(event.currentTarget);
     let data = Object.fromEntries(formData.entries());
