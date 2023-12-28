@@ -11,10 +11,12 @@ module.exports = {
     {
       files: ['**/*.gts'],
       parser: 'ember-eslint-parser',
+      extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:ember/recommended-gts'],
     },
     {
       files: ['**/*.gjs'],
       parser: 'ember-eslint-parser',
+      extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:ember/recommended-gjs'],
     },
   ],
 };
