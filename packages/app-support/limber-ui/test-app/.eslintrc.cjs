@@ -6,5 +6,15 @@ const config = configs.ember();
 
 module.exports = {
   ...config,
-  overrides: [...config.overrides],
+  overrides: [
+    ...config.overrides,
+    {
+      files: ['**/*.gts'],
+      parser: 'ember-eslint-parser',
+    },
+    {
+      files: ['**/*.gjs'],
+      parser: 'ember-eslint-parser',
+    },
+  ],
 };
