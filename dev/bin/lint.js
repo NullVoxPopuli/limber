@@ -41,7 +41,7 @@ async function run() {
     case 'js:fix':
       return exec(`pnpm eslint . ` + `--fix --cache --cache-strategy content`);
     case 'js':
-      return exec(`pnpm eslint .`);
+      return exec(`pnpm eslint . `);
     case 'hbs:fix':
       return exec(`pnpm ember-template-lint . --fix --no-error-on-unmatched-pattern`);
     case 'hbs':
@@ -54,6 +54,10 @@ async function run() {
 }
 
 function exec(command) {
+  if (userArgs.length) {
+    command += ` ${userArgs.join(' ')}`;
+  }
+
   console.info(chalk.blueBright('Running:\n', command));
 
   return execaCommand(command, { cwd, stdio: 'inherit' });

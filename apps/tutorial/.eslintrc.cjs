@@ -10,10 +10,12 @@ module.exports = {
     ...config.overrides,
     {
       files: ['**/*.gts'],
+      plugins: ['ember'],
       parser: 'ember-eslint-parser',
     },
     {
       files: ['**/*.gjs'],
+      plugins: ['ember'],
       parser: 'ember-eslint-parser',
     },
   ],
