@@ -13,7 +13,9 @@ import type { Format } from 'limber/utils/messaging';
 export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
   @service declare router: RouterService;
 
-  switch = (format: Format) => this.router.transitionTo({ queryParams: { format } });
+  switch = (format: Format): void => {
+    this.router.transitionTo({ queryParams: { format } });
+  }
 
   <template>
     <Menu>

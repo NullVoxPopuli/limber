@@ -89,6 +89,7 @@ export default class Compiler extends Component<Signature> {
 
       await this.parentFrame.success();
 
+      // eslint-disable-next-line ember/no-runloop
       schedule('afterRender', () => {
         if (isDestroyed(this) || isDestroying(this)) return;
 

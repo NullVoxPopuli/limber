@@ -24,7 +24,7 @@ export class DemoSelect extends PageObject {
 
     assert(
       `Could not find demo named "${text}". Available: ${options
-        .map((x: any) => x.innerHTML?.trim())
+        .map((x) => x.innerHTML?.trim())
         .join(', ')}`,
       option
     );

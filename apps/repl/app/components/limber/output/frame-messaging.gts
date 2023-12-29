@@ -66,9 +66,11 @@ async function setupEvents(
   /**
    * This app now can't render again, so we need to tell the host frame to re-load the output frame
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Ember.onerror = (error: any) =>
     parent.error({ error: error.message || error, unrecoverable: true });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleError = (error: any) => parent.error({ error: error.message || error });
 
   window.addEventListener('error', handleError);
