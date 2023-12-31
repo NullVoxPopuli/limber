@@ -6,7 +6,7 @@ import HeadlessMenu from 'ember-headlessui/components/menu';
 import { Popover } from 'ember-primitives';
 
 import type { TOC } from '@ember/component/template-only';
-import type { ModifierLike, WithBoundArgs } from '@glint/template';
+import type { WithBoundArgs } from '@glint/template';
 import type * as MenuTypes from 'ember-headlessui/components/menu';
 
 const Button: TOC<{
@@ -35,7 +35,8 @@ const DefaultTrigger: TOC<{
   Element: HTMLButtonElement;
   Args: {
     menu: MenuTypes.Menu;
-    trigger: ModifierLike<{}>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    trigger: any;
   };
   Blocks: {
     default: [MenuTypes.Menu];
@@ -54,7 +55,8 @@ const PlainTrigger: TOC<{
   Element: HTMLButtonElement;
   Args: {
     menu: MenuTypes.Menu;
-    trigger: ModifierLike<{ Element: HTMLButtonElement }>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    trigger: any;
   };
   Blocks: {
     default: [MenuTypes.Menu];
@@ -94,7 +96,7 @@ const Menu: TOC<{
       {
         menu: MenuTypes.Menu;
         isOpen: boolean;
-        // Default: WithBoundArgs<typeof DefaultTrigger, 'menu' | 'trigger'>;
+        Default: WithBoundArgs<typeof DefaultTrigger, 'menu' | 'trigger'>;
         Button: WithBoundArgs<typeof PlainTrigger, 'menu' | 'trigger'>;
       },
     ];
