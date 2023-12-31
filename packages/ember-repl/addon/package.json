@@ -163,7 +163,7 @@
   "peerDependencies": {
     "@glimmer/compiler": "^0.85.13",
     "@glimmer/component": "^1.1.2",
-    "@glimmer/syntax": "^0.85.13",
+    "@glimmer/syntax": "^0.87.0",
     "@glint/template": "^1.2.1",
     "ember-resources": "^6.4.2",
     "ember-source": "^5.5.0"
