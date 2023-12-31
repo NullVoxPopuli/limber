@@ -54,7 +54,7 @@ const PlainTrigger: TOC<{
   Element: HTMLButtonElement;
   Args: {
     menu: MenuTypes.Menu;
-    trigger: ModifierLike<{}>;
+    trigger: ModifierLike<{ Element: HTMLButtonElement }>;
   };
   Blocks: {
     default: [MenuTypes.Menu];
@@ -94,7 +94,7 @@ const Menu: TOC<{
       {
         menu: MenuTypes.Menu;
         isOpen: boolean;
-        Default: WithBoundArgs<typeof DefaultTrigger, 'menu' | 'trigger'>;
+        // Default: WithBoundArgs<typeof DefaultTrigger, 'menu' | 'trigger'>;
         Button: WithBoundArgs<typeof PlainTrigger, 'menu' | 'trigger'>;
       },
     ];

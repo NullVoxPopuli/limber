@@ -100,7 +100,7 @@
     "vfile": "^6.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.6",
+    "@babel/core": "^7.23.7",
     "@babel/preset-typescript": "^7.23.3",
     "@babel/types": "^7.23.6",
     "@ember/test-helpers": "^3.2.1",
@@ -110,9 +110,9 @@
     "@glimmer/component": "^1.1.2",
     "@glimmer/interfaces": "^0.86.0",
     "@glimmer/reference": "^0.86.0",
-    "@glimmer/syntax": "^0.86.0",
+    "@glimmer/syntax": ">= 0.86.0",
     "@glimmer/tracking": "^1.1.2",
-    "@glimmer/util": "^0.86.0",
+    "@glimmer/util": "^0.87.1",
     "@glint/core": "^1.2.1",
     "@glint/environment-ember-loose": "^1.2.1",
     "@glint/environment-ember-template-imports": "^1.2.1",
@@ -163,7 +163,7 @@
   "peerDependencies": {
     "@glimmer/compiler": "^0.85.13",
     "@glimmer/component": "^1.1.2",
-    "@glimmer/syntax": "^0.85.13",
+    "@glimmer/syntax": ">= 0.85.13",
     "@glint/template": "^1.2.1",
     "ember-resources": "^6.4.2",
     "ember-source": "^5.5.0"
