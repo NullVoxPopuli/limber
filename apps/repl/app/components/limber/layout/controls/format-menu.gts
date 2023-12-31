@@ -15,7 +15,7 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
 
   switch = (format: Format): void => {
     this.router.transitionTo({ queryParams: { format } });
-  }
+  };
 
   <template>
     <Menu>

@@ -54,8 +54,8 @@
       "ember-auto-import": "^2.7.0",
       "ember-source": "^5.5.0",
       "ember-modifier": "^4.1.0",
-      "ember-eslint-parser": "0.2.3",
-      "eslint-plugin-ember": "github:ember-cli/eslint-plugin-ember#failing-test-for-no-deprecated-router-transition-methods",
+      "ember-eslint-parser": "0.2.4",
+      "eslint-plugin-ember": "github:ember-cli/eslint-plugin-ember#combined-tmp",
       "@types/eslint": "^8.0.0"
     },
     "allowedDeprecatedVersions": {
