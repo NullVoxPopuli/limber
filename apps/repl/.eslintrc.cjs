@@ -14,26 +14,14 @@ module.exports = {
       files: ['browserstack.testem.js'],
     },
     {
-      files: ['**/*.{gts,gjs'],
-      rules: {},
+      files: ['**/*.gts'],
+      plugins: ['ember'],
+      parser: 'ember-eslint-parser',
     },
     {
-      files: ['**/*.{ts,gts}'],
-      rules: {
-        '@typescript-eslint/no-explicit-any': 'off',
-      },
-    },
-    {
-      files: ['tests/**/*.ts'],
-      rules: {
-        '@typescript-eslint/no-empty-function': 'off',
-      },
-    },
-    {
-      files: ['types/**/*'],
-      rules: {
-        '@typescript-eslint/no-explicit-any': 'off',
-      },
+      files: ['**/*.gjs'],
+      plugins: ['ember'],
+      parser: 'ember-eslint-parser',
     },
   ],
 };

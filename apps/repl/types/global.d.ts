@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Types for compiled templates
 declare module 'limber/templates/*' {
   import type { TemplateFactory } from 'htmlbars-inline-precompile';

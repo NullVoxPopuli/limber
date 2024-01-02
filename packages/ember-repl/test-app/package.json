@@ -37,12 +37,12 @@
     }
   },
   "devDependencies": {
-    "@babel/core": "^7.23.6",
+    "@babel/core": "^7.23.7",
     "@ember/optional-features": "^2.0.0",
     "@ember/string": "^3.1.1",
     "@ember/test-helpers": "^3.2.1",
     "@ember/test-waiters": "^3.1.0",
-    "@embroider/compat": "3.4.2",
+    "@embroider/compat": "3.4.3",
     "@embroider/core": "3.4.3",
     "@embroider/test-setup": "3.0.3",
     "@embroider/webpack": "3.2.1",
@@ -80,7 +80,7 @@
     "ember-try": "^3.0.0",
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-ember": "^11.11.1",
+    "eslint-plugin-ember": "github:ember-cli/eslint-plugin-ember#combined-tmp",
     "eslint-plugin-n": "^16.3.1",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-qunit": "^8.0.1",

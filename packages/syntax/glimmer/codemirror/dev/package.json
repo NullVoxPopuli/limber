@@ -12,12 +12,12 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.6",
+    "@babel/core": "^7.23.7",
     "@babel/eslint-parser": "^7.23.3",
     "@codemirror/language": "^6.9.3",
-    "@codemirror/state": "^6.3.3",
+    "@codemirror/state": "^6.4.0",
     "@codemirror/theme-one-dark": "^6.1.2",
-    "@codemirror/view": "^6.22.3",
+    "@codemirror/view": "^6.23.0",
     "@glimdown/codemirror-dev-preview": "workspace:*",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "@typescript-eslint/eslint-plugin": "^6.13.2",

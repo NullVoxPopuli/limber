@@ -4,6 +4,8 @@
     "environment": ["ember-loose", "ember-template-imports"]
   },
   "compilerOptions": {
+    // temporary until ember gets the glimmer-vm upgrade
+    "skipLibCheck": true,
     "paths": {
       "tutorial/tests/*": ["tests/*"],
       "tutorial/*": ["app/*"],

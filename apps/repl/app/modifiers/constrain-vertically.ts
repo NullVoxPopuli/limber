@@ -5,6 +5,7 @@ import { modifier } from 'ember-modifier';
 
 export default modifier((element) => {
   let debouncedConstrain = () => constrain(element);
+  // eslint-disable-next-line ember/no-runloop
   let x = () => debounce(debouncedConstrain, 10);
 
   constrain(element);
