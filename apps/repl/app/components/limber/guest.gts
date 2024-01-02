@@ -41,6 +41,4 @@ const guestFrame = resource(({ on, owner }) => {
   return '';
 });
 
-<template>
-  {{guestFrame}}
-</template>
+<template>{{guestFrame}}</template>

@@ -38,11 +38,13 @@ module('compileJS()', function (hooks) {
       return component;
     };
 
-    await render(<template>
-      {{#let (compile) as |CustomComponent|}}
-        <Await @promise={{CustomComponent}} />
-      {{/let}}
-    </template>);
+    await render(
+      <template>
+        {{#let (compile) as |CustomComponent|}}
+          <Await @promise={{CustomComponent}} />
+        {{/let}}
+      </template>
+    );
 
     assert.dom('output').exists();
     assert.dom('output').hasText('0');
@@ -78,11 +80,13 @@ module('compileJS()', function (hooks) {
       return component;
     };
 
-    await render(<template>
-      {{#let (compile) as |CustomComponent|}}
-        <Await @promise={{CustomComponent}} />
-      {{/let}}
-    </template>);
+    await render(
+      <template>
+        {{#let (compile) as |CustomComponent|}}
+          <Await @promise={{CustomComponent}} />
+        {{/let}}
+      </template>
+    );
 
     assert.dom().hasText('!!Example!!');
   });
@@ -113,11 +117,13 @@ module('compileJS()', function (hooks) {
       return component;
     };
 
-    await render(<template>
-      {{#let (compile) as |CustomComponent|}}
-        <Await @promise={{CustomComponent}} />
-      {{/let}}
-    </template>);
+    await render(
+      <template>
+        {{#let (compile) as |CustomComponent|}}
+          <Await @promise={{CustomComponent}} />
+        {{/let}}
+      </template>
+    );
 
     assert.dom().hasText('Custom extra module');
   });
@@ -149,11 +155,13 @@ module('compileJS()', function (hooks) {
           return component;
         };
 
-        await render(<template>
-          {{#let (compile) as |CustomComponent|}}
-            <Await @promise={{CustomComponent}} />
-          {{/let}}
-        </template>);
+        await render(
+          <template>
+            {{#let (compile) as |CustomComponent|}}
+              <Await @promise={{CustomComponent}} />
+            {{/let}}
+          </template>
+        );
 
         assert.dom('a').doesNotExist();
       });
@@ -182,11 +190,13 @@ module('compileJS()', function (hooks) {
           return component;
         };
 
-        await render(<template>
-          {{#let (compile) as |CustomComponent|}}
-            <Await @promise={{CustomComponent}} />
-          {{/let}}
-        </template>);
+        await render(
+          <template>
+            {{#let (compile) as |CustomComponent|}}
+              <Await @promise={{CustomComponent}} />
+            {{/let}}
+          </template>
+        );
 
         assert.dom('a').doesNotExist();
       });
@@ -217,11 +227,13 @@ module('compileJS()', function (hooks) {
         return component;
       };
 
-      await render(<template>
-        {{#let (compile) as |CustomComponent|}}
-          <Await @promise={{CustomComponent}} />
-        {{/let}}
-      </template>);
+      await render(
+        <template>
+          {{#let (compile) as |CustomComponent|}}
+            <Await @promise={{CustomComponent}} />
+          {{/let}}
+        </template>
+      );
 
       assert.dom('a').hasText('true');
       assert.dom('b').hasText('true');
@@ -250,11 +262,13 @@ module('compileJS()', function (hooks) {
         return component;
       };
 
-      await render(<template>
-        {{#let (compile) as |CustomComponent|}}
-          <Await @promise={{CustomComponent}} />
-        {{/let}}
-      </template>);
+      await render(
+        <template>
+          {{#let (compile) as |CustomComponent|}}
+            <Await @promise={{CustomComponent}} />
+          {{/let}}
+        </template>
+      );
 
       assert.dom('a').hasText('true');
       assert.dom('b').hasText('true');
