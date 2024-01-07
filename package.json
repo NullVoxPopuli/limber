@@ -20,7 +20,7 @@
   },
   "volta": {
     "node": "20.10.0",
-    "pnpm": "8.13.1"
+    "pnpm": "8.14.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
@@ -35,7 +35,7 @@
     "prettier-plugin-ember-template-tag": "^1.1.0",
     "turbo": "^1.11.2"
   },
-  "packageManager": "pnpm@8.12.1",
+  "packageManager": "pnpm@8.14.0",
   "pnpm": {
     "overrides": {
       "@nullvoxpopuli/eslint-configs": "^3.2.2",
