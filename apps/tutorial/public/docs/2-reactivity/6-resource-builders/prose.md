@@ -5,7 +5,7 @@ Taking the `Clock` example, we can use a resource builder to allow us to configu
 ```gjs
 import { resource, cell, resourceFactory } from 'ember-resources';
 
-const Clock = resourceFactory((locale = 'en-US') => {
+function Clock(locale = 'en-US') {
   let formatter = new Intl.DateTimeFormat(locale, {
     // ...
   });
@@ -18,7 +18,9 @@ const Clock = resourceFactory((locale = 'en-US') => {
 
     return () => formatter.format(time.current);
   });
-});
+}
+
+resourceFactory(Clock);
 
 <template>
   It is: <time>{{Clock}}</time><br />

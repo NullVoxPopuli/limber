@@ -1,6 +1,6 @@
 import { resource, cell, resourceFactory } from 'ember-resources';
 
-const Clock = resourceFactory((locale = 'en-US') => {
+function Clock(locale = 'en-US') {
   let formatter = new Intl.DateTimeFormat(locale, {
     month: 'long',
     day: 'numeric',
@@ -18,7 +18,9 @@ const Clock = resourceFactory((locale = 'en-US') => {
 
     return () => formatter.format(time.current);
   });
-});
+}
+
+resourceFactory(Clock);
 
 <template>
   It is: <time>{{Clock}}</time><br />
