@@ -155,10 +155,7 @@ export function Compiled(markdownText: Input | (() => Input)): Value;
 export function Compiled(markdownText: Input | (() => Input), options?: Format): Value;
 export function Compiled(markdownText: Input | (() => Input), options?: () => Format): Value;
 export function Compiled(markdownText: Input | (() => Input), options?: ExtraOptions): Value;
-export function Compiled(
-  markdownText: Input | (() => Input),
-  options?: () => ExtraOptions
-): Value;
+export function Compiled(markdownText: Input | (() => Input), options?: () => ExtraOptions): Value;
 
 /**
  * By default, this compiles to `glimdown`. A Markdown format which
