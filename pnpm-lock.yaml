@@ -105,8 +105,8 @@ importers:
         specifier: ^2.7.0
         version: 2.7.2(@glint/template@1.2.1)(webpack@5.89.0)
       ember-container-query:
-        specifier: 5.0.5
-        version: 5.0.5(@babel/core@7.23.7)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.5.0)
+        specifier: 5.0.4
+        version: 5.0.4(@babel/core@7.23.7)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.5.0)
       ember-deep-tracked:
         specifier: ^2.0.0
         version: 2.0.0(@glint/template@1.2.1)
@@ -11064,8 +11064,8 @@ packages:
       mimic-response: 3.1.0
     dev: false
 
-  /decorator-transforms@1.0.3(@babel/core@7.23.7):
-    resolution: {integrity: sha512-kY+IuCYwp1WvWWDrT+NmqckV4ZZ4wBDIvbbvhQBNUZYLxztLpN/P+hBhmVXN/1G95U61yYWewJEdJ+o4Sm8Tng==}
+  /decorator-transforms@1.0.1(@babel/core@7.23.7):
+    resolution: {integrity: sha512-ZOaiw4tqiyhtqiMKCNzjS+nGsYPZltToqRAFc5rOUcc4u8d7MTlgelw1qXfL6ieg2l6xZcz6lTZ5M94Ohnk2xA==}
     dependencies:
       '@babel/plugin-syntax-decorators': 7.23.3(@babel/core@7.23.7)
       babel-import-util: 2.0.1
@@ -12044,12 +12044,12 @@ packages:
       - supports-color
     dev: false
 
-  /ember-container-query@5.0.5(@babel/core@7.23.7)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.5.0):
-    resolution: {integrity: sha512-7iRLqTGcyMv7nTNmZwJ4MSA9i+0X9PX6u6NH+5ngVF6+WW2GBHq1j+9moLl353DdDZtiEeKB79xPYxQsINWCwg==}
+  /ember-container-query@5.0.4(@babel/core@7.23.7)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.5.0):
+    resolution: {integrity: sha512-DTwCNnv/yUgREoGNONQmC75YIeZCA+18ZFfgED5XiNLhamBNQJLWOuPch0c/LiFWSkIXaeGLKSEihNmTMxhW8A==}
     engines: {node: 18.* || >= 20}
     dependencies:
       '@embroider/addon-shim': 1.8.7
-      decorator-transforms: 1.0.3(@babel/core@7.23.7)
+      decorator-transforms: 1.0.1(@babel/core@7.23.7)
       ember-element-helper: 0.8.5(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.5.0)
       ember-modifier: 4.1.0(ember-source@5.5.0)
       ember-resize-observer-service: 1.1.0
