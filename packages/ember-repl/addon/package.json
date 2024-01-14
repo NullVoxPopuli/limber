@@ -161,7 +161,7 @@
     "app-js": {}
   },
   "peerDependencies": {
-    "@glimmer/compiler": "^0.85.13",
+    "@glimmer/compiler": "^0.87.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/syntax": ">= 0.85.13",
     "@glint/template": "^1.2.1",
