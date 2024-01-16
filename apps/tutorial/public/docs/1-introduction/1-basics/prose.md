@@ -124,3 +124,25 @@ However, because there are a number of more foundational concepts to cover, this
 [Signals]: https://www.solidjs.com/tutorial/introduction_signals
 [Runes]: https://svelte.dev/blog/runes 
 [tracked]: https://guides.emberjs.com/release/components/component-state-and-actions/#toc_tracked-properties
+
+## How do I get started with a bleeding-edge Ember app today?
+
+- For Webpack:
+  ```bash
+  git clone --branch webpack git@github.com:NullVoxPopuli/polaris-starter.git 
+  cd polaris-starter
+  pnpm install
+  pnpm start
+  ```
+  Or try it out on [Stackblitz](https://stackblitz.com/github/nullVoxPopuli/polaris-starter/tree/webpack?file=README.md) (however, Stackblitz may be [broken with Webpack](https://github.com/stackblitz/core/issues/2926) atm)
+
+
+- For Vite (alpha / unstable)
+  ```bash
+  git clone git@github.com:NullVoxPopuli/polaris-starter.git 
+  cd polaris-starter
+  pnpm install
+  pnpm start
+  ```
+  Or try it out on [Stackblitz](https://stackblitz.com/github/nullVoxPopuli/polaris-starter/tree/main?file=README.md)
+
