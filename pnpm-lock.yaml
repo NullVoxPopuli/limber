@@ -365,7 +365,7 @@ importers:
         version: 11.0.1(ember-source@5.5.0)
       ember-route-template:
         specifier: https://github.com/discourse/ember-route-template#dist
-        version: github.com/discourse/ember-route-template/8babed213f24d9f8dd38844e57cc744e886ee398
+        version: github.com/discourse/ember-route-template/6776978d498ae30508bdfa32ac0a55e04d0925ca
       ember-source:
         specifier: ^5.5.0
         version: 5.5.0(@babel/core@7.23.7)(@glimmer/component@1.1.2)(@glint/template@1.2.2)(webpack@5.89.0)
@@ -3857,7 +3857,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/code-frame': 7.23.5
-      '@babel/generator': 7.23.0
+      '@babel/generator': 7.23.6
       '@babel/helper-environment-visitor': 7.22.20
       '@babel/helper-function-name': 7.23.0
       '@babel/helper-hoist-variables': 7.22.5
@@ -22684,8 +22684,8 @@ packages:
       - supports-color
     dev: false
 
-  github.com/discourse/ember-route-template/8babed213f24d9f8dd38844e57cc744e886ee398:
-    resolution: {tarball: https://codeload.github.com/discourse/ember-route-template/tar.gz/8babed213f24d9f8dd38844e57cc744e886ee398}
+  github.com/discourse/ember-route-template/6776978d498ae30508bdfa32ac0a55e04d0925ca:
+    resolution: {tarball: https://codeload.github.com/discourse/ember-route-template/tar.gz/6776978d498ae30508bdfa32ac0a55e04d0925ca}
     name: ember-route-template
     version: 1.0.3
     dependencies:
