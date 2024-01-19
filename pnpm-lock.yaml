@@ -22,7 +22,7 @@ overrides:
   ember-source: ^5.5.0
   ember-modifier: ^4.1.0
   ember-eslint-parser: 0.2.5
-  eslint-plugin-ember: github:ember-cli/eslint-plugin-ember#combined-tmp
+  eslint-plugin-ember: ^12.0.0
   '@types/eslint': ^8.0.0
 
 importers:
@@ -257,7 +257,7 @@ importers:
         version: 1.2.2
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@nullvoxpopuli/limber-untyped':
         specifier: workspace:^0.0.0
         version: link:../../packages/untyped
@@ -385,8 +385,8 @@ importers:
         specifier: ^8.55.0
         version: 8.56.0
       eslint-plugin-ember:
-        specifier: github:ember-cli/eslint-plugin-ember#combined-tmp
-        version: github.com/ember-cli/eslint-plugin-ember/d15ab56b35d9dee0458a289fe453b273c87d0884(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
+        specifier: ^12.0.0
+        version: 12.0.0(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
       execa:
         specifier: ^8.0.1
         version: 8.0.1
@@ -556,7 +556,7 @@ importers:
         version: 1.2.2
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-config-prettier@9.1.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint-plugin-qunit@8.0.1)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-config-prettier@9.1.0)(eslint-plugin-ember@12.0.0)(eslint-plugin-qunit@8.0.1)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@nullvoxpopuli/limber-styles':
         specifier: workspace:^0.0.0
         version: link:../../packages/app-support/styles
@@ -636,8 +636,8 @@ importers:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.56.0)
       eslint-plugin-ember:
-        specifier: github:ember-cli/eslint-plugin-ember#combined-tmp
-        version: github.com/ember-cli/eslint-plugin-ember/d15ab56b35d9dee0458a289fe453b273c87d0884(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
+        specifier: ^12.0.0
+        version: 12.0.0(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
       eslint-plugin-n:
         specifier: ^16.3.1
         version: 16.6.1(eslint@8.56.0)
@@ -813,7 +813,7 @@ importers:
         version: 7.23.7
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.13.2
         version: 6.18.0(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
@@ -916,7 +916,7 @@ importers:
         version: 1.2.2
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@nullvoxpopuli/limber-untyped':
         specifier: workspace:*
         version: link:../../../untyped
@@ -963,8 +963,8 @@ importers:
         specifier: ^8.55.0
         version: 8.56.0
       eslint-plugin-ember:
-        specifier: github:ember-cli/eslint-plugin-ember#combined-tmp
-        version: github.com/ember-cli/eslint-plugin-ember/d15ab56b35d9dee0458a289fe453b273c87d0884(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
+        specifier: ^12.0.0
+        version: 12.0.0(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
       eslint-plugin-node:
         specifier: ^11.1.0
         version: 11.1.0(eslint@8.56.0)
@@ -1058,7 +1058,7 @@ importers:
         version: 1.1.2
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(eslint-config-prettier@9.1.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint-plugin-qunit@8.0.1)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(eslint-config-prettier@9.1.0)(eslint-plugin-ember@12.0.0)(eslint-plugin-qunit@8.0.1)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       broccoli-asset-rev:
         specifier: ^3.0.0
         version: 3.0.0
@@ -1126,8 +1126,8 @@ importers:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.56.0)
       eslint-plugin-ember:
-        specifier: github:ember-cli/eslint-plugin-ember#combined-tmp
-        version: github.com/ember-cli/eslint-plugin-ember/d15ab56b35d9dee0458a289fe453b273c87d0884(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
+        specifier: ^12.0.0
+        version: 12.0.0(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
       eslint-plugin-node:
         specifier: ^11.1.0
         version: 11.1.0(eslint@8.56.0)
@@ -1231,7 +1231,7 @@ importers:
         version: 1.1.2(@babel/core@7.23.7)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -1285,7 +1285,7 @@ importers:
         version: 7.23.7
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.13.2
         version: 6.18.0(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
@@ -1433,7 +1433,7 @@ importers:
         version: 1.2.2
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@nullvoxpopuli/limber-untyped':
         specifier: workspace:*
         version: link:../../untyped
@@ -1492,8 +1492,8 @@ importers:
         specifier: ^8.55.0
         version: 8.56.0
       eslint-plugin-ember:
-        specifier: github:ember-cli/eslint-plugin-ember#combined-tmp
-        version: github.com/ember-cli/eslint-plugin-ember/d15ab56b35d9dee0458a289fe453b273c87d0884(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
+        specifier: ^12.0.0
+        version: 12.0.0(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
       eslint-plugin-node:
         specifier: ^11.1.0
         version: 11.1.0(eslint@8.56.0)
@@ -1587,7 +1587,7 @@ importers:
         version: 1.2.2
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-config-prettier@9.1.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint-plugin-qunit@8.0.1)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-config-prettier@9.1.0)(eslint-plugin-ember@12.0.0)(eslint-plugin-qunit@8.0.1)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@nullvoxpopuli/limber-untyped':
         specifier: workspace:^0.0.0
         version: link:../../untyped
@@ -1670,8 +1670,8 @@ importers:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.56.0)
       eslint-plugin-ember:
-        specifier: github:ember-cli/eslint-plugin-ember#combined-tmp
-        version: github.com/ember-cli/eslint-plugin-ember/d15ab56b35d9dee0458a289fe453b273c87d0884(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
+        specifier: ^12.0.0
+        version: 12.0.0(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
       eslint-plugin-n:
         specifier: ^16.3.1
         version: 16.6.1(eslint@8.56.0)
@@ -1722,7 +1722,7 @@ importers:
         version: 7.23.7
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.13.2
         version: 6.18.0(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
@@ -1774,7 +1774,7 @@ importers:
         version: 7.23.3(@babel/core@7.23.7)(eslint@8.56.0)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.13.2
         version: 6.18.0(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
@@ -1808,7 +1808,7 @@ importers:
         version: 7.23.3(@babel/core@7.23.7)(eslint@8.56.0)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.13.2
         version: 6.18.0(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
@@ -1884,7 +1884,7 @@ importers:
         version: 1.5.1
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@tsconfig/ember':
         specifier: ^3.0.2
         version: 3.0.3
@@ -1941,7 +1941,7 @@ importers:
         version: link:../../../dev-preview
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.13.2
         version: 6.18.0(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
@@ -1971,7 +1971,7 @@ importers:
         version: 7.23.3(@babel/core@7.23.7)(eslint@8.56.0)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.4.0
         version: 6.18.0(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
@@ -2011,7 +2011,7 @@ importers:
         version: 1.5.1
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@rollup/plugin-node-resolve':
         specifier: ^15.2.3
         version: 15.2.3(rollup@4.9.4)
@@ -2087,7 +2087,7 @@ importers:
         version: 1.5.1
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@tsconfig/ember':
         specifier: ^3.0.2
         version: 3.0.3
@@ -2144,7 +2144,7 @@ importers:
         version: link:../../../dev-preview
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.13.2
         version: 6.18.0(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
@@ -2187,7 +2187,7 @@ importers:
         version: 1.5.1
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@rollup/plugin-node-resolve':
         specifier: ^15.2.3
         version: 15.2.3(rollup@4.9.4)
@@ -2269,7 +2269,7 @@ importers:
         version: 1.5.1
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@tsconfig/ember':
         specifier: ^3.0.2
         version: 3.0.3
@@ -2326,7 +2326,7 @@ importers:
         version: link:../../../dev-preview
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.13.2
         version: 6.18.0(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
@@ -2384,7 +2384,7 @@ importers:
         version: 1.5.1
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@tsconfig/ember':
         specifier: ^3.0.2
         version: 3.0.3
@@ -2426,7 +2426,7 @@ importers:
         version: 7.23.3(@babel/core@7.23.7)(eslint@8.56.0)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^3.2.2
-        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.4.0
         version: 6.18.0(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
@@ -5922,7 +5922,7 @@ packages:
       - supports-color
     dev: false
 
-  /@nullvoxpopuli/eslint-configs@3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3):
+  /@nullvoxpopuli/eslint-configs@3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3):
     resolution: {integrity: sha512-Qm7TR7K+kb5emAoddPsoznmAgUptL7YWUOdtaBq2T4pgkEyr7JTS1v4TPg07LusfYi2He2nKJBdTcD++hrsNdw==}
     engines: {node: '>= v16.0.0'}
     peerDependencies:
@@ -5931,7 +5931,7 @@ packages:
       '@typescript-eslint/eslint-plugin': ^5.62.0 || >= 6.0.0
       '@typescript-eslint/parser': ^5.62.0 || >= 6.0.0
       eslint: ^7.0.0 || ^8.0.0
-      eslint-plugin-ember: github:ember-cli/eslint-plugin-ember#combined-tmp
+      eslint-plugin-ember: ^12.0.0
       eslint-plugin-qunit: '>= 8.0.0'
       prettier: ^2.8.8 || >= 3.0.0
     peerDependenciesMeta:
@@ -5958,7 +5958,7 @@ packages:
       eslint: 8.56.0
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.18.0)(eslint-plugin-import@2.29.1)(eslint@8.56.0)
       eslint-plugin-decorator-position: 5.0.2(@babel/eslint-parser@7.23.3)(eslint@8.56.0)
-      eslint-plugin-ember: github.com/ember-cli/eslint-plugin-ember/d15ab56b35d9dee0458a289fe453b273c87d0884(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
+      eslint-plugin-ember: 12.0.0(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.18.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.56.0)
       eslint-plugin-json: 3.1.0
       eslint-plugin-n: 16.6.1(eslint@8.56.0)
@@ -5974,7 +5974,7 @@ packages:
       - typescript
     dev: true
 
-  /@nullvoxpopuli/eslint-configs@3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(eslint-config-prettier@9.1.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint-plugin-qunit@8.0.1)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3):
+  /@nullvoxpopuli/eslint-configs@3.2.2(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(eslint-config-prettier@9.1.0)(eslint-plugin-ember@12.0.0)(eslint-plugin-qunit@8.0.1)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3):
     resolution: {integrity: sha512-Qm7TR7K+kb5emAoddPsoznmAgUptL7YWUOdtaBq2T4pgkEyr7JTS1v4TPg07LusfYi2He2nKJBdTcD++hrsNdw==}
     engines: {node: '>= v16.0.0'}
     peerDependencies:
@@ -5983,7 +5983,7 @@ packages:
       '@typescript-eslint/eslint-plugin': ^5.62.0 || >= 6.0.0
       '@typescript-eslint/parser': ^5.62.0 || >= 6.0.0
       eslint: ^7.0.0 || ^8.0.0
-      eslint-plugin-ember: github:ember-cli/eslint-plugin-ember#combined-tmp
+      eslint-plugin-ember: ^12.0.0
       eslint-plugin-qunit: '>= 8.0.0'
       prettier: ^2.8.8 || >= 3.0.0
     peerDependenciesMeta:
@@ -6008,7 +6008,7 @@ packages:
       eslint: 8.56.0
       eslint-import-resolver-typescript: 3.6.1(eslint-plugin-import@2.29.1)(eslint@8.56.0)
       eslint-plugin-decorator-position: 5.0.2(@babel/eslint-parser@7.23.3)(eslint@8.56.0)
-      eslint-plugin-ember: github.com/ember-cli/eslint-plugin-ember/d15ab56b35d9dee0458a289fe453b273c87d0884(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
+      eslint-plugin-ember: 12.0.0(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
       eslint-plugin-import: 2.29.1(eslint-import-resolver-typescript@3.6.1)(eslint@8.56.0)
       eslint-plugin-json: 3.1.0
       eslint-plugin-n: 16.6.1(eslint@8.56.0)
@@ -6025,7 +6025,7 @@ packages:
       - typescript
     dev: true
 
-  /@nullvoxpopuli/eslint-configs@3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-config-prettier@9.1.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint-plugin-qunit@8.0.1)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3):
+  /@nullvoxpopuli/eslint-configs@3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-config-prettier@9.1.0)(eslint-plugin-ember@12.0.0)(eslint-plugin-qunit@8.0.1)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3):
     resolution: {integrity: sha512-Qm7TR7K+kb5emAoddPsoznmAgUptL7YWUOdtaBq2T4pgkEyr7JTS1v4TPg07LusfYi2He2nKJBdTcD++hrsNdw==}
     engines: {node: '>= v16.0.0'}
     peerDependencies:
@@ -6034,7 +6034,7 @@ packages:
       '@typescript-eslint/eslint-plugin': ^5.62.0 || >= 6.0.0
       '@typescript-eslint/parser': ^5.62.0 || >= 6.0.0
       eslint: ^7.0.0 || ^8.0.0
-      eslint-plugin-ember: github:ember-cli/eslint-plugin-ember#combined-tmp
+      eslint-plugin-ember: ^12.0.0
       eslint-plugin-qunit: '>= 8.0.0'
       prettier: ^2.8.8 || >= 3.0.0
     peerDependenciesMeta:
@@ -6060,7 +6060,7 @@ packages:
       eslint: 8.56.0
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.18.0)(eslint-plugin-import@2.29.1)(eslint@8.56.0)
       eslint-plugin-decorator-position: 5.0.2(@babel/eslint-parser@7.23.3)(eslint@8.56.0)
-      eslint-plugin-ember: github.com/ember-cli/eslint-plugin-ember/d15ab56b35d9dee0458a289fe453b273c87d0884(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
+      eslint-plugin-ember: 12.0.0(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.18.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.56.0)
       eslint-plugin-json: 3.1.0
       eslint-plugin-n: 16.6.1(eslint@8.56.0)
@@ -6077,7 +6077,7 @@ packages:
       - typescript
     dev: true
 
-  /@nullvoxpopuli/eslint-configs@3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0-alpha.4)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3):
+  /@nullvoxpopuli/eslint-configs@3.2.2(@babel/core@7.23.7)(@typescript-eslint/eslint-plugin@6.18.0)(@typescript-eslint/parser@6.18.0)(eslint-plugin-ember@12.0.0)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3):
     resolution: {integrity: sha512-Qm7TR7K+kb5emAoddPsoznmAgUptL7YWUOdtaBq2T4pgkEyr7JTS1v4TPg07LusfYi2He2nKJBdTcD++hrsNdw==}
     engines: {node: '>= v16.0.0'}
     peerDependencies:
@@ -6086,7 +6086,7 @@ packages:
       '@typescript-eslint/eslint-plugin': ^5.62.0 || >= 6.0.0
       '@typescript-eslint/parser': ^5.62.0 || >= 6.0.0
       eslint: ^7.0.0 || ^8.0.0
-      eslint-plugin-ember: github:ember-cli/eslint-plugin-ember#combined-tmp
+      eslint-plugin-ember: ^12.0.0
       eslint-plugin-qunit: '>= 8.0.0'
       prettier: ^2.8.8 || >= 3.0.0
     peerDependenciesMeta:
@@ -6112,7 +6112,7 @@ packages:
       eslint: 8.56.0
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.18.0)(eslint-plugin-import@2.29.1)(eslint@8.56.0)
       eslint-plugin-decorator-position: 5.0.2(@babel/eslint-parser@7.23.3)(eslint@8.56.0)
-      eslint-plugin-ember: github.com/ember-cli/eslint-plugin-ember/d15ab56b35d9dee0458a289fe453b273c87d0884(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
+      eslint-plugin-ember: 12.0.0(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.18.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.56.0)
       eslint-plugin-json: 3.1.0
       eslint-plugin-n: 16.6.1(eslint@8.56.0)
@@ -6137,7 +6137,7 @@ packages:
       '@typescript-eslint/eslint-plugin': ^5.62.0 || >= 6.0.0
       '@typescript-eslint/parser': ^5.62.0 || >= 6.0.0
       eslint: ^7.0.0 || ^8.0.0
-      eslint-plugin-ember: github:ember-cli/eslint-plugin-ember#combined-tmp
+      eslint-plugin-ember: ^12.0.0
       eslint-plugin-qunit: '>= 8.0.0'
       prettier: ^2.8.8 || >= 3.0.0
     peerDependenciesMeta:
@@ -6185,7 +6185,7 @@ packages:
       '@typescript-eslint/eslint-plugin': ^5.62.0 || >= 6.0.0
       '@typescript-eslint/parser': ^5.62.0 || >= 6.0.0
       eslint: ^7.0.0 || ^8.0.0
-      eslint-plugin-ember: github:ember-cli/eslint-plugin-ember#combined-tmp
+      eslint-plugin-ember: ^12.0.0
       eslint-plugin-qunit: '>= 8.0.0'
       prettier: ^2.8.8 || >= 3.0.0
     peerDependenciesMeta:
@@ -13003,6 +13003,33 @@ packages:
       snake-case: 3.0.4
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /eslint-plugin-ember@12.0.0(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3):
+    resolution: {integrity: sha512-+GQTzL925GeKM8lUmSVskc3HqSspz7UwvW9TV0h3Z9BoSxki0qLe0RN4dfwQBxirpHu1+/4b1tLs2BKu3UEOXQ==}
+    engines: {node: 18.* || 20.* || >= 21}
+    peerDependencies:
+      eslint: '>= 8'
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@ember-data/rfc395-data': 0.0.4
+      css-tree: 2.3.1
+      ember-eslint-parser: 0.2.5(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
+      ember-rfc176-data: 0.3.18
+      eslint: 8.56.0
+      eslint-utils: 3.0.0(eslint@8.56.0)
+      estraverse: 5.3.0
+      lodash.camelcase: 4.3.0
+      lodash.kebabcase: 4.1.1
+      requireindex: 1.2.0
+      snake-case: 3.0.4
+      typescript: 5.3.3
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@typescript-eslint/parser'
     dev: true
 
   /eslint-plugin-es-x@7.5.0(eslint@8.56.0):
@@ -22692,34 +22719,4 @@ packages:
       '@embroider/addon-shim': 1.8.7
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  github.com/ember-cli/eslint-plugin-ember/d15ab56b35d9dee0458a289fe453b273c87d0884(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3):
-    resolution: {tarball: https://codeload.github.com/ember-cli/eslint-plugin-ember/tar.gz/d15ab56b35d9dee0458a289fe453b273c87d0884}
-    id: github.com/ember-cli/eslint-plugin-ember/d15ab56b35d9dee0458a289fe453b273c87d0884
-    name: eslint-plugin-ember
-    version: 12.0.0-alpha.4
-    engines: {node: 18.* || 20.* || >= 21}
-    peerDependencies:
-      eslint: '>= 8'
-      typescript: '*'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      '@ember-data/rfc395-data': 0.0.4
-      css-tree: 2.3.1
-      ember-eslint-parser: 0.2.5(@babel/core@7.23.7)(@typescript-eslint/parser@6.18.0)(eslint@8.56.0)(typescript@5.3.3)
-      ember-rfc176-data: 0.3.18
-      eslint: 8.56.0
-      eslint-utils: 3.0.0(eslint@8.56.0)
-      estraverse: 5.3.0
-      lodash.camelcase: 4.3.0
-      lodash.kebabcase: 4.1.1
-      requireindex: 1.2.0
-      snake-case: 3.0.4
-      typescript: 5.3.3
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@typescript-eslint/parser'
     dev: true
