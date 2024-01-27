@@ -26,7 +26,7 @@ export class Selection extends Component {
   @service declare router: RouterService;
 
   get humanSelected() {
-    let path = this.docs.selected?.path;
+    let path = this.docs.currentPath;
 
     if (!path) return;
 
@@ -40,7 +40,7 @@ export class Selection extends Component {
   };
 
   isSelected = ({ path }: { path: string }) => {
-    return this.docs.selected?.path === path;
+    return this.docs.currentPath === path;
   };
 
   <template>

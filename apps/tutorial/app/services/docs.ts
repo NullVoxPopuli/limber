@@ -33,9 +33,26 @@ export default class DocsService extends Service {
     this.router.transitionTo({ queryParams: { showAnswer: 1 } });
   };
 
+  unShowMe = () => {
+    this.#hideProse();
+    this.router.transitionTo({ queryParams: { showAnswer: 0 } });
+  };
+
   @cached
   get flatList() {
     return this.tutorials.flat();
+  }
+
+  get currentPath(): string | undefined {
+    if (!this.router.currentURL) return this.#manifest?.first.path;
+
+    let [path] = this.router.currentURL.split('?');
+
+    return path && path !== '/' ? path : this.#manifest?.first.path;
+  }
+
+  get #manifest() {
+    return this.docs.value;
   }
 
   toggleProse = () => {

@@ -1,6 +1,7 @@
 import Service, { service } from '@ember/service';
 
 import { use } from 'ember-resources';
+import { link } from 'ember-resources/link';
 import { keepLatest } from 'ember-resources/util/keep-latest';
 import { RemoteData } from 'ember-resources/util/remote-data';
 
@@ -26,21 +27,27 @@ async function preload(path?: string) {
   ]);
 }
 
-export default class Selected extends Service {
+class DocFile {
   @service declare router: RouterService;
   @service declare docs: DocsService;
 
+  #fileName: string;
+
+  constructor(fileName: string) {
+    this.#fileName = fileName;
+  }
+
+  get url() {
+    return `/docs${this.docs.currentPath}/${this.#fileName}`;
+  }
+
   /*********************************************************************
-   * These load the files from /public and handle loading / error state.
+   * This loads the file from /public and handles loading / error state.
    *
-   * When the path changes for each of these, the previous request will
+   * When the path changes, the previous request will
    * be cancelled if it was still pending.
    *******************************************************************/
-
-  @use proseFile = RemoteData<string>(() => `/docs${this.path}/prose.md`);
-  @use promptFile = RemoteData<string>(() => `/docs${this.path}/prompt.gjs`);
-  @use answerFile = RemoteData<string>(() => `/docs${this.path}/answer.gjs`);
-  @use proseCompiled = MarkdownToHTML(() => this.proseFile.value);
+  @use request = RemoteData<string>(() => this.url);
 
   /*********************************************************************
    * This is a pattern to help reduce flashes of content during
@@ -50,19 +57,38 @@ export default class Selected extends Service {
    *
    ********************************************************************/
 
+  @use content = keepLatest({
+    value: () => this.request.value,
+    when: () => this.request.isLoading,
+  });
+
+  @use status = keepLatest({
+    value: () => this.request.status,
+    when: () => this.request.isLoading,
+  });
+
+  get exists() {
+    let status = this.status;
+
+    if (status && status > 400) return false;
+
+    return Boolean(this.content);
+  }
+}
+
+export default class Selected extends Service {
+  @service declare router: RouterService;
+  @service declare docs: DocsService;
+
+  @link proseFile = new DocFile('prose.md');
+  @link prompt = new DocFile('prompt.gjs');
+  @link answer = new DocFile('answer.gjs');
+
+  @use proseCompiled = MarkdownToHTML(() => this.proseFile.content);
+
   @use prose = keepLatest({
     value: () => this.proseCompiled.html,
     when: () => !this.proseCompiled.ready,
-  });
-
-  @use prompt = keepLatest({
-    value: () => this.promptFile.value,
-    when: () => this.promptFile.isLoading,
-  });
-
-  @use answer = keepLatest({
-    value: () => this.answerFile.value,
-    when: () => this.answerFile.isLoading,
   });
 
   /**
@@ -74,30 +100,22 @@ export default class Selected extends Service {
     // these values without short-circuiting so that
     // the requests run in parallel.
     let prose = this.prose;
-    let prompt = this.prompt;
-    let answer = this.answer;
+    let prompt = this.prompt.content;
+    let answer = this.answer.content;
 
     return prose && prompt && answer;
   }
 
   get hasProse() {
-    // if (this.proseFile.isError) return false;
-
-    return Boolean(this.prose);
+    return this.proseFile.exists;
   }
 
   get hasPrompt() {
-    // if (this.promptFile.isError) return false;
-
-    return Boolean(this.prompt);
+    return this.prompt.exists;
   }
 
   get hasAnswer() {
-    let { value, status } = this.answerFile;
-
-    if (status && status > 400) return false;
-
-    return Boolean(value);
+    return this.answer.exists;
   }
 
   get next(): Tutorial | undefined {
@@ -136,22 +154,10 @@ export default class Selected extends Service {
     return;
   }
 
-  get path(): string | undefined {
-    if (!this.router.currentURL) return this.#manifest?.first.path;
-
-    let [path] = this.router.currentURL.split('?');
-
-    return path && path !== '/' ? path : this.#manifest?.first.path;
-  }
-
   get tutorial(): Tutorial | undefined {
-    if (!this.path) return;
+    if (!this.docs.currentPath) return;
 
-    return this.#findByPath(this.path);
-  }
-
-  get #manifest() {
-    return this.docs.docs.value;
+    return this.#findByPath(this.docs.currentPath);
   }
 
   #findByPath = (path: string) => {
