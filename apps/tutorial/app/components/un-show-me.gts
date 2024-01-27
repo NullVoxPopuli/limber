@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
@@ -11,28 +10,19 @@ import type DocsService from 'tutorial/services/docs';
  * TODO: how do you correctly animate the width
  *       of a button that gets text added?
  */
-export class ShowMe extends Component {
+export class UnShowMe extends Component {
   <template>
     <Button
-      @variant="primary"
+      @variant="secondary"
       class="whitespace-nowrap transition-all overflow-hidden text-left"
       style="transition-duration: 50ms"
-      {{on "click" this.docs.showMe}}
-      {{on "mouseenter" this.hoverShowText}}
-      {{on "mouseleave" this.hideShowText}}
-      {{on "focusin" this.hoverShowText}}
-      {{on "focusout" this.hideShowText}}
+      {{on "click" this.docs.unShowMe}}
     >
       <span>
-        Show me
-        <span class="{{if this.hideText 'sr-only'}}">the answer</span>
+        Hide Answer
       </span>
     </Button>
   </template>
 
   @service declare docs: DocsService;
-
-  @tracked hideText = true;
-  hoverShowText = () => (this.hideText = false);
-  hideShowText = () => (this.hideText = true);
 }

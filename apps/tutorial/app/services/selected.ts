@@ -92,12 +92,17 @@ export default class Selected extends Service {
     return Boolean(this.prompt);
   }
 
+  @use answerStatus = keepLatest({
+    value: () => this.answerFile.status,
+    when: () => this.answerFile.isLoading,
+  });
+
   get hasAnswer() {
-    let { value, status } = this.answerFile;
+    let status = this.answerStatus;
 
     if (status && status > 400) return false;
 
-    return Boolean(value);
+    return Boolean(this.answer);
   }
 
   get next(): Tutorial | undefined {

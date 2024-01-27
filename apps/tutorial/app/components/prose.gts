@@ -6,6 +6,7 @@ import { ExternalLink, Link, service } from 'limber-ui';
 
 import { highlight } from './highlight';
 import { ShowMe } from './show-me';
+import { UnShowMe } from './un-show-me';
 
 import type { TOC } from '@ember/component/template-only';
 
@@ -41,7 +42,11 @@ export const Prose: TOC<{ Element: HTMLDivElement }> = <template>
         <footer class="grid p-2 gap-4 text-sm bg-[#eee] drop-shadow-2xl">
           <div class="flex justify-between items-center justify-self-end w-full">
             {{#if docs.selected.hasAnswer}}
-              <ShowMe @onClick={{docs.showMe}} />
+              {{#if docs.showAnswer}}
+                <UnShowMe />
+              {{else}}
+                <ShowMe />
+              {{/if}}
             {{else}}
               <span></span>
             {{/if}}

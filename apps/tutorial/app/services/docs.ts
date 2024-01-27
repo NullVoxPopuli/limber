@@ -33,6 +33,11 @@ export default class DocsService extends Service {
     this.router.transitionTo({ queryParams: { showAnswer: 1 } });
   };
 
+  unShowMe = () => {
+    this.#hideProse();
+    this.router.transitionTo({ queryParams: { showAnswer: 0 } });
+  };
+
   @cached
   get flatList() {
     return this.tutorials.flat();
