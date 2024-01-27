@@ -43,6 +43,18 @@ export default class DocsService extends Service {
     return this.tutorials.flat();
   }
 
+  get currentPath(): string | undefined {
+    if (!this.router.currentURL) return this.#manifest?.first.path;
+
+    let [path] = this.router.currentURL.split('?');
+
+    return path && path !== '/' ? path : this.#manifest?.first.path;
+  }
+
+  get #manifest() {
+    return this.docs.value;
+  }
+
   toggleProse = () => {
     if (this.isViewingProse) {
       return this.#hideProse();

@@ -6,11 +6,19 @@ import type DocsService from 'tutorial/services/docs';
 const codeFor = (docs: DocsService) => {
   if (docs.showAnswer) {
     if (docs.selected.hasAnswer) {
-      return docs.selected.answer;
+      return docs.selected.answer.content;
     }
   }
 
-  return docs.selected.prompt;
+  if (docs.selected.hasPrompt) {
+    return docs.selected.prompt.content;
+  }
+
+  return `<template>
+  Not Found. Please check the URL.
+  <br><br>
+  (or navigate to a tutorial chapter)
+</template>`;
 };
 
 export const Editor: TOC<{
