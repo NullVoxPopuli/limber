@@ -28,7 +28,7 @@ export const Prose: TOC<{ Element: HTMLDivElement }> = <template>
         <div data-prose class="prose p-4" {{highlight docs.selected.prose}}>
           {{#if docs.selected.hasProse}}
             {{! template-lint-disable no-triple-curlies }}
-            {{{docs.selected.prose.content}}}
+            {{{docs.selected.prose}}}
           {{else}}
             <NotFound />
           {{/if}}

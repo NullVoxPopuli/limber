@@ -80,11 +80,16 @@ export default class Selected extends Service {
   @service declare router: RouterService;
   @service declare docs: DocsService;
 
-  @link prose = new DocFile('prose.md');
+  @link proseFile = new DocFile('prose.md');
   @link prompt = new DocFile('prompt.gjs');
   @link answer = new DocFile('answer.gjs');
 
-  @use proseCompiled = MarkdownToHTML(() => this.prose.content);
+  @use proseCompiled = MarkdownToHTML(() => this.proseFile.content);
+
+  @use prose = keepLatest({
+    value: () => this.proseCompiled.html,
+    when: () => !this.proseCompiled.ready,
+  });
 
   /**
    * Once this whole thing is "true", we can start
@@ -94,7 +99,7 @@ export default class Selected extends Service {
     // Instead of inlining these, we want to access
     // these values without short-circuiting so that
     // the requests run in parallel.
-    let prose = this.prose.content;
+    let prose = this.prose;
     let prompt = this.prompt.content;
     let answer = this.answer.content;
 
@@ -102,7 +107,7 @@ export default class Selected extends Service {
   }
 
   get hasProse() {
-    return this.prose.exists;
+    return this.proseFile.exists;
   }
 
   get hasPrompt() {
