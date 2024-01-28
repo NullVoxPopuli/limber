@@ -18,3 +18,9 @@ overrides:
   - path: packages/syntax/*/*/package.json
     devDependencies: false
     dependencies: false 
+
+update-range:
+  "~":
+    - cm-buildhelper 
+    - "@codemirror/*" 
+    - "@lezer/*"
