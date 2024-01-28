@@ -12,10 +12,7 @@
 write-as: pinned
 
 overrides:
-  - path: packages/*/addon/package.json
-    devDependencies: pinned
-    dependencies: minors 
-  - path: packages/syntax/**/*
+  - path: packages/**/*
     devDependencies: false
     dependencies: false 
 
