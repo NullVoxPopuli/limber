@@ -14,6 +14,6 @@ write-as: pinned
 overrides:
   - path: 
     - packages/*/addon/package.json
-    - packages/*/*/package.json
+    - packages/syntax/*/*/package.json
     devDependencies: pinned
     dependencies: minors 
