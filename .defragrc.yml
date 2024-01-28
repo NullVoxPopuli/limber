@@ -12,7 +12,9 @@
 write-as: pinned
 
 overrides:
-  - path: packages/**/*
+  - path: 
+    - packages/**/*
+    - packages/*
     devDependencies: false
     dependencies: false 
 
