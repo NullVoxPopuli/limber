@@ -15,7 +15,7 @@ overrides:
   - path: packages/*/addon/package.json
     devDependencies: pinned
     dependencies: minors 
-  - path: packages/syntax/*/*/package.json
+  - path: packages/syntax/**/*
     devDependencies: false
     dependencies: false 
 
