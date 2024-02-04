@@ -25,7 +25,7 @@ export const Shadowed: TOC<{
 }> = <template>
   {{#let (shadowRoot) as |shadow|}}
     {{! @glint-ignore }}
-    <div data-shadow {{attachShadow shadow.update}} ...attributes></div>
+    <div data-shadow {{attachShadow shadow.set}} ...attributes></div>
 
     {{#if shadow.current}}
       {{#in-element shadow.current}}
