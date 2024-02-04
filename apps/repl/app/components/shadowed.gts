@@ -30,7 +30,7 @@ export class Shadowed extends Component<{
     await Promise.resolve();
 
     this.shadow = shadowRoot;
-  }
+  };
 
   <template>
     <div data-shadow {{attachShadow this.setShadow}} ...attributes></div>
