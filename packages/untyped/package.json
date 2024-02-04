@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "devDependencies": {
-    "@glint/template": "^1.0.2",
+    "@glint/template": "1.3.0",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "eslint": "^8.55.0",
     "prettier": "^3.2.5",
