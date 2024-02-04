@@ -16,8 +16,8 @@
     "directory": "packages/syntax/glimmer-js/codemirror"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.7",
-    "@babel/eslint-parser": "^7.23.3",
+    "@babel/core": "^7.23.9",
+    "@babel/eslint-parser": "^7.23.10",
     "@codemirror/buildhelper": "^1.0.1",
     "@codemirror/view": "^6.23.0",
     "@glimdown/lezer-infra": "workspace:*",
@@ -30,7 +30,7 @@
     "codemirror": "^6.0.1",
     "concurrently": "^8.2.2",
     "eslint": "^8.55.0",
-    "prettier": "^3.1.1",
+    "prettier": "^3.2.5",
     "rollup": "^4.9.0",
     "rollup-plugin-ts": "^3.4.5",
     "typescript": "^5.3.3"
