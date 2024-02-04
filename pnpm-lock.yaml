@@ -706,8 +706,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       latest-version:
-        specifier: ^7.0.0
-        version: 7.0.0
+        specifier: ^8.0.0
+        version: 8.0.0
       yargs:
         specifier: ^17.7.2
         version: 17.7.2
@@ -14935,6 +14935,23 @@ packages:
       responselike: 3.0.0
     dev: false
 
+  /got@13.0.0:
+    resolution: {integrity: sha512-XfBk1CxOOScDcMr9O1yKkNaQyy865NbYs+F7dr4H0LZMVgCj2Le59k6PqbNHoL5ToeaEQUYh6c6yMfVcc6SJxA==}
+    engines: {node: '>=16'}
+    dependencies:
+      '@sindresorhus/is': 5.6.0
+      '@szmarczak/http-timer': 5.0.1
+      cacheable-lookup: 7.0.0
+      cacheable-request: 10.2.14
+      decompress-response: 6.0.0
+      form-data-encoder: 2.1.4
+      get-stream: 6.0.1
+      http2-wrapper: 2.2.1
+      lowercase-keys: 3.0.0
+      p-cancelable: 3.0.0
+      responselike: 3.0.0
+    dev: false
+
   /got@9.6.0:
     resolution: {integrity: sha512-R7eWptXuGYxwijs0eV+v3o6+XH1IqVK8dJOEecQfTmkncw9AV4dcw/Dhxi8MdlqPthxxpZyizMzyg8RTmEsG+Q==}
     engines: {node: '>=8.6'}
@@ -16469,6 +16486,13 @@ packages:
     engines: {node: '>=14.16'}
     dependencies:
       package-json: 8.1.1
+    dev: false
+
+  /latest-version@8.0.0:
+    resolution: {integrity: sha512-FvwzZ43AtFdin94Mmuu/Sa+2vpDKbaDarz/MZU2EuDU7B9aGWq+c6M7EccBD7XJGnEwBmSDRRYabkvnEKqqksw==}
+    engines: {node: '>=18'}
+    dependencies:
+      package-json: 9.0.0
     dev: false
 
   /lcid@3.1.1:
@@ -18463,6 +18487,16 @@ packages:
     engines: {node: '>=14.16'}
     dependencies:
       got: 12.6.1
+      registry-auth-token: 5.0.2
+      registry-url: 6.0.1
+      semver: 7.5.4
+    dev: false
+
+  /package-json@9.0.0:
+    resolution: {integrity: sha512-vGgkl6BR8SJUcOdhj49/17fqYpBYr4fAlbBA3we5j548q114UAafKBEVck85Kk2HKhVzWGIAVybFpJ9LesJY6w==}
+    engines: {node: '>=18'}
+    dependencies:
+      got: 13.0.0
       registry-auth-token: 5.0.2
       registry-url: 6.0.1
       semver: 7.5.4
