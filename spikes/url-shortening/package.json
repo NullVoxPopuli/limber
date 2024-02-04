@@ -14,10 +14,10 @@
   "devDependencies": {
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "eslint": "^8.55.0",
-    "prettier": "^3.1.1",
+    "prettier": "^3.2.5",
     "prettier-plugin-ember-template-tag": "^2.0.0",
     "typescript": "^5.3.3",
-    "vitest": "^1.0.4"
+    "vitest": "^1.2.2"
   },
   "scripts": {
     "lint": "pnpm -w exec lint",
