@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
 
-import { link } from 'ember-resources/link';
+import { link } from 'reactiveweb/link';
 
 type AllowedFormat = 'gjs' | 'gts' | 'hbs' | 'gmd';
 type Storage = 'local' | 'url';

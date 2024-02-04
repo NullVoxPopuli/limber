@@ -2,7 +2,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import Service, { service } from '@ember/service';
 
 import { use } from 'ember-resources';
-import { RemoteData } from 'ember-resources/util/remote-data';
+import { RemoteData } from 'reactiveweb/remote-data';
 
 import type Selected from './selected';
 import type { Manifest } from './types';

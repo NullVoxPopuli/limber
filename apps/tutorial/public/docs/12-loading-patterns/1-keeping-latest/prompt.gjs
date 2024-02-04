@@ -3,8 +3,8 @@ import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 
 import { use, resource } from 'ember-resources';
-import { RemoteData, remoteData } from 'ember-resources/util/remote-data';
-import { keepLatest } from 'ember-resources/util/keep-latest';
+import { RemoteData, remoteData } from 'reactiveweb/remote-data';
+import { keepLatest } from 'reactiveweb/keep-latest';
 
 const isEmpty = (x) => !x || x?.length === 0;
 const urlFor = (id) => `https://swapi.dev/api/people/${id}`;
@@ -60,8 +60,8 @@ export default class Demo extends Component {
       {{/if}}
     </div>
     <style>
-      #demo { 
-        position: relative; max-width: 30rem; 
+      #demo {
+        position: relative; max-width: 30rem;
         border: 1px solid;
         padding: 1rem;
       }

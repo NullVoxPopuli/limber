@@ -48,7 +48,8 @@
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-regular-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
-    "penpal": "^6.2.2"
+    "penpal": "^6.2.2",
+    "reactiveweb": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
@@ -75,7 +76,7 @@
     "ember-cli-htmlbars": "^6.3.0",
     "ember-modifier": "^4.1.0",
     "ember-primitives": "^0.11.1",
-    "ember-resources": "^6.4.2",
+    "ember-resources": "^7.0.0",
     "ember-source": "^5.5.0",
     "ember-template-imports": "^3.4.2",
     "ember-template-lint": "^5.13.0",

@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 
-import { RemoteData } from 'ember-resources/util/remote-data';
+import { RemoteData } from 'reactiveweb/remote-data';
 
 const urlFor = (id) => `https://swapi.dev/api/people/${id}`;
 

@@ -1,9 +1,9 @@
 import Service, { service } from '@ember/service';
 
 import { use } from 'ember-resources';
-import { link } from 'ember-resources/link';
-import { keepLatest } from 'ember-resources/util/keep-latest';
-import { RemoteData } from 'ember-resources/util/remote-data';
+import { keepLatest } from 'reactiveweb/keep-latest';
+import { link } from 'reactiveweb/link';
+import { RemoteData } from 'reactiveweb/remote-data';
 
 import { MarkdownToHTML } from './markdown';
 

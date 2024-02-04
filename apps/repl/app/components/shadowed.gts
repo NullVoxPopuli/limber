@@ -1,10 +1,11 @@
 import { modifier } from 'ember-modifier';
-
-import State from 'limber/helpers/state';
+import { cell } from 'ember-resources';
 
 import type { TOC } from '@ember/component/template-only';
 
-const attachShadow = modifier((element: Element, [setShadow]: [State['update']]) => {
+type SetShadow = ReturnType<typeof cell<ShadowRoot>>['set'];
+
+const attachShadow = modifier((element: Element, [setShadow]: [SetShadow]) => {
   setShadow(element.attachShadow({ mode: 'open' }));
 });
 
@@ -13,6 +14,8 @@ const attachShadow = modifier((element: Element, [setShadow]: [State['update']])
 // assets in public, but idk how to set that up
 const getStyles = () => [...document.head.querySelectorAll('link')].map((link) => link.href);
 
+const shadowRoot = () => cell<ShadowRoot>();
+
 export const Shadowed: TOC<{
   Element: HTMLDivElement;
   Args: {
@@ -20,12 +23,12 @@ export const Shadowed: TOC<{
   };
   Blocks: { default: [] };
 }> = <template>
-  {{#let (State) as |shadow|}}
+  {{#let (shadowRoot) as |shadow|}}
     {{! @glint-ignore }}
-    <div data-shadow {{attachShadow shadow.update}} ...attributes></div>
+    <div data-shadow {{attachShadow shadow.set}} ...attributes></div>
 
-    {{#if shadow.value}}
-      {{#in-element shadow.value}}
+    {{#if shadow.current}}
+      {{#in-element shadow.current}}
         {{#unless @omitStyles}}
           {{#let (getStyles) as |styles|}}
             {{#each styles as |styleHref|}}
