@@ -1,12 +1,15 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+
 import { modifier } from 'ember-modifier';
-import { cell } from 'ember-resources';
 
-import type { TOC } from '@ember/component/template-only';
+const attachShadow = modifier((element: Element, [set]: [(shadowRoot: HTMLDivElement) => void]) => {
+  let shadow = element.attachShadow({ mode: 'open' });
+  let div = document.createElement('div');
 
-type SetShadow = ReturnType<typeof cell<ShadowRoot>>['set'];
+  shadow.appendChild(div);
 
-const attachShadow = modifier((element: Element, [setShadow]: [SetShadow]) => {
-  setShadow(element.attachShadow({ mode: 'open' }));
+  set(div);
 });
 
 // index.html has the production-fingerprinted references to these links
@@ -14,33 +17,36 @@ const attachShadow = modifier((element: Element, [setShadow]: [SetShadow]) => {
 // assets in public, but idk how to set that up
 const getStyles = () => [...document.head.querySelectorAll('link')].map((link) => link.href);
 
-const shadowRoot = () => cell<ShadowRoot>();
-
-export const Shadowed: TOC<{
+export class Shadowed extends Component<{
   Element: HTMLDivElement;
   Args: {
     omitStyles?: boolean;
   };
   Blocks: { default: [] };
-}> = <template>
-  {{#let (shadowRoot) as |shadow|}}
-    {{! @glint-ignore }}
-    <div data-shadow {{attachShadow shadow.set}} ...attributes></div>
+}> {
+  @tracked shadow: HTMLDivElement | undefined;
 
-    {{#if shadow.current}}
-      {{#in-element shadow.current}}
+  setShadow = async (shadowRoot: HTMLDivElement) => {
+    await Promise.resolve();
+
+    this.shadow = shadowRoot;
+  };
+
+  <template>
+    <div data-shadow {{attachShadow this.setShadow}} ...attributes></div>
+
+    {{#if this.shadow}}
+      {{#in-element this.shadow}}
         {{#unless @omitStyles}}
-          {{#let (getStyles) as |styles|}}
-            {{#each styles as |styleHref|}}
-              <link rel="stylesheet" href={{styleHref}} />
-            {{/each}}
-          {{/let}}
+          {{#each (getStyles) as |styleHref|}}
+            <link rel="stylesheet" href={{styleHref}} />
+          {{/each}}
         {{/unless}}
 
         {{yield}}
       {{/in-element}}
     {{/if}}
-  {{/let}}
-</template>;
+  </template>
+}
 
 export default Shadowed;

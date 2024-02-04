@@ -9,7 +9,7 @@
     "globby": "^14.0.0",
     "jsoncrush": "^1.1.8",
     "lz-string": "^1.5.0",
-    "tinybench": "^2.5.1"
+    "tinybench": "^2.6.0"
   },
   "devDependencies": {
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
