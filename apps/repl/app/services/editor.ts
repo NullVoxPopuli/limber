@@ -2,7 +2,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
 
-import { link } from 'ember-resources/link';
+import { link } from 'reactiveweb/link';
 
 import { FileURIComponent } from 'limber/utils/editor-text';
 

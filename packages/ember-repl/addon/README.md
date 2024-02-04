@@ -91,7 +91,7 @@ resource so that when an error occurs, you could keep rendering the latest succe
 import Component from '@glimmer/component';
 import { Compiled } from 'ember-repl';
 import { use } from 'ember-resources'; 
-import { keepLatest } from 'ember-resources/util/keep-latest';
+import { keepLatest } from 'reactiveweb/keep-latest';
 
 export class Renderer extends Component {
   @use compile = Compiled(() => this.args.gjsText, 'gjs');
@@ -198,7 +198,7 @@ resource so that when an error occurs, you could keep rendering the latest succe
 import Component from '@glimmer/component';
 import { Compiled } from 'ember-repl';
 import { use } from 'ember-resources'; 
-import { keepLatest } from 'ember-resources/util/keep-latest';
+import { keepLatest } from 'reactiveweb/util/keep-latest';
 
 export class Renderer extends Component {
   @use compile = Compiled(() => this.args.mdText, 'glimdown');

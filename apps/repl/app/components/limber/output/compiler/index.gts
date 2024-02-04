@@ -69,9 +69,7 @@ export default class Compiler extends Component<Signature> {
   @action
   @waitFor
   async makeComponent(format: Format, text: string) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    let { COMPONENT_MAP } = await import('/ember-repl/component-map.js');
+    let { importMap } = await import('./import-map');
 
     let onSuccess = async (component: ComponentLike) => {
       if (!component) {
@@ -103,7 +101,7 @@ export default class Compiler extends Component<Signature> {
           topLevelScope: {
             CopyMenu: CopyMenu,
           },
-          importMap: COMPONENT_MAP,
+          importMap,
           onCompileStart: this.onCompileStart,
           onSuccess,
           onError: this.onError,
@@ -112,7 +110,7 @@ export default class Compiler extends Component<Signature> {
       case 'gjs':
         return await compile(text, {
           format: format,
-          importMap: COMPONENT_MAP,
+          importMap,
           onCompileStart: this.onCompileStart,
           onSuccess,
           onError: this.onError,
