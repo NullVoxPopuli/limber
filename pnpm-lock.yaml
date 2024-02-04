@@ -184,8 +184,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(@babel/core@7.23.9)(ember-source@5.6.0)
       unified:
-        specifier: ^10.1.2
-        version: 10.1.2
+        specifier: ^11.0.0
+        version: 11.0.4
       unist-util-flatmap:
         specifier: ^1.0.0
         version: 1.0.0
@@ -501,8 +501,8 @@ importers:
         specifier: ^10.1.0
         version: 10.1.0
       unified:
-        specifier: ^10.1.2
-        version: 10.1.2
+        specifier: ^11.0.0
+        version: 11.0.4
     devDependencies:
       '@babel/core':
         specifier: ^7.23.9
@@ -1381,8 +1381,8 @@ importers:
         specifier: ^10.1.0
         version: 10.1.0
       unified:
-        specifier: ^10.1.2
-        version: 10.1.2
+        specifier: ^11.0.0
+        version: 11.0.4
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
@@ -23113,7 +23113,7 @@ packages:
       remark-gfm: 3.0.1
       remark-parse: 10.0.2
       remark-rehype: 10.1.0
-      unified: 10.1.2
+      unified: 11.0.4
       unist-util-visit: 5.0.0
       uuid: 9.0.1
       vfile: 6.0.1

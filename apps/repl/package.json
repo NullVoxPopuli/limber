@@ -181,7 +181,7 @@
     "stringify-object": "^5.0.0",
     "tracked-built-ins": "^3.3.0",
     "tracked-toolbox": "^2.0.0",
-    "unified": "^10.1.2",
+    "unified": "^11.0.0",
     "unist-util-flatmap": "^1.0.0",
     "unist-util-visit": "^5.0.0",
     "webpack-bundle-analyzer": "^4.10.1",
