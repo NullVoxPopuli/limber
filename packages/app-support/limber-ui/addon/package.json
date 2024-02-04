@@ -77,7 +77,7 @@
     "ember-modifier": "^4.1.0",
     "ember-primitives": "^0.11.1",
     "ember-resources": "^7.0.0",
-    "ember-source": "^5.5.0",
+    "ember-source": "^5.6.0",
     "ember-template-imports": "^3.4.2",
     "ember-template-lint": "^5.13.0",
     "eslint": "^8.55.0",
