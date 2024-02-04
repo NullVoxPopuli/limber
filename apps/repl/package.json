@@ -174,7 +174,7 @@
     "penpal": "^6.2.2",
     "reactiveweb": "^1.2.0",
     "rehype-raw": "^6.1.1",
-    "rehype-stringify": "^9.0.4",
+    "rehype-stringify": "^10.0.0",
     "remark-html": "16.0.1",
     "remark-parse": "10.0.2",
     "remark-rehype": "^10.1.0",
