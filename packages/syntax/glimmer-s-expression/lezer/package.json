@@ -22,19 +22,19 @@
     "@babel/core": "^7.23.9",
     "@babel/eslint-parser": "^7.23.10",
     "@glimdown/lezer-infra": "workspace:*",
-    "@lezer/generator": "^1.5.1",
+    "@lezer/generator": "^1.6.0",
     "@nullvoxpopuli/eslint-configs": "^3.2.2",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@typescript-eslint/eslint-plugin": "^6.20.0",
     "@typescript-eslint/parser": "^6.20.0",
     "eslint": "^8.55.0",
     "prettier": "^3.2.5",
-    "rollup": "^4.9.0",
+    "rollup": "^4.9.6",
     "typescript": "^5.3.3"
   },
   "dependencies": {
     "@lezer/highlight": "^1.2.0",
-    "@lezer/lr": "^1.3.14"
+    "@lezer/lr": "^1.4.0"
   },
   "scripts": {
     "build": "lezer-generator src/glimmer-expression.grammar -o src/parser && rollup -c",

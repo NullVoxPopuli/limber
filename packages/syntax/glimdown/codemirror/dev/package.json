@@ -14,7 +14,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.9",
     "@babel/eslint-parser": "^7.23.10",
-    "@codemirror/language": "^6.9.3",
+    "@codemirror/language": "^6.10.1",
     "@codemirror/state": "^6.4.0",
     "@codemirror/theme-one-dark": "^6.1.2",
     "@codemirror/view": "^6.23.0",
