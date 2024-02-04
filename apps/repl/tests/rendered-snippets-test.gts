@@ -22,13 +22,11 @@ module('Rendered Snippets / Demos', function (hooks) {
     let component: ComponentLike | undefined;
     let error: string | undefined;
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    let { COMPONENT_MAP } = await import('/ember-repl/component-map.js');
+    let { importMap } = await import('limber/components/limber/output/compiler/import-map');
 
     await compileAnything(text, {
       format: 'glimdown',
-      importMap: COMPONENT_MAP,
+      importMap,
       onCompileStart: async () => assert.step('start compile'),
       onSuccess: async (compiled) => {
         component = compiled;

@@ -71,7 +71,7 @@ jobs:
 
 
   tests_node:
-    name: Tests
+    name: "Node Tests"
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [install_dependencies]
@@ -85,7 +85,7 @@ jobs:
 
 
   tests:
-    name: Ember Tests
+    name: "Ember Tests"
     strategy:
       matrix:
         # os: [ubuntu-latest, macOS-latest, windows-latest]
