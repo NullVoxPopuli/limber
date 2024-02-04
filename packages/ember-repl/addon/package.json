@@ -89,7 +89,7 @@
     "magic-string": "^0.30.6",
     "mdast": "^3.0.0",
     "parse-static-imports": "^1.1.0",
-    "rehype-raw": "^6.1.1",
+    "rehype-raw": "^7.0.0",
     "rehype-stringify": "^9.0.4",
     "remark-gfm": "^3.0.1",
     "remark-parse": "^10.0.2",

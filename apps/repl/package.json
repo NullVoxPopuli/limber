@@ -173,7 +173,7 @@
     "path-browserify": "^1.0.1",
     "penpal": "^6.2.2",
     "reactiveweb": "^1.2.0",
-    "rehype-raw": "^6.1.1",
+    "rehype-raw": "^7.0.0",
     "rehype-stringify": "^9.0.4",
     "remark-html": "16.0.1",
     "remark-parse": "10.0.2",
