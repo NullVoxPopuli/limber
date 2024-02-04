@@ -33,7 +33,6 @@ import * as limberExternalLink from 'limber/components/external-link';
 import * as limberHeader from 'limber/components/limber/header';
 import * as limberMenu from 'limber/components/limber/menu';
 import * as limberShadowed from 'limber/components/shadowed';
-import * as limberState from 'limber/helpers/state';
 
 export const importMap = {
   // Own Stuff
@@ -41,7 +40,7 @@ export const importMap = {
   'limber/components/limber/header': limberHeader,
   'limber/components/external-link': limberExternalLink,
   'limber/components/shadowed': limberShadowed,
-  'limber/helpers/state': limberState,
+
   // Libraries
   'ember-repl': emberRepl,
   xstate: xstate,
