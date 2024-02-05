@@ -31,7 +31,7 @@ const MyComponent = <template>
 </template>;
 ```
 
-Practice using named blocks within the playground area.
+<p class="call-to-play">Practice using named blocks within the playground area</p>.
 
 Take note, there _are_ some constraints when it comes to invoking components with named blocks to help with conceptual consistency:
 - _the order of named blocks regions does not matter._
