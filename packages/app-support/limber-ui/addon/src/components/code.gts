@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
+import { isDevelopingApp,macroCondition } from '@embroider/macros';
 
 import { link } from 'reactiveweb/link';
 
@@ -64,8 +65,13 @@ interface Signature {
 }
 
 const DEFAULT_NUMBER_OF_LINES = 7;
-// TODO: allow import.meta.env to override this
-const HOST = 'https://limber.glimdown.com/edit';
+const PROD = 'https://limber.glimdown.com/edit';
+let HOST = PROD;
+
+// TODO: if localhost isn't running, fallback to live production
+if (macroCondition(isDevelopingApp())) {
+  HOST = 'http://localhost:4201/edit';
+}
 
 const INITIAL_URL = (force?: boolean) =>
   `${HOST}?format=gjs&t=<template></template>` + (force ? `&forceEditor=${force}` : '');

@@ -28,4 +28,13 @@ For example:
 
 All valid HTML is valid within a component or component block.
 
+In order for `<MyComponent>` to be capable of receiving a block, we must place a `{{yield}}` within the component definition: 
+```gjs
+const MyComponent = <template>
+  {{yield}}
+</template>;
+```
+
+This `{{yield}}` is a shorthand for the longer, named version, `{{yield to="default"}}`, which we'll explore in the next chapter.
+
 Try to create your own `:default` block-receiving component in the playground area.
