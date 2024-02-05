@@ -5,17 +5,18 @@ import { waitFor, waitForPromise } from '@ember/test-waiters';
 
 import { modifier } from 'ember-modifier';
 import { type Connection, connectToChild } from 'penpal';
+
 import type { ModifierLike } from '@glint/template';
 
-  /**
-   * We can't post right away, because we might do so before the iframe is ready.
-   * We need to wait until the frame initiates contact.
-   */
+/**
+ * We can't post right away, because we might do so before the iframe is ready.
+ * We need to wait until the frame initiates contact.
+ */
 function PostMessage(handleUpdate: (data: string) => void): ModifierLike<{
-  Element: HTMLIFrameElement,
+  Element: HTMLIFrameElement;
   Args: {
-    Positional: [data: string | null]
-  }
+    Positional: [data: string | null];
+  };
 }> {
   return modifier((element, [data]: [string | null]) => {
     if (!element.contentWindow) return;
@@ -26,10 +27,11 @@ function PostMessage(handleUpdate: (data: string) => void): ModifierLike<{
   });
 }
 
-function HandleMessage(createConnection: (element: HTMLIFrameElement) => () => void): ModifierLike<{ Element: HTMLIFrameElement }> {
-  return modifier(element => createConnection(element));
+function HandleMessage(
+  createConnection: (element: HTMLIFrameElement) => () => void
+): ModifierLike<{ Element: HTMLIFrameElement }> {
+  return modifier((element) => createConnection(element));
 }
-
 
 export class HostMessaging {
   @tracked frameStatus: unknown;
@@ -53,7 +55,6 @@ export class HostMessaging {
 
     return () => this.connection?.destroy();
   });
-
 
   @action
   @waitFor
