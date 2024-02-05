@@ -30,7 +30,7 @@ All external links should use the `<ExternalLink />` component.
 An icon on the right side of the link indicates that the link is external.
 
 ```gjs live preview
-import ExternalLink from 'limber/components/external-link';
+import { ExternalLink } from 'limber-ui';
 
 <template>
   <ExternalLink href="#">Link</ExternalLink>
@@ -44,7 +44,7 @@ Wraps the template block in a shadow dom with the correctly imported CSS so that
 component renderings can escape the default "prose" styling of the surrounding markdown.
 
 ```gjs live preview
-import Shadowed from 'limber/components/shadowed';
+import { Shadowed } from 'ember-primitives';
 
 <template>
   <ul><li>Styled</li><li>by Prose</li></ul>
@@ -63,7 +63,7 @@ app.
 
 ```gjs live preview
 import Header from 'limber/components/limber/header';
-import Shadowed from 'limber/components/shadowed';
+import { Shadowed } from 'ember-primitives';
 
 <template>
   <Shadowed>
@@ -79,7 +79,7 @@ customization of the trigger content and the the list.
 
 ```gjs live preview
 import Menu from 'limber/components/limber/menu';
-import Shadowed from 'limber/components/shadowed';
+import { Shadowed } from 'ember-primitives';
 
 <template>
   <Shadowed>

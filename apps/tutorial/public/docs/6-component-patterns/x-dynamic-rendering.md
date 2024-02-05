@@ -2,7 +2,7 @@ import { on } from '@ember/modifier';
 import { cell } from 'ember-resources';
 // shadow-dom componentt used to get a reset on styling
 // this is showcased more prominently in the "Styleguide" demo
-import Shadowed from 'limber/components/shadowed';
+import { Shadowed } from 'ember-primitives';
 
 // State that manages the "selected" component
 const selected = cell();

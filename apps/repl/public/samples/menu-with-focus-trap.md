@@ -7,7 +7,7 @@ More details as well as a tutorial
 ```gjs live preview
 import { on } from '@ember/modifier';
 
-import focusTrap from 'ember-focus-trap/modifiers/focus-trap';
+import { focusTrap } from 'ember-focus-trap';
 import { Popover } from 'ember-primitives';
 import HeadlessMenu from 'ember-headlessui/components/menu';
 

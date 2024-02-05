@@ -1,6 +1,7 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
-import ExternalLink from '../external-link';
+import { ExternalLink } from 'limber-ui';
+
 import DemoSelect from './demo-select';
 
 <template>

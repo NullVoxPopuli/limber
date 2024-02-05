@@ -2,7 +2,7 @@ import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import ExternalLink from 'limber/components/external-link';
+import { ExternalLink } from 'limber-ui';
 
 module('Integration | Component | external-link', function (hooks) {
   setupRenderingTest(hooks);

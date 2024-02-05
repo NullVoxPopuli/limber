@@ -4,8 +4,6 @@
 import * as eDeepTracked from 'ember-deep-tracked';
 // @ts-expect-error
 import * as focusTrap from 'ember-focus-trap';
-// @ts-expect-error
-import * as mFocusTrap from 'ember-focus-trap/modifiers/focus-trap';
 import * as headlessMenu from 'ember-headlessui/components/menu';
 import * as eModifier from 'ember-modifier';
 import * as ePrimitives from 'ember-primitives';
@@ -29,26 +27,24 @@ import * as trackedBuiltIns from 'tracked-built-ins';
 import * as trackedToolbox from 'tracked-toolbox';
 import * as xstate from 'xstate';
 
-import * as limberExternalLink from 'limber/components/external-link';
 import * as limberHeader from 'limber/components/limber/header';
 import * as limberMenu from 'limber/components/limber/menu';
-import * as limberShadowed from 'limber/components/shadowed';
+import * as limberUi from 'limber-ui';
+import { ExternalLink } from 'limber-ui';
 
 export const importMap = {
   // Own Stuff
   'limber/components/limber/menu': limberMenu,
   'limber/components/limber/header': limberHeader,
-  'limber/components/external-link': limberExternalLink,
-  'limber/components/shadowed': limberShadowed,
 
   // Libraries
   'ember-repl': emberRepl,
+  'limber-ui': limberUi,
   xstate: xstate,
   'ember-modifier': eModifier,
   'tracked-built-ins': trackedBuiltIns,
   'ember-headlessui/components/menu': headlessMenu,
   'ember-focus-trap': focusTrap,
-  'ember-focus-trap/modifiers/focus-trap': mFocusTrap,
   'ember-primitives': ePrimitives,
   'tracked-toolbox': trackedToolbox,
   'ember-deep-tracked': eDeepTracked,
@@ -69,20 +65,97 @@ export const importMap = {
   'reactiveweb/sync': reactiveSync,
   'reactiveweb/throttle': reactiveThrottle,
   'reactiveweb/wait-until': reactiveWaitUntil,
-
-  // These paths are for backcompat
-  // Since code is maintained in URLs,
-  // we can't upgrade any of it.
-  //
-  // We could probably log a deprecation message on these paths
-  'ember-resources/core': eResources,
-  'ember-resources/link': reactiveLink,
-  'ember-resources/service': reactiveService,
-  'ember-resources/modifier': reactiveModifier,
-  'ember-resources/util/map': reactiveMap,
-  'ember-resources/util/debounce': reactiveDebounce,
-  'ember-resources/util/keep-latest': reactiveKeepLatest,
-  'ember-resources/util/function': reactiveFunction,
-  'ember-resources/util/fps': reactiveFps,
-  'ember-resources/util/remote-data': reactiveRemoteData,
 };
+
+function defineWithWarning(
+  obj: object,
+  { name, original, replacement }: { name?: string; original: string; replacement?: string }
+) {
+  Object.defineProperty(importMap, original, {
+    get() {
+      let suggestion = replacement
+        ? `Please use ${replacement} going forward.`
+        : `There is not a direct replacement, please consult the docs for the library you're trying to use.`;
+
+      if (name) {
+        console.warn(
+          `${name} is no longer located at ${original} and has been aliased for you. ${suggestion}`
+        );
+      } else {
+        console.warn(
+          `The import you are using at ${original} no longerg exists and has been aliased for you. ${suggestion}`
+        );
+      }
+
+      return obj;
+    },
+  });
+}
+
+/**
+ * These paths are for backcompat
+ * Since code is maintained in URLs,
+ * we can't upgrade any of it.
+ *
+ * We could probably log a deprecation message on these paths
+ */
+defineWithWarning(ExternalLink, {
+  name: '<ExternalLink />',
+  original: 'limber/components/external-link',
+  replacement: 'limber-ui',
+});
+defineWithWarning(
+  { default: ePrimitives.Shadowed, Shadowed: ePrimitives.Shadowed },
+  { name: '<Shadowed />', original: 'limber/components/shadowed', replacement: 'ember-primitives' }
+);
+defineWithWarning(eResources, { original: 'ember-resources/core', replacement: 'ember-resources' });
+defineWithWarning(reactiveLink, {
+  name: 'link',
+  original: 'ember-resources/link',
+  replacement: 'reactiveweb/link',
+});
+defineWithWarning(reactiveService, {
+  name: 'service',
+  original: 'ember-resources/service',
+  replacement: 'reactiveweb/resource/service',
+});
+defineWithWarning(reactiveModifier, {
+  name: 'modifier',
+  original: 'ember-resources/modifier',
+  replacement: 'reactiveweb/resource/modifier',
+});
+defineWithWarning(reactiveMap, {
+  name: 'map',
+  original: 'ember-resources/util/map',
+  replacement: 'reactiveweb/map',
+});
+defineWithWarning(reactiveDebounce, {
+  name: 'debounce',
+  original: 'ember-resources/util/debounce',
+  replacement: 'reactiveweb/debounce',
+});
+defineWithWarning(reactiveKeepLatest, {
+  name: 'keepLatest',
+  original: 'ember-resources/util/keep-latest',
+  replacement: 'reactiveweb/keep-latest',
+});
+defineWithWarning(reactiveFunction, {
+  name: 'function',
+  original: 'ember-resources/util/function',
+  replacement: 'reactiveweb/function',
+});
+defineWithWarning(reactiveFps, {
+  name: 'FrameRate or UpdateFrequency',
+  original: 'ember-resources/util/fps',
+  replacement: 'reactiveweb/fps',
+});
+defineWithWarning(reactiveRemoteData, {
+  name: 'RemoteData',
+  original: 'ember-resources/util/remote-data',
+  replacement: 'reactiveweb/remote-data',
+});
+defineWithWarning(focusTrap.focusTrap, {
+  name: 'focusTrap',
+  original: 'ember-focus-trap/modifiers/focus-trap',
+  replacement: 'ember-focus-trap',
+});
