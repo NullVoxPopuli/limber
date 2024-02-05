@@ -37,4 +37,6 @@ const MyComponent = <template>
 
 This `{{yield}}` is a shorthand for the longer, named version, `{{yield to="default"}}`, which we'll explore in the next chapter.
 
-Try to create your own `:default` block-receiving component in the playground area.
+<p class="call-to-play">
+  Try to create your own <code>:default</code> block-receiving component in the playground area.
+</p>
