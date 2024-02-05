@@ -184,7 +184,7 @@ export const ResizeHandle: TOC<{
           'h-full w-2 py-2 cursor-col-resize'
           'w-full h-2 px-2 cursor-row-resize'
         }}
-        absolute inset-0 flex justify-end items-end text-white bg-horizon-lavender focus:ring-4 focus:outline-none focus-visible:outline-none leading-4 shadow z-10 group"
+        absolute inset-0 flex justify-end items-end text-white bg-horizon-lavender focus:ring-4 focus:outline-none focus-visible:outline-none leading-4 shadow group"
       {{! template-lint-disable no-inline-styles }}
       style="text-shadow: 1px 1px 1px black"
       aria-label="resize the editor"
