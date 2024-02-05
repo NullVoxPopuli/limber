@@ -99,14 +99,11 @@ function defineWithWarning(
  *
  * We could probably log a deprecation message on these paths
  */
-defineWithWarning(
-  { default: ExternalLink },
-  {
-    name: '<ExternalLink />',
-    original: 'limber/components/external-link',
-    replacement: 'limber-ui',
-  }
-);
+defineWithWarning(ExternalLink, {
+  name: '<ExternalLink />',
+  original: 'limber/components/external-link',
+  replacement: 'limber-ui',
+});
 defineWithWarning(
   { default: ePrimitives.Shadowed, Shadowed: ePrimitives.Shadowed },
   { name: '<Shadowed />', original: 'limber/components/shadowed', replacement: 'ember-primitives' }
@@ -157,11 +154,8 @@ defineWithWarning(reactiveRemoteData, {
   original: 'ember-resources/util/remote-data',
   replacement: 'reactiveweb/remote-data',
 });
-defineWithWarning(
-  { default: focusTrap.focusTrap },
-  {
-    name: 'focusTrap',
-    original: 'ember-focus-trap/modifiers/focus-trap',
-    replacement: 'ember-focus-trap',
-  }
-);
+defineWithWarning(focusTrap.focusTrap, {
+  name: 'focusTrap',
+  original: 'ember-focus-trap/modifiers/focus-trap',
+  replacement: 'ember-focus-trap',
+});
