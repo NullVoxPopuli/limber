@@ -707,9 +707,6 @@ importers:
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
-      latest-version:
-        specifier: ^7.0.0
-        version: 7.0.0
       yargs:
         specifier: ^17.7.2
         version: 17.7.2
