@@ -30,7 +30,7 @@ All external links should use the `<ExternalLink />` component.
 An icon on the right side of the link indicates that the link is external.
 
 ```gjs live preview
-import ExternalLink from 'limber/components/external-link';
+import { ExternalLink } from 'limber-ui';
 
 <template>
   <ExternalLink href="#">Link</ExternalLink>
