@@ -6,13 +6,12 @@
     "dev": "node ./dev/index.js",
     "prepare": "pnpm build",
     "release": "changeset publish",
-    "build": "turbo build --filter=limber^... --filter=tutorial^... --output-logs errors-only",
+    "build": "turbo build --filter=limber^... --filter=tutorial^...",
     "lint:fix": "turbo _:lint:fix --output-logs errors-only",
     "lint": "turbo _:lint --output-logs errors-only",
-    "start": "pnpm build && concurrently 'npm:start:*' --prefix-colors cyan,white,yellow,blue --restart-tries -1",
+    "start": "pnpm build && concurrently 'npm:start:tutorial' 'npm:start:repl' 'npm:start:styles' --names 'tutarial,repl,tailwind'",
     "start:tutorial": "pnpm --filter=tutorial start",
     "start:repl": "pnpm --filter=limber start",
-    "start:limber-ui": "pnpm --filter=limber-ui start",
     "start:styles": "pnpm --filter=limber-styles start"
   },
   "engines": {
