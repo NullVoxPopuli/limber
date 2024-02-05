@@ -89,7 +89,7 @@ importers:
         version: link:../../packages/app-support/styles
       '@nullvoxpopuli/limber-transpilation':
         specifier: workspace:*
-        version: link:../../packages/app-support/transpilation
+        version: file:packages/app-support/transpilation(@glimmer/component@1.1.2)(ember-source@5.6.0)
       '@xstate/inspect':
         specifier: ^0.8.0
         version: 0.8.0(ws@8.16.0)(xstate@4.35.4)
@@ -446,6 +446,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
     dependenciesMeta:
+      '@nullvoxpopuli/limber-transpilation':
+        injected: true
       ember-primitives:
         injected: true
       ember-repl:
@@ -785,7 +787,7 @@ importers:
         specifier: ^1.1.2
         version: 1.2.0
       '@nullvoxpopuli/horizon-theme':
-        specifier: '*'
+        specifier: workspace:*
         version: link:../../horizon-theme
       assert:
         specifier: ^2.1.0
@@ -951,6 +953,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^6.20.0
         version: 6.20.0(eslint@8.56.0)(typescript@5.3.3)
+      babel-plugin-ember-template-compilation:
+        specifier: ^2.2.1
+        version: 2.2.1
       concurrently:
         specifier: ^8.2.2
         version: 8.2.2
@@ -1568,6 +1573,9 @@ importers:
       '@babel/core':
         specifier: ^7.23.9
         version: 7.23.9
+      '@babel/plugin-proposal-decorators':
+        specifier: ^7.23.9
+        version: 7.23.9(@babel/core@7.23.9)
       '@ember/optional-features':
         specifier: ^2.0.0
         version: 2.0.0
@@ -22994,6 +23002,22 @@ packages:
       - rollup
       - supports-color
       - webpack
+    dev: false
+
+  file:packages/app-support/transpilation(@glimmer/component@1.1.2)(ember-source@5.6.0):
+    resolution: {directory: packages/app-support/transpilation, type: directory}
+    id: file:packages/app-support/transpilation
+    name: '@nullvoxpopuli/limber-transpilation'
+    engines: {node: '>= v16', npm: use pnpm, yarn: use pnpm}
+    peerDependencies:
+      '@glimmer/component': ^1.1.2
+      ember-source: '*'
+    dependencies:
+      '@babel/standalone': 7.23.10
+      '@glimmer/component': 1.1.2(@babel/core@7.23.9)
+      babel-plugin-htmlbars-inline-precompile: 5.3.1
+      ember-source: 5.6.0(@babel/core@7.23.9)(@glimmer/component@1.1.2)(@glint/template@1.3.0)(webpack@5.90.1)
+      path-browserify: 1.0.1
     dev: false
 
   file:packages/ember-repl/addon(@babel/core@7.23.9)(@glimmer/component@1.1.2)(@glint/template@1.3.0)(ember-resources@7.0.0)(ember-source@5.6.0):

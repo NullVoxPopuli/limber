@@ -18,7 +18,7 @@
   "scripts": {
     "ember:canary": "npx ember-source-channel-url canary --write",
     "ember:beta": "npx ember-source-channel-url beta --write",
-    "build": "ember build --environment=production",
+    "build": "pnpm _syncPnpm && ember build --environment=production",
     "lint:types": "glint",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "concurrently 'ember serve -p 4201' 'pnpm _syncPnpm --watch' --names 'serve,ync deps'",
@@ -42,6 +42,9 @@
       "injected": true
     },
     "limber-ui": {
+      "injected": true
+   },
+    "@nullvoxpopuli/limber-transpilation": {
       "injected": true
     }
   },
