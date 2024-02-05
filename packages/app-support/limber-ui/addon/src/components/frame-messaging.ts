@@ -6,6 +6,33 @@ import { waitFor, waitForPromise } from '@ember/test-waiters';
 import { modifier } from 'ember-modifier';
 import { type Connection, connectToChild } from 'penpal';
 
+import type { ModifierLike } from '@glint/template';
+
+/**
+ * We can't post right away, because we might do so before the iframe is ready.
+ * We need to wait until the frame initiates contact.
+ */
+function PostMessage(handleUpdate: (data: string) => void): ModifierLike<{
+  Element: HTMLIFrameElement;
+  Args: {
+    Positional: [data: string | null];
+  };
+}> {
+  return modifier((element, [data]: [string | null]) => {
+    if (!element.contentWindow) return;
+
+    if (data) {
+      handleUpdate(data);
+    }
+  });
+}
+
+function HandleMessage(
+  createConnection: (element: HTMLIFrameElement) => () => void
+): ModifierLike<{ Element: HTMLIFrameElement }> {
+  return modifier((element) => createConnection(element));
+}
+
 export class HostMessaging {
   @tracked frameStatus: unknown;
 
@@ -17,14 +44,8 @@ export class HostMessaging {
    * We can't post right away, because we might do so before the iframe is ready.
    * We need to wait until the frame initiates contact.
    */
-  postMessage = modifier((element: HTMLIFrameElement, [data]: [string | null]) => {
-    if (!element.contentWindow) return;
-
-    if (data) {
-      this.queuePayload('gjs', data);
-    }
-  });
-  onMessage = modifier((element: HTMLIFrameElement) => {
+  postMessage = PostMessage((data) => this.queuePayload('gjs', data));
+  onMessage = HandleMessage((element) => {
     this.connection = connectToChild({
       iframe: element,
       methods: {},
