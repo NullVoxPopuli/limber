@@ -125,7 +125,7 @@ const Menu: TOC<{
 
       {{#if menu.isOpen}}
         {{! template-lint-disable no-inline-styles }}
-        <p.Content style="width: max-content;z-index:1;">
+        <p.Content style="width: max-content;z-index:11;">
           {{! template-lint-disable no-inline-styles }}
           <div
             class="border"
