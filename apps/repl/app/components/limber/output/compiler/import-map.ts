@@ -9,6 +9,7 @@ import * as mFocusTrap from 'ember-focus-trap/modifiers/focus-trap';
 import * as headlessMenu from 'ember-headlessui/components/menu';
 import * as eModifier from 'ember-modifier';
 import * as ePrimitives from 'ember-primitives';
+import * as shadowed from 'ember-primitives/components/shadowed';
 import * as emberRepl from 'ember-repl';
 import * as eResources from 'ember-resources';
 import * as reactiveDebounce from 'reactiveweb/debounce';
@@ -32,14 +33,12 @@ import * as xstate from 'xstate';
 import * as limberExternalLink from 'limber/components/external-link';
 import * as limberHeader from 'limber/components/limber/header';
 import * as limberMenu from 'limber/components/limber/menu';
-import * as limberShadowed from 'limber/components/shadowed';
 
 export const importMap = {
   // Own Stuff
   'limber/components/limber/menu': limberMenu,
   'limber/components/limber/header': limberHeader,
   'limber/components/external-link': limberExternalLink,
-  'limber/components/shadowed': limberShadowed,
 
   // Libraries
   'ember-repl': emberRepl,
@@ -75,6 +74,7 @@ export const importMap = {
   // we can't upgrade any of it.
   //
   // We could probably log a deprecation message on these paths
+  'limber/components/shadowed': shadowed,
   'ember-resources/core': eResources,
   'ember-resources/link': reactiveLink,
   'ember-resources/service': reactiveService,
