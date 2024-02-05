@@ -7,7 +7,7 @@ import { link } from 'reactiveweb/link';
 type AllowedFormat = 'gjs' | 'gts' | 'hbs' | 'gmd';
 type Storage = 'local' | 'url';
 
-import { HostMessaging } from './frame-messaging';
+import { HostMessaging } from './frame-messaging.ts';
 
 interface Signature {
   Element: HTMLIFrameElement;

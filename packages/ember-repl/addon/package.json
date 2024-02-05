@@ -85,6 +85,7 @@
     "change-case": "^5.4.2",
     "common-tags": "^1.8.2",
     "content-tag": "^1.2.1",
+    "decorator-transforms": "^1.1.0",
     "line-column": "^1.0.2",
     "magic-string": "^0.30.6",
     "mdast": "^3.0.0",
@@ -101,6 +102,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
+    "@babel/plugin-transform-typescript": "^7.23.6",
     "@babel/preset-typescript": "^7.23.3",
     "@babel/types": "^7.23.9",
     "@ember/test-helpers": "^3.2.1",
@@ -145,7 +147,6 @@
     "publint": "^0.2.6",
     "rollup": "~4.9.6",
     "rollup-plugin-copy": "^3.5.0",
-    "rollup-plugin-glimmer-template-tag": "^0.4.1",
     "typescript": "^5.3.3"
   },
   "volta": {
