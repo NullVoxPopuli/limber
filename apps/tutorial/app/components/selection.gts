@@ -53,11 +53,7 @@ export class Selection extends Component {
         <span class="limber__selected">{{this.humanSelected}}</span>
       </span>
       <style>
-        .limber__selected {
-            text-wrap: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-        }
+        .limber__selected { text-wrap: nowrap; text-overflow: ellipsis; overflow: hidden; }
       </style>
 
       <select

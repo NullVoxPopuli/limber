@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
-import { isDevelopingApp,macroCondition } from '@embroider/macros';
+import { isDevelopingApp, macroCondition } from '@embroider/macros';
 
 import { link } from 'reactiveweb/link';
 
