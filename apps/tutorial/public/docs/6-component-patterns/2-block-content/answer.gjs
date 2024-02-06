@@ -1,5 +1,14 @@
-<template>
-  This tutorial chapter needs to be written!
+const MyComponent = <template>
+  before
+  <hr>
+  {{yield}}
+  <hr>
+  after
+</template>;
 
-  It could be written by you!, if you want &lt;3
+<template>
+  <MyComponent>
+    Example block content passed to
+    <code>MyComponent</code>.
+  </MyComponent>
 </template>

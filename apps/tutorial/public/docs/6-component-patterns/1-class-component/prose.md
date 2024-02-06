@@ -15,7 +15,9 @@ export default class Demo extends Component {
 }
 ```
 
-In the editor, try adding a button that increments the `value` when clicked.
+<p class="call-to-play">
+  In the editor, try adding a button that increments the <code>value</code> when clicked.
+</p>
 
 It may end up looking something like this:
 ```gjs
@@ -26,11 +28,19 @@ import { on } from '@ember/modifier';
 export default class Demo extends Component {
   <template>
     {{this.value}}<br>
+    {{this.doubled}}<br>
     <button {{on 'click' this.increment}}>increment</button>
   </template>
 
+  // root state
   @tracked value = 0;
 
+  // derived state
+  get doubled() {
+    return this.value * 2;
+  }
+
+  // action
   increment = () => this.value++;
 }
 ```

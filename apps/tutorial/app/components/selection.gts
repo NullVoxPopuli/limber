@@ -50,8 +50,11 @@ export class Selection extends Component {
         class="w-full h-full px-4 absolute z-1 sr-hidden pointer-events-none grid gap-3 grid-flow-col items-center justify-start"
       >
         <FaIcon @icon="bars" />
-        <span>{{this.humanSelected}}</span>
+        <span class="limber__selected">{{this.humanSelected}}</span>
       </span>
+      <style>
+        .limber__selected { text-wrap: nowrap; text-overflow: ellipsis; overflow: hidden; }
+      </style>
 
       <select
         name="tutorial"

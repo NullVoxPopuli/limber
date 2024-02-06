@@ -1,5 +1,7 @@
-<template>
-  This tutorial chapter needs to be written!
+const MyComponent = <template>
 
-  It could be written by you!, if you want &lt;3
+</template>;
+
+<template>
+  <MyComponent />
 </template>
