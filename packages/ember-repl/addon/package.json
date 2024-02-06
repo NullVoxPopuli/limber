@@ -164,9 +164,9 @@
     "@glimmer/compiler": ">= 0.86.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/syntax": ">= 0.86.0",
-    "@glint/template": "1.3.0",
-    "ember-resources": "^6.4.2",
-    "ember-source": "^5.5.0"
+    "@glint/template": ">= 1.3.0",
+    "ember-resources": ">= 6.4.2",
+    "ember-source": ">= 5.5.0"
   },
   "engines": {
     "node": ">= v16",
