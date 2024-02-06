@@ -10,7 +10,7 @@ overrides:
   ember-element-helper: ^0.8.5
   ember-auto-import: ^2.7.0
 
-packageExtensionsChecksum: 544080bde436377b617b03ac0e4c6872
+packageExtensionsChecksum: 3fe993230909b47c01531fe70fa3e092
 
 importers:
 
