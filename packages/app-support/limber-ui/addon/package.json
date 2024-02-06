@@ -76,8 +76,6 @@
     "@typescript-eslint/eslint-plugin": "^6.20.0",
     "@typescript-eslint/parser": "^6.20.0",
     "babel-plugin-ember-template-compilation": "^2.2.1",
-    "execa": "^8.0.1",
-    "fix-bad-declaration-output": "^1.1.0",
     "concurrently": "^8.2.2",
     "ember-async-data": "1.0.3",
     "ember-cli-htmlbars": "^6.3.0",

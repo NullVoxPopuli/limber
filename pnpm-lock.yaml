@@ -20,8 +20,6 @@ overrides:
   '@glint/environment-ember-template-imports': 1.3.0
   ember-auto-import: ^2.7.0
   ember-modifier: ^4.1.0
-  eslint-plugin-ember: ^12.0.0
-  ember-eslint-parser: 0.2.5
 
 importers:
 
@@ -6180,7 +6178,7 @@ packages:
       '@typescript-eslint/eslint-plugin': ^5.62.0 || >= 6.0.0
       '@typescript-eslint/parser': ^5.62.0 || >= 6.0.0
       eslint: ^7.0.0 || ^8.0.0
-      eslint-plugin-ember: ^12.0.0
+      eslint-plugin-ember: '>= 11.10.0'
       eslint-plugin-qunit: '>= 8.0.0'
       prettier: ^2.8.8 || >= 3.0.0
     peerDependenciesMeta:
@@ -6232,7 +6230,7 @@ packages:
       '@typescript-eslint/eslint-plugin': ^5.62.0 || >= 6.0.0
       '@typescript-eslint/parser': ^5.62.0 || >= 6.0.0
       eslint: ^7.0.0 || ^8.0.0
-      eslint-plugin-ember: ^12.0.0
+      eslint-plugin-ember: '>= 11.10.0'
       eslint-plugin-qunit: '>= 8.0.0'
       prettier: ^2.8.8 || >= 3.0.0
     peerDependenciesMeta:
@@ -6284,7 +6282,7 @@ packages:
       '@typescript-eslint/eslint-plugin': ^5.62.0 || >= 6.0.0
       '@typescript-eslint/parser': ^5.62.0 || >= 6.0.0
       eslint: ^7.0.0 || ^8.0.0
-      eslint-plugin-ember: ^12.0.0
+      eslint-plugin-ember: '>= 11.10.0'
       eslint-plugin-qunit: '>= 8.0.0'
       prettier: ^2.8.8 || >= 3.0.0
     peerDependenciesMeta:
@@ -6336,7 +6334,7 @@ packages:
       '@typescript-eslint/eslint-plugin': ^5.62.0 || >= 6.0.0
       '@typescript-eslint/parser': ^5.62.0 || >= 6.0.0
       eslint: ^7.0.0 || ^8.0.0
-      eslint-plugin-ember: ^12.0.0
+      eslint-plugin-ember: '>= 11.10.0'
       eslint-plugin-qunit: '>= 8.0.0'
       prettier: ^2.8.8 || >= 3.0.0
     peerDependenciesMeta:
@@ -6387,7 +6385,7 @@ packages:
       '@typescript-eslint/eslint-plugin': ^5.62.0 || >= 6.0.0
       '@typescript-eslint/parser': ^5.62.0 || >= 6.0.0
       eslint: ^7.0.0 || ^8.0.0
-      eslint-plugin-ember: ^12.0.0
+      eslint-plugin-ember: '>= 11.10.0'
       eslint-plugin-qunit: '>= 8.0.0'
       prettier: ^2.8.8 || >= 3.0.0
     peerDependenciesMeta:
@@ -6435,7 +6433,7 @@ packages:
       '@typescript-eslint/eslint-plugin': ^5.62.0 || >= 6.0.0
       '@typescript-eslint/parser': ^5.62.0 || >= 6.0.0
       eslint: ^7.0.0 || ^8.0.0
-      eslint-plugin-ember: ^12.0.0
+      eslint-plugin-ember: '>= 11.10.0'
       eslint-plugin-qunit: '>= 8.0.0'
       prettier: ^2.8.8 || >= 3.0.0
     peerDependenciesMeta:
@@ -22928,7 +22926,7 @@ packages:
       '@glimmer/tracking': ^1.1.2
       ember-async-data: ^1.0.3
       ember-modifier: '*'
-      ember-primitives: ^0.10.1
+      ember-primitives: ^0.11.0
       ember-resources: ^6.4.2
       ember-source: '*'
     dependencies:
@@ -22970,7 +22968,7 @@ packages:
       '@glimmer/tracking': ^1.1.2
       ember-async-data: ^1.0.3
       ember-modifier: '*'
-      ember-primitives: ^0.10.1
+      ember-primitives: ^0.11.0
       ember-resources: ^6.4.2
       ember-source: '*'
     dependencies:
