@@ -65,7 +65,13 @@ interface Signature {
 
 const DEFAULT_NUMBER_OF_LINES = 7;
 // TODO: allow import.meta.env to override this
-const HOST = 'https://limber.glimdown.com/edit';
+let HOST = 'https://limber.glimdown.com/edit';
+
+const initialQPs = new URLSearchParams(window.location.search);
+
+if (initialQPs.get('local')) {
+  HOST = `http://localhost:${initialQPs.get('local')}`;
+}
 
 const INITIAL_URL = (force?: boolean) =>
   `${HOST}?format=gjs&t=<template></template>` + (force ? `&forceEditor=${force}` : '');
