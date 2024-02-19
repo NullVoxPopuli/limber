@@ -39,9 +39,6 @@
       "types": "./declarations/browser/compile/markdown-to-ember.d.ts",
       "default": "./dist/browser/compile/markdown-to-ember.js"
     },
-    "./ember-cli": {
-      "require": "./src/build/ember-cli.cjs"
-    },
     "./test-support": {
       "types": "./declarations/test-support/index.d.ts",
       "default": "./dist/test-support/index.js"
