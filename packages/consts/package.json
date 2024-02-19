@@ -1,6 +1,6 @@
 {
   "name": "@nullvoxpopuli/limber-consts",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "repo constants for helping out node scripts",
   "main": "index.js",
   "author": "NullVoxPopuli",

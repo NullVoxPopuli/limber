@@ -1,5 +1,54 @@
 ## [2.0.63](https://github.com/NullVoxPopuli/ember-repl/compare/v2.0.62...v2.0.63) (2022-08-23)
 
+## 3.0.0
+
+### Major Changes
+
+- [#896](https://github.com/NullVoxPopuli/limber/pull/896) [`9631cfd`](https://github.com/NullVoxPopuli/limber/commit/9631cfdb5b0a56c6b7c8aa72cd1c75ef65c8d597) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Now compatible with Glint types.
+
+  This is considered a breaking change because the types became _stricter_.
+
+  Previously the `component` property was `unknown`, and now it is `ComponentLike` (from `@glint/template`)
+
+- [#769](https://github.com/NullVoxPopuli/limber/pull/769) [`74490d7`](https://github.com/NullVoxPopuli/limber/commit/74490d767b448381af3b41c60a0a58dbffb3e3ea) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Drop support for ember-source < 4.11.
+
+  This doesn't mean that ember-source < 4.11 won't work with ember-repl, but that ember-repl is not testing against earlier ember-sources.
+
+### Minor Changes
+
+- [#986](https://github.com/NullVoxPopuli/limber/pull/986) [`0e72a5d`](https://github.com/NullVoxPopuli/limber/commit/0e72a5dbddfd9c147d90a12b3e56d8e035ad7945) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Add GitHub-Flavored-Markdown support
+
+- [#950](https://github.com/NullVoxPopuli/limber/pull/950) [`7dcfc53`](https://github.com/NullVoxPopuli/limber/commit/7dcfc5338b9a91e35a419b24330c3679c18632da) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Additional exports:
+
+  - `compile`
+  - `Compiled`
+
+  These enable editors to more easily integrate with the multiple formats supported by ember-repl.
+
+  `compile` is an imperative interface where you can provide callbacks for what you'd like to do on success, error, and start of a compilation.
+
+  `Compiled` is a resource for when you don't want to do any of the above, and want just get to rendering. This utility resource is a only a few lines and immediately wraps `compile` while providing 3 reactive values to use directly in your templates.
+
+  See the README for more information.
+
+- [`fa9b78c`](https://github.com/NullVoxPopuli/limber/commit/fa9b78c0786ad523c7ec6096f9b2df5c5da473fc) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Add support for passing `remarkPlugins` to `compile` and `Compile` for the `glimdown` format
+
+### Patch Changes
+
+- [#754](https://github.com/NullVoxPopuli/limber/pull/754) [`ae14517`](https://github.com/NullVoxPopuli/limber/commit/ae1451732dda5ae03c4e100b6851743a99d74ee9) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Use caret ranges (^) for all dependencies
+
+- [`ff2de75`](https://github.com/NullVoxPopuli/limber/commit/ff2de75a7b0269e31dc224fff0d173a252cc26c4) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Fix an issue where hbs live blocks did not have scope properly forwarded to them and make errors about missing scope clearer, rather than 'tried to render undefined, how dare you'
+
+  Fix implemented here: https://github.com/NullVoxPopuli/limber/pull/1668
+
+- [#1258](https://github.com/NullVoxPopuli/limber/pull/1258) [`f0b1c68`](https://github.com/NullVoxPopuli/limber/commit/f0b1c68da309f9fb39864def158539396086c5a5) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Fix types exports by using separate declarations directory in npm package
+
+- [`1a825f9`](https://github.com/NullVoxPopuli/limber/commit/1a825f9c4062d557cf9b7b6adcf7d15800ccc710) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Use WASM-based content-tag for compilation instead of regex-based javascript implementation.
+
+- [`29fd785`](https://github.com/NullVoxPopuli/limber/commit/29fd785d8e44280760f4b9f39248fbaa1b9188ee) - Add option to pass the ShadowComponent to compile"
+
+- [#954](https://github.com/NullVoxPopuli/limber/pull/954) [`c52a615`](https://github.com/NullVoxPopuli/limber/commit/c52a615a5b427032fecc037cc71d983d4cfa9ffe) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Passthrough all options from Compiled to compile
+
 ## 3.0.0-beta.7
 
 ### Patch Changes

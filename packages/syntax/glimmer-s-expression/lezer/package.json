@@ -1,6 +1,6 @@
 {
   "name": "@glimdown/lezer-glimmer-expression",
-  "version": "0.0.0-beta.2",
+  "version": "0.0.0",
   "author": "NullVoxPopuli",
   "license": "MIT",
   "type": "module",

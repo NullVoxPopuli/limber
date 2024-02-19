@@ -1,5 +1,13 @@
 # codemirror-lang-glimdown
 
+## 0.0.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - codemirror-lang-glimmer-js@0.0.0
+  - codemirror-lang-glimmer@0.0.0
+
 ## 0.0.0-beta.4
 
 ### Patch Changes

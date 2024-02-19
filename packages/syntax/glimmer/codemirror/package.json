@@ -1,6 +1,6 @@
 {
   "name": "codemirror-lang-glimmer",
-  "version": "0.0.0-beta.4",
+  "version": "0.0.0",
   "author": "NullVoxPopuli",
   "license": "MIT",
   "type": "module",

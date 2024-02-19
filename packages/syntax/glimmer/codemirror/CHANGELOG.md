@@ -1,5 +1,13 @@
 # codemirror-lang-glimmer
 
+## 0.0.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @glimdown/lezer-glimmer-expression@0.0.0
+  - lezer-glimmer@0.0.0
+
 ## 0.0.0-beta.4
 
 ### Patch Changes

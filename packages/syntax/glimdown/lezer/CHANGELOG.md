@@ -1,5 +1,7 @@
 # @glimdown/lezer
 
+## 0.0.0
+
 ## 0.0.0-beta.2
 
 ### Patch Changes
