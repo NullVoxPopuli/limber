@@ -164,4 +164,80 @@ module('Rendering | compile()', function (hooks) {
       });
     });
   });
+
+  module('passing options', function () {
+    test('adding to top-level scope', async function (assert) {
+      const text = `This is a local component added to topLevelScope`;
+      const LocalComponent = <template>{{text}}</template>;
+
+      setupOnerror(() => {
+        assert.notOk('This should not error');
+      });
+
+      let snippet = stripIndent`
+        <LocalComponent />
+      `;
+
+      let component: ComponentLike | undefined;
+
+      await compile(snippet, {
+        format: 'glimdown',
+        onSuccess: (comp) => (component = comp),
+        onError: () => assert.notOk('did not expect error'),
+        onCompileStart: () => {
+          /* not used */
+        },
+        topLevelScope: {
+          LocalComponent,
+        },
+      });
+
+      debugAssert(`[BUG]`, component);
+
+      await render(component);
+
+      assert.dom().hasText(text);
+    });
+
+    test('adding to top-level scope applies to rendered "hbs" codefences', async function (assert) {
+      const text = `This is a local component added to topLevelScope`;
+      const LocalComponent = <template>{{text}}</template>;
+
+      setupOnerror((e) => {
+        console.error(e);
+        assert.notOk('This should not error');
+      });
+
+      let snippet = stripIndent`
+        Using a live hbs tag is how we can syntax highlighting
+
+        \`\`\`hbs live
+        <LocalComponent />
+        \`\`\`
+      `;
+
+      let component: ComponentLike | undefined;
+
+      await compile(snippet, {
+        format: 'glimdown',
+        onSuccess: (comp) => (component = comp),
+        onError: (e) => {
+          console.error(e);
+          assert.notOk('did not expect error');
+        },
+        onCompileStart: () => {
+          /* not used */
+        },
+        topLevelScope: {
+          LocalComponent,
+        },
+      });
+
+      debugAssert(`[BUG]`, component);
+
+      await render(component);
+
+      assert.dom().containsText(text);
+    });
+  });
 });

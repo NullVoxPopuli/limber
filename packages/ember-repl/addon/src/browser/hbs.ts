@@ -75,7 +75,15 @@ function compileTemplate(source: string, { moduleName, scope = {} }: CompileTemp
   // Copied from @glimmer/compiler/lib/compiler#precompile
   let [block, usedLocals] = precompileJSON(source, options);
 
-  let usedScope = usedLocals.map((key: string) => localScope[key]);
+  let usedScope = usedLocals.map((key: string) => {
+    let value = localScope[key];
+
+    if (!value) {
+      throw new Error(`Attempt to use ${key} in compiled hbs, but it was not available in scope.`);
+    }
+
+    return value;
+  });
 
   let blockJSON = JSON.stringify(block);
   let templateJSONObject = {

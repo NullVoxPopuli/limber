@@ -5,7 +5,7 @@ import type { ExtractedCode } from './markdown-to-ember.ts';
 import type { UnifiedPlugin } from './types.ts';
 import type { EvalImportMap, ScopeMap } from './types.ts';
 
-async function compileAll(js: { code: string }[], importMap?: EvalImportMap) {
+async function compileGJSArray(js: { code: string }[], importMap?: EvalImportMap) {
   let modules = await Promise.all(
     js.map(async ({ code }) => {
       return await compileGJS(code, importMap);
@@ -46,7 +46,10 @@ export async function compileHBS(
 
 async function extractScope(
   liveCode: ExtractedCode[],
-  importMap?: EvalImportMap
+  options?: {
+    importMap?: EvalImportMap;
+    topLevelScope?: ScopeMap;
+  }
 ): Promise<CompileResult[]> {
   let scope: CompileResult[] = [];
 
@@ -54,7 +57,7 @@ async function extractScope(
   let js = liveCode.filter((code) => ['js', 'gjs'].includes(code.lang));
 
   if (js.length > 0) {
-    let compiled = await compileAll(js, importMap);
+    let compiled = await compileGJSArray(js, options?.importMap);
 
     await Promise.all(
       compiled.map(async (info) => {
@@ -74,7 +77,7 @@ async function extractScope(
   }
 
   for (let { code } of hbs) {
-    let compiled = await compileHBS(code);
+    let compiled = await compileHBS(code, { scope: options?.topLevelScope });
 
     scope.push(compiled);
   }
@@ -92,7 +95,6 @@ export async function compileMD(
     ShadowComponent?: string;
   }
 ): Promise<CompileResult & { rootTemplate?: string }> {
-  let importMap = options?.importMap;
   let topLevelScope = options?.topLevelScope ?? {};
   let rootTemplate: string;
   let liveCode: ExtractedCode[];
@@ -126,7 +128,7 @@ export async function compileMD(
    */
   if (liveCode.length > 0) {
     try {
-      scope = await extractScope(liveCode, importMap);
+      scope = await extractScope(liveCode, options);
     } catch (error) {
       console.info({ scope });
       console.error(error);
