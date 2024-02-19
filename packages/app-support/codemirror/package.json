@@ -1,6 +1,6 @@
 {
   "name": "@nullvoxpopuli/limber-codemirror",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "custom build of codemirror for use in Limber",
   "type": "module",
   "exports": {

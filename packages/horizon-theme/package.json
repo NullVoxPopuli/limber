@@ -1,6 +1,6 @@
 {
   "name": "@nullvoxpopuli/horizon-theme",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "horizon variables for the limber editors and other JS-based theming",
   "main": "dist/index.js",
   "type": "module",

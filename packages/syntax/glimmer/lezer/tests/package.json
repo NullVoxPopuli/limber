@@ -33,5 +33,6 @@
     "yarn": "use pnpm"
   },
   "license": "MIT",
-  "author": "NullVoxPopuli"
+  "author": "NullVoxPopuli",
+  "version": null
 }

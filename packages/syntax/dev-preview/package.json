@@ -1,7 +1,7 @@
 {
   "name": "@glimdown/codemirror-dev-preview",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "exports": {
     "./print-tree": "./src/print-lezer-tree.ts"
   },

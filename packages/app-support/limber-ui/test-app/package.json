@@ -1,6 +1,6 @@
 {
   "name": "limber-ui-test-app",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "description": "Small description for test-app goes here",
   "repository": {
@@ -73,7 +73,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-qunit": "^8.0.1",
-    "limber-ui": "^1.0.0-beta.0",
+    "limber-ui": "^1.0.0",
     "loader.js": "^4.7.0",
     "prettier": "^3.2.5",
     "prettier-plugin-ember-template-tag": "^2.0.0",
