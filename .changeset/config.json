@@ -17,6 +17,7 @@
   "ignore": [
     "limber",
     "tutorial",
+    "dev-tools",
     "limber-ui-test-app",
     "ember-repl-test-app",
     "@nullvoxpopuli/limber-codemirror",

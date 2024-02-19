@@ -58,6 +58,9 @@
         "rsvp"
       ]
     },
-    "notes": {}
+    "notes": {},
+    "patchedDependencies": {
+      "@changesets/assemble-release-plan@6.0.0": "patches/@changesets__assemble-release-plan@6.0.0.patch"
+    }
   }
 }
