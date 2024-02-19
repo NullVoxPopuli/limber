@@ -1,24 +1,21 @@
 {
   "name": "limber-monorepo",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:NullVoxPopuli/limber.git"
+  },
   "author": "NullVoxPopuli",
   "scripts": {
-    "dev": "node ./dev/index.js",
-    "prepare": "pnpm build",
     "build": "turbo build --filter=limber^... --filter=tutorial^...",
-    "lint:fix": "turbo _:lint:fix --output-logs errors-only",
+    "dev": "node ./dev/index.js",
     "lint": "turbo _:lint --output-logs errors-only",
+    "lint:fix": "turbo _:lint:fix --output-logs errors-only",
+    "prepare": "pnpm build",
     "start": "pnpm build && concurrently 'npm:start:tutorial' 'npm:start:repl' 'npm:start:styles' --names 'tutarial,repl,tailwind'",
-    "start:tutorial": "pnpm --filter=tutorial start",
     "start:repl": "pnpm --filter=limber start",
-    "start:styles": "pnpm --filter=limber-styles start"
-  },
-  "engines": {
-    "node": ">= 16"
-  },
-  "volta": {
-    "node": "20.11.1",
-    "pnpm": "8.15.1"
+    "start:styles": "pnpm --filter=limber-styles start",
+    "start:tutorial": "pnpm --filter=tutorial start"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
@@ -29,9 +26,17 @@
     "pnpm-sync-dependencies-meta-injected": "^0.0.10",
     "prettier": "^3.2.5",
     "prettier-plugin-ember-template-tag": "^2.0.0",
+    "release-plan": "^0.8.0",
     "turbo": "^1.12.2"
   },
   "packageManager": "pnpm@8.15.1",
+  "engines": {
+    "node": ">= 16"
+  },
+  "volta": {
+    "node": "20.11.1",
+    "pnpm": "8.15.1"
+  },
   "pnpm": {
     "overrides": {
       "@nullvoxpopuli/eslint-configs": "^3.2.2",
