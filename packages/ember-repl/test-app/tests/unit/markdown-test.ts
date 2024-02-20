@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 
 import { stripIndent } from 'common-tags';
 import { invocationOf, nameFor } from 'ember-repl';
-import { parseMarkdown } from 'ember-repl/markdown/parse';
+import { parseMarkdown } from 'ember-repl/formats/markdown';
 
 /**
  * NOTE: there is a problem(?) with remark-hbs where all extra newlines and

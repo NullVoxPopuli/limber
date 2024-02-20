@@ -1,4 +1,4 @@
-import { CACHE } from '../browser/compile/index.ts';
+import { CACHE } from '../compile/index.ts';
 
 export function clearCompileCache() {
   CACHE.clear();

@@ -1,8 +1,7 @@
-import { invocationName } from '../utils.ts';
+import { invocationName } from './utils.ts';
 
-import type { CompileResult } from '../types.ts';
-import type { ExtractedCode } from './markdown-to-ember.ts';
-import type { UnifiedPlugin } from './types.ts';
+import type { ExtractedCode } from './formats/markdown.ts';
+import type { CompileResult, UnifiedPlugin } from './types.ts';
 import type { EvalImportMap, ScopeMap } from './types.ts';
 
 async function compileGJSArray(js: { code: string }[], importMap?: EvalImportMap) {
@@ -20,7 +19,7 @@ export async function compileGJS(
   importMap?: EvalImportMap
 ): Promise<CompileResult> {
   try {
-    let { compileJS } = await import('../js.ts');
+    let { compileJS } = await import('./formats/gjs/index.ts');
 
     return await compileJS(gjsInput, importMap);
   } catch (error) {
@@ -36,7 +35,7 @@ export async function compileHBS(
   }
 ): Promise<CompileResult> {
   try {
-    let { compileHBS } = await import('../hbs.ts');
+    let { compileHBS } = await import('./formats/hbs.ts');
 
     return compileHBS(hbsInput, options);
   } catch (error) {
@@ -110,7 +109,7 @@ export async function compileMD(
    *         compiled rootTemplate can invoke them
    */
   try {
-    let { parseMarkdown } = await import('./markdown-to-ember.ts');
+    let { parseMarkdown } = await import('./formats/markdown.ts');
     let { templateOnlyGlimdown, blocks } = await parseMarkdown(glimdownInput, {
       CopyComponent: options?.CopyComponent,
       ShadowComponent: options?.ShadowComponent,

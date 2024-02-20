@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { modules } from '../known-modules.ts';
+import { modules } from './known-modules.ts';
 
-import type { ExtraModules } from '../types.ts';
 import type Component from '@glimmer/component';
 
 export function evalSnippet(
   compiled: string,
-  extraModules: ExtraModules = {}
+  extraModules: Record<string, unknown /* imported module */> = {}
 ): {
   default: Component;
   services?: { [key: string]: unknown };
@@ -21,7 +20,6 @@ export function evalSnippet(
     return preConfigured || window.require(moduleName);
   }
 
-  // https://github.com/glimmerjs/glimmer-experimental/blob/master/packages/examples/playground/src/utils/eval-snippet.ts
   eval(compiled);
 
   return Object.assign(exports, { require }) as {
