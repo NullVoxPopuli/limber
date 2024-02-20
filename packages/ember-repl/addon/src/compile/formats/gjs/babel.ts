@@ -5,4 +5,3 @@ export interface Babel {
   availablePresets: typeof availablePresets;
   transform: typeof transform;
 }
-

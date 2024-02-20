@@ -31,9 +31,17 @@
       "types": "./declarations/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./markdown/parse": {
-      "types": "./declarations/compile/markdown-to-ember.d.ts",
-      "default": "./dist/compile/markdown-to-ember.js"
+    "./formats/markdown": {
+      "types": "./declarations/compile/formats/markdown.d.ts",
+      "default": "./dist/compile/formats/markdown.js"
+    },
+    "./formats/hbs": {
+      "types": "./declarations/compile/formats/hbs.d.ts",
+      "default": "./dist/compile/formats/hbs.js"
+    },
+    "./formats/gjs": {
+      "types": "./declarations/compile/formats/gjs/index.d.ts",
+      "default": "./dist/compile/formats/gjs/index.js"
     },
     "./test-support": {
       "types": "./declarations/test-support/index.d.ts",
@@ -66,6 +74,7 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "dependencies": {
+    "ember-resources": ">= 6.4.2",
     "@babel/helper-plugin-utils": "^7.22.5",
     "@babel/standalone": "^7.23.10",
     "@embroider/addon-shim": "1.8.7",
@@ -155,8 +164,13 @@
   },
   "peerDependencies": {
     "@glint/template": ">= 1.3.0",
-    "ember-resources": ">= 6.4.2",
-    "ember-source": ">= 5.5.0"
+    "@glimmer/compiler": ">= 0.86.0",
+    "@glimmer/syntax": ">= 0.86.0"
+  },
+  "peerDependenciesMeta": {
+    "@glint/template": { "optional": true },
+    "@glimmer/compiler": { "optional": true },
+    "@glimmer/syntax": { "optional": true }
   },
   "engines": {
     "node": ">= v16",

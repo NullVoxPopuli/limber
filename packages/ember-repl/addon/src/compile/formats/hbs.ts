@@ -79,8 +79,10 @@ function compileTemplate(source: string, { moduleName, scope = {} }: CompileTemp
     let value = localScope[key];
 
     if (!value) {
-      throw new Error(`Attempt to use ${key} in compiled hbs, but it was not available in scope. `
-        +`Available scope includes: ${Object.keys(localScope)}`);
+      throw new Error(
+        `Attempt to use ${key} in compiled hbs, but it was not available in scope. ` +
+          `Available scope includes: ${Object.keys(localScope)}`
+      );
     }
 
     return value;

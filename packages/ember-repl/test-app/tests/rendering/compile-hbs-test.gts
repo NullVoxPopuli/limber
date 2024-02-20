@@ -2,7 +2,7 @@ import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import { compileHBS } from 'ember-repl';
+import { compileHBS } from 'ember-repl/formats/hbs';
 
 import { Await } from '../helpers/await';
 

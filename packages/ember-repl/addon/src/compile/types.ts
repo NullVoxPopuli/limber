@@ -11,7 +11,6 @@ export interface ScopeMap {
 
 export type UnifiedPlugin = Plugin; // Parameters<ReturnType<typeof unified>['use']>[0];
 
-
 export interface CompileResult {
   component?: ComponentLike;
   error?: Error;
@@ -25,4 +24,3 @@ export type Options = {
    */
   skypack?: boolean;
 };
-

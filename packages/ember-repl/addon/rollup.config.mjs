@@ -14,7 +14,7 @@ export default defineConfig({
   output: addon.output(),
   external: ["@glimmer/compiler", "@glimmer/syntax"],
   plugins: [
-    addon.publicEntrypoints(["browser/**/*.js", "test-support/*.js"]),
+    addon.publicEntrypoints(["**/*.js"]),
     addon.appReexports([]),
     babel({
       extensions: [".js", ".gjs", ".ts", ".gts"],
@@ -29,6 +29,7 @@ export default defineConfig({
     {
       async closeBundle() {
         await execaCommand("tsc --emitDeclarationOnly --noEmit false", { stdio: "inherit" });
+        console.info("Declarations built successfully");
       },
     },
   ],

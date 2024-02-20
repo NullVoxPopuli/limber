@@ -5,7 +5,7 @@ import babelPluginEmberTemplateCompilation from 'babel-plugin-ember-template-com
 import { nameFor } from '../../utils.ts';
 import { evalSnippet } from './eval.ts';
 
-import type { CompileResult, ExtraModules } from '../../types.ts';
+import type { CompileResult } from '../../types.ts';
 import type { ComponentLike } from '@glint/template';
 
 export interface Info {
@@ -30,7 +30,10 @@ export interface Info {
  *  are not provided by extraModules will be searched on npm to see if a package
  *  needs to be downloaded before running the `code` / invoking the component
  */
-export async function compileJS(code: string, extraModules?: ExtraModules): Promise<CompileResult> {
+export async function compileJS(
+  code: string,
+  extraModules?: Record<string, unknown>
+): Promise<CompileResult> {
   let name = nameFor(code);
   let component: undefined | ComponentLike;
   let error: undefined | Error;

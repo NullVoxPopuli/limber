@@ -20,7 +20,6 @@ export function evalSnippet(
     return preConfigured || window.require(moduleName);
   }
 
-  // https://github.com/glimmerjs/glimmer-experimental/blob/master/packages/examples/playground/src/utils/eval-snippet.ts
   eval(compiled);
 
   return Object.assign(exports, { require }) as {

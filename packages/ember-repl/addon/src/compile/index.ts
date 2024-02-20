@@ -7,7 +7,7 @@ import {
 } from './formats.ts';
 import { nameFor } from './utils.ts';
 
-import type { CompileResult,UnifiedPlugin } from './types.ts';
+import type { CompileResult, UnifiedPlugin } from './types.ts';
 import type { EvalImportMap, ScopeMap } from './types.ts';
 import type { ComponentLike } from '@glint/template';
 type Format = 'glimdown' | 'gjs' | 'hbs';
