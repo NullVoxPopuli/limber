@@ -8,7 +8,7 @@ import { visit } from 'unist-util-visit';
 
 import { invocationOf, nameFor } from '../utils.ts';
 
-import type { UnifiedPlugin } from './types.ts';
+import type { UnifiedPlugin } from '../types.ts';
 import type { Node } from 'hast';
 import type { Code, Text } from 'mdast';
 import type { Parent } from 'unist';

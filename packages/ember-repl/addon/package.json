@@ -18,34 +18,30 @@
         "declarations/test-support/index.d.ts"
       ],
       "markdown/parse": [
-        "./declarations/browser/compile/markdown-to-ember.d.ts"
+        "./declarations/compile/markdown-to-ember.d.ts"
       ],
       "*": [
-        "declarations/browser/*",
-        "declarations/browser/*/index.d.ts"
+        "declarations/*",
+        "declarations/*/index.d.ts"
       ]
     }
   },
   "exports": {
     ".": {
-      "types": "./declarations/browser/index.d.ts",
-      "default": "./dist/browser/index.js"
-    },
-    "./esm": {
-      "types": "./declarations/browser/esm/index.d.ts",
-      "default": "./dist/browser/esm/index.js"
+      "types": "./declarations/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./markdown/parse": {
-      "types": "./declarations/browser/compile/markdown-to-ember.d.ts",
-      "default": "./dist/browser/compile/markdown-to-ember.js"
+      "types": "./declarations/compile/markdown-to-ember.d.ts",
+      "default": "./dist/compile/markdown-to-ember.js"
     },
     "./test-support": {
       "types": "./declarations/test-support/index.d.ts",
       "default": "./dist/test-support/index.js"
     },
     "./__PRIVATE__DO_NOT_USE__": {
-      "types": "./declarations/browser/__PRIVATE__.d.ts",
-      "default": "./dist/browser/__PRIVATE__.js"
+      "types": "./declarations/__PRIVATE__.d.ts",
+      "default": "./dist/__PRIVATE__.js"
     },
     "./addon-main.js": "./addon-main.cjs"
   },
@@ -56,8 +52,7 @@
     "addon-main.cjs"
   ],
   "scripts": {
-    "build": "concurrently 'npm:build:*'",
-    "build:js": "rollup --config",
+    "build": "rollup --config",
     "lint:types": "tsc --noEmit",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "rollup --config --watch",
@@ -68,8 +63,7 @@
     "lint:hbs": "pnpm -w exec lint hbs",
     "lint:hbs:fix": "pnpm -w exec lint hbs:fix",
     "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
-    "lint:prettier": "pnpm -w exec lint prettier",
-    "build:types": "tsc --emitDeclarationOnly --noEmit false"
+    "lint:prettier": "pnpm -w exec lint prettier"
   },
   "dependencies": {
     "@babel/helper-plugin-utils": "^7.22.5",
@@ -139,6 +133,7 @@
     "eslint-plugin-ember": "^12.0.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.1.3",
+    "execa": "^8.0.1",
     "prettier": "^3.2.5",
     "prettier-plugin-ember-template-tag": "^2.0.0",
     "publint": "^0.2.6",
@@ -159,9 +154,6 @@
     "app-js": {}
   },
   "peerDependencies": {
-    "@glimmer/compiler": ">= 0.86.0",
-    "@glimmer/component": "^1.1.2",
-    "@glimmer/syntax": ">= 0.86.0",
     "@glint/template": ">= 1.3.0",
     "ember-resources": ">= 6.4.2",
     "ember-source": ">= 5.5.0"
