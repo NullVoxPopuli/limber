@@ -11,9 +11,9 @@ import { on } from '@ember/modifier';
 import { createTemplateFactory } from '@ember/template-factory';
 import { importSync } from '@embroider/macros';
 
-import { nameFor } from './utils.ts';
+import { nameFor } from '../utils.ts';
 
-import type { CompileResult } from './types.ts';
+import type { CompileResult } from '../types.ts';
 import type { ComponentLike } from '@glint/template';
 
 // These things are pre-bundled in the old system.
@@ -79,7 +79,8 @@ function compileTemplate(source: string, { moduleName, scope = {} }: CompileTemp
     let value = localScope[key];
 
     if (!value) {
-      throw new Error(`Attempt to use ${key} in compiled hbs, but it was not available in scope.`);
+      throw new Error(`Attempt to use ${key} in compiled hbs, but it was not available in scope. `
+        +`Available scope includes: ${Object.keys(localScope)}`);
     }
 
     return value;
@@ -89,7 +90,7 @@ function compileTemplate(source: string, { moduleName, scope = {} }: CompileTemp
   let templateJSONObject = {
     id: moduleName,
     block: blockJSON,
-    moduleName: moduleName ?? '(unknown template module)',
+    moduleName: moduleName ?? '(dynamically compiled component)',
     scope: () => usedScope,
     isStrictMode: true,
   };
