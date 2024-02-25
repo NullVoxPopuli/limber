@@ -765,7 +765,7 @@ importers:
         version: 1.2.0
       '@lezer/html':
         specifier: ^1.3.7
-        version: 1.3.8
+        version: 1.3.9
       '@lezer/markdown':
         specifier: ^1.1.2
         version: 1.2.0
@@ -1860,7 +1860,7 @@ importers:
         version: 1.2.0
       '@lezer/html':
         specifier: ^1.3.7
-        version: 1.3.8
+        version: 1.3.9
       '@lezer/javascript':
         specifier: ^1.4.13
         version: 1.4.13
@@ -2254,7 +2254,7 @@ importers:
         version: 1.2.0
       '@lezer/html':
         specifier: ^1.3.7
-        version: 1.3.8
+        version: 1.3.9
       '@lezer/javascript':
         specifier: ^1.4.13
         version: 1.4.13
@@ -2375,7 +2375,7 @@ importers:
         version: 1.2.0
       '@lezer/html':
         specifier: ^1.3.7
-        version: 1.3.8
+        version: 1.3.9
       '@lezer/javascript':
         specifier: ^1.4.13
         version: 1.4.13
@@ -4016,7 +4016,7 @@ packages:
       '@codemirror/view': 6.24.0
       '@lezer/common': 1.2.1
       '@lezer/css': 1.1.7
-      '@lezer/html': 1.3.8
+      '@lezer/html': 1.3.9
     dev: false
 
   /@codemirror/lang-java@6.0.1:
@@ -5773,8 +5773,8 @@ packages:
     dependencies:
       '@lezer/common': 1.2.1
 
-  /@lezer/html@1.3.8:
-    resolution: {integrity: sha512-EXseJ3pUzWxE6XQBQdqWHZqqlGQRSuNMBcLb6mZWS2J2v+QZhOObD+3ZIKIcm59ntTzyor4LqFTb72iJc3k23Q==}
+  /@lezer/html@1.3.9:
+    resolution: {integrity: sha512-MXxeCMPyrcemSLGaTQEZx0dBUH0i+RPl8RN5GwMAzo53nTsd/Unc/t5ZxACeQoyPUM5/GkPLRUs2WliOImzkRA==}
     dependencies:
       '@lezer/common': 1.2.1
       '@lezer/highlight': 1.2.0
@@ -22817,8 +22817,14 @@ packages:
     name: ember-repl
     engines: {node: '>= v16', npm: use pnpm, yarn: use pnpm}
     peerDependencies:
+      '@glimmer/compiler': '>= 0.86.0'
+      '@glimmer/syntax': '>= 0.86.0'
       '@glint/template': '>= 1.3.0'
     peerDependenciesMeta:
+      '@glimmer/compiler':
+        optional: true
+      '@glimmer/syntax':
+        optional: true
       '@glint/template':
         optional: true
     dependencies:
