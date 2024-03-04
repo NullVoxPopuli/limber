@@ -48,3 +48,7 @@ const Menu = <template>
   </Sidebar>
 </template>;
 ```
+
+[Documentation on rendering values][docs]
+
+[docs]: https://guides.emberjs.com/release/in-depth-topics/rendering-values/
