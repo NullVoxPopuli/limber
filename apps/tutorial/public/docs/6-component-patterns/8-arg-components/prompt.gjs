@@ -1,3 +1,5 @@
+// Renders: 🐹 + 🧑‍💻 = 🧡
+
 import { hash } from '@ember/helper';
 
 const Hamster = <template>
