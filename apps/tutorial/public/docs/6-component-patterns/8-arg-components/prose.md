@@ -27,7 +27,7 @@ const Button = <template>
 
 const Sidebar = <template>
   <side>
-    {{yield (hash closeButton=(component Button))}}
+    {{yield (hash closeButton=Button)}}
   </side>
 </template>;
 
