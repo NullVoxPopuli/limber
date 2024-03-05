@@ -53,9 +53,13 @@ However, manually typing in the editor for each example is a more effective way 
 
 On smaller screens, there is a button in the bottom right of the screen so that slides the tutorial text out of the way so that the editor can be interacted with.
 
+<p class="call-to-play">
+  Callouts like these will be present in tutorials to guide focus, and be clear about what you're expected to do in a particular exercise.
+</p>
+
 This entire app is generated from [the docs folder][the-docs] and content can be edited, previewed, and created all within the GitHub UI. No need to download or install anything to contribute.
 
-[the-docs]: https://github.com/NullVoxPopuli/limber/tree/main/apps/tutorial/docs
+[the-docs]: https://github.com/NullVoxPopuli/limber/tree/main/apps/tutorial/public/docs
 
 ## What are components?
 
@@ -124,3 +128,24 @@ However, because there are a number of more foundational concepts to cover, this
 [Signals]: https://www.solidjs.com/tutorial/introduction_signals
 [Runes]: https://svelte.dev/blog/runes 
 [tracked]: https://guides.emberjs.com/release/components/component-state-and-actions/#toc_tracked-properties
+
+## How do I get started with a bleeding-edge Ember app today?
+
+- For Webpack:
+  ```bash
+  git clone --branch webpack git@github.com:NullVoxPopuli/polaris-starter.git 
+  cd polaris-starter
+  pnpm install
+  pnpm start
+  ```
+  Or try it out on [Stackblitz](https://stackblitz.com/github/nullVoxPopuli/polaris-starter/tree/webpack?file=README.md) (however, Stackblitz may be [broken with Webpack](https://github.com/stackblitz/core/issues/2926) atm)
+
+- For Vite (alpha / unstable)
+  ```bash
+  git clone git@github.com:NullVoxPopuli/polaris-starter.git 
+  cd polaris-starter
+  pnpm install
+  pnpm start
+  ```
+  Or try it out on [Stackblitz](https://stackblitz.com/github/nullVoxPopuli/polaris-starter/tree/main?file=README.md)
+
