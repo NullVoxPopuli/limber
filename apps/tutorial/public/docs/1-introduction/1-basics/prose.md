@@ -53,9 +53,13 @@ However, manually typing in the editor for each example is a more effective way 
 
 On smaller screens, there is a button in the bottom right of the screen so that slides the tutorial text out of the way so that the editor can be interacted with.
 
+<p class="call-to-play">
+  Callouts like these will be present in tutorials to guide focus, and be clear about what you're expected to do in a particular exercise.
+</p>
+
 This entire app is generated from [the docs folder][the-docs] and content can be edited, previewed, and created all within the GitHub UI. No need to download or install anything to contribute.
 
-[the-docs]: https://github.com/NullVoxPopuli/limber/tree/main/apps/tutorial/docs
+[the-docs]: https://github.com/NullVoxPopuli/limber/tree/main/apps/tutorial/public/docs
 
 ## What are components?
 
