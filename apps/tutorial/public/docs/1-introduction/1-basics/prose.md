@@ -107,6 +107,7 @@ If you're an existing ember/glimmer user and are not yet using `<template>`, the
   For more information on "using anything as values", see [these docs](https://guides.emberjs.com/release/in-depth-topics/rendering-values/)
 
 
+<<<<<<< HEAD
 ## Why does the tutorial use `cell`?, I'm not using that in my projects.
 
 Not to worry!, `@tracked` is not going away. `cell`s are a fundamental primitive of reactivity as no reactive state can exist without them.  
@@ -135,7 +136,6 @@ However, because there are a number of more foundational concepts to cover, this
   pnpm start
   ```
   Or try it out on [Stackblitz](https://stackblitz.com/github/nullVoxPopuli/polaris-starter/tree/webpack?file=README.md) (however, Stackblitz may be [broken with Webpack](https://github.com/stackblitz/core/issues/2926) atm)
-
 
 - For Vite (alpha / unstable)
   ```bash
