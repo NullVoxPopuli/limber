@@ -294,6 +294,12 @@ function buildCompiler(options: ParseMarkdownOptions) {
     });
   });
 
+  if (options.rehypePlugins) {
+    options.rehypePlugins.forEach((plugin) => {
+      compiler = compiler.use(plugin) as any;
+    });
+  }
+
   compiler = compiler.use(rehypeRaw, { passThrough: ['glimmer_raw', 'raw'] }).use(() => (tree) => {
     visit(tree, 'glimmer_raw', (node: Node) => {
       node.type = 'raw';
@@ -316,6 +322,7 @@ interface ParseMarkdownOptions {
   CopyComponent?: string;
   ShadowComponent?: string;
   remarkPlugins?: UnifiedPlugin[];
+  rehypePlugins?: UnifiedPlugin[];
 }
 
 /**
