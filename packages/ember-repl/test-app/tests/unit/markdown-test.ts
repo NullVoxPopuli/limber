@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import { stripIndent } from 'common-tags';
 import { invocationOf, nameFor } from 'ember-repl';
 import { parseMarkdown } from 'ember-repl/formats/markdown';
+import { visit } from 'unist-util-visit';
 
 /**
  * NOTE: there is a problem(?) with remark-hbs where all extra newlines and
@@ -66,8 +67,68 @@ module('Unit | parseMarkdown()', function () {
     assert.deepEqual(result.blocks, []);
   });
 
+  module('plugin options', function () {
+    test('remarkPlugins', async function (assert) {
+      let result = await parseMarkdown(`# Title`, {
+        remarkPlugins: [
+          function noH1(/* options */) {
+            return (tree) => {
+              return visit(tree, ['heading'], function (node) {
+                if (!('depth' in node)) return;
+
+                if (node.depth === 1) {
+                  node.depth = 2;
+                }
+
+                return 'skip';
+              });
+            };
+          },
+        ],
+      });
+
+      assertOutput(
+        result.templateOnlyGlimdown,
+        stripIndent`
+        <h2>Title</h2>
+      `
+      );
+
+      assert.deepEqual(result.blocks, []);
+    });
+
+    test('rehypePlugins', async function (assert) {
+      let result = await parseMarkdown(`# Title`, {
+        rehypePlugins: [
+          function noH1(/* options */) {
+            return (tree) => {
+              return visit(tree, ['element'], function (node) {
+                if (!('tagName' in node)) return;
+
+                if (node.tagName === 'h1') {
+                  node.tagName = 'h2';
+                }
+
+                return 'skip';
+              });
+            };
+          },
+        ],
+      });
+
+      assertOutput(
+        result.templateOnlyGlimdown,
+        stripIndent`
+        <h2>Title</h2>
+      `
+      );
+
+      assert.deepEqual(result.blocks, []);
+    });
+  });
+
   module('hbs', function () {
-    test('Code fence is live', async function (assert) {
+    test('Codecontainer fence is live', async function (assert) {
       let snippet = `{{concat "hello" " " "there"}}`;
       let name = nameFor(snippet);
       let result = await parseMarkdown(
