@@ -1,5 +1,5 @@
 import type { ComponentLike } from '@glint/template';
-import type { unified } from 'unified';
+import type { Pluggable } from 'unified';
 
 export interface EvalImportMap {
   [moduleName: string]: ScopeMap;
@@ -9,7 +9,7 @@ export interface ScopeMap {
   [localName: string]: unknown;
 }
 
-export type UnifiedPlugin = Parameters<ReturnType<typeof unified>['use']>[0];
+export type UnifiedPlugin = Pluggable;
 
 export interface CompileResult {
   component?: ComponentLike;

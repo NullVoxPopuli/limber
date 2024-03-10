@@ -244,7 +244,7 @@ function buildCompiler(options: ParseMarkdownOptions) {
       // why not just invoke the the function?
       let p = Array.isArray(plugin) ? plugin : [plugin];
 
-      compiler = compiler.use(...(p as Parameters<typeof compiler.use>));
+      compiler = compiler.use(...(p as [any]));
     });
   }
 
@@ -304,7 +304,7 @@ function buildCompiler(options: ParseMarkdownOptions) {
       // why not just invoke the the function?
       let p = Array.isArray(plugin) ? plugin : [plugin];
 
-      compiler = compiler.use(...(p as Parameters<typeof compiler.use>));
+      compiler = compiler.use(...(p as [any]));
     });
   }
 

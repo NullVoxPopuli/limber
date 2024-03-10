@@ -101,7 +101,7 @@ module('Unit | parseMarkdown()', function () {
       let result = await parseMarkdown(`# Title`, {
         remarkPlugins: [
           [
-            function noH1(options) {
+            function noH1(options: { depth: number }) {
               return (tree) => {
                 return visit(tree, ['heading'], function (node) {
                   if (!('depth' in node)) return;
@@ -156,7 +156,7 @@ module('Unit | parseMarkdown()', function () {
       let result = await parseMarkdown(`# Title`, {
         rehypePlugins: [
           [
-            function noH1(options) {
+            function noH1(options: { depth: number }) {
               return (tree) => {
                 return visit(tree, ['element'], function (node) {
                   if (!('tagName' in node)) return;
