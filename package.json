@@ -26,7 +26,7 @@
     "pnpm-sync-dependencies-meta-injected": "^0.0.10",
     "prettier": "^3.2.5",
     "prettier-plugin-ember-template-tag": "^2.0.0",
-    "release-plan": "github:embroider-build/release-plan#bbd8d70",
+    "release-plan": "^0.8.0",
     "turbo": "^1.12.2"
   },
   "packageManager": "pnpm@8.15.3",
@@ -39,6 +39,7 @@
   },
   "pnpm": {
     "overrides": {
+      "@ef4/lerna-changelog": "github:embroider-build/github-changelog#3ad92f5",
       "@nullvoxpopuli/eslint-configs": "^3.2.2",
       "@embroider/addon-shim": "1.8.7",
       "ember-element-helper": "^0.8.5",
