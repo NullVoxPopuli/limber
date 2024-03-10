@@ -5,8 +5,8 @@
     },
     "ember-repl": {
       "impact": "patch",
-      "oldVersion": "4.0.1",
-      "newVersion": "4.0.2",
+      "oldVersion": "4.0.2",
+      "newVersion": "4.0.3",
       "constraints": [
         {
           "impact": "patch",
@@ -34,5 +34,5 @@
       "oldVersion": "0.0.0"
     }
   },
-  "description": "## Release (2024-03-10)\n\nember-repl 4.0.2 (patch)\n\n#### :bug: Bug Fix\n* `ember-repl`\n  * [#1695](https://github.com/NullVoxPopuli/limber/pull/1695) Fix ember-repl publish ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2024-03-10)\n\nember-repl 4.0.3 (patch)\n\n#### :bug: Bug Fix\n* `ember-repl`\n  * [#1697](https://github.com/NullVoxPopuli/limber/pull/1697) Fix ember repl build + use turbo in publish.yml ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }
