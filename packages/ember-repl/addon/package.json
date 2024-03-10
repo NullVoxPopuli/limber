@@ -60,6 +60,7 @@
     "addon-main.cjs"
   ],
   "scripts": {
+    "prepack": "rollup --config",
     "build": "rollup --config",
     "lint:types": "tsc --noEmit",
     "lint:fix": "pnpm -w exec lint fix",
