@@ -6,13 +6,13 @@ import { setupRenderingTest } from 'ember-qunit';
 import { stripIndent } from 'common-tags';
 import { compile } from 'ember-repl';
 import { CACHE } from 'ember-repl/__PRIVATE__DO_NOT_USE__';
-import { type Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 
 import type { ComponentLike } from '@glint/template';
+import type { PluggableList } from 'unified';
 import type { Parent } from 'unist';
 
-export type UnifiedPlugin = Plugin; // Parameters<ReturnType<(typeof unified)>['use']>[0];
+export type UnifiedPlugin = PluggableList[0];
 type Build = (plugin?: UnifiedPlugin) => Promise<void>;
 
 module('Rendering | compile()', function (hooks) {
@@ -98,7 +98,7 @@ module('Rendering | compile()', function (hooks) {
          * unformatted mess in a p tag
          */
         const uncodeSnippet: UnifiedPlugin = (/* options */) => {
-          return function transformer(tree) {
+          return function transformer(tree: Parameters<typeof visit>[0]) {
             visit(tree, ['code'], function (node, index, parent: Parent) {
               if (!parent) return;
               if (undefined === index) return;
@@ -263,8 +263,8 @@ module('Rendering | compile()', function (hooks) {
 
         remarkPlugins: [
           function noH1(/* options */) {
-            return (tree) => {
-              return visit(tree, ['heading'], function (node) {
+            return (tree: Parameters<typeof visit>[0]) => {
+              visit(tree, ['heading'], function (node) {
                 if (!('depth' in node)) return;
 
                 if (node.depth === 1) {
