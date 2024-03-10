@@ -29,6 +29,7 @@ const SUPPORTED_FORMATS = ['glimdown', 'gjs', 'hbs'];
 interface GlimdownOptions extends Scope, Events {
   format: 'glimdown';
   remarkPlugins?: UnifiedPlugin[];
+  rehypePlugins?: UnifiedPlugin[];
   CopyComponent?: string;
   ShadowComponent?: string;
   topLevelScope?: ScopeMap;
