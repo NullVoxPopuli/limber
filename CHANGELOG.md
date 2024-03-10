@@ -2,6 +2,17 @@
 
 ## Release (2024-03-10)
 
+ember-repl 4.1.0 (minor)
+
+#### :rocket: Enhancement
+* `ember-repl`
+  * [#1699](https://github.com/NullVoxPopuli/limber/pull/1699) Allow plugin options for both remark and rehype plugins ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
+## Release (2024-03-10)
+
 ember-repl 4.0.3 (patch)
 
 #### :bug: Bug Fix
