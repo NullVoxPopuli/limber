@@ -41,8 +41,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(prettier@3.2.5)
       release-plan:
-        specifier: ^0.8.0
-        version: 0.8.0
+        specifier: github:embroider-build/release-plan#dist/ignore-private-packages-detected-from-the-changelog-generator-dist
+        version: github.com/embroider-build/release-plan/8e64065bfcf1110a3a87520ab0f25ff664ad029d
       turbo:
         specifier: ^1.12.2
         version: 1.12.5
@@ -19435,34 +19435,6 @@ packages:
       unified: 10.1.2
     dev: false
 
-  /release-plan@0.8.0:
-    resolution: {integrity: sha512-kOR8rjuSD4ljH/BOoWeX5ECjQ0Wf0jl0xLFeKQpOCx2Qoo2Y+A+is4t2GRMtFUGjoA5Wp+j7aJaIFFbZNEC+oA==}
-    hasBin: true
-    dependencies:
-      '@ef4/lerna-changelog': 2.2.1
-      '@manypkg/get-packages': 2.2.0
-      '@npmcli/package-json': 5.0.0
-      '@octokit/rest': 19.0.13
-      '@types/fs-extra': 9.0.13
-      '@types/js-yaml': 4.0.9
-      '@types/semver': 7.5.8
-      '@types/yargs': 17.0.32
-      assert-never: 1.2.1
-      chalk: 4.1.2
-      cli-highlight: 2.1.11
-      execa: 4.1.0
-      fs-extra: 10.1.0
-      js-yaml: 4.1.0
-      latest-version: 5.1.0
-      parse-github-repo-url: 1.4.1
-      semver: 7.6.0
-      yargs: 17.7.2
-    transitivePeerDependencies:
-      - bluebird
-      - encoding
-      - supports-color
-    dev: true
-
   /remark-gfm@3.0.1:
     resolution: {integrity: sha512-lEFDoi2PICJyNrACFOfDD3JlLkuSbOa5Wd8EPt06HUdptv8Gn0bxYTdbU/XXQ3swAPkEaGxxPN9cbnMHvVu1Ig==}
     dependencies:
@@ -22976,3 +22948,35 @@ packages:
       - ember-source
       - supports-color
     dev: false
+
+  github.com/embroider-build/release-plan/8e64065bfcf1110a3a87520ab0f25ff664ad029d:
+    resolution: {tarball: https://codeload.github.com/embroider-build/release-plan/tar.gz/8e64065bfcf1110a3a87520ab0f25ff664ad029d}
+    name: release-plan
+    version: 0.8.0
+    hasBin: true
+    prepare: true
+    requiresBuild: true
+    dependencies:
+      '@ef4/lerna-changelog': 2.2.1
+      '@manypkg/get-packages': 2.2.0
+      '@npmcli/package-json': 5.0.0
+      '@octokit/rest': 19.0.13
+      '@types/fs-extra': 9.0.13
+      '@types/js-yaml': 4.0.9
+      '@types/semver': 7.5.8
+      '@types/yargs': 17.0.32
+      assert-never: 1.2.1
+      chalk: 4.1.2
+      cli-highlight: 2.1.11
+      execa: 4.1.0
+      fs-extra: 10.1.0
+      js-yaml: 4.1.0
+      latest-version: 5.1.0
+      parse-github-repo-url: 1.4.1
+      semver: 7.6.0
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - bluebird
+      - encoding
+      - supports-color
+    dev: true
