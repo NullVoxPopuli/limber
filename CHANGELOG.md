@@ -2,6 +2,17 @@
 
 ## Release (2024-03-10)
 
+ember-repl 4.0.1 (patch)
+
+#### :bug: Bug Fix
+* `ember-repl`
+  * [#1693](https://github.com/NullVoxPopuli/limber/pull/1693) Fix issue where rehypePlugins were not passed through all the way through to the markdown compiler ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
+## Release (2024-03-10)
+
 ember-repl 4.0.0 (major)
 
 #### :boom: Breaking Change
