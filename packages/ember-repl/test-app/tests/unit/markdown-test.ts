@@ -97,6 +97,32 @@ module('Unit | parseMarkdown()', function () {
       assert.deepEqual(result.blocks, []);
     });
 
+    test('remarkPlugins w/ options', async function (assert) {
+      let result = await parseMarkdown(`# Title`, {
+        remarkPlugins: [
+          [
+            function noH1(options) {
+              return (tree) => {
+                return visit(tree, ['heading'], function (node) {
+                  if (!('depth' in node)) return;
+
+                  if (node.depth === 1) {
+                    node.depth = options.depth;
+                  }
+
+                  return 'skip';
+                });
+              };
+            },
+            { depth: 3 },
+          ],
+        ],
+      });
+
+      assertOutput(result.templateOnlyGlimdown, `<h3>Title</h3>`);
+
+      assert.deepEqual(result.blocks, []);
+    });
     test('rehypePlugins', async function (assert) {
       let result = await parseMarkdown(`# Title`, {
         rehypePlugins: [
@@ -122,6 +148,33 @@ module('Unit | parseMarkdown()', function () {
         <h2>Title</h2>
       `
       );
+
+      assert.deepEqual(result.blocks, []);
+    });
+
+    test('rehypePlugins w/ options', async function (assert) {
+      let result = await parseMarkdown(`# Title`, {
+        rehypePlugins: [
+          [
+            function noH1(options) {
+              return (tree) => {
+                return visit(tree, ['element'], function (node) {
+                  if (!('tagName' in node)) return;
+
+                  if (node.tagName === 'h1') {
+                    node.tagName = `h${options.depth ?? 2}`;
+                  }
+
+                  return 'skip';
+                });
+              };
+            },
+            { depth: 3 },
+          ],
+        ],
+      });
+
+      assertOutput(result.templateOnlyGlimdown, `<h3>Title</h3>`);
 
       assert.deepEqual(result.blocks, []);
     });

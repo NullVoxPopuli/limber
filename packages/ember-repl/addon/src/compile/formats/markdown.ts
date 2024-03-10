@@ -240,7 +240,11 @@ function buildCompiler(options: ParseMarkdownOptions) {
    */
   if (options.remarkPlugins) {
     options.remarkPlugins.forEach((plugin) => {
-      compiler = compiler.use(plugin) as any;
+      // Arrays are how plugins are passed options (for some reason?)
+      // why not just invoke the the function?
+      let p = Array.isArray(plugin) ? plugin : [plugin];
+
+      compiler = compiler.use(...(p as Parameters<typeof compiler.use>));
     });
   }
 
@@ -296,7 +300,11 @@ function buildCompiler(options: ParseMarkdownOptions) {
 
   if (options.rehypePlugins) {
     options.rehypePlugins.forEach((plugin) => {
-      compiler = compiler.use(plugin) as any;
+      // Arrays are how plugins are passed options (for some reason?)
+      // why not just invoke the the function?
+      let p = Array.isArray(plugin) ? plugin : [plugin];
+
+      compiler = compiler.use(...(p as Parameters<typeof compiler.use>));
     });
   }
 
