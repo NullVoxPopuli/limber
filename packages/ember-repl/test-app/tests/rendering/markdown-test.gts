@@ -239,5 +239,93 @@ module('Rendering | compile()', function (hooks) {
 
       assert.dom().containsText(text);
     });
+
+    test('adding a remark plugin', async function (assert) {
+      setupOnerror((e) => {
+        console.error(e);
+        assert.notOk('This should not error');
+      });
+
+      let snippet = '# Hello';
+
+      let component: ComponentLike | undefined;
+
+      await compile(snippet, {
+        format: 'glimdown',
+        onSuccess: (comp) => (component = comp),
+        onError: (e) => {
+          console.error(e);
+          assert.notOk('did not expect error');
+        },
+        onCompileStart: () => {
+          /* not used */
+        },
+
+        remarkPlugins: [
+          function noH1(/* options */) {
+            return (tree) => {
+              return visit(tree, ['heading'], function (node) {
+                if (!('depth' in node)) return;
+
+                if (node.depth === 1) {
+                  node.depth = 2;
+                }
+
+                return 'skip';
+              });
+            };
+          },
+        ],
+      });
+
+      debugAssert(`[BUG]`, component);
+
+      await render(component);
+
+      assert.dom('h2').containsText('Hello');
+    });
+    test('adding a rehype plugin', async function (assert) {
+      setupOnerror((e) => {
+        console.error(e);
+        assert.notOk('This should not error');
+      });
+
+      let snippet = '# Hello';
+
+      let component: ComponentLike | undefined;
+
+      await compile(snippet, {
+        format: 'glimdown',
+        onSuccess: (comp) => (component = comp),
+        onError: (e) => {
+          console.error(e);
+          assert.notOk('did not expect error');
+        },
+        onCompileStart: () => {
+          /* not used */
+        },
+        rehypePlugins: [
+          function noH1(/* options */) {
+            return (tree) => {
+              return visit(tree, ['element'], function (node) {
+                if (!('tagName' in node)) return;
+
+                if (node.tagName === 'h1') {
+                  node.tagName = 'h2';
+                }
+
+                return 'skip';
+              });
+            };
+          },
+        ],
+      });
+
+      debugAssert(`[BUG]`, component);
+
+      await render(component);
+
+      assert.dom('h2').containsText('Hello');
+    });
   });
 });

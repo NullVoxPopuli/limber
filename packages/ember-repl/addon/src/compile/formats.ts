@@ -90,6 +90,7 @@ export async function compileMD(
     importMap?: EvalImportMap;
     topLevelScope?: ScopeMap;
     remarkPlugins?: UnifiedPlugin[];
+    rehypePlugins?: UnifiedPlugin[];
     CopyComponent?: string;
     ShadowComponent?: string;
   }
@@ -114,6 +115,7 @@ export async function compileMD(
       CopyComponent: options?.CopyComponent,
       ShadowComponent: options?.ShadowComponent,
       remarkPlugins: options?.remarkPlugins,
+      rehypePlugins: options?.rehypePlugins,
     });
 
     rootTemplate = templateOnlyGlimdown;
