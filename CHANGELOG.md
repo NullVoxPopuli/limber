@@ -2,6 +2,17 @@
 
 ## Release (2024-03-10)
 
+ember-repl 4.0.2 (patch)
+
+#### :bug: Bug Fix
+* `ember-repl`
+  * [#1695](https://github.com/NullVoxPopuli/limber/pull/1695) Fix ember-repl publish ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
+## Release (2024-03-10)
+
 ember-repl 4.0.1 (patch)
 
 #### :bug: Bug Fix
