@@ -41,8 +41,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(prettier@3.2.5)
       release-plan:
-        specifier: github:embroider-build/release-plan#dist/ignore-private-packages-detected-from-the-changelog-generator-dist
-        version: github.com/embroider-build/release-plan/8e64065bfcf1110a3a87520ab0f25ff664ad029d
+        specifier: github:embroider-build/release-plan#bbd8d70
+        version: github.com/embroider-build/release-plan/bbd8d70
       turbo:
         specifier: ^1.12.2
         version: 1.12.5
@@ -22949,8 +22949,8 @@ packages:
       - supports-color
     dev: false
 
-  github.com/embroider-build/release-plan/8e64065bfcf1110a3a87520ab0f25ff664ad029d:
-    resolution: {tarball: https://codeload.github.com/embroider-build/release-plan/tar.gz/8e64065bfcf1110a3a87520ab0f25ff664ad029d}
+  github.com/embroider-build/release-plan/bbd8d70:
+    resolution: {tarball: https://codeload.github.com/embroider-build/release-plan/tar.gz/bbd8d70}
     name: release-plan
     version: 0.8.0
     hasBin: true
