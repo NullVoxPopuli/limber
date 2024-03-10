@@ -26,7 +26,7 @@
     "pnpm-sync-dependencies-meta-injected": "^0.0.10",
     "prettier": "^3.2.5",
     "prettier-plugin-ember-template-tag": "^2.0.0",
-    "release-plan": "^0.8.0",
+    "release-plan": "github:embroider-build/release-plan#dist/ignore-private-packages-detected-from-the-changelog-generator-dist",
     "turbo": "^1.12.2"
   },
   "packageManager": "pnpm@8.15.3",
