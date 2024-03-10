@@ -1,6 +1,6 @@
 {
   "name": "ember-repl",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Addon for enabling REPL and Playground creation with Ember/Glimmer",
   "keywords": [
     "ember-addon"
@@ -168,9 +168,15 @@
     "@glimmer/syntax": ">= 0.86.0"
   },
   "peerDependenciesMeta": {
-    "@glint/template": { "optional": true },
-    "@glimmer/compiler": { "optional": true },
-    "@glimmer/syntax": { "optional": true }
+    "@glint/template": {
+      "optional": true
+    },
+    "@glimmer/compiler": {
+      "optional": true
+    },
+    "@glimmer/syntax": {
+      "optional": true
+    }
   },
   "engines": {
     "node": ">= v16",
