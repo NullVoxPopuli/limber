@@ -4,13 +4,13 @@
       "oldVersion": "1.0.0"
     },
     "ember-repl": {
-      "impact": "patch",
-      "oldVersion": "4.0.2",
-      "newVersion": "4.0.3",
+      "impact": "minor",
+      "oldVersion": "4.0.3",
+      "newVersion": "4.1.0",
       "constraints": [
         {
-          "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
+          "impact": "minor",
+          "reason": "Appears in changelog section :rocket: Enhancement"
         }
       ],
       "pkgJSONPath": "./packages/ember-repl/addon/package.json"
@@ -34,5 +34,5 @@
       "oldVersion": "0.0.0"
     }
   },
-  "description": "## Release (2024-03-10)\n\nember-repl 4.0.3 (patch)\n\n#### :bug: Bug Fix\n* `ember-repl`\n  * [#1697](https://github.com/NullVoxPopuli/limber/pull/1697) Fix ember repl build + use turbo in publish.yml ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2024-03-10)\n\nember-repl 4.1.0 (minor)\n\n#### :rocket: Enhancement\n* `ember-repl`\n  * [#1699](https://github.com/NullVoxPopuli/limber/pull/1699) Allow plugin options for both remark and rehype plugins ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }
