@@ -1,0 +1,42 @@
+{
+  "solution": {
+    "limber-ui": {
+      "oldVersion": "1.0.0"
+    },
+    "ember-repl": {
+      "impact": "major",
+      "oldVersion": "3.0.0",
+      "newVersion": "4.0.0",
+      "constraints": [
+        {
+          "impact": "major",
+          "reason": "Appears in changelog section :boom: Breaking Change"
+        },
+        {
+          "impact": "minor",
+          "reason": "Appears in changelog section :rocket: Enhancement"
+        }
+      ],
+      "pkgJSONPath": "./packages/ember-repl/addon/package.json"
+    },
+    "codemirror-lang-glimdown": {
+      "oldVersion": "0.0.0"
+    },
+    "@glimdown/lezer": {
+      "oldVersion": "0.0.0"
+    },
+    "codemirror-lang-glimmer-js": {
+      "oldVersion": "0.0.0"
+    },
+    "@glimdown/lezer-glimmer-expression": {
+      "oldVersion": "0.0.0"
+    },
+    "codemirror-lang-glimmer": {
+      "oldVersion": "0.0.0"
+    },
+    "lezer-glimmer": {
+      "oldVersion": "0.0.0"
+    }
+  },
+  "description": "## Release (2024-03-10)\n\nember-repl 4.0.0 (major)\n\n#### :boom: Breaking Change\n* `ember-repl`\n  * [#1674](https://github.com/NullVoxPopuli/limber/pull/1674) Refactor the compilation library to prepare for broader usage ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#1672](https://github.com/NullVoxPopuli/limber/pull/1672) [ember-repl] remove broccoli plugin for generating a 'component map' ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :rocket: Enhancement\n* `ember-repl`\n  * [#1687](https://github.com/NullVoxPopuli/limber/pull/1687) Allow passing rehype plugins to the markdown renderer in ember-repl ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#1674](https://github.com/NullVoxPopuli/limber/pull/1674) Refactor the compilation library to prepare for broader usage ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :bug: Bug Fix\n* [#1642](https://github.com/NullVoxPopuli/limber/pull/1642) Fix for #1641: Alternative 1) Remove `z-10` from resize-handle ([@johanrd](https://github.com/johanrd))\n\n#### :memo: Documentation\n* [#1618](https://github.com/NullVoxPopuli/limber/pull/1618) Add note about trying out Polaris ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n* [#1680](https://github.com/NullVoxPopuli/limber/pull/1680) feat: Arg Components ([@MichalBryxi](https://github.com/MichalBryxi))\n\n#### :house: Internal\n* [#1691](https://github.com/NullVoxPopuli/limber/pull/1691) Try out a github-changelog fix ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n* [#1690](https://github.com/NullVoxPopuli/limber/pull/1690) Try this release-plan fix branch ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n* [#1689](https://github.com/NullVoxPopuli/limber/pull/1689) Try release-plan fix  ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n* [#1688](https://github.com/NullVoxPopuli/limber/pull/1688) Re-roll lockfile ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n* [#1667](https://github.com/NullVoxPopuli/limber/pull/1667) Update pnpm to v8.15.3 ([@renovate[bot]](https://github.com/apps/renovate))\n* [#1676](https://github.com/NullVoxPopuli/limber/pull/1676) Remove skipped tests that have been skipped for years ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n* [#1670](https://github.com/NullVoxPopuli/limber/pull/1670) Release plan ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 3\n- Michal Bryxí ([@MichalBryxi](https://github.com/MichalBryxi))\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n- [@johanrd](https://github.com/johanrd)\n"
+}
