@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 
+import rehypeShiki from '@shikijs/rehype';
 import { stripIndent } from 'common-tags';
 import { invocationOf, nameFor } from 'ember-repl';
 import { parseMarkdown } from 'ember-repl/formats/markdown';
@@ -10,13 +11,7 @@ import { visit } from 'unist-util-visit';
  *       indentation are stripped
  */
 function assertOutput(actual: string, expected: string) {
-  let _actual = actual
-    .split('\n')
-    .filter(Boolean)
-    .join('\n')
-    .trim()
-    .replace(/<div class="glimdown-render">/, '')
-    .replace(/<\/div>/, '');
+  let _actual = actual.split('\n').filter(Boolean).join('\n').trim();
   let _expected = expected.split('\n').filter(Boolean).join('\n').trim();
 
   QUnit.assert.equal(_actual, _expected);
@@ -60,7 +55,7 @@ module('Unit | parseMarkdown()', function () {
         <h1>Title</h1>
 
         <div class=\"glimdown-snippet relative\"><pre><code class=\"language-js\">  const two = 2;
-        </code></pre><CopyMenu />
+        </code></pre><CopyMenu /></div>
       `
     );
 
@@ -178,6 +173,38 @@ module('Unit | parseMarkdown()', function () {
 
       assert.deepEqual(result.blocks, []);
     });
+
+    test('rehypePlugins retain {{ }} escaping', async function () {
+      let result = await parseMarkdown(
+        stripIndent`
+        # Title
+
+        \`\`\`gjs
+        const two = 2
+
+        <template>
+          {{two}}
+        </template>
+        \`\`\`
+      `,
+        {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          rehypePlugins: [[rehypeShiki as any, { theme: 'github-dark' }]],
+        }
+      );
+
+      assertOutput(
+        result.templateOnlyGlimdown,
+        `<h1>Title</h1>
+<div class="glimdown-snippet relative"><pre class="shiki github-dark" style="background-color:#24292e;color:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> two</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#85E89D">template</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#F97583">  \\{{</span><span style="color:#79B8FF">two</span><span style="color:#F97583">}}</span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;/</span><span style="color:#85E89D">template</span><span style="color:#E1E4E8">></span></span>
+<span class="line"></span></code></pre></div>
+        `
+      );
+    });
   });
 
   module('hbs', function () {
@@ -199,7 +226,7 @@ module('Unit | parseMarkdown()', function () {
         stripIndent`
           <h1>Title</h1>
 
-          ${invocationOf(name)}
+          <div class=\"glimdown-render\">${invocationOf(name)}</div>
         `
       );
 
@@ -232,7 +259,7 @@ module('Unit | parseMarkdown()', function () {
           <h1>Title</h1>
 
           <div class=\"glimdown-snippet relative\"><pre><code class=\"language-gjs\">  const two = 2;
-          </code></pre><CopyMenu />
+          </code></pre><CopyMenu /></div>
         `
       );
 
@@ -255,7 +282,7 @@ module('Unit | parseMarkdown()', function () {
         stripIndent`
           <h1>Title</h1>
 
-          ${invocationOf(name)}
+          <div class=\"glimdown-render\">${invocationOf(name)}</div>
         `
       );
 
@@ -266,6 +293,34 @@ module('Unit | parseMarkdown()', function () {
           lang: 'gjs',
         },
       ]);
+    });
+
+    test('Code with preview fence has {{ }} tokens escaped', async function () {
+      let result = await parseMarkdown(stripIndent`
+        # Title
+
+        \`\`\`gjs
+        const two = 2
+
+        <template>
+          {{two}}
+        </template>
+        \`\`\`
+      `);
+
+      assertOutput(
+        result.templateOnlyGlimdown,
+        stripIndent`
+          <h1>Title</h1>
+
+          <div class=\"glimdown-snippet relative\"><pre><code class=\"language-gjs\">const two = 2
+
+          &#x3C;template>
+            \\{{two}}
+          &#x3C;/template>
+          </code></pre></div>
+        `
+      );
     });
 
     test('Can invoke a component again when defined in a live fence', async function (assert) {
@@ -285,7 +340,7 @@ module('Unit | parseMarkdown()', function () {
         stripIndent`
           <h1>Title</h1>
 
-          ${invocationOf(name)}
+          <div class=\"glimdown-render\">${invocationOf(name)}</div>
           <Demo />
         `
       );
@@ -319,7 +374,7 @@ module('Unit | parseMarkdown()', function () {
         stripIndent`
           <p>hi</p>
 
-          ${invocationOf(name)}
+          <div class=\"glimdown-render\">${invocationOf(name)}</div>
           <div class=\"glimdown-snippet relative\"><pre><code class=\"language-gjs\">import Component from '@glimmer/component';
           import { on } from '@ember/modifier';
           &#x3C;template>
