@@ -25,7 +25,9 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "dependencies": {
+    "@shikijs/rehype": "^1.1.7",
     "@types/unist": "^3.0.2",
+    "buffer": "^6.0.3",
     "common-tags": "^1.8.2",
     "ember-repl": "workspace:*",
     "ember-resources": "^7.0.0",

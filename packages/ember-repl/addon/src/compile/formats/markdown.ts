@@ -49,26 +49,6 @@ const ALLOWED_LANGUAGES = ['gjs', 'hbs'] as const;
 type AllowedLanguage = (typeof ALLOWED_LANGUAGES)[number];
 type RelevantCode = Omit<Code, 'lang'> & { lang: AllowedLanguage };
 
-const escapeCurlies = (node: Text | Parent) => {
-  if ('value' in node && node.value) {
-    node.value = node.value.replace(/{{/g, '\\{{');
-  }
-
-  if ('children' in node && node.children) {
-    node.children.forEach((child) => escapeCurlies(child as Parent));
-  }
-
-  if (!node.data) {
-    return;
-  }
-
-  if ('hChildren' in node.data && Array.isArray(node.data['hChildren'])) {
-    node.data['hChildren'].forEach(escapeCurlies);
-
-    return;
-  }
-};
-
 function isLive(meta: string) {
   return meta.includes('live');
 }
@@ -218,6 +198,24 @@ function liveCodeExtraction(options: Options = {}) {
   };
 }
 
+function sanitizeForGlimmer(/* options */) {
+  return (tree: Parent) => {
+    visit(tree, 'element', (node: Parent) => {
+      if ('tagName' in node) {
+        if (node.tagName !== 'pre') return;
+
+        visit(node, 'text', (textNode: Text) => {
+          if ('value' in textNode && textNode.value) {
+            textNode.value = textNode.value.replace(/{{/g, '\\{{');
+          }
+        });
+
+        return 'skip';
+      }
+    });
+  };
+}
+
 function buildCompiler(options: ParseMarkdownOptions) {
   let compiler = unified().use(remarkParse).use(remarkGfm);
 
@@ -261,9 +259,6 @@ function buildCompiler(options: ParseMarkdownOptions) {
       let properties = (node as any).properties;
 
       if (properties?.[GLIMDOWN_PREVIEW]) {
-        // Have to sanitize anything Glimmer could try to render
-        escapeCurlies(node as Parent);
-
         return 'skip';
       }
 
@@ -273,8 +268,6 @@ function buildCompiler(options: ParseMarkdownOptions) {
 
           return;
         }
-
-        escapeCurlies(node as Parent);
 
         return 'skip';
       }
@@ -313,6 +306,8 @@ function buildCompiler(options: ParseMarkdownOptions) {
       node.type = 'raw';
     });
   });
+
+  compiler = compiler.use(sanitizeForGlimmer);
 
   // Finally convert to string! oofta!
   compiler = compiler.use(rehypeStringify, {

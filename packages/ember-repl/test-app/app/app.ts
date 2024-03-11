@@ -10,7 +10,8 @@ import config from 'test-app/config/environment';
 // But they aren't used.... so.. that's fun.
 Object.assign(window, {
   process: { env: {} },
-  Buffer: {},
+  // Polyfilled in webpack
+  // Buffer: {},
 });
 
 export default class App extends Application {
