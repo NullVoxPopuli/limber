@@ -4,13 +4,13 @@
       "oldVersion": "1.0.0"
     },
     "ember-repl": {
-      "impact": "minor",
-      "oldVersion": "4.0.3",
-      "newVersion": "4.1.0",
+      "impact": "patch",
+      "oldVersion": "4.1.0",
+      "newVersion": "4.1.1",
       "constraints": [
         {
-          "impact": "minor",
-          "reason": "Appears in changelog section :rocket: Enhancement"
+          "impact": "patch",
+          "reason": "Appears in changelog section :bug: Bug Fix"
         }
       ],
       "pkgJSONPath": "./packages/ember-repl/addon/package.json"
@@ -34,5 +34,5 @@
       "oldVersion": "0.0.0"
     }
   },
-  "description": "## Release (2024-03-10)\n\nember-repl 4.1.0 (minor)\n\n#### :rocket: Enhancement\n* `ember-repl`\n  * [#1699](https://github.com/NullVoxPopuli/limber/pull/1699) Allow plugin options for both remark and rehype plugins ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2024-03-11)\n\nember-repl 4.1.1 (patch)\n\n#### :bug: Bug Fix\n* `ember-repl`\n  * [#1704](https://github.com/NullVoxPopuli/limber/pull/1704) Escape {{ after the rehype phase instead of during the remark phase ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }
