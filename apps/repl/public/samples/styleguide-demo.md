@@ -66,7 +66,7 @@ import Header from 'limber/components/limber/header';
 import { Shadowed } from 'ember-primitives';
 
 <template>
-  <Shadowed>
+  <Shadowed @includeStyles={{true}}>
     <Header />
   </Shadowed>
 </template>
@@ -82,7 +82,7 @@ import Menu from 'limber/components/limber/menu';
 import { Shadowed } from 'ember-primitives';
 
 <template>
-  <Shadowed>
+  <Shadowed @includeStyles={{true}}>
     <Menu>
       <:trigger as |t|>
         <t.Default>
