@@ -1,5 +1,16 @@
 # Changelog
 
+## Release (2024-03-11)
+
+ember-repl 4.1.1 (patch)
+
+#### :bug: Bug Fix
+* `ember-repl`
+  * [#1704](https://github.com/NullVoxPopuli/limber/pull/1704) Escape {{ after the rehype phase instead of during the remark phase ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2024-03-10)
 
 ember-repl 4.1.0 (minor)
