@@ -36,11 +36,23 @@ interface GlimdownOptions extends Scope, Events {
 }
 interface GJSOptions extends Scope, Events {
   format: 'gjs';
+
+  // Make overloads easier?
+  remarkPlugins?: never;
+  rehypePlugins?: never;
+  CopyComponent?: never;
+  ShadowComponent?: never;
 }
 
 interface HBSOptions extends Scope, Events {
   format: 'hbs';
   topLevelScope?: ScopeMap;
+
+  // Make overloads easier?
+  remarkPlugins?: never;
+  rehypePlugins?: never;
+  CopyComponent?: never;
+  ShadowComponent?: never;
 }
 
 /**
