@@ -11,7 +11,7 @@ const Person = <template>
     {{#if request.isLoading}}
       ... loading {{@id}} ...
     {{else if request.value}}
-      {{request.value.name}}
+      {{request.value.result.properties.name}}
     {{/if}}
   {{/let}}
 </template>
