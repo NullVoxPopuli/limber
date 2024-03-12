@@ -15,14 +15,14 @@ import { on } from '@ember/modifier';
 
 import { RemoteData } from 'reactiveweb/remote-data';
 
-const urlFor = (id) => `https://swapi.dev/api/people/${id}`;
+const urlFor = (id) => `https://swapi.tech/api/people/${id}`;
 
 const Person = <template>
   {{#let (RemoteData (urlFor @id)) as |request|}}
     {{#if request.isLoading}}
       ... loading {{@id}} ...
     {{else if request.value}}
-      {{request.value.name}}
+      {{request.value.result.properties.name}}
     {{/if}}
   {{/let}}
 </template>
@@ -56,4 +56,4 @@ Information about how Resources fit in to the next edition of Ember can be [foun
 [mdn-AbortController]: https://developer.mozilla.org/en-US/docs/Web/API/AbortController
 [docs-remote-data]: https://ember-resources.pages.dev/modules/util_remote_data
 [polaris-reactivity]: https://wycats.github.io/polaris-sketchwork/reactivity.html
-[swapi]: https://swapi.dev/
+[swapi]: https://swapi.tech/

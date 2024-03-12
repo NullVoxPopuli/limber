@@ -4,14 +4,14 @@ import { on } from '@ember/modifier';
 
 import { RemoteData } from 'reactiveweb/remote-data';
 
-const urlFor = (id) => `https://swapi.dev/api/people/${id}`;
+const urlFor = (id) => `https://swapi.tech/api/people/${id}`;
 
 const Person = <template>
   {{#let (RemoteData (urlFor @id)) as |request|}}
     {{#if request.isLoading}}
       ... loading {{@id}} ...
     {{else if request.value}}
-      {{request.value.name}}
+      {{request.value.result.properties.name}}
     {{/if}}
   {{/let}}
 </template>
