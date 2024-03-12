@@ -7,7 +7,7 @@ import { RemoteData, remoteData } from 'reactiveweb/remote-data';
 import { keepLatest } from 'reactiveweb/keep-latest';
 
 const isEmpty = (x) => !x || x?.length === 0;
-const urlFor = (id) => `https://swapi.dev/api/people/${id}`;
+const urlFor = (id) => `https://swapi.tech/api/people/${id}`;
 
 const PersonInfo = <template>
   <fieldset class="border px-4">

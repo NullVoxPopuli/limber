@@ -40,4 +40,4 @@ Information about how Resources fit in to the next edition of Ember can be [foun
 [mdn-AbortController]: https://developer.mozilla.org/en-US/docs/Web/API/AbortController
 [docs-remote-data]: https://ember-resources.pages.dev/modules/util_remote_data
 [polaris-reactivity]: https://wycats.github.io/polaris-sketchwork/reactivity.html
-[swapi]: https://swapi.dev/
+[swapi]: https://swapi.tech/

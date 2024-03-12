@@ -4,7 +4,7 @@ Looping over lists of data can be done with an `each` block:
 <ul>
   {{#each planets as |planet|}}
     <li>
-      <a href='https://swapi.dev/api/planets/{{planet.id}}/' target='_blank'>
+      <a href='https://swapi.tech/api/planets/{{planet.id}}/' target='_blank'>
         {{planet.name}}
       </a>
     </li>
@@ -18,7 +18,7 @@ You can get the current index as a second argument as well:
 <ul>
   {{#each planets as |planet i|}}
     <li>
-      <a href='https://swapi.dev/api/planets/{{planet.id}}/' target='_blank'>
+      <a href='https://swapi.tech/api/planets/{{planet.id}}/' target='_blank'>
         {{i}}
         {{planet.name}}
       </a>
