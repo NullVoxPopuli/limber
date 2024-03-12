@@ -2,6 +2,20 @@
 
 ## Release (2024-03-12)
 
+ember-repl 4.2.0 (minor)
+
+#### :rocket: Enhancement
+* `ember-repl`
+  * [#1710](https://github.com/NullVoxPopuli/limber/pull/1710) Re-export some types from ember-repl ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :memo: Documentation
+* [#1709](https://github.com/NullVoxPopuli/limber/pull/1709) Rename swapi.dev to swapi.tech ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
+## Release (2024-03-12)
+
 limber-ui 1.0.1 (patch)
 ember-repl 4.1.2 (patch)
 
