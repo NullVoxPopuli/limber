@@ -128,6 +128,7 @@ type ExtraOptions =
   | {
       format: 'glimdown';
       remarkPlugins?: UnifiedPlugin[];
+      rehypePlugins?: UnifiedPlugin[];
       importMap?: EvalImportMap;
       CopyComponent?: string;
       ShadowComponent?: string;
