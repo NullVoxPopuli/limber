@@ -1,5 +1,21 @@
 # Changelog
 
+## Release (2024-03-12)
+
+limber-ui 1.0.1 (patch)
+ember-repl 4.1.2 (patch)
+
+#### :bug: Bug Fix
+* `ember-repl`
+  * [#1708](https://github.com/NullVoxPopuli/limber/pull/1708) Add rehypePlugins to ExtraOptions, used by compile ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :memo: Documentation
+* `limber-ui`, `ember-repl`
+  * [#1706](https://github.com/NullVoxPopuli/limber/pull/1706) Add @includeStyles to <Shadowed> ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2024-03-11)
 
 ember-repl 4.1.1 (patch)
