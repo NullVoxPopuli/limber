@@ -1,29 +1,16 @@
 {
   "solution": {
     "limber-ui": {
-      "impact": "patch",
-      "oldVersion": "1.0.0",
-      "newVersion": "1.0.1",
-      "constraints": [
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :memo: Documentation"
-        }
-      ],
-      "pkgJSONPath": "./packages/app-support/limber-ui/addon/package.json"
+      "oldVersion": "1.0.1"
     },
     "ember-repl": {
-      "impact": "patch",
-      "oldVersion": "4.1.1",
-      "newVersion": "4.1.2",
+      "impact": "minor",
+      "oldVersion": "4.1.2",
+      "newVersion": "4.2.0",
       "constraints": [
         {
-          "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
-        },
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :memo: Documentation"
+          "impact": "minor",
+          "reason": "Appears in changelog section :rocket: Enhancement"
         }
       ],
       "pkgJSONPath": "./packages/ember-repl/addon/package.json"
@@ -47,5 +34,5 @@
       "oldVersion": "0.0.0"
     }
   },
-  "description": "## Release (2024-03-12)\n\nlimber-ui 1.0.1 (patch)\nember-repl 4.1.2 (patch)\n\n#### :bug: Bug Fix\n* `ember-repl`\n  * [#1708](https://github.com/NullVoxPopuli/limber/pull/1708) Add rehypePlugins to ExtraOptions, used by compile ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :memo: Documentation\n* `limber-ui`, `ember-repl`\n  * [#1706](https://github.com/NullVoxPopuli/limber/pull/1706) Add @includeStyles to <Shadowed> ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2024-03-12)\n\nember-repl 4.2.0 (minor)\n\n#### :rocket: Enhancement\n* `ember-repl`\n  * [#1710](https://github.com/NullVoxPopuli/limber/pull/1710) Re-export some types from ember-repl ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :memo: Documentation\n* [#1709](https://github.com/NullVoxPopuli/limber/pull/1709) Rename swapi.dev to swapi.tech ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }
