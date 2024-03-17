@@ -83,7 +83,7 @@
     "broccoli-file-creator": "^2.1.1",
     "change-case": "^5.4.2",
     "common-tags": "^1.8.2",
-    "content-tag": "^1.2.1",
+    "content-tag": "^2.0.0",
     "decorator-transforms": "^1.1.0",
     "ember-resources": ">= 6.4.2",
     "line-column": "^1.0.2",
