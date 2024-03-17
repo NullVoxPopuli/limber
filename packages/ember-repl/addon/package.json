@@ -77,7 +77,7 @@
     "@babel/helper-plugin-utils": "^7.22.5",
     "@babel/standalone": "^7.23.10",
     "@embroider/addon-shim": "1.8.7",
-    "@embroider/macros": "1.13.5",
+    "@embroider/macros": "1.15.0",
     "babel-import-util": "^2.0.1",
     "babel-plugin-ember-template-compilation": "^2.2.1",
     "broccoli-file-creator": "^2.1.1",

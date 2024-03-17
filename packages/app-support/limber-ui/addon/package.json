@@ -43,7 +43,7 @@
   "dependencies": {
     "@babel/runtime": "^7.23.9",
     "@embroider/addon-shim": "1.8.7",
-    "@embroider/macros": "1.13.5",
+    "@embroider/macros": "1.15.0",
     "@fortawesome/ember-fontawesome": "^2.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
