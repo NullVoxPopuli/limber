@@ -1,6 +1,5 @@
 {
   "name": "limber-ui-test-app",
-  "version": "0.0.1",
   "private": true,
   "description": "Small description for test-app goes here",
   "repository": {
@@ -76,7 +75,7 @@
     "limber-ui": "^1.0.0",
     "loader.js": "^4.7.0",
     "prettier": "^3.2.5",
-    "prettier-plugin-ember-template-tag": "^2.0.0",
+    "prettier-plugin-ember-template-tag": "2.0.0",
     "qunit": "^2.20.0",
     "qunit-dom": "3.0.0",
     "typescript": "^5.3.3",

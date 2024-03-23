@@ -16,5 +16,11 @@ module.exports = {
       files: ['**/*.gjs'],
       parser: 'ember-eslint-parser',
     },
+    {
+      files: ['**/*'],
+      rules: {
+        'n/no-unpublished-require': 'off',
+      },
+    },
   ],
 };

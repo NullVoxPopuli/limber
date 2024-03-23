@@ -92,7 +92,7 @@
     "execa": "^8.0.1",
     "fix-bad-declaration-output": "^1.1.1",
     "prettier": "^3.2.5",
-    "prettier-plugin-ember-template-tag": "^2.0.0",
+    "prettier-plugin-ember-template-tag": "2.0.0",
     "rollup": "^4.9.6",
     "rollup-plugin-copy": "^3.5.0",
     "typescript": "^5.3.3"

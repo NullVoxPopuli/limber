@@ -39,8 +39,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.1(prettier@3.2.5)
+        specifier: 2.0.0
+        version: 2.0.0(prettier@3.2.5)
       release-plan:
         specifier: ^0.8.0
         version: 0.8.0
@@ -397,8 +397,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.1(prettier@3.2.5)
+        specifier: 2.0.0
+        version: 2.0.0(prettier@3.2.5)
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -659,8 +659,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.1(prettier@3.2.5)
+        specifier: 2.0.0
+        version: 2.0.0(prettier@3.2.5)
       qunit:
         specifier: ^2.20.0
         version: 2.20.1
@@ -717,8 +717,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.1(prettier@3.2.5)
+        specifier: 2.0.0
+        version: 2.0.0(prettier@3.2.5)
       typescript:
         specifier: ^5.3.3
         version: 5.4.2
@@ -829,8 +829,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.1(prettier@3.2.5)
+        specifier: 2.0.0
+        version: 2.0.0(prettier@3.2.5)
       recursive-copy:
         specifier: ^2.0.14
         version: 2.0.14
@@ -989,8 +989,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.1(prettier@3.2.5)
+        specifier: 2.0.0
+        version: 2.0.0(prettier@3.2.5)
       rollup:
         specifier: ^4.9.6
         version: 4.13.0
@@ -1155,8 +1155,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.1(prettier@3.2.5)
+        specifier: 2.0.0
+        version: 2.0.0(prettier@3.2.5)
       qunit:
         specifier: ^2.20.0
         version: 2.20.1
@@ -1201,8 +1201,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.1(prettier@3.2.5)
+        specifier: 2.0.0
+        version: 2.0.0(prettier@3.2.5)
       tailwindcss:
         specifier: ^3.3.6
         version: 3.4.1
@@ -1274,8 +1274,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.1(prettier@3.2.5)
+        specifier: 2.0.0
+        version: 2.0.0(prettier@3.2.5)
       typescript:
         specifier: ^5.3.3
         version: 5.4.2
@@ -1313,8 +1313,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.1(prettier@3.2.5)
+        specifier: 2.0.0
+        version: 2.0.0(prettier@3.2.5)
       typescript:
         specifier: ^5.3.3
         version: 5.4.2
@@ -1524,8 +1524,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.1(prettier@3.2.5)
+        specifier: 2.0.0
+        version: 2.0.0(prettier@3.2.5)
       publint:
         specifier: ^0.2.6
         version: 0.2.7
@@ -1720,8 +1720,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.1(prettier@3.2.5)
+        specifier: 2.0.0
+        version: 2.0.0(prettier@3.2.5)
       qunit:
         specifier: ^2.20.0
         version: 2.20.1
@@ -1762,8 +1762,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.1(prettier@3.2.5)
+        specifier: 2.0.0
+        version: 2.0.0(prettier@3.2.5)
       typescript:
         specifier: ^5.3.3
         version: 5.4.2
@@ -2481,8 +2481,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.1(prettier@3.2.5)
+        specifier: 2.0.0
+        version: 2.0.0(prettier@3.2.5)
       typescript:
         specifier: ^5.3.3
         version: 5.4.2
@@ -2499,8 +2499,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.1(prettier@3.2.5)
+        specifier: 2.0.0
+        version: 2.0.0(prettier@3.2.5)
 
   spikes/url-shortening:
     dependencies:
@@ -2536,8 +2536,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.1(prettier@3.2.5)
+        specifier: 2.0.0
+        version: 2.0.0(prettier@3.2.5)
       typescript:
         specifier: ^5.3.3
         version: 5.4.2
@@ -19350,8 +19350,8 @@ packages:
       - supports-color
     dev: true
 
-  /prettier-plugin-ember-template-tag@2.0.1(prettier@3.2.5):
-    resolution: {integrity: sha512-CLoCdQ0cWPMq9dOmqbcBhOURSFd8X2+wXK2TJ4UIMNfG7G3Bxu91MY3VHILQrvRyva+XNF28n6y5oMxfNqyiNw==}
+  /prettier-plugin-ember-template-tag@2.0.0(prettier@3.2.5):
+    resolution: {integrity: sha512-n2iIQedT5r/kvoTfhjThPECE1y0Ji3DupNpCtENP1Dm974M2NoKhaT5QynfBdn+WXlPhvFE4A/2uDSsZfx373A==}
     engines: {node: 18.* || >= 20}
     peerDependencies:
       prettier: '>= 3.0.0'
