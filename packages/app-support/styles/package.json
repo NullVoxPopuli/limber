@@ -2,13 +2,14 @@
   "name": "@nullvoxpopuli/limber-styles",
   "version": "0.0.1",
   "description": "CSS used for Limber",
-  "main": "index.js",
   "license": "MIT",
+  "type": "module",
   "private": true,
+  "exports": {
+    ".": "./base.tailwind.config.js"
+  },
   "scripts": {
     "lint:fix": "pnpm -w exec lint fix",
-    "build": "tailwindcss -o dist/tailwind.css",
-    "start": "tailwindcss -o dist/tailwind.css --watch",
     "lint": "pnpm -w exec lint",
     "lint:js": "pnpm -w exec lint js",
     "lint:js:fix": "pnpm -w exec lint js:fix",
