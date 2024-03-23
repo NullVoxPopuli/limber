@@ -4,6 +4,9 @@
   "description": "custom build of codemirror for use in Limber",
   "type": "module",
   "exports": {
+    ".": {
+      "default": "./dist/preconfigured.js"
+    },
     "./broccoli-funnel": {
       "require": "./broccoli-funnel.cjs"
     }
