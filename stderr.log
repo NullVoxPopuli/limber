@@ -1,0 +1,14 @@
+# Unlabeled Changes
+
+* Other
+  * [#1372](https://github.com/NullVoxPopuli/limber/pull/1372) specify node-version ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1681](https://github.com/NullVoxPopuli/limber/pull/1681) Update dependency ember-container-query to v5.0.7 ([@renovate[bot]](https://github.com/apps/renovate))
+  * [#1702](https://github.com/NullVoxPopuli/limber/pull/1702) Update pnpm to v8.15.4 ([@renovate[bot]](https://github.com/apps/renovate))
+* `limber-ui`, `ember-repl`
+  * [#1701](https://github.com/NullVoxPopuli/limber/pull/1701) Update devDependencies ([@renovate[bot]](https://github.com/apps/renovate))
+  * [#1713](https://github.com/NullVoxPopuli/limber/pull/1713) Update dependency @embroider/macros to v1.15.0 ([@renovate[bot]](https://github.com/apps/renovate))
+* `codemirror-lang-glimmer`
+  * [#1678](https://github.com/NullVoxPopuli/limber/pull/1678) Update CodeMirror ([@renovate[bot]](https://github.com/apps/renovate))
+
+
+*Cannot plan release until the above changes are labeled*.
