@@ -5,6 +5,7 @@
     "environment": ["ember-loose", "ember-template-imports"]
   },
   "compilerOptions": {
+    "lib": ["esnext", "es6", "dom", "webworker"],
     "skipLibCheck": true,
     "declaration": true,
     "allowImportingTsExtensions": true,

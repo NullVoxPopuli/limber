@@ -1,9 +1,11 @@
-import { handleFetch } from './fetch-handler';
+import { handleFetch } from './fetch-handler.ts';
 
-const worker = self as unknown as ServiceWorkerGlobalScope;
+// Silly Workers
+export type { };
+declare const self: ServiceWorkerGlobalScope;
 
 /**
- * For a given glimdown document id, we will compile
+ * For a given markdown document id, we will compile
  * N components within that glimdown, and return an object
  * map of an arbitrary name of the default export to the URL
  * for which the module may be imported from.
@@ -24,26 +26,19 @@ const worker = self as unknown as ServiceWorkerGlobalScope;
  *    [name] => "url/to/import"
  *  }
  *
- *  which will then turn in to (roughly):
- *
- *  for (let [name, importPath] of response) {
- *    let module = await import(importPath);
- *
- *    owner.register(`component:${name}`, module);
- *  }
- *
- *  and the <${name} /> will be swapped in to the ember
- *  variant of the glimdown for invocation
  *
  */
-worker.addEventListener('install', () => {
+self.addEventListener('install', () => {
   // force moving on to activation even if another service worker had control
-  worker.skipWaiting();
+  self.skipWaiting();
 });
 
-worker.addEventListener('activate', (event) => {
+self.addEventListener('activate', (event) => {
   // Claim any clients immediately, so that the page will be under SW control without reloading.
-  event.waitUntil(worker.clients.claim());
+  const claim = self.clients.claim();
+
+  event.waitUntil(claim);
+
   console.info(`\
     Service Worker installed successfully!
 
@@ -52,6 +47,8 @@ worker.addEventListener('activate', (event) => {
   `);
 });
 
-worker.addEventListener('fetch', (event) => {
+
+self.addEventListener("fetch", (event) => {
   event.respondWith(handleFetch(event));
 });
+

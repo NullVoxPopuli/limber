@@ -12,6 +12,7 @@ packages:
   #
   ####################################
   - './packages/*'
+  - './packages/*/demo'
   - './packages/*/addon'
   - './packages/*/test-app'
   - './packages/app-support/*'
