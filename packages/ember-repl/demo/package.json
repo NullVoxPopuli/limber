@@ -1,0 +1,33 @@
+{
+  "name": "@nullvoxpopuli/ember-repl-demo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "concurrently 'vite dev' 'rollup -c --watch'"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.9",
+    "@babel/plugin-transform-typescript": "^7.23.6",
+    "@babel/preset-typescript": "^7.23.3",
+    "@embroider/addon-dev": "4.2.1",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@tsconfig/strictest": "^2.0.3",
+    "@types/node": "^20.11.16",
+    "concurrently": "^8.2.2",
+    "esbuild": "0.20.2",
+    "execa": "^8.0.1",
+    "prettier": "^3.2.5",
+    "rollup": "^4.13.0",
+    "rollup-plugin-typescript": "^1.0.1",
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.3",
+    "vite": "^5.0.12",
+    "vite-plugin-pwa": "^0.19.7",
+    "workbox-routing": "^7.0.0",
+    "workbox-window": "^7.0.0"
+  },
+  "dependencies": {
+    "register-service-worker": "^1.7.2"
+  }
+}
