@@ -1211,7 +1211,7 @@ importers:
     dependencies:
       '@babel/standalone':
         specifier: ^7.23.10
-        version: 7.24.0
+        version: 7.24.3
       babel-plugin-htmlbars-inline-precompile:
         specifier: ^5.3.1
         version: 5.3.1
@@ -1326,7 +1326,7 @@ importers:
         version: 7.24.0
       '@babel/standalone':
         specifier: ^7.23.10
-        version: 7.24.0
+        version: 7.24.3
       '@embroider/addon-shim':
         specifier: 1.8.7
         version: 1.8.7
@@ -4044,6 +4044,11 @@ packages:
 
   /@babel/standalone@7.24.0:
     resolution: {integrity: sha512-yIZ/X3EAASgX/MW1Bn8iZKxCwixgYJAUaIScoZ9C6Gapw5l3eKIbtVSgO/IGldQed9QXm22yurKVWyWj5/j+SQ==}
+    engines: {node: '>=6.9.0'}
+    dev: false
+
+  /@babel/standalone@7.24.3:
+    resolution: {integrity: sha512-PbObiI21Z/1DoJLr6DKsdmyp7uUIuw6zv5zIMorH98rOBE/TehkjK7xqXiwJmbCqi7deVbIksDerZ9Ds9hRLGw==}
     engines: {node: '>=6.9.0'}
     dev: false
 
