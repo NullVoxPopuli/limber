@@ -1463,6 +1463,12 @@ importers:
       '@rollup/plugin-commonjs':
         specifier: ^25.0.7
         version: 25.0.7(rollup@4.13.0)
+      '@rollup/plugin-node-resolve':
+        specifier: ^15.2.3
+        version: 15.2.3(rollup@4.13.0)
+      '@rollup/plugin-terser':
+        specifier: ^0.4.4
+        version: 0.4.4(rollup@4.13.0)
       '@tsconfig/ember':
         specifier: ^3.0.2
         version: 3.0.5
@@ -1541,6 +1547,9 @@ importers:
 
   packages/ember-repl/demo:
     dependencies:
+      ember-repl:
+        specifier: workspace:^
+        version: link:../addon
       register-service-worker:
         specifier: ^1.7.2
         version: 1.7.2
@@ -7209,6 +7218,21 @@ packages:
       '@rollup/pluginutils': 3.1.0(rollup@2.79.1)
       magic-string: 0.25.9
       rollup: 2.79.1
+    dev: true
+
+  /@rollup/plugin-terser@0.4.4(rollup@4.13.0):
+    resolution: {integrity: sha512-XHeJC5Bgvs8LfukDwWZp7yeqin6ns8RTl2B9avbejt6tZqsqvVoWI7ZTQrcNsfKEDWBTnTxM8nMDkO2IFFbd0A==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      rollup: 4.13.0
+      serialize-javascript: 6.0.2
+      smob: 1.4.1
+      terser: 5.29.1
     dev: true
 
   /@rollup/pluginutils@3.1.0(rollup@2.79.1):
@@ -20628,6 +20652,10 @@ packages:
     resolution: {integrity: sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==}
     engines: {node: '>= 6.0.0', npm: '>= 3.0.0'}
 
+  /smob@1.4.1:
+    resolution: {integrity: sha512-9LK+E7Hv5R9u4g4C3p+jjLstaLe11MDsL21UpYaCNmapvMkYhqCV4A/f/3gyH8QjMyh6l68q9xC85vihY9ahMQ==}
+    dev: true
+
   /snake-case@3.0.4:
     resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}
     dependencies:
@@ -23567,6 +23595,7 @@ packages:
     id: file:packages/ember-repl/addon
     name: ember-repl
     engines: {node: '>= v16', npm: use pnpm, yarn: use pnpm}
+    hasBin: true
     peerDependencies:
       '@glimmer/compiler': '>= 0.86.0'
       '@glimmer/syntax': '>= 0.86.0'

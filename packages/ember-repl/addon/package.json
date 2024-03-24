@@ -12,6 +12,7 @@
   },
   "license": "MIT",
   "author": "NullVoxPopuli",
+  "bin": "./bin/bin.mjs",
   "typesVersions": {
     "*": {
       "test-support": [
@@ -56,6 +57,7 @@
   "files": [
     "src",
     "dist",
+    "dist-sw",
     "declarations",
     "addon-main.cjs"
   ],
@@ -123,6 +125,8 @@
     "@nullvoxpopuli/limber-untyped": "workspace:*",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
     "@tsconfig/ember": "^3.0.2",
     "@types/babel__core": "^7.20.5",
     "@types/babel__standalone": "^7.1.7",

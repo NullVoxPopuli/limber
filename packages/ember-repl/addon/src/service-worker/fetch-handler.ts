@@ -1,6 +1,5 @@
-const PREFIX_PROXY_MODULE = '/proxy-module/';
+import { nameFor } from '../compile/utils.ts';
 
-// const CACHE_NAME = 'babel-compilation-and-module-service';
 const URLS = ['/compile.sw', '/module.sw'];
 
 const COMPILE_CACHE = new Map();
@@ -50,7 +49,7 @@ function error(msg: unknown | string, status = 500) {
       stack: msg.stack,
     };
   } else {
-    payload = msg;
+    payload = JSON.stringify(msg);
   }
 
   return new Response(JSON.stringify({ error: payload }), {
@@ -76,9 +75,7 @@ function moduleResponse(pathName: string) {
 }
 
 async function compile(request: Request) {
-  let body = await request.json();
-
-  console.log(body);
+  let body: { code?: string, format?: string } = await request.json();
 
   let { code, format } = body;
 
@@ -90,24 +87,31 @@ async function compile(request: Request) {
     throw new Error(`'format' property missing in body`);
   }
 
-  let name = 'test-todo-generate-from-code';
+  let name = nameFor(code + format, 'sw:named');
 
   let modulePath = `/module.sw/${name}.js`;
 
-  // TODO: all external imports must be changed 
+  // TODO: all external imports must be changed
   //       (via babel plugin (because we already have babel))
   //       to use https://esm.sh/*thePackage
   //
   //       https://esm.sh/#docs
   //
   // let compiled = await compileGJS({ name, code });
+  //
+  // TODO: only do this for import paths which have not already
+  //       been declared by the local scope references
+  let compiled = code.replaceAll(/from ('|")([^'"]+)('|")/g, function(_match, quote, moduleName, quote2) {
+    let replacementModule = `https://esm.sh/*${moduleName}`;
 
-  // COMPILE_CACHE.set(modulePath, compiled);
-  COMPILE_CACHE.set(modulePath, code);
+    return `from ${quote}${replacementModule}${quote2}`;
+  });
+
+  COMPILE_CACHE.set(modulePath, compiled);
 
   let response = new Response(JSON.stringify({
     importPath: modulePath,
-    content: code,
+    content: compiled,
   }), {
     headers: {
       'Content-Type': 'application/json',

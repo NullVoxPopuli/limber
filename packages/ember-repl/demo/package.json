@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "concurrently 'vite dev' 'rollup -c --watch'"
+    "start": "vite dev"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
@@ -28,6 +28,7 @@
     "workbox-window": "^7.0.0"
   },
   "dependencies": {
+    "ember-repl": "workspace:^",
     "register-service-worker": "^1.7.2"
   }
 }

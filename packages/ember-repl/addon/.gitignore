@@ -2,6 +2,7 @@
 
 # compiled output
 dist/
+dist-sw/
 tmp/
 declarations/
 tests/dummy/declarations/

@@ -36,6 +36,7 @@ self.addEventListener('install', () => {
 self.addEventListener('activate', (event) => {
   // Claim any clients immediately, so that the page will be under SW control without reloading.
   const claim = self.clients.claim();
+
   event.waitUntil(claim);
 
   console.info(`\

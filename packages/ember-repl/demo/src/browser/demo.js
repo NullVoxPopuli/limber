@@ -1,14 +1,17 @@
 export const initial = `
 import * as changeCase from 'change-case';
-import * as changeCase2 from '/proxy-module?m=change-case';
+import { Preprocessor } from 'content-tag';
 
-console.log(changeCase, changeCase2);
+const p = new Preprocessor();
+
+console.log(p.process(\`
+  <template>
+    hello there
+  </template>
+\`));
 
 console.log(
-  // idk
   changeCase.camelCase('foo-bar'),
-  // eh?
-  changeCase2.camelCase('foo-bar')
 );
 `;
 
@@ -46,9 +49,12 @@ export async function compile(code) {
   });
   let data = await response.json();
 
-  let idk = await import(data.importPath);
+  // Eval, but with extra steps
+  await import(/* @vite-ignore */ /* webpack-ignore */ data.importPath);
 
-  console.log(idk);
+  console.group('Code');
+  console.log(data.content);
+  console.groupEnd();
 
   if (!output) {
     throw new Error(`Where'd the output go?`);
