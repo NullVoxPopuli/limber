@@ -12,7 +12,6 @@ export default defineConfig({
   output: {
     file: 'sw.js',
     format: 'es',
-    sourcemap: true,
     inlineDynamicImports: true,
     name: 'service-worker',
   },

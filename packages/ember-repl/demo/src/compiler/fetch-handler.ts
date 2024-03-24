@@ -98,6 +98,8 @@ async function compile(request: Request) {
   //       (via babel plugin (because we already have babel))
   //       to use https://esm.sh/*thePackage
   //
+  //       https://esm.sh/#docs
+  //
   // let compiled = await compileGJS({ name, code });
 
   // COMPILE_CACHE.set(modulePath, compiled);
