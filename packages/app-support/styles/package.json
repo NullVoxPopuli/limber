@@ -30,11 +30,6 @@
     "@tailwindcss/typography": "^0.5.10",
     "broccoli-funnel": "^3.0.8"
   },
-  "engines": {
-    "node": ">= v16",
-    "npm": "use pnpm",
-    "yarn": "use pnpm"
-  },
   "volta": {
     "extends": "../../../package.json"
   },

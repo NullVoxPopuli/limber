@@ -35,11 +35,6 @@
     "url": "https://github.com/NullVoxPopuli/limber.git",
     "directory": "packages/syntax/glimmer-js/codemirror/dev"
   },
-  "engines": {
-    "node": ">= v16",
-    "npm": "use pnpm",
-    "yarn": "use pnpm"
-  },
   "license": "MIT",
   "author": "NullVoxPopuli"
 }

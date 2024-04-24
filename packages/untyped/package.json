@@ -26,11 +26,6 @@
     "url": "https://github.com/NullVoxPopuli/limber.git",
     "directory": "packages/untyped"
   },
-  "engines": {
-    "node": ">= v16",
-    "npm": "use pnpm",
-    "yarn": "use pnpm"
-  },
   "license": "MIT",
   "author": "NullVoxPopuli"
 }

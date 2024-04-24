@@ -63,11 +63,6 @@
   "volta": {
     "extends": "../../../../package.json"
   },
-  "engines": {
-    "node": ">= v16",
-    "npm": "use pnpm",
-    "yarn": "use pnpm"
-  },
   "peerDependencies": {
     "@lezer/common": "^1.1.2"
   }
