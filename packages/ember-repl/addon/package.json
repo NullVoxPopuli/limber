@@ -177,10 +177,5 @@
     "@glimmer/syntax": {
       "optional": true
     }
-  },
-  "engines": {
-    "node": ">= v16",
-    "npm": "use pnpm",
-    "yarn": "use pnpm"
   }
 }

@@ -40,10 +40,5 @@
   },
   "volta": {
     "extends": "../../../../package.json"
-  },
-  "engines": {
-    "node": ">= v16",
-    "npm": "use pnpm",
-    "yarn": "use pnpm"
   }
 }

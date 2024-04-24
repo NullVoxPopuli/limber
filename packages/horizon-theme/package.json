@@ -29,11 +29,6 @@
     "prettier-plugin-ember-template-tag": "2.0.0",
     "typescript": "^5.3.3"
   },
-  "engines": {
-    "node": ">= v16",
-    "npm": "use pnpm",
-    "yarn": "use pnpm"
-  },
   "volta": {
     "extends": "../../package.json"
   },
