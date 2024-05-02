@@ -11,7 +11,7 @@ Interactive [Glimmer Tutorial](https://tutorial.glimdown.com) @ https://tutorial
 [Open Issues](https://github.com/NullVoxPopuli/limber/issues?q=is%3Aopen+is%3Aissue+-author%3Arenovate%5Bbot%5D) |
 [Pending Dependency Updates](https://github.com/NullVoxPopuli/limber/issues/42)
 
-[Submitted PRs](https://github.com/NullVoxPopuli/limber/pulls?q=is%3Aopen+is%3Apr+-author%3Arenovate%5Bbot%5D+) |
+[Submitted PRs](https://github.com/search?q=repo%3ANullVoxPopuli%2Flimber+is%3Apr+-author%3ANullVoxPopuli+-author%3Arenovate%5Bbot%5D+-author%3Agithub-actions%5Bbot%5D&type=pullrequests) |
 [Renovate PRs](https://github.com/NullVoxPopuli/limber/pulls/renovate%5Bbot%5D) |
 [Release Preview PR](https://github.com/NullVoxPopuli/limber/pulls?q=is%3Aopen+is%3Apr+%22Release+Preview%22) 
 
