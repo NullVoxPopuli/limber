@@ -37,4 +37,7 @@ It is:
 <time>{{Clock 'ja-JP-u-ca-japanese'}}</time><br />
 ```
 
+Learn more about [resourceFactory here](https://github.com/NullVoxPopuli/ember-resources/blob/main/docs/docs/what-is-resourceFactory.md).
+
+
 [mdn-DateTimeFormat]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
