@@ -1,13 +1,16 @@
 import { resource, cell, resourceFactory } from 'ember-resources';
 
-const Time = resourceFactory((ms) => resource(({ on }) => {
-  let time = cell(Date.now());
-  let interval = setInterval(() => time.current = Date.now(), ms);
+function Time(ms) {
+  return resource(({ on }) => {
+    let time = cell(Date.now());
+    let interval = setInterval(() => time.current = Date.now(), ms);
 
-  on.cleanup(() => clearInterval(interval));
+    on.cleanup(() => clearInterval(interval));
 
-  return time;
-}));
+    return time;
+  });
+}
+resourceFactory(Time);
 
 const Clock = resource(({ use }) => {
   return use(Time(1_000));
@@ -18,7 +21,7 @@ const Stopwatch = resource(({ use }) => {
 });
 
 // from a previous example
-const FormattedClock = resourceFactory((locale = 'en-US') => {
+function FormattedClock(locale = 'en-US')  {
   let formatter = new Intl.DateTimeFormat(locale, {
     month: 'long',
     day: 'numeric',
@@ -33,7 +36,8 @@ const FormattedClock = resourceFactory((locale = 'en-US') => {
 
     return () => formatter.format(time.current);
   });
-});
+}
+resourceFactory(FormattedClock);
 
 // demonstrating that use can be used multiple times
 const Watch = resource(({ use }) => {
