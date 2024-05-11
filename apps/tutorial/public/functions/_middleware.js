@@ -1,5 +1,3 @@
-import fs from 'node:fs/promises';
-
 export async function onRequest(context) {
   try {
     return errorIfNotFound(context);
@@ -8,7 +6,7 @@ export async function onRequest(context) {
   }
 }
 
-function errorIfNotFound(context) {
+async function errorIfNotFound(context) {
   const { request, next } = context;
   const url = new URL(request.url);
 
@@ -28,5 +26,33 @@ function errorIfNotFound(context) {
     return await next();
   }
 
+  let defaultResponse = await next();
+
+  /**
+    * Cloudflare (because of how single-page-apps work)
+    * returns our index.html as a 200 whenever any URL is requested.
+    * Normally this is good, but because we have file extensions
+    * in our URLs, we *only* want to return those files.
+    * Not the index HTML
+    */
+  if (defaultResponse.status === 200) {
+    console.log(defaultResponse.headers);
+    let headers = defaultResponse.headers;
+    let body = defaultResponse.clone();
+
+    /**
+      * We return a 404
+      */
+    if (headers.get('content-type') === 'text/html') {
+      return new Response(JSON.stringify({
+        'intercepted-by': 'public/functions/_middleware.js',
+      }), {
+        status: 404,
+      });
+    }
+  }
+
+
+  return defaultResponse;
 
 }
