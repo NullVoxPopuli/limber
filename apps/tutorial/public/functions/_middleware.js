@@ -27,7 +27,17 @@ async function errorIfNotFound(context) {
   }
 
   let defaultResponse = await next();
+  let { status, headers } = defaultResponse;
 
+  /**
+   * Server thinks things are not modified, there is nothing we can do.
+   * (So we need to make sure we return the correct thing the first time)
+   */
+  if (status === 304) {
+    return defaultResponse;
+  }
+
+  console.log(url, status, headers, headers.get('content-type'));
   /**
     * Cloudflare (because of how single-page-apps work)
     * returns our index.html as a 200 whenever any URL is requested.
@@ -35,24 +45,16 @@ async function errorIfNotFound(context) {
     * in our URLs, we *only* want to return those files.
     * Not the index HTML
     */
-  if (defaultResponse.status === 200) {
-    console.log(defaultResponse.headers);
-    let headers = defaultResponse.headers;
-    let body = defaultResponse.clone();
-
-    /**
-      * We return a 404
-      */
-    if (headers.get('content-type') === 'text/html') {
-      return new Response(JSON.stringify({
-        'intercepted-by': 'public/functions/_middleware.js',
-      }), {
-        status: 404,
-      });
-    }
+  if (status <= 400 && headers.get('content-type').includes('text/html')) {
+  /**
+    * We return a 404
+    */
+    return new Response(JSON.stringify({
+      'intercepted-by': 'public/functions/_middleware.js',
+    }), {
+      status: 404,
+    });
   }
 
-
   return defaultResponse;
-
 }
