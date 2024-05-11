@@ -108,15 +108,20 @@ jobs:
       - uses: actions/download-artifact@v4
         name: deploy-prep-dist
       - id: deploy
-        uses: cloudflare/pages-action@v1.5.0
-        with:
-          branch: ${{ github.event.workflow_run.head_branch }}
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: limber-glimmer-tutorial
-          directory: ./deploy-prep-dist/tutorial/dist
-          workingDirectory: ./deploy-prep-dist/tutorial
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # wrangler pages deploy 
+          # or 
+          # wrangler pages deploy 
+          npx wrangler pages dev \
+            $DIRECTORY \
+            --project-name=$PROJECT_NAME \
+            --branch=${{ github.event.workflow_run.head_branch }} \
+            --commit-hash=${{ github.event.workflow_run.head_commit }}
+        env:
+          CLOUDFLARE_ACCOUNT_ID=${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN=${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PROJECT_NAME=limber-glimmer-tutorial
+          DIRECTORY="./deploy-prep-dist/tutorial/dist"
 
   DeployPreview_Limber:
     name: "Deploy: Preview"
