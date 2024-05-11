@@ -94,56 +94,39 @@ jobs:
       - run: echo "${{ github.event.workflow_run.pull_requests[0].number }}"
         id: number
 
-  DeployPreview_Tutorial:
-    name: "Deploy: Preview"
+  # We can know the URL ahead of time:
+  # https://<SHA>.limber-glimmer-tutorial.pages.dev
+  # https://<SHA>.limber-glimdown.pages.dev
+  DeployPreview:
+    name: "Deploy: Preview ${{ matrix.app.name }}"
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [Build]
     permissions:
       contents: read
-      deployments: write
-    outputs:
-      tutorialUrl: ${{ steps.deploy.outputs.url }}
+    strategy: 
+      matrix:
+        app: 
+        - { path: "./tutorial/dist", cloudflareName: "limber-glimmer-tutorial", name: "tutorial" }
+        - { path: "./repl/dist", cloudflareName: "limber-glimdown", name: "limber" }
     steps:
       - uses: actions/download-artifact@v4
         name: deploy-prep-dist
-      - id: deploy
-        uses: cloudflare/pages-action@v1.5.0
-        with:
-          branch: ${{ github.event.workflow_run.head_branch }}
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: limber-glimmer-tutorial
-          directory: ./deploy-prep-dist/tutorial/dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-
-  DeployPreview_Limber:
-    name: "Deploy: Preview"
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [Build]
-    permissions:
-      contents: read
-      deployments: write
-    outputs:
-      limberUrl: ${{ steps.deploy.outputs.url }}
-    steps:
-      - uses: actions/download-artifact@v4
-        name: deploy-prep-dist
-      - id: deploy
-        uses: cloudflare/pages-action@v1.5.0
-        with:
-          branch: ${{ github.event.workflow_run.head_branch }}
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: limber-glimdown
-          directory: ./deploy-prep-dist/repl/dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Preview ${{ matrix.app.name }}
+        run: |
+          npx wrangler pages deploy \
+            ./deploy-prep-dist/${{ matrix.app.path }} \
+            --project-name=${{ matrix.app.cloudflareName }} \
+            --branch=${{ github.event.workflow_run.head_branch }} \
+            --commit-hash=${{ github.event.workflow_run.head_commit }}
+        env:
+          CLOUDFLARE_ACCOUNT_ID=${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN=${{ secrets.CLOUDFLARE_API_TOKEN }}
 
   PostComment:
     name: Post Preview URL as comment to PR
     runs-on: ubuntu-latest
-    needs: [DeployPreview_Limber, DeployPreview_Tutorial, determinePR]
+    needs: [DeployPreview, determinePR]
     permissions:
       pull-requests: write
     steps:
@@ -154,7 +137,7 @@ jobs:
           message: |+
             | Project   | Preview URL |
             | -------   | ----------- |
-            | Limber    | ${{ needs.DeployPreview_Limber.outputs.limberUrl }}   |
-            | Tutorial  | ${{ needs.DeployPreview_Tutorial.outputs.tutorialUrl }} |
+            | Limber    | https://${{ github.event.workflow_run.head_commit }}.limber-glimdown.pages.dev   |
+            | Tutorial  | https://${{ github.event.workflow_run.head_commit }}.limber-glimmer-tutorial.pages.dev |
 
             [Logs](https://github.com/NullVoxPopuli/limber/actions/runs/${{ github.run_id }}) 
