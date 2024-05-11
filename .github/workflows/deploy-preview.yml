@@ -95,7 +95,7 @@ jobs:
         id: number
 
   DeployPreview_Tutorial:
-    name: "Deploy: Preview"
+    name: "Deploy: Preview (Tutorial)"
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [Build]
@@ -124,7 +124,7 @@ jobs:
           DIRECTORY="./deploy-prep-dist/tutorial/dist"
 
   DeployPreview_Limber:
-    name: "Deploy: Preview"
+    name: "Deploy: Preview (REPL)"
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [Build]
