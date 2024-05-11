@@ -113,9 +113,9 @@ jobs:
       - uses: actions/download-artifact@v4
         name: deploy-prep-dist
       - name: Preview ${{ matrix.app.name }}
+        working-directory: ./deploy-prep-dist/${{ matrix.app.path }}
         run: |
-          npx wrangler pages deploy \
-            ./deploy-prep-dist/${{ matrix.app.path }} \
+          npx wrangler pages deploy ./ \
             --project-name=${{ matrix.app.cloudflareName }} \
             --branch=${{ github.event.workflow_run.head_branch }} \
             --commit-hash=${{ github.event.workflow_run.head_commit }}
