@@ -15,7 +15,7 @@
     "lint": "pnpm -w exec lint",
     "lint:types": "glint",
     "lint:fix": "pnpm -w exec lint fix",
-    "cf": "cd dist && npx wrangler pages dev ./",
+    "cf": "cd dist && npx wrangler pages dev --port 42000 ./",
     "start": "concurrently 'ember serve' 'pnpm _syncPnpm --watch' --names 'serve,sync deps'",
     "test:ember": "ember test --test-port 0",
     "_syncPnpm": "pnpm sync-dependencies-meta-injected",

@@ -45,7 +45,7 @@ async function errorIfNotFound(context) {
     * in our URLs, we *only* want to return those files.
     * Not the index HTML
     */
-  if (status <= 400 && headers.get('content-type').includes('text/html')) {
+  if (status <= 400 && headers.get('content-type')?.includes('text/html')) {
   /**
     * We return a 404
     */
