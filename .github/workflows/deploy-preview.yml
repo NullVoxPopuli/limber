@@ -115,6 +115,7 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: limber-glimmer-tutorial
           directory: ./deploy-prep-dist/tutorial/dist
+          workingDirectory: ./deploy-prep-dist/tutorial
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
   DeployPreview_Limber:
