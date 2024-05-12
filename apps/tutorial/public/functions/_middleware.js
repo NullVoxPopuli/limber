@@ -37,7 +37,7 @@ async function errorIfNotFound(context) {
     return defaultResponse;
   }
 
-  console.log(url, status, headers, headers.get('content-type'));
+  console.log(url, status, headers.get('content-type'), headers);
   /**
     * Cloudflare (because of how single-page-apps work)
     * returns our index.html as a 200 whenever any URL is requested.
