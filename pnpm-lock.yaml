@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@ef4/lerna-changelog': github:embroider-build/github-changelog#3ad92f5
+  '@ef4/lerna-changelog': github:embroider-build/github-changelog#7e13349
   '@nullvoxpopuli/eslint-configs': ^3.2.2
   '@embroider/addon-shim': 1.8.7
   ember-element-helper: ^0.8.5
@@ -19285,7 +19285,7 @@ packages:
     resolution: {integrity: sha512-kOR8rjuSD4ljH/BOoWeX5ECjQ0Wf0jl0xLFeKQpOCx2Qoo2Y+A+is4t2GRMtFUGjoA5Wp+j7aJaIFFbZNEC+oA==}
     hasBin: true
     dependencies:
-      '@ef4/lerna-changelog': github.com/embroider-build/github-changelog/3ad92f5
+      '@ef4/lerna-changelog': github.com/embroider-build/github-changelog/7e13349
       '@manypkg/get-packages': 2.2.1
       '@npmcli/package-json': 5.0.0
       '@octokit/rest': 19.0.13
@@ -22696,7 +22696,6 @@ packages:
     resolution: {directory: packages/app-support/limber-ui/addon, type: directory}
     id: file:packages/app-support/limber-ui/addon
     name: limber-ui
-    engines: {node: '>= v16', npm: use pnpm, yarn: use pnpm}
     peerDependencies:
       '@ember/test-waiters': ^3.1.0
       '@glimmer/component': ^1.1.2
@@ -22738,7 +22737,6 @@ packages:
     resolution: {directory: packages/app-support/transpilation, type: directory}
     id: file:packages/app-support/transpilation
     name: '@nullvoxpopuli/limber-transpilation'
-    engines: {node: '>= v16', npm: use pnpm, yarn: use pnpm}
     peerDependencies:
       '@glimmer/component': ^1.1.2
       ember-source: '*'
@@ -22754,7 +22752,6 @@ packages:
     resolution: {directory: packages/ember-repl/addon, type: directory}
     id: file:packages/ember-repl/addon
     name: ember-repl
-    engines: {node: '>= v16', npm: use pnpm, yarn: use pnpm}
     peerDependencies:
       '@glimmer/compiler': '>= 0.86.0'
       '@glimmer/syntax': '>= 0.86.0'
@@ -22801,10 +22798,10 @@ packages:
       - supports-color
     dev: false
 
-  github.com/embroider-build/github-changelog/3ad92f5:
-    resolution: {tarball: https://codeload.github.com/embroider-build/github-changelog/tar.gz/3ad92f5}
-    name: '@ef4/lerna-changelog'
-    version: 2.2.1
+  github.com/embroider-build/github-changelog/7e13349:
+    resolution: {tarball: https://codeload.github.com/embroider-build/github-changelog/tar.gz/7e13349}
+    name: github-changelog
+    version: 1.0.1
     engines: {node: 12.* || 14.* || >= 16}
     hasBin: true
     dependencies:

@@ -39,7 +39,7 @@
   },
   "pnpm": {
     "overrides": {
-      "@ef4/lerna-changelog": "github:embroider-build/github-changelog#3ad92f5",
+      "@ef4/lerna-changelog": "github:embroider-build/github-changelog#7e13349",
       "@nullvoxpopuli/eslint-configs": "^3.2.2",
       "@embroider/addon-shim": "1.8.7",
       "ember-element-helper": "^0.8.5",
