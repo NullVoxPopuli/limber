@@ -187,7 +187,7 @@ jobs:
           npx wrangler pages publish ./ \
             --project-name=${{ matrix.app.cloudflareName }} \
             --branch=${{ github.event.workflow_run.head_branch }} \
-            --commit-hash=${{ github.event.workflow_run.head_commit }}
+            --commit-hash=${{ github.event.workflow_run.head_sha }}
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
