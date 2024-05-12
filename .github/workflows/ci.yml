@@ -160,6 +160,7 @@ jobs:
 ##############################################################
 ##############################################################
 
+  # NOTE: this is basically the same code as in DeployPreview
   DeployProduction:
     name: "Deploy: Production ${{ matrix.app.name }}"
     if: github.ref == 'refs/heads/main' 
@@ -184,7 +185,7 @@ jobs:
       - name: Publish ${{ matrix.app.name }}
         working-directory: ./deploy-prep-dist/${{ matrix.app.path }}
         run: |
-          npx wrangler pages publish ./ \
+          npx wrangler pages deploy ./ \
             --project-name=${{ matrix.app.cloudflareName }} \
             --branch=${{ github.event.workflow_run.head_branch }} \
             --commit-hash=${{ github.event.workflow_run.head_sha }}
