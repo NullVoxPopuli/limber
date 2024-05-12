@@ -136,9 +136,12 @@ jobs:
           header: preview-urls 
           number: ${{ github.event.workflow_run.pull_requests[0].number }}
           message: |+
-            | Project   | Preview URL |
+            | Project   | Preview URL[^note] |
             | -------   | ----------- |
-            | Limber    | https://${{ github.event.workflow_run.head_sha }}.limber-glimdown.pages.dev   |
-            | Tutorial  | https://${{ github.event.workflow_run.head_sha }}.limber-glimmer-tutorial.pages.dev |
+            | Limber    | https://${{ github.event.workflow_run.head_branch }}.limber-glimdown.pages.dev   |
+            | Tutorial  | https://${{ github.event.workflow_run.head_branch }}.limber-glimmer-tutorial.pages.dev |
 
             [Logs](https://github.com/NullVoxPopuli/limber/actions/runs/${{ github.run_id }}) 
+
+            [^note]: if these branch preview links are not working, please check the logs for the commit-based preview link. There is a character limit of 28 for the branch subdomain, as well as some other heuristics, [described here](https://community.cloudflare.com/t/algorithm-to-generate-a-preview-dns-subdomain-from-a-branch-name/477633?u=walshymvp) for the sake of implementation ease in deploy-preview.yml, that algo has been omitted.  The URLs are logged in the wrangler output, but it's hard to get outputs from a matrix job.
+
