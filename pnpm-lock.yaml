@@ -1543,7 +1543,7 @@ importers:
     dependencies:
       '@shikijs/rehype':
         specifier: ^1.1.7
-        version: 1.2.2
+        version: 1.5.1
       '@types/unist':
         specifier: ^3.0.2
         version: 3.0.2
@@ -6925,25 +6925,25 @@ packages:
     requiresBuild: true
     optional: true
 
-  /@shikijs/core@1.2.2:
-    resolution: {integrity: sha512-GXbTyNP6HlxpyWMR4eirW54Cxp84nVuivcV5hGVBgKnIl+UmD4AJgCX1uXuNRcFFAw58lB3HqryuezIc0iCLgw==}
+  /@shikijs/core@1.5.1:
+    resolution: {integrity: sha512-xjV63pRUBvxA1LsxOUhRKLPh0uUjwBLzAKLdEuYSLIylo71sYuwDcttqNP01Ib1TZlLfO840CXHPlgUUsYFjzg==}
     dev: false
 
-  /@shikijs/rehype@1.2.2:
-    resolution: {integrity: sha512-CPQpd9Fn5E3ikRD2KM2K/UTh6wQC/hYfbKbng22T6fwePkHOs490GfmvT/chiOglLELQHam2foxeh5a9bHq+Rg==}
+  /@shikijs/rehype@1.5.1:
+    resolution: {integrity: sha512-UzmDzid4Zv4ZeY+GvJlKabBVdTt40aCCoOyeq/JwLJ0YmiZhm5vOicpzdbmMcUClgpCtBjJRLaOg8mkhd7YX/w==}
     dependencies:
-      '@shikijs/transformers': 1.2.2
+      '@shikijs/transformers': 1.5.1
       '@types/hast': 3.0.4
       hast-util-to-string: 3.0.0
-      shiki: 1.2.2
+      shiki: 1.5.1
       unified: 11.0.4
       unist-util-visit: 5.0.0
     dev: false
 
-  /@shikijs/transformers@1.2.2:
-    resolution: {integrity: sha512-GL03TlMh9oBeBLU5pcYBKpZnZZVdXSJ4ec7EQ/uw9+NrVaHs6qTjVN8F/0mvKd+sXLbBga8XZWDdob5F5tx5lw==}
+  /@shikijs/transformers@1.5.1:
+    resolution: {integrity: sha512-vir+y0elkjh2CepLVbqeGX+ftuc6WpfWNCMV/EBIallSLzhBfDO9r/TORDVOzegbTg9JMEmtOFv6PT9cSZTcyA==}
     dependencies:
-      shiki: 1.2.2
+      shiki: 1.5.1
     dev: false
 
   /@sigstore/bundle@2.2.0:
@@ -20079,10 +20079,10 @@ packages:
     resolution: {integrity: sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==}
     dev: true
 
-  /shiki@1.2.2:
-    resolution: {integrity: sha512-nqazfFgrU+DBLqk4+WjmGQz8sVWkcUcGriHqSM2zGk0GhjirVz4FyJ3AABEx91OpjGiKpuKBg2diYfRfQG3Fbg==}
+  /shiki@1.5.1:
+    resolution: {integrity: sha512-vx4Ds3M3B9ZEmLeSXqBAB85osBWV8ErZfP69kuFQZozPgHc33m7spLTCUkcjwEjFm3gk3F9IdXMv8kX+v9xDHA==}
     dependencies:
-      '@shikijs/core': 1.2.2
+      '@shikijs/core': 1.5.1
     dev: false
 
   /side-channel@1.0.6:
