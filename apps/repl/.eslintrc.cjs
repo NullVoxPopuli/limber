@@ -13,15 +13,5 @@ module.exports = {
       ...baseNode,
       files: ['browserstack.testem.js'],
     },
-    {
-      files: ['**/*.gts'],
-      plugins: ['ember'],
-      parser: 'ember-eslint-parser',
-    },
-    {
-      files: ['**/*.gjs'],
-      plugins: ['ember'],
-      parser: 'ember-eslint-parser',
-    },
   ],
 };
