@@ -29,13 +29,13 @@
     "release-plan": "^0.9.0",
     "turbo": "^1.13.3"
   },
-  "packageManager": "pnpm@8.15.4",
+  "packageManager": "pnpm@9.1.1",
   "engines": {
     "node": ">= 16"
   },
   "volta": {
     "node": "20.11.1",
-    "pnpm": "8.15.5"
+    "pnpm": "9.1.1"
   },
   "pnpm": {
     "overrides": {
