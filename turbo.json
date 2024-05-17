@@ -36,12 +36,12 @@
     /////////////////////////////////////////////////
     /////////////////////////////////////////////////
     "dev": {
-      "dependsOn": ["_syncPnpm", "^build"],
+      "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
     },
     "start": {
-      "dependsOn": ["_syncPnpm", "^build"],
+      "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
     },
@@ -59,11 +59,11 @@
     },
     "build": {
       "outputs": ["dist/**", "declarations/**"],
-      "dependsOn": ["_syncPnpm", "^build"]
+      "dependsOn": ["^build"]
     },
     "test:node": {
       "outputs": [],
-      "dependsOn": ["_syncPnpm"]
+      "dependsOn": []
     },
     // Apps will have test:ember and test:browserstack
     // They are separate so that they can cache independently
@@ -74,18 +74,14 @@
         "EMBER_TRY_CURRENT_SCENARIO", 
         "EMBROIDER_TEST_SETUP_OPTIONS"
       ],
-      "dependsOn": ["_syncPnpm" ,"^build"]
+      "dependsOn": ["^build"]
     },
     "test:browserstack": {
-      "dependsOn": ["_syncPnpm", "^build"]
+      "dependsOn": ["^build"]
     },
     // All scenarios
     "test:scenarios": {
       "dependsOn": ["^build"]
-    },
-    "_syncPnpm": {
-      "dependsOn": ["^build"],
-      "cache": false
     },
 
     /////////////////////////////////////////////////
@@ -109,7 +105,7 @@
     "lint:js": { "outputs": [] },
     "lint:hbs": { "outputs": [] },
     "lint:prettier": { "outputs": [] },
-    "lint:types": { "outputs": [], "dependsOn": ["_syncPnpm"] },
+    "lint:types": { "outputs": [], "dependsOn": ["^build"] },
     "lint:package": { "outputs": [], "dependsOn": ["build"] },
     "lint:published-types": { "outputs": [], "dependsOn": ["pack"] },
 

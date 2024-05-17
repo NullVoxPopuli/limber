@@ -18,14 +18,13 @@
   "scripts": {
     "ember:canary": "npx ember-source-channel-url canary --write",
     "ember:beta": "npx ember-source-channel-url beta --write",
-    "build": "pnpm _syncPnpm && ember build --environment=production",
+    "build": "ember build --environment=production",
     "lint:types": "glint",
     "lint:fix": "pnpm -w exec lint fix",
-    "start": "concurrently 'ember serve -p 4201' 'pnpm _syncPnpm --watch' --names 'serve,ync deps'",
+    "start": "ember serve -p 4201",
     "start:iframe": "pnpx http-server ./public -i -p 4204",
     "test:browserstack": "./scripts/browserstack.sh",
     "test:ember": "ember test --test-port 0",
-    "_syncPnpm": "pnpm sync-dependencies-meta-injected",
     "lint": "pnpm -w exec lint",
     "lint:js": "pnpm -w exec lint js",
     "lint:js:fix": "pnpm -w exec lint js:fix",
@@ -33,20 +32,6 @@
     "lint:hbs:fix": "pnpm -w exec lint hbs:fix",
     "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
     "lint:prettier": "pnpm -w exec lint prettier"
-  },
-  "dependenciesMeta": {
-    "ember-repl": {
-      "injected": true
-    },
-    "ember-primitives": {
-      "injected": true
-    },
-    "limber-ui": {
-      "injected": true
-    },
-    "@nullvoxpopuli/limber-transpilation": {
-      "injected": true
-    }
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",
@@ -117,7 +102,6 @@
     "fractal-page-object": "^0.5.0",
     "loader.js": "^4.7.0",
     "onp": "^2.0.4",
-    "pnpm-sync-dependencies-meta-injected": "^0.0.14",
     "prettier": "^3.2.5",
     "prettier-plugin-ember-template-tag": "2.0.2",
     "process": "^0.11.10",
