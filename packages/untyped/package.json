@@ -3,12 +3,12 @@
   "private": true,
   "version": "0.0.1",
   "devDependencies": {
-    "@glint/template": "1.3.0",
-    "@nullvoxpopuli/eslint-configs": "^3.2.2",
+    "@glint/template": "1.4.0",
+    "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "eslint": "^8.55.0",
     "prettier": "^3.2.5",
-    "prettier-plugin-ember-template-tag": "2.0.0",
-    "typescript": "^5.3.3"
+    "prettier-plugin-ember-template-tag": "2.0.2",
+    "typescript": "^5.4.5"
   },
   "scripts": {
     "lint": "pnpm -w exec lint",

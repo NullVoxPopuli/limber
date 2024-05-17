@@ -12,10 +12,10 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "devDependencies": {
-    "@nullvoxpopuli/eslint-configs": "^3.2.2",
+    "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "eslint": "^8.55.0",
     "prettier": "^3.2.5",
-    "prettier-plugin-ember-template-tag": "2.0.0"
+    "prettier-plugin-ember-template-tag": "2.0.2"
   },
   "volta": {
     "extends": "../../package.json"
