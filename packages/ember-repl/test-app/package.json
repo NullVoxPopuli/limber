@@ -13,8 +13,7 @@
   "scripts": {
     "lint": "pnpm -w exec lint",
     "lint:fix": "pnpm -w exec lint fix",
-    "start": "concurrently 'ember serve' 'pnpm _syncPnpm --watch' --names 'tests serve,tests sync deps'",
-    "_syncPnpm": "pnpm sync-dependencies-meta-injected",
+    "start": "ember serve",
     "test:scenarios": "ember try:each",
     "lint:types": "glint",
     "lint:js": "pnpm -w exec lint js",
@@ -84,7 +83,6 @@
     "eslint-plugin-qunit": "^8.0.1",
     "loader.js": "^4.7.0",
     "path-browserify": "^1.0.1",
-    "pnpm-sync-dependencies-meta-injected": "^0.0.14",
     "prettier": "^3.2.5",
     "prettier-plugin-ember-template-tag": "2.0.2",
     "qunit": "^2.20.0",

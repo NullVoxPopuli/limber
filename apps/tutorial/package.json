@@ -11,14 +11,13 @@
   "license": "MIT",
   "author": "NullVoxPopuli",
   "scripts": {
-    "build": "pnpm _syncPnpm && ember build --environment=production",
+    "build": "ember build --environment=production",
     "lint": "pnpm -w exec lint",
     "lint:types": "glint",
     "lint:fix": "pnpm -w exec lint fix",
     "cf": "cd dist && npx wrangler pages dev --port 42000 ./",
-    "start": "concurrently 'ember serve' 'pnpm _syncPnpm --watch' --names 'serve,sync deps'",
+    "start": "ember serve",
     "test:ember": "ember test --test-port 0",
-    "_syncPnpm": "pnpm sync-dependencies-meta-injected",
     "lint:js": "pnpm -w exec lint js",
     "lint:js:fix": "pnpm -w exec lint js:fix",
     "lint:hbs": "pnpm -w exec lint hbs",
@@ -43,11 +42,6 @@
     "remark-parse": "^10.0.2",
     "remark-rehype": "^10.1.0",
     "unified": "^10.1.2"
-  },
-  "dependenciesMeta": {
-    "limber-ui": {
-      "injected": true
-    }
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",
@@ -103,7 +97,6 @@
     "fs-extra": "^11.2.0",
     "globby": "^14.0.0",
     "loader.js": "^4.7.0",
-    "pnpm-sync-dependencies-meta-injected": "^0.0.14",
     "prettier": "^3.2.5",
     "prettier-plugin-ember-template-tag": "2.0.2",
     "qunit": "^2.20.0",
