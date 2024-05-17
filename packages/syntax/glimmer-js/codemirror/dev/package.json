@@ -12,20 +12,20 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.9",
-    "@babel/eslint-parser": "^7.23.10",
+    "@babel/core": "^7.24.5",
+    "@babel/eslint-parser": "^7.24.5",
     "@codemirror/language": "^6.10.1",
     "@codemirror/state": "^6.4.0",
     "@codemirror/theme-one-dark": "^6.1.2",
-    "@codemirror/view": "^6.23.0",
+    "@codemirror/view": "^6.26.3",
     "@glimdown/codemirror-dev-preview": "workspace:*",
-    "@nullvoxpopuli/eslint-configs": "^3.2.2",
-    "@typescript-eslint/eslint-plugin": "^6.20.0",
-    "@typescript-eslint/parser": "^6.20.0",
+    "@nullvoxpopuli/eslint-configs": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.9.0",
+    "@typescript-eslint/parser": "^7.9.0",
     "eslint": "^8.55.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.3.3",
-    "vite": "^5.0.12"
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
   },
   "volta": {
     "extends": "../../../../../package.json"

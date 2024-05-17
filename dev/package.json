@@ -17,14 +17,14 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.9",
-    "@nullvoxpopuli/eslint-configs": "^3.2.2",
-    "@types/node": "^20.11.16",
+    "@babel/core": "^7.24.5",
+    "@nullvoxpopuli/eslint-configs": "^4.0.0",
+    "@types/node": "^20.12.12",
     "@types/yargs": "^17.0.32",
     "eslint": "^8.55.0",
     "prettier": "^3.2.5",
-    "prettier-plugin-ember-template-tag": "2.0.0",
-    "typescript": "^5.3.3"
+    "prettier-plugin-ember-template-tag": "2.0.2",
+    "typescript": "^5.4.5"
   },
   "engines": {
     "node": ">= v16",
