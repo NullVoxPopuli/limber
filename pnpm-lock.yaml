@@ -2482,8 +2482,8 @@ importers:
         specifier: 3.1.1
         version: 3.1.1
       '@algorithm.ts/huffman':
-        specifier: 3.1.1
-        version: 3.1.1
+        specifier: 4.0.0
+        version: 4.0.0
       filesize:
         specifier: ^10.1.2
         version: 10.1.2
@@ -2525,17 +2525,11 @@ packages:
     resolution: {integrity: sha512-8qXO3P6P7ocjtIZAa3By0D2Lzw8eUm5z8n0f/adgKz6tHnV7BrbrPTlFA9F3xNoSTBEXYh4JefJLueqFNTPwmw==}
     engines: {node: '>= 16.0.0'}
 
-  '@algorithm.ts/huffman@3.1.1':
-    resolution: {integrity: sha512-DWvuiAlczy1arE5bMn5d+FzvXtBnEgaJEzfv4HKKFS2keqkLCBFf3p49FMF2aALSxeBAA+39hBUKgpOW1rYRNQ==}
-    engines: {node: '>= 16.0.0'}
+  '@algorithm.ts/huffman@4.0.0':
+    resolution: {integrity: sha512-PsmGRQPBcSp52x3LHsYqsgf3xgOiEyZ+F4Dwn60FbAwmYd/HGtnoHWycmOyFHD19uVGeFyFqBL0GYEMXPcgxGw==}
 
-  '@algorithm.ts/queue@3.1.1':
-    resolution: {integrity: sha512-AB57lJkDZJUErmebTshzGeB/UGxHkQC6tbLUqBcAjM6PhbXETFUVy0S6CrRmV1yk5tILo31KDwgpwv2VWDvmxA==}
-    engines: {node: '>= 16.0.0'}
-
-  '@algorithm.ts/types@3.1.1':
-    resolution: {integrity: sha512-OcaCeU7oSBlvzS7g5gTVvXGPcQph6F7BK529peOf90GvnXbFYC8x/zM1hG85GUnftNw/i1bIoZEEsGfFBmDQow==}
-    engines: {node: '>= 16.0.0'}
+  '@algorithm.ts/queue@4.0.0':
+    resolution: {integrity: sha512-fgCxhFtAWb5j1+/p9DElwqmIPnWXq+wwDxXVEKBlq6Oqv+ZphNWqZRxdPvdRte9k0NorN1QLruoBoPTMHs8GjA==}
 
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -11938,15 +11932,11 @@ snapshots:
 
   '@algorithm.ts/base64@3.1.1': {}
 
-  '@algorithm.ts/huffman@3.1.1':
+  '@algorithm.ts/huffman@4.0.0':
     dependencies:
-      '@algorithm.ts/queue': 3.1.1
+      '@algorithm.ts/queue': 4.0.0
 
-  '@algorithm.ts/queue@3.1.1':
-    dependencies:
-      '@algorithm.ts/types': 3.1.1
-
-  '@algorithm.ts/types@3.1.1': {}
+  '@algorithm.ts/queue@4.0.0': {}
 
   '@alloc/quick-lru@5.2.0': {}
 
