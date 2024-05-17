@@ -63,7 +63,7 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_branch }}
       - name: TurboRepo local server
-        uses: felixmosh/turborepo-gh-artifacts@v2
+        uses: felixmosh/turborepo-gh-artifacts@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: wyvox/action-setup-pnpm@v3
