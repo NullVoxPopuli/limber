@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@algorithm.ts/base64": "3.1.1",
+    "@algorithm.ts/base64": "4.0.0",
     "@algorithm.ts/huffman": "3.1.1",
     "filesize": "^10.1.2",
     "globby": "^14.0.0",
