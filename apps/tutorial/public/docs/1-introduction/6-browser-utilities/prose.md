@@ -12,7 +12,7 @@ And likewise, if we have data we need to format with [`JSON.stringify`][mdn-json
 <pre><code>{{JSON.stringify data null '\t'}}</code></pre>
 ```
 
-The same [polish][polish] notation we used early applies to all globally available functions -- so the above `stringify` call would like like this, if in JS: `JSON.stringify(data, null, "\t")`
+The same [polish][polish] notation we used early applies to all globally available functions -- so the above `stringify` call would look like this, if in JS: `JSON.stringify(data, null, "\t")`
 
 Note that due to how polish notation reads, it's _highly encouraged_ to extract one-off utility functions instead of wrapping more functions in the template.
 
