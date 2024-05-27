@@ -34,6 +34,7 @@ const createState = () => new State();
   <style>
     input {
       border: 1px solid;
+      padding: 0.25rem 0.5rem;
     }
   </style>
 </template>
