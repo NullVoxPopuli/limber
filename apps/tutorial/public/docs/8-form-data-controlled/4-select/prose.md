@@ -15,7 +15,7 @@ class Demo extends Component {
 }
 ```
 
-And for the event binding, we'll use the `change` event on each of the radio inputs as well.
+And for the event binding, we'll use the `change` event on the single select element.
 ```gjs
 class Demo extends Component {
   handleChange = (event) => {
