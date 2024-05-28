@@ -21,6 +21,8 @@ class ControlledInput extends Component {
   </template>
 }
 
+// Below is only setup for the tutorial chapter 
+// and not exactly relevent to the topic
 class State {
   @tracked value;
   handleChange = (newValue) => this.value = newValue;

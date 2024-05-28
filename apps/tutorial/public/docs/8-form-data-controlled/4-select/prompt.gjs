@@ -4,10 +4,17 @@ import { on } from '@ember/modifier';
 
 class ControlledInput extends Component {
   <template>
-     <label>
-        Example input
-        <input type="checkbox" />
-      </label>
+    <label>
+      Favorite Color
+      <select>
+        <option value="red">Red</option>
+        <option value="orange">Orange</option>
+        <option value="yellow">Yellow</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+        <option value="purple">Purple</option>
+      </select>
+    </label>
   </template>
 }
 
@@ -26,11 +33,9 @@ const createState = () => new State();
     <pre>{{x.value}}</pre>
   {{/let}}
 
+
   <style>
-    input {
-      border: 1px solid;
-      padding: 0.25rem 0.5rem;
-    }
+    select { border: 1px solid; }
   </style>
 </template>
 
