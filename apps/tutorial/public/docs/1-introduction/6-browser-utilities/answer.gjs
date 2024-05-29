@@ -4,15 +4,16 @@ let data = {
   terrain: "desert",
 };
 
+let { JSON } = globalThis;
+
 localStorage.setItem('localStorage-item', JSON.stringify(data));
 
-// Pending update to GlimmerVM that does this automatically
-let getItem = localStorage.getItem.bind(localStorage);
+let get = (key) => localStorage.getItem(key);
 
 <template>
   From localStorage: <br>
-  <pre>{{getItem "localStorage-item"}}</pre>
+  <pre>{{get "localStorage-item"}}</pre>
 
   Formatted: <br>
-  <pre><code>{{JSON.stringify data null "\t"}}</code></pre>
+  <pre><code>{{JSON.stringify data null "  "}}</code></pre>
 </template>
