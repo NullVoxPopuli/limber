@@ -38,7 +38,7 @@
     "ember-modifier": "^4.1.0",
     "ember-primitives": ">= 0.11.0",
     "ember-resources": ">= 6.4.2",
-    "ember-source": ">= 5.5.0"
+    "ember-source": ">= 5.9.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.24.5",
@@ -82,7 +82,7 @@
     "ember-modifier": "^4.1.0",
     "ember-primitives": "^0.16.0",
     "ember-resources": "^7.0.1",
-    "ember-source": ">= 5.5.0",
+    "ember-source": ">= 5.9.0",
     "ember-template-imports": "^4.1.1",
     "ember-template-lint": "^6.0.0",
     "eslint": "^8.55.0",

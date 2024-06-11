@@ -41,7 +41,7 @@
       "@nullvoxpopuli/eslint-configs": "^4.0.0",
       "ember-element-helper": "^0.8.5",
       "ember-auto-import": "^2.7.2",
-      "ember-source": ">= 5.5.0",
+      "ember-source": ">= 5.9.0",
       "webpack": "5.90.3"
     },
     "allowedDeprecatedVersions": {
