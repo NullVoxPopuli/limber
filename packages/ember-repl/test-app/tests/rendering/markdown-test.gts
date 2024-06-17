@@ -12,7 +12,7 @@ import type { ComponentLike } from '@glint/template';
 import type { PluggableList } from 'unified';
 import type { Parent } from 'unist';
 
-export type UnifiedPlugin = PluggableList[0];
+type UnifiedPlugin = PluggableList[0];
 type Build = (plugin?: UnifiedPlugin) => Promise<void>;
 
 module('Rendering | compile()', function (hooks) {
