@@ -75,7 +75,6 @@ export const Controls: TOC<{
           </a>
         {{/if}}
 
-        <FormatMenu class={{buttonClasses}} />
       </div>
     {{/let}}
   {{/if}}

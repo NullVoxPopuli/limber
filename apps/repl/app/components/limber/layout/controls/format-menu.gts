@@ -3,8 +3,9 @@ import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
-import Menu from 'limber/components/limber/menu';
+import { Button as Item } from './button';
 
+//import Menu from 'limber/components/limber/menu';
 import type RouterService from '@ember/routing/router-service';
 import type { Format } from 'limber/utils/messaging';
 
@@ -30,26 +31,16 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
   }
 
   <template>
-    <Menu>
-      <:trigger as |t|>
-        <t.Button title="Change document language" ...attributes>
-          {{abbreviationFor this.format}}
-        </t.Button>
-      </:trigger>
-
-      <:options as |Item|>
         <Item {{on "click" (fn this.switch "glimdown")}} class="{{this.isSelected "glimdown"}}">
-          Glimdown
+          gmd
         </Item>
 
         <Item {{on "click" (fn this.switch "gjs")}} class="{{this.isSelected "gjs"}}">
-          Glimmer JS
+    gjs
         </Item>
 
         <Item {{on "click" (fn this.switch "hbs")}} class="{{this.isSelected "hbs"}}">
-          Template
+    hbs
         </Item>
-      </:options>
-    </Menu>
   </template>
 }
