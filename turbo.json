@@ -78,7 +78,21 @@
     },
     "test:browserstack": {
       "dependsOn": ["^build"],
-      "passThroughEnv": ["BROWSERSTACK_USERNAME", "BROWSERSTACK_ACCESS_KEY"]
+      // see: https://github.com/kategengler/ember-cli-browserstack/blob/b199b19d0fe279fb0dcec13e76985c4492c591d8/lib/utils/build-name-from-env.js#L51
+      "passThroughEnv": [
+        "BROWSERSTACK_USERNAME", 
+        "BROWSERSTACK_ACCESS_KEY", 
+        "BROWSERSTACK_LOCAL_IDENTIFIER",
+        "BROWSERSTACK_BUILD_NAME",
+        "BROWSERSTACK_BUILD_NAME_PREFIX",
+        "GITHUB_RUN_ID",
+        "GITHUB_WORKFLOW",
+        "GITHUB_REF",
+        "GITHUB_HEAD_REF",
+        "GITHUB_RUN_NUMBER",
+        "GITHUB_JOB",
+        "CI",
+      ]
     },
     // All scenarios
     "test:scenarios": {
