@@ -1,9 +1,8 @@
 import { isDevelopingApp, macroCondition } from '@embroider/macros';
 
+import { notInIframe } from 'ember-primitives/iframe';
 import { resource } from 'ember-resources';
 import { connectToParent } from 'penpal';
-
-import { notInIframe } from 'limber/helpers/in-iframe';
 
 import type { Format } from 'limber/utils/messaging';
 

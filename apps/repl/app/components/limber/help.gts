@@ -2,8 +2,8 @@ import { on } from '@ember/modifier';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { Modal } from 'ember-primitives';
+import { notInIframe } from 'ember-primitives/iframe';
 
-import { notInIframe } from 'limber/helpers/in-iframe';
 import { Button, ExternalLink } from 'limber-ui';
 
 import type { TOC } from '@ember/component/template-only';

@@ -3,9 +3,7 @@ import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-
-import Menu from 'limber/components/limber/menu';
+import { Button } from './button';
 
 import type RouterService from '@ember/routing/router-service';
 import type { Format } from 'limber/utils/messaging';
@@ -18,26 +16,16 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
   };
 
   <template>
-    <Menu>
-      <:trigger as |t|>
-        <t.Button title="Change document language" ...attributes>
-          <FaIcon @icon="cog" />
-        </t.Button>
-      </:trigger>
+    <Button {{on "click" (fn this.switch "glimdown")}}>
+      Glimdown
+    </Button>
 
-      <:options as |Item|>
-        <Item {{on "click" (fn this.switch "glimdown")}}>
-          Glimdown
-        </Item>
+    <Button {{on "click" (fn this.switch "gjs")}}>
+      Glimmer JS
+    </Button>
 
-        <Item {{on "click" (fn this.switch "gjs")}}>
-          Glimmer JS
-        </Item>
-
-        <Item {{on "click" (fn this.switch "hbs")}}>
-          Template
-        </Item>
-      </:options>
-    </Menu>
+    <Button {{on "click" (fn this.switch "hbs")}}>
+      Template
+    </Button>
   </template>
 }

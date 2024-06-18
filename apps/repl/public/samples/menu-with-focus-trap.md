@@ -8,66 +8,56 @@ More details as well as a tutorial
 import { on } from '@ember/modifier';
 
 import { focusTrap } from 'ember-focus-trap';
-import { Popover } from 'ember-primitives';
-import HeadlessMenu from 'ember-headlessui/components/menu';
-
-const Button =
-  <template>
-    <@item as |item|>
-      <item.Element @tagName="button" class="btn-item" tabindex="0" ...attributes>
-        {{yield}}
-      </item.Element>
-    </@item>
-  </template>;
+import { PortalTargets, Menu } from 'ember-primitives';
 
 <template>
-  <HeadlessMenu as |menu|>
-    <div {{focusTrap isActive=menu.isOpen}}>
-      <Popover @inline={{true}} as |x|>
-        <menu.Button {{x.hook}}>
-          Toggle Menu
-        </menu.Button>
+  <div>
+    <Menu as |m|>
+      <m.Trigger class="trigger">
+        Toggle Menu
+      </m.Trigger>
 
-        {{#if menu.isOpen}}
-          <x.Content style="z-index: 1">
-            <div class="arrow" {{x.arrow}}></div>
-
-            <menu.Items class="items" as |items|>
-              {{#let (component Button item=items.Item) as |Button|}}
-                <Button>Option 1</Button>
-                <Button>Option 2</Button>
-                <Button>Option 3</Button>
-              {{/let}}
-            </menu.Items>
-          </x.Content>
-        {{/if}}
-      </Popover>
-    </div>
-  </HeadlessMenu>
+      <m.Content {{focusTrap isActive=m.isOpen}} class="items" as |c|>
+        <c.Item>Item 1</c.Item>
+        <c.Item>Item 2</c.Item>
+        <c.Separator />
+        <c.Item>Item 3</c.Item>
+      </m.Content>
+    </Menu>
+  </div>
+  <PortalTargets />
 
   <style>
-    .btn-item {
+   .items {
+      all: unset;
+      min-width: 180px;
+      background: #fff;
+      color: #111827;
+      padding: 8px 0;
+      border-radius: 6px;
+      border: none;
+      font-size: 14px;
+      z-index: 10;
+      box-shadow: 0 0 #0000, 0 0 #0000, 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .items [role="menuitem"] {
+      all: unset;
       display: block;
-      width: 100%;
-      user-select: none;
-      padding: 0.5rem 1rem;
-      text-align: left;
+      padding: 4px 12px;
+      cursor: pointer;
     }
-    .btn-item:focus {
-      --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-      --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-      box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-      outline: 2px solid transparent;
-      outline-offset: 2px;
+
+    .items [role="menuitem"]:focus {
+      background-color: #f9fafb;
     }
-    .items {
-      display: grid;
-      gap: 0.75rem;
-      padding: 0.5rem;
-      background: white;
-      --tw-drop-shadow: drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
-      filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+
+    .items [role="separator"] {
+      border-bottom: 1px solid rgb(17 24 39 / 0.1);
     }
+
     .arrow {
       position: absolute;
       background: white;

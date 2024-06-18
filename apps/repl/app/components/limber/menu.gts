@@ -2,17 +2,23 @@
 // @ts-ignore-expect-error
 import { hash } from '@ember/helper';
 
-import HeadlessMenu from 'ember-headlessui/components/menu';
-import { Popover } from 'ember-primitives';
+import {
+  Menu as HeadlessMenu
+} from 'ember-primitives/components/menu';
 
 import type { TOC } from '@ember/component/template-only';
-import type { WithBoundArgs } from '@glint/template';
-import type * as MenuTypes from 'ember-headlessui/components/menu';
+import type { ComponentLike, WithBoundArgs } from '@glint/template';
+import type {
+  ItemSignature,
+  Signature as MenuSignature,
+} from 'ember-primitives/components/menu';
+
+type MenuType = MenuSignature['Blocks']['default'][0]
 
 const Button: TOC<{
   Element: HTMLButtonElement;
   Args: {
-    item: MenuTypes.Item;
+    item: ComponentLike<ItemSignature>;
   };
   Blocks: {
     default: [];
@@ -34,21 +40,18 @@ const Button: TOC<{
 const DefaultTrigger: TOC<{
   Element: HTMLButtonElement;
   Args: {
-    menu: MenuTypes.Menu;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    trigger: any;
+    menu: MenuType;
   };
   Blocks: {
-    default: [MenuTypes.Menu];
+    default: [MenuType];
   };
 }> = <template>
-  <@menu.Button
-    {{@trigger}}
+  <@menu.Trigger
     class="text-black rounded border bg-white px-2 py-1 -my-1 text-left transition ease-in-out duration-150 sm:text-sm drop-shadow-md hover:drop-shadow-xl focus:ring-4 focus-visible:outline-none ring-ember-brand focus:outline-none"
     ...attributes
   >
     {{yield @menu}}
-  </@menu.Button>
+  </@menu.Trigger>
 </template>;
 
 const PlainTrigger: TOC<{
@@ -94,59 +97,54 @@ const Menu: TOC<{
   Blocks: {
     trigger: [
       {
-        menu: MenuTypes.Menu;
+        menu: MenuType;
         isOpen: boolean;
-        Default: WithBoundArgs<typeof DefaultTrigger, 'menu' | 'trigger'>;
-        Button: WithBoundArgs<typeof PlainTrigger, 'menu' | 'trigger'>;
+        Default: WithBoundArgs<typeof DefaultTrigger, 'menu'>;
+        Button: WithBoundArgs<typeof PlainTrigger, 'menu'>;
       },
     ];
     options: [button: WithBoundArgs<typeof Button, 'item'>];
   };
 }> = <template>
-  <Popover
+  <HeadlessMenu
     @inline={{@inline}}
     @placement="bottom"
     @offsetOptions={{8}}
     @shiftOptions={{hash padding=8}}
     @flipOptions={{hash padding=8}}
-    as |p|
-  >
-    <HeadlessMenu as |menu|>
+  as |menu|>
+    {{yield
+      (hash
+        menu=menu
+        isOpen=menu.isOpen
+        Button=(component PlainTrigger menu=menu)
+        Default=(component DefaultTrigger menu=menu)
+      )
+      to="trigger"
+    }}
 
-      {{yield
-        (hash
-          menu=menu
-          isOpen=menu.isOpen
-          Button=(component PlainTrigger menu=menu trigger=p.hook)
-          Default=(component DefaultTrigger menu=menu trigger=p.hook)
-        )
-        to="trigger"
-      }}
+    {{! template-lint-disable no-inline-styles }}
+    <menu.Content style="width: max-content;z-index:1;" as |content|>
+      {{! template-lint-disable no-inline-styles }}
+      <div
+        class="border"
+        style="
+        position: absolute;
+        background: white;
+        width: 8px;
+        height: 8px;
+        transform: rotate(45deg);
+        z-index: 0;
+      "
+        {{menu.arrow}}
+      ></div>
 
-      {{#if menu.isOpen}}
-        {{! template-lint-disable no-inline-styles }}
-        <p.Content style="width: max-content;z-index:1;">
-          {{! template-lint-disable no-inline-styles }}
-          <div
-            class="border"
-            style="
-            position: absolute;
-            background: white;
-            width: 8px;
-            height: 8px;
-            transform: rotate(45deg);
-            z-index: 0;
-          "
-            {{p.arrow}}
-          ></div>
-          <Items @items={{menu.Items}} ...attributes as |Button|>
-            {{yield Button to="options"}}
-          </Items>
-        </p.Content>
-      {{/if}}
+      <Items @items={{menu.Items}} ...attributes as |Button|>
+        {{yield Button to="options"}}
+      </Items>
+    </menu.Content>
 
-    </HeadlessMenu>
-  </Popover>
+  </HeadlessMenu>
 </template>;
 
 export default Menu;

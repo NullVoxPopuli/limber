@@ -4,7 +4,6 @@
 import * as eDeepTracked from 'ember-deep-tracked';
 // @ts-expect-error
 import * as focusTrap from 'ember-focus-trap';
-import * as headlessMenu from 'ember-headlessui/components/menu';
 import * as eModifier from 'ember-modifier';
 import * as ePrimitives from 'ember-primitives';
 import * as emberRepl from 'ember-repl';
@@ -43,7 +42,6 @@ export const importMap = {
   xstate: xstate,
   'ember-modifier': eModifier,
   'tracked-built-ins': trackedBuiltIns,
-  'ember-headlessui/components/menu': headlessMenu,
   'ember-focus-trap': focusTrap,
   'ember-primitives': ePrimitives,
   'tracked-toolbox': trackedToolbox,
