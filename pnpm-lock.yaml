@@ -191,8 +191,8 @@ importers:
         specifier: ^7.24.5
         version: 7.24.7(@babel/core@7.24.7)(eslint@8.57.0)
       '@codemirror/view':
-        specifier: 6.26.3
-        version: 6.26.3
+        specifier: 6.28.1
+        version: 6.28.1
       '@ember/optional-features':
         specifier: ^2.0.0
         version: 2.1.0
@@ -703,11 +703,11 @@ importers:
   packages/app-support/codemirror:
     dependencies:
       '@codemirror/autocomplete':
-        specifier: 6.16.0
-        version: 6.16.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+        specifier: 6.16.2
+        version: 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.1)(@lezer/common@1.2.1)
       '@codemirror/commands':
-        specifier: 6.5.0
-        version: 6.5.0
+        specifier: 6.6.0
+        version: 6.6.0
       '@codemirror/lang-html':
         specifier: ^6.4.9
         version: 6.4.9
@@ -722,7 +722,7 @@ importers:
         version: 6.10.2
       '@codemirror/language-data':
         specifier: ^6.5.1
-        version: 6.5.1(@codemirror/view@6.26.3)
+        version: 6.5.1(@codemirror/view@6.28.1)
       '@codemirror/lint':
         specifier: ^6.7.1
         version: 6.8.0
@@ -733,8 +733,8 @@ importers:
         specifier: 6.4.1
         version: 6.4.1
       '@codemirror/view':
-        specifier: 6.26.3
-        version: 6.26.3
+        specifier: 6.28.1
+        version: 6.28.1
       '@lezer/common':
         specifier: ^1.1.2
         version: 1.2.1
@@ -821,8 +821,8 @@ importers:
         specifier: ^7.24.5
         version: 7.24.7
       '@embroider/addon-shim':
-        specifier: 1.8.8
-        version: 1.8.8
+        specifier: 1.8.9
+        version: 1.8.9
       '@embroider/macros':
         specifier: 1.16.3
         version: 1.16.3(@glint/template@1.4.0)
@@ -1305,8 +1305,8 @@ importers:
         specifier: ^7.24.5
         version: 7.24.7
       '@embroider/addon-shim':
-        specifier: 1.8.8
-        version: 1.8.8
+        specifier: 1.8.9
+        version: 1.8.9
       '@embroider/macros':
         specifier: 1.16.3
         version: 1.16.3(@glint/template@1.4.0)
@@ -1748,8 +1748,8 @@ importers:
         specifier: ^6.10.1
         version: 6.10.2
       '@codemirror/view':
-        specifier: ^6.26.3
-        version: 6.26.3
+        specifier: ^6.28.1
+        version: 6.28.1
       '@lezer/generator':
         specifier: ^1.6.0
         version: 1.7.0
@@ -1832,7 +1832,7 @@ importers:
         version: 6.2.5
       '@codemirror/language-data':
         specifier: ^6.5.1
-        version: 6.5.1(@codemirror/view@6.26.3)
+        version: 6.5.1(@codemirror/view@6.28.1)
       '@lezer/common':
         specifier: ^1.1.2
         version: 1.2.1
@@ -1874,8 +1874,8 @@ importers:
         specifier: ^6.4.0
         version: 6.4.1
       '@codemirror/view':
-        specifier: ^6.26.3
-        version: 6.26.3
+        specifier: ^6.28.1
+        version: 6.28.1
       '@lezer/generator':
         specifier: ^1.6.0
         version: 1.7.0
@@ -1931,8 +1931,8 @@ importers:
         specifier: ^6.1.2
         version: 6.1.2
       '@codemirror/view':
-        specifier: ^6.26.3
-        version: 6.26.3
+        specifier: ^6.28.1
+        version: 6.28.1
       '@glimdown/codemirror-dev-preview':
         specifier: workspace:*
         version: link:../../../dev-preview
@@ -2038,7 +2038,7 @@ importers:
     dependencies:
       '@codemirror/lang-css':
         specifier: ^6.2.1
-        version: 6.2.1(@codemirror/view@6.26.3)
+        version: 6.2.1(@codemirror/view@6.28.1)
       '@codemirror/lang-html':
         specifier: ^6.4.9
         version: 6.4.9
@@ -2071,8 +2071,8 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1
       '@codemirror/view':
-        specifier: ^6.26.3
-        version: 6.26.3
+        specifier: ^6.28.1
+        version: 6.28.1
       '@glimdown/lezer-infra':
         specifier: workspace:*
         version: link:../../-infra
@@ -2134,8 +2134,8 @@ importers:
         specifier: ^6.1.2
         version: 6.1.2
       '@codemirror/view':
-        specifier: ^6.26.3
-        version: 6.26.3
+        specifier: ^6.28.1
+        version: 6.28.1
       '@glimdown/codemirror-dev-preview':
         specifier: workspace:*
         version: link:../../../dev-preview
@@ -2210,11 +2210,11 @@ importers:
   packages/syntax/glimmer/codemirror:
     dependencies:
       '@codemirror/autocomplete':
-        specifier: 6.16.0
-        version: 6.16.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+        specifier: 6.16.2
+        version: 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.1)(@lezer/common@1.2.1)
       '@codemirror/lang-css':
         specifier: ^6.2.1
-        version: 6.2.1(@codemirror/view@6.26.3)
+        version: 6.2.1(@codemirror/view@6.28.1)
       '@codemirror/lang-html':
         specifier: ^6.4.9
         version: 6.4.9
@@ -2225,8 +2225,8 @@ importers:
         specifier: ^6.4.0
         version: 6.4.1
       '@codemirror/view':
-        specifier: ^6.26.3
-        version: 6.26.3
+        specifier: ^6.28.1
+        version: 6.28.1
       '@glimdown/lezer-glimmer-expression':
         specifier: workspace:*
         version: link:../../glimmer-s-expression/lezer
@@ -2316,8 +2316,8 @@ importers:
         specifier: ^6.1.2
         version: 6.1.2
       '@codemirror/view':
-        specifier: ^6.26.3
-        version: 6.26.3
+        specifier: ^6.28.1
+        version: 6.28.1
       '@glimdown/codemirror-dev-preview':
         specifier: workspace:*
         version: link:../../../dev-preview
@@ -3248,8 +3248,8 @@ packages:
     engines: {node: '>=0.1.95'}
     hasBin: true
 
-  '@codemirror/autocomplete@6.16.0':
-    resolution: {integrity: sha512-P/LeCTtZHRTCU4xQsa89vSKWecYv1ZqwzOd5topheGRf+qtacFgBeIMQi3eL8Kt/BUNvxUWkx+5qP2jlGoARrg==}
+  '@codemirror/autocomplete@6.16.2':
+    resolution: {integrity: sha512-MjfDrHy0gHKlPWsvSsikhO1+BOh+eBHNgfH1OXs1+DAf30IonQldgMM3kxLDTG9ktE7kDLaA1j/l7KMPA4KNfw==}
     peerDependencies:
       '@codemirror/language': ^6.0.0
       '@codemirror/state': ^6.0.0
@@ -3260,8 +3260,8 @@ packages:
     resolution: {integrity: sha512-RbXu1opzxeeilMzKunOFkM83rRBqvsAPax36sa3JW+jVxL88E7aK2bFi3ugbQUNogCFyxuNk2m9zeyY63kFcPQ==}
     hasBin: true
 
-  '@codemirror/commands@6.5.0':
-    resolution: {integrity: sha512-rK+sj4fCAN/QfcY9BEzYMgp4wwL/q5aj/VfNSoH1RWPF9XS/dUwBkvlL3hpWgEjOqlpdN1uLC9UkjJ4tmyjJYg==}
+  '@codemirror/commands@6.6.0':
+    resolution: {integrity: sha512-qnY+b7j1UNcTS31Eenuc/5YJB6gQOzkUoNmJQc0rznwqSRpeaWWpjkWy2C/MPTcePpsKJEM26hXrOXl1+nceXg==}
 
   '@codemirror/lang-angular@0.1.3':
     resolution: {integrity: sha512-xgeWGJQQl1LyStvndWtruUvb4SnBZDAu/gvFH/ZU+c0W25tQR8e5hq7WTwiIY2dNxnf+49mRiGI/9yxIwB6f5w==}
@@ -3344,8 +3344,8 @@ packages:
   '@codemirror/theme-one-dark@6.1.2':
     resolution: {integrity: sha512-F+sH0X16j/qFLMAfbciKTxVOwkdAS336b7AXTKOZhy8BR3eH/RelsnLgLFINrpST63mmN2OuwUt0W2ndUgYwUA==}
 
-  '@codemirror/view@6.26.3':
-    resolution: {integrity: sha512-gmqxkPALZjkgSxIeeweY/wGQXBfwTUaLs8h7OKtSwfbj9Ct3L11lD+u1sS7XHppxFQoMDiMDp07P9f3I2jWOHw==}
+  '@codemirror/view@6.28.1':
+    resolution: {integrity: sha512-BUWr+zCJpMkA/u69HlJmR+YkV4yPpM81HeMkOMZuwFa8iM5uJdEPKAs1icIRZKkKmy0Ub1x9/G3PQLTXdpBxrQ==}
 
   '@colors/colors@1.5.0':
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
@@ -3386,6 +3386,10 @@ packages:
 
   '@embroider/addon-shim@1.8.8':
     resolution: {integrity: sha512-+SkD/JJqnmCBJpsjPu419iNA9kQdqojNBrldE7f5H80A4FWUGRO9s622+SwdzKiXCaMWcNeww7Ah7CL/YZPoHg==}
+    engines: {node: 12.* || 14.* || >= 16}
+
+  '@embroider/addon-shim@1.8.9':
+    resolution: {integrity: sha512-qyN64T1jMHZ99ihlk7VFHCWHYZHLE1DOdHi0J7lmn5waV1DoW7gD8JLi1i7FregzXtKhbDc7shyEmTmWPTs8MQ==}
     engines: {node: 12.* || 14.* || >= 16}
 
   '@embroider/babel-loader-9@3.1.1':
@@ -13340,11 +13344,11 @@ snapshots:
       exec-sh: 0.3.6
       minimist: 1.2.8
 
-  '@codemirror/autocomplete@6.16.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)':
+  '@codemirror/autocomplete@6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.1)(@lezer/common@1.2.1)':
     dependencies:
       '@codemirror/language': 6.10.2
       '@codemirror/state': 6.4.1
-      '@codemirror/view': 6.26.3
+      '@codemirror/view': 6.28.1
       '@lezer/common': 1.2.1
 
   '@codemirror/buildhelper@1.0.1':
@@ -13357,11 +13361,11 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@codemirror/commands@6.5.0':
+  '@codemirror/commands@6.6.0':
     dependencies:
       '@codemirror/language': 6.10.2
       '@codemirror/state': 6.4.1
-      '@codemirror/view': 6.26.3
+      '@codemirror/view': 6.28.1
       '@lezer/common': 1.2.1
 
   '@codemirror/lang-angular@0.1.3':
@@ -13378,9 +13382,9 @@ snapshots:
       '@codemirror/language': 6.10.2
       '@lezer/cpp': 1.1.2
 
-  '@codemirror/lang-css@6.2.1(@codemirror/view@6.26.3)':
+  '@codemirror/lang-css@6.2.1(@codemirror/view@6.28.1)':
     dependencies:
-      '@codemirror/autocomplete': 6.16.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.1)(@lezer/common@1.2.1)
       '@codemirror/language': 6.10.2
       '@codemirror/state': 6.4.1
       '@lezer/common': 1.2.1
@@ -13388,9 +13392,9 @@ snapshots:
     transitivePeerDependencies:
       - '@codemirror/view'
 
-  '@codemirror/lang-go@6.0.1(@codemirror/view@6.26.3)':
+  '@codemirror/lang-go@6.0.1(@codemirror/view@6.28.1)':
     dependencies:
-      '@codemirror/autocomplete': 6.16.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.1)(@lezer/common@1.2.1)
       '@codemirror/language': 6.10.2
       '@codemirror/state': 6.4.1
       '@lezer/common': 1.2.1
@@ -13400,12 +13404,12 @@ snapshots:
 
   '@codemirror/lang-html@6.4.9':
     dependencies:
-      '@codemirror/autocomplete': 6.16.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
-      '@codemirror/lang-css': 6.2.1(@codemirror/view@6.26.3)
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.1)(@lezer/common@1.2.1)
+      '@codemirror/lang-css': 6.2.1(@codemirror/view@6.28.1)
       '@codemirror/lang-javascript': 6.2.2
       '@codemirror/language': 6.10.2
       '@codemirror/state': 6.4.1
-      '@codemirror/view': 6.26.3
+      '@codemirror/view': 6.28.1
       '@lezer/common': 1.2.1
       '@lezer/css': 1.1.8
       '@lezer/html': 1.3.10
@@ -13417,11 +13421,11 @@ snapshots:
 
   '@codemirror/lang-javascript@6.2.2':
     dependencies:
-      '@codemirror/autocomplete': 6.16.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.1)(@lezer/common@1.2.1)
       '@codemirror/language': 6.10.2
       '@codemirror/lint': 6.8.0
       '@codemirror/state': 6.4.1
-      '@codemirror/view': 6.26.3
+      '@codemirror/view': 6.28.1
       '@lezer/common': 1.2.1
       '@lezer/javascript': 1.4.17
 
@@ -13430,9 +13434,9 @@ snapshots:
       '@codemirror/language': 6.10.2
       '@lezer/json': 1.0.2
 
-  '@codemirror/lang-less@6.0.2(@codemirror/view@6.26.3)':
+  '@codemirror/lang-less@6.0.2(@codemirror/view@6.28.1)':
     dependencies:
-      '@codemirror/lang-css': 6.2.1(@codemirror/view@6.26.3)
+      '@codemirror/lang-css': 6.2.1(@codemirror/view@6.28.1)
       '@codemirror/language': 6.10.2
       '@lezer/common': 1.2.1
       '@lezer/highlight': 1.2.0
@@ -13442,22 +13446,22 @@ snapshots:
 
   '@codemirror/lang-liquid@6.2.1':
     dependencies:
-      '@codemirror/autocomplete': 6.16.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.1)(@lezer/common@1.2.1)
       '@codemirror/lang-html': 6.4.9
       '@codemirror/language': 6.10.2
       '@codemirror/state': 6.4.1
-      '@codemirror/view': 6.26.3
+      '@codemirror/view': 6.28.1
       '@lezer/common': 1.2.1
       '@lezer/highlight': 1.2.0
       '@lezer/lr': 1.4.1
 
   '@codemirror/lang-markdown@6.2.5':
     dependencies:
-      '@codemirror/autocomplete': 6.16.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.1)(@lezer/common@1.2.1)
       '@codemirror/lang-html': 6.4.9
       '@codemirror/language': 6.10.2
       '@codemirror/state': 6.4.1
-      '@codemirror/view': 6.26.3
+      '@codemirror/view': 6.28.1
       '@lezer/common': 1.2.1
       '@lezer/markdown': 1.3.0
 
@@ -13469,9 +13473,9 @@ snapshots:
       '@lezer/common': 1.2.1
       '@lezer/php': 1.0.2
 
-  '@codemirror/lang-python@6.1.6(@codemirror/view@6.26.3)':
+  '@codemirror/lang-python@6.1.6(@codemirror/view@6.28.1)':
     dependencies:
-      '@codemirror/autocomplete': 6.16.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.1)(@lezer/common@1.2.1)
       '@codemirror/language': 6.10.2
       '@codemirror/state': 6.4.1
       '@lezer/common': 1.2.1
@@ -13484,9 +13488,9 @@ snapshots:
       '@codemirror/language': 6.10.2
       '@lezer/rust': 1.0.2
 
-  '@codemirror/lang-sass@6.0.2(@codemirror/view@6.26.3)':
+  '@codemirror/lang-sass@6.0.2(@codemirror/view@6.28.1)':
     dependencies:
-      '@codemirror/lang-css': 6.2.1(@codemirror/view@6.26.3)
+      '@codemirror/lang-css': 6.2.1(@codemirror/view@6.28.1)
       '@codemirror/language': 6.10.2
       '@codemirror/state': 6.4.1
       '@lezer/common': 1.2.1
@@ -13494,9 +13498,9 @@ snapshots:
     transitivePeerDependencies:
       - '@codemirror/view'
 
-  '@codemirror/lang-sql@6.6.5(@codemirror/view@6.26.3)':
+  '@codemirror/lang-sql@6.6.5(@codemirror/view@6.28.1)':
     dependencies:
-      '@codemirror/autocomplete': 6.16.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.1)(@lezer/common@1.2.1)
       '@codemirror/language': 6.10.2
       '@codemirror/state': 6.4.1
       '@lezer/common': 1.2.1
@@ -13523,16 +13527,16 @@ snapshots:
 
   '@codemirror/lang-xml@6.1.0':
     dependencies:
-      '@codemirror/autocomplete': 6.16.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.1)(@lezer/common@1.2.1)
       '@codemirror/language': 6.10.2
       '@codemirror/state': 6.4.1
-      '@codemirror/view': 6.26.3
+      '@codemirror/view': 6.28.1
       '@lezer/common': 1.2.1
       '@lezer/xml': 1.0.5
 
-  '@codemirror/lang-yaml@6.1.1(@codemirror/view@6.26.3)':
+  '@codemirror/lang-yaml@6.1.1(@codemirror/view@6.28.1)':
     dependencies:
-      '@codemirror/autocomplete': 6.16.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.1)(@lezer/common@1.2.1)
       '@codemirror/language': 6.10.2
       '@codemirror/state': 6.4.1
       '@lezer/common': 1.2.1
@@ -13541,28 +13545,28 @@ snapshots:
     transitivePeerDependencies:
       - '@codemirror/view'
 
-  '@codemirror/language-data@6.5.1(@codemirror/view@6.26.3)':
+  '@codemirror/language-data@6.5.1(@codemirror/view@6.28.1)':
     dependencies:
       '@codemirror/lang-angular': 0.1.3
       '@codemirror/lang-cpp': 6.0.2
-      '@codemirror/lang-css': 6.2.1(@codemirror/view@6.26.3)
-      '@codemirror/lang-go': 6.0.1(@codemirror/view@6.26.3)
+      '@codemirror/lang-css': 6.2.1(@codemirror/view@6.28.1)
+      '@codemirror/lang-go': 6.0.1(@codemirror/view@6.28.1)
       '@codemirror/lang-html': 6.4.9
       '@codemirror/lang-java': 6.0.1
       '@codemirror/lang-javascript': 6.2.2
       '@codemirror/lang-json': 6.0.1
-      '@codemirror/lang-less': 6.0.2(@codemirror/view@6.26.3)
+      '@codemirror/lang-less': 6.0.2(@codemirror/view@6.28.1)
       '@codemirror/lang-liquid': 6.2.1
       '@codemirror/lang-markdown': 6.2.5
       '@codemirror/lang-php': 6.0.1
-      '@codemirror/lang-python': 6.1.6(@codemirror/view@6.26.3)
+      '@codemirror/lang-python': 6.1.6(@codemirror/view@6.28.1)
       '@codemirror/lang-rust': 6.0.1
-      '@codemirror/lang-sass': 6.0.2(@codemirror/view@6.26.3)
-      '@codemirror/lang-sql': 6.6.5(@codemirror/view@6.26.3)
+      '@codemirror/lang-sass': 6.0.2(@codemirror/view@6.28.1)
+      '@codemirror/lang-sql': 6.6.5(@codemirror/view@6.28.1)
       '@codemirror/lang-vue': 0.1.3
       '@codemirror/lang-wast': 6.0.2
       '@codemirror/lang-xml': 6.1.0
-      '@codemirror/lang-yaml': 6.1.1(@codemirror/view@6.26.3)
+      '@codemirror/lang-yaml': 6.1.1(@codemirror/view@6.28.1)
       '@codemirror/language': 6.10.2
       '@codemirror/legacy-modes': 6.4.0
     transitivePeerDependencies:
@@ -13571,7 +13575,7 @@ snapshots:
   '@codemirror/language@6.10.2':
     dependencies:
       '@codemirror/state': 6.4.1
-      '@codemirror/view': 6.26.3
+      '@codemirror/view': 6.28.1
       '@lezer/common': 1.2.1
       '@lezer/highlight': 1.2.0
       '@lezer/lr': 1.4.1
@@ -13584,13 +13588,13 @@ snapshots:
   '@codemirror/lint@6.8.0':
     dependencies:
       '@codemirror/state': 6.4.1
-      '@codemirror/view': 6.26.3
+      '@codemirror/view': 6.28.1
       crelt: 1.0.6
 
   '@codemirror/search@6.5.6':
     dependencies:
       '@codemirror/state': 6.4.1
-      '@codemirror/view': 6.26.3
+      '@codemirror/view': 6.28.1
       crelt: 1.0.6
 
   '@codemirror/state@6.4.1': {}
@@ -13599,10 +13603,10 @@ snapshots:
     dependencies:
       '@codemirror/language': 6.10.2
       '@codemirror/state': 6.4.1
-      '@codemirror/view': 6.26.3
+      '@codemirror/view': 6.28.1
       '@lezer/highlight': 1.2.0
 
-  '@codemirror/view@6.26.3':
+  '@codemirror/view@6.28.1':
     dependencies:
       '@codemirror/state': 6.4.1
       style-mod: 4.1.2
@@ -13680,6 +13684,15 @@ snapshots:
       - utf-8-validate
 
   '@embroider/addon-shim@1.8.8':
+    dependencies:
+      '@embroider/shared-internals': 2.6.1(supports-color@8.1.1)
+      broccoli-funnel: 3.0.8
+      common-ancestor-path: 1.0.1
+      semver: 7.6.2
+    transitivePeerDependencies:
+      - supports-color
+
+  '@embroider/addon-shim@1.8.9':
     dependencies:
       '@embroider/shared-internals': 2.6.1(supports-color@8.1.1)
       broccoli-funnel: 3.0.8
@@ -16759,10 +16772,10 @@ snapshots:
 
   codemirror-languageserver@1.11.0(@codemirror/language@6.10.2)(@lezer/common@1.2.1)(encoding@0.1.13):
     dependencies:
-      '@codemirror/autocomplete': 6.16.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.1)(@lezer/common@1.2.1)
       '@codemirror/lint': 6.8.0
       '@codemirror/state': 6.4.1
-      '@codemirror/view': 6.26.3
+      '@codemirror/view': 6.28.1
       '@open-rpc/client-js': 1.8.1(encoding@0.1.13)
       vscode-languageserver-protocol: 3.17.5
     transitivePeerDependencies:
@@ -16774,13 +16787,13 @@ snapshots:
 
   codemirror@6.0.1(@lezer/common@1.2.1):
     dependencies:
-      '@codemirror/autocomplete': 6.16.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
-      '@codemirror/commands': 6.5.0
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.1)(@lezer/common@1.2.1)
+      '@codemirror/commands': 6.6.0
       '@codemirror/language': 6.10.2
       '@codemirror/lint': 6.8.0
       '@codemirror/search': 6.5.6
       '@codemirror/state': 6.4.1
-      '@codemirror/view': 6.26.3
+      '@codemirror/view': 6.28.1
     transitivePeerDependencies:
       - '@lezer/common'
 
@@ -17934,7 +17947,7 @@ snapshots:
 
   ember-element-helper@0.8.6(@glint/environment-ember-loose@1.4.0(@glimmer/component@1.1.2(@babel/core@7.24.7))(@glint/template@1.4.0)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.1.0(ember-source@5.9.0(@babel/core@7.24.7)(@glimmer/component@1.1.2(@babel/core@7.24.7))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.90.3))))(@glint/template@1.4.0)(ember-source@5.9.0(@babel/core@7.24.7)(@glimmer/component@1.1.2(@babel/core@7.24.7))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.90.3)):
     dependencies:
-      '@embroider/addon-shim': 1.8.8
+      '@embroider/addon-shim': 1.8.9
       '@embroider/util': 1.13.1(@glint/environment-ember-loose@1.4.0(@glimmer/component@1.1.2(@babel/core@7.24.7))(@glint/template@1.4.0)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.1.0(ember-source@5.9.0(@babel/core@7.24.7)(@glimmer/component@1.1.2(@babel/core@7.24.7))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.90.3))))(@glint/template@1.4.0)(ember-source@5.9.0(@babel/core@7.24.7)(@glimmer/component@1.1.2(@babel/core@7.24.7))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.90.3))
       ember-source: 5.9.0(@babel/core@7.24.7)(@glimmer/component@1.1.2(@babel/core@7.24.7))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.90.3)
     transitivePeerDependencies:
@@ -18031,7 +18044,7 @@ snapshots:
 
   ember-modifier@4.1.0(ember-source@5.9.0(@babel/core@7.24.7)(@glimmer/component@1.1.2(@babel/core@7.24.7))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.90.3)):
     dependencies:
-      '@embroider/addon-shim': 1.8.8
+      '@embroider/addon-shim': 1.8.9
       ember-cli-normalize-entity-name: 1.0.0
       ember-cli-string-utils: 1.1.0
     optionalDependencies:
@@ -18130,7 +18143,7 @@ snapshots:
 
   ember-resources@7.0.1(@glimmer/component@1.1.2(@babel/core@7.24.7))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.9.0(@babel/core@7.24.7)(@glimmer/component@1.1.2(@babel/core@7.24.7))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.90.3)):
     dependencies:
-      '@embroider/addon-shim': 1.8.8
+      '@embroider/addon-shim': 1.8.9
       '@embroider/macros': 1.16.3(@glint/template@1.4.0)
       '@glimmer/tracking': 1.1.2
       '@glint/template': 1.4.0
@@ -22332,7 +22345,7 @@ snapshots:
   reactiveweb@1.3.0(@babel/core@7.24.7)(@ember/test-waiters@3.1.0)(@glimmer/component@1.1.2(@babel/core@7.24.7))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.9.0(@babel/core@7.24.7)(@glimmer/component@1.1.2(@babel/core@7.24.7))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.90.3)):
     dependencies:
       '@ember/test-waiters': 3.1.0
-      '@embroider/addon-shim': 1.8.8
+      '@embroider/addon-shim': 1.8.9
       '@embroider/macros': 1.16.3(@glint/template@1.4.0)
       decorator-transforms: 1.2.1(@babel/core@7.24.7)
       ember-async-data: 1.0.3(ember-source@5.9.0(@babel/core@7.24.7)(@glimmer/component@1.1.2(@babel/core@7.24.7))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.90.3))
@@ -23764,7 +23777,7 @@ snapshots:
 
   tracked-built-ins@3.3.0:
     dependencies:
-      '@embroider/addon-shim': 1.8.8
+      '@embroider/addon-shim': 1.8.9
       ember-tracked-storage-polyfill: 1.0.0
     transitivePeerDependencies:
       - supports-color
@@ -23780,7 +23793,7 @@ snapshots:
 
   tracked-toolbox@2.0.0(@babel/core@7.24.7)(ember-source@5.9.0(@babel/core@7.24.7)(@glimmer/component@1.1.2(@babel/core@7.24.7))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.90.3)):
     dependencies:
-      '@embroider/addon-shim': 1.8.8
+      '@embroider/addon-shim': 1.8.9
       ember-cache-primitive-polyfill: 1.0.1(@babel/core@7.24.7)
     optionalDependencies:
       ember-source: 5.9.0(@babel/core@7.24.7)(@glimmer/component@1.1.2(@babel/core@7.24.7))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.90.3)
