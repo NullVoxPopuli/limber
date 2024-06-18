@@ -91,7 +91,7 @@
         "GITHUB_HEAD_REF",
         "GITHUB_RUN_NUMBER",
         "GITHUB_JOB",
-        "CI",
+        "CI"
       ]
     },
     // All scenarios
