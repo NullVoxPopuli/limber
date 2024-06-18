@@ -12,7 +12,7 @@ function abbreviationFor(format: Format) {
   return format === 'glimdown' ? 'gdm' : format;
 }
 
-function  iconFor (format: Format): string {
+function iconFor(format: Format): string {
   switch (format) {
     case 'glimdown':
       return 'G⬇';
@@ -36,7 +36,7 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
     let fmt = abbreviationFor(this.format);
 
     return fmt === format;
-  }
+  };
 
   get format(): Format {
     return this.router.currentRoute?.queryParams?.format as Format;
@@ -51,17 +51,17 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
       </:trigger>
 
       <:options as |Item|>
-        <Item {{on "click" (fn this.switch "glimdown")}} class="{{this.isSelected "glimdown"}}">
+        <Item {{on "click" (fn this.switch "glimdown")}} class="{{this.isSelected 'glimdown'}}">
           <div class={{menuIconClasses}}>{{iconFor "glimdown"}}</div>
           Glimdown
         </Item>
 
-        <Item {{on "click" (fn this.switch "gjs")}} class="{{this.isSelected "gjs"}}">
+        <Item {{on "click" (fn this.switch "gjs")}} class="{{this.isSelected 'gjs'}}">
           <div class={{menuIconClasses}}>{{iconFor "gjs"}}</div>
           Glimmer JS
         </Item>
 
-        <Item {{on "click" (fn this.switch "hbs")}} class="{{this.isSelected "hbs"}}">
+        <Item {{on "click" (fn this.switch "hbs")}} class="{{this.isSelected 'hbs'}}">
           <div class={{menuIconClasses}}>{{iconFor "hbs"}}</div>
           Template
         </Item>

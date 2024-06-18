@@ -13,7 +13,6 @@ import { FormatMenu } from './format-menu';
 
 import type { TOC } from '@ember/component/template-only';
 
-
 const or = (a: boolean, b: boolean) => a || b;
 
 export const Controls: TOC<{

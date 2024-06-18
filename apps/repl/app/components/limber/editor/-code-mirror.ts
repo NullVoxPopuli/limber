@@ -29,14 +29,14 @@ export default class CodeMirror extends Modifier<Signature> {
     this.setup(element);
   }
 
-  // For deduping incidental changes to the *format* Signal 
+  // For deduping incidental changes to the *format* Signal
   // (Since auto-tracking is _by-reference_ for now)
   //
   // We only want to re-create the editor when the format changes value
-  previousFormat: Format | undefined; 
+  previousFormat: Format | undefined;
 
   setup = async (element: Element) => {
-    let {format} = this.editor;
+    let { format } = this.editor;
 
     if (format === this.previousFormat) {
       return;

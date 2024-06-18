@@ -3,18 +3,13 @@
 import { hash } from '@ember/helper';
 
 import { focusTrap } from 'ember-focus-trap';
-import {
-  Menu as HeadlessMenu
-} from 'ember-primitives/components/menu';
+import { Menu as HeadlessMenu } from 'ember-primitives/components/menu';
 
 import type { TOC } from '@ember/component/template-only';
 import type { ComponentLike, WithBoundArgs } from '@glint/template';
-import type {
-  ItemSignature,
-  Signature as MenuSignature,
-} from 'ember-primitives/components/menu';
+import type { ItemSignature, Signature as MenuSignature } from 'ember-primitives/components/menu';
 
-type MenuType = MenuSignature['Blocks']['default'][0]
+type MenuType = MenuSignature['Blocks']['default'][0];
 
 const Button: TOC<{
   Element: HTMLButtonElement;
@@ -89,7 +84,8 @@ const Menu: TOC<{
     @offsetOptions={{8}}
     @shiftOptions={{hash padding=8}}
     @flipOptions={{hash padding=8}}
-  as |menu|>
+    as |menu|
+  >
     <div>
       {{yield
         (hash
@@ -102,11 +98,13 @@ const Menu: TOC<{
       }}
 
       {{! template-lint-disable no-inline-styles }}
-      <menu.Content 
-      {{focusTrap isActive=menu.isOpen}}
+      <menu.Content
+        {{focusTrap isActive=menu.isOpen}}
         data-test-menu-items
         class="z-20 grid rounded border bg-white drop-shadow-xl min-w-max"
-        style="width: max-content;z-index:1;" as |content|>
+        style="width: max-content;z-index:1;"
+        as |content|
+      >
         {{! template-lint-disable no-inline-styles }}
         <div
           class="border"
