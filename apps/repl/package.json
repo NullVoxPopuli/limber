@@ -40,9 +40,9 @@
     "@ember/optional-features": "^2.0.0",
     "@ember/string": "^3.1.1",
     "@ember/test-helpers": "^3.2.1",
-    "@embroider/compat": "3.5.0",
-    "@embroider/core": "3.4.9",
-    "@embroider/webpack": "4.0.0",
+    "@embroider/compat": "3.5.3",
+    "@embroider/core": "3.4.12",
+    "@embroider/webpack": "4.0.3",
     "@fortawesome/ember-fontawesome": "^2.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
@@ -113,7 +113,7 @@
     "type-fest": "4.18.2",
     "typescript": "^5.4.5",
     "vfile": "^6.0.1",
-    "webpack": "5.91.0",
+    "webpack": "5.90.3",
     "yn": "^5.0.0"
   },
   "engines": {
@@ -129,7 +129,7 @@
   },
   "dependencies": {
     "@ember/test-waiters": "^3.1.0",
-    "@embroider/macros": "1.16.1",
+    "@embroider/macros": "1.16.3",
     "@embroider/router": "2.1.7",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
