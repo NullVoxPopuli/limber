@@ -3,7 +3,6 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { ExternalLink } from 'limber-ui';
 
 import DemoSelect from './demo-select';
-import { FormatMenu } from './layout/controls/format-menu';
 
 <template>
   <header
@@ -23,7 +22,7 @@ import { FormatMenu } from './layout/controls/format-menu';
         <FaIcon @icon="markdown" @prefix="fab" @size="2x" class="-mb-2 -mt-2" />
       </h1>
 
-      <FormatMenu />
+      {{! <FormatMenu /> }}
     </div>
 
     <nav class="text-white mt-1 flex gap-2 items-baseline">
