@@ -2,7 +2,7 @@ import { settled, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
-import { Editor } from 'limber/components/limer/editor/index';
+import { Editor } from 'limber/components/limber/editor';
 
 import { Page } from './-page';
 
