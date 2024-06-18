@@ -80,7 +80,7 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Test
-        run: pnpm turbo test:node --output-logs errors-only
+        run: pnpm turbo test:node 
 
 
   tests:
@@ -141,7 +141,7 @@ jobs:
       - uses: wyvox/action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - run: pnpm turbo test:browserstack --output-logs errors-only
+      - run: pnpm turbo test:browserstack --log-order stream --output-logs=new-only
         env:
           # This is a guest user on an open source plan.
           # (limited access, etc etc)
