@@ -1,7 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore-expect-error
 import { hash } from '@ember/helper';
 
+// @ts-expect-error - they still don't have types
 import { focusTrap } from 'ember-focus-trap';
 import { Menu as HeadlessMenu } from 'ember-primitives/components/menu';
 

@@ -8,7 +8,7 @@ import State from './state';
 
 import type { TOC } from '@ember/component/template-only';
 
-const Editor: TOC<{
+export const Editor: TOC<{
   Element: HTMLDivElement;
 }> = <template>
   <State as |state|>

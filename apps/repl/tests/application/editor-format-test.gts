@@ -1,7 +1,8 @@
 import { settled, visit } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
+
+import { Editor } from 'limber/components/limer/editor/index';
 
 import { Page } from './-page';
 
@@ -14,10 +15,11 @@ module('Editor > Format', function (hooks) {
   hooks.beforeEach(function () {
     this.owner.register(
       'template:edit',
-      hbs`{{! @glint-ignore }}
+      <template>
         <div data-test-editor-panel>
-          <Limber::Editor />
-        </div>`
+          <Editor />
+        </div>
+      </template>
     );
   });
 
