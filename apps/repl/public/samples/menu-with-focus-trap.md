@@ -13,16 +13,18 @@ import { PortalTargets, Menu } from 'ember-primitives';
 <template>
   <div>
     <Menu as |m|>
-      <m.Trigger class="trigger">
-        Toggle Menu
-      </m.Trigger>
+      <div {{focusTrap isActive=m.isOpen}}>
+        <m.Trigger class="trigger">
+          Toggle Menu
+        </m.Trigger>
 
-      <m.Content {{focusTrap isActive=m.isOpen}} class="items" as |c|>
-        <c.Item>Item 1</c.Item>
-        <c.Item>Item 2</c.Item>
-        <c.Separator />
-        <c.Item>Item 3</c.Item>
-      </m.Content>
+        <m.Content class="items" as |c|>
+          <c.Item>Item 1</c.Item>
+          <c.Item>Item 2</c.Item>
+          <c.Separator />
+          <c.Item>Item 3</c.Item>
+        </m.Content>
+      </div>
     </Menu>
   </div>
   <PortalTargets />

@@ -2,6 +2,7 @@
 // @ts-ignore-expect-error
 import { hash } from '@ember/helper';
 
+import { focusTrap } from 'ember-focus-trap';
 import {
   Menu as HeadlessMenu
 } from 'ember-primitives/components/menu';
@@ -18,23 +19,20 @@ type MenuType = MenuSignature['Blocks']['default'][0]
 const Button: TOC<{
   Element: HTMLButtonElement;
   Args: {
-    item: ComponentLike<ItemSignature>;
+    content: { Item: ComponentLike<ItemSignature> };
   };
   Blocks: {
     default: [];
   };
 }> = <template>
-  <@item as |i|>
-    <i.Element
-      @tagName="button"
-      class="bg-transparent block w-full select-none py-2 px-4 text-left text-black hover:bg-gray-100 focus:ring-4 ring-inset focus:outline-none"
-      tabindex="0"
-      data-test-menu-button
-      ...attributes
-    >
-      {{yield}}
-    </i.Element>
-  </@item>
+  <@content.Item
+    class="bg-transparent block w-full select-none py-2 px-4 text-left text-black hover:bg-gray-100 focus:ring-4 ring-inset focus:outline-none"
+    tabindex="0"
+    data-test-menu-button
+    ...attributes
+  >
+    {{yield}}
+  </@content.Item>
 </template>;
 
 const DefaultTrigger: TOC<{
@@ -57,36 +55,15 @@ const DefaultTrigger: TOC<{
 const PlainTrigger: TOC<{
   Element: HTMLButtonElement;
   Args: {
-    menu: MenuTypes.Menu;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    trigger: any;
+    menu: MenuType;
   };
   Blocks: {
-    default: [MenuTypes.Menu];
+    default: [MenuType];
   };
 }> = <template>
-  <@menu.Button {{@trigger}} ...attributes>
+  <@menu.Trigger ...attributes>
     {{yield @menu}}
-  </@menu.Button>
-</template>;
-
-const Items: TOC<{
-  Element: HTMLDivElement;
-  Args: {
-    items: MenuTypes.Items;
-  };
-  Blocks: {
-    default: [button: WithBoundArgs<typeof Button, 'item'>];
-  };
-}> = <template>
-  <@items
-    class="z-20 grid rounded border bg-white drop-shadow-xl min-w-max"
-    data-test-menu-items
-    ...attributes
-    as |items|
-  >
-    {{yield (component Button item=items.Item)}}
-  </@items>
+  </@menu.Trigger>
 </template>;
 
 const Menu: TOC<{
@@ -103,7 +80,7 @@ const Menu: TOC<{
         Button: WithBoundArgs<typeof PlainTrigger, 'menu'>;
       },
     ];
-    options: [button: WithBoundArgs<typeof Button, 'item'>];
+    options: [button: WithBoundArgs<typeof Button, 'content'>];
   };
 }> = <template>
   <HeadlessMenu
@@ -113,37 +90,41 @@ const Menu: TOC<{
     @shiftOptions={{hash padding=8}}
     @flipOptions={{hash padding=8}}
   as |menu|>
-    {{yield
-      (hash
-        menu=menu
-        isOpen=menu.isOpen
-        Button=(component PlainTrigger menu=menu)
-        Default=(component DefaultTrigger menu=menu)
-      )
-      to="trigger"
-    }}
+    <div>
+      {{yield
+        (hash
+          menu=menu
+          isOpen=menu.isOpen
+          Button=(component PlainTrigger menu=menu)
+          Default=(component DefaultTrigger menu=menu)
+        )
+        to="trigger"
+      }}
 
-    {{! template-lint-disable no-inline-styles }}
-    <menu.Content style="width: max-content;z-index:1;" as |content|>
       {{! template-lint-disable no-inline-styles }}
-      <div
-        class="border"
-        style="
-        position: absolute;
-        background: white;
-        width: 8px;
-        height: 8px;
-        transform: rotate(45deg);
-        z-index: 0;
-      "
-        {{menu.arrow}}
-      ></div>
+      <menu.Content 
+      {{focusTrap isActive=menu.isOpen}}
+        data-test-menu-items
+        class="z-20 grid rounded border bg-white drop-shadow-xl min-w-max"
+        style="width: max-content;z-index:1;" as |content|>
+        {{! template-lint-disable no-inline-styles }}
+        <div
+          class="border"
+          style="
+          position: absolute;
+          background: white;
+          width: 8px;
+          height: 8px;
+          transform: rotate(45deg);
+          z-index: 0;
+        "
+          {{menu.arrow}}
+        ></div>
 
-      <Items @items={{menu.Items}} ...attributes as |Button|>
-        {{yield Button to="options"}}
-      </Items>
-    </menu.Content>
+        {{yield (component Button content=content) to="options"}}
 
+      </menu.Content>
+    </div>
   </HeadlessMenu>
 </template>;
 
