@@ -77,7 +77,8 @@
       "dependsOn": ["^build"]
     },
     "test:browserstack": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "passThroughEnv": ["BROWSERSTACK_USERNAME", "BROWSERSTACK_ACCESS_KEY"],
     },
     // All scenarios
     "test:scenarios": {
