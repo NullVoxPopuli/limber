@@ -145,7 +145,7 @@ export class FileURIComponent {
     return base ?? window.location.toString();
   };
 
-  #lastQPs;
+  #lastQPs: URLSearchParams | undefined;
   #updateQPs = async (rawText: string, format: Format) => {
     let isFast = new Date().getTime() - this.#rapidCallTime < 100;
 
@@ -162,7 +162,7 @@ export class FileURIComponent {
       let isIrrelevant =
         this.#lastQPs &&
         [...qps.entries()].every(([key, value]) => {
-          return this.#lastQPs.get(key) === value;
+          return this.#lastQPs?.get(key) === value;
         });
 
       if (isIrrelevant) return;
