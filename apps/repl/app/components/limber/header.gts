@@ -1,4 +1,5 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { notInIframe } from 'ember-primitives/iframe';
 
 import { FormatButtons } from 'limber/components/limber/layout/controls/format-buttons';
 import { ExternalLink } from 'limber-ui';
@@ -23,7 +24,9 @@ import DemoSelect from './demo-select';
         {{!--<FaIcon @icon="markdown" @prefix="fab" @size="2x" class="-mb-2 -mt-2" />--}}
       </h1>
 
-      <FormatButtons />
+      {{#if (notInIframe) }}
+        <FormatButtons />
+      {{/if}}
     </div>
 
     <nav class="text-white mt-1 flex gap-2 items-baseline">
