@@ -77,15 +77,17 @@ const Menu: TOC<{
     options: [button: WithBoundArgs<typeof Button, 'content'>];
   };
 }> = <template>
+
   <HeadlessMenu
-    @inline={{@inline}}
+    {{! focusTrap doesn't work unless inline is set }}
+    @inline={{true}}
     @placement="bottom"
     @offsetOptions={{8}}
     @shiftOptions={{hash padding=8}}
     @flipOptions={{hash padding=8}}
     as |menu|
   >
-    <div>
+    <div {{focusTrap isActive=menu.isOpen}}>
       {{yield
         (hash
           menu=menu
@@ -96,12 +98,9 @@ const Menu: TOC<{
         to="trigger"
       }}
 
-      {{! template-lint-disable no-inline-styles }}
       <menu.Content
-        {{focusTrap isActive=menu.isOpen}}
         data-test-menu-items
-        class="z-20 grid rounded border bg-white drop-shadow-xl min-w-max"
-        style="width: max-content;z-index:1;"
+        class="limber__menu__content"
         as |content|
       >
         {{! template-lint-disable no-inline-styles }}
@@ -118,7 +117,9 @@ const Menu: TOC<{
           {{menu.arrow}}
         ></div>
 
-        {{yield (component Button content=content) to="options"}}
+        <div class=" grid rounded border bg-white drop-shadow-xl min-w-max">
+          {{yield (component Button content=content) to="options"}}
+        </div>
 
       </menu.Content>
     </div>
