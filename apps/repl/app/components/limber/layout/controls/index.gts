@@ -3,30 +3,15 @@ import { on } from '@ember/modifier';
 import { htmlSafe } from '@ember/template';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { inIframe } from 'ember-primitives/iframe';
 
 import currentURL from 'limber/helpers/current-url';
-import { inIframe } from 'limber/helpers/in-iframe';
 import { service } from 'limber-ui';
 
+import { Button, buttonClasses } from './button';
 import { FormatMenu } from './format-menu';
 
 import type { TOC } from '@ember/component/template-only';
-
-const buttonClasses = `
-  block select-none py-2 px-3 text-white text-xs
-  hover:bg-[#9b2918]
-  focus:ring-4 ring-inset focus:outline-none
-  disabled:opacity-30
-`;
-
-const Button: TOC<{
-  Element: HTMLButtonElement;
-  Blocks: { default: [] };
-}> = <template>
-  <button type="button" class={{buttonClasses}} ...attributes>
-    {{yield}}
-  </button>
-</template>;
 
 const or = (a: boolean, b: boolean) => a || b;
 

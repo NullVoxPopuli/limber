@@ -13,7 +13,7 @@ import { getFromLabel, NAMES } from 'limber/snippets';
 import type RouterService from '@ember/routing/router-service';
 import type EditorService from 'limber/services/editor';
 
-export default class DemoSelect extends Component {
+export class DemoSelect extends Component {
   @service declare editor: EditorService;
   @service declare router: RouterService;
 
@@ -51,3 +51,5 @@ export default class DemoSelect extends Component {
     </Menu>
   </template>
 }
+
+export default DemoSelect;

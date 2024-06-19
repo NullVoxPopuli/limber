@@ -29,7 +29,21 @@ export default class CodeMirror extends Modifier<Signature> {
     this.setup(element);
   }
 
+  // For deduping incidental changes to the *format* Signal
+  // (Since auto-tracking is _by-reference_ for now)
+  //
+  // We only want to re-create the editor when the format changes value
+  previousFormat: Format | undefined;
+
   setup = async (element: Element) => {
+    let { format } = this.editor;
+
+    if (format === this.previousFormat) {
+      return;
+    }
+
+    this.previousFormat = format;
+
     /**
      * As long as tracked data is accessed after this await,
      * we will never update due to tracked data changes (we manually update)
@@ -41,7 +55,7 @@ export default class CodeMirror extends Modifier<Signature> {
     assert(`Expected CODEMIRROR to exist`, CODEMIRROR);
     assert(`can only install codemirror editor an an HTMLElement`, element instanceof HTMLElement);
 
-    let { text: value, format } = this.editor;
+    let { text: value } = this.editor;
     let updateText = this.editor.updateText;
 
     element.innerHTML = '';

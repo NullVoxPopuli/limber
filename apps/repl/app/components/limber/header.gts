@@ -1,5 +1,7 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { notInIframe } from 'ember-primitives/iframe';
 
+import { FormatButtons } from 'limber/components/limber/layout/controls/format-buttons';
 import { ExternalLink } from 'limber-ui';
 
 import DemoSelect from './demo-select';
@@ -8,18 +10,24 @@ import DemoSelect from './demo-select';
   <header
     class="bg-ember-black flex justify-between items-center drop-shadow-lg z-20 py-2 px-4 max-h-12"
   >
-    <h1 class="text-ember-brand flex gap-2 items-center">
-      <a
-        class="focus:ring-4 focus:outline-none focus-visible:outline-none"
-        href="https://emberjs.com"
-        target="_blank"
-        rel="noreferrer noopener"
-      >
-        <FaIcon @icon="ember" @prefix="fab" @size="3x" class="-mb-3 -mt-2" />
-        <span class="sr-only">Ember.JS homepage</span>
-      </a>
-      <FaIcon @icon="markdown" @prefix="fab" @size="2x" class="-mb-2 -mt-2" />
-    </h1>
+    <div class="flex gap-2 items-center">
+      <h1 class="text-ember-brand flex gap-2 items-center">
+        <a
+          class="focus:ring-4 focus:outline-none focus-visible:outline-none"
+          href="https://emberjs.com"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          <FaIcon @icon="ember" @prefix="fab" @size="3x" class="-mb-3 -mt-2" />
+          <span class="sr-only">Ember.JS homepage</span>
+        </a>
+        {{!<FaIcon @icon="markdown" @prefix="fab" @size="2x" class="-mb-2 -mt-2" />}}
+      </h1>
+
+      {{#if (notInIframe)}}
+        <FormatButtons />
+      {{/if}}
+    </div>
 
     <nav class="text-white mt-1 flex gap-2 items-baseline">
       <DemoSelect />

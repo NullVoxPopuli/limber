@@ -1,3 +1,4 @@
+import { _backburner } from '@ember/runloop';
 import {
   currentRouteName,
   currentURL,
@@ -9,6 +10,8 @@ import { getPendingWaiterState } from '@ember/test-waiters';
 import * as QUnit from 'qunit';
 import { setup } from 'qunit-dom';
 import { start } from 'ember-qunit';
+
+_backburner.DEBUG = true;
 
 import Application from 'limber/app';
 import config from 'limber/config/environment';
