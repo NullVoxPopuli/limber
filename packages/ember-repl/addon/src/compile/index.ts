@@ -81,7 +81,7 @@ export async function compile(
   options: GlimdownOptions | GJSOptions | HBSOptions
 ): Promise<void> {
   let { onSuccess, onError, onCompileStart } = options;
-  let id = nameFor(text);
+  let id = nameFor(`${options.format}:${ text }`);
 
   let existing = CACHE.get(id);
 
