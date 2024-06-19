@@ -20,7 +20,7 @@ import DemoSelect from './demo-select';
           <FaIcon @icon="ember" @prefix="fab" @size="3x" class="-mb-3 -mt-2" />
           <span class="sr-only">Ember.JS homepage</span>
         </a>
-        <!--<FaIcon @icon="markdown" @prefix="fab" @size="2x" class="-mb-2 -mt-2" />-->
+        {{!--<FaIcon @icon="markdown" @prefix="fab" @size="2x" class="-mb-2 -mt-2" />--}}
       </h1>
 
       <FormatButtons />
