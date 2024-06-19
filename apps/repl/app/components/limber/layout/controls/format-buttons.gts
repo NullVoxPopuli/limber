@@ -25,7 +25,7 @@ function iconFor(format: Format): string {
   }
 }
 
-const buttonClasses = `relative border px-2 py-1 -my-1 text-left transition ease-in-out duration-150 sm:text-sm drop-shadow-md hover:drop-shadow-xl focus:ring-4 focus-visible:outline-none ring-ember-brand focus:outline-none focus-visible:z-1 focus-visible:rounded focus:rounded focus:z-1`
+const buttonClasses = `relative px-2 py-1 -my-1 text-left transition ease-in-out duration-150 sm:text-sm drop-shadow-md hover:drop-shadow-xl focus:ring-4 focus-visible:outline-none ring-ember-brand focus:outline-none focus-visible:z-1 focus-visible:rounded focus:rounded focus:z-1`
 
 export class FormatButtons extends Component<{ Element: HTMLButtonElement }> {
   @service declare router: RouterService;
@@ -41,7 +41,7 @@ export class FormatButtons extends Component<{ Element: HTMLButtonElement }> {
   };
 
   active = (format: Format) => {
-    return this.format === format ? "bg-ember-black text-white" : 'bg-[#444] text-white';
+    return this.format === format ? "bg-[#333] text-white" : 'bg-ember-black text-white';
   }
 
   get format(): Format {
@@ -53,15 +53,18 @@ export class FormatButtons extends Component<{ Element: HTMLButtonElement }> {
   <template>
     <style>
       .limber__toggle-group {
-      button:focus-visible, button:focus {
-      z-index: 1;
-      }
+        button {
+          box-shadow: 0 0px 1px rgba(255,255,255,0.5);
+        }
+        button:focus-visible, button:focus {
+          z-index: 1;
+        }
       }
     </style>
      <ToggleGroup class="flex limber__toggle-group" as |t|>
       <t.Item
         {{on "click" (fn this.switch "glimdown")}}
-        class="rounded-l {{buttonClasses}} {{this.active 'glimdown'}}"
+        class="rounder-l {{buttonClasses}} {{this.active 'glimdown'}}"
         @value="glimdown"
         aria-label="Glimdown"
         title="Glimdown">
@@ -78,7 +81,7 @@ export class FormatButtons extends Component<{ Element: HTMLButtonElement }> {
       </t.Item>
       <t.Item
         {{on "click" (fn this.switch "hbs")}}
-        class="rounded-r {{buttonClasses}} {{this.active 'hbs'}}"
+        class="rounder-r {{buttonClasses}} {{this.active 'hbs'}}"
         aria-label="Template"
         title="Template"
         @value="hbs"
