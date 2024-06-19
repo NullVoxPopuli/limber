@@ -145,6 +145,7 @@ export class FileURIComponent {
     return base ?? window.location.toString();
   };
 
+  #lastQPs;
   #updateQPs = async (rawText: string, format: Format) => {
     let isFast = new Date().getTime() - this.#rapidCallTime < 100;
 
@@ -154,13 +155,25 @@ export class FileURIComponent {
       this.#rapidCallTime = -Infinity;
     }
 
-    if (isFast && this.#rapidCallCount > 3) {
-      console.debug(this.#rapidCallQPs);
-      throw new Error('Too many rapid query param changes');
-    }
-
     let encoded = compressToEncodedURIComponent(rawText);
     let qps = new URLSearchParams(location.search);
+
+    if (isFast && this.#rapidCallCount > 1) {
+      let isIrrelevant =
+        this.#lastQPs &&
+        [...qps.entries()].every(([key, value]) => {
+          return this.#lastQPs.get(key) === value;
+        });
+
+      if (isIrrelevant) return;
+
+      console.debug(this.#rapidCallQPs);
+
+      let error = new Error('Too many rapid query param changes');
+
+      console.debug(error.stack);
+      throw error;
+    }
 
     this.#rapidCallTime = new Date().getTime();
     this.#rapidCallCount++;
@@ -169,6 +182,8 @@ export class FileURIComponent {
     qps.set('c', encoded);
     qps.delete('t');
     qps.set('format', formatFrom(format));
+
+    this.#lastQPs = qps;
 
     // On initial load, if we call #updateQPs,
     // we may not have a currentURL, because the first transition has yet to complete

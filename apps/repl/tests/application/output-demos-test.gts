@@ -4,6 +4,8 @@ import { settled, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
+import Route from 'ember-route-template';
+
 import { DemoSelect } from 'limber/components/limber/demo-select';
 import { Output } from 'limber/components/limber/output';
 import { ALL, getFromLabel } from 'limber/snippets';
@@ -32,7 +34,7 @@ module('Output > Demos', function (hooks) {
   module('every option correctly changes the query params', function () {
     for (let demo of ALL) {
       test(demo.label, async function (assert) {
-        this.owner.register('template:edit', <template><DemoSelect /></template>);
+        this.owner.register('template:edit', Route(<template><DemoSelect /></template>));
 
         await visit('/edit');
         await page.selectDemo(demo.label);
@@ -70,13 +72,15 @@ module('Output > Demos', function (hooks) {
         this.owner.register('controller:edit', FakeController);
         this.owner.register(
           'template:edit',
-          <template>
-            <fieldset class="border">
-              <legend>Limber::Output</legend>
-              {{! @glint-ignore }}
-              <Output @messagingAPI={{this.api}} />
-            </fieldset>
-          </template>
+          Route(
+            <template>
+              <fieldset class="border">
+                <legend>Limber::Output</legend>
+                {{! @glint-ignore }}
+                <Output @messagingAPI={{@controller.api}} />
+              </fieldset>
+            </template>
+          )
         );
 
         await visit('/edit');

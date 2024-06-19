@@ -2,6 +2,8 @@ import { settled, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
+import Route from 'ember-route-template';
+
 import { Editor } from 'limber/components/limber/editor';
 
 import { Page } from './-page';
@@ -15,11 +17,13 @@ module('Editor > Format', function (hooks) {
   hooks.beforeEach(function () {
     this.owner.register(
       'template:edit',
-      <template>
-        <div data-test-editor-panel>
-          <Editor />
-        </div>
-      </template>
+      Route(
+        <template>
+          <div data-test-editor-panel>
+            <Editor />
+          </div>
+        </template>
+      )
     );
   });
 
@@ -32,8 +36,8 @@ module('Editor > Format', function (hooks) {
 
   test('when choosing a format, text is required -- otherwise glimdown is chosen', async function (assert) {
     await visit('/edit?format=gjs');
-    await page.editor.load();
 
+    await page.editor.load();
     assert.strictEqual(page.editor.format, 'glimdown');
   });
 
@@ -57,7 +61,7 @@ module('Editor > Format', function (hooks) {
     assert.strictEqual(page.editor.format, 'gjs');
   });
 
-  test('can start with glimdown, and is unable to change formats via the URL (must be done via postMessage or via service)', async function (assert) {
+  test('can start with glimdown, and is able to change formats via the URL', async function (assert) {
     await visit('/edit');
     await page.editor.load();
 
@@ -65,6 +69,6 @@ module('Editor > Format', function (hooks) {
 
     await visit(`/edit?format=gjs&t=${defaultText}`);
 
-    assert.strictEqual(page.editor.format, 'glimdown');
+    assert.strictEqual(page.editor.format, 'gjs');
   });
 });
