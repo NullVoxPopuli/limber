@@ -34,7 +34,10 @@ interface Signature {
  * The Receiving Component is Limber::FrameOutput
  */
 export default class Compiler extends Component<Signature> {
-  <template>{{yield (hash component=this.component format=this.format)}}</template>
+  <template>
+    {{(this.handleFormatChange)}}{{(this.reRenderWithFormat)}}
+    {{yield (hash component=this.component format=this.format)}}
+  </template>
 
   @service declare router: RouterService;
 
@@ -58,6 +61,29 @@ export default class Compiler extends Component<Signature> {
     api.onConnect((parent) => (this.parentFrame = parent));
   }
 
+  _text?: string;
+  @tracked _format?: Format;
+  handleFormatChange = () => {
+  console.log('handleFormatChange')
+
+    let format = this.format;
+
+    (async () => {
+      await 0;
+
+      if (this._format !== format) {
+        this._format = format;
+      }
+    })()
+  }
+  reRenderWithFormat = () => { 
+  console.log('re-rendering', this._format, Boolean(this._text))
+
+    if (this._format && this._text) {
+      this.makeComponent(this._format, this._text)
+    }
+  }
+
   onCompileStart = async () => {
     await this.parentFrame.beginCompile();
   };
@@ -69,6 +95,8 @@ export default class Compiler extends Component<Signature> {
   @action
   @waitFor
   async makeComponent(format: Format, text: string) {
+    this._text = text;
+
     let { importMap } = await import('./import-map');
 
     let onSuccess = async (component: ComponentLike) => {
