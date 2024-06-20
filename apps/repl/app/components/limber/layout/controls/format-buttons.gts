@@ -22,15 +22,9 @@ export const FormatButtons: TOC<{}> = <template>
 
     {{#let (component Option item=t.Item) as |Option|}}
 
-      <Option @value="glimdown" @description="Glimdown">
-        GDM
-      </Option>
-      <Option @value="gjs" @description="Glimmer JS">
-        GJS
-      </Option>
-      <Option @value="hbs" @description="Template">
-        HBS
-      </Option>
+      <Option @value="glimdown" @description="Glimdown">GDM</Option>
+      <Option @value="gjs" @description="Glimmer JS">GJS</Option>
+      <Option @value="hbs" @description="Template">HBS</Option>
 
     {{/let}}
 
