@@ -29,7 +29,7 @@ import DemoSelect from './demo-select';
       {{/if}}
     </div>
 
-    <nav class="text-white mt-1 flex gap-2 items-baseline">
+    <nav class="text-white flex gap-2 items-baseline">
       <DemoSelect />
 
       <ExternalLink href="/bundle.html">
