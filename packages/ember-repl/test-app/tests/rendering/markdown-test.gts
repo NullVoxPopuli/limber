@@ -1,6 +1,6 @@
 import { assert as debugAssert } from '@ember/debug';
 import { render, setupOnerror } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import QUnit, { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import { stripIndent } from 'common-tags';
@@ -14,6 +14,11 @@ import type { Parent } from 'unist';
 
 type UnifiedPlugin = PluggableList[0];
 type Build = (plugin?: UnifiedPlugin) => Promise<void>;
+
+function unexpectedErrorHandler(error: unknown) {
+  console.error(error);
+  QUnit.assert.notOk(`CHECK CONSOLE: did not expect error: ${error}`);
+}
 
 module('Rendering | compile()', function (hooks) {
   setupRenderingTest(hooks);
@@ -36,7 +41,7 @@ module('Rendering | compile()', function (hooks) {
       await compile(snippet, {
         format: 'glimdown',
         onSuccess: (comp) => (component = comp),
-        onError: () => assert.notOk('did not expect error'),
+        onError: unexpectedErrorHandler,
         onCompileStart: () => {
           /* not used */
         },
@@ -66,7 +71,7 @@ module('Rendering | compile()', function (hooks) {
       await compile(snippet, {
         format: 'glimdown',
         onSuccess: (comp) => (component = comp),
-        onError: () => assert.notOk('did not expect error'),
+        onError: unexpectedErrorHandler,
         onCompileStart: () => {
           /* not used */
         },
@@ -123,7 +128,7 @@ module('Rendering | compile()', function (hooks) {
                 format: 'glimdown',
                 remarkPlugins: [plugin],
                 onSuccess: (comp) => (component = comp),
-                onError: (e) => assert.notOk('did not expect error. ' + e),
+                onError: unexpectedErrorHandler,
                 onCompileStart: () => {
                   /* not used */
                 },
@@ -183,7 +188,7 @@ module('Rendering | compile()', function (hooks) {
       await compile(snippet, {
         format: 'glimdown',
         onSuccess: (comp) => (component = comp),
-        onError: () => assert.notOk('did not expect error'),
+        onError: unexpectedErrorHandler,
         onCompileStart: () => {
           /* not used */
         },
@@ -221,10 +226,7 @@ module('Rendering | compile()', function (hooks) {
       await compile(snippet, {
         format: 'glimdown',
         onSuccess: (comp) => (component = comp),
-        onError: (e) => {
-          console.error(e);
-          assert.notOk('did not expect error');
-        },
+        onError: unexpectedErrorHandler,
         onCompileStart: () => {
           /* not used */
         },
@@ -253,10 +255,7 @@ module('Rendering | compile()', function (hooks) {
       await compile(snippet, {
         format: 'glimdown',
         onSuccess: (comp) => (component = comp),
-        onError: (e) => {
-          console.error(e);
-          assert.notOk('did not expect error');
-        },
+        onError: unexpectedErrorHandler,
         onCompileStart: () => {
           /* not used */
         },
@@ -284,6 +283,64 @@ module('Rendering | compile()', function (hooks) {
 
       assert.dom('h2').containsText('Hello');
     });
+
+
+    test('plugins can add code snippets', async function (assert) {
+      setupOnerror((e) => {
+        console.error(e);
+        assert.notOk('This should not error');
+      });
+
+      let snippet = `# Hello
+
+\`\`\`gjs live
+<template>not a greeting</template>
+\`\`\`
+
+<Greeting />
+`;
+
+      let component: ComponentLike | undefined;
+
+      await compile(snippet, {
+        format: 'glimdown',
+        onSuccess: (comp) => (component = comp),
+        onError: unexpectedErrorHandler,
+        onCompileStart: () => {
+          /* not used */
+        },
+
+        remarkPlugins: [
+          function codeSwapper(/* options */) {
+            return (tree: Parameters<typeof visit>[0]) => {
+              visit(tree, ['html'], function (node, index, parent: Parent) {
+                if (!parent) return;
+                if (undefined === index) return;
+                if (!('value' in node)) return;
+                if (node.value !== '<Greeting />') return;
+
+                parent.children[index] = {
+                  type: 'code',
+                  lang: 'gjs',
+                  meta: 'live',
+                  value: `
+                    <template><p class="greeting">a greeting</p></template>
+                  `
+                  // TODO: where is the type for a code node?
+                } as any
+              });
+            };
+          },
+        ],
+      });
+
+      debugAssert(`[BUG]`, component);
+
+      await render(component);
+
+      assert.dom('p').containsText('a greeting');
+      });
+
     test('adding a rehype plugin', async function (assert) {
       setupOnerror((e) => {
         console.error(e);
@@ -297,10 +354,7 @@ module('Rendering | compile()', function (hooks) {
       await compile(snippet, {
         format: 'glimdown',
         onSuccess: (comp) => (component = comp),
-        onError: (e) => {
-          console.error(e);
-          assert.notOk('did not expect error');
-        },
+        onError: unexpectedErrorHandler,
         onCompileStart: () => {
           /* not used */
         },

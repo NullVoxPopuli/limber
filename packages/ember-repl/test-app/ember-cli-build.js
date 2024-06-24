@@ -1,10 +1,16 @@
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const path = require('path');
 
 module.exports = function (defaults) {
+  const sideWatch = require('@embroider/broccoli-side-watch');
+
   const app = new EmberApp(defaults, {
     // Add options here
+    trees: {
+      app: sideWatch('app', { watching: [path.join(__dirname, '../addon/dist')] }),
+    },
     'ember-cli-babel': {
       enableTypeScriptTransform: true,
     },
