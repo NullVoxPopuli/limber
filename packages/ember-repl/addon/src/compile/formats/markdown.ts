@@ -219,19 +219,6 @@ function sanitizeForGlimmer(/* options */) {
 function buildCompiler(options: ParseMarkdownOptions) {
   let compiler = unified().use(remarkParse).use(remarkGfm);
 
-  // TODO: we only want to do this when we have pre > code.
-  //       code can exist inline.
-  compiler = compiler.use(liveCodeExtraction, {
-    snippets: {
-      classList: ['glimdown-snippet', 'relative'],
-    },
-    demo: {
-      classList: ['glimdown-render'],
-    },
-    copyComponent: options?.CopyComponent,
-    shadowComponent: options?.ShadowComponent,
-  });
-
   /**
    * If this were "use"d after `remarkRehype`,
    * remark is gone, and folks would need to work with rehype trees
@@ -245,6 +232,20 @@ function buildCompiler(options: ParseMarkdownOptions) {
       compiler = compiler.use(...(p as [any]));
     });
   }
+
+  // TODO: we only want to do this when we have pre > code.
+  //       code can exist inline.
+  compiler = compiler.use(liveCodeExtraction, {
+    snippets: {
+      classList: ['glimdown-snippet', 'relative'],
+    },
+    demo: {
+      classList: ['glimdown-render'],
+    },
+    copyComponent: options?.CopyComponent,
+    shadowComponent: options?.ShadowComponent,
+  });
+
 
   // .use(() => (tree) => visit(tree, (node) => console.log('i', node)))
   // remark rehype is needed to convert markdown to HTML
