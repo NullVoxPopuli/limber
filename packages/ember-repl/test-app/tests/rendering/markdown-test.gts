@@ -284,7 +284,6 @@ module('Rendering | compile()', function (hooks) {
       assert.dom('h2').containsText('Hello');
     });
 
-
     test('plugins can add code snippets', async function (assert) {
       setupOnerror((e) => {
         console.error(e);
@@ -325,9 +324,10 @@ module('Rendering | compile()', function (hooks) {
                   meta: 'live',
                   value: `
                     <template><p class="greeting">a greeting</p></template>
-                  `
-                  // TODO: where is the type for a code node?
-                } as any
+                  `,
+                  // where is the type for a code node?
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                } as any;
               });
             };
           },
@@ -339,7 +339,7 @@ module('Rendering | compile()', function (hooks) {
       await render(component);
 
       assert.dom('p').containsText('a greeting');
-      });
+    });
 
     test('adding a rehype plugin', async function (assert) {
       setupOnerror((e) => {

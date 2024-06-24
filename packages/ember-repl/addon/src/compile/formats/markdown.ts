@@ -246,7 +246,6 @@ function buildCompiler(options: ParseMarkdownOptions) {
     shadowComponent: options?.ShadowComponent,
   });
 
-
   // .use(() => (tree) => visit(tree, (node) => console.log('i', node)))
   // remark rehype is needed to convert markdown to HTML
   // However, it also changes all the nodes, so we need another pass
