@@ -1,12 +1,17 @@
 import { assert as debugAssert } from '@ember/debug';
 import { render, setupOnerror } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import QUnit, { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import { stripIndent } from 'common-tags';
 import { compile } from 'ember-repl';
 
 import type { ComponentLike } from '@glint/template';
+
+function unexpectedErrorHandler(error: unknown) {
+  console.error(error);
+  QUnit.assert.notOk(`CHECK CONSOLE: did not expect error: ${error}`);
+}
 
 module('Rendering | compile()', function (hooks) {
   setupRenderingTest(hooks);
@@ -21,6 +26,8 @@ module('Rendering | compile()', function (hooks) {
         import Component from '@glimmer/component';
         import { on } from '@ember/modifier';
 
+        const { console } = globalThis;
+
         <template>
           <button {{on "click" console.log}}>Click</button>
         </template>
@@ -31,7 +38,7 @@ module('Rendering | compile()', function (hooks) {
       await compile(snippet, {
         format: 'gjs',
         onSuccess: (comp) => (component = comp),
-        onError: () => assert.notOk('did not expect error'),
+        onError: unexpectedErrorHandler,
         onCompileStart: () => {
           /* not used */
         },
