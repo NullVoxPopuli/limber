@@ -129,7 +129,7 @@
   },
   "dependencies": {
     "@ember/test-waiters": "^3.1.0",
-    "@embroider/macros": "1.16.3",
+    "@embroider/macros": "1.16.4",
     "@embroider/router": "2.1.8",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
