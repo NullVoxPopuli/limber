@@ -76,7 +76,7 @@
     "ember-template-imports": "^4.1.1",
     "ember-template-lint": "^6.0.0",
     "ember-try": "^3.0.0",
-    "eslint": "^8.55.0",
+    "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-ember": "^12.1.0",
     "eslint-plugin-n": "^17.7.0",
@@ -89,7 +89,7 @@
     "qunit": "^2.20.0",
     "qunit-dom": "3.1.2",
     "typescript": "^5.4.5",
-    "unified": "^10.1.2",
+    "unified": "^11.0.0",
     "webpack": "5.92.0"
   },
   "engines": {

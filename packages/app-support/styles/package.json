@@ -20,7 +20,7 @@
     "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "autoprefixer": "^10.4.17",
     "concurrently": "^8.2.2",
-    "eslint": "^8.55.0",
+    "eslint": "^9.0.0",
     "postcss": "^8.4.32",
     "prettier": "^3.2.5",
     "prettier-plugin-ember-template-tag": "2.0.2",
