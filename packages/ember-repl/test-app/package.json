@@ -40,10 +40,10 @@
     "@ember/test-helpers": "^3.2.1",
     "@ember/test-waiters": "^3.1.0",
     "@embroider/broccoli-side-watch": "0.0.2-unstable.ba9fd29",
-    "@embroider/compat": "3.5.3",
-    "@embroider/core": "3.4.12",
+    "@embroider/compat": "3.5.5",
+    "@embroider/core": "3.4.14",
     "@embroider/test-setup": "4.0.0",
-    "@embroider/webpack": "4.0.3",
+    "@embroider/webpack": "4.0.4",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "@glint/core": "1.4.0",
@@ -87,10 +87,10 @@
     "prettier": "^3.2.5",
     "prettier-plugin-ember-template-tag": "2.0.2",
     "qunit": "^2.20.0",
-    "qunit-dom": "3.1.2",
+    "qunit-dom": "3.2.0",
     "typescript": "^5.4.5",
     "unified": "^10.1.2",
-    "webpack": "5.92.0"
+    "webpack": "5.92.1"
   },
   "engines": {
     "node": ">= v16",

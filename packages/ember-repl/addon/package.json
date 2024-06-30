@@ -146,7 +146,7 @@
     "prettier": "^3.2.5",
     "prettier-plugin-ember-template-tag": "2.0.2",
     "publint": "^0.2.6",
-    "rollup": "~4.17.2",
+    "rollup": "~4.18.0",
     "rollup-plugin-copy": "^3.5.0",
     "typescript": "^5.4.5"
   },
