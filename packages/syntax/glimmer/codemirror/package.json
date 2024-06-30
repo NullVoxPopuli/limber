@@ -29,7 +29,7 @@
     "@typescript-eslint/parser": "^7.9.0",
     "codemirror": "^6.0.1",
     "concurrently": "^8.2.2",
-    "eslint": "^8.55.0",
+    "eslint": "^9.0.0",
     "prettier": "^3.2.5",
     "rollup": "^4.17.2",
     "rollup-plugin-ts": "^3.4.5",
