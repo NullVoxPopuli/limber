@@ -172,6 +172,6 @@
     "unist-util-visit": "^5.0.0",
     "webpack-bundle-analyzer": "^4.10.2",
     "ws": "^8.15.1",
-    "xstate": "4.35.4"
+    "xstate": "4.38.3"
   }
 }
