@@ -50,9 +50,9 @@
     "@ember/string": "^3.1.1",
     "@ember/test-helpers": "^3.2.1",
     "@ember/test-waiters": "^3.1.0",
-    "@embroider/compat": "3.5.3",
-    "@embroider/core": "3.4.12",
-    "@embroider/webpack": "4.0.3",
+    "@embroider/compat": "3.5.5",
+    "@embroider/core": "3.4.14",
+    "@embroider/webpack": "4.0.4",
     "@fortawesome/ember-fontawesome": "^2.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
@@ -100,10 +100,10 @@
     "prettier": "^3.2.5",
     "prettier-plugin-ember-template-tag": "2.0.2",
     "qunit": "^2.20.0",
-    "qunit-dom": "3.1.2",
+    "qunit-dom": "3.2.0",
     "typescript": "^5.4.5",
     "unplugin": "^1.5.1",
-    "webpack": "5.92.0"
+    "webpack": "5.92.1"
   },
   "engines": {
     "node": ">= v16",
