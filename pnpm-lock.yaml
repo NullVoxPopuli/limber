@@ -1517,7 +1517,7 @@ importers:
     dependencies:
       '@shikijs/rehype':
         specifier: ^1.5.2
-        version: 1.9.1
+        version: 1.10.0
       '@types/unist':
         specifier: ^3.0.2
         version: 3.0.2
@@ -4571,14 +4571,14 @@ packages:
   '@sec-ant/readable-stream@0.4.1':
     resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
 
-  '@shikijs/core@1.9.1':
-    resolution: {integrity: sha512-EmUful2MQtY8KgCF1OkBtOuMcvaZEvmdubhW0UHCGXi21O9dRLeADVCj+k6ZS+de7Mz9d2qixOXJ+GLhcK3pXg==}
+  '@shikijs/core@1.10.0':
+    resolution: {integrity: sha512-BZcr6FCmPfP6TXaekvujZcnkFmJHZ/Yglu97r/9VjzVndQA56/F4WjUKtJRQUnK59Wi7p/UTAOekMfCJv7jnYg==}
 
-  '@shikijs/rehype@1.9.1':
-    resolution: {integrity: sha512-geZUt4m+exTpacxPyTfvSiFrmTm5slnXUcVH0BUtE/K30QyPgzffQnPgZdDEwcKoh97o9dskBnumoUzlKWQvIw==}
+  '@shikijs/rehype@1.10.0':
+    resolution: {integrity: sha512-PVyAts/hbibYiqJ6yXJetIsvOC5SVtlnx4hzUhEoUY+zeqfxO9Kzouc6wN7TaAJIBiC7wwMOxt+A3TdH5thw2g==}
 
-  '@shikijs/transformers@1.9.1':
-    resolution: {integrity: sha512-wPrGTpBURQ95IKPIhPQE3bGsANpPPtea1+aVHZp0aYtgxfL5UM3QbJ5rNdCuhcyjz/JNp5ZvSItOr+ayJxebJQ==}
+  '@shikijs/transformers@1.10.0':
+    resolution: {integrity: sha512-5Eu/kuJu7/CzAjFlTJkyyPoLTLSVQZ31Ps81cjIeR/3PDJ2RUuX1/R8d0qFziBKToym1LXbNiXoJQq0mg5+Cwg==}
 
   '@sigstore/bundle@2.3.2':
     resolution: {integrity: sha512-wueKWDk70QixNLB363yHc2D2ItTgYiMTdPwK8D9dKQMR3ZQ0c35IxP5xnwQ8cNLoCgCRcHf14kE+CLIvNX1zmA==}
@@ -10821,8 +10821,8 @@ packages:
   shellwords@0.1.1:
     resolution: {integrity: sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==}
 
-  shiki@1.9.1:
-    resolution: {integrity: sha512-8PDkgb5ja3nfujTjvC4VytL6wGOGCtFAClUb2r3QROevYXxcq+/shVJK5s6gy0HZnjaJgFxd6BpPqpRfqne5rA==}
+  shiki@1.10.0:
+    resolution: {integrity: sha512-YD2sXQ+TMD/F9BimV9Jn0wj35pqOvywvOG/3PB6hGHyGKlM7TJ9tyJ02jOb2kF8F0HfJwKNYrh3sW7jEcuRlXA==}
 
   side-channel@1.0.6:
     resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
@@ -15390,20 +15390,20 @@ snapshots:
 
   '@sec-ant/readable-stream@0.4.1': {}
 
-  '@shikijs/core@1.9.1': {}
+  '@shikijs/core@1.10.0': {}
 
-  '@shikijs/rehype@1.9.1':
+  '@shikijs/rehype@1.10.0':
     dependencies:
-      '@shikijs/transformers': 1.9.1
+      '@shikijs/transformers': 1.10.0
       '@types/hast': 3.0.4
       hast-util-to-string: 3.0.0
-      shiki: 1.9.1
+      shiki: 1.10.0
       unified: 11.0.5
       unist-util-visit: 5.0.0
 
-  '@shikijs/transformers@1.9.1':
+  '@shikijs/transformers@1.10.0':
     dependencies:
-      shiki: 1.9.1
+      shiki: 1.10.0
 
   '@sigstore/bundle@2.3.2':
     dependencies:
@@ -23626,9 +23626,9 @@ snapshots:
 
   shellwords@0.1.1: {}
 
-  shiki@1.9.1:
+  shiki@1.10.0:
     dependencies:
-      '@shikijs/core': 1.9.1
+      '@shikijs/core': 1.10.0
 
   side-channel@1.0.6:
     dependencies:
