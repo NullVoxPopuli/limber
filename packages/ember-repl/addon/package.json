@@ -97,7 +97,7 @@
     "remark-rehype": "^10.1.0",
     "unified": "^10.1.2",
     "unist-util-visit": "^5.0.0",
-    "uuid": "^9.0.1",
+    "uuid": "^10.0.0",
     "vfile": "^6.0.1"
   },
   "devDependencies": {
