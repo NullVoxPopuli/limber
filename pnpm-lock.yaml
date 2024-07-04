@@ -628,7 +628,7 @@ importers:
         version: 11.2.0
       globby:
         specifier: ^14.0.0
-        version: 14.0.1
+        version: 14.0.2
       loader.js:
         specifier: ^4.7.0
         version: 4.7.0
@@ -2489,7 +2489,7 @@ importers:
         version: 10.1.2
       globby:
         specifier: ^14.0.0
-        version: 14.0.1
+        version: 14.0.2
       jsoncrush:
         specifier: ^1.1.8
         version: 1.1.8
@@ -7637,6 +7637,10 @@ packages:
 
   globby@14.0.1:
     resolution: {integrity: sha512-jOMLD2Z7MAhyG8aJpNOpmziMOP4rPLcc95oQPKXBazW82z+CEgPFBQvEpRUa1KeIMUJo4Wsm+q6uzO/Q/4BksQ==}
+    engines: {node: '>=18'}
+
+  globby@14.0.2:
+    resolution: {integrity: sha512-s3Fq41ZVh7vbbe2PN3nrW7yC7U7MFVc5c98/iTl9c2GawNMKx/J648KQRW6WKkuU8GIbbh2IXfIRQjOZnXcTnw==}
     engines: {node: '>=18'}
 
   globrex@0.1.2:
@@ -17396,7 +17400,7 @@ snapshots:
       execa: 8.0.1
       find-up: 7.0.0
       fs-extra: 11.2.0
-      globby: 14.0.1
+      globby: 14.0.2
       jscodeshift: 0.15.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       latest-version: 7.0.0
       ora: 7.0.1
@@ -19280,7 +19284,7 @@ snapshots:
   fix-bad-declaration-output@1.1.4(@babel/preset-env@7.24.7(@babel/core@7.24.7)):
     dependencies:
       fs-extra: 11.2.0
-      globby: 14.0.1
+      globby: 14.0.2
       jscodeshift: 0.15.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))
     transitivePeerDependencies:
       - '@babel/preset-env'
@@ -19690,6 +19694,15 @@ snapshots:
       slash: 3.0.0
 
   globby@14.0.1:
+    dependencies:
+      '@sindresorhus/merge-streams': 2.3.0
+      fast-glob: 3.3.2
+      ignore: 5.3.1
+      path-type: 5.0.0
+      slash: 5.1.0
+      unicorn-magic: 0.1.0
+
+  globby@14.0.2:
     dependencies:
       '@sindresorhus/merge-streams': 2.3.0
       fast-glob: 3.3.2
