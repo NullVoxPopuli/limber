@@ -124,10 +124,25 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
+  ReformatSubDomain:
+    name: Reformat Sub-domain Alias
+    runs-on: ubuntu-latest
+    needs: [determinePR]
+    outputs: 
+      subdomain: ${{ steps.reformat.outputs.subdomain }}
+    steps:
+      - id: reformat
+        run: |
+          branch="${{ github.event.workflow_run.head_branch }}"
+          # Remove any / in the branch name
+          #   renovate/uuid becomes renovate-uuid
+          subdomain="${branch//\//-/}"
+          echo "subdomain=$subdomain" >> $GITHUB_OUTPUT
+
   PostComment:
     name: Post Preview URL as comment to PR
     runs-on: ubuntu-latest
-    needs: [DeployPreview, determinePR]
+    needs: [DeployPreview, ReformatSubDomain]
     permissions:
       pull-requests: write
     steps:
@@ -136,10 +151,10 @@ jobs:
           header: preview-urls 
           number: ${{ github.event.workflow_run.pull_requests[0].number }}
           message: |+
-            | Project   | Preview URL[^note] |
-            | -------   | ----------- |
-            | Limber    | https://${{ github.event.workflow_run.head_branch }}.limber-glimdown.pages.dev   |
-            | Tutorial  | https://${{ github.event.workflow_run.head_branch }}.limber-glimmer-tutorial.pages.dev |
+            | Project   | Preview URL[^note] | Manage | 
+            | -------   | ------------------ | ------ |
+            | Limber    | https://${{ needs.ReformatSubDomain.outputs.subdomain }}.limber-glimdown.pages.dev   | [on Cloudflare](https://dash.cloudflare.com/c67910a047e1510fec6d0d0cf442934c/pages/view/limber-glimdown) | 
+            | Tutorial  | https://${{ needs.ReformatSubDomain.outputs.subdomain }}.limber-glimmer-tutorial.pages.dev | [on Cloudflare](https://dash.cloudflare.com/c67910a047e1510fec6d0d0cf442934c/pages/view/limber-glimmer-tutorial)
 
             [Logs](https://github.com/NullVoxPopuli/limber/actions/runs/${{ github.run_id }}) 
 
