@@ -37,6 +37,11 @@ module.exports = async function (defaults) {
 
   let app = new EmberApp(defaults, config);
 
+  // Adds:
+  //  - ember-template-compiler
+  //  - @glimmer/syntax
+  // app.import('vendor/ember/ember-template-compiler.js');
+
   const { Webpack } = require('@embroider/webpack');
   const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 

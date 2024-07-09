@@ -87,6 +87,8 @@ async function preprocess(input: string, name: string): Promise<string> {
   return processor.process(input, `${name}.js`);
 }
 
+console.log(compiler);
+
 async function transform(
   intermediate: string,
   name: string,

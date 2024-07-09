@@ -59,6 +59,9 @@
         "rollup",
         "rsvp"
       ]
+    },
+    "patchedDependencies": {
+      "ember-source@5.10.0": "patches/ember-source@5.10.0.patch"
     }
   }
 }
