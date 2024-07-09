@@ -43,7 +43,7 @@
       "ember-auto-import": "^2.7.2",
       "ember-repl": "workspace:*",
       "ember-source": ">= 5.10.0",
-      "webpack": "5.92.0"
+      "webpack": ">= 5.92.0"
     },
     "allowedDeprecatedVersions": {
       "source-map-url": "^0.3.0",
