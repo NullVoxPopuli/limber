@@ -56,7 +56,6 @@
         "ember-source"
       ],
       "ignoreMissing": [
-        "webpack",
         "rollup",
         "rsvp"
       ]

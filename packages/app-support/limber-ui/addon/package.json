@@ -39,7 +39,7 @@
     "ember-primitives": ">= 0.11.0",
     "ember-resources": ">= 6.4.2",
     "ember-source": ">= 5.10.0",
-    "webpack": "5.92.0"
+    "webpack": "^5.92.1"
   },
   "dependencies": {
     "@babel/runtime": "^7.24.5",
@@ -96,8 +96,15 @@
     "prettier-plugin-ember-template-tag": "2.0.2",
     "rollup": "^4.17.2",
     "rollup-plugin-copy": "^3.5.0",
+<<<<<<< HEAD
     "typescript": "^5.4.5",
     "webpack": "5.92.0"
+||||||| parent of cbeaa507 (ember-source *really* needs to drop the peer on webpack)
+    "typescript": "^5.4.5"
+=======
+    "typescript": "^5.4.5",
+    "webpack": "^5.92.1"
+>>>>>>> cbeaa507 (ember-source *really* needs to drop the peer on webpack)
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
