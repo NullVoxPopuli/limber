@@ -135,7 +135,7 @@
     "@typescript-eslint/parser": "^7.9.0",
     "concurrently": "^8.2.2",
     "ember-resources": "^7.0.0",
-    "ember-source": ">= 5.9.0",
+    "ember-source": "^5.10.0",
     "ember-template-imports": "^4.1.1",
     "ember-template-lint": "^6.0.0",
     "eslint": "^8.55.0",
