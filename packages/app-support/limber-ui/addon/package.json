@@ -38,7 +38,8 @@
     "ember-modifier": "^4.1.0",
     "ember-primitives": ">= 0.11.0",
     "ember-resources": ">= 6.4.2",
-    "ember-source": ">= 5.9.0"
+    "ember-source": ">= 5.9.0",
+    "webpack": "5.92.1"
   },
   "dependencies": {
     "@babel/runtime": "^7.24.5",
@@ -95,7 +96,8 @@
     "prettier-plugin-ember-template-tag": "2.0.2",
     "rollup": "^4.17.2",
     "rollup-plugin-copy": "^3.5.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "webpack": "5.92.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"

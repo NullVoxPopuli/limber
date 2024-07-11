@@ -28,19 +28,22 @@
   "dependencies": {
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
+    "@shikijs/rehype": "^1.10.3",
+    "@universal-ember/kolay-ui": "^0.0.8",
     "ember-async-data": "1.0.3",
     "ember-modifier": "^4.1.0",
     "ember-primitives": "^0.21.0",
     "ember-resources": "^7.0.1",
     "highlight.js": "^11.9.0",
     "highlightjs-glimmer": "^2.2.1",
-    "kolay": "^0.0.3",
+    "kolay": "^1.0.6",
     "limber-ui": "workspace:*",
     "reactiveweb": "^1.2.0",
     "rehype-raw": "^6.1.1",
     "rehype-stringify": "^9.0.4",
     "remark-parse": "^10.0.2",
     "remark-rehype": "^10.1.0",
+    "shiki": "^1.10.3",
     "unified": "^10.1.2"
   },
   "devDependencies": {
