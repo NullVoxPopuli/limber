@@ -1,4 +1,4 @@
-`component` is used for [partial application][wiki] of arguments to modifiers.
+`component` is used for [partial application][wiki] of arguments to conponents.
 
 This can be useful for pre-wiring arguments to complex components, or components with private implementation details that a consumer may not need to care about.
 
