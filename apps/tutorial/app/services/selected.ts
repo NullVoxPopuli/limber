@@ -122,7 +122,7 @@ export default class Selected extends Service {
     let found = false;
     let current = this.tutorial;
 
-    for (let tutorial of this.docs.flatList) {
+    for (let tutorial of this.docs.tutorials) {
       if (found) {
         preload(tutorial.path);
 
@@ -141,7 +141,7 @@ export default class Selected extends Service {
     let previous = undefined;
     let current = this.tutorial;
 
-    for (let tutorial of this.docs.flatList) {
+    for (let tutorial of this.docs.tutorials) {
       if (current?.path === tutorial.path) {
         preload(previous?.path);
 
@@ -161,7 +161,7 @@ export default class Selected extends Service {
   }
 
   #findByPath = (path: string) => {
-    return this.docs.flatList.find((tutorial) => tutorial.path === path);
+    return this.docs.tutorials.find((tutorial) => tutorial.path === path);
   };
 }
 

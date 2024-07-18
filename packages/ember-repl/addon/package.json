@@ -149,7 +149,7 @@
     "rollup": "~4.18.0",
     "rollup-plugin-copy": "^3.5.0",
     "typescript": "^5.4.5",
-    "webpack": "5.92.1"
+    "webpack": "5.92.0"
   },
   "volta": {
     "extends": "../../../package.json"
@@ -167,7 +167,7 @@
     "@glimmer/compiler": ">= 0.86.0",
     "@glimmer/syntax": ">= 0.86.0",
     "@glint/template": ">= 1.3.0",
-    "webpack": "5.92.1"
+    "webpack": "5.92.0"
   },
   "peerDependenciesMeta": {
     "@glint/template": {

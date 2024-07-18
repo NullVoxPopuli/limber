@@ -1,27 +1,25 @@
 import { cached, tracked } from '@glimmer/tracking';
 import Service, { service } from '@ember/service';
 
-import { use } from 'ember-resources';
-import { RemoteData } from 'reactiveweb/remote-data';
-
 import type Selected from './selected';
-import type { Manifest } from './types';
 import type RouterService from '@ember/routing/router-service';
+import type { DocsService as KolayDocsService } from 'kolay';
 
 export default class DocsService extends Service {
   @service declare router: RouterService;
   @service declare selected: Selected;
+  @service('kolay/docs') declare docs: KolayDocsService;
 
   @tracked isViewingProse = true;
 
-  @use docs = RemoteData<Manifest>(() => `/docs/manifest.json`);
+
 
   get tutorials() {
-    return this.docs.value?.list ?? [];
+    return this.docs.pages ?? [];
   }
 
   get grouped() {
-    return this.docs.value?.grouped ?? {};
+    return this.docs.tree ?? {};
   }
 
   get showAnswer() {
@@ -38,21 +36,12 @@ export default class DocsService extends Service {
     this.router.transitionTo({ queryParams: { showAnswer: 0 } });
   };
 
-  @cached
-  get flatList() {
-    return this.tutorials.flat();
-  }
-
   get currentPath(): string | undefined {
-    if (!this.router.currentURL) return this.#manifest?.first.path;
+    if (!this.router.currentURL) return this.tutorials[0]?.path;
 
     let [path] = this.router.currentURL.split('?');
 
-    return path && path !== '/' ? path : this.#manifest?.first.path;
-  }
-
-  get #manifest() {
-    return this.docs.value;
+    return path && path !== '/' ? path : this.tutorials[0]?.path;
   }
 
   toggleProse = () => {
