@@ -16,8 +16,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           cache: pnpm
-          
-      # Things that could cause a diff
+
+      - run: git fetch origin --depth 1    
+      - run: git checkout origin/main -- pnpm-lock.yaml
       - run: pnpm install --fix-lockfile
       - run: pnpm lint:fix
 
