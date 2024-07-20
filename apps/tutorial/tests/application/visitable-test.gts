@@ -2,6 +2,8 @@ import { click, currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
+import { isCollection } from 'kolay';
+
 // We can't use this until we switch to Vite and tests can remain real modules.
 // (so that the import gets all the way to the browser)
 //
@@ -13,16 +15,19 @@ import { setupApplicationTest } from 'ember-qunit';
 //const manifest: Manifest = manifestJson;
 import { tmpData } from './tmp';
 
-import type { Manifest } from 'tutorial/services/types';
+import type { Manifest } from 'kolay';
 
 const manifest = tmpData as Manifest;
 
 module('every tutorial chapter', function (hooks) {
   setupApplicationTest(hooks);
 
-  for (let section of manifest.list) {
-    for (let chapter of section) {
-      let name = chapter.path;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  for (let section of manifest.groups[0]!.tree.pages) {
+    if (!isCollection(section)) continue;
+
+    for (let chapter of section.pages) {
+      let name = chapter.path.replace(/\/prose\.md$/, '');
       // every page except the last one (99-next-steps/1-congratulations)
       // should have a "next" button
       let isLast = name === '/99-next-steps/1-congratulations';
