@@ -67,7 +67,10 @@ export class Selection extends Component {
           <optgroup label={{titleize group.name}}>
             {{#if (isCollection group)}}
               {{#each group.pages as |tutorial|}}
-                <option value={{tutorial.path}} selected={{this.isSelected tutorial}}>
+                <option
+                  value="/{{group.path}}/{{tutorial.path}}"
+                  selected={{this.isSelected tutorial}}
+                >
                   {{titleize tutorial.name}}
                 </option>
               {{/each}}

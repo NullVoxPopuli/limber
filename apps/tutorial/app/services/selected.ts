@@ -11,6 +11,12 @@ import type DocsService from './docs';
 import type RouterService from '@ember/routing/router-service';
 import type { Page } from 'kolay';
 
+function unprose(prosePath: string | undefined) {
+  if (!prosePath) return;
+
+  return prosePath.replace(/\/prose.md$/, '');
+}
+
 /**
  * To help reduce load time between chapters, we'll load
  * the next and previous documents for each page
@@ -20,7 +26,7 @@ async function preload(prosePath?: string) {
 
   await Promise.resolve();
 
-  let path = prosePath.replace(/\/prose.md$/, '');
+  let path = unprose(prosePath);
 
   await Promise.all([
     fetch(`/docs/${path}/prose.md`),
@@ -40,7 +46,7 @@ class DocFile {
   }
 
   get url() {
-    return `/docs${this.docs.currentPath}/${this.#fileName}`;
+    return `/docs/${this.docs.currentPath}/${this.#fileName}`;
   }
 
   /*********************************************************************
@@ -120,7 +126,7 @@ export default class Selected extends Service {
     return this.answer.exists;
   }
 
-  get next(): Page | undefined {
+  get next(): string | undefined {
     let found = false;
     let current = this.tutorial;
 
@@ -128,7 +134,7 @@ export default class Selected extends Service {
       if (found) {
         preload(tutorial.path);
 
-        return tutorial;
+        return unprose(tutorial.path);
       }
 
       if (current?.path && current.path === tutorial.path) {
@@ -139,7 +145,7 @@ export default class Selected extends Service {
     return;
   }
 
-  get previous(): Page | undefined {
+  get previous(): string | undefined {
     let previous = undefined;
     let current = this.tutorial;
 
@@ -147,7 +153,7 @@ export default class Selected extends Service {
       if (current?.path === tutorial.path) {
         preload(previous?.path);
 
-        return previous;
+        return unprose(previous?.path);
       }
 
       previous = tutorial;

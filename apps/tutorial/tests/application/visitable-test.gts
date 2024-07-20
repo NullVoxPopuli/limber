@@ -1,4 +1,5 @@
-import { click, currentURL, visit } from '@ember/test-helpers';
+import { assert as debugAssert } from '@ember/debug';
+import { click, currentURL, find, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
@@ -28,29 +29,38 @@ module('every tutorial chapter', function (hooks) {
 
     for (let chapter of section.pages) {
       let name = chapter.path.replace(/\/prose\.md$/, '');
+
+      let fullName = `${section.name} / ${name}`;
+      let fullPath = `/${section.path}/${name}`;
+
       // every page except the last one (99-next-steps/1-congratulations)
       // should have a "next" button
-      let isLast = name === '/99-next-steps/1-congratulations';
+      let isLast = fullPath === '/99-next-steps/1-congratulations';
 
       // also anything starting with /x- isn't ready for folks to ese
       // nor test
-      if (name.startsWith('/x-')) continue;
+      if (fullPath.startsWith('/x-')) continue;
 
       if (isLast) {
-        test(`Visiting ${name}`, async function (assert) {
-          await visit(chapter.path);
-          assert.strictEqual(currentURL(), chapter.path, `visited ${chapter.path}`);
+        test(`Visiting ${fullName}`, async function (assert) {
+          await visit(fullPath);
+          assert.strictEqual(currentURL(), fullPath, `visited ${fullPath}`);
         });
       } else {
-        test(`Visiting ${name}`, async function (assert) {
-          await visit(chapter.path);
-          assert.strictEqual(currentURL(), chapter.path, `visited ${chapter.path}`);
+        test(`Visiting ${fullName}`, async function (assert) {
+          await visit(fullPath);
+          assert.strictEqual(currentURL(), fullPath, `visited ${fullPath}`);
 
           let previous = currentURL();
 
           // every page except the last one (99-next-steps/1-congratulations)
           // should have a "next" button
 
+          let actualHref = find('[data-test-next]')?.getAttribute('href');
+
+          debugAssert(`Expected href of [data-test-next] to exist`, actualHref);
+
+          assert.notStrictEqual(actualHref, fullPath, `${actualHref} is not ${fullPath}`);
           await click('[data-test-next]');
 
           let current = currentURL();
