@@ -1,31 +1,14 @@
 import 'ember-source/types';
 import 'ember-source/types/preview';
-import '@glint/environment-ember-loose';
-import '@glint/environment-ember-loose/native-integration';
 import '@nullvoxpopuli/limber-untyped';
 import 'ember-cached-decorator-polyfill';
 
-import type { HelperLike } from '@glint/template';
-import type Layout from 'tutorial/components/layout';
+import type Docs from 'tutorial/services/docs';
+import type Selected from 'tutorial/services/selected';
 
-declare module '@glint/environment-ember-loose/registry' {
-  export default interface Registry {
-    // How to define globals from external addons
-    // state: HelperLike<{ Args: {}, Return: State }>;
-    // attachShadow: ModifierLike<{ Args: { Positional: [State['update']]}}>;
-
-    /**
-     *  Components
-     */
-    Layout: typeof Layout;
-
-    /**
-     * Helpers
-     */
-    'page-title': HelperLike<{ Args: { Positional: [string] }; Return: string }>;
-
-    /**
-     * Modifiers
-     */
+declare module '@ember/service' {
+  interface Registry {
+    selected: Selected;
+    docs: Docs;
   }
 }

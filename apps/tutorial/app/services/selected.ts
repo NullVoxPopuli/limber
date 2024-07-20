@@ -8,17 +8,20 @@ import { RemoteData } from 'reactiveweb/remote-data';
 import { MarkdownToHTML } from './markdown';
 
 import type DocsService from './docs';
-import type { Tutorial } from './types';
 import type RouterService from '@ember/routing/router-service';
+import type { Page } from 'kolay';
 
 /**
  * To help reduce load time between chapters, we'll load
  * the next and previous documents for each page
  */
-async function preload(path?: string) {
-  if (!path) return;
+async function preload(prosePath?: string) {
+  if (!prosePath) return;
 
   await Promise.resolve();
+
+  let path = prosePath.replace(/\/prose.md$/, '');
+
 
   await Promise.all([
     fetch(`/docs/${path}/prose.md`),
@@ -118,7 +121,7 @@ export default class Selected extends Service {
     return this.answer.exists;
   }
 
-  get next(): Tutorial | undefined {
+  get next(): Page | undefined {
     let found = false;
     let current = this.tutorial;
 
@@ -137,7 +140,7 @@ export default class Selected extends Service {
     return;
   }
 
-  get previous(): Tutorial | undefined {
+  get previous(): Page | undefined {
     let previous = undefined;
     let current = this.tutorial;
 
@@ -154,20 +157,16 @@ export default class Selected extends Service {
     return;
   }
 
-  get tutorial(): Tutorial | undefined {
+  get tutorial(): Page | undefined {
     if (!this.docs.currentPath) return;
 
     return this.#findByPath(this.docs.currentPath);
   }
 
   #findByPath = (path: string) => {
-    return this.docs.tutorials.find((tutorial) => tutorial.path === path);
+    let prosePath = `${path}/prose.md`
+
+    return this.docs.tutorials.find((tutorial) => tutorial.path === prosePath);
   };
 }
 
-// DO NOT DELETE: this is how TypeScript knows how to look up your services.
-declare module '@ember/service' {
-  interface Registry {
-    selected: Selected;
-  }
-}

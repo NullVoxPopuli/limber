@@ -5,6 +5,7 @@ import type Selected from './selected';
 import type RouterService from '@ember/routing/router-service';
 import type { DocsService as KolayDocsService } from 'kolay';
 
+
 export default class DocsService extends Service {
   @service declare router: RouterService;
   @service declare selected: Selected;
@@ -12,8 +13,7 @@ export default class DocsService extends Service {
 
   @tracked isViewingProse = true;
 
-
-
+  @cached
   get tutorials() {
     return this.docs.pages ?? [];
   }
@@ -71,11 +71,4 @@ export default class DocsService extends Service {
 
     this.isViewingProse = true;
   };
-}
-
-// DO NOT DELETE: this is how TypeScript knows how to look up your services.
-declare module '@ember/service' {
-  interface Registry {
-    docs: DocsService;
-  }
 }
