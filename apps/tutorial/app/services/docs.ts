@@ -5,7 +5,6 @@ import type Selected from './selected';
 import type RouterService from '@ember/routing/router-service';
 import type { DocsService as KolayDocsService } from 'kolay';
 
-
 export default class DocsService extends Service {
   @service declare router: RouterService;
   @service declare selected: Selected;

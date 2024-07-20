@@ -22,7 +22,6 @@ async function preload(prosePath?: string) {
 
   let path = prosePath.replace(/\/prose.md$/, '');
 
-
   await Promise.all([
     fetch(`/docs/${path}/prose.md`),
     fetch(`/docs/${path}/prompt.gjs`),
@@ -164,9 +163,8 @@ export default class Selected extends Service {
   }
 
   #findByPath = (path: string) => {
-    let prosePath = `${path}/prose.md`
+    let prosePath = `${path}/prose.md`;
 
     return this.docs.tutorials.find((tutorial) => tutorial.path === prosePath);
   };
 }
-

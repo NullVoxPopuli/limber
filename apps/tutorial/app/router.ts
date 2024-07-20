@@ -1,7 +1,7 @@
 import EmberRouter from '@ember/routing/router';
 
 import { properLinks } from 'ember-primitives/proper-links';
-import { addRoutes } from "kolay";
+import { addRoutes } from 'kolay';
 import config from 'tutorial/config/environment';
 
 @properLinks
