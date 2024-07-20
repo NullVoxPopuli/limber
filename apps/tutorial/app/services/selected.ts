@@ -1,11 +1,10 @@
 import Service, { service } from '@ember/service';
 
 import { use } from 'ember-resources';
+import { Compiled as MarkdownToHTML } from 'kolay';
 import { keepLatest } from 'reactiveweb/keep-latest';
 import { link } from 'reactiveweb/link';
 import { RemoteData } from 'reactiveweb/remote-data';
-
-import { MarkdownToHTML } from './markdown';
 
 import type DocsService from './docs';
 import type RouterService from '@ember/routing/router-service';
@@ -95,8 +94,8 @@ export default class Selected extends Service {
   @use proseCompiled = MarkdownToHTML(() => this.proseFile.content);
 
   @use prose = keepLatest({
-    value: () => this.proseCompiled.html,
-    when: () => !this.proseCompiled.ready,
+    value: () => this.proseCompiled.component,
+    when: () => !this.proseCompiled.isReady,
   });
 
   /**
