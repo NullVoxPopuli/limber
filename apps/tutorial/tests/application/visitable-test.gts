@@ -30,7 +30,6 @@ module('every tutorial chapter', function (hooks) {
     for (let chapter of section.pages) {
       let name = chapter.path.replace(/\/prose\.md$/, '');
 
-      let fullName = `${section.name} / ${name}`;
       let fullPath = `/${section.path}/${name}`;
 
       // every page except the last one (99-next-steps/1-congratulations)
@@ -40,14 +39,17 @@ module('every tutorial chapter', function (hooks) {
       // also anything starting with /x- isn't ready for folks to ese
       // nor test
       if (fullPath.startsWith('/x-')) continue;
+      if (name.startsWith('x-')) continue;
+      if (fullPath.endsWith('.md')) continue;
+      if (fullPath.includes('/x-')) continue;
 
       if (isLast) {
-        test(`Visiting ${fullName}`, async function (assert) {
+        test(`Visiting ${fullPath}`, async function (assert) {
           await visit(fullPath);
           assert.strictEqual(currentURL(), fullPath, `visited ${fullPath}`);
         });
       } else {
-        test(`Visiting ${fullName}`, async function (assert) {
+        test(`Visiting ${fullPath}`, async function (assert) {
           await visit(fullPath);
           assert.strictEqual(currentURL(), fullPath, `visited ${fullPath}`);
 
