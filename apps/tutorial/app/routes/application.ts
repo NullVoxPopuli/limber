@@ -36,10 +36,7 @@ export default class ApplicationRoute extends Route {
           rehypeShikiFromHighlighter,
           highlighter,
           {
-            themes: {
-              light: 'github-light',
-              dark: 'github-dark',
-            },
+            theme: 'github-dark',
           },
         ],
       ],
