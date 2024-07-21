@@ -202,7 +202,7 @@ function sanitizeForGlimmer(/* options */) {
   return (tree: Parent) => {
     visit(tree, 'element', (node: Parent) => {
       if ('tagName' in node) {
-        if (node.tagName !== 'pre') return;
+        if (!['pre', 'code'].includes(node.tagName as string)) return;
 
         visit(node, 'text', (textNode: Text) => {
           if ('value' in textNode && textNode.value) {

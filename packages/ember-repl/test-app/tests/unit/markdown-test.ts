@@ -323,6 +323,22 @@ module('Unit | parseMarkdown()', function () {
       );
     });
 
+    test('Inline Code with {{ }} tokens is escaped', async function () {
+      let result = await parseMarkdown(stripIndent`
+        # Title
+
+        \`{{ foo }}\`
+      `);
+
+      assertOutput(
+        result.templateOnlyGlimdown,
+        stripIndent`
+          <h1>Title</h1>
+          <p><code>\\{{ foo }}</code></p>
+        `
+      );
+    });
+
     test('Can invoke a component again when defined in a live fence', async function (assert) {
       let snippet = `const two = 2`;
       let name = nameFor(snippet);
