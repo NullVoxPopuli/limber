@@ -1,5 +1,5 @@
 import { assert as debugAssert } from '@ember/debug';
-import { click, currentURL, find, visit } from '@ember/test-helpers';
+import { click, currentURL, find, visit, waitUntil } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
@@ -57,8 +57,13 @@ module('every tutorial chapter', function (hooks) {
 
           // every page except the last one (99-next-steps/1-congratulations)
           // should have a "next" button
+          await waitUntil(() => this.owner.lookup('service:selected').isReady, {'timeoutMessage': 'Selected service was never ready'})
 
-          let actualHref = find('[data-test-next]')?.getAttribute('href');
+          let nextLink = find('[data-test-next]');
+
+          debugAssert(`Next link is missing`, nextLink);
+
+          let actualHref = nextLink?.getAttribute('href');
 
           debugAssert(`Expected href of [data-test-next] to exist`, actualHref);
 
