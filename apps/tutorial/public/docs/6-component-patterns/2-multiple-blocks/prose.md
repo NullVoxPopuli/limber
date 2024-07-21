@@ -35,14 +35,14 @@ const MyComponent = <template>
 
 Take note, there _are_ some constraints when it comes to invoking components with named blocks to help with conceptual consistency:
 - _the order of named blocks regions does not matter._
-  ```glimmer
+  ```hbs
   <MyComponent>
     <:header>some heading</:header>
     <:body>body content here</:body>
   </MyComponent>
   ```
   is the same as 
-  ```glimmer
+  ```hbs
   <MyComponent>
     <:body>body content here</:body>
     <:header>some heading</:header>
@@ -51,14 +51,14 @@ Take note, there _are_ some constraints when it comes to invoking components wit
   This is because the placement of a block is determined by `<MyComponent>`, not the caller. This makes named blocks a good tool for design systems.
 - _free-form content may not exist outside of named-blocked invocation._
   For example, this is invalid:
-  ```glimmer
+  ```hbs
   <MyComponent>
     content here 
     <:body>body content here</:body>
   </MyComponent>
   ```
   This is because, syntactically, content directly within the `<MyComponent>` and `</MyComponent>` belongs to the `:default` block, which is the same as defining
-  ```glimmer
+  ```hbs
   <MyComponent>
     <:default>
       content here
