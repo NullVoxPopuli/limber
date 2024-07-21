@@ -70,10 +70,15 @@
     // and provide more variability than just "test"
     "test:ember": {
       "env": [
-        "CI_BROWSER", 
         "EMBER_TRY_CURRENT_SCENARIO", 
         "EMBROIDER_TEST_SETUP_OPTIONS"
       ],
+      "dependsOn": ["^build"]
+    },
+    "test:chrome": {
+      "dependsOn": ["^build"]
+    },
+    "test:firefox": {
       "dependsOn": ["^build"]
     },
     "test:browserstack": {

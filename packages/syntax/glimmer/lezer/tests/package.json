@@ -29,5 +29,6 @@
     "directory": "packages/syntax/glimmer/codemirror/tests"
   },
   "license": "MIT",
-  "author": "NullVoxPopuli"
+  "author": "NullVoxPopuli",
+  "version": "0.0.0"
 }
