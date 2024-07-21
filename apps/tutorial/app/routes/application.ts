@@ -27,10 +27,7 @@ export default class ApplicationRoute extends Route {
     });
 
     const manifest = await setupKolay(this, {
-      resolve: {
-        'ember-primitives': import('ember-primitives'),
-        kolay: import('kolay'),
-      },
+      resolve: {},
       rehypePlugins: [
         [
           rehypeShikiFromHighlighter,
