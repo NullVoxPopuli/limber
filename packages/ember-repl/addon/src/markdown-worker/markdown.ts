@@ -6,9 +6,9 @@ import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
 import { visit } from 'unist-util-visit';
 
-import { invocationOf, nameFor } from '../utils.ts';
+import { invocationOf, nameFor } from '../browser/utils.ts';
 
-import type { UnifiedPlugin } from '../types.ts';
+import type { UnifiedPlugin } from '../types';
 import type { Node } from 'hast';
 import type { Code, Text } from 'mdast';
 import type { Parent } from 'unist';

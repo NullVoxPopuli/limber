@@ -1,90 +1,9 @@
-import { invocationName } from './utils.ts';
+import { parseMarkdown } from './markdown.ts';
 
-import type { ExtractedCode } from './formats/markdown.ts';
-import type { CompileResult, UnifiedPlugin } from './types.ts';
-import type { EvalImportMap, ScopeMap } from './types.ts';
+import type { CompileResult, EvalImportMap, ScopeMap, UnifiedPlugin } from '../types.ts';
+import type { ExtractedCode } from './markdown.ts';
 
-async function compileGJSArray(js: { code: string }[], importMap?: EvalImportMap) {
-  let modules = await Promise.all(
-    js.map(async ({ code }) => {
-      return await compileGJS(code, importMap);
-    })
-  );
-
-  return modules;
-}
-
-export async function compileGJS(
-  gjsInput: string,
-  importMap?: EvalImportMap
-): Promise<CompileResult> {
-  try {
-    let { compileJS } = await import('./formats/gjs/index.ts');
-
-    return await compileJS(gjsInput, importMap);
-  } catch (error) {
-    return { error: error as Error, name: 'unknown' };
-  }
-}
-
-export async function compileHBS(
-  hbsInput: string,
-  options?: {
-    moduleName?: string;
-    scope?: Record<string, unknown>;
-  }
-): Promise<CompileResult> {
-  try {
-    let { compileHBS } = await import('./formats/hbs.ts');
-
-    return compileHBS(hbsInput, options);
-  } catch (error) {
-    return { error: error as Error, name: 'unknown' };
-  }
-}
-
-async function extractScope(
-  liveCode: ExtractedCode[],
-  options?: {
-    importMap?: EvalImportMap;
-    topLevelScope?: ScopeMap;
-  }
-): Promise<CompileResult[]> {
-  let scope: CompileResult[] = [];
-
-  let hbs = liveCode.filter((code) => code.lang === 'hbs');
-  let js = liveCode.filter((code) => ['js', 'gjs'].includes(code.lang));
-
-  if (js.length > 0) {
-    let compiled = await compileGJSArray(js, options?.importMap);
-
-    await Promise.all(
-      compiled.map(async (info) => {
-        // using web worker + import maps is not available yet (need firefox support)
-        // (and to somehow be able to point at npm)
-        //
-        // if ('importPath' in info) {
-        //   return scope.push({
-        //     moduleName: name,
-        //     component: await import(/* webpackIgnore: true */ info.importPath),
-        //   });
-        // }
-
-        return scope.push(info);
-      })
-    );
-  }
-
-  for (let { code } of hbs) {
-    let compiled = await compileHBS(code, { scope: options?.topLevelScope });
-
-    scope.push(compiled);
-  }
-
-  return scope;
-}
-
-export async function compileMD(
+export async function compileGDM(
   glimdownInput: string,
   options?: {
     importMap?: EvalImportMap;
@@ -110,7 +29,6 @@ export async function compileMD(
    *         compiled rootTemplate can invoke them
    */
   try {
-    let { parseMarkdown } = await import('./formats/markdown.ts');
     let { templateOnlyGlimdown, blocks } = await parseMarkdown(glimdownInput, {
       CopyComponent: options?.CopyComponent,
       ShadowComponent: options?.ShadowComponent,
@@ -176,4 +94,55 @@ export async function compileMD(
   } catch (error) {
     return { error: error as Error, rootTemplate, name: 'unknown' };
   }
+}
+
+async function compileGJSArray(js: { code: string }[], importMap?: EvalImportMap) {
+  let modules = await Promise.all(
+    js.map(async ({ code }) => {
+      // return await compileGJS(code, importMap);
+    })
+  );
+
+  return modules;
+}
+
+async function extractScope(
+  liveCode: ExtractedCode[],
+  options?: {
+    importMap?: EvalImportMap;
+    topLevelScope?: ScopeMap;
+  }
+): Promise<CompileResult[]> {
+  let scope: CompileResult[] = [];
+
+  let hbs = liveCode.filter((code) => code.lang === 'hbs');
+  let js = liveCode.filter((code) => ['js', 'gjs'].includes(code.lang));
+
+  if (js.length > 0) {
+    let compiled = await compileGJSArray(js, options?.importMap);
+
+    await Promise.all(
+      compiled.map(async (info) => {
+        // using web worker + import maps is not available yet (need firefox support)
+        // (and to somehow be able to point at npm)
+        //
+        // if ('importPath' in info) {
+        //   return scope.push({
+        //     moduleName: name,
+        //     component: await import(/* webpackIgnore: true */ info.importPath),
+        //   });
+        // }
+
+        return scope.push(info);
+      })
+    );
+  }
+
+  for (let { code } of hbs) {
+    let compiled = await compileHBS(code, { scope: options?.topLevelScope });
+
+    scope.push(compiled);
+  }
+
+  return scope;
 }

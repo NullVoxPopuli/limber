@@ -1,3 +1,5 @@
+import 'decorator-transforms/globals';
+
 import Application from '@ember/application';
 
 import loadInitializers from 'ember-load-initializers';
@@ -12,6 +14,15 @@ Object.assign(window, {
   process: { env: {} },
   // Polyfilled in webpack
   // Buffer: {},
+});
+
+import { setup } from 'ember-repl';
+import compiler from 'ember-repl/compiler.js?url';
+import sw from 'ember-repl/service-worker.js?url';
+
+setup({
+  serviceWorker: sw,
+  compiler: compiler,
 });
 
 export default class App extends Application {

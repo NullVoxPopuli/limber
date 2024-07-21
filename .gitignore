@@ -3,6 +3,7 @@
 # compiled output
 dist/
 declarations/
+__screenshots__/
 /tmp/
 /out/
 

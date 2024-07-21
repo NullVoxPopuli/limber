@@ -84,7 +84,7 @@ jobs:
 
 
   tests:
-    name: "Ember Tests"
+    name: "Browser Tests"
     strategy:
       matrix:
         # os: [ubuntu-latest, macOS-latest, windows-latest]
@@ -109,7 +109,7 @@ jobs:
           echo "NPM: $( npm --version )"
           echo "pnpm: $( pnpm --version )"
       - name: Test
-        run: pnpm turbo test:ember
+        run: pnpm turbo test:chrome test:firefox
         env:
           CI_BROWSER: ${{ matrix.ci_browser }}
 
