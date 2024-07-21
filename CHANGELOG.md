@@ -1,5 +1,33 @@
 # Changelog
 
+## Release (2024-07-21)
+
+limber-ui 1.0.4 (patch)
+ember-repl 4.3.1 (patch)
+codemirror-lang-glimdown 0.0.3 (patch)
+codemirror-lang-glimmer-js 0.0.3 (patch)
+codemirror-lang-glimmer 0.0.3 (patch)
+
+#### :bug: Bug Fix
+* `ember-repl`, `ember-repl-test-app`
+  * [#1800](https://github.com/NullVoxPopuli/limber/pull/1800) when compiling gdm, fix an issue with (not) escaping {{ }} within inline code tags ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :memo: Documentation
+* `limber`, `tutorial`, `@nullvoxpopuli/limber-codemirror`, `limber-ui`, `limber-ui-test-app`, `@nullvoxpopuli/limber-transpilation`, `ember-repl`, `ember-repl-test-app`, `@glimdown/lezer-infra`, `codemirror-lang-glimdown`, `codemirror-lang-glimmer-js`, `codemirror-lang-glimmer`
+  * [#1789](https://github.com/NullVoxPopuli/limber/pull/1789) Begin usage of Kolay (latest) in the tutorial ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `tutorial`
+  * [#1793](https://github.com/NullVoxPopuli/limber/pull/1793) Fixed issue #1792: Used of modifier instead of component. ([@bitxplora](https://github.com/bitxplora))
+  * [#1791](https://github.com/NullVoxPopuli/limber/pull/1791) Update htmlSafe prose.md ([@johnpatrickanders](https://github.com/johnpatrickanders))
+  * [#1790](https://github.com/NullVoxPopuli/limber/pull/1790) Update 4-logic/10-unless-block answer.gjs ([@johnpatrickanders](https://github.com/johnpatrickanders))
+
+#### :house: Internal
+* [#1783](https://github.com/NullVoxPopuli/limber/pull/1783) Update deploy-preview.yml ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 3
+- 'Dayo Olutayo ([@bitxplora](https://github.com/bitxplora))
+- John Anders ([@johnpatrickanders](https://github.com/johnpatrickanders))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2024-06-24)
 
 limber-ui 1.0.3 (patch)
