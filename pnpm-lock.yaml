@@ -452,12 +452,6 @@ importers:
       ember-route-template:
         specifier: ^1.0.3
         version: 1.0.3
-      highlight.js:
-        specifier: ^11.9.0
-        version: 11.9.0
-      highlightjs-glimmer:
-        specifier: ^2.2.1
-        version: 2.2.1(highlight.js@11.9.0)
       kolay:
         specifier: ^1.2.2
         version: 1.2.2(z5rbq6zwmkzpuwjtznkpibz6tm)

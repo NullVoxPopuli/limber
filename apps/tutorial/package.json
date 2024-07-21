@@ -35,8 +35,6 @@
     "ember-primitives": "^0.21.0",
     "ember-resources": "^7.0.1",
     "ember-route-template": "^1.0.3",
-    "highlight.js": "^11.9.0",
-    "highlightjs-glimmer": "^2.2.1",
     "kolay": "^1.2.2",
     "limber-ui": "workspace:*",
     "reactiveweb": "^1.2.0",
