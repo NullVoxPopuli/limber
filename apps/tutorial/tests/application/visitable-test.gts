@@ -57,7 +57,9 @@ module('every tutorial chapter', function (hooks) {
 
           // every page except the last one (99-next-steps/1-congratulations)
           // should have a "next" button
-          await waitUntil(() => this.owner.lookup('service:selected').isReady, {'timeoutMessage': 'Selected service was never ready'})
+          await waitUntil(() => this.owner.lookup('service:selected').isReady, {
+            timeoutMessage: 'Selected service was never ready',
+          });
 
           let nextLink = find('[data-test-next]');
 
