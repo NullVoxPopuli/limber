@@ -57,8 +57,8 @@
           ], {type: 'text/javascript'});
 
           const blobUrl = URL.createObjectURL(blob);
-          return blobUrl;
           // window.addImportMap(id, blobUrl);
+          return blobUrl;
           // return './example-fake-module';
         }
         case 'example-2': {
@@ -67,6 +67,7 @@
           ], {type: 'text/javascript'});
 
           const blobUrl = URL.createObjectURL(blob);
+          // window.addImportMap(id, blobUrl);
           return blobUrl;
         }
         /**
@@ -112,14 +113,14 @@
 
 
   <script type="module-shim">
-    import { itsAModule } from "example-fake-module";
-    
-    console.log({ itsAModule });
+    import {itsAModule} from "example-fake-module";
+
+    console.log({itsAModule});
   </script>
   <script type="module-shim">
-    import { three } from "example-2";
-    
-    console.log({ three });
+    import {three} from "example-2";
+
+    console.log({three});
   </script>
   <script type="module-shim">
     import { js } from "example-3/example.js";

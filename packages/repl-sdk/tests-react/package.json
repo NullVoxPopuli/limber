@@ -1,0 +1,22 @@
+{
+  "name": "@nullvoxpopuli/repl-sdk-tests-react",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "pnpm test:firefox",
+    "test:chrome": "vitest --browser.name=chrome --browser.headless",
+    "test:firefox": "vitest --browser.name=firefox --browser.headless"
+  },
+  "author": "NullvoxPopuli",
+  "devDependencies": {
+    "@testing-library/dom": "^10.3.2",
+    "@vitest/browser": "^2.0.3",
+    "vitest": "^2.0.3",
+    "webdriverio": "^8.39.1"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "repl-sdk": "workspace:^"
+  }
+}

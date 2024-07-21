@@ -1,0 +1,11 @@
+
+{
+  "extends": "@tsconfig/ember/tsconfig.json",
+  "include": ["src/**/*", "unpublished-development-types/**/*"],
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "declaration": true,
+    "allowImportingTsExtensions": true,
+    "declarationDir": "declarations"
+  }
+}

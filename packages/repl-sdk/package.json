@@ -1,0 +1,26 @@
+{
+  "name": "repl-sdk",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./declarations/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "start": "vite build --watch",
+    "prepack": "vite build"
+  },
+  "keywords": ["repl", "playground", "SDK", "render", "play", "javascript", "live", "interactive"],
+  "author": "NullVoxPopuli",
+  "files": ["dist", "declarations", "src"],
+  "license": "MIT",
+  "devDependencies": {
+    "@tsconfig/ember": "^3.0.7",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11",
+    "vite-plugin-dts": "4.0.0-beta.1"
+  }
+}
