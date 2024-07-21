@@ -5,7 +5,7 @@
   "type": "module",
   "dependencies": {
     "@codemirror/language": "^6.10.1",
-    "@codemirror/view": "^6.28.1",
+    "@codemirror/view": "^6.28.6",
     "@lezer/generator": "^1.6.0",
     "@lezer/highlight": "^1.2.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
