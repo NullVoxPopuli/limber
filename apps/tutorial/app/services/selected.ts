@@ -1,24 +1,31 @@
 import Service, { service } from '@ember/service';
 
 import { use } from 'ember-resources';
+import { Compiled as MarkdownToHTML } from 'kolay';
 import { keepLatest } from 'reactiveweb/keep-latest';
 import { link } from 'reactiveweb/link';
 import { RemoteData } from 'reactiveweb/remote-data';
 
-import { MarkdownToHTML } from './markdown';
-
 import type DocsService from './docs';
-import type { Tutorial } from './types';
 import type RouterService from '@ember/routing/router-service';
+import type { Page } from 'kolay';
+
+function unprose(prosePath: string | undefined) {
+  if (!prosePath) return;
+
+  return prosePath.replace(/\/prose.md$/, '');
+}
 
 /**
  * To help reduce load time between chapters, we'll load
  * the next and previous documents for each page
  */
-async function preload(path?: string) {
-  if (!path) return;
+async function preload(prosePath?: string) {
+  if (!prosePath) return;
 
   await Promise.resolve();
+
+  let path = unprose(prosePath);
 
   await Promise.all([
     fetch(`/docs/${path}/prose.md`),
@@ -38,7 +45,7 @@ class DocFile {
   }
 
   get url() {
-    return `/docs${this.docs.currentPath}/${this.#fileName}`;
+    return `/docs/${this.docs.currentPath}/${this.#fileName}`;
   }
 
   /*********************************************************************
@@ -87,8 +94,8 @@ export default class Selected extends Service {
   @use proseCompiled = MarkdownToHTML(() => this.proseFile.content);
 
   @use prose = keepLatest({
-    value: () => this.proseCompiled.html,
-    when: () => !this.proseCompiled.ready,
+    value: () => this.proseCompiled.component,
+    when: () => !this.proseCompiled.isReady,
   });
 
   /**
@@ -118,15 +125,15 @@ export default class Selected extends Service {
     return this.answer.exists;
   }
 
-  get next(): Tutorial | undefined {
+  get next(): string | undefined {
     let found = false;
     let current = this.tutorial;
 
-    for (let tutorial of this.docs.flatList) {
+    for (let tutorial of this.docs.tutorials) {
       if (found) {
         preload(tutorial.path);
 
-        return tutorial;
+        return unprose(tutorial.path);
       }
 
       if (current?.path && current.path === tutorial.path) {
@@ -137,15 +144,15 @@ export default class Selected extends Service {
     return;
   }
 
-  get previous(): Tutorial | undefined {
+  get previous(): string | undefined {
     let previous = undefined;
     let current = this.tutorial;
 
-    for (let tutorial of this.docs.flatList) {
+    for (let tutorial of this.docs.tutorials) {
       if (current?.path === tutorial.path) {
         preload(previous?.path);
 
-        return previous;
+        return unprose(previous?.path);
       }
 
       previous = tutorial;
@@ -154,20 +161,15 @@ export default class Selected extends Service {
     return;
   }
 
-  get tutorial(): Tutorial | undefined {
+  get tutorial(): Page | undefined {
     if (!this.docs.currentPath) return;
 
     return this.#findByPath(this.docs.currentPath);
   }
 
   #findByPath = (path: string) => {
-    return this.docs.flatList.find((tutorial) => tutorial.path === path);
-  };
-}
+    let prosePath = `${path}/prose.md`;
 
-// DO NOT DELETE: this is how TypeScript knows how to look up your services.
-declare module '@ember/service' {
-  interface Registry {
-    selected: Selected;
-  }
+    return this.docs.tutorials.find((tutorial) => tutorial.path === prosePath);
+  };
 }

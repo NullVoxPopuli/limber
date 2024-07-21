@@ -26,7 +26,7 @@ module.exports = async function (defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  const { createManifest } = await import('kolay/build');
+  const { kolay } = await import('kolay/webpack');
 
   const { Webpack } = require('@embroider/webpack');
 
@@ -43,9 +43,8 @@ module.exports = async function (defaults) {
     packagerOptions: {
       webpackConfig: {
         plugins: [
-          createManifest.webpack({
+          kolay({
             src: 'public/docs',
-            dest: 'docs',
             /**
              * Pending: https://github.com/emberjs/ember.js/issues/20419
              */
@@ -54,6 +53,7 @@ module.exports = async function (defaults) {
              * This project has convention a based manifest so we only need directories
              */
             onlyDirectories: true,
+            packages: [],
           }),
         ],
       },

@@ -28,19 +28,20 @@
     "release-plan": "^0.9.0",
     "turbo": "^2.0.4"
   },
-  "packageManager": "pnpm@9.4.0",
+  "packageManager": "pnpm@9.5.0",
   "engines": {
     "node": ">= 16"
   },
   "volta": {
     "node": "20.13.1",
-    "pnpm": "9.4.0"
+    "pnpm": "9.5.0"
   },
   "pnpm": {
     "overrides": {
       "@nullvoxpopuli/eslint-configs": "^4.0.0",
       "ember-element-helper": "^0.8.5",
       "ember-auto-import": "^2.7.2",
+      "ember-repl": "workspace:*",
       "ember-source": ">= 5.9.0",
       "webpack": "5.92.0"
     },

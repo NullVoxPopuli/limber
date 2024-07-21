@@ -4,7 +4,6 @@ import { StickyFooter } from 'ember-primitives';
 import { service } from 'limber-ui';
 
 import { FooterContent } from './footer';
-import { highlight } from './highlight';
 import { NotFound } from './prose-not-found';
 
 import type { TOC } from '@ember/component/template-only';
@@ -29,10 +28,9 @@ export const Prose: TOC<{ Element: HTMLDivElement }> = <template>
       {{resetScroll docs.selected.prose}}
     >
       <:content>
-        <div data-prose class="prose p-4" {{highlight docs.selected.prose}}>
+        <div data-prose class="prose p-4">
           {{#if docs.selected.hasProse}}
-            {{! template-lint-disable no-triple-curlies }}
-            {{{docs.selected.prose}}}
+            <docs.selected.prose />
           {{else}}
             <NotFound />
           {{/if}}

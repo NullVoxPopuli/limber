@@ -4,6 +4,7 @@ import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { isCollection } from 'kolay';
 
 import type RouterService from '@ember/routing/router-service';
 import type DocsService from 'tutorial/services/docs';
@@ -62,15 +63,20 @@ export class Selection extends Component {
         class="bg-none border border-gray-900 font-lg rounded p-2 w-full h-full indent-[-100000px]"
         {{on "change" this.handleChange}}
       >
-        {{#each-in this.docs.grouped as |group tutorials|}}
-          <optgroup label={{titleize group}}>
-            {{#each tutorials as |tutorial|}}
-              <option value={{tutorial.path}} selected={{this.isSelected tutorial}}>
-                {{titleize tutorial.name}}
-              </option>
-            {{/each}}
+        {{#each this.docs.grouped.pages as |group|}}
+          <optgroup label={{titleize group.name}}>
+            {{#if (isCollection group)}}
+              {{#each group.pages as |tutorial|}}
+                <option
+                  value="/{{group.path}}/{{tutorial.path}}"
+                  selected={{this.isSelected tutorial}}
+                >
+                  {{titleize tutorial.name}}
+                </option>
+              {{/each}}
+            {{/if}}
           </optgroup>
-        {{/each-in}}
+        {{/each}}
       </select>
     </label>
   </template>

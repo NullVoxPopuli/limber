@@ -90,7 +90,7 @@
     "qunit-dom": "3.2.0",
     "typescript": "^5.4.5",
     "unified": "^10.1.2",
-    "webpack": "5.92.1"
+    "webpack": "5.92.0"
   },
   "engines": {
     "node": ">= v16",

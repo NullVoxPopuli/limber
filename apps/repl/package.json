@@ -36,7 +36,7 @@
   "devDependencies": {
     "@babel/core": "^7.24.5",
     "@babel/eslint-parser": "^7.24.5",
-    "@codemirror/view": "6.28.3",
+    "@codemirror/view": "6.28.6",
     "@ember/optional-features": "^2.0.0",
     "@ember/string": "^3.1.1",
     "@ember/test-helpers": "^3.2.1",
@@ -113,7 +113,7 @@
     "type-fest": "4.20.1",
     "typescript": "^5.4.5",
     "vfile": "^6.0.1",
-    "webpack": "5.92.1",
+    "webpack": "5.92.0",
     "yn": "^5.0.0"
   },
   "engines": {
@@ -153,7 +153,7 @@
     "highlight.js": "^11.9.0",
     "highlightjs-glimmer": "^2.2.1",
     "html-to-image": "^1.11.11",
-    "kolay": "^0.0.3",
+    "kolay": "^1.2.2",
     "limber-ui": "workspace:*",
     "lz-string": "^1.5.0",
     "path-browserify": "^1.0.1",

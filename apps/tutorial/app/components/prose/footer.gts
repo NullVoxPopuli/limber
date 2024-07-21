@@ -24,11 +24,7 @@ export const FooterContent = <template>
           <span></span>
         {{/if}}
 
-        <Link
-          data-test-next
-          href={{docs.selected.next.path}}
-          @isDisabled={{not docs.selected.next.path}}
-        >
+        <Link data-test-next href={{docs.selected.next}} @isDisabled={{not docs.selected.next}}>
           <span>Next</span>
           <FaIcon @icon="angle-right" />
         </Link>

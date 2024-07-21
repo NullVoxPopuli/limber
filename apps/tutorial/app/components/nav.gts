@@ -9,13 +9,13 @@ const not = (x: unknown) => !x;
 export const Nav = <template>
   <nav class="grid gap-2 p-2 shadow grid-cols-[min-content_1fr_min-content]">
     {{#let (service "selected") as |selected|}}
-      <Link href={{selected.previous.path}} @isDisabled={{not selected.previous}}>
+      <Link href={{selected.previous}} @isDisabled={{not selected.previous}}>
         <FaIcon @icon="angle-left" />
       </Link>
 
       <Selection />
 
-      <Link href={{selected.next.path}} @isDisabled={{not selected.next}}>
+      <Link href={{selected.next}} @isDisabled={{not selected.next}}>
         <FaIcon @icon="angle-right" />
       </Link>
     {{/let}}
