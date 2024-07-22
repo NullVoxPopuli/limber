@@ -7,7 +7,6 @@ function createComplier() {
     formats: {
       jsx: {
         compiler: async () => {
-          // const { createPortal } = await import('react-dom');
           const { createRoot } = await import('react-dom/client');
           // @ts-ignore
           const babel = await import('@babel/standalone');
@@ -21,9 +20,11 @@ function createComplier() {
               return result.code;
             },
             render: async (element, component) => {
-              // createPortal(component, element);
               const root = createRoot(element);
               root.render(component);
+
+              // Wait for react-dom to render
+              await new Promise(resolve => requestIdleCallback(resolve))
             }
           };
         }
@@ -35,6 +36,7 @@ function createComplier() {
 describe('Custom compiler', () => {
   test('it works', async () => {
     let compiler = createComplier();
+    // React comes from esm.sh
     let element = await compiler.compile('jsx', `
       import React from 'react';
 
@@ -45,7 +47,6 @@ describe('Custom compiler', () => {
       </>;
     `);
 
-    console.log({ element: element.innerHTML });
     expect(element.querySelector('h1').textContent).toContain('Hello World');
     expect(element.textContent).toContain('Hello World');
   });

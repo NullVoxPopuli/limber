@@ -121,10 +121,10 @@ export class Compiler {
     return compiler;
   }
 
-  #render(compiler, whatToRender) {
+  async #render(compiler, whatToRender) {
     const div = this.#createDiv();
 
-    compiler.render(div, whatToRender);
+    await compiler.render(div, whatToRender);
 
     return div;
   }
@@ -132,6 +132,7 @@ export class Compiler {
   #createDiv() {
     let div = document.createElement('div');
     div.setAttribute('data-repl-output', '');
+    div.id = 'some-random-string';
     return div;
   }
 }
