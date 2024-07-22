@@ -1,4 +1,4 @@
-import { resolveImportMap } from './imports.ts';
+// import { resolveImportMap } from './imports.ts';
 import { invocationName } from './utils.ts';
 
 import type { ExtractedCode } from './formats/markdown.ts';
@@ -22,9 +22,9 @@ export async function compileGJS(
   try {
     let { compileJS } = await import('./formats/gjs/index.ts');
 
-    let importMap2 = await resolveImportMap(gjsInput, importMap);
-
-    console.log(importMap2);
+    // let importMap2 = await resolveImportMap(gjsInput, importMap);
+    //
+    // console.log(importMap2);
 
     return await compileJS(gjsInput, importMap);
   } catch (error) {

@@ -5,14 +5,14 @@ export interface EvalImportMap {
   /**
    * The name of the module to import and the value that will be imported.
    * For example:
-   * ```js 
+   * ```js
    * {
    *   'my-library': () => import('my-library'),
    * }
    * ```
    *
    * or, if you want to make a fake module, you may specify its exports
-   * ```js 
+   * ```js
    * {
    *   'my-library': { Foo, Bar }
    * }

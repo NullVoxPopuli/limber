@@ -6,7 +6,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { stripIndent } from 'common-tags';
 import { Compiled } from 'ember-repl';
 
-
 const { assert } = QUnit;
 const { Boolean } = globalThis;
 
@@ -43,7 +42,6 @@ module('Rendering | Compiled()', function (hooks) {
     assert.dom('#component').hasAttribute('data-test-component');
   }
 
-
   test('it works', async function (assert) {
     let doc = stripIndent`
       hello there
@@ -73,9 +71,9 @@ module('Rendering | Compiled()', function (hooks) {
           'fake-module': () => {
             return {
               two: 2,
-            }
-          }
-        }
+            };
+          },
+        },
       };
 
       await renderTest(doc, options);
