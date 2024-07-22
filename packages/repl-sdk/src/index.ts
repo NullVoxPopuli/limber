@@ -1,19 +1,19 @@
 export const defaultFormats: Options['formats'] = {
-   mermaid: {
+  mermaid: {
     compiler: async () => {
       return {
         compile: async (text) => {
         }
       }
     }
-  } 
+  }
 };
 
 export const defaults = {
   formats: defaultFormats,
 };
 
-export interface Options<Extension extends string>{
+export interface Options<Extension extends string> {
   formats: {
     [fileExtension: Extension]: {
       /**
@@ -85,17 +85,24 @@ export class Compiler<Extension> {
     this.#options = options;
   }
 
-  compile(format: string, text: string): Promise<HTMLElement> { 
-    let compilerFn = this.#options.formats[format];
+  compile = async (format: string, text: string): Promise<HTMLElement> => {
+    const config = this.#options.formats[format];
 
     assert(
       `${format} is not a configured format. `
-        +`The currently configured formats are ${Object.keys(this.#options.formats).join(', ')}`, 
-      compilerFn
+      + `The currently configured formats are ${Object.keys(this.#options.formats).join(', ')}`,
+      config
     );
 
-    let div = this.#createDiv();
+    const compiler = await config.compiler();
+    // TODO: pass this through es-module-shims
+    //       for getting the actual module back
+    const compiledText = await compiler.compile(text);
 
+
+    const div = this.#createDiv();
+
+    compiler.render(div, compiledText);
 
     return div;
   }
@@ -104,7 +111,7 @@ export class Compiler<Extension> {
     let div = document.createElement('div');
     div.setAttribute('data-repl-output', '');
     return div;
-  } 
+  }
 }
 
 

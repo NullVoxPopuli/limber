@@ -4,11 +4,12 @@
   "type": "module",
   "scripts": {
     "test": "pnpm test:firefox",
-    "test:chrome": "vitest --browser.name=chrome --browser.headless",
-    "test:firefox": "vitest --browser.name=firefox --browser.headless"
+    "test:chrome": "vitest --browser.name=chrome",
+    "test:firefox": "vitest --browser.name=firefox"
   },
   "author": "NullvoxPopuli",
   "devDependencies": {
+    "@swc/wasm-web": "^1.7.0",
     "@testing-library/dom": "^10.3.2",
     "@vitest/browser": "^2.0.3",
     "vitest": "^2.0.3",
