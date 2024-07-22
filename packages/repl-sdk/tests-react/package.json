@@ -9,7 +9,7 @@
   },
   "author": "NullvoxPopuli",
   "devDependencies": {
-    "@swc/wasm-web": "^1.7.0",
+    "@babel/standalone": "^7.24.5",
     "@testing-library/dom": "^10.3.2",
     "@vitest/browser": "^2.0.3",
     "vite-plugin-wasm": "^3.3.0",

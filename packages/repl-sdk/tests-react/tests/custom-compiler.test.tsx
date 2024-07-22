@@ -1,6 +1,5 @@
 import { describe, expect, test } from 'vitest'
 import { Compiler } from 'repl-sdk';
-import * as swc from '@swc/wasm-web';
 
 
 function createComplier() {
@@ -8,36 +7,23 @@ function createComplier() {
     formats: {
       jsx: {
         compiler: async () => {
+          // const { createPortal } = await import('react-dom');
           const { createRoot } = await import('react-dom/client');
-          // const swc = await import("@swc/wasm-web");
-
-          await swc.default();
+          // @ts-ignore
+          const babel = await import('@babel/standalone');
 
           return {
             compile: async (text) => {
-              const result = swc.transformSync(text, {
-                jsc: {
-                  parser: {
-                    syntax: 'ecmascript',
-                    jsx: true,
-                  },
-                  target: 'es2022',
-                },
-                module: {
-                  type: 'es6'
-                },
-                minify: false,
-                isModule: true,
-                sourceMaps: 'inline'
+              const result = babel.transform(text, {
+                filename: `repl.js`,
+                presets: [babel.availablePresets.react],
               });
-
               return result.code;
             },
-            render: async (element, defaultExport) => {
-              console.log(defaultExport);
+            render: async (element, component) => {
+              // createPortal(component, element);
               const root = createRoot(element);
-
-              root.render(defaultExport);
+              root.render(component);
             }
           };
         }
@@ -50,6 +36,8 @@ describe('Custom compiler', () => {
   test('it works', async () => {
     let compiler = createComplier();
     let element = await compiler.compile('jsx', `
+      import React from 'react';
+
       export default <>
         <h1>Hello World</h1>
 
@@ -57,7 +45,7 @@ describe('Custom compiler', () => {
       </>;
     `);
 
-    console.log({ element });
+    console.log({ element: element.innerHTML });
     expect(element.querySelector('h1').textContent).toContain('Hello World');
     expect(element.textContent).toContain('Hello World');
   });
