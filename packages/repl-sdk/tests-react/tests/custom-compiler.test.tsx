@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import { Compiler } from 'repl-sdk';
+import * as swc from '@swc/wasm-web';
 
 
 function createComplier() {
@@ -8,14 +9,12 @@ function createComplier() {
       jsx: {
         compiler: async () => {
           const { createRoot } = await import('react-dom/client');
-          const swc = await ("@swc/wasm-web");
+          // const swc = await import("@swc/wasm-web");
 
-          // @ts-ignore
-          await swc.init();
+          await swc.default();
 
           return {
             compile: async (text) => {
-              // @ts-ignore
               const result = swc.transformSync(text, {
                 jsc: {
                   parser: {
@@ -48,9 +47,9 @@ function createComplier() {
 }
 
 describe('Custom compiler', () => {
-  test('it works', () => {
+  test('it works', async () => {
     let compiler = createComplier();
-    let element = compiler.compile('jsx', `
+    let element = await compiler.compile('jsx', `
       export default <>
         <h1>Hello World</h1>
 
@@ -58,6 +57,7 @@ describe('Custom compiler', () => {
       </>;
     `);
 
+    console.log({ element });
     expect(element.querySelector('h1').textContent).toContain('Hello World');
     expect(element.textContent).toContain('Hello World');
   });

@@ -1,21 +1,6 @@
-export const defaultFormats: Options['formats'] = {
-  mermaid: {
-    compiler: async () => {
-      return {
-        compile: async (text) => {
-        }
-      }
-    }
-  }
-};
-
-export const defaults = {
-  formats: defaultFormats,
-};
-
-export interface Options<Extension extends string> {
+export interface Options {
   formats: {
-    [fileExtension: Extension]: {
+    [fileExtension: string]: {
       /**
        * When using this file extension in markdown documents,
        * should we only evaluate the code block if the "live" 
@@ -75,48 +60,3 @@ export interface Options<Extension extends string> {
   }
 }
 
-export class Compiler<Extension> {
-  #options: Options<Extension>;
-
-  /**
-   * Options may be passed to the compiler to add to its behavior.
-   */
-  constructor(options: Options<Extension> = defaults) {
-    this.#options = options;
-  }
-
-  compile = async (format: string, text: string): Promise<HTMLElement> => {
-    const config = this.#options.formats[format];
-
-    assert(
-      `${format} is not a configured format. `
-      + `The currently configured formats are ${Object.keys(this.#options.formats).join(', ')}`,
-      config
-    );
-
-    const compiler = await config.compiler();
-    // TODO: pass this through es-module-shims
-    //       for getting the actual module back
-    const compiledText = await compiler.compile(text);
-
-
-    const div = this.#createDiv();
-
-    compiler.render(div, compiledText);
-
-    return div;
-  }
-
-  #createDiv = () => {
-    let div = document.createElement('div');
-    div.setAttribute('data-repl-output', '');
-    return div;
-  }
-}
-
-
-function assert(message: string, test: unknown): asserts test {
-  if (!test) {
-    throw new Error(message);
-  }
-}
