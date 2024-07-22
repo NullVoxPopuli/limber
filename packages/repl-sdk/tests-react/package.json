@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "test": "pnpm test:firefox",
-    "test:chrome": "vitest --browser.name=chrome",
-    "test:firefox": "vitest --browser.name=firefox"
+    "test:chrome": "vitest --browser.name=chrome --browser.headless=true",
+    "test:firefox": "vitest --browser.name=firefox --browser.headless=true"
   },
   "author": "NullvoxPopuli",
   "devDependencies": {
