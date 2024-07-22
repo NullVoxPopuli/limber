@@ -1,5 +1,5 @@
 {
-  "name": "@nullvoxpopuli/ember-repl-spikes",
+  "name": "@nullvoxpopuli/ember-repl-es-module-shim",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
