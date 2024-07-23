@@ -3,21 +3,14 @@
  */
 import { assert } from './utils.js';
 
+import { compilers } from './compilers.js';
+
 assert(`There is no document. repl-sdk is meant to be ran in a browser`, globalThis.document);
 
-export const defaultFormats = {
-  mermaid: {
-    compiler: async () => {
-      return {
-        compile: async (text) => {},
-        render: async (element, defaultExport) => {},
-      };
-    },
-  },
-};
+export const defaultFormats = Object.keys(compilers);
 
 export const defaults = {
-  formats: defaultFormats,
+  formats: compilers,
 };
 
 const secret = Symbol.for('__repl-sdk__compiler__');
@@ -141,6 +134,9 @@ export class Compiler {
     const div = this.#createDiv();
 
     await compiler.render(div, whatToRender, extras);
+
+    // Wait for render
+    await new Promise((resolve) => requestIdleCallback(resolve));
 
     return div;
   }

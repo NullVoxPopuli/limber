@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>REPL SDK Example</title>
+</head>
+
+<body>
+  <div class="layout">
+    <form>
+      <label>
+        Code
+        <textarea name="code" lines="10"></textarea>
+      </label>
+      <label>
+        Format
+        <select name="format">
+        </select>
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+    <fieldset>
+      <legend>output</legend>
+      <output></output>
+    </fieldset>
+  </div>
+
+  <style>
+    .layout {
+      display: flex;
+      gap: 1rem;
+    }
+
+    form {
+      display: grid;
+      gap: 0.5rem;
+      align-content: start;
+    }
+  </style>
+
+  <script type="module">
+    import {Compiler, defaultFormats} from '../src/index.js';
+
+    let compiler = new Compiler();
+
+    let e = {
+      form: document.querySelector('form'),
+      output: document.querySelector('output'),
+      select: document.querySelector('select'),
+      code: document.querySelector('textarea'),
+    }
+
+    defaultFormats.map(format => {
+      let option = document.createElement('option');
+      option.setAttribute('value', format);
+      option.innerText = format;
+      e.select.appendChild(option);
+    });
+
+    e.select.firstChild.selected = true;
+    e.code.innerHTML = `graph TD;
+  A-->B;
+  A-->C;
+  B-->D;
+  C-->D;
+`;
+
+    e.form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      let formData = new FormData(event.currentTarget);
+
+      let code = formData.get('code');
+      let format = formData.get('format');
+
+      let element = await compiler.compile(format, code);
+      e.output.appendChild(element);
+    });
+  </script>
+</body>
+
+</html>

@@ -22,7 +22,14 @@ export interface Options {
        * \`\`\`
        */
       needsLiveMeta?: boolean;
-      compiler: () => Promise<{
+      compiler: (
+        /**
+         * The config for the compiler may be passed by the caller.
+         * Common use case for this object is specifying what versions 
+         * of the compiler/library/framework dependencies to use.
+         */
+        config: Record<string, unknown>
+      ) => Promise<{
         /**
          * Convert a string from "fileExtension" to standard JavaScript.
          * This will be loaded as a module and then passed to the render method.

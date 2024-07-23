@@ -9,22 +9,18 @@ function createComplier() {
         compiler: async () => {
           const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
 
+          // mermaid.initialize({ startOnLoad: false });
+          let id = 0;
           return {
-            compile: async (text, fileName) => {
+            compile: async (text) => {
               return `export default \`${text}\`;`;
             },
             render: async (element, text) => {
-              let pre = document.createElement('pre');
+              let { svg } = await mermaid.render('graphDiv' + id++, text);
 
-              pre.classList.add('mermaid');
-              pre.innerHTML = text;
+              element.innerHTML = svg;
 
-              element.appendChild(pre);
-
-              // Mermaid has no way to scope to an element
-              mermaid.initialize({ startOnLoad: true });
-              // Wait for render
-              await new Promise(resolve => requestIdleCallback(resolve))
+              mermaid.run({ nodes: [element], securityLevel: 'loose' });
             }
           };
         }
@@ -38,17 +34,19 @@ describe('Custom compiler', () => {
     let compiler = createComplier();
     // Vue comes from esm.sh
     let element = await compiler.compile('mermaid', `
-      graph TD
-      A[Client] --> B[Load Balancer]
-      B --> C[Server01]
-      B --> D[Server02]
+  graph TD
+
+  A[Client] --> B[Load Balancer]
+  B --> C[Server01]
+  B --> D[Server02]
     `);
 
     // getComputedStyle doesn't work without the element existing in the document
     document.body.appendChild(element);
 
+    let rootSVG = element.querySelector('svg');
     console.log(element.innerHTML);
-
+    expect(rootSVG, "Mermaid draws in SVG inside the <pre> tag").toBeTruthy();
   });
 });
 

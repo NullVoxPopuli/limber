@@ -9,6 +9,7 @@
     }
   },
   "scripts": {
+    "example": "cd example && vite",
     "start": "vite build --watch",
     "prepack": "vite build"
   },
