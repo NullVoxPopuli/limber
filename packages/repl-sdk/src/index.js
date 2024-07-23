@@ -10,6 +10,7 @@ export const defaultFormats = {
     compiler: async () => {
       return {
         compile: async (text) => {},
+        render: async (element, defaultExport) => {},
       };
     },
   },
@@ -90,21 +91,36 @@ export class Compiler {
   /**
    * @param {string} format
    * @param {string} text
+   * @param {{ fileName: string }} [ options ]
+   * @returns {}
    */
-  async compile(format, text) {
+  async compile(format, text, options = {}) {
     await import('es-module-shims');
 
-    const compiler = await this.#getCompiler(format);
+    let opts = { ...options };
 
-    // TODO: pass this through es-module-shims
-    //       for getting the actual module back
-    const compiledText = await compiler.compile(text);
+    opts.fileName ||= `dynamic.${format}`;
+
+    const compiler = await this.#getCompiler(format);
+    const compiled = await compiler.compile(text, opts.fileName);
+
+    let compiledText = 'export default "failed to compile"';
+    let extras = {};
+
+    if (typeof compiled === 'string') {
+      compiledText = compiled;
+      extras = { compiled: compiledText };
+    } else {
+      let { compiled: text } = compiled;
+      compiledText = text;
+      extras = compiled;
+    }
 
     const asBlobUrl = textToBlobUrl(compiledText);
 
     const { default: defaultExport } = await importShim(/* @vite-ignore */ asBlobUrl);
 
-    return this.#render(compiler, defaultExport);
+    return this.#render(compiler, defaultExport, extras);
   }
 
   async #getCompiler(format) {
@@ -121,10 +137,10 @@ export class Compiler {
     return compiler;
   }
 
-  async #render(compiler, whatToRender) {
+  async #render(compiler, whatToRender, extras) {
     const div = this.#createDiv();
 
-    await compiler.render(div, whatToRender);
+    await compiler.render(div, whatToRender, extras);
 
     return div;
   }

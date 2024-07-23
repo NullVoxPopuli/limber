@@ -26,8 +26,10 @@ export interface Options {
         /**
          * Convert a string from "fileExtension" to standard JavaScript.
          * This will be loaded as a module and then passed to the render method.
+         *
+         * You may return either just a string, or an object with a `compiled` property that is a string -- any additional properties will be passde through to the render function -- which may be useful if there is accompanying CSS.
          */
-        compile: (text: string) => Promise<string>;
+        compile: (text: string) => Promise<string | ({ compiled: string } & Record<string, unknown>)>;
         /**
          * For the root of a node rendered for this compiler,
          * how will this particular library / framework
@@ -52,9 +54,10 @@ export interface Options {
          * ```
          *
          * @param {HTMLElement} the element to render in to, this is provided by repl-sdk.
-         * @param {any} the default export from the compiled module.
+         * @param {any} defaultExport the default export from the compiled module.
+         * @param {{ compiled: string } & Record<string, unknown>} extras the compiled string (for reference), as well as any extra information that may have been returned from the compile function.
          */
-        render: (element: HTMLElement, defaultExport: any) => void;
+        render: (element: HTMLElement, defaultExport: any, extras: { compiled: string } & Record<string, unknown>) => void;
       }>;
     }
   }

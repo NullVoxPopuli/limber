@@ -1,5 +1,5 @@
 {
-  "name": "@nullvoxpopuli/repl-sdk-tests-react",
+  "name": "@nullvoxpopuli/repl-sdk-tests-vue",
   "private": true,
   "type": "module",
   "scripts": {
@@ -18,8 +18,8 @@
     "webdriverio": "^8.39.1"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "repl-sdk": "workspace:^"
+    "@vue/repl": "^4.3.1",
+    "repl-sdk": "workspace:^",
+    "vue": "^3.4.33"
   }
 }
