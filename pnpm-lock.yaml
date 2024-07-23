@@ -1811,6 +1811,40 @@ importers:
         specifier: ^8.39.1
         version: 8.39.1
 
+  packages/repl-sdk/tests-self:
+    dependencies:
+      '@vue/repl':
+        specifier: ^4.3.1
+        version: 4.3.1
+      repl-sdk:
+        specifier: workspace:^
+        version: link:..
+      vue:
+        specifier: ^3.4.33
+        version: 3.4.33
+    devDependencies:
+      '@babel/standalone':
+        specifier: ^7.24.5
+        version: 7.24.10
+      '@testing-library/dom':
+        specifier: ^10.3.2
+        version: 10.4.0
+      '@vitest/browser':
+        specifier: ^2.0.3
+        version: 2.0.4(vitest@2.0.4)(webdriverio@8.39.1)
+      vite:
+        specifier: ^5.3.4
+        version: 5.3.4
+      vite-plugin-wasm:
+        specifier: ^3.3.0
+        version: 3.3.0(vite@5.3.4)
+      vitest:
+        specifier: ^2.0.3
+        version: 2.0.4(@vitest/browser@2.0.4)
+      webdriverio:
+        specifier: ^8.39.1
+        version: 8.39.1
+
   packages/repl-sdk/tests-vue:
     dependencies:
       '@vue/repl':
