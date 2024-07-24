@@ -82,7 +82,7 @@
     defaultFormats.map(format => {
       let option = document.createElement('option');
       option.setAttribute('value', format);
-      option.innerText = format;
+      option.innerText = `.${format}`;
       if (format === 'mermaid') {
         option.setAttribute('selected', 'selected');
       }
