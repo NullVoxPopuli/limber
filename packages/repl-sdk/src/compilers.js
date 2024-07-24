@@ -87,6 +87,39 @@ export const compilers = {
     },
   },
   /**
+   * https://svelte.dev/
+   */
+  svelte: {
+    compiler: async (config = {}) => {
+      const versions = config.versions || {};
+      const svelteSource = versions['svelte']
+        ? `https://esm.sh/svelte@${versions['svelte']}/compiler`
+        : 'https://esm.sh/svelte/compiler';
+
+      const { compile } = await import(/* vite-ignore */ svelteSource);
+
+      return {
+        compile: async (text, fileName) => {
+          let output = await compile(text);
+          return { compiled: output.js.code, css: output.css.code };
+        },
+        render: async (element, component, { css }) => {
+          let div = document.createElement('div');
+          let style = document.createElement('style');
+
+          style.innerHTML = css;
+
+          element.appendChild(div);
+          element.appendChild(style);
+
+          new component({
+            target: div,
+          });
+        },
+      };
+    },
+  },
+  /**
    * https://vuejs.org/
    */
   vue: {
@@ -130,9 +163,6 @@ export const compilers = {
           element.appendChild(style);
 
           createApp(component).mount(div);
-
-          // Wait for render
-          await new Promise((resolve) => requestIdleCallback(resolve));
         },
       };
     },
