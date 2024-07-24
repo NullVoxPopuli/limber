@@ -3,30 +3,7 @@ import { Compiler } from 'repl-sdk';
 
 
 function createComplier() {
-  return new Compiler({
-    formats: {
-      mermaid: {
-        compiler: async () => {
-          const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
-
-          // mermaid.initialize({ startOnLoad: false });
-          let id = 0;
-          return {
-            compile: async (text) => {
-              return `export default \`${text}\`;`;
-            },
-            render: async (element, text) => {
-              let { svg } = await mermaid.render('graphDiv' + id++, text);
-
-              element.innerHTML = svg;
-
-              mermaid.run({ nodes: [element], securityLevel: 'loose' });
-            }
-          };
-        }
-      }
-    }
-  })
+  return new Compiler()
 }
 
 describe('Custom compiler', () => {
@@ -45,7 +22,7 @@ describe('Custom compiler', () => {
     document.body.appendChild(element);
 
     let rootSVG = element.querySelector('svg');
-    console.log(element.innerHTML);
+
     expect(rootSVG, "Mermaid draws in SVG inside the <pre> tag").toBeTruthy();
   });
 });

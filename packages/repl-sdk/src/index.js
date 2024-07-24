@@ -84,7 +84,7 @@ export class Compiler {
   /**
    * @param {string} format
    * @param {string} text
-   * @param {{ fileName: string }} [ options ]
+   * @param {{ fileName?: string, flavor?: string }} [ options ]
    * @returns {}
    */
   async compile(format, text, options = {}) {
@@ -94,7 +94,7 @@ export class Compiler {
 
     opts.fileName ||= `dynamic.${format}`;
 
-    const compiler = await this.#getCompiler(format);
+    const compiler = await this.#getCompiler(format, opts.flavor);
     const compiled = await compiler.compile(text, opts.fileName);
 
     let compiledText = 'export default "failed to compile"';
@@ -116,13 +116,26 @@ export class Compiler {
     return this.#render(compiler, defaultExport, extras);
   }
 
-  async #getCompiler(format) {
-    const config = this.#options.formats[format];
+  /**
+   * @param {string} format
+   * @param {string | undefined} flavor
+   */
+  async #getCompiler(format, flavor) {
+    let config = this.#options.formats[format];
 
     assert(
-      `${format} is not a configured format. ` +
+      `${format} is not a configured format / extension. ` +
         `The currently configured formats are ${Object.keys(this.#options.formats).join(', ')}`,
       config
+    );
+
+    if (flavor && flavor in config) {
+      config = config[flavor];
+    }
+
+    assert(
+      `The config for ${format}${flavor ? ` (using flavor ${flavor})` : ''} is missing the 'compiler' function. It had keys: ${Object.keys(config)}`,
+      'compiler' in config
     );
 
     const compiler = await config.compiler();
@@ -149,20 +162,20 @@ export class Compiler {
   }
 }
 
-function addShim() {
-  let url = 'https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js';
-
-  if (document.querySelector('script[src="${url}"]')) {
-    // Shim is already present
-    return;
-  }
-
-  let script = document.createElement('script');
-  // script.setAttribute('async', '');
-  script.setAttribute('src', `<script async src="${url}"></script>`);
-
-  document.head.appendChild(script);
-}
+// function addShim() {
+//   let url = 'https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js';
+//
+//   if (document.querySelector('script[src="${url}"]')) {
+//     // Shim is already present
+//     return;
+//   }
+//
+//   let script = document.createElement('script');
+//   // script.setAttribute('async', '');
+//   script.setAttribute('src', `<script async src="${url}"></script>`);
+//
+//   document.head.appendChild(script);
+// }
 
 /**
  * @param {string} text

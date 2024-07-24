@@ -1,4 +1,69 @@
 export const compilers = {
+  /**
+   * JSX is too overloaded to treat one way.
+   * We need to split this, and then make folks choose which one to use
+   * - jsx-react
+   * - jsx-vue
+   * - jsx-solid
+   * - (etc)
+   *
+   * This means that as a generic compiler, we can't just have jsx support.
+   * And in markdown, we'll need to support choosing which flavor of jsx
+   * via meta tags on the codefences.
+   *
+   * For example:
+   * ```jsx solid
+   * export default <></>;
+   * ```
+   *
+   * or
+   * ```jsx react
+   * export default <></>;
+   * ```
+   *
+   */
+  jsx: {
+    /**
+     * https://react.dev/
+     */
+    react: {
+      compiler: async (config = {}) => {
+        const versions = config.versions || {};
+
+        const reactDomSource = versions['react-dom']
+          ? `https://esm.sh/react-dom@${versions['react-dom']}/client`
+          : 'https://esm.sh/react-dom/client';
+
+        const babelStandaloneSource = versions['@babel/standalone']
+          ? `https://esm.sh/@babel/standalone@${versions['@babel/standalone']}`
+          : 'https://esm.sh/@babel/standalone';
+
+        const { createRoot } = await import(/* vite-ignore */ reactDomSource);
+        // @ts-ignore
+        const babel = await import(/* vite-ignore */ babelStandaloneSource);
+
+        return {
+          compile: async (text) => {
+            const result = babel.transform(text, {
+              filename: `repl.js`,
+              presets: [babel.availablePresets.react],
+            });
+            return result.code;
+          },
+          render: async (element, component) => {
+            const root = createRoot(element);
+            root.render(component);
+
+            // Wait for react-dom to render
+            await new Promise((resolve) => requestIdleCallback(resolve));
+          },
+        };
+      },
+    },
+  },
+  /**
+   * https://mermaid.js.org/
+   */
   mermaid: {
     compiler: async (config = {}) => {
       const versions = config.versions || {};
@@ -8,7 +73,6 @@ export const compilers = {
 
       const { default: mermaid } = await import(/* vite-ignore */ source);
 
-      // mermaid.initialize({ startOnLoad: false });
       let id = 0;
       return {
         compile: async (text) => {
@@ -18,46 +82,13 @@ export const compilers = {
           let { svg } = await mermaid.render('graphDiv' + id++, text);
 
           element.innerHTML = svg;
-
-          // mermaid.run({ nodes: [element], securityLevel: 'loose' });
         },
       };
     },
   },
-  jsx: {
-    compiler: async (config = {}) => {
-      const versions = config.versions || {};
-
-      const reactDomSource = versions['react-dom']
-        ? `https://esm.sh/react-dom@${versions['react-dom']}/client`
-        : 'https://esm.sh/react-dom/client';
-
-      const babelStandaloneSource = versions['@babel/standalone']
-        ? `https://esm.sh/@babel/standalone@${versions['@babel/standalone']}`
-        : 'https://esm.sh/@babel/standalone';
-
-      const { createRoot } = await import(/* vite-ignore */ reactDomSource);
-      // @ts-ignore
-      const babel = await import(/* vite-ignore */ babelStandaloneSource);
-
-      return {
-        compile: async (text) => {
-          const result = babel.transform(text, {
-            filename: `repl.js`,
-            presets: [babel.availablePresets.react],
-          });
-          return result.code;
-        },
-        render: async (element, component) => {
-          const root = createRoot(element);
-          root.render(component);
-
-          // Wait for react-dom to render
-          await new Promise((resolve) => requestIdleCallback(resolve));
-        },
-      };
-    },
-  },
+  /**
+   * https://vuejs.org/
+   */
   vue: {
     compiler: async (config = {}) => {
       const versions = config.versions || {};
@@ -67,8 +98,8 @@ export const compilers = {
         : 'https://esm.sh/vue';
 
       const vueReplSource = versions['@vue/repl']
-        ? `https://esm.sh/@vue/repl@${versions['@vue/repl']}`
-        : 'https://esm.sh/@vue/repl';
+        ? `https://esm.run/@vue/repl@${versions['@vue/repl']}`
+        : 'https://esm.run/@vue/repl';
 
       const { createApp } = await import(/* vite-ignore */ vueSource);
       const { compileFile, useStore } = await import(/* vite-ignore */ vueReplSource);
