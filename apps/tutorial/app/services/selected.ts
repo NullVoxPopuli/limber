@@ -5,34 +5,11 @@ import { Compiled as MarkdownToHTML } from 'kolay';
 import { keepLatest } from 'reactiveweb/keep-latest';
 import { link } from 'reactiveweb/link';
 import { RemoteData } from 'reactiveweb/remote-data';
+import { nextPage } from 'tutorial/utils';
 
 import type DocsService from './docs';
 import type RouterService from '@ember/routing/router-service';
 import type { Page } from 'kolay';
-
-function unprose(prosePath: string | undefined) {
-  if (!prosePath) return;
-
-  return prosePath.replace(/\/prose.md$/, '');
-}
-
-/**
- * To help reduce load time between chapters, we'll load
- * the next and previous documents for each page
- */
-async function preload(prosePath?: string) {
-  if (!prosePath) return;
-
-  await Promise.resolve();
-
-  let path = unprose(prosePath);
-
-  await Promise.all([
-    fetch(`/docs/${path}/prose.md`),
-    fetch(`/docs/${path}/prompt.gjs`),
-    fetch(`/docs/${path}/answer.gjs`),
-  ]);
-}
 
 class DocFile {
   @service declare router: RouterService;
@@ -126,39 +103,11 @@ export default class Selected extends Service {
   }
 
   get next(): string | undefined {
-    let found = false;
-    let current = this.tutorial;
-
-    for (let tutorial of this.docs.tutorials) {
-      if (found) {
-        preload(tutorial.path);
-
-        return unprose(tutorial.path);
-      }
-
-      if (current?.path && current.path === tutorial.path) {
-        found = true;
-      }
-    }
-
-    return;
+    return nextPage(this.docs.tutorials, this.tutorial);
   }
 
   get previous(): string | undefined {
-    let previous = undefined;
-    let current = this.tutorial;
-
-    for (let tutorial of this.docs.tutorials) {
-      if (current?.path === tutorial.path) {
-        preload(previous?.path);
-
-        return unprose(previous?.path);
-      }
-
-      previous = tutorial;
-    }
-
-    return;
+    return nextPage(this.docs.tutorials.toReversed(), this.tutorial);
   }
 
   get tutorial(): Page | undefined {

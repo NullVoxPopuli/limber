@@ -1,10 +1,9 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { not } from 'tutorial/utils';
 
 import { Link, service } from 'limber-ui';
 
 import { Selection } from './selection';
-
-const not = (x: unknown) => !x;
 
 export const Nav = <template>
   <nav class="grid gap-2 p-2 shadow grid-cols-[min-content_1fr_min-content]">
