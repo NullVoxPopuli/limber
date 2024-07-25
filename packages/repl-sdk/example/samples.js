@@ -45,3 +45,35 @@ export const svelte = `
 
 <h1>Hello {name}!</h1>
 `.trim();
+
+export const md = `
+# Markdown 
+
+With the markdown compiler, all configured compilers can be used 
+with their respective codefences + flavors (if applicable).
+
+## JSX React
+
+\`\`\`jsx react live 
+${jsx.react}
+\`\`\`
+
+## Mermaid
+
+\`\`\`mermaid
+${mermaid}
+\`\`\`
+
+## Svelte 
+
+\`\`\`svelte live
+${svelte}
+\`\`\`
+
+## Vue 
+
+\`\`\`vue live
+${vue}
+\`\`\`\
+
+`.trim();

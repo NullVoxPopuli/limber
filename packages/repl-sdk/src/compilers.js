@@ -167,4 +167,7 @@ export const compilers = {
       };
     },
   },
+  md: {
+    compiler: async () => {},
+  },
 };
