@@ -5,22 +5,10 @@ import { service } from '@ember/service';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { isCollection } from 'kolay';
+import { isNotHidden, titleize } from 'tutorial/utils';
 
 import type RouterService from '@ember/routing/router-service';
 import type DocsService from 'tutorial/services/docs';
-
-/**
- * Converts 1-2-hyphenated-thing
- * to
- *   Hyphenated Thing
- */
-const titleize = (str: string) => {
-  return str
-    .split('-')
-    .filter((text) => !text.match(/^[\d]+$/))
-    .map((text) => `${text[0]?.toLocaleUpperCase()}${text.slice(1, text.length)}`)
-    .join(' ');
-};
 
 export class Selection extends Component {
   @service declare docs: DocsService;
@@ -64,18 +52,28 @@ export class Selection extends Component {
         {{on "change" this.handleChange}}
       >
         {{#each this.docs.grouped.pages as |group|}}
-          <optgroup label={{titleize group.name}}>
-            {{#if (isCollection group)}}
-              {{#each group.pages as |tutorial|}}
-                <option
-                  value="/{{group.path}}/{{tutorial.path}}"
-                  selected={{this.isSelected tutorial}}
-                >
-                  {{titleize tutorial.name}}
-                </option>
-              {{/each}}
-            {{/if}}
-          </optgroup>
+          {{#if (isNotHidden group)}}
+
+            <optgroup label={{titleize group.name}}>
+
+              {{#if (isCollection group)}}
+                {{#each group.pages as |tutorial|}}
+                  {{#if (isNotHidden tutorial)}}
+
+                    <option
+                      value="/{{group.path}}/{{tutorial.path}}"
+                      selected={{this.isSelected tutorial}}
+                    >
+                      {{titleize tutorial.name}}
+                    </option>
+
+                  {{/if}}
+                {{/each}}
+              {{/if}}
+
+            </optgroup>
+
+          {{/if}}
         {{/each}}
       </select>
     </label>
