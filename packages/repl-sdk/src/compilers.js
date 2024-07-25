@@ -168,6 +168,10 @@ export const compilers = {
     },
   },
   md: {
-    compiler: async () => {},
+    compiler: async (config = {}) => {
+      const markdown = await import('./compilers/markdown.js');
+
+      return markdown.compiler(config);
+    },
   },
 };
