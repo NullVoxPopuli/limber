@@ -1,14 +1,9 @@
 import { describe, expect, test } from 'vitest'
 import { Compiler } from 'repl-sdk';
 
-
-function createComplier() {
-  return new Compiler()
-}
-
 describe('Custom compiler', () => {
   test('it works', async () => {
-    let compiler = createComplier();
+    let compiler = new Compiler();
     // Vue comes from esm.sh
     let element = await compiler.compile('mermaid', `
   graph TD

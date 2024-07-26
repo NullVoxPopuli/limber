@@ -1,0 +1,23 @@
+import { describe, expect, test } from 'vitest'
+import { Compiler } from 'repl-sdk';
+
+describe('jsx', () => {
+  describe('react', () => {
+    test('it works', async () => {
+      let compiler = new Compiler();
+      // React comes from esm.sh
+      let element = await compiler.compile('jsx', `
+        import React from 'react';
+
+        export default <>
+          <h1>Hello World</h1>
+
+          GENERAL KENOBI!
+        </>;
+      `, { flavor: 'react' });
+
+      expect(element.querySelector('h1').textContent).toContain('Hello World');
+      expect(element.textContent).toContain('Hello World');
+    });
+  });
+});

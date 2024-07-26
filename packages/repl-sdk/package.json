@@ -34,10 +34,13 @@
     "@tsconfig/ember": "^3.0.7",
     "prettier": "^3.2.5",
     "typescript": "^5.4.5",
-    "vite": "^5.2.11",
+    "vite": "^5.3.5",
     "vite-plugin-dts": "4.0.0-beta.1"
   },
   "dependencies": {
     "es-module-shims": "^1.10.0"
+  },
+  "volta": {
+    "extends": "../../package.json"
   }
 }
