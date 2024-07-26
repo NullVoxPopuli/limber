@@ -306,12 +306,15 @@ export async function compiler(config = {}) {
     let liveCode = processed.data.liveCode || [];
     let templateOnly = processed.toString();
 
-    return { compiled: templateOnly, liveCode };
+    return { text: templateOnly, codeBlocks: liveCode };
   }
 
   return {
     compile: async (text) => {
-      return parseMarkdown(text, {});
+      let result = await parseMarkdown(text, {});
+      console.log({ result });
+      let escaped = result.text.replace(/`/g, '\\`');
+      return { compiled: `export default \`${escaped}\``, ...result };
     },
     render: async (element, compiled, extra, compiler) => {
       element.innerHTML = compiled;

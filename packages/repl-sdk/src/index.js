@@ -41,6 +41,7 @@ export class Compiler {
       resolve: (id, parentUrl, resolve) => {
         if (id.startsWith('blob:')) return id;
         if (id.startsWith('https://')) return id;
+        if (id.startsWith('.')) return id;
 
         console.log('Resolving', id);
         /**
@@ -113,7 +114,7 @@ export class Compiler {
 
     const { default: defaultExport } = await importShim(/* @vite-ignore */ asBlobUrl);
 
-    return this.#render(compiler, defaultExport, extras);
+    return this.#render(compiler, defaultExport, extras, this);
   }
 
   /**
