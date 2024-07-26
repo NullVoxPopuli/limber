@@ -1,21 +1,33 @@
-import { getAll } from './cdn.js';
+import { esmsh } from './cdn.js';
 
 const GLIMDOWN_PREVIEW = Symbol('__GLIMDOWN_PREVIEW__');
 const GLIMDOWN_RENDER = Symbol('__GLIMDOWN_RENDER__');
 
+let i = 0;
+function nextId() {
+  return `repl_md_${i++}`;
+}
+
 export async function compiler(config = {}) {
   const versions = config.versions || {};
 
-  const [rehypeRaw, rehypeStringify, remarkGfm, remarkParse, remarkRehype, unified, visit] =
-    await getAll(versions, [
-      'rehype-raw',
-      'rehype-stringify',
-      'remark-gfm',
-      'remark-parse',
-      'remark-rehype',
-      'unified',
-      'unist-util-visit',
-    ]);
+  const [
+    { default: rehypeRaw },
+    { default: rehypeStringify },
+    { default: remarkGfm },
+    { default: remarkParse },
+    { default: remarkRehype },
+    { unified },
+    { visit },
+  ] = await esmsh.importAll(versions, [
+    'rehype-raw',
+    'rehype-stringify',
+    'remark-gfm',
+    'remark-parse',
+    'remark-rehype',
+    'unified',
+    'unist-util-visit',
+  ]);
 
   const { compilers } = await import('../compilers.js');
 
@@ -61,11 +73,6 @@ export async function compiler(config = {}) {
       return true;
     }
 
-    let copyNode = {
-      type: 'html',
-      value: copyComponent,
-    };
-
     function enhance(code) {
       code.data ??= {};
       code.data['hProperties'] ??= {};
@@ -78,7 +85,7 @@ export async function compiler(config = {}) {
         },
         type: 'div',
         hProperties: { className: snippetClasses },
-        children: [code, copyNode],
+        children: [code],
       };
     }
 
@@ -115,31 +122,23 @@ export async function compiler(config = {}) {
         file.data.liveCode ??= [];
 
         let code = value.trim();
-        let name = nameFor(code);
-        let invocation = invocationOf(name);
-
-        let shadow = options.shadowComponent;
-
-        let wrapInShadow = shadow && !meta?.includes('no-shadow');
-
-        if (wrapInShadow) {
-          invocation = `<${shadow}>${invocation}</${shadow}>`;
-        }
+        let id = nextId();
 
         let invokeNode = {
           type: 'html',
           data: {
             hProperties: { [GLIMDOWN_RENDER]: true },
           },
-          value: `<div class="${demoClasses}">${invocation}</div>`,
+          value: `<div id=${id} class="${demoClasses}"></div>`,
         };
 
         let wrapper = enhance(node);
 
         file.data.liveCode.push({
           lang,
-          name,
           code,
+          placeholderId,
+          meta,
         });
 
         let live = isLive(meta);

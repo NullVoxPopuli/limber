@@ -1,3 +1,5 @@
+import { esmsh, jsdelivr } from './compilers/cdn.js';
+
 export const compilers = {
   /**
    * JSX is too overloaded to treat one way.
@@ -30,17 +32,10 @@ export const compilers = {
       compiler: async (config = {}) => {
         const versions = config.versions || {};
 
-        const reactDomSource = versions['react-dom']
-          ? `https://esm.sh/react-dom@${versions['react-dom']}/client`
-          : 'https://esm.sh/react-dom/client';
-
-        const babelStandaloneSource = versions['@babel/standalone']
-          ? `https://esm.sh/@babel/standalone@${versions['@babel/standalone']}`
-          : 'https://esm.sh/@babel/standalone';
-
-        const { createRoot } = await import(/* vite-ignore */ reactDomSource);
-        // @ts-ignore
-        const babel = await import(/* vite-ignore */ babelStandaloneSource);
+        const [{ createRoot }, babel] = await esmsh.importAll(versions, [
+          'react-dom',
+          '@babel/standalone',
+        ]);
 
         return {
           compile: async (text) => {
@@ -67,11 +62,7 @@ export const compilers = {
   mermaid: {
     compiler: async (config = {}) => {
       const versions = config.versions || {};
-      const source = versions['mermaid']
-        ? `https://esm.sh/mermaid@${versions['mermaid']}`
-        : 'https://esm.sh/mermaid';
-
-      const { default: mermaid } = await import(/* vite-ignore */ source);
+      const { default: mermaid } = await esmsh.import(versions, 'mermaid');
 
       let id = 0;
       return {
@@ -92,11 +83,7 @@ export const compilers = {
   svelte: {
     compiler: async (config = {}) => {
       const versions = config.versions || {};
-      const svelteSource = versions['svelte']
-        ? `https://esm.sh/svelte@${versions['svelte']}/compiler`
-        : 'https://esm.sh/svelte/compiler';
-
-      const { compile } = await import(/* vite-ignore */ svelteSource);
+      const { compile } = await esmsh.import(versions, 'svelte/compiler');
 
       return {
         compile: async (text, fileName) => {
@@ -126,16 +113,10 @@ export const compilers = {
     compiler: async (config = {}) => {
       const versions = config.versions || {};
 
-      const vueSource = versions['vue']
-        ? `https://esm.sh/vue@${versions['vue']}`
-        : 'https://esm.sh/vue';
-
-      const vueReplSource = versions['@vue/repl']
-        ? `https://esm.run/@vue/repl@${versions['@vue/repl']}`
-        : 'https://esm.run/@vue/repl';
-
-      const { createApp } = await import(/* vite-ignore */ vueSource);
-      const { compileFile, useStore } = await import(/* vite-ignore */ vueReplSource);
+      const [{ createApp }, { compileFile, useStore }] = await jsdelivr.importAll(versions, [
+        'vue',
+        '@vue/repl',
+      ]);
 
       const store = useStore();
 

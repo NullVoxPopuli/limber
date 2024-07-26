@@ -4,8 +4,8 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./declarations/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
     }
   },
   "scripts": {
