@@ -1,5 +1,13 @@
-import { describe, expect, test } from 'vitest'
 import { Compiler } from 'repl-sdk';
+import { describe, expect, test } from 'vitest';
+
+function escapeFence(code: string) {
+  return code.replace(/`/g, '\\`');
+}
+
+function fenced(code: string, meta: string) {
+  return '```' + meta + '\n' + escapeFence(code) + '\n```';
+}
 
 describe('markdown', () => {
   test('it works', async () => {
@@ -29,9 +37,19 @@ describe('markdown', () => {
       </template>
     `;
 
+    let jsxReact = `
+      import React from 'react';
+
+      export default <>
+        <h1>Hello World</h1>
+
+        GENERAL KENOBI!
+      </>;
+    `;
+
     test('vue live', async () => {
       let compiler = new Compiler();
-      let element = await compiler.compile('md', `# Hello\n\n` + '```vue live\n' + vue + '\n```');
+      let element = await compiler.compile('md', `# Hello\n\n` + fenced(vue, 'vue live'));
 
       let h1 = element.querySelector('h1');
       let h2 = element.querySelector('h2');
@@ -44,7 +62,29 @@ describe('markdown', () => {
       expect(h1?.textContent).toContain('Hello');
       expect(h2?.textContent).toContain('GENERAL KENOBI!');
       expect(window.getComputedStyle(h2!).color).toBe('rgb(255, 0, 0)');
-    })
+    });
+
+    test('jsx requires a flavor to be specified', async () => {
+      let compiler = new Compiler();
+      let element = await compiler.compile(
+        'md',
+        `# Hello\n\n` +
+          fenced(jsxReact, 'jsx react live') +
+          '\n\n' +
+          fenced(`export default <>hi</>`, 'jsx live')
+      );
+
+      let h1 = element.querySelector('h1');
+      let h2 = element.querySelector('h2');
+
+      // getComputedStyle doesn't work without the element existing in the document
+      document.body.appendChild(element);
+
+      expect(h1).toBeTruthy();
+      expect(h2).toBeTruthy();
+      expect(h1?.textContent).toContain('Hello');
+      expect(h2?.textContent).toContain('GENERAL KENOBI!');
+      expect(window.getComputedStyle(h2!).color).toBe('rgb(255, 0, 0)');
+    });
   });
 });
-

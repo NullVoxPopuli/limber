@@ -1,10 +1,10 @@
 export interface CompilerConfig {
   /**
    * When using this file extension in markdown documents,
-   * should we only evaluate the code block if the "live" 
+   * should we only evaluate the code block if the "live"
    * meta is attached to the codefence?
    *
-   * If you don't use markdown-embedded rendering, 
+   * If you don't use markdown-embedded rendering,
    * you can ignore this option. Default behavior is "false",
    * but it doesn't matter if you don't render markdown anyway.
    *
@@ -15,7 +15,7 @@ export interface CompilerConfig {
    * will be evaluated and log to the console.
    * However, with `needsLiveMeta: true`, the above snippet would not
    * be evaluated. To evaluate a snippet with `needsLiveMeta: true`:
-   * \`\`\`js live 
+   * \`\`\`js live
    * console.log('hello');
    * \`\`\`
    */
@@ -23,7 +23,7 @@ export interface CompilerConfig {
   compiler: (
     /**
      * The config for the compiler may be passed by the caller.
-     * Common use case for this object is specifying what versions 
+     * Common use case for this object is specifying what versions
      * of the compiler/library/framework dependencies to use.
      */
     config: Record<string, unknown>
@@ -45,7 +45,7 @@ export interface CompilerConfig {
      * {
      *   async compiler() {
      *     const { createRoot } = await import('react-dom/client');
-     *   
+     *
      *     return {
      *        render(element, defaultExport) {
      *          const root = createRoot(element);
@@ -62,15 +62,20 @@ export interface CompilerConfig {
      * @param {any} defaultExport the default export from the compiled module.
      * @param {{ compiled: string } & Record<string, unknown>} extras the compiled string (for reference), as well as any extra information that may have been returned from the compile function.
      */
-    render: (element: HTMLElement, defaultExport: any, extras: { compiled: string } & Record<string, unknown>) => void;
+    render: (
+      element: HTMLElement,
+      defaultExport: any,
+      extras: { compiled: string } & Record<string, unknown>
+    ) => void;
   }>;
 }
 
 export interface Options {
   formats: {
-    [fileExtension: string]: CompilerConfig | {
-      [flavor: string]: CompilerConfig;
-    };
-  }
+    [fileExtension: string]:
+      | CompilerConfig
+      | {
+          [flavor: string]: CompilerConfig;
+        };
+  };
 }
-

@@ -43,6 +43,7 @@ export const jsdelivr = {
    */
   async import(versions, importPath) {
     let url = esmRun(versions, importPath);
+
     return await import(/* vite-ignore */ url);
   },
   /**
@@ -65,6 +66,7 @@ export const esmsh = {
    */
   async import(versions, importPath) {
     let url = esmSh(versions, importPath);
+
     return await import(/* vite-ignore */ url);
   },
   /**

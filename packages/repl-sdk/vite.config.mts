@@ -1,14 +1,14 @@
-import { resolve, join } from 'node:path';
-import { readFile } from 'node:fs/promises';
-import url from 'node:url';
+import { resolve, join } from "node:path";
+import { readFile } from "node:fs/promises";
+import url from "node:url";
 
-import { defineConfig } from 'vite';
-import dts from 'vite-plugin-dts';
+import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
 
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
 let manifest = await (async () => {
-  let buffer = await readFile(join(__dirname, 'package.json'));
+  let buffer = await readFile(join(__dirname, "package.json"));
   return JSON.parse(buffer.toString());
 })();
 
@@ -19,11 +19,11 @@ let externals = Object.keys({
 
 export default defineConfig({
   build: {
-    outDir: 'dist',
+    outDir: "dist",
     // These targets are not "support".
     // A consuming app or library should compile further if they need to support
     // old browsers.
-    target: ['esnext'],
+    target: ["esnext"],
     // In case folks debug without sourcemaps
     //
     // TODO: do a dual build, split for development + production
@@ -33,11 +33,11 @@ export default defineConfig({
     sourcemap: true,
     lib: {
       // Could also be a dictionary or array of multiple entry points
-      entry: resolve(__dirname, 'src/index.js'),
-      name: 'repl-sdk',
-      formats: ['es'],
+      entry: resolve(__dirname, "src/index.js"),
+      name: "repl-sdk",
+      formats: ["es"],
       // the proper extensions will be added
-      fileName: 'index',
+      fileName: "index",
     },
     rollupOptions: {
       external: externals,
@@ -46,7 +46,7 @@ export default defineConfig({
   plugins: [
     dts({
       rollupTypes: true,
-      outDir: 'declarations',
+      outDir: "declarations",
     }),
   ],
 });

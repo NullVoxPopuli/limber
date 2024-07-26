@@ -10,6 +10,7 @@
   "author": "NullvoxPopuli",
   "devDependencies": {
     "@babel/standalone": "^7.24.5",
+    "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "@testing-library/dom": "^10.3.2",
     "@tsconfig/ember": "^3.0.7",
     "@vitest/browser": "^2.0.3",

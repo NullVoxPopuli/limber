@@ -1,4 +1,4 @@
-import type { Options } from "./types.ts";
+import type { Options } from './types.ts';
 
 export const defaultFormats: keyof Options['formats'];
 export const defaults: Options;
@@ -6,5 +6,12 @@ export const defaults: Options;
 export class Compiler {
   constructor(options?: Options);
 
-  compile(format: string, text: string): Promise<HTMLElement>;
+  compile(
+    format: string,
+    text: string,
+    options?: {
+      flavor?: string;
+      fileName?: string;
+    }
+  ): Promise<HTMLElement>;
 }

@@ -310,6 +310,7 @@ export async function compiler(config = {}) {
     compile: async (text) => {
       let result = await parseMarkdown(text, {});
       let escaped = result.text.replace(/`/g, '\\`');
+
       return { compiled: `export default \`${escaped}\``, ...result };
     },
     render: async (element, compiled, extra, compiler) => {

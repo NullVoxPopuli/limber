@@ -1,9 +1,8 @@
 /**
  * @typedef {import("./types.ts").Options} Options
  */
-import { assert, nextId } from './utils.js';
-
 import { compilers } from './compilers.js';
+import { assert, nextId } from './utils.js';
 
 assert(`There is no document. repl-sdk is meant to be ran in a browser`, globalThis.document);
 
@@ -38,44 +37,17 @@ export class Compiler {
       // Permit overrides to import maps
       mapOverrides: true, // default false
       // Hook all module resolutions
-      resolve: (id, parentUrl, resolve) => {
+      resolve: (id) => {
         if (id.startsWith('blob:')) return id;
         if (id.startsWith('https://')) return id;
         if (id.startsWith('.')) return id;
 
-        console.log('Resolving', id);
-        /**
-         * TODO: locally defined scope
-         *       vs
-         *       proxy to esm.sh
-         */
-
-        /**
-         * For esm.sh, we want all imports to declare they don't want
-         * their dependencies bundled. We want to have every import go
-         * through this resolve/fetch combo of things so we have a chance
-         * to compile if we need to.
-         */
         return `https://esm.sh/*${id}`;
       },
       // Hook source fetch function
       fetch: async (url, options) => {
-        console.log(`Fetching`, url);
-        /**
-         * Do transformations here based on file extension
-         */
-        if (url.endsWith('example.js')) {
-          const transformed = `export const js = 'transformed'`;
-          return new Response(new Blob([transformed], { type: 'application/javascript' }));
-        }
-
         const response = await fetch(url, options);
 
-        // if (response.url.endsWith('.ts')) {
-        //   const source = await response.body();
-        //   const transformed = tsCompile(source);
-        //   return new Response(new Blob([transformed], { type: 'application/javascript' }));
-        // }
         return response;
       },
     };
@@ -106,6 +78,7 @@ export class Compiler {
       extras = { compiled: compiledText };
     } else {
       let { compiled: text } = compiled;
+
       compiledText = text;
       extras = compiled;
     }
@@ -157,8 +130,10 @@ export class Compiler {
 
   #createDiv() {
     let div = document.createElement('div');
+
     div.setAttribute('data-repl-output', '');
     div.id = nextId();
+
     return div;
   }
 }
@@ -185,5 +160,6 @@ function textToBlobUrl(text) {
   const blob = new Blob([text], { type: 'text/javascript' });
 
   const blobUrl = URL.createObjectURL(blob);
+
   return blobUrl;
 }

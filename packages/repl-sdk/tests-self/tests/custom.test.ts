@@ -1,5 +1,5 @@
-import { describe, expect, test } from 'vitest'
 import { Compiler } from 'repl-sdk';
+import { describe, expect, test } from 'vitest';
 
 describe('custom', () => {
   test('it works', async () => {
@@ -14,10 +14,10 @@ describe('custom', () => {
               render: async (element, compiled) => {
                 element.innerHTML = compiled;
               },
-            }
-          }
-        }
-      }
+            };
+          },
+        },
+      },
     });
 
     let element = await compiler.compile('custom', `example text`);
@@ -25,4 +25,3 @@ describe('custom', () => {
     expect(element.textContent).toContain('example text!!');
   });
 });
-

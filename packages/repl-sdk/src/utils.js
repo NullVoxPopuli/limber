@@ -10,6 +10,7 @@ export function assert(message, test) {
 }
 
 let i = 0;
+
 export function nextId() {
   return `repl_${i++}`;
 }

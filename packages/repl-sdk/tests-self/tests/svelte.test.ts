@@ -1,10 +1,12 @@
-import { describe, expect, test } from 'vitest'
 import { Compiler } from 'repl-sdk';
+import { describe, expect, test } from 'vitest';
 
 describe('svelte', () => {
   test('it works', async () => {
     let compiler = new Compiler();
-    let element = await compiler.compile('svelte', `
+    let element = await compiler.compile(
+      'svelte',
+      `
       <script>
         let name = 'world';
       </script>
@@ -13,7 +15,8 @@ describe('svelte', () => {
       </style>
 
       <h1>Hello {name}!</h1>
-    `);
+    `
+    );
 
     // getComputedStyle doesn't work without the element existing in the document
     document.body.appendChild(element);
@@ -24,4 +27,3 @@ describe('svelte', () => {
     expect(window.getComputedStyle(h1).color).toBe('rgb(255, 0, 0)');
   });
 });
-

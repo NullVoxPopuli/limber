@@ -1,11 +1,13 @@
-import { describe, expect, test } from 'vitest'
 import { Compiler } from 'repl-sdk';
+import { describe, expect, test } from 'vitest';
 
 describe('vue', () => {
   test('it works', async () => {
     let compiler = new Compiler();
     // Vue comes from esm.sh
-    let element = await compiler.compile('vue', `
+    let element = await compiler.compile(
+      'vue',
+      `
       <style scoped>
         h1 { color: red; }
       </style>
@@ -20,7 +22,8 @@ describe('vue', () => {
 
         GENERAL KENOBI!
       </template>
-    `);
+    `
+    );
 
     // getComputedStyle doesn't work without the element existing in the document
     document.body.appendChild(element);
@@ -33,4 +36,3 @@ describe('vue', () => {
     expect(element.textContent).toContain('Hello World');
   });
 });
-

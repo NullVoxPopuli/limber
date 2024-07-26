@@ -43,10 +43,12 @@ export const compilers = {
               filename: `repl.js`,
               presets: [babel.availablePresets.react],
             });
+
             return result.code;
           },
           render: async (element, component) => {
             const root = createRoot(element);
+
             root.render(component);
 
             // Wait for react-dom to render
@@ -65,6 +67,7 @@ export const compilers = {
       const { default: mermaid } = await esmsh.import(versions, 'mermaid');
 
       let id = 0;
+
       return {
         compile: async (text) => {
           return `export default \`${text}\`;`;
@@ -86,8 +89,9 @@ export const compilers = {
       const { compile } = await esmsh.import(versions, 'svelte/compiler');
 
       return {
-        compile: async (text, fileName) => {
+        compile: async (text) => {
           let output = await compile(text);
+
           return { compiled: output.js.code, css: output.css.code };
         },
         render: async (element, component, { css }) => {
@@ -134,7 +138,7 @@ export const compilers = {
 
           return { compiled: output.js, css: output.css };
         },
-        render: async (element, component, { css, compiled }) => {
+        render: async (element, component, { css }) => {
           let div = document.createElement('div');
           let style = document.createElement('style');
 
