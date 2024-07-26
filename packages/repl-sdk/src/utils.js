@@ -8,3 +8,8 @@ export function assert(message, test) {
     throw new Error(message);
   }
 }
+
+let i = 0;
+export function nextId() {
+  return `repl_${i++}`;
+}

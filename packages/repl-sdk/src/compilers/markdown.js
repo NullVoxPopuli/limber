@@ -1,12 +1,8 @@
+import { assert, nextId } from '../utils.js';
 import { esmsh } from './cdn.js';
 
 const GLIMDOWN_PREVIEW = Symbol('__GLIMDOWN_PREVIEW__');
 const GLIMDOWN_RENDER = Symbol('__GLIMDOWN_RENDER__');
-
-let i = 0;
-function nextId() {
-  return `repl_md_${i++}`;
-}
 
 export async function compiler(config = {}) {
   const versions = config.versions || {};
@@ -68,7 +64,7 @@ export async function compiler(config = {}) {
         return false;
       }
 
-      if (!ALLOWED_LANGUAGES.includes(lang)) return false;
+      if (!ALLOWED_FORMATS.includes(lang)) return false;
 
       return true;
     }
@@ -129,15 +125,16 @@ export async function compiler(config = {}) {
           data: {
             hProperties: { [GLIMDOWN_RENDER]: true },
           },
-          value: `<div id=${id} class="${demoClasses}"></div>`,
+          value: `<div id="${id}" class="${demoClasses}"></div>`,
         };
 
         let wrapper = enhance(node);
 
         file.data.liveCode.push({
-          lang,
+          format: lang,
+          /* flavor,  */
           code,
-          placeholderId,
+          placeholderId: id,
           meta,
         });
 
@@ -312,7 +309,6 @@ export async function compiler(config = {}) {
   return {
     compile: async (text) => {
       let result = await parseMarkdown(text, {});
-      console.log({ result });
       let escaped = result.text.replace(/`/g, '\\`');
       return { compiled: `export default \`${escaped}\``, ...result };
     },
@@ -322,11 +318,19 @@ export async function compiler(config = {}) {
       await Promise.all(
         extra.codeBlocks.map(async (info) => {
           let subElement = await compiler.compile(info.format, info.code, {
-            fileName: info.fileName,
             flavor: info.flavor,
           });
 
-          element.querySelector(info.placeholder).appendChild(subElement);
+          let selector = `#${info.placeholderId}`;
+          let target = element.querySelector(selector);
+
+          assert(
+            `Could not find placeholder / target element (using selector: \`${selector}\`). ` +
+              `Could not render ${info.format} block.`,
+            target
+          );
+
+          target.appendChild(subElement);
         })
       );
     },

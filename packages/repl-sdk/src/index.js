@@ -1,7 +1,7 @@
 /**
  * @typedef {import("./types.ts").Options} Options
  */
-import { assert } from './utils.js';
+import { assert, nextId } from './utils.js';
 
 import { compilers } from './compilers.js';
 
@@ -114,7 +114,7 @@ export class Compiler {
 
     const { default: defaultExport } = await importShim(/* @vite-ignore */ asBlobUrl);
 
-    return this.#render(compiler, defaultExport, extras, this);
+    return this.#render(compiler, defaultExport, extras);
   }
 
   /**
@@ -147,7 +147,7 @@ export class Compiler {
   async #render(compiler, whatToRender, extras) {
     const div = this.#createDiv();
 
-    await compiler.render(div, whatToRender, extras);
+    await compiler.render(div, whatToRender, extras, this);
 
     // Wait for render
     await new Promise((resolve) => requestIdleCallback(resolve));
@@ -158,7 +158,7 @@ export class Compiler {
   #createDiv() {
     let div = document.createElement('div');
     div.setAttribute('data-repl-output', '');
-    div.id = 'some-random-string';
+    div.id = nextId();
     return div;
   }
 }

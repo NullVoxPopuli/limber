@@ -27,8 +27,9 @@ describe('vue', () => {
 
     let h1 = element.querySelector('h1');
 
-    expect(h1.textContent).toContain('Hello World');
-    expect(window.getComputedStyle(h1).color).toBe('rgb(255, 0, 0)');
+    expect(h1).toBeTruthy();
+    expect(h1?.textContent).toContain('Hello World');
+    expect(window.getComputedStyle(h1!).color).toBe('rgb(255, 0, 0)');
     expect(element.textContent).toContain('Hello World');
   });
 });
