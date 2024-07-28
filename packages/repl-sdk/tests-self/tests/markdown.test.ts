@@ -86,21 +86,20 @@ graph TD;
     test('jsx requires a flavor to be specified', async () => {
       let compiler = new Compiler();
 
-      expect(compiler.compile(
-        'md',
-        `# Hello\n\n` +
-        fenced(jsxReact, 'jsx react live') +
-        '\n\n' +
-        fenced(`export default <>hi</>`, 'jsx live')
-      )).rejects.toThrow('make sure you specify the flavor.');
+      expect(
+        compiler.compile(
+          'md',
+          `# Hello\n\n` +
+            fenced(jsxReact, 'jsx react live') +
+            '\n\n' +
+            fenced(`export default <>hi</>`, 'jsx live')
+        )
+      ).rejects.toThrow('make sure you specify the flavor.');
     });
 
     test('svelte live', async () => {
       let compiler = new Compiler();
-      let element = await compiler.compile(
-        'md',
-        fenced(svelte, 'svelte live')
-      );
+      let element = await compiler.compile('md', fenced(svelte, 'svelte live'));
 
       let h1 = element.querySelector('h1');
 
@@ -114,11 +113,7 @@ graph TD;
 
     test('mermaid (no live)', async () => {
       let compiler = new Compiler();
-      let element = await compiler.compile(
-        'md',
-        fenced(mermaid, 'mermaid')
-      );
-
+      let element = await compiler.compile('md', fenced(mermaid, 'mermaid'));
 
       let rootSVG = element.querySelector('svg');
 

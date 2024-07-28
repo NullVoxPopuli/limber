@@ -143,10 +143,9 @@ export class Compiler {
    * @returns {import('./types.ts').ResolvedCompilerOptions)}
    */
   optionsFor = (format, flavor) => {
-    const { compiler: _, needsLiveMeta, ...rest } = this.#resolveFormat(format, flavor);
+    const { needsLiveMeta } = this.#resolveFormat(format, flavor);
 
     return {
-      ...rest,
       needsLiveMeta: needsLiveMeta ?? true,
       importMap: this.#options.importMap ?? {},
       resolve: this.#options.resolve ?? {},

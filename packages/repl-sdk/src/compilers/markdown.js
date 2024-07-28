@@ -24,11 +24,13 @@ export async function compiler(config = {}, api) {
 
   function isPreview(meta) {
     if (!meta) return false;
+
     return meta.includes('preview');
   }
 
   function isBelow(meta) {
     if (!meta) return false;
+
     return meta.includes('below');
   }
 
@@ -148,6 +150,7 @@ export async function compiler(config = {}, api) {
         if (!lang) {
           return 'skip';
         }
+
         /**
          * Sometimes, meta is not required,
          * like with the `mermaid` language
