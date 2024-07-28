@@ -4,8 +4,33 @@ import { esmsh } from './cdn.js';
 const GLIMDOWN_PREVIEW = Symbol('__GLIMDOWN_PREVIEW__');
 const GLIMDOWN_RENDER = Symbol('__GLIMDOWN_RENDER__');
 
-export async function compiler(config = {}) {
+/**
+ * @param {import('../types.ts').ResolvedCompilerOptions} config
+ * @param {import('../types.ts').PublicMethods} api
+ */
+export async function compiler(config = {}, api) {
   const versions = config.versions || {};
+
+  function needsLive(lang) {
+    return api.optionsFor(lang).needsLiveMeta;
+  }
+
+  function isLive(meta, lang) {
+    if (!needsLive(lang)) return true;
+    if (!meta) return false;
+
+    return meta.includes('live');
+  }
+
+  function isPreview(meta) {
+    if (!meta) return false;
+    return meta.includes('preview');
+  }
+
+  function isBelow(meta) {
+    if (!meta) return false;
+    return meta.includes('below');
+  }
 
   const [
     { default: rehypeRaw },
@@ -56,15 +81,19 @@ export async function compiler(config = {}) {
 
       let { meta, lang } = node;
 
-      meta = meta?.trim();
-
-      if (!meta || !lang) return false;
-
-      if (!meta.includes('live')) {
+      if (!lang) {
         return false;
       }
 
-      if (!ALLOWED_FORMATS.includes(lang)) return false;
+      meta = meta?.trim();
+
+      if (!isLive(meta, lang)) {
+        return false;
+      }
+
+      if (!ALLOWED_FORMATS.includes(lang)) {
+        return false;
+      }
 
       return true;
     }
@@ -98,7 +127,9 @@ export async function compiler(config = {}) {
         if (parent === null || parent === undefined) return;
         if (index === null || index === undefined) return;
 
-        if (!isRelevantCode(node)) {
+        let isRelevant = isRelevantCode(node);
+
+        if (!isRelevant) {
           let enhanced = enhance(node);
 
           parent.children[index] = enhanced;
@@ -106,14 +137,26 @@ export async function compiler(config = {}) {
           return 'skip';
         }
 
-        if (seen.has(node)) return 'skip';
+        if (seen.has(node)) {
+          return 'skip';
+        }
 
         seen.add(node);
 
         let { meta, lang, value } = node;
 
-        if (!meta) return 'skip';
-        if (!lang) return 'skip';
+        if (!lang) {
+          return 'skip';
+        }
+        /**
+         * Sometimes, meta is not required,
+         * like with the `mermaid` language
+         */
+        if (!meta) {
+          if (needsLive(lang)) {
+            return 'skip';
+          }
+        }
 
         file.data.liveCode ??= [];
 
@@ -138,7 +181,7 @@ export async function compiler(config = {}) {
           meta,
         });
 
-        let live = isLive(meta);
+        let live = isLive(meta, lang);
         let preview = isPreview(meta);
         let below = isBelow(meta);
 
@@ -336,16 +379,4 @@ export async function compiler(config = {}) {
       );
     },
   };
-}
-
-function isLive(meta) {
-  return meta.includes('live');
-}
-
-function isPreview(meta) {
-  return meta.includes('preview');
-}
-
-function isBelow(meta) {
-  return meta.includes('below');
 }

@@ -95,6 +95,17 @@ export class Compiler {
    * @param {string | undefined} flavor
    */
   async #getCompiler(format, flavor) {
+    const config = this.#resolveFormat(format, flavor);
+    const compiler = await config.compiler(this.optionsFor(format, flavor), this.#nestedPublicAPI);
+
+    return compiler;
+  }
+
+  /**
+   * @param {string} format
+   * @param {string | undefined} flavor
+   */
+  #resolveFormat(format, flavor) {
     let config = this.#options.formats[format];
 
     assert(
@@ -112,20 +123,42 @@ export class Compiler {
       'compiler' in config
     );
 
-    const compiler = await config.compiler();
-
-    return compiler;
+    return config;
   }
 
   async #render(compiler, whatToRender, extras) {
     const div = this.#createDiv();
 
-    await compiler.render(div, whatToRender, extras, this);
+    await compiler.render(div, whatToRender, extras, this.#nestedPublicAPI);
 
     // Wait for render
     await new Promise((resolve) => requestIdleCallback(resolve));
 
     return div;
+  }
+
+  /**
+   * @param {string} format
+   * @param {string} [ flavor ]
+   * @returns {import('./types.ts').ResolvedCompilerOptions)}
+   */
+  optionsFor = (format, flavor) => {
+    const { compiler: _, needsLiveMeta, ...rest } = this.#resolveFormat(format, flavor);
+
+    return {
+      ...rest,
+      needsLiveMeta: needsLiveMeta ?? true,
+      importMap: this.#options.importMap ?? {},
+      resolve: this.#options.resolve ?? {},
+      versions: this.#options.versions ?? {},
+    };
+  };
+
+  get #nestedPublicAPI() {
+    return {
+      compile: (...args) => this.compile(...args),
+      optionsFor: (...args) => this.optionsFor(...args),
+    };
   }
 
   #createDiv() {

@@ -1,4 +1,4 @@
-import type { Options } from './types.ts';
+import type { CompilerConfig, Options } from './types.ts';
 
 export const defaultFormats: keyof Options['formats'];
 export const defaults: Options;
@@ -14,4 +14,6 @@ export class Compiler {
       fileName?: string;
     }
   ): Promise<HTMLElement>;
+
+  optionsFor(format: string, flavor?: string): Omit<CompilerConfig, 'compiler'>;
 }

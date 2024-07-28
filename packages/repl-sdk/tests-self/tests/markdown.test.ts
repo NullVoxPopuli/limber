@@ -58,7 +58,8 @@ describe('markdown', () => {
       <h1>Hello {name}!</h1>
       `;
 
-    const mermaid = `graph TD;
+    const mermaid = `
+graph TD;
   A-->B;
   A-->C;
   B-->D;
@@ -117,6 +118,7 @@ describe('markdown', () => {
         'md',
         fenced(mermaid, 'mermaid')
       );
+
 
       let rootSVG = element.querySelector('svg');
 

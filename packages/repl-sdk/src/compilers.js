@@ -62,6 +62,7 @@ export const compilers = {
    * https://mermaid.js.org/
    */
   mermaid: {
+    needsLiveMeta: false,
     compiler: async (config = {}) => {
       const versions = config.versions || {};
       const { default: mermaid } = await esmsh.import(versions, 'mermaid');
@@ -153,10 +154,10 @@ export const compilers = {
     },
   },
   md: {
-    compiler: async (config = {}) => {
+    compiler: async (config = {}, api) => {
       const markdown = await import('./compilers/markdown.js');
 
-      return markdown.compiler(config);
+      return markdown.compiler(config, api);
     },
   },
 };
