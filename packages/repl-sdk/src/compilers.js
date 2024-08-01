@@ -154,10 +154,17 @@ export const compilers = {
     },
   },
   md: {
-    compiler: async (config = {}, api) => {
+    compiler: async (...args) => {
       const markdown = await import('./compilers/markdown.js');
 
-      return markdown.compiler(config, api);
+      return markdown.compiler(...args);
+    },
+  },
+  gjs: {
+    compiler: async (...args) => {
+      const gjs = await import('./compilers/glimmer-js.js');
+
+      return gjs.compiler(...args);
     },
   },
 };

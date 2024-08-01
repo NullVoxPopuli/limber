@@ -46,6 +46,18 @@ export const svelte = `
 <h1>Hello {name}!</h1>
 `.trim();
 
+export const gjs = ` 
+const greeting = 'hello there';
+
+<template>
+  <h1>{{greeting}}</h1>
+
+  <style>
+    h1 { color: orange; }
+  </style>
+</template>
+`.trim();
+
 export const md = `
 # Markdown 
 
