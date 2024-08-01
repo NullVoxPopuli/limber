@@ -1,0 +1,55 @@
+{
+  "name": "repl-sdk",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    }
+  },
+  "scripts": {
+    "lint:fix": "pnpm -w exec lint fix",
+    "example": "cd example && vite",
+    "start": "vite build --watch",
+    "prepack": "vite build",
+    "lint:package": "pnpm publint",
+    "lint:js": "pnpm -w exec lint js",
+    "lint:js:fix": "pnpm -w exec lint js:fix",
+    "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
+    "lint:prettier": "pnpm -w exec lint prettier"
+  },
+  "keywords": [
+    "repl",
+    "playground",
+    "SDK",
+    "render",
+    "play",
+    "javascript",
+    "live",
+    "interactive"
+  ],
+  "author": "NullVoxPopuli",
+  "files": [
+    "dist",
+    "declarations",
+    "src"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@nullvoxpopuli/eslint-configs": "^4.0.0",
+    "@tsconfig/ember": "^3.0.7",
+    "eslint": "^8.55.0",
+    "prettier": "^3.2.5",
+    "publint": "^0.2.6",
+    "typescript": "^5.4.5",
+    "vite": "^5.3.5",
+    "vite-plugin-dts": "4.0.0-beta.1"
+  },
+  "dependencies": {
+    "es-module-shims": "^1.10.0"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  }
+}

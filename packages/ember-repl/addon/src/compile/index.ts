@@ -1,3 +1,5 @@
+import { buildWaiter } from '@ember/test-waiters';
+
 import { cell, resource, resourceFactory } from 'ember-resources';
 
 import {
@@ -13,6 +15,8 @@ import type { ComponentLike } from '@glint/template';
 type Format = 'glimdown' | 'gjs' | 'hbs';
 
 export const CACHE = new Map<string, ComponentLike>();
+
+const compileWaiter = buildWaiter('ember-repl::compile');
 
 interface Events {
   onSuccess: (component: ComponentLike) => Promise<unknown> | unknown;
@@ -189,6 +193,8 @@ export function Compiled(
     let error = cell<string | null>();
     let result = cell<ComponentLike>();
 
+    let token = compileWaiter.beginAsync();
+
     if (input) {
       compile(input, {
         // narrowing is hard here, but this is an implementation detail
@@ -197,9 +203,11 @@ export function Compiled(
           result.current = component;
           ready.set(true);
           error.set(null);
+          compileWaiter.endAsync(token);
         },
         onError: async (e) => {
           error.set(e);
+          compileWaiter.endAsync(token);
         },
         onCompileStart: async () => {
           ready.set(false);
