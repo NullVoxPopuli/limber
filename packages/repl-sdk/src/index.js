@@ -23,6 +23,9 @@ export class Compiler {
   /** @type {Options} */
   #options;
 
+  /** @type {((id: string) => string | undefined)[] } */
+  #resolvers = [];
+
   /**
    * Options may be passed to the compiler to add to its behavior.
    */
@@ -42,10 +45,18 @@ export class Compiler {
         if (id.startsWith('https://')) return id;
         if (id.startsWith('.')) return id;
 
+        for (let resolver of this.#resolvers) {
+          let result = resolver(id);
+
+          if (result) return result;
+        }
+        console.log('resolve', id);
+
         return `https://esm.sh/*${id}`;
       },
       // Hook source fetch function
       fetch: async (url, options) => {
+        console.log('fetching url', url);
         const response = await fetch(url, options);
 
         return response;
@@ -90,13 +101,23 @@ export class Compiler {
     return this.#render(compiler, defaultExport, extras);
   }
 
+  #compilerCache = new WeakMap();
   /**
    * @param {string} format
    * @param {string | undefined} flavor
    */
   async #getCompiler(format, flavor) {
     const config = this.#resolveFormat(format, flavor);
+    if (this.#compilerCache.has(config)) {
+      return this.#compilerCache.get(config);
+    }
+
     const compiler = await config.compiler(this.optionsFor(format, flavor), this.#nestedPublicAPI);
+
+    this.#compilerCache.set(config, compiler);
+    if (compiler.resolve) {
+      this.#resolvers.push(compiler.resolve);
+    }
 
     return compiler;
   }
@@ -169,21 +190,6 @@ export class Compiler {
     return div;
   }
 }
-
-// function addShim() {
-//   let url = 'https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js';
-//
-//   if (document.querySelector('script[src="${url}"]')) {
-//     // Shim is already present
-//     return;
-//   }
-//
-//   let script = document.createElement('script');
-//   // script.setAttribute('async', '');
-//   script.setAttribute('src', `<script async src="${url}"></script>`);
-//
-//   document.head.appendChild(script);
-// }
 
 /**
  * @param {string} text

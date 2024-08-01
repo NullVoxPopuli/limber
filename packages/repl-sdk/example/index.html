@@ -138,6 +138,7 @@
         e.output.appendChild(element);
       } catch (error) {
         e.error.innerText = error;
+        throw error;
       }
     });
   </script>
