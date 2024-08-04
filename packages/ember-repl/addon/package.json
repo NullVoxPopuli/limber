@@ -167,7 +167,7 @@
     "@glimmer/compiler": ">= 0.86.0",
     "@glimmer/syntax": ">= 0.86.0",
     "@glint/template": ">= 1.3.0",
-    "webpack": "5.92.0"
+    "webpack": "5.93.0"
   },
   "peerDependenciesMeta": {
     "@glint/template": {

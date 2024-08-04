@@ -39,7 +39,7 @@
     "ember-primitives": ">= 0.11.0",
     "ember-resources": ">= 6.4.2",
     "ember-source": ">= 5.9.0",
-    "webpack": "5.92.0"
+    "webpack": "5.93.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.24.5",
