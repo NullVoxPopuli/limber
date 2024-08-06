@@ -161,6 +161,7 @@
     "version": 2,
     "type": "addon",
     "main": "addon-main.cjs",
+    "externals": ["ember-template-compiler"],
     "app-js": {}
   },
   "peerDependencies": {

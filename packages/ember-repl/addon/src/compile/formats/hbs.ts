@@ -13,14 +13,11 @@ import { on } from '@ember/modifier';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { createTemplateFactory } from '@ember/template-factory';
-import { importSync } from '@embroider/macros';
 
 import { nameFor } from '../utils.ts';
 
 import type { CompileResult } from '../types.ts';
 import type { ComponentLike } from '@glint/template';
-// const { precompileJSON } = importSync('@glimmer/compiler') as any;
-// const { getTemplateLocals } = importSync('@glimmer/syntax') as any;
 
 /**
  * compile a template with an empty scope
