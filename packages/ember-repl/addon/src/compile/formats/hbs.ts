@@ -2,6 +2,10 @@
 // import { precompileJSON } from '@glimmer/compiler';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
+// These things are pre-bundled in the old system.
+// ember-template-compiler defines them in AMD/requirejs
+import { precompileJSON } from '@glimmer/compiler';
+import { getTemplateLocals } from '@glimmer/syntax';
 import { setComponentTemplate } from '@ember/component';
 import templateOnlyComponent from '@ember/component/template-only';
 import { array, concat, fn, get, hash } from '@ember/helper';
@@ -15,11 +19,8 @@ import { nameFor } from '../utils.ts';
 
 import type { CompileResult } from '../types.ts';
 import type { ComponentLike } from '@glint/template';
-
-// These things are pre-bundled in the old system.
-// ember-template-compiler defines them in AMD/requirejs
-const { precompileJSON } = importSync('@glimmer/compiler') as any;
-const { getTemplateLocals } = importSync('@glimmer/syntax') as any;
+// const { precompileJSON } = importSync('@glimmer/compiler') as any;
+// const { getTemplateLocals } = importSync('@glimmer/syntax') as any;
 
 /**
  * compile a template with an empty scope

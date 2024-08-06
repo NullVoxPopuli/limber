@@ -66,9 +66,10 @@ async function transpile({ code: input, name }: Info) {
   return code;
 }
 
-import type { Babel } from './babel.ts';
+import * as compiler from 'ember-source/dist/ember-template-compiler.js';
 
-const compiler = importSync('ember-source/dist/ember-template-compiler.js');
+import type { Babel } from './babel.ts';
+// const compiler = importSync('ember-source/dist/ember-template-compiler.js');
 
 let processor: any;
 let fetchingPromise: Promise<any>;
@@ -87,7 +88,7 @@ async function preprocess(input: string, name: string): Promise<string> {
   return processor.process(input, `${name}.js`);
 }
 
-console.log(compiler);
+console.log(compiler, compiler.default, compiler.precompile);
 
 async function transform(
   intermediate: string,
