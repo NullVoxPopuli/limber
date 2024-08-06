@@ -90,7 +90,7 @@
     "ember-qunit": "^8.0.2",
     "ember-resolver": "^12.0.1",
     "ember-route-template": "^1.0.3",
-    "ember-source": ">= 5.10.0",
+    "ember-source": "^5.10.2",
     "ember-template-imports": "^4.1.1",
     "ember-template-lint": "^6.0.0",
     "ember-template-lint-plugin-prettier": "^5.0.0",
@@ -113,7 +113,7 @@
     "type-fest": "4.20.1",
     "typescript": "^5.4.5",
     "vfile": "^6.0.1",
-    "webpack": "^5.92.1",
+    "webpack": ">= 5.92.0",
     "yn": "^5.0.0"
   },
   "engines": {
