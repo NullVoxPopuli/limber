@@ -38,7 +38,7 @@
     "ember-modifier": "^4.1.0",
     "ember-primitives": ">= 0.11.0",
     "ember-resources": ">= 6.4.2",
-    "ember-source": ">= 5.10.0",
+    "ember-source": ">= 5.10.2",
     "webpack": ">= 5.92.0"
   },
   "dependencies": {

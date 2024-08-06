@@ -42,7 +42,7 @@
       "ember-element-helper": "^0.8.5",
       "ember-auto-import": "^2.7.2",
       "ember-repl": "workspace:*",
-      "ember-source": ">= 5.10.0",
+      "ember-source": ">= 5.10.2",
       "webpack": ">= 5.92.0"
     },
     "allowedDeprecatedVersions": {
