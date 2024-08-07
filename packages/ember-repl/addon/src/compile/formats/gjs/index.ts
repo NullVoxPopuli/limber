@@ -1,6 +1,5 @@
-import { importSync } from '@embroider/macros';
-
 import babelPluginEmberTemplateCompilation from 'babel-plugin-ember-template-compilation';
+import * as compiler from 'ember-template-compiler';
 
 import { nameFor } from '../../utils.ts';
 import { evalSnippet } from './eval.ts';
@@ -67,8 +66,6 @@ async function transpile({ code: input, name }: Info) {
 }
 
 import type { Babel } from './babel.ts';
-
-const compiler = importSync('ember-source/dist/ember-template-compiler.js');
 
 let processor: any;
 let fetchingPromise: Promise<any>;

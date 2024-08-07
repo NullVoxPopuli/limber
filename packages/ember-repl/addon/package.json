@@ -105,9 +105,9 @@
     "@babel/plugin-transform-typescript": "^7.24.5",
     "@babel/preset-typescript": "^7.23.3",
     "@babel/types": "^7.24.5",
-    "@ember/test-helpers": "^3.2.1",
+    "@ember/test-helpers": "^3.3.1",
     "@ember/test-waiters": "^3.1.0",
-    "@embroider/addon-dev": "4.3.1",
+    "@embroider/addon-dev": "5.0.0",
     "@glimmer/compiler": "^0.92.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/interfaces": "^0.92.0",
@@ -135,7 +135,7 @@
     "@typescript-eslint/parser": "^7.9.0",
     "concurrently": "^8.2.2",
     "ember-resources": "^7.0.0",
-    "ember-source": ">= 5.9.0",
+    "ember-source": ">= 5.10.2",
     "ember-template-imports": "^4.1.1",
     "ember-template-lint": "^6.0.0",
     "eslint": "^8.55.0",
@@ -149,7 +149,7 @@
     "rollup": "~4.18.0",
     "rollup-plugin-copy": "^3.5.0",
     "typescript": "^5.4.5",
-    "webpack": "5.92.0"
+    "webpack": ">= 5.92.0"
   },
   "volta": {
     "extends": "../../../package.json"
@@ -161,13 +161,14 @@
     "version": 2,
     "type": "addon",
     "main": "addon-main.cjs",
+    "externals": ["ember-template-compiler"],
     "app-js": {}
   },
   "peerDependencies": {
     "@glimmer/compiler": ">= 0.86.0",
     "@glimmer/syntax": ">= 0.86.0",
     "@glint/template": ">= 1.3.0",
-    "webpack": "5.92.0"
+    "webpack": ">= 5.92.0"
   },
   "peerDependenciesMeta": {
     "@glint/template": {
