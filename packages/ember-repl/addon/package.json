@@ -105,7 +105,7 @@
     "@babel/plugin-transform-typescript": "^7.24.5",
     "@babel/preset-typescript": "^7.23.3",
     "@babel/types": "^7.24.5",
-    "@ember/test-helpers": "^3.3.1",
+    "@ember/test-helpers": "^4.0.2",
     "@ember/test-waiters": "^3.1.0",
     "@embroider/addon-dev": "5.0.0",
     "@glimmer/compiler": "^0.92.0",
@@ -161,7 +161,9 @@
     "version": 2,
     "type": "addon",
     "main": "addon-main.cjs",
-    "externals": ["ember-template-compiler"],
+    "externals": [
+      "ember-template-compiler"
+    ],
     "app-js": {}
   },
   "peerDependencies": {
