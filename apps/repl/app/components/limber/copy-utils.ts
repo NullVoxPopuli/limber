@@ -39,31 +39,45 @@ export function getSnippetElement(event: Event) {
   throw new Error('Could not find snippet element');
 }
 
-export async function withExtraStyles(target: HTMLElement, next: () => Promise<void>) {
-  let pre = target.querySelector('pre');
-
-  if (!pre) {
-    return await next();
-  }
-
-  pre.classList.add('drop-shadow-lg');
-  pre.style.margin = '0';
+/**
+ * Cloning elements for screenshotting is hard.
+ * Look at all this:
+ *   https://github.com/bubkoo/html-to-image/blob/128dc3edfde95d6ac636f2756630f5cbd6f7c8df/src/clone-node.ts#L231
+ *
+ * So instead, we jitter a bit
+ */
+export async function copyToClipboard(toCopy: HTMLElement) {
+  let pre = toCopy.querySelector('pre');
 
   try {
-    await next();
+    pre?.classList.add('drop-shadow-lg');
+    Object.assign(toCopy.style, {
+      margin: 0,
+      display: 'inline-block',
+      width: 'fit-content',
+    });
+    await toClipboard(toCopy);
   } finally {
-    pre.classList.remove('drop-shadow-lg');
-    pre.setAttribute('style', '');
+    pre?.classList.remove('drop-shadow-lg');
+    Object.assign(toCopy.style, {
+      margin: 'unset',
+      display: 'unset',
+      width: 'unset',
+    });
   }
 }
 
-export async function toClipboard(target: HTMLElement) {
+async function toClipboard(target: HTMLElement) {
   let backgroundColor = '#ffffff';
   let canCopyToImage = 'ClipboardItem' in window;
   let filter = (node: HTMLElement | Text) => {
     if (node instanceof Text) return true;
 
     if ('getAttribute' in node && node.hasAttribute('data-test-copy-menu')) {
+      return false;
+    }
+
+    if ('classList' in node && node.classList.contains('limber__menu__content')) {
       return false;
     }
 
@@ -79,10 +93,12 @@ export async function toClipboard(target: HTMLElement) {
     // html-to-image does not make adjustments if margins exist anyway
     width: box.width + 32,
     height: box.height + 32,
+    cacheBust: true,
+    /**
+     * Good for pasting on social medias
+     */
     pixelRatio: 3,
     style: {
-      // m-0
-      // make margin uniform all the way around
       margin: '1rem',
     },
   };
