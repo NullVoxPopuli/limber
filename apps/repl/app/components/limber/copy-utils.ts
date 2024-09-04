@@ -1,3 +1,5 @@
+import { assert } from '@ember/debug';
+
 import { toBlob, toPng } from 'html-to-image';
 
 export function getSnippetElement(event: Event) {
@@ -39,22 +41,21 @@ export function getSnippetElement(event: Event) {
   throw new Error('Could not find snippet element');
 }
 
-export async function withExtraStyles(target: HTMLElement, next: () => Promise<void>) {
-  let pre = target.querySelector('pre');
+export async function copyToClipboard(target: HTMLElement) {
+  /**
+   * 1. clone
+   * 2. remove extra styles
+   * 3. image
+   * 3. clipboard
+   */
+  let toCopy = (target.querySelector('pre') || target).cloneNode();
 
-  if (!pre) {
-    return await next();
-  }
+  assert(`Element to copy must be an HTMLElement`, toCopy instanceof HTMLElement);
 
-  pre.classList.add('drop-shadow-lg');
-  pre.style.margin = '0';
+  toCopy.classList.add('drop-shadow-lg');
+  toCopy.style.margin = '0';
 
-  try {
-    await next();
-  } finally {
-    pre.classList.remove('drop-shadow-lg');
-    pre.setAttribute('style', '');
-  }
+  await toClipboard(toCopy);
 }
 
 export async function toClipboard(target: HTMLElement) {
@@ -64,6 +65,10 @@ export async function toClipboard(target: HTMLElement) {
     if (node instanceof Text) return true;
 
     if ('getAttribute' in node && node.hasAttribute('data-test-copy-menu')) {
+      return false;
+    }
+
+    if (node.classList.contains('limber__menu__content')) {
       return false;
     }
 
