@@ -77,7 +77,7 @@ async function toClipboard(target: HTMLElement) {
       return false;
     }
 
-    if (node.classList.contains('limber__menu__content')) {
+    if ('classList' in node && node.classList.contains('limber__menu__content')) {
       return false;
     }
 
