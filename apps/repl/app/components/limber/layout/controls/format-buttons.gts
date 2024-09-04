@@ -10,7 +10,7 @@ import type RouterService from '@ember/routing/router-service';
 import type { ComponentLike } from '@glint/template';
 import type { Format } from 'limber/utils/messaging';
 
-export const FormatButtons: TOC<{}> = <template>
+export const FormatButtons: TOC<object> = <template>
   {{! template-lint-disable no-forbidden-elements }}
   <style>
     .limber__toggle-group { button { box-shadow: 0 0px 1px rgba(255,255,255,0.5); } button:hover {

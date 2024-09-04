@@ -1,5 +1,6 @@
 {
   "name": "@nullvoxpopuli/spike-url-shortening",
+  "version": "0.0.0",
   "private": true,
   "type": "module",
   "dependencies": {
@@ -14,7 +15,7 @@
   "devDependencies": {
     "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "eslint": "^8.55.0",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.3",
     "prettier-plugin-ember-template-tag": "2.0.2",
     "typescript": "^5.4.5",
     "vitest": "^2.0.3"
@@ -41,6 +42,5 @@
     "yarn": "use pnpm"
   },
   "license": "MIT",
-  "author": "NullVoxPopuli",
-  "version": null
+  "author": "NullVoxPopuli"
 }

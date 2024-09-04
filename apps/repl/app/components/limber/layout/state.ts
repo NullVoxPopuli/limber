@@ -447,7 +447,7 @@ function getData(): SplitSizeData {
 
   try {
     return JSON.parse(json);
-  } catch (e) {
+  } catch {
     return {};
   }
 }

@@ -32,7 +32,8 @@ export default class FrameOutput extends Component {
     update: (format: Format, text: string) => void;
   }>;
 
-  constructor(owner: unknown, args: {}) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  constructor(owner: unknown, args: any) {
     super(owner, args);
 
     registerDestructor(this, () => {
