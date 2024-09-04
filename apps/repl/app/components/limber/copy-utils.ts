@@ -1,5 +1,3 @@
-import { assert } from '@ember/debug';
-
 import { toBlob, toPng } from 'html-to-image';
 
 export function getSnippetElement(event: Event) {
@@ -41,24 +39,35 @@ export function getSnippetElement(event: Event) {
   throw new Error('Could not find snippet element');
 }
 
-export async function copyToClipboard(target: HTMLElement) {
-  /**
-   * 1. clone
-   * 2. remove extra styles
-   * 3. image
-   * 3. clipboard
-   */
-  let toCopy = (target.querySelector('pre') || target).cloneNode();
+/**
+ * Cloning elements for screenshotting is hard.
+ * Look at all this:
+ *   https://github.com/bubkoo/html-to-image/blob/128dc3edfde95d6ac636f2756630f5cbd6f7c8df/src/clone-node.ts#L231
+ *
+ * So instead, we jitter a bit
+ */
+export async function copyToClipboard(toCopy: HTMLElement) {
+  let pre = toCopy.querySelector('pre');
 
-  assert(`Element to copy must be an HTMLElement`, toCopy instanceof HTMLElement);
-
-  toCopy.classList.add('drop-shadow-lg');
-  toCopy.style.margin = '0';
-
-  await toClipboard(toCopy);
+  try {
+    pre?.classList.add('drop-shadow-lg');
+    Object.assign(toCopy.style, {
+      margin: 0,
+      display: 'inline-block',
+      width: 'fit-content',
+    });
+    await toClipboard(toCopy);
+  } finally {
+    pre?.classList.remove('drop-shadow-lg');
+    Object.assign(toCopy.style, {
+      margin: 'unset',
+      display: 'unset',
+      width: 'unset',
+    });
+  }
 }
 
-export async function toClipboard(target: HTMLElement) {
+async function toClipboard(target: HTMLElement) {
   let backgroundColor = '#ffffff';
   let canCopyToImage = 'ClipboardItem' in window;
   let filter = (node: HTMLElement | Text) => {
@@ -84,10 +93,12 @@ export async function toClipboard(target: HTMLElement) {
     // html-to-image does not make adjustments if margins exist anyway
     width: box.width + 32,
     height: box.height + 32,
+    cacheBust: true,
+    /**
+     * Good for pasting on social medias
+     */
     pixelRatio: 3,
     style: {
-      // m-0
-      // make margin uniform all the way around
       margin: '1rem',
     },
   };
