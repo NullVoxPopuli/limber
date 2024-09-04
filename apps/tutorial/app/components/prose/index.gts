@@ -9,6 +9,7 @@ import { NotFound } from './prose-not-found';
 import type { TOC } from '@ember/component/template-only';
 
 export const resetScroll = modifier((element, [prose]) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   prose;
   element.scrollTo(0, 0);
 });
