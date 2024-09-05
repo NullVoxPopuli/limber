@@ -22,7 +22,8 @@ export default class Save extends Component {
 
   @tracked isShowing = false;
 
-  constructor(owner: unknown, args: {}) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  constructor(owner: unknown, args: any) {
     super(owner, args);
 
     const handler = (e: KeyboardEvent) => {

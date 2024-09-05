@@ -1,5 +1,6 @@
 {
   "name": "dev-tools",
+  "version": "0.0.0",
   "private": true,
   "type": "module",
   "main": "index.js",
@@ -17,12 +18,12 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.5",
+    "@babel/core": "^7.25.2",
     "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "@types/node": "^20.12.12",
     "@types/yargs": "^17.0.32",
     "eslint": "^8.55.0",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.3",
     "prettier-plugin-ember-template-tag": "2.0.2",
     "typescript": "^5.4.5"
   },
@@ -45,6 +46,5 @@
     "directory": "dev"
   },
   "license": "MIT",
-  "author": "NullVoxPopuli",
-  "version": null
+  "author": "NullVoxPopuli"
 }

@@ -58,7 +58,7 @@ module('Output > Demos', function (hooks) {
         let makeComponent!: (format: Format, text: string) => void;
         let setParentFrame!: (parentAPI: {
           beginCompile: () => void;
-          error: () => void;
+          error: (e: unknown) => void;
           success: () => void;
           finishedRendering: () => void;
         }) => void;
@@ -90,7 +90,7 @@ module('Output > Demos', function (hooks) {
 
         setParentFrame({
           beginCompile: () => assert.step('begin compile'),
-          error: () => assert.step('error'),
+          error: (e) => assert.step(e as string),
           success: () => assert.step('success'),
           finishedRendering: () => assert.step('finished rendering'),
         });

@@ -19,16 +19,16 @@
     "directory": "packages/syntax/glimmer-s-expression/lezer"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.5",
-    "@babel/eslint-parser": "^7.24.5",
+    "@babel/core": "^7.25.2",
+    "@babel/eslint-parser": "^7.25.1",
     "@glimdown/lezer-infra": "workspace:*",
     "@lezer/generator": "^1.6.0",
     "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
-    "@typescript-eslint/eslint-plugin": "^7.9.0",
-    "@typescript-eslint/parser": "^7.9.0",
+    "@typescript-eslint/eslint-plugin": "^8.4.0",
+    "@typescript-eslint/parser": "^8.4.0",
     "eslint": "^8.55.0",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.3",
     "rollup": "^4.17.2",
     "typescript": "^5.4.5"
   },
