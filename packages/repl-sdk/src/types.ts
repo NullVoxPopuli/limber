@@ -1,14 +1,18 @@
 interface PublicMethods {
-  compile: (format: string, text: string, options?: {
-    flavor?: string;
-    fileName?: string;
-  }) => Promise<HTMLElement>
+  compile: (
+    format: string,
+    text: string,
+    options?: {
+      flavor?: string;
+      fileName?: string;
+    }
+  ) => Promise<HTMLElement>;
 
-  optionsFor: (format: string, flavor?: string) => Omit<CompilerConfig, 'compiler'>
+  optionsFor: (format: string, flavor?: string) => Omit<CompilerConfig, 'compiler'>;
 }
 export interface ResolvedCompilerOptions {
-  importMap: { [importPath: string]: string; };
-  resolve: { [importPath: string]: unknown; };
+  importMap: { [importPath: string]: string };
+  resolve: { [importPath: string]: unknown };
   needsLiveMeta?: boolean;
   versions: { [packageName: string]: string };
 }
@@ -82,7 +86,7 @@ export interface CompilerConfig {
       element: HTMLElement,
       defaultExport: any,
       extras: { compiled: string } & Record<string, unknown>,
-      compiler: PublicMethods,
+      compiler: PublicMethods
     ) => void;
   }>;
 }
@@ -93,26 +97,26 @@ export interface Options {
    *
    * Thehse will take precedence over the default CDN fallback.
    */
-  importMap?: { [importPath: string]: string; };
+  importMap?: { [importPath: string]: string };
   /**
    * Map of pre-resolved JS values to use as the import map
    * These could assume the role of runtime virtual modules.
    *
    * These will take precedence over the importMap, and implicit CDN fallback.
    */
-  resolve?: { [importPath: string]: unknown; }
+  resolve?: { [importPath: string]: unknown };
 
   /**
-  * Specifies which vesions of dependencies to when pulling from a CDN.
-  * Defaults to latest.
-  */
+   * Specifies which vesions of dependencies to when pulling from a CDN.
+   * Defaults to latest.
+   */
   versions?: { [packageName: string]: string };
 
   formats: {
     [fileExtension: string]:
-    | CompilerConfig
-    | {
-      [flavor: string]: CompilerConfig;
-    };
+      | CompilerConfig
+      | {
+          [flavor: string]: CompilerConfig;
+        };
   };
 }
