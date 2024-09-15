@@ -50,13 +50,17 @@ export class Compiler {
 
           if (result) return result;
         }
+
+        // eslint-disable-next-line
         console.log('resolve', id);
 
         return `https://esm.sh/*${id}`;
       },
       // Hook source fetch function
       fetch: async (url, options) => {
+        // eslint-disable-next-line
         console.log('fetching url', url);
+
         const response = await fetch(url, options);
 
         return response;
@@ -108,6 +112,7 @@ export class Compiler {
    */
   async #getCompiler(format, flavor) {
     const config = this.#resolveFormat(format, flavor);
+
     if (this.#compilerCache.has(config)) {
       return this.#compilerCache.get(config);
     }
@@ -115,6 +120,7 @@ export class Compiler {
     const compiler = await config.compiler(this.optionsFor(format, flavor), this.#nestedPublicAPI);
 
     this.#compilerCache.set(config, compiler);
+
     if (compiler.resolve) {
       this.#resolvers.push(compiler.resolve);
     }

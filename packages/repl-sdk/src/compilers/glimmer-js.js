@@ -1,10 +1,10 @@
-import { esmsh, jsdelivr } from './cdn.js';
+import { esmsh } from './cdn.js';
 
 /**
  * @param {import('../types.ts').ResolvedCompilerOptions} config
  * @param {import('../types.ts').PublicMethods} api
  */
-export async function compiler(config = {}, api) {
+export async function compiler(config = {} /*, api */) {
   const versions = config.versions || {};
 
   const [
@@ -13,7 +13,7 @@ export async function compiler(config = {}, api) {
     { default: templateCompiler },
     { Preprocessor },
     { default: MacrosPlugin },
-    { MacrosConfig },
+    ,
     { buildPlugin: makeMacrosGlimmerPlugin },
     { default: AdjustImports },
     { default: DebugMacros },
@@ -63,7 +63,9 @@ export async function compiler(config = {}, api) {
   ]);
 
   async function transform(text) {
+    // eslint-disable-next-line
     console.log(templateCompiler, templatePlugin);
+
     return babel.transform(text, {
       filename: `dynamic-repl.js`,
       plugins: [
@@ -209,6 +211,7 @@ export async function compiler(config = {}, api) {
       if (id.startsWith('@ember')) {
         return `https://esm.sh/*ember-source/dist/packages/${id}`;
       }
+
       if (id.startsWith('@glimmer')) {
         return `https://esm.sh/*ember-source/dist/dependencies/${id}.js`;
       }
@@ -222,10 +225,13 @@ export async function compiler(config = {}, api) {
       let transformed = await transform({ babel, templatePlugin, templateCompiler }, preprocessed);
 
       let code = transformed.code;
+
+      // eslint-disable-next-line
       console.log(code);
+
       return code;
     },
-    render: async (element, compiled, extra, compiler) => {
+    render: async (element, compiled /*, extra, compiler */) => {
       element.innerHTML = compiled.toString();
     },
   };
