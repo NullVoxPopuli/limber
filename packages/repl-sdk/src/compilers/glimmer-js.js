@@ -12,10 +12,6 @@ export async function compiler(config = {} /*, api */) {
     templatePlugin,
     { default: templateCompiler },
     { Preprocessor },
-    { default: MacrosPlugin },
-    ,
-    { buildPlugin: makeMacrosGlimmerPlugin },
-    { default: AdjustImports },
     { default: DebugMacros },
   ] = await esmsh.importAll(versions, [
     /**
@@ -40,15 +36,6 @@ export async function compiler(config = {} /*, api */) {
      */
     'content-tag',
     /**
-     * Build-time macros
-     * (partly because import.meta.env.DEV isn't standard
-     *   partly because we needed more than what meta.env could offer)
-     */
-    '@embroider/macros/src/babel/macros-babel-plugin.js',
-    '@embroider/macros/src/node.js',
-    '@embroider/macros/src/glimmer/ast-transform.js',
-    '@embroider/compat/src/babel-plugin-adjust-imports.js',
-    /**
      * Older-style build macros
      * (before import.meta.env was even a thing)
      *
@@ -63,9 +50,6 @@ export async function compiler(config = {} /*, api */) {
   ]);
 
   async function transform(text) {
-    // eslint-disable-next-line
-    console.log(templateCompiler, templatePlugin);
-
     return babel.transform(text, {
       filename: `dynamic-repl.js`,
       plugins: [
@@ -73,10 +57,7 @@ export async function compiler(config = {} /*, api */) {
           templatePlugin,
           {
             compiler: templateCompiler,
-            transforms: [
-              makeMacrosGlimmerPlugin({ methodName: 'makeFirstTransform' }),
-              makeMacrosGlimmerPlugin({ methodName: 'makeSecondTransform' }),
-            ],
+            transforms: [],
           },
         ],
         [
@@ -116,73 +97,6 @@ export async function compiler(config = {} /*, api */) {
           },
           '@ember/application/deprecations stripping',
         ],
-        /**
-         * TODO: I may need a safer browser-time implementation
-         *       of @embroider/macros
-         */
-        [
-          MacrosPlugin,
-          {
-            userConfigs: {},
-            globalConfig: {
-              '@embroider/macros': {
-                isTesting: false,
-              },
-              WarpDrive: {
-                debug: {
-                  LOG_GRAPH: false,
-                  LOG_IDENTIFIERS: false,
-                  LOG_INSTANCE_CACHE: false,
-                  LOG_MUTATIONS: false,
-                  LOG_NOTIFICATIONS: false,
-                  LOG_OPERATIONS: false,
-                  LOG_PAYLOADS: false,
-                  LOG_REQUESTS: false,
-                  LOG_REQUEST_STATUS: false,
-                },
-                polyfillUUID: false,
-                includeDataAdapter: true,
-                compatWith: null,
-                deprecations: {
-                  DEPRECATE_CATCH_ALL: true,
-                  DEPRECATE_COMPUTED_CHAINS: true,
-                  DEPRECATE_EMBER_INFLECTOR: true,
-                  DEPRECATE_LEGACY_IMPORTS: true,
-                  DEPRECATE_MANY_ARRAY_DUPLICATES: true,
-                  DEPRECATE_NON_STRICT_ID: true,
-                  DEPRECATE_NON_STRICT_TYPES: true,
-                  DEPRECATE_NON_UNIQUE_PAYLOADS: true,
-                  DEPRECATE_RELATIONSHIP_REMOTE_UPDATE_CLEARING_LOCAL_STATE: true,
-                  DEPRECATE_STORE_EXTENDS_EMBER_OBJECT: true,
-                  ENABLE_LEGACY_SCHEMA_SERVICE: true,
-                },
-                features: {
-                  SAMPLE_FEATURE_FLAG: false,
-                },
-                env: {
-                  TESTING: true,
-                  PRODUCTION: false,
-                  DEBUG: true,
-                },
-              },
-              '@embroider/core': {
-                active: true,
-              },
-            },
-            owningPackageRoot: null,
-            isDevelopingPackageRoots: ['/home/nvp/Development/tmp/my-fancy-app'],
-            appPackageRoot: '/home/nvp/Development/tmp/my-fancy-app',
-            embroiderMacrosConfigMarker: true,
-            mode: 'run-time',
-            hideRequires: true,
-          },
-        ],
-        [
-          AdjustImports,
-          {
-            appRoot: '/home/nvp/Development/tmp/my-fancy-app',
-          },
-        ],
         // [babel.availablePlugins['proposal-decorators'], { legacy: true }],
         // [babel.availablePlugins['proposal-class-properties']],
       ],
@@ -216,18 +130,20 @@ export async function compiler(config = {} /*, api */) {
         return `https://esm.sh/*ember-source/dist/dependencies/${id}.js`;
       }
 
-      // if (id.startsWith('@embroider/macros')) {
-      //   return `https://esm.sh/*@embroider/macros/src/addon/runtime.js`;
-      // }
+      console.log({ id });
+
+      if (id.startsWith('@embroider/macros')) {
+        return `repl-sdk/compilers/ember/macros.js`;
+      }
     },
     compile: async (text) => {
       let preprocessed = preprocessor.process(text, 'dynamic-repl.js');
-      let transformed = await transform({ babel, templatePlugin, templateCompiler }, preprocessed);
+      let transformed = await transform(preprocessed);
 
       let code = transformed.code;
 
       // eslint-disable-next-line
-      console.log(code);
+      console.log({ code });
 
       return code;
     },
