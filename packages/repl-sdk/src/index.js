@@ -41,6 +41,7 @@ export class Compiler {
       mapOverrides: true, // default false
       // Hook all module resolutions
       resolve: (id) => {
+        console.debug('resolving', id);
         if (id.startsWith('blob:')) return id;
         if (id.startsWith('https://')) return id;
         if (id.startsWith('.')) return id;

@@ -9,6 +9,7 @@
   },
   "author": "NullvoxPopuli",
   "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.23.9",
     "@babel/standalone": "^7.24.5",
     "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "@testing-library/dom": "^10.3.2",
