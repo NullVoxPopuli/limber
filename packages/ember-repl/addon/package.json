@@ -76,6 +76,7 @@
   "dependencies": {
     "@babel/helper-plugin-utils": "^7.24.5",
     "@babel/standalone": "^7.24.5",
+    "@ember/test-waiters": "^3.1.0",
     "@embroider/addon-shim": "1.8.9",
     "@embroider/macros": "1.16.6",
     "babel-import-util": "^3.0.0",
