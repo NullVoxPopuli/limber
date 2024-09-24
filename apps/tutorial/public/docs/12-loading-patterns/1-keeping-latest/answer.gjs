@@ -6,6 +6,7 @@ import { use, resource } from 'ember-resources';
 import { RemoteData, remoteData } from 'reactiveweb/remote-data';
 import { keepLatest } from 'reactiveweb/keep-latest';
 
+const { JSON } = globalThis;
 const isEmpty = (x) => !x || x?.length === 0;
 const urlFor = (id) => `https://swapi.tech/api/people/${id}`;
 
