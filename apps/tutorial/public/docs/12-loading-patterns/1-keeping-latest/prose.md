@@ -5,7 +5,7 @@ This can be useful for improving user experience across sites with data that tak
 _Typically, users don't want to see the UI flashing a bunch of different states_.
 The more stable we can keep the UI, and defer to subtle / polite indicators of progress, the better. We are kinder to the visual stimulous we put our users through.
 
-`keepLatest` _only_ works in a component's class for now, but it looks like this:
+`keepLatest` _only_ works in a class for now, but it looks like this:
 
 ```js
 class Demo extends Component {
