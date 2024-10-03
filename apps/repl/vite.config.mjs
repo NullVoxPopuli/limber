@@ -17,6 +17,8 @@ const extensions = [".mjs", ".gjs", ".js", ".mts", ".gts", ".ts", ".hbs", ".json
 export default defineConfig(({ mode }) => {
   let embroiderOptimize = optimizeDeps();
 
+  console.log(embroiderOptimize.esbuildOptions);
+
   return {
     resolve: {
       extensions,
@@ -25,13 +27,13 @@ export default defineConfig(({ mode }) => {
       target: "esnext",
     },
     plugins: [
-      hbs(),
+      // hbs(), what's hbs? 🙈
       templateTag(),
       scripts(),
       resolver(),
-      compatPrebuild(),
+      // compatPrebuild(), am I good enough?
       assets(),
-      contentFor(),
+      // contentFor(), I micro manage my HTML
 
       babel({
         babelHelpers: "runtime",
