@@ -1,16 +1,13 @@
 <!doctype html>
-<html lang="en-us">
+<html>
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Limber » Ember Markdown Playground</title>
     <meta
       name="description"
       content="Limber is a Glimdown playground for demonstrating how Glimmer and Markdown can be used together to write documentation"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    {{content-for "head"}} {{content-for "head-footer"}}
 
     <!--
       This the source of truth for the ember brand variables
@@ -30,22 +27,15 @@
         --ember-white: #fdfdfd;
       }
     </style>
-    <script>
-      globalThis.v8 = {};
-      globalThis.path = {
-        resolve: (...args) => args.join("/"),
-      };
-    </script>
 
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="preload"
       as="style"
       onload="this.onload=null;this.rel='stylesheet'"
       ref="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap"
-    >
+    />
   </head>
   <body class="overflow-hidden syntax-dark syntax-bright">
     <div id="initial-loader">
@@ -100,22 +90,21 @@
       </div>
     </div>
 
-    {{content-for "body"}}
+    <link integrity="" rel="stylesheet" href="/assets/tailwind.css" />
+    <link integrity="" rel="stylesheet" href="/assets/limber.css" />
 
-    <script>
+    <script src="/@embroider/core/vendor.js"></script>
+    <script type="module">
+      import Application from "./app/app";
+      import environment from "./app/config/environment";
+
+      Application.create(environment.APP);
+
       if (window.self !== window.parent) {
         window.self.document.querySelector("#initial-loader").style.display = "none";
         window.self.document.body.classList.remove("overflow-hidden");
       }
     </script>
-
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/tailwind.css" />
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css" />
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/limber.css" />
-    <script src="{{rootURL}}assets/vendor.js"></script>
-    <script src="{{rootURL}}assets/limber.js"></script>
-
-    {{content-for "body-footer"}}
 
     <a rel="me" style="display: none" href="https://mastodon.coffee/@nullvoxpopuli">Mastodon</a>
   </body>
