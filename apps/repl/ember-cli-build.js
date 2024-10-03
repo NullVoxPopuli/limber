@@ -21,6 +21,11 @@ module.exports = async function (defaults) {
 
   let app = new EmberApp(defaults, {
     /* defaults */
+    'ember-cli-babel': {
+      // turn off the old transform
+      // (for this to work when using Embroider you need https://github.com/embroider-build/embroider/pull/1673)
+      disableDecoratorTransforms: true,
+    },
   });
 
   // Adds:
@@ -38,5 +43,8 @@ module.exports = async function (defaults) {
     staticAddonTestSupportTrees: true,
     staticAddonTrees: true,
     allowUnsafeDynamicComponents: true,
+    amdCompatibility: {
+      es: [['ember-template-compiler', ['default', '_preprocess', 'precompile']]],
+    },
   });
 };

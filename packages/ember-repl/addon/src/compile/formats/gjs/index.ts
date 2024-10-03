@@ -1,5 +1,10 @@
+import { importSync } from '@embroider/macros';
+
 import babelPluginEmberTemplateCompilation from 'babel-plugin-ember-template-compilation';
-import * as compiler from 'ember-source/dist/ember-template-compiler';
+
+const compiler = importSync('ember-source/dist/ember-template-compiler.js');
+// const compiler = importSync('ember-template-compiler');
+// import * as compiler from 'ember-source/dist/ember-template-compiler';
 
 import { nameFor } from '../../utils.ts';
 import { evalSnippet } from './eval.ts';
@@ -81,7 +86,7 @@ async function preprocess(input: string, name: string): Promise<string> {
     processor = new Preprocessor();
   }
 
-  return processor.process(input, `${name}.js`);
+  return processor.process(input, { filename: `${name}.js`, inline_sourceMap: true });
 }
 
 async function transform(
