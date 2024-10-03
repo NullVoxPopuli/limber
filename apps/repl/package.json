@@ -45,7 +45,6 @@
     "@embroider/core": "3.4.16-unstable.aa52b09",
     "@embroider/test-setup": "4.0.1-unstable.aa52b09",
     "@embroider/vite": "0.2.1-unstable.aa52b09",
-    "@fortawesome/ember-fontawesome": "^2.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-regular-svg-icons": "^6.5.1",

@@ -1,6 +1,6 @@
 import { on } from '@ember/modifier';
 
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faQuestion, faXmark} from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'ember-primitives';
 import { notInIframe } from 'ember-primitives/iframe';
 
@@ -97,7 +97,7 @@ export const Help = <template>
     <Modal as |m|>
       <div class="fixed right-4 bottom-4">
         <FAB {{on "click" m.open}} aria-label="Help / How to use this tool">
-          <FaIcon @size="xs" @icon="question" class="aspect-square" />
+          {{{faQuestion}}}
         </FAB>
       </div>
 
@@ -108,7 +108,7 @@ export const Help = <template>
         <header class="flex justify-between items-center py-2 px-2">
           <h2 class="m-0">Help</h2>
           <FlatButton {{on "click" m.close}} aria-label="hide the help information">
-            <FaIcon @size="xs" @icon="xmark" class="aspect-square" />
+            {{{faXmark}}}
           </FlatButton>
         </header>
 

@@ -17,17 +17,14 @@ type LazyTrackedArgs = {
 
 declare module '@glimmer/env';
 
-declare module '@fortawesome/ember-fontawesome-components/fa-icon';
 declare module '@ember/helper';
 declare module '@ember/modifier';
 declare module '@sentry/ember';
 declare module 'babel-plugin-htmlbars-inline-precompile';
 declare module '@babel/plugin-proposal-decorators';
-declare module '@glimmerx/babel-preset';
 declare module '@ember/template-compilation';
 declare module '@ember/template-factory';
 declare module 'ember-source/dist/ember-template-compiler';
-declare module '@glimmer/babel-preset';
 declare module 'highlightjs-glimmer';
 declare module 'highlightjs-glimmer/vendor/highlight.js';
 declare module 'highlightjs-glimmer/vendor/javascript.min';

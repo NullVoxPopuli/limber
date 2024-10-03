@@ -45,7 +45,6 @@
     "@babel/runtime": "^7.24.5",
     "@embroider/addon-shim": "1.8.9",
     "@embroider/macros": "1.16.6",
-    "@fortawesome/ember-fontawesome": "^2.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-regular-svg-icons": "^6.5.1",

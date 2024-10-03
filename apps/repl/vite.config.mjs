@@ -17,8 +17,6 @@ const extensions = [".mjs", ".gjs", ".js", ".mts", ".gts", ".ts", ".hbs", ".json
 export default defineConfig(({ mode }) => {
   let embroiderOptimize = optimizeDeps();
 
-  console.log(embroiderOptimize.esbuildOptions);
-
   return {
     resolve: {
       extensions,
@@ -31,7 +29,7 @@ export default defineConfig(({ mode }) => {
       templateTag(),
       scripts(),
       resolver(),
-      // compatPrebuild(), am I good enough?
+      compatPrebuild(), // am I good enough?
       assets(),
       // contentFor(), I micro manage my HTML
 

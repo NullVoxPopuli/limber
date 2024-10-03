@@ -1,4 +1,4 @@
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { ExternalLink as PrimitiveExternalLink } from 'ember-primitives';
 
 import type { TOC } from '@ember/component/template-only';
@@ -6,7 +6,7 @@ import type { TOC } from '@ember/component/template-only';
 const DefaultContent: TOC<{ Blocks: { default: [] } }> = <template>
   <span>{{yield}}</span>
 
-  <FaIcon @icon="external-link-alt" />
+  {{{faExternalLinkAlt}}}
 </template>;
 
 export const ExternalLink: TOC<{

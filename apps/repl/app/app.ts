@@ -10,7 +10,7 @@ import { _backburner } from '@ember/runloop';
 // @ts-expect-error - TODO: add types to compatModules
 import compatModules from '@embroider/core/entrypoint';
 
-import loadInitializers from 'ember-load-initializers';
+// import loadInitializers from 'ember-load-initializers';
 import Resolver from 'ember-resolver';
 import { setupComponentMachines } from 'ember-statechart-component';
 import { StateNode } from 'xstate';
@@ -45,6 +45,6 @@ export default class App extends Application {
   Resolver = Resolver.withModules(compatModules);
 }
 
-loadInitializers(App, config.modulePrefix);
+// loadInitializers(App, config.modulePrefix);
 
 setupComponentMachines(StateNode);

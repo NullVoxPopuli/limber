@@ -2,7 +2,7 @@ import { concat, fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { htmlSafe } from '@ember/template';
 
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faColumns, faExternalLinkAlt,faRotate,faWindowMaximize, faWindowMinimize } from '@fortawesome/free-solid-svg-icons';
 import { inIframe } from 'ember-primitives/iframe';
 
 import currentURL from 'limber/helpers/current-url';
@@ -39,9 +39,9 @@ export const Controls: TOC<{
           {{on "click" (fn @send "MAXIMIZE")}}
         >
           {{#if @isMaximized}}
-            <FaIcon @icon="columns" />
+            {{{faColumns}}}
           {{else}}
-            <FaIcon @icon="window-maximize" @prefix="far" />
+            {{{faWindowMaximize}}}
           {{/if}}
         </Button>
         <Button
@@ -49,9 +49,9 @@ export const Controls: TOC<{
           {{on "click" (fn @send "MINIMIZE")}}
         >
           {{#if @isMinimized}}
-            <FaIcon @icon="columns" />
+            {{{faColumns}}}
           {{else}}
-            <FaIcon @icon="window-minimize" @prefix="far" />
+            {{{faWindowMinimize}}}
           {{/if}}
         </Button>
         <Button
@@ -59,7 +59,7 @@ export const Controls: TOC<{
           disabled={{or @isMaximized @isMinimized}}
           {{on "click" (fn @send "ROTATE")}}
         >
-          <FaIcon @icon="rotate" />
+          {{{faRotate}}}
         </Button>
 
         {{#if (inIframe)}}
@@ -70,7 +70,7 @@ export const Controls: TOC<{
             target="_blank"
             class="flex select-none py-2 px-3 text-white text-xs items-center hover:bg-[#9b2918] focus:ring-4 ring-inset focus:outline-none disabled:opacity-30"
           >
-            <FaIcon @icon="external-link-alt" />
+            {{{faExternalLinkAlt}}}
           </a>
         {{/if}}
 
