@@ -1,5 +1,5 @@
 import babelPluginEmberTemplateCompilation from 'babel-plugin-ember-template-compilation';
-import * as compiler from 'ember-template-compiler';
+import * as compiler from 'ember-source/dist/ember-template-compiler';
 
 import { nameFor } from '../../utils.ts';
 import { evalSnippet } from './eval.ts';
