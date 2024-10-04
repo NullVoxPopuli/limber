@@ -67,6 +67,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          # Defaults to ${{ github.repository }}, but that doesn't work for forks
+          # This should also make it obvious why this is in a separate workflow
+          # and in a job that doesn't have access to our secrets.
+          repository: ${{ github.event.workflow_run.head_repository.full_name }}
           ref: ${{ github.event.workflow_run.head_branch }}
       - name: TurboRepo local server
         uses: felixmosh/turborepo-gh-artifacts@v3
