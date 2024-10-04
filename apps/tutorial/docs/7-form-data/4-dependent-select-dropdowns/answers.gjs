@@ -33,7 +33,7 @@ const Select = <template>
 </template>;
 /////////// End Select
 
-////////////// Demo 
+////////////// Demo
 
 function data() {
   return JSON.stringify({ selectedAPI: selectedAPI.current, selectedStuff }, null, 3);
@@ -53,12 +53,12 @@ function names(options) {
 
 <template>
   <pre>{{data}}</pre>
-  
+
   <label>
     Parent Dropdown
-    <Select 
-      @options={{DATA_SOURCES}} 
-      @onChange={{selectedAPI.set}} 
+    <Select
+      @options={{DATA_SOURCES}}
+      @onChange={{selectedAPI.set}}
       @selected={{selectedAPI.current}}
     />
   </label>
@@ -66,8 +66,8 @@ function names(options) {
   <label>
     Select {{selectedAPI.current}}
 
-    {{! 
-      it's important to model async behavior, and this util makes that a bit easier. 
+    {{!
+      it's important to model async behavior, and this util makes that a bit easier.
       Docs here: https://ember-resources.pages.dev/funcs/util_remote_data.RemoteData }}
     {{#let (RemoteData (urlForDataSource selectedAPI.current)) as |request|}}
       {{#if request.isLoading}}
@@ -75,9 +75,9 @@ function names(options) {
       {{/if}}
 
       {{#if request.value}}
-         <Select 
-           @options={{names request.value.results}} 
-           @onChange={{(fn setSelected selectedAPI.current)}} 
+         <Select
+           @options={{names request.value.results}}
+           @onChange={{(fn setSelected selectedAPI.current)}}
           >
             <:option as |item|>
               {{item.name}}
