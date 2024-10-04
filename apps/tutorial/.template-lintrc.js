@@ -15,6 +15,12 @@ module.exports = {
         // We do what we want. psh
         'no-forbidden-elements': 'off',
         'no-inline-styles': 'off',
+        // false negatives due to template-lint not being able to determine that
+        // a calling context provides the label
+        //
+        // We'd rather disable than have template-lint-disables in the file...
+        // lint disables look unprofessional
+        'require-input-label': 'off',
       },
     },
   ],
