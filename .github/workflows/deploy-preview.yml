@@ -96,8 +96,10 @@ jobs:
     outputs:
       number: ${{ steps.number.outputs.pr-number || github.event.inputs.prNumber }}
     steps:
-      - run: echo "${{ toJSON(github.event.workflow_run) }}"
+      - run: echo '${{ toJSON(github.event) }}'
         name: "debug workflow_run event"
+        # When PR comes from a fork, 
+        # github.event.workflow_run.pull_requests is empty
       - run: echo "${{ github.event.workflow_run.pull_requests[0].number }}"
         id: number
 
