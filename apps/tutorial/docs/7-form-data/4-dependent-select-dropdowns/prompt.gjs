@@ -33,58 +33,26 @@ const Select = <template>
 </template>;
 /////////// End Select
 
-////////////// Demo 
+////////////// Demo
 
 function data() {
   return JSON.stringify({ selectedAPI: selectedAPI.current, selectedStuff }, null, 3);
-}
-
-function urlForDataSource(selectedData) {
-  return `https://swapi.dev/api/${selectedData}/`;
 }
 
 function setSelected(propertyName, value) {
   selectedStuff[propertyName] = value;
 }
 
-function names(options) {
-  return options.map(option => option.name);
-}
-
 <template>
   <pre>{{data}}</pre>
-  
+
   <label>
     Parent Dropdown
-    <Select 
-      @options={{DATA_SOURCES}} 
-      @onChange={{selectedAPI.set}} 
+    <Select
+      @options={{DATA_SOURCES}}
+      @onChange={{selectedAPI.set}}
       @selected={{selectedAPI.current}}
     />
-  </label>
-
-  <label>
-    Select {{selectedAPI.current}}
-
-    {{! 
-      it's important to model async behavior, and this util makes that a bit easier. 
-      Docs here: https://ember-resources.pages.dev/funcs/util_remote_data.RemoteData }}
-    {{#let (RemoteData (urlForDataSource selectedAPI.current)) as |request|}}
-      {{#if request.isLoading}}
-        Loading...
-      {{/if}}
-
-      {{#if request.value}}
-         <Select 
-           @options={{names request.value.results}} 
-           @onChange={{(fn setSelected selectedAPI.current)}} 
-          >
-            <:option as |item|>
-              {{item.name}}
-            </:option>
-         </Select>
-      {{/if}}
-    {{/let}}
   </label>
 
   <style>
