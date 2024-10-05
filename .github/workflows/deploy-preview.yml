@@ -102,6 +102,8 @@ jobs:
     steps:
       - run: echo '${{ toJSON(github.event) }}'
         name: "debug workflow_run event"
+      - run: echo "${{ github.event.number }}"
+        name: 'debug github.event.number'
         # When PR comes from a fork, 
         # github.event.workflow_run.pull_requests is empty
       - run: echo "${{ github.event.workflow_run.pull_requests[0].number }}"
