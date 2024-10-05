@@ -9,11 +9,13 @@ import { getHighlighter, getPurifier } from './-utils/highlighting';
 interface Signature {
   Element: HTMLPreElement;
   Args: {
-    Positional: [string];
+    Positional: [string | null];
   };
 }
 
 export default modifier<Signature>((element: Element, [code]) => {
+  if (!code) return;
+
   let guid = guidFor(element);
 
   element.setAttribute('id', guid);

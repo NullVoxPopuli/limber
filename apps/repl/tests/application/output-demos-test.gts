@@ -1,4 +1,3 @@
-import Controller from '@ember/controller';
 import { assert as debugAssert } from '@ember/debug';
 import { settled, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
@@ -59,17 +58,16 @@ module('Output > Demos', function (hooks) {
         let setParentFrame!: (parentAPI: {
           beginCompile: () => void;
           error: (e: unknown) => void;
+          ready: () => void;
           success: () => void;
           finishedRendering: () => void;
         }) => void;
 
-        class FakeController extends Controller {
-          api = {
-            onReceiveText: (callback: typeof makeComponent) => (makeComponent = callback),
-            onConnect: (callback: typeof setParentFrame) => (setParentFrame = callback),
-          };
-        }
-        this.owner.register('controller:edit', FakeController);
+        let api = {
+          onReceiveText: (callback: typeof makeComponent) => (makeComponent = callback),
+          onConnect: (callback: typeof setParentFrame) => (setParentFrame = callback),
+        };
+
         this.owner.register(
           'template:edit',
           Route(
@@ -77,7 +75,7 @@ module('Output > Demos', function (hooks) {
               <fieldset class="border">
                 <legend>Limber::Output</legend>
                 {{! @glint-ignore }}
-                <Output @messagingAPI={{@controller.api}} />
+                <Output @messagingAPI={{api}} />
               </fieldset>
             </template>
           )

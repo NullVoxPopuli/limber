@@ -12,7 +12,10 @@
     "skipLibCheck": true,
 
     "allowJs": true,
+    "noEmit": false,
     "declarationDir": "declarations",
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
 
     /**
       https://www.typescriptlang.org/tsconfig#rootDir
