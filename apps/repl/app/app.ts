@@ -7,8 +7,10 @@ import Application from '@ember/application';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { _backburner } from '@ember/runloop';
+// @ts-expect-error - TODO: add types to compatModules
+import compatModules from '@embroider/core/entrypoint';
 
-import loadInitializers from 'ember-load-initializers';
+// import loadInitializers from 'ember-load-initializers';
 import Resolver from 'ember-resolver';
 import { setupComponentMachines } from 'ember-statechart-component';
 import { StateNode } from 'xstate';
@@ -34,12 +36,15 @@ Object.assign(window, {
   Buffer: {},
 });
 
+// eslint-disable-next-line no-console
+console.log({ compatModules });
+
 export default class App extends Application {
   modulePrefix = config.modulePrefix;
   podModulePrefix = config.podModulePrefix;
-  Resolver = Resolver;
+  Resolver = Resolver.withModules(compatModules);
 }
 
-loadInitializers(App, config.modulePrefix);
+// loadInitializers(App, config.modulePrefix);
 
 setupComponentMachines(StateNode);

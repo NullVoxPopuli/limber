@@ -1,4 +1,6 @@
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { icon } from '@fortawesome/fontawesome-svg-core'
+import { faEmber,faGithub} from '@fortawesome/free-brands-svg-icons';
+import {faCubes} from '@fortawesome/free-solid-svg-icons';
 import { notInIframe } from 'ember-primitives/iframe';
 
 import { FormatButtons } from 'limber/components/limber/layout/controls/format-buttons';
@@ -6,6 +8,9 @@ import { ExternalLink } from 'limber-ui';
 
 import DemoSelect from './demo-select';
 
+const ember = icon(faEmber).node[0];
+
+console.log(ember);
 <template>
   <header
     class="bg-ember-black flex justify-between items-center drop-shadow-lg z-20 py-2 px-4 max-h-12"
@@ -18,7 +23,8 @@ import DemoSelect from './demo-select';
           target="_blank"
           rel="noreferrer noopener"
         >
-          <FaIcon @icon="ember" @prefix="fab" @size="3x" class="-mb-3 -mt-2" />
+          {{ember}}
+          <!-- <FaIcon @icon="ember" @prefix="fab" @size="3x" class="-mb-3 -mt-2" /> -->
           <span class="sr-only">Ember.JS homepage</span>
         </a>
         {{!<FaIcon @icon="markdown" @prefix="fab" @size="2x" class="-mb-2 -mt-2" />}}
@@ -40,7 +46,7 @@ import DemoSelect from './demo-select';
             </DefaultContent>
           </span>
           <span class="block sm:hidden px-2">
-            <FaIcon @icon="cubes" />
+            {{{faCubes}}}
           </span>
         </:custom>
       </ExternalLink>
@@ -52,7 +58,7 @@ import DemoSelect from './demo-select';
             </DefaultContent>
           </span>
           <span class="block sm:hidden px-2">
-            <FaIcon @icon="github" @prefix="fab" />
+            {{{faGithub}}}
           </span>
         </:custom>
       </ExternalLink>

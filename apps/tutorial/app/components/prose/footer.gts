@@ -1,4 +1,4 @@
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 import { ExternalLink, Link, service } from 'limber-ui';
 
@@ -26,7 +26,7 @@ export const FooterContent = <template>
 
         <Link data-test-next href={{docs.selected.next}} @isDisabled={{not docs.selected.next}}>
           <span>Next</span>
-          <FaIcon @icon="angle-right" />
+          {{{faAngleRight}}}
         </Link>
       </div>
 

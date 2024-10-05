@@ -18,7 +18,7 @@
     "start:tutorial": "pnpm --filter=tutorial start"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
+    "@babel/core": "^7.25.7",
     "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "concurrently": "^8.2.2",
     "dev-tools": "workspace:*",
@@ -28,21 +28,21 @@
     "release-plan": "^0.9.2",
     "turbo": "^2.1.1"
   },
-  "packageManager": "pnpm@9.5.0",
+  "packageManager": "pnpm@9.12.0",
   "engines": {
     "node": ">= 16"
   },
   "volta": {
     "node": "20.13.1",
-    "pnpm": "9.5.0"
+    "pnpm": "9.12.0"
   },
   "pnpm": {
     "overrides": {
       "@nullvoxpopuli/eslint-configs": "^4.0.0",
       "ember-element-helper": "^0.8.5",
-      "ember-auto-import": "^2.7.2",
+      "ember-auto-import": "^2.8.1",
       "ember-repl": "workspace:*",
-      "ember-source": ">= 5.10.2",
+      "ember-source": ">= 6.1.0-alpha.1",
       "webpack": ">= 5.92.0"
     },
     "allowedDeprecatedVersions": {

@@ -1,5 +1,6 @@
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { getOwner, setOwner } from '@ember/owner';
 import Service, { inject as service } from '@ember/service';
 
 import { link } from 'reactiveweb/link';
@@ -17,7 +18,14 @@ export default class EditorService extends Service {
   @tracked errorLine?: number;
   @tracked scrollbarWidth = 0;
 
-  @link(FileURIComponent) declare fileURIComponent: FileURIComponent;
+  // @link(FileURIComponent) declare fileURIComponent: FileURIComponent;
+  get fileURIComponent() {
+    let instance = new FileURIComponent();
+
+    setOwner(instance, getOwner(this));
+
+    return instance;
+  }
 
   @action
   updateText(text: string) {
