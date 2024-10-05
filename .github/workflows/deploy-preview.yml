@@ -98,7 +98,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.workflow_run.event == 'pull_request' || github.event.inputs.prNumber 
     outputs:
-      number: ${{ steps.pr.outputs.result }} || ${{ steps.number.outputs.pr-number || github.event.inputs.prNumber }}
+      number: ${{ steps.pr.outputs.result || steps.number.outputs.pr-number || github.event.inputs.prNumber }}
     steps:
       - run: echo '${{ toJSON(github.event) }}'
         name: "debug workflow_run event"
