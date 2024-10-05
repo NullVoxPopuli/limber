@@ -48,5 +48,5 @@ Use conditional rendering to display a loading message while the API call is in 
 
 Docs for `RemoteData` can [be found here][docs-remote-data].
 
-[docs-remote-data]: https://ember-resources.pages.dev/modules/util_remote_data
+[docs-remote-data]: https://reactive.nullvoxpopuli.com/functions/remote_data.RemoteData-1.html
 [swapi]: https://swapi.dev/
