@@ -98,7 +98,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.workflow_run.event == 'pull_request' || github.event.inputs.prNumber 
     outputs:
-      number: ${{ steps.number.outputs.pr-number || github.event.inputs.prNumber }}
+      number: ${{ steps.pr.outputs.result }} || ${{ steps.number.outputs.pr-number || github.event.inputs.prNumber }}
     steps:
       - run: echo '${{ toJSON(github.event) }}'
         name: "debug workflow_run event"
@@ -108,6 +108,25 @@ jobs:
         # github.event.workflow_run.pull_requests is empty
       - run: echo "${{ github.event.workflow_run.pull_requests[0].number }}"
         id: number
+      # https://github.com/orgs/community/discussions/25220#discussioncomment-8697399
+      - name: Find associated pull request
+        # if: "!${{ steps.number.output.pr-number }}"
+        id: pr
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
+        with:
+          script: |
+            const response = await github.rest.search.issuesAndPullRequests({
+              q: 'repo:${{ github.repository }} is:pr sha:${{ github.event.workflow_run.head_sha }}',
+              per_page: 1,
+            })
+            const items = response.data.items
+            if (items.length < 1) {
+              console.error('No PRs found')
+              return
+            }
+            const pullRequestNumber = items[0].number
+            console.info("Pull request number is", pullRequestNumber)
+            return pullRequestNumber
 
   # We can know the URL ahead of time:
   # https://<SHA>.limber-glimmer-tutorial.pages.dev
