@@ -4,7 +4,7 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import { cell } from 'ember-resources';
 import { TrackedObject } from 'tracked-built-ins';
-import { RemoteData } from 'ember-resources/util/remote-data';
+import { RemoteData } from 'reactiveweb/remote-data';
 
 const DATA_SOURCES = ['people', 'planets'];
 // A cell is @tracked data that can be used anywhere -- makes for smaller demos
