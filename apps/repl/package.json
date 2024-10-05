@@ -34,7 +34,7 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
+    "@babel/core": "^7.25.7",
     "@babel/eslint-parser": "^7.25.1",
     "@codemirror/view": "6.28.6",
     "@ember/optional-features": "^2.0.0",
