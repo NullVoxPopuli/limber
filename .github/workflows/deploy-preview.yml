@@ -148,7 +148,8 @@ jobs:
           branch="${{ github.event.workflow_run.head_branch }}"
           # Remove any / in the branch name
           #   renovate/uuid becomes renovate-uuid
-          subdomain="${branch//\//-/}"
+          subdomain="${branch//\//-}"
+          subdomain=$(echo $subdomain | cut -c -28)
           echo "subdomain=$subdomain" >> $GITHUB_OUTPUT
 
   PostComment:
