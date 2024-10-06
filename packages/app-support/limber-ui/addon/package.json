@@ -110,8 +110,6 @@
     "type": "addon",
     "main": "addon-main.cjs",
     "app-js": {
-      "./components/code.js": "./dist/_app_/components/code.js",
-      "./components/external-link.js": "./dist/_app_/components/external-link.js"
     }
   },
   "typesVersions": {
