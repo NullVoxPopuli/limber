@@ -1,3 +1,6 @@
+// need to Fix something in ember-statechart-component
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { assert } from '@ember/debug';
 import { fn, hash } from '@ember/helper';
 
@@ -57,12 +60,6 @@ export const Layout: TOC<{
   };
 }> = <template>
   <State as |state send|>
-    {{!--
-      {{effect (fn onTransition console.log)}}
-      {{log (state.toStrings)}}
-      --}}
-
-    {{! @glint-expect-error xstate broke }}
     {{#let (containerDirection state) as |horizontallySplit|}}
       <Orientation as |isVertical|>
         {{effect (fn send "ORIENTATION" (hash isVertical=isVertical))}}
