@@ -5,7 +5,7 @@
   },
   "compilerOptions": {
     // Stylistic
-    "noPropertyAccessFromIndexSignature": "false",
+    "noPropertyAccessFromIndexSignature": false,
     // Ecosystem
     "skipLibCheck": true,
     "allowJs": true,

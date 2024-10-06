@@ -6,12 +6,13 @@
   "compilerOptions": {
     "lib": ["DOM", "ES2023"],
     "declaration": false,
+    "declarationMap": false,
     // temporary until ember gets the glimmer-vm upgrade
     "skipLibCheck": true,
     "paths": {
-      "tutorial/tests/*": ["tests/*"],
-      "tutorial/*": ["app/*"],
-      "*": ["types/*"]
+      "tutorial/tests/*": ["./tests/*"],
+      "tutorial/*": ["./app/*"],
+      "*": ["./types/*"]
     }
   },
   "include": ["app/**/*", "tests/**/*", "types/**/*"]

@@ -1,3 +1,6 @@
+// need to Fix something in ember-statechart-component
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { assert } from '@ember/debug';
 import { fn, hash } from '@ember/helper';
 
@@ -57,12 +60,6 @@ export const Layout: TOC<{
   };
 }> = <template>
   <State as |state send|>
-    {{!--
-      {{effect (fn onTransition console.log)}}
-      {{log (state.toStrings)}}
-      --}}
-
-    {{! @glint-expect-error xstate broke }}
     {{#let (containerDirection state) as |horizontallySplit|}}
       <Orientation as |isVertical|>
         {{effect (fn send "ORIENTATION" (hash isVertical=isVertical))}}
@@ -72,18 +69,13 @@ export const Layout: TOC<{
           class="{{if horizontallySplit 'flex-col' 'flex-row'}} flex overflow-hidden"
         >
 
-          <EditorContainer
-            @splitHorizontally={{horizontallySplit}}
-            {{! @glint-ignore }}
-            {{setupState send}}
-          >
+          <EditorContainer @splitHorizontally={{horizontallySplit}} {{setupState send}}>
             <Save />
             <Controls
               @isMinimized={{state.matches "hasContainer.minimized"}}
               @isMaximized={{state.matches "hasContainer.maximized"}}
               @needsControls={{toBoolean state.context.container}}
               @splitHorizontally={{horizontallySplit}}
-              {{! @glint-expect-error xstate broken }}
               @send={{send}}
             />
 
@@ -91,7 +83,11 @@ export const Layout: TOC<{
 
           </EditorContainer>
 
-          {{! @glint-expect-error xstate broken }}
+          {{!
+            Unfortunately, even if we were to use native container queries,
+            we wouldn't be able to conditionally render stuff as
+            native container queries are CSS only.
+          }}
           {{#if (isResizable state)}}
             <ResizeHandle @direction={{resizeDirection horizontallySplit}} />
           {{/if}}

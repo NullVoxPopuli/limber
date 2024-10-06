@@ -1,4 +1,3 @@
-import Controller from '@ember/controller';
 import { assert as debugAssert } from '@ember/debug';
 import { settled, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
@@ -13,6 +12,12 @@ import { fileFromParams, type Format } from 'limber/utils/messaging';
 
 import { getService } from '../helpers';
 import { Page } from './-page';
+
+import type {
+  MessagingAPI,
+  ParentMethods,
+} from 'limber/components/limber/output/frame-messaging.gts';
+import type { AsyncMethodReturns } from 'penpal';
 
 module('Output > Demos', function (hooks) {
   setupApplicationTest(hooks);
@@ -56,28 +61,20 @@ module('Output > Demos', function (hooks) {
     for (let demo of ALL) {
       test(demo.label, async function (assert) {
         let makeComponent!: (format: Format, text: string) => void;
-        let setParentFrame!: (parentAPI: {
-          beginCompile: () => void;
-          error: (e: unknown) => void;
-          success: () => void;
-          finishedRendering: () => void;
-        }) => void;
+        let setParentFrame!: (parentAPI: AsyncMethodReturns<ParentMethods>) => void;
 
-        class FakeController extends Controller {
-          api = {
-            onReceiveText: (callback: typeof makeComponent) => (makeComponent = callback),
-            onConnect: (callback: typeof setParentFrame) => (setParentFrame = callback),
-          };
-        }
-        this.owner.register('controller:edit', FakeController);
+        let api = {
+          onReceiveText: (callback: typeof makeComponent) => (makeComponent = callback),
+          onConnect: (callback) => (setParentFrame = callback),
+        } satisfies MessagingAPI;
+
         this.owner.register(
           'template:edit',
           Route(
             <template>
               <fieldset class="border">
                 <legend>Limber::Output</legend>
-                {{! @glint-ignore }}
-                <Output @messagingAPI={{@controller.api}} />
+                <Output @messagingAPI={{api}} />
               </fieldset>
             </template>
           )
@@ -89,10 +86,12 @@ module('Output > Demos', function (hooks) {
         debugAssert(`makeComponent did not get set`, makeComponent);
 
         setParentFrame({
-          beginCompile: () => assert.step('begin compile'),
-          error: (e) => assert.step(e as string),
-          success: () => assert.step('success'),
-          finishedRendering: () => assert.step('finished rendering'),
+          beginCompile: async () => assert.step('begin compile'),
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          error: async (e) => assert.step(e as any),
+          ready: async () => {},
+          success: async () => assert.step('success'),
+          finishedRendering: async () => assert.step('finished rendering'),
         });
 
         let text = await getFromLabel(demo.label);

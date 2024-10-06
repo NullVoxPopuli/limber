@@ -27,7 +27,7 @@ interface Signature {
   };
 }
 
-interface ParentMethods {
+export interface ParentMethods {
   ready: () => void;
   error: (error: OutputError) => void;
   beginCompile: () => void;
