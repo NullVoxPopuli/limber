@@ -8,7 +8,10 @@ import Route from 'ember-route-template';
 import { DemoSelect } from 'limber/components/limber/demo-select';
 import { Output } from 'limber/components/limber/output';
 import { ALL, getFromLabel } from 'limber/snippets';
+import type { MessagingAPI, ParentMethods } from 'limber/components/limber/output/frame-messaging.gts';
 import { fileFromParams, type Format } from 'limber/utils/messaging';
+import type { AsyncMethodReturns } from 'penpal';
+
 
 import { getService } from '../helpers';
 import { Page } from './-page';
@@ -55,18 +58,12 @@ module('Output > Demos', function (hooks) {
     for (let demo of ALL) {
       test(demo.label, async function (assert) {
         let makeComponent!: (format: Format, text: string) => void;
-        let setParentFrame!: (parentAPI: {
-          beginCompile: () => void;
-          error: (e: unknown) => void;
-          ready: () => void;
-          success: () => void;
-          finishedRendering: () => void;
-        }) => void;
+        let setParentFrame!: (parentAPI: AsyncMethodReturns<ParentMethods>) => void;
 
         let api = {
           onReceiveText: (callback: typeof makeComponent) => (makeComponent = callback),
-          onConnect: (callback: typeof setParentFrame) => (setParentFrame = callback),
-        };
+          onConnect: (callback) => (setParentFrame = callback),
+        } satisfies MessagingAPI;
 
         this.owner.register(
           'template:edit',
@@ -74,7 +71,6 @@ module('Output > Demos', function (hooks) {
             <template>
               <fieldset class="border">
                 <legend>Limber::Output</legend>
-                {{! @glint-ignore }}
                 <Output @messagingAPI={{api}} />
               </fieldset>
             </template>
@@ -87,10 +83,12 @@ module('Output > Demos', function (hooks) {
         debugAssert(`makeComponent did not get set`, makeComponent);
 
         setParentFrame({
-          beginCompile: () => assert.step('begin compile'),
-          error: (e) => assert.step(e as string),
-          success: () => assert.step('success'),
-          finishedRendering: () => assert.step('finished rendering'),
+          beginCompile: async () => assert.step('begin compile'),
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          error: async (e) => assert.step(e as any),
+          ready: async () => {},
+          success: async () => assert.step('success'),
+          finishedRendering: async () => assert.step('finished rendering'),
         });
 
         let text = await getFromLabel(demo.label);
