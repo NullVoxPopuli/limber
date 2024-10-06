@@ -151,7 +151,7 @@
     "ember-resources": "^7.0.1",
     "ember-statechart-component": "6.1.2",
     "highlight.js": "^11.9.0",
-    "highlightjs-glimmer": "^2.2.1",
+    "highlightjs-glimmer": "^2.2.2",
     "html-to-image": "^1.11.11",
     "kolay": "^1.2.2",
     "limber-ui": "workspace:*",
