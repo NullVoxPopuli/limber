@@ -22,6 +22,7 @@ export default defineConfig({
       babelHelpers: "bundled",
     }),
     addon.gjs(),
+    addon.keepAssets(["**/*.css"]),
     addon.clean(),
 
     {
