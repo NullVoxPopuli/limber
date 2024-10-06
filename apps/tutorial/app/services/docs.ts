@@ -22,7 +22,7 @@ export default class DocsService extends Service {
   }
 
   get showAnswer() {
-    return this.router.currentRoute?.queryParams?.['showAnswer'] === '1' ?? false;
+    return this.router.currentRoute?.queryParams?.['showAnswer'] === '1';
   }
 
   showMe = () => {
