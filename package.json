@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.7",
-    "@nullvoxpopuli/eslint-configs": "^4.2.0",
+    "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "concurrently": "^8.2.2",
     "dev-tools": "workspace:*",
     "eslint": "^8.55.0",

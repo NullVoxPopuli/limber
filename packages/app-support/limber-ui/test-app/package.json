@@ -44,7 +44,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
-    "@nullvoxpopuli/eslint-configs": "^4.2.0",
+    "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "@typescript-eslint/parser": "^8.8.0",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.2.2",
