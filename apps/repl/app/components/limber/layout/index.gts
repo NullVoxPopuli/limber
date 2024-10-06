@@ -86,6 +86,11 @@ export const Layout: TOC<{
 
           </EditorContainer>
 
+          {{!
+            Unfortunately, even if we were to use native container queries,
+            we wouldn't be able to conditionally render stuff as
+            native container queries are CSS only.
+          }}
           {{#if (isResizable state)}}
             <ResizeHandle @direction={{resizeDirection horizontallySplit}} />
           {{/if}}
