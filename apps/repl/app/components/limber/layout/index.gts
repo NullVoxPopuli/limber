@@ -69,10 +69,7 @@ export const Layout: TOC<{
           class="{{if horizontallySplit 'flex-col' 'flex-row'}} flex overflow-hidden"
         >
 
-          <EditorContainer
-            @splitHorizontally={{horizontallySplit}}
-            {{setupState send}}
-          >
+          <EditorContainer @splitHorizontally={{horizontallySplit}} {{setupState send}}>
             <Save />
             <Controls
               @isMinimized={{state.matches "hasContainer.minimized"}}

@@ -8,13 +8,16 @@ import Route from 'ember-route-template';
 import { DemoSelect } from 'limber/components/limber/demo-select';
 import { Output } from 'limber/components/limber/output';
 import { ALL, getFromLabel } from 'limber/snippets';
-import type { MessagingAPI, ParentMethods } from 'limber/components/limber/output/frame-messaging.gts';
 import { fileFromParams, type Format } from 'limber/utils/messaging';
-import type { AsyncMethodReturns } from 'penpal';
-
 
 import { getService } from '../helpers';
 import { Page } from './-page';
+
+import type {
+  MessagingAPI,
+  ParentMethods,
+} from 'limber/components/limber/output/frame-messaging.gts';
+import type { AsyncMethodReturns } from 'penpal';
 
 module('Output > Demos', function (hooks) {
   setupApplicationTest(hooks);
