@@ -14,7 +14,7 @@
     "@babel/eslint-parser": "^7.25.7",
     "@glimdown/lezer-infra": "workspace:*",
     "@lezer/generator": "^1.6.0",
-    "@nullvoxpopuli/eslint-configs": "^4.2.0",
+    "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@typescript-eslint/eslint-plugin": "^8.8.0",
     "@typescript-eslint/parser": "^8.8.0",
@@ -25,8 +25,8 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@lezer/highlight": "^1.2.0",
-    "@lezer/lr": "^1.4.0"
+    "@lezer/highlight": "^1.2.1",
+    "@lezer/lr": "^1.4.2"
   },
   "scripts": {
     "____:build": "lezer-generator src/glimdown.grammar -o src/parser && rollup -c",

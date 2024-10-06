@@ -19,11 +19,11 @@
     "@babel/core": "^7.25.7",
     "@babel/eslint-parser": "^7.25.7",
     "@codemirror/buildhelper": "^1.0.1",
-    "@codemirror/view": "^6.28.6",
+    "@codemirror/view": "^6.34.1",
     "@glimdown/lezer-infra": "workspace:*",
-    "@lezer/common": "^1.1.2",
+    "@lezer/common": "^1.2.2",
     "@lezer/generator": "^1.6.0",
-    "@nullvoxpopuli/eslint-configs": "^4.2.0",
+    "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "@tsconfig/ember": "^3.0.7",
     "@typescript-eslint/eslint-plugin": "^8.8.0",
     "@typescript-eslint/parser": "^8.8.0",
@@ -36,13 +36,13 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@codemirror/lang-css": "^6.2.1",
+    "@codemirror/lang-css": "^6.3.0",
     "@codemirror/lang-html": "^6.4.9",
     "@codemirror/lang-javascript": "^6.2.1",
-    "@codemirror/language": "^6.10.1",
-    "@lezer/highlight": "^1.2.0",
-    "@lezer/javascript": "^1.4.16",
-    "@lezer/lr": "^1.4.0",
+    "@codemirror/language": "^6.10.3",
+    "@lezer/highlight": "^1.2.1",
+    "@lezer/javascript": "^1.4.18",
+    "@lezer/lr": "^1.4.2",
     "codemirror-lang-glimmer": "workspace:*"
   },
   "scripts": {
