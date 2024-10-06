@@ -1,10 +1,10 @@
 // @ts-nocheck
 import { Addon } from "@embroider/addon-dev/rollup";
+
 import { babel } from "@rollup/plugin-babel";
-import copy from "rollup-plugin-copy";
-import { defineConfig } from "rollup";
 import { execaCommand } from "execa";
-import { fixBadDeclarationOutput } from "fix-bad-declaration-output";
+import { defineConfig } from "rollup";
+import copy from "rollup-plugin-copy";
 
 const addon = new Addon({
   srcDir: "src",
@@ -49,7 +49,6 @@ export default defineConfig({
          * Generate the types (these include /// <reference types="ember-source/types"
          * but our consumers may not be using those, or have a new enough ember-source that provides them.
          */
-        console.log("Building types");
         await execaCommand(`pnpm glint --declaration`, { stdio: "inherit" });
 
         // console.log("Fixing types");
