@@ -105,8 +105,23 @@ async function transform(
           compiler,
         },
       ],
-      [babel.availablePlugins['proposal-decorators'], { legacy: true }],
-      [babel.availablePlugins['proposal-class-properties']],
+      // See: https://github.com/NullVoxPopuli/limber/issues/1671
+      //     for just how bad the babel plugins are
+      //     (grow your code by 20%!)
+      // [babel.availablePlugins['proposal-decorators'], { legacy: true }],
+      // [babel.availablePlugins['proposal-class-properties']],
+      [
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore - we don't care about types here..
+        await import('decorator-transforms'),
+        {
+          runtime: {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore - we don't care about types here..
+            import: await import('decorator-transforms/runtime'),
+          },
+        },
+      ],
     ],
     presets: [
       [
