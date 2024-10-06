@@ -59,6 +59,9 @@
         "rollup",
         "rsvp"
       ]
+    },
+    "patchedDependencies": {
+      "browserslist-generator": "patches/browserslist-generator.patch"
     }
   }
 }
