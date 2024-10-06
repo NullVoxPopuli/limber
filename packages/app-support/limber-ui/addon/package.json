@@ -97,7 +97,7 @@
     "rollup": "^4.24.0",
     "rollup-plugin-copy": "^3.5.0",
     "typescript": "^5.4.5",
-    "webpack": "^5.95.0"
+    "webpack": ">= 5.92.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"

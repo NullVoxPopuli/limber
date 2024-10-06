@@ -83,7 +83,7 @@
     "broccoli-file-creator": "^2.1.1",
     "change-case": "^5.4.4",
     "common-tags": "^1.8.2",
-    "content-tag": "^1.2.1",
+    "content-tag": "^2.0.2",
     "decorator-transforms": "^2.2.2",
     "ember-resources": "^7.0.1",
     "line-column": "^1.0.2",
@@ -149,7 +149,7 @@
     "rollup": "~4.24.0",
     "rollup-plugin-copy": "^3.5.0",
     "typescript": "^5.4.5",
-    "webpack": "^5.95.0"
+    "webpack": ">= 5.92.0"
   },
   "volta": {
     "extends": "../../../package.json"
