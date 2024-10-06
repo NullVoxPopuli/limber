@@ -1,9 +1,9 @@
+import { Addon } from "@embroider/addon-dev/rollup";
+
 import { babel } from "@rollup/plugin-babel";
 import cjs from "@rollup/plugin-commonjs";
-import { Addon } from "@embroider/addon-dev/rollup";
-import copy from "rollup-plugin-copy";
-import { defineConfig } from "rollup";
 import { execaCommand } from "execa";
+import { defineConfig } from "rollup";
 
 const addon = new Addon({
   srcDir: "src",
