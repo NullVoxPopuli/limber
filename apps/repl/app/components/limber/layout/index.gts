@@ -71,7 +71,6 @@ export const Layout: TOC<{
 
           <EditorContainer
             @splitHorizontally={{horizontallySplit}}
-            {{! @glint-ignore }}
             {{setupState send}}
           >
             <Save />
@@ -80,7 +79,6 @@ export const Layout: TOC<{
               @isMaximized={{state.matches "hasContainer.maximized"}}
               @needsControls={{toBoolean state.context.container}}
               @splitHorizontally={{horizontallySplit}}
-              {{! @glint-expect-error xstate broken }}
               @send={{send}}
             />
 
@@ -88,7 +86,6 @@ export const Layout: TOC<{
 
           </EditorContainer>
 
-          {{! @glint-expect-error xstate broken }}
           {{#if (isResizable state)}}
             <ResizeHandle @direction={{resizeDirection horizontallySplit}} />
           {{/if}}
