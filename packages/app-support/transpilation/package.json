@@ -50,7 +50,7 @@
     "@typescript-eslint/parser": "^8.8.0",
     "babel-loader": "^9.2.1",
     "ember-source": ">= 5.10.2",
-    "esbuild": "0.22.0",
+    "esbuild": "0.24.0",
     "eslint": "^8.55.0",
     "prettier": "^3.3.3",
     "prettier-plugin-ember-template-tag": "2.0.2",

@@ -19,7 +19,7 @@
     "@babel/core": "^7.25.7",
     "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "autoprefixer": "^10.4.17",
-    "concurrently": "^8.2.2",
+    "concurrently": "^9.0.1",
     "eslint": "^8.55.0",
     "postcss": "^8.4.32",
     "prettier": "^3.3.3",
