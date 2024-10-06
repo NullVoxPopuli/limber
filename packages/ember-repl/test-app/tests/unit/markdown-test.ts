@@ -200,9 +200,7 @@ module('Unit | parseMarkdown()', function () {
 <span class="line"></span>
 <span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#85E89D">template</span><span style="color:#E1E4E8">></span></span>
 <span class="line"><span style="color:#F97583">  \\{{</span><span style="color:#79B8FF">two</span><span style="color:#F97583">}}</span></span>
-<span class="line"><span style="color:#E1E4E8">&#x3C;/</span><span style="color:#85E89D">template</span><span style="color:#E1E4E8">></span></span>
-<span class="line"></span></code></pre></div>
-        `
+<span class="line"><span style="color:#E1E4E8">&#x3C;/</span><span style="color:#85E89D">template</span><span style="color:#E1E4E8">></span></span></code></pre></div>`
       );
     });
   });

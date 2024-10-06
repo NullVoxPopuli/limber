@@ -81,7 +81,7 @@ async function preprocess(input: string, name: string): Promise<string> {
     processor = new Preprocessor();
   }
 
-  return processor.process(input, `${name}.js`);
+  return processor.process(input, { filename: `${name}.js`, inline_source_map: true });
 }
 
 async function transform(

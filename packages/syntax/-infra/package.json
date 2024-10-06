@@ -9,7 +9,7 @@
     "@lezer/generator": "^1.6.0",
     "@lezer/highlight": "^1.2.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
-    "rollup": "^4.17.2"
+    "rollup": "^4.24.0"
   },
   "volta": {
     "extends": "../../../package.json"

@@ -42,9 +42,9 @@
     "webpack": ">= 5.92.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.24.5",
+    "@babel/runtime": "^7.25.7",
     "@embroider/addon-shim": "1.8.9",
-    "@embroider/macros": "1.16.6",
+    "@embroider/macros": "1.16.7",
     "@fortawesome/ember-fontawesome": "^2.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
@@ -63,7 +63,7 @@
     "@babel/plugin-transform-typescript": "^7.25.7",
     "@babel/preset-typescript": "^7.25.7",
     "@ember/test-waiters": "^3.1.0",
-    "@embroider/addon-dev": "5.0.0",
+    "@embroider/addon-dev": "^5.0.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "@glint/core": "1.4.1-unstable.ff9ea6c",
@@ -84,7 +84,7 @@
     "ember-primitives": "^0.21.0",
     "ember-resources": "^7.0.1",
     "ember-source": ">= 5.10.2",
-    "ember-template-imports": "^4.1.1",
+    "ember-template-imports": "^4.1.2",
     "ember-template-lint": "^6.0.0",
     "eslint": "^8.55.0",
     "eslint-plugin-ember": "^12.2.1",
@@ -94,7 +94,7 @@
     "fix-bad-declaration-output": "^1.1.1",
     "prettier": "^3.3.3",
     "prettier-plugin-ember-template-tag": "2.0.2",
-    "rollup": "^4.17.2",
+    "rollup": "^4.24.0",
     "rollup-plugin-copy": "^3.5.0",
     "typescript": "^5.4.5",
     "webpack": ">= 5.92.0"
@@ -110,8 +110,6 @@
     "type": "addon",
     "main": "addon-main.cjs",
     "app-js": {
-      "./components/code.js": "./dist/_app_/components/code.js",
-      "./components/external-link.js": "./dist/_app_/components/external-link.js"
     }
   },
   "typesVersions": {
