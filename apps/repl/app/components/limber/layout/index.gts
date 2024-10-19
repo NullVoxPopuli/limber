@@ -53,6 +53,13 @@ const containerDirection = (state) => {
   return isHorizontalSplit(state.snapshot);
 };
 
+function updateOrientation(isVertical: boolean) {
+  return {
+    type: 'ORIENTATION',
+    isVertical,
+  };
+}
+
 export const Layout: TOC<{
   Blocks: {
     editor: [];
@@ -67,7 +74,7 @@ export const Layout: TOC<{
 
             But XState is an *evented* system, so we have to send events.
         }}
-        {{effect (fn state.send "ORIENTATION" (hash isVertical=isVertical))}}
+        {{effect (fn state.send (updateOrientation isVertical))}}
 
         <div
           {{! row = left to right, col = top to bottom }}
@@ -79,7 +86,7 @@ export const Layout: TOC<{
             <Controls
               @isMinimized={{state.matches "hasContainer.minimized"}}
               @isMaximized={{state.matches "hasContainer.maximized"}}
-              @needsControls={{toBoolean state.context.container}}
+              @needsControls={{toBoolean state.snapshot.context.container}}
               @splitHorizontally={{horizontallySplit}}
               @send={{state.send}}
             />

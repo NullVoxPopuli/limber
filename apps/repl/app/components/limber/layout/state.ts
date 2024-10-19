@@ -183,10 +183,10 @@ export const LayoutState = setup({
       target: '.hasContainer',
       actions: assign({
         handle: ({ event }) => event.container.nextElementSibling,
-        container: ({ event }) => event.container.container,
-        observer: ({ event }) => event.container.observer,
-        maximize: ({ event }) => event.container.maximize,
-        minimize: ({ event }) => event.container.minimize,
+        container: ({ event }) => event.container,
+        observer: ({ event }) => event.observer,
+        maximize: ({ event }) => event.maximize,
+        minimize: ({ event }) => event.minimize,
       }),
     },
     CONTAINER_REMOVED: {
