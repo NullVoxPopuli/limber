@@ -1,4 +1,5 @@
 import 'limber-ui/theme.css';
+import 'ember-statechart-component';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -10,8 +11,6 @@ import { _backburner } from '@ember/runloop';
 
 import loadInitializers from 'ember-load-initializers';
 import Resolver from 'ember-resolver';
-import { setupComponentMachines } from 'ember-statechart-component';
-import { StateNode } from 'xstate';
 
 import config from 'limber/config/environment';
 
@@ -41,5 +40,3 @@ export default class App extends Application {
 }
 
 loadInitializers(App, config.modulePrefix);
-
-setupComponentMachines(StateNode);

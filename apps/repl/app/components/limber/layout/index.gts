@@ -11,17 +11,17 @@ import { EditorContainer, OutputContainer } from './containers';
 import { Controls } from './controls';
 import { Orientation } from './orientation';
 import { ResizeHandle } from './resize-handle';
-import State, { isHorizontalSplit, setupResizeObserver } from './state';
+import { isHorizontalSplit, LayoutState, setupResizeObserver } from './state';
 
 import type { TOC } from '@ember/component/template-only';
-import type { Send, State as StateFor } from 'ember-statechart-component/glint';
 
-const setupState = modifier((element: Element, [send]: [Send<unknown>]) => {
+const setupState = modifier((element: Element, [send]: [(event: string) => void]) => {
   assert(`Element is not resizable`, element instanceof HTMLElement);
 
   let observer = setupResizeObserver(() => send('RESIZE'));
 
-  send('CONTAINER_FOUND', {
+  send({
+    type: 'CONTAINER_FOUND',
     container: element,
     observer,
     maximize: () => send('MAXIMIZE'),
@@ -37,7 +37,7 @@ const effect = (fn: (...args: unknown[]) => void) => {
   fn();
 };
 
-const isResizable = (state: StateFor<typeof State>) => {
+const isResizable = (state) => {
   return !(state.matches('hasContainer.minimized') || state.matches('hasContainer.maximized'));
 };
 
@@ -45,12 +45,12 @@ const isResizable = (state: StateFor<typeof State>) => {
  * true for horizontally split
  * false for vertically split
  */
-const containerDirection = (state: StateFor<typeof State>) => {
+const containerDirection = (state) => {
   if (state.matches('hasContainer.default.horizontallySplit')) {
     return true;
   }
 
-  return isHorizontalSplit(state.context);
+  return isHorizontalSplit(state.snapshot);
 };
 
 export const Layout: TOC<{
@@ -59,24 +59,29 @@ export const Layout: TOC<{
     output: [];
   };
 }> = <template>
-  <State as |state send|>
+  <LayoutState as |state|>
     {{#let (containerDirection state) as |horizontallySplit|}}
       <Orientation as |isVertical|>
-        {{effect (fn send "ORIENTATION" (hash isVertical=isVertical))}}
+        {{! Normally we don't do effects in app code,
+            because we can derive all state.
+
+            But XState is an *evented* system, so we have to send events.
+        }}
+        {{effect (fn state.send "ORIENTATION" (hash isVertical=isVertical))}}
 
         <div
           {{! row = left to right, col = top to bottom }}
           class="{{if horizontallySplit 'flex-col' 'flex-row'}} flex overflow-hidden"
         >
 
-          <EditorContainer @splitHorizontally={{horizontallySplit}} {{setupState send}}>
+          <EditorContainer @splitHorizontally={{horizontallySplit}} {{setupState state.send}}>
             <Save />
             <Controls
               @isMinimized={{state.matches "hasContainer.minimized"}}
               @isMaximized={{state.matches "hasContainer.maximized"}}
               @needsControls={{toBoolean state.context.container}}
               @splitHorizontally={{horizontallySplit}}
-              @send={{send}}
+              @send={{state.send}}
             />
 
             {{yield to="editor"}}
@@ -100,7 +105,7 @@ export const Layout: TOC<{
         </div>
       </Orientation>
     {{/let}}
-  </State>
+  </LayoutState>
 </template>;
 
 export default Layout;
