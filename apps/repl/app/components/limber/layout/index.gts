@@ -1,8 +1,5 @@
-// need to Fix something in ember-statechart-component
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import { assert } from '@ember/debug';
-import { fn, hash } from '@ember/helper';
+import { fn } from '@ember/helper';
 
 import { modifier } from 'ember-modifier';
 
@@ -14,12 +11,16 @@ import { ResizeHandle } from './resize-handle';
 import { isHorizontalSplit, LayoutState, setupResizeObserver } from './state';
 
 import type { TOC } from '@ember/component/template-only';
+import type { ReactiveActorFrom } from 'ember-statechart-component';
+
+type ReactiveActor = ReactiveActorFrom<typeof LayoutState>;
 
 const setupState = modifier((element: Element, [send]: [(event: string) => void]) => {
   assert(`Element is not resizable`, element instanceof HTMLElement);
 
   let observer = setupResizeObserver(() => send('RESIZE'));
 
+  // @ts-expect-error need to fix the type of this for ember-statechart-component
   send({
     type: 'CONTAINER_FOUND',
     container: element,
@@ -37,7 +38,7 @@ const effect = (fn: (...args: unknown[]) => void) => {
   fn();
 };
 
-const isResizable = (state) => {
+const isResizable = (state: ReactiveActor) => {
   return !(state.matches('hasContainer.minimized') || state.matches('hasContainer.maximized'));
 };
 
@@ -45,7 +46,7 @@ const isResizable = (state) => {
  * true for horizontally split
  * false for vertically split
  */
-const containerDirection = (state) => {
+const containerDirection = (state: ReactiveActor) => {
   if (state.matches('hasContainer.default.horizontallySplit')) {
     return true;
   }
