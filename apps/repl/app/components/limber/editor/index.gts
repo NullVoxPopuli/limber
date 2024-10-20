@@ -1,19 +1,66 @@
+import { waitForPromise } from '@ember/test-waiters';
+
+import { resource, resourceFactory } from 'ember-resources';
+import { TrackedObject } from 'tracked-built-ins';
+
 import { service } from 'limber-ui';
 
-import codemirror from './-code-mirror';
+import codemirror, { setupCodeMirror } from './-code-mirror';
 import Loader from './loader';
 import { LoadingError } from './loading-error';
 import { Placeholder } from './placeholder';
-import State from './state';
 
 import type { TOC } from '@ember/component/template-only';
+
+function deferCodemirror() {
+  let state = new TrackedObject({ isLoading: false, isDone: false, error: null });
+
+  function getEditor() {
+    state.isLoading = true;
+    waitForPromise(setupCodeMirror())
+      .then(() => {
+        state.isDone = true;
+      })
+      .catch((error) => (state.error = error))
+      .finally(() => {
+        state.isLoading = false;
+      });
+  }
+
+  function cleanup() {
+    window.removeEventListener('mousemove', load);
+    window.removeEventListener('keydown', load);
+    window.removeEventListener('touchstart', load);
+  }
+
+  let load = () => {
+    getEditor();
+    cleanup();
+  };
+
+  return resource(({ on, owner }) => {
+    if (owner.lookup('service:router').currentRoute?.queryParams?.['forceEditor'] === 'true') {
+      load();
+    }
+
+    on.cleanup(() => cleanup());
+
+    window.addEventListener('mousemove', load, { passive: true });
+    window.addEventListener('keydown', load, { passive: true });
+    window.addEventListener('touchstart', load, { passive: true });
+
+    return state;
+  });
+}
+
+resourceFactory(deferCodemirror);
 
 export const Editor: TOC<{
   Element: HTMLDivElement;
 }> = <template>
-  <State as |state|>
+  {{#let (deferCodemirror) as |state|}}
 
-    {{#if (state.matches "editingWithCodeMirror")}}
+    {{#if state.isDone}}
 
       {{#let (service "editor") as |context|}}
         <div class="overflow-hidden overflow-y-auto">
@@ -28,19 +75,19 @@ export const Editor: TOC<{
         ...attributes
       >
 
-        {{#if (state.matches "loadCodeMirror")}}
+        {{#if state.isLoading}}
           <Loader />
         {{/if}}
 
-        {{#if (state.matches "error")}}
-          <LoadingError @error={{state.context.error}} />
+        {{#if state.error}}
+          <LoadingError @error={{state.error}} />
         {{/if}}
 
         <Placeholder />
       </div>
     {{/if}}
 
-  </State>
+  {{/let}}
 </template>;
 
 export default Editor;

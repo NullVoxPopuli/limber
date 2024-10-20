@@ -1,8 +1,5 @@
-// need to Fix something in ember-statechart-component
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import { assert } from '@ember/debug';
-import { fn, hash } from '@ember/helper';
+import { fn } from '@ember/helper';
 
 import { modifier } from 'ember-modifier';
 
@@ -11,17 +8,21 @@ import { EditorContainer, OutputContainer } from './containers';
 import { Controls } from './controls';
 import { Orientation } from './orientation';
 import { ResizeHandle } from './resize-handle';
-import State, { isHorizontalSplit, setupResizeObserver } from './state';
+import { isHorizontalSplit, LayoutState, setupResizeObserver } from './state';
 
 import type { TOC } from '@ember/component/template-only';
-import type { Send, State as StateFor } from 'ember-statechart-component/glint';
+import type { ReactiveActorFrom } from 'ember-statechart-component';
 
-const setupState = modifier((element: Element, [send]: [Send<unknown>]) => {
+type ReactiveActor = ReactiveActorFrom<typeof LayoutState>;
+
+const setupState = modifier((element: Element, [send]: [(event: string) => void]) => {
   assert(`Element is not resizable`, element instanceof HTMLElement);
 
   let observer = setupResizeObserver(() => send('RESIZE'));
 
-  send('CONTAINER_FOUND', {
+  // @ts-expect-error need to fix the type of this for ember-statechart-component
+  send({
+    type: 'CONTAINER_FOUND',
     container: element,
     observer,
     maximize: () => send('MAXIMIZE'),
@@ -37,7 +38,7 @@ const effect = (fn: (...args: unknown[]) => void) => {
   fn();
 };
 
-const isResizable = (state: StateFor<typeof State>) => {
+const isResizable = (state: ReactiveActor) => {
   return !(state.matches('hasContainer.minimized') || state.matches('hasContainer.maximized'));
 };
 
@@ -45,13 +46,20 @@ const isResizable = (state: StateFor<typeof State>) => {
  * true for horizontally split
  * false for vertically split
  */
-const containerDirection = (state: StateFor<typeof State>) => {
+const containerDirection = (state: ReactiveActor) => {
   if (state.matches('hasContainer.default.horizontallySplit')) {
     return true;
   }
 
-  return isHorizontalSplit(state.context);
+  return isHorizontalSplit(state.snapshot);
 };
+
+function updateOrientation(isVertical: boolean) {
+  return {
+    type: 'ORIENTATION',
+    isVertical,
+  };
+}
 
 export const Layout: TOC<{
   Blocks: {
@@ -59,24 +67,29 @@ export const Layout: TOC<{
     output: [];
   };
 }> = <template>
-  <State as |state send|>
+  <LayoutState as |state|>
     {{#let (containerDirection state) as |horizontallySplit|}}
       <Orientation as |isVertical|>
-        {{effect (fn send "ORIENTATION" (hash isVertical=isVertical))}}
+        {{! Normally we don't do effects in app code,
+            because we can derive all state.
+
+            But XState is an *evented* system, so we have to send events.
+        }}
+        {{effect (fn state.send (updateOrientation isVertical))}}
 
         <div
           {{! row = left to right, col = top to bottom }}
           class="{{if horizontallySplit 'flex-col' 'flex-row'}} flex overflow-hidden"
         >
 
-          <EditorContainer @splitHorizontally={{horizontallySplit}} {{setupState send}}>
+          <EditorContainer @splitHorizontally={{horizontallySplit}} {{setupState state.send}}>
             <Save />
             <Controls
               @isMinimized={{state.matches "hasContainer.minimized"}}
               @isMaximized={{state.matches "hasContainer.maximized"}}
-              @needsControls={{toBoolean state.context.container}}
+              @needsControls={{toBoolean state.snapshot.context.container}}
               @splitHorizontally={{horizontallySplit}}
-              @send={{send}}
+              @send={{state.send}}
             />
 
             {{yield to="editor"}}
@@ -100,7 +113,7 @@ export const Layout: TOC<{
         </div>
       </Orientation>
     {{/let}}
-  </State>
+  </LayoutState>
 </template>;
 
 export default Layout;

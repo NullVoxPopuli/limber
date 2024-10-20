@@ -42,7 +42,7 @@
     "@lezer/html": "^1.3.7",
     "@lezer/markdown": "^1.3.1",
     "@nullvoxpopuli/horizon-theme": "workspace:*",
-    "assert": "^2.1.0",
+    "assert": "npm:@nolyfill/assert@^1",
     "broccoli-funnel": "^3.0.8",
     "codemirror": "^6.0.1",
     "codemirror-lang-glimdown": "workspace:*",

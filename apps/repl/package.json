@@ -149,7 +149,7 @@
     "ember-primitives": "^0.23.1",
     "ember-repl": "workspace:*",
     "ember-resources": "^7.0.1",
-    "ember-statechart-component": "6.1.2",
+    "ember-statechart-component": "7.1.0",
     "highlight.js": "^11.9.0",
     "highlightjs-glimmer": "^2.2.2",
     "html-to-image": "^1.11.11",
@@ -172,6 +172,6 @@
     "unist-util-visit": "^5.0.0",
     "webpack-bundle-analyzer": "^4.10.2",
     "ws": "^8.15.1",
-    "xstate": "4.35.4"
+    "xstate": "5.18.2"
   }
 }
