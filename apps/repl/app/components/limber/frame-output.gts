@@ -10,6 +10,7 @@ import { type Connection, connectToChild } from 'penpal';
 
 import { fileFromParams, type Format, type OutputError } from 'limber/utils/messaging';
 
+import type Owner from '@ember/owner';
 import type RouterService from '@ember/routing/router-service';
 import type EditorService from 'limber/services/editor';
 
@@ -33,7 +34,7 @@ export default class FrameOutput extends Component {
   }>;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  constructor(owner: unknown, args: any) {
+  constructor(owner: Owner, args: any) {
     super(owner, args);
 
     registerDestructor(this, () => {

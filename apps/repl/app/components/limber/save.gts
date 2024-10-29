@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { registerDestructor } from '@ember/destroyable';
 import { service } from '@ember/service';
 
+import type Owner from '@ember/owner';
 import type EditorService from 'limber/services/editor';
 
 const SHOW_TIME = 2000;
@@ -23,7 +24,7 @@ export default class Save extends Component {
   @tracked isShowing = false;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  constructor(owner: unknown, args: any) {
+  constructor(owner: Owner, args: any) {
     super(owner, args);
 
     const handler = (e: KeyboardEvent) => {
