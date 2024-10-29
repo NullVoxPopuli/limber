@@ -78,7 +78,8 @@
       ]
     },
     "patchedDependencies": {
-      "browserslist-generator": "patches/browserslist-generator.patch"
+      "browserslist-generator": "patches/browserslist-generator.patch",
+      "@fortawesome/ember-fontawesome": "patches/@fortawesome__ember-fontawesome.patch"
     }
   }
 }

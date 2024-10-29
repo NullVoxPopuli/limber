@@ -1,0 +1,22 @@
+diff --git a/package.json b/package.json
+index 3b302caa135ac3911cde21b45bc0cbe4e0b7950a..e208119373e45c7969de38b047f7953807963494 100644
+--- a/package.json
++++ b/package.json
+@@ -61,6 +61,8 @@
+     ]
+   },
+   "dependencies": {
++    "@glimmer/component": "^1.1.2",
++    "@glimmer/tracking": "^1.1.2",
+     "@fortawesome/fontawesome-svg-core": "^6.2.0",
+     "@rollup/plugin-node-resolve": "^15.1.0",
+     "array-unique": "^0.3.2",
+@@ -88,8 +90,6 @@
+     "@fortawesome/free-brands-svg-icons": "^6.2.0",
+     "@fortawesome/free-regular-svg-icons": "^6.2.0",
+     "@fortawesome/free-solid-svg-icons": "^6.2.0",
+-    "@glimmer/component": "^1.1.2",
+-    "@glimmer/tracking": "^1.1.2",
+     "broccoli-asset-rev": "^3.0.0",
+     "broccoli-stew": "^3.0.0",
+     "broccoli-viz": "^5.0.0",
