@@ -109,7 +109,7 @@
     "@ember/test-waiters": "^3.1.0",
     "@embroider/addon-dev": "^5.0.0",
     "@glimmer/compiler": "^0.92.0",
-    "@glimmer/component": "^1.1.2",
+    "@glimmer/component": "^2.0.0",
     "@glimmer/interfaces": "^0.92.0",
     "@glimmer/reference": "^0.92.0",
     "@glimmer/syntax": "^0.92.0",
