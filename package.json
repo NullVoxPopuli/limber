@@ -41,7 +41,7 @@
       "@nullvoxpopuli/eslint-configs": "^4.0.0",
       "@glimmer/component": "^2.0.0",
       "ember-element-helper": "^0.8.5",
-      "ember-auto-import": "^2.7.2",
+      "ember-auto-import": "^2.9.0",
       "ember-repl": "workspace:*",
       "ember-source": ">= 5.10.2",
       "webpack": ">= 5.92.0",
@@ -78,8 +78,7 @@
       ]
     },
     "patchedDependencies": {
-      "browserslist-generator": "patches/browserslist-generator.patch",
-      "@fortawesome/ember-fontawesome": "patches/@fortawesome__ember-fontawesome.patch"
+      "browserslist-generator": "patches/browserslist-generator.patch"
     }
   }
 }
