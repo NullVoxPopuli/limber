@@ -25,7 +25,7 @@ async function shortenUrl(url: string) {
   });
 
   let json = await response.json();
-  let shortUrl = json.attributes.shortUrl;
+  let shortUrl = json.data.attributes.shortUrl;
 
   // fake our custom domain
   // Will be done for us later
