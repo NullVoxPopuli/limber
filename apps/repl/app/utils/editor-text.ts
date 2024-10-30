@@ -14,6 +14,24 @@ const DEBOUNCE_MS = 300;
 const queueWaiter = buildWaiter('FileURIComponent::queue');
 const queueTokens: unknown[] = [];
 
+async function shortenUrl(url: string) {
+  let response = await fetch(`https://api.nvp.gg/v1/links`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/vnd.api+json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ originalUrl: url }),
+  });
+
+  let json = await response.json();
+  let shortUrl = json.attributes.shortUrl;
+
+  // fake our custom domain
+  // Will be done for us later
+  return shortUrl.replace('nvp.gg', 'share.glimdown.com');
+}
+
 /**
  * Manages the URL state, representing the editor text.
  * Editor text may be newer than the URL state.
@@ -82,6 +100,15 @@ export class FileURIComponent {
     this.#flush();
 
     let url = location.origin + this.router.currentURL;
+
+    if (window.location.href.includes('glimdown.com')) {
+      try {
+        url = await shortenUrl(url);
+      } catch (e) {
+        console.error(`Could not shorten the URL`);
+        console.error(e);
+      }
+    }
 
     await navigator.clipboard.writeText(url);
   };
