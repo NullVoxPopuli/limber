@@ -12,6 +12,7 @@ import { compile } from 'ember-repl';
 import CopyMenu from 'limber/components/limber/copy-menu';
 
 import type { MessagingAPI, Parent } from '../frame-messaging';
+import type Owner from '@ember/owner';
 import type RouterService from '@ember/routing/router-service';
 import type { ComponentLike } from '@glint/template';
 import type { Format } from 'limber/utils/messaging';
@@ -49,7 +50,7 @@ export default class Compiler extends Component<Signature> {
 
   declare parentFrame: Parent;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     let api = args.messagingAPI;

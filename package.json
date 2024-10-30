@@ -39,6 +39,7 @@
   "pnpm": {
     "overrides": {
       "@nullvoxpopuli/eslint-configs": "^4.0.0",
+      "@glimmer/component": "^2.0.0",
       "ember-element-helper": "^0.8.5",
       "ember-auto-import": "^2.7.2",
       "ember-repl": "workspace:*",
@@ -66,6 +67,7 @@
     },
     "peerDependencyRules": {
       "allowAny": [
+        "@glimmer/component",
         "ember-modifier",
         "typescript",
         "ember-source"
@@ -76,7 +78,8 @@
       ]
     },
     "patchedDependencies": {
-      "browserslist-generator": "patches/browserslist-generator.patch"
+      "browserslist-generator": "patches/browserslist-generator.patch",
+      "@fortawesome/ember-fontawesome": "patches/@fortawesome__ember-fontawesome.patch"
     }
   }
 }

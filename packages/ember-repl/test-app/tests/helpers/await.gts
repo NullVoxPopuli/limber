@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { isDestroyed, isDestroying } from '@ember/destroyable';
 import { waitForPromise } from '@ember/test-waiters';
 
+import type Owner from '@ember/owner';
 import type { ComponentLike } from '@glint/template';
 
 interface Args {
@@ -13,7 +14,7 @@ export class Await extends Component<Args> {
   @tracked resolved?: ComponentLike;
   @tracked error?: Error;
 
-  constructor(owner: unknown, args: Args) {
+  constructor(owner: Owner, args: Args) {
     super(owner, args);
 
     let promise = args.promise
