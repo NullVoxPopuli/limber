@@ -101,7 +101,7 @@ export class FileURIComponent {
 
     let url = location.origin + this.router.currentURL;
 
-    if (window.location.includes('glimdown.com')) {
+    if (window.location.href.includes('glimdown.com')) {
       try {
         url = await shortenUrl(url);
       } catch (e) {
