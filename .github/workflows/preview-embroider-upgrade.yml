@@ -24,7 +24,7 @@ jobs:
       - uses: wyvox/action-setup-pnpm@v3
       - run: npx ember-apply@latest unstable-embroider
       - run: pnpm install --fix-lockfile --frozen-lockfile=false
-      - uses: peter-evans/create-pull-request@v6
+      - uses: peter-evans/create-pull-request@v7
         with:
           # A PAT is required to trigger further workflows
           token: ${{ secrets.WORKFLOW_TOKEN }}
