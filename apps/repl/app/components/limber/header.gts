@@ -5,6 +5,7 @@ import { FormatButtons } from 'limber/components/limber/layout/controls/format-b
 import { ExternalLink } from 'limber-ui';
 
 import DemoSelect from './demo-select';
+import { Share } from './share';
 
 <template>
   <header
@@ -27,6 +28,7 @@ import DemoSelect from './demo-select';
       {{#if (notInIframe)}}
         <FormatButtons />
       {{/if}}
+      <Share />
     </div>
 
     <nav class="text-white flex gap-2 items-baseline">
