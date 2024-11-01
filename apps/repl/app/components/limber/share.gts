@@ -132,7 +132,7 @@ export const Share = <template>
     }
   </style>
   <Modal as |m|>
-    <button data-share-button {{on "click" m.open}}>
+    <button data-share-button type="button" {{on "click" m.open}}>
       Share
       <FaIcon @icon="share-from-square" @prefix="fas" />
     </button>
@@ -152,8 +152,8 @@ export const Share = <template>
       <footer>
         <div class="right">
           <div class="buttons">
-            <button>Close</button>
-            <button>Create Link</button>
+            <button type="button">Close</button>
+            <button type="button">Create Link</button>
           </div>
         </div>
       </footer>
