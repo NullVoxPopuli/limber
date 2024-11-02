@@ -1,5 +1,70 @@
 # Changelog
 
+## Release (2024-11-02)
+
+limber-ui 1.0.5 (patch)
+ember-repl 4.3.2 (patch)
+codemirror-lang-glimdown 0.0.4 (patch)
+@glimdown/lezer 0.0.3 (patch)
+codemirror-lang-glimmer-js 0.0.4 (patch)
+@glimdown/lezer-glimmer-expression 0.0.3 (patch)
+codemirror-lang-glimmer 0.0.4 (patch)
+lezer-glimmer 0.0.3 (patch)
+
+#### :rocket: Enhancement
+* `limber`
+  * [#1848](https://github.com/NullVoxPopuli/limber/pull/1848) URL Shortener ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber`, `@nullvoxpopuli/limber-codemirror`
+  * [#1841](https://github.com/NullVoxPopuli/limber/pull/1841) Upgrade to XState 5 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* `limber`
+  * [#1817](https://github.com/NullVoxPopuli/limber/pull/1817) Fix the copy button (when copying snippets) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :memo: Documentation
+* `tutorial`
+  * [#1152](https://github.com/NullVoxPopuli/limber/pull/1152) New tutorial chapter: dependent select dropdowns ([@MehulKChaudhari](https://github.com/MehulKChaudhari))
+  * [#1807](https://github.com/NullVoxPopuli/limber/pull/1807) Fix unfinished tutorial hiding ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1802](https://github.com/NullVoxPopuli/limber/pull/1802) Remove importable modules, as we are only using markdown here ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* Other
+  * [#1812](https://github.com/NullVoxPopuli/limber/pull/1812) Add landing page ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber`, `limber-ui`
+  * [#1801](https://github.com/NullVoxPopuli/limber/pull/1801) External fonts can cost 100ms of load time (unless preloaded in html's head) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :house: Internal
+* `limber`, `tutorial`, `limber-ui-test-app`, `ember-repl-test-app`
+  * [#1849](https://github.com/NullVoxPopuli/limber/pull/1849) Bump ember-auto-import to 2.9, remove patch on ember-fontawesome ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber`, `tutorial`, `limber-ui`, `limber-ui-test-app`, `@nullvoxpopuli/limber-transpilation`, `ember-repl`, `ember-repl-test-app`
+  * [#1847](https://github.com/NullVoxPopuli/limber/pull/1847) Force newer @glimmer/component ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1787](https://github.com/NullVoxPopuli/limber/pull/1787) Upgrade ember-source to 5.10 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* Other
+  * [#1788](https://github.com/NullVoxPopuli/limber/pull/1788) Remove old node polyfills ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1831](https://github.com/NullVoxPopuli/limber/pull/1831) Node 22 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1827](https://github.com/NullVoxPopuli/limber/pull/1827) Upgrade pnpm ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1821](https://github.com/NullVoxPopuli/limber/pull/1821) Add debug information for the workflow_run event ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber`, `tutorial`, `dev-tools`, `@nullvoxpopuli/limber-codemirror`, `limber-ui`, `limber-ui-test-app`, `@nullvoxpopuli/limber-styles`, `@nullvoxpopuli/limber-transpilation`, `@nullvoxpopuli/limber-consts`, `ember-repl`, `ember-repl-test-app`, `@nullvoxpopuli/horizon-theme`, `codemirror-lang-glimdown`, `codemirror-lang-glimmer-js`, `codemirror-lang-glimmer`, `lezer-glimmer`
+  * [#1832](https://github.com/NullVoxPopuli/limber/pull/1832) Stragglers ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber`, `tutorial`, `limber-ui`, `limber-ui-test-app`, `ember-repl`, `ember-repl-test-app`
+  * [#1830](https://github.com/NullVoxPopuli/limber/pull/1830) Upgrade some runtime deps ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber`, `tutorial`, `limber-ui`, `limber-ui-test-app`, `ember-repl`, `ember-repl-test-app`, `@glimdown/lezer-infra`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer`, `lezer-glimmer`, `@nullvoxpopuli/spike-url-shortening`
+  * [#1829](https://github.com/NullVoxPopuli/limber/pull/1829) Update build deps ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber`, `tutorial`, `dev-tools`, `@nullvoxpopuli/limber-codemirror`, `limber-ui`, `limber-ui-test-app`, `@nullvoxpopuli/limber-styles`, `@nullvoxpopuli/limber-transpilation`, `@nullvoxpopuli/limber-consts`, `ember-repl`, `ember-repl-test-app`, `@nullvoxpopuli/horizon-theme`, `@glimdown/lezer-infra`, `@glimdown/codemirror-dev-preview`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer`, `lezer-glimmer`, `@nullvoxpopuli/limber-untyped`, `@nullvoxpopuli/spike-unified`, `@nullvoxpopuli/spike-url-shortening`
+  * [#1828](https://github.com/NullVoxPopuli/limber/pull/1828) Update codemirror ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1826](https://github.com/NullVoxPopuli/limber/pull/1826) lints ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1818](https://github.com/NullVoxPopuli/limber/pull/1818) Upgrade some things ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber`, `tutorial`, `limber-ui`, `limber-ui-test-app`, `ember-repl`, `ember-repl-test-app`, `@nullvoxpopuli/limber-untyped`
+  * [#1824](https://github.com/NullVoxPopuli/limber/pull/1824) Use @glint/*@unstable ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber`, `tutorial`, `dev-tools`, `@nullvoxpopuli/limber-codemirror`, `limber-ui`, `limber-ui-test-app`, `@nullvoxpopuli/limber-styles`, `@nullvoxpopuli/limber-transpilation`, `@nullvoxpopuli/limber-consts`, `ember-repl`, `ember-repl-test-app`, `@nullvoxpopuli/horizon-theme`, `@glimdown/lezer-infra`, `@glimdown/codemirror-dev-preview`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer`, `lezer-glimmer`
+  * [#1823](https://github.com/NullVoxPopuli/limber/pull/1823) Upgrade babel ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber`, `tutorial`, `limber-ui-test-app`, `ember-repl`, `ember-repl-test-app`
+  * [#1816](https://github.com/NullVoxPopuli/limber/pull/1816) Upgrade to @ember/test-helpers@v4 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `codemirror-lang-glimmer`, `@nullvoxpopuli/spike-url-shortening`
+  * [#1806](https://github.com/NullVoxPopuli/limber/pull/1806) Upgrade vite ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 2
+- Mehul Kiran Chaudhari ([@MehulKChaudhari](https://github.com/MehulKChaudhari))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2024-07-21)
 
 limber-ui 1.0.4 (patch)
