@@ -1,167 +1,87 @@
+import './share.css';
+
+import Component from '@glimmer/component';
 import { array } from '@ember/helper';
 import { on } from '@ember/modifier';
+import { service } from '@ember/service';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { focusTrap } from 'ember-focus-trap';
 import { Modal } from 'ember-primitives/components/dialog';
 
+import { shortenUrl } from 'limber/utils/editor-text';
+
 import { FlatButton } from './help';
 
 import type { TOC } from '@ember/component/template-only';
+import type RouterService from '@ember/routing/router-service';
 
-// copyAsText = (event: Event) => {
-//   let code = getSnippetElement(event);
-//
-//   navigator.clipboard.writeText(code.innerText);
-// };
+export class Share extends Component {
+  <template>
+    <Modal as |m|>
+      <button data-share-button type="button" {{on "click" m.open}}>
+        Share
+        <FaIcon @icon="share-from-square" @prefix="fas" />
+      </button>
+      <m.Dialog class="preem" {{focusTrap isActive=m.isOpen}}>
+        <header><h2>Share</h2>
 
-export const Share = <template>
-  {{! prettier-ignore }}
-  <style>
-    button[data-share-button] {
-      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      transition-duration: 150ms;
-      transition-property: all;
-      --tw-ring-color: var(--ember-brand);
-      --tw-text-opacity: 1;
-      color: rgb(255 255 255 / var(--tw-text-opacity));
-      padding: 0.25rem 0.5rem;
-      /**
-      * TODO: can this be nested automatically?
-      */
-      border-radius: 0.25rem;
-      cursor: pointer;
+          <FlatButton {{on "click" m.close}} aria-label="close this share modal">
+            <FaIcon @size="xs" @icon="xmark" class="aspect-square" />
+          </FlatButton>
+        </header>
+        <main>
+          <form {{on "submit" this.handleSubmit}}>
+            <ReadonlyField @label="shortened URL" @value="Click 'Create'" />
 
-      &:focus-visible, &:focus {
-        outline: 2px solid transparent;
-        outsilen-offset: 2px;
-      }
-      &:focus {
-        --tw-ring-offset-shadow:
-            var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-          --tw-ring-shadow:
-            var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-          box-shadow:
-            var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-      }
-    }
-
-
-    .preem__tip {
-      --tw-bg-opacity: 1;
-      margin: 0.5rem;
-      padding: 1rem;
-      background: white;
-      background: rgb(240 249 255 / var(--tw-bg-opacity));
-      color: rgb(50, 60, 100);
-      position: relative;
-
-      .preem__tip__bulb {
-        position: absolute;
-        left: 1rem;
-        top: 1rem;
-        text-shadow: 1px 2px 1px rgba(0,0,0,0.2);
-        font-size: 1.5rem;
-      }
-      .preem__tip__text {
-        padding-left: 2rem;
-      }
-    }
-    dialog.preem {
-      border-radius: 0.25rem;
-      animation: var(--animation-slide-in-up), var(--animation-fade-in);
-      animation-timing-function: var(--ease-out-5);
-      animation-duration: 0.2s;
-    }
-    dialog.preem::backdrop {
-      backdrop-filter: blur(1px);
-    }
-    dialog.preem header {
-      display: flex;
-      justify-content: space-between;
-      padding: 1rem;
-    }
-    dialog.preem h2 {
-      margin: 0 !important;
-    }
-
-    dialog.preem main {
-      padding: 2rem;
-      max-width: 500px;
-    }
-
-    dialog.preem footer {
-      padding: 1rem;
-
-      .right {
-        display: grid;
-        justify-content: end;
-      }
-
-      .buttons {
-        display: flex;
-        gap: 1rem;
-      }
-
-      button {
-        color: white;
-        border-radius: 0.25rem;
-        padding: 0.25rem 0.5rem;
-        background: var(--code-bg);
-        border: 1px solid var(--horizon-border);
-      }
-
-      button:focus {
-        outline: 2px solid transparent;
-        outline-offset: 2px;
-        --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width)
-          var(--tw-ring-offset-color);
-        --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width))
-          var(--tw-ring-color);
-        box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-      }
-
-      button:focus-visible {
-        outline: 2px solid transparent;
-        outline-offset: 2px;
-      }
-
-      button:hover {
-        opacity: 0.9;
-      }
-    }
-  </style>
-  <Modal as |m|>
-    <button data-share-button type="button" {{on "click" m.open}}>
-      Share
-      <FaIcon @icon="share-from-square" @prefix="fas" />
-    </button>
-    <m.Dialog class="preem" {{focusTrap isActive=m.isOpen}}>
-      <header><h2>Share</h2>
-
-        <FlatButton {{on "click" m.close}} aria-label="close this share modal">
-          <FaIcon @size="xs" @icon="xmark" class="aspect-square" />
-        </FlatButton>
-      </header>
-      <main>
-        <ReadonlyField @label="shortened URL" @value="pending..." />
-        <Tip>
-          <KeyCombo @keys={{array "Ctrl" "S"}} @mac={{array "Command" "S"}} />
-          will copy a shortened URL to your clipboard.</Tip>
-      </main>
-      <footer>
-        <div class="right">
-          <div class="buttons">
-            <button type="button">Close</button>
-            <button type="button">Create Link</button>
+            <button type="button">Create</button>
+          </form>
+          <Tip>
+            <KeyCombo @keys={{array "Ctrl" "S"}} @mac={{array "Command" "S"}} />
+            will copy a shortened URL to your clipboard.</Tip>
+        </main>
+        <footer>
+          <div class="right">
+            <div class="buttons">
+              <button type="button" class="cancel">Close</button>
+              <button type="button">Create Link</button>
+            </div>
           </div>
-        </div>
-      </footer>
-    </m.Dialog>
-  </Modal>
-</template>;
+        </footer>
+      </m.Dialog>
+    </Modal>
+  </template>
 
-// "with copy" / @copyale={{true}}?
+  @service declare router: RouterService;
+
+  toClipboard = async () => {
+    let url = location.origin + this.router.currentURL;
+
+    if (window.location.href.includes('glimdown.com')) {
+      try {
+        url = await shortenUrl(url);
+      } catch (e) {
+        console.error(`Could not shorten the URL`);
+        console.error(e);
+        throw e;
+      }
+    }
+
+    await navigator.clipboard.writeText(url);
+  };
+
+  handleSubmit = async (event: SubmitEvent) => {
+    event.preventDefault();
+
+    try {
+      await this.toClipboard();
+    } catch {
+      // TODO: Toast message
+    }
+  };
+}
+
+// "with copy" / @copyable={{true}}?
 const ReadonlyField: TOC<{
   Args: {
     label: string;
