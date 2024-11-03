@@ -127,15 +127,15 @@ const ReadonlyField: TOC<{
     copyable?: boolean | undefined;
   };
 }> = <template>
-  <label>
-    <span>{{@label}}</span>
+  <span class="field">
+    <label for="share-copy">{{@label}}</label>
     <span class="field-input">
-      <input value={{@value}} readonly ...attributes />
+      <input value={{@value}} name="share-copy" readonly ...attributes />
       {{#if @copyable}}
-        <button {{on "click" (fn writeToClipboard @value)}}>Copy</button>
+        <button type="button" {{on "click" (fn writeToClipboard @value)}}>Copy</button>
       {{/if}}
     </span>
-  </label>
+  </span>
 </template>;
 
 const isLast = (collection: unknown[], index: number) => index === collection.length - 1;

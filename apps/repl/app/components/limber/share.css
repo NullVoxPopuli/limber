@@ -94,7 +94,7 @@ dialog.preem main {
   display: grid;
   gap: 1rem;
 
-  label {
+  .field {
     display: grid;
     gap: 0.5rem;
     input {
