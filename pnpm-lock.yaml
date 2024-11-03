@@ -40,6 +40,9 @@ importers:
       '@babel/core':
         specifier: ^7.25.7
         version: 7.25.8(supports-color@8.1.1)
+      '@glint/core':
+        specifier: 1.4.1-unstable.ff9ea6c
+        version: 1.4.1-unstable.ff9ea6c(typescript@5.6.3)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^4.0.0
         version: 4.2.0(@babel/core@7.25.8)(@babel/eslint-parser@7.25.8(@babel/core@7.25.8)(eslint@8.57.1))(@babel/plugin-proposal-decorators@7.25.9(@babel/core@7.25.8))(@types/eslint@8.56.12)(@typescript-eslint/eslint-plugin@8.8.1(@typescript-eslint/parser@8.8.1(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3))(@typescript-eslint/parser@8.8.1(eslint@8.57.1)(typescript@5.6.3))(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint-plugin-ember@12.2.1(@babel/core@7.25.8)(@typescript-eslint/parser@8.8.1(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint-plugin-qunit@8.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)(typescript@5.6.3)
@@ -391,7 +394,7 @@ importers:
         version: 12.2.1(@babel/core@7.25.8)(@typescript-eslint/parser@8.8.1(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)
       execa:
         specifier: ^8.0.1
-        version: 9.4.1
+        version: 8.0.1
       file-loader:
         specifier: ^6.2.0
         version: 6.2.0(webpack@5.95.0)
@@ -983,7 +986,7 @@ importers:
         version: 5.2.1(@types/eslint@8.56.12)(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)
       execa:
         specifier: ^8.0.1
-        version: 9.4.1
+        version: 8.0.1
       fix-bad-declaration-output:
         specifier: ^1.1.1
         version: 1.1.4(@babel/preset-env@7.26.0(@babel/core@7.25.8))
@@ -1524,7 +1527,7 @@ importers:
         version: 5.2.1(@types/eslint@8.56.12)(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)
       execa:
         specifier: ^8.0.1
-        version: 9.4.1
+        version: 8.0.1
       prettier:
         specifier: ^3.3.3
         version: 3.3.3

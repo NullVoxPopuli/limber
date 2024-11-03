@@ -14,6 +14,7 @@ module.exports = function () {
       'columns',
       'pencil',
       'rotate',
+      'share-from-square',
       'question',
       'xmark',
     ],
