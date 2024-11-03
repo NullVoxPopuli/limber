@@ -14,7 +14,7 @@ const DEBOUNCE_MS = 300;
 const queueWaiter = buildWaiter('FileURIComponent::queue');
 const queueTokens: unknown[] = [];
 
-async function shortenUrl(url: string) {
+export async function shortenUrl(url: string) {
   let response = await fetch(`https://api.nvp.gg/v1/links`, {
     method: 'POST',
     headers: {

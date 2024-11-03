@@ -1,7 +1,8 @@
 import './share.css';
 
 import Component from '@glimmer/component';
-import { array } from '@ember/helper';
+import { tracked } from '@glimmer/tracking';
+import { array, fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
@@ -15,6 +16,8 @@ import { FlatButton } from './help';
 
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
+
+const { Boolean } = globalThis;
 
 export class Share extends Component {
   <template>
@@ -30,41 +33,57 @@ export class Share extends Component {
             <FaIcon @size="xs" @icon="xmark" class="aspect-square" />
           </FlatButton>
         </header>
-        <main>
-          <form {{on "submit" this.handleSubmit}}>
-            <ReadonlyField @label="shortened URL" @value="Click 'Create'" />
+        <form {{on "submit" this.handleSubmit}}>
+          <main>
+            {{#if this.error}}
+              <div class="error">{{this.error}}</div>
+            {{/if}}
+            <div class="inline-mini-form">
+              <ReadonlyField
+                @label="shortened URL"
+                @value={{this.shortUrl}}
+                @copyable={{Boolean this.shortUrl}}
+                placeholder="Click 'Create'"
+              />
 
-            <button type="button">Create</button>
-          </form>
-          <Tip>
-            <KeyCombo @keys={{array "Ctrl" "S"}} @mac={{array "Command" "S"}} />
-            will copy a shortened URL to your clipboard.</Tip>
-        </main>
-        <footer>
-          <div class="right">
-            <div class="buttons">
-              <button type="button" class="cancel">Close</button>
-              <button type="button">Create Link</button>
+              {{#unless this.shortUrl}}
+                <button type="submit">Create</button>
+              {{/unless}}
             </div>
-          </div>
-        </footer>
+            <Tip>
+              <KeyCombo @keys={{array "Ctrl" "S"}} @mac={{array "Command" "S"}} />
+              will copy a shortened URL to your clipboard.</Tip>
+          </main>
+
+          <footer>
+            <div class="right">
+              <div class="buttons">
+                <button type="button" class="cancel" {{on "click" m.close}}>Close</button>
+                {{#unless this.shortUrl}}
+                  <button type="submit">Create Link</button>
+                {{/unless}}
+              </div>
+            </div>
+          </footer>
+        </form>
       </m.Dialog>
     </Modal>
   </template>
 
   @service declare router: RouterService;
 
+  @tracked shortUrl: string | undefined;
+  @tracked error: string | undefined;
+
   toClipboard = async () => {
     let url = location.origin + this.router.currentURL;
 
-    if (window.location.href.includes('glimdown.com')) {
-      try {
-        url = await shortenUrl(url);
-      } catch (e) {
-        console.error(`Could not shorten the URL`);
-        console.error(e);
-        throw e;
-      }
+    try {
+      url = await shortenUrl(url);
+    } catch (e) {
+      console.error(`Could not shorten the URL`);
+      console.error(e);
+      throw e;
     }
 
     await navigator.clipboard.writeText(url);
@@ -72,6 +91,20 @@ export class Share extends Component {
 
   handleSubmit = async (event: SubmitEvent) => {
     event.preventDefault();
+    this.error = undefined;
+
+    let href = window.location.href;
+
+    if (!href.includes('glimdown.com')) {
+      if (href.includes('localhost')) {
+        this.error = "You're on localhost, silly, here is a fake error with fake URL";
+        this.shortUrl = 'https://share.glimdown.com/something';
+      } else {
+        this.error = 'This is only supported on glimdown.com';
+      }
+
+      return;
+    }
 
     try {
       await this.toClipboard();
@@ -81,16 +114,27 @@ export class Share extends Component {
   };
 }
 
+async function writeToClipboard(text: string) {
+  await navigator.clipboard.writeText(text);
+}
+
 // "with copy" / @copyable={{true}}?
 const ReadonlyField: TOC<{
+  Element: HTMLInputElement;
   Args: {
     label: string;
-    value: string;
+    value: string | undefined;
+    copyable?: boolean | undefined;
   };
 }> = <template>
   <label>
     <span>{{@label}}</span>
-    <input value={{@value}} readonly />
+    <span class="field-input">
+      <input value={{@value}} readonly ...attributes />
+      {{#if @copyable}}
+        <button {{on "click" (fn writeToClipboard @value)}}>Copy</button>
+      {{/if}}
+    </span>
   </label>
 </template>;
 

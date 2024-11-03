@@ -18,6 +18,16 @@ dialog.preem input {
   }
 }
 
+dialog.preem {
+  .error {
+    border: 2px solid #622;
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+    background: #fee;
+  }
+}
+
+
 button[data-share-button] {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
@@ -87,6 +97,13 @@ dialog.preem main {
   label {
     display: grid;
     gap: 0.5rem;
+    input {
+      width: 100%;
+    }
+    .field-input {
+      display: flex;
+      gap: 0.5rem;
+    }
   }
   input {
     padding: 0.25rem 0.5rem;
@@ -97,19 +114,25 @@ dialog.preem main {
 }
 
 dialog.preem form {
+}
+dialog.preem .inline-mini-form {
   display: grid;
-  gap: 1rem;
   align-items: end;
   grid-auto-flow: column;
   grid-template-columns: 1fr min-content;
+
+  [type="submit"] {
+    margin-left: 0.5rem;
+  }
 }
+
 dialog.preem footer,
 dialog.preem form {
   button {
     color: white;
     border-radius: 0.25rem;
     padding: 0.25rem 0.5rem;
-    background: var(--code-bg);
+   background: var(--code-bg);
     border: 1px solid var(--horizon-border);
 
     &.cancel {
