@@ -23,6 +23,8 @@
     "noEmit": true,
     "inlineSourceMap": true,
     "inlineSources": true,
+    "declaration": false,
+    "declarationMap": false,
     "baseUrl": ".",
     "experimentalDecorators": true,
     "paths": {
