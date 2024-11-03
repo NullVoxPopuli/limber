@@ -10,13 +10,17 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 // @ts-expect-error womp types
 import { focusTrap } from 'ember-focus-trap';
 import { Modal } from 'ember-primitives/components/dialog';
+import { cell } from 'ember-resources';
 
 import { shortenUrl } from 'limber/utils/editor-text';
 
 import { FlatButton } from './help';
+import { SaveBanner, SHOW_TIME } from './save';
 
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
+
+const isShowing = cell(false);
 
 const { Boolean } = globalThis;
 
@@ -27,9 +31,11 @@ export class Share extends Component {
         Share
         <FaIcon @icon="share-from-square" @prefix="fas" />
       </button>
-      <m.Dialog class="preem" {{focusTrap isActive=m.isOpen}}>
-        <header><h2>Share</h2>
 
+      <m.Dialog class="preem" {{focusTrap isActive=m.isOpen}}>
+        <SaveBanner @isShowing={{isShowing.current}} />
+
+        <header><h2>Share</h2>
           <FlatButton {{on "click" m.close}} aria-label="close this share modal">
             <FaIcon @size="xs" @icon="xmark" class="aspect-square" />
           </FlatButton>
@@ -81,13 +87,18 @@ export class Share extends Component {
 
     try {
       url = await shortenUrl(url);
+      this.shortUrl = url;
     } catch (e) {
       console.error(`Could not shorten the URL`);
       console.error(e);
       throw e;
     }
 
+    isShowing.set(true);
     await navigator.clipboard.writeText(url);
+
+    await new Promise((resolve) => setTimeout(resolve, SHOW_TIME));
+    isShowing.set(false);
   };
 
   handleSubmit = async (event: SubmitEvent) => {
@@ -116,7 +127,10 @@ export class Share extends Component {
 }
 
 async function writeToClipboard(text: string) {
+  isShowing.set(true);
   await navigator.clipboard.writeText(text);
+  await new Promise((resolve) => setTimeout(resolve, SHOW_TIME));
+  isShowing.set(false);
 }
 
 // "with copy" / @copyable={{true}}?

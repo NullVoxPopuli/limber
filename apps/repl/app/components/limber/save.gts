@@ -3,21 +3,24 @@ import { tracked } from '@glimmer/tracking';
 import { registerDestructor } from '@ember/destroyable';
 import { service } from '@ember/service';
 
+import type { TOC } from '@ember/component/template-only';
 import type Owner from '@ember/owner';
 import type EditorService from 'limber/services/editor';
 
-const SHOW_TIME = 2000;
+export const SHOW_TIME = 2000;
+
+export const SaveBanner = <template>
+  <div
+    class="w-full p-10 absolute text-2xl backdrop-blur-md bg-slate-800/30 border-y border-slate-800/50 transition-all duration-300 pointer-events-none text-white text-center shadow-2xl shadow-stone-900/50 z-[100] top-[39%]
+      {{if @isShowing 'opacity-100' 'opacity-0'}}
+      "
+  >
+    URL copied to clipboard
+  </div>
+</template> satisfies TOC<{ Args: { isShowing: boolean } }>;
 
 export default class Save extends Component {
-  <template>
-    <div
-      class="w-full p-10 absolute text-2xl backdrop-blur-md bg-slate-800/30 border-y border-slate-800/50 transition-all duration-300 pointer-events-none text-white text-center shadow-2xl shadow-stone-900/50 z-[100] top-[39%]
-        {{if this.isShowing 'opacity-100' 'opacity-0'}}
-        "
-    >
-      URL copied to clipboard
-    </div>
-  </template>
+  <template><SaveBanner @isShowing={{this.isShowing}} /></template>
 
   @service declare editor: EditorService;
 
