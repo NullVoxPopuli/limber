@@ -24,57 +24,63 @@ const isShowing = cell(false);
 
 const { Boolean } = globalThis;
 
-export class Share extends Component {
+export const Share = <template>
+  <Modal as |m|>
+    <button data-share-button type="button" {{on "click" m.open}}>
+      Share
+      <FaIcon @icon="share-from-square" @prefix="fas" />
+    </button>
+
+    <m.Dialog class="preem" {{focusTrap isActive=m.isOpen}}>
+      {{#if m.isOpen}}
+        <ShareModal @onCancel={{m.close}} />
+      {{/if}}
+    </m.Dialog>
+  </Modal>
+</template>;
+
+class ShareModal extends Component<{ onCancel: () => void }> {
   <template>
-    <Modal as |m|>
-      <button data-share-button type="button" {{on "click" m.open}}>
-        Share
-        <FaIcon @icon="share-from-square" @prefix="fas" />
-      </button>
+    <SaveBanner @isShowing={{isShowing.current}} />
 
-      <m.Dialog class="preem" {{focusTrap isActive=m.isOpen}}>
-        <SaveBanner @isShowing={{isShowing.current}} />
+    <header><h2>Share</h2>
+      <FlatButton {{on "click" @onCancel}} aria-label="close this share modal">
+        <FaIcon @size="xs" @icon="xmark" class="aspect-square" />
+      </FlatButton>
+    </header>
+    <form {{on "submit" this.handleSubmit}}>
+      <main>
+        {{#if this.error}}
+          <div class="error">{{this.error}}</div>
+        {{/if}}
+        <div class="inline-mini-form">
+          <ReadonlyField
+            @label="shortened URL"
+            @value={{this.shortUrl}}
+            @copyable={{Boolean this.shortUrl}}
+            placeholder="Click 'Create'"
+          />
 
-        <header><h2>Share</h2>
-          <FlatButton {{on "click" m.close}} aria-label="close this share modal">
-            <FaIcon @size="xs" @icon="xmark" class="aspect-square" />
-          </FlatButton>
-        </header>
-        <form {{on "submit" this.handleSubmit}}>
-          <main>
-            {{#if this.error}}
-              <div class="error">{{this.error}}</div>
-            {{/if}}
-            <div class="inline-mini-form">
-              <ReadonlyField
-                @label="shortened URL"
-                @value={{this.shortUrl}}
-                @copyable={{Boolean this.shortUrl}}
-                placeholder="Click 'Create'"
-              />
+          {{#unless this.shortUrl}}
+            <button type="submit">Create</button>
+          {{/unless}}
+        </div>
+        <Tip>
+          <KeyCombo @keys={{array "Ctrl" "S"}} @mac={{array "Command" "S"}} />
+          will copy a shortened URL to your clipboard.</Tip>
+      </main>
 
-              {{#unless this.shortUrl}}
-                <button type="submit">Create</button>
-              {{/unless}}
-            </div>
-            <Tip>
-              <KeyCombo @keys={{array "Ctrl" "S"}} @mac={{array "Command" "S"}} />
-              will copy a shortened URL to your clipboard.</Tip>
-          </main>
-
-          <footer>
-            <div class="right">
-              <div class="buttons">
-                <button type="button" class="cancel" {{on "click" m.close}}>Close</button>
-                {{#unless this.shortUrl}}
-                  <button type="submit">Create Link</button>
-                {{/unless}}
-              </div>
-            </div>
-          </footer>
-        </form>
-      </m.Dialog>
-    </Modal>
+      <footer>
+        <div class="right">
+          <div class="buttons">
+            <button type="button" class="cancel" {{on "click" @onCancel}}>Close</button>
+            {{#unless this.shortUrl}}
+              <button type="submit">Create Link</button>
+            {{/unless}}
+          </div>
+        </div>
+      </footer>
+    </form>
   </template>
 
   @service declare router: RouterService;
