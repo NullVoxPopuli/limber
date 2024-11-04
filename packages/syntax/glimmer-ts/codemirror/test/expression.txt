@@ -1,0 +1,95 @@
+# Minimal
+
+{{@foo}}
+
+==>
+
+Glimmer(
+  Expression(
+    StartStache,
+    SubExpression(
+      Value(Property(Argument))
+    ),
+    EndStache
+  )
+)
+
+# Function invocation (compressed)
+
+{{(myFunction @foo)}}
+
+==>
+
+Glimmer(
+  Expression(
+    StartStache,
+    SubExpression(
+      Value(
+        Invocation(
+          SubExpStart,
+          SubExpression(
+            Value(Property),
+            Text,
+            Value(Property(Argument))
+          ),
+          SubExpEnd
+        )
+      )
+    ),
+    EndStache
+  )
+)
+
+
+
+# Function invocation
+
+{{ (myFunction @foo) }}
+
+==>
+
+Glimmer(
+  Expression(
+    StartStache,
+    SubExpression(
+      Value(
+        Invocation(
+          SubExpStart,
+          SubExpression(
+            Value(PropertyPath(Property)),
+            Value(PropertyPath(Property(Argument)))
+          ),
+          SubExpEnd
+        )
+      )
+    ),
+    EndStache
+  )
+)
+
+# Iteration
+
+{{#each this.foo as |item|}}
+  {{item}}
+{{/each}}
+
+==>
+
+Glimmer(
+  Expression(ArgumentReference)
+)
+
+
+# Multiple
+
+{{@foo}} {{@bar}}
+
+==>
+
+Glimmer(
+  Expression(
+    SubExpression(
+      Value(Argument)
+    )
+  )
+)

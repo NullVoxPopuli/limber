@@ -1,0 +1,79 @@
+# foo.bar
+
+{{foo.bar}}
+
+==>
+
+Glimmer(
+  Expression(
+    StartStache,
+    SubExpression(
+      Value(
+        PropertyPath(
+          Property
+        )
+      )
+    ),
+    EndStache
+  )
+)
+
+# foo.bar.baz
+
+{{foo.bar.baz}}
+
+==>
+
+Glimmer(
+  Expression(
+    StartStache,
+    SubExpression(
+      Value(
+        PropertyPath(
+          Property
+        )
+      )
+    ),
+    EndStache
+  )
+)
+
+# this.bar
+
+{{this.bar}}
+
+==>
+
+Glimmer(
+  Expression(
+    StartStache,
+    SubExpression(
+      Value(
+        PropertyPath(
+          Property(this)
+        )
+      )
+    ),
+    EndStache
+  )
+)
+
+# @arg.bar
+
+{{@arg.bar}}
+
+==>
+
+Glimmer(
+  Expression(
+    StartStache,
+    SubExpression(
+      Value(
+        PropertyPath(
+          Property(Argument)
+        )
+      )
+    ),
+    EndStache
+  )
+)
