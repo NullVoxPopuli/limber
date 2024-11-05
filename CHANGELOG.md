@@ -1,5 +1,27 @@
 # Changelog
 
+## Release (2024-11-05)
+
+ember-repl 4.3.3 (patch)
+codemirror-lang-glimmer-ts 0.0.2 (patch)
+
+#### :rocket: Enhancement
+* `limber`
+  * [#1851](https://github.com/NullVoxPopuli/limber/pull/1851) Share menu ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* `ember-repl`
+  * [#1856](https://github.com/NullVoxPopuli/limber/pull/1856) Make the transform function (which uses @babel/standalone) compatible… ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber`
+  * [#1853](https://github.com/NullVoxPopuli/limber/pull/1853) Fix Share Menu, add indicator of copied status ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :house: Internal
+* `codemirror-lang-glimmer-ts`
+  * [#1857](https://github.com/NullVoxPopuli/limber/pull/1857) Fix build with preparation for gts syntax support for codemirror ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2024-11-02)
 
 limber-ui 1.0.5 (patch)
