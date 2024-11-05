@@ -91,7 +91,9 @@ async function transform(
 ): Promise<ReturnType<Babel['transform']>> {
   // @babel/standalone is a CJS module....
   // so we have to use the default export (which is all the exports)
-  let babel = (await import('@babel/standalone')).default as Babel;
+  let maybeBabel = (await import('@babel/standalone')) as Babel;
+  // Handle difference between vite and webpack in consuming projects...
+  let babel = 'default' in maybeBabel ? maybeBabel.default : maybeBabel;
 
   return babel.transform(intermediate, {
     filename: `${name}.js`,
