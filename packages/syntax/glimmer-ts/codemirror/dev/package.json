@@ -1,5 +1,5 @@
 {
-  "name": "@glimdown/glimmer-js-dev-preview",
+  "name": "@glimdown/glimmer-ts-dev-preview",
   "version": "0.0.1",
   "private": true,
   "scripts": {
