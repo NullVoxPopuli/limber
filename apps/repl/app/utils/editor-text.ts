@@ -172,61 +172,40 @@ export class FileURIComponent {
     return base ?? window.location.toString();
   };
 
-  #lastQPs: URLSearchParams | undefined;
+  #frame?: number;
+  #qps: URLSearchParams | undefined;
   #updateQPs = async (rawText: string, format: Format) => {
-    let isFast = new Date().getTime() - this.#rapidCallTime < 100;
-
-    if (!isFast) {
-      this.#rapidCallQPs = [];
-      this.#rapidCallCount = 0;
-      this.#rapidCallTime = -Infinity;
-    }
+    if (this.#frame) cancelAnimationFrame(this.#frame);
 
     let encoded = compressToEncodedURIComponent(rawText);
     let qps = new URLSearchParams(location.search);
-
-    if (isFast && this.#rapidCallCount > 1) {
-      let isIrrelevant =
-        this.#lastQPs &&
-        [...qps.entries()].every(([key, value]) => {
-          return this.#lastQPs?.get(key) === value;
-        });
-
-      if (isIrrelevant) return;
-
-      console.debug(this.#rapidCallQPs);
-
-      let error = new Error('Too many rapid query param changes');
-
-      console.debug(error.stack);
-      throw error;
-    }
-
-    this.#rapidCallTime = new Date().getTime();
-    this.#rapidCallCount++;
-    this.#rapidCallQPs.push(qps);
 
     qps.set('c', encoded);
     qps.delete('t');
     qps.set('format', formatFrom(format));
 
-    this.#lastQPs = qps;
+    this.#qps = {
+      ...this.#qps,
+      ...qps,
+    };
 
-    // On initial load, if we call #updateQPs,
-    // we may not have a currentURL, because the first transition has yet to complete
-    let base = this.router.currentURL?.split('?')[0];
+    this.#frame = requestAnimationFrame(() => {
+      // On initial load, if we call #updateQPs,
+      // we may not have a currentURL, because the first transition has yet to complete
+      let base = this.router.currentURL?.split('?')[0];
 
-    if (macroCondition(isTesting())) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      base ??= (this.router as any) /* private API? */?.location?.path;
-    } else {
-      base ??= window.location.pathname;
-    }
+      if (macroCondition(isTesting())) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        base ??= (this.router as any) /* private API? */?.location?.path;
+      } else {
+        base ??= window.location.pathname;
+      }
 
-    let next = `${base}?${qps}`;
+      let next = `${base}?${qps}`;
 
-    this.router.replaceWith(next);
-    this.#text = rawText;
+      this.router.replaceWith(next);
+      this.#text = rawText;
+    });
   };
 
   #rapidCallTime = -Infinity;
