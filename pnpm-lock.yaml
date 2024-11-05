@@ -2244,6 +2244,133 @@ importers:
         specifier: ^5.4.5
         version: 5.6.3
 
+  packages/syntax/glimmer-ts/codemirror:
+    dependencies:
+      '@codemirror/lang-css':
+        specifier: ^6.3.0
+        version: 6.3.0(@codemirror/view@6.34.1)
+      '@codemirror/lang-html':
+        specifier: ^6.4.9
+        version: 6.4.9
+      '@codemirror/lang-javascript':
+        specifier: ^6.2.1
+        version: 6.2.2
+      '@codemirror/language':
+        specifier: ^6.10.3
+        version: 6.10.3
+      '@lezer/highlight':
+        specifier: ^1.2.1
+        version: 1.2.1
+      '@lezer/javascript':
+        specifier: ^1.4.18
+        version: 1.4.19
+      '@lezer/lr':
+        specifier: ^1.4.2
+        version: 1.4.2
+      codemirror-lang-glimmer:
+        specifier: workspace:*
+        version: link:../../glimmer/codemirror
+    devDependencies:
+      '@babel/core':
+        specifier: ^7.25.7
+        version: 7.25.8(supports-color@8.1.1)
+      '@babel/eslint-parser':
+        specifier: ^7.25.7
+        version: 7.25.8(@babel/core@7.25.8)(eslint@8.57.1)
+      '@codemirror/buildhelper':
+        specifier: ^1.0.1
+        version: 1.0.2
+      '@codemirror/view':
+        specifier: ^6.34.1
+        version: 6.34.1
+      '@glimdown/lezer-infra':
+        specifier: workspace:*
+        version: link:../../-infra
+      '@lezer/common':
+        specifier: ^1.2.2
+        version: 1.2.3
+      '@lezer/generator':
+        specifier: ^1.6.0
+        version: 1.7.1
+      '@nullvoxpopuli/eslint-configs':
+        specifier: ^4.0.0
+        version: 4.2.0(@babel/core@7.25.8)(@babel/eslint-parser@7.25.8(@babel/core@7.25.8)(eslint@8.57.1))(@babel/plugin-proposal-decorators@7.25.9(@babel/core@7.25.8))(@types/eslint@8.56.12)(@typescript-eslint/eslint-plugin@8.8.1(@typescript-eslint/parser@8.8.1(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3))(@typescript-eslint/parser@8.8.1(eslint@8.57.1)(typescript@5.6.3))(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint-plugin-ember@12.2.1(@babel/core@7.25.8)(@typescript-eslint/parser@8.8.1(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint-plugin-qunit@8.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)(typescript@5.6.3)
+      '@tsconfig/ember':
+        specifier: ^3.0.7
+        version: 3.0.8
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^8.8.0
+        version: 8.8.1(@typescript-eslint/parser@8.8.1(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3)
+      '@typescript-eslint/parser':
+        specifier: ^8.8.0
+        version: 8.8.1(eslint@8.57.1)(typescript@5.6.3)
+      codemirror:
+        specifier: ^6.0.1
+        version: 6.0.1(@lezer/common@1.2.3)
+      concurrently:
+        specifier: ^9.0.1
+        version: 9.0.1
+      eslint:
+        specifier: ^8.55.0
+        version: 8.57.1
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
+      rollup:
+        specifier: ^4.24.0
+        version: 4.24.0
+      rollup-plugin-ts:
+        specifier: ^3.4.5
+        version: 3.4.5(@babel/core@7.25.8)(@babel/plugin-transform-runtime@7.25.9(@babel/core@7.25.8))(@babel/preset-env@7.26.0(@babel/core@7.25.8))(@babel/preset-typescript@7.25.7(@babel/core@7.25.8))(@babel/runtime@7.25.7)(rollup@4.24.0)(typescript@5.6.3)
+      typescript:
+        specifier: ^5.4.5
+        version: 5.6.3
+
+  packages/syntax/glimmer-ts/codemirror/dev:
+    devDependencies:
+      '@babel/core':
+        specifier: ^7.25.7
+        version: 7.25.8(supports-color@8.1.1)
+      '@babel/eslint-parser':
+        specifier: ^7.25.7
+        version: 7.25.8(@babel/core@7.25.8)(eslint@8.57.1)
+      '@codemirror/language':
+        specifier: ^6.10.3
+        version: 6.10.3
+      '@codemirror/state':
+        specifier: ^6.4.0
+        version: 6.4.1
+      '@codemirror/theme-one-dark':
+        specifier: ^6.1.2
+        version: 6.1.2
+      '@codemirror/view':
+        specifier: ^6.34.1
+        version: 6.34.1
+      '@glimdown/codemirror-dev-preview':
+        specifier: workspace:*
+        version: link:../../../dev-preview
+      '@nullvoxpopuli/eslint-configs':
+        specifier: ^4.0.0
+        version: 4.2.0(@babel/core@7.25.8)(@babel/eslint-parser@7.25.8(@babel/core@7.25.8)(eslint@8.57.1))(@babel/plugin-proposal-decorators@7.25.9(@babel/core@7.25.8))(@types/eslint@8.56.12)(@typescript-eslint/eslint-plugin@8.8.1(@typescript-eslint/parser@8.8.1(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3))(@typescript-eslint/parser@8.8.1(eslint@8.57.1)(typescript@5.6.3))(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint-plugin-ember@12.2.1(@babel/core@7.25.8)(@typescript-eslint/parser@8.8.1(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint-plugin-qunit@8.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)(typescript@5.6.3)
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^8.8.0
+        version: 8.8.1(@typescript-eslint/parser@8.8.1(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3)
+      '@typescript-eslint/parser':
+        specifier: ^8.8.0
+        version: 8.8.1(eslint@8.57.1)(typescript@5.6.3)
+      eslint:
+        specifier: ^8.55.0
+        version: 8.57.1
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
+      typescript:
+        specifier: ^5.4.5
+        version: 5.6.3
+      vite:
+        specifier: ^5.4.8
+        version: 5.4.8(@types/node@22.7.5)(terser@5.36.0)
+
   packages/syntax/glimmer/codemirror:
     dependencies:
       '@codemirror/autocomplete':
