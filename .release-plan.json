@@ -5,8 +5,8 @@
     },
     "ember-repl": {
       "impact": "patch",
-      "oldVersion": "4.3.2",
-      "newVersion": "4.3.3",
+      "oldVersion": "4.3.3",
+      "newVersion": "4.3.4",
       "constraints": [
         {
           "impact": "patch",
@@ -28,16 +28,7 @@
       "oldVersion": "0.0.3"
     },
     "codemirror-lang-glimmer-ts": {
-      "impact": "patch",
-      "oldVersion": "0.0.1",
-      "newVersion": "0.0.2",
-      "constraints": [
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :house: Internal"
-        }
-      ],
-      "pkgJSONPath": "./packages/syntax/glimmer-ts/codemirror/package.json"
+      "oldVersion": "0.0.2"
     },
     "codemirror-lang-glimmer": {
       "oldVersion": "0.0.4"
@@ -46,5 +37,5 @@
       "oldVersion": "0.0.3"
     }
   },
-  "description": "## Release (2024-11-05)\n\nember-repl 4.3.3 (patch)\ncodemirror-lang-glimmer-ts 0.0.2 (patch)\n\n#### :rocket: Enhancement\n* `limber`\n  * [#1851](https://github.com/NullVoxPopuli/limber/pull/1851) Share menu ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :bug: Bug Fix\n* `ember-repl`\n  * [#1856](https://github.com/NullVoxPopuli/limber/pull/1856) Make the transform function (which uses @babel/standalone) compatible… ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n* `limber`\n  * [#1853](https://github.com/NullVoxPopuli/limber/pull/1853) Fix Share Menu, add indicator of copied status ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :house: Internal\n* `codemirror-lang-glimmer-ts`\n  * [#1857](https://github.com/NullVoxPopuli/limber/pull/1857) Fix build with preparation for gts syntax support for codemirror ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2024-11-05)\n\nember-repl 4.3.4 (patch)\n\n#### :bug: Bug Fix\n* `ember-repl`\n  * [#1859](https://github.com/NullVoxPopuli/limber/pull/1859) Fix vite support (attempt 2) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }

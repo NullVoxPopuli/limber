@@ -2,6 +2,17 @@
 
 ## Release (2024-11-05)
 
+ember-repl 4.3.4 (patch)
+
+#### :bug: Bug Fix
+* `ember-repl`
+  * [#1859](https://github.com/NullVoxPopuli/limber/pull/1859) Fix vite support (attempt 2) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
+## Release (2024-11-05)
+
 ember-repl 4.3.3 (patch)
 codemirror-lang-glimmer-ts 0.0.2 (patch)
 
