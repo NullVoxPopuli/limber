@@ -93,7 +93,7 @@ async function transform(
   // so we have to use the default export (which is all the exports)
   let maybeBabel = (await import('@babel/standalone')) as any;
   // Handle difference between vite and webpack in consuming projects...
-  let babel: Babel = 'default' in maybeBabel ? maybeBabel.default : maybeBabel;
+  let babel: Babel = 'availablePlugins' in maybeBabel ? maybeBabel : maybeBabel.default;
 
   return babel.transform(intermediate, {
     filename: `${name}.js`,
