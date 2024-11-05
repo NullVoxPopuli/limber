@@ -89,7 +89,9 @@ async function transform(
   name: string,
   options: any = {}
 ): Promise<ReturnType<Babel['transform']>> {
-  let babel = (await import('@babel/standalone')) as Babel;
+  // @babel/standalone is a CJS module....
+  // so we have to use the default export (which is all the exports)
+  let babel = (await import('@babel/standalone')).default as Babel;
 
   return babel.transform(intermediate, {
     filename: `${name}.js`,
