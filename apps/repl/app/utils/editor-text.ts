@@ -179,6 +179,9 @@ export class FileURIComponent {
 
     this.#frame = requestAnimationFrame(async () => {
       if (isDestroyed(this) || isDestroying(this)) {
+        queueWaiter.endAsync(this.#updateWaiter);
+        this.#updateWaiter = null;
+
         return;
       }
 
@@ -188,6 +191,9 @@ export class FileURIComponent {
       await new Promise((resolve) => setTimeout(resolve, DEBOUNCE_MS));
 
       if (isDestroyed(this) || isDestroying(this)) {
+        queueWaiter.endAsync(this.#updateWaiter);
+        this.#updateWaiter = null;
+
         return;
       }
 
