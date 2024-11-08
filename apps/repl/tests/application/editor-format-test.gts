@@ -40,7 +40,7 @@ module('Editor > Format', function (hooks) {
 
   test('when choosing a format, text is required -- otherwise glimdown is chosen', async function (assert) {
     await page.expectRedirectToContent('/edit?format=gjs', {
-      format: 'gjs',
+      format: 'glimdown',
     });
 
     await page.editor.load();

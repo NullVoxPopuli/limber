@@ -192,6 +192,7 @@ export class FileURIComponent {
       }
 
       queueWaiter.endAsync(this.#updateWaiter);
+      this.#updateWaiter = null;
 
       // On initial load, if we call #updateQPs,
       // we may not have a currentURL, because the first transition has yet to complete
