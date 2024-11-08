@@ -22,7 +22,7 @@ export class Page extends PageObject {
 
   async expectRedirectToContent(
     to: string,
-    { c, t, format }: { t?: string; c?: string; format?: string }
+    { c, t, format }: { t?: string; c?: string; format?: string } = {}
   ) {
     let sawExpectedError = false;
 

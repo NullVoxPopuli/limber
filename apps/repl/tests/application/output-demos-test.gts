@@ -41,7 +41,7 @@ module('Output > Demos', function (hooks) {
       test(demo.label, async function (assert) {
         this.owner.register('template:edit', Route(<template><DemoSelect /></template>));
 
-        await visit('/edit');
+        await page.expectRedirectToContent('/edit');
         await page.selectDemo(demo.label);
 
         let { queryParams = {} } = getService('router').currentRoute ?? {};
@@ -80,7 +80,7 @@ module('Output > Demos', function (hooks) {
           )
         );
 
-        await visit('/edit');
+        await page.expectRedirectToContent('/edit');
 
         debugAssert(`setParentFrame did not get set`, setParentFrame);
         debugAssert(`makeComponent did not get set`, makeComponent);
