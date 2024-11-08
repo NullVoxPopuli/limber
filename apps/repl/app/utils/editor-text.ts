@@ -207,8 +207,4 @@ export class FileURIComponent {
       this.#text = rawText;
     });
   };
-
-  #rapidCallTime = -Infinity;
-  #rapidCallCount = 0;
-  #rapidCallQPs: unknown[] = [];
 }
