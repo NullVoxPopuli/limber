@@ -28,14 +28,19 @@ module('Editor > Format', function (hooks) {
   });
 
   test('defaults to glimdown', async function (assert) {
-    await visit('/edit');
+    await page.expectRedirectToContent('/edit', {
+      format: 'glimdown',
+    });
+
     await page.editor.load();
 
     assert.strictEqual(page.editor.format, 'glimdown');
   });
 
   test('when choosing a format, text is required -- otherwise glimdown is chosen', async function (assert) {
-    await visit('/edit?format=gjs');
+    await page.expectRedirectToContent('/edit?format=gjs', {
+      format: 'glimdown',
+    });
 
     await page.editor.load();
     assert.strictEqual(page.editor.format, 'glimdown');
@@ -50,7 +55,9 @@ module('Editor > Format', function (hooks) {
   });
 
   test('can start with glimdown, and change to gjs', async function (assert) {
-    await visit('/edit');
+    await page.expectRedirectToContent(`/edit`, {
+      format: 'glimdown',
+    });
     await page.editor.load();
 
     assert.strictEqual(page.editor.format, 'glimdown');
@@ -62,7 +69,9 @@ module('Editor > Format', function (hooks) {
   });
 
   test('can start with glimdown, and is able to change formats via the URL', async function (assert) {
-    await visit('/edit');
+    await page.expectRedirectToContent(`/edit`, {
+      format: 'glimdown',
+    });
     await page.editor.load();
 
     assert.strictEqual(page.editor.format, 'glimdown');

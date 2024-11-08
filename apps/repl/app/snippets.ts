@@ -40,6 +40,8 @@ export const ALL = [
 
 export const NAMES = ALL.map((demo) => demo.label);
 
+export const LOADED = new Set([DEFAULT_SNIPPET]);
+
 export async function getFromLabel(label: string): Promise<string> {
   let entry = ALL.find((entry) => entry.label === label);
 
@@ -52,6 +54,8 @@ export async function getFromLabel(label: string): Promise<string> {
   let path = entry.path;
   let response = await fetch(path);
   let text = await response.text();
+
+  LOADED.add(text);
 
   return text;
 }

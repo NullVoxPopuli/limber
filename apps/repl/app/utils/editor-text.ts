@@ -133,22 +133,8 @@ export class FileURIComponent {
   #timeout?: ReturnType<typeof setTimeout>;
   #queuedFn?: () => void;
 
-  /**
-   * Debounce so we are kinder on the CPU
-   */
   queue = (rawText: string, format: Format) => {
-    if (this.#timeout) clearTimeout(this.#timeout);
-
-    this.#queuedFn = () => {
-      if (isDestroyed(this) || isDestroying(this)) return;
-
-      this.set(rawText, format);
-      this.#queuedFn = undefined;
-      queueTokens.forEach((token) => queueWaiter.endAsync(token));
-    };
-
-    this.#timeout = setTimeout(this.#queuedFn, DEBOUNCE_MS);
-    queueTokens.push(queueWaiter.beginAsync());
+    this.set(rawText, format);
   };
 
   #flush = () => {
@@ -172,64 +158,63 @@ export class FileURIComponent {
     return base ?? window.location.toString();
   };
 
-  #lastQPs: URLSearchParams | undefined;
+  #updateWaiter: unknown;
+  #frame?: number;
+  #qps: URLSearchParams | undefined;
   #updateQPs = async (rawText: string, format: Format) => {
-    let isFast = new Date().getTime() - this.#rapidCallTime < 100;
-
-    if (!isFast) {
-      this.#rapidCallQPs = [];
-      this.#rapidCallCount = 0;
-      this.#rapidCallTime = -Infinity;
-    }
+    if (this.#frame) cancelAnimationFrame(this.#frame);
+    if (!this.#updateWaiter) this.#updateWaiter = queueWaiter.beginAsync();
 
     let encoded = compressToEncodedURIComponent(rawText);
     let qps = new URLSearchParams(location.search);
-
-    if (isFast && this.#rapidCallCount > 1) {
-      let isIrrelevant =
-        this.#lastQPs &&
-        [...qps.entries()].every(([key, value]) => {
-          return this.#lastQPs?.get(key) === value;
-        });
-
-      if (isIrrelevant) return;
-
-      console.debug(this.#rapidCallQPs);
-
-      let error = new Error('Too many rapid query param changes');
-
-      console.debug(error.stack);
-      throw error;
-    }
-
-    this.#rapidCallTime = new Date().getTime();
-    this.#rapidCallCount++;
-    this.#rapidCallQPs.push(qps);
 
     qps.set('c', encoded);
     qps.delete('t');
     qps.set('format', formatFrom(format));
 
-    this.#lastQPs = qps;
+    this.#qps = {
+      ...this.#qps,
+      ...qps,
+    };
 
-    // On initial load, if we call #updateQPs,
-    // we may not have a currentURL, because the first transition has yet to complete
-    let base = this.router.currentURL?.split('?')[0];
+    this.#frame = requestAnimationFrame(async () => {
+      if (isDestroyed(this) || isDestroying(this)) {
+        queueWaiter.endAsync(this.#updateWaiter);
+        this.#updateWaiter = null;
 
-    if (macroCondition(isTesting())) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      base ??= (this.router as any) /* private API? */?.location?.path;
-    } else {
-      base ??= window.location.pathname;
-    }
+        return;
+      }
 
-    let next = `${base}?${qps}`;
+      /**
+       * Debounce so we are kinder on the CPU
+       */
+      await new Promise((resolve) => setTimeout(resolve, DEBOUNCE_MS));
 
-    this.router.replaceWith(next);
-    this.#text = rawText;
+      if (isDestroyed(this) || isDestroying(this)) {
+        queueWaiter.endAsync(this.#updateWaiter);
+        this.#updateWaiter = null;
+
+        return;
+      }
+
+      queueWaiter.endAsync(this.#updateWaiter);
+      this.#updateWaiter = null;
+
+      // On initial load, if we call #updateQPs,
+      // we may not have a currentURL, because the first transition has yet to complete
+      let base = this.router.currentURL?.split('?')[0];
+
+      if (macroCondition(isTesting())) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        base ??= (this.router as any) /* private API? */?.location?.path;
+      } else {
+        base ??= window.location.pathname;
+      }
+
+      let next = `${base}?${qps}`;
+
+      this.router.replaceWith(next);
+      this.#text = rawText;
+    });
   };
-
-  #rapidCallTime = -Infinity;
-  #rapidCallCount = 0;
-  #rapidCallQPs: unknown[] = [];
 }
