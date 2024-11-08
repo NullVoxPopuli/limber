@@ -133,22 +133,8 @@ export class FileURIComponent {
   #timeout?: ReturnType<typeof setTimeout>;
   #queuedFn?: () => void;
 
-  /**
-   * Debounce so we are kinder on the CPU
-   */
   queue = (rawText: string, format: Format) => {
-    if (this.#timeout) clearTimeout(this.#timeout);
-
-    this.#queuedFn = () => {
-      if (isDestroyed(this) || isDestroying(this)) return;
-
-      this.set(rawText, format);
-      this.#queuedFn = undefined;
-      queueTokens.forEach((token) => queueWaiter.endAsync(token));
-    };
-
-    this.#timeout = setTimeout(this.#queuedFn, DEBOUNCE_MS);
-    queueTokens.push(queueWaiter.beginAsync());
+    this.set(rawText, format);
   };
 
   #flush = () => {
@@ -172,10 +158,12 @@ export class FileURIComponent {
     return base ?? window.location.toString();
   };
 
+  #updateWaiter: unknown;
   #frame?: number;
   #qps: URLSearchParams | undefined;
   #updateQPs = async (rawText: string, format: Format) => {
     if (this.#frame) cancelAnimationFrame(this.#frame);
+    if (!this.#updateWaiter) this.#updateWaiter = queueWaiter.beginAsync();
 
     let encoded = compressToEncodedURIComponent(rawText);
     let qps = new URLSearchParams(location.search);
@@ -189,7 +177,22 @@ export class FileURIComponent {
       ...qps,
     };
 
-    this.#frame = requestAnimationFrame(() => {
+    this.#frame = requestAnimationFrame(async () => {
+      if (isDestroyed(this) || isDestroying(this)) {
+        return;
+      }
+
+      /**
+       * Debounce so we are kinder on the CPU
+       */
+      await new Promise((resolve) => setTimeout(resolve, DEBOUNCE_MS));
+
+      if (isDestroyed(this) || isDestroying(this)) {
+        return;
+      }
+
+      queueWaiter.endAsync(this.#updateWaiter);
+
       // On initial load, if we call #updateQPs,
       // we may not have a currentURL, because the first transition has yet to complete
       let base = this.router.currentURL?.split('?')[0];
