@@ -1,5 +1,4 @@
 import { settled, visit } from '@ember/test-helpers';
-import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
