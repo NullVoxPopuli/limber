@@ -1,4 +1,3 @@
-import babelPluginEmberTemplateCompilation from 'babel-plugin-ember-template-compilation';
 import * as compiler from 'ember-template-compiler';
 
 import { nameFor } from '../../utils.ts';
@@ -88,7 +87,25 @@ async function transform(
   intermediate: string,
   name: string
 ): Promise<ReturnType<Babel['transform']>> {
-  // @babel/standalone is a CJS module....
+  const [
+    // _parser, _traverse, _generator,
+    _decoratorTransforms,
+    emberTemplateCompilation,
+  ] = await Promise.all([
+    // @babel/* doesn't have the greatest ESM compat yet
+    // https://github.com/babel/babel/issues/14314#issuecomment-1054505190
+    //
+    // babel-standalone is so easy...
+    // import('@babel/parser'),
+    // import('@babel/traverse'),
+    // import('@babel/generator'),
+    import('decorator-transforms'),
+    import('babel-plugin-ember-template-compilation'),
+  ]);
+
+  const decoratorTransforms =
+    'default' in _decoratorTransforms ? _decoratorTransforms.default : _decoratorTransforms;
+
   // so we have to use the default export (which is all the exports)
   let maybeBabel = (await import('@babel/standalone')) as any;
   // Handle difference between vite and webpack in consuming projects...
@@ -97,30 +114,25 @@ async function transform(
   return babel.transform(intermediate, {
     filename: `${name}.js`,
     plugins: [
-      // [babelPluginIntermediateGJS],
       [
-        babelPluginEmberTemplateCompilation,
+        emberTemplateCompilation,
         {
           compiler,
         },
       ],
-      // See: https://github.com/NullVoxPopuli/limber/issues/1671
-      //     for just how bad the babel plugins are
-      //     (grow your code by 20%!)
-      // [babel.availablePlugins['proposal-decorators'], { legacy: true }],
-      // [babel.availablePlugins['proposal-class-properties']],
       [
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore - we don't care about types here..
-        await import('decorator-transforms'),
+        decoratorTransforms,
         {
           runtime: {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore - we don't care about types here..
             import: 'decorator-transforms/runtime',
           },
         },
       ],
+      // Womp.
+      // See this exploration into true ESM:
+      //   https://github.com/NullVoxPopuli/limber/pull/1805
       [babel.availablePlugins['transform-modules-commonjs']],
     ],
     presets: [],
