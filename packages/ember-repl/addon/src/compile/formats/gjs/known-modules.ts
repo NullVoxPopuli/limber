@@ -23,6 +23,8 @@ import * as _template from '@ember/template';
 import { createTemplateFactory } from '@ember/template-factory';
 import * as _utils from '@ember/utils';
 
+import * as _decoratorsRuntime from 'decorator-transforms/runtime';
+
 export const modules = {
   '@ember/application': _application,
   '@ember/array': _array,
@@ -43,4 +45,5 @@ export const modules = {
 
   '@glimmer/component': _GlimmerComponent,
   '@glimmer/tracking': _tracking,
+  'decorator-transforms/runtime': _decoratorsRuntime,
 };

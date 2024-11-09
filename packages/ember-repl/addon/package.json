@@ -84,7 +84,7 @@
     "change-case": "^5.4.4",
     "common-tags": "^1.8.2",
     "content-tag": "^2.0.2",
-    "decorator-transforms": "^2.2.2",
+    "decorator-transforms": "^2.3.0",
     "ember-resources": "^7.0.1",
     "line-column": "^1.0.2",
     "magic-string": "^0.30.6",

@@ -86,8 +86,7 @@ async function preprocess(input: string, name: string): Promise<string> {
 
 async function transform(
   intermediate: string,
-  name: string,
-  options: any = {}
+  name: string
 ): Promise<ReturnType<Babel['transform']>> {
   // @babel/standalone is a CJS module....
   // so we have to use the default export (which is all the exports)
@@ -105,20 +104,25 @@ async function transform(
           compiler,
         },
       ],
-      [babel.availablePlugins['proposal-decorators'], { legacy: true }],
-      [babel.availablePlugins['proposal-class-properties']],
-    ],
-    presets: [
+      // See: https://github.com/NullVoxPopuli/limber/issues/1671
+      //     for just how bad the babel plugins are
+      //     (grow your code by 20%!)
+      // [babel.availablePlugins['proposal-decorators'], { legacy: true }],
+      // [babel.availablePlugins['proposal-class-properties']],
       [
-        babel.availablePresets['env'],
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore - we don't care about types here..
+        await import('decorator-transforms'),
         {
-          // false -- keeps ES Modules
-          modules: 'cjs',
-          targets: { esmodules: true },
-          forceAllTransforms: false,
-          ...options,
+          runtime: {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore - we don't care about types here..
+            import: 'decorator-transforms/runtime',
+          },
         },
       ],
+      [babel.availablePlugins['transform-modules-commonjs']],
     ],
+    presets: [],
   });
 }
