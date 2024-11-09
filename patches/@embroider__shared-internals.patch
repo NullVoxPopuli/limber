@@ -1,0 +1,56 @@
+diff --git a/src/ember-standard-modules.js b/src/ember-standard-modules.js
+index 0698baf14b420a5c98fd7fef28b889b8daab4f28..f7fb644d48ae4d8c6d07b403abbba58b4dc0109e 100644
+--- a/src/ember-standard-modules.js
++++ b/src/ember-standard-modules.js
+@@ -1,15 +1,20 @@
+-"use strict";
+-var __importDefault = (this && this.__importDefault) || function (mod) {
+-    return (mod && mod.__esModule) ? mod : { "default": mod };
+-};
+-Object.defineProperty(exports, "__esModule", { value: true });
+-exports.templateCompilationModules = exports.emberVirtualPeerDeps = exports.emberVirtualPackages = void 0;
++'use strict';
++var __importDefault =
++  (this && this.__importDefault) ||
++  function (mod) {
++    return mod && mod.__esModule ? mod : { default: mod };
++  };
++Object.defineProperty(exports, '__esModule', { value: true });
++exports.templateCompilationModules =
++  exports.emberVirtualPeerDeps =
++  exports.emberVirtualPackages =
++    void 0;
+ // I'm doing this as a json import because even though that's not standard JS,
+ // it's relaively easy to consume into builds for the web. As opposed to doing
+ // something like fs.readFile, which is harder.
+ //
+ // @ts-ignore
+-const mappings_json_1 = __importDefault(require("ember-rfc176-data/mappings.json"));
++const mappings_json_1 = __importDefault(require('ember-rfc176-data/mappings.json'));
+ // these are packages that available to import in standard ember code that don't
+ // exist as real packages. If a build system encounters them in stage 3, it
+ // should convert them to runtime AMD require.
+@@ -34,6 +39,8 @@ exports.emberVirtualPeerDeps.add('@ember/string');
+ exports.emberVirtualPackages.add('@glimmer/env');
+ exports.emberVirtualPackages.add('ember');
+ exports.emberVirtualPackages.add('ember-testing');
++exports.emberVirtualPackages.add('ember-template-compiler');
++exports.emberVirtualPackages.add('@ember/template-compiler');
+ // this is a real package and even though most of its primary API is implemented
+ // as transforms, it does include some runtime code.
+ exports.emberVirtualPeerDeps.add('@embroider/macros');
+@@ -57,9 +64,10 @@ exports.emberVirtualPackages.add('@glimmer/manager');
+ // These are the known names that people use to import template precomiplation
+ // macros from.
+ exports.templateCompilationModules = Object.freeze([
+-    { module: 'htmlbars-inline-precompile', exportedName: 'default' },
+-    { module: 'ember-cli-htmlbars-inline-precompile', exportedName: 'default' },
+-    { module: 'ember-cli-htmlbars', exportedName: 'hbs' },
+-    { module: '@ember/template-precompilation', exportedName: 'precompileTemplate' },
++  { module: 'htmlbars-inline-precompile', exportedName: 'default' },
++  { module: 'ember-cli-htmlbars-inline-precompile', exportedName: 'default' },
++  { module: 'ember-cli-htmlbars', exportedName: 'hbs' },
++  { module: '@ember/template-precompilation', exportedName: 'precompileTemplate' },
+ ]);
+ //# sourceMappingURL=ember-standard-modules.js.map
++

@@ -8,6 +8,7 @@
     "skipLibCheck": true,
     "declaration": true,
     "allowImportingTsExtensions": true,
-    "declarationDir": "declarations"
+    "declarationDir": "declarations",
+    "types": ["./node_modules/ember-source/types/stable"]
   }
 }

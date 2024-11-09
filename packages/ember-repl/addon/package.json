@@ -76,7 +76,7 @@
   "dependencies": {
     "@babel/helper-plugin-utils": "^7.25.7",
     "@babel/standalone": "^7.25.7",
-    "@embroider/addon-shim": "1.8.9",
+    "@embroider/addon-shim": "1.9.0",
     "@embroider/macros": "1.16.9",
     "babel-import-util": "^3.0.0",
     "babel-plugin-ember-template-compilation": "^2.3.0",
@@ -116,7 +116,7 @@
     "@glimmer/tracking": "^1.1.2",
     "@glimmer/util": "^0.92.0",
     "@glint/core": "1.4.1-unstable.ff9ea6c",
-    "@glint/environment-ember-loose": "1.4.1-unstable.ff9ea6c",
+    "@glint/environment-ember-loose": "1.5.0",
     "@glint/environment-ember-template-imports": "1.4.1-unstable.ff9ea6c",
     "@glint/template": "1.4.1-unstable.ff9ea6c",
     "@nullvoxpopuli/eslint-configs": "^4.0.0",
@@ -135,7 +135,7 @@
     "@typescript-eslint/parser": "^8.8.0",
     "concurrently": "^9.0.1",
     "ember-resources": "^7.0.0",
-    "ember-source": ">= 5.10.2",
+    "ember-source": ">= 6.1.0-alpha.6",
     "ember-template-imports": "^4.1.2",
     "ember-template-lint": "^6.0.0",
     "eslint": "^8.55.0",
@@ -161,9 +161,6 @@
     "version": 2,
     "type": "addon",
     "main": "addon-main.cjs",
-    "externals": [
-      "ember-template-compiler"
-    ],
     "app-js": {}
   },
   "peerDependencies": {
