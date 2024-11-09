@@ -24,7 +24,7 @@ export function compileHBS(code: string, options: CompileTemplateOptions = {}): 
     component = template(code, {
       moduleName: options.moduleName || name,
       scope: () => ({ on, hash, array, concat, fn, get }),
-    });
+    }) as unknown as ComponentLike;
   } catch (e) {
     error = e as Error | undefined;
   }
