@@ -18,6 +18,8 @@ import * as _owner from '@ember/owner';
 import * as _runloop from '@ember/runloop';
 import * as _service from '@ember/service';
 import * as _template from '@ember/template';
+import * as _compiler from '@ember/template-compiler';
+import * as _runtimeCompiler from '@ember/template-compiler/runtime';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { createTemplateFactory } from '@ember/template-factory';
@@ -26,6 +28,9 @@ import * as _utils from '@ember/utils';
 import * as _decoratorsRuntime from 'decorator-transforms/runtime';
 
 export const modules = {
+  '@ember/runtime-compiler': _compiler,
+  '@ember/runtime-compiler/runtime': _runtimeCompiler,
+
   '@ember/application': _application,
   '@ember/array': _array,
   '@ember/component': _EmberComponent,
