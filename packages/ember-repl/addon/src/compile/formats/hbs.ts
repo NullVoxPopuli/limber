@@ -1,13 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import { precompileJSON } from '@glimmer/compiler';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { array, concat, fn, get, hash } from '@ember/helper';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { on } from '@ember/modifier';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { template } from '@ember/template-compiler/runtime';
 
 import { nameFor } from '../utils.ts';
