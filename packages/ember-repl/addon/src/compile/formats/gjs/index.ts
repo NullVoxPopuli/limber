@@ -1,4 +1,3 @@
-import babelPluginEmberTemplateCompilation from 'babel-plugin-ember-template-compilation';
 import * as compiler from 'ember-template-compiler';
 
 import { nameFor } from '../../utils.ts';
@@ -93,6 +92,10 @@ async function transform(
     _decoratorTransforms,
     emberTemplateCompilation,
   ] = await Promise.all([
+    // @babel/* doesn't have the greatest ESM compat yet
+    // https://github.com/babel/babel/issues/14314#issuecomment-1054505190
+    //
+    // babel-standalone is so easy...
     // import('@babel/parser'),
     // import('@babel/traverse'),
     // import('@babel/generator'),
@@ -100,25 +103,8 @@ async function transform(
     import('babel-plugin-ember-template-compilation'),
   ]);
 
-  // @babel/* doesn't have the greatest ESM compat yet
-  // https://github.com/babel/babel/issues/14314#issuecomment-1054505190
-  //
-  // babel-standalone is so easy...
-  // const parser = 'default' in _parser ? _parser.default : _parser;
-  // const traverse = 'default' in _traverse ? _traverse.default : _traverse;
-  // const generator = 'default' in _generator ? _generator.default : _generator;
   const decoratorTransforms =
     'default' in _decoratorTransforms ? _decoratorTransforms.default : _decoratorTransforms;
-
-  // console.log({ parser, traverse, generator, emberTemplateCompilation, decoratorTransforms });
-
-  // function transform(code, visitor) {
-  //   const ast = parser.parse(code);
-  //
-  //   traverse(code, visitor);
-  //
-  //   return generator(ast);
-  // }
 
   // so we have to use the default export (which is all the exports)
   let maybeBabel = (await import('@babel/standalone')) as any;
