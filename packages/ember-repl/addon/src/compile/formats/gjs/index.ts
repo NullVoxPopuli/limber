@@ -86,8 +86,7 @@ async function preprocess(input: string, name: string): Promise<string> {
 
 async function transform(
   intermediate: string,
-  name: string,
-  options: any = {}
+  name: string
 ): Promise<ReturnType<Babel['transform']>> {
   // @babel/standalone is a CJS module....
   // so we have to use the default export (which is all the exports)
@@ -118,22 +117,12 @@ async function transform(
           runtime: {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore - we don't care about types here..
-            import: await import('decorator-transforms/runtime'),
+            import: 'decorator-transforms/runtime',
           },
         },
       ],
+      [babel.availablePlugins['transform-modules-commonjs']],
     ],
-    presets: [
-      [
-        babel.availablePresets['env'],
-        {
-          // false -- keeps ES Modules
-          modules: 'cjs',
-          targets: { esmodules: true },
-          forceAllTransforms: false,
-          ...options,
-        },
-      ],
-    ],
+    presets: [],
   });
 }
