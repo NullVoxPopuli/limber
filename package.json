@@ -79,7 +79,8 @@
       ]
     },
     "patchedDependencies": {
-      "browserslist-generator": "patches/browserslist-generator.patch"
+      "browserslist-generator": "patches/browserslist-generator.patch",
+      "@embroider/shared-internals": "patches/@embroider__shared-internals.patch"
     }
   }
 }
