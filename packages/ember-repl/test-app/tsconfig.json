@@ -9,7 +9,8 @@
       "test-app/tests/*": ["./tests/*"],
       "test-app/*": ["./app/*"],
       "*": ["./types/*"]
-    }
+    },
+    "types": ["./node_modules/ember-source/types/stable"]
   },
   "include": ["./app/**/*", "./tests/**/*", "./types/**/*"]
 }
