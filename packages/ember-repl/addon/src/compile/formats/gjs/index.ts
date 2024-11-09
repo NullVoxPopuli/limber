@@ -88,7 +88,38 @@ async function transform(
   intermediate: string,
   name: string
 ): Promise<ReturnType<Babel['transform']>> {
-  // @babel/standalone is a CJS module....
+  const [
+    // _parser, _traverse, _generator,
+    _decoratorTransforms,
+    emberTemplateCompilation,
+  ] = await Promise.all([
+    // import('@babel/parser'),
+    // import('@babel/traverse'),
+    // import('@babel/generator'),
+    import('decorator-transforms'),
+    import('babel-plugin-ember-template-compilation'),
+  ]);
+
+  // @babel/* doesn't have the greatest ESM compat yet
+  // https://github.com/babel/babel/issues/14314#issuecomment-1054505190
+  //
+  // babel-standalone is so easy...
+  // const parser = 'default' in _parser ? _parser.default : _parser;
+  // const traverse = 'default' in _traverse ? _traverse.default : _traverse;
+  // const generator = 'default' in _generator ? _generator.default : _generator;
+  const decoratorTransforms =
+    'default' in _decoratorTransforms ? _decoratorTransforms.default : _decoratorTransforms;
+
+  // console.log({ parser, traverse, generator, emberTemplateCompilation, decoratorTransforms });
+
+  // function transform(code, visitor) {
+  //   const ast = parser.parse(code);
+  //
+  //   traverse(code, visitor);
+  //
+  //   return generator(ast);
+  // }
+
   // so we have to use the default export (which is all the exports)
   let maybeBabel = (await import('@babel/standalone')) as any;
   // Handle difference between vite and webpack in consuming projects...
@@ -98,7 +129,7 @@ async function transform(
     filename: `${name}.js`,
     plugins: [
       [
-        babelPluginEmberTemplateCompilation,
+        emberTemplateCompilation,
         {
           compiler,
         },
@@ -106,7 +137,7 @@ async function transform(
       [
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore - we don't care about types here..
-        await import('decorator-transforms'),
+        decoratorTransforms,
         {
           runtime: {
             import: 'decorator-transforms/runtime',

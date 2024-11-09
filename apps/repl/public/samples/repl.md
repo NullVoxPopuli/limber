@@ -13,7 +13,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { on } from '@ember/modifier';
-import { compileJS } from 'ember-repl';
+import { compile } from 'ember-repl';
 
 const STARTING_CODE = `import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
@@ -44,8 +44,20 @@ export default class ExampleREPL extends Component {
     submitEvent.preventDefault();
     this.error = null;
 
+    let error;
+    let component;
+
     try {
-      let { component, error } = await compileJS(this.code);
+       await compile(this.code, { 
+        format: 'gjs',
+        onCompileStart() {},
+        onSuccess(c) {
+          component = c;
+        },
+        onError(e) {
+          error = e;
+        },
+      });
 
       if (error) {
         this.error = error;
