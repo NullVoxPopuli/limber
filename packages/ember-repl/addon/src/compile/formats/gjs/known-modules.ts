@@ -28,8 +28,8 @@ import * as _utils from '@ember/utils';
 import * as _decoratorsRuntime from 'decorator-transforms/runtime';
 
 export const modules = {
-  '@ember/runtime-compiler': _compiler,
-  '@ember/runtime-compiler/runtime': _runtimeCompiler,
+  '@ember/template-compiler': _compiler,
+  '@ember/template-compiler/runtime': _runtimeCompiler,
 
   '@ember/application': _application,
   '@ember/array': _array,

@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.25.7",
-    "@embroider/addon-shim": "1.8.9",
+    "@embroider/addon-shim": "1.9.0",
     "@embroider/macros": "1.16.9",
     "@fortawesome/ember-fontawesome": "^2.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
@@ -67,7 +67,7 @@
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
     "@glint/core": "1.4.1-unstable.ff9ea6c",
-    "@glint/environment-ember-loose": "1.4.1-unstable.ff9ea6c",
+    "@glint/environment-ember-loose": "1.5.0",
     "@glint/environment-ember-template-imports": "1.4.1-unstable.ff9ea6c",
     "@glint/template": "1.4.1-unstable.ff9ea6c",
     "@nullvoxpopuli/eslint-configs": "^4.0.0",
