@@ -38,7 +38,7 @@
     "ember-modifier": "^4.1.0",
     "ember-primitives": ">= 0.11.0",
     "ember-resources": ">= 6.4.2",
-    "ember-source": ">= 5.10.2",
+    "ember-source": ">= 6.1.0-alpha.6",
     "webpack": ">= 5.92.0"
   },
   "dependencies": {
@@ -83,7 +83,7 @@
     "ember-modifier": "^4.1.0",
     "ember-primitives": "^0.23.1",
     "ember-resources": "^7.0.1",
-    "ember-source": ">= 5.10.2",
+    "ember-source": ">= 6.1.0-alpha.6",
     "ember-template-imports": "^4.1.2",
     "ember-template-lint": "^6.0.0",
     "eslint": "^8.55.0",
