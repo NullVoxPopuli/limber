@@ -1,5 +1,27 @@
 # Changelog
 
+## Release (2024-11-12)
+
+limber-ui 2.0.0 (major)
+ember-repl 5.0.0 (major)
+
+#### :boom: Breaking Change
+* `limber-ui`, `ember-repl`
+  * [#1675](https://github.com/NullVoxPopuli/limber/pull/1675) Use decorator transforms ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :rocket: Enhancement
+* `ember-repl`
+  * [#1867](https://github.com/NullVoxPopuli/limber/pull/1867) Upgrade content-tag in ember-repl to v3 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber`, `ember-repl`
+  * [#1862](https://github.com/NullVoxPopuli/limber/pull/1862) Cleanup a bit. ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber-ui`, `ember-repl`
+  * [#1675](https://github.com/NullVoxPopuli/limber/pull/1675) Use decorator transforms ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber`
+  * [#1858](https://github.com/NullVoxPopuli/limber/pull/1858) Improve format switching with default content ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2024-11-05)
 
 ember-repl 4.3.4 (patch)
