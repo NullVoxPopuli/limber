@@ -95,7 +95,7 @@ async function transform(
   const [
     // _parser, _traverse, _generator,
     _decoratorTransforms,
-    emberTemplateCompilation,
+    _emberTemplateCompilation,
   ] = await Promise.all([
     // @babel/* doesn't have the greatest ESM compat yet
     // https://github.com/babel/babel/issues/14314#issuecomment-1054505190
@@ -108,8 +108,14 @@ async function transform(
     import('babel-plugin-ember-template-compilation'),
   ]);
 
+  // These libraries are compiled incorrectly for cjs<->ESM compat
   const decoratorTransforms =
     'default' in _decoratorTransforms ? _decoratorTransforms.default : _decoratorTransforms;
+
+  const emberTemplateCompilation =
+    'default' in _emberTemplateCompilation
+      ? _emberTemplateCompilation.default
+      : _emberTemplateCompilation;
 
   // so we have to use the default export (which is all the exports)
   let maybeBabel = (await import('@babel/standalone')) as any;
