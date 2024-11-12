@@ -80,7 +80,12 @@ async function preprocess(input: string, name: string): Promise<string> {
     processor = new Preprocessor();
   }
 
-  return processor.process(input, { filename: `${name}.js`, inline_source_map: true });
+  let { code /* map */ } = processor.process(input, {
+    filename: `${name}.js`,
+    inline_source_map: true,
+  });
+
+  return code;
 }
 
 async function transform(
