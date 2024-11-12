@@ -2,6 +2,17 @@
 
 ## Release (2024-11-12)
 
+ember-repl 5.0.1 (patch)
+
+#### :bug: Bug Fix
+* `ember-repl`
+  * [#1868](https://github.com/NullVoxPopuli/limber/pull/1868) Fix ESM compatibility (Vite) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
+## Release (2024-11-12)
+
 limber-ui 2.0.0 (major)
 ember-repl 5.0.0 (major)
 

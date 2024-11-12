@@ -1,33 +1,16 @@
 {
   "solution": {
     "limber-ui": {
-      "impact": "major",
-      "oldVersion": "1.0.5",
-      "newVersion": "2.0.0",
-      "constraints": [
-        {
-          "impact": "major",
-          "reason": "Appears in changelog section :boom: Breaking Change"
-        },
-        {
-          "impact": "minor",
-          "reason": "Appears in changelog section :rocket: Enhancement"
-        }
-      ],
-      "pkgJSONPath": "./packages/app-support/limber-ui/addon/package.json"
+      "oldVersion": "2.0.0"
     },
     "ember-repl": {
-      "impact": "major",
-      "oldVersion": "4.3.4",
-      "newVersion": "5.0.0",
+      "impact": "patch",
+      "oldVersion": "5.0.0",
+      "newVersion": "5.0.1",
       "constraints": [
         {
-          "impact": "major",
-          "reason": "Appears in changelog section :boom: Breaking Change"
-        },
-        {
-          "impact": "minor",
-          "reason": "Appears in changelog section :rocket: Enhancement"
+          "impact": "patch",
+          "reason": "Appears in changelog section :bug: Bug Fix"
         }
       ],
       "pkgJSONPath": "./packages/ember-repl/addon/package.json"
@@ -54,5 +37,5 @@
       "oldVersion": "0.0.3"
     }
   },
-  "description": "## Release (2024-11-12)\n\nlimber-ui 2.0.0 (major)\nember-repl 5.0.0 (major)\n\n#### :boom: Breaking Change\n* `limber-ui`, `ember-repl`\n  * [#1675](https://github.com/NullVoxPopuli/limber/pull/1675) Use decorator transforms ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :rocket: Enhancement\n* `ember-repl`\n  * [#1867](https://github.com/NullVoxPopuli/limber/pull/1867) Upgrade content-tag in ember-repl to v3 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n* `limber`, `ember-repl`\n  * [#1862](https://github.com/NullVoxPopuli/limber/pull/1862) Cleanup a bit. ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n* `limber-ui`, `ember-repl`\n  * [#1675](https://github.com/NullVoxPopuli/limber/pull/1675) Use decorator transforms ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n* `limber`\n  * [#1858](https://github.com/NullVoxPopuli/limber/pull/1858) Improve format switching with default content ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2024-11-12)\n\nember-repl 5.0.1 (patch)\n\n#### :bug: Bug Fix\n* `ember-repl`\n  * [#1868](https://github.com/NullVoxPopuli/limber/pull/1868) Fix ESM compatibility (Vite) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }
