@@ -13,7 +13,8 @@
       "tutorial/tests/*": ["./tests/*"],
       "tutorial/*": ["./app/*"],
       "*": ["./types/*"]
-    }
+    },
+    "types": ["ember-source/types"]
   },
   "include": ["app/**/*", "tests/**/*", "types/**/*"]
 }

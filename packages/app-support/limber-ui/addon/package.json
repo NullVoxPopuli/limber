@@ -38,7 +38,7 @@
     "ember-modifier": "^4.1.0",
     "ember-primitives": ">= 0.11.0",
     "ember-resources": ">= 6.4.2",
-    "ember-source": ">= 5.10.2",
+    "ember-source": ">= 6.0.0",
     "webpack": ">= 5.92.0"
   },
   "dependencies": {
@@ -83,7 +83,7 @@
     "ember-modifier": "^4.1.0",
     "ember-primitives": "^0.23.1",
     "ember-resources": "^7.0.1",
-    "ember-source": ">= 5.10.2",
+    "ember-source": ">= 6.0.0",
     "ember-template-imports": "^4.1.2",
     "ember-template-lint": "^6.0.0",
     "eslint": "^8.55.0",
@@ -94,7 +94,7 @@
     "fix-bad-declaration-output": "^1.1.1",
     "prettier": "^3.3.3",
     "prettier-plugin-ember-template-tag": "2.0.2",
-    "rollup": "^4.24.0",
+    "rollup": "^4.25.0",
     "rollup-plugin-copy": "^3.5.0",
     "typescript": "^5.4.5",
     "webpack": ">= 5.92.0"
