@@ -128,7 +128,7 @@ export async function compiler(config = {}, api) {
         // Womp.
         // See this exploration into true ESM:
         //   https://github.com/NullVoxPopuli/limber/pull/1805
-        [babel.availablePlugins['transform-modules-commonjs']],
+        // [babel.availablePlugins['transform-modules-commonjs']],
       ],
       presets: [],
     });
@@ -146,24 +146,23 @@ export async function compiler(config = {}, api) {
         return `https://esm.sh/*ember-source/dist/dependencies/${id}.js`;
       }
 
-      console.log({ id });
+      console.log('custom resolve for compiler', { id });
 
       if (id.startsWith('@embroider/macros')) {
         return `repl-sdk/compilers/ember/macros.js`;
       }
     },
     compile: async (text) => {
-      let { code: preprocessed } = preprocessor.process(text, 'dynamic-repl.js');
+      let { code: preprocessed } = preprocessor.process(text, { filename: 'dynamic-repl.js' });
       let transformed = await transform(preprocessed);
 
       let code = transformed.code;
 
-      // eslint-disable-next-line
-      console.log({ code });
-
+      console.log('[code]', code);
       return code;
     },
     render: async (element, compiled /*, extra, compiler */) => {
+      console.log('[compiled]', compiled);
       element.innerHTML = compiled.toString();
     },
   };

@@ -12,7 +12,8 @@ export const defaults = {
   formats: compilers,
 };
 
-const secret = Symbol.for('__repl-sdk__compiler__');
+const secretKey = '__repl-sdk__compiler__';
+const secret = Symbol.for(secretKey);
 
 assert(
   `There is already an instance of repl-sdk, and there can only be one. Make sure that your dependency graph is correct.`,
@@ -39,21 +40,23 @@ export class Compiler {
       // Permit overrides to import maps
       mapOverrides: true, // default false
       // Hook all module resolutions
-      resolve: (id) => {
-        console.debug('resolving', id);
-        if (id.startsWith('blob:')) return id;
-        if (id.startsWith('https://')) return id;
-        if (id.startsWith('.')) return id;
-
+      resolve: (id, parentUrl, resolve) => {
         if (this.#options.logging) {
           console.debug('[resolve]', id);
         }
+        if (id.startsWith('blob:')) return id;
+        if (id.startsWith('https://')) return id;
+        if (id.startsWith('.')) return id;
 
         if (this.#options.resolve?.[id]) {
           if (this.#options.logging) {
             console.debug(`[resolve] ${id} found in manually specified resolver`);
           }
           return `manual:${id}`;
+        }
+
+        if (this.#options.logging) {
+          console.debug(`[resolve] ${id} not found, deferring to esm.sh`);
         }
 
         return `https://esm.sh/*${id}`;
@@ -73,17 +76,52 @@ export class Compiler {
               console.error(`[fetch] Could not resolve ${url}`);
             }
 
-            return result;
+            if (typeof result === 'function') {
+              if (this.#options.logging && !result) {
+                console.error(`[fetch] Value for ${url} is a function. Invoking.`);
+              }
+
+              result = await result();
+            }
+
+            window[secret].resolves ||= {};
+            window[secret].resolves[name] ||= result;
+            let blobContent =
+              `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
+              `${Object.keys(result)
+                .map((exportName) => {
+                  if (exportName === 'default') {
+                    return `export default mod.default;`;
+                  }
+                  return `export const ${exportName} = mod.${exportName};`;
+                })
+                .join('\n')}
+            `;
+
+            let blob = new Blob(Array.from(blobContent), { type: 'application/javascript' });
+
+            if (this.#options.logging) {
+              console.debug(
+                `[fetch] returning blob mapping to manually resolved import for ${name}`,
+                blobContent
+              );
+              // console.debug(await blob.text());
+            }
+            return new Response(blob);
           }
         }
 
         if (this.#options.logging) {
-          console.debug('[fetch] fetching url', url);
+          console.debug('[fetch] fetching url', url, options);
         }
         const response = await fetch(url, options);
 
         return response;
       },
+
+      // onimport: async (url, options, parentUrl) => {
+      //   console.log('[onimport]', url, options, parentUrl);
+      // },
     };
     // addShim();
   }
