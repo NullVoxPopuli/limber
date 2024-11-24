@@ -1,4 +1,21 @@
 interface PublicMethods {
+  /**
+   * Will try to use a shimmed import, or will return null.
+   */
+  tryResolve: (moduleName: string) => Promise<unknown>;
+
+  /**
+   * Import many modules in parallel.
+   * For each array entry,
+   *   Will try to use a shimmed import, or will return null.
+   *
+   * Optionally accepts a fallback function for proxying to a CDN, if desired.
+   *
+   */
+  tryResolveAll: (
+    moduleNames: string[],
+    fallback?: (moduleName: string) => Promise<unknown>
+  ) => Promise<unknown[]>;
   compile: (
     format: string,
     text: string,
@@ -119,4 +136,9 @@ export interface Options {
           [flavor: string]: CompilerConfig;
         };
   };
+
+  /**
+   * Show extra debug logging or not
+   */
+  logging?: boolean | undefined;
 }

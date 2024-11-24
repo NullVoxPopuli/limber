@@ -9,10 +9,19 @@ module.exports = function (defaults) {
   const app = new EmberApp(defaults, {
     // Add options here
     trees: {
-      app: sideWatch('app', { watching: [path.join(__dirname, '../addon/dist')] }),
+      app: sideWatch('app', {
+        watching: [path.join(__dirname, '../addon/dist'), path.join(__dirname, '../../repl-sdk')],
+      }),
     },
     'ember-cli-babel': {
       enableTypeScriptTransform: true,
+      disableDecoratorTransforms: true,
+    },
+    babel: {
+      plugins: [
+        // add the new transform.
+        require.resolve('decorator-transforms'),
+      ],
     },
     name: 'test-app',
     autoImport: {

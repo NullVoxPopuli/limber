@@ -23,14 +23,13 @@ export class Compiler {
   /** @type {Options} */
   #options;
 
-  /** @type {((id: string) => string | undefined)[] } */
-  #resolvers = [];
-
   /**
    * Options may be passed to the compiler to add to its behavior.
    */
   constructor(options = defaults) {
     this.#options = options;
+
+    let explicitResolve = this.#options.resolve ?? {};
 
     globalThis[secret] = this;
     globalThis.window.esmsInitOptions = {
@@ -46,22 +45,41 @@ export class Compiler {
         if (id.startsWith('https://')) return id;
         if (id.startsWith('.')) return id;
 
-        for (let resolver of this.#resolvers) {
-          let result = resolver(id);
-
-          if (result) return result;
+        if (this.#options.logging) {
+          console.debug('[resolve]', id);
         }
 
-        // eslint-disable-next-line
-        console.log('resolve', id);
+        if (this.#options.resolve?.[id]) {
+          if (this.#options.logging) {
+            console.debug(`[resolve] ${id} found in manually specified resolver`);
+          }
+          return `manual:${id}`;
+        }
 
         return `https://esm.sh/*${id}`;
       },
       // Hook source fetch function
       fetch: async (url, options) => {
-        // eslint-disable-next-line
-        console.log('fetching url', url);
+        if (this.#options.resolve) {
+          if (url.startsWith('manual:')) {
+            let name = url.replace(/^manual:/, '');
+            if (this.#options.logging) {
+              console.debug('[fetch] resolved url in manually specified resolver', url);
+            }
 
+            let result = this.#options.resolve[name];
+
+            if (this.#options.logging && !result) {
+              console.error(`[fetch] Could not resolve ${url}`);
+            }
+
+            return result;
+          }
+        }
+
+        if (this.#options.logging) {
+          console.debug('[fetch] fetching url', url);
+        }
         const response = await fetch(url, options);
 
         return response;
@@ -122,10 +140,6 @@ export class Compiler {
 
     this.#compilerCache.set(config, compiler);
 
-    if (compiler.resolve) {
-      this.#resolvers.push(compiler.resolve);
-    }
-
     return compiler;
   }
 
@@ -181,12 +195,42 @@ export class Compiler {
     };
   };
 
-  get #nestedPublicAPI() {
-    return {
-      compile: (...args) => this.compile(...args),
-      optionsFor: (...args) => this.optionsFor(...args),
-    };
-  }
+  #nestedPublicAPI = {
+    tryResolve: (name) => importShim(/* vite-ignore */ name),
+    tryResolveAll: async (names, fallback) => {
+      let results = await Promise.all(names.map(this.#nestedPublicAPI.tryResolve));
+
+      if (fallback) {
+        let morePromises = {};
+
+        for (let i = 0; i < results.length; i++) {
+          let result = results[i];
+          let name = names[i];
+
+          if (!result) {
+            if (this.#options.logging) {
+              console.warn(`Could not load ${name}. Trying fallback.`);
+            }
+            morePromises[i] = fallback(name);
+          }
+        }
+
+        await Promise.all(Object.values(morePromises));
+
+        for (let i = 0; i < results.length; i++) {
+          let result = results[i];
+
+          if (!result && morePromises[i]) {
+            result = morePromises[i];
+          }
+        }
+      }
+
+      return results;
+    },
+    compile: (...args) => this.compile(...args),
+    optionsFor: (...args) => this.optionsFor(...args),
+  };
 
   #createDiv() {
     let div = document.createElement('div');

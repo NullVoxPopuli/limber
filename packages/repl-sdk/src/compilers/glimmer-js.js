@@ -1,10 +1,48 @@
 import { esmsh } from './cdn.js';
 
+const buildDependencies = [
+  /**
+   * The only version of babel that is easily runnable in the browser
+   * This includes way too much stuff.
+   */
+  '@babel/standalone',
+  /**
+   * We will be using this decorator transform
+   * instead of the babel one.
+   * The babel transform does way too much transforming.
+   */
+  'decorator-transforms',
+
+  /**
+   * Babel plugin that understands all the different ways
+   * which templates have been authored and what they need to
+   * compile to over the years.
+   */
+  'babel-plugin-ember-template-compilation',
+  /**
+   * The actual template-compiler is ember-sounce-dependent,
+   * because the underlying format / bytecodes / etc is private,
+   * and can change between versions of ember-source.
+   */
+  'ember-source/dist/ember-template-compiler.js',
+  /**
+   * Converts gjs/gts to standard js/ts
+   */
+  'content-tag',
+  /**
+   * Older-style build macros
+   * (before import.meta.env was even a thing)
+   *
+   * These remove `@glimmer/env` and DEBUG usages
+   */
+  'babel-plugin-debug-macros',
+];
+
 /**
  * @param {import('../types.ts').ResolvedCompilerOptions} config
  * @param {import('../types.ts').PublicMethods} api
  */
-export async function compiler(config = {} /*, api */) {
+export async function compiler(config = {}, api) {
   const versions = config.versions || {};
 
   const [
@@ -14,48 +52,9 @@ export async function compiler(config = {} /*, api */) {
     compiler,
     { Preprocessor },
     { default: DebugMacros },
-  ] = await esmsh.importAll(versions, [
-    /**
-     * The only version of babel that is easily runnable in the browser
-     * This includes way too much stuff.
-     */
-    '@babel/standalone',
-    /**
-     * We will be using this decorator transform
-     * instead of the babel one.
-     * The babel transform does way too much transforming.
-     */
-    'decorator-transforms',
-
-    /**
-     * Babel plugin that understands all the different ways
-     * which templates have been authored and what they need to
-     * compile to over the years.
-     */
-    'babel-plugin-ember-template-compilation',
-    /**
-     * The actual template-compiler is ember-sounce-dependent,
-     * because the underlying format / bytecodes / etc is private,
-     * and can change between versions of ember-source.
-     */
-    'ember-source/dist/ember-template-compiler.js',
-    /**
-     * Converts gjs/gts to standard js/ts
-     */
-    'content-tag',
-    /**
-     * Older-style build macros
-     * (before import.meta.env was even a thing)
-     *
-     * These remove `@glimmer/env` and DEBUG usages
-     */
-    'babel-plugin-debug-macros',
-    // Failed to load (will need to PR for browser support),
-    //   so we have to use babel's decorator transforms,
-    //   which ... aren't great.
-    //   They force over-transforming of classes.
-    // 'decorator-transforms',
-  ]);
+  ] = await api.tryResolveAll(buildDependencies, (moduleName) =>
+    esmsh.import(versions, moduleName)
+  );
 
   // These libraries are compiled incorrectly for cjs<->ESM compat
   const decoratorTransforms =
