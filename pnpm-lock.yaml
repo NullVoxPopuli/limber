@@ -147,7 +147,7 @@ importers:
         version: 1.11.11
       kolay:
         specifier: ^1.2.2
-        version: 1.2.2(qc4tz6dmfyhe7skldktqhiinkm)
+        version: 1.2.2(hcxn3fnga42kaglmntmitbc3w4)
       limber-ui:
         specifier: workspace:*
         version: link:../../packages/app-support/limber-ui/addon
@@ -459,8 +459,8 @@ importers:
         specifier: ^1.21.1
         version: 1.22.0
       '@universal-ember/kolay-ui':
-        specifier: ^0.0.12
-        version: 0.0.12(fe5eacwte6ndmfhmkgx7lvq7yi)
+        specifier: ^0.0.13
+        version: 0.0.13(fe5eacwte6ndmfhmkgx7lvq7yi)
       ember-async-data:
         specifier: 1.0.3
         version: 1.0.3(ember-source@6.0.1(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.ff9ea6c)(rsvp@4.8.5)(webpack@5.95.0))
@@ -478,7 +478,7 @@ importers:
         version: 1.0.3
       kolay:
         specifier: ^1.2.2
-        version: 1.2.2(qc4tz6dmfyhe7skldktqhiinkm)
+        version: 1.2.2(hcxn3fnga42kaglmntmitbc3w4)
       limber-ui:
         specifier: workspace:*
         version: link:../../packages/app-support/limber-ui/addon
@@ -4959,8 +4959,8 @@ packages:
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  '@universal-ember/kolay-ui@0.0.12':
-    resolution: {integrity: sha512-7Gj/GxBGtqTLgXolITcwxdepHYkwQpdXxTb/Vd8Qh8n0sGLELtMbZIpb9bgf+wmN6oYPnzBM4Oxfl+JwUlU+Lg==}
+  '@universal-ember/kolay-ui@0.0.13':
+    resolution: {integrity: sha512-AieocMj1U898F5thI4dQC3pCRtpO0PhvOMJPPp6yTck3AsGGJ3kRGg1utA66OTqF0CG+ZvjEg3eHrsulptu3oA==}
     peerDependencies:
       '@ember/test-waiters': ^3.1.0
       '@glimmer/component': ^2.0.0
@@ -14694,7 +14694,7 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@universal-ember/kolay-ui@0.0.12(fe5eacwte6ndmfhmkgx7lvq7yi)':
+  '@universal-ember/kolay-ui@0.0.13(fe5eacwte6ndmfhmkgx7lvq7yi)':
     dependencies:
       '@ember/test-waiters': 3.1.0
       '@embroider/addon-shim': 1.8.9
@@ -19493,14 +19493,14 @@ snapshots:
 
   kleur@4.1.5: {}
 
-  kolay@1.2.2(qc4tz6dmfyhe7skldktqhiinkm):
+  kolay@1.2.2(hcxn3fnga42kaglmntmitbc3w4):
     dependencies:
       '@ember/test-waiters': 3.1.0
       '@glimmer/component': 2.0.0
       '@glimmer/tracking': 1.1.2
       '@glint/template': 1.4.1-unstable.ff9ea6c
       '@tsconfig/ember': 3.0.8
-      '@universal-ember/kolay-ui': 0.0.12(fe5eacwte6ndmfhmkgx7lvq7yi)
+      '@universal-ember/kolay-ui': 0.0.13(fe5eacwte6ndmfhmkgx7lvq7yi)
       '@zamiell/typedoc-plugin-not-exported': 0.3.0(typedoc@0.26.9(typescript@5.6.3))
       common-tags: 1.8.2
       ember-modifier: 4.2.0(@babel/core@7.26.0)(ember-source@6.0.1(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.ff9ea6c)(rsvp@4.8.5)(webpack@5.95.0))
