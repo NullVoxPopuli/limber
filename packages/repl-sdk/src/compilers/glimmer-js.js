@@ -8,9 +8,10 @@ export async function compiler(config = {} /*, api */) {
   const versions = config.versions || {};
 
   const [
-    babel,
-    templatePlugin,
-    { default: templateCompiler },
+    _babel,
+    _decoratorTransforms,
+    _emberTemplateCompilation,
+    compiler,
     { Preprocessor },
     { default: DebugMacros },
   ] = await esmsh.importAll(versions, [
@@ -19,6 +20,13 @@ export async function compiler(config = {} /*, api */) {
      * This includes way too much stuff.
      */
     '@babel/standalone',
+    /**
+     * We will be using this decorator transform
+     * instead of the babel one.
+     * The babel transform does way too much transforming.
+     */
+    'decorator-transforms',
+
     /**
      * Babel plugin that understands all the different ways
      * which templates have been authored and what they need to
@@ -49,15 +57,36 @@ export async function compiler(config = {} /*, api */) {
     // 'decorator-transforms',
   ]);
 
+  // These libraries are compiled incorrectly for cjs<->ESM compat
+  const decoratorTransforms =
+    'default' in _decoratorTransforms ? _decoratorTransforms.default : _decoratorTransforms;
+
+  const emberTemplateCompilation =
+    'default' in _emberTemplateCompilation
+      ? _emberTemplateCompilation.default
+      : _emberTemplateCompilation;
+
+  let babel = 'availablePlugins' in _babel ? _babel : _babel.default;
+
   async function transform(text) {
     return babel.transform(text, {
       filename: `dynamic-repl.js`,
       plugins: [
         [
-          templatePlugin,
+          emberTemplateCompilation,
           {
-            compiler: templateCompiler,
+            compiler,
             transforms: [],
+          },
+        ],
+        [
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore - we don't care about types here..
+          decoratorTransforms,
+          {
+            runtime: {
+              import: 'decorator-transforms/runtime',
+            },
           },
         ],
         [
@@ -97,24 +126,12 @@ export async function compiler(config = {} /*, api */) {
           },
           '@ember/application/deprecations stripping',
         ],
-        // [babel.availablePlugins['proposal-decorators'], { legacy: true }],
-        // [babel.availablePlugins['proposal-class-properties']],
+        // Womp.
+        // See this exploration into true ESM:
+        //   https://github.com/NullVoxPopuli/limber/pull/1805
+        [babel.availablePlugins['transform-modules-commonjs']],
       ],
-      presets: [
-        [
-          babel.availablePresets['env'],
-          {
-            modules: false,
-            targets: {
-              browsers: [
-                'last 1 Chrome versions',
-                'last 1 Firefox versions',
-                'last 1 Safari versions',
-              ],
-            },
-          },
-        ],
-      ],
+      presets: [],
     });
   }
 
@@ -137,7 +154,7 @@ export async function compiler(config = {} /*, api */) {
       }
     },
     compile: async (text) => {
-      let preprocessed = preprocessor.process(text, 'dynamic-repl.js');
+      let { code: preprocessed } = preprocessor.process(text, 'dynamic-repl.js');
       let transformed = await transform(preprocessed);
 
       let code = transformed.code;
