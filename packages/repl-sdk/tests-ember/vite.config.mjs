@@ -33,6 +33,7 @@ export default defineConfig(({ mode }) => {
       extensions,
       alias: {
         'ember-template-compiler': 'ember-source/dist/ember-template-compiler',
+        // 'content-tag': import.meta.resolve('content-tag'),
         // The fact that this is required
         // reveals a problem with babel-plugin-debug-macros.
         // *Nothing* should be touching path.
@@ -40,7 +41,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     plugins: [
-      wasm(),
+      // wasm(),
       hbs(),
       templateTag(),
       scripts(),
@@ -65,15 +66,8 @@ export default defineConfig(({ mode }) => {
           {
             name: 'deal-with-weird-pre-official-runtime-compiler',
             setup(build) {
-              build.onResolve({ filter: /ember-template-compiler$/ }, () => ({
-                path: require.resolve(
-                  'ember-source/dist/ember-template-compiler',
-                ),
-                external: true,
-              }));
-
               build.onResolve({ filter: /content-tag/ }, (path) => ({
-                path: require.resolve(path),
+                path: 'content-tag',
                 external: true,
               }));
             },

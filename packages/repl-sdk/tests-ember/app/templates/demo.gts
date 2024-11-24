@@ -1,7 +1,10 @@
 import Component from '@glimmer/component';
 
+import * as babelPluginETC from 'babel-plugin-ember-template-compilation';
 import * as templateCompiler from 'ember-source/dist/ember-template-compiler.js';
 import * as babelMacros from 'babel-plugin-debug-macros';
+import * as contentTag from 'content-tag';
+import * as glimmerTracking from '@glimmer/tracking';
 
 import { modifier } from 'ember-modifier';
 import { Compiler, defaults } from 'repl-sdk';
@@ -12,25 +15,28 @@ let compiler = new Compiler({
   resolve: {
     '@babel/standalone': () => import('@babel/standalone'),
     'decorator-transforms': () => import('decorator-transforms'),
-    'babel-plugin-ember-template-compilation': import(
-      'babel-plugin-ember-template-compilation'
-    ),
+    // 'babel-plugin-ember-template-compilation': import(
+    //   'babel-plugin-ember-template-compilation'
+    // ),
+    'babel-plugin-ember-template-compilation': babelPluginETC,
     'babel-plugin-debug-macros': babelMacros,
-    'content-tag': () => import('content-tag'),
+    // 'content-tag': () => import('content-tag'),
+    'content-tag': contentTag,
     'ember-template-compiler': templateCompiler,
     'ember-source/dist/ember-template-compiler.js': templateCompiler,
 
     // Pass all the ember stuff through
+    // TODO: check if we can do ember-source/dist/packages paths
     '@ember/component': () => import('@ember/component'),
     '@ember/modifier': () => import('@ember/modifier'),
     '@ember/helper': () => import('@ember/helper'),
     '@ember/template-factory': () => import('@ember/template-factory'),
-    '@ember/template-compiler': () =>
-      import('ember-source/dist/packages/@ember/template-compiler'),
+    '@ember/template-compilation': () => import('@ember/template-compilation'),
     '@ember/component/template-only': () =>
       import('@ember/component/template-only'),
     '@glimmer/component': () => import('@glimmer/component'),
-    '@glimmer/tracking': () => import('@glimmer/tracking'),
+    // '@glimmer/tracking': () => import('@glimmer/tracking'),
+    '@glimmer/tracking': glimmerTracking,
   },
 });
 

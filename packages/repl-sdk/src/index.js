@@ -102,8 +102,8 @@ export class Compiler {
 
             if (this.#options.logging) {
               console.debug(
-                `[fetch] returning blob mapping to manually resolved import for ${name}`,
-                blobContent
+                `[fetch] returning blob mapping to manually resolved import for ${name}`
+                // blobContent
               );
               // console.debug(await blob.text());
             }

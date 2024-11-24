@@ -76,6 +76,7 @@ export async function compiler(config = {}, api) {
           {
             compiler,
             transforms: [],
+            targetFormat: 'wire',
           },
         ],
         [
@@ -125,10 +126,6 @@ export async function compiler(config = {}, api) {
           },
           '@ember/application/deprecations stripping',
         ],
-        // Womp.
-        // See this exploration into true ESM:
-        //   https://github.com/NullVoxPopuli/limber/pull/1805
-        // [babel.availablePlugins['transform-modules-commonjs']],
       ],
       presets: [],
     });
@@ -158,11 +155,11 @@ export async function compiler(config = {}, api) {
 
       let code = transformed.code;
 
-      console.log('[code]', code);
+      console.log('[compile:code]', code);
       return code;
     },
     render: async (element, compiled /*, extra, compiler */) => {
-      console.log('[compiled]', compiled);
+      console.log('[render:compiled]', compiled);
       element.innerHTML = compiled.toString();
     },
   };
