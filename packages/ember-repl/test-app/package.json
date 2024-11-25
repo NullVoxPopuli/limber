@@ -24,12 +24,18 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "dependencies": {
+    "@babel/standalone": "^7.26.2",
     "@shikijs/rehype": "^1.21.1",
     "@types/unist": "^3.0.2",
     "buffer": "^6.0.3",
     "common-tags": "^1.8.2",
+    "content-tag": "^3.0.0",
+    "decorator-transforms": "^2.3.0",
+    "ember-modifier": "^4.1.0",
     "ember-repl": "workspace:*",
     "ember-resources": "^7.0.1",
+    "ember-route-template": "^1.0.3",
+    "repl-sdk": "workspace:*",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
@@ -58,6 +64,7 @@
     "@types/rsvp": "^4.0.9",
     "@typescript-eslint/eslint-plugin": "^8.8.0",
     "@typescript-eslint/parser": "^8.8.0",
+    "babel-plugin-ember-template-compilation": "^2.3.0",
     "concurrently": "^9.0.1",
     "ember-auto-import": "^2.9.0",
     "ember-cli": "~5.12.0",

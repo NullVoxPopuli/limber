@@ -1,3 +1,5 @@
+import 'decorator-transforms/globals';
+
 import Application from '@ember/application';
 
 import loadInitializers from 'ember-load-initializers';
