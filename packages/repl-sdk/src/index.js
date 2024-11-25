@@ -61,7 +61,7 @@ export class Compiler {
           console.debug(`[resolve] ${id} not found, deferring to esm.sh`);
         }
 
-        return `https://esm.sh/*${id}`;
+        return `esm.sh:${id}`;
       },
       // Hook source fetch function
       fetch: async (url, options) => {
@@ -121,9 +121,33 @@ export class Compiler {
           console.debug('[fetch] fetching url', url, options);
         }
 
+        // return `https://esm.sh/*${id}`;
+        if (url.startsWith('esm.sh:')) {
+          let name = url.replace(/^esm\.sh:/, '');
+          let newUrl = `https://esm.sh/v135/*${name}`;
+
+          const response = await fetch(newUrl, options);
+
+          if (!response.ok) return response;
+
+          const source = await response.text();
+
+          console.log({ source, url, newUrl });
+
+          return new Response(new Blob([source], { type: 'application/javascript' }));
+        }
+
         const response = await fetch(url, options);
 
-        return response;
+        if (!response.ok) return response;
+
+        const source = await response.text();
+
+        // const transformed = tsCompile(source);
+        //
+        console.log({ source, url });
+
+        return new Response(new Blob([source], { type: 'application/javascript' }));
       },
 
       // onimport: async (url, options, parentUrl) => {
