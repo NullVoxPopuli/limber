@@ -44,6 +44,7 @@ export class Compiler {
         if (this.#options.logging) {
           console.debug('[resolve]', id);
         }
+
         if (id.startsWith('blob:')) return id;
         if (id.startsWith('https://')) return id;
         if (id.startsWith('.')) return id;
@@ -52,6 +53,7 @@ export class Compiler {
           if (this.#options.logging) {
             console.debug(`[resolve] ${id} found in manually specified resolver`);
           }
+
           return `manual:${id}`;
         }
 
@@ -66,6 +68,7 @@ export class Compiler {
         if (this.#options.resolve) {
           if (url.startsWith('manual:')) {
             let name = url.replace(/^manual:/, '');
+
             if (this.#options.logging) {
               console.debug('[fetch] resolved url in manually specified resolver', url);
             }
@@ -86,6 +89,7 @@ export class Compiler {
 
             window[secret].resolves ||= {};
             window[secret].resolves[name] ||= result;
+
             let blobContent =
               `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
               `${Object.keys(result)
@@ -93,6 +97,7 @@ export class Compiler {
                   if (exportName === 'default') {
                     return `export default mod.default;`;
                   }
+
                   return `export const ${exportName} = mod.${exportName};`;
                 })
                 .join('\n')}
@@ -107,6 +112,7 @@ export class Compiler {
               );
               // console.debug(await blob.text());
             }
+
             return new Response(blob);
           }
         }
@@ -114,6 +120,7 @@ export class Compiler {
         if (this.#options.logging) {
           console.debug('[fetch] fetching url', url, options);
         }
+
         const response = await fetch(url, options);
 
         return response;
@@ -249,6 +256,7 @@ export class Compiler {
             if (this.#options.logging) {
               console.warn(`Could not load ${name}. Trying fallback.`);
             }
+
             morePromises[i] = fallback(name);
           }
         }
