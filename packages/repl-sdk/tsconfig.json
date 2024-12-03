@@ -3,6 +3,7 @@
   "extends": "@tsconfig/ember/tsconfig.json",
   "include": ["src/**/*", "unpublished-development-types/**/*"],
   "compilerOptions": {
+    "lib": ["WebWorker", "ESNext", "DOM"],
     "skipLibCheck": true,
     "allowImportingTsExtensions": true
   }

@@ -1,5 +1,5 @@
-import { resolve, join } from "node:path";
 import { readFile } from "node:fs/promises";
+import { join, resolve } from "node:path";
 import url from "node:url";
 
 import { defineConfig } from "vite";
@@ -9,6 +9,7 @@ const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
 let manifest = await (async () => {
   let buffer = await readFile(join(__dirname, "package.json"));
+
   return JSON.parse(buffer.toString());
 })();
 
@@ -33,11 +34,12 @@ export default defineConfig({
     sourcemap: true,
     lib: {
       // Could also be a dictionary or array of multiple entry points
-      entry: resolve(__dirname, "src/index.js"),
+      entry: {
+        index: resolve(__dirname, "src/index.js"),
+        "service-worker": resolve(__dirname, "src/service-worker/index.ts"),
+      },
       name: "repl-sdk",
       formats: ["es"],
-      // the proper extensions will be added
-      fileName: "index",
     },
     rollupOptions: {
       external: externals,

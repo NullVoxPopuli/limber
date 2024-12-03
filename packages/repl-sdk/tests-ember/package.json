@@ -109,6 +109,7 @@
   },
   "dependencies": {
     "babel-plugin-debug-macros": "^1.0.2",
-    "path-browserify": "^1.0.1"
+    "path-browserify": "^1.0.1",
+    "register-service-worker": "^1.7.2"
   }
 }

@@ -1,5 +1,3 @@
-import { nameFor } from '../compile/utils.ts';
-
 const URLS = ['/compile.sw', '/module.sw'];
 
 const COMPILE_CACHE = new Map();
@@ -87,7 +85,7 @@ async function compile(request: Request) {
     throw new Error(`'format' property missing in body`);
   }
 
-  let name = nameFor(code + format, 'sw:named');
+  let name = 'abcd'; // nameFor(code + format, 'sw:named');
 
   let modulePath = `/module.sw/${name}.js`;
 

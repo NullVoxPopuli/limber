@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
 
-import * as babelPluginETC from 'babel-plugin-ember-template-compilation';
-import * as templateCompiler from 'ember-source/dist/ember-template-compiler.js';
-import * as babelMacros from 'babel-plugin-debug-macros';
+// import * as babelPluginETC from 'babel-plugin-ember-template-compilation';
+// import * as templateCompiler from 'ember-source/dist/ember-template-compiler.js';
+// import * as babelMacros from 'babel-plugin-debug-macros';
 import * as contentTag from 'content-tag';
 import * as glimmerTracking from '@glimmer/tracking';
 
@@ -13,17 +13,17 @@ let compiler = new Compiler({
   ...defaults,
   logging: true,
   resolve: {
-    '@babel/standalone': () => import('@babel/standalone'),
+    // '@babel/standalone': () => import('@babel/standalone'),
     'decorator-transforms': () => import('decorator-transforms'),
     // 'babel-plugin-ember-template-compilation': import(
     //   'babel-plugin-ember-template-compilation'
     // ),
-    'babel-plugin-ember-template-compilation': babelPluginETC,
-    'babel-plugin-debug-macros': babelMacros,
+    // 'babel-plugin-ember-template-compilation': babelPluginETC,
+    // 'babel-plugin-debug-macros': babelMacros,
     // 'content-tag': () => import('content-tag'),
     'content-tag': contentTag,
-    'ember-template-compiler': templateCompiler,
-    'ember-source/dist/ember-template-compiler.js': templateCompiler,
+    // 'ember-template-compiler': templateCompiler,
+    // 'ember-source/dist/ember-template-compiler.js': templateCompiler,
 
     // Pass all the ember stuff through
     // TODO: check if we can do ember-source/dist/packages paths
@@ -53,11 +53,18 @@ const increment = () => count.current++;
 `;
 
 const compile = modifier((element) => {
+  let root: HTMLElement;
   (async () => {
-    let root = await compiler.compile('gjs', snippet, {});
-
-    element.appendChild(root);
+    // root = await compiler.compile('gjs', snippet, {});
+    //
+    // element.appendChild(root);
   })();
+
+  return () => {
+    if (root) {
+      element.removeChild(root);
+    }
+  };
 });
 
 export class MiniRepl extends Component {

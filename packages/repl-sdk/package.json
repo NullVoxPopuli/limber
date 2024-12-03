@@ -7,6 +7,13 @@
       "types": "./src/index.d.ts",
       "default": "./src/index.js"
     },
+    "./service-worker.js": {
+      "types": "./declarations/service-worker.d.ts",
+      "default": "./dist/service-worker.js"
+    },
+    "./service-worker.js?url": {
+      "types": "src/url-import.d.ts"
+    },
     "./compilers/ember/*": {
       "default": "./src/compilers/ember/*.js"
     }

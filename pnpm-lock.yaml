@@ -1843,6 +1843,9 @@ importers:
       path-browserify:
         specifier: ^1.0.1
         version: 1.0.1
+      register-service-worker:
+        specifier: ^1.7.2
+        version: 1.7.2
     devDependencies:
       '@babel/core':
         specifier: ^7.26.0
@@ -5789,7 +5792,7 @@ packages:
       '@glimmer/component': ^2.0.0
       '@glimmer/tracking': '>= 1.1.2'
       '@glint/template': '>= 1.3.0'
-      ember-modifier: '*'
+      ember-modifier: '>= 4.1.0'
       ember-primitives: '>= 0.11.3'
       ember-repl: workspace:*
       ember-resources: '>= 7.0.0'
@@ -6057,8 +6060,6 @@ packages:
       webpack-cli: 5.x.x
       webpack-dev-server: '*'
     peerDependenciesMeta:
-      webpack:
-        optional: true
       webpack-dev-server:
         optional: true
 
@@ -11643,6 +11644,9 @@ packages:
   regexpu-core@6.1.1:
     resolution: {integrity: sha512-k67Nb9jvwJcJmVpw0jPttR1/zVfnKf8Km0IPatrU/zJ5XeG3+Slx0xLXs9HByJSzXzrlz5EDvN6yLNMDc2qdnw==}
     engines: {node: '>=4'}
+
+  register-service-worker@1.7.2:
+    resolution: {integrity: sha512-CiD3ZSanZqcMPRhtfct5K9f7i3OLCcBBWsJjLh1gW9RO/nS94sVzY59iS+fgYBOBqaBpf4EzfqUF3j9IG+xo8A==}
 
   registry-auth-token@4.2.2:
     resolution: {integrity: sha512-PC5ZysNb42zpFME6D/XlIgtNGdTl8bBOCw90xQLVMpzuuubJKYDWFAEuUNc+Cn8Z8724tg2SDhDRrkVEsqfDMg==}
@@ -17991,9 +17995,8 @@ snapshots:
 
   '@webpack-cli/serve@2.0.5(webpack-cli@5.1.4)(webpack@5.95.0)':
     dependencies:
-      webpack-cli: 5.1.4(webpack@5.95.0)
-    optionalDependencies:
       webpack: 5.95.0(esbuild@0.24.0)(webpack-cli@5.1.4)
+      webpack-cli: 5.1.4(webpack@5.95.0)
 
   '@wessberg/stringutil@1.0.19': {}
 
@@ -25669,6 +25672,8 @@ snapshots:
       regjsparser: 0.11.1
       unicode-match-property-ecmascript: 2.0.0
       unicode-match-property-value-ecmascript: 2.2.0
+
+  register-service-worker@1.7.2: {}
 
   registry-auth-token@4.2.2:
     dependencies:
