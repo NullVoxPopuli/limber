@@ -30,130 +30,130 @@ export class Compiler {
   constructor(options = defaults) {
     this.#options = options;
 
-    let explicitResolve = this.#options.resolve ?? {};
-
-    globalThis[secret] = this;
-    globalThis.window.esmsInitOptions = {
-      shimMode: true,
-      skip: `https://esm.sh/`,
-      revokeBlobURLs: true, // default false
-      // Permit overrides to import maps
-      mapOverrides: true, // default false
-      // Hook all module resolutions
-      resolve: (id, parentUrl, resolve) => {
-        if (this.#options.logging) {
-          console.debug('[resolve]', id);
-        }
-
-        if (id.startsWith('blob:')) return id;
-        if (id.startsWith('https://')) return id;
-        if (id.startsWith('.')) return id;
-
-        if (this.#options.resolve?.[id]) {
-          if (this.#options.logging) {
-            console.debug(`[resolve] ${id} found in manually specified resolver`);
-          }
-
-          return `manual:${id}`;
-        }
-
-        if (this.#options.logging) {
-          console.debug(`[resolve] ${id} not found, deferring to esm.sh`);
-        }
-
-        return `esm.sh:${id}`;
-      },
-      // Hook source fetch function
-      fetch: async (url, options) => {
-        if (this.#options.resolve) {
-          if (url.startsWith('manual:')) {
-            let name = url.replace(/^manual:/, '');
-
-            if (this.#options.logging) {
-              console.debug('[fetch] resolved url in manually specified resolver', url);
-            }
-
-            let result = this.#options.resolve[name];
-
-            if (this.#options.logging && !result) {
-              console.error(`[fetch] Could not resolve ${url}`);
-            }
-
-            if (typeof result === 'function') {
-              if (this.#options.logging && !result) {
-                console.error(`[fetch] Value for ${url} is a function. Invoking.`);
-              }
-
-              result = await result();
-            }
-
-            window[secret].resolves ||= {};
-            window[secret].resolves[name] ||= result;
-
-            let blobContent =
-              `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
-              `${Object.keys(result)
-                .map((exportName) => {
-                  if (exportName === 'default') {
-                    return `export default mod.default;`;
-                  }
-
-                  return `export const ${exportName} = mod.${exportName};`;
-                })
-                .join('\n')}
-            `;
-
-            let blob = new Blob(Array.from(blobContent), { type: 'application/javascript' });
-
-            if (this.#options.logging) {
-              console.debug(
-                `[fetch] returning blob mapping to manually resolved import for ${name}`
-                // blobContent
-              );
-              // console.debug(await blob.text());
-            }
-
-            return new Response(blob);
-          }
-        }
-
-        if (this.#options.logging) {
-          console.debug('[fetch] fetching url', url, options);
-        }
-
-        // return `https://esm.sh/*${id}`;
-        if (url.startsWith('esm.sh:')) {
-          let name = url.replace(/^esm\.sh:/, '');
-          let newUrl = `https://esm.sh/v135/*${name}`;
-
-          const response = await fetch(newUrl, options);
-
-          if (!response.ok) return response;
-
-          const source = await response.text();
-
-          console.log({ source, url, newUrl });
-
-          return new Response(new Blob([source], { type: 'application/javascript' }));
-        }
-
-        const response = await fetch(url, options);
-
-        if (!response.ok) return response;
-
-        const source = await response.text();
-
-        // const transformed = tsCompile(source);
-        //
-        console.log({ source, url });
-
-        return new Response(new Blob([source], { type: 'application/javascript' }));
-      },
-
-      // onimport: async (url, options, parentUrl) => {
-      //   console.log('[onimport]', url, options, parentUrl);
-      // },
-    };
+    // let explicitResolve = this.#options.resolve ?? {};
+    //
+    // globalThis[secret] = this;
+    // globalThis.window.esmsInitOptions = {
+    //   shimMode: true,
+    //   skip: `https://esm.sh/`,
+    //   revokeBlobURLs: true, // default false
+    //   // Permit overrides to import maps
+    //   mapOverrides: true, // default false
+    //   // Hook all module resolutions
+    //   resolve: (id, parentUrl, resolve) => {
+    //     if (this.#options.logging) {
+    //       console.debug('[resolve]', id);
+    //     }
+    //
+    //     if (id.startsWith('blob:')) return id;
+    //     if (id.startsWith('https://')) return id;
+    //     if (id.startsWith('.')) return id;
+    //
+    //     if (this.#options.resolve?.[id]) {
+    //       if (this.#options.logging) {
+    //         console.debug(`[resolve] ${id} found in manually specified resolver`);
+    //       }
+    //
+    //       return `manual:${id}`;
+    //     }
+    //
+    //     if (this.#options.logging) {
+    //       console.debug(`[resolve] ${id} not found, deferring to esm.sh`);
+    //     }
+    //
+    //     return `esm.sh:${id}`;
+    //   },
+    //   // Hook source fetch function
+    //   fetch: async (url, options) => {
+    //     if (this.#options.resolve) {
+    //       if (url.startsWith('manual:')) {
+    //         let name = url.replace(/^manual:/, '');
+    //
+    //         if (this.#options.logging) {
+    //           console.debug('[fetch] resolved url in manually specified resolver', url);
+    //         }
+    //
+    //         let result = this.#options.resolve[name];
+    //
+    //         if (this.#options.logging && !result) {
+    //           console.error(`[fetch] Could not resolve ${url}`);
+    //         }
+    //
+    //         if (typeof result === 'function') {
+    //           if (this.#options.logging && !result) {
+    //             console.error(`[fetch] Value for ${url} is a function. Invoking.`);
+    //           }
+    //
+    //           result = await result();
+    //         }
+    //
+    //         window[secret].resolves ||= {};
+    //         window[secret].resolves[name] ||= result;
+    //
+    //         let blobContent =
+    //           `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
+    //           `${Object.keys(result)
+    //             .map((exportName) => {
+    //               if (exportName === 'default') {
+    //                 return `export default mod.default;`;
+    //               }
+    //
+    //               return `export const ${exportName} = mod.${exportName};`;
+    //             })
+    //             .join('\n')}
+    //         `;
+    //
+    //         let blob = new Blob(Array.from(blobContent), { type: 'application/javascript' });
+    //
+    //         if (this.#options.logging) {
+    //           console.debug(
+    //             `[fetch] returning blob mapping to manually resolved import for ${name}`
+    //             // blobContent
+    //           );
+    //           // console.debug(await blob.text());
+    //         }
+    //
+    //         return new Response(blob);
+    //       }
+    //     }
+    //
+    //     if (this.#options.logging) {
+    //       console.debug('[fetch] fetching url', url, options);
+    //     }
+    //
+    //     // return `https://esm.sh/*${id}`;
+    //     if (url.startsWith('esm.sh:')) {
+    //       let name = url.replace(/^esm\.sh:/, '');
+    //       let newUrl = `https://esm.sh/v135/*${name}`;
+    //
+    //       const response = await fetch(newUrl, options);
+    //
+    //       if (!response.ok) return response;
+    //
+    //       const source = await response.text();
+    //
+    //       console.log({ source, url, newUrl });
+    //
+    //       return new Response(new Blob([source], { type: 'application/javascript' }));
+    //     }
+    //
+    //     const response = await fetch(url, options);
+    //
+    //     if (!response.ok) return response;
+    //
+    //     const source = await response.text();
+    //
+    //     // const transformed = tsCompile(source);
+    //     //
+    //     console.log({ source, url });
+    //
+    //     return new Response(new Blob([source], { type: 'application/javascript' }));
+    //   },
+    //
+    //   // onimport: async (url, options, parentUrl) => {
+    //   //   console.log('[onimport]', url, options, parentUrl);
+    //   // },
+    // };
     // addShim();
   }
 
@@ -164,7 +164,9 @@ export class Compiler {
    * @returns {}
    */
   async compile(format, text, options = {}) {
-    await import('es-module-shims');
+    // await import('es-module-shims');
+
+    await fetch(`/sw:compile/${text}`);
 
     let opts = { ...options };
 
@@ -188,7 +190,7 @@ export class Compiler {
 
     const asBlobUrl = textToBlobUrl(compiledText);
 
-    const { default: defaultExport } = await importShim(/* @vite-ignore */ asBlobUrl);
+    const { default: defaultExport } = await import(/* @vite-ignore */ asBlobUrl);
 
     return this.#render(compiler, defaultExport, extras);
   }
@@ -265,7 +267,7 @@ export class Compiler {
   };
 
   #nestedPublicAPI = {
-    tryResolve: (name) => importShim(/* vite-ignore */ name),
+    tryResolve: (name) => import(/* vite-ignore */ name),
     tryResolveAll: async (names, fallback) => {
       let results = await Promise.all(names.map(this.#nestedPublicAPI.tryResolve));
 

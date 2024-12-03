@@ -1272,7 +1272,7 @@ importers:
         version: 9.2.1(@babel/core@7.26.0)(webpack@5.95.0)
       ember-source:
         specifier: '>= 6.0.1'
-        version: 6.0.1(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.ff9ea6c)(rsvp@4.8.5)(webpack@5.95.0)
+        version: 6.0.1(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.95.0)
       esbuild:
         specifier: 0.24.0
         version: 0.24.0
@@ -1381,6 +1381,12 @@ importers:
       parse-static-imports:
         specifier: ^1.1.0
         version: 1.1.0
+      promise-worker-bi:
+        specifier: ^4.1.1
+        version: 4.1.1
+      register-service-worker:
+        specifier: ^1.7.2
+        version: 1.7.2
       rehype-raw:
         specifier: ^6.1.1
         version: 6.1.1
@@ -11423,6 +11429,9 @@ packages:
   promise-retry@2.0.1:
     resolution: {integrity: sha512-y+WKFlBR8BGXnsNlIHFGPZmyDf3DFMoLhaflAnyZgV6rG6xu+JwesTo2Q9R6XwYmtmwAFCkAk3e35jEdoeh/3g==}
     engines: {node: '>=10'}
+
+  promise-worker-bi@4.1.1:
+    resolution: {integrity: sha512-8IF9KDl324zJ/Epuz1a3PmfwiT0JnVgRi09E2aZGqaOTkBg7oSIz9xB/p2Lgr2KHsbaiJeyUeyhs5vxMtI0dIw==}
 
   promise.hash.helper@1.0.8:
     resolution: {integrity: sha512-KYcnXctWUWyVD3W3Ye0ZDuA1N8Szrh85cVCxpG6xYrOk/0CttRtYCmU30nWsUch0NuExQQ63QXvzRE6FLimZmg==}
@@ -25371,6 +25380,8 @@ snapshots:
     dependencies:
       err-code: 2.0.3
       retry: 0.12.0
+
+  promise-worker-bi@4.1.1: {}
 
   promise.hash.helper@1.0.8: {}
 

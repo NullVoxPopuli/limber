@@ -6,6 +6,8 @@ export async function handleFetch(event: FetchEvent): Promise<Response> {
   // event.request.url is a string
   const url = new URL(event.request.url);
 
+  console.log({ url });
+
   /**
    * We only define two URL handlers,
    * - compile.sw - actually does compilation

@@ -16,6 +16,15 @@ Object.assign(window, {
   // Buffer: {},
 });
 
+import { setup } from 'ember-repl';
+import compiler from 'ember-repl/compiler.js?url';
+import sw from 'ember-repl/service-worker.js?url';
+
+setup({
+  serviceWorker: sw,
+  compiler: compiler,
+});
+
 export default class App extends Application {
   modulePrefix = config.modulePrefix;
   podModulePrefix = config.podModulePrefix;

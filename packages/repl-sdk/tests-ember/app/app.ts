@@ -13,8 +13,6 @@ export default class App extends Application {
 
 import { register } from 'register-service-worker';
 
-console.log({ sw, register });
-window.sw = sw;
 register(sw, {
   ready: () => console.log('hello there'),
   registered(registration) {

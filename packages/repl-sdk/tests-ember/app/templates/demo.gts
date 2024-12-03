@@ -1,8 +1,5 @@
 import Component from '@glimmer/component';
 
-// import * as babelPluginETC from 'babel-plugin-ember-template-compilation';
-// import * as templateCompiler from 'ember-source/dist/ember-template-compiler.js';
-// import * as babelMacros from 'babel-plugin-debug-macros';
 import * as contentTag from 'content-tag';
 import * as glimmerTracking from '@glimmer/tracking';
 
@@ -13,7 +10,6 @@ let compiler = new Compiler({
   ...defaults,
   logging: true,
   resolve: {
-    // '@babel/standalone': () => import('@babel/standalone'),
     'decorator-transforms': () => import('decorator-transforms'),
     // 'babel-plugin-ember-template-compilation': import(
     //   'babel-plugin-ember-template-compilation'
@@ -55,9 +51,9 @@ const increment = () => count.current++;
 const compile = modifier((element) => {
   let root: HTMLElement;
   (async () => {
-    // root = await compiler.compile('gjs', snippet, {});
-    //
-    // element.appendChild(root);
+    root = await compiler.compile('gjs', snippet, {});
+
+    element.appendChild(root);
   })();
 
   return () => {
