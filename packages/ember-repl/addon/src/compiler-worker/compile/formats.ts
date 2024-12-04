@@ -89,7 +89,7 @@ async function extractScope(
   return scope;
 }
 
-export async function compileMD(
+export async function compileGDM(
   glimdownInput: string,
   options?: {
     importMap?: EvalImportMap;

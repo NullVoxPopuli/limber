@@ -1,7 +1,20 @@
+import { assert } from '@ember/debug';
 import Service from '@ember/service';
+import { waitFor } from '@ember/test-waiters';
 
 import { PWBHost } from 'promise-worker-bi';
 import { register } from 'register-service-worker';
+
+import {
+  type CompileResult,
+  type GJSOptions,
+  type GlimdownOptions,
+  type HBSOptions,
+  SUPPORTED_FORMATS,
+} from '../../../types';
+import { nameFor } from '../utils';
+
+import type { ComponentLike } from '@glint/template';
 
 /**
  * TODO:
@@ -82,5 +95,100 @@ export default class Compiler extends Service {
     });
   }
 
-  compile(text) {}
+  #cache = new Map<string, ComponentLike>();
+
+  /**
+   * Compile a stateless component using just the template
+   */
+
+  compile(text: string, options: HBSOptions): Promise<ComponentLike | undefined>;
+
+  /**
+   * Compile GJS
+   */
+  compile(text: string, options: GJSOptions): Promise<ComponentLike | undefined>;
+
+  /**
+   * Compile GitHub-flavored Markdown with GJS support
+   * and optionally render gjs-snippets via a `live` meta tag
+   * on the code fences.
+   */
+  compile(text: string, options: GlimdownOptions): Promise<ComponentLike | undefined>;
+
+  @waitFor
+  async compile(
+    text: string,
+    options: GlimdownOptions | GJSOptions | HBSOptions
+  ): Promise<ComponentLike | undefined> {
+    let { onSuccess, onError, onCompileStart } = options;
+    let id = nameFor(`${options.format}:${text}`);
+
+    let existing = this.#cache.get(id);
+
+    if (existing) {
+      onSuccess(existing);
+
+      return existing;
+    }
+
+    if (!SUPPORTED_FORMATS.includes(options.format)) {
+      await onError(
+        `Unsupported format: ${options.format}. Supported formats: ${SUPPORTED_FORMATS}`
+      );
+
+      return;
+    }
+
+    await onCompileStart();
+
+    if (!text) {
+      await onError('No Input Document yet');
+
+      return;
+    }
+
+    let file = await this.#compile({
+      text,
+      format: options.format,
+      options,
+    });
+    /**
+     * 1. convert to blob
+     * 2. import('/repl/module:blob')
+     *    - default export is a CompileResult
+     */
+    let blob = new Blob([file]);
+    // handled by the service worker's fetch handler
+    let module = await import(`/repl/module:${blob}`);
+    let result = module.default as CompileResult;
+
+    if (result.error) {
+      await onError(result.error.message || `${result.error}`);
+
+      return;
+    }
+
+    this.#cache.set(id, result.component as ComponentLike);
+
+    await onSuccess(result.component as ComponentLike);
+
+    return result.component;
+  }
+
+  get #promileCompiler() {
+    assert(`Cannot compile without the compiler-worker.`, this.#promiseWorkers.compiler);
+
+    return this.#promiseWorkers.compiler;
+  }
+
+  async #compile(data: {
+    text: string;
+    format: string;
+    options: GlimdownOptions | HBSOptions | GJSOptions;
+  }): Promise<string> {
+    return this.#promileCompiler.postMessage({
+      command: 'compile',
+      ...data,
+    });
+  }
 }
