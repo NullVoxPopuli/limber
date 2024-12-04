@@ -36,6 +36,7 @@ export default defineConfig({
       // Could also be a dictionary or array of multiple entry points
       entry: {
         index: resolve(__dirname, "src/index.js"),
+        "compiler-worker": resolve(__dirname, "src/compiler-worker/index.ts"),
         "service-worker": resolve(__dirname, "src/service-worker/index.ts"),
       },
       name: "repl-sdk",
