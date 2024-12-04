@@ -1,8 +1,8 @@
-import { invocationName } from './utils.ts';
+// import { resolveImportMap } from './imports.ts';
 
 import type { ExtractedCode } from './formats/markdown.ts';
-import type { CompileResult, UnifiedPlugin } from './types.ts';
-import type { EvalImportMap, ScopeMap } from './types.ts';
+import type { CompileResult, EvalImportMap, ScopeMap, UnifiedPlugin } from '../types.ts';
+import { invocationName } from '../browser/utils.ts';
 
 async function compileGJSArray(js: { code: string }[], importMap?: EvalImportMap) {
   let modules = await Promise.all(
@@ -20,6 +20,10 @@ export async function compileGJS(
 ): Promise<CompileResult> {
   try {
     let { compileJS } = await import('./formats/gjs/index.ts');
+
+    // let importMap2 = await resolveImportMap(gjsInput, importMap);
+    //
+    // console.log(importMap2);
 
     return await compileJS(gjsInput, importMap);
   } catch (error) {
@@ -84,7 +88,7 @@ async function extractScope(
   return scope;
 }
 
-export async function compileMD(
+export async function compileGDM(
   glimdownInput: string,
   options?: {
     importMap?: EvalImportMap;

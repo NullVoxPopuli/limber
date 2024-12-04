@@ -6,3 +6,4 @@ vendor/
 public/
 coverage/
 *.ember-try
+tests-self/
