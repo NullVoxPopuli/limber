@@ -10,7 +10,7 @@ module.exports = function (defaults) {
     // Add options here
     trees: {
       app: sideWatch('app', {
-        watching: [path.join(__dirname, '../addon/dist'), path.join(__dirname, '../../repl-sdk')],
+        watching: [path.join(__dirname, '../addon/dist')],
       }),
     },
     'ember-cli-babel': {

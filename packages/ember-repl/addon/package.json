@@ -60,10 +60,10 @@
     "addon-main.cjs"
   ],
   "scripts": {
-    "build": "rollup --config",
+    "build": "vite build",
     "lint:types": "tsc --noEmit",
     "lint:fix": "pnpm -w exec lint fix",
-    "start": "rollup --config --watch",
+    "start": "vite build --watch",
     "lint": "pnpm -w exec lint",
     "lint:package": "pnpm publint",
     "lint:js": "pnpm -w exec lint js",
@@ -152,6 +152,8 @@
     "rollup": "~4.25.0",
     "rollup-plugin-copy": "^3.5.0",
     "typescript": "^5.4.5",
+    "vite": "^6.0.2",
+    "vite-plugin-dts": "4.0.0-beta.1",
     "webpack": ">= 5.92.0"
   },
   "volta": {

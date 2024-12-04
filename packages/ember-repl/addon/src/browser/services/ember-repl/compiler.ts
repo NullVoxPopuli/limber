@@ -12,9 +12,9 @@ import {
   type HBSOptions,
   SUPPORTED_FORMATS,
 } from '../../../types';
-import { nameFor } from '../utils';
 
 import type { ComponentLike } from '@glint/template';
+import { nameFor } from '../../utils';
 
 /**
  * TODO:

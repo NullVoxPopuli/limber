@@ -13,10 +13,20 @@ let manifest = await (async () => {
   return JSON.parse(buffer.toString());
 })();
 
-let externals = Object.keys({
-  ...(manifest.dependencies || {}),
-  ...(manifest.peerDependencies || {}),
-});
+let externals = [
+  "@ember/debug",
+  "@ember/service",
+  "@ember/component",
+  "@ember/helper",
+  "@ember/modifier",
+  "@ember/template-factory",
+  "@glimmer/compiler",
+  "@glimmer/syntax",
+  ...Object.keys({
+    ...(manifest.dependencies || {}),
+    ...(manifest.peerDependencies || {}),
+  }),
+];
 
 export default defineConfig({
   build: {
@@ -35,11 +45,15 @@ export default defineConfig({
     lib: {
       // Could also be a dictionary or array of multiple entry points
       entry: {
-        index: resolve(__dirname, "src/index.js"),
+        index: resolve(__dirname, "src/browser/index.ts"),
+        "browser/services/ember-repl-compiler": resolve(
+          __dirname,
+          "src/browser/services/ember-repl/compiler.ts",
+        ),
         "compiler-worker": resolve(__dirname, "src/compiler-worker/index.ts"),
         "service-worker": resolve(__dirname, "src/service-worker/index.ts"),
       },
-      name: "repl-sdk",
+      name: "ember-repl",
       formats: ["es"],
     },
     rollupOptions: {

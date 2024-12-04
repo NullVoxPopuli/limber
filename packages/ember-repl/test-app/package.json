@@ -35,7 +35,6 @@
     "ember-repl": "workspace:*",
     "ember-resources": "^7.0.1",
     "ember-route-template": "^1.0.3",
-    "repl-sdk": "workspace:*",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
