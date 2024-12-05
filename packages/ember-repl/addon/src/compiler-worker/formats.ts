@@ -1,8 +1,9 @@
 // import { resolveImportMap } from './imports.ts';
 
-import type { ExtractedCode } from './formats/markdown.ts';
-import type { CompileResult, EvalImportMap, ScopeMap, UnifiedPlugin } from '../types.ts';
 import { invocationName } from '../browser/utils.ts';
+
+import type { CompileResult, EvalImportMap, ScopeMap, UnifiedPlugin } from '../types.ts';
+import type { ExtractedCode } from './formats/markdown.ts';
 
 async function compileGJSArray(js: { code: string }[], importMap?: EvalImportMap) {
   let modules = await Promise.all(

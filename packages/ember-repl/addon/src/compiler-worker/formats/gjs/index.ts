@@ -1,9 +1,5 @@
 import * as compiler from 'ember-template-compiler';
 
-import { nameFor } from '../../utils.ts';
-import { evalSnippet } from './eval.ts';
-
-import type { CompileResult } from '../../types.ts';
 import type { ComponentLike } from '@glint/template';
 
 export interface Info {
@@ -28,27 +24,12 @@ export interface Info {
  *  are not provided by extraModules will be searched on npm to see if a package
  *  needs to be downloaded before running the `code` / invoking the component
  */
-export async function compileJS(
-  code: string,
-  extraModules?: Record<string, unknown>
-): Promise<CompileResult> {
+export async function compileJS(code: string): Promise<string | null | undefined> {
   let name = nameFor(code);
-  let component: undefined | ComponentLike;
-  let error: undefined | Error;
 
-  try {
-    let compiled = await transpile({ code: code, name });
+  let compiled = await transpile({ code: code, name });
 
-    if (!compiled) {
-      throw new Error(`Compiled output is missing`);
-    }
-
-    component = evalSnippet(compiled, extraModules).default as unknown as ComponentLike;
-  } catch (e) {
-    error = e as Error | undefined;
-  }
-
-  return { name, component, error };
+  return compiled;
 }
 
 async function transpile({ code: input, name }: Info) {
@@ -63,6 +44,8 @@ async function transpile({ code: input, name }: Info) {
 
   return code;
 }
+
+import { nameFor } from '../../../browser/utils.ts';
 
 import type { Babel } from './babel.ts';
 

@@ -11,10 +11,10 @@ import {
   type GlimdownOptions,
   type HBSOptions,
   SUPPORTED_FORMATS,
-} from '../../../types';
+} from '../../../types.ts';
+import { nameFor } from '../../utils.ts';
 
 import type { ComponentLike } from '@glint/template';
-import { nameFor } from '../../utils';
 
 /**
  * TODO:

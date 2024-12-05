@@ -1,0 +1,90 @@
+import { Addon } from "@embroider/addon-dev/rollup";
+
+import alias from "@rollup/plugin-alias";
+import { babel } from "@rollup/plugin-babel";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import { defineConfig } from "rollup";
+
+const browser = new Addon({ srcDir: "src/browser", destDir: "dist/browser" });
+const compiler = new Addon({ srcDir: "src/compiler-worker", destDir: "dist/compiler-worker" });
+const sw = new Addon({ srcDir: "src/service-worker", destDir: "dist/service-worker" });
+
+function ember(name) {
+  return `./node_modules/ember-source/dist/${name}`;
+}
+
+function pkg(name) {
+  return ember(`packages/${name}`);
+}
+
+const lookup = {
+  "@ember/debug": pkg("@ember/debug/index.js"),
+  "@ember/template-factory": pkg("@ember/template-factory/index.js"),
+  "@ember/helper": pkg("@ember/helper/index.js"),
+  "@ember/modifier": pkg("@ember/modifier/index.js"),
+  "@ember/component": pkg("@ember/component/index.js"),
+  "@ember/component/template-only": pkg("@ember/component/template-only.js"),
+  "ember-template-compiler": ember("ember-template-compiler.js"),
+};
+
+function bundledEmber() {
+  return alias([
+    {
+      find: /(@?ember.+)/,
+      replacement: "$1",
+      customResolver(source) {
+        return lookup[source];
+      },
+    },
+  ]);
+}
+
+export default defineConfig([
+  // {
+  //   output: browser.output(),
+  //   plugins: [
+  //     browser.publicEntrypoints(["**/*.js"]),
+  //     browser.appReexports(["./services/ember-repl/compiler.js"]),
+  //     babel({
+  //       extensions: [".js", ".gjs", ".ts", ".gts"],
+  //       babelHelpers: "bundled",
+  //     }),
+  //     browser.dependencies(),
+  //   ],
+  // },
+  {
+    input: "src/compiler-worker/index.ts",
+    external: [],
+    output: {
+      sourcemap: true,
+      format: "es",
+      hoistTransitiveImports: false,
+      inlineDynamicImports: true,
+      file: "dist/compiler-worker.js",
+    },
+    plugins: [
+      babel({
+        extensions: [".js", ".gjs", ".ts", ".gts"],
+        babelHelpers: "bundled",
+      }),
+      bundledEmber(),
+      nodeResolve(),
+    ],
+  },
+  // {
+  //   input: "src/service-worker/index.ts",
+  //   output: {
+  //     sourcemap: true,
+  //     format: "es",
+  //     hoistTransitiveImports: false,
+  //     file: "dist/service-worker.js",
+  //   },
+  //   plugins: [
+  //     babel({
+  //       extensions: [".js", ".gjs", ".ts", ".gts"],
+  //       babelHelpers: "bundled",
+  //     }),
+  //     bundledEmber(),
+  //   ],
+  // },
+]);

@@ -14,9 +14,9 @@ import { on } from '@ember/modifier';
 // @ts-ignore
 import { createTemplateFactory } from '@ember/template-factory';
 
-import { nameFor } from '../utils.ts';
+import { nameFor } from '../../browser/utils.ts';
 
-import type { CompileResult } from '../types.ts';
+import type { CompileResult } from '../../types';
 import type { ComponentLike } from '@glint/template';
 
 /**

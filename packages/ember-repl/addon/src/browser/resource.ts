@@ -1,13 +1,13 @@
-import { buildWaiter } from '@ember/test-waiters';
+import { assert } from '@ember/debug';
 
 import { cell, resource, resourceFactory } from 'ember-resources';
 
-import type { EvalImportMap, Format, ScopeMap, UnifiedPlugin } from '../../types';
+import Compiler from './services/ember-repl/compiler.ts';
+
+import type { EvalImportMap, Format, ScopeMap, UnifiedPlugin } from '../types.ts';
 import type { ComponentLike } from '@glint/template';
 
 export const CACHE = new Map<string, ComponentLike>();
-
-const compileWaiter = buildWaiter('ember-repl::compile');
 
 type Input = string | undefined | null;
 
@@ -66,6 +66,12 @@ export function Compiled(
 
     let compiler = owner.lookup('service:ember-repl/compiler');
 
+    assert(`Expected to find the compiler service at 'ember-repl/compiler'`, compiler);
+    assert(
+      `Expcected the service at 'ember-repl/compiler' to be an instance of the Compiler Service`,
+      compiler instanceof Compiler
+    );
+
     if (input) {
       compiler.compile(input, {
         // narrowing is hard here, but this is an implementation detail
@@ -74,11 +80,9 @@ export function Compiled(
           result.current = component;
           ready.set(true);
           error.set(null);
-          compileWaiter.endAsync(token);
         },
         onError: async (e) => {
           error.set(e);
-          compileWaiter.endAsync(token);
         },
         onCompileStart: async () => {
           ready.set(false);

@@ -51,10 +51,16 @@ async function compile(message: NonNullable<object>) {
 
   switch (format) {
     case 'gjs':
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       return compileGJS(message);
     case 'hbs':
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       return compileHBS(message);
     case 'glimdown':
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       return compileGDM(message);
     default:
       debug(`Invalid format. Allowed: gjs, hbs, glimdown`);
