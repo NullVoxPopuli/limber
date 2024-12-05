@@ -145,8 +145,6 @@
     "rollup": "~4.25.0",
     "rollup-plugin-copy": "^3.5.0",
     "typescript": "^5.4.5",
-    "vite": "^6.0.2",
-    "vite-plugin-dts": "4.0.0-beta.1",
     "webpack": ">= 5.92.0"
   },
   "volta": {
