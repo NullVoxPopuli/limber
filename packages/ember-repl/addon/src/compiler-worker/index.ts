@@ -1,6 +1,6 @@
 import { PWBWorker } from 'promise-worker-bi';
 
-import { compileGDM, compileGJS, compileHBS } from './formats.ts';
+import { compileGJS, compileHBS } from './formats.ts';
 import { debug } from './log.ts';
 import { getString } from './util.ts';
 
@@ -60,6 +60,7 @@ async function compile(message: NonNullable<object>) {
       return compileHBS(message);
     case 'glimdown':
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // TODO: Call out to markdown worker
       // @ts-ignore
       return compileGDM(message);
     default:

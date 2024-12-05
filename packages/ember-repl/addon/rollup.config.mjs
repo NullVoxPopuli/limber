@@ -2,6 +2,7 @@ import { Addon } from "@embroider/addon-dev/rollup";
 
 import alias from "@rollup/plugin-alias";
 import { babel } from "@rollup/plugin-babel";
+import commonjs from "@rollup/plugin-commonjs";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import { defineConfig } from "rollup";
 
@@ -39,28 +40,16 @@ function bundledEmber() {
   ]);
 }
 
-export default defineConfig([
-  // {
-  //   output: browser.output(),
-  //   plugins: [
-  //     browser.publicEntrypoints(["**/*.js"]),
-  //     browser.appReexports(["./services/ember-repl/compiler.js"]),
-  //     babel({
-  //       extensions: [".js", ".gjs", ".ts", ".gts"],
-  //       babelHelpers: "bundled",
-  //     }),
-  //     browser.dependencies(),
-  //   ],
-  // },
-  {
-    input: "src/compiler-worker/index.ts",
+function worker(input, out) {
+  return {
+    input: input,
     external: [],
     output: {
       sourcemap: true,
       format: "es",
       hoistTransitiveImports: false,
       inlineDynamicImports: true,
-      file: "dist/compiler-worker.js",
+      file: out,
     },
     plugins: [
       babel({
@@ -69,22 +58,41 @@ export default defineConfig([
       }),
       bundledEmber(),
       nodeResolve(),
+      // unified>extends
+      commonjs(),
+    ],
+  };
+}
+
+export default defineConfig([
+  {
+    output: browser.output(),
+    plugins: [
+      browser.publicEntrypoints(["**/*.js"]),
+      browser.appReexports(["./services/ember-repl/compiler.js"]),
+      babel({
+        extensions: [".js", ".gjs", ".ts", ".gts"],
+        babelHelpers: "bundled",
+      }),
+      browser.dependencies(),
     ],
   },
-  // {
-  //   input: "src/service-worker/index.ts",
-  //   output: {
-  //     sourcemap: true,
-  //     format: "es",
-  //     hoistTransitiveImports: false,
-  //     file: "dist/service-worker.js",
-  //   },
-  //   plugins: [
-  //     babel({
-  //       extensions: [".js", ".gjs", ".ts", ".gts"],
-  //       babelHelpers: "bundled",
-  //     }),
-  //     bundledEmber(),
-  //   ],
-  // },
+  worker("src/compiler-worker/index.ts", "dist/compiler-worker.js"),
+  worker("src/markdown-worker/index.ts", "dist/markdown-worker.js"),
+  {
+    input: "src/service-worker/index.ts",
+    output: {
+      sourcemap: true,
+      format: "es",
+      hoistTransitiveImports: false,
+      file: "dist/service-worker.js",
+    },
+    plugins: [
+      babel({
+        extensions: [".js", ".gjs", ".ts", ".gts"],
+        babelHelpers: "bundled",
+      }),
+      bundledEmber(),
+    ],
+  },
 ]);

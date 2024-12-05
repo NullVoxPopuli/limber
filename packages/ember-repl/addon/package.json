@@ -12,20 +12,6 @@
   },
   "license": "MIT",
   "author": "NullVoxPopuli",
-  "typesVersions": {
-    "*": {
-      "test-support": [
-        "declarations/test-support/index.d.ts"
-      ],
-      "markdown/parse": [
-        "./declarations/compile/markdown-to-ember.d.ts"
-      ],
-      "*": [
-        "declarations/*",
-        "declarations/*/index.d.ts"
-      ]
-    }
-  },
   "exports": {
     ".": {
       "types": "./declarations/browser/index.d.ts",
@@ -35,7 +21,11 @@
       "types": "./declarations/compiler-worker/index.d.ts",
       "default": "./dist/compiler-worker/index.js"
     },
-    "./service-worker": {
+    "./workers/markdown": {
+      "types": "./declarations/markdown-worker/index.d.ts",
+      "default": "./dist/markdown-worker/index.js"
+    },
+    "./sw": {
       "types": "./declarations/service-worker/index.d.ts",
       "default": "./dist/service-worker/index.js"
     },
@@ -50,7 +40,6 @@
   "scripts": {
     "build": "rm -rf dist declarations && concurrently 'pnpm:build:*'",
     "build:browser": "rollup --config",
-    "build:workers": "vite build",
     "build:types": "tsc --emitDeclarationOnly --noEmit false",
     "start": "vite build --watch",
     "lint:types": "tsc --noEmit",
