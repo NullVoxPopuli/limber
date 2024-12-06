@@ -62,7 +62,7 @@
     "@babel/plugin-syntax-decorators": "^7.25.7",
     "@babel/plugin-transform-typescript": "^7.25.7",
     "@babel/preset-typescript": "^7.25.7",
-    "@ember/test-waiters": "^3.1.0",
+    "@ember/test-waiters": "^4.0.0",
     "@embroider/addon-dev": "^5.0.0",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",

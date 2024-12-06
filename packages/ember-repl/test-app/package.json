@@ -38,7 +38,7 @@
     "@ember/optional-features": "^2.2.0",
     "@ember/string": "^4.0.0",
     "@ember/test-helpers": "^4.0.4",
-    "@ember/test-waiters": "^3.1.0",
+    "@ember/test-waiters": "^4.0.0",
     "@embroider/broccoli-side-watch": "0.0.2-unstable.ba9fd29",
     "@embroider/compat": "3.6.5",
     "@embroider/core": "3.4.19",
