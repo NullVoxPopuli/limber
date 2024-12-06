@@ -146,7 +146,7 @@
     "ember-element-helper": "^0.8.5",
     "ember-focus-trap": "^1.1.1",
     "ember-modifier": "^4.1.0",
-    "ember-primitives": "^0.27.1",
+    "ember-primitives": "^0.23.1",
     "ember-repl": "workspace:*",
     "ember-resources": "^7.0.3",
     "ember-statechart-component": "7.1.0",
