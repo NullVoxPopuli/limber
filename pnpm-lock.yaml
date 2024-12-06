@@ -239,16 +239,16 @@ importers:
         version: 2.0.0(@glint/template@1.4.1-unstable.ff9ea6c)(ember-source@6.0.1(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.ff9ea6c)(rsvp@4.8.5)(webpack@5.95.0))(rollup@4.25.0)(webpack@5.95.0)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.5.1
-        version: 6.6.0
+        version: 6.7.1
       '@fortawesome/free-brands-svg-icons':
         specifier: ^6.5.1
-        version: 6.6.0
+        version: 6.7.1
       '@fortawesome/free-regular-svg-icons':
         specifier: ^6.5.1
-        version: 6.6.0
+        version: 6.7.1
       '@fortawesome/free-solid-svg-icons':
         specifier: ^6.5.1
-        version: 6.6.0
+        version: 6.7.1
       '@glint/core':
         specifier: 1.4.1-unstable.ff9ea6c
         version: 1.4.1-unstable.ff9ea6c(typescript@5.6.3)
@@ -537,16 +537,16 @@ importers:
         version: 2.0.0(@glint/template@1.4.1-unstable.ff9ea6c)(ember-source@6.0.1(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.ff9ea6c)(rsvp@4.8.5)(webpack@5.95.0))(rollup@4.25.0)(webpack@5.95.0)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.5.1
-        version: 6.6.0
+        version: 6.7.1
       '@fortawesome/free-brands-svg-icons':
         specifier: ^6.5.1
-        version: 6.6.0
+        version: 6.7.1
       '@fortawesome/free-regular-svg-icons':
         specifier: ^6.5.1
-        version: 6.6.0
+        version: 6.7.1
       '@fortawesome/free-solid-svg-icons':
         specifier: ^6.5.1
-        version: 6.6.0
+        version: 6.7.1
       '@glint/core':
         specifier: 1.4.1-unstable.ff9ea6c
         version: 1.4.1-unstable.ff9ea6c(typescript@5.6.3)
@@ -860,16 +860,16 @@ importers:
         version: 2.0.0(@glint/template@1.4.1-unstable.ff9ea6c)(ember-source@6.0.1(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.ff9ea6c)(rsvp@4.8.5)(webpack@5.95.0))(rollup@4.25.0)(webpack@5.95.0)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.5.1
-        version: 6.6.0
+        version: 6.7.1
       '@fortawesome/free-brands-svg-icons':
         specifier: ^6.5.1
-        version: 6.6.0
+        version: 6.7.1
       '@fortawesome/free-regular-svg-icons':
         specifier: ^6.5.1
-        version: 6.6.0
+        version: 6.7.1
       '@fortawesome/free-solid-svg-icons':
         specifier: ^6.5.1
-        version: 6.6.0
+        version: 6.7.1
       decorator-transforms:
         specifier: ^2.3.0
         version: 2.3.0(@babel/core@7.26.0)
@@ -1057,16 +1057,16 @@ importers:
         version: 2.0.0(@glint/template@1.4.1-unstable.ff9ea6c)(ember-source@6.0.1(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.ff9ea6c)(rsvp@4.8.5)(webpack@5.95.0))(rollup@4.25.0)(webpack@5.95.0)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.5.1
-        version: 6.6.0
+        version: 6.7.1
       '@fortawesome/free-brands-svg-icons':
         specifier: ^6.5.1
-        version: 6.6.0
+        version: 6.7.1
       '@fortawesome/free-regular-svg-icons':
         specifier: ^6.5.1
-        version: 6.6.0
+        version: 6.7.1
       '@fortawesome/free-solid-svg-icons':
         specifier: ^6.5.1
-        version: 6.6.0
+        version: 6.7.1
       '@glimmer/component':
         specifier: ^2.0.0
         version: 2.0.0
@@ -3887,24 +3887,24 @@ packages:
     peerDependencies:
       ember-source: '>= 6.0.1'
 
-  '@fortawesome/fontawesome-common-types@6.6.0':
-    resolution: {integrity: sha512-xyX0X9mc0kyz9plIyryrRbl7ngsA9jz77mCZJsUkLl+ZKs0KWObgaEBoSgQiYWAsSmjz/yjl0F++Got0Mdp4Rw==}
+  '@fortawesome/fontawesome-common-types@6.7.1':
+    resolution: {integrity: sha512-gbDz3TwRrIPT3i0cDfujhshnXO9z03IT1UKRIVi/VEjpNHtSBIP2o5XSm+e816FzzCFEzAxPw09Z13n20PaQJQ==}
     engines: {node: '>=6'}
 
-  '@fortawesome/fontawesome-svg-core@6.6.0':
-    resolution: {integrity: sha512-KHwPkCk6oRT4HADE7smhfsKudt9N/9lm6EJ5BVg0tD1yPA5hht837fB87F8pn15D8JfTqQOjhKTktwmLMiD7Kg==}
+  '@fortawesome/fontawesome-svg-core@6.7.1':
+    resolution: {integrity: sha512-8dBIHbfsKlCk2jHQ9PoRBg2Z+4TwyE3vZICSnoDlnsHA6SiMlTwfmW6yX0lHsRmWJugkeb92sA0hZdkXJhuz+g==}
     engines: {node: '>=6'}
 
-  '@fortawesome/free-brands-svg-icons@6.6.0':
-    resolution: {integrity: sha512-1MPD8lMNW/earme4OQi1IFHtmHUwAKgghXlNwWi9GO7QkTfD+IIaYpIai4m2YJEzqfEji3jFHX1DZI5pbY/biQ==}
+  '@fortawesome/free-brands-svg-icons@6.7.1':
+    resolution: {integrity: sha512-nJR76eqPzCnMyhbiGf6X0aclDirZriTPRcFm1YFvuupyJOGwlNF022w3YBqu+yrHRhnKRpzFX+8wJKqiIjWZkA==}
     engines: {node: '>=6'}
 
-  '@fortawesome/free-regular-svg-icons@6.6.0':
-    resolution: {integrity: sha512-Yv9hDzL4aI73BEwSEh20clrY8q/uLxawaQ98lekBx6t9dQKDHcDzzV1p2YtBGTtolYtNqcWdniOnhzB+JPnQEQ==}
+  '@fortawesome/free-regular-svg-icons@6.7.1':
+    resolution: {integrity: sha512-e13cp+bAx716RZOTQ59DhqikAgETA9u1qTBHO3e3jMQQ+4H/N1NC1ZVeFYt1V0m+Th68BrEL1/X6XplISutbXg==}
     engines: {node: '>=6'}
 
-  '@fortawesome/free-solid-svg-icons@6.6.0':
-    resolution: {integrity: sha512-IYv/2skhEDFc2WGUcqvFJkeK39Q+HyPf5GHUrT/l2pKbtgEIv1al1TKd6qStR5OIwQdN1GZP54ci3y4mroJWjA==}
+  '@fortawesome/free-solid-svg-icons@6.7.1':
+    resolution: {integrity: sha512-BTKc0b0mgjWZ2UDKVgmwaE0qt0cZs6ITcDgjrti5f/ki7aF5zs+N91V6hitGo3TItCFtnKg6cUVGdTmBFICFRg==}
     engines: {node: '>=6'}
 
   '@gar/promisify@1.1.3':
@@ -13403,7 +13403,7 @@ snapshots:
 
   '@fortawesome/ember-fontawesome@2.0.0(@glint/template@1.4.1-unstable.ff9ea6c)(ember-source@6.0.1(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.ff9ea6c)(rsvp@4.8.5)(webpack@5.95.0))(rollup@4.25.0)(webpack@5.95.0)':
     dependencies:
-      '@fortawesome/fontawesome-svg-core': 6.6.0
+      '@fortawesome/fontawesome-svg-core': 6.7.1
       '@rollup/plugin-node-resolve': 15.3.0(rollup@4.25.0)
       array-unique: 0.3.2
       broccoli-file-creator: 2.1.1
@@ -13426,23 +13426,23 @@ snapshots:
       - supports-color
       - webpack
 
-  '@fortawesome/fontawesome-common-types@6.6.0': {}
+  '@fortawesome/fontawesome-common-types@6.7.1': {}
 
-  '@fortawesome/fontawesome-svg-core@6.6.0':
+  '@fortawesome/fontawesome-svg-core@6.7.1':
     dependencies:
-      '@fortawesome/fontawesome-common-types': 6.6.0
+      '@fortawesome/fontawesome-common-types': 6.7.1
 
-  '@fortawesome/free-brands-svg-icons@6.6.0':
+  '@fortawesome/free-brands-svg-icons@6.7.1':
     dependencies:
-      '@fortawesome/fontawesome-common-types': 6.6.0
+      '@fortawesome/fontawesome-common-types': 6.7.1
 
-  '@fortawesome/free-regular-svg-icons@6.6.0':
+  '@fortawesome/free-regular-svg-icons@6.7.1':
     dependencies:
-      '@fortawesome/fontawesome-common-types': 6.6.0
+      '@fortawesome/fontawesome-common-types': 6.7.1
 
-  '@fortawesome/free-solid-svg-icons@6.6.0':
+  '@fortawesome/free-solid-svg-icons@6.7.1':
     dependencies:
-      '@fortawesome/fontawesome-common-types': 6.6.0
+      '@fortawesome/fontawesome-common-types': 6.7.1
 
   '@gar/promisify@1.1.3': {}
 
