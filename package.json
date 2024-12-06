@@ -41,6 +41,7 @@
     "overrides": {
       "@nullvoxpopuli/eslint-configs": "^4.0.0",
       "@glimmer/component": "^2.0.0",
+      "@ember/test-waiters": "^4.0.0",
       "ember-element-helper": "^0.8.5",
       "ember-auto-import": "^2.9.0",
       "ember-repl": "workspace:*",
