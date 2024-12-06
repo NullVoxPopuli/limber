@@ -26,8 +26,8 @@
     "@glint/template": "1.4.1-unstable.ff9ea6c",
     "ember-async-data": "1.0.3",
     "ember-modifier": "^4.1.0",
-    "ember-primitives": "^0.23.1",
-    "ember-resources": "^7.0.1",
+    "ember-primitives": "^0.27.1",
+    "ember-resources": "^7.0.3",
     "limber-ui": "workspace:*"
   },
   "devDependencies": {
@@ -48,7 +48,7 @@
     "@typescript-eslint/parser": "^8.8.0",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^9.0.1",
-    "ember-auto-import": "^2.9.0",
+    "ember-auto-import": "^2.10.0",
     "ember-cli": "~5.12.0",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-dependency-checker": "^3.3.2",

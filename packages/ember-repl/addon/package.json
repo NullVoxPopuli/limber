@@ -85,7 +85,7 @@
     "common-tags": "^1.8.2",
     "content-tag": "^3.0.0",
     "decorator-transforms": "^2.3.0",
-    "ember-resources": "^7.0.1",
+    "ember-resources": "^7.0.3",
     "line-column": "^1.0.2",
     "magic-string": "^0.30.6",
     "mdast": "^3.0.0",
