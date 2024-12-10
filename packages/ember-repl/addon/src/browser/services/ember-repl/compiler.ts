@@ -159,7 +159,7 @@ export default class Compiler extends Service {
      */
     let blob = new Blob([file]);
     // handled by the service worker's fetch handler
-    let module = await import(`/repl/module:${blob}`);
+    let module = await import(/* @vite-ignore */ /* webpackIgnore: true */ `/repl/module:${blob}`);
     let result = module.default as CompileResult;
 
     if (result.error) {

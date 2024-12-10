@@ -41,7 +41,7 @@
     "build": "rm -rf dist declarations && concurrently 'pnpm:build:*'",
     "build:browser": "rollup --config",
     "build:types": "tsc --emitDeclarationOnly --noEmit false",
-    "start": "vite build --watch",
+    "start": "pnpm build:browser --watch",
     "lint:types": "tsc --noEmit",
     "lint:fix": "pnpm -w exec lint fix",
     "lint": "pnpm -w exec lint",
