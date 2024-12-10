@@ -1,8 +1,8 @@
 import Application from '@ember/application';
 
-import loadInitializers from 'ember-load-initializers';
 import Resolver from 'ember-resolver';
-import config from 'test-app/config/environment';
+
+import config from './config/environment';
 
 // @babel/traverse (from babel-plugin-ember-template-imports)
 // accesses process.....
@@ -19,5 +19,3 @@ export default class App extends Application {
   podModulePrefix = config.podModulePrefix;
   Resolver = Resolver;
 }
-
-loadInitializers(App, config.modulePrefix);

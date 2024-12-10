@@ -8,6 +8,8 @@
     "skipLibCheck": true,
     "declaration": true,
     "allowImportingTsExtensions": true,
-    "declarationDir": "declarations"
+    "declarationDir": "declarations",
+    "lib": ["WebWorker", "DOM", "ESNext"],
+    "types": ["../test-app/node_modules/ember-source/types/stable"],
   }
 }

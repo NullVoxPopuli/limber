@@ -1,15 +1,16 @@
 import { getSettledState, resetOnerror, setApplication } from '@ember/test-helpers';
 import * as QUnit from 'qunit';
 import { setup } from 'qunit-dom';
-import { start } from 'ember-qunit';
+import { start as qunitStart } from 'ember-qunit';
 
-import Application from 'test-app/app';
-import config from 'test-app/config/environment';
+import Application from '../app/app';
+import config from '../app/config/environment';
 
-setApplication(Application.create(config.APP));
-
-setup(QUnit.assert);
 QUnit.testDone(resetOnerror);
 Object.assign(window, { getSettledState });
 
-start();
+export function start() {
+  setApplication(Application.create(config.APP));
+  setup(QUnit.assert);
+  qunitStart();
+}

@@ -2,7 +2,7 @@
 
 module.exports = function (environment) {
   const ENV = {
-    modulePrefix: 'test-app',
+    modulePrefix: 'ember-repl-test-app',
     environment,
     rootURL: '/',
     locationType: 'history',
