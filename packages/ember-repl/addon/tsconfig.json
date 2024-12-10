@@ -9,6 +9,7 @@
     "declaration": true,
     "allowImportingTsExtensions": true,
     "declarationDir": "declarations",
-    "lib": ["WebWorker", "DOM", "ESNext"]
+    "lib": ["WebWorker", "DOM", "ESNext"],
+    "types": ["../test-app/node_modules/ember-source/types/stable"],
   }
 }
