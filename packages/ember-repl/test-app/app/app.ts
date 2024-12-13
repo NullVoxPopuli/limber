@@ -1,8 +1,8 @@
 import Application from '@ember/application';
-
-import loadInitializers from 'ember-load-initializers';
+import compatModules from '@embroider/virtual/compat-modules';
 import Resolver from 'ember-resolver';
-import config from 'test-app/config/environment';
+import loadInitializers from 'ember-load-initializers';
+import config from './config/environment';
 
 // @babel/traverse (from babel-plugin-ember-template-imports)
 // accesses process.....
@@ -17,7 +17,7 @@ Object.assign(window, {
 export default class App extends Application {
   modulePrefix = config.modulePrefix;
   podModulePrefix = config.podModulePrefix;
-  Resolver = Resolver;
+  Resolver = Resolver.withModules(compatModules);
 }
 
-loadInitializers(App, config.modulePrefix);
+loadInitializers(App, config.modulePrefix, compatModules);
