@@ -43,7 +43,9 @@ function bundledEmber() {
       find: /(@?ember.+)/,
       replacement: "$1",
       customResolver(source) {
-        return lookup[source];
+        let result = lookup[source];
+
+        return result;
       },
     },
   ]);

@@ -1367,7 +1367,7 @@ importers:
         specifier: ^1.8.2
         version: 1.8.2
       content-tag:
-        specifier: ^3.0.0
+        specifier: 3.0.0
         version: 3.0.0(patch_hash=mxrqbd7koi4jhoh4wmlojs3awa)
       decorator-transforms:
         specifier: ^2.3.0
