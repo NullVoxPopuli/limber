@@ -11,7 +11,7 @@
   "license": "MIT",
   "author": "NullVoxPopuli",
   "scripts": {
-    "build": "ember build --environment=production",
+    "build:production": "ember build --environment=production",
     "lint": "pnpm -w exec lint",
     "lint:types": "glint",
     "lint:fix": "pnpm -w exec lint fix",

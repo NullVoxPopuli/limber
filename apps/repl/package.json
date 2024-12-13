@@ -18,7 +18,7 @@
   "scripts": {
     "ember:canary": "npx ember-source-channel-url canary --write",
     "ember:beta": "npx ember-source-channel-url beta --write",
-    "build": "ember build --environment=production",
+    "build:production": "ember build --environment=production",
     "lint:types": "glint",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "ember serve -p 4201",
