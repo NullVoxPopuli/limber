@@ -80,7 +80,8 @@
       ]
     },
     "patchedDependencies": {
-      "browserslist-generator": "patches/browserslist-generator.patch"
+      "browserslist-generator": "patches/browserslist-generator.patch",
+      "content-tag@3.0.0": "patches/content-tag@3.0.0.patch"
     }
   }
 }

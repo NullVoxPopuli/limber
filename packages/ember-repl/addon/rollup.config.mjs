@@ -23,9 +23,18 @@ const lookup = {
   "@ember/template-factory": pkg("@ember/template-factory/index.js"),
   "@ember/helper": pkg("@ember/helper/index.js"),
   "@ember/modifier": pkg("@ember/modifier/index.js"),
+  "@ember/template-factory": pkg("@ember/template-factory/index.js"),
   "@ember/component": pkg("@ember/component/index.js"),
   "@ember/component/template-only": pkg("@ember/component/template-only.js"),
-  "ember-template-compiler": ember("ember-template-compiler.js"),
+  // "ember-template-compiler": ember("ember-template-compiler.js"),
+};
+
+const output = {
+  sourcemap: true,
+  format: "es",
+  hoistTransitiveImports: false,
+  // moduleSideEffects: false,
+  interop: "default",
 };
 
 function bundledEmber() {
@@ -45,9 +54,7 @@ function worker(input, out) {
     input: input,
     external: [],
     output: {
-      sourcemap: true,
-      format: "es",
-      hoistTransitiveImports: false,
+      ...output,
       inlineDynamicImports: true,
       file: out,
     },
@@ -82,9 +89,7 @@ export default defineConfig([
   {
     input: "src/service-worker/index.ts",
     output: {
-      sourcemap: true,
-      format: "es",
-      hoistTransitiveImports: false,
+      ...output,
       file: "dist/service-worker.js",
     },
     plugins: [

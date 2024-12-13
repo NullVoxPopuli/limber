@@ -20,15 +20,15 @@
     },
     "./workers/compiler": {
       "types": "./declarations/compiler-worker/index.d.ts",
-      "default": "./dist/compiler-worker/index.js"
+      "default": "./dist/compiler-worker.js"
     },
     "./workers/markdown": {
       "types": "./declarations/markdown-worker/index.d.ts",
-      "default": "./dist/markdown-worker/index.js"
+      "default": "./dist/markdown-worker.js"
     },
     "./sw": {
       "types": "./declarations/service-worker/index.d.ts",
-      "default": "./dist/service-worker/index.js"
+      "default": "./dist/service-worker.js"
     },
     "./addon-main.js": "./addon-main.cjs"
   },

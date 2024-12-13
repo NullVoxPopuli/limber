@@ -1,0 +1,15 @@
+diff --git a/package.json b/package.json
+index d3a1e17d49ada142061ec224ef5cf8376075e2bd..a8ebf0ad3c20ba4bdd4dfe908279551183626fca 100644
+--- a/package.json
++++ b/package.json
+@@ -14,6 +14,10 @@
+         "types": "./index.d.ts",
+         "default": "./pkg/standalone.js"
+       },
++      "./standalone": {
++        "types": "./index.d.ts",
++        "default": "./pkg/standalone.js"
++      },
+       "default": {
+         "types": "./index.d.cts",
+         "default": "./pkg/node.cjs"

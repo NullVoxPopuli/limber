@@ -33,6 +33,9 @@ patchedDependencies:
   browserslist-generator:
     hash: n3ito36vhlo4nnnxxzk4jueqrq
     path: patches/browserslist-generator.patch
+  content-tag@3.0.0:
+    hash: mxrqbd7koi4jhoh4wmlojs3awa
+    path: patches/content-tag@3.0.0.patch
 
 importers:
 
@@ -1365,7 +1368,7 @@ importers:
         version: 1.8.2
       content-tag:
         specifier: ^3.0.0
-        version: 3.0.0
+        version: 3.0.0(patch_hash=mxrqbd7koi4jhoh4wmlojs3awa)
       decorator-transforms:
         specifier: ^2.3.0
         version: 2.3.0(@babel/core@7.26.0)
@@ -1565,6 +1568,9 @@ importers:
       '@babel/standalone':
         specifier: ^7.26.2
         version: 7.26.4
+      '@ember/test-waiters':
+        specifier: ^4.0.0
+        version: 4.0.0(@glint/template@1.4.1-unstable.34c4510)
       '@shikijs/rehype':
         specifier: ^1.21.1
         version: 1.24.1
@@ -1579,7 +1585,7 @@ importers:
         version: 1.8.2
       content-tag:
         specifier: ^3.0.0
-        version: 3.0.0
+        version: 3.0.0(patch_hash=mxrqbd7koi4jhoh4wmlojs3awa)
       ember-modifier:
         specifier: ^4.1.0
         version: 4.2.0(@babel/core@7.26.0)(ember-source@6.1.0-beta.1(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.97.1))
@@ -18636,7 +18642,7 @@ snapshots:
 
   content-tag@2.0.3: {}
 
-  content-tag@3.0.0: {}
+  content-tag@3.0.0(patch_hash=mxrqbd7koi4jhoh4wmlojs3awa): {}
 
   content-type@1.0.5: {}
 
@@ -20129,7 +20135,7 @@ snapshots:
   ember-template-imports@4.2.0:
     dependencies:
       broccoli-stew: 3.0.0
-      content-tag: 3.0.0
+      content-tag: 3.0.0(patch_hash=mxrqbd7koi4jhoh4wmlojs3awa)
       ember-cli-version-checker: 5.1.2
     transitivePeerDependencies:
       - supports-color

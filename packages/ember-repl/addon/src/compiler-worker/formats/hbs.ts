@@ -6,8 +6,8 @@
 // ember-template-compiler defines them in AMD/requirejs
 import { precompileJSON } from '@glimmer/compiler';
 import { getTemplateLocals } from '@glimmer/syntax';
-import { setComponentTemplate } from '@ember/component';
-import templateOnlyComponent from '@ember/component/template-only';
+// import { setComponentTemplate } from '@ember/component';
+// import templateOnlyComponent from '@ember/component/template-only';
 import { array, concat, fn, get, hash } from '@ember/helper';
 import { on } from '@ember/modifier';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -31,10 +31,10 @@ export function compileHBS(template: string, options: CompileTemplateOptions = {
   let error: undefined | Error;
 
   try {
-    component = setComponentTemplate(
-      compileTemplate(template, { moduleName: options.moduleName || name, ...options }),
-      templateOnlyComponent(options.moduleName || name)
-    ) as ComponentLike;
+    // component = setComponentTemplate(
+    //   compileTemplate(template, { moduleName: options.moduleName || name, ...options }),
+    //   templateOnlyComponent(options.moduleName || name)
+    // ) as ComponentLike;
   } catch (e) {
     error = e as Error | undefined;
   }

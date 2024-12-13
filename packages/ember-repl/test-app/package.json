@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@babel/standalone": "^7.26.2",
+    "@ember/test-waiters": "^4.0.0",
     "@shikijs/rehype": "^1.21.1",
     "@types/unist": "^3.0.2",
     "buffer": "^6.0.3",
@@ -41,7 +42,6 @@
     "extends": "../../../package.json"
   },
   "devDependencies": {
-    "@nullvoxpopuli/limber-untyped": "workspace:^0.0.1",
     "@babel/core": "^7.26.0",
     "@babel/eslint-parser": "^7.25.9",
     "@babel/plugin-transform-runtime": "^7.25.7",
@@ -71,6 +71,7 @@
     "@glint/environment-ember-loose": "1.4.1-unstable.34c4510",
     "@glint/environment-ember-template-imports": "1.4.1-unstable.34c4510",
     "@glint/template": "1.4.1-unstable.34c4510",
+    "@nullvoxpopuli/limber-untyped": "workspace:^0.0.1",
     "@rollup/plugin-babel": "^6.0.4",
     "@tsconfig/ember": "^3.0.8",
     "@types/eslint__js": "^8.42.3",

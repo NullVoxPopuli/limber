@@ -1,4 +1,4 @@
-import * as compiler from 'ember-template-compiler';
+import * as compiler from 'ember-source/dist/ember-template-compiler.js';
 
 import type { ComponentLike } from '@glint/template';
 
@@ -54,7 +54,7 @@ let fetchingPromise: Promise<any>;
 
 async function preprocess(input: string, name: string): Promise<string> {
   if (!fetchingPromise) {
-    fetchingPromise = import('content-tag');
+    fetchingPromise = import('content-tag/standalone');
   }
 
   if (!processor) {
@@ -88,7 +88,7 @@ async function transform(
     // import('@babel/traverse'),
     // import('@babel/generator'),
     import('decorator-transforms'),
-    import('babel-plugin-ember-template-compilation'),
+    import('babel-plugin-ember-template-compilation/browser'),
   ]);
 
   // These libraries are compiled incorrectly for cjs<->ESM compat
