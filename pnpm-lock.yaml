@@ -1790,7 +1790,7 @@ importers:
         version: 6.35.0
       '@lezer/generator':
         specifier: ^1.6.0
-        version: 1.7.1
+        version: 1.7.2
       '@lezer/highlight':
         specifier: ^1.2.1
         version: 1.2.1
@@ -1916,7 +1916,7 @@ importers:
         version: 6.35.0
       '@lezer/generator':
         specifier: ^1.6.0
-        version: 1.7.1
+        version: 1.7.2
       '@nullvoxpopuli/eslint-configs':
         specifier: ^4.0.0
         version: 4.2.0(@babel/core@7.26.0)(@babel/eslint-parser@7.25.9(@babel/core@7.26.0)(eslint@8.57.1))(@babel/plugin-proposal-decorators@7.25.9(@babel/core@7.26.0))(@types/eslint@8.56.12)(@typescript-eslint/eslint-plugin@8.13.0(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3))(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint-plugin-ember@12.3.1(@babel/core@7.26.0)(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint-plugin-qunit@8.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)(typescript@5.6.3)
@@ -2043,7 +2043,7 @@ importers:
         version: link:../../-infra
       '@lezer/generator':
         specifier: ^1.6.0
-        version: 1.7.1
+        version: 1.7.2
       '@nullvoxpopuli/eslint-configs':
         specifier: ^4.0.0
         version: 4.2.0(@babel/core@7.26.0)(@babel/eslint-parser@7.25.9(@babel/core@7.26.0)(eslint@8.57.1))(@babel/plugin-proposal-decorators@7.25.9(@babel/core@7.26.0))(@types/eslint@8.56.12)(@typescript-eslint/eslint-plugin@8.13.0(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3))(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint-plugin-ember@12.3.1(@babel/core@7.26.0)(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint-plugin-qunit@8.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)(typescript@5.6.3)
@@ -2119,7 +2119,7 @@ importers:
         version: 1.2.3
       '@lezer/generator':
         specifier: ^1.6.0
-        version: 1.7.1
+        version: 1.7.2
       '@nullvoxpopuli/eslint-configs':
         specifier: ^4.0.0
         version: 4.2.0(@babel/core@7.26.0)(@babel/eslint-parser@7.25.9(@babel/core@7.26.0)(eslint@8.57.1))(@babel/plugin-proposal-decorators@7.25.9(@babel/core@7.26.0))(@types/eslint@8.56.12)(@typescript-eslint/eslint-plugin@8.13.0(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3))(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint-plugin-ember@12.3.1(@babel/core@7.26.0)(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint-plugin-qunit@8.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)(typescript@5.6.3)
@@ -2219,7 +2219,7 @@ importers:
         version: link:../../-infra
       '@lezer/generator':
         specifier: ^1.6.0
-        version: 1.7.1
+        version: 1.7.2
       '@nullvoxpopuli/eslint-configs':
         specifier: ^4.0.0
         version: 4.2.0(@babel/core@7.26.0)(@babel/eslint-parser@7.25.9(@babel/core@7.26.0)(eslint@8.57.1))(@babel/plugin-proposal-decorators@7.25.9(@babel/core@7.26.0))(@types/eslint@8.56.12)(@typescript-eslint/eslint-plugin@8.13.0(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3))(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint-plugin-ember@12.3.1(@babel/core@7.26.0)(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint-plugin-qunit@8.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)(typescript@5.6.3)
@@ -2292,7 +2292,7 @@ importers:
         version: 1.2.3
       '@lezer/generator':
         specifier: ^1.6.0
-        version: 1.7.1
+        version: 1.7.2
       '@nullvoxpopuli/eslint-configs':
         specifier: ^4.0.0
         version: 4.2.0(@babel/core@7.26.0)(@babel/eslint-parser@7.25.9(@babel/core@7.26.0)(eslint@8.57.1))(@babel/plugin-proposal-decorators@7.25.9(@babel/core@7.26.0))(@types/eslint@8.56.12)(@typescript-eslint/eslint-plugin@8.13.0(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3))(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint-plugin-ember@12.3.1(@babel/core@7.26.0)(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint-plugin-qunit@8.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)(typescript@5.6.3)
@@ -2428,7 +2428,7 @@ importers:
         version: 1.2.3
       '@lezer/generator':
         specifier: ^1.6.0
-        version: 1.7.1
+        version: 1.7.2
       '@nullvoxpopuli/eslint-configs':
         specifier: ^4.0.0
         version: 4.2.0(@babel/core@7.26.0)(@babel/eslint-parser@7.25.9(@babel/core@7.26.0)(eslint@8.57.1))(@babel/plugin-proposal-decorators@7.25.9(@babel/core@7.26.0))(@types/eslint@8.56.12)(@typescript-eslint/eslint-plugin@8.13.0(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3))(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint-plugin-ember@12.3.1(@babel/core@7.26.0)(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint-plugin-qunit@8.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)(typescript@5.6.3)
@@ -2543,7 +2543,7 @@ importers:
         version: 6.10.5
       '@lezer/generator':
         specifier: ^1.6.0
-        version: 1.7.1
+        version: 1.7.2
       '@nullvoxpopuli/eslint-configs':
         specifier: ^4.0.0
         version: 4.2.0(@babel/core@7.26.0)(@babel/eslint-parser@7.25.9(@babel/core@7.26.0)(eslint@8.57.1))(@babel/plugin-proposal-decorators@7.25.9(@babel/core@7.26.0))(@types/eslint@8.56.12)(@typescript-eslint/eslint-plugin@8.13.0(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3))(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint-plugin-ember@12.3.1(@babel/core@7.26.0)(@typescript-eslint/parser@8.13.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint-plugin-qunit@8.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)(typescript@5.6.3)
@@ -4113,8 +4113,8 @@ packages:
   '@lezer/css@1.1.9':
     resolution: {integrity: sha512-TYwgljcDv+YrV0MZFFvYFQHCfGgbPMR6nuqLabBdmZoFH3EP1gvw8t0vae326Ne3PszQkbXfVBjCnf3ZVCr0bA==}
 
-  '@lezer/generator@1.7.1':
-    resolution: {integrity: sha512-MgPJN9Si+ccxzXl3OAmCeZuUKw4XiPl4y664FX/hnnyG9CTqUPq65N3/VGPA2jD23D7QgMTtNqflta+cPN+5mQ==}
+  '@lezer/generator@1.7.2':
+    resolution: {integrity: sha512-CwgULPOPPmH54tv4gki18bElLCdJ1+FBC+nGVSVD08vFWDsMjS7KEjNTph9JOypDnet90ujN3LzQiW3CyVODNQ==}
     hasBin: true
 
   '@lezer/go@1.0.0':
@@ -12649,7 +12649,7 @@ snapshots:
 
   '@codemirror/buildhelper@1.0.2':
     dependencies:
-      '@lezer/generator': 1.7.1
+      '@lezer/generator': 1.7.2
       '@marijn/buildtool': 1.0.0
       '@marijn/testtool': 0.1.3
     transitivePeerDependencies:
@@ -13747,7 +13747,7 @@ snapshots:
       '@lezer/highlight': 1.2.1
       '@lezer/lr': 1.4.2
 
-  '@lezer/generator@1.7.1':
+  '@lezer/generator@1.7.2':
     dependencies:
       '@lezer/common': 1.2.3
       '@lezer/lr': 1.4.2
