@@ -1882,7 +1882,7 @@ importers:
         version: 1.3.10
       '@lezer/javascript':
         specifier: ^1.4.18
-        version: 1.4.19
+        version: 1.4.21
       '@lezer/lr':
         specifier: ^1.4.2
         version: 1.4.2
@@ -2091,7 +2091,7 @@ importers:
         version: 1.2.1
       '@lezer/javascript':
         specifier: ^1.4.18
-        version: 1.4.19
+        version: 1.4.21
       '@lezer/lr':
         specifier: ^1.4.2
         version: 1.4.2
@@ -2264,7 +2264,7 @@ importers:
         version: 1.2.1
       '@lezer/javascript':
         specifier: ^1.4.18
-        version: 1.4.19
+        version: 1.4.21
       '@lezer/lr':
         specifier: ^1.4.2
         version: 1.4.2
@@ -2403,7 +2403,7 @@ importers:
         version: 1.3.10
       '@lezer/javascript':
         specifier: ^1.4.18
-        version: 1.4.19
+        version: 1.4.21
       '@lezer/lr':
         specifier: ^1.4.2
         version: 1.4.2
@@ -2524,7 +2524,7 @@ importers:
         version: 1.3.10
       '@lezer/javascript':
         specifier: ^1.4.18
-        version: 1.4.19
+        version: 1.4.21
       '@lezer/lr':
         specifier: ^1.4.2
         version: 1.4.2
@@ -4131,6 +4131,9 @@ packages:
 
   '@lezer/javascript@1.4.19':
     resolution: {integrity: sha512-j44kbR1QL26l6dMunZ1uhKBFteVGLVCBGNUD2sUaMnic+rbTviVuoK0CD1l9FTW31EueWvFFswCKMH7Z+M3JRA==}
+
+  '@lezer/javascript@1.4.21':
+    resolution: {integrity: sha512-lL+1fcuxWYPURMM/oFZLEDm0XuLN128QPV+VuGtKpeaOGdcl9F2LYC3nh1S9LkPqx9M0mndZFdXCipNAZpzIkQ==}
 
   '@lezer/json@1.0.2':
     resolution: {integrity: sha512-xHT2P4S5eeCYECyKNPhr4cbEL9tc8w83SPwRC373o9uEdrvGKTZoJVAGxpOsZckMlEh9W23Pc72ew918RWQOBQ==}
@@ -13775,6 +13778,12 @@ snapshots:
       '@lezer/lr': 1.4.2
 
   '@lezer/javascript@1.4.19':
+    dependencies:
+      '@lezer/common': 1.2.3
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.2
+
+  '@lezer/javascript@1.4.21':
     dependencies:
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
