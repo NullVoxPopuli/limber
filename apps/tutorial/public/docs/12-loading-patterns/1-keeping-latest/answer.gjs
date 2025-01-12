@@ -50,7 +50,7 @@ export default class Demo extends Component {
       {{else}}
         {{! This block only matters during the initial request }}
 
-        {{#if this.rejest.isRejected}}
+        {{#if this.request.isRejected}}
           error loading initial data!
         {{else}}
           <pre> ... loading ... </pre>
