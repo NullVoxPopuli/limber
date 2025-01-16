@@ -36,11 +36,6 @@ export default class EditRoute extends Route {
     let hasFormat = qps.format !== undefined;
 
     if (!hasCode) {
-      console.warn(
-        'URL contained no document information in the SearchParams. ' +
-          'Assuming glimdown and using the default sample snippet.'
-      );
-
       /**
        * Default starting doc is
        * user-configurable.

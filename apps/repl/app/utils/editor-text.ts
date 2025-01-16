@@ -1,7 +1,7 @@
 /* eslint-disable ember/classic-decorator-no-classic-methods */
 import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
 import { inject as service } from '@ember/service';
-import { buildWaiter, waitForPromise } from '@ember/test-waiters';
+import { buildWaiter } from '@ember/test-waiters';
 import { isTesting, macroCondition } from '@embroider/macros';
 
 import { compressToEncodedURIComponent } from 'lz-string';
@@ -224,9 +224,16 @@ export class FileURIComponent {
       if (macroCondition(isTesting())) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         base ??= (this.router as any) /* private API? */?.location?.path;
+        // @ts-expect-error private api
+        base = base.split('?')[0];
       } else {
         base ??= window.location.pathname;
       }
+
+      /**
+       * At some point this added qps
+       * we don't want them though, so we'll strip them
+       */
 
       let next = `${base}?${qps}`;
 
