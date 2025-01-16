@@ -161,10 +161,11 @@ export class FileURIComponent {
   #frame?: number;
   #qps: URLSearchParams | undefined;
   #updateQPs = async (rawText: string, format: Format) => {
-    await waitForPromise(this.#_updateQPs(rawText, format));
+    waitForPromise(this.#_updateQPs(rawText, format));
   };
 
   #_updateQPs = async (rawText: string, format: Format) => {
+    console.debug('queueing QPs');
     if (this.#frame) cancelAnimationFrame(this.#frame);
 
     let encoded = compressToEncodedURIComponent(rawText);
@@ -182,35 +183,42 @@ export class FileURIComponent {
       ...qps,
     };
 
-    this.#frame = requestAnimationFrame(async () => {
-      if (isDestroyed(this) || isDestroying(this)) {
-        return;
-      }
+    return new Promise<void>((resolve) => {
+      this.#frame = requestAnimationFrame(async () => {
+        if (isDestroyed(this) || isDestroying(this)) {
+          resolve();
 
-      /**
-       * Debounce so we are kinder on the CPU
-       */
-      await new Promise((resolve) => setTimeout(resolve, DEBOUNCE_MS));
+          return;
+        }
 
-      if (isDestroyed(this) || isDestroying(this)) {
-        return;
-      }
+        /**
+         * Debounce so we are kinder on the CPU
+         */
+        await new Promise((resolve) => setTimeout(resolve, DEBOUNCE_MS));
 
-      // On initial load, if we call #updateQPs,
-      // we may not have a currentURL, because the first transition has yet to complete
-      let base = this.router.currentURL?.split('?')[0];
+        if (isDestroyed(this) || isDestroying(this)) {
+          resolve();
 
-      if (macroCondition(isTesting())) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        base ??= (this.router as any) /* private API? */?.location?.path;
-      } else {
-        base ??= window.location.pathname;
-      }
+          return;
+        }
 
-      let next = `${base}?${qps}`;
+        // On initial load, if we call #updateQPs,
+        // we may not have a currentURL, because the first transition has yet to complete
+        let base = this.router.currentURL?.split('?')[0];
 
-      this.router.replaceWith(next);
-      this.#text = rawText;
+        if (macroCondition(isTesting())) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          base ??= (this.router as any) /* private API? */?.location?.path;
+        } else {
+          base ??= window.location.pathname;
+        }
+
+        let next = `${base}?${qps}`;
+
+        this.router.replaceWith(next);
+        this.#text = rawText;
+        resolve();
+      });
     });
   };
 }

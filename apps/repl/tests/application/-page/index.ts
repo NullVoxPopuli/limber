@@ -52,7 +52,7 @@ export class Page extends PageObject {
 
     let url = currentURL();
 
-    assert(`Expected an URL, got ${url}`, url);
+    assert(`Expected an URL -- via currentURL(), got ${url}`, url);
 
     let [, search] = url.split('?');
     let query = new URLSearchParams(search);

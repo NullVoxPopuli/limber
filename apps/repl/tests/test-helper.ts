@@ -22,6 +22,9 @@ Object.assign(window, { getSettledState, getPendingWaiterState, currentURL, curr
 
 setup(QUnit.assert);
 
+QUnit.testStart(() => {
+  localStorage.clear();
+});
 QUnit.testDone(resetOnerror);
 
 start();
