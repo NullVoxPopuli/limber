@@ -151,6 +151,8 @@ export class FileURIComponent {
     if (macroCondition(isTesting())) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       base ??= (this.router as any) /* private API? */?.location;
+      // @ts-expect-error private api
+      base = base.split('?')[0];
     } else {
       base ??= window.location.toString();
     }
@@ -182,6 +184,7 @@ export class FileURIComponent {
     qps.delete('t');
     qps.set('format', formatFrom(format));
 
+    // @ts-expect-error this works
     if (this.#qps?.c === qps.get('c') && this.#qps?.format === qps.get('format')) {
       // no-op, we should not have gotten here
       // it's a mistake to have tried to have update QPs.
