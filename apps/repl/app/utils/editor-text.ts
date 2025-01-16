@@ -151,8 +151,6 @@ export class FileURIComponent {
     if (macroCondition(isTesting())) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       base ??= (this.router as any) /* private API? */?.location;
-      // @ts-expect-error private api
-      base = base.split('?')[0];
     } else {
       base ??= window.location.toString();
     }
