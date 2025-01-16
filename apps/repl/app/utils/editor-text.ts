@@ -158,12 +158,22 @@ export class FileURIComponent {
     return base ?? window.location.toString();
   };
 
-  #updateWaiter: unknown;
   #frame?: number;
   #qps: URLSearchParams | undefined;
+  #tokens: unknown[] = [];
   #updateQPs = async (rawText: string, format: Format) => {
+    this.#tokens.push(queueWaiter.beginAsync());
+    this.#_updateQPs(rawText, format);
+  };
+
+  #cleanup = () => {
+    this.#tokens.forEach((token) => {
+      queueWaiter.endAsync(token);
+    });
+  };
+
+  #_updateQPs = async (rawText: string, format: Format) => {
     if (this.#frame) cancelAnimationFrame(this.#frame);
-    if (!this.#updateWaiter) this.#updateWaiter = queueWaiter.beginAsync();
 
     let encoded = compressToEncodedURIComponent(rawText);
     let qps = new URLSearchParams(location.search);
@@ -172,6 +182,19 @@ export class FileURIComponent {
     qps.delete('t');
     qps.set('format', formatFrom(format));
 
+    // @ts-expect-error this works
+    if (this.#qps?.c === qps.get('c') && this.#qps?.format === qps.get('format')) {
+      // no-op, we should not have gotten here
+      // it's a mistake to have tried to have update QPs.
+      // Someone should debug this.
+      this.#cleanup();
+
+      return;
+    }
+
+    localStorage.setItem('format', formatFrom(format));
+    localStorage.setItem('document', rawText);
+
     this.#qps = {
       ...this.#qps,
       ...qps,
@@ -179,8 +202,7 @@ export class FileURIComponent {
 
     this.#frame = requestAnimationFrame(async () => {
       if (isDestroyed(this) || isDestroying(this)) {
-        queueWaiter.endAsync(this.#updateWaiter);
-        this.#updateWaiter = null;
+        this.#cleanup();
 
         return;
       }
@@ -191,14 +213,10 @@ export class FileURIComponent {
       await new Promise((resolve) => setTimeout(resolve, DEBOUNCE_MS));
 
       if (isDestroyed(this) || isDestroying(this)) {
-        queueWaiter.endAsync(this.#updateWaiter);
-        this.#updateWaiter = null;
+        this.#cleanup();
 
         return;
       }
-
-      queueWaiter.endAsync(this.#updateWaiter);
-      this.#updateWaiter = null;
 
       // On initial load, if we call #updateQPs,
       // we may not have a currentURL, because the first transition has yet to complete
@@ -207,14 +225,22 @@ export class FileURIComponent {
       if (macroCondition(isTesting())) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         base ??= (this.router as any) /* private API? */?.location?.path;
+        // @ts-expect-error private api
+        base = base.split('?')[0];
       } else {
         base ??= window.location.pathname;
       }
+
+      /**
+       * At some point this added qps
+       * we don't want them though, so we'll strip them
+       */
 
       let next = `${base}?${qps}`;
 
       this.router.replaceWith(next);
       this.#text = rawText;
+      this.#cleanup();
     });
   };
 }

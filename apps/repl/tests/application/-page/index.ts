@@ -22,9 +22,18 @@ export class Page extends PageObject {
 
   async expectRedirectToContent(
     to: string,
-    { c, t, format }: { t?: string; c?: string; format?: string } = {}
+    {
+      c,
+      t,
+      format,
+      checks,
+    }: { t?: string; c?: string; format?: string; checks?: { aborted?: boolean } } = {}
   ) {
     let sawExpectedError = false;
+
+    let _checks = {
+      aborted: checks?.aborted ?? true,
+    };
 
     try {
       await visit(to);
@@ -45,14 +54,19 @@ export class Page extends PageObject {
       sawExpectedError = true;
     }
 
-    assert(`Expected to see a TransitionAborted error, but it did not occur.`, sawExpectedError);
+    if (_checks.aborted) {
+      assert(
+        `Expected to see a TransitionAborted error, but it did not occur. currentURL: ${currentURL()}`,
+        sawExpectedError
+      );
+    }
 
     // Allow time for transitions to settle
     await settled();
 
     let url = currentURL();
 
-    assert(`Expected an URL, got ${url}`, url);
+    assert(`Expected an URL -- via currentURL(), got ${url}`, url);
 
     let [, search] = url.split('?');
     let query = new URLSearchParams(search);
@@ -66,7 +80,7 @@ export class Page extends PageObject {
     if (c) {
       let lzString = query.get('c');
 
-      assert(`Missing c query param`, lzString);
+      assert(`Missing c query param. currentURL: ${url}`, lzString);
 
       let value = decompressFromEncodedURIComponent(lzString);
 
