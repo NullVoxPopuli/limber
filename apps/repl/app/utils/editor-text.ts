@@ -160,9 +160,17 @@ export class FileURIComponent {
 
   #frame?: number;
   #qps: URLSearchParams | undefined;
+  #tokens: unknown[] = [];
   #updateQPs = async (rawText: string, format: Format) => {
-    waitForPromise(this.#_updateQPs(rawText, format));
+    this.#tokens.push(queueWaiter.beginAsync());
+    this.#_updateQPs(rawText, format);
   };
+
+  #cleanup = () => {
+    this.#tokens.forEach((token) => {
+      queueWaiter.endAsync(token);
+    });
+  }
 
   #_updateQPs = async (rawText: string, format: Format) => {
     console.debug('queueing QPs');
@@ -183,42 +191,40 @@ export class FileURIComponent {
       ...qps,
     };
 
-    return new Promise<void>((resolve) => {
-      this.#frame = requestAnimationFrame(async () => {
-        if (isDestroyed(this) || isDestroying(this)) {
-          resolve();
+    this.#frame = requestAnimationFrame(async () => {
+      if (isDestroyed(this) || isDestroying(this)) {
+        this.#cleanup();
 
-          return;
-        }
+        return;
+      }
 
-        /**
-         * Debounce so we are kinder on the CPU
-         */
-        await new Promise((resolve) => setTimeout(resolve, DEBOUNCE_MS));
+      /**
+       * Debounce so we are kinder on the CPU
+       */
+      await new Promise((resolve) => setTimeout(resolve, DEBOUNCE_MS));
 
-        if (isDestroyed(this) || isDestroying(this)) {
-          resolve();
+      if (isDestroyed(this) || isDestroying(this)) {
+        this.#cleanup();
 
-          return;
-        }
+        return;
+      }
 
-        // On initial load, if we call #updateQPs,
-        // we may not have a currentURL, because the first transition has yet to complete
-        let base = this.router.currentURL?.split('?')[0];
+      // On initial load, if we call #updateQPs,
+      // we may not have a currentURL, because the first transition has yet to complete
+      let base = this.router.currentURL?.split('?')[0];
 
-        if (macroCondition(isTesting())) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          base ??= (this.router as any) /* private API? */?.location?.path;
-        } else {
-          base ??= window.location.pathname;
-        }
+      if (macroCondition(isTesting())) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        base ??= (this.router as any) /* private API? */?.location?.path;
+      } else {
+        base ??= window.location.pathname;
+      }
 
-        let next = `${base}?${qps}`;
+      let next = `${base}?${qps}`;
 
-        this.router.replaceWith(next);
-        this.#text = rawText;
-        resolve();
-      });
+      this.router.replaceWith(next);
+      this.#text = rawText;
+      this.#cleanup();
     });
   };
 }
