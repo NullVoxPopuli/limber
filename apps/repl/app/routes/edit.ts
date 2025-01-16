@@ -50,11 +50,17 @@ export default class EditRoute extends Route {
       let doc = localStorage.getItem('document');
 
       if (format && doc) {
+        console.info(`Found format and document in localStorage. Using those.`);
         transition.abort();
         this.editor.fileURIComponent.set(doc, formatFrom(format));
 
         return;
       }
+
+      console.warn(
+        'URL contained no document information in the SearchParams. ' +
+          'Assuming glimdown and using the default sample snippet.'
+      );
 
       transition.abort();
       this.editor.fileURIComponent.set(DEFAULT_SNIPPET, 'glimdown');

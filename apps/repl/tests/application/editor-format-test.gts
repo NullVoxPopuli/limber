@@ -54,6 +54,22 @@ module('Editor > Format', function (hooks) {
     assert.true(page.editor.hasText('hi'), 'has passed text as well');
   });
 
+  test('after selecting text, it loads again when visiting /', async function (assert) {
+    await visit(`/edit?format=gjs&t=${defaultText}`);
+    await page.editor.load();
+
+    assert.strictEqual(page.editor.format, 'gjs');
+    assert.true(page.editor.hasText('hi'), 'has passed text as well');
+
+    await page.expectRedirectToContent(`application`, {
+      format: 'gjs',
+      t: defaultText,
+      checks: { aborted: false },
+    });
+    assert.strictEqual(page.editor.format, 'gjs');
+    assert.true(page.editor.hasText('hi'), 'has passed text as well');
+  });
+
   test('can start with glimdown, and change to gjs', async function (assert) {
     await page.expectRedirectToContent(`/edit`, {
       format: 'glimdown',

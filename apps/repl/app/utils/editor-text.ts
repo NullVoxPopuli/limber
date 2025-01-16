@@ -170,10 +170,9 @@ export class FileURIComponent {
     this.#tokens.forEach((token) => {
       queueWaiter.endAsync(token);
     });
-  }
+  };
 
   #_updateQPs = async (rawText: string, format: Format) => {
-    console.debug('queueing QPs');
     if (this.#frame) cancelAnimationFrame(this.#frame);
 
     let encoded = compressToEncodedURIComponent(rawText);
@@ -182,6 +181,15 @@ export class FileURIComponent {
     qps.set('c', encoded);
     qps.delete('t');
     qps.set('format', formatFrom(format));
+
+    if (this.#qps?.c === qps.get('c') && this.#qps?.format === qps.get('format')) {
+      // no-op, we should not have gotten here
+      // it's a mistake to have tried to have update QPs.
+      // Someone should debug this.
+      this.#cleanup();
+
+      return;
+    }
 
     localStorage.setItem('format', formatFrom(format));
     localStorage.setItem('document', rawText);
