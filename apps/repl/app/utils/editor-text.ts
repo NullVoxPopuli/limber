@@ -1,7 +1,7 @@
 /* eslint-disable ember/classic-decorator-no-classic-methods */
 import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
 import { inject as service } from '@ember/service';
-import { buildWaiter } from '@ember/test-waiters';
+import { buildWaiter, waitForPromise } from '@ember/test-waiters';
 import { isTesting, macroCondition } from '@embroider/macros';
 
 import { compressToEncodedURIComponent } from 'lz-string';
@@ -158,12 +158,14 @@ export class FileURIComponent {
     return base ?? window.location.toString();
   };
 
-  #updateWaiter: unknown;
   #frame?: number;
   #qps: URLSearchParams | undefined;
   #updateQPs = async (rawText: string, format: Format) => {
+    await waitForPromise(this.#_updateQPs(rawText, format));
+  };
+
+  #_updateQPs = async (rawText: string, format: Format) => {
     if (this.#frame) cancelAnimationFrame(this.#frame);
-    if (!this.#updateWaiter) this.#updateWaiter = queueWaiter.beginAsync();
 
     let encoded = compressToEncodedURIComponent(rawText);
     let qps = new URLSearchParams(location.search);
@@ -172,6 +174,9 @@ export class FileURIComponent {
     qps.delete('t');
     qps.set('format', formatFrom(format));
 
+    localStorage.setItem('format', formatFrom(format));
+    localStorage.setItem('document', rawText);
+
     this.#qps = {
       ...this.#qps,
       ...qps,
@@ -179,9 +184,6 @@ export class FileURIComponent {
 
     this.#frame = requestAnimationFrame(async () => {
       if (isDestroyed(this) || isDestroying(this)) {
-        queueWaiter.endAsync(this.#updateWaiter);
-        this.#updateWaiter = null;
-
         return;
       }
 
@@ -191,14 +193,8 @@ export class FileURIComponent {
       await new Promise((resolve) => setTimeout(resolve, DEBOUNCE_MS));
 
       if (isDestroyed(this) || isDestroying(this)) {
-        queueWaiter.endAsync(this.#updateWaiter);
-        this.#updateWaiter = null;
-
         return;
       }
-
-      queueWaiter.endAsync(this.#updateWaiter);
-      this.#updateWaiter = null;
 
       // On initial load, if we call #updateQPs,
       // we may not have a currentURL, because the first transition has yet to complete
