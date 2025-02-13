@@ -24,7 +24,7 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "dependencies": {
-    "@shikijs/rehype": "^1.21.1",
+    "@shikijs/rehype": "^2.3.2",
     "@types/unist": "^3.0.2",
     "buffer": "^6.0.3",
     "common-tags": "^1.8.2",
@@ -59,7 +59,7 @@
     "@typescript-eslint/eslint-plugin": "^8.8.0",
     "@typescript-eslint/parser": "^8.8.0",
     "concurrently": "^9.0.1",
-    "ember-auto-import": "^2.10.0",
+    "ember-auto-import": "^2.9.0",
     "ember-cli": "~5.12.0",
     "ember-cli-app-version": "^7.0.0",
     "ember-cli-babel": "^8.2.0",
@@ -79,18 +79,18 @@
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-ember": "^12.2.1",
-    "eslint-plugin-n": "^17.10.3",
-    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-n": "^17.15.1",
+    "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-qunit": "^8.1.2",
     "loader.js": "^4.7.0",
     "path-browserify": "^1.0.1",
-    "prettier": "^3.3.3",
-    "prettier-plugin-ember-template-tag": "2.0.2",
-    "qunit": "^2.20.0",
+    "prettier": "^3.5.0",
+    "prettier-plugin-ember-template-tag": "2.0.4",
+    "qunit": "^2.24.1",
     "qunit-dom": "3.2.1",
-    "typescript": "^5.4.5",
+    "typescript": "^5.7.3",
     "unified": "^10.1.2",
-    "webpack": ">= 5.92.0"
+    "webpack": "^5.97.1"
   },
   "engines": {
     "node": ">= v16",

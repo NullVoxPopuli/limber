@@ -6,9 +6,9 @@
     "@glint/template": "1.4.1-unstable.ff9ea6c",
     "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "eslint": "^8.55.0",
-    "prettier": "^3.3.3",
-    "prettier-plugin-ember-template-tag": "2.0.2",
-    "typescript": "^5.4.5"
+    "prettier": "^3.5.0",
+    "prettier-plugin-ember-template-tag": "2.0.4",
+    "typescript": "^5.7.3"
   },
   "scripts": {
     "lint": "pnpm -w exec lint",
