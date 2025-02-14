@@ -4,25 +4,25 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@codemirror/language": "^6.10.3",
-    "@codemirror/view": "^6.34.1",
+    "@codemirror/language": "^6.10.8",
+    "@codemirror/view": "^6.36.2",
     "@lezer/generator": "^1.6.0",
     "@lezer/highlight": "^1.2.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
-    "rollup": "^4.25.0"
+    "rollup": "^4.34.6"
   },
   "volta": {
     "extends": "../../../package.json"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.7",
-    "@babel/eslint-parser": "^7.25.7",
+    "@babel/core": "^7.26.8",
+    "@babel/eslint-parser": "^7.26.8",
     "@nullvoxpopuli/eslint-configs": "^4.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.8.0",
-    "@typescript-eslint/parser": "^8.8.0",
+    "@typescript-eslint/eslint-plugin": "^8.24.0",
+    "@typescript-eslint/parser": "^8.24.0",
     "eslint": "^8.55.0",
-    "prettier": "^3.3.3",
-    "typescript": "^5.4.5"
+    "prettier": "^3.5.0",
+    "typescript": "~5.5.0"
   },
   "scripts": {
     "lint:fix": "pnpm -w exec lint fix",

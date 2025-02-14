@@ -18,16 +18,16 @@
     "start:tutorial": "pnpm --filter=tutorial start"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.7",
-    "@glint/core": "1.4.1-unstable.ff9ea6c",
+    "@babel/core": "^7.26.8",
+    "@glint/core": "1.4.1-unstable.34c4510",
     "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "concurrently": "^9.0.1",
     "dev-tools": "workspace:*",
     "eslint": "^8.55.0",
-    "prettier": "^3.3.3",
-    "prettier-plugin-ember-template-tag": "2.0.2",
-    "release-plan": "^0.9.2",
-    "turbo": "^2.1.3"
+    "prettier": "^3.5.0",
+    "prettier-plugin-ember-template-tag": "2.0.4",
+    "release-plan": "^0.13.1",
+    "turbo": "^2.4.2"
   },
   "packageManager": "pnpm@9.12.0",
   "engines": {
@@ -41,6 +41,10 @@
     "overrides": {
       "@nullvoxpopuli/eslint-configs": "^4.0.0",
       "@glimmer/component": "^2.0.0",
+      "@glint/core": "1.4.1-unstable.34c4510",
+      "@glint/template": "1.4.1-unstable.34c4510",
+      "@glint/environment-ember-loose": "1.4.1-unstable.34c4510",
+      "@glint/environment-ember-templte-imports": "1.4.1-unstable.34c4510",
       "@ember/test-waiters": "^4.0.0",
       "ember-element-helper": "^0.8.5",
       "ember-auto-import": "^2.9.0",
