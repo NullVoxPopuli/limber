@@ -91,12 +91,11 @@
     "eslint-plugin-n": "^17.15.1",
     "eslint-plugin-prettier": "^5.2.3",
     "execa": "^9.5.2",
-    "fix-bad-declaration-output": "^1.1.1",
     "prettier": "^3.5.0",
     "prettier-plugin-ember-template-tag": "2.0.4",
     "rollup": "^4.34.6",
     "rollup-plugin-copy": "^3.5.0",
-    "typescript": "^5.7.3",
+    "typescript": "~5.5.0",
     "webpack": ">= 5.92.0"
   },
   "publishConfig": {

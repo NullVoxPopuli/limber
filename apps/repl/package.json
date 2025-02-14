@@ -111,7 +111,7 @@
     "rollup": "^4.34.6",
     "testem-failure-only-reporter": "^1.0.0",
     "type-fest": "4.34.1",
-    "typescript": "^5.7.3",
+    "typescript": "~5.5.0",
     "vfile": "^6.0.1",
     "webpack": ">= 5.92.0",
     "yn": "^5.0.0"

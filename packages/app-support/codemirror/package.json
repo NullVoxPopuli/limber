@@ -64,7 +64,7 @@
     "prettier": "^3.5.0",
     "prettier-plugin-ember-template-tag": "2.0.4",
     "recursive-copy": "^2.0.14",
-    "typescript": "^5.7.3"
+    "typescript": "~5.5.0"
   },
   "volta": {
     "extends": "../../../package.json"
