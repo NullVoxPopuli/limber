@@ -16,10 +16,10 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.7",
+    "@babel/core": "^7.26.8",
     "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "^8.24.0",
-    "@typescript-eslint/parser": "^8.8.0",
+    "@typescript-eslint/parser": "^8.24.0",
     "concurrently": "^9.0.1",
     "eslint": "^8.55.0",
     "prettier": "^3.5.0",

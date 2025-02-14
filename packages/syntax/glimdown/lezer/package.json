@@ -10,14 +10,14 @@
     "directory": "packages/syntax/glimdown/lezer"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.7",
+    "@babel/core": "^7.26.8",
     "@babel/eslint-parser": "^7.26.8",
     "@glimdown/lezer-infra": "workspace:*",
     "@lezer/generator": "^1.6.0",
     "@nullvoxpopuli/eslint-configs": "^4.0.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@typescript-eslint/eslint-plugin": "^8.24.0",
-    "@typescript-eslint/parser": "^8.8.0",
+    "@typescript-eslint/parser": "^8.24.0",
     "eslint": "^8.55.0",
     "mocha": "^10.7.0",
     "prettier": "^3.5.0",
