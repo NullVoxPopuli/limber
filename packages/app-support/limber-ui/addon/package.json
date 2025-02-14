@@ -84,7 +84,7 @@
     "ember-primitives": "^0.23.1",
     "ember-resources": "^7.0.3",
     "ember-source": ">= 6.0.1",
-    "ember-template-imports": "^4.1.2",
+    "ember-template-imports": "^4.3.0",
     "ember-template-lint": "^6.0.0",
     "eslint": "^8.55.0",
     "eslint-plugin-ember": "^12.2.1",
@@ -97,7 +97,7 @@
     "rollup": "^4.34.6",
     "rollup-plugin-copy": "^3.5.0",
     "typescript": "^5.7.3",
-    "webpack": "^5.97.1"
+    "webpack": "^5.98.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
