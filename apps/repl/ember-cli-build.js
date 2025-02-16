@@ -66,13 +66,9 @@ module.exports = async function (defaults) {
     ],
     staticAddonTrees: true,
     staticAddonTestSupportTrees: true,
-    staticHelpers: true,
-    staticModifiers: true,
-    staticComponents: true,
+    staticInvokables: true,
     staticEmberSource: false,
     staticAppPaths: ['utils'],
-    // splitAtRoutes: [],
-    implicitModulesStrategy: 'packageNames',
     // required due to this app being a dynamic component generator
     allowUnsafeDynamicComponents: true,
     packagerOptions: {

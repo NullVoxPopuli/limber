@@ -62,7 +62,7 @@
     "ember-page-title": "^8.2.1",
     "ember-qunit": "^9.0.1",
     "ember-resolver": "^13.1.0",
-    "ember-source": ">= 6.0.1",
+    "ember-source": "alpha",
     "ember-source-channel-url": "^3.0.0",
     "ember-template-lint": "^6.1.0",
     "ember-try": "^3.0.0",

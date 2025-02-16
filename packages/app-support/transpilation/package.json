@@ -49,7 +49,7 @@
     "@typescript-eslint/eslint-plugin": "^8.24.0",
     "@typescript-eslint/parser": "^8.24.0",
     "babel-loader": "^9.2.1",
-    "ember-source": ">= 6.0.1",
+    "ember-source": "alpha",
     "esbuild": "0.25.0",
     "eslint": "^8.55.0",
     "prettier": "^3.5.0",
