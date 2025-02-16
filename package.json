@@ -41,6 +41,10 @@
     "overrides": {
       "unplugin": "1.14.1",
       "@nullvoxpopuli/eslint-configs": "^4.0.0",
+      "@embroider/core": "latest",
+      "@embroider/compat": "latest",
+      "@embroider/webpack": "latest",
+      "@embroider/macros": "latest",
       "@glimmer/component": "^2.0.0",
       "@glint/core": "unstable",
       "@glint/template": "unstable",
