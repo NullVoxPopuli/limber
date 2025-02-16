@@ -2,6 +2,7 @@ import { Addon } from "@embroider/addon-dev/rollup";
 
 import { babel } from "@rollup/plugin-babel";
 import cjs from "@rollup/plugin-commonjs";
+import { execaCommand } from "execa";
 import { defineConfig } from "rollup";
 
 const addon = new Addon({
@@ -23,7 +24,13 @@ export default defineConfig({
     // line-column...
     cjs(),
     addon.keepAssets(["build/**/*"]),
-    addon.declarations("declarations"),
     addon.clean(),
+
+    {
+      async closeBundle() {
+        await execaCommand("tsc --emitDeclarationOnly --noEmit false", { stdio: "inherit" });
+        console.info("Declarations built successfully");
+      },
+    },
   ],
 });
