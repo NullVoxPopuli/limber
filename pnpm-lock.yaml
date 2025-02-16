@@ -5,12 +5,13 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  unplugin: 1.14.1
   '@nullvoxpopuli/eslint-configs': ^4.0.0
   '@glimmer/component': ^2.0.0
-  '@glint/core': 1.4.1-unstable.34c4510
-  '@glint/template': 1.4.1-unstable.34c4510
-  '@glint/environment-ember-loose': 1.4.1-unstable.34c4510
-  '@glint/environment-ember-templte-imports': 1.4.1-unstable.34c4510
+  '@glint/core': unstable
+  '@glint/template': unstable
+  '@glint/environment-ember-loose': unstable
+  '@glint/environment-ember-templte-imports': unstable
   '@ember/test-waiters': ^4.0.0
   ember-element-helper: ^0.8.5
   ember-auto-import: ^2.9.0
@@ -46,7 +47,7 @@ importers:
         specifier: ^7.26.8
         version: 7.26.9(supports-color@8.1.1)
       '@glint/core':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510(typescript@5.6.3)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^4.0.0
@@ -152,7 +153,7 @@ importers:
         version: 1.11.13
       kolay:
         specifier: ^1.2.2
-        version: 1.2.4(6kyrfawyhceiygiishmw6z7tqm)
+        version: 1.2.4(em6nzzegoefgl7n7dtrxi6m4xa)
       limber-ui:
         specifier: workspace:*
         version: link:../../packages/app-support/limber-ui/addon
@@ -254,16 +255,16 @@ importers:
         specifier: ^6.5.1
         version: 6.7.2
       '@glint/core':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510(typescript@5.5.4)
       '@glint/environment-ember-loose':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0)))
       '@glint/environment-ember-template-imports':
-        specifier: 1.4.1-unstable.ff9ea6c
-        version: 1.4.1-unstable.ff9ea6c(@glint/environment-ember-loose@1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0))))(@glint/template@1.4.1-unstable.34c4510)
+        specifier: unstable
+        version: 1.4.1-unstable.34c4510(@glint/environment-ember-loose@1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0))))(@glint/template@1.4.1-unstable.34c4510)
       '@glint/template':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510
       '@nullvoxpopuli/eslint-configs':
         specifier: ^4.0.0
@@ -483,7 +484,7 @@ importers:
         version: 1.0.3
       kolay:
         specifier: ^1.2.2
-        version: 1.2.4(6kyrfawyhceiygiishmw6z7tqm)
+        version: 1.2.4(em6nzzegoefgl7n7dtrxi6m4xa)
       limber-ui:
         specifier: workspace:*
         version: link:../../packages/app-support/limber-ui/addon
@@ -552,16 +553,16 @@ importers:
         specifier: ^6.5.1
         version: 6.7.2
       '@glint/core':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510(typescript@5.5.4)
       '@glint/environment-ember-loose':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0)))
       '@glint/environment-ember-template-imports':
-        specifier: 1.4.1-unstable.ff9ea6c
-        version: 1.4.1-unstable.ff9ea6c(@glint/environment-ember-loose@1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0))))(@glint/template@1.4.1-unstable.34c4510)
+        specifier: unstable
+        version: 1.4.1-unstable.34c4510(@glint/environment-ember-loose@1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0))))(@glint/template@1.4.1-unstable.34c4510)
       '@glint/template':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510
       '@nullvoxpopuli/eslint-configs':
         specifier: ^4.0.0
@@ -684,8 +685,8 @@ importers:
         specifier: ~5.5.0
         version: 5.5.4
       unplugin:
-        specifier: ^2.2.0
-        version: 2.2.0
+        specifier: 1.14.1
+        version: 1.14.1(webpack-sources@3.2.3)
       webpack:
         specifier: '>= 5.92.0'
         version: 5.98.0
@@ -918,16 +919,16 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       '@glint/core':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510(typescript@5.5.4)
       '@glint/environment-ember-loose':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0)))
       '@glint/environment-ember-template-imports':
-        specifier: 1.4.1-unstable.ff9ea6c
-        version: 1.4.1-unstable.ff9ea6c(@glint/environment-ember-loose@1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0))))(@glint/template@1.4.1-unstable.34c4510)
+        specifier: unstable
+        version: 1.4.1-unstable.34c4510(@glint/environment-ember-loose@1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0))))(@glint/template@1.4.1-unstable.34c4510)
       '@glint/template':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510
       '@nullvoxpopuli/eslint-configs':
         specifier: ^4.0.0
@@ -1017,7 +1018,7 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0(@glint/template@1.4.1-unstable.34c4510)
       '@glint/template':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510
       ember-async-data:
         specifier: 1.0.3
@@ -1450,16 +1451,16 @@ importers:
         specifier: ^0.92.0
         version: 0.92.3
       '@glint/core':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510(typescript@5.6.3)
       '@glint/environment-ember-loose':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0)))
       '@glint/environment-ember-template-imports':
-        specifier: 1.4.1-unstable.ff9ea6c
-        version: 1.4.1-unstable.ff9ea6c(@glint/environment-ember-loose@1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0))))(@glint/template@1.4.1-unstable.34c4510)
+        specifier: unstable
+        version: 1.4.1-unstable.34c4510(@glint/environment-ember-loose@1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0))))(@glint/template@1.4.1-unstable.34c4510)
       '@glint/template':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510
       '@nullvoxpopuli/eslint-configs':
         specifier: ^4.0.0
@@ -1616,16 +1617,16 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       '@glint/core':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510(typescript@5.5.4)
       '@glint/environment-ember-loose':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0)))
       '@glint/environment-ember-template-imports':
-        specifier: 1.4.1-unstable.ff9ea6c
-        version: 1.4.1-unstable.ff9ea6c(@glint/environment-ember-loose@1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0))))(@glint/template@1.4.1-unstable.34c4510)
+        specifier: unstable
+        version: 1.4.1-unstable.34c4510(@glint/environment-ember-loose@1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0))))(@glint/template@1.4.1-unstable.34c4510)
       '@glint/template':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510
       '@nullvoxpopuli/eslint-configs':
         specifier: ^4.0.0
@@ -2609,7 +2610,7 @@ importers:
   packages/untyped:
     devDependencies:
       '@glint/template':
-        specifier: 1.4.1-unstable.34c4510
+        specifier: unstable
         version: 1.4.1-unstable.34c4510
       '@nullvoxpopuli/eslint-configs':
         specifier: ^4.0.0
@@ -3527,7 +3528,7 @@ packages:
     resolution: {integrity: sha512-G0vCsKgNCX0PMmuVNsTLG7IYXz8VkekQMK4Kcllzqpwb7ivFRDwVx2bD4QSvZ9LCTd4eWQ654RsCqVbW5aviww==}
     engines: {node: 12.* || 14.* || >= 16}
     peerDependencies:
-      '@glint/template': 1.4.1-unstable.34c4510
+      '@glint/template': unstable
     peerDependenciesMeta:
       '@glint/template':
         optional: true
@@ -3536,7 +3537,7 @@ packages:
     resolution: {integrity: sha512-aSdRetg0vY3c70G/3K85fOSlGtDzSV4ozwF9qD8ToQB+4RLZusxwItnctWEa+MKkhAYB6rbFiQ+bhFwEnaEazg==}
     engines: {node: 12.* || 14.* || >= 16}
     peerDependencies:
-      '@glint/template': 1.4.1-unstable.34c4510
+      '@glint/template': unstable
     peerDependenciesMeta:
       '@glint/template':
         optional: true
@@ -3545,7 +3546,7 @@ packages:
     resolution: {integrity: sha512-AUrmHQdixczIU3ouv/+HzWxwYVsw/NwssZxAQnXfBDJ3d3/CRtAvGRu3JhY6OT3AAPFwfa2WT66tB5jeAa7r5g==}
     engines: {node: 12.* || 14.* || >= 16}
     peerDependencies:
-      '@glint/template': 1.4.1-unstable.34c4510
+      '@glint/template': unstable
     peerDependenciesMeta:
       '@glint/template':
         optional: true
@@ -3585,8 +3586,8 @@ packages:
     resolution: {integrity: sha512-6/0sK4dtFK7Ld+t5Ovn9EilBVySoysMRdDAf/jGteOO7jdLKNgHnONg0w1T7ZZaMFUQfwJdRrk3u0dM+Idhiew==}
     engines: {node: 12.* || 14.* || >= 16}
     peerDependencies:
-      '@glint/environment-ember-loose': 1.4.1-unstable.34c4510
-      '@glint/template': 1.4.1-unstable.34c4510
+      '@glint/environment-ember-loose': unstable
+      '@glint/template': unstable
       ember-source: alpha
     peerDependenciesMeta:
       '@glint/environment-ember-loose':
@@ -4075,7 +4076,7 @@ packages:
     resolution: {integrity: sha512-1lRKFlhuUMwtJ5URzumO27Qdqfz315kH+QZ3AwpkXxJwOtjKLsJLZsD7vcllxuEpssT5BWvOPa1YiH6zNTNMeA==}
     peerDependencies:
       '@glimmer/component': ^2.0.0
-      '@glint/template': 1.4.1-unstable.34c4510
+      '@glint/template': unstable
       '@types/ember__array': ^4.0.2
       '@types/ember__component': ^4.0.10
       '@types/ember__controller': ^4.0.2
@@ -4099,11 +4100,11 @@ packages:
       ember-modifier:
         optional: true
 
-  '@glint/environment-ember-template-imports@1.4.1-unstable.ff9ea6c':
-    resolution: {integrity: sha512-9voQDDuCrjPHZQ37q4i8L2ifK4ap2eX+y3si5U4jS0/7sbeX9wwoI7Yqg5BF2TPgQg6CqzDO0xURQFtTsH8y+A==}
+  '@glint/environment-ember-template-imports@1.4.1-unstable.34c4510':
+    resolution: {integrity: sha512-zJtVI+WUkS9T/FtVKTPBTbQg8M0ycvv8vxBZbz3x13hAPdCdWWLEATPgEuXsfEXdLInUyMExPzqyl1TLa1bW2w==}
     peerDependencies:
-      '@glint/environment-ember-loose': 1.4.1-unstable.34c4510
-      '@glint/template': 1.4.1-unstable.34c4510
+      '@glint/environment-ember-loose': unstable
+      '@glint/template': unstable
       '@types/ember__component': ^4.0.10
       '@types/ember__helper': ^4.0.1
       '@types/ember__modifier': ^4.0.3
@@ -5066,7 +5067,7 @@ packages:
       '@ember/test-waiters': ^4.0.0
       '@glimmer/component': ^2.0.0
       '@glimmer/tracking': '>= 1.1.2'
-      '@glint/template': 1.4.1-unstable.34c4510
+      '@glint/template': unstable
       ember-modifier: '>= 4.1.0'
       ember-primitives: '>= 0.11.3'
       ember-repl: workspace:*
@@ -6935,7 +6936,7 @@ packages:
       '@ember/test-waiters': ^4.0.0
       '@glimmer/component': ^2.0.0
       '@glimmer/tracking': '>= 1.1.2'
-      '@glint/template': 1.4.1-unstable.34c4510
+      '@glint/template': unstable
       ember-modifier: '>= 4.1.0'
       ember-resources: '>= 6.1.0'
       ember-source: alpha
@@ -6970,7 +6971,7 @@ packages:
     peerDependencies:
       '@glimmer/component': ^2.0.0
       '@glimmer/tracking': '>= 1.1.2'
-      '@glint/template': 1.4.1-unstable.34c4510
+      '@glint/template': unstable
       ember-source: alpha
     peerDependenciesMeta:
       '@glimmer/component':
@@ -7001,7 +7002,7 @@ packages:
     resolution: {integrity: sha512-BiIJRjXvLDIBf5QGdRo8Wtoa7sC0wtoTR0DCZHMcyXaLVrbzyPm99R7OfVS3mRrCX1/N2/cZoG8wUAZoTU2nPQ==}
     peerDependencies:
       '@glimmer/component': ^2.0.0
-      '@glint/template': 1.4.1-unstable.34c4510
+      '@glint/template': unstable
       xstate: ^5.18.0
 
   ember-template-imports@3.4.2:
@@ -8693,7 +8694,7 @@ packages:
       '@ember/test-waiters': ^4.0.0
       '@glimmer/component': ^2.0.0
       '@glimmer/tracking': '>= 1.1.2'
-      '@glint/template': 1.4.1-unstable.34c4510
+      '@glint/template': unstable
       '@universal-ember/kolay-ui': '>= 0.0.13'
       ember-modifier: '>= 4.1.0'
       ember-primitives: '>= 0.11.3'
@@ -11533,13 +11534,14 @@ packages:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
     engines: {node: '>= 0.8'}
 
-  unplugin@1.16.1:
-    resolution: {integrity: sha512-4/u/j4FrCKdi17jaxuJA0jClGxB1AvU2hw/IuayPc4ay1XGaJs/rbb4v5WKwAjNifjmXK9PIFyuPiaK8azyR9w==}
+  unplugin@1.14.1:
+    resolution: {integrity: sha512-lBlHbfSFPToDYp9pjXlUEFVxYLaue9f9T1HC+4OHlmj+HnMDdz9oZY+erXfoCe/5V/7gKUSY2jpXPb9S7f0f/w==}
     engines: {node: '>=14.0.0'}
-
-  unplugin@2.2.0:
-    resolution: {integrity: sha512-m1ekpSwuOT5hxkJeZGRxO7gXbXT3gF26NjQ7GdVHoLoF8/nopLcd/QfPigpCy7i51oFHiRJg/CyHhj4vs2+KGw==}
-    engines: {node: '>=18.12.0'}
+    peerDependencies:
+      webpack-sources: ^3
+    peerDependenciesMeta:
+      webpack-sources:
+        optional: true
 
   unset-value@1.0.0:
     resolution: {integrity: sha512-PcA2tsuGSF9cnySLHTLSh2qrQiJ70mn+r+Glzxv2TWZblxsxCC52BDlZoPCsz7STd9pN7EZetkWZBAvk4cgZdQ==}
@@ -13977,7 +13979,7 @@ snapshots:
       ember-cli-htmlbars: 6.3.0
       ember-modifier: 4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0))
 
-  '@glint/environment-ember-template-imports@1.4.1-unstable.ff9ea6c(@glint/environment-ember-loose@1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0))))(@glint/template@1.4.1-unstable.34c4510)':
+  '@glint/environment-ember-template-imports@1.4.1-unstable.34c4510(@glint/environment-ember-loose@1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0))))(@glint/template@1.4.1-unstable.34c4510)':
     dependencies:
       '@glint/environment-ember-loose': 1.4.1-unstable.34c4510(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0)))
       '@glint/template': 1.4.1-unstable.34c4510
@@ -20076,7 +20078,7 @@ snapshots:
 
   kleur@4.1.5: {}
 
-  kolay@1.2.4(6kyrfawyhceiygiishmw6z7tqm):
+  kolay@1.2.4(em6nzzegoefgl7n7dtrxi6m4xa):
     dependencies:
       '@ember/test-waiters': 4.0.0(@glint/template@1.4.1-unstable.34c4510)
       '@glimmer/component': 2.0.0
@@ -20097,9 +20099,10 @@ snapshots:
       reactiveweb: 1.4.0(@babel/core@7.26.9)(@ember/test-waiters@4.0.0(@glint/template@1.4.1-unstable.34c4510))(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/template@1.4.1-unstable.34c4510)(ember-source@6.4.0-alpha.2(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.34c4510)(rsvp@4.8.5)(webpack@5.98.0))
       tracked-built-ins: 4.0.0(@babel/core@7.26.9)
       typedoc: 0.26.11(typescript@5.5.4)
-      unplugin: 1.16.1
+      unplugin: 1.14.1(webpack-sources@3.2.3)
     transitivePeerDependencies:
       - typescript
+      - webpack-sources
 
   ky@1.7.5: {}
 
@@ -23482,15 +23485,12 @@ snapshots:
 
   unpipe@1.0.0: {}
 
-  unplugin@1.16.1:
+  unplugin@1.14.1(webpack-sources@3.2.3):
     dependencies:
       acorn: 8.14.0
       webpack-virtual-modules: 0.6.2
-
-  unplugin@2.2.0:
-    dependencies:
-      acorn: 8.14.0
-      webpack-virtual-modules: 0.6.2
+    optionalDependencies:
+      webpack-sources: 3.2.3
 
   unset-value@1.0.0:
     dependencies:
