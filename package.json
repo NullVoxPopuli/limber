@@ -91,5 +91,8 @@
     "patchedDependencies": {
       "browserslist-generator": "patches/browserslist-generator.patch"
     }
+  },
+  "dependencies": {
+    "ember-source": "6.4.0-alpha.3"
   }
 }
