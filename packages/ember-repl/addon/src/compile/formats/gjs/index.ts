@@ -1,4 +1,6 @@
 import * as compiler from 'ember-template-compiler';
+// import * as compiler from '@ember/template-compiler';
+// import * as compiler from 'ember-source/dist/ember-template-compiler.js';
 
 import { nameFor } from '../../utils.ts';
 import { evalSnippet } from './eval.ts';
