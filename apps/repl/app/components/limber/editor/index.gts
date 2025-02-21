@@ -71,7 +71,7 @@ export const Editor: TOC<{
 
     {{else}}
       <div
-        class="syntax-dark relative border border-gray-900 bg-code-bg overflow-hidden"
+        class="syntax-dark relative overflow-hidden border border-gray-900 bg-code-bg"
         ...attributes
       >
 

@@ -1,7 +1,0 @@
-dist/
-node_modules/
-tmp/
-vendor/
-public/
-coverage/
-*.ember-try

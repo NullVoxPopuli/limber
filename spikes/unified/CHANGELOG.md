@@ -1,3 +1,0 @@
-# @nullvoxpopuli/spike-unified
-
-## null

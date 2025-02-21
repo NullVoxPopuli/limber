@@ -17,7 +17,6 @@ type LazyTrackedArgs = {
 
 declare module '@glimmer/env';
 
-declare module '@fortawesome/ember-fontawesome-components/fa-icon';
 declare module '@ember/helper';
 declare module '@ember/modifier';
 declare module '@sentry/ember';

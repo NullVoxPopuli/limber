@@ -12,6 +12,8 @@ declare module '@ember/-internals/glimmer';
 declare module '@ember/helper';
 declare module '@ember/modifier';
 declare module '@ember/template-factory';
+declare module 'ember-source/dist/ember-template-compiler';
+declare module 'ember-source/dist/ember-template-compiler.js';
 
 /**
  * ember-cli-typescript does not provide types for glimmer...

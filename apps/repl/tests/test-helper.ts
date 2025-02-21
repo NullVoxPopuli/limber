@@ -9,22 +9,26 @@ import {
 import { getPendingWaiterState } from '@ember/test-waiters';
 import * as QUnit from 'qunit';
 import { setup } from 'qunit-dom';
-import { start } from 'ember-qunit';
-
-_backburner.DEBUG = true;
+import { setupEmberOnerrorValidation, start as qunitStart } from 'ember-qunit';
 
 import Application from 'limber/app';
-import config from 'limber/config/environment';
+import config, { enterTestMode } from 'limber/config/environment';
 
-setApplication(Application.create(config.APP));
+export function start() {
+  _backburner.DEBUG = true;
 
-Object.assign(window, { getSettledState, getPendingWaiterState, currentURL, currentRouteName });
+  enterTestMode();
+  setApplication(Application.create(config.APP));
 
-setup(QUnit.assert);
+  Object.assign(window, { getSettledState, getPendingWaiterState, currentURL, currentRouteName });
 
-QUnit.testStart(() => {
-  localStorage.clear();
-});
-QUnit.testDone(resetOnerror);
+  setup(QUnit.assert);
+  setupEmberOnerrorValidation();
 
-start();
+  QUnit.testStart(() => {
+    localStorage.clear();
+  });
+  QUnit.testDone(resetOnerror);
+
+  qunitStart();
+}

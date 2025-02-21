@@ -1,4 +1,5 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
 import { ExternalLink } from 'limber-ui';
 
@@ -13,7 +14,7 @@ export const Footer = <template>
             </DefaultContent>
           </span>
           <span class="block sm:hidden px-2">
-            <FaIcon @icon="github" @prefix="fab" />
+            <FaIcon @icon={{faGithub}} />
           </span>
         </:custom>
       </ExternalLink>

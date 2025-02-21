@@ -4,6 +4,7 @@ import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { isCollection } from 'kolay';
 import { isNotHidden, titleize } from 'tutorial/utils';
 
@@ -38,12 +39,16 @@ export class Selection extends Component {
       <span
         class="w-full h-full px-4 absolute z-1 sr-hidden pointer-events-none grid gap-3 grid-flow-col items-center justify-start"
       >
-        <FaIcon @icon="bars" />
+        <FaIcon @icon={{faBars}} />
         <span class="limber__selected">{{this.humanSelected}}</span>
       </span>
       <style>
-        .limber__selected { text-wrap: nowrap; white-space: nowrap; text-overflow: ellipsis;
-        overflow: hidden; }
+        .limber__selected {
+          text-wrap: nowrap;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
       </style>
 
       <select
