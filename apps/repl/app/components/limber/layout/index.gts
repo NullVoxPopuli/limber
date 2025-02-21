@@ -18,7 +18,7 @@ type ReactiveActor = ReactiveActorFrom<typeof LayoutState>;
 const setupState = modifier((element: Element, [send]: [(event: string) => void]) => {
   assert(`Element is not resizable`, element instanceof HTMLElement);
 
-  let observer = setupResizeObserver(() => send('RESIZE'));
+  const observer = setupResizeObserver(() => send('RESIZE'));
 
   // @ts-expect-error need to fix the type of this for ember-statechart-component
   send({

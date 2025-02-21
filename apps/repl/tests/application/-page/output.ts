@@ -12,9 +12,9 @@ export class OutputArea extends PageObject {
   get firstButton() {
     assert('Output frame does not exist', this._innerDocument);
 
-    let buttonsList = this._innerDocument.querySelectorAll('.glimdown-render > button');
-    let buttons = [...buttonsList] as HTMLButtonElement[];
-    let button = buttons.find((button) => !button.dataset['test-copy-menu']);
+    const buttonsList = this._innerDocument.querySelectorAll('.glimdown-render > button');
+    const buttons = [...buttonsList] as HTMLButtonElement[];
+    const button = buttons.find((button) => !button.dataset['test-copy-menu']);
 
     assert('Button was not rendered', button);
 
@@ -34,8 +34,8 @@ export class OutputArea extends PageObject {
   private get _innerDocument() {
     assertExists(`Could not find output frame`, this._iframe);
 
-    let iframeElement = this._iframe.element as HTMLIFrameElement;
-    let innerDoc = iframeElement.contentDocument;
+    const iframeElement = this._iframe.element as HTMLIFrameElement;
+    const innerDoc = iframeElement.contentDocument;
 
     return innerDoc;
   }

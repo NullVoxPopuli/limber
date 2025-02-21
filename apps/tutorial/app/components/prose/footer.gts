@@ -1,6 +1,8 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { service } from 'ember-primitives/helpers/service';
 
-import { ExternalLink, Link, service } from 'limber-ui';
+import { ExternalLink, Link } from 'limber-ui';
 
 import { ShowMe } from './show-me';
 import { UnShowMe } from './un-show-me';
@@ -12,8 +14,8 @@ const not = (x: unknown) => !x;
 export const FooterContent = <template>
   {{#let (service "docs") as |docs|}}
 
-    <footer class="grid p-2 gap-4 text-sm bg-[#eee] drop-shadow-2xl">
-      <div class="flex justify-between items-center justify-self-end w-full">
+    <footer class="grid gap-4 bg-[#eee] p-2 text-sm drop-shadow-2xl">
+      <div class="flex w-full items-center justify-between justify-self-end">
         {{#if docs.selected.hasAnswer}}
           {{#if docs.showAnswer}}
             <UnShowMe />
@@ -26,7 +28,7 @@ export const FooterContent = <template>
 
         <Link data-test-next href={{docs.selected.next}} @isDisabled={{not docs.selected.next}}>
           <span>Next</span>
-          <FaIcon @icon="angle-right" />
+          <FaIcon @icon={{faAngleRight}} />
         </Link>
       </div>
 

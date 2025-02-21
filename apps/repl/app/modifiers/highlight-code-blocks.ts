@@ -8,10 +8,10 @@ export default modifier((element: HTMLElement, [_]: unknown[]) => {
   }
 
   (async () => {
-    let elements = element.querySelectorAll('pre > code');
+    const elements = element.querySelectorAll('pre > code');
 
-    for (let element of elements) {
-      let hljs = await getHighlighter();
+    for (const element of elements) {
+      const hljs = await getHighlighter();
 
       hljs.highlightElement(element as HTMLElement);
     }

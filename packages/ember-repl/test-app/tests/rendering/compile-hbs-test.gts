@@ -10,14 +10,14 @@ module('compileHBS()', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it works', async function (assert) {
-    let compile = () => {
-      let template = `
+    const compile = () => {
+      const template = `
         {{#each (array 1 2) as |num|}}
           <output>{{num}}</output>
         {{/each}}
       `;
 
-      let { component, name, error } = compileHBS(template);
+      const { component, name, error } = compileHBS(template);
 
       assert.notOk(error);
       assert.ok(name);
@@ -41,10 +41,10 @@ module('compileHBS()', function (hooks) {
   test('can render components passed to scope', async function (assert) {
     const SomeOtherComponent = <template>there!</template>;
 
-    let template = `Hi <SomeOtherComponent />`;
+    const template = `Hi <SomeOtherComponent />`;
 
-    let compile = () => {
-      let { component, error, name } = compileHBS(template, {
+    const compile = () => {
+      const { component, error, name } = compileHBS(template, {
         scope: { SomeOtherComponent },
       });
 
@@ -67,17 +67,17 @@ module('compileHBS()', function (hooks) {
 
   module('deliberate errors', function () {
     test('syntax', async function (assert) {
-      let compile = async () => {
+      const compile = async () => {
         // What else do we await to convert this to promise?
         await Promise.resolve();
 
-        let template = `
+        const template = `
           {{#each array 1 2) as |num|}}
             <output>{{num}}</output>
           {{/each}}
         `;
 
-        let { component, name, error } = compileHBS(template);
+        const { component, name, error } = compileHBS(template);
 
         assert.ok(error);
         assert.ok(name);

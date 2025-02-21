@@ -31,7 +31,7 @@ export type ToOutput = NewContent;
 export type FromOutput = FromLimberOutput & ToParent;
 export type ToParent = Ready | Error | Success | CompileBegin;
 
-export const DEFAULT_FORMAT = 'glimdown' as const;
+export const DEFAULT_FORMAT = 'glimdown';
 export const ALLOWED_FORMATS = [DEFAULT_FORMAT, 'gjs', 'hbs'] as const;
 export const STATUSES = ['ready', 'error'] as const;
 
@@ -76,7 +76,7 @@ export function fromParent<T extends { from?: string }>(x?: T | null): x is T & 
 }
 
 export function fileFromParams(search: string | object = location.search) {
-  let qps = new URLSearchParams(typeof search === 'string' ? search : Object.entries(search));
+  const qps = new URLSearchParams(typeof search === 'string' ? search : Object.entries(search));
 
   return {
     text: getText(qps) ?? null,
@@ -85,13 +85,13 @@ export function fileFromParams(search: string | object = location.search) {
 }
 
 function getText(qps: URLSearchParams) {
-  let c = qps.get('c');
+  const c = qps.get('c');
 
   if (c) {
     return decompressFromEncodedURIComponent(c);
   }
 
-  let t = qps.get('t');
+  const t = qps.get('t');
 
   if (t) {
     return t;

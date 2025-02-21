@@ -7,9 +7,9 @@ import {
 } from './formats.ts';
 import { nameFor } from './utils.ts';
 
-import type { CompileResult, UnifiedPlugin } from './types.ts';
-import type { EvalImportMap, ScopeMap } from './types.ts';
+import type { CompileResult, EvalImportMap, ScopeMap, UnifiedPlugin } from './types.ts';
 import type { ComponentLike } from '@glint/template';
+
 type Format = 'glimdown' | 'gjs' | 'hbs';
 
 export const CACHE = new Map<string, ComponentLike>();
@@ -80,10 +80,10 @@ export async function compile(
   text: string,
   options: GlimdownOptions | GJSOptions | HBSOptions
 ): Promise<void> {
-  let { onSuccess, onError, onCompileStart } = options;
-  let id = nameFor(`${options.format}:${text}`);
+  const { onSuccess, onError, onCompileStart } = options;
+  const id = nameFor(`${options.format}:${text}`);
 
-  let existing = CACHE.get(id);
+  const existing = CACHE.get(id);
 
   if (existing) {
     onSuccess(existing);
@@ -179,15 +179,15 @@ export function Compiled(
   maybeOptions?: Format | (() => Format) | ExtraOptions | (() => ExtraOptions)
 ): Value {
   return resource(() => {
-    let maybeObject = typeof maybeOptions === 'function' ? maybeOptions() : maybeOptions;
-    let format =
+    const maybeObject = typeof maybeOptions === 'function' ? maybeOptions() : maybeOptions;
+    const format =
       (typeof maybeObject === 'string' ? maybeObject : maybeObject?.format) || 'glimdown';
-    let options = (typeof maybeObject === 'string' ? {} : maybeObject) || {};
+    const options = (typeof maybeObject === 'string' ? {} : maybeObject) || {};
 
-    let input = typeof markdownText === 'function' ? markdownText() : markdownText;
-    let ready = cell(false);
-    let error = cell<string | null>();
-    let result = cell<ComponentLike>();
+    const input = typeof markdownText === 'function' ? markdownText() : markdownText;
+    const ready = cell(false);
+    const error = cell<string | null>();
+    const result = cell<ComponentLike>();
 
     if (input) {
       compile(input, {

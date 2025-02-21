@@ -17,7 +17,7 @@ type Build = (plugin?: UnifiedPlugin) => Promise<void>;
 
 function unexpectedErrorHandler(error: unknown) {
   console.error(error);
-  QUnit.assert.notOk(`CHECK CONSOLE: did not expect error: ${error}`);
+  QUnit.assert.notOk(`CHECK CONSOLE: did not expect error: ${String(error)}`);
 }
 
 module('Rendering | compile()', function (hooks) {
@@ -29,7 +29,7 @@ module('Rendering | compile()', function (hooks) {
         assert.notOk('This should not error');
       });
 
-      let snippet = stripIndent`
+      const snippet = stripIndent`
         | Color | Food |
         | ----  | ---- |
         | red   | apple |
@@ -60,7 +60,7 @@ module('Rendering | compile()', function (hooks) {
         assert.notOk('This should not error');
       });
 
-      let snippet = stripIndent`
+      const snippet = stripIndent`
         text[^note]
 
         [^note]: a note about a thing
@@ -90,7 +90,7 @@ module('Rendering | compile()', function (hooks) {
         let build: Build;
         let component: ComponentLike | undefined;
 
-        let snippet = stripIndent`
+        const snippet = stripIndent`
           text
 
           \`\`\`js
@@ -179,7 +179,7 @@ module('Rendering | compile()', function (hooks) {
         assert.notOk('This should not error');
       });
 
-      let snippet = stripIndent`
+      const snippet = stripIndent`
         <LocalComponent />
       `;
 
@@ -213,7 +213,7 @@ module('Rendering | compile()', function (hooks) {
         assert.notOk('This should not error');
       });
 
-      let snippet = stripIndent`
+      const snippet = stripIndent`
         Using a live hbs tag is how we can syntax highlighting
 
         \`\`\`hbs live
@@ -248,7 +248,7 @@ module('Rendering | compile()', function (hooks) {
         assert.notOk('This should not error');
       });
 
-      let snippet = '# Hello';
+      const snippet = '# Hello';
 
       let component: ComponentLike | undefined;
 
@@ -290,7 +290,7 @@ module('Rendering | compile()', function (hooks) {
         assert.notOk('This should not error');
       });
 
-      let snippet = `# Hello
+      const snippet = `# Hello
 
 \`\`\`gjs live
 <template>not a greeting</template>
@@ -347,7 +347,7 @@ module('Rendering | compile()', function (hooks) {
         assert.notOk('This should not error');
       });
 
-      let snippet = '# Hello';
+      const snippet = '# Hello';
 
       let component: ComponentLike | undefined;
 
@@ -364,7 +364,9 @@ module('Rendering | compile()', function (hooks) {
               return visit(tree, ['element'], function (node) {
                 if (!('tagName' in node)) return;
 
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                 if (node.tagName === 'h1') {
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                   node.tagName = 'h2';
                 }
 

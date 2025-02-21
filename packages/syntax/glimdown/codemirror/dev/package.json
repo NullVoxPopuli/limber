@@ -1,31 +1,27 @@
 {
   "name": "@glimdown/glimdown-dev-preview",
   "version": "0.0.1",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "vite .",
     "lint": "pnpm -w exec lint",
     "lint:fix": "pnpm -w exec lint fix",
-    "lint:js": "pnpm -w exec lint js",
-    "lint:js:fix": "pnpm -w exec lint js:fix",
     "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.7",
-    "@babel/eslint-parser": "^7.25.7",
-    "@codemirror/language": "^6.10.3",
-    "@codemirror/state": "^6.4.0",
+    "@babel/core": "^7.26.9",
+    "@codemirror/language": "^6.10.8",
+    "@codemirror/state": "^6.5.2",
     "@codemirror/theme-one-dark": "^6.1.2",
-    "@codemirror/view": "^6.34.1",
+    "@codemirror/view": "^6.36.3",
     "@glimdown/codemirror-dev-preview": "workspace:*",
-    "@nullvoxpopuli/eslint-configs": "^4.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.8.0",
-    "@typescript-eslint/parser": "^8.8.0",
-    "eslint": "^8.55.0",
-    "prettier": "^3.3.3",
-    "typescript": "^5.4.5",
-    "vite": "^5.4.8"
+    "@nullvoxpopuli/eslint-configs": "^5.0.0",
+    "eslint": "^9.21.0",
+    "prettier": "^3.5.2",
+    "typescript": "5.7.3",
+    "vite": "^5.4.14"
   },
   "volta": {
     "extends": "../../../../../package.json"

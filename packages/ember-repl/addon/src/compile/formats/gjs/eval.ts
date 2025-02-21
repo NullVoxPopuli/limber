@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { modules } from './known-modules.ts';
 
 import type Component from '@glimmer/component';
@@ -13,7 +12,7 @@ export function evalSnippet(
   const exports = {};
 
   function require(moduleName: keyof typeof modules): unknown {
-    let preConfigured = modules[moduleName] || extraModules[moduleName];
+    const preConfigured = modules[moduleName] || extraModules[moduleName];
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore

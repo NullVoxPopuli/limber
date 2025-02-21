@@ -7,7 +7,7 @@ import { schedule } from '@ember/runloop';
 import { service } from '@ember/service';
 import { waitFor } from '@ember/test-waiters';
 
-import { compile } from 'ember-repl';
+import { compile, type EvalImportMap } from 'ember-repl';
 
 import CopyMenu from 'limber/components/limber/copy-menu';
 
@@ -53,7 +53,7 @@ export default class Compiler extends Component<Signature> {
   constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
-    let api = args.messagingAPI;
+    const api = args.messagingAPI;
 
     api.onReceiveText((format: Format, text) => this.makeComponent(format, text));
     api.onConnect((parent) => (this.parentFrame = parent));
@@ -70,9 +70,9 @@ export default class Compiler extends Component<Signature> {
   @action
   @waitFor
   async makeComponent(format: Format, text: string) {
-    let { importMap } = await import('./import-map');
+    const { importMap } = await import('./import-map');
 
-    let onSuccess = async (component: ComponentLike) => {
+    const onSuccess = async (component: ComponentLike) => {
       if (!component) {
         await this.parentFrame.error({ error: 'could not build component' });
 
@@ -102,7 +102,7 @@ export default class Compiler extends Component<Signature> {
           topLevelScope: {
             CopyMenu: CopyMenu,
           },
-          importMap,
+          importMap: importMap as unknown as EvalImportMap,
           onCompileStart: this.onCompileStart,
           onSuccess,
           onError: this.onError,
@@ -111,7 +111,7 @@ export default class Compiler extends Component<Signature> {
       case 'gjs':
         return await compile(text, {
           format: format,
-          importMap,
+          importMap: importMap as unknown as EvalImportMap,
           onCompileStart: this.onCompileStart,
           onSuccess,
           onError: this.onError,

@@ -41,6 +41,7 @@ export async function symlinkEverywhere(options) {
     try {
       await fs.symlink(linkTarget, fileName);
     } catch (e) {
+      console.error(e);
       console.error(`Error: ${newFile}`);
     }
   }

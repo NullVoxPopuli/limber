@@ -11,7 +11,7 @@ export const SHOW_TIME = 2000;
 
 export const SaveBanner = <template>
   <div
-    class="w-full p-10 absolute text-2xl backdrop-blur-md bg-slate-800/30 border-y border-slate-800/50 transition-all duration-300 pointer-events-none text-white text-center shadow-2xl shadow-stone-900/50 z-[100] top-[39%]
+    class="pointer-events-none absolute top-[39%] z-[100] w-full border-y border-slate-800/50 bg-slate-800/30 p-10 text-center text-2xl text-white shadow-2xl shadow-stone-900/50 backdrop-blur-md transition-all duration-300
       {{if @isShowing 'opacity-100' 'opacity-0'}}
       "
   >
@@ -26,12 +26,11 @@ export default class Save extends Component {
 
   @tracked isShowing = false;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(owner: Owner, args: any) {
     super(owner, args);
 
     const handler = (e: KeyboardEvent) => {
-      let isSave = (e.ctrlKey && e.key === 's') || (e.metaKey && e.key === 's');
+      const isSave = (e.ctrlKey && e.key === 's') || (e.metaKey && e.key === 's');
 
       if (isSave) {
         e.preventDefault();

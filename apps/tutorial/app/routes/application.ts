@@ -2,6 +2,8 @@
 import Route from '@ember/routing/route';
 
 import rehypeShikiFromHighlighter from '@shikijs/rehype/core';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import { setupKolay } from 'kolay/setup';
 import { createHighlighterCore } from 'shiki/core';
 import getWasm from 'shiki/wasm';

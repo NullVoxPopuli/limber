@@ -18,7 +18,7 @@ export class Editor extends PageObject {
   }
 
   get format() {
-    let element = this.element?.querySelector('div[data-format]');
+    const element = this.element?.querySelector('div[data-format]');
 
     assert(`Could not find element that codemirror should be attached to`, element);
 
@@ -26,9 +26,9 @@ export class Editor extends PageObject {
   }
 
   get activeEditor() {
-    let { _editor, _placeholder } = this;
+    const { _editor, _placeholder } = this;
 
-    let active = [_editor, _placeholder].find((editor) => editor.element);
+    const active = [_editor, _placeholder].find((editor) => editor.element);
 
     assert(`Something went wrong, there is no active editor`, active);
 
@@ -44,15 +44,15 @@ export class Editor extends PageObject {
    * both the text in the editor and the passed text
    */
   hasText(text: string) {
-    let editorText = this.activeEditor._text;
+    const editorText = this.activeEditor._text;
 
-    let _editor = removeInvisibleCharacters(editorText);
-    let _text = removeInvisibleCharacters(text);
+    const _editor = removeInvisibleCharacters(editorText);
+    const _text = removeInvisibleCharacters(text);
 
     // need to chop down the source text to the amount that we can see in the editor.
     // editors will optimize to the viewport so that they don't degrade perf
-    let diff = diffText(_editor, _text.slice(0, _editor.length));
-    let similarity = 1 - diff.distance / _text.length;
+    const diff = diffText(_editor, _text.slice(0, _editor.length));
+    const similarity = 1 - diff.distance / _text.length;
 
     return similarity > 0.75;
   }

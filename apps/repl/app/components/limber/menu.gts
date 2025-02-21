@@ -20,7 +20,7 @@ const Button: TOC<{
   };
 }> = <template>
   <@content.Item
-    class="bg-transparent block w-full select-none py-2 px-4 text-left text-black hover:bg-gray-100 focus:ring-4 ring-inset focus:outline-none"
+    class="block w-full select-none bg-transparent px-4 py-2 text-left text-black ring-inset hover:bg-gray-100 focus:outline-none focus:ring-4"
     tabindex="0"
     data-test-menu-button
     ...attributes
@@ -39,7 +39,7 @@ const DefaultTrigger: TOC<{
   };
 }> = <template>
   <@menu.Trigger
-    class="text-black rounded border bg-white px-2 py-1 -my-1 text-left transition ease-in-out duration-150 sm:text-sm drop-shadow-md hover:drop-shadow-xl focus:ring-4 focus-visible:outline-none ring-ember-brand focus:outline-none"
+    class="ring-ember-brand -my-1 rounded border bg-white px-2 py-1 text-left text-black drop-shadow-md transition duration-150 ease-in-out hover:drop-shadow-xl focus:outline-none focus:ring-4 focus-visible:outline-none sm:text-sm"
     ...attributes
   >
     {{yield @menu}}
@@ -112,7 +112,7 @@ const Menu: TOC<{
           {{menu.arrow}}
         ></div>
 
-        <div class="grid rounded border bg-white drop-shadow-xl min-w-max">
+        <div class="grid min-w-max rounded border bg-white drop-shadow-xl">
           {{yield (component Button content=content) to="options"}}
         </div>
 

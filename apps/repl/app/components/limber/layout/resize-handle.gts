@@ -33,7 +33,7 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] } }> {
     this.direction = direction;
     this.dragHandle = element as HTMLElement;
     // Is this a valid warning?
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
     this.editor = element.parentElement!.previousElementSibling! as HTMLElement;
 
     if (!this.isSetup) {
@@ -73,7 +73,7 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] } }> {
   queueUpdate = () => {
     cancelAnimationFrame(this.dragFrame);
     this.dragFrame = requestAnimationFrame(() => {
-      let box = this.editor.getBoundingClientRect();
+      const box = this.editor.getBoundingClientRect();
 
       if (this.direction === 'horizontal') {
         this.editor.style.width = `${this.pointerX - box.x}px`;
@@ -119,8 +119,8 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] } }> {
   };
 
   keyHandler = (event: KeyboardEvent) => {
-    let deltaT = new Date().getTime() - this.lastKey;
-    let isRapid = deltaT < 50;
+    const deltaT = new Date().getTime() - this.lastKey;
+    const isRapid = deltaT < 50;
 
     if (event.code === 'ArrowDown' || event.code === 'ArrowRight') {
       this.keyDistance += isRapid ? 8 : 1;
@@ -134,7 +134,7 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] } }> {
 
     cancelAnimationFrame(this.keyFrame);
     this.keyFrame = requestAnimationFrame(() => {
-      let box = this.editor.getBoundingClientRect();
+      const box = this.editor.getBoundingClientRect();
 
       if (this.direction === 'horizontal') {
         this.editor.style.width = `calc(${box.width}px + ${this.keyDistance}rem)`;
@@ -177,14 +177,14 @@ export const ResizeHandle: TOC<{
     direction: 'vertical' | 'horizontal';
   };
 }> = <template>
-  <div class="relative {{if (eq @direction 'horizontal') 'h-full w-2 py-2' 'w-full h-2 px-2'}} ">
+  <div class="relative {{if (eq @direction 'horizontal') 'h-full w-2 py-2' 'h-2 w-full px-2'}} ">
     <button
       class="{{if
           (eq @direction 'horizontal')
-          'h-full w-2 py-2 cursor-col-resize'
-          'w-full h-2 px-2 cursor-row-resize'
+          'h-full w-2 cursor-col-resize py-2'
+          'h-2 w-full cursor-row-resize px-2'
         }}
-        absolute inset-0 flex justify-end items-end text-white bg-horizon-lavender focus:ring-4 focus:outline-none focus-visible:outline-none leading-4 shadow group"
+        bg-horizon-lavender group absolute inset-0 flex items-end justify-end leading-4 text-white shadow focus:outline-none focus:ring-4 focus-visible:outline-none"
       {{! template-lint-disable no-inline-styles }}
       style="text-shadow: 1px 1px 1px black"
       aria-label="resize the editor"

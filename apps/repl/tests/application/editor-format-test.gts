@@ -11,8 +11,8 @@ import { Page } from './-page';
 module('Editor > Format', function (hooks) {
   setupApplicationTest(hooks);
 
-  let page = new Page();
-  let defaultText = '<template>hi</template>';
+  const page = new Page();
+  const defaultText = '<template>hi</template>';
 
   hooks.beforeEach(function () {
     this.owner.register(

@@ -15,7 +15,7 @@ export class ShowMe extends Component {
   <template>
     <Button
       @variant="primary"
-      class="whitespace-nowrap transition-all overflow-hidden text-left"
+      class="overflow-hidden whitespace-nowrap text-left transition-all"
       style="transition-duration: 50ms"
       {{on "click" this.docs.showMe}}
       {{on "mouseenter" this.hoverShowText}}

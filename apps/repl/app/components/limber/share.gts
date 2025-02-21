@@ -7,14 +7,15 @@ import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faShareFromSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
 // @ts-expect-error womp types
 import { focusTrap } from 'ember-focus-trap';
 import { Modal } from 'ember-primitives/components/dialog';
 import { cell } from 'ember-resources';
 
 import { shortenUrl } from 'limber/utils/editor-text';
+import { FlatButton } from 'limber-ui';
 
-import { FlatButton } from './help';
 import { SaveBanner, SHOW_TIME } from './save';
 
 import type { TOC } from '@ember/component/template-only';
@@ -28,7 +29,7 @@ export const Share = <template>
   <Modal as |m|>
     <button data-share-button type="button" {{on "click" m.open}}>
       Share
-      <FaIcon @icon="share-from-square" @prefix="fas" />
+      <FaIcon @icon={{faShareFromSquare}} />
     </button>
 
     <m.Dialog class="preem" {{focusTrap isActive=m.isOpen}}>
@@ -45,7 +46,7 @@ class ShareModal extends Component<{ onCancel: () => void }> {
 
     <header><h2>Share</h2>
       <FlatButton {{on "click" @onCancel}} aria-label="close this share modal">
-        <FaIcon @size="xs" @icon="xmark" class="aspect-square" />
+        <FaIcon @size="xs" @icon={{faXmark}} class="aspect-square" />
       </FlatButton>
     </header>
     <form {{on "submit" this.handleSubmit}}>
@@ -111,7 +112,7 @@ class ShareModal extends Component<{ onCancel: () => void }> {
     event.preventDefault();
     this.error = undefined;
 
-    let href = window.location.href;
+    const href = window.location.href;
 
     if (!href.includes('glimdown.com')) {
       if (href.includes('localhost')) {

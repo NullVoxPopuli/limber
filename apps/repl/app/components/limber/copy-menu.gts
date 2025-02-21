@@ -9,13 +9,13 @@ import Menu from './menu';
  */
 export default class CopyMenu extends Component {
   copyAsText = (event: Event) => {
-    let code = getSnippetElement(event);
+    const code = getSnippetElement(event);
 
     navigator.clipboard.writeText(code.innerText);
   };
 
   copyAsImage = async (event: Event) => {
-    let code = getSnippetElement(event);
+    const code = getSnippetElement(event);
 
     await copyToClipboard(code);
   };
@@ -23,7 +23,7 @@ export default class CopyMenu extends Component {
   <template>
     <Menu data-test-copy-menu>
       <:trigger as |t|>
-        <t.Default class="absolute top-3 right-4 z-10" data-test-copy-menu>
+        <t.Default class="absolute right-4 top-3 z-10" data-test-copy-menu>
           📋
         </t.Default>
       </:trigger>

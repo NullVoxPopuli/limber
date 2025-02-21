@@ -41,7 +41,7 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - run:  echo ${{ github.event.number }} > ./pr-number.txt
-    - run: pnpm turbo build
+    - run: pnpm turbo build build:prod
     # Used for faster deploy so we don't need to checkout the repo
     - uses: actions/upload-artifact@v4
       with:
@@ -64,6 +64,7 @@ jobs:
       - uses: wyvox/action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: pnpm build
       - run: pnpm lint
 
 ##############################################################

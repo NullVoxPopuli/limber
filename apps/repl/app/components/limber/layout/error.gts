@@ -15,9 +15,9 @@ export default class EditorError extends Component<Signature> {
 
       <footer
         data-test-error
-        class="rounded fixed right-4 bottom-4 p-4 bg-red-100 text-black drop-shadow-md border border-red-700 max-w-[60vw] z-[100]"
+        class="fixed bottom-4 right-4 z-[100] max-w-[60vw] rounded border border-red-700 bg-red-100 p-4 text-black drop-shadow-md"
       >
-        <pre class="font-[monospace] text-base whitespace-pre-wrap">{{this.editor.error}}</pre>
+        <pre class="whitespace-pre-wrap font-[monospace] text-base">{{this.editor.error}}</pre>
       </footer>
     {{/if}}
   </template>

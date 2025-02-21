@@ -1,12 +1,12 @@
-import { service } from 'limber-ui';
+import { service } from 'ember-primitives/helpers/service';
 
 <template>
   {{#let (service "editor") as |editor|}}
     {{#if editor.isCompiling}}
       <div
-        class="absolute top-0 inset-x-0 bg-opacity-95 p-10 bg-gray-100 shadow text-black text-2xl font-bold z-20 flex gap-4 items-center"
+        class="absolute inset-x-0 top-0 z-20 flex items-center gap-4 bg-gray-100 bg-opacity-95 p-10 text-2xl font-bold text-black shadow"
       >
-        <div class="loader animate-spin h-6 w-6"></div>
+        <div class="loader h-6 w-6 animate-spin"></div>
         <span>Building...</span>
       </div>
     {{/if}}

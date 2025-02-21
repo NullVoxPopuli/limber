@@ -6,25 +6,23 @@
   "dependencies": {
     "@algorithm.ts/base64": "3.1.1",
     "@algorithm.ts/huffman": "3.1.1",
-    "filesize": "^10.1.2",
-    "globby": "^14.0.0",
+    "filesize": "^10.1.6",
+    "globby": "^14.1.0",
     "jsoncrush": "^1.1.8",
     "lz-string": "^1.5.0",
-    "tinybench": "^2.8.0"
+    "tinybench": "^2.9.0"
   },
   "devDependencies": {
-    "@nullvoxpopuli/eslint-configs": "^4.0.0",
-    "eslint": "^8.55.0",
-    "prettier": "^3.3.3",
-    "prettier-plugin-ember-template-tag": "2.0.2",
-    "typescript": "^5.4.5",
-    "vitest": "^2.1.2"
+    "@nullvoxpopuli/eslint-configs": "^5.0.0",
+    "eslint": "^9.21.0",
+    "prettier": "^3.5.2",
+    "prettier-plugin-ember-template-tag": "2.0.4",
+    "typescript": "5.7.3",
+    "vitest": "^3.0.6"
   },
   "scripts": {
     "lint": "pnpm -w exec lint",
     "lint:fix": "pnpm -w exec lint fix",
-    "lint:js": "pnpm -w exec lint js",
-    "lint:js:fix": "pnpm -w exec lint js:fix",
     "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
     "lint:prettier": "pnpm -w exec lint prettier"
   },
