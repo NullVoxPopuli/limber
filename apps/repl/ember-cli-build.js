@@ -40,7 +40,7 @@ module.exports = async function (defaults) {
   // Adds:
   //  - ember-template-compiler
   //  - @glimmer/syntax
-  app.import('vendor/ember/ember-template-compiler.js');
+  // app.import('ember-source/dist/ember-template-compiler.js');
 
   const { Webpack } = require('@embroider/webpack');
   const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -66,13 +66,9 @@ module.exports = async function (defaults) {
     ],
     staticAddonTrees: true,
     staticAddonTestSupportTrees: true,
-    staticHelpers: true,
-    staticModifiers: true,
-    staticComponents: true,
-    staticEmberSource: false,
+    staticInvokables: true,
+    staticEmberSource: true,
     staticAppPaths: ['utils'],
-    // splitAtRoutes: [],
-    implicitModulesStrategy: 'packageNames',
     // required due to this app being a dynamic component generator
     allowUnsafeDynamicComponents: true,
     packagerOptions: {
@@ -92,6 +88,7 @@ module.exports = async function (defaults) {
         resolve: {
           alias: {
             path: 'path-browserify',
+            'ember-template-compiler': 'node_modules/ember-source/dist/ember-template-compiler.js',
           },
           fallback: {
             path: require.resolve('path-browserify'),
