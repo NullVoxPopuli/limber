@@ -145,7 +145,7 @@ importers:
         version: 2.2.2(highlight.js@11.10.0)
       html-to-image:
         specifier: ^1.11.11
-        version: 1.11.11
+        version: 1.11.13
       kolay:
         specifier: ^1.2.2
         version: 1.2.2(qpkpy65t3vwzp3q253txilyx4a)
@@ -215,7 +215,7 @@ importers:
         version: 7.25.9(@babel/core@7.26.0)(eslint@8.57.1)
       '@codemirror/view':
         specifier: 6.34.1
-        version: 6.36.3
+        version: 6.34.1
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.2.0
@@ -3420,6 +3420,9 @@ packages:
 
   '@codemirror/theme-one-dark@6.1.2':
     resolution: {integrity: sha512-F+sH0X16j/qFLMAfbciKTxVOwkdAS336b7AXTKOZhy8BR3eH/RelsnLgLFINrpST63mmN2OuwUt0W2ndUgYwUA==}
+
+  '@codemirror/view@6.34.1':
+    resolution: {integrity: sha512-t1zK/l9UiRqwUNPm+pdIT0qzJlzuVckbTEMVNFhfWkGiBQClstzg+78vedCvLSX0xJEZ6lwZbPpnljL7L6iwMQ==}
 
   '@codemirror/view@6.36.3':
     resolution: {integrity: sha512-N2bilM47QWC8Hnx0rMdDxO2x2ImJ1FvZWXubwKgjeoOrWwEiFrtpA7SFHcuZ+o2Ze2VzbkgbzWVj4+V18LVkeg==}
@@ -8011,8 +8014,8 @@ packages:
     resolution: {integrity: sha512-ztqyC3kLto0e9WbNp0aeP+M3kTt+nbaIveGmUxAtZa+8iFgKLUOD4YKM5j+f3QD89bra7UeumolZHKuOXnTmeQ==}
     engines: {node: '>=8'}
 
-  html-to-image@1.11.11:
-    resolution: {integrity: sha512-9gux8QhvjRO/erSnDPv28noDZcPZmYE7e1vFsBLKLlRlKDSqNJYebj6Qz1TGd5lsRV+X+xYyjCKjuZdABinWjA==}
+  html-to-image@1.11.13:
+    resolution: {integrity: sha512-cuOPoI7WApyhBElTTb9oqsawRvZ0rHhaHwghRLlTuffoD1B2aDemlCruLeZrUIIdvG7gs9xeELEPm6PhuASqrg==}
 
   html-void-elements@2.0.1:
     resolution: {integrity: sha512-0quDb7s97CfemeJAnW9wC0hw78MtW7NU3hqtCD75g2vFlDLt36llsYD7uB7SUzojLMP24N5IatXf7ylGXiGG9A==}
@@ -12919,6 +12922,12 @@ snapshots:
       '@codemirror/state': 6.5.2
       '@codemirror/view': 6.36.3
       '@lezer/highlight': 1.2.1
+
+  '@codemirror/view@6.34.1':
+    dependencies:
+      '@codemirror/state': 6.5.2
+      style-mod: 4.1.2
+      w3c-keyname: 2.2.8
 
   '@codemirror/view@6.36.3':
     dependencies:
@@ -18994,7 +19003,7 @@ snapshots:
 
   html-tags@3.3.1: {}
 
-  html-to-image@1.11.11: {}
+  html-to-image@1.11.13: {}
 
   html-void-elements@2.0.1: {}
 
