@@ -1699,9 +1699,15 @@ importers:
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.0.0
         version: 5.0.0(@babel/core@7.26.9)(@babel/eslint-parser@7.26.8(@babel/core@7.26.9)(eslint@9.21.0(jiti@2.4.2)))(@babel/plugin-proposal-decorators@7.25.9(@babel/core@7.26.9))(eslint@9.21.0(jiti@2.4.2))(prettier@3.5.2)(typescript@5.7.3)
+      '@types/mocha':
+        specifier: ^10.0.10
+        version: 10.0.10
       eslint:
         specifier: ^9.21.0
         version: 9.21.0(jiti@2.4.2)
+      mocha:
+        specifier: ^10.8.2
+        version: 10.8.2
       prettier:
         specifier: ^3.5.2
         version: 3.5.2
@@ -4985,6 +4991,9 @@ packages:
 
   '@types/minimatch@5.1.2':
     resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
+
+  '@types/mocha@10.0.10':
+    resolution: {integrity: sha512-xPyYSz1cMPnJQhl0CLMH68j3gprKZaTjG3s5Vi+fDgx+uhG9NOXwbVt52eFS8ECyXhyKcjDLCBEqBExKuiZb7Q==}
 
   '@types/mocha@9.1.1':
     resolution: {integrity: sha512-Z61JK7DKDtdKTWwLeElSEBcWGRLY8g95ic5FoQqI9CMx0ns/Ghep3B4DfcEimiKMvtamNVULVNKEsiwV3aQmXw==}
@@ -15406,6 +15415,8 @@ snapshots:
   '@types/minimatch@3.0.5': {}
 
   '@types/minimatch@5.1.2': {}
+
+  '@types/mocha@10.0.10': {}
 
   '@types/mocha@9.1.1': {}
 

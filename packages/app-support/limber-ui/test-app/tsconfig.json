@@ -1,0 +1,23 @@
+{
+  "extends": "@tsconfig/ember",
+  "glint": {
+    "environment": ["ember-loose", "ember-template-imports"]
+  },
+  "compilerOptions": {
+    // Stylistic
+    "noPropertyAccessFromIndexSignature": false,
+    // Ecosystem
+    "skipLibCheck": true,
+    "allowJs": true,
+    "declaration": false,
+    "declarationMap": false,
+    "baseUrl": ".",
+    "experimentalDecorators": true,
+    "paths": {
+      "test-app/tests/*": ["tests/*"],
+      "test-app/*": ["app/*"],
+      "*": ["types/*"]
+    }
+  },
+  "include": ["app/**/*", "tests/**/*", "types/**/*"]
+}
