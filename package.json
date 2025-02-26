@@ -50,7 +50,7 @@
       "ember-get-config": "github:mansona/ember-get-config#config-meta-loader",
       "ember-auto-import": "^2.9.0",
       "ember-repl": "workspace:*",
-      "ember-source": ">= 6.0.1",
+      "ember-source": ">= 6.4.0-alpha.3",
       "array-includes": "npm:@nolyfill/array-includes@^1",
       "array.prototype.findlastindex": "npm:@nolyfill/array.prototype.findlastindex@^1",
       "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@^1",
