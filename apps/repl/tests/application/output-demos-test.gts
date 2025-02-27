@@ -88,7 +88,7 @@ module('Output > Demos', function (hooks) {
         setParentFrame({
           beginCompile: async () => assert.step('begin compile'),
 
-          error: async (e) => assert.step(e),
+          error: async (e: any) => assert.step(e),
           ready: async () => {},
           success: async () => assert.step('success'),
           finishedRendering: async () => assert.step('finished rendering'),

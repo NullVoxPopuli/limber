@@ -13,3 +13,5 @@ declare const config: {
   APP: Record<string, unknown>;
   SERVICE_WORKER: boolean;
 };
+
+export function enterTestMode(): void;

@@ -32,7 +32,8 @@
       "limber/*": ["app/*"],
       "*": ["types/*"]
     },
-    "types": ["vite/client"]
+    "types": ["vite/client","@embroider/core/virtual"
+    ]
   },
   "include": ["app/**/*", "tests/**/*", "types/**/*"]
 }

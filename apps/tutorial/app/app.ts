@@ -1,4 +1,5 @@
 import 'limber-ui/theme.css';
+import './registry.ts';
 
 import Application from '@ember/application';
 import compatModules from '@embroider/virtual/compat-modules';
