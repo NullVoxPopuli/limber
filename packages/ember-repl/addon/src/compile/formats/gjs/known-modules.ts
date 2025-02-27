@@ -30,7 +30,7 @@ export const modules = {
   '@ember/array': _array,
   '@ember/component': _EmberComponent,
   '@ember/component/helper': _EmberComponentHelper,
-  '@ember/component/template-only': _TO,
+  '@ember/component/template-only': Object.assign(_TO, { default: _TO }),
   '@ember/debug': _debug,
   '@ember/destroyable': _destroyable,
   '@ember/helper': _helpers,

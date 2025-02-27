@@ -1,3 +1,5 @@
+import { getGlobalConfig } from '@embroider/macros/src/addon/runtime';
+
 const ENV = {
   modulePrefix: 'tutorial',
   environment: import.meta.env.DEV ? 'development' : 'production',
@@ -22,4 +24,5 @@ export function enterTestMode() {
   ENV.locationType = 'none';
   ENV.APP.rootElement = '#ember-testing';
   ENV.APP.autoboot = false;
+  getGlobalConfig()['@embroider/macros'].isTesting = true;
 }
