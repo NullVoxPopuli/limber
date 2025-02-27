@@ -1,10 +1,11 @@
-import { defineConfig } from 'vite';
-import { extensions, ember, classicEmberSupport } from '@embroider/vite';
+import { classicEmberSupport, ember, extensions } from '@embroider/vite';
+
 import { babel } from '@rollup/plugin-babel';
 import tailwindcss from '@tailwindcss/vite';
 import { kolay } from 'kolay/vite';
+import { defineConfig } from 'vite';
 
-export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => ({
+export default defineConfig(({ mode /* command, isSsrBuild, isPreview */ }) => ({
   resolve: {
     extensions,
   },

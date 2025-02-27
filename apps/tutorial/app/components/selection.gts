@@ -16,7 +16,7 @@ export class Selection extends Component {
   @service declare router: RouterService;
 
   get humanSelected() {
-    let path = this.docs.currentPath;
+    const path = this.docs.currentPath;
 
     if (!path) return;
 
@@ -34,10 +34,10 @@ export class Selection extends Component {
   };
 
   <template>
-    <label class="w-full relative">
+    <label class="relative w-full">
       <span class="sr-only">Change tutorial</span>
       <span
-        class="w-full h-full px-4 absolute z-1 sr-hidden pointer-events-none grid gap-3 grid-flow-col items-center justify-start"
+        class="sr-hidden pointer-events-none absolute z-1 grid h-full w-full grid-flow-col items-center justify-start gap-3 px-4"
       >
         <FaIcon @icon={{faBars}} />
         <span class="limber__selected">{{this.humanSelected}}</span>
@@ -53,7 +53,7 @@ export class Selection extends Component {
 
       <select
         name="tutorial"
-        class="bg-none border border-gray-900 font-lg rounded p-2 w-full h-full indent-[-100000px]"
+        class="font-lg h-full w-full rounded border border-gray-900 bg-none p-2 indent-[-100000px]"
         {{on "change" this.handleChange}}
       >
         {{#each this.docs.grouped.pages as |group|}}

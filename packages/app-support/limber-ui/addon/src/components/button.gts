@@ -24,7 +24,7 @@ export const Button: TOC<{
   <button
     type="button"
     class="{{colorsFor @variant}}
-      inline-block items-center grid-flow-col rounded px-3 py-2 border border-[var(--horizon-border)] focus:outline-none focus:ring focus-visible:outline-none focus-visible:ring shadow hover:shadow-sm grid gap-2 disabled:opacity-30"
+      inline-block grid grid-flow-col items-center gap-2 rounded border border-[var(--horizon-border)] px-3 py-2 shadow hover:shadow-sm focus:outline-none focus:ring focus-visible:outline-none focus-visible:ring disabled:opacity-30"
     ...attributes
   >
     {{yield}}

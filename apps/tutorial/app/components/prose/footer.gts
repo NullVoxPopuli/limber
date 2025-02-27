@@ -13,8 +13,8 @@ const not = (x: unknown) => !x;
 export const FooterContent = <template>
   {{#let (service "docs") as |docs|}}
 
-    <footer class="grid p-2 gap-4 text-sm bg-[#eee] drop-shadow-2xl">
-      <div class="flex justify-between items-center justify-self-end w-full">
+    <footer class="grid gap-4 bg-[#eee] p-2 text-sm drop-shadow-2xl">
+      <div class="flex w-full items-center justify-between justify-self-end">
         {{#if docs.selected.hasAnswer}}
           {{#if docs.showAnswer}}
             <UnShowMe />

@@ -13,7 +13,7 @@ interface Signature<Key extends keyof Registry> {
 
 export default class GetService<Key extends keyof Registry> extends Helper<Signature<Key>> {
   compute([name]: [Key]): Registry[Key] {
-    let owner = getOwner(this);
+    const owner = getOwner(this);
 
     assert(`Could not get owner.`, owner);
 

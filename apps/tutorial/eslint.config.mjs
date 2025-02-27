@@ -11,4 +11,18 @@ export default [
       "padding-line-between-statements": "off",
     },
   },
+  {
+    files: ["**/*"],
+    rules: {
+      "import/no-unassigned-import": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/no-unsafe-argument": "off",
+      "@typescript-eslint/no-floating-promises": "off",
+      "@typescript-eslint/no-unsafe-return": "off",
+    },
+  },
+  {
+    ignores: ["public/**/*"],
+  },
 ];

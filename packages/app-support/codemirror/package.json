@@ -18,8 +18,6 @@
     "lint:types": "tsc --noEmit",
     "lint:fix": "pnpm -w exec lint fix",
     "lint": "pnpm -w exec lint",
-    "lint:js": "pnpm -w exec lint js",
-    "lint:js:fix": "pnpm -w exec lint js:fix",
     "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
     "lint:prettier": "pnpm -w exec lint prettier"
   },

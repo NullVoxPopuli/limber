@@ -6941,8 +6941,8 @@ packages:
       '@typescript-eslint/parser':
         optional: true
 
-  ember-eslint@0.2.0:
-    resolution: {integrity: sha512-R4fCcpExCe3KvykjTtbWDwvzT8BSWKam9j+7Nv2CcnSdldVVpivzlIPfkjrZlgV+dZvnHYLhwq3QjbLhry2ACw==}
+  ember-eslint@0.2.1:
+    resolution: {integrity: sha512-sxmh8dNJmWZH4Xx+4AC0XYbp3hKTSU8M3s886Ly9S6oL1dzVQ0A/GJp4lJUf5ex7wDbgZtMIhMQcw89329NIyw==}
 
   ember-fetch@8.1.2:
     resolution: {integrity: sha512-TVx24/jrvDIuPL296DV0hBwp7BWLcSMf0I8464KGz01sPytAB+ZAePbc9ooBTJDkKZEGFgatJa4nj3yF1S9Bpw==}
@@ -14742,7 +14742,7 @@ snapshots:
       '@eslint/js': 9.21.0
       '@typescript-eslint/parser': 8.25.0(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3)
       cosmiconfig: 9.0.0(typescript@5.7.3)
-      ember-eslint: 0.2.0(@babel/core@7.26.9)(@typescript-eslint/parser@8.25.0(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3)
+      ember-eslint: 0.2.1(@babel/core@7.26.9)(@typescript-eslint/parser@8.25.0(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3)
       eslint: 9.21.0(jiti@2.4.2)
       eslint-import-resolver-typescript: 3.8.3(eslint-plugin-import@2.31.0)(eslint@9.21.0(jiti@2.4.2))
       eslint-plugin-decorator-position: 6.0.0(@babel/eslint-parser@7.26.8(@babel/core@7.26.9)(eslint@9.21.0(jiti@2.4.2)))(eslint@9.21.0(jiti@2.4.2))
@@ -17960,7 +17960,7 @@ snapshots:
     transitivePeerDependencies:
       - eslint
 
-  ember-eslint@0.2.0(@babel/core@7.26.9)(@typescript-eslint/parser@8.25.0(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3):
+  ember-eslint@0.2.1(@babel/core@7.26.9)(@typescript-eslint/parser@8.25.0(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3):
     dependencies:
       '@babel/eslint-parser': 7.26.8(@babel/core@7.26.9)(eslint@9.21.0(jiti@2.4.2))
       '@eslint/js': 9.21.0

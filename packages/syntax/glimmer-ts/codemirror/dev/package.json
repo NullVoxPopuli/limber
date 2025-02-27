@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite .",
     "lint": "pnpm -w exec lint",
-    "lint:js:fix": "pnpm -w exec lint js:fix",
+    "lint:fix": "pnpm -w exec lint fix",
     "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
     "lint:prettier": "pnpm -w exec lint prettier"
   },

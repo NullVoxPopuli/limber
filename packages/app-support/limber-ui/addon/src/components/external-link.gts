@@ -18,7 +18,7 @@ export const ExternalLink: TOC<{
   };
 }> = <template>
   <PrimitiveExternalLink
-    class="inline-flex gap-2 items-baseline focus:ring-4 focus:outline-none focus-visible:outline-none rounded-sm hover:underline"
+    class="inline-flex items-baseline gap-2 rounded-sm hover:underline focus:outline-none focus:ring-4 focus-visible:outline-none"
     ...attributes
   >
     {{#if (has-block)}}

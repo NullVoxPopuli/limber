@@ -34,12 +34,12 @@ export async function compileJS(
   code: string,
   extraModules?: Record<string, unknown>
 ): Promise<CompileResult> {
-  let name = nameFor(code);
+  const name = nameFor(code);
   let component: undefined | ComponentLike;
   let error: undefined | Error;
 
   try {
-    let compiled = await transpile({ code: code, name });
+    const compiled = await transpile({ code: code, name });
 
     if (!compiled) {
       throw new Error(`Compiled output is missing`);
@@ -54,14 +54,14 @@ export async function compileJS(
 }
 
 async function transpile({ code: input, name }: Info) {
-  let preprocessed = await preprocess(input, name);
-  let result = await transform(preprocessed, name);
+  const preprocessed = await preprocess(input, name);
+  const result = await transform(preprocessed, name);
 
   if (!result) {
     return;
   }
 
-  let { code } = result;
+  const { code } = result;
 
   return code;
 }
@@ -77,12 +77,12 @@ async function preprocess(input: string, name: string): Promise<string> {
   }
 
   if (!processor) {
-    let { Preprocessor } = await fetchingPromise;
+    const { Preprocessor } = await fetchingPromise;
 
     processor = new Preprocessor();
   }
 
-  let { code /* map */ } = processor.process(input, {
+  const { code /* map */ } = processor.process(input, {
     filename: `${name}.js`,
     inline_source_map: true,
   });
@@ -120,9 +120,9 @@ async function transform(
       : _emberTemplateCompilation;
 
   // so we have to use the default export (which is all the exports)
-  let maybeBabel = (await import('@babel/standalone')) as any;
+  const maybeBabel = (await import('@babel/standalone')) as any;
   // Handle difference between vite and webpack in consuming projects...
-  let babel: Babel = 'availablePlugins' in maybeBabel ? maybeBabel : maybeBabel.default;
+  const babel: Babel = 'availablePlugins' in maybeBabel ? maybeBabel : maybeBabel.default;
 
   return babel.transform(intermediate, {
     filename: `${name}.js`,

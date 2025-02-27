@@ -18,7 +18,7 @@ const DEFAULT_PREFIX = 'ember-repl';
  * and generally allowing a consumer to derive "known references" to user-input
  */
 export function nameFor(code: string, prefix = DEFAULT_PREFIX) {
-  let id = uuidv5(code, NAMESPACE);
+  const id = uuidv5(code, NAMESPACE);
 
   return `${prefix ? `${prefix}-` : ''}${id}`;
 }

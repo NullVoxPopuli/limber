@@ -10,11 +10,11 @@ module('Rendering | Compiled()', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it works', async function (assert) {
-    let doc = stripIndent`
+    const doc = stripIndent`
       hello there
     `;
 
-    render(
+    void render(
       <template>
         {{#let (Compiled doc) as |state|}}
           <div id="ready">{{state.isReady}}</div>
@@ -28,6 +28,7 @@ module('Rendering | Compiled()', function (hooks) {
       </template>
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     await renderSettled();
     assert.dom('#ready').hasText('false');
     assert.dom('#error').hasNoText();

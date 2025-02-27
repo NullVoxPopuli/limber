@@ -5,6 +5,7 @@ import {
   resetOnerror,
   setApplication,
 } from '@ember/test-helpers';
+import { getPendingWaiterState } from '@ember/test-waiters';
 import * as QUnit from 'qunit';
 import { setup } from 'qunit-dom';
 import { setupEmberOnerrorValidation, start as qunitStart } from 'ember-qunit';

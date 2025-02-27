@@ -7,7 +7,7 @@ import { Link, service } from 'limber-ui';
 import { Selection } from './selection';
 
 export const Nav = <template>
-  <nav class="grid gap-2 p-2 shadow grid-cols-[min-content_1fr_min-content]">
+  <nav class="grid grid-cols-[min-content_1fr_min-content] gap-2 p-2 shadow">
     {{#let (service "selected") as |selected|}}
       <Link href={{selected.previous}} @isDisabled={{not selected.previous}}>
         <FaIcon @icon={{faAngleLeft}} />

@@ -11,15 +11,15 @@ import { visit } from 'unist-util-visit';
  *       indentation are stripped
  */
 function assertOutput(actual: string, expected: string) {
-  let _actual = actual.split('\n').filter(Boolean).join('\n').trim();
-  let _expected = expected.split('\n').filter(Boolean).join('\n').trim();
+  const _actual = actual.split('\n').filter(Boolean).join('\n').trim();
+  const _expected = expected.split('\n').filter(Boolean).join('\n').trim();
 
   QUnit.assert.equal(_actual, _expected);
 }
 
 module('Unit | parseMarkdown()', function () {
   test('There are no code fences', async function (assert) {
-    let result = await parseMarkdown(stripIndent`
+    const result = await parseMarkdown(stripIndent`
       # Title
 
       text
@@ -38,7 +38,7 @@ module('Unit | parseMarkdown()', function () {
   });
 
   test('There is code fence, but it is not gjs', async function (assert) {
-    let result = await parseMarkdown(
+    const result = await parseMarkdown(
       stripIndent`
       # Title
 
@@ -64,14 +64,16 @@ module('Unit | parseMarkdown()', function () {
 
   module('plugin options', function () {
     test('remarkPlugins', async function (assert) {
-      let result = await parseMarkdown(`# Title`, {
+      const result = await parseMarkdown(`# Title`, {
         remarkPlugins: [
           function noH1(/* options */) {
             return (tree) => {
               return visit(tree, ['heading'], function (node) {
                 if (!('depth' in node)) return;
 
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                 if (node.depth === 1) {
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                   node.depth = 2;
                 }
 
@@ -93,7 +95,7 @@ module('Unit | parseMarkdown()', function () {
     });
 
     test('remarkPlugins w/ options', async function (assert) {
-      let result = await parseMarkdown(`# Title`, {
+      const result = await parseMarkdown(`# Title`, {
         remarkPlugins: [
           [
             function noH1(options: { depth: number }) {
@@ -101,7 +103,9 @@ module('Unit | parseMarkdown()', function () {
                 return visit(tree, ['heading'], function (node) {
                   if (!('depth' in node)) return;
 
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                   if (node.depth === 1) {
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                     node.depth = options.depth;
                   }
 
@@ -119,14 +123,16 @@ module('Unit | parseMarkdown()', function () {
       assert.deepEqual(result.blocks, []);
     });
     test('rehypePlugins', async function (assert) {
-      let result = await parseMarkdown(`# Title`, {
+      const result = await parseMarkdown(`# Title`, {
         rehypePlugins: [
           function noH1(/* options */) {
             return (tree) => {
               return visit(tree, ['element'], function (node) {
                 if (!('tagName' in node)) return;
 
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                 if (node.tagName === 'h1') {
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                   node.tagName = 'h2';
                 }
 
@@ -148,7 +154,7 @@ module('Unit | parseMarkdown()', function () {
     });
 
     test('rehypePlugins w/ options', async function (assert) {
-      let result = await parseMarkdown(`# Title`, {
+      const result = await parseMarkdown(`# Title`, {
         rehypePlugins: [
           [
             function noH1(options: { depth: number }) {
@@ -156,7 +162,9 @@ module('Unit | parseMarkdown()', function () {
                 return visit(tree, ['element'], function (node) {
                   if (!('tagName' in node)) return;
 
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                   if (node.tagName === 'h1') {
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                     node.tagName = `h${options.depth ?? 2}`;
                   }
 
@@ -175,7 +183,7 @@ module('Unit | parseMarkdown()', function () {
     });
 
     test('rehypePlugins retain {{ }} escaping', async function () {
-      let result = await parseMarkdown(
+      const result = await parseMarkdown(
         stripIndent`
         # Title
 
@@ -207,9 +215,9 @@ module('Unit | parseMarkdown()', function () {
 
   module('hbs', function () {
     test('Codecontainer fence is live', async function (assert) {
-      let snippet = `{{concat "hello" " " "there"}}`;
-      let name = nameFor(snippet);
-      let result = await parseMarkdown(
+      const snippet = `{{concat "hello" " " "there"}}`;
+      const name = nameFor(snippet);
+      const result = await parseMarkdown(
         stripIndent`
           # Title
 
@@ -240,7 +248,7 @@ module('Unit | parseMarkdown()', function () {
 
   module('gjs', function () {
     test('Code fence does not have the "live" keyword', async function (assert) {
-      let result = await parseMarkdown(
+      const result = await parseMarkdown(
         stripIndent`
         # Title
 
@@ -265,9 +273,9 @@ module('Unit | parseMarkdown()', function () {
     });
 
     test('Code fence is live', async function (assert) {
-      let snippet = `const two = 2`;
-      let name = nameFor(snippet);
-      let result = await parseMarkdown(stripIndent`
+      const snippet = `const two = 2`;
+      const name = nameFor(snippet);
+      const result = await parseMarkdown(stripIndent`
         # Title
 
         \`\`\`gjs live
@@ -294,7 +302,7 @@ module('Unit | parseMarkdown()', function () {
     });
 
     test('Code with preview fence has {{ }} tokens escaped', async function () {
-      let result = await parseMarkdown(stripIndent`
+      const result = await parseMarkdown(stripIndent`
         # Title
 
         \`\`\`gjs
@@ -322,7 +330,7 @@ module('Unit | parseMarkdown()', function () {
     });
 
     test('Inline Code with {{ }} tokens is escaped', async function () {
-      let result = await parseMarkdown(stripIndent`
+      const result = await parseMarkdown(stripIndent`
         # Title
 
         \`{{ foo }}\`
@@ -338,9 +346,9 @@ module('Unit | parseMarkdown()', function () {
     });
 
     test('Can invoke a component again when defined in a live fence', async function (assert) {
-      let snippet = `const two = 2`;
-      let name = nameFor(snippet);
-      let result = await parseMarkdown(stripIndent`
+      const snippet = `const two = 2`;
+      const name = nameFor(snippet);
+      const result = await parseMarkdown(stripIndent`
       # Title
 
       \`\`\`gjs live
@@ -369,7 +377,7 @@ module('Unit | parseMarkdown()', function () {
     });
 
     test('Code fence imports things', async function (assert) {
-      let snippet = stripIndent`
+      const snippet = stripIndent`
         import Component from '@glimmer/component';
         import { on } from '@ember/modifier';
 
@@ -377,8 +385,8 @@ module('Unit | parseMarkdown()', function () {
           <button {{on "click" console.log}}>Click</button>
         </template>
       `;
-      let name = nameFor(snippet);
-      let result = await parseMarkdown(
+      const name = nameFor(snippet);
+      const result = await parseMarkdown(
         `hi\n` + `\n` + '```gjs live preview\n' + snippet + '\n```',
         { CopyComponent: '<CopyMenu />' }
       );

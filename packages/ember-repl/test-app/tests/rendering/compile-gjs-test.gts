@@ -10,7 +10,7 @@ import type { ComponentLike } from '@glint/template';
 
 function unexpectedErrorHandler(error: unknown) {
   console.error(error);
-  QUnit.assert.notOk(`CHECK CONSOLE: did not expect error: ${error}`);
+  QUnit.assert.notOk(`CHECK CONSOLE: did not expect error: ${String(error)}`);
 }
 
 module('Rendering | compile()', function (hooks) {
@@ -22,7 +22,7 @@ module('Rendering | compile()', function (hooks) {
         assert.notOk('This should not error');
       });
 
-      let snippet = stripIndent`
+      const snippet = stripIndent`
         import Component from '@glimmer/component';
         import { on } from '@ember/modifier';
 
