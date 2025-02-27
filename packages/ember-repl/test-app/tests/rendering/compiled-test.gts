@@ -28,7 +28,6 @@ module('Rendering | Compiled()', function (hooks) {
       </template>
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     await renderSettled();
     assert.dom('#ready').hasText('false');
     assert.dom('#error').hasNoText();
