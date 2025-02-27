@@ -71,7 +71,7 @@ function defineWithWarning(
 ) {
   Object.defineProperty(importMap, original, {
     get() {
-      let suggestion = replacement
+      const suggestion = replacement
         ? `Please use ${replacement} going forward.`
         : `There is not a direct replacement, please consult the docs for the library you're trying to use.`;
 

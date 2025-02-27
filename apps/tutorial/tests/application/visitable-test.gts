@@ -23,7 +23,6 @@ const manifest = tmpData as Manifest;
 module('every tutorial chapter', function (hooks) {
   setupApplicationTest(hooks);
 
-   
   for (const section of manifest.groups[0]!.tree.pages) {
     if (!isCollection(section)) continue;
 

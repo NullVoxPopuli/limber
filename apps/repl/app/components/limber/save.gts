@@ -26,12 +26,11 @@ export default class Save extends Component {
 
   @tracked isShowing = false;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(owner: Owner, args: any) {
     super(owner, args);
 
     const handler = (e: KeyboardEvent) => {
-      let isSave = (e.ctrlKey && e.key === 's') || (e.metaKey && e.key === 's');
+      const isSave = (e.ctrlKey && e.key === 's') || (e.metaKey && e.key === 's');
 
       if (isSave) {
         e.preventDefault();

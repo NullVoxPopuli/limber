@@ -45,7 +45,7 @@ async function setupEvents(
     onConnect: (parent: AsyncMethodReturns<ParentMethods>) => void;
   }
 ) {
-  let connection = connectToParent<ParentMethods>({
+  const connection = connectToParent<ParentMethods>({
     methods: {
       update(format: Format, text: string) {
         onReceiveText(format, text);
@@ -57,7 +57,7 @@ async function setupEvents(
 
   registerDestructor(context, () => connection.destroy());
 
-  let parent = await connection.promise;
+  const parent = await connection.promise;
 
   onConnect(parent);
 
@@ -66,11 +66,10 @@ async function setupEvents(
   /**
    * This app now can't render again, so we need to tell the host frame to re-load the output frame
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   Ember.onerror = (error: any) =>
     parent.error({ error: error.message || error, unrecoverable: true });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleError = (error: any) => parent.error({ error: error.message || error });
 
   window.addEventListener('error', handleError);
@@ -115,7 +114,7 @@ export default class Compiler extends Component<Signature> {
   };
 
   trySetup = () => {
-    let { _onReceiveText, _onConnect, connection } = this;
+    const { _onReceiveText, _onConnect, connection } = this;
 
     if (_onReceiveText && _onConnect && !connection) {
       setupEvents(this, {

@@ -13,7 +13,7 @@ import { Placeholder } from './placeholder';
 import type { TOC } from '@ember/component/template-only';
 
 function deferCodemirror() {
-  let state = new TrackedObject({ isLoading: false, isDone: false, error: null });
+  const state = new TrackedObject({ isLoading: false, isDone: false, error: null });
 
   function getEditor() {
     state.isLoading = true;
@@ -33,7 +33,7 @@ function deferCodemirror() {
     window.removeEventListener('touchstart', load);
   }
 
-  let load = () => {
+  const load = () => {
     getEditor();
     cleanup();
   };

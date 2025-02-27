@@ -11,7 +11,7 @@ export async function getHighlighter(): Promise<HLJSApi> {
    * since we now use hljs on initial page load, eagerly, we want to load
    * as little as possible
    */
-  let [hljs, glimmer, javascript, typescript, markdown, css] = await Promise.all([
+  const [hljs, glimmer, javascript, typescript, markdown, css] = await Promise.all([
     import('highlight.js/lib/core'),
     import('highlightjs-glimmer'),
     import('highlight.js/lib/languages/javascript'),

@@ -7,16 +7,16 @@ import { dt, s } from './-helpers';
 
 export class DemoSelect extends PageObject {
   async select(text: string) {
-    let toggleButton = this.element;
+    const toggleButton = this.element;
 
     assert('Demo selection went missing', toggleButton);
 
     await settled();
     await click(toggleButton);
 
-    let options = [...(this.element?.parentElement?.querySelectorAll(dt('demo')) || [])];
+    const options = [...(this.element?.parentElement?.querySelectorAll(dt('demo')) || [])];
 
-    let option = options.find((option) => {
+    const option = options.find((option) => {
       assert(`option's element has been removed`, option && option instanceof HTMLButtonElement);
 
       return new RegExp(`\\b${text}\\b`).test(option.innerHTML);

@@ -73,7 +73,8 @@ function liveCodeExtraction(options: Options = {}) {
   function isRelevantCode(node: Code): node is RelevantCode {
     if (node.type !== 'code') return false;
 
-    let { meta, lang } = node;
+    let { meta } = node;
+    const { lang } = node;
 
     meta = meta?.trim();
 

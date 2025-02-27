@@ -1,7 +1,8 @@
-import { defineConfig } from 'vite';
-import { extensions, ember, classicEmberSupport } from '@embroider/vite';
+import { classicEmberSupport, ember, extensions } from '@embroider/vite';
+
 import { babel } from '@rollup/plugin-babel';
 import tailwindcss from '@tailwindcss/vite';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   resolve: {

@@ -33,7 +33,7 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
   };
 
   isSelected = (format: Format) => {
-    let fmt = abbreviationFor(this.format);
+    const fmt = abbreviationFor(this.format);
 
     return fmt === format;
   };

@@ -1,4 +1,3 @@
- 
 import { modules } from './known-modules.ts';
 
 import type Component from '@glimmer/component';

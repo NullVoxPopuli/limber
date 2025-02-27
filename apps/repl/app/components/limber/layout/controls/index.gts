@@ -5,10 +5,10 @@ import { htmlSafe } from '@ember/template';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import {
   faColumns,
+  faExternalLinkAlt,
+  faRotate,
   faWindowMaximize,
   faWindowMinimize,
-  faRotate,
-  faExternalLinkAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { inIframe } from 'ember-primitives/iframe';
 

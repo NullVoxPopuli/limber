@@ -6,7 +6,7 @@ import { inject as service } from '@ember/service';
 import { waitFor } from '@ember/test-waiters';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faAngleUp, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faAngleRight, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
 import Menu from 'limber/components/limber/menu';
 import { getFromLabel, NAMES } from 'limber/snippets';
@@ -21,7 +21,7 @@ export class DemoSelect extends Component {
   @action
   @waitFor
   async select(demoName: string) {
-    let demo = await getFromLabel(demoName);
+    const demo = await getFromLabel(demoName);
 
     this.editor.updateDemo(demo, 'glimdown');
   }

@@ -1,7 +1,6 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faCubes } from '@fortawesome/free-solid-svg-icons';
-
 import { faEmber, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faCubes } from '@fortawesome/free-solid-svg-icons';
 import { notInIframe } from 'ember-primitives/iframe';
 
 import { FormatButtons } from 'limber/components/limber/layout/controls/format-buttons';

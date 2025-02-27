@@ -112,7 +112,7 @@ class ShareModal extends Component<{ onCancel: () => void }> {
     event.preventDefault();
     this.error = undefined;
 
-    let href = window.location.href;
+    const href = window.location.href;
 
     if (!href.includes('glimdown.com')) {
       if (href.includes('localhost')) {

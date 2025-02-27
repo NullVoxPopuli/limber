@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // import { precompileJSON } from '@glimmer/compiler';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore

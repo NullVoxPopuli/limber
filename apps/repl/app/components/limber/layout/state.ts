@@ -17,9 +17,9 @@ interface Data {
 export const BREAKPOINT = 1.2;
 
 function detectAspectRatio() {
-  let width = window.innerWidth;
-  let height = window.innerHeight;
-  let aspectRatio = width / height;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const aspectRatio = width / height;
 
   if (aspectRatio < BREAKPOINT) {
     return VERTICAL;
@@ -68,8 +68,8 @@ interface ContainerFoundData {
   minimize: () => void;
 }
 
-const VERTICAL = 'vertical' as const;
-const HORIZONTAL = 'horizontal' as const;
+const VERTICAL = 'vertical';
+const HORIZONTAL = 'horizontal';
 
 type Direction = typeof VERTICAL | typeof HORIZONTAL;
 
@@ -79,14 +79,14 @@ export const LayoutState = setup({
     maximizeEditor: ({ context }) => maximizeEditor({ context }),
     minimizeEditor: ({ context }) => minimizeEditor({ context }),
     restoreEditor: ({ context }) => {
-      let { container, maximize, minimize } = context;
+      const { container, maximize, minimize } = context;
 
       if (!container) return;
 
-      let router = getService(context, 'router');
-      let editor = router.currentRoute?.queryParams.editor;
-      let requestingMax = editor === 'max';
-      let requestingMin = editor === 'min';
+      const router = getService(context, 'router');
+      const editor = router.currentRoute?.queryParams.editor;
+      const requestingMax = editor === 'max';
+      const requestingMin = editor === 'min';
 
       if (maximize && requestingMax) {
         maximize();
@@ -118,14 +118,14 @@ export const LayoutState = setup({
     },
 
     observe: ({ context }) => {
-      let { observer, container } = context;
+      const { observer, container } = context;
 
       if (!container || !observer) return;
 
       observer.observe(container);
     },
     unobserve: ({ context }) => {
-      let { observer, container } = context;
+      const { observer, container } = context;
 
       if (!container || !observer) return;
 
@@ -134,14 +134,14 @@ export const LayoutState = setup({
     persistVerticalSplitSize: ({ context }) => {
       if (!context.container) return;
 
-      let rect = context.container.getBoundingClientRect();
+      const rect = context.container.getBoundingClientRect();
 
       setSize(WHEN_VERTICALLY_SPLIT, `${rect.width}px`);
     },
     persistHorizontalSplitSize: ({ context }) => {
       if (!context.container) return;
 
-      let rect = context.container.getBoundingClientRect();
+      const rect = context.container.getBoundingClientRect();
 
       setSize(WHEN_HORIZONTALLY_SPLIT, `${rect.height}px`);
     },
@@ -385,7 +385,7 @@ export const LayoutState = setup({
 });
 
 const minimizeEditor = ({ context }: Data) => {
-  let { container } = context;
+  const { container } = context;
 
   if (!container) return;
 
@@ -400,7 +400,7 @@ const minimizeEditor = ({ context }: Data) => {
   }
 };
 const maximizeEditor = ({ context }: Data) => {
-  let { container } = context;
+  const { container } = context;
 
   if (!container) return;
 
@@ -413,7 +413,7 @@ const maximizeEditor = ({ context }: Data) => {
 const clearHeight = (element: HTMLElement) => (element.style.height = '');
 const clearWidth = (element: HTMLElement) => (element.style.width = '');
 const restoreWidth = (element: HTMLElement) => {
-  let size = getSize(WHEN_VERTICALLY_SPLIT) ?? '';
+  const size = getSize(WHEN_VERTICALLY_SPLIT) ?? '';
 
   element.style.width = size;
   element.style.maxHeight = '';
@@ -421,9 +421,9 @@ const restoreWidth = (element: HTMLElement) => {
   element.style.maxWidth = 'calc(100vw - 72px)';
 };
 const restoreHeight = (element: HTMLElement) => {
-  let offset = document.querySelector('main > header')?.getBoundingClientRect().height || 0;
+  const offset = document.querySelector('main > header')?.getBoundingClientRect().height || 0;
 
-  let size = getSize(WHEN_HORIZONTALLY_SPLIT) ?? '';
+  const size = getSize(WHEN_HORIZONTALLY_SPLIT) ?? '';
 
   element.style.height = size;
   element.style.maxWidth = '';
@@ -438,7 +438,7 @@ function getData(): SplitSizeData {
     return RUNTIME_FOR_IFRAME;
   }
 
-  let json = localStorage.getItem(STORAGE_NAME);
+  const json = localStorage.getItem(STORAGE_NAME);
 
   if (!json) return {};
 
@@ -467,7 +467,7 @@ function setSize(name: SplitName, value: `${number}px`) {
     return;
   }
 
-  let data = getData();
+  const data = getData();
 
   data[name] = value;
 
@@ -482,10 +482,10 @@ function setSize(name: SplitName, value: `${number}px`) {
  * Since this is specifically used with the resize observer below,
  * we can let it be quite a bit delayed to improve perf.
  */
-let delay = 200;
+const delay = 200;
 let timeout: ReturnType<typeof setTimeout>;
 const debounced = (fn: (...args: unknown[]) => void) => {
-  let forNextFrame = nextAvailableFrame.bind(null, fn);
+  const forNextFrame = nextAvailableFrame.bind(null, fn);
 
   if (timeout) clearTimeout(timeout);
   timeout = setTimeout(forNextFrame, delay);
@@ -502,7 +502,7 @@ const nextAvailableFrame = (fn: (...args: unknown[]) => void) => {
  * of the editor and persisting it to local storage
  */
 export const setupResizeObserver = (callback: () => unknown) => {
-  let observer = new ResizeObserver(() => {
+  const observer = new ResizeObserver(() => {
     debounced(callback);
   });
 
