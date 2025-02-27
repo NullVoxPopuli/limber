@@ -55,7 +55,7 @@
     "@ember/test-helpers": "^5.1.0",
     "@ember/test-waiters": "^4.0.0",
     "@embroider/compat": "alpha",
-    "@embroider/config-meta-loader": "alpha",
+    "@embroider/config-meta-loader": "1.0.1-unstable.9f1e74e",
     "@embroider/core": "alpha",
     "@embroider/vite": "alpha",
     "@fortawesome/ember-fontawesome": "^3.0.0",

@@ -238,8 +238,8 @@ importers:
         specifier: alpha
         version: 4.0.0-alpha.6(@embroider/core@4.0.0-alpha.6(@glint/template@1.4.1-unstable.0e0d936))(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.0e0d936)(rsvp@4.8.5)
       '@embroider/config-meta-loader':
-        specifier: alpha
-        version: 1.0.0-alpha.1
+        specifier: 1.0.1-unstable.9f1e74e
+        version: 1.0.1-unstable.9f1e74e
       '@embroider/core':
         specifier: alpha
         version: 4.0.0-alpha.6(@glint/template@1.4.1-unstable.0e0d936)
@@ -545,8 +545,8 @@ importers:
         specifier: alpha
         version: 4.0.0-alpha.6(@embroider/core@4.0.0-alpha.6(@glint/template@1.4.1-unstable.0e0d936))(@glimmer/component@2.0.0)(@glint/template@1.4.1-unstable.0e0d936)(rsvp@4.8.5)
       '@embroider/config-meta-loader':
-        specifier: alpha
-        version: 1.0.0-alpha.1
+        specifier: 1.0.1-unstable.9f1e74e
+        version: 1.0.1-unstable.9f1e74e
       '@embroider/core':
         specifier: alpha
         version: 4.0.0-alpha.6(@glint/template@1.4.1-unstable.0e0d936)
@@ -899,8 +899,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0(@glint/template@1.4.1-unstable.0e0d936)
       '@embroider/addon-dev':
-        specifier: ^5.0.0
-        version: 5.0.0(@glint/template@1.4.1-unstable.0e0d936)(rollup@4.34.8)
+        specifier: ^7.1.1
+        version: 7.1.1(@glint/template@1.4.1-unstable.0e0d936)(rollup@4.34.8)
       '@glimmer/component':
         specifier: ^2.0.0
         version: 2.0.0
@@ -1365,8 +1365,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0(@glint/template@1.4.1-unstable.0e0d936)
       '@embroider/addon-dev':
-        specifier: ^5.0.0
-        version: 5.0.0(@glint/template@1.4.1-unstable.0e0d936)(rollup@4.25.0)
+        specifier: ^7.1.1
+        version: 7.1.1(@glint/template@1.4.1-unstable.0e0d936)(rollup@4.25.0)
       '@glimmer/compiler':
         specifier: ^0.92.4
         version: 0.92.4
@@ -3199,8 +3199,8 @@ packages:
   '@ember/test-waiters@4.0.0':
     resolution: {integrity: sha512-anqtvTCQvQh8VlHcKPJC0Fxz3aMmc7L+mZLOqvoH7+k86TUikZ/CxhytgMvgLk0x53fqOPEL1uykl2C9Ez65OA==}
 
-  '@embroider/addon-dev@5.0.0':
-    resolution: {integrity: sha512-cEaPnhNJBqb+1Mp/1iDsfZjXU/odQ+vYqtqg19qh/28KBbbL5do1TzFPfXuGjzuDHiTIagklpGoNGkMwU/bJtw==}
+  '@embroider/addon-dev@7.1.1':
+    resolution: {integrity: sha512-81xGvfvIULEvZTZIswdF4X2Ag7dRKfiUfIQsQ9s11ScozexVj7gyBsMZ4iIwpPmv9iz7WZdBu+ptyJjOdx+HgA==}
     engines: {node: 12.* || 14.* || >= 16}
     hasBin: true
     peerDependencies:
@@ -3239,8 +3239,8 @@ packages:
     peerDependencies:
       '@embroider/core': ^4.0.0-alpha.6
 
-  '@embroider/config-meta-loader@1.0.0-alpha.1':
-    resolution: {integrity: sha512-S9pAFF2GzscEqXBQJ4KJiTBqNIRoGFwRFZ/BKgjA0aVdpmaNKpTVCUhAfBhABCkDqAG1pYB2WW/bJJLtGpMuSA==}
+  '@embroider/config-meta-loader@1.0.1-unstable.9f1e74e':
+    resolution: {integrity: sha512-c2DgPfBVfyazlfLEMfYkPhiS1haZUXkvBM1UEWlfvfK9gRkElgxJyr7Oa2qkitafyDpO5LUal3Bj8gkHALvqzA==}
     engines: {node: 12.* || 14.* || >= 16}
 
   '@embroider/core@3.5.2':
@@ -6668,10 +6668,6 @@ packages:
     resolution: {integrity: sha512-jwK2UV4cnPpbcG7+VRARKTZPUWowwXA8bzH5NP6ud0oeAxyYPuGZUAC7hMugpCdz4BeSZl2Dl9k66CHJ/46ZYQ==}
     engines: {node: '>=0.10.0'}
 
-  del@6.1.1:
-    resolution: {integrity: sha512-ua8BhapfP0JUJKC/zV9yHHDW/rDoDxP4Zhn3AkA6/xT6gY7jYXJiaeyBZznYVujhZZET+UgcbZiQ7sN3WqcImg==}
-    engines: {node: '>=10'}
-
   delayed-stream@1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
     engines: {node: '>=0.4.0'}
@@ -8491,14 +8487,6 @@ packages:
   is-obj@3.0.0:
     resolution: {integrity: sha512-IlsXEHOjtKhpN8r/tRFj2nDyTmHvcfNeu/nrRIcXE17ROeatXchkojffa1SpdqW4cr/Fj6QkEf/Gn4zf6KKvEQ==}
     engines: {node: '>=12'}
-
-  is-path-cwd@2.2.0:
-    resolution: {integrity: sha512-w942bTcih8fdJPJmQHFzkS76NEP8Kzzvmw92cXsazb8intwLqPibPPdXf4ANdKV3rYMuuQYGIWtvz9JilB3NFQ==}
-    engines: {node: '>=6'}
-
-  is-path-inside@3.0.3:
-    resolution: {integrity: sha512-Fd4gABb+ycGAmKou8eMftCupSir5lRxqf4aD/vd0cD2qc4HL07OjCeuHMr8Ro4CoMaeCKDB0/ECBOVWjTwUvPQ==}
-    engines: {node: '>=8'}
 
   is-plain-obj@2.1.0:
     resolution: {integrity: sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA==}
@@ -10634,12 +10622,6 @@ packages:
   rollup-plugin-copy@3.5.0:
     resolution: {integrity: sha512-wI8D5dvYovRMx/YYKtUNt3Yxaw4ORC9xo6Gt9t22kveWz1enG9QrhVlagzwrxSC455xD1dHMKhIJkbsQ7d48BA==}
     engines: {node: '>=8.3'}
-
-  rollup-plugin-delete@2.2.0:
-    resolution: {integrity: sha512-REKtDKWvjZlbrWpPvM9X/fadCs3E9I9ge27AK8G0e4bXwSLeABAAwtjiI1u3ihqZxk6mJeB2IVeSbH4DtOcw7A==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      rollup: '*'
 
   rollup-plugin-dts@6.1.1:
     resolution: {integrity: sha512-aSHRcJ6KG2IHIioYlvAOcEq6U99sVtqDDKVhnwt70rW6tsz3tv5OSjEiWcgzfsHdLyGXZ/3b/7b/+Za3Y6r1XA==}
@@ -13337,15 +13319,15 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  '@embroider/addon-dev@5.0.0(@glint/template@1.4.1-unstable.0e0d936)(rollup@4.25.0)':
+  '@embroider/addon-dev@7.1.1(@glint/template@1.4.1-unstable.0e0d936)(rollup@4.25.0)':
     dependencies:
       '@embroider/core': 3.5.2(@glint/template@1.4.1-unstable.0e0d936)
       '@rollup/pluginutils': 4.2.1
-      content-tag: 2.0.3
+      content-tag: 3.1.1
+      execa: 5.1.1
       fs-extra: 10.1.0
       minimatch: 3.1.2
       rollup-plugin-copy-assets: 2.0.3(rollup@4.25.0)
-      rollup-plugin-delete: 2.2.0(rollup@4.25.0)
       walk-sync: 3.0.0
       yargs: 17.7.2
     optionalDependencies:
@@ -13357,15 +13339,15 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@embroider/addon-dev@5.0.0(@glint/template@1.4.1-unstable.0e0d936)(rollup@4.34.8)':
+  '@embroider/addon-dev@7.1.1(@glint/template@1.4.1-unstable.0e0d936)(rollup@4.34.8)':
     dependencies:
       '@embroider/core': 3.5.2(@glint/template@1.4.1-unstable.0e0d936)
       '@rollup/pluginutils': 4.2.1
-      content-tag: 2.0.3
+      content-tag: 3.1.1
+      execa: 5.1.1
       fs-extra: 10.1.0
       minimatch: 3.1.2
       rollup-plugin-copy-assets: 2.0.3(rollup@4.34.8)
-      rollup-plugin-delete: 2.2.0(rollup@4.34.8)
       walk-sync: 3.0.0
       yargs: 17.7.2
     optionalDependencies:
@@ -13520,7 +13502,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@embroider/config-meta-loader@1.0.0-alpha.1': {}
+  '@embroider/config-meta-loader@1.0.1-unstable.9f1e74e': {}
 
   '@embroider/core@3.5.2(@glint/template@1.4.1-unstable.0e0d936)':
     dependencies:
@@ -17344,17 +17326,6 @@ snapshots:
       is-descriptor: 1.0.3
       isobject: 3.0.1
 
-  del@6.1.1:
-    dependencies:
-      globby: 11.1.0
-      graceful-fs: 4.2.11
-      is-glob: 4.0.3
-      is-path-cwd: 2.2.0
-      is-path-inside: 3.0.3
-      p-map: 4.0.0
-      rimraf: 3.0.2
-      slash: 3.0.0
-
   delayed-stream@1.0.0: {}
 
   delegates@1.0.0: {}
@@ -20149,10 +20120,6 @@ snapshots:
 
   is-obj@3.0.0: {}
 
-  is-path-cwd@2.2.0: {}
-
-  is-path-inside@3.0.3: {}
-
   is-plain-obj@2.1.0: {}
 
   is-plain-obj@4.1.0: {}
@@ -22507,16 +22474,6 @@ snapshots:
       fs-extra: 8.1.0
       globby: 10.0.1
       is-plain-object: 3.0.1
-
-  rollup-plugin-delete@2.2.0(rollup@4.25.0):
-    dependencies:
-      del: 6.1.1
-      rollup: 4.25.0
-
-  rollup-plugin-delete@2.2.0(rollup@4.34.8):
-    dependencies:
-      del: 6.1.1
-      rollup: 4.34.8
 
   rollup-plugin-dts@6.1.1(rollup@4.34.8)(typescript@5.7.3):
     dependencies:

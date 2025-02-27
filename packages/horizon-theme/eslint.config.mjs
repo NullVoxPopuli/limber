@@ -1,3 +1,6 @@
 import { configs } from '@nullvoxpopuli/eslint-configs';
 
-export default configs.node(import.meta.dirname);
+export default [
+  ...configs.node(import.meta.dirname),
+  { ignores: ['dist']}
+];
