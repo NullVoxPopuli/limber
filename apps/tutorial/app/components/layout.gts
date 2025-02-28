@@ -31,7 +31,7 @@ function removeAppShell() {
           <Footer />
         </section>
         <Editor class="fixed inset-0 z-0 md:static" />
-        <SmallScreenToggle class="fixed right-4 bottom-4 z-20 md:hidden" />
+        <SmallScreenToggle class="fixed bottom-4 right-4 z-20 md:hidden" />
       </main>
     {{/if}}
   {{/let}}

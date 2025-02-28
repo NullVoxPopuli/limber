@@ -36,9 +36,9 @@ export const Controls: TOC<{
       <div
         data-is-minimized="{{@isMinimized}}"
         style={{htmlSafe (concat "right: " editor.scrollbarWidth "px;")}}
-        class="absolute top-0 right-0 z-[1]
+        class="absolute right-0 top-0 z-[1]
           {{if @splitHorizontally 'flex flex-row-reverse' 'grid'}}
-          {{if @isMinimized 'h-full content-start bg-ember-black'}}
+          {{if @isMinimized 'bg-ember-black h-full content-start'}}
           "
       >
         <Button
@@ -75,7 +75,7 @@ export const Controls: TOC<{
             href={{(currentURL)}}
             rel="noreferrer noopener"
             target="_blank"
-            class="flex items-center px-3 py-2 text-xs text-white select-none ring-inset hover:bg-[#9b2918] focus:ring-4 focus:outline-none disabled:opacity-30"
+            class="flex select-none items-center px-3 py-2 text-xs text-white ring-inset hover:bg-[#9b2918] focus:outline-none focus:ring-4 disabled:opacity-30"
           >
             <FaIcon @icon={{faExternalLinkAlt}} />
           </a>
