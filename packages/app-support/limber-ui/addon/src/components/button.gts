@@ -37,7 +37,7 @@ export const FAB: TOC<{
 }> = <template>
   <button
     type="button"
-    class="grid aspect-square grid-flow-col items-center gap-2 rounded-full border-2 bg-white p-2 text-4xl text-black ring-ember-brand drop-shadow-2xl hover:bg-[var(--ember-faint-gray)] hover:drop-shadow-xl focus:ring focus:outline-none focus-visible:ring focus-visible:outline-none disabled:opacity-30"
+    class="ring-ember-brand grid aspect-square grid-flow-col items-center gap-2 rounded-full border-2 bg-white p-2 text-4xl text-black drop-shadow-2xl hover:bg-[var(--ember-faint-gray)] hover:drop-shadow-xl focus:outline-none focus:ring focus-visible:outline-none focus-visible:ring disabled:opacity-30"
     ...attributes
   >
     {{yield}}
@@ -50,10 +50,9 @@ export const FlatButton: TOC<{
 }> = <template>
   <button
     type="button"
-    class="grid aspect-square grid-flow-col items-center gap-2 rounded-full border-1 bg-white p-2 text-2xl text-black ring-ember-brand hover:bg-[var(--ember-faint-gray)] focus:ring focus:outline-none focus-visible:ring focus-visible:outline-none disabled:opacity-30"
+    class="border-1 ring-ember-brand grid aspect-square grid-flow-col items-center gap-2 rounded-full bg-white p-2 text-2xl text-black hover:bg-[var(--ember-faint-gray)] focus:outline-none focus:ring focus-visible:outline-none focus-visible:ring disabled:opacity-30"
     ...attributes
   >
     {{yield}}
   </button>
 </template>;
-
