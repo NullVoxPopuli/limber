@@ -14,7 +14,7 @@ export class UnShowMe extends Component {
   <template>
     <Button
       @variant="secondary"
-      class="overflow-hidden text-left whitespace-nowrap transition-all"
+      class="overflow-hidden whitespace-nowrap text-left transition-all"
       style="transition-duration: 50ms"
       {{on "click" this.docs.unShowMe}}
     >

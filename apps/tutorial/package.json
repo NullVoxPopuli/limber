@@ -19,7 +19,7 @@
     "cf": "cd dist && npx wrangler pages dev --port 42000 ./",
     "start": "vite --port 4200",
     "test:ember": "vite build --mode test && pnpm dist:ember:test",
-    "dist:ember:test": "ember test --path dist --config-file ./testem.cjs",
+    "dist:ember:test": "ember test --path dist --config-file ./testem.cjs --test-port 0",
     "lint:js": "pnpm -w exec lint js",
     "lint:js:fix": "pnpm -w exec lint js:fix",
     "lint:hbs": "pnpm -w exec lint hbs",

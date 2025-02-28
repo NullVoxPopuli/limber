@@ -37,7 +37,7 @@ export class Selection extends Component {
     <label class="relative w-full">
       <span class="sr-only">Change tutorial</span>
       <span
-        class="sr-hidden pointer-events-none absolute z-1 grid h-full w-full grid-flow-col items-center justify-start gap-3 px-4"
+        class="sr-hidden z-1 pointer-events-none absolute grid h-full w-full grid-flow-col items-center justify-start gap-3 px-4"
       >
         <FaIcon @icon={{faBars}} />
         <span class="limber__selected">{{this.humanSelected}}</span>
