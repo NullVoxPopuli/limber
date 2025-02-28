@@ -1,8 +1,9 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { service } from 'ember-primitives/helpers/service';
 import { not } from 'tutorial/utils';
 
-import { Link, service } from 'limber-ui';
+import { Link } from 'limber-ui';
 
 import { Selection } from './selection';
 

@@ -1,9 +1,8 @@
 import { waitForPromise } from '@ember/test-waiters';
 
+import { service } from 'ember-primitives/helpers/service';
 import { resource, resourceFactory } from 'ember-resources';
 import { TrackedObject } from 'tracked-built-ins';
-
-import { service } from 'limber-ui';
 
 import codemirror, { setupCodeMirror } from './-code-mirror';
 import Loader from './loader';

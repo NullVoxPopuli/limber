@@ -1,7 +1,6 @@
 import { modifier } from 'ember-modifier';
 import { StickyFooter } from 'ember-primitives';
-
-import { service } from 'limber-ui';
+import { service } from 'ember-primitives/helpers/service';
 
 import { FooterContent } from './footer';
 import { NotFound } from './prose-not-found';

@@ -1,7 +1,8 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { service } from 'ember-primitives/helpers/service';
 
-import { ExternalLink, Link, service } from 'limber-ui';
+import { ExternalLink, Link } from 'limber-ui';
 
 import { ShowMe } from './show-me';
 import { UnShowMe } from './un-show-me';

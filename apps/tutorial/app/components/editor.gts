@@ -1,4 +1,5 @@
-import { REPL, service } from 'limber-ui';
+import { REPL } from 'limber-ui';
+import { service } from 'ember-primitives/helpers/service';
 
 import type { TOC } from '@ember/component/template-only';
 import type DocsService from 'tutorial/services/docs';

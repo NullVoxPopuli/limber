@@ -1,4 +1,4 @@
-import { service } from 'limber-ui';
+import { service } from 'ember-primitives/helpers/service';
 
 <template>
   {{#let (service "editor") as |editor|}}

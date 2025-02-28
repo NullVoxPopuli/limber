@@ -5,35 +5,9 @@ import { faQuestion, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'ember-primitives';
 import { notInIframe } from 'ember-primitives/iframe';
 
-import { Button, ExternalLink } from 'limber-ui';
+import { Button, ExternalLink, FAB, FlatButton } from 'limber-ui';
 
 import type { TOC } from '@ember/component/template-only';
-
-export const FAB: TOC<{
-  Element: HTMLButtonElement;
-  Blocks: { default: [] };
-}> = <template>
-  <button
-    type="button"
-    class="grid aspect-square grid-flow-col items-center gap-2 rounded-full border-2 bg-white p-2 text-4xl text-black ring-ember-brand drop-shadow-2xl hover:bg-[var(--ember-faint-gray)] hover:drop-shadow-xl focus:ring focus:outline-none focus-visible:ring focus-visible:outline-none disabled:opacity-30"
-    ...attributes
-  >
-    {{yield}}
-  </button>
-</template>;
-
-export const FlatButton: TOC<{
-  Element: HTMLButtonElement;
-  Blocks: { default: [] };
-}> = <template>
-  <button
-    type="button"
-    class="grid aspect-square grid-flow-col items-center gap-2 rounded-full border-1 bg-white p-2 text-2xl text-black ring-ember-brand hover:bg-[var(--ember-faint-gray)] focus:ring focus:outline-none focus-visible:ring focus-visible:outline-none disabled:opacity-30"
-    ...attributes
-  >
-    {{yield}}
-  </button>
-</template>;
 
 const Tutorial = <template>
   <ExternalLink class="m-0" href="https://tutorial.glimdown.com/">

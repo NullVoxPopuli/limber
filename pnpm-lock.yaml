@@ -550,6 +550,9 @@ importers:
       '@embroider/core':
         specifier: alpha
         version: 4.0.0-alpha.6(@glint/template@1.4.1-unstable.0e0d936)
+      '@embroider/macros':
+        specifier: alpha
+        version: 1.17.0-alpha.5(@glint/template@1.4.1-unstable.0e0d936)
       '@embroider/vite':
         specifier: alpha
         version: 1.0.0-alpha.7(@embroider/core@4.0.0-alpha.6(@glint/template@1.4.1-unstable.0e0d936))(@glint/template@1.4.1-unstable.0e0d936)(rollup@4.34.8)(vite@6.2.0(@types/node@22.13.5)(jiti@2.4.2)(lightningcss@1.29.1)(terser@5.39.0)(yaml@2.7.0))

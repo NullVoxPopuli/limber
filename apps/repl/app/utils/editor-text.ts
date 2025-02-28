@@ -1,5 +1,5 @@
 import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { buildWaiter } from '@ember/test-waiters';
 import { isTesting, macroCondition } from '@embroider/macros';
 
