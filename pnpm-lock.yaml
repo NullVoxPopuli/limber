@@ -641,8 +641,8 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/template@1.4.1-unstable.0e0d936)(ember-resources@7.0.3(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/template@1.4.1-unstable.0e0d936)(ember-source@6.4.0-alpha.3(@glimmer/component@2.0.0)(rsvp@4.8.5)))(ember-source@6.4.0-alpha.3(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-page-title:
-        specifier: ^8.2.4
-        version: 8.2.4(ember-source@6.4.0-alpha.3(@glimmer/component@2.0.0)(rsvp@4.8.5))
+        specifier: ^9.0.1
+        version: 9.0.1(ember-source@6.4.0-alpha.3(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-qunit:
         specifier: ^9.0.1
         version: 9.0.1(@ember/test-helpers@5.1.0(@babel/core@7.26.9)(@glint/template@1.4.1-unstable.0e0d936)(ember-source@6.4.0-alpha.3(@glimmer/component@2.0.0)(rsvp@4.8.5)))(@glint/template@1.4.1-unstable.0e0d936)(ember-source@6.4.0-alpha.3(@glimmer/component@2.0.0)(rsvp@4.8.5))(qunit@2.24.1)
@@ -1449,8 +1449,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(ember-source@6.4.0-alpha.3(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-page-title:
-        specifier: ^8.2.4
-        version: 8.2.4(ember-source@6.4.0-alpha.3(@glimmer/component@2.0.0)(rsvp@4.8.5))
+        specifier: ^9.0.1
+        version: 9.0.1(ember-source@6.4.0-alpha.3(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-qunit:
         specifier: ^9.0.1
         version: 9.0.1(@ember/test-helpers@5.1.0(@babel/core@7.26.9)(@glint/template@1.4.1-unstable.0e0d936)(ember-source@6.4.0-alpha.3(@glimmer/component@2.0.0)(rsvp@4.8.5)))(@glint/template@1.4.1-unstable.0e0d936)(ember-source@6.4.0-alpha.3(@glimmer/component@2.0.0)(rsvp@4.8.5))(qunit@2.24.1)
@@ -6791,12 +6791,6 @@ packages:
   ember-on-resize-modifier@2.0.2:
     resolution: {integrity: sha512-7mcD7CNbiCaZEIASWlRz/Wmn47afCMSFTdQJSSUe0WCgnXxn9DVoqZ39B7ZuddTHa0V6otTFrV/lIRYpggQ+eg==}
     engines: {node: 12.* || 14.* || >= 16}
-
-  ember-page-title@8.2.4:
-    resolution: {integrity: sha512-ZZ912IRItIEfD5+35w65DT9TmqppK+suXJeaJenD5OSuvujUnYl6KxBpyAbfjw4mYtURwJO/TmSe+4GGJbsJ0w==}
-    engines: {node: 16.* || >= 18}
-    peerDependencies:
-      ember-source: '>= 6.4.0-alpha.3'
 
   ember-page-title@9.0.1:
     resolution: {integrity: sha512-qo3NHJRrCZpYyGr+KkDAQDZ9IFJOFLW9qEKYer2tetSpaL9B2PQmh4KY0XdZY25jxFg8GZ1+DChDSImIbh5yzA==}
@@ -17719,14 +17713,6 @@ snapshots:
       - ember-source
       - supports-color
       - webpack
-
-  ember-page-title@8.2.4(ember-source@6.4.0-alpha.3(@glimmer/component@2.0.0)(rsvp@4.8.5)):
-    dependencies:
-      '@embroider/addon-shim': 1.8.9
-      '@simple-dom/document': 1.4.0
-      ember-source: 6.4.0-alpha.3(@glimmer/component@2.0.0)(rsvp@4.8.5)
-    transitivePeerDependencies:
-      - supports-color
 
   ember-page-title@9.0.1(ember-source@6.4.0-alpha.3(@glimmer/component@2.0.0)(rsvp@4.8.5)):
     dependencies:
