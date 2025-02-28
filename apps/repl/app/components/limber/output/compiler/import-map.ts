@@ -33,8 +33,10 @@ import { ExternalLink } from 'limber-ui';
 
 export const importMap = {
   // Own Stuff
-  'limber/components/limber/menu': limberMenu,
-  'limber/components/limber/header': limberHeader,
+  // Something is weird with how this import map works.
+  // I can't wait to land the other which behaves a lot mormally
+  'limber/components/limber/menu': Object.assign(limberMenu.default, limberMenu),
+  'limber/components/limber/header': Object.assign(limberHeader.default, limberHeader),
 
   // Libraries
   'ember-repl': emberRepl,
