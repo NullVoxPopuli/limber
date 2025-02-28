@@ -26,11 +26,7 @@ module.exports = {
     },
     fontFamily: {
       sans: ['system-ui', 'Helvetica', 'Arial', 'sans-serif'],
-      mono: [
-        'ui-monospace',
-        'monospace',
-        'monospace',
-      ],
+      mono: ['ui-monospace', 'monospace', 'monospace'],
     },
     extend: {
       colors: {
