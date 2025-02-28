@@ -1,6 +1,11 @@
 @config "../../config/tailwind.cjs";
 @import "tailwindcss";
 
+/* This is super annoying: Tailwind broke the ability to _resolve_ dependencies. */
+/* This is brittle */
+@source "../../node_modules/limber-ui"
+
+
 * {
   touch-action: manipulation;
 }
