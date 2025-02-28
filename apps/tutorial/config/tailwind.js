@@ -6,8 +6,6 @@ const require = createRequire(import.meta.url);
 const replRoot = path.join(import.meta.dirname, '..');
 const uiRoot = path.join(import.meta.dirname, '../../../packages/app-support/limber-ui/addon');
 
-console.log({ uiRoot })
-
 export default {
   content: [
     `${replRoot}/app/**/*.{js,ts,hbs,gjs,gts}`,
