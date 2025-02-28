@@ -16,6 +16,9 @@ export const resetScroll = modifier((element, [prose]) => {
 export const Prose: TOC<{ Element: HTMLDivElement }> = <template>
   {{#let (service "docs") as |docs|}}
     <style>
+      .ember-primitives__sticky-footer__wrapper {
+        height: calc(100dvh - 94px);
+      }
       .ember-primitives__sticky-footer__footer {
         position: sticky;
         bottom: -32px;
