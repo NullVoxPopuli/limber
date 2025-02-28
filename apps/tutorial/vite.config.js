@@ -1,13 +1,15 @@
 import { classicEmberSupport, ember, extensions } from '@embroider/vite';
 
 import { babel } from '@rollup/plugin-babel';
-import tailwindcss from '@tailwindcss/vite';
 import { kolay } from 'kolay/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig(({ mode /* command, isSsrBuild, isPreview */ }) => ({
   resolve: {
     extensions,
+  },
+  css: {
+    postcss: './config/postcss.config.mjs',
   },
   optimizeDeps: {
     // a wasm-providing dependency
@@ -30,7 +32,6 @@ export default defineConfig(({ mode /* command, isSsrBuild, isPreview */ }) => (
       onlyDirectories: true,
       packages: [],
     }),
-    tailwindcss(),
     classicEmberSupport(),
     ember(),
     babel({

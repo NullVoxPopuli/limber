@@ -1,11 +1,12 @@
-'use strict';
+import { createRequire } from 'node:module';
+import path from 'node:path';
 
-const path = require('path');
+const require = createRequire(import.meta.url);
 
-const replRoot = path.join(__dirname, '..');
-const uiRoot = path.join(__dirname, '../../packages/app-support/limber-ui/addon');
+const replRoot = path.join(import.meta.dirname, '..');
+const uiRoot = path.join(import.meta.dirname, '../../packages/app-support/limber-ui/addon');
 
-module.exports = {
+export default {
   content: [
     `${replRoot}/app/**/*.{js,ts,hbs,gjs,gts}`,
     `${replRoot}/public/**/*.md`,

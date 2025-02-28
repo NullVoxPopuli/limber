@@ -1,12 +1,14 @@
 import { classicEmberSupport, ember, extensions } from '@embroider/vite';
 
 import { babel } from '@rollup/plugin-babel';
-import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
   resolve: {
     extensions,
+  },
+  css: {
+    postcss: './config/postcss.config.mjs',
   },
   optimizeDeps: {
     // a wasm-providing dependency
@@ -17,7 +19,6 @@ export default defineConfig({
     },
   },
   plugins: [
-    tailwindcss(),
     classicEmberSupport(),
     ember(),
     babel({
