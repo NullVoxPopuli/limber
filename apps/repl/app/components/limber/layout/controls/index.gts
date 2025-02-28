@@ -10,10 +10,10 @@ import {
   faWindowMaximize,
   faWindowMinimize,
 } from '@fortawesome/free-solid-svg-icons';
+import { service } from 'ember-primitives/helpers/service';
 import { inIframe } from 'ember-primitives/iframe';
 
 import currentURL from 'limber/helpers/current-url';
-import { service } from 'limber-ui';
 
 import { Button, buttonClasses } from './button';
 import { FormatMenu } from './format-menu';

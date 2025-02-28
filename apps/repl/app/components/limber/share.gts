@@ -14,8 +14,8 @@ import { Modal } from 'ember-primitives/components/dialog';
 import { cell } from 'ember-resources';
 
 import { shortenUrl } from 'limber/utils/editor-text';
+import { FlatButton } from 'limber-ui';
 
-import { FlatButton } from './help';
 import { SaveBanner, SHOW_TIME } from './save';
 
 import type { TOC } from '@ember/component/template-only';
