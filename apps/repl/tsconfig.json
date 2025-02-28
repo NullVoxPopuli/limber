@@ -30,12 +30,10 @@
     "paths": {
       "limber/tests/*": ["tests/*"],
       "limber/*": ["app/*"],
-      "@glimmer/tracking": [
-        "../node_modules/ember-cached-decorator-polyfill",
-        "../node_modules/@glimmer/tracking/dist/types"
-      ],
       "*": ["types/*"]
-    }
+    },
+    "types": ["vite/client","@embroider/core/virtual"
+    ]
   },
   "include": ["app/**/*", "tests/**/*", "types/**/*"]
 }

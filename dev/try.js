@@ -28,7 +28,6 @@ for (let group of groups) {
   }
 }
 
-// eslint-disable-next-line no-console
 console.table(results);
 
 if (errors.length) {

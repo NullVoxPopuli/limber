@@ -1,6 +1,7 @@
+import { service } from 'ember-primitives/helpers/service';
+
 import qp from 'limber/helpers/qp';
 import highlighted from 'limber/modifiers/highlighted';
-import { service } from 'limber-ui';
 
 import type { TOC } from '@ember/component/template-only';
 
@@ -18,7 +19,7 @@ export const Placeholder: TOC<{
       data-test-placeholder
       id="initial-editor"
       spellcheck="false"
-      class="w-full h-full px-6 py-2 font-sm font-mono text-white"
+      class="font-sm h-full w-full px-6 py-2 font-mono text-white"
       {{! @glint-ignore }}
       {{highlighted context.text}}
       ...attributes

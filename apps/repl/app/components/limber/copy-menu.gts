@@ -9,13 +9,13 @@ import Menu from './menu';
  */
 export default class CopyMenu extends Component {
   copyAsText = (event: Event) => {
-    let code = getSnippetElement(event);
+    const code = getSnippetElement(event);
 
     navigator.clipboard.writeText(code.innerText);
   };
 
   copyAsImage = async (event: Event) => {
-    let code = getSnippetElement(event);
+    const code = getSnippetElement(event);
 
     await copyToClipboard(code);
   };

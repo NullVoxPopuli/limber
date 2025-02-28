@@ -10,11 +10,11 @@ module('Rendering | Compiled()', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it works', async function (assert) {
-    let doc = stripIndent`
+    const doc = stripIndent`
       hello there
     `;
 
-    render(
+    void render(
       <template>
         {{#let (Compiled doc) as |state|}}
           <div id="ready">{{state.isReady}}</div>

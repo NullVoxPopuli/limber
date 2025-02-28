@@ -44,7 +44,7 @@ export class HostMessaging {
    * We can't post right away, because we might do so before the iframe is ready.
    * We need to wait until the frame initiates contact.
    */
-  postMessage = PostMessage((data) => this.queuePayload('gjs', data));
+  postMessage = PostMessage((data) => void this.queuePayload('gjs', data));
   onMessage = HandleMessage((element) => {
     this.connection = connectToChild({
       iframe: element,
@@ -53,7 +53,7 @@ export class HostMessaging {
 
     waitForPromise(this.connection.promise).catch(console.error);
 
-    return () => this.connection?.destroy();
+    return () => void this.connection?.destroy();
   });
 
   @action
@@ -64,7 +64,7 @@ export class HostMessaging {
 
     if (!this.connection) return;
 
-    let child = await this.connection.promise;
+    const child = await this.connection.promise;
 
     if (isDestroyed(this) || isDestroying(this)) return;
 

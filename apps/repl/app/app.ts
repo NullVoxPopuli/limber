@@ -1,20 +1,19 @@
 import 'limber-ui/theme.css';
 import 'ember-statechart-component';
+import './icons.ts';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { DEBUG } from '@glimmer/env';
 import Application from '@ember/application';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { _backburner } from '@ember/runloop';
+import compatModules from '@embroider/virtual/compat-modules';
 
 import loadInitializers from 'ember-load-initializers';
 import Resolver from 'ember-resolver';
 
-import config from 'limber/config/environment';
+import config from './config/environment';
 
-if (DEBUG) {
+if (import.meta.env.DEV) {
   // This has performance implications, but the debuggability is worth it.
   // Debugging eventloop stuff is notoriously difficult, so let's make it
   // not difficult by default.
@@ -35,8 +34,7 @@ Object.assign(window, {
 
 export default class App extends Application {
   modulePrefix = config.modulePrefix;
-  podModulePrefix = config.podModulePrefix;
-  Resolver = Resolver;
+  Resolver = Resolver.withModules(compatModules);
 }
 
-loadInitializers(App, config.modulePrefix);
+loadInitializers(App, config.modulePrefix, compatModules);

@@ -21,7 +21,7 @@ export function isNotHidden(page: Page | Collection) {
 export function nextPage(pages: Page[], current: Page | undefined): string | undefined {
   let found = false;
 
-  for (let tutorial of pages) {
+  for (const tutorial of pages) {
     if (isHidden(tutorial)) {
       continue;
     }
@@ -55,7 +55,7 @@ async function preload(prosePath?: string) {
 
   await Promise.resolve();
 
-  let path = unprose(prosePath);
+  const path = unprose(prosePath);
 
   await Promise.all([
     fetch(`/docs/${path}/prose.md`),

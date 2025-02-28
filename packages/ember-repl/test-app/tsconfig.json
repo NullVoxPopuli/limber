@@ -5,11 +5,11 @@
   },
   "compilerOptions": {
     "skipLibCheck": true,
+    "types": ["ember-source/types"],
     "paths": {
       "test-app/tests/*": ["./tests/*"],
       "test-app/*": ["./app/*"],
-      "*": ["./types/*"]
     }
   },
-  "include": ["./app/**/*", "./tests/**/*", "./types/**/*"]
+  "include": ["./app/**/*", "./tests/**/*"]
 }

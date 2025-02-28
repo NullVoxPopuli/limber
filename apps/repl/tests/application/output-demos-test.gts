@@ -22,7 +22,7 @@ import type { AsyncMethodReturns } from 'penpal';
 module('Output > Demos', function (hooks) {
   setupApplicationTest(hooks);
 
-  let page = new Page();
+  const page = new Page();
 
   /**
    * The editor is excluded from these tests,
@@ -37,16 +37,16 @@ module('Output > Demos', function (hooks) {
   });
 
   module('every option correctly changes the query params', function () {
-    for (let demo of ALL) {
+    for (const demo of ALL) {
       test(demo.label, async function (assert) {
         this.owner.register('template:edit', Route(<template><DemoSelect /></template>));
 
         await page.expectRedirectToContent('/edit');
         await page.selectDemo(demo.label);
 
-        let { queryParams = {} } = getService('router').currentRoute ?? {};
+        const { queryParams = {} } = getService('router').currentRoute ?? {};
 
-        let file = fileFromParams(queryParams);
+        const file = fileFromParams(queryParams);
 
         assert.strictEqual(queryParams.format, 'glimdown');
         assert.strictEqual(file.format, queryParams.format, 'format matches queryParams');
@@ -58,12 +58,12 @@ module('Output > Demos', function (hooks) {
   });
 
   module('The output frame renders every demo', function () {
-    for (let demo of ALL) {
+    for (const demo of ALL) {
       test(demo.label, async function (assert) {
         let makeComponent!: (format: Format, text: string) => void;
         let setParentFrame!: (parentAPI: AsyncMethodReturns<ParentMethods>) => void;
 
-        let api = {
+        const api = {
           onReceiveText: (callback: typeof makeComponent) => (makeComponent = callback),
           onConnect: (callback) => (setParentFrame = callback),
         } satisfies MessagingAPI;
@@ -87,14 +87,14 @@ module('Output > Demos', function (hooks) {
 
         setParentFrame({
           beginCompile: async () => assert.step('begin compile'),
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          error: async (e) => assert.step(e as any),
+
+          error: async (e: any) => assert.step(e),
           ready: async () => {},
           success: async () => assert.step('success'),
           finishedRendering: async () => assert.step('finished rendering'),
         });
 
-        let text = await getFromLabel(demo.label);
+        const text = await getFromLabel(demo.label);
 
         makeComponent('glimdown', text);
         await settled();

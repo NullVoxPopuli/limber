@@ -31,7 +31,7 @@ export class Page extends PageObject {
   ) {
     let sawExpectedError = false;
 
-    let _checks = {
+    const _checks = {
       aborted: checks?.aborted ?? true,
     };
 
@@ -44,8 +44,8 @@ export class Page extends PageObject {
         'message' in e && typeof e.message === 'string'
       );
 
-      let lines = e.message.split('\n');
-      let first = lines[0];
+      const lines = e.message.split('\n');
+      const first = lines[0];
 
       assert(
         `The only expected error is a TransitionAborted. Received: ${first}`,
@@ -64,31 +64,31 @@ export class Page extends PageObject {
     // Allow time for transitions to settle
     await settled();
 
-    let url = currentURL();
+    const url = currentURL();
 
     assert(`Expected an URL -- via currentURL(), got ${url}`, url);
 
-    let [, search] = url.split('?');
-    let query = new URLSearchParams(search);
+    const [, search] = url.split('?');
+    const query = new URLSearchParams(search);
 
     if (format) {
-      let f = query.get('format');
+      const f = query.get('format');
 
       assert(`Expected format, ${format}, but got ${f}`, f === format);
     }
 
     if (c) {
-      let lzString = query.get('c');
+      const lzString = query.get('c');
 
       assert(`Missing c query param. currentURL: ${url}`, lzString);
 
-      let value = decompressFromEncodedURIComponent(lzString);
+      const value = decompressFromEncodedURIComponent(lzString);
 
       assert(`QP's c did not match expected text`, c === value);
     }
 
     if (t) {
-      let text = query.get('t');
+      const text = query.get('t');
 
       assert(`QP's t did not match expected text`, text === t);
     }

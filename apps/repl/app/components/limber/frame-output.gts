@@ -33,7 +33,6 @@ export default class FrameOutput extends Component {
     update: (format: Format, text: string) => void;
   }>;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(owner: Owner, args: any) {
     super(owner, args);
 
@@ -45,11 +44,11 @@ export default class FrameOutput extends Component {
   @action
   @waitFor
   async queuePayload() {
-    let qps = this.router.currentURL?.split('?')[1];
+    const qps = this.router.currentURL?.split('?')[1];
 
     if (!this.connection) return;
 
-    let child = await this.connection.promise;
+    const child = await this.connection.promise;
 
     if (isDestroyed(this) || isDestroying(this)) return;
 
@@ -59,7 +58,7 @@ export default class FrameOutput extends Component {
       return;
     }
 
-    let { text, format } = fileFromParams(qps);
+    const { text, format } = fileFromParams(qps);
 
     if (text && format) {
       await child.update(format, text);
@@ -74,8 +73,8 @@ export default class FrameOutput extends Component {
   previous = '';
   previousURL = '';
   monitorConnection = modifier((element: HTMLIFrameElement) => {
-    let status = this.frameStatus;
-    let currentURL = this.router.currentURL;
+    const status = this.frameStatus;
+    const currentURL = this.router.currentURL;
 
     if (!currentURL) return;
 
@@ -167,7 +166,7 @@ export default class FrameOutput extends Component {
     <iframe
       {{this.monitorConnection}}
       title="Rendered output"
-      class="w-full h-full border-none"
+      class="h-full w-full border-none"
       src="/output"
     ></iframe>
   </template>

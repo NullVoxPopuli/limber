@@ -1,4 +1,6 @@
-import { ExternalLink, Link, service } from 'limber-ui';
+import { service } from 'ember-primitives/helpers/service';
+
+import { ExternalLink, Link } from 'limber-ui';
 
 const ReportIssue = <template>
   If the tutorial navigated you here,

@@ -23,18 +23,17 @@ const manifest = tmpData as Manifest;
 module('every tutorial chapter', function (hooks) {
   setupApplicationTest(hooks);
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  for (let section of manifest.groups[0]!.tree.pages) {
+  for (const section of manifest.groups[0]!.tree.pages) {
     if (!isCollection(section)) continue;
 
-    for (let chapter of section.pages) {
-      let name = chapter.path.replace(/\/prose\.md$/, '');
+    for (const chapter of section.pages) {
+      const name = chapter.path.replace(/\/prose\.md$/, '');
 
-      let fullPath = `/${section.path}/${name}`;
+      const fullPath = `/${section.path}/${name}`;
 
       // every page except the last one (99-next-steps/1-congratulations)
       // should have a "next" button
-      let isLast = fullPath === '/99-next-steps/1-congratulations';
+      const isLast = fullPath === '/99-next-steps/1-congratulations';
 
       // also anything starting with /x- isn't ready for folks to ese
       // nor test
@@ -53,7 +52,7 @@ module('every tutorial chapter', function (hooks) {
           await visit(fullPath);
           assert.strictEqual(currentURL(), fullPath, `visited ${fullPath}`);
 
-          let previous = currentURL();
+          const previous = currentURL();
 
           // every page except the last one (99-next-steps/1-congratulations)
           // should have a "next" button
@@ -61,18 +60,18 @@ module('every tutorial chapter', function (hooks) {
             timeoutMessage: 'Selected service was never ready',
           });
 
-          let nextLink = find('[data-test-next]');
+          const nextLink = find('[data-test-next]');
 
           debugAssert(`Next link is missing`, nextLink);
 
-          let actualHref = nextLink?.getAttribute('href');
+          const actualHref = nextLink?.getAttribute('href');
 
           debugAssert(`Expected href of [data-test-next] to exist`, actualHref);
 
           assert.notStrictEqual(actualHref, fullPath, `${actualHref} is not ${fullPath}`);
           await click('[data-test-next]');
 
-          let current = currentURL();
+          const current = currentURL();
 
           assert.notEqual(current, previous, `Navigated from ${previous} to ${current}`);
         });

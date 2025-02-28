@@ -19,10 +19,10 @@ const guestFrame = resource(({ on, owner }) => {
     return '';
   }
 
-  let connection = connectToParent<ParentMethods>({
+  const connection = connectToParent<ParentMethods>({
     methods: {
       update(format: Format, text: string) {
-        let editor = owner.lookup('service:editor');
+        const editor = owner.lookup('service:editor');
 
         editor.updateDemo(text, format);
       },

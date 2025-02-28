@@ -3,10 +3,17 @@ import { on } from '@ember/modifier';
 import { htmlSafe } from '@ember/template';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import {
+  faColumns,
+  faExternalLinkAlt,
+  faRotate,
+  faWindowMaximize,
+  faWindowMinimize,
+} from '@fortawesome/free-solid-svg-icons';
+import { service } from 'ember-primitives/helpers/service';
 import { inIframe } from 'ember-primitives/iframe';
 
 import currentURL from 'limber/helpers/current-url';
-import { service } from 'limber-ui';
 
 import { Button, buttonClasses } from './button';
 import { FormatMenu } from './format-menu';
@@ -29,7 +36,7 @@ export const Controls: TOC<{
       <div
         data-is-minimized="{{@isMinimized}}"
         style={{htmlSafe (concat "right: " editor.scrollbarWidth "px;")}}
-        class="absolute top-0 right-0 z-[1]
+        class="absolute right-0 top-0 z-[1]
           {{if @splitHorizontally 'flex flex-row-reverse' 'grid'}}
           {{if @isMinimized 'bg-ember-black h-full content-start'}}
           "
@@ -39,9 +46,9 @@ export const Controls: TOC<{
           {{on "click" (fn @send "MAXIMIZE")}}
         >
           {{#if @isMaximized}}
-            <FaIcon @icon="columns" />
+            <FaIcon @icon={{faColumns}} />
           {{else}}
-            <FaIcon @icon="window-maximize" @prefix="far" />
+            <FaIcon @icon={{faWindowMaximize}} @prefix="far" />
           {{/if}}
         </Button>
         <Button
@@ -49,9 +56,9 @@ export const Controls: TOC<{
           {{on "click" (fn @send "MINIMIZE")}}
         >
           {{#if @isMinimized}}
-            <FaIcon @icon="columns" />
+            <FaIcon @icon={{faColumns}} />
           {{else}}
-            <FaIcon @icon="window-minimize" @prefix="far" />
+            <FaIcon @icon={{faWindowMinimize}} @prefix="far" />
           {{/if}}
         </Button>
         <Button
@@ -59,7 +66,7 @@ export const Controls: TOC<{
           disabled={{or @isMaximized @isMinimized}}
           {{on "click" (fn @send "ROTATE")}}
         >
-          <FaIcon @icon="rotate" />
+          <FaIcon @icon={{faRotate}} />
         </Button>
 
         {{#if (inIframe)}}
@@ -68,9 +75,9 @@ export const Controls: TOC<{
             href={{(currentURL)}}
             rel="noreferrer noopener"
             target="_blank"
-            class="flex select-none py-2 px-3 text-white text-xs items-center hover:bg-[#9b2918] focus:ring-4 ring-inset focus:outline-none disabled:opacity-30"
+            class="flex select-none items-center px-3 py-2 text-xs text-white ring-inset hover:bg-[#9b2918] focus:outline-none focus:ring-4 disabled:opacity-30"
           >
-            <FaIcon @icon="external-link-alt" />
+            <FaIcon @icon={{faExternalLinkAlt}} />
           </a>
         {{/if}}
 

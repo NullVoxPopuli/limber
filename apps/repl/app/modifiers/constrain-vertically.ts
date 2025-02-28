@@ -4,9 +4,9 @@ import { isTesting } from '@embroider/macros';
 import { modifier } from 'ember-modifier';
 
 export default modifier((element) => {
-  let debouncedConstrain = () => constrain(element);
+  const debouncedConstrain = () => constrain(element);
   // eslint-disable-next-line ember/no-runloop
-  let x = () => debounce(debouncedConstrain, 10);
+  const x = () => debounce(debouncedConstrain, 10);
 
   constrain(element);
   window.addEventListener('resize', x);
@@ -23,8 +23,8 @@ function constrain(element: Pick<HTMLElement, 'getBoundingClientRect' | 'setAttr
    * Improve scaled debug window
    */
   if (isTesting()) {
-    let container = document.querySelector('#ember-testing');
-    let containerOffset = container?.getBoundingClientRect()?.y ?? 0;
+    const container = document.querySelector('#ember-testing');
+    const containerOffset = container?.getBoundingClientRect()?.y ?? 0;
 
     offset -= containerOffset;
   }

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // import { precompileJSON } from '@glimmer/compiler';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -26,7 +25,7 @@ import type { ComponentLike } from '@glint/template';
  * (templates alone do not have a way to import / define complex structures)
  */
 export function compileHBS(template: string, options: CompileTemplateOptions = {}): CompileResult {
-  let name = nameFor(template);
+  const name = nameFor(template);
   let component: undefined | ComponentLike;
   let error: undefined | Error;
 
@@ -59,10 +58,10 @@ interface CompileTemplateOptions {
  * which means that *everything* is undefined.
  */
 function compileTemplate(source: string, { moduleName, scope = {} }: CompileTemplateOptions) {
-  let localScope = { array, concat, fn, get, hash, on, ...scope } as any;
-  let locals = getTemplateLocals(source);
+  const localScope = { array, concat, fn, get, hash, on, ...scope } as any;
+  const locals = getTemplateLocals(source);
 
-  let options = {
+  const options = {
     strictMode: true,
     moduleName,
     locals,
@@ -71,10 +70,10 @@ function compileTemplate(source: string, { moduleName, scope = {} }: CompileTemp
   };
 
   // Copied from @glimmer/compiler/lib/compiler#precompile
-  let [block, usedLocals] = precompileJSON(source, options);
+  const [block, usedLocals] = precompileJSON(source, options);
 
-  let usedScope = usedLocals.map((key: string) => {
-    let value = localScope[key];
+  const usedScope = usedLocals.map((key: string) => {
+    const value = localScope[key];
 
     if (!value) {
       throw new Error(
@@ -86,8 +85,8 @@ function compileTemplate(source: string, { moduleName, scope = {} }: CompileTemp
     return value;
   });
 
-  let blockJSON = JSON.stringify(block);
-  let templateJSONObject = {
+  const blockJSON = JSON.stringify(block);
+  const templateJSONObject = {
     id: moduleName,
     block: blockJSON,
     moduleName: moduleName ?? '(dynamically compiled component)',
@@ -95,7 +94,7 @@ function compileTemplate(source: string, { moduleName, scope = {} }: CompileTemp
     isStrictMode: true,
   };
 
-  let factory = createTemplateFactory(templateJSONObject);
+  const factory = createTemplateFactory(templateJSONObject);
 
   return factory;
 }

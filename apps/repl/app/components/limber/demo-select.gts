@@ -2,10 +2,11 @@ import Component from '@glimmer/component';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { waitFor } from '@ember/test-waiters';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faAngleRight, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
 import Menu from 'limber/components/limber/menu';
 import { getFromLabel, NAMES } from 'limber/snippets';
@@ -20,7 +21,7 @@ export class DemoSelect extends Component {
   @action
   @waitFor
   async select(demoName: string) {
-    let demo = await getFromLabel(demoName);
+    const demo = await getFromLabel(demoName);
 
     this.editor.updateDemo(demo, 'glimdown');
   }
@@ -29,13 +30,13 @@ export class DemoSelect extends Component {
     <Menu @inline={{true}}>
       <:trigger as |t|>
         <t.Default data-test-demo-select as |menu|>
-          <span class="grid grid-flow-col gap-2 items-center">
+          <span class="grid grid-flow-col items-center gap-2">
             Select demo
 
             {{#if menu.isOpen}}
-              <FaIcon @icon="angle-up" class="min-w-3" />
+              <FaIcon @icon={{faAngleUp}} class="min-w-3" />
             {{else}}
-              <FaIcon @icon="angle-right" class="min-w-3" />
+              <FaIcon @icon={{faAngleRight}} class="min-w-3" />
             {{/if}}
           </span>
         </t.Default>

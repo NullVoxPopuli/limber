@@ -1,4 +1,4 @@
-import type { DOMPurifyI } from 'dompurify';
+import type { DOMPurify } from 'dompurify';
 import type { HLJSApi } from 'highlight.js';
 
 let HIGHLIGHT: HLJSApi;
@@ -11,7 +11,7 @@ export async function getHighlighter(): Promise<HLJSApi> {
    * since we now use hljs on initial page load, eagerly, we want to load
    * as little as possible
    */
-  let [hljs, glimmer, javascript, typescript, markdown, css] = await Promise.all([
+  const [hljs, glimmer, javascript, typescript, markdown, css] = await Promise.all([
     import('highlight.js/lib/core'),
     import('highlightjs-glimmer'),
     import('highlight.js/lib/languages/javascript'),
@@ -35,7 +35,7 @@ export async function getHighlighter(): Promise<HLJSApi> {
   return HIGHLIGHT;
 }
 
-let PURIFY: DOMPurifyI;
+let PURIFY: DOMPurify;
 
 export async function getPurifier() {
   if (PURIFY) return PURIFY;

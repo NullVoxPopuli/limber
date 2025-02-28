@@ -1,11 +1,10 @@
 import { invocationName } from './utils.ts';
 
 import type { ExtractedCode } from './formats/markdown.ts';
-import type { CompileResult, UnifiedPlugin } from './types.ts';
-import type { EvalImportMap, ScopeMap } from './types.ts';
+import type { CompileResult, EvalImportMap, ScopeMap, UnifiedPlugin } from './types.ts';
 
 async function compileGJSArray(js: { code: string }[], importMap?: EvalImportMap) {
-  let modules = await Promise.all(
+  const modules = await Promise.all(
     js.map(async ({ code }) => {
       return await compileGJS(code, importMap);
     })
@@ -19,7 +18,7 @@ export async function compileGJS(
   importMap?: EvalImportMap
 ): Promise<CompileResult> {
   try {
-    let { compileJS } = await import('./formats/gjs/index.ts');
+    const { compileJS } = await import('./formats/gjs/index.ts');
 
     return await compileJS(gjsInput, importMap);
   } catch (error) {
@@ -35,7 +34,7 @@ export async function compileHBS(
   }
 ): Promise<CompileResult> {
   try {
-    let { compileHBS } = await import('./formats/hbs.ts');
+    const { compileHBS } = await import('./formats/hbs.ts');
 
     return compileHBS(hbsInput, options);
   } catch (error) {
@@ -50,13 +49,13 @@ async function extractScope(
     topLevelScope?: ScopeMap;
   }
 ): Promise<CompileResult[]> {
-  let scope: CompileResult[] = [];
+  const scope: CompileResult[] = [];
 
-  let hbs = liveCode.filter((code) => code.lang === 'hbs');
-  let js = liveCode.filter((code) => ['js', 'gjs'].includes(code.lang));
+  const hbs = liveCode.filter((code) => code.lang === 'hbs');
+  const js = liveCode.filter((code) => ['js', 'gjs'].includes(code.lang));
 
   if (js.length > 0) {
-    let compiled = await compileGJSArray(js, options?.importMap);
+    const compiled = await compileGJSArray(js, options?.importMap);
 
     await Promise.all(
       compiled.map(async (info) => {
@@ -75,8 +74,8 @@ async function extractScope(
     );
   }
 
-  for (let { code } of hbs) {
-    let compiled = await compileHBS(code, { scope: options?.topLevelScope });
+  for (const { code } of hbs) {
+    const compiled = await compileHBS(code, { scope: options?.topLevelScope });
 
     scope.push(compiled);
   }
@@ -95,7 +94,7 @@ export async function compileMD(
     ShadowComponent?: string;
   }
 ): Promise<CompileResult & { rootTemplate?: string }> {
-  let topLevelScope = options?.topLevelScope ?? {};
+  const topLevelScope = options?.topLevelScope ?? {};
   let rootTemplate: string;
   let liveCode: ExtractedCode[];
   let scope: CompileResult[] = [];
@@ -110,8 +109,8 @@ export async function compileMD(
    *         compiled rootTemplate can invoke them
    */
   try {
-    let { parseMarkdown } = await import('./formats/markdown.ts');
-    let { templateOnlyGlimdown, blocks } = await parseMarkdown(glimdownInput, {
+    const { parseMarkdown } = await import('./formats/markdown.ts');
+    const { templateOnlyGlimdown, blocks } = await parseMarkdown(glimdownInput, {
       CopyComponent: options?.CopyComponent,
       ShadowComponent: options?.ShadowComponent,
       remarkPlugins: options?.remarkPlugins,
@@ -145,7 +144,7 @@ export async function compileMD(
    * can render the 'Ember' and still highlight the correct line?
    * or maybe there is a way to highlight in the editor instead?
    */
-  for (let { error, component } of scope) {
+  for (const { error, component } of scope) {
     if (!component) {
       if (error) {
         return { error, rootTemplate, name: 'unknown' };
@@ -157,7 +156,7 @@ export async function compileMD(
    * Step 4: Compile the Ember Template
    */
   try {
-    let localScope = scope.reduce(
+    const localScope = scope.reduce(
       (accum, { component, name }) => {
         accum[invocationName(name)] = component;
 

@@ -1,0 +1,59 @@
+diff --git a/dist/components/container-query.js b/dist/components/container-query.js
+index eaf2e5dcf6c271c676d8573c181b4ba02d6a7ab0..a0682e48a3be53c6ab84458f1be79e98cb2c8909 100644
+--- a/dist/components/container-query.js
++++ b/dist/components/container-query.js
+@@ -1,12 +1,12 @@
+ import './container-query.css';
+-import { action } from '@ember/object';
++import { hash } from '@ember/helper';
+ import Component from '@glimmer/component';
+ import { tracked } from '@glimmer/tracking';
++import { element } from 'ember-element-helper';
++import ContainerQueryModifier from '../modifiers/container-query.js';
+ import { precompileTemplate } from '@ember/template-compilation';
+-import { g, i, n } from 'decorator-transforms/runtime';
+ import { setComponentTemplate } from '@ember/component';
+-
+-var TEMPLATE = precompileTemplate("{{#let (element this.tagName) as |Tag|}}\n  <Tag\n    class=\"container-query\"\n    {{container-query\n      dataAttributePrefix=@dataAttributePrefix\n      debounce=@debounce\n      features=@features\n      onQuery=this.updateState\n    }}\n    ...attributes\n  >\n    {{yield\n      (hash\n        dimensions=this.dimensions features=this.queryResults\n      )\n    }}\n  </Tag>\n{{/let}}");
++import { g, i } from 'decorator-transforms/runtime';
+ 
+ class ContainerQueryComponent extends Component {
+   static {
+@@ -19,18 +19,24 @@ class ContainerQueryComponent extends Component {
+   #queryResults = (i(this, "queryResults"), void 0);
+   // The dynamic tag is restricted to be immutable
+   tagName = this.args.tagName ?? 'div';
+-  updateState({
++  updateState = ({
+     dimensions,
+     queryResults
+-  }) {
++  }) => {
+     this.dimensions = dimensions;
+     this.queryResults = queryResults;
+-  }
++  };
+   static {
+-    n(this.prototype, "updateState", [action]);
++    setComponentTemplate(precompileTemplate("\n    {{#let (element this.tagName) as |Tag|}}\n      <Tag class=\"container-query\" {{containerQuery dataAttributePrefix=@dataAttributePrefix debounce=@debounce features=@features onQuery=this.updateState}} ...attributes>\n        {{yield (hash dimensions=this.dimensions features=this.queryResults)}}\n      </Tag>\n    {{/let}}\n  ", {
++      strictMode: true,
++      scope: () => ({
++        element,
++        containerQuery: ContainerQueryModifier,
++        hash
++      })
++    }), this);
+   }
+ }
+-setComponentTemplate(TEMPLATE, ContainerQueryComponent);
+ 
+ export { ContainerQueryComponent as default };
+ //# sourceMappingURL=container-query.js.map
+diff --git a/dist/components/container-query.js.map b/dist/components/container-query.js.map
+index 49540761e9efdbaaf701890597c0a278d001584d..1f79bb34b57c5b2a6964b77487f028fcd5b914eb 100644
+--- a/dist/components/container-query.js.map
++++ b/dist/components/container-query.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"container-query.js","sources":["../../src/components/container-query.ts"],"sourcesContent":["import './container-query.css';\n\nimport { action } from '@ember/object';\nimport Component from '@glimmer/component';\nimport { tracked } from '@glimmer/tracking';\n\nimport type {\n  Dimensions,\n  Features,\n  IndexSignatureParameter,\n  QueryResults,\n} from '../modifiers/container-query.ts';\n\ninterface ContainerQuerySignature<T extends IndexSignatureParameter> {\n  Args: {\n    dataAttributePrefix?: string;\n    debounce?: number;\n    features?: Features<T>;\n    tagName?: string;\n  };\n  Blocks: {\n    default: [\n      {\n        dimensions?: Dimensions;\n        features?: QueryResults<T>;\n      },\n    ];\n  };\n  Element: Element;\n}\n\nexport default class ContainerQueryComponent<\n  T extends IndexSignatureParameter,\n> extends Component<ContainerQuerySignature<T>> {\n  @tracked dimensions?: Dimensions;\n  @tracked queryResults?: QueryResults<T>;\n\n  // The dynamic tag is restricted to be immutable\n  tagName = this.args.tagName ?? 'div';\n\n  @action updateState({\n    dimensions,\n    queryResults,\n  }: {\n    dimensions: Dimensions;\n    queryResults: QueryResults<T>;\n  }): void {\n    this.dimensions = dimensions;\n    this.queryResults = queryResults;\n  }\n}\n"],"names":["ContainerQueryComponent","Component","g","prototype","tracked","i","void 0","tagName","args","updateState","dimensions","queryResults","n","action","setComponentTemplate","TEMPLATE"],"mappings":";;;;;;;;;;AA+Be,MAAMA,uBAAuB,SAElCC,SAAS,CAA6B;AAAA,EAAA;IAAAC,CAAA,CAAA,IAAA,CAAAC,SAAA,EAAA,YAAA,EAAA,CAC7CC,OAAO,CAAA,CAAA;AAAA;AAAA,EAAA,WAAA,IAAAC,CAAA,CAAA,IAAA,EAAA,YAAA,CAAA,EAAAC,MAAA;AAAA,EAAA;IAAAJ,CAAA,CAAA,IAAA,CAAAC,SAAA,EAAA,cAAA,EAAA,CACPC,OAAO,CAAA,CAAA;AAAA;AAAA,EAAA,aAAA,IAAAC,CAAA,CAAA,IAAA,EAAA,cAAA,CAAA,EAAAC,MAAA;AAER;AACAC,EAAAA,OAAO,GAAG,IAAI,CAACC,IAAI,CAACD,OAAO,IAAI,KAAK;AAE5BE,EAAAA,WAAWA,CAAC;IAClBC,UAAU;AACVC,IAAAA;AAIF,GAAC,EAAQ;IACP,IAAI,CAACD,UAAU,GAAGA,UAAU;IAC5B,IAAI,CAACC,YAAY,GAAGA,YAAY;AAClC;AAAC,EAAA;IAAAC,CAAA,CAAA,IAAA,CAAAT,SAAA,EAAA,aAAA,EAAA,CATAU,MAAM,CAAA,CAAA;AAAA;AAUT;AAACC,oBAAA,CAAAC,QAAA,EAnBoBf,uBAAuB,CAAA;;;;"}
+\ No newline at end of file
++{"version":3,"file":"container-query.js","sources":["../../src/components/container-query.gts"],"sourcesContent":["import './container-query.css';\n\nimport { hash } from '@ember/helper';\nimport Component from '@glimmer/component';\nimport { tracked } from '@glimmer/tracking';\nimport { element } from 'ember-element-helper';\nimport { default as containerQuery } from '../modifiers/container-query.ts';\n\nimport type {\n  Dimensions,\n  Features,\n  IndexSignatureParameter,\n  QueryResults,\n} from '../modifiers/container-query.ts';\n\ninterface ContainerQuerySignature<T extends IndexSignatureParameter> {\n  Args: {\n    dataAttributePrefix?: string;\n    debounce?: number;\n    features?: Features<T>;\n    tagName?: string;\n  };\n  Blocks: {\n    default: [\n      {\n        dimensions?: Dimensions;\n        features?: QueryResults<T>;\n      },\n    ];\n  };\n  Element: Element;\n}\n\nexport default class ContainerQueryComponent<\n  T extends IndexSignatureParameter,\n> extends Component<ContainerQuerySignature<T>> {\n  @tracked dimensions?: Dimensions;\n  @tracked queryResults?: QueryResults<T>;\n\n  // The dynamic tag is restricted to be immutable\n  tagName = this.args.tagName ?? 'div';\n\n  updateState = (\n    { dimensions, queryResults }: { dimensions: Dimensions; queryResults: QueryResults<T> }\n  ): void => {\n    this.dimensions = dimensions;\n    this.queryResults = queryResults;\n  };\n\n  <template>\n    {{#let (element this.tagName) as |Tag|}}\n      <Tag\n        class=\"container-query\"\n        {{containerQuery\n          dataAttributePrefix=@dataAttributePrefix\n          debounce=@debounce\n          features=@features\n          onQuery=this.updateState\n        }}\n        ...attributes\n      >\n        {{yield\n          (hash\n            dimensions=this.dimensions features=this.queryResults\n          )\n        }}\n      </Tag>\n    {{/let}}\n  </template>\n}\n"],"names":["ContainerQueryComponent","Component","g","prototype","tracked","i","void 0","tagName","args","updateState","dimensions","queryResults","setComponentTemplate","precompileTemplate","strictMode","scope","element","containerQuery","hash"],"mappings":";;;;;;;;;;AAiCe,MAAMA,uBAAA,SAEXC,UAAkC;AAAA,EAAA;IAAAC,CAAA,CAAA,IAAA,CAAAC,SAAA,EAAA,YAAA,EAAA,CACzCC,OAAA,CAAA,CAAA;AAAA;AAAA,EAAA,WAAA,IAAAC,CAAA,CAAA,IAAA,EAAA,YAAA,CAAA,EAAAC,MAAA;AAAA,EAAA;IAAAJ,CAAA,CAAA,IAAA,CAAAC,SAAA,EAAA,cAAA,EAAA,CACAC,OAAA,CAAA,CAAA;AAAA;AAAA,EAAA,aAAA,IAAAC,CAAA,CAAA,IAAA,EAAA,cAAA,CAAA,EAAAC,MAAA;AAED;AACAC,EAAAA,OAAA,GAAU,IAAI,CAACC,IAAI,CAACD,OAAO,IAAI,KAAM;AAErCE,EAAAA,WAAA,GAAcA,CACZ;IAAEC,UAAU;AAAEC,IAAAA;AAAyE,GAAA,KAClF;IACL,IAAI,CAACD,UAAU,GAAGA,UAAA;IAClB,IAAI,CAACC,YAAY,GAAGA,YAAA;GACpB;AAEF,EAAA;IAAAC,oBAAA,CAAAC,kBAAA,CAmBA,gVAAA,EAAA;MAAAC,UAAA,EAAA,IAAA;AAAAC,MAAAA,KAAA,EAAAA,OAAA;QAAAC,OAAA;wBAAAC,sBAAA;AAAAC,QAAAA;AAAA,OAAA;KAAU,CAAA,EAAV,IAAW,CAAA;AAAD;AACZ;;;;"}

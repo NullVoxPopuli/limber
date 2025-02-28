@@ -52,7 +52,7 @@ class DocFile {
   });
 
   get exists() {
-    let status = this.status;
+    const status = this.status;
 
     if (status && status > 400) return false;
 
@@ -83,9 +83,9 @@ export default class Selected extends Service {
     // Instead of inlining these, we want to access
     // these values without short-circuiting so that
     // the requests run in parallel.
-    let prose = this.prose;
-    let prompt = this.prompt.content;
-    let answer = this.answer.content;
+    const prose = this.prose;
+    const prompt = this.prompt.content;
+    const answer = this.answer.content;
 
     return prose && prompt && answer;
   }
@@ -117,7 +117,7 @@ export default class Selected extends Service {
   }
 
   #findByPath = (path: string) => {
-    let prosePath = `${path}/prose.md`;
+    const prosePath = `${path}/prose.md`;
 
     return this.docs.tutorials.find((tutorial) => tutorial.path === prosePath);
   };

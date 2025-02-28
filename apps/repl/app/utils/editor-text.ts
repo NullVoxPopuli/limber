@@ -1,6 +1,5 @@
-/* eslint-disable ember/classic-decorator-no-classic-methods */
 import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { buildWaiter } from '@ember/test-waiters';
 import { isTesting, macroCondition } from '@embroider/macros';
 
@@ -15,7 +14,7 @@ const queueWaiter = buildWaiter('FileURIComponent::queue');
 const queueTokens: unknown[] = [];
 
 export async function shortenUrl(url: string) {
-  let response = await fetch(`https://api.nvp.gg/v1/links`, {
+  const response = await fetch(`https://api.nvp.gg/v1/links`, {
     method: 'POST',
     headers: {
       Accept: 'application/vnd.api+json',
@@ -24,8 +23,8 @@ export async function shortenUrl(url: string) {
     body: JSON.stringify({ originalUrl: url }),
   });
 
-  let json = await response.json();
-  let shortUrl = json.data.attributes.shortUrl;
+  const json = await response.json();
+  const shortUrl = json.data.attributes.shortUrl;
 
   // fake our custom domain
   // Will be done for us later
@@ -71,10 +70,10 @@ export class FileURIComponent {
   #text = this.#initialFile.text;
 
   get format() {
-    let location = this.#currentURL();
+    const location = this.#currentURL();
 
-    let search = location.split('?')[1];
-    let queryParams = new URLSearchParams(search);
+    const search = location.split('?')[1];
+    const queryParams = new URLSearchParams(search);
 
     return formatFrom(queryParams.get('format'));
   }
@@ -149,7 +148,6 @@ export class FileURIComponent {
     let base = this.router.currentURL;
 
     if (macroCondition(isTesting())) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       base ??= (this.router as any) /* private API? */?.location;
     } else {
       base ??= window.location.toString();
@@ -175,8 +173,8 @@ export class FileURIComponent {
   #_updateQPs = async (rawText: string, format: Format) => {
     if (this.#frame) cancelAnimationFrame(this.#frame);
 
-    let encoded = compressToEncodedURIComponent(rawText);
-    let qps = new URLSearchParams(location.search);
+    const encoded = compressToEncodedURIComponent(rawText);
+    const qps = new URLSearchParams(location.search);
 
     qps.set('c', encoded);
     qps.delete('t');
@@ -223,7 +221,6 @@ export class FileURIComponent {
       let base = this.router.currentURL?.split('?')[0];
 
       if (macroCondition(isTesting())) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         base ??= (this.router as any) /* private API? */?.location?.path;
         // @ts-expect-error private api
         base = base.split('?')[0];
@@ -236,7 +233,7 @@ export class FileURIComponent {
        * we don't want them though, so we'll strip them
        */
 
-      let next = `${base}?${qps}`;
+      const next = `${base}?${qps}`;
 
       this.router.replaceWith(next);
       this.#text = rawText;
