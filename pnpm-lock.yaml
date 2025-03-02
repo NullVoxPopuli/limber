@@ -1371,7 +1371,7 @@ importers:
         version: 1.0.2
       magic-string:
         specifier: ^0.30.6
-        version: 0.30.12
+        version: 0.30.17
       mdast:
         specifier: ^3.0.0
         version: 3.0.0
@@ -8798,8 +8798,8 @@ packages:
   magic-string@0.25.9:
     resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
 
-  magic-string@0.30.12:
-    resolution: {integrity: sha512-Ea8I3sQMVXr8JhN4z+H/d8zwo+tYDgHE9+5G4Wnrwhs0gaK9fXTKx0Tw5Xwsd/bCPTTZNRAdpyzvoeORe9LYpw==}
+  magic-string@0.30.17:
+    resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
 
   make-dir@2.1.0:
     resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==}
@@ -14224,7 +14224,7 @@ snapshots:
       estree-walker: 2.0.2
       fdir: 6.4.0(picomatch@2.3.1)
       is-reference: 1.2.1
-      magic-string: 0.30.12
+      magic-string: 0.30.17
       picomatch: 2.3.1
     optionalDependencies:
       rollup: 4.25.0
@@ -14791,7 +14791,7 @@ snapshots:
     dependencies:
       '@vitest/spy': 2.1.2
       estree-walker: 3.0.3
-      magic-string: 0.30.12
+      magic-string: 0.30.17
     optionalDependencies:
       vite: 5.4.8(@types/node@22.9.0)(terser@5.36.0)
 
@@ -14807,7 +14807,7 @@ snapshots:
   '@vitest/snapshot@2.1.2':
     dependencies:
       '@vitest/pretty-format': 2.1.2
-      magic-string: 0.30.12
+      magic-string: 0.30.17
       pathe: 1.1.2
 
   '@vitest/spy@2.1.2':
@@ -19773,7 +19773,7 @@ snapshots:
     dependencies:
       sourcemap-codec: 1.4.8
 
-  magic-string@0.30.12:
+  magic-string@0.30.17:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.0
 
@@ -21608,7 +21608,7 @@ snapshots:
 
   rollup-plugin-dts@6.1.1(rollup@4.25.0)(typescript@5.6.3):
     dependencies:
-      magic-string: 0.30.12
+      magic-string: 0.30.17
       rollup: 4.25.0
       typescript: 5.6.3
     optionalDependencies:
@@ -21623,7 +21623,7 @@ snapshots:
       browserslist-generator: 2.3.0(patch_hash=n3ito36vhlo4nnnxxzk4jueqrq)
       compatfactory: 3.0.0(typescript@5.6.3)
       crosspath: 2.0.0
-      magic-string: 0.30.12
+      magic-string: 0.30.17
       rollup: 4.25.0
       ts-clone-node: 3.0.0(typescript@5.6.3)
       tslib: 2.7.0
@@ -23008,7 +23008,7 @@ snapshots:
       '@vitest/utils': 2.1.2
       chai: 5.1.1
       debug: 4.3.7(supports-color@8.1.1)
-      magic-string: 0.30.12
+      magic-string: 0.30.17
       pathe: 1.1.2
       std-env: 3.7.0
       tinybench: 2.9.0
