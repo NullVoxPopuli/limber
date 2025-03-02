@@ -100,7 +100,7 @@ importers:
         version: link:../../packages/app-support/transpilation
       '@xstate/inspect':
         specifier: ^0.8.0
-        version: 0.8.0(ws@8.18.0)(xstate@5.18.2)
+        version: 0.8.0(ws@8.18.1)(xstate@5.18.2)
       browserslist:
         specifier: ^4.22.3
         version: 4.24.2
@@ -202,7 +202,7 @@ importers:
         version: 4.10.2
       ws:
         specifier: ^8.15.1
-        version: 8.18.0
+        version: 8.18.1
       xstate:
         specifier: 5.18.2
         version: 5.18.2
@@ -11746,8 +11746,8 @@ packages:
       utf-8-validate:
         optional: true
 
-  ws@8.18.0:
-    resolution: {integrity: sha512-8VbfWfHLbbwu3+N6OKsOMpBdT4kXPDDB9cJk2bJ6mh9ucxdlnNvH1e+roYkKmN9Nxw2yjz7VzeO9oOz2zJ04Pw==}
+  ws@8.18.1:
+    resolution: {integrity: sha512-RKW2aJZMXeMxVpnZ6bck+RswznaxmzdULiBr6KY7XkTnW8uvt0iT9H5DkHUChXrc+uurzwa0rVI16n/Xzjdz1w==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -14968,10 +14968,10 @@ snapshots:
 
   '@xmldom/xmldom@0.8.10': {}
 
-  '@xstate/inspect@0.8.0(ws@8.18.0)(xstate@5.18.2)':
+  '@xstate/inspect@0.8.0(ws@8.18.1)(xstate@5.18.2)':
     dependencies:
       fast-safe-stringify: 2.1.1
-      ws: 8.18.0
+      ws: 8.18.1
       xstate: 5.18.2
 
   '@xtuc/ieee754@1.2.0': {}
@@ -19474,7 +19474,7 @@ snapshots:
       whatwg-encoding: 3.1.1
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.0.0
-      ws: 8.18.0
+      ws: 8.18.1
       xml-name-validator: 5.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -21785,7 +21785,7 @@ snapshots:
       '@bazel/runfiles': 5.8.1
       jszip: 3.10.1
       tmp: 0.2.3
-      ws: 8.18.0
+      ws: 8.18.1
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -23347,7 +23347,7 @@ snapshots:
 
   ws@8.17.1: {}
 
-  ws@8.18.0: {}
+  ws@8.18.1: {}
 
   xdg-basedir@4.0.0: {}
 
