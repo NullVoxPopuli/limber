@@ -9,11 +9,11 @@ module('nameFor()', function () {
   }
 
   function makeString() {
-    let length = randomInRange(0, 10000);
+    const length = randomInRange(0, 10000);
 
     let result = '';
-    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let charactersLength = characters.length;
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
 
     for (let i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -24,7 +24,7 @@ module('nameFor()', function () {
 
   test('it is stable', function (assert) {
     for (let i = 0; i < 20; i++) {
-      let str = makeString();
+      const str = makeString();
 
       assert.strictEqual(nameFor(str), nameFor(str));
     }

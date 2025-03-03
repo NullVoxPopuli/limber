@@ -1,16 +1,32 @@
-import { setApplication } from '@ember/test-helpers';
+import {
+  currentRouteName,
+  currentURL,
+  getSettledState,
+  resetOnerror,
+  setApplication,
+} from '@ember/test-helpers';
+import { getPendingWaiterState } from '@ember/test-waiters';
 import * as QUnit from 'qunit';
 import { setup } from 'qunit-dom';
-import { start } from 'ember-qunit';
+import { setupEmberOnerrorValidation, start as qunitStart } from 'ember-qunit';
 
 import Application from 'tutorial/app';
-import config from 'tutorial/config/environment';
+import config, { enterTestMode } from 'tutorial/config/environment';
 
-setApplication(Application.create(config.APP));
+export function start() {
+  enterTestMode();
+  setApplication(Application.create(config.APP));
 
-// Fast test timeout, because I'm impatient
-QUnit.config.testTimeout = 10_000;
+  // Fast test timeout, because I'm impatient
+  QUnit.config.testTimeout = 10_000;
 
-setup(QUnit.assert);
+  Object.assign(window, { getSettledState, getPendingWaiterState, currentURL, currentRouteName });
+  setup(QUnit.assert);
+  setupEmberOnerrorValidation();
 
-start();
+  QUnit.testStart(() => {
+    localStorage.clear();
+  });
+  QUnit.testDone(resetOnerror);
+  qunitStart();
+}

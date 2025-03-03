@@ -2,7 +2,8 @@
 
 module.exports = {
   printWidth: 100,
-  plugins: ['prettier-plugin-ember-template-tag'],
+  tailwindStylesheet: './app/styles/app.css',
+  plugins: ['prettier-plugin-ember-template-tag', 'prettier-plugin-tailwindcss'],
   overrides: [
     {
       // Lol, JavaScript

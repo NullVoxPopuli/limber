@@ -1,9 +1,8 @@
 import { waitForPromise } from '@ember/test-waiters';
 
+import { service } from 'ember-primitives/helpers/service';
 import { resource, resourceFactory } from 'ember-resources';
 import { TrackedObject } from 'tracked-built-ins';
-
-import { service } from 'limber-ui';
 
 import codemirror, { setupCodeMirror } from './-code-mirror';
 import Loader from './loader';
@@ -13,7 +12,7 @@ import { Placeholder } from './placeholder';
 import type { TOC } from '@ember/component/template-only';
 
 function deferCodemirror() {
-  let state = new TrackedObject({ isLoading: false, isDone: false, error: null });
+  const state = new TrackedObject({ isLoading: false, isDone: false, error: null });
 
   function getEditor() {
     state.isLoading = true;
@@ -33,7 +32,7 @@ function deferCodemirror() {
     window.removeEventListener('touchstart', load);
   }
 
-  let load = () => {
+  const load = () => {
     getEditor();
     cleanup();
   };
@@ -71,7 +70,7 @@ export const Editor: TOC<{
 
     {{else}}
       <div
-        class="syntax-dark relative border border-gray-900 bg-code-bg overflow-hidden"
+        class="syntax-dark bg-code-bg relative overflow-hidden border border-gray-900"
         ...attributes
       >
 

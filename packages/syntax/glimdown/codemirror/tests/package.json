@@ -2,24 +2,20 @@
   "name": "@glimdown/glimdown-tests",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "volta": {
     "extends": "../../../../../package.json"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.7",
-    "@babel/eslint-parser": "^7.25.7",
-    "@nullvoxpopuli/eslint-configs": "^4.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.8.0",
-    "@typescript-eslint/parser": "^8.8.0",
-    "eslint": "^8.45.0",
-    "prettier": "^3.3.3",
-    "typescript": "^5.4.5"
+    "@babel/core": "^7.26.9",
+    "@nullvoxpopuli/eslint-configs": "^5.0.0",
+    "eslint": "^9.21.0",
+    "prettier": "^3.5.2",
+    "typescript": "5.7.3"
   },
   "scripts": {
     "lint": "pnpm -w exec lint",
     "lint:fix": "pnpm -w exec lint fix",
-    "lint:js": "pnpm -w exec lint js",
-    "lint:js:fix": "pnpm -w exec lint js:fix",
     "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
     "lint:prettier": "pnpm -w exec lint prettier"
   },

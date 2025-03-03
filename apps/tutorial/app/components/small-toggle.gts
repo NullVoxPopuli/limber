@@ -1,8 +1,10 @@
 import { on } from '@ember/modifier';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
+import { service } from 'ember-primitives/helpers/service';
 
-import { Button, service } from 'limber-ui';
+import { Button } from 'limber-ui';
 
 import type { TOC } from '@ember/component/template-only';
 
@@ -11,9 +13,9 @@ export const SmallScreenToggle: TOC<{ Element: HTMLButtonElement }> = <template>
 
     <Button {{on "click" docs.toggleProse}} class="drop-shadow-md" ...attributes>
       {{#if docs.isViewingProse}}
-        <FaIcon @icon="angles-left" />
+        <FaIcon @icon={{faAnglesLeft}} />
       {{else}}
-        <FaIcon @icon="angles-right" />
+        <FaIcon @icon={{faAnglesRight}} />
       {{/if}}
     </Button>
 

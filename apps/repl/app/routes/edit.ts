@@ -30,10 +30,10 @@ export default class EditRoute extends Route {
   @service declare editor: EditorService;
 
   async beforeModel(transition: Transition) {
-    let qps = transition.to?.queryParams ?? {};
+    const qps = transition.to?.queryParams ?? {};
 
-    let hasCode = Boolean(qps.t || qps.c);
-    let hasFormat = qps.format !== undefined;
+    const hasCode = Boolean(qps.t || qps.c);
+    const hasFormat = qps.format !== undefined;
 
     if (!hasCode) {
       /**
@@ -41,8 +41,8 @@ export default class EditRoute extends Route {
        * user-configurable.
        * (whatever they did last)
        */
-      let format = localStorage.getItem('format');
-      let doc = localStorage.getItem('document');
+      const format = localStorage.getItem('format');
+      const doc = localStorage.getItem('document');
 
       if (format && doc) {
         console.info(`Found format and document in localStorage. Using those.`);

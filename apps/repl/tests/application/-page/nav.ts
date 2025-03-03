@@ -7,7 +7,7 @@ import { s } from './-helpers';
 
 export class Nav extends PageObject {
   get activeTab() {
-    let tab = this.tabs.find((tab) => tab.isActive);
+    const tab = this.tabs.find((tab) => tab.isActive);
 
     assert(`None of the tabs are active`, tab);
 
@@ -23,8 +23,8 @@ export class Nav extends PageObject {
           this.element && this.element instanceof HTMLAnchorElement
         );
 
-        let href = this.element.getAttribute('href');
-        let currentPath = currentURL().split('?')[0];
+        const href = this.element.getAttribute('href');
+        const currentPath = currentURL().split('?')[0];
 
         assert('Link did not have an href', href);
 

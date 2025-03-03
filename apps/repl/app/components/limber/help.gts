@@ -1,38 +1,13 @@
 import { on } from '@ember/modifier';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faQuestion, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'ember-primitives';
 import { notInIframe } from 'ember-primitives/iframe';
 
-import { Button, ExternalLink } from 'limber-ui';
+import { Button, ExternalLink, FAB, FlatButton } from 'limber-ui';
 
 import type { TOC } from '@ember/component/template-only';
-
-export const FAB: TOC<{
-  Element: HTMLButtonElement;
-  Blocks: { default: [] };
-}> = <template>
-  <button
-    type="button"
-    class="inline-block items-center p-2 grid-flow-col grid gap-2 rounded-full border-2 text-black bg-white hover:bg-[var(--ember-faint-gray)] focus:outline-none focus:ring focus-visible:outline-none focus-visible:ring ring-ember-brand drop-shadow-2xl hover:drop-shadow-xl disabled:opacity-30 aspect-square text-4xl"
-    ...attributes
-  >
-    {{yield}}
-  </button>
-</template>;
-
-export const FlatButton: TOC<{
-  Element: HTMLButtonElement;
-  Blocks: { default: [] };
-}> = <template>
-  <button
-    type="button"
-    class="inline-block items-center grid-flow-col grid gap-2 rounded-full p-2 border-1 text-black bg-white hover:bg-[var(--ember-faint-gray)] focus:outline-none focus:ring focus-visible:outline-none focus-visible:ring ring-ember-brand disabled:opacity-30 aspect-square text-2xl"
-    ...attributes
-  >
-    {{yield}}
-  </button>
-</template>;
 
 const Tutorial = <template>
   <ExternalLink class="m-0" href="https://tutorial.glimdown.com/">
@@ -95,24 +70,24 @@ const CodeBlock: TOC<{ Args: { code: string } }> = <template>
 export const Help = <template>
   {{#if (notInIframe)}}
     <Modal as |m|>
-      <div class="fixed right-4 bottom-4">
+      <div class="fixed bottom-4 right-4">
         <FAB {{on "click" m.open}} aria-label="Help / How to use this tool">
-          <FaIcon @size="xs" @icon="question" class="aspect-square" />
+          <FaIcon @size="xs" @icon={{faQuestion}} class="aspect-square" />
         </FAB>
       </div>
 
       <m.Dialog
-        class="prose rounded drop-shadow-xl border border-white"
+        class="prose rounded border border-white drop-shadow-xl"
         aria-label="help with this tool"
       >
-        <header class="flex justify-between items-center py-2 px-2">
+        <header class="flex items-center justify-between px-2 py-2">
           <h2 class="m-0">Help</h2>
           <FlatButton {{on "click" m.close}} aria-label="hide the help information">
-            <FaIcon @size="xs" @icon="xmark" class="aspect-square" />
+            <FaIcon @size="xs" @icon={{faXmark}} class="aspect-square" />
           </FlatButton>
         </header>
 
-        <hr class="mt-4 mb-4" />
+        <hr class="mb-4 mt-4" />
 
         <main class="px-2">
           The editor has 3 modes

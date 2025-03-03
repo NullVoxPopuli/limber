@@ -12,8 +12,8 @@ module('compileJS()', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it works', async function (assert) {
-    let compile = async () => {
-      let template = `
+    const compile = async () => {
+      const template = `
         import Component from '@glimmer/component';
         import { tracked } from '@glimmer/tracking';
         import { on } from '@ember/modifier';
@@ -30,7 +30,7 @@ module('compileJS()', function (hooks) {
         }
       `;
 
-      let { component, name, error } = await compileJS(template);
+      const { component, name, error } = await compileJS(template);
 
       assert.notOk(error);
       assert.ok(name);
@@ -59,8 +59,8 @@ module('compileJS()', function (hooks) {
   test('can import components available to the app', async function (assert) {
     assert.ok(ExampleComponent);
 
-    let compile = async () => {
-      let template = `
+    const compile = async () => {
+      const template = `
         import Component from '@glimmer/component';
         import { tracked } from '@glimmer/tracking';
         import { on } from '@ember/modifier';
@@ -72,7 +72,7 @@ module('compileJS()', function (hooks) {
         </template>
       `;
 
-      let { component, name, error } = await compileJS(template);
+      const { component, name, error } = await compileJS(template);
 
       assert.notOk(error);
       assert.ok(name);
@@ -94,8 +94,8 @@ module('compileJS()', function (hooks) {
   test('extra modules may be passed, explicitly', async function (assert) {
     const AComponent = <template>Custom extra module</template>;
 
-    let compile = async () => {
-      let template = `
+    const compile = async () => {
+      const template = `
         import Component from '@glimmer/component';
         import { tracked } from '@glimmer/tracking';
         import { on } from '@ember/modifier';
@@ -107,7 +107,7 @@ module('compileJS()', function (hooks) {
         </template>
       `;
 
-      let { component, name, error } = await compileJS(template, {
+      const { component, name, error } = await compileJS(template, {
         'my-silly-import-path/a-component': AComponent,
       });
 

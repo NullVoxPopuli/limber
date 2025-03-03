@@ -57,6 +57,7 @@
       "outputs": ["*.tgz"],
       "dependsOn": ["build"]
     },
+    "build:prod": { "dependsOn": ["^build"] },
     "build": {
       "outputs": ["dist/**", "declarations/**"],
       "dependsOn": ["^build"]

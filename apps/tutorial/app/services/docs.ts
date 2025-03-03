@@ -38,7 +38,7 @@ export default class DocsService extends Service {
   get currentPath(): string | undefined {
     if (!this.router.currentURL) return this.tutorials[0]?.path;
 
-    let [path] = this.router.currentURL.split('?');
+    const [path] = this.router.currentURL.split('?');
 
     return path && path !== '/' ? path : this.tutorials[0]?.path;
   }
@@ -52,7 +52,7 @@ export default class DocsService extends Service {
   };
 
   #hideProse = () => {
-    let words = document.querySelector('section[data-words]');
+    const words = document.querySelector('section[data-words]');
 
     if (words) {
       words.classList.add('-translate-x-full');
@@ -62,7 +62,7 @@ export default class DocsService extends Service {
   };
 
   #showProse = () => {
-    let words = document.querySelector('section[data-words]');
+    const words = document.querySelector('section[data-words]');
 
     if (words) {
       words.classList.remove('-translate-x-full');

@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // Types for compiled templates
 declare module 'limber/templates/*' {
   import type { TemplateFactory } from 'htmlbars-inline-precompile';
+
   const tmpl: TemplateFactory;
   export default tmpl;
 }
@@ -17,7 +17,6 @@ type LazyTrackedArgs = {
 
 declare module '@glimmer/env';
 
-declare module '@fortawesome/ember-fontawesome-components/fa-icon';
 declare module '@ember/helper';
 declare module '@ember/modifier';
 declare module '@sentry/ember';

@@ -19,7 +19,7 @@ const isGJS = (format: Format | undefined) => format === 'gjs';
 
 export const Output: TOC<Signature> = <template>
   <Compiler @messagingAPI={{@messagingAPI}} as |context|>
-    <div class="p-4 prose max-w-full relative" data-test-compiled-output>
+    <div class="prose relative max-w-full p-4" data-test-compiled-output>
       {{!
             The copy menu exists here for two reasons:
              - we need to statically reference this component so that it doesn't get tree-shaken away

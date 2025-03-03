@@ -1,28 +1,14 @@
 import 'limber-ui/theme.css';
 import 'ember-statechart-component';
+import './icons.ts';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { DEBUG } from '@glimmer/env';
 import Application from '@ember/application';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { _backburner } from '@ember/runloop';
 
-import loadInitializers from 'ember-load-initializers';
 import Resolver from 'ember-resolver';
 
 import config from 'limber/config/environment';
 
-if (DEBUG) {
-  // This has performance implications, but the debuggability is worth it.
-  // Debugging eventloop stuff is notoriously difficult, so let's make it
-  // not difficult by default.
-  //
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  _backburner.DEBUG = true;
-}
+import { registry } from './registry.ts';
 
 // @babel/traverse (from babel-plugin-ember-template-imports)
 // accesses process.....
@@ -35,8 +21,5 @@ Object.assign(window, {
 
 export default class App extends Application {
   modulePrefix = config.modulePrefix;
-  podModulePrefix = config.podModulePrefix;
-  Resolver = Resolver;
+  Resolver = Resolver.withModules(registry);
 }
-
-loadInitializers(App, config.modulePrefix);

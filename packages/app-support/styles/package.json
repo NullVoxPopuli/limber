@@ -7,8 +7,6 @@
   "private": true,
   "scripts": {
     "lint:fix": "pnpm -w exec lint fix",
-    "build": "tailwindcss -o dist/tailwind.css",
-    "start": "tailwindcss -o dist/tailwind.css --watch",
     "lint": "pnpm -w exec lint",
     "lint:js": "pnpm -w exec lint js",
     "lint:js:fix": "pnpm -w exec lint js:fix",
@@ -16,18 +14,18 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.7",
-    "@nullvoxpopuli/eslint-configs": "^4.0.0",
-    "autoprefixer": "^10.4.17",
-    "concurrently": "^9.0.1",
-    "eslint": "^8.55.0",
-    "postcss": "^8.4.32",
-    "prettier": "^3.3.3",
-    "prettier-plugin-ember-template-tag": "2.0.2",
-    "tailwindcss": "^3.3.6"
+    "@babel/core": "^7.26.9",
+    "@nullvoxpopuli/eslint-configs": "^5.0.0",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
+    "eslint": "^9.21.0",
+    "postcss": "^8.5.3",
+    "prettier": "^3.5.2",
+    "prettier-plugin-ember-template-tag": "2.0.4",
+    "tailwindcss": "^4.0.8"
   },
   "dependencies": {
-    "@tailwindcss/typography": "^0.5.13",
+    "@tailwindcss/typography": "^0.5.16",
     "broccoli-funnel": "^3.0.8"
   },
   "volta": {

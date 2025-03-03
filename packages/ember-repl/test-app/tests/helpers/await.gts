@@ -17,7 +17,7 @@ export class Await extends Component<Args> {
   constructor(owner: Owner, args: Args) {
     super(owner, args);
 
-    let promise = args.promise
+    const promise = args.promise
       .then((resolved) => {
         if (isDestroying(this) || isDestroyed(this)) return;
 
@@ -30,7 +30,7 @@ export class Await extends Component<Args> {
         this.resolved = undefined;
       });
 
-    waitForPromise(promise);
+    void waitForPromise(promise);
   }
 
   get isPending() {

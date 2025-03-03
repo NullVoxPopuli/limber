@@ -6,7 +6,7 @@ export function getSnippetElement(event: Event) {
    * closest, because the element may be removed from the DOM
    * by the time this function runs.
    */
-  let ancestry = event.composedPath();
+  const ancestry = event.composedPath();
 
   /**
    * This component has intimate knowledge
@@ -16,7 +16,7 @@ export function getSnippetElement(event: Event) {
    * We can't select the pre tag directly, otherwise html-to-image
    * loses the padding, border-radius, shadow
    */
-  for (let element of ancestry) {
+  for (const element of ancestry) {
     if (!(element instanceof HTMLElement)) continue;
 
     if (element.classList.contains('glimdown-snippet')) {
@@ -47,7 +47,7 @@ export function getSnippetElement(event: Event) {
  * So instead, we jitter a bit
  */
 export async function copyToClipboard(toCopy: HTMLElement) {
-  let pre = toCopy.querySelector('pre');
+  const pre = toCopy.querySelector('pre');
 
   try {
     pre?.classList.add('drop-shadow-lg');
@@ -68,9 +68,9 @@ export async function copyToClipboard(toCopy: HTMLElement) {
 }
 
 async function toClipboard(target: HTMLElement) {
-  let backgroundColor = '#ffffff';
-  let canCopyToImage = 'ClipboardItem' in window;
-  let filter = (node: HTMLElement | Text) => {
+  const backgroundColor = '#ffffff';
+  const canCopyToImage = 'ClipboardItem' in window;
+  const filter = (node: HTMLElement | Text) => {
     if (node instanceof Text) return true;
 
     if ('getAttribute' in node && node.hasAttribute('data-test-copy-menu')) {
@@ -84,9 +84,9 @@ async function toClipboard(target: HTMLElement) {
     return true;
   };
 
-  let box = target.getBoundingClientRect();
+  const box = target.getBoundingClientRect();
 
-  let options = {
+  const options = {
     filter,
     backgroundColor,
     // tell html-to-image to include margins in dimensions
@@ -104,12 +104,12 @@ async function toClipboard(target: HTMLElement) {
   };
 
   if (!canCopyToImage) {
-    let image = new Image();
-    let dataUri = await toPng(target, options);
+    const image = new Image();
+    const dataUri = await toPng(target, options);
 
     image.src = dataUri;
 
-    let w = window.open('');
+    const w = window.open('');
 
     w?.document.write(
       `Your browser does not yet support ` +
@@ -120,7 +120,7 @@ async function toClipboard(target: HTMLElement) {
     return;
   }
 
-  let blob = await toBlob(target, options);
+  const blob = await toBlob(target, options);
 
   // Works in chrome-based browsers only :(
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

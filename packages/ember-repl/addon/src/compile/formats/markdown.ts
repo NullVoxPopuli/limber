@@ -63,7 +63,7 @@ function isBelow(meta: string) {
 
 // TODO: extract and publish remark plugin
 function liveCodeExtraction(options: Options = {}) {
-  let { copyComponent, snippets, demo } = options;
+  const { copyComponent, snippets, demo } = options;
   let { classList: snippetClasses } = snippets || {};
   let { classList: demoClasses } = demo || {};
 
@@ -73,7 +73,8 @@ function liveCodeExtraction(options: Options = {}) {
   function isRelevantCode(node: Code): node is RelevantCode {
     if (node.type !== 'code') return false;
 
-    let { meta, lang } = node;
+    let { meta } = node;
+    const { lang } = node;
 
     meta = meta?.trim();
 
@@ -88,7 +89,7 @@ function liveCodeExtraction(options: Options = {}) {
     return true;
   }
 
-  let copyNode = {
+  const copyNode = {
     type: 'html',
     value: copyComponent,
   };
@@ -123,7 +124,7 @@ function liveCodeExtraction(options: Options = {}) {
       if (index === null || index === undefined) return;
 
       if (!isRelevantCode(node as Code)) {
-        let enhanced = enhance(node as Code);
+        const enhanced = enhance(node as Code);
 
         parent.children[index] = enhanced;
 
@@ -134,26 +135,26 @@ function liveCodeExtraction(options: Options = {}) {
 
       seen.add(node);
 
-      let { meta, lang, value } = node as Code;
+      const { meta, lang, value } = node as Code;
 
       if (!meta) return 'skip';
       if (!lang) return 'skip';
 
       file.data.liveCode ??= [];
 
-      let code = value.trim();
-      let name = nameFor(code);
+      const code = value.trim();
+      const name = nameFor(code);
       let invocation = invocationOf(name);
 
-      let shadow = options.shadowComponent;
+      const shadow = options.shadowComponent;
 
-      let wrapInShadow = shadow && !meta?.includes('no-shadow');
+      const wrapInShadow = shadow && !meta?.includes('no-shadow');
 
       if (wrapInShadow) {
         invocation = `<${shadow}>${invocation}</${shadow}>`;
       }
 
-      let invokeNode = {
+      const invokeNode = {
         type: 'html',
         data: {
           hProperties: { [GLIMDOWN_RENDER]: true },
@@ -161,7 +162,7 @@ function liveCodeExtraction(options: Options = {}) {
         value: `<div class="${demoClasses}">${invocation}</div>`,
       };
 
-      let wrapper = enhance(node as Code);
+      const wrapper = enhance(node as Code);
 
       file.data.liveCode.push({
         lang,
@@ -169,9 +170,9 @@ function liveCodeExtraction(options: Options = {}) {
         code,
       });
 
-      let live = isLive(meta);
-      let preview = isPreview(meta);
-      let below = isBelow(meta);
+      const live = isLive(meta);
+      const preview = isPreview(meta);
+      const below = isBelow(meta);
 
       if (live && preview && below) {
         flatReplaceAt(parent.children, index, [wrapper, invokeNode]);
@@ -227,7 +228,7 @@ function buildCompiler(options: ParseMarkdownOptions) {
     options.remarkPlugins.forEach((plugin) => {
       // Arrays are how plugins are passed options (for some reason?)
       // why not just invoke the the function?
-      let p = Array.isArray(plugin) ? plugin : [plugin];
+      const p = Array.isArray(plugin) ? plugin : [plugin];
 
       compiler = compiler.use(...(p as [any]));
     });
@@ -256,7 +257,7 @@ function buildCompiler(options: ParseMarkdownOptions) {
   compiler = compiler.use(() => (tree: Node) => {
     visit(tree, function (node) {
       // We rely on an implicit transformation of data.hProperties => properties
-      let properties = (node as any).properties;
+      const properties = (node as any).properties;
 
       if (properties?.[GLIMDOWN_PREVIEW]) {
         return 'skip';
@@ -295,7 +296,7 @@ function buildCompiler(options: ParseMarkdownOptions) {
     options.rehypePlugins.forEach((plugin) => {
       // Arrays are how plugins are passed options (for some reason?)
       // why not just invoke the the function?
-      let p = Array.isArray(plugin) ? plugin : [plugin];
+      const p = Array.isArray(plugin) ? plugin : [plugin];
 
       compiler = compiler.use(...(p as [any]));
     });
@@ -335,10 +336,10 @@ export async function parseMarkdown(
   input: string,
   options: ParseMarkdownOptions = {}
 ): Promise<LiveCodeExtraction> {
-  let markdownCompiler = buildCompiler(options);
-  let processed = await markdownCompiler.process(input);
-  let liveCode = (processed.data as LiveData).liveCode || [];
-  let templateOnly = processed.toString();
+  const markdownCompiler = buildCompiler(options);
+  const processed = await markdownCompiler.process(input);
+  const liveCode = (processed.data as LiveData).liveCode || [];
+  const templateOnly = processed.toString();
 
   return { templateOnlyGlimdown: templateOnly, blocks: liveCode };
 }

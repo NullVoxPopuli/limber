@@ -1,4 +1,6 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faEmber, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faCubes } from '@fortawesome/free-solid-svg-icons';
 import { notInIframe } from 'ember-primitives/iframe';
 
 import { FormatButtons } from 'limber/components/limber/layout/controls/format-buttons';
@@ -9,20 +11,19 @@ import { Share } from './share';
 
 <template>
   <header
-    class="bg-ember-black flex justify-between items-center drop-shadow-lg z-20 py-2 px-4 max-h-12"
+    class="bg-ember-black z-20 flex max-h-12 items-center justify-between px-4 py-2 drop-shadow-lg"
   >
-    <div class="flex gap-2 items-center">
-      <h1 class="text-ember-brand flex gap-2 items-center">
+    <div class="flex items-center gap-2">
+      <h1 class="text-ember-brand flex items-center gap-2">
         <a
-          class="focus:ring-4 focus:outline-none focus-visible:outline-none"
+          class="focus:outline-none focus:ring-4 focus-visible:outline-none"
           href="https://emberjs.com"
           target="_blank"
           rel="noreferrer noopener"
         >
-          <FaIcon @icon="ember" @prefix="fab" @size="3x" class="-mb-3 -mt-2" />
+          <FaIcon @icon={{faEmber}} @size="3x" class="-mb-3 -mt-2" />
           <span class="sr-only">Ember.JS homepage</span>
         </a>
-        {{!<FaIcon @icon="markdown" @prefix="fab" @size="2x" class="-mb-2 -mt-2" />}}
       </h1>
 
       {{#if (notInIframe)}}
@@ -31,7 +32,7 @@ import { Share } from './share';
       <Share />
     </div>
 
-    <nav class="text-white flex gap-2 items-baseline">
+    <nav class="flex items-baseline gap-2 text-white">
       <DemoSelect />
 
       <ExternalLink href="/bundle.html">
@@ -41,8 +42,8 @@ import { Share } from './share';
               Bundle
             </DefaultContent>
           </span>
-          <span class="block sm:hidden px-2">
-            <FaIcon @icon="cubes" />
+          <span class="block px-2 sm:hidden">
+            <FaIcon @icon={{faCubes}} />
           </span>
         </:custom>
       </ExternalLink>
@@ -53,8 +54,8 @@ import { Share } from './share';
               GitHub
             </DefaultContent>
           </span>
-          <span class="block sm:hidden px-2">
-            <FaIcon @icon="github" @prefix="fab" />
+          <span class="block px-2 sm:hidden">
+            <FaIcon @icon={{faGithub}} />
           </span>
         </:custom>
       </ExternalLink>

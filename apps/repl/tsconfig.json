@@ -4,6 +4,7 @@
     "environment": ["ember-loose", "ember-template-imports"]
   },
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     // Stylistic
     "noPropertyAccessFromIndexSignature": false,
     // Ecosystem
@@ -30,12 +31,10 @@
     "paths": {
       "limber/tests/*": ["tests/*"],
       "limber/*": ["app/*"],
-      "@glimmer/tracking": [
-        "../node_modules/ember-cached-decorator-polyfill",
-        "../node_modules/@glimmer/tracking/dist/types"
-      ],
       "*": ["types/*"]
-    }
+    },
+    "types": ["vite/client","@embroider/core/virtual"
+    ]
   },
   "include": ["app/**/*", "tests/**/*", "types/**/*"]
 }

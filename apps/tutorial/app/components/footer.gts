@@ -1,9 +1,10 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
 import { ExternalLink } from 'limber-ui';
 
 export const Footer = <template>
-  <footer class="p-2 w-full grid shadow border-t">
+  <footer class="grid w-full border-t p-2 shadow">
     <nav class="mx-auto flex gap-4">
       <ExternalLink href="https://github.com/nullvoxpopuli/limber">
         <:custom as |DefaultContent|>
@@ -12,8 +13,8 @@ export const Footer = <template>
               GitHub
             </DefaultContent>
           </span>
-          <span class="block sm:hidden px-2">
-            <FaIcon @icon="github" @prefix="fab" />
+          <span class="block px-2 sm:hidden">
+            <FaIcon @icon={{faGithub}} />
           </span>
         </:custom>
       </ExternalLink>

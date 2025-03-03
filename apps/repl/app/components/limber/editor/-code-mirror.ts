@@ -36,7 +36,7 @@ export default class CodeMirror extends Modifier<Signature> {
   previousFormat: Format | undefined;
 
   setup = async (element: Element) => {
-    let { format } = this.editor;
+    const { format } = this.editor;
 
     if (format === this.previousFormat) {
       return;
@@ -55,13 +55,13 @@ export default class CodeMirror extends Modifier<Signature> {
     assert(`Expected CODEMIRROR to exist`, CODEMIRROR);
     assert(`can only install codemirror editor an an HTMLElement`, element instanceof HTMLElement);
 
-    let { text: value } = this.editor;
-    let updateText = this.editor.updateText;
+    const { text: value } = this.editor;
+    const updateText = this.editor.updateText;
 
     element.innerHTML = '';
     element.setAttribute('data-format', format);
 
-    let { view, setText } = CODEMIRROR(element, value, format, updateText);
+    const { view, setText } = CODEMIRROR(element, value, format, updateText);
 
     /**
      * This has to be defined on the service so that
@@ -73,7 +73,7 @@ export default class CodeMirror extends Modifier<Signature> {
       setText(text, format); // update the editor
     };
 
-    let scrollable = document.querySelector('.cm-scroller');
+    const scrollable = document.querySelector('.cm-scroller');
 
     if (scrollable instanceof HTMLElement) {
       this.editor.scrollbarWidth = scrollable.offsetWidth - scrollable.clientWidth;
@@ -101,5 +101,5 @@ export async function setupCodeMirror() {
   // TypeScript doesn't have a way to type files in the public folder
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  CODEMIRROR = (await import(/* webpackIgnore: true */ '/codemirror/preconfigured.js')).default;
+  CODEMIRROR = (await import('@nullvoxpopuli/limber-codemirror/preconfigured')).default;
 }

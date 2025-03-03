@@ -18,7 +18,7 @@ module('Scenarios', function (hooks) {
     localStorage.clear();
   });
 
-  let page = new Page();
+  const page = new Page();
 
   module('compile and run user input', function () {
     module('the Demos work', function () {
@@ -37,7 +37,7 @@ module('Scenarios', function (hooks) {
         await page.editor.load();
         await page.selectDemo('With inline Templates');
 
-        let demoText = await getFromLabel('With inline Templates');
+        const demoText = await getFromLabel('With inline Templates');
 
         // assert.dom(page.nav.activeTab.element).hasText('Preview');
         assert.true(page.editor.hasText(demoText), 'snippet loaded');
@@ -51,7 +51,7 @@ module('Scenarios', function (hooks) {
         await page.editor.load();
         await page.selectDemo('With inline Javascript');
 
-        let demoText = await getFromLabel('With inline Javascript');
+        const demoText = await getFromLabel('With inline Javascript');
 
         // assert.dom(page.nav.activeTab.element).hasText('Preview');
         assert.true(page.editor.hasText(demoText), 'snippet loaded');
@@ -75,7 +75,7 @@ module('Scenarios', function (hooks) {
         await page.editor.load();
         await page.selectDemo('Styleguide Demo');
 
-        let demoText = await getFromLabel('Styleguide Demo');
+        const demoText = await getFromLabel('Styleguide Demo');
 
         // assert.dom(page.nav.activeTab.element).hasText('Preview');
         assert.true(page.editor.hasText(demoText), 'snippet loaded');
@@ -91,7 +91,7 @@ module('Scenarios', function (hooks) {
         await page.editor.load();
         await page.selectDemo('Build your own REPL');
 
-        let demoText = await getFromLabel('Build your own REPL');
+        const demoText = await getFromLabel('Build your own REPL');
 
         // assert.dom(page.nav.activeTab.element).hasText('Preview');
         assert.true(page.editor.hasText(demoText), 'snippet loaded');
@@ -105,7 +105,6 @@ module('Scenarios', function (hooks) {
 
     module('input is valid', function () {
       skip('format: glimdown', async function (assert) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         // const code = stripIndent`
         //   import Component from '@glimmer/component';
         //   import { tracked } from '@glimmer/tracking';
@@ -128,7 +127,7 @@ module('Scenarios', function (hooks) {
         await page.editor.load();
         // await page.editor.setText(code);
 
-        let demoText = await getFromLabel('With inline Javascript');
+        const demoText = await getFromLabel('With inline Javascript');
 
         // assert.dom(page.nav.activeTab.element).hasText('Preview');
         assert.true(page.editor.hasText(demoText), 'snippet loaded');
