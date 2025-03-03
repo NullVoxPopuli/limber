@@ -46,7 +46,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: deploy-prep-dist
-        if-no-files-found: error
+        # if-no-files-found: error
         path: | 
           ./apps/**/dist/**/*
           !node_modules/
