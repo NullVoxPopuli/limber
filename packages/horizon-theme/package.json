@@ -8,9 +8,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "lint:types": "tsc --noEmit",
+    "build": "pnpm tsc",
+    "dev": "pnpm tsc --watch",
+    "lint:types": "pnpm tsc --noEmit",
     "lint:fix": "pnpm -w exec lint fix",
     "lint": "pnpm -w exec lint",
     "lint:js": "pnpm -w exec lint js",
