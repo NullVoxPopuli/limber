@@ -5,6 +5,10 @@ import { kolay } from 'kolay/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig(({ mode /* command, isSsrBuild, isPreview */ }) => ({
+  build: {
+    sourcemap: true,
+    minify: 'terser',
+  },
   resolve: {
     extensions,
   },

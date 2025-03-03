@@ -429,6 +429,9 @@ importers:
       tailwindcss:
         specifier: ^3.0.8
         version: 3.4.17
+      terser:
+        specifier: ^5.39.0
+        version: 5.39.0
       testem-failure-only-reporter:
         specifier: ^1.0.0
         version: 1.0.0(handlebars@4.7.8)(underscore@1.13.7)
@@ -661,6 +664,9 @@ importers:
       tailwindcss:
         specifier: ^3.0.8
         version: 3.4.17
+      terser:
+        specifier: ^5.39.0
+        version: 5.39.0
       typescript:
         specifier: 5.7.3
         version: 5.7.3
