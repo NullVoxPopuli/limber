@@ -42,11 +42,13 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - run:  echo ${{ github.event.number }} > ./pr-number.txt
     - run: pnpm turbo build build:prod
+    - run: ls -la ./apps/repl/dist
+    - run: ls -la ./apps/tutorial/dist
     # Used for faster deploy so we don't need to checkout the repo
     - uses: actions/upload-artifact@v4
       with:
         name: deploy-prep-dist
-        # if-no-files-found: error
+        if-no-files-found: error
         path: | 
           ./apps/**/dist/**/*
           !node_modules/
