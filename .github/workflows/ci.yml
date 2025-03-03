@@ -41,7 +41,7 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - run:  echo ${{ github.event.number }} > ./pr-number.txt
-    - run: pnpm turbo build build:prod
+    - run: pnpm turbo build build:prod --force
     - run: ls -la ./apps/repl/dist
     - run: ls -la ./apps/tutorial/dist
     # Used for faster deploy so we don't need to checkout the repo
