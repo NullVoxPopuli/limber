@@ -1,6 +1,6 @@
 {
   "name": "codemirror-lang-glimmer-js",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "author": "NullVoxPopuli",
   "license": "MIT",
   "main": "dist/index.cjs",
