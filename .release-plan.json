@@ -1,41 +1,185 @@
 {
   "solution": {
     "limber-ui": {
-      "oldVersion": "2.0.0"
-    },
-    "ember-repl": {
-      "impact": "patch",
-      "oldVersion": "5.0.0",
-      "newVersion": "5.0.1",
+      "impact": "major",
+      "oldVersion": "2.0.0",
+      "newVersion": "3.0.0",
       "constraints": [
         {
+          "impact": "major",
+          "reason": "Appears in changelog section :boom: Breaking Change"
+        },
+        {
           "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
+          "reason": "Appears in changelog section :memo: Documentation"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :house: Internal"
+        }
+      ],
+      "pkgJSONPath": "./packages/app-support/limber-ui/addon/package.json"
+    },
+    "ember-repl": {
+      "impact": "major",
+      "oldVersion": "5.0.1",
+      "newVersion": "6.0.0",
+      "constraints": [
+        {
+          "impact": "major",
+          "reason": "Appears in changelog section :boom: Breaking Change"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :memo: Documentation"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :house: Internal"
         }
       ],
       "pkgJSONPath": "./packages/ember-repl/addon/package.json"
     },
     "codemirror-lang-glimdown": {
-      "oldVersion": "0.0.4"
+      "impact": "major",
+      "oldVersion": "0.0.4",
+      "newVersion": "1.0.0",
+      "constraints": [
+        {
+          "impact": "major",
+          "reason": "Appears in changelog section :boom: Breaking Change"
+        },
+        {
+          "impact": "patch",
+          "reason": "Has dependency `workspace:*` on codemirror-lang-glimmer-js"
+        },
+        {
+          "impact": "patch",
+          "reason": "Has dependency `workspace:*` on codemirror-lang-glimmer"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :memo: Documentation"
+        }
+      ],
+      "pkgJSONPath": "./packages/syntax/glimdown/codemirror/package.json"
     },
     "@glimdown/lezer": {
-      "oldVersion": "0.0.3"
+      "impact": "major",
+      "oldVersion": "0.0.3",
+      "newVersion": "1.0.0",
+      "constraints": [
+        {
+          "impact": "major",
+          "reason": "Appears in changelog section :boom: Breaking Change"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :memo: Documentation"
+        }
+      ],
+      "pkgJSONPath": "./packages/syntax/glimdown/lezer/package.json"
     },
     "codemirror-lang-glimmer-js": {
-      "oldVersion": "0.0.4"
+      "impact": "major",
+      "oldVersion": "0.0.4",
+      "newVersion": "1.0.0",
+      "constraints": [
+        {
+          "impact": "major",
+          "reason": "Appears in changelog section :boom: Breaking Change"
+        },
+        {
+          "impact": "patch",
+          "reason": "Has dependency `workspace:*` on codemirror-lang-glimmer"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :memo: Documentation"
+        }
+      ],
+      "pkgJSONPath": "./packages/syntax/glimmer-js/codemirror/package.json"
     },
     "@glimdown/lezer-glimmer-expression": {
-      "oldVersion": "0.0.3"
+      "impact": "major",
+      "oldVersion": "0.0.3",
+      "newVersion": "1.0.0",
+      "constraints": [
+        {
+          "impact": "major",
+          "reason": "Appears in changelog section :boom: Breaking Change"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :memo: Documentation"
+        }
+      ],
+      "pkgJSONPath": "./packages/syntax/glimmer-s-expression/lezer/package.json"
     },
     "codemirror-lang-glimmer-ts": {
-      "oldVersion": "0.0.2"
+      "impact": "major",
+      "oldVersion": "0.0.2",
+      "newVersion": "1.0.0",
+      "constraints": [
+        {
+          "impact": "patch",
+          "reason": "Has dependency `workspace:*` on codemirror-lang-glimmer"
+        },
+        {
+          "impact": "major",
+          "reason": "Appears in changelog section :boom: Breaking Change"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :memo: Documentation"
+        }
+      ],
+      "pkgJSONPath": "./packages/syntax/glimmer-ts/codemirror/package.json"
     },
     "codemirror-lang-glimmer": {
-      "oldVersion": "0.0.4"
+      "impact": "major",
+      "oldVersion": "0.0.4",
+      "newVersion": "1.0.0",
+      "constraints": [
+        {
+          "impact": "patch",
+          "reason": "Has dependency `workspace:*` on @glimdown/lezer-glimmer-expression"
+        },
+        {
+          "impact": "patch",
+          "reason": "Has dependency `workspace:*` on lezer-glimmer"
+        },
+        {
+          "impact": "major",
+          "reason": "Appears in changelog section :boom: Breaking Change"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :memo: Documentation"
+        }
+      ],
+      "pkgJSONPath": "./packages/syntax/glimmer/codemirror/package.json"
     },
     "lezer-glimmer": {
-      "oldVersion": "0.0.3"
+      "impact": "major",
+      "oldVersion": "0.0.3",
+      "newVersion": "1.0.0",
+      "constraints": [
+        {
+          "impact": "patch",
+          "reason": "Has dependency `workspace:*` on @glimdown/lezer-glimmer-expression"
+        },
+        {
+          "impact": "major",
+          "reason": "Appears in changelog section :boom: Breaking Change"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :memo: Documentation"
+        }
+      ],
+      "pkgJSONPath": "./packages/syntax/glimmer/lezer/package.json"
     }
   },
-  "description": "## Release (2024-11-12)\n\nember-repl 5.0.1 (patch)\n\n#### :bug: Bug Fix\n* `ember-repl`\n  * [#1868](https://github.com/NullVoxPopuli/limber/pull/1868) Fix ESM compatibility (Vite) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2025-03-03)\n\nlimber-ui 3.0.0 (major)\nember-repl 6.0.0 (major)\ncodemirror-lang-glimdown 1.0.0 (major)\n@glimdown/lezer 1.0.0 (major)\ncodemirror-lang-glimmer-js 1.0.0 (major)\n@glimdown/lezer-glimmer-expression 1.0.0 (major)\ncodemirror-lang-glimmer-ts 1.0.0 (major)\ncodemirror-lang-glimmer 1.0.0 (major)\nlezer-glimmer 1.0.0 (major)\n\n#### :boom: Breaking Change\n* `limber`, `tutorial`, `dev-tools`, `@nullvoxpopuli/limber-codemirror`, `limber-ui`, `@nullvoxpopuli/limber-styles`, `@nullvoxpopuli/limber-transpilation`, `@nullvoxpopuli/limber-consts`, `ember-repl`, `ember-repl-test-app`, `@nullvoxpopuli/horizon-theme`, `@glimdown/lezer-infra`, `@glimdown/codemirror-dev-preview`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`, `@nullvoxpopuli/spike-url-shortening`\n  * [#1898](https://github.com/NullVoxPopuli/limber/pull/1898) Vite repl ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :rocket: Enhancement\n* `limber`\n  * [#1895](https://github.com/NullVoxPopuli/limber/pull/1895) Save last format and document in localStorage ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :memo: Documentation\n* `tutorial`\n  * [#1894](https://github.com/NullVoxPopuli/limber/pull/1894) new tutorial chapter: conditional event handling ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#1893](https://github.com/NullVoxPopuli/limber/pull/1893) Update prompt.gjs ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n* `limber`, `tutorial`, `limber-ui`, `@nullvoxpopuli/limber-transpilation`, `ember-repl`, `ember-repl-test-app`, `@glimdown/lezer-infra`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`\n  * [#1872](https://github.com/NullVoxPopuli/limber/pull/1872) Upgrade to ember 6 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :house: Internal\n* `limber`, `tutorial`, `limber-ui`, `ember-repl`, `ember-repl-test-app`\n  * [#1882](https://github.com/NullVoxPopuli/limber/pull/1882) Upgrade ember-test-waiters ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }

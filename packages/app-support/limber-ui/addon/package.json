@@ -1,6 +1,6 @@
 {
   "name": "limber-ui",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "The default blueprint for Embroider v2 addons.",
   "keywords": [
     "ember-addon"
