@@ -152,7 +152,7 @@
     "ember-element-helper": "^0.8.5",
     "ember-focus-trap": "^1.1.1",
     "ember-modifier": "^4.2.0",
-    "ember-primitives": "^0.23.1",
+    "ember-primitives": "^0.27.2",
     "ember-repl": "workspace:*",
     "ember-resize-observer-service": "^1.1.0",
     "ember-resources": "^7.0.3",
