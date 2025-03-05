@@ -55,6 +55,7 @@
       "ember-get-config": "github:mansona/ember-get-config#config-meta-loader",
       "ember-auto-import": "^2.9.0",
       "ember-repl": "workspace:*",
+      "ember-primitives": "^0.27.2",
       "ember-source": ">= 6.4.0-alpha.3",
       "array-includes": "npm:@nolyfill/array-includes@^1",
       "array.prototype.findlastindex": "npm:@nolyfill/array.prototype.findlastindex@^1",
