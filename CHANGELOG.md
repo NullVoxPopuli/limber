@@ -1,5 +1,39 @@
 # Changelog
 
+## Release (2025-03-03)
+
+limber-ui 3.0.0 (major)
+ember-repl 6.0.0 (major)
+codemirror-lang-glimdown 1.0.0 (major)
+@glimdown/lezer 1.0.0 (major)
+codemirror-lang-glimmer-js 1.0.0 (major)
+@glimdown/lezer-glimmer-expression 1.0.0 (major)
+codemirror-lang-glimmer-ts 1.0.0 (major)
+codemirror-lang-glimmer 1.0.0 (major)
+lezer-glimmer 1.0.0 (major)
+
+#### :boom: Breaking Change
+* `limber`, `tutorial`, `dev-tools`, `@nullvoxpopuli/limber-codemirror`, `limber-ui`, `@nullvoxpopuli/limber-styles`, `@nullvoxpopuli/limber-transpilation`, `@nullvoxpopuli/limber-consts`, `ember-repl`, `ember-repl-test-app`, `@nullvoxpopuli/horizon-theme`, `@glimdown/lezer-infra`, `@glimdown/codemirror-dev-preview`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`, `@nullvoxpopuli/spike-url-shortening`
+  * [#1898](https://github.com/NullVoxPopuli/limber/pull/1898) Vite repl ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :rocket: Enhancement
+* `limber`
+  * [#1895](https://github.com/NullVoxPopuli/limber/pull/1895) Save last format and document in localStorage ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :memo: Documentation
+* `tutorial`
+  * [#1894](https://github.com/NullVoxPopuli/limber/pull/1894) new tutorial chapter: conditional event handling ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1893](https://github.com/NullVoxPopuli/limber/pull/1893) Update prompt.gjs ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber`, `tutorial`, `limber-ui`, `@nullvoxpopuli/limber-transpilation`, `ember-repl`, `ember-repl-test-app`, `@glimdown/lezer-infra`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`
+  * [#1872](https://github.com/NullVoxPopuli/limber/pull/1872) Upgrade to ember 6 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :house: Internal
+* `limber`, `tutorial`, `limber-ui`, `ember-repl`, `ember-repl-test-app`
+  * [#1882](https://github.com/NullVoxPopuli/limber/pull/1882) Upgrade ember-test-waiters ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2024-11-12)
 
 ember-repl 5.0.1 (patch)

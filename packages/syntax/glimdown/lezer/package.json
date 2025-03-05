@@ -1,6 +1,6 @@
 {
   "name": "@glimdown/lezer",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "author": "NullVoxPopuli",
   "license": "MIT",
   "type": "module",
@@ -9,7 +9,10 @@
     "url": "https://github.com/NullVoxPopuli/limber.git",
     "directory": "packages/syntax/glimdown/lezer"
   },
-  "files": ["src", "dist"],
+  "files": [
+    "src",
+    "dist"
+  ],
   "devDependencies": {
     "@babel/core": "^7.26.9",
     "@glimdown/lezer-infra": "workspace:*",
