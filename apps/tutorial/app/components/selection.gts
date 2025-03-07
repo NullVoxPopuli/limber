@@ -29,8 +29,9 @@ export class Selection extends Component {
     this.router.transitionTo(event.target.value);
   };
 
-  isSelected = ({ path }: { path: string }) => {
-    return this.docs.currentPath === path;
+  isSelected = (group: { path: string }, tutorial: { path: string }) => {
+    const fullPath = `/${group.path}/${tutorial.path}`;
+    return this.docs.currentPath === fullPath;
   };
 
   <template>
@@ -67,7 +68,7 @@ export class Selection extends Component {
 
                     <option
                       value="/{{group.path}}/{{tutorial.path}}"
-                      selected={{this.isSelected tutorial}}
+                      selected={{this.isSelected group tutorial}}
                     >
                       {{titleize tutorial.name}}
                     </option>
