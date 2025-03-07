@@ -1,19 +1,22 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'tutorial/tests/helpers';
 import { render, select } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+
 import { Selection } from 'tutorial/components/selection';
+import { setupRenderingTest } from 'tutorial/tests/helpers';
+
 import { MockDocsService, MockRouterService } from '../../helpers/mocks';
 
 module('Integration | Component | selection', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function (assert) {
+  hooks.beforeEach(function () {
     this.owner.register('service:docs', MockDocsService);
     this.owner.register('service:router', MockRouterService);
   });
 
   test('it renders groups and options', async function (assert) {
     const docsSvc = this.owner.lookup('service:docs') as unknown as MockDocsService;
+
     docsSvc._setGroupsData([
       [
         '1-introduction',
@@ -44,8 +47,11 @@ module('Integration | Component | selection', function (hooks) {
 
   test('it handles selection', async function (assert) {
     const routerSvc = this.owner.lookup('service:router') as unknown as MockRouterService;
+
     routerSvc._setAssert(assert);
+
     const docsSvc = this.owner.lookup('service:docs') as unknown as MockDocsService;
+
     docsSvc._setGroupsData([
       ['english', ['one', 'two', 'three']],
       ['spanish', ['uno', 'dos', 'tres']],

@@ -31,6 +31,7 @@ export class Selection extends Component {
 
   isSelected = (group: { path: string }, tutorial: { path: string }) => {
     const fullPath = `/${group.path}/${tutorial.path}`;
+
     return this.docs.currentPath === fullPath;
   };
 

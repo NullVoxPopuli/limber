@@ -39,6 +39,7 @@ function makeDocsTree(treeData: [string, string[]][]) {
 
       groupPages.push(page);
     }
+
     const group = {
       path: groupPath,
       name: groupName,
@@ -46,6 +47,7 @@ function makeDocsTree(treeData: [string, string[]][]) {
       pages: groupPages,
       first: `/${groupPath}/${groupPages[0]?.path}/prose.md`,
     };
+
     pages.push(group);
   }
 
