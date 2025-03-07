@@ -18,7 +18,7 @@ export async function shortenUrl(url: string) {
     method: 'POST',
     headers: {
       Accept: 'application/vnd.api+json',
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/vnd.api+json',
     },
     body: JSON.stringify({ originalUrl: url }),
   });
