@@ -33,8 +33,12 @@ export const Share = <template>
     </button>
 
     <m.Dialog class="preem" {{focusTrap isActive=m.isOpen}}>
+      <SaveBanner @isShowing={{isShowing.current}} />
+
       {{#if m.isOpen}}
-        <ShareModal @onCancel={{m.close}} />
+        <div class="modal-facade">
+          <ShareModal @onCancel={{m.close}} />
+        </div>
       {{/if}}
     </m.Dialog>
   </Modal>
@@ -42,8 +46,6 @@ export const Share = <template>
 
 class ShareModal extends Component<{ onCancel: () => void }> {
   <template>
-    <SaveBanner @isShowing={{isShowing.current}} />
-
     <header><h2>Share</h2>
       <FlatButton {{on "click" @onCancel}} aria-label="close this share modal">
         <FaIcon @size="xs" @icon={{faXmark}} class="aspect-square" />
@@ -127,8 +129,17 @@ class ShareModal extends Component<{ onCancel: () => void }> {
 
     try {
       await this.toClipboard();
-    } catch {
-      // TODO: Toast message
+    } catch (e) {
+      if (typeof e === 'object' && e !== null) {
+        if ('message' in e && typeof e.message === 'string') {
+          this.error = e.message;
+
+          return;
+        }
+      }
+
+      console.error(e);
+      this.error = `An unknown error occurred. Details in the console. If you have time, a bug report would be appreciated <3`;
     }
   };
 }
