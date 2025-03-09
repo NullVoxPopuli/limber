@@ -68,10 +68,21 @@ button[data-share-button] {
   }
 }
 dialog.preem {
-  border-radius: 0.25rem;
+  width: 100dvw;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+
   animation: var(--animation-slide-in-up), var(--animation-fade-in);
   animation-timing-function: var(--ease-out-5);
   animation-duration: 0.2s;
+
+  > .modal-facade {
+    background: white;
+    border-radius: 0.25rem;
+    width: max-content;
+  }
 }
 dialog.preem::backdrop {
   backdrop-filter: blur(1px);
