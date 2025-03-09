@@ -11,6 +11,7 @@ import { faShareFromSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
 // @ts-expect-error womp types
 import { focusTrap } from 'ember-focus-trap';
 import { Modal } from 'ember-primitives/components/dialog';
+import { KeyCombo } from 'ember-primitives/components/keys';
 import { cell } from 'ember-resources';
 
 import { shortenUrl } from 'limber/utils/editor-text';
@@ -169,35 +170,6 @@ const ReadonlyField: TOC<{
       {{/if}}
     </span>
   </span>
-</template>;
-
-const isLast = (collection: unknown[], index: number) => index === collection.length - 1;
-const isNotLast = (collection: unknown[], index: number) => !isLast(collection, index);
-const isMac = navigator.userAgent.indexOf('Mac OS') >= 0;
-const getKeys = (keys: string[], mac: string[]) => (isMac ? mac ?? keys : keys);
-
-const KeyCombo: TOC<{
-  Args: {
-    keys: string[];
-    mac: string[];
-  };
-}> = <template>
-  <span class="preem__key-combination">
-    {{#let (getKeys @keys @mac) as |keys|}}
-      {{#each keys as |key i|}}
-        <Key>{{key}}</Key>
-        {{#if (isNotLast @keys i)}}
-          <span class="preem__key-combination__separator">+</span>
-        {{/if}}
-      {{/each}}
-    {{/let}}
-  </span>
-</template>;
-
-const Key: TOC<{
-  Blocks: { default?: [] };
-}> = <template>
-  <span class="preem-key">{{yield}}</span>
 </template>;
 
 const Tip: TOC<{

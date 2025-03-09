@@ -1,6 +1,9 @@
+@import './primitives.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 * {
   touch-action: manipulation;
@@ -64,3 +67,4 @@
 dialog::backdrop {
   backdrop-filter: blur(1px);
 }
+
