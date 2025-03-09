@@ -13,6 +13,7 @@ import { focusTrap } from 'ember-focus-trap';
 import { Modal } from 'ember-primitives/components/dialog';
 import { KeyCombo } from 'ember-primitives/components/keys';
 import { cell } from 'ember-resources';
+import { modifier as eModifier } from 'ember-modifier';
 
 import { shortenUrl } from 'limber/utils/editor-text';
 import { FlatButton } from 'limber-ui';
@@ -26,14 +27,16 @@ const isShowing = cell(false);
 
 const { Boolean } = globalThis;
 
+const not = (x: unknown) => !x;
+
 export const Share = <template>
   <Modal as |m|>
-    <button data-share-button type="button" {{on "click" m.open}}>
+    <button data-share-button type="button" {{on "click" m.open}} {{m.focusOnClose}}>
       Share
       <FaIcon @icon={{faShareFromSquare}} />
     </button>
 
-    <m.Dialog class="preem" {{focusTrap isActive=m.isOpen}}>
+    <m.Dialog class="preem" inert={{not m.isOpen}} {{focusTrap isActive=m.isOpen}}>
       <SaveBanner @isShowing={{isShowing.current}} />
 
       {{#if m.isOpen}}
