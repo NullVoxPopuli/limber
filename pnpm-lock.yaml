@@ -237,7 +237,7 @@ importers:
         version: 5.1.0(1798237407a1ebae961ee9114c4e7f1c)
       '@embroider/compat':
         specifier: alpha
-        version: 4.0.0-alpha.6(1e779bdfcd86c5fd0bb68e1e39ac0f73)
+        version: 4.0.0-alpha.7(1e779bdfcd86c5fd0bb68e1e39ac0f73)
       '@embroider/config-meta-loader':
         specifier: alpha
         version: 1.0.0-alpha.1
@@ -535,7 +535,7 @@ importers:
         version: 4.0.0(@glint/template@1.4.1-unstable.0e0d936)
       '@embroider/compat':
         specifier: alpha
-        version: 4.0.0-alpha.6(1e779bdfcd86c5fd0bb68e1e39ac0f73)
+        version: 4.0.0-alpha.7(1e779bdfcd86c5fd0bb68e1e39ac0f73)
       '@embroider/config-meta-loader':
         specifier: alpha
         version: 1.0.0-alpha.1
@@ -1125,7 +1125,7 @@ importers:
         version: 1.16.9(@glint/template@1.4.1-unstable.0e0d936)
       babel-import-util:
         specifier: ^3.0.0
-        version: 3.0.0
+        version: 3.0.1
       babel-plugin-ember-template-compilation:
         specifier: ^2.3.0
         version: 2.3.0
@@ -1361,13 +1361,13 @@ importers:
         version: 0.0.2-unstable.ba9fd29
       '@embroider/compat':
         specifier: alpha
-        version: 4.0.0-alpha.6(1e779bdfcd86c5fd0bb68e1e39ac0f73)
+        version: 4.0.0-alpha.7(1e779bdfcd86c5fd0bb68e1e39ac0f73)
       '@embroider/core':
         specifier: alpha
         version: 4.0.0-alpha.6(@glint/template@1.4.1-unstable.0e0d936)
       '@embroider/test-setup':
         specifier: 4.0.0
-        version: 4.0.0(52699ed3eda1116e7d217be0007805f5)
+        version: 4.0.0(1d7edb6b3bff06daa89536a87ebb3dc0)
       '@embroider/webpack':
         specifier: 4.0.10
         version: 4.0.10(e02a4e032d2b70496cadbc86598a48bb)
@@ -3075,8 +3075,8 @@ packages:
   '@embroider/broccoli-side-watch@0.0.2-unstable.ba9fd29':
     resolution: {integrity: sha512-jxMe47Rc2fUAwtKGsPy9x7gtYJpglTlbeRG5bgzs8njYZHbOiXRyhpNMcfJnn7f6Aoc4Xv4qXvTHeyye/6SyZw==}
 
-  '@embroider/compat@4.0.0-alpha.6':
-    resolution: {integrity: sha512-pnE9AASJMmmsTBdKLWypz/xP7SFwotWJfu45B7FqtgTVGlfI9dXbRE8nXUIUa5GTYzxALaibDCghcWqTd0Z5GQ==}
+  '@embroider/compat@4.0.0-alpha.7':
+    resolution: {integrity: sha512-Uqv9oSyZu+uP09H3/PzsYZbAJj6FCs7Mi2waoG1pIccv8U1TDssVlayJXhzAxuWQirG/1qtZgwA1jOPvTl312Q==}
     engines: {node: 12.* || 14.* || >= 16}
     peerDependencies:
       '@embroider/core': ^4.0.0-alpha.6
@@ -5150,6 +5150,10 @@ packages:
 
   babel-import-util@3.0.0:
     resolution: {integrity: sha512-4YNPkuVsxAW5lnSTa6cn4Wk49RX6GAB6vX+M6LqEtN0YePqoFczv1/x0EyLK/o+4E1j9jEuYj5Su7IEPab5JHQ==}
+    engines: {node: '>= 12.*'}
+
+  babel-import-util@3.0.1:
+    resolution: {integrity: sha512-2copPaWQFUrzooJVIVZA/Oppx/S/KOoZ4Uhr+XWEQDMZ8Rvq/0SNQpbdIyMBJ8IELWt10dewuJw+tX4XjOo7Rg==}
     engines: {node: '>= 12.*'}
 
   babel-loader@10.0.0:
@@ -12812,7 +12816,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@embroider/compat@4.0.0-alpha.6(1e779bdfcd86c5fd0bb68e1e39ac0f73)':
+  '@embroider/compat@4.0.0-alpha.7(1e779bdfcd86c5fd0bb68e1e39ac0f73)':
     dependencies:
       '@babel/code-frame': 7.26.2
       '@babel/core': 7.26.9(supports-color@8.1.1)
@@ -13006,12 +13010,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@embroider/test-setup@4.0.0(52699ed3eda1116e7d217be0007805f5)':
+  '@embroider/test-setup@4.0.0(1d7edb6b3bff06daa89536a87ebb3dc0)':
     dependencies:
       lodash: 4.17.21
       resolve: 1.22.10
     optionalDependencies:
-      '@embroider/compat': 4.0.0-alpha.6(1e779bdfcd86c5fd0bb68e1e39ac0f73)
+      '@embroider/compat': 4.0.0-alpha.7(1e779bdfcd86c5fd0bb68e1e39ac0f73)
       '@embroider/core': 4.0.0-alpha.6(@glint/template@1.4.1-unstable.0e0d936)
       '@embroider/webpack': 4.0.10(e02a4e032d2b70496cadbc86598a48bb)
 
@@ -15151,6 +15155,8 @@ snapshots:
   babel-import-util@2.1.1: {}
 
   babel-import-util@3.0.0: {}
+
+  babel-import-util@3.0.1: {}
 
   babel-loader@10.0.0(@babel/core@7.26.9)(webpack@5.98.0):
     dependencies:
