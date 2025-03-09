@@ -1,5 +1,27 @@
 # Changelog
 
+## Release (2025-03-09)
+
+limber-ui 3.0.1 (patch)
+
+#### :bug: Bug Fix
+* `tutorial`
+  * [#1904](https://github.com/NullVoxPopuli/limber/pull/1904) Tutorial navigation selected state ([@tcjr](https://github.com/tcjr))
+
+#### :memo: Documentation
+* `tutorial`
+  * [#1904](https://github.com/NullVoxPopuli/limber/pull/1904) Tutorial navigation selected state ([@tcjr](https://github.com/tcjr))
+
+#### :house: Internal
+* `limber`
+  * [#1905](https://github.com/NullVoxPopuli/limber/pull/1905) Improve share dialog ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber`, `tutorial`, `limber-ui`
+  * [#1902](https://github.com/NullVoxPopuli/limber/pull/1902) Update ember-primitives ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 2
+- Tom Carter ([@tcjr](https://github.com/tcjr))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2025-03-03)
 
 limber-ui 3.0.0 (major)
