@@ -11,7 +11,9 @@ import { faShareFromSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
 // @ts-expect-error womp types
 import { focusTrap } from 'ember-focus-trap';
 import { Modal } from 'ember-primitives/components/dialog';
+import { KeyCombo } from 'ember-primitives/components/keys';
 import { cell } from 'ember-resources';
+import { modifier as eModifier } from 'ember-modifier';
 
 import { shortenUrl } from 'limber/utils/editor-text';
 import { FlatButton } from 'limber-ui';
@@ -25,14 +27,16 @@ const isShowing = cell(false);
 
 const { Boolean } = globalThis;
 
+const not = (x: unknown) => !x;
+
 export const Share = <template>
   <Modal as |m|>
-    <button data-share-button type="button" {{on "click" m.open}}>
+    <button data-share-button type="button" {{on "click" m.open}} {{m.focusOnClose}}>
       Share
       <FaIcon @icon={{faShareFromSquare}} />
     </button>
 
-    <m.Dialog class="preem" {{focusTrap isActive=m.isOpen}}>
+    <m.Dialog class="preem" inert={{not m.isOpen}} {{focusTrap isActive=m.isOpen}}>
       <SaveBanner @isShowing={{isShowing.current}} />
 
       {{#if m.isOpen}}
@@ -169,35 +173,6 @@ const ReadonlyField: TOC<{
       {{/if}}
     </span>
   </span>
-</template>;
-
-const isLast = (collection: unknown[], index: number) => index === collection.length - 1;
-const isNotLast = (collection: unknown[], index: number) => !isLast(collection, index);
-const isMac = navigator.userAgent.indexOf('Mac OS') >= 0;
-const getKeys = (keys: string[], mac: string[]) => (isMac ? mac ?? keys : keys);
-
-const KeyCombo: TOC<{
-  Args: {
-    keys: string[];
-    mac: string[];
-  };
-}> = <template>
-  <span class="preem__key-combination">
-    {{#let (getKeys @keys @mac) as |keys|}}
-      {{#each keys as |key i|}}
-        <Key>{{key}}</Key>
-        {{#if (isNotLast @keys i)}}
-          <span class="preem__key-combination__separator">+</span>
-        {{/if}}
-      {{/each}}
-    {{/let}}
-  </span>
-</template>;
-
-const Key: TOC<{
-  Blocks: { default?: [] };
-}> = <template>
-  <span class="preem-key">{{yield}}</span>
 </template>;
 
 const Tip: TOC<{
