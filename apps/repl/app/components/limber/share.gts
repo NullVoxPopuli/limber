@@ -13,7 +13,6 @@ import { focusTrap } from 'ember-focus-trap';
 import { Modal } from 'ember-primitives/components/dialog';
 import { KeyCombo } from 'ember-primitives/components/keys';
 import { cell } from 'ember-resources';
-import { modifier as eModifier } from 'ember-modifier';
 
 import { shortenUrl } from 'limber/utils/editor-text';
 import { FlatButton } from 'limber-ui';
