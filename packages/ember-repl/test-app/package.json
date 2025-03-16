@@ -39,7 +39,7 @@
     "@ember/string": "^4.0.1",
     "@ember/test-helpers": "^5.1.0",
     "@ember/test-waiters": "^4.0.0",
-    "@embroider/broccoli-side-watch": "0.0.2-unstable.ba9fd29",
+    "@embroider/broccoli-side-watch": "1.0.1",
     "@embroider/compat": "alpha",
     "@embroider/core": "alpha",
     "@embroider/test-setup": "4.0.0",
@@ -71,8 +71,8 @@
     "ember-source": ">= 6.4.0-alpha.3",
     "ember-source-channel-url": "^3.0.0",
     "ember-template-imports": "^4.3.0",
-    "ember-template-lint": "^6.1.0",
-    "ember-try": "^3.0.0",
+    "ember-template-lint": "^7.0.0",
+    "ember-try": "^4.0.0",
     "eslint": "^9.21.0",
     "loader.js": "^4.7.0",
     "path-browserify": "^1.0.1",
@@ -81,7 +81,7 @@
     "qunit": "^2.24.1",
     "qunit-dom": "3.4.0",
     "typescript": "5.7.3",
-    "unified": "^10.1.2",
+    "unified": "^11.0.0",
     "webpack": "^5.98.0"
   },
   "engines": {
