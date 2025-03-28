@@ -24,8 +24,6 @@ import type RouterService from '@ember/routing/router-service';
 
 const isShowing = cell(false);
 
-const { Boolean } = globalThis;
-
 const not = (x: unknown) => !x;
 
 export const Share = <template>

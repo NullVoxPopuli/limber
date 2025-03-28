@@ -12,8 +12,6 @@ interface Signature {
   };
 }
 
-const { Boolean } = globalThis;
-
 export const Orientation: TOC<Signature> = <template>
   <ContainerQuery
     @features={{hash isVertical=(aspectRatio max=1.2)}}

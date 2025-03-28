@@ -4,7 +4,6 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import { modifier } from 'ember-modifier';
 
-let { document } = globalThis;
 const bold = () => document.execCommand("bold", false, null);
 const italic = () => document.execCommand("italic", false, null);
 const underline = () => document.execCommand("underline", false, null);
