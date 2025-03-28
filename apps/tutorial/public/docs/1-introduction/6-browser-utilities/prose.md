@@ -1,5 +1,3 @@
-All functions available on [`globalThis`][mdn-globalThis] ([window][mdn-Window] in browsers), are available to use in templates.
-
 For example, retrieving data from [`localStorage`][mdn-LocalStorage] may be done like this:
 
 ```hbs
@@ -33,7 +31,6 @@ function formatFromStorage(key) {
 
 Since templates are the _source of truth_ for what is visible to users, it's useful to make them as readable as possible. An extra advantage here is that the extracted functions can more easily be unit tested.
 
-[mdn-globalThis]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
 [mdn-Window]: https://developer.mozilla.org/en-US/docs/Web/API/Window
 [mdn-LocalStorage]: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
 [mdn-json-stringify]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify

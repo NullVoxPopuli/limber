@@ -4,8 +4,6 @@ let data = {
   terrain: "desert",
 };
 
-let { JSON } = globalThis;
-
 localStorage.setItem('localStorage-item', JSON.stringify(data));
 
 let get = (key) => localStorage.getItem(key);
