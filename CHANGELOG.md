@@ -1,5 +1,33 @@
 # Changelog
 
+## Release (2025-03-28)
+
+limber-ui 3.1.0 (minor)
+ember-repl 6.1.0 (minor)
+
+#### :rocket: Enhancement
+* `limber`, `tutorial`, `limber-ui`, `@nullvoxpopuli/limber-transpilation`, `ember-repl`
+  * [#1914](https://github.com/NullVoxPopuli/limber/pull/1914) Upgrade template-compilation ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* `tutorial`
+  * [#1904](https://github.com/NullVoxPopuli/limber/pull/1904) Tutorial navigation selected state ([@tcjr](https://github.com/tcjr))
+
+#### :memo: Documentation
+* `tutorial`
+  * [#1904](https://github.com/NullVoxPopuli/limber/pull/1904) Tutorial navigation selected state ([@tcjr](https://github.com/tcjr))
+
+#### :house: Internal
+* `limber`, `tutorial`, `limber-ui`
+  * [#1906](https://github.com/NullVoxPopuli/limber/pull/1906) Upgrade ember-primitives, use KeyCombo component ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1902](https://github.com/NullVoxPopuli/limber/pull/1902) Update ember-primitives ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber`
+  * [#1905](https://github.com/NullVoxPopuli/limber/pull/1905) Improve share dialog ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 2
+- Tom Carter ([@tcjr](https://github.com/tcjr))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2025-03-03)
 
 limber-ui 3.0.0 (major)
