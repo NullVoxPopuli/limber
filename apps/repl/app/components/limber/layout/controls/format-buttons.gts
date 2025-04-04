@@ -11,6 +11,7 @@ import { getStoredDocumentForFormat } from 'limber/utils/editor-text';
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
 import type { ComponentLike } from '@glint/template';
+import type EditorService from 'limber/services/editor';
 import type { Format } from 'limber/utils/messaging';
 
 export const FormatButtons: TOC<object> = <template>
