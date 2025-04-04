@@ -45,6 +45,8 @@ export const importMap = {
 
       return {
         ...c,
+        // @ts-ignore
+        increment: () => c.current++,
         get value() {
           return c.current;
         },
