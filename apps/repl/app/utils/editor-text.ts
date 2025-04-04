@@ -190,8 +190,7 @@ export class FileURIComponent {
       return;
     }
 
-    localStorage.setItem('format', formatFrom(format));
-    localStorage.setItem('document', rawText);
+    setStoredDocument(formatFrom(format), rawText);
 
     this.#qps = {
       ...this.#qps,
@@ -240,4 +239,44 @@ export class FileURIComponent {
       this.#cleanup();
     });
   };
+}
+
+export function setStoredDocument(format: string, text: string) {
+  localStorage.setItem('active-format', format);
+  localStorage.setItem(`${format}-doc`, text);
+}
+
+export function getStoredDocumentForFormat(format: string) {
+  return localStorage.getItem(`${format}-doc`);
+}
+
+/**
+ * We store the document per format, as well as which format
+ * was last active.
+ *
+ * This enables us to have different documents load while changing formats
+ * without fear of losing what we were working on.
+ *
+ * Default starting doc is
+ * user-configurable.
+ * (whatever they did last)
+ *
+ */
+export function getStoredDocument() {
+  const active = localStorage.getItem('active-format');
+
+  if (active) {
+    const activeDoc = localStorage.getItem(`${active}-doc`);
+
+    if (activeDoc) {
+      return { format: active, doc: activeDoc };
+    }
+  }
+
+  // fallback to the prior implemenntation so we don't break
+  // existing users.
+  const format = localStorage.getItem('format');
+  const doc = localStorage.getItem('document');
+
+  return { format, doc };
 }

@@ -2,6 +2,7 @@ import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
 import { DEFAULT_SNIPPET } from 'limber/snippets';
+import { getStoredDocument } from 'limber/utils/editor-text';
 import { formatFrom } from 'limber/utils/messaging';
 
 import type RouterService from '@ember/routing/router-service';
@@ -41,8 +42,7 @@ export default class EditRoute extends Route {
        * user-configurable.
        * (whatever they did last)
        */
-      const format = localStorage.getItem('format');
-      const doc = localStorage.getItem('document');
+      const { format, doc } = getStoredDocument();
 
       if (format && doc) {
         console.info(`Found format and document in localStorage. Using those.`);

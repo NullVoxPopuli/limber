@@ -5,9 +5,13 @@ import { service } from '@ember/service';
 
 import { type ItemSignature, ToggleGroup } from 'ember-primitives/components/toggle-group';
 
+import { defaultSnippetForFormat } from 'limber/snippets';
+import { getStoredDocumentForFormat } from 'limber/utils/editor-text';
+
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
 import type { ComponentLike } from '@glint/template';
+import type EditorService from 'limber/services/editor';
 import type { Format } from 'limber/utils/messaging';
 
 export const FormatButtons: TOC<object> = <template>
@@ -50,13 +54,21 @@ class Option extends Component<{
   Blocks: { default: [] };
 }> {
   @service declare router: RouterService;
+  @service declare editor: EditorService;
 
   active = (format: Format) => {
     return this.format === format ? 'bg-[#333] text-white' : 'bg-ember-black text-white';
   };
 
+  /**
+   * Because most of the formats are not cross-compatible with each other,
+   * we'll want to also swap the document
+   */
   switch = (format: Format): void => {
-    this.router.transitionTo({ queryParams: { format } });
+    const stored = getStoredDocumentForFormat(format);
+
+    this.editor.fileURIComponent.set(stored ?? defaultSnippetForFormat(format), format);
+    // this.router.transitionTo({ queryParams: { format,  } });
   };
 
   get format(): Format {
