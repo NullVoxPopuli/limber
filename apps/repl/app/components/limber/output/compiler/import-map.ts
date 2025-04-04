@@ -38,6 +38,9 @@ export const importMap = {
   'limber/components/limber/menu': Object.assign(limberMenu.default, limberMenu),
   'limber/components/limber/header': Object.assign(limberHeader.default, limberHeader),
 
+  // Legacy things that don't exist anymore
+  'limber/helpers/state': { default: eResources.cell },
+
   // Libraries
   'ember-repl': emberRepl,
   'limber-ui': limberUi,
