@@ -39,19 +39,17 @@ export const importMap = {
   'limber/components/limber/header': Object.assign(limberHeader.default, limberHeader),
 
   // Legacy things that don't exist anymore
-  'limber/helpers/state': {
-    default: (...args: unknown[]) => {
-      const c = eResources.cell(...args);
+  'limber/helpers/state': (...args: unknown[]) => {
+    const c = eResources.cell(...args);
 
-      return {
-        ...c,
-        // @ts-ignore
-        increment: () => c.current++,
-        get value() {
-          return c.current;
-        },
-      };
-    },
+    return {
+      ...c,
+      // @ts-ignore
+      increment: () => c.current++,
+      get value() {
+        return c.current;
+      },
+    };
   },
 
   // Libraries
