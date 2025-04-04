@@ -1,3 +1,26 @@
+export const DEFAULT_GJS = `// Welcome!
+
+const who = 'world';
+
+<template>
+  Hello, {{who}}!
+
+  for a tutorial on this format, check out
+  <a href="https://tutorial.glimdown.com" target="_blank">
+    the interactive tutariol
+  </a>
+</template>
+`;
+export const DEFAULT_HBS = `{{! Welcome! }}
+
+Hello, {{who}}!
+
+if you're interested in a tutorial, check out
+<a href="https://tutorial.glimdown.com" target="_blank">
+  the interactive tutariol
+</a>
+`;
+
 export const DEFAULT_SNIPPET = `# Limber Editor
 
 **glimdown** //  _Ember or Glimmer  rendered with markdown_
@@ -58,4 +81,16 @@ export async function getFromLabel(label: string): Promise<string> {
   LOADED.add(text);
 
   return text;
+}
+
+export function defaultSnippetForFormat(format: string) {
+  if (format === 'gjs') {
+    return DEFAULT_GJS;
+  }
+
+  if (format === 'hbs') {
+    return DEFAULT_GJS;
+  }
+
+  return DEFAULT_SNIPPET;
 }

@@ -246,6 +246,10 @@ export function setStoredDocument(format: string, text: string) {
   localStorage.setItem(`${format}-doc`, text);
 }
 
+export function getStoredDocumentForFormat(format: string) {
+  return localStorage.getItem(`${format}-doc`);
+}
+
 /**
  * We store the document per format, as well as which format
  * was last active.
