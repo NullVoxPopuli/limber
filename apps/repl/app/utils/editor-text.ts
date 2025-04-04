@@ -190,8 +190,7 @@ export class FileURIComponent {
       return;
     }
 
-    localStorage.setItem('format', formatFrom(format));
-    localStorage.setItem('document', rawText);
+    setStoredDocument(formatFrom(format), rawText);
 
     this.#qps = {
       ...this.#qps,
@@ -240,6 +239,11 @@ export class FileURIComponent {
       this.#cleanup();
     });
   };
+}
+
+export function setStoredDocument(format: string, text: string) {
+  localStorage.setItem('active-format', format);
+  localStorage.setItem(`${format}-doc`, text);
 }
 
 /**
