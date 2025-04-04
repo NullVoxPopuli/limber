@@ -39,7 +39,18 @@ export const importMap = {
   'limber/components/limber/header': Object.assign(limberHeader.default, limberHeader),
 
   // Legacy things that don't exist anymore
-  'limber/helpers/state': { default: eResources.cell },
+  'limber/helpers/state': {
+    default: (...args: unknown[]) => {
+      const c = eResources.cell(...args);
+
+      return {
+        ...c,
+        get value() {
+          return c.current;
+        },
+      };
+    },
+  },
 
   // Libraries
   'ember-repl': emberRepl,
