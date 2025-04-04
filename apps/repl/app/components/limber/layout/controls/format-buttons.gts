@@ -6,6 +6,7 @@ import { service } from '@ember/service';
 import { type ItemSignature, ToggleGroup } from 'ember-primitives/components/toggle-group';
 
 import { defaultSnippetForFormat } from 'limber/snippets';
+import { getStoredDocumentForFormat } from 'limber/utils/editor-text';
 
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
@@ -65,7 +66,7 @@ class Option extends Component<{
   switch = (format: Format): void => {
     const stored = getStoredDocumentForFormat(format);
 
-    this.editor.updateDemo(stored ?? defaultSnippetForFormat(format));
+    this.editor.fileURIComponent.set(stored ?? defaultSnippetForFormat(format), format);
     // this.router.transitionTo({ queryParams: { format,  } });
   };
 

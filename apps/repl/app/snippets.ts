@@ -13,7 +13,7 @@ const who = 'world';
 `;
 export const DEFAULT_HBS = `{{! Welcome! }}
 
-Hello, {{who}}!
+Hello, world!
 
 if you're interested in a tutorial, check out
 <a href="https://tutorial.glimdown.com" target="_blank">
@@ -89,7 +89,7 @@ export function defaultSnippetForFormat(format: string) {
   }
 
   if (format === 'hbs') {
-    return DEFAULT_GJS;
+    return DEFAULT_HBS;
   }
 
   return DEFAULT_SNIPPET;
