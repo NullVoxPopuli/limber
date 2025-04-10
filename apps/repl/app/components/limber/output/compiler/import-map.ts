@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // Some packages do not provide types
 
+import * as eAutofocus from 'ember-autofocus-modifier';
 import * as eDeepTracked from 'ember-deep-tracked';
 // @ts-expect-error
 import * as focusTrap from 'ember-focus-trap';
@@ -63,6 +64,7 @@ export const importMap = {
   'tracked-toolbox': trackedToolbox,
   'ember-deep-tracked': eDeepTracked,
   'ember-resources': eResources,
+  'ember-autofocus-modifier': eAutofocus,
 
   // Reactiveweb *only* has path imports
   'reactiveweb/debounce': reactiveDebounce,
