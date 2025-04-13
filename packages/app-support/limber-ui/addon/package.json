@@ -65,10 +65,10 @@
     "@embroider/addon-dev": "^7.1.1",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
-    "@glint/core": "1.4.1-unstable.0e0d936",
-    "@glint/environment-ember-loose": "1.4.1-unstable.0e0d936",
-    "@glint/environment-ember-template-imports": "1.4.1-unstable.0e0d936",
-    "@glint/template": "1.4.1-unstable.0e0d936",
+    "@glint/core": "1.5.2",
+    "@glint/environment-ember-loose": "1.5.2",
+    "@glint/environment-ember-template-imports": "1.5.2",
+    "@glint/template": "1.5.2",
     "@nullvoxpopuli/eslint-configs": "^5.0.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@tsconfig/ember": "^3.0.9",
@@ -77,7 +77,7 @@
     "ember-async-data": "1.0.3",
     "ember-cli-htmlbars": "^6.3.0",
     "ember-modifier": "^4.2.0",
-    "ember-primitives": "^0.28.1",
+    "ember-primitives": "^0.30.0",
     "ember-resources": "^7.0.3",
     "ember-source": ">= 6.4.0-alpha.3",
     "ember-template-imports": "^4.3.0",
@@ -86,10 +86,10 @@
     "execa": "^8.0.1",
     "fix-bad-declaration-output": "^1.1.4",
     "prettier": "^3.5.2",
-    "prettier-plugin-ember-template-tag": "2.0.4",
+    "prettier-plugin-ember-template-tag": "2.0.5",
     "rollup": "^4.34.8",
     "rollup-plugin-copy": "^3.5.0",
-    "typescript": "5.7.3"
+    "typescript": "5.8.3"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"

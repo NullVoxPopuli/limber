@@ -20,7 +20,7 @@
     "@nullvoxpopuli/eslint-configs": "^5.0.0",
     "eslint": "^9.21.0",
     "prettier": "^3.5.2",
-    "typescript": "5.7.3",
+    "typescript": "5.8.3",
     "vite": "^5.4.14"
   },
   "volta": {
