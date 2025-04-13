@@ -21,7 +21,7 @@
     "eslint": "^9.21.0",
     "postcss": "^8.5.3",
     "prettier": "^3.5.2",
-    "prettier-plugin-ember-template-tag": "2.0.4",
+    "prettier-plugin-ember-template-tag": "2.0.5",
     "tailwindcss": "^4.0.8"
   },
   "dependencies": {
