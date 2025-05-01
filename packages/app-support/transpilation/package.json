@@ -48,7 +48,7 @@
     "@types/htmlbars-inline-precompile": "^3.0.3",
     "babel-loader": "^10.0.0",
     "ember-source": ">= 6.4.0-alpha.3",
-    "esbuild": "0.25.0",
+    "esbuild": "0.25.3",
     "eslint": "^9.25.1",
     "prettier": "^3.5.2",
     "prettier-plugin-ember-template-tag": "2.0.4",

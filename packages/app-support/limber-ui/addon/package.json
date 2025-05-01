@@ -31,7 +31,7 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "peerDependencies": {
-    "@ember/test-waiters": "^4.0.0",
+    "@ember/test-waiters": "^4.1.0",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
     "ember-async-data": "^1.0.3",
@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.26.9",
-    "@embroider/addon-shim": "1.8.9",
+    "@embroider/addon-shim": "1.10.0",
     "@embroider/macros": "1.17.2",
     "@fortawesome/ember-fontawesome": "^3.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
