@@ -14,7 +14,7 @@ module.exports = function (defaults) {
     'ember-cli-babel': {
       enableTypeScriptTransform: true,
     },
-    name: 'test-app',
+    name: 'ember-repl-test-app',
     autoImport: {
       watchDependencies: Object.keys(require('./package.json').dependencies),
     },

@@ -4,7 +4,7 @@ import { setupRenderingTest } from 'ember-qunit';
 
 import { compileJS } from 'ember-repl/formats/gjs';
 // import this so we don't tree-shake it away
-import ExampleComponent from 'test-app/components/example-component';
+import ExampleComponent from 'ember-repl-test-app/components/example-component';
 
 import { Await } from '../helpers/await';
 
@@ -65,7 +65,7 @@ module('compileJS()', function (hooks) {
         import { tracked } from '@glimmer/tracking';
         import { on } from '@ember/modifier';
 
-        import Example from 'test-app/components/example-component';
+        import Example from 'ember-repl-test-app/components/example-component';
 
         <template>
           <Example />

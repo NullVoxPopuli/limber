@@ -7,8 +7,8 @@
     "skipLibCheck": true,
     "types": ["ember-source/types"],
     "paths": {
-      "test-app/tests/*": ["./tests/*"],
-      "test-app/*": ["./app/*"],
+      "ember-repl-test-app/tests/*": ["./tests/*"],
+      "ember-repl-test-app/*": ["./app/*"],
     }
   },
   "include": ["./app/**/*", "./tests/**/*"]

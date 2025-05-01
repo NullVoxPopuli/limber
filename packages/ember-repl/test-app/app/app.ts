@@ -2,7 +2,7 @@ import Application from '@ember/application';
 
 import loadInitializers from 'ember-load-initializers';
 import Resolver from 'ember-resolver';
-import config from 'test-app/config/environment';
+import config from 'ember-repl-test-app/config/environment';
 
 // @babel/traverse (from babel-plugin-ember-template-imports)
 // accesses process.....
