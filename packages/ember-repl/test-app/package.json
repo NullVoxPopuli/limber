@@ -13,7 +13,7 @@
   "scripts": {
     "lint": "pnpm -w exec lint",
     "lint:fix": "pnpm -w exec lint fix",
-    "start": "ember serve",
+    "start": "vite",
     "test:scenarios": "ember try:each",
     "lint:types": "glint",
     "lint:js": "pnpm -w exec lint js",
@@ -21,7 +21,9 @@
     "lint:hbs": "pnpm -w exec lint hbs",
     "lint:hbs:fix": "pnpm -w exec lint hbs:fix",
     "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
-    "lint:prettier": "pnpm -w exec lint prettier"
+    "lint:prettier": "pnpm -w exec lint prettier",
+    "build": "vite build",
+    "test:ember": "vite build --mode test && ember test --path dist"
   },
   "dependencies": {
     "@shikijs/rehype": "^1.29.2",
@@ -35,15 +37,16 @@
   "devDependencies": {
     "@babel/core": "^7.26.9",
     "@babel/plugin-proposal-decorators": "^7.25.9",
+    "@babel/plugin-transform-runtime": "^7.26.9",
     "@ember/optional-features": "^2.2.0",
     "@ember/string": "^4.0.1",
     "@ember/test-helpers": "^5.1.0",
     "@ember/test-waiters": "^4.0.0",
-    "@embroider/broccoli-side-watch": "0.0.2-unstable.ba9fd29",
     "@embroider/compat": "4.0.0-alpha.14",
+    "@embroider/config-meta-loader": "^1.0.0-alpha.3",
     "@embroider/core": "4.0.0-alpha.10",
     "@embroider/test-setup": "4.0.0",
-    "@embroider/webpack": "4.0.10",
+    "@embroider/vite": "^1.0.0-alpha.11",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
     "@glint/core": "1.4.1-unstable.0e0d936",
@@ -51,30 +54,27 @@
     "@glint/environment-ember-template-imports": "1.4.1-unstable.0e0d936",
     "@glint/template": "1.4.1-unstable.0e0d936",
     "@nullvoxpopuli/eslint-configs": "^5.0.0",
+    "@rollup/plugin-babel": "^6.0.4",
     "@tsconfig/ember": "^3.0.9",
     "@types/common-tags": "^1.8.4",
     "@types/qunit": "^2.19.12",
     "@types/rsvp": "^4.0.9",
+    "babel-plugin-ember-template-compilation": "^2.3.0",
     "concurrently": "^9.1.2",
+    "decorator-transforms": "^2.3.0",
     "ember-auto-import": "^2.9.0",
     "ember-cli": "6.2.2",
-    "ember-cli-app-version": "^7.0.0",
     "ember-cli-babel": "^8.2.0",
-    "ember-cli-dependency-checker": "^3.3.3",
     "ember-cli-htmlbars": "^6.3.0",
-    "ember-cli-inject-live-reload": "^2.1.0",
-    "ember-cli-sri": "^2.1.1",
     "ember-load-initializers": "^3.0.1",
     "ember-page-title": "^9.0.1",
     "ember-qunit": "^9.0.1",
     "ember-resolver": "^13.1.0",
     "ember-source": ">= 6.4.0-alpha.3",
     "ember-source-channel-url": "^3.0.0",
-    "ember-template-imports": "^4.3.0",
     "ember-template-lint": "^6.1.0",
     "ember-try": "^3.0.0",
     "eslint": "^9.21.0",
-    "loader.js": "^4.7.0",
     "path-browserify": "^1.0.1",
     "prettier": "^3.5.2",
     "prettier-plugin-ember-template-tag": "2.0.4",
@@ -82,7 +82,7 @@
     "qunit-dom": "3.4.0",
     "typescript": "5.7.3",
     "unified": "^10.1.2",
-    "webpack": "^5.98.0"
+    "vite": "^6.0.0"
   },
   "engines": {
     "node": ">= v16",
@@ -94,5 +94,13 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "ember-addon": {
+    "type": "app",
+    "version": 2
+  },
+  "exports": {
+    "./tests/*": "./tests/*",
+    "./*": "./app/*"
   }
 }
