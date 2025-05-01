@@ -22,7 +22,6 @@
     "lint:hbs:fix": "pnpm -w exec lint hbs:fix",
     "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
     "lint:prettier": "pnpm -w exec lint prettier",
-    "build": "vite build",
     "test:ember": "vite build --mode test && ember test --path dist"
   },
   "dependencies": {
