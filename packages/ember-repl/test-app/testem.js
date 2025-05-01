@@ -1,8 +1,9 @@
-'use strict';;
+'use strict';
 const DEFAULT_BROWSER = 'Chrome';
-const CI_BROWSER = process.env.CI_BROWSER || DEFAULT_BROWSER;
 
-if (typeof module !== "undefined") {
+if (typeof module !== 'undefined') {
+  const CI_BROWSER = process.env.CI_BROWSER || DEFAULT_BROWSER;
+
   module.exports = {
     test_page: 'tests/index.html?hidepassed',
     disable_watching: true,

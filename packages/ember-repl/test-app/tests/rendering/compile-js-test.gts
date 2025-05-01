@@ -1,5 +1,5 @@
 import { click, render } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import { compileJS } from 'ember-repl/formats/gjs';
@@ -56,7 +56,10 @@ module('compileJS()', function (hooks) {
     assert.dom('output').hasText('2');
   });
 
-  test('can import components available to the app', async function (assert) {
+  /**
+   * Vite apps don't use loader.js, so this isn't possible anymore
+   */
+  skip('can import components available to the app', async function (assert) {
     assert.ok(ExampleComponent);
 
     const compile = async () => {

@@ -9,7 +9,5 @@ module.exports = async function (defaults) {
 
   const app = new EmberApp(defaults, {});
 
-  app.import('vendor/ember/ember-template-compiler.js');
-
   return compatBuild(app, buildOnce);
 };
