@@ -105,7 +105,7 @@
     "@babel/types": "^7.26.9",
     "@ember/test-helpers": "^5.1.0",
     "@ember/test-waiters": "^4.0.0",
-    "@embroider/addon-dev": "^7.1.1",
+    "@embroider/addon-dev": "^7.1.4",
     "@glimmer/compiler": "^0.92.4",
     "@glimmer/component": "^2.0.0",
     "@glimmer/interfaces": "^0.94.5",

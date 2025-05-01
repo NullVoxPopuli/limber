@@ -62,7 +62,7 @@
     "@babel/plugin-transform-typescript": "^7.26.8",
     "@babel/preset-typescript": "^7.26.0",
     "@ember/test-waiters": "^4.0.0",
-    "@embroider/addon-dev": "^7.1.1",
+    "@embroider/addon-dev": "^7.1.4",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
     "@glint/core": "1.4.1-unstable.0e0d936",
