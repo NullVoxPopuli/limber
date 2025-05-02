@@ -2,7 +2,6 @@ import { classicEmberSupport, ember, extensions } from "@embroider/vite";
 
 import { babel } from "@rollup/plugin-babel";
 import { defineConfig } from "vite";
-import { nodePolyfills } from "vite-plugin-node-polyfills";
 
 export default defineConfig({
   build: {
@@ -23,8 +22,5 @@ export default defineConfig({
       babelHelpers: "runtime",
       extensions,
     }),
-
-    // runtime babel... grrr
-    nodePolyfills(),
   ],
 });
