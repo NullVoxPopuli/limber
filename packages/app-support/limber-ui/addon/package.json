@@ -61,6 +61,7 @@
     "@babel/plugin-syntax-decorators": "^7.27.1",
     "@babel/plugin-transform-typescript": "^7.26.8",
     "@babel/preset-typescript": "^7.27.1",
+    "@ember/library-tsconfig": "^1.1.3",
     "@ember/test-waiters": "^4.1.0",
     "@embroider/addon-dev": "^7.0.0",
     "@glimmer/component": "^2.0.0",
