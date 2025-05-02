@@ -1,6 +1,6 @@
 'use strict';
+
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
-const path = require('path');
 
 const { compatBuild } = require('@embroider/compat');
 

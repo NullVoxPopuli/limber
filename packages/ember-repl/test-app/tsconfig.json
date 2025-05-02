@@ -5,7 +5,7 @@
   },
   "compilerOptions": {
     "skipLibCheck": true,
-    "types": ["ember-source/types"],
+    "types": ["ember-source/types", "vite/client", "@embroider/core/virtual"],
     "paths": {
       "ember-repl-test-app/tests/*": ["./tests/*"],
       "ember-repl-test-app/*": ["./app/*"],

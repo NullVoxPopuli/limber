@@ -5,6 +5,7 @@ dist/
 declarations/
 /tmp/
 /out/
+.log/
 
 # dependencies
 /bower_components/

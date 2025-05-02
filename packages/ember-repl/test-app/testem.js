@@ -1,4 +1,5 @@
 'use strict';
+
 const DEFAULT_BROWSER = 'Chrome';
 
 if (typeof module !== 'undefined') {
