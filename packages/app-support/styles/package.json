@@ -18,11 +18,11 @@
     "@nullvoxpopuli/eslint-configs": "^5.0.0",
     "autoprefixer": "^10.4.20",
     "concurrently": "^9.1.2",
-    "eslint": "^9.21.0",
+    "eslint": "^9.25.1",
     "postcss": "^8.5.3",
     "prettier": "^3.5.2",
     "prettier-plugin-ember-template-tag": "2.0.4",
-    "tailwindcss": "^4.0.8"
+    "tailwindcss": "^3.0.0"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.16",

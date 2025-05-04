@@ -1,10 +1,10 @@
 import { click, render } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import { compileJS } from 'ember-repl/formats/gjs';
 // import this so we don't tree-shake it away
-import ExampleComponent from 'test-app/components/example-component';
+import ExampleComponent from 'ember-repl-test-app/components/example-component';
 
 import { Await } from '../helpers/await';
 
@@ -56,7 +56,10 @@ module('compileJS()', function (hooks) {
     assert.dom('output').hasText('2');
   });
 
-  test('can import components available to the app', async function (assert) {
+  /**
+   * Vite apps don't use loader.js, so this isn't possible anymore
+   */
+  skip('can import components available to the app', async function (assert) {
     assert.ok(ExampleComponent);
 
     const compile = async () => {
@@ -65,7 +68,7 @@ module('compileJS()', function (hooks) {
         import { tracked } from '@glimmer/tracking';
         import { on } from '@ember/modifier';
 
-        import Example from 'test-app/components/example-component';
+        import Example from 'ember-repl-test-app/components/example-component';
 
         <template>
           <Example />

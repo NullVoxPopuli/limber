@@ -118,7 +118,7 @@
         "lint:published-types"
       ]
     },
-    "lint:js": { "outputs": [] },
+    "lint:js": { "outputs": [], "dependsOn": ["^build"] },
     "lint:hbs": { "outputs": [] },
     "lint:prettier": { "outputs": [] },
     "lint:types": { "outputs": [], "dependsOn": ["^build"] },
@@ -128,7 +128,7 @@
     "_:lint:fix": {
       "dependsOn": ["lint:js:fix", "lint:prettier:fix", "lint:hbs:fix"]
     },
-    "lint:js:fix": { "outputs": [] },
+    "lint:js:fix": { "outputs": [], "dependsOn": ["^build"] },
     "lint:hbs:fix": { "outputs": [] },
     // Prettier can alter files too, so let's prevent race conditions for multiple
     // writing to the same files.

@@ -5,8 +5,10 @@ import { syntaxHighlighting } from '@codemirror/language';
 import { Compartment, EditorSelection, EditorState } from '@codemirror/state';
 import { keymap } from '@codemirror/view';
 import { basicSetup, EditorView } from 'codemirror';
+// @ts-ignore
 import { glimdown } from 'codemirror-lang-glimdown';
 import { glimmer } from 'codemirror-lang-glimmer';
+// @ts-ignore
 import { gjs } from 'codemirror-lang-glimmer-js';
 
 import { HorizonSyntaxTheme } from './horizon-syntax-theme';

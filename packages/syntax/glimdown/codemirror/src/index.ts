@@ -107,6 +107,7 @@ export function glimdown() {
         alias: ['hbs', 'glimmer', 'ember', 'handlebars'],
         extensions: ['hbs'],
         async load() {
+          // @ts-ignore
           const { glimmer } = await import('codemirror-lang-glimmer');
 
           return glimmer();
@@ -117,6 +118,7 @@ export function glimdown() {
         alias: ['gjs', 'glimmer-js', 'javascript.glimmer'],
         extensions: ['gjs'],
         async load() {
+          // @ts-ignore
           const { gjs } = await import('codemirror-lang-glimmer-js');
 
           return gjs();
@@ -127,6 +129,7 @@ export function glimdown() {
         alias: ['gts', 'glimmer-ts', 'typescript.glimmer'],
         extensions: ['gts'],
         async load() {
+          // @ts-ignore
           const { gts } = await import('codemirror-lang-glimmer-js');
 
           return gts();
