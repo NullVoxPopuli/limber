@@ -8,6 +8,9 @@ export function macroCondition(result) {
   return result;
 }
 
+/**
+ * This can probably be implemented
+ */
 export function dependencySatisfies() {
   return true;
 }
