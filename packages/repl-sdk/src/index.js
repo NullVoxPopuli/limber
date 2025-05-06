@@ -124,7 +124,8 @@ export class Compiler {
         // return `https://esm.sh/*${id}`;
         if (url.startsWith('esm.sh:')) {
           let name = url.replace(/^esm\.sh:/, '');
-          let newUrl = `https://esm.sh/v135/*${name}`;
+          // Where is this double // coming from?
+          let newUrl = `https://esm.sh/${name}`.replaceAll('//', '/');
 
           const response = await fetch(newUrl, options);
 
