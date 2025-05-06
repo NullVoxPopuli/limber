@@ -58,6 +58,15 @@ export const compilers = {
       },
     },
   },
+  hbs: {
+    ember: {
+      compiler: async (...args) => {
+        const hbs = await import('./compilers/embebr-hbs.js');
+
+        return hbs.compiler(...args);
+      },
+    },
+  },
   /**
    * https://mermaid.js.org/
    */
