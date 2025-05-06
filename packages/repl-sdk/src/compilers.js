@@ -61,7 +61,7 @@ export const compilers = {
   hbs: {
     ember: {
       compiler: async (...args) => {
-        const hbs = await import('./compilers/embebr-hbs.js');
+        const hbs = await import('./compilers/ember-hbs.js');
 
         return hbs.compiler(...args);
       },

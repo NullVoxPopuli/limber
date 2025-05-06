@@ -28,7 +28,7 @@ export class Compiler {
    * Options may be passed to the compiler to add to its behavior.
    */
   constructor(options = defaults) {
-    this.#options = options;
+    this.#options = Object.assign({}, defaults, options);
 
     let explicitResolve = this.#options.resolve ?? {};
 
@@ -65,6 +65,8 @@ export class Compiler {
       },
       // Hook source fetch function
       fetch: async (url, options) => {
+        console.debug(`[fetch] attempting to fetch: ${url}`);
+
         if (this.#options.resolve) {
           if (url.startsWith('manual:')) {
             let name = url.replace(/^manual:/, '');

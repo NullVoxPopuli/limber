@@ -156,6 +156,7 @@ export async function compiler(config = {}, api) {
       let code = transformed.code;
 
       console.log('[compile:code]', code);
+
       return code;
     },
     render: async (element, compiled /*, extra, compiler */) => {
