@@ -43,6 +43,7 @@ export async function compileJS(
    * TODO: move this Compiler to a service
    */
   const compiler = new Compiler({
+    logging: true,
     resolve: {
       ...modules,
       ...extraModules,

@@ -4,7 +4,7 @@ export const defaultFormats: keyof Options['formats'];
 export const defaults: Options;
 
 export class Compiler {
-  constructor(options?: Options);
+  constructor(options?: Partial<Options>);
 
   compile(
     format: string,

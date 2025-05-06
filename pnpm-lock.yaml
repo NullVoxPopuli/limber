@@ -1174,6 +1174,9 @@ importers:
       remark-rehype:
         specifier: ^10.1.0
         version: 10.1.0
+      repl-sdk:
+        specifier: workspace:*
+        version: link:../../repl-sdk
       unified:
         specifier: ^10.1.2
         version: 10.1.2
@@ -19067,7 +19070,7 @@ snapshots:
       tinyglobby: 0.2.13
       unrs-resolver: 1.7.2
     optionalDependencies:
-      eslint-plugin-import: 2.31.0(e539445447c6ca98656cf52fda269ddc)
+      eslint-plugin-import: 2.31.0(e88e4ed15243864f8818c186c313aaf2)
     transitivePeerDependencies:
       - supports-color
 
