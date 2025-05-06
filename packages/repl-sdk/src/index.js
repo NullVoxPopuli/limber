@@ -133,7 +133,7 @@ export class Compiler {
 
           const source = await response.text();
 
-          console.log({ source, url, newUrl });
+          // console.log({ source, url, newUrl });
 
           return new Response(new Blob([source], { type: 'application/javascript' }));
         }
@@ -146,7 +146,7 @@ export class Compiler {
 
         // const transformed = tsCompile(source);
         //
-        console.log({ source, url });
+        // console.log({ source, url });
 
         return new Response(new Blob([source], { type: 'application/javascript' }));
       },
