@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>REPL SDK Example</title>
+  </head>
+
+  <body>
+    <div class="layout">
+      <form>
+        <label>
+          <span>Code</span>
+          <textarea name="code" lines="10"></textarea>
+        </label>
+        <label>
+          Format
+          <select name="format"></select>
+        </label>
+
+        <label class="flavor" style="visibility: hidden">
+          Flavor
+          <select name="flavor"></select>
+        </label>
+        <button type="submit">Submit</button>
+      </form>
+      <fieldset>
+        <legend>output</legend>
+        <output></output>
+      </fieldset>
+    </div>
+    <div class="error"></div>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      .layout {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: start;
+
+        label {
+          width: 100%;
+        }
+
+        textarea {
+          height: 200px;
+          width: 100%;
+        }
+      }
+    </style>
+
+    <script type="module">
+      import { Compiler, defaultFormats, defaults } from "../src/index.js";
+      import * as samples from "./samples.js";
+
+      let compiler = new Compiler();
+
+      let e = {
+        form: document.querySelector("form"),
+        output: document.querySelector("output"),
+        select: document.querySelector("select[name=format]"),
+        flavor: document.querySelector("select[name=flavor]"),
+        flavorL: document.querySelector("label.flavor"),
+        code: document.querySelector("textarea"),
+        error: document.querySelector(".error"),
+      };
+
+      defaultFormats.map((format) => {
+        let option = document.createElement("option");
+        option.setAttribute("value", format);
+        option.innerText = `.${format}`;
+        if (format === "mermaid") {
+          option.setAttribute("selected", "selected");
+        }
+        e.select.appendChild(option);
+      });
+
+      function select(fileType) {
+        let option = [...e.select.querySelectorAll("option")].find((option) =>
+          option.textContent.includes("gjs"),
+        );
+
+        if (option) {
+          option.selected = true;
+        }
+
+        e.code.innerHTML = samples[fileType];
+      }
+
+      select("gjs");
+
+      e.select.addEventListener("change", (event) => {
+        let format = event.target.value;
+
+        let hasFlavors = !("compiler" in defaults.formats[format]);
+        if (hasFlavors) {
+          e.flavor.innerHTML = "";
+          Object.keys(defaults.formats[format]).map((flv) => {
+            let option = document.createElement("option");
+            option.setAttribute("value", flv);
+            option.innerText = flv;
+            e.flavor.appendChild(option);
+          });
+          e.flavorL.style.visibility = "visible";
+          let firstFlavor = e.flavor.firstChild.value;
+          e.code.innerHTML = samples[format][firstFlavor];
+          return;
+        }
+
+        e.flavorL.style.visibility = "hidden";
+        e.flavor.innerHTML = "";
+        e.code.innerHTML = samples[format];
+      });
+
+      e.flavor.addEventListener("change", (event) => {
+        let flavor = event.target.value;
+        let format = e.select.value;
+        e.code.innerHTML = samples[format][flavor];
+      });
+
+      e.form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        let formData = new FormData(event.currentTarget);
+
+        let code = formData.get("code");
+        let format = formData.get("format");
+        let flavor = formData.get("flavor");
+
+        e.output.innerHTML = "Compiling...";
+        e.error.innerText = "";
+        try {
+          let element = await compiler.compile(format, code, { flavor });
+          e.output.innerHTML = "";
+          e.output.appendChild(element);
+        } catch (error) {
+          e.error.innerText = error;
+          throw error;
+        }
+      });
+    </script>
+  </body>
+</html>
