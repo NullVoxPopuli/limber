@@ -1,9 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import * as compiler from 'ember-source/dist/ember-template-compiler.js';
+import { template } from '@ember/template-compiler/runtime';
+
+import { Compiler } from 'repl-sdk';
 
 import { nameFor } from '../../utils.ts';
-import { evalSnippet } from './eval.ts';
+import { modules } from './known-modules.ts';
 
 import type { CompileResult } from '../../types.ts';
 import type { ComponentLike } from '@glint/template';
@@ -37,117 +39,32 @@ export async function compileJS(
   const name = nameFor(code);
   let component: undefined | ComponentLike;
   let error: undefined | Error;
+  /**
+   * TODO: move this Compiler to a service
+   */
+  const compiler = new Compiler({
+    resolve: {
+      ...modules,
+      ...extraModules,
+      'ember-source/dist/ember-template-compiler': import(
+        'ember-source/dist/ember-template-compiler.js'
+      ),
+      '@babel/standalone': import('@babel/standalone'),
+      'content-tag': import('content-tag'),
+      'decorator-transforms': import('decorator-transforms'),
+      'decorator-transforms/runtime': import('decorator-transforms/runtime'),
+      'babel-plugin-ember-template-compilation': import('babel-plugin-ember-template-compilation'),
+    },
+  });
 
   try {
-    const compiled = await transpile({ code: code, name });
+    // Does this work?
+    const element = await compiler.compile('gjs', code);
 
-    if (!compiled) {
-      throw new Error(`Compiled output is missing`);
-    }
-
-    component = evalSnippet(compiled, extraModules).default as unknown as ComponentLike;
+    component = template(`{{element}}`, { scope: () => ({ element }) }) as unknown as ComponentLike;
   } catch (e) {
     error = e as Error | undefined;
   }
 
   return { name, component, error };
-}
-
-async function transpile({ code: input, name }: Info) {
-  const preprocessed = await preprocess(input, name);
-  const result = await transform(preprocessed, name);
-
-  if (!result) {
-    return;
-  }
-
-  const { code } = result;
-
-  return code;
-}
-
-import type { Babel } from './babel.ts';
-
-let processor: any;
-let fetchingPromise: Promise<any>;
-
-async function preprocess(input: string, name: string): Promise<string> {
-  if (!fetchingPromise) {
-    fetchingPromise = import('content-tag');
-  }
-
-  if (!processor) {
-    const { Preprocessor } = await fetchingPromise;
-
-    processor = new Preprocessor();
-  }
-
-  const { code /* map */ } = processor.process(input, {
-    filename: `${name}.js`,
-    inline_source_map: true,
-  });
-
-  return code;
-}
-
-async function transform(
-  intermediate: string,
-  name: string
-): Promise<ReturnType<Babel['transform']>> {
-  const [
-    // _parser, _traverse, _generator,
-    _decoratorTransforms,
-    _emberTemplateCompilation,
-  ] = await Promise.all([
-    // @babel/* doesn't have the greatest ESM compat yet
-    // https://github.com/babel/babel/issues/14314#issuecomment-1054505190
-    //
-    // babel-standalone is so easy...
-    // import('@babel/parser'),
-    // import('@babel/traverse'),
-    // import('@babel/generator'),
-    import('decorator-transforms'),
-    import('babel-plugin-ember-template-compilation'),
-  ]);
-
-  // These libraries are compiled incorrectly for cjs<->ESM compat
-  const decoratorTransforms =
-    'default' in _decoratorTransforms ? _decoratorTransforms.default : _decoratorTransforms;
-
-  const emberTemplateCompilation =
-    'default' in _emberTemplateCompilation
-      ? _emberTemplateCompilation.default
-      : _emberTemplateCompilation;
-
-  // so we have to use the default export (which is all the exports)
-  const maybeBabel = (await import('@babel/standalone')) as any;
-  // Handle difference between vite and webpack in consuming projects...
-  const babel: Babel = 'availablePlugins' in maybeBabel ? maybeBabel : maybeBabel.default;
-
-  return babel.transform(intermediate, {
-    filename: `${name}.js`,
-    plugins: [
-      [
-        emberTemplateCompilation,
-        {
-          compiler,
-        },
-      ],
-      [
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore - we don't care about types here..
-        decoratorTransforms,
-        {
-          runtime: {
-            import: 'decorator-transforms/runtime',
-          },
-        },
-      ],
-      // Womp.
-      // See this exploration into true ESM:
-      //   https://github.com/NullVoxPopuli/limber/pull/1805
-      [babel.availablePlugins['transform-modules-commonjs']],
-    ],
-    presets: [],
-  });
 }

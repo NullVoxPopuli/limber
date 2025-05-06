@@ -160,6 +160,13 @@ export async function compiler(config = {}, api) {
     },
     render: async (element, compiled /*, extra, compiler */) => {
       console.log('[render:compiled]', compiled);
+
+      /**
+       *
+       * TODO: These will make things easier:
+       *    https://github.com/emberjs/rfcs/pull/1099
+       *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
+       */
       element.innerHTML = compiled.toString();
     },
   };
