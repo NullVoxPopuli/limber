@@ -65,25 +65,23 @@ export class Compiler {
       },
       // Hook source fetch function
       fetch: async (url, options) => {
-        console.debug(`[fetch] attempting to fetch: ${url}`);
+        this.#log(`[fetch] attempting to fetch: ${url}`);
 
         if (this.#options.resolve) {
           if (url.startsWith('manual:')) {
             let name = url.replace(/^manual:/, '');
 
-            if (this.#options.logging) {
-              console.debug('[fetch] resolved url in manually specified resolver', url);
-            }
+            this.#log('[fetch] resolved url in manually specified resolver', url);
 
             let result = this.#options.resolve[name];
 
-            if (this.#options.logging && !result) {
-              console.error(`[fetch] Could not resolve ${url}`);
+            if (!result) {
+              this.#error(`[fetch] Could not resolve ${url}`);
             }
 
             if (typeof result === 'function') {
-              if (this.#options.logging && !result) {
-                console.error(`[fetch] Value for ${url} is a function. Invoking.`);
+              if (!result) {
+                this.#error(`[fetch] Value for ${url} is a function. Invoking.`);
               }
 
               result = await result();
@@ -107,21 +105,17 @@ export class Compiler {
 
             let blob = new Blob(Array.from(blobContent), { type: 'application/javascript' });
 
-            if (this.#options.logging) {
-              console.debug(
-                `[fetch] returning blob mapping to manually resolved import for ${name}`
-                // blobContent
-              );
-              // console.debug(await blob.text());
-            }
+            this.#log(
+              `[fetch] returning blob mapping to manually resolved import for ${name}`
+              // blobContent
+            );
+            // console.debug(await blob.text());
 
             return new Response(blob);
           }
         }
 
-        if (this.#options.logging) {
-          console.debug('[fetch] fetching url', url, options);
-        }
+        this.#log('[fetch] fetching url', url, options);
 
         // return `https://esm.sh/*${id}`;
         if (url.startsWith('esm.sh:')) {
@@ -280,9 +274,7 @@ export class Compiler {
           let name = names[i];
 
           if (!result) {
-            if (this.#options.logging) {
-              console.warn(`Could not load ${name}. Trying fallback.`);
-            }
+            this.#warn(`Could not load ${name}. Trying fallback.`);
 
             morePromises[i] = fallback(name);
           }
@@ -312,6 +304,22 @@ export class Compiler {
     div.id = nextId();
 
     return div;
+  }
+
+  #log(msg) {
+    if (this.#options.logging) {
+      console.debug(msg);
+    }
+  }
+  #warn(msg) {
+    if (this.#options.logging) {
+      console.warn(msg);
+    }
+  }
+  #error(msg) {
+    if (this.#options.logging) {
+      console.error(msg);
+    }
   }
 }
 
