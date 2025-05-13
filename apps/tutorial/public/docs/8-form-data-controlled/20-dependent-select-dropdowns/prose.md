@@ -30,11 +30,7 @@ After fetching the data, you need to update the second dropdown with the results
         <Select 
           @options={{names request.value.results}} 
           @onChange={{(fn setSelected selectedAPI.current)}} 
-        >
-          <:option as |item|>
-            {{item.name}}
-          </:option>
-        </Select>
+        />
     {{/if}}
    {{/let}}
    ```

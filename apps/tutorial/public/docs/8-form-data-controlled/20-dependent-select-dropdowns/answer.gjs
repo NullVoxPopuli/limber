@@ -78,11 +78,7 @@ function names(options) {
          <Select
            @options={{names request.value.results}}
            @onChange={{fn setSelected selectedAPI.current}}
-          >
-            <:option as |item|>
-              {{item.name}}
-            </:option>
-         </Select>
+         />
       {{/if}}
     {{/let}}
   </label>
