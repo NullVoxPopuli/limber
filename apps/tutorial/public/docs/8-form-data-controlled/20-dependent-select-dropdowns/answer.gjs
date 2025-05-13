@@ -40,7 +40,7 @@ function data() {
 }
 
 function urlForDataSource(selectedData) {
-  return `https://swapi.dev/api/${selectedData}/`;
+  return `https://swapi.tech/api/${selectedData}/`;
 }
 
 function setSelected(propertyName, value) {
