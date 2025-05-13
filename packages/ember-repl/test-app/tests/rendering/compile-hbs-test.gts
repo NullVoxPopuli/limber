@@ -72,7 +72,7 @@ module('compileHBS()', function (hooks) {
         await Promise.resolve();
 
         const template = `
-          {{#each array 1 2) as |num|}}
+          {{#each (array 1 2) as |num|}}
             <output>{{num}}</output>
           {{/each}}
         `;
