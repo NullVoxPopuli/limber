@@ -43,6 +43,10 @@
       "types": "./declarations/compile/formats/gjs/index.d.ts",
       "default": "./dist/compile/formats/gjs/index.js"
     },
+    "./*": {
+      "default": "./dist/*.js"
+    }
+    ,
     "./test-support": {
       "types": "./declarations/test-support/index.d.ts",
       "default": "./dist/test-support/index.js"
@@ -72,6 +76,7 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "dependencies": {
+    "repl-sdk": "workspace:*",
     "@babel/helper-plugin-utils": "^7.26.5",
     "@babel/standalone": "^7.26.9",
     "@embroider/addon-shim": "1.10.0",
