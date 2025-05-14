@@ -12,7 +12,7 @@ const addon = new Addon({
 
 export default defineConfig({
   output: addon.output(),
-  external: ["@glimmer/compiler", "@glimmer/syntax"],
+  external: ["@glimmer/compiler", "@glimmer/syntax", "embebr-source"],
   plugins: [
     addon.publicEntrypoints(["**/*.js"]),
     addon.appReexports([]),

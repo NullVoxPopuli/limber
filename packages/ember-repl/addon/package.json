@@ -43,6 +43,10 @@
       "types": "./declarations/compile/formats/gjs/index.d.ts",
       "default": "./dist/compile/formats/gjs/index.js"
     },
+    "./*": {
+      "default": "./dist/*.js"
+    }
+    ,
     "./test-support": {
       "types": "./declarations/test-support/index.d.ts",
       "default": "./dist/test-support/index.js"

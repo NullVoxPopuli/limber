@@ -4,10 +4,10 @@ import { template } from '@ember/template-compiler/runtime';
 
 import { Compiler } from 'repl-sdk';
 
-import { nameFor } from '../../utils.ts';
+import { nameFor } from '../utils.ts';
 import { modules } from './known-modules.ts';
 
-import type { CompileResult } from '../../types.ts';
+import type { CompileResult } from '../types.ts';
 import type { ComponentLike } from '@glint/template';
 
 export interface Info {
@@ -48,6 +48,7 @@ export async function compileJS(
       ...modules,
       ...extraModules,
       'ember-source/dist/ember-template-compiler': import(
+        // @ts-ignore
         'ember-source/dist/ember-template-compiler.js'
       ),
       '@babel/standalone': import('@babel/standalone'),
