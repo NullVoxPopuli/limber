@@ -172,16 +172,9 @@ export async function compiler(config = {}, api) {
        *    https://github.com/emberjs/rfcs/pull/1099
        *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
        */
-      // element.innerHTML = compiled.toString();
-      const [application, resolver, router] = await compiler.tryResolveAll([
-        '@ember/application',
-        'ember-resolver',
-        '@ember/routing/router',
-      ]);
 
-      element.id = `repl-output-${id++}`;
-
-      renderLater({ application, resolver, router, element });
+      renderComponent({ element, compiler, component: compiled });
+      // renderApp({ element, compiler, component: compiled });
     },
   };
 }
@@ -194,10 +187,65 @@ export async function compiler(config = {}, api) {
  * We really need renderComponent(...)
  *   https://github.com/emberjs/ember.js/pull/20781
  */
-async function renderLater({ application, resolver, router, element }) {
+async function renderComponent({ compiler, component, element }) {
+  const [application, resolver, router, testHelpers] = await compiler.tryResolveAll([
+    '@ember/application',
+    'ember-resolver',
+    '@ember/routing/router',
+    '@ember/test-helpers',
+  ]);
   const App = application.default;
   const Resolver = resolver.default;
   const Router = router.default;
+  const { render, setupRenderingContext, setupContext, teardownContext, setApplication } =
+    testHelpers;
+
+  class EphemeralApp extends App {
+    modulePrefix = 'ephemeral-render-output';
+    Resolver = Resolver.withModules({
+      'ephemeral-render-output/templates/application': { default: component },
+      'ephemeral-render-output/router': {
+        default: class BoilerplateRouter extends Router {
+          location = 'none';
+          rootURL = '/';
+        },
+      },
+    });
+  }
+
+  setApplication(
+    EphemeralApp.create({
+      autoboot: false,
+      rootElement: '#' + element.id,
+    })
+  );
+
+  const context = {};
+
+  await setupContext(context);
+  await setupRenderingContext(context);
+  await render(component);
+}
+
+/**
+ * Wait to boot the app until the Element is in the DOM.
+ * because This old way of making a whole app requires that the element
+ * be present in the app.
+ *
+ * We really need renderComponent(...)
+ *   https://github.com/emberjs/ember.js/pull/20781
+ */
+async function renderApp({ compiler, element, component }) {
+  const [application, resolver, router] = await compiler.tryResolveAll([
+    '@ember/application',
+    'ember-resolver',
+    '@ember/routing/router',
+  ]);
+  const App = application.default;
+  const Resolver = resolver.default;
+  const Router = router.default;
+
+  element.id = `repl-output-${id++}`;
 
   let rendered = false;
   while (!rendered) {
@@ -211,6 +259,7 @@ async function renderLater({ application, resolver, router, element }) {
     (class EphemeralApp extends App {
       modulePrefix = 'ephemeral-render-output';
       Resolver = Resolver.withModules({
+        'ephemeral-render-output/templates/application': { default: component },
         'ephemeral-render-output/router': {
           default: class BoilerplateRouter extends Router {
             location = 'none';

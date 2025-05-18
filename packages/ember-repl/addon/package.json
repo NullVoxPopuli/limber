@@ -75,6 +75,7 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "dependencies": {
+    "@ember/test-helpers": "^5.1.0",
     "@embroider/addon-shim": "1.10.0",
     "@embroider/macros": "1.17.2",
     "babel-plugin-ember-template-compilation": "^2.4.0",
@@ -91,7 +92,6 @@
     "@babel/preset-typescript": "^7.27.1",
     "@babel/standalone": "^7.26.9",
     "@babel/types": "^7.26.9",
-    "@ember/test-helpers": "^5.1.0",
     "@ember/test-waiters": "^4.1.0",
     "@embroider/addon-dev": "^8.0.1",
     "@glimmer/compiler": "^0.94.10",

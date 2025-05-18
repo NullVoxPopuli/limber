@@ -63,6 +63,7 @@ export async function compileJS(
       '@ember/routing/router': () => import('@ember/routing/router'),
       '@ember/runloop': () => import('@ember/runloop'),
       '@ember/service': () => import('@ember/service'),
+      '@ember/test-helpers': () => import('@ember/test-helpers'),
       '@ember/template-factory': () => import('@ember/template-factory'),
       '@ember/utils': () => import('@ember/utils'),
       '@ember/template': () => import('@ember/template'),
