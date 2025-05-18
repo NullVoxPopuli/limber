@@ -5,7 +5,6 @@ import { template } from '@ember/template-compiler/runtime';
 import { Compiler } from 'repl-sdk';
 
 import { nameFor } from '../utils.ts';
-import { modules } from './known-modules.ts';
 
 import type { CompileResult } from '../types.ts';
 import type { ComponentLike } from '@glint/template';
@@ -45,8 +44,35 @@ export async function compileJS(
   const compiler = new Compiler({
     logging: true,
     resolve: {
-      ...modules,
+      /////////////////////////////
+      // Provided by the framework
+      /////////////////////////////
+      '@ember/application': () => import('@ember/application'),
+      '@ember/application/instance': () => import('@ember/application/instance'),
+      '@ember/array': () => import('@ember/array'),
+      '@ember/component': () => import('@ember/component'),
+      '@ember/component/helper': () => import('@ember/component/helper'),
+      '@ember/component/template-only': () => import('@ember/component/template-only'),
+      '@ember/debug': () => import('@ember/debug'),
+      '@ember/destroyable': () => import('@ember/destroyable'),
+      '@ember/helper': () => import('@ember/helper'),
+      '@ember/modifier': () => import('@ember/modifier'),
+      '@ember/object': () => import('@ember/object'),
+      '@ember/runloop': () => import('@ember/runloop'),
+      '@ember/service': () => import('@ember/service'),
+      '@ember/template-factory': () => import('@ember/template-factory'),
+      '@ember/utils': () => import('@ember/utils'),
+      '@ember/template': () => import('@ember/template'),
+      '@ember/owner': () => import('@ember/owner'),
+      '@glimmer/component': () => import('@glimmer/component'),
+      '@glimmer/tracking': () => import('@glimmer/tracking'),
+      /////////////////////////////
+      // Provided by the user (optional)
+      /////////////////////////////
       ...extraModules,
+      /////////////////////////////
+      // Required for compilation (in addition to (some of) the framework deps
+      /////////////////////////////
       'ember-source/dist/ember-template-compiler': () =>
         import(
           // eslint-disable-next-line
