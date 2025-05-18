@@ -1117,6 +1117,9 @@ importers:
       '@embroider/macros':
         specifier: 1.17.2
         version: 1.17.2(@glint/template@1.4.1-unstable.0e0d936)
+      babel-plugin-ember-template-compilation:
+        specifier: ^2.4.0
+        version: 2.4.1
       broccoli-file-creator:
         specifier: ^2.1.1
         version: 2.1.1
@@ -1126,6 +1129,9 @@ importers:
       decorator-transforms:
         specifier: ^2.3.0
         version: 2.3.0(@babel/core@7.27.1)
+      ember-resolver:
+        specifier: ^13.1.0
+        version: 13.1.0(c74a9e52ce1ef5cbfa31d9959d9dadca)
       ember-resources:
         specifier: ^7.0.3
         version: 7.0.3(366a6eab8f9b46b64877d79074d1f6e3)
@@ -1232,9 +1238,6 @@ importers:
       babel-plugin-debug-macros:
         specifier: ^1.0.2
         version: 1.0.2(@babel/core@7.27.1)
-      babel-plugin-ember-template-compilation:
-        specifier: ^2.4.0
-        version: 2.4.1
       change-case:
         specifier: ^5.4.4
         version: 5.4.4

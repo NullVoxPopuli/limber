@@ -173,22 +173,54 @@ export async function compiler(config = {}, api) {
        *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
        */
       // element.innerHTML = compiled.toString();
-      const { default: App } = await compiler.tryResolve('@ember/application');
-      const { default: Resolver } = await compiler.tryResolve('ember-resolver');
+      const [application, resolver, router] = await compiler.tryResolveAll([
+        '@ember/application',
+        'ember-resolver',
+        '@ember/routing/router',
+      ]);
 
       element.id = `repl-output-${id++}`;
 
-      console.log('[render]', 'output will be in #', element.id);
-
-      (class EphemeralApp extends App {
-        modulePrefix = 'ephemeral-render-output';
-        Resolver = Resolver.withModules({
-          'ephemeral-render-output/router': { default: Router },
-          // add any custom services here
-        });
-      }).create({
-        rootElement: '#' + element.id,
-      });
+      renderLater({ application, resolver, router, element });
     },
   };
+}
+
+/**
+ * Wait to boot the app until the Element is in the DOM.
+ * because This old way of making a whole app requires that the element
+ * be present in the app.
+ *
+ * We really need renderComponent(...)
+ *   https://github.com/emberjs/ember.js/pull/20781
+ */
+async function renderLater({ application, resolver, router, element }) {
+  const App = application.default;
+  const Resolver = resolver.default;
+  const Router = router.default;
+
+  let rendered = false;
+  while (!rendered) {
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+
+    if (!document.getElementById(element.id)) {
+      continue;
+    }
+    console.log('[render]', 'output will be in #', element.id);
+
+    (class EphemeralApp extends App {
+      modulePrefix = 'ephemeral-render-output';
+      Resolver = Resolver.withModules({
+        'ephemeral-render-output/router': {
+          default: class BoilerplateRouter extends Router {
+            location = 'none';
+            rootURL = '/';
+          },
+        },
+      });
+    }).create({
+      rootElement: '#' + element.id,
+    });
+    rendered = true;
+  }
 }

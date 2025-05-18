@@ -69,7 +69,7 @@ export async function compileJS(
       '@ember/owner': () => import('@ember/owner'),
       '@glimmer/component': () => import('@glimmer/component'),
       '@glimmer/tracking': () => import('@glimmer/tracking'),
-      'ember-resolver': () => import('ember-resolver');
+      'ember-resolver': () => import('ember-resolver'),
       /////////////////////////////
       // Provided by the user (optional)
       /////////////////////////////
@@ -108,6 +108,7 @@ export async function compileJS(
     // Does this work?
     const element = await compiler.compile('gjs', code);
 
+    console.log(element);
     component = template(`{{element}}`, { scope: () => ({ element }) }) as unknown as ComponentLike;
   } catch (e) {
     error = e as Error | undefined;
