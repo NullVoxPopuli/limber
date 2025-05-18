@@ -11,17 +11,17 @@ function fenced(code: string, meta: string) {
 
 describe('markdown', () => {
   test('it works', async () => {
-    let compiler = new Compiler();
-    let element = await compiler.compile('md', `# Hello`);
+    const compiler = new Compiler();
+    const element = await compiler.compile('md', `# Hello`);
 
-    let h1 = element.querySelector('h1');
+    const h1 = element.querySelector('h1');
 
     expect(h1).toBeTruthy();
     expect(h1?.textContent).toContain('Hello');
   });
 
   describe('code fences', () => {
-    let vue = `
+    const vue = `
       <style scoped>
         h2 { color: red; }
       </style>
@@ -37,7 +37,7 @@ describe('markdown', () => {
       </template>
     `;
 
-    let jsxReact = `
+    const jsxReact = `
       import React from 'react';
 
       export default <>
@@ -47,7 +47,7 @@ describe('markdown', () => {
       </>;
     `;
 
-    let svelte = `
+    const svelte = `
       <script>
         let name = 'world';
       </script>
@@ -67,11 +67,11 @@ graph TD;
 `;
 
     test('vue live', async () => {
-      let compiler = new Compiler();
-      let element = await compiler.compile('md', `# Hello\n\n` + fenced(vue, 'vue live'));
+      const compiler = new Compiler();
+      const element = await compiler.compile('md', `# Hello\n\n` + fenced(vue, 'vue live'));
 
-      let h1 = element.querySelector('h1');
-      let h2 = element.querySelector('h2');
+      const h1 = element.querySelector('h1');
+      const h2 = element.querySelector('h2');
 
       // getComputedStyle doesn't work without the element existing in the document
       document.body.appendChild(element);
@@ -80,11 +80,11 @@ graph TD;
       expect(h2).toBeTruthy();
       expect(h1?.textContent).toContain('Hello');
       expect(h2?.textContent).toContain('GENERAL KENOBI!');
-      expect(window.getComputedStyle(h2!).color).toBe('rgb(255, 0, 0)');
+      expect(window.getComputedStyle(h2).color).toBe('rgb(255, 0, 0)');
     });
 
     test('jsx requires a flavor to be specified', async () => {
-      let compiler = new Compiler();
+      const compiler = new Compiler();
 
       expect(
         compiler.compile(
@@ -98,24 +98,24 @@ graph TD;
     });
 
     test('svelte live', async () => {
-      let compiler = new Compiler();
-      let element = await compiler.compile('md', fenced(svelte, 'svelte live'));
+      const compiler = new Compiler();
+      const element = await compiler.compile('md', fenced(svelte, 'svelte live'));
 
-      let h1 = element.querySelector('h1');
+      const h1 = element.querySelector('h1');
 
       // getComputedStyle doesn't work without the element existing in the document
       document.body.appendChild(element);
 
       expect(h1).toBeTruthy();
       expect(h1?.textContent).toContain('Hello');
-      expect(window.getComputedStyle(h1!).color).toBe('rgb(255, 0, 0)');
+      expect(window.getComputedStyle(h1).color).toBe('rgb(255, 0, 0)');
     });
 
     test('mermaid (no live)', async () => {
-      let compiler = new Compiler();
-      let element = await compiler.compile('md', fenced(mermaid, 'mermaid'));
+      const compiler = new Compiler();
+      const element = await compiler.compile('md', fenced(mermaid, 'mermaid'));
 
-      let rootSVG = element.querySelector('svg');
+      const rootSVG = element.querySelector('svg');
 
       expect(rootSVG, 'Mermaid draws in SVG inside the <pre> tag').toBeTruthy();
     });

@@ -1,19 +1,15 @@
-import globals from 'globals';
+import babelParser from '@babel/eslint-parser';
 import js from '@eslint/js';
-
-import ts from 'typescript-eslint';
-
+import emberParser from 'ember-eslint-parser';
 import ember from 'eslint-plugin-ember';
 import emberRecommended from 'eslint-plugin-ember/configs/recommended';
 import gjsRecommended from 'eslint-plugin-ember/configs/recommended-gjs';
 import gtsRecommended from 'eslint-plugin-ember/configs/recommended-gts';
-
+import n from 'eslint-plugin-n';
 import prettier from 'eslint-plugin-prettier/recommended';
 import qunit from 'eslint-plugin-qunit';
-import n from 'eslint-plugin-n';
-
-import emberParser from 'ember-eslint-parser';
-import babelParser from '@babel/eslint-parser';
+import globals from 'globals';
+import ts from 'typescript-eslint';
 
 const parserOptions = {
   esm: {

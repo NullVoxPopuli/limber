@@ -4,9 +4,9 @@ import { describe, expect, test } from 'vitest';
 describe('jsx', () => {
   describe('react', () => {
     test('it works', async () => {
-      let compiler = new Compiler();
+      const compiler = new Compiler();
       // React comes from esm.sh
-      let element = await compiler.compile(
+      const element = await compiler.compile(
         'jsx',
         `
         import React from 'react';

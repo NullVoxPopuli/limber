@@ -109,7 +109,6 @@ export async function compileJS(
     // Does this work?
     const element = await compiler.compile('gjs', code);
 
-    console.log(element);
     component = template(`{{element}}`, { scope: () => ({ element }) }) as unknown as ComponentLike;
   } catch (e) {
     error = e as Error | undefined;

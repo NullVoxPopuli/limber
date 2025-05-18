@@ -1,15 +1,14 @@
 import Component from '@glimmer/component';
-
-import * as babelPluginETC from 'babel-plugin-ember-template-compilation';
-import * as templateCompiler from 'ember-source/dist/ember-template-compiler.js';
-import * as babelMacros from 'babel-plugin-debug-macros';
-import * as contentTag from 'content-tag';
 import * as glimmerTracking from '@glimmer/tracking';
 
+import * as babelMacros from 'babel-plugin-debug-macros';
+import * as babelPluginETC from 'babel-plugin-ember-template-compilation';
+import * as contentTag from 'content-tag';
 import { modifier } from 'ember-modifier';
+import * as templateCompiler from 'ember-source/dist/ember-template-compiler.js';
 import { Compiler, defaults } from 'repl-sdk';
 
-let compiler = new Compiler({
+const compiler = new Compiler({
   ...defaults,
   logging: true,
   resolve: {
@@ -54,7 +53,7 @@ const increment = () => count.current++;
 
 const compile = modifier((element) => {
   (async () => {
-    let root = await compiler.compile('gjs', snippet, {});
+    const root = await compiler.compile('gjs', snippet, {});
 
     element.appendChild(root);
   })();

@@ -3,7 +3,7 @@ import { describe, expect, test } from 'vitest';
 
 describe('custom', () => {
   test('it works', async () => {
-    let compiler = new Compiler({
+    const compiler = new Compiler({
       formats: {
         custom: {
           compiler: async () => {
@@ -20,7 +20,7 @@ describe('custom', () => {
       },
     });
 
-    let element = await compiler.compile('custom', `example text`);
+    const element = await compiler.compile('custom', `example text`);
 
     expect(element.textContent).toContain('example text!!');
   });

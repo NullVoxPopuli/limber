@@ -1,17 +1,19 @@
-import { defineConfig } from 'vite';
-import wasm from 'vite-plugin-wasm';
-import { createRequire } from 'node:module';
 import {
-  resolver,
+  assets,
+  compatPrebuild,
+  contentFor,
   hbs,
+  optimizeDeps,
+  resolver,
   scripts,
   templateTag,
-  optimizeDeps,
-  compatPrebuild,
-  assets,
-  contentFor,
 } from '@embroider/vite';
+import { createRequire } from 'node:module';
+
 import { babel } from '@rollup/plugin-babel';
+import { defineConfig } from 'vite';
+import wasm from 'vite-plugin-wasm';
+
 const require = createRequire(import.meta.url);
 
 const extensions = [

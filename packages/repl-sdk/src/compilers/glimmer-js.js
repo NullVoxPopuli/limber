@@ -248,12 +248,14 @@ async function renderApp({ compiler, element, component }) {
   element.id = `repl-output-${id++}`;
 
   let rendered = false;
+
   while (!rendered) {
     await new Promise((resolve) => requestAnimationFrame(resolve));
 
     if (!document.getElementById(element.id)) {
       continue;
     }
+
     console.log('[render]', 'output will be in #', element.id);
 
     (class EphemeralApp extends App {

@@ -1,5 +1,5 @@
-import Route from 'ember-route-template';
 import { pageTitle } from 'ember-page-title';
+import Route from 'ember-route-template';
 
 import { MiniRepl } from './demo';
 

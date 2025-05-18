@@ -3,9 +3,9 @@ import { describe, expect, test } from 'vitest';
 
 describe('vue', () => {
   test('it works', async () => {
-    let compiler = new Compiler();
+    const compiler = new Compiler();
     // Vue comes from esm.sh
-    let element = await compiler.compile(
+    const element = await compiler.compile(
       'vue',
       `
       <style scoped>
@@ -28,11 +28,11 @@ describe('vue', () => {
     // getComputedStyle doesn't work without the element existing in the document
     document.body.appendChild(element);
 
-    let h1 = element.querySelector('h1');
+    const h1 = element.querySelector('h1');
 
     expect(h1).toBeTruthy();
     expect(h1?.textContent).toContain('Hello World');
-    expect(window.getComputedStyle(h1!).color).toBe('rgb(255, 0, 0)');
+    expect(window.getComputedStyle(h1).color).toBe('rgb(255, 0, 0)');
     expect(element.textContent).toContain('Hello World');
   });
 });
