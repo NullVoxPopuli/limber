@@ -29,8 +29,7 @@ export class Compiler {
    */
   constructor(options = defaults) {
     this.#options = Object.assign({}, defaults, options);
-
-    let explicitResolve = this.#options.resolve ?? {};
+    console.log(options);
 
     globalThis[secret] = this;
     globalThis.window.esmsInitOptions = {
@@ -88,10 +87,15 @@ export class Compiler {
             }
 
             window[secret].resolves ||= {};
-            window[secret].resolves[name] ||= result;
+            console.debug('Cache', window[secret]);
+            window[secret].resolves[name] ||= await result;
 
             let blobContent =
               `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
+              /**
+               * This is semi-trying to polyfill modules
+               * that aren't proper ESM. very annoying.
+               */
               `${Object.keys(result)
                 .map((exportName) => {
                   if (exportName === 'default') {

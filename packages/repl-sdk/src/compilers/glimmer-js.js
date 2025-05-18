@@ -50,7 +50,7 @@ export async function compiler(config = {}, api) {
     _decoratorTransforms,
     _emberTemplateCompilation,
     compiler,
-    { Preprocessor },
+    contentTag,
     { default: DebugMacros },
   ] = await api.tryResolveAll(buildDependencies, (moduleName) =>
     esmsh.import(versions, moduleName)
@@ -131,7 +131,9 @@ export async function compiler(config = {}, api) {
     });
   }
 
-  const preprocessor = new Preprocessor();
+  console.log(contentTag, contentTag.default);
+
+  const preprocessor = new contentTag.Preprocessor();
 
   return {
     resolve: (id) => {

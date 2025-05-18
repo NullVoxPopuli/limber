@@ -2,8 +2,10 @@ import { Addon } from "@embroider/addon-dev/rollup";
 
 import { babel } from "@rollup/plugin-babel";
 import cjs from "@rollup/plugin-commonjs";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import { execaCommand } from "execa";
 import { defineConfig } from "rollup";
+import nodePolyfills from "rollup-plugin-node-polyfills";
 
 const addon = new Addon({
   srcDir: "src",
@@ -21,8 +23,19 @@ export default defineConfig({
       babelHelpers: "bundled",
     }),
     addon.dependencies(),
+
+    // Any dep not marked as external (by addon.dependencies()) gets bundled
+    nodeResolve({
+      browser: true,
+      preferBuiltins: false,
+      // Defaults for this plugin are for node...
+      exportConditions: ["browser", "module", "default"],
+    }),
+    // This is needed because babel doesn't ship a proper browser bundle...
+    nodePolyfills(),
     // line-column...
     cjs(),
+
     addon.keepAssets(["build/**/*"]),
     addon.clean(),
 
