@@ -1111,6 +1111,9 @@ importers:
 
   packages/ember-repl/addon:
     dependencies:
+      '@ember/test-helpers':
+        specifier: ^5.1.0
+        version: 5.2.1(35438b6e272b520ca540b25aef2325ed)
       '@embroider/addon-shim':
         specifier: 1.10.0
         version: 1.10.0
@@ -1154,9 +1157,6 @@ importers:
       '@babel/types':
         specifier: ^7.26.9
         version: 7.27.1
-      '@ember/test-helpers':
-        specifier: ^5.1.0
-        version: 5.2.1(35438b6e272b520ca540b25aef2325ed)
       '@ember/test-waiters':
         specifier: ^4.1.0
         version: 4.1.0(@glint/template@1.4.1-unstable.0e0d936)
