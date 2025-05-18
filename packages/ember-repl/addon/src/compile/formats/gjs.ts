@@ -47,27 +47,30 @@ export async function compileJS(
     resolve: {
       ...modules,
       ...extraModules,
-      'ember-source/dist/ember-template-compiler': import(
-        // eslint-disable-next-line
-        // @ts-ignore
-        'ember-source/dist/ember-template-compiler.js'
-      ),
-      'ember-source/dist/ember-template-compiler.js': import(
-        // eslint-disable-next-line
-        // @ts-ignore
-        'ember-source/dist/ember-template-compiler.js'
-      ),
+      'ember-source/dist/ember-template-compiler': () =>
+        import(
+          // eslint-disable-next-line
+          // @ts-ignore
+          'ember-source/dist/ember-template-compiler.js'
+        ),
+      'ember-source/dist/ember-template-compiler.js': () =>
+        import(
+          // eslint-disable-next-line
+          // @ts-ignore
+          'ember-source/dist/ember-template-compiler.js'
+        ),
       // Direct Dependencies
       // '@babel/standalone': import('@babel/standalone'),
-      'content-tag': import('content-tag'),
-      'decorator-transforms': import('decorator-transforms'),
-      'decorator-transforms/runtime': import('decorator-transforms/runtime'),
-      'babel-plugin-ember-template-compilation': import('babel-plugin-ember-template-compilation'),
+      'content-tag': () => import('content-tag'),
+      'decorator-transforms': () => import('decorator-transforms'),
+      'decorator-transforms/runtime': () => import('decorator-transforms/runtime'),
+      'babel-plugin-ember-template-compilation': () =>
+        import('babel-plugin-ember-template-compilation'),
       // Dependencies of the above
-      'babel-import-util': import('babel-import-util'),
+      'babel-import-util': () => import('babel-import-util'),
       // eslint-disable-next-line
       // @ts-ignore
-      'babel-plugin-debug-macros': import('babel-plugin-debug-macros'),
+      'babel-plugin-debug-macros': () => import('babel-plugin-debug-macros'),
     },
   });
 

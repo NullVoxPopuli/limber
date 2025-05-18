@@ -99,7 +99,7 @@ export class Compiler {
               `${Object.keys(result)
                 .map((exportName) => {
                   if (exportName === 'default') {
-                    return `export default mod.default;`;
+                    return `export default mod.default ?? mod;`;
                   }
 
                   return `export const ${exportName} = mod.${exportName};`;
@@ -266,7 +266,19 @@ export class Compiler {
   };
 
   #nestedPublicAPI = {
-    tryResolve: (name) => importShim(/* vite-ignore */ name),
+    tryResolve: async (name) => {
+      const existing = await window[Symbol.for(secretKey)].resolves?.[name];
+
+      if (existing) {
+        console.debug(name, 'already resolved');
+
+        return existing;
+      }
+
+      // Global
+      // eslint-disable-next-line
+      return importShim(/* vite-ignore */ name);
+    },
     tryResolveAll: async (names, fallback) => {
       let results = await Promise.all(names.map(this.#nestedPublicAPI.tryResolve));
 
