@@ -1,5 +1,6 @@
 import { esmsh } from './cdn.js';
 
+let id = 0;
 const buildDependencies = [
   /**
    * The only version of babel that is easily runnable in the browser
@@ -131,8 +132,6 @@ export async function compiler(config = {}, api) {
     });
   }
 
-  console.log(contentTag, contentTag.default);
-
   const preprocessor = new contentTag.Preprocessor();
 
   return {
@@ -161,7 +160,10 @@ export async function compiler(config = {}, api) {
 
       return code;
     },
-    render: async (element, compiled /*, extra, compiler */) => {
+    render: async (element, compiled, extra, compiler) => {
+      /**
+       * This should be a component definition
+       */
       console.log('[render:compiled]', compiled);
 
       /**
@@ -170,7 +172,20 @@ export async function compiler(config = {}, api) {
        *    https://github.com/emberjs/rfcs/pull/1099
        *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
        */
-      element.innerHTML = compiled.toString();
+      // element.innerHTML = compiled.toString();
+      let { default: App } = compiler.tryResolve('@ember/application');
+
+      class EphemeralApp extends App {
+        modulePrefix = 'test-app';
+      }
+
+      element.id = `repl-output-${id++}`;
+
+      console.log('[render]', 'output will be in #', element.id);
+
+      EphemeralApp.create({
+        rootElement: '#' + element.id,
+      });
     },
   };
 }
