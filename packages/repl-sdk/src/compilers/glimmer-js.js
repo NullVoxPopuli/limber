@@ -173,17 +173,20 @@ export async function compiler(config = {}, api) {
        *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
        */
       // element.innerHTML = compiled.toString();
-      let { default: App } = compiler.tryResolve('@ember/application');
-
-      class EphemeralApp extends App {
-        modulePrefix = 'test-app';
-      }
+      const { default: App } = await compiler.tryResolve('@ember/application');
+      const { default: Resolver } = await compiler.tryResolve('ember-resolver');
 
       element.id = `repl-output-${id++}`;
 
       console.log('[render]', 'output will be in #', element.id);
 
-      EphemeralApp.create({
+      (class EphemeralApp extends App {
+        modulePrefix = 'ephemeral-render-output';
+        Resolver = Resolver.withModules({
+          'ephemeral-render-output/router': { default: Router },
+          // add any custom services here
+        });
+      }).create({
         rootElement: '#' + element.id,
       });
     },

@@ -58,6 +58,9 @@ export async function compileJS(
       '@ember/helper': () => import('@ember/helper'),
       '@ember/modifier': () => import('@ember/modifier'),
       '@ember/object': () => import('@ember/object'),
+      '@ember/routing': () => import('@ember/routing'),
+      '@ember/routing/route': () => import('@ember/routing/route'),
+      '@ember/routing/router': () => import('@ember/routing/router'),
       '@ember/runloop': () => import('@ember/runloop'),
       '@ember/service': () => import('@ember/service'),
       '@ember/template-factory': () => import('@ember/template-factory'),
@@ -66,6 +69,7 @@ export async function compileJS(
       '@ember/owner': () => import('@ember/owner'),
       '@glimmer/component': () => import('@glimmer/component'),
       '@glimmer/tracking': () => import('@glimmer/tracking'),
+      'ember-resolver': () => import('ember-resolver');
       /////////////////////////////
       // Provided by the user (optional)
       /////////////////////////////
