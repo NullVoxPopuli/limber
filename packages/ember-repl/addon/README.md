@@ -108,8 +108,8 @@ export class Renderer extends Component {
 
     {{! This will keep showing even when there is an error.
         Which can help reduce visual jitter }} 
-    {{#if this.latest.value}}
-      <this.latest.latest />
+    {{#if this.latest}}
+      <this.latest />
     {{/if}}
 
   </template>
