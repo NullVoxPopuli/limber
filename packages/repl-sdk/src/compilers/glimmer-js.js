@@ -173,8 +173,8 @@ export async function compiler(config = {}, api) {
        *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
        */
 
-      renderComponent({ element, compiler, component: compiled });
-      // renderApp({ element, compiler, component: compiled });
+      // renderComponent({ element, compiler, component: compiled });
+      renderApp({ element, compiler, component: compiled });
     },
   };
 }
