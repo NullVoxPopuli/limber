@@ -39,19 +39,36 @@ export class Compiler {
       mapOverrides: true, // default false
       // Hook all module resolutions
       resolve: (id /*, parentUrl, resolve */) => {
-        this.#log('[resolve]', id);
+        /**
+         * We have to strip the query params because our manual resolving
+         * doesn't use them -- but CDNs do
+         */
+        let vanilla = deCDN(id);
+        this.#log('[resolve]', id, 'potentially manually via', vanilla);
 
         if (id.startsWith('blob:')) return id;
         if (id.startsWith('https://')) return id;
         if (id.startsWith('.')) return id;
 
-        if (this.#options.resolve?.[id]) {
-          this.#log(`[resolve] ${id} found in manually specified resolver`);
+        if (this.#options.resolve?.[vanilla]) {
+          this.#log(`[resolve] ${vanilla} found in manually specified resolver`);
 
-          return `manual:${id}`;
+          return `manual:${vanilla}`;
         }
 
         this.#log(`[resolve] ${id} not found, deferring to esm.sh`);
+
+        if (id.startsWith('node:')) {
+          this.#log(`Is known node module: ${id}. Grabbing polyfill`);
+          if (id === 'node:process') return `esm.sh:process`;
+          if (id === 'node:buffer') return `esm.sh:buffer`;
+          if (id === 'node:events') return `esm.sh:events`;
+          if (id === 'node:path') return `esm.sh:path-browser`;
+          if (id === 'node:util') return `esm.sh:util-browser`;
+          if (id === 'node:crypto') return `esm.sh:crypto-browserify`;
+          if (id === 'node:stream') return `esm.sh:stream-browserify`;
+          if (id === 'node:fs') return `esm.sh:browserify-fs`;
+        }
 
         return `esm.sh:${id}`;
       },
@@ -80,7 +97,6 @@ export class Compiler {
             }
 
             window[secret].resolves ||= {};
-            this.#log('Cache', window[secret]);
             window[secret].resolves[name] ||= await result;
 
             let blobContent =
@@ -113,11 +129,10 @@ export class Compiler {
 
         this.#log('[fetch] fetching url', url, options);
 
-        // return `https://esm.sh/*${id}`;
         if (url.startsWith('esm.sh:')) {
           let name = url.replace(/^esm\.sh:/, '');
           // Where is this double // coming from?
-          let newUrl = `https://esm.sh/${name}`.replaceAll('//', '/');
+          let newUrl = `https://esm.sh/*${name}`.replaceAll('//', '/').replaceAll('/*/*', '/*');
 
           const response = await fetch(newUrl, options);
 
@@ -350,4 +365,14 @@ function shimmedImport(...args) {
   }
 
   return globalThis.importShim(/* @vite-ignore */ ...args);
+}
+
+/**
+ * CDNs will pre-process every file to make sure every import goes through them.
+ * We don't want this.
+ */
+function deCDN(id) {
+  let noQPs = id.split('?')[0];
+
+  return noQPs;
 }

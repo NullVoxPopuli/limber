@@ -173,7 +173,7 @@ export const compilers = {
   },
   gjs: {
     compiler: async (...args) => {
-      const gjs = await import('./compilers/glimmer-js.js');
+      const gjs = await import('./compilers/ember-gjs.js');
 
       return gjs.compiler(...args);
     },

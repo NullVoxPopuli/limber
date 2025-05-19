@@ -65,6 +65,7 @@ export async function compileJS(
       '@ember/service': () => import('@ember/service'),
       '@ember/test-helpers': () => import('@ember/test-helpers'),
       '@ember/template-factory': () => import('@ember/template-factory'),
+      '@ember/template-compilation': () => import('@ember/template-compilation'),
       '@ember/utils': () => import('@ember/utils'),
       '@ember/template': () => import('@ember/template'),
       '@ember/owner': () => import('@ember/owner'),
@@ -102,6 +103,14 @@ export async function compileJS(
       // eslint-disable-next-line
       // @ts-ignore
       'babel-plugin-debug-macros': () => import('babel-plugin-debug-macros'),
+      '@embroider/macros': () => ({
+        // passthrough, we are not doing dead-code-elimination
+        macroCondition: (x) => x,
+        // I *could* actually implement this
+        dependencySatisfies: () => true,
+        isDevelopingApp: () => true,
+        getGlobalConfig: () => ({}),
+      }),
     },
   });
 

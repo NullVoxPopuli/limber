@@ -37,6 +37,12 @@ const buildDependencies = [
    * These remove `@glimmer/env` and DEBUG usages
    */
   'babel-plugin-debug-macros',
+
+  /**
+   * build macros, because the ecosystem isn't standardized on imprt.meta.env?.X
+   * Also, @embroider/macros does dead-code-elimination, which is handy.
+   */
+  '@embroider/macros/babel',
 ];
 
 /**
@@ -53,6 +59,7 @@ export async function compiler(config = {}, api) {
     compiler,
     contentTag,
     { default: DebugMacros },
+    embroiderMacros,
   ] = await api.tryResolveAll(buildDependencies, (moduleName) =>
     esmsh.import(versions, moduleName)
   );
@@ -68,6 +75,8 @@ export async function compiler(config = {}, api) {
 
   let babel = 'availablePlugins' in _babel ? _babel : _babel.default;
 
+  let macros = embroiderMacros.buildMacros();
+
   async function transform(text) {
     return babel.transform(text, {
       filename: `dynamic-repl.js`,
@@ -76,7 +85,7 @@ export async function compiler(config = {}, api) {
           emberTemplateCompilation,
           {
             compiler,
-            transforms: [],
+            transforms: [...macros.templateMacros],
             targetFormat: 'wire',
           },
         ],
@@ -89,6 +98,7 @@ export async function compiler(config = {}, api) {
             },
           },
         ],
+        ...macros.babelMacros,
         [
           DebugMacros,
           {
@@ -145,7 +155,7 @@ export async function compiler(config = {}, api) {
 
       console.debug('custom resolve for compiler', { id });
 
-      if (id.startsWith('@embroider/macros')) {
+      if (id.includes('@embroider/macros')) {
         return `repl-sdk/compilers/ember/macros.js`;
       }
     },
