@@ -164,6 +164,8 @@ export const compilers = {
   },
   md: {
     compiler: async (...args) => {
+      // Should be safe
+      // eslint-disable-next-line import/no-cycle
       const markdown = await import('./compilers/markdown.js');
 
       return markdown.compiler(...args);

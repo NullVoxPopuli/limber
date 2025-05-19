@@ -52,6 +52,8 @@ export async function compiler(config = {}, api) {
     'unist-util-visit',
   ]);
 
+  // Should be safe
+  // eslint-disable-next-line import/no-cycle
   const { compilers } = await import('../compilers.js');
 
   // No recursing for now.

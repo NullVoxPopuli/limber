@@ -1,6 +1,6 @@
 import { esmsh } from './cdn.js';
+import { renderApp } from './ember/render-app-island.js';
 
-let id = 0;
 const buildDependencies = [
   /**
    * The only version of babel that is easily runnable in the browser
@@ -81,7 +81,6 @@ export async function compiler(config = {}, api) {
           },
         ],
         [
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore - we don't care about types here..
           decoratorTransforms,
           {
@@ -144,7 +143,7 @@ export async function compiler(config = {}, api) {
         return `https://esm.sh/*ember-source/dist/dependencies/${id}.js`;
       }
 
-      console.log('custom resolve for compiler', { id });
+      console.debug('custom resolve for compiler', { id });
 
       if (id.startsWith('@embroider/macros')) {
         return `repl-sdk/compilers/ember/macros.js`;
@@ -156,7 +155,7 @@ export async function compiler(config = {}, api) {
 
       let code = transformed.code;
 
-      console.log('[compile:code]', code);
+      console.debug('[compile:code]', code);
 
       return code;
     },
@@ -164,7 +163,7 @@ export async function compiler(config = {}, api) {
       /**
        * This should be a component definition
        */
-      console.log('[render:compiled]', compiled);
+      console.debug('[render:compiled]', compiled);
 
       /**
        *
@@ -172,106 +171,7 @@ export async function compiler(config = {}, api) {
        *    https://github.com/emberjs/rfcs/pull/1099
        *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
        */
-
-      // renderComponent({ element, compiler, component: compiled });
       renderApp({ element, compiler, component: compiled });
     },
   };
-}
-
-/**
- * Wait to boot the app until the Element is in the DOM.
- * because This old way of making a whole app requires that the element
- * be present in the app.
- *
- * We really need renderComponent(...)
- *   https://github.com/emberjs/ember.js/pull/20781
- */
-async function renderComponent({ compiler, component, element }) {
-  const [application, resolver, router, testHelpers] = await compiler.tryResolveAll([
-    '@ember/application',
-    'ember-resolver',
-    '@ember/routing/router',
-    '@ember/test-helpers',
-  ]);
-  const App = application.default;
-  const Resolver = resolver.default;
-  const Router = router.default;
-  const { render, setupRenderingContext, setupContext, teardownContext, setApplication } =
-    testHelpers;
-
-  class EphemeralApp extends App {
-    modulePrefix = 'ephemeral-render-output';
-    Resolver = Resolver.withModules({
-      'ephemeral-render-output/templates/application': { default: component },
-      'ephemeral-render-output/router': {
-        default: class BoilerplateRouter extends Router {
-          location = 'none';
-          rootURL = '/';
-        },
-      },
-    });
-  }
-
-  setApplication(
-    EphemeralApp.create({
-      autoboot: false,
-      rootElement: '#' + element.id,
-    })
-  );
-
-  const context = {};
-
-  await setupContext(context);
-  await setupRenderingContext(context);
-  await render(component);
-}
-
-/**
- * Wait to boot the app until the Element is in the DOM.
- * because This old way of making a whole app requires that the element
- * be present in the app.
- *
- * We really need renderComponent(...)
- *   https://github.com/emberjs/ember.js/pull/20781
- */
-async function renderApp({ compiler, element, component }) {
-  const [application, resolver, router] = await compiler.tryResolveAll([
-    '@ember/application',
-    'ember-resolver',
-    '@ember/routing/router',
-  ]);
-  const App = application.default;
-  const Resolver = resolver.default;
-  const Router = router.default;
-
-  element.id = `repl-output-${id++}`;
-
-  let rendered = false;
-
-  while (!rendered) {
-    await new Promise((resolve) => requestAnimationFrame(resolve));
-
-    if (!document.getElementById(element.id)) {
-      continue;
-    }
-
-    console.log('[render]', 'output will be in #', element.id);
-
-    (class EphemeralApp extends App {
-      modulePrefix = 'ephemeral-render-output';
-      Resolver = Resolver.withModules({
-        'ephemeral-render-output/templates/application': { default: component },
-        'ephemeral-render-output/router': {
-          default: class BoilerplateRouter extends Router {
-            location = 'none';
-            rootURL = '/';
-          },
-        },
-      });
-    }).create({
-      rootElement: '#' + element.id,
-    });
-    rendered = true;
-  }
 }

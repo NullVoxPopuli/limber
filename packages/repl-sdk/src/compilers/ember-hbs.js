@@ -1,3 +1,5 @@
+import { renderApp } from './ember/render-app-island.js';
+
 /**
  * @param {import('../types.ts').ResolvedCompilerOptions} config
  * @param {import('../types.ts').PublicMethods} api
@@ -10,6 +12,8 @@ export function compiler(config = {}, api) {
       }
     },
     compile: async (text) => {
+      const { template } = await api.tryResolve('@ember/template-compiler/runtime');
+
       let component = template(text, {
         scope: () => ({ ...config.defaultScope }),
       });
@@ -20,16 +24,10 @@ export function compiler(config = {}, api) {
        */
       return component;
     },
-    render: async (element, compiled /*, extra, compiler */) => {
-      console.log('[render:compiled]', compiled);
+    render: async (element, compiled, extra, compiler) => {
+      console.debug('[render:compiled]', compiled);
 
-      /**
-       *
-       * TODO: These will make things easier:
-       *    https://github.com/emberjs/rfcs/pull/1099
-       *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
-       */
-      element.innerHTML = compiled.toString();
+      renderApp({ element, compiler, component: compiled });
     },
   };
 }

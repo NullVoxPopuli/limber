@@ -101,7 +101,7 @@ export interface CompilerConfig {
      */
     render: (
       element: HTMLElement,
-      defaultExport: any,
+      defaultExport: unknown,
       extras: { compiled: string } & Record<string, unknown>,
       compiler: PublicMethods
     ) => void;

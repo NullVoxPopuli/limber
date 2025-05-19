@@ -29,7 +29,6 @@ export class Compiler {
    */
   constructor(options = defaults) {
     this.#options = Object.assign({}, defaults, options);
-    console.log(options);
 
     globalThis[secret] = this;
     globalThis.window.esmsInitOptions = {
@@ -39,26 +38,20 @@ export class Compiler {
       // Permit overrides to import maps
       mapOverrides: true, // default false
       // Hook all module resolutions
-      resolve: (id, parentUrl, resolve) => {
-        if (this.#options.logging) {
-          console.debug('[resolve]', id);
-        }
+      resolve: (id /*, parentUrl, resolve */) => {
+        this.#log('[resolve]', id);
 
         if (id.startsWith('blob:')) return id;
         if (id.startsWith('https://')) return id;
         if (id.startsWith('.')) return id;
 
         if (this.#options.resolve?.[id]) {
-          if (this.#options.logging) {
-            console.debug(`[resolve] ${id} found in manually specified resolver`);
-          }
+          this.#log(`[resolve] ${id} found in manually specified resolver`);
 
           return `manual:${id}`;
         }
 
-        if (this.#options.logging) {
-          console.debug(`[resolve] ${id} not found, deferring to esm.sh`);
-        }
+        this.#log(`[resolve] ${id} not found, deferring to esm.sh`);
 
         return `esm.sh:${id}`;
       },
@@ -87,7 +80,7 @@ export class Compiler {
             }
 
             window[secret].resolves ||= {};
-            console.debug('Cache', window[secret]);
+            this.#log('Cache', window[secret]);
             window[secret].resolves[name] ||= await result;
 
             let blobContent =
@@ -113,7 +106,6 @@ export class Compiler {
               `[fetch] returning blob mapping to manually resolved import for ${name}`
               // blobContent
             );
-            // console.debug(await blob.text());
 
             return new Response(blob);
           }
@@ -189,7 +181,7 @@ export class Compiler {
 
     const asBlobUrl = textToBlobUrl(compiledText);
 
-    const { default: defaultExport } = await importShim(/* @vite-ignore */ asBlobUrl);
+    const { default: defaultExport } = await shimmedImport(/* @vite-ignore */ asBlobUrl);
 
     return this.#render(compiler, defaultExport, extras);
   }
@@ -270,14 +262,12 @@ export class Compiler {
       const existing = await window[Symbol.for(secretKey)].resolves?.[name];
 
       if (existing) {
-        console.debug(name, 'already resolved');
+        this.#log(name, 'already resolved');
 
         return existing;
       }
 
-      // Global
-      // eslint-disable-next-line
-      return importShim(/* vite-ignore */ name);
+      return shimmedImport(/* vite-ignore */ name);
     },
     tryResolveAll: async (names, fallback) => {
       let results = await Promise.all(names.map(this.#nestedPublicAPI.tryResolve));
@@ -348,4 +338,16 @@ function textToBlobUrl(text) {
   const blobUrl = URL.createObjectURL(blob);
 
   return blobUrl;
+}
+
+/**
+ * This should have happened at the beginning of the compile function.
+ * If this error is ever thrown, something goofy has happened, and it would be very unexpected.
+ */
+function shimmedImport(...args) {
+  if (!globalThis.importShim) {
+    throw new Error(`Could not find importShim. Has the REPL been set up correctly?`);
+  }
+
+  return globalThis.importShim(/* @vite-ignore */ ...args);
 }
