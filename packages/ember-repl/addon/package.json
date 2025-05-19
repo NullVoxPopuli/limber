@@ -2,11 +2,12 @@
   "name": "ember-repl",
   "version": "6.0.0",
   "description": "Addon for enabling REPL and Playground creation with Ember/Glimmer",
+  "type": "module",
   "keywords": [
     "ember-addon"
   ],
   "repository": {
-    "type": "git",
+    "type": "https",
     "url": "https://github.com/NullVoxPopuli/limber.git",
     "directory": "packages/ember-repl/addon"
   },
@@ -31,19 +32,8 @@
       "types": "./declarations/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./formats/markdown": {
-      "types": "./declarations/compile/formats/markdown.d.ts",
-      "default": "./dist/compile/formats/markdown.js"
-    },
-    "./formats/hbs": {
-      "types": "./declarations/compile/formats/hbs.d.ts",
-      "default": "./dist/compile/formats/hbs.js"
-    },
-    "./formats/gjs": {
-      "types": "./declarations/compile/formats/gjs/index.d.ts",
-      "default": "./dist/compile/formats/gjs/index.js"
-    },
     "./*": {
+      "types": "./declarations/*.d.ts",
       "default": "./dist/*.js"
     },
     "./test-support": {
