@@ -100,6 +100,9 @@ export class Compiler {
 
             let blobContent =
               `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
+              `\n\n` +
+              `if (!mod) { throw new Error('Could not resolve \`${name}\`. Does the module exist? ( checked ${url} )') }` +
+              `\n\n` +
               /**
                * This is semi-trying to polyfill modules
                * that aren't proper ESM. very annoying.
