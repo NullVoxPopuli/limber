@@ -105,11 +105,30 @@ export async function compileJS(
       'babel-plugin-debug-macros': () => import('babel-plugin-debug-macros'),
       '@embroider/macros': () => ({
         // passthrough, we are not doing dead-code-elimination
-        macroCondition: (x) => x,
+        macroCondition: (x: boolean) => x,
         // I *could* actually implement this
         dependencySatisfies: () => true,
         isDevelopingApp: () => true,
-        getGlobalConfig: () => ({}),
+        getGlobalConfig: () => ({
+          WarpDrive: {
+            debug: false,
+            env: {
+              DEBUG: false,
+              TESTING: false,
+              PRODUCTION: true,
+            },
+            activeLogging: false,
+            compatWith: '99.0',
+            features: {},
+            deprecations: {},
+            polyfillUUID: false,
+            includeDataAdapter: false,
+          },
+        }),
+        // Private
+        // @ts-ignore
+        importSync: (x: string) => window[Symbol.for('__repl-sdk__compiler__')].resolves[x],
+        moduleExists: () => false,
       }),
     },
   });

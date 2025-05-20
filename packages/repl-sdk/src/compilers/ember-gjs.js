@@ -1,5 +1,6 @@
 import { esmsh } from './cdn.js';
 import { renderApp } from './ember/render-app-island.js';
+import { secret } from '../cache.js';
 
 const buildDependencies = [
   /**
@@ -42,7 +43,7 @@ const buildDependencies = [
    * build macros, because the ecosystem isn't standardized on imprt.meta.env?.X
    * Also, @embroider/macros does dead-code-elimination, which is handy.
    */
-  '@embroider/macros/babel',
+  // '@embroider/macros/babel',
 ];
 
 /**
@@ -59,7 +60,7 @@ export async function compiler(config = {}, api) {
     compiler,
     contentTag,
     { default: DebugMacros },
-    embroiderMacros,
+    // embroiderMacros,
   ] = await api.tryResolveAll(buildDependencies, (moduleName) =>
     esmsh.import(versions, moduleName)
   );
@@ -75,7 +76,7 @@ export async function compiler(config = {}, api) {
 
   let babel = 'availablePlugins' in _babel ? _babel : _babel.default;
 
-  let macros = embroiderMacros.buildMacros();
+  // let macros = embroiderMacros.buildMacros();
 
   async function transform(text) {
     return babel.transform(text, {
@@ -85,7 +86,9 @@ export async function compiler(config = {}, api) {
           emberTemplateCompilation,
           {
             compiler,
-            transforms: [...macros.templateMacros],
+            transforms: [
+              // ...macros.templateMacros
+            ],
             targetFormat: 'wire',
           },
         ],
@@ -98,7 +101,7 @@ export async function compiler(config = {}, api) {
             },
           },
         ],
-        ...macros.babelMacros,
+        // ...macros.babelMacros,
         [
           DebugMacros,
           {
@@ -156,7 +159,19 @@ export async function compiler(config = {}, api) {
       console.debug('custom resolve for compiler', { id });
 
       if (id.includes('@embroider/macros')) {
-        return `repl-sdk/compilers/ember/macros.js`;
+        return () => {
+          return {
+            // passthrough, we are not doing dead-code-elimination
+            macroCondition: (x) => x,
+            // I *could* actually implement this
+            dependencySatisfies: () => true,
+            isDevelopingApp: () => true,
+            getGlobalConfig: () => ({}),
+            // Private
+            importSync: (x) => window[secret].resolves[x],
+            moduleExists: () => false,
+          };
+        };
       }
     },
     compile: async (text) => {

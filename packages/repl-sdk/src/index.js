@@ -3,6 +3,7 @@
  */
 import { compilers } from './compilers.js';
 import { assert, nextId } from './utils.js';
+import { secret, secretKey } from './cache.js';
 
 assert(`There is no document. repl-sdk is meant to be ran in a browser`, globalThis.document);
 
@@ -11,9 +12,6 @@ export const defaultFormats = Object.keys(compilers);
 export const defaults = {
   formats: compilers,
 };
-
-const secretKey = '__repl-sdk__compiler__';
-const secret = Symbol.for(secretKey);
 
 assert(
   `There is already an instance of repl-sdk, and there can only be one. Make sure that your dependency graph is correct.`,
@@ -44,6 +42,7 @@ export class Compiler {
          * doesn't use them -- but CDNs do
          */
         let vanilla = deCDN(id);
+
         this.#log('[resolve]', id, 'potentially manually via', vanilla);
 
         if (id.startsWith('blob:')) return id;
@@ -132,15 +131,15 @@ export class Compiler {
         if (url.startsWith('esm.sh:')) {
           let name = url.replace(/^esm\.sh:/, '');
           // Where is this double // coming from?
-          let newUrl = `https://esm.sh/*${name}`.replaceAll('//', '/').replaceAll('/*/*', '/*');
+          let newUrl =
+            `https://esm.sh/*${name}`.replaceAll('//', '/').replaceAll('/*/*', '/*') +
+            '?bundle=false';
 
           const response = await fetch(newUrl, options);
 
           if (!response.ok) return response;
 
           const source = await response.text();
-
-          // console.log({ source, url, newUrl });
 
           return new Response(new Blob([source], { type: 'application/javascript' }));
         }
@@ -151,18 +150,9 @@ export class Compiler {
 
         const source = await response.text();
 
-        // const transformed = tsCompile(source);
-        //
-        // console.log({ source, url });
-
         return new Response(new Blob([source], { type: 'application/javascript' }));
       },
-
-      // onimport: async (url, options, parentUrl) => {
-      //   console.log('[onimport]', url, options, parentUrl);
-      // },
     };
-    // addShim();
   }
 
   /**
