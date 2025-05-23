@@ -1,9 +1,10 @@
 /**
  * @typedef {import("./types.ts").Options} Options
  */
-import { compilers } from './compilers.js';
-import { assert, nextId } from './utils.js';
 import { secret, secretKey } from './cache.js';
+import { compilers } from './compilers.js';
+import { getFromTarball } from './tar.js';
+import { assert, nextId } from './utils.js';
 
 assert(`There is no document. repl-sdk is meant to be ran in a browser`, globalThis.document);
 
@@ -131,6 +132,8 @@ export class Compiler {
 
         if (url.startsWith('tgz:')) {
           let fullName = url.replace(/^tgz:/, '');
+
+          let file = getFromTarball(fullName);
           let [name, version = 'latest'] = fullName.split('@');
           let response = await fetch(`https://registry.npmjs.org/${name}`);
           let json = await response.json();
@@ -167,11 +170,13 @@ export class Compiler {
            */
           if (name.includes('/components')) {
             this.#log('[fetch] compiling from esm.sh', name);
+
             const compiler = await this.#getCompiler('js', null);
             const compiled = await compiler.compile(source, name);
 
             return new Response(new Blob([compiled], { type: 'application/javascript' }));
           }
+
           this.#log('[fetch] return raw from esm.sh', name);
 
           return new Response(new Blob([source], { type: 'application/javascript' }));
