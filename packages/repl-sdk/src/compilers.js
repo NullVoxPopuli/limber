@@ -171,6 +171,11 @@ export const compilers = {
       return markdown.compiler(...args);
     },
   },
+  js: {
+    compiler: async (...args) => {
+      return compilers.gjs.compiler(...args);
+    },
+  },
   gjs: {
     compiler: async (...args) => {
       const gjs = await import('./compilers/ember-gjs.js');

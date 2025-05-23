@@ -129,6 +129,24 @@ export class Compiler {
           }
         }
 
+        if (url.startsWith('tgz:')) {
+          let fullName = url.replace(/^tgz:/, '');
+          let [name, version = 'latest'] = fullName.split('@');
+          let response = await fetch(`https://registry.npmjs.org/${name}`);
+          let json = await response.json();
+          let tag = json['dist-tags'].latest;
+
+          let requested = json.versions[tag];
+          let exports = requested.exports;
+          let tgzUrl = requested.dist.tarball;
+
+          // TODO:
+          // - fetch tarball
+          // - untar
+          // - cache
+          // - load requested module via `package.json#exports`
+        }
+
         this.#log('[fetch] fetching url', url, options);
 
         if (url.startsWith('esm.sh:')) {
@@ -136,13 +154,25 @@ export class Compiler {
           // Where is this double // coming from?
           let newUrl =
             `https://esm.sh/*${name}`.replaceAll('//', '/').replaceAll('/*/*', '/*') +
-            '?bundle=false';
+            '?bundle=false&dev&target=esnext&keep-names';
 
           const response = await fetch(newUrl, options);
 
           if (!response.ok) return response;
 
           const source = await response.text();
+
+          /**
+           * We don't know if this code is completely ready to run in the browser yet, so we need to run in through the compiler again
+           */
+          if (name.includes('/components')) {
+            this.#log('[fetch] compiling from esm.sh', name);
+            const compiler = await this.#getCompiler('js', null);
+            const compiled = await compiler.compile(source, name);
+
+            return new Response(new Blob([compiled], { type: 'application/javascript' }));
+          }
+          this.#log('[fetch] return raw from esm.sh', name);
 
           return new Response(new Blob([source], { type: 'application/javascript' }));
         }

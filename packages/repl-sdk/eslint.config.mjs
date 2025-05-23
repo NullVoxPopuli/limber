@@ -5,4 +5,10 @@ export default [
   {
     ignores: ["tests-ember", "tests-self"],
   },
+  {
+    files: ["**/*.test.ts"],
+    rules: {
+      "@typescript-eslint/no-unsafe-call": "off",
+    },
+  },
 ];

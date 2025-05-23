@@ -1561,6 +1561,9 @@ importers:
       vite-plugin-dts:
         specifier: 4.5.3
         version: 4.5.3(7b87ff620be75c66e361b8dfb39bab9c)
+      vitest:
+        specifier: ^3.1.2
+        version: 3.1.2(212b84efdd1fb3a1616191536ec10813)
 
   packages/syntax/-infra:
     dependencies:
