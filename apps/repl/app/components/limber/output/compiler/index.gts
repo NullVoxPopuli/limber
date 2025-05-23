@@ -64,6 +64,7 @@ export default class Compiler extends Component<Signature> {
   };
 
   onError = async (error: string) => {
+    console.error(error);
     await this.parentFrame.error({ error });
   };
 

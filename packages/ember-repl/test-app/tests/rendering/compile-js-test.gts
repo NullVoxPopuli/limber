@@ -2,7 +2,7 @@ import { click, render } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import { compileJS } from 'ember-repl/formats/gjs';
+import { compileJS } from 'ember-repl/compile/formats/gjs';
 // import this so we don't tree-shake it away
 import ExampleComponent from 'ember-repl-test-app/components/example-component';
 

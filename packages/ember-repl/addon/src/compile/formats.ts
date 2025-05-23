@@ -18,7 +18,7 @@ export async function compileGJS(
   importMap?: EvalImportMap
 ): Promise<CompileResult> {
   try {
-    const { compileJS } = await import('./formats/gjs/index.ts');
+    const { compileJS } = await import('./formats/gjs.ts');
 
     return await compileJS(gjsInput, importMap);
   } catch (error) {
