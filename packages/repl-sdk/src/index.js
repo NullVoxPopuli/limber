@@ -56,8 +56,6 @@ export class Compiler {
           return `manual:${vanilla}`;
         }
 
-        this.#log(`[resolve] ${id} not found, deferring to esm.sh`);
-
         if (id.startsWith('node:')) {
           this.#log(`Is known node module: ${id}. Grabbing polyfill`);
           if (id === 'node:process') return `esm.sh:process`;
@@ -70,7 +68,9 @@ export class Compiler {
           if (id === 'node:fs') return `esm.sh:browserify-fs`;
         }
 
-        return `esm.sh:${id}`;
+        this.#log(`[resolve] ${id} not found, deferring to npmjs.com's provided tarball`);
+
+        return `tgz:${id}`;
       },
       // Hook source fetch function
       fetch: async (url, options) => {
@@ -133,21 +133,9 @@ export class Compiler {
         if (url.startsWith('tgz:')) {
           let fullName = url.replace(/^tgz:/, '');
 
-          let file = getFromTarball(fullName);
-          let [name, version = 'latest'] = fullName.split('@');
-          let response = await fetch(`https://registry.npmjs.org/${name}`);
-          let json = await response.json();
-          let tag = json['dist-tags'].latest;
+          let file = await getFromTarball(fullName);
 
-          let requested = json.versions[tag];
-          let exports = requested.exports;
-          let tgzUrl = requested.dist.tarball;
-
-          // TODO:
-          // - fetch tarball
-          // - untar
-          // - cache
-          // - load requested module via `package.json#exports`
+          // console.log({ file });
         }
 
         this.#log('[fetch] fetching url', url, options);
