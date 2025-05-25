@@ -135,7 +135,7 @@ export class Compiler {
 
           let file = await getFromTarball(fullName);
 
-          // console.log({ file });
+          return new Response(new Blob([file], { type: 'application/javascript' }));
         }
 
         this.#log('[fetch] fetching url', url, options);

@@ -1,3 +1,5 @@
+import type { FileDescription } from 'tarparser';
+
 interface PublicMethods {
   /**
    * Will try to use a shimmed import, or will return null.
@@ -141,4 +143,21 @@ export interface Options {
    * Show extra debug logging or not
    */
   logging?: boolean | undefined;
+}
+
+export interface UntarredPackage {
+  /**
+   * the package.json
+   */
+  manifest: {
+    name: string;
+    version: string;
+    exports?: unknown;
+    main?: string;
+    module?: string;
+    browser?: string;
+  };
+  contents: {
+    [path: string]: FileDescription;
+  };
 }

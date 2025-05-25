@@ -1530,12 +1530,12 @@ importers:
 
   packages/repl-sdk:
     dependencies:
-      '@andrewbranch/untar.js':
-        specifier: ^1.0.3
-        version: 1.0.3
       es-module-shims:
         specifier: ^2.4.1
         version: 2.4.1
+      tarparser:
+        specifier: ^0.0.4
+        version: 0.0.4
     devDependencies:
       '@babel/plugin-proposal-decorators':
         specifier: ^7.23.9
@@ -2341,9 +2341,6 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
-
-  '@andrewbranch/untar.js@1.0.3':
-    resolution: {integrity: sha512-Jh15/qVmrLGhkKJBdXlK1+9tY4lZruYjsgkDFj08ZmDiWVBLJcqkok7Z0/R0In+i1rScBpJlSvrTS2Lm41Pbnw==}
 
   '@asamuzakjp/css-color@3.1.5':
     resolution: {integrity: sha512-w7AmVyTTiU41fNLsFDf+gA2Dwtbx2EJtn2pbJNAGSRAg50loXy1uLXA3hEpD8+eydcomTurw09tq5/AyceCaGg==}
@@ -11318,6 +11315,9 @@ packages:
     resolution: {integrity: sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A==}
     engines: {node: '>=10'}
 
+  tarparser@0.0.4:
+    resolution: {integrity: sha512-H3+VR6ys/N4eRBYbcyKuy4i0lKAxW/tx+wZANTFPfXjHLkz7UDs7V9g0rdGJDsVWYyqnmvmLM7YqWZ7yrtoReA==}
+
   temp-dir@2.0.0:
     resolution: {integrity: sha512-aoBAniQmmwtcKp/7BzsH8Cxzv8OL736p7v1ihGb5e9DJ9kTwGWHrQrVB5+lfVDzfGrdRzXch+ig7LHaY1JTOrg==}
     engines: {node: '>=8'}
@@ -12367,8 +12367,6 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.8
       '@jridgewell/trace-mapping': 0.3.25
-
-  '@andrewbranch/untar.js@1.0.3': {}
 
   '@asamuzakjp/css-color@3.1.5':
     dependencies:
@@ -23840,6 +23838,8 @@ snapshots:
       minizlib: 2.1.2
       mkdirp: 1.0.4
       yallist: 4.0.0
+
+  tarparser@0.0.4: {}
 
   temp-dir@2.0.0: {}
 

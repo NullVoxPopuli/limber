@@ -1,4 +1,4 @@
-import { untar } from '@andrewbranch/untar.js';
+import { parseTar } from 'tarparser';
 
 import { parseSpecifier } from './specifier.js';
 
@@ -9,9 +9,11 @@ import { parseSpecifier } from './specifier.js';
  * This format should still be ESM.
  */
 const CONDITIONS = ['repl', 'module', 'browser', 'import', 'default', 'development'];
+const RESOLVE_VIA = ['exports', 'module', 'browser', 'main'];
 
 /**
- * @type {Map<string, unknown>} namp@version => untarred data
+ *
+ * @type {Map<string, import('./types.ts').UntarredPackage)>} namp@version => untarred data
  */
 const tarballCache = new Map();
 
@@ -30,6 +32,47 @@ export async function getFromTarball(specifier) {
   let untarred = await getTar(name, version);
 
   // TODO: refer to package.json.exports for resolving the path
+  return resolve(untarred, path);
+}
+
+/**
+ * @param {import('./types.ts').UntarredPackage} untarred
+ * @param {string} path
+ */
+function resolve(untarred, path) {
+  let { main, module, browser, exports, name } = untarred.manifest;
+
+  let target = path;
+
+  if (!exports) {
+    target = browser ?? module ?? main;
+  }
+
+  if (exports && typeof exports === 'object') {
+    for (const condition of CONDITIONS) {
+      let maybe = exports[path];
+
+      if (maybe[condition]) {
+        target = maybe[condition];
+
+        break;
+      }
+    }
+  }
+
+  let toFind = target.replace(/^\.\//, '');
+  let file = untarred.contents[toFind]?.text;
+
+  if (!file) {
+    console.group(`${name} file info`);
+    console.info(`${name} has available: `, exports ?? browser ?? module ?? main);
+    console.info(`${name} has these files: `, Object.keys(untarred.contents));
+    console.info(`We searched for '${toFind}'`);
+    console.groupEnd();
+    throw new Error(`Could not resolve \`${path}\` in ${name}`);
+  }
+
+  return file;
 }
 
 /**
@@ -45,9 +88,7 @@ async function getTar(name, requestedVersion) {
   }
 
   let json = await getNPMInfo(name, requestedVersion);
-  let requested = await getManifest(json, name, requestedVersion);
-
-  let tgzUrl = requested.dist.tarball;
+  let tgzUrl = await getTarUrl(json, name, requestedVersion);
 
   let response = await fetch(tgzUrl, {
     headers: {
@@ -55,20 +96,30 @@ async function getTar(name, requestedVersion) {
     },
   });
 
-  console.log('Attempting to untar');
+  let contents = await untar(await response.arrayBuffer());
 
-  let files = untar(await response.arrayBuffer());
+  let manifest = JSON.parse(contents['package.json'].text);
 
-  console.log({ files: await Promise.all(files.map((f) => f.readAsString())) });
+  let info = { manifest, contents };
+
+  tarballCache.set(key, info);
+
+  return info;
 }
 
-async function getManifest(npmInfo, name, requestedVersion) {
-  let key = `${name}@${requestedVersion}`;
+async function untar(arrayBuffer) {
+  const contents = {};
 
-  if (manifestCache.has(key)) {
-    return manifestCache.get(key);
+  for (const file of await parseTar(arrayBuffer)) {
+    if (file.type === 'file') {
+      contents[file.name.slice(8)] = file; // remove `package/` prefix
+    }
   }
 
+  return contents;
+}
+
+async function getTarUrl(npmInfo, name, requestedVersion) {
   let json = npmInfo;
 
   let tag =
@@ -78,9 +129,7 @@ async function getManifest(npmInfo, name, requestedVersion) {
 
   let requested = json.versions[tag];
 
-  manifestCache.set(key, requested);
-
-  return requested;
+  return requested.dist.tarball;
 }
 
 /**
