@@ -19,11 +19,15 @@ const RESOLVE_VIA = ['exports', 'module', 'browser', 'main'];
 const tarballCache = new Map();
 
 /**
- * @type {Map<string, unknown>} namp@version => manifest
+ * @type {Map<string, unknown>} specifier => fileText
  */
-const manifestCache = new Map();
+const fileCache = new Map();
 
 export async function getFromTarball(specifier) {
+  if (fileCache.has(specifier)) {
+    return fileCache.get(specifier);
+  }
+
   let parsed = parseSpecifier(specifier);
   let { name, version = 'latest', path } = parsed;
 
@@ -32,8 +36,11 @@ export async function getFromTarball(specifier) {
    */
   let untarred = await getTar(name, version);
 
-  // TODO: refer to package.json.exports for resolving the path
-  return resolve(untarred, path);
+  let result = resolve(untarred, path);
+
+  fileCache.set(specifier, result);
+
+  return result;
 }
 
 /**
