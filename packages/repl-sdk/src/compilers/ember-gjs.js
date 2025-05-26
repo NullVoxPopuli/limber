@@ -146,7 +146,10 @@ export async function compiler(config = {}, api) {
 
   const preprocessor = new contentTag.Preprocessor();
 
-  return {
+  /**
+   * @type {import('../types.ts').Compiler}
+   */
+  let gjsCompiler = {
     resolve: (id) => {
       if (id.startsWith('@ember')) {
         return `https://esm.sh/*ember-source/dist/packages/${id}`;
@@ -198,5 +201,15 @@ export async function compiler(config = {}, api) {
        */
       renderApp({ element, compiler, component: compiled });
     },
+    handlers: {
+      js: async (text) => {
+        return gjsCompiler.compile(text);
+      },
+      mjs: async (text) => {
+        return gjsCompiler.compile(text);
+      },
+    },
   };
+
+  return gjsCompiler;
 }

@@ -133,19 +133,12 @@ export class Compiler {
         if (url.startsWith('tgz:')) {
           let fullName = url.replace(/^tgz:/, '');
 
-          let file = await getFromTarball(fullName);
+          let { code, ext } = await getFromTarball(fullName);
 
           /**
-           * We don't know if this code is completely ready to run in the browser yet, so we need to run in through the compiler again
+           * We don't know if this code is completely ready to run in the browser yet, so we might need to run in through the compiler again
            */
-          if (fullName.includes('/components')) {
-            this.#log('[fetch] compiling from esm.sh', name);
-
-            const compiler = await this.#getCompiler('js', null);
-            const compiled = await compiler.compile(file, fullName);
-
-            return new Response(new Blob([compiled], { type: 'application/javascript' }));
-          }
+          let file = await this.#postProcess(code, ext);
 
           return new Response(new Blob([file], { type: 'application/javascript' }));
         }
@@ -194,6 +187,26 @@ export class Compiler {
   }
 
   /**
+   * NOTE: this does not resolve compilers that are not loaded yet.
+   * So there would be a bit of a race condition here if different compilers
+   * were to have incompatible post-processing handlers.
+   *
+   * @param {string} text
+   * @param {string} ext
+   */
+  async #postProcess(text, ext) {
+    let code = text;
+
+    for (let compiler of this.#compilers) {
+      if (compiler.handlers?.[ext]) {
+        code = await compiler.handlers[ext](code);
+      }
+    }
+
+    return code;
+  }
+
+  /**
    * @param {string} format
    * @param {string} text
    * @param {{ fileName?: string, flavor?: string }} [ options ]
@@ -230,6 +243,8 @@ export class Compiler {
   }
 
   #compilerCache = new WeakMap();
+  #compilers = new Set();
+
   /**
    * @param {string} format
    * @param {string | undefined} flavor
@@ -244,6 +259,7 @@ export class Compiler {
     const compiler = await config.compiler(this.optionsFor(format, flavor), this.#nestedPublicAPI);
 
     this.#compilerCache.set(config, compiler);
+    this.#compilers.add(compiler);
 
     return compiler;
   }

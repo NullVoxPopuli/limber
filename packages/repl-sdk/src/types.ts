@@ -36,6 +36,49 @@ export interface ResolvedCompilerOptions {
   versions: { [packageName: string]: string };
 }
 
+export interface Compiler {
+  /**
+   * Convert a string from "fileExtension" to standard JavaScript.
+   * This will be loaded as a module and then passed to the render method.
+   *
+   * You may return either just a string, or an object with a `compiled` property that is a string -- any additional properties will be passde through to the render function -- which may be useful if there is accompanying CSS.
+   */
+  compile: (text: string) => Promise<string | ({ compiled: string } & Record<string, unknown>)>;
+  /**
+   * For the root of a node rendered for this compiler,
+   * how will this particular library / framework
+   * render in to the given element?
+   *
+   * Example:
+   * ```js
+   * {
+   *   async compiler() {
+   *     const { createRoot } = await import('react-dom/client');
+   *
+   *     return {
+   *        render(element, defaultExport) {
+   *          const root = createRoot(element);
+   *
+   *          root.render(defaultExport);
+   *        },
+   *        // ...
+   *     }
+   *   }
+   * }
+   * ```
+   *
+   * @param {HTMLElement} the element to render in to, this is provided by repl-sdk.
+   * @param {any} defaultExport the default export from the compiled module.
+   * @param {{ compiled: string } & Record<string, unknown>} extras the compiled string (for reference), as well as any extra information that may have been returned from the compile function.
+   */
+  render: (
+    element: HTMLElement,
+    defaultExport: unknown,
+    extras: { compiled: string } & Record<string, unknown>,
+    compiler: PublicMethods
+  ) => void;
+}
+
 export interface CompilerConfig {
   /**
    * When using this file extension in markdown documents,
@@ -66,48 +109,53 @@ export interface CompilerConfig {
      * of the compiler/library/framework dependencies to use.
      */
     config: Record<string, unknown>
-  ) => Promise<{
-    /**
-     * Convert a string from "fileExtension" to standard JavaScript.
-     * This will be loaded as a module and then passed to the render method.
-     *
-     * You may return either just a string, or an object with a `compiled` property that is a string -- any additional properties will be passde through to the render function -- which may be useful if there is accompanying CSS.
-     */
-    compile: (text: string) => Promise<string | ({ compiled: string } & Record<string, unknown>)>;
-    /**
-     * For the root of a node rendered for this compiler,
-     * how will this particular library / framework
-     * render in to the given element?
-     *
-     * Example:
-     * ```js
-     * {
-     *   async compiler() {
-     *     const { createRoot } = await import('react-dom/client');
-     *
-     *     return {
-     *        render(element, defaultExport) {
-     *          const root = createRoot(element);
-     *
-     *          root.render(defaultExport);
-     *        },
-     *        // ...
-     *     }
-     *   }
-     * }
-     * ```
-     *
-     * @param {HTMLElement} the element to render in to, this is provided by repl-sdk.
-     * @param {any} defaultExport the default export from the compiled module.
-     * @param {{ compiled: string } & Record<string, unknown>} extras the compiled string (for reference), as well as any extra information that may have been returned from the compile function.
-     */
-    render: (
-      element: HTMLElement,
-      defaultExport: unknown,
-      extras: { compiled: string } & Record<string, unknown>,
-      compiler: PublicMethods
-    ) => void;
-  }>;
+  ) => Promise<Compiler>;
+
+  /**
+   * Sometimes libraries do not publish browser-compatible modules,
+   * and require additional transpilation.
+   * Usually this happens by the consuming application's build process -- but in this REPL,
+   * we are kind of not exactly a consuming application, but still need to handle the further
+   * build concerns.
+   *
+   * For example, `import.meta.env.DEV` is not a platform native thing that and requires
+   * a build plugin. Vite has one built in, but all other tools need to manually specify
+   * what to do with `import.meta.env.DEV`.
+   *
+   * Another example, some component frameworks may use templates, which can only be compiled
+   * by the host application, as the details of how a template is compiled are private API,
+   * and can vary in minor releases of the template compiler.
+   *
+   * This should be a map of file extensions to async functions that must return either the
+   * original file text or additionally transformed text.
+   *
+   * ```js
+   * handlers: {
+   *   // When resolving a .js file from a CDN or NPM, replace `import.meta.env.DEV` with `true`
+   *   js: async(text) => {
+   *     return text.replaceAll('import.meta.env.DEV', 'true');
+   *   }
+   * }
+   * ```
+   *
+   * This could also be used to run the same build step on fetched files as
+   * the files provided to the REPL.
+   *
+   * ```js
+   * let compiler = {
+   *   compile: async (text) => { ... },
+   *   render: async (element, compiled, ...rest) => { ... },
+   *   handlers: {
+   *     js: async(text) => {
+   *       return compiler.compile(text);
+   *     }
+   *   }
+   * }
+   * ```
+   */
+  handlers?: {
+    [fileExtension: string]: (text: string) => Promise<string>;
+  };
 }
 
 export interface Options {

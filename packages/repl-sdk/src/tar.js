@@ -23,6 +23,10 @@ const tarballCache = new Map();
  */
 const fileCache = new Map();
 
+/**
+ * @param {string} specifier
+ * @returns {Promise<{ code: string, ext: string }>}
+ */
 export async function getFromTarball(specifier) {
   if (fileCache.has(specifier)) {
     return fileCache.get(specifier);
@@ -46,6 +50,7 @@ export async function getFromTarball(specifier) {
 /**
  * @param {import('./types.ts').UntarredPackage} untarred
  * @param {string} path
+ * @returns {{ code: string, ext: string }}
  */
 function resolve(untarred, path) {
   let { main, module, browser, exports, name } = untarred.manifest;
@@ -58,9 +63,10 @@ function resolve(untarred, path) {
     for (let option of options) {
       if (option) {
         let toFind = option.replace(/^\.\//, '');
-        let file = untarred.contents[toFind]?.text;
+        let code = untarred.contents[toFind]?.text;
+        let ext = toFind.split('.').pop();
 
-        if (file) return file;
+        if (code) return { code, ext };
       }
     }
   }
@@ -70,9 +76,9 @@ function resolve(untarred, path) {
   //
   // Extensions will be required for this to work though
   let toFind = path.replace(/^\.\//, '');
-  let file = untarred.contents[toFind]?.text;
+  let code = untarred.contents[toFind]?.text;
 
-  if (!file) {
+  if (!code) {
     console.group(`${name} file info`);
     console.info(`${name} has available: `, exports ?? browser ?? module ?? main);
     console.info(`${name} has these files: `, Object.keys(untarred.contents));
@@ -81,7 +87,9 @@ function resolve(untarred, path) {
     throw new Error(`Could not resolve \`${path}\` in ${name}`);
   }
 
-  return file;
+  let ext = toFind.split('.').pop();
+
+  return { code, ext };
 }
 
 /**
