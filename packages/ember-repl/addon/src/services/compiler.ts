@@ -1,0 +1,229 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { assert } from '@ember/debug';
+import { array, concat, fn, get, hash } from '@ember/helper';
+import { on } from '@ember/modifier';
+import Service from '@ember/service';
+import { template } from '@ember/template-compiler/runtime';
+
+import { Compiler } from 'repl-sdk';
+
+import { nameFor } from '../compile/utils.ts';
+
+import type { CompileResult } from '../compile/types.ts';
+import type { ComponentLike } from '@glint/template';
+
+interface ModuleMap {
+  [key: string]: () => Promise<unknown>;
+}
+
+const modules = (extraModules: ModuleMap) => ({
+  /////////////////////////////
+  // Provided by the framework
+  /////////////////////////////
+  '@ember/application': () => import('@ember/application'),
+  '@ember/application/instance': () => import('@ember/application/instance'),
+  '@ember/array': () => import('@ember/array'),
+  '@ember/component': () => import('@ember/component'),
+  '@ember/component/helper': () => import('@ember/component/helper'),
+  '@ember/component/template-only': () => import('@ember/component/template-only'),
+  '@ember/debug': () => import('@ember/debug'),
+  '@ember/destroyable': () => import('@ember/destroyable'),
+  '@ember/helper': () => import('@ember/helper'),
+  '@ember/modifier': () => import('@ember/modifier'),
+  '@ember/object': () => import('@ember/object'),
+  '@ember/routing': () => import('@ember/routing'),
+  '@ember/routing/route': () => import('@ember/routing/route'),
+  '@ember/routing/router': () => import('@ember/routing/router'),
+  '@ember/runloop': () => import('@ember/runloop'),
+  '@ember/service': () => import('@ember/service'),
+  '@ember/test-helpers': () => import('@ember/test-helpers'),
+  '@ember/template-factory': () => import('@ember/template-factory'),
+  '@ember/template-compilation': () => import('@ember/template-compilation'),
+  '@ember/utils': () => import('@ember/utils'),
+  '@ember/template': () => import('@ember/template'),
+  '@ember/owner': () => import('@ember/owner'),
+  '@glimmer/component': () => import('@glimmer/component'),
+  '@glimmer/tracking': () => import('@glimmer/tracking'),
+  'ember-resolver': () => import('ember-resolver'),
+  /////////////////////////////
+  // Provided by the user (optional)
+  /////////////////////////////
+  ...extraModules,
+  /////////////////////////////
+  // Required for compilation (in addition to (some of) the framework deps
+  /////////////////////////////
+  'ember-source/dist/ember-template-compiler': () =>
+    import(
+      // eslint-disable-next-line
+      // @ts-ignore
+      'ember-source/dist/ember-template-compiler.js'
+    ),
+  'ember-source/dist/ember-template-compiler.js': () =>
+    import(
+      // eslint-disable-next-line
+      // @ts-ignore
+      'ember-source/dist/ember-template-compiler.js'
+    ),
+  // Direct Dependencies
+  '@babel/standalone': () => import('@babel/standalone'),
+  'content-tag': () => import('content-tag'),
+  'decorator-transforms': () => import('decorator-transforms'),
+  'decorator-transforms/runtime': () => import('decorator-transforms/runtime'),
+  'babel-plugin-ember-template-compilation': () =>
+    import('babel-plugin-ember-template-compilation'),
+  // Dependencies of the above
+  'babel-import-util': () => import('babel-import-util'),
+  // eslint-disable-next-line
+  // @ts-ignore
+  'babel-plugin-debug-macros': () => import('babel-plugin-debug-macros'),
+  '@embroider/macros': () => ({
+    // passthrough, we are not doing dead-code-elimination
+    macroCondition: (x: boolean) => x,
+    // I *could* actually implement this
+    dependencySatisfies: () => true,
+    isDevelopingApp: () => true,
+    getGlobalConfig: () => ({
+      WarpDrive: {
+        debug: false,
+        env: {
+          DEBUG: false,
+          TESTING: false,
+          PRODUCTION: true,
+        },
+        activeLogging: false,
+        compatWith: '99.0',
+        features: {},
+        deprecations: {},
+        polyfillUUID: false,
+        includeDataAdapter: false,
+      },
+    }),
+    // Private
+    // @ts-ignore
+    importSync: (x: string) => window[Symbol.for('__repl-sdk__compiler__')].resolves[x],
+    moduleExists: () => false,
+  }),
+});
+
+export default class CompilerService extends Service {
+  #compiler: Compiler | undefined;
+
+  /**
+   * @param {ModuleMap} [ extraModules ]: map of import paths to modules.
+   *  These modules are useful if you need to document a library or a any design system or a styleguide or
+   *  if there are additional modules that could be imported in the passed `code`.
+   *
+   *  Later on, imports that are not present by default (ember/glimmer) or that
+   *  are not provided by extraModules will be searched on npm to see if a package
+   *  needs to be downloaded before running the `code` / invoking the component
+   */
+  setup = (extraModules: ModuleMap = {}) => {
+    const localModules = modules(extraModules);
+
+    this.#compiler = new Compiler({
+      logging: true,
+      resolve: {
+        ...localModules,
+      },
+    });
+  };
+
+  get compiler() {
+    assert(
+      `Expected a compiled to be setup on the compiler service. Use \`compiler.setup()\` first.`,
+      this.#compiler
+    );
+
+    return this.#compiler;
+  }
+
+  async compile(ext: string, text: string) {
+    return this.compiler.compile(ext, text);
+  }
+
+  /**
+   * Transpiles GlimmerJS (*.gjs) formatted text into and evaluates as a JS Module.
+   * The returned component can be invoked explicitly in the consuming project.
+   *
+   * @param {string} code the code to be compiled
+   */
+  async compileGJS(code: string): Promise<CompileResult> {
+    const name = nameFor(code);
+    let component: undefined | ComponentLike;
+    let error: undefined | Error;
+    /**
+     * TODO: move this Compiler to a service
+     */
+
+    try {
+      const element = await this.compiler.compile('gjs', code);
+
+      component = template(`{{element}}`, {
+        scope: () => ({ element }),
+      }) as unknown as ComponentLike;
+    } catch (e) {
+      console.error(e);
+      error = e as Error | undefined;
+    }
+
+    return { name, component, error };
+  }
+
+  /**
+   * compile a template with an empty scope
+   * to use components, helpers, etc, you will need to compile with JS
+   *
+   * (templates alone do not have a way to import / define complex structures)
+   */
+  compileHBS(
+    source: string,
+    options: {
+      /**
+       * Used for debug viewing
+       */
+      moduleName?: string;
+      /**
+       * Additional values to include in hbs scope.
+       * This is a _strict mode_ hbs component.
+       */
+      scope?: Record<string, unknown>;
+    } = {}
+  ): CompileResult {
+    const name = nameFor(source);
+    let component: undefined | ComponentLike;
+    let error: undefined | Error;
+
+    try {
+      component = template(source, {
+        scope: () => ({ array, concat, fn, get, hash, on, ...(options?.scope ?? {}) }),
+      }) as unknown as ComponentLike;
+    } catch (e) {
+      error = e as Error | undefined;
+    }
+
+    return { name, component, error };
+  }
+
+  async compileMD(source: string): Promise<CompileResult> {
+    const name = nameFor(source);
+    let component: undefined | ComponentLike;
+    let error: undefined | Error;
+    /**
+     * TODO: move this Compiler to a service
+     */
+
+    try {
+      const element = await this.compiler.compile('md', source);
+
+      component = template(`{{element}}`, {
+        scope: () => ({ element }),
+      }) as unknown as ComponentLike;
+    } catch (e) {
+      console.error(e);
+      error = e as Error | undefined;
+    }
+
+    return { name, component, error };
+  }
+}

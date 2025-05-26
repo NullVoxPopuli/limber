@@ -145,36 +145,6 @@ export class Compiler {
 
         this.#log('[fetch] fetching url', url, options);
 
-        if (url.startsWith('esm.sh:')) {
-          let name = url.replace(/^esm\.sh:/, '');
-          // Where is this double // coming from?
-          let newUrl =
-            `https://esm.sh/*${name}`.replaceAll('//', '/').replaceAll('/*/*', '/*') +
-            '?bundle=false&dev&target=esnext&keep-names';
-
-          const response = await fetch(newUrl, options);
-
-          if (!response.ok) return response;
-
-          const source = await response.text();
-
-          /**
-           * We don't know if this code is completely ready to run in the browser yet, so we need to run in through the compiler again
-           */
-          if (name.includes('/components')) {
-            this.#log('[fetch] compiling from esm.sh', name);
-
-            const compiler = await this.#getCompiler('js', null);
-            const compiled = await compiler.compile(source, name);
-
-            return new Response(new Blob([compiled], { type: 'application/javascript' }));
-          }
-
-          this.#log('[fetch] return raw from esm.sh', name);
-
-          return new Response(new Blob([source], { type: 'application/javascript' }));
-        }
-
         const response = await fetch(url, options);
 
         if (!response.ok) return response;

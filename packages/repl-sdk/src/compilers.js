@@ -1,5 +1,3 @@
-import { esmsh, jsdelivr } from './compilers/cdn.js';
-
 export const compilers = {
   /**
    * JSX is too overloaded to treat one way.
@@ -29,13 +27,8 @@ export const compilers = {
      * https://react.dev/
      */
     react: {
-      compiler: async (config = {}) => {
-        const versions = config.versions || {};
-
-        const [{ createRoot }, babel] = await esmsh.importAll(versions, [
-          'react-dom',
-          '@babel/standalone',
-        ]);
+      compiler: async (config = {}, api) => {
+        const [{ createRoot }, babel] = await api.tryResolveAll(['react-dom', '@babel/standalone']);
 
         return {
           compile: async (text) => {
@@ -72,9 +65,9 @@ export const compilers = {
    */
   mermaid: {
     needsLiveMeta: false,
-    compiler: async (config = {}) => {
+    compiler: async (config = {}, api) => {
       const versions = config.versions || {};
-      const { default: mermaid } = await esmsh.import(versions, 'mermaid');
+      const { default: mermaid } = await api.tryResolve('mermaid');
 
       let id = 0;
 
@@ -94,9 +87,9 @@ export const compilers = {
    * https://svelte.dev/
    */
   svelte: {
-    compiler: async (config = {}) => {
+    compiler: async (config = {}, api) => {
       const versions = config.versions || {};
-      const { compile } = await esmsh.import(versions, 'svelte/compiler');
+      const { compile } = await api.tryResolve('svelte/compiler');
 
       return {
         compile: async (text) => {
@@ -124,10 +117,10 @@ export const compilers = {
    * https://vuejs.org/
    */
   vue: {
-    compiler: async (config = {}) => {
+    compiler: async (config = {}, api) => {
       const versions = config.versions || {};
 
-      const [{ createApp }, { compileFile, useStore }] = await jsdelivr.importAll(versions, [
+      const [{ createApp }, { compileFile, useStore }] = await api.tryResolveAll([
         'vue',
         '@vue/repl',
       ]);

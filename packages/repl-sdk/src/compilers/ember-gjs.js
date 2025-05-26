@@ -1,5 +1,4 @@
 import { secret } from '../cache.js';
-import { esmsh } from './cdn.js';
 import { renderApp } from './ember/render-app-island.js';
 
 const buildDependencies = [
@@ -51,8 +50,6 @@ const buildDependencies = [
  * @param {import('../types.ts').PublicMethods} api
  */
 export async function compiler(config = {}, api) {
-  const versions = config.versions || {};
-
   const [
     _babel,
     _decoratorTransforms,
@@ -61,9 +58,7 @@ export async function compiler(config = {}, api) {
     contentTag,
     { default: DebugMacros },
     // embroiderMacros,
-  ] = await api.tryResolveAll(buildDependencies, (moduleName) =>
-    esmsh.import(versions, moduleName)
-  );
+  ] = await api.tryResolveAll(buildDependencies);
 
   // These libraries are compiled incorrectly for cjs<->ESM compat
   const decoratorTransforms =

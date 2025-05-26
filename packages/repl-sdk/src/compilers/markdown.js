@@ -1,5 +1,4 @@
 import { assert, nextId } from '../utils.js';
-import { esmsh } from './cdn.js';
 
 const GLIMDOWN_PREVIEW = Symbol('__GLIMDOWN_PREVIEW__');
 const GLIMDOWN_RENDER = Symbol('__GLIMDOWN_RENDER__');
@@ -42,7 +41,7 @@ export async function compiler(config = {}, api) {
     { default: remarkRehype },
     { unified },
     { visit },
-  ] = await esmsh.importAll(versions, [
+  ] = await api.tryResolveAll([
     'rehype-raw',
     'rehype-stringify',
     'remark-gfm',
