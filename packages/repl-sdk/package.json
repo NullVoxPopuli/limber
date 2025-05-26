@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "es-module-shims": "^2.4.1",
+    "resolve.exports": "^2.0.3",
     "tarparser": "^0.0.4"
   },
   "volta": {

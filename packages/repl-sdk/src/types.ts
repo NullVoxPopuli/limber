@@ -152,7 +152,7 @@ export interface UntarredPackage {
   manifest: {
     name: string;
     version: string;
-    exports?: unknown;
+    exports?: ManifestExports;
     main?: string;
     module?: string;
     browser?: string;
@@ -160,4 +160,10 @@ export interface UntarredPackage {
   contents: {
     [path: string]: FileDescription;
   };
+}
+
+type ManifestExport = string | string[] | { [condition: string]: ManifestExport };
+
+export interface ManifestExports {
+  [importPath: string]: ManifestExport;
 }

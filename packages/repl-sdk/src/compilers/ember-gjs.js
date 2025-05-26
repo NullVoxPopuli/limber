@@ -1,6 +1,6 @@
+import { secret } from '../cache.js';
 import { esmsh } from './cdn.js';
 import { renderApp } from './ember/render-app-island.js';
-import { secret } from '../cache.js';
 
 const buildDependencies = [
   /**

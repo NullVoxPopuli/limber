@@ -92,7 +92,7 @@ export async function compileJS(
           'ember-source/dist/ember-template-compiler.js'
         ),
       // Direct Dependencies
-      // '@babel/standalone': import('@babel/standalone'),
+      '@babel/standalone': () => import('@babel/standalone'),
       'content-tag': () => import('content-tag'),
       'decorator-transforms': () => import('decorator-transforms'),
       'decorator-transforms/runtime': () => import('decorator-transforms/runtime'),
@@ -138,6 +138,7 @@ export async function compileJS(
 
     component = template(`{{element}}`, { scope: () => ({ element }) }) as unknown as ComponentLike;
   } catch (e) {
+    console.error(e);
     error = e as Error | undefined;
   }
 

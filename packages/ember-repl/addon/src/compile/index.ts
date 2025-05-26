@@ -124,6 +124,7 @@ export async function compile(
   }
 
   if (result.error) {
+    console.error(result.error.stack);
     await onError(result.error.message || `${result.error}`);
 
     return;

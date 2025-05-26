@@ -1533,6 +1533,9 @@ importers:
       es-module-shims:
         specifier: ^2.4.1
         version: 2.4.1
+      resolve.exports:
+        specifier: ^2.0.3
+        version: 2.0.3
       tarparser:
         specifier: ^0.0.4
         version: 0.0.4

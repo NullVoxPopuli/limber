@@ -1,3 +1,4 @@
+import { exports as resolveExports } from 'resolve.exports';
 import { parseTar } from 'tarparser';
 
 import { parseSpecifier } from './specifier.js';
@@ -42,25 +43,17 @@ export async function getFromTarball(specifier) {
 function resolve(untarred, path) {
   let { main, module, browser, exports, name } = untarred.manifest;
 
-  let target = path;
+  for (let manifiestField of RESOLVE_VIA) {
+    let result = resolveVia(untarred.manifest, path, manifiestField);
 
-  if (!exports) {
-    target = browser ?? module ?? main;
+    if (result) return result;
   }
 
-  if (exports && typeof exports === 'object') {
-    for (const condition of CONDITIONS) {
-      let maybe = exports[path];
-
-      if (maybe[condition]) {
-        target = maybe[condition];
-
-        break;
-      }
-    }
-  }
-
-  let toFind = target.replace(/^\.\//, '');
+  // Super fallback, just see if we can find the file...
+  // This may be stupid, because not even node allows for this.
+  //
+  // Extensions will be required for this to work though
+  let toFind = path.replace(/^\.\//, '');
   let file = untarred.contents[toFind]?.text;
 
   if (!file) {
@@ -73,6 +66,29 @@ function resolve(untarred, path) {
   }
 
   return file;
+}
+
+/**
+ * @param {import('./types.ts').UntarredPackage['manifest']} manifest
+ * @param {string} path
+ * @param {'exports' | 'module' | 'browser' | 'main'} manifiestField
+ */
+function resolveVia(manifest, path, manifiestField) {
+  let target = manifest[manifiestField];
+
+  if (!target) return;
+
+  if (typeof target === 'string') {
+    return target;
+  }
+
+  if (typeof target === 'object') {
+    debugger;
+
+    return resolveExports(manifest, path, {
+      conditions: CONDITIONS,
+    });
+  }
 }
 
 /**
