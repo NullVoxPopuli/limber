@@ -53,7 +53,16 @@ function resolve(untarred, path) {
   for (let manifiestField of RESOLVE_VIA) {
     let result = resolveVia(untarred.manifest, path, manifiestField);
 
-    if (result) return result;
+    let options = Array.isArray(result) ? result : [result];
+
+    for (let option of options) {
+      if (option) {
+        let toFind = option.replace(/^\.\//, '');
+        let file = untarred.contents[toFind]?.text;
+
+        if (file) return file;
+      }
+    }
   }
 
   // Super fallback, just see if we can find the file...
