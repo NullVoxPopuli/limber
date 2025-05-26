@@ -135,6 +135,18 @@ export class Compiler {
 
           let file = await getFromTarball(fullName);
 
+          /**
+           * We don't know if this code is completely ready to run in the browser yet, so we need to run in through the compiler again
+           */
+          if (fullName.includes('/components')) {
+            this.#log('[fetch] compiling from esm.sh', name);
+
+            const compiler = await this.#getCompiler('js', null);
+            const compiled = await compiler.compile(file, fullName);
+
+            return new Response(new Blob([compiled], { type: 'application/javascript' }));
+          }
+
           return new Response(new Blob([file], { type: 'application/javascript' }));
         }
 
