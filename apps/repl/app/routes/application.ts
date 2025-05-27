@@ -1,21 +1,26 @@
+import { getOwner } from '@ember/owner';
 import Route from '@ember/routing/route';
-import { cell } from 'ember-resources';
 
 import { setupTabster } from 'ember-primitives/tabster';
-import { setupREPL } from 'ember-repl';
+import { setupCompiler } from 'ember-repl';
+import { cell } from 'ember-resources';
+
 import { importMap } from './import-map.ts';
+
+import type Owner from '@ember/owner';
 
 const map = new WeakSet();
 
 export default class ApplicationRoute extends Route {
-  // The router is littered with bugs.. so here we only let the model hook run once per instance
-  model() {
+  constructor(owner: Owner) {
+    super(owner);
+
     if (!map.has(this)) {
       setupTabster(this);
       map.add(this);
     }
 
-    setupREPL(this, {
+    setupCompiler(this, {
       /**
        * Anything not specified here comes from NPM via
        * ember-repl
@@ -59,7 +64,9 @@ export default class ApplicationRoute extends Route {
         ...importMap,
       },
     });
+  }
 
+  model() {
     document.querySelector('#initial-loader')?.remove();
   }
 }

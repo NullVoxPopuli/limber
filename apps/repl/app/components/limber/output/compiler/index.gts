@@ -7,7 +7,7 @@ import { schedule } from '@ember/runloop';
 import { service } from '@ember/service';
 import { waitFor } from '@ember/test-waiters';
 
-import { compile, type EvalImportMap, Service as CompilerService } from 'ember-repl';
+import { CompilerService } from 'ember-repl';
 
 import CopyMenu from 'limber/components/limber/copy-menu';
 
@@ -96,7 +96,7 @@ export default class Compiler extends Component<Signature> {
 
     switch (format) {
       case 'glimdown':
-        return await compiler.compileMD(text, {
+        return await this.compiler.configuredCompile(text, {
           format: format,
           CopyComponent: '<CopyMenu />',
           topLevelScope: {
@@ -108,14 +108,14 @@ export default class Compiler extends Component<Signature> {
         });
 
       case 'gjs':
-        return await compiler.compileGJS(text, {
+        return await this.compiler.configuredCompile(text, {
           format: format,
           onCompileStart: this.onCompileStart,
           onSuccess,
           onError: this.onError,
         });
       case 'hbs':
-        return await compiler.compileHBS(text, {
+        return await this.compiler.configuredCompile(text, {
           format: format,
           topLevelScope: {
             CopyMenu: CopyMenu,

@@ -10,7 +10,7 @@ export interface ScopeMap {
 }
 
 export interface ModuleMap {
-  [key: string]: () => Promise<unknown>;
+  [key: string]: () => Promise<unknown> | Record<string, unknown>;
 }
 
 export type UnifiedPlugin = Pluggable;

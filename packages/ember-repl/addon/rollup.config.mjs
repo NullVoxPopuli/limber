@@ -17,7 +17,7 @@ export default defineConfig({
   external: ["@glimmer/compiler", "@glimmer/syntax", "embebr-source"],
   plugins: [
     addon.publicEntrypoints(["**/*.js"]),
-    addon.appReexports(["./services/*.js"]),
+    addon.appReexports(["./services/compiler.js"]),
     babel({
       extensions: [".js", ".gjs", ".ts", ".gts"],
       babelHelpers: "bundled",
