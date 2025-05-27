@@ -1,12 +1,8 @@
 import { cell, resource, resourceFactory } from 'ember-resources';
 
-import {
-  compileGJS as processGJS,
-  compileHBS as processHBS,
-  compileMD as processMD,
-} from './formats.ts';
 import { nameFor } from './utils.ts';
 
+import type CompilerService from '../services/compiler.ts';
 import type { CompileResult, EvalImportMap, ScopeMap, UnifiedPlugin } from './types.ts';
 import type { ComponentLike } from '@glint/template';
 
@@ -60,23 +56,36 @@ interface HBSOptions extends Scope, Events {
  * and optionally render gjs-snippets via a `live` meta tag
  * on the code fences.
  */
-export async function compile(text: string, options: GlimdownOptions): Promise<void>;
+export async function compile(
+  service: CompilerService,
+  text: string,
+  options: GlimdownOptions
+): Promise<void>;
 
 /**
  * Compile GJS
  */
-export async function compile(text: string, options: GJSOptions): Promise<void>;
+export async function compile(
+  service: CompilerService,
+  text: string,
+  options: GJSOptions
+): Promise<void>;
 
 /**
  * Compile a stateless component using just the template
  */
-export async function compile(text: string, options: HBSOptions): Promise<void>;
+export async function compile(
+  service: CompilerService,
+  text: string,
+  options: HBSOptions
+): Promise<void>;
 
 /**
  * This compileMD is a more robust version of the raw compiling used in "formats".
  * This function manages cache, and has events for folks building UIs to hook in to
  */
 export async function compile(
+  service: CompilerService,
   text: string,
   options: GlimdownOptions | GJSOptions | HBSOptions
 ): Promise<void> {
@@ -108,13 +117,11 @@ export async function compile(
   let result: CompileResult;
 
   if (options.format === 'glimdown') {
-    result = await processMD(text, options);
+    result = await service.compileMD(text);
   } else if (options.format === 'gjs') {
-    result = await processGJS(text, options.importMap);
+    result = await service.compileGJS(text);
   } else if (options.format === 'hbs') {
-    result = await processHBS(text, {
-      scope: options.topLevelScope,
-    });
+    result = await service.compileHBS(text);
   } else {
     await onError(
       `Unsupported format: ${(options as any).format}. Supported formats: ${SUPPORTED_FORMATS}`
@@ -178,7 +185,7 @@ export function Compiled(
   markdownText: Input | (() => Input),
   maybeOptions?: Format | (() => Format) | ExtraOptions | (() => ExtraOptions)
 ): Value {
-  return resource(() => {
+  return resource(({ owner }) => {
     const maybeObject = typeof maybeOptions === 'function' ? maybeOptions() : maybeOptions;
     const format =
       (typeof maybeObject === 'string' ? maybeObject : maybeObject?.format) || 'glimdown';
@@ -189,8 +196,10 @@ export function Compiled(
     const error = cell<string | null>();
     const result = cell<ComponentLike>();
 
+    const compiler = owner.lookup('service:compiler') as CompilerService;
+
     if (input) {
-      compile(input, {
+      compile(compiler, input, {
         // narrowing is hard here, but this is an implementation detail
         format: format as any,
         onSuccess: async (component) => {

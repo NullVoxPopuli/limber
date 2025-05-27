@@ -7,7 +7,7 @@ import { schedule } from '@ember/runloop';
 import { service } from '@ember/service';
 import { waitFor } from '@ember/test-waiters';
 
-import { compile, type EvalImportMap } from 'ember-repl';
+import { compile, type EvalImportMap, Service as CompilerService } from 'ember-repl';
 
 import CopyMenu from 'limber/components/limber/copy-menu';
 
@@ -38,6 +38,7 @@ export default class Compiler extends Component<Signature> {
   <template>{{yield (hash component=this.component format=this.format)}}</template>
 
   @service declare router: RouterService;
+  @service declare compiler: CompilerService;
 
   @tracked component?: ComponentLike<never>;
   @tracked error: string | null = null;
@@ -71,8 +72,6 @@ export default class Compiler extends Component<Signature> {
   @action
   @waitFor
   async makeComponent(format: Format, text: string) {
-    const { importMap } = await import('./import-map');
-
     const onSuccess = async (component: ComponentLike) => {
       if (!component) {
         await this.parentFrame.error({ error: 'could not build component' });
@@ -97,28 +96,26 @@ export default class Compiler extends Component<Signature> {
 
     switch (format) {
       case 'glimdown':
-        return await compile(text, {
+        return await compiler.compileMD(text, {
           format: format,
           CopyComponent: '<CopyMenu />',
           topLevelScope: {
             CopyMenu: CopyMenu,
           },
-          importMap: importMap as unknown as EvalImportMap,
           onCompileStart: this.onCompileStart,
           onSuccess,
           onError: this.onError,
         });
 
       case 'gjs':
-        return await compile(text, {
+        return await compiler.compileGJS(text, {
           format: format,
-          importMap: importMap as unknown as EvalImportMap,
           onCompileStart: this.onCompileStart,
           onSuccess,
           onError: this.onError,
         });
       case 'hbs':
-        return await compile(text, {
+        return await compiler.compileHBS(text, {
           format: format,
           topLevelScope: {
             CopyMenu: CopyMenu,

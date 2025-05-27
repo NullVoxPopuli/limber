@@ -8,14 +8,11 @@ import { template } from '@ember/template-compiler/runtime';
 
 import { Compiler } from 'repl-sdk';
 
+import { compile } from '../compile/index.ts';
 import { nameFor } from '../compile/utils.ts';
 
-import type { CompileResult } from '../compile/types.ts';
+import type { CompileResult, ModuleMap } from '../compile/types.ts';
 import type { ComponentLike } from '@glint/template';
-
-interface ModuleMap {
-  [key: string]: () => Promise<unknown>;
-}
 
 const modules = (extraModules: ModuleMap) => ({
   /////////////////////////////
@@ -100,6 +97,7 @@ const modules = (extraModules: ModuleMap) => ({
       },
     }),
     // Private
+    // eslint-disable-next-line
     // @ts-ignore
     importSync: (x: string) => window[Symbol.for('__repl-sdk__compiler__')].resolves[x],
     moduleExists: () => false,
@@ -143,6 +141,8 @@ export default class CompilerService extends Service {
   }
 
   /**
+   * @public
+   *
    * Transpiles GlimmerJS (*.gjs) formatted text into and evaluates as a JS Module.
    * The returned component can be invoked explicitly in the consuming project.
    *
@@ -152,12 +152,9 @@ export default class CompilerService extends Service {
     const name = nameFor(code);
     let component: undefined | ComponentLike;
     let error: undefined | Error;
-    /**
-     * TODO: move this Compiler to a service
-     */
 
     try {
-      const element = await this.compiler.compile('gjs', code);
+      const element = await this.compile('gjs', code);
 
       component = template(`{{element}}`, {
         scope: () => ({ element }),
@@ -176,7 +173,7 @@ export default class CompilerService extends Service {
    *
    * (templates alone do not have a way to import / define complex structures)
    */
-  compileHBS(
+  async compileHBS(
     source: string,
     options: {
       /**
@@ -189,12 +186,13 @@ export default class CompilerService extends Service {
        */
       scope?: Record<string, unknown>;
     } = {}
-  ): CompileResult {
+  ): Promise<CompileResult> {
     const name = nameFor(source);
     let component: undefined | ComponentLike;
     let error: undefined | Error;
 
     try {
+      await Promise.resolve();
       component = template(source, {
         scope: () => ({ array, concat, fn, get, hash, on, ...(options?.scope ?? {}) }),
       }) as unknown as ComponentLike;
@@ -214,7 +212,7 @@ export default class CompilerService extends Service {
      */
 
     try {
-      const element = await this.compiler.compile('md', source);
+      const element = await this.compile('md', source);
 
       component = template(`{{element}}`, {
         scope: () => ({ element }),
@@ -225,5 +223,9 @@ export default class CompilerService extends Service {
     }
 
     return { name, component, error };
+  }
+
+  async configuredCompile(text: string, options: any) {
+    return compile(this, text, options);
   }
 }

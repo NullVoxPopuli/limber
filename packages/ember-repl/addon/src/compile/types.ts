@@ -9,6 +9,10 @@ export interface ScopeMap {
   [localName: string]: unknown;
 }
 
+export interface ModuleMap {
+  [key: string]: () => Promise<unknown>;
+}
+
 export type UnifiedPlugin = Pluggable;
 
 export interface CompileResult {
