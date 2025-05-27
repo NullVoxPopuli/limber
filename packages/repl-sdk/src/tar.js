@@ -79,6 +79,21 @@ function resolve(untarred, path) {
   let code = untarred.contents[toFind]?.text;
 
   if (!code) {
+    let parts = path.split('.');
+    let ext = parts.pop();
+
+    /**
+     * For example,
+     * '.' imports './foo.js'
+     *
+     * but ./foo.js isn't in package.json#exports, we still want to resolve the file.
+     */
+    if (ext) {
+      let withoutExt = parts.join('.');
+
+      return resolve(untarred, withoutExt);
+    }
+
     console.group(`${name} file info`);
     console.info(`${name} has available: `, exports ?? browser ?? module ?? main);
     console.info(`${name} has these files: `, Object.keys(untarred.contents));

@@ -37,18 +37,14 @@ export class Compiler {
       // Permit overrides to import maps
       mapOverrides: true, // default false
       // Hook all module resolutions
-      resolve: (id /*, parentUrl, resolve */) => {
+      resolve: (id, parentUrl, resolve) => {
         /**
          * We have to strip the query params because our manual resolving
          * doesn't use them -- but CDNs do
          */
         let vanilla = deCDN(id);
 
-        this.#log('[resolve]', id, 'potentially manually via', vanilla);
-
-        if (id.startsWith('blob:')) return id;
-        if (id.startsWith('https://')) return id;
-        if (id.startsWith('.')) return id;
+        this.#log('[resolve]', id, 'from', parentUrl);
 
         if (this.#options.resolve?.[vanilla]) {
           this.#log(`[resolve] ${vanilla} found in manually specified resolver`);
@@ -56,21 +52,31 @@ export class Compiler {
           return `manual:${vanilla}`;
         }
 
+        if (parentUrl.startsWith('tgz://') && id.startsWith('.')) {
+          let url = new URL(id, parentUrl);
+
+          return url.href;
+        }
+
+        if (id.startsWith('blob:')) return id;
+        if (id.startsWith('https://')) return id;
+        if (id.startsWith('.')) return resolve(id, parentUrl);
+
         if (id.startsWith('node:')) {
           this.#log(`Is known node module: ${id}. Grabbing polyfill`);
-          if (id === 'node:process') return `esm.sh:process`;
-          if (id === 'node:buffer') return `esm.sh:buffer`;
-          if (id === 'node:events') return `esm.sh:events`;
-          if (id === 'node:path') return `esm.sh:path-browser`;
-          if (id === 'node:util') return `esm.sh:util-browser`;
-          if (id === 'node:crypto') return `esm.sh:crypto-browserify`;
-          if (id === 'node:stream') return `esm.sh:stream-browserify`;
-          if (id === 'node:fs') return `esm.sh:browserify-fs`;
+          if (id === 'node:process') return `tgz://process`;
+          if (id === 'node:buffer') return `tgz://buffer`;
+          if (id === 'node:events') return `tgz://events`;
+          if (id === 'node:path') return `tgz://path-browser`;
+          if (id === 'node:util') return `tgz://util-browser`;
+          if (id === 'node:crypto') return `tgz://crypto-browserify`;
+          if (id === 'node:stream') return `tgz://stream-browserify`;
+          if (id === 'node:fs') return `tgz://browserify-fs`;
         }
 
         this.#log(`[resolve] ${id} not found, deferring to npmjs.com's provided tarball`);
 
-        return `tgz:${id}`;
+        return `tgz://${id}`;
       },
       // Hook source fetch function
       fetch: async (url, options) => {
@@ -82,22 +88,7 @@ export class Compiler {
 
             this.#log('[fetch] resolved url in manually specified resolver', url);
 
-            let result = this.#options.resolve[name];
-
-            if (!result) {
-              this.#error(`[fetch] Could not resolve ${url}`);
-            }
-
-            if (typeof result === 'function') {
-              if (!result) {
-                this.#error(`[fetch] Value for ${url} is a function. Invoking.`);
-              }
-
-              result = await result();
-            }
-
-            window[secret].resolves ||= {};
-            window[secret].resolves[name] ||= await result;
+            let result = await this.#resolveManually(name);
 
             let blobContent =
               `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
@@ -130,8 +121,8 @@ export class Compiler {
           }
         }
 
-        if (url.startsWith('tgz:')) {
-          let fullName = url.replace(/^tgz:/, '');
+        if (url.startsWith('tgz://')) {
+          let fullName = url.replace(/^tgz:\/\//, '');
 
           let { code, ext } = await getFromTarball(fullName);
 
@@ -286,9 +277,38 @@ export class Compiler {
     };
   };
 
+  #resolveManually = async (name) => {
+    const existing = window[Symbol.for(secretKey)].resolves?.[name];
+
+    if (existing) {
+      this.#log('[#resolveManually]', name, 'already resolved');
+
+      return existing;
+    }
+
+    let result = await this.#options.resolve[name];
+
+    if (!result) {
+      this.#error(`[#resolveManually] Could not resolve ${name}`);
+    }
+
+    if (typeof result === 'function') {
+      if (!result) {
+        this.#error(`[#resolveManually] Value for ${name} is a function. Invoking.`);
+      }
+
+      result = await result();
+    }
+
+    window[secret].resolves ||= {};
+    window[secret].resolves[name] ||= await result;
+
+    return result;
+  };
+
   #nestedPublicAPI = {
     tryResolve: async (name) => {
-      const existing = await window[Symbol.for(secretKey)].resolves?.[name];
+      const existing = await this.#resolveManually(name);
 
       if (existing) {
         this.#log(name, 'already resolved');
@@ -341,19 +361,19 @@ export class Compiler {
     return div;
   }
 
-  #log(msg) {
+  #log(...args) {
     if (this.#options.logging) {
-      console.debug(msg);
+      console.debug(...args);
     }
   }
-  #warn(msg) {
+  #warn(...args) {
     if (this.#options.logging) {
-      console.warn(msg);
+      console.warn(...args);
     }
   }
-  #error(msg) {
+  #error(...args) {
     if (this.#options.logging) {
-      console.error(msg);
+      console.error(...args);
     }
   }
 }

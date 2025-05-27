@@ -18,6 +18,7 @@ const frameworkModules = {
   '@ember/runloop': () => import('@ember/runloop'),
   '@ember/service': () => import('@ember/service'),
   '@ember/test-helpers': () => import('@ember/test-helpers'),
+  '@ember/test-waiters': () => import('@ember/test-waiters'),
   '@ember/template-factory': () => import('@ember/template-factory'),
   '@ember/template-compilation': () => import('@ember/template-compilation'),
   '@ember/utils': () => import('@ember/utils'),
