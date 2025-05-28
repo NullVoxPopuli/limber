@@ -27,7 +27,7 @@ export async function getFromTarball(specifier) {
 
   let untarred = await getTar(request.name, request.version);
   let answer = findInTar(untarred, request);
-  let result = resolveFile(untarred, answer);
+  let result = getFile(untarred, answer);
 
   fileCache.set(specifier, result);
 
@@ -39,7 +39,7 @@ export async function getFromTarball(specifier) {
  * @param {{ inTarFile: string, ext: string }} request
  * @returns {{ code: string, ext: string }}
  */
-export function resolveFile(untarred, answer) {
+export function getFile(untarred, answer) {
   let { inTarFile, ext } = answer;
 
   let code = untarred.contents[inTarFile]?.text;
