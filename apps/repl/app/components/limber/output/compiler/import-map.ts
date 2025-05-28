@@ -6,6 +6,7 @@ import * as eDeepTracked from 'ember-deep-tracked';
 import * as focusTrap from 'ember-focus-trap';
 import * as eModifier from 'ember-modifier';
 import * as ePrimitives from 'ember-primitives';
+import * as validator from '@glimmer/validator';
 import * as emberRepl from 'ember-repl';
 import * as eResources from 'ember-resources';
 import * as reactiveDebounce from 'reactiveweb/debounce';
@@ -32,6 +33,8 @@ import * as limberUi from 'limber-ui';
 import { ExternalLink } from 'limber-ui';
 
 export const importMap = {
+  // DANGERZONE!
+  '@glimmer/validator': validator,
   // Own Stuff
   // Something is weird with how this import map works.
   // I can't wait to land the other which behaves a lot mormally
