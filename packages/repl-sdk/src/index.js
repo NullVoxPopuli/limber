@@ -55,7 +55,7 @@ export class Compiler {
         if (parentUrl.startsWith('tgz://') && id.startsWith('.')) {
           let url = new URL(id, parentUrl);
 
-          return url.href;
+          return `${url.href}?from=${parentUrl}&to=${id}`;
         }
 
         if (id.startsWith('blob:')) return id;
@@ -122,6 +122,8 @@ export class Compiler {
         }
 
         if (url.startsWith('tgz://')) {
+          this.#log('[fetch] resolved url via tgz resolver', url, options);
+
           let fullName = url.replace(/^tgz:\/\//, '');
 
           let { code, ext } = await getFromTarball(fullName);

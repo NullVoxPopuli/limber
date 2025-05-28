@@ -1,16 +1,7 @@
-import { exports as resolveExports } from 'resolve.exports';
 import { parseTar } from 'tarparser';
 
-import { parseSpecifier } from './specifier.js';
-
-/**
- * If a package wanted, they could provide a special export condition
- * targeting REPLs.
- *
- * This format should still be ESM.
- */
-const CONDITIONS = ['repl', 'module', 'browser', 'import', 'default', 'development'];
-const RESOLVE_VIA = ['exports', 'module', 'browser', 'main'];
+import { getNPMInfo, getTarUrl } from './npm.js';
+import { findInTar, Request } from './resolve.js';
 
 /**
  *
@@ -28,19 +19,15 @@ const fileCache = new Map();
  * @returns {Promise<{ code: string, ext: string }>}
  */
 export async function getFromTarball(specifier) {
-  if (fileCache.has(specifier)) {
-    return fileCache.get(specifier);
+  let request = Request.fromSpecifier(specifier);
+
+  if (fileCache.has(request.specifier)) {
+    return fileCache.get(request.specifier);
   }
 
-  let parsed = parseSpecifier(specifier);
-  let { name, version = 'latest', path } = parsed;
-
-  /**
-   * getTar also populates the package.json in the manifestCache
-   */
-  let untarred = await getTar(name, version);
-
-  let result = resolve(untarred, path);
+  let untarred = await getTar(request.name, request.version);
+  let answer = findInTar(untarred, request);
+  let result = resolveFile(untarred, answer);
 
   fileCache.set(specifier, result);
 
@@ -49,85 +36,25 @@ export async function getFromTarball(specifier) {
 
 /**
  * @param {import('./types.ts').UntarredPackage} untarred
- * @param {string} path
+ * @param {{ inTarFile: string, ext: string }} request
  * @returns {{ code: string, ext: string }}
  */
-function resolve(untarred, path) {
-  let { main, module, browser, exports, name } = untarred.manifest;
+export function resolveFile(untarred, answer) {
+  let { inTarFile, ext } = answer;
 
-  for (let manifiestField of RESOLVE_VIA) {
-    let result = resolveVia(untarred.manifest, path, manifiestField);
-
-    let options = Array.isArray(result) ? result : [result];
-
-    for (let option of options) {
-      if (option) {
-        let toFind = option.replace(/^\.\//, '');
-        let code = untarred.contents[toFind]?.text;
-        let ext = toFind.split('.').pop();
-
-        if (code) return { code, ext };
-      }
-    }
-  }
-
-  // Super fallback, just see if we can find the file...
-  // This may be stupid, because not even node allows for this.
-  //
-  // Extensions will be required for this to work though
-  let toFind = path.replace(/^\.\//, '');
-  let code = untarred.contents[toFind]?.text;
+  let code = untarred.contents[inTarFile]?.text;
 
   if (!code) {
-    let parts = path.split('.');
-    let ext = parts.pop();
-
-    /**
-     * For example,
-     * '.' imports './foo.js'
-     *
-     * but ./foo.js isn't in package.json#exports, we still want to resolve the file.
-     */
-    if (ext) {
-      let withoutExt = parts.join('.');
-
-      return resolve(untarred, withoutExt);
-    }
+    let { main, module, browser, exports, name } = untarred.manifest;
 
     console.group(`${name} file info`);
     console.info(`${name} has available: `, exports ?? browser ?? module ?? main);
     console.info(`${name} has these files: `, Object.keys(untarred.contents));
-    console.info(`We searched for '${toFind}'`);
+    console.info(`We searched for '${inTarFile}'`);
     console.groupEnd();
-    throw new Error(`Could not resolve \`${path}\` in ${name}`);
   }
 
-  let ext = toFind.split('.').pop();
-
-  return { code, ext };
-}
-
-/**
- * @param {import('./types.ts').UntarredPackage['manifest']} manifest
- * @param {string} path
- * @param {'exports' | 'module' | 'browser' | 'main'} manifiestField
- */
-function resolveVia(manifest, path, manifiestField) {
-  let target = manifest[manifiestField];
-
-  if (!target) return;
-
-  if (typeof target === 'string') {
-    return target;
-  }
-
-  if (typeof target === 'object') {
-    debugger;
-
-    return resolveExports(manifest, path, {
-      conditions: CONDITIONS,
-    });
-  }
+  return { code, ext, resolvedAs: inTarFile };
 }
 
 /**
@@ -143,7 +70,7 @@ async function getTar(name, requestedVersion) {
   }
 
   let json = await getNPMInfo(name, requestedVersion);
-  let tgzUrl = await getTarUrl(json, name, requestedVersion);
+  let tgzUrl = await getTarUrl(json, requestedVersion);
 
   let response = await fetch(tgzUrl, {
     headers: {
@@ -172,39 +99,4 @@ async function untar(arrayBuffer) {
   }
 
   return contents;
-}
-
-async function getTarUrl(npmInfo, name, requestedVersion) {
-  let json = npmInfo;
-
-  let tag =
-    requestedVersion in json['dist-tags']
-      ? json['dist-tags'][requestedVersion]
-      : (requestedVersion ?? json['dist-tags'].latest);
-
-  let requested = json.versions[tag];
-
-  return requested.dist.tarball;
-}
-
-/**
- * @type {Map<string, unknown>} namp@version => manifest
- */
-const npmInfoCache = new Map();
-
-async function getNPMInfo(name, version) {
-  let key = `${name}@${version}`;
-
-  let existing = npmInfoCache.get(key);
-
-  if (existing) {
-    return existing;
-  }
-
-  let response = await fetch(`https://registry.npmjs.org/${name}`);
-  let json = await response.json();
-
-  npmInfoCache.set(key, json);
-
-  return json;
 }
