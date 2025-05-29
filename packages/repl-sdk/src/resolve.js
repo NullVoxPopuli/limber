@@ -15,16 +15,8 @@ const CONDITIONS = ['repl', 'module', 'browser', 'import', 'default', 'developme
  */
 const resolveCache = new Map();
 
-export function findInTar(untarred, request) {
-  let { specifier } = request;
-
-  if (resolveCache.has(specifier)) {
-    return resolveCache.get(specifier);
-  }
-
-  let inTarFile = resolve(untarred, request);
-
-  return inTarFile;
+export function resolvePath(start, target) {
+  return start;
 }
 
 /**
@@ -35,6 +27,12 @@ export function findInTar(untarred, request) {
 export function resolve(untarred, request) {
   let answer = undefined;
 
+  let { specifier } = request;
+
+  if (resolveCache.has(specifier)) {
+    return resolveCache.get(specifier);
+  }
+
   answer ||= fromInternalImport(untarred, request, answer);
   answer ||= fromExportsString(untarred, request, answer);
   answer ||= fromExports(untarred, request, answer);
@@ -44,11 +42,48 @@ export function resolve(untarred, request) {
   answer ||= fromIndex(untarred, request, answer);
   answer ||= fromFallback(untarred, request, answer);
 
+  resolveCache.set(specifier, answer);
+
   return answer;
 }
 
+/**
+ * These are likely all private imports
+ *
+ * @param {import('./types.ts').UntarredPackage} untarred
+ * @param {Request} request
+ * @param {undefined | import('./types.ts').RequestAnswer} answer
+ * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
+ */
 function fromInternalImport(untarred, request, answer) {
   if (answer) return answer;
+
+  let isInternal = request.from && request.to;
+
+  if (!isInternal) return answer;
+
+  let fromSpecifier = Request.fromSpecifier(request.from);
+  let answerFrom = resolve(untarred, fromSpecifier);
+
+  if (!answerFrom) printError(untarred, fromSpecifier, answer);
+
+  let url = answerFrom.inTarFile.includes('/')
+    ? new URL(request.to, 'file://' + answerFrom.inTarFile)
+    : { href: request.to };
+
+  let inTarFile = url.href.replace('file://', '');
+  let result = checkFile(untarred, inTarFile);
+
+  if (result) {
+    return {
+      inTarFile: result,
+      ext: extName(result),
+      from: 'internalImport',
+    };
+  }
+
+  // Internal imports should always exist, unless a package is just broken.
+  printError(untarred, request, answer);
 }
 
 /**
@@ -64,9 +99,11 @@ function fromExports(untarred, request, answer) {
 
   if (!(typeof exports === 'object')) return answer;
 
-  let found = resolveExports(untarred.manifest, request.path, {
+  let foundArray = resolveExports(untarred.manifest, request.path, {
     conditions: CONDITIONS,
   });
+
+  let found = foundArray.map((f) => checkFile(untarred, f)).find(Boolean);
 
   if (found) {
     return {
@@ -85,7 +122,7 @@ function fromExports(untarred, request, answer) {
  */
 function fromExportsString(untarred, request, answer) {
   if (answer) return answer;
-  if (hasExports(untarred)) return answer;
+  if (!hasExports(untarred)) return answer;
 
   // technically not legacy, but it's the same logic
   return checkLegacyEntry(untarred, request, 'exports');
@@ -140,6 +177,8 @@ function checkLegacyEntry(untarred, request, entryName) {
   if (request.path !== '.') return;
 
   let filePath = untarred.manifest[entryName];
+
+  if (!filePath || typeof filePath !== 'string') return;
 
   let result = checkFile(untarred, filePath);
 
@@ -227,16 +266,12 @@ export class Request {
   }
 
   /**
-   * @type {null | { inTarFile: string, ext: string, from: string }}
-   */
-  answer = null;
-
-  /**
    * @private
    */
   constructor(specifier) {
     let [full, query] = specifier.split('?');
 
+    this.original = specifier;
     this.specifier = full;
 
     let parsed = parseSpecifier(this.specifier);
@@ -252,12 +287,28 @@ export class Request {
     if (query) {
       let search = new URLSearchParams(query);
 
-      this.from = search.get('from');
-      this.to = search.get('to');
+      this.from = search.get('from').replace('tgz://', '').split('?')[0];
+      this.path = this.to = search.get('to').replace('//', '/');
     }
   }
 
   setAnswer(answer) {
     this.answer = answer;
   }
+}
+
+export function printError(untarred, request, answer) {
+  let { name, exports, main, module, browser } = untarred.manifest;
+
+  console.group(`${name} file info`);
+  console.info(`${name} has these files: `, Object.keys(untarred.contents));
+  console.info(`We searched for '${request.original}'`);
+  console.info(`from: `, { exports, main, module, browser });
+  console.info(`And found: `, answer);
+  console.info(`The request was: `, request);
+  console.groupEnd();
+
+  // eslint-disable-next-line no-debugger
+  debugger;
+  throw new Error(`Could not find file for ${request.specifier}`);
 }

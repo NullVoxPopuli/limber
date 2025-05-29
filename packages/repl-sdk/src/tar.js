@@ -1,7 +1,7 @@
 import { parseTar } from 'tarparser';
 
 import { getNPMInfo, getTarUrl } from './npm.js';
-import { findInTar, Request } from './resolve.js';
+import { printError,Request,resolve } from './resolve.js';
 
 /**
  *
@@ -26,8 +26,8 @@ export async function getFromTarball(specifier) {
   }
 
   let untarred = await getTar(request.name, request.version);
-  let answer = findInTar(untarred, request);
-  let result = getFile(untarred, answer);
+  let answer = resolve(untarred, request);
+  let result = getFile(untarred, request, answer);
 
   fileCache.set(specifier, result);
 
@@ -36,26 +36,22 @@ export async function getFromTarball(specifier) {
 
 /**
  * @param {import('./types.ts').UntarredPackage} untarred
- * @param {{ inTarFile: string, ext: string }} request
+ * @param {import('./types.ts').Request} request
+ * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {{ code: string, ext: string }}
  */
-export function getFile(untarred, answer) {
+export function getFile(untarred, request, answer) {
+  if (!answer) printError(untarred, request, answer);
+
   let { inTarFile, ext } = answer;
 
   let code = untarred.contents[inTarFile]?.text;
 
-  if (!code) {
-    let { main, module, browser, exports, name } = untarred.manifest;
-
-    console.group(`${name} file info`);
-    console.info(`${name} has available: `, exports ?? browser ?? module ?? main);
-    console.info(`${name} has these files: `, Object.keys(untarred.contents));
-    console.info(`We searched for '${inTarFile}'`);
-    console.groupEnd();
-  }
+  if (!code) printError(untarred, request, answer);
 
   return { code, ext, resolvedAs: inTarFile };
 }
+
 
 /**
  * @param {string} name of the package

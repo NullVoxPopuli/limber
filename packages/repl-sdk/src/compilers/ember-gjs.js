@@ -178,7 +178,7 @@ export async function compiler(config = {}, api) {
 
       let code = transformed.code;
 
-      console.debug('[compile:code]', code);
+      // console.debug('[compile:code]', code);
 
       return code;
     },
@@ -186,7 +186,7 @@ export async function compiler(config = {}, api) {
       /**
        * This should be a component definition
        */
-      console.debug('[render:compiled]', compiled);
+      // console.debug('[render:compiled]', compiled);
 
       /**
        *

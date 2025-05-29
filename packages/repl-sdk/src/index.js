@@ -53,9 +53,13 @@ export class Compiler {
         }
 
         if (parentUrl.startsWith('tgz://') && id.startsWith('.')) {
-          let url = new URL(id, parentUrl);
+          // there has to be a better way to do this, yea?
+          let url = new URL(id, parentUrl.split('?')[0].replace('@', 'at.'));
 
-          return `${url.href}?from=${parentUrl}&to=${id}`;
+          url.searchParams.set('from', parentUrl);
+          url.searchParams.set('to', id);
+
+          return url.href.replace('at.', '@');
         }
 
         if (id.startsWith('blob:')) return id;
@@ -291,12 +295,12 @@ export class Compiler {
     let result = await this.#options.resolve[name];
 
     if (!result) {
-      this.#error(`[#resolveManually] Could not resolve ${name}`);
+      this.#log(`[#resolveManually] Could not resolve ${name}`);
     }
 
     if (typeof result === 'function') {
       if (!result) {
-        this.#error(`[#resolveManually] Value for ${name} is a function. Invoking.`);
+        this.#log(`[#resolveManually] Value for ${name} is a function. Invoking.`);
       }
 
       result = await result();
