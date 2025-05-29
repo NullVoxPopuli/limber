@@ -1,5 +1,11 @@
 import type { FileDescription } from 'tarparser';
 
+export interface RequestAnswer {
+  inTarFile: string;
+  ext: string;
+  from: string;
+}
+
 interface PublicMethods {
   /**
    * Will try to use a shimmed import, or will return null.
