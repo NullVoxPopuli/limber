@@ -1,3 +1,5 @@
+import { esmsh } from './cdn.js';
+
 export const compilers = {
   /**
    * JSX is too overloaded to treat one way.
@@ -67,7 +69,9 @@ export const compilers = {
     needsLiveMeta: false,
     compiler: async (config = {}, api) => {
       const versions = config.versions || {};
-      const { default: mermaid } = await api.tryResolve('mermaid');
+      const { default: mermaid } = await api.tryResolve('mermaid', () => {
+        return esmsh.import(versions, 'mermaid');
+      });
 
       let id = 0;
 

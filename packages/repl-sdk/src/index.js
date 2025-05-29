@@ -3,8 +3,9 @@
  */
 import { secret, secretKey } from './cache.js';
 import { compilers } from './compilers.js';
+import { resolvePath } from './resolve.js';
 import { getFromTarball } from './tar.js';
-import { assert, nextId } from './utils.js';
+import { assert, nextId, tgzPrefix } from './utils.js';
 
 assert(`There is no document. repl-sdk is meant to be ran in a browser`, globalThis.document);
 
@@ -52,14 +53,15 @@ export class Compiler {
           return `manual:${vanilla}`;
         }
 
-        if (parentUrl.startsWith('tgz://') && id.startsWith('.')) {
+        if (parentUrl.startsWith(tgzPrefix) && id.startsWith('.')) {
+          let newId = resolvePath(parentUrl.replace(tgzPrefix, ''), id);
           // there has to be a better way to do this, yea?
-          let url = new URL(id, parentUrl.split('?')[0].replace('@', 'at.'));
+          let url = new URL(tgzPrefix + newId);
 
           url.searchParams.set('from', parentUrl);
           url.searchParams.set('to', id);
 
-          return url.href.replace('at.', '@');
+          return url.href;
         }
 
         if (id.startsWith('blob:')) return id;
@@ -80,7 +82,7 @@ export class Compiler {
 
         this.#log(`[resolve] ${id} not found, deferring to npmjs.com's provided tarball`);
 
-        return `tgz://${id}`;
+        return tgzPrefix + id;
       },
       // Hook source fetch function
       fetch: async (url, options) => {
@@ -125,10 +127,10 @@ export class Compiler {
           }
         }
 
-        if (url.startsWith('tgz://')) {
+        if (url.startsWith(tgzPrefix)) {
           this.#log('[fetch] resolved url via tgz resolver', url, options);
 
-          let fullName = url.replace(/^tgz:\/\//, '');
+          let fullName = url.replace(tgzPrefix, '');
 
           let { code, ext } = await getFromTarball(fullName);
 
@@ -283,7 +285,7 @@ export class Compiler {
     };
   };
 
-  #resolveManually = async (name) => {
+  #resolveManually = async (name, fallback) => {
     const existing = window[Symbol.for(secretKey)].resolves?.[name];
 
     if (existing) {
@@ -306,6 +308,14 @@ export class Compiler {
       result = await result();
     }
 
+    /**
+     * Compiler-implementation-provided fallback takes precidence over
+     * going through the shimmedImport / tgz / npm fallback.
+     */
+    if (fallback) {
+      result = await fallback();
+    }
+
     window[secret].resolves ||= {};
     window[secret].resolves[name] ||= await result;
 
@@ -313,8 +323,8 @@ export class Compiler {
   };
 
   #nestedPublicAPI = {
-    tryResolve: async (name) => {
-      const existing = await this.#resolveManually(name);
+    tryResolve: async (name, fallback) => {
+      const existing = await this.#resolveManually(name, fallback);
 
       if (existing) {
         this.#log(name, 'already resolved');
@@ -325,7 +335,11 @@ export class Compiler {
       return shimmedImport(/* vite-ignore */ name);
     },
     tryResolveAll: async (names, fallback) => {
-      let results = await Promise.all(names.map(this.#nestedPublicAPI.tryResolve));
+      let results = await Promise.all(
+        names.map((name) => {
+          return this.#nestedPublicAPI.tryResolve(name);
+        })
+      );
 
       if (fallback) {
         let morePromises = {};

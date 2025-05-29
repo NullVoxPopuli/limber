@@ -14,3 +14,6 @@ let i = 0;
 export function nextId() {
   return `repl_${i++}`;
 }
+
+export const fakeDomain = 'repl.sdk';
+export const tgzPrefix = 'tgz://repl.sdk/';

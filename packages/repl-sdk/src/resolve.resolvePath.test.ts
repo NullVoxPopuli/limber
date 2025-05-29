@@ -5,7 +5,7 @@ const expect = errorExpect.soft;
 import { resolvePath } from './resolve.js';
 
 function test({ from, to, expected }: { from: string; to: string; expected: string }) {
-  it(input, () => {
+  it(`import ${to} from ${from}`, () => {
     expect(resolvePath(from, to)).deep.equal(expected);
   });
 }

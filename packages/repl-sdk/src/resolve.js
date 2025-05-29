@@ -1,6 +1,7 @@
 import { exports as resolveExports } from 'resolve.exports';
 
 import { parseSpecifier } from './specifier.js';
+import { fakeDomain, tgzPrefix } from './utils.js';
 
 /**
  * If a package wanted, they could provide a special export condition
@@ -15,8 +16,22 @@ const CONDITIONS = ['repl', 'module', 'browser', 'import', 'default', 'developme
  */
 const resolveCache = new Map();
 
+const AT = '___AT___';
+const fakeProtocol = 'repl://';
+
 export function resolvePath(start, target) {
-  return start;
+  /**
+   * How to make the whole package name look like one segment for URL
+   */
+  let base = start.replace(/^@([^/]+)\/([^/]+)/, `${AT}$1___$2`);
+
+  let url = new URL(target, fakeProtocol + base);
+
+  /**
+   * href omits the protocol
+   * (which is what we want)
+   */
+  return url.href.replace(fakeProtocol, '').replace(AT, '@').replace('___', '/');
 }
 
 /**
@@ -99,7 +114,7 @@ function fromExports(untarred, request, answer) {
 
   if (!(typeof exports === 'object')) return answer;
 
-  let foundArray = resolveExports(untarred.manifest, request.path, {
+  let foundArray = resolveExports(untarred.manifest, request.to, {
     conditions: CONDITIONS,
   });
 
@@ -174,7 +189,7 @@ function fromMain(untarred, request, answer) {
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
  */
 function checkLegacyEntry(untarred, request, entryName) {
-  if (request.path !== '.') return;
+  if (request.to !== '.') return;
 
   let filePath = untarred.manifest[entryName];
 
@@ -201,7 +216,7 @@ function fromIndex(untarred, request, answer) {
   if (answer) return answer;
   if (hasExports(untarred)) return answer;
 
-  if (request.path === '.') {
+  if (request.to === '.') {
     if (untarred.contents['index.js']) {
       return {
         inTarFile: 'index.js',
@@ -221,7 +236,7 @@ function fromIndex(untarred, request, answer) {
 function fromFallback(untarred, request, answer) {
   if (answer) return answer;
 
-  let result = checkFile(untarred, request.path);
+  let result = checkFile(untarred, request.to);
 
   if (result) {
     return {
@@ -265,16 +280,24 @@ export class Request {
     return new Request(specifier);
   }
 
+  /** @type {string} */
+  #to;
+
   /**
    * @private
    */
   constructor(specifier) {
-    let [full, query] = specifier.split('?');
+    let removedPrefix = specifier
+      .replace(tgzPrefix, '')
+      .replace(fakeDomain + '/', '')
+      .replace(fakeDomain, '')
+      .replace(/^\//, '');
+    let [full, query] = removedPrefix.split('?');
 
     this.original = specifier;
     this.specifier = full;
 
-    let parsed = parseSpecifier(this.specifier);
+    let parsed = parseSpecifier(full);
     let { name, version = 'latest', path } = parsed;
 
     this.name = name;
@@ -282,18 +305,18 @@ export class Request {
     /**
      * This will either be '.' or have the leading ./
      */
-    this.path = path;
+    this.#to = path;
 
     if (query) {
       let search = new URLSearchParams(query);
 
-      this.from = search.get('from').replace('tgz://', '').split('?')[0];
-      this.path = this.to = search.get('to').replace('//', '/');
+      this.from = search.get('from').replace('tgz://', '').split('?')[0].replace(/^\//, '');
+      this.#to = search.get('to').replace('//', '/');
     }
   }
 
-  setAnswer(answer) {
-    this.answer = answer;
+  get to() {
+    return this.#to;
   }
 }
 
