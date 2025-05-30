@@ -4,9 +4,11 @@ import QUnit, { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import { stripIndent } from 'common-tags';
-import { compile } from 'ember-repl';
+import { compile, getCompiler } from 'ember-repl';
 import { CACHE } from 'ember-repl/__PRIVATE__DO_NOT_USE__';
 import { visit } from 'unist-util-visit';
+
+import { setupCompiler } from 'ember-repl/test-support';
 
 import type { ComponentLike } from '@glint/template';
 import type { PluggableList } from 'unified';
@@ -22,6 +24,7 @@ function unexpectedErrorHandler(error: unknown) {
 
 module('Rendering | compile()', function (hooks) {
   setupRenderingTest(hooks);
+  setupCompiler(hooks);
 
   module('markdown features', function () {
     test('tables', async function (assert) {
@@ -38,7 +41,9 @@ module('Rendering | compile()', function (hooks) {
 
       let component: ComponentLike | undefined;
 
-      await compile(snippet, {
+      const compiler = getCompiler(this);
+
+      await compile(compiler, snippet, {
         format: 'glimdown',
         onSuccess: (comp) => (component = comp),
         onError: unexpectedErrorHandler,
@@ -122,9 +127,11 @@ module('Rendering | compile()', function (hooks) {
           CACHE.clear();
           component = undefined;
 
+          const compiler = getCompiler(this);
+
           build = async function build(plugin?: UnifiedPlugin) {
             if (plugin) {
-              return await compile(snippet, {
+              return await compile(compiler, snippet, {
                 format: 'glimdown',
                 remarkPlugins: [plugin],
                 onSuccess: (comp) => (component = comp),
@@ -135,7 +142,7 @@ module('Rendering | compile()', function (hooks) {
               });
             }
 
-            await compile(snippet, {
+            await compile(compiler, snippet, {
               format: 'glimdown',
               onSuccess: (comp) => (component = comp),
               onError: (e) => assert.notOk('did not expect error. ' + e),
@@ -185,7 +192,9 @@ module('Rendering | compile()', function (hooks) {
 
       let component: ComponentLike | undefined;
 
-      await compile(snippet, {
+      const compiler = getCompiler(this);
+
+      await compile(compiler, snippet, {
         format: 'glimdown',
         onSuccess: (comp) => (component = comp),
         onError: unexpectedErrorHandler,
@@ -223,7 +232,9 @@ module('Rendering | compile()', function (hooks) {
 
       let component: ComponentLike | undefined;
 
-      await compile(snippet, {
+      const compiler = getCompiler(this);
+
+      await compile(compiler, snippet, {
         format: 'glimdown',
         onSuccess: (comp) => (component = comp),
         onError: unexpectedErrorHandler,
@@ -252,7 +263,9 @@ module('Rendering | compile()', function (hooks) {
 
       let component: ComponentLike | undefined;
 
-      await compile(snippet, {
+      const compiler = getCompiler(this);
+
+      await compile(compiler, snippet, {
         format: 'glimdown',
         onSuccess: (comp) => (component = comp),
         onError: unexpectedErrorHandler,
@@ -301,7 +314,9 @@ module('Rendering | compile()', function (hooks) {
 
       let component: ComponentLike | undefined;
 
-      await compile(snippet, {
+      const compiler = getCompiler(this);
+
+      await compile(compiler, snippet, {
         format: 'glimdown',
         onSuccess: (comp) => (component = comp),
         onError: unexpectedErrorHandler,
@@ -351,7 +366,9 @@ module('Rendering | compile()', function (hooks) {
 
       let component: ComponentLike | undefined;
 
-      await compile(snippet, {
+      const compiler = getCompiler(this);
+
+      await compile(compiler, snippet, {
         format: 'glimdown',
         onSuccess: (comp) => (component = comp),
         onError: unexpectedErrorHandler,

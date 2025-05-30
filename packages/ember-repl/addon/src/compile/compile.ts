@@ -23,13 +23,12 @@ export function compile(service: CompilerService, text: Input, options: Options)
     return new MissingTextState();
   }
 
-  const { onSuccess } = options;
   const id = nameFor(`${options.format}:${text}`);
 
   const existing = CACHE.get(id);
 
   if (existing) {
-    onSuccess?.(existing);
+    options?.onSuccess?.(existing);
 
     return new CachedCompileState(existing);
   }
@@ -55,14 +54,12 @@ async function runTheCompiler({
   state: CompileState;
   id: string;
 }) {
-  const { onSuccess, onError, onCompileStart } = options;
-
-  await onCompileStart?.();
+  await options?.onCompileStart?.();
   await Promise.resolve();
 
   if (!text) {
     state[REJECT](new Error('No Input Document yet'));
-    await onError?.('No Input Document yet');
+    await options?.onError?.('No Input Document yet');
 
     return;
   }
@@ -81,7 +78,7 @@ async function runTheCompiler({
 
   if (result.error) {
     state[REJECT](result.error);
-    await onError?.(state.reason || 'Unknown Error');
+    await options?.onError?.(state.reason || 'Unknown Error');
 
     return;
   }
@@ -90,5 +87,5 @@ async function runTheCompiler({
 
   state[RESOLVE](result.component as ComponentLike);
 
-  await onSuccess?.(result.component as ComponentLike);
+  await options?.onSuccess?.(result.component as ComponentLike);
 }
