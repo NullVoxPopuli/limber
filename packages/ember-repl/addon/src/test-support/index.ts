@@ -10,10 +10,16 @@ export function clearCompileCache() {
 export function setupCompiler(
   hooks: {
     beforeEach: (callback: (...args: unknown[]) => void | Promise<void>) => void | Promise<void>;
+    afterEach: (callback: (...args: unknown[]) => void | Promise<void>) => void | Promise<void>;
   },
   options?: { modules?: ModuleMap }
 ) {
   hooks.beforeEach(function (this: object) {
+    clearCompileCache();
     setup(this, options);
+  });
+
+  hooks.afterEach(function () {
+    clearCompileCache();
   });
 }

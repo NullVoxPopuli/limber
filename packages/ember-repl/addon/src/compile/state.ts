@@ -40,6 +40,7 @@ export class CompileState implements PromiseLike<CompileState> {
    */
   [RESOLVE](component: ComponentLike) {
     this.isReady = true;
+    this.component = component;
     this.#resolve?.(component);
   }
   /**

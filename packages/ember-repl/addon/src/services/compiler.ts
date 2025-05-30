@@ -9,6 +9,7 @@ import { getOwner } from '@ember/owner';
 import Service from '@ember/service';
 import { precompileTemplate } from '@ember/template-compilation';
 import { template } from '@ember/template-compiler/runtime';
+import { waitFor } from '@ember/test-waiters';
 
 import { Compiler } from 'repl-sdk';
 
@@ -31,7 +32,11 @@ export function getCompiler(context: object) {
     owner
   );
 
-  return owner.lookup('service:compiler') as CompilerService;
+  const service = owner.lookup('service:compiler') as CompilerService;
+
+  assert(`Could not locate the compiler service. Has setupCompiler been called?`, service);
+
+  return service;
 }
 
 /**
@@ -95,6 +100,7 @@ export default class CompilerService extends Service {
    * @param {string} ext the ext/format to be compiled
    * @param {string} text the code to be compiled using the configured compiler for the ext
    */
+  @waitFor
   async compile(ext: string, text: string) {
     const name = nameFor(text);
     let component: undefined | ComponentLike;
@@ -120,6 +126,7 @@ export default class CompilerService extends Service {
    *
    * @param {string} code the code to be compiled
    */
+  @waitFor
   async compileGJS(code: string): Promise<CompileResult> {
     const name = nameFor(code);
     let component: undefined | ComponentLike;
@@ -143,6 +150,7 @@ export default class CompilerService extends Service {
    *
    * (templates alone do not have a way to import / define complex structures)
    */
+  @waitFor
   async compileHBS(
     source: string,
     options: {
@@ -173,13 +181,11 @@ export default class CompilerService extends Service {
     return { name, component, error };
   }
 
+  @waitFor
   async compileMD(source: string): Promise<CompileResult> {
     const name = nameFor(source);
     let component: undefined | ComponentLike;
     let error: undefined | Error;
-    /**
-     * TODO: move this Compiler to a service
-     */
 
     try {
       const element = await this.#compile('md', source);

@@ -152,7 +152,9 @@ module('Rendering | compile()', function (hooks) {
     const AComponent = <template>Custom extra module</template>;
 
     setupCompiler(hooks, {
-      'my-silly-import-path/a-component': () => ({ default: AComponent }),
+      modules: {
+        'my-silly-import-path/a-component': () => ({ default: AComponent }),
+      },
     });
 
     test('extra modules may be passed, explicitly', async function (assert) {
