@@ -58,6 +58,7 @@ async function runTheCompiler({
   const { onSuccess, onError, onCompileStart } = options;
 
   await onCompileStart?.();
+  await Promise.resolve();
 
   if (!text) {
     state[REJECT](new Error('No Input Document yet'));

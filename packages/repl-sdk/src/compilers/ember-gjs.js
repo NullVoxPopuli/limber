@@ -183,6 +183,7 @@ export async function compiler(config = {}, api) {
       return code;
     },
     render: async (element, compiled, extra, compiler) => {
+      let { waitForPromise } = await compiler.tryResolve('@ember/test-waiters');
       /**
        * This should be a component definition
        */
@@ -194,7 +195,7 @@ export async function compiler(config = {}, api) {
        *    https://github.com/emberjs/rfcs/pull/1099
        *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
        */
-      renderApp({ element, compiler, component: compiled });
+      waitForPromise(renderApp({ element, compiler, component: compiled }));
     },
     handlers: {
       js: async (text) => {
