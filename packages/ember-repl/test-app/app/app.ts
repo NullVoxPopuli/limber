@@ -19,7 +19,9 @@ Object.assign(window, {
 export default class App extends Application {
   modulePrefix = config.modulePrefix;
   podModulePrefix = config.podModulePrefix;
-  Resolver = Resolver.withModules(compatModules);
+  Resolver = Resolver.withModules({
+    ...compatModules,
+  });
 }
 
 loadInitializers(App, config.modulePrefix, compatModules);

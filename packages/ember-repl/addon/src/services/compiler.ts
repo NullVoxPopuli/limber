@@ -1,10 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
+import { setComponentTemplate } from '@ember/component';
+import templateOnly from '@ember/component/template-only';
 import { assert } from '@ember/debug';
 import { array, concat, fn, get, hash } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { getOwner } from '@ember/owner';
 import Service from '@ember/service';
+import { precompileTemplate } from '@ember/template-compilation';
 import { template } from '@ember/template-compiler/runtime';
 
 import { Compiler } from 'repl-sdk';
@@ -29,6 +32,23 @@ export function getCompiler(context: object) {
   );
 
   return owner.lookup('service:compiler') as CompilerService;
+}
+
+/**
+ * Old way to make static components, because
+ * https://github.com/emberjs/ember.js/issues/20913
+ *
+ * The runtime compiler doesn't allow you to catch compiler errors.
+ * This particular component doesn't need to be runtime anyway.
+ */
+function rendersElement(element: Element): ComponentLike {
+  return setComponentTemplate(
+    precompileTemplate(`{{element}}`, {
+      strictMode: true,
+      scope: () => ({ element }),
+    }),
+    templateOnly()
+  ) as ComponentLike;
 }
 
 export default class CompilerService extends Service {
@@ -83,9 +103,7 @@ export default class CompilerService extends Service {
     try {
       const element = await this.#compile(ext, text);
 
-      component = template(`{{element}}`, {
-        scope: () => ({ element }),
-      }) as unknown as ComponentLike;
+      component = rendersElement(element);
     } catch (e) {
       console.error(e);
       error = e as Error | undefined;
@@ -110,9 +128,7 @@ export default class CompilerService extends Service {
     try {
       const element = await this.#compile('gjs', code);
 
-      component = template(`{{element}}`, {
-        scope: () => ({ element }),
-      }) as unknown as ComponentLike;
+      component = rendersElement(element);
     } catch (e) {
       console.error(e);
       error = e as Error | undefined;
@@ -168,9 +184,7 @@ export default class CompilerService extends Service {
     try {
       const element = await this.#compile('md', source);
 
-      component = template(`{{element}}`, {
-        scope: () => ({ element }),
-      }) as unknown as ComponentLike;
+      component = rendersElement(element);
     } catch (e) {
       console.error(e);
       error = e as Error | undefined;

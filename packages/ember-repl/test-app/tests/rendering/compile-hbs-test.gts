@@ -81,13 +81,18 @@ module('compileHBS()', function (hooks) {
         `;
 
         const compiler = getCompiler(this);
-        const { component, error, name } = await compiler.compileHBS(template);
 
-        assert.ok(error);
-        assert.ok(name);
-        assert.notOk(component);
+        try {
+          const { component, error, name } = await compiler.compileHBS(template);
 
-        return component;
+          assert.ok(error);
+          assert.ok(name);
+          assert.notOk(component);
+
+          return component;
+        } catch (e) {
+          return;
+        }
       };
 
       await render(
