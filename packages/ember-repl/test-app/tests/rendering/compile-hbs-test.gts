@@ -4,10 +4,13 @@ import { setupRenderingTest } from 'ember-qunit';
 
 import { getCompiler } from 'ember-repl';
 
+import { setupCompiler } from 'ember-repl/test-support';
+
 import { Await } from '../helpers/await';
 
 module('compileHBS()', function (hooks) {
   setupRenderingTest(hooks);
+  setupCompiler(hooks);
 
   test('it works', async function (assert) {
     const compile = async () => {
@@ -65,17 +68,14 @@ module('compileHBS()', function (hooks) {
       </template>
     );
 
-    assert.dom().containsText('Hi there!');
+    assert.dom().hasText('Hi there!');
   });
 
   module('deliberate errors', function () {
     test('syntax', async function (assert) {
       const compile = async () => {
-        // What else do we await to convert this to promise?
-        await Promise.resolve();
-
         const template = `
-          {{#each (array 1 2) as |num|}}
+          {{#each array 1 2) as |num|}}
             <output>{{num}}</output>
           {{/each}}
         `;
@@ -92,8 +92,8 @@ module('compileHBS()', function (hooks) {
 
       await render(
         <template>
-          {{#let (compile) as |CustomComponent|}}
-            <Await @promise={{CustomComponent}} />
+          {{#let (compile) as |promise|}}
+            <Await @promise={{promise}} />
           {{/let}}
         </template>
       );
