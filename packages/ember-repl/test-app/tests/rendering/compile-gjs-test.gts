@@ -1,5 +1,7 @@
 import { assert as debugAssert } from '@ember/debug';
-import { click, render, setupOnerror } from '@ember/test-helpers';
+import { getPendingWaiterState } from '@ember/test-waiters';
+import { renderSettled } from '@ember/renderer';
+import { settled, click, render, setupOnerror } from '@ember/test-helpers';
 import QUnit, { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -90,22 +92,24 @@ module('Rendering | compile()', function (hooks) {
         return component;
       };
 
-      await render(
+      void render(
         <template>
-          {{#let (compile) as |CustomComponent|}}
-            <Await @promise={{CustomComponent}} />
+          {{#let (compile) as |promise|}}
+            <Await @promise={{promise}} />
           {{/let}}
         </template>
       );
 
-      assert.dom('output').exists();
-      assert.dom('output').hasText('0');
+      await settled();
+
+      assert.dom('output').exists('output element exists');
+      assert.dom('output').hasText('0', 'output has text: 0');
 
       await click('button');
-      assert.dom('output').hasText('1');
+      assert.dom('output').hasText('1', 'output has text: 1');
 
       await click('button');
-      assert.dom('output').hasText('2');
+      assert.dom('output').hasText('2', 'output has text: 2');
     });
 
     /**

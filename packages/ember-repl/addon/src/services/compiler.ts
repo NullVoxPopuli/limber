@@ -9,7 +9,7 @@ import { getOwner } from '@ember/owner';
 import Service from '@ember/service';
 import { precompileTemplate } from '@ember/template-compilation';
 import { template } from '@ember/template-compiler/runtime';
-import { waitFor } from '@ember/test-waiters';
+import { waitFor, waitForPromise } from '@ember/test-waiters';
 
 import { Compiler } from 'repl-sdk';
 
@@ -72,7 +72,7 @@ export default class CompilerService extends Service {
     const localModules = modules(extraModules);
 
     this.#compiler = new Compiler({
-      logging: true,
+      logging: location.search.includes('debug'),
       resolve: {
         ...localModules,
       },

@@ -13,11 +13,27 @@ import { setupEmberOnerrorValidation, start as qunitStart } from 'ember-qunit';
 import Application from 'limber/app';
 import config, { enterTestMode } from 'limber/config/environment';
 
+Object.assign(window, {
+  getSettledState,
+  getPendingWaiterState,
+  currentURL,
+  currentRouteName,
+  snapshotTimers: (label?: string) => {
+    console.debug(
+      label ?? 'snapshotTimers',
+      JSON.parse(
+        JSON.stringify({
+          settled: getSettledState(),
+          waiters: getPendingWaiterState(),
+        })
+      )
+    );
+  },
+});
+
 export function start() {
   enterTestMode();
   setApplication(Application.create(config.APP));
-
-  Object.assign(window, { getSettledState, getPendingWaiterState, currentURL, currentRouteName });
 
   setup(QUnit.assert);
   setupEmberOnerrorValidation();

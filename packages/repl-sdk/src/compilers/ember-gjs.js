@@ -183,19 +183,17 @@ export async function compiler(config = {}, api) {
       return code;
     },
     render: async (element, compiled, extra, compiler) => {
-      let { waitForPromise } = await compiler.tryResolve('@ember/test-waiters');
-      /**
-       * This should be a component definition
-       */
-      // console.debug('[render:compiled]', compiled);
-
       /**
        *
        * TODO: These will make things easier:
        *    https://github.com/emberjs/rfcs/pull/1099
        *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
        */
-      waitForPromise(renderApp({ element, compiler, component: compiled }));
+
+      // We don't want to await here, because we need to early
+      // return the element so that the app can render in to it.
+      // (Ember will only render in to an element if it's present in the DOM)
+      renderApp({ element, compiler, component: compiled });
     },
     handlers: {
       js: async (text) => {
