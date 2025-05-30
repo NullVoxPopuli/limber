@@ -96,7 +96,7 @@ export default class Compiler extends Component<Signature> {
 
     switch (format) {
       case 'glimdown':
-        return await this.compiler.configuredCompile(text, {
+        return await this.compiler.compileMd(text, {
           format: format,
           CopyComponent: '<CopyMenu />',
           topLevelScope: {
@@ -108,14 +108,14 @@ export default class Compiler extends Component<Signature> {
         });
 
       case 'gjs':
-        return await this.compiler.configuredCompile(text, {
+        return await this.compiler.compileGJS(text, {
           format: format,
           onCompileStart: this.onCompileStart,
           onSuccess,
           onError: this.onError,
         });
       case 'hbs':
-        return await this.compiler.configuredCompile(text, {
+        return await this.compiler.compileHBS(text, {
           format: format,
           topLevelScope: {
             CopyMenu: CopyMenu,

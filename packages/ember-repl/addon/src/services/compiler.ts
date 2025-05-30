@@ -3,17 +3,33 @@
 import { assert } from '@ember/debug';
 import { array, concat, fn, get, hash } from '@ember/helper';
 import { on } from '@ember/modifier';
+import { getOwner } from '@ember/owner';
 import Service from '@ember/service';
 import { template } from '@ember/template-compiler/runtime';
 
 import { Compiler } from 'repl-sdk';
 
-import { compile } from '../compile/index.ts';
 import { nameFor } from '../compile/utils.ts';
+import { modules } from './known-modules.ts';
 
 import type { CompileResult, ModuleMap } from '../compile/types.ts';
+import type Owner from '@ember/owner';
 import type { ComponentLike } from '@glint/template';
-import { modules } from './known-modules.ts';
+
+function isOwner(context: object): context is Owner {
+  return 'lookup' in context && 'register' in context;
+}
+
+export function getCompiler(context: object) {
+  const owner = isOwner(context) ? context : getOwner(context);
+
+  assert(
+    `Owner does not exist on passed context. Cannot look up the compiler service without an owner.`,
+    owner
+  );
+
+  return owner.lookup('service:compiler') as CompilerService;
+}
 
 export default class CompilerService extends Service {
   #compiler: Compiler | undefined;
@@ -47,8 +63,35 @@ export default class CompilerService extends Service {
     return this.#compiler;
   }
 
-  async compile(ext: string, text: string) {
+  async #compile(ext: string, text: string) {
     return this.compiler.compile(ext, text);
+  }
+
+  /**
+   * @public
+   *
+   * Defers to the underlying repl-SDK and gives us a component we can render.
+   *
+   * @param {string} ext the ext/format to be compiled
+   * @param {string} text the code to be compiled using the configured compiler for the ext
+   */
+  async compile(ext: string, text: string) {
+    const name = nameFor(text);
+    let component: undefined | ComponentLike;
+    let error: undefined | Error;
+
+    try {
+      const element = await this.#compile(ext, text);
+
+      component = template(`{{element}}`, {
+        scope: () => ({ element }),
+      }) as unknown as ComponentLike;
+    } catch (e) {
+      console.error(e);
+      error = e as Error | undefined;
+    }
+
+    return { name, component, error };
   }
 
   /**
@@ -65,7 +108,7 @@ export default class CompilerService extends Service {
     let error: undefined | Error;
 
     try {
-      const element = await this.compile('gjs', code);
+      const element = await this.#compile('gjs', code);
 
       component = template(`{{element}}`, {
         scope: () => ({ element }),
@@ -123,7 +166,7 @@ export default class CompilerService extends Service {
      */
 
     try {
-      const element = await this.compile('md', source);
+      const element = await this.#compile('md', source);
 
       component = template(`{{element}}`, {
         scope: () => ({ element }),
@@ -134,9 +177,5 @@ export default class CompilerService extends Service {
     }
 
     return { name, component, error };
-  }
-
-  async configuredCompile(text: string, options: any) {
-    return compile(this, text, options);
   }
 }

@@ -2,7 +2,7 @@ import { click, render } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import { compileJS } from 'ember-repl/compile/formats/gjs';
+import { getCompiler } from 'ember-repl';
 // import this so we don't tree-shake it away
 import ExampleComponent from 'ember-repl-test-app/components/example-component';
 
@@ -29,8 +29,9 @@ module('compileJS()', function (hooks) {
           </template>
         }
       `;
+      const compiler = getCompiler(this);
 
-      const { component, name, error } = await compileJS(template);
+      const { component, name, error } = await compiler.compileJS(template);
 
       assert.notOk(error);
       assert.ok(name);

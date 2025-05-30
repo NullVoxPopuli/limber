@@ -4,7 +4,9 @@ import QUnit, { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import { stripIndent } from 'common-tags';
-import { compile } from 'ember-repl';
+import { compile, getCompiler } from 'ember-repl';
+
+import { setupCompiler } from 'ember-repl/test-support';
 
 import type { ComponentLike } from '@glint/template';
 
@@ -15,12 +17,15 @@ function unexpectedErrorHandler(error: unknown) {
 
 module('Rendering | compile()', function (hooks) {
   setupRenderingTest(hooks);
+  setupCompiler(hooks);
 
   module('format: gjs', function () {
     test('gjs with imports works', async function (assert) {
-      setupOnerror(() => {
-        assert.notOk('This should not error');
+      setupOnerror((e) => {
+        assert.notOk(e, 'This should not error');
       });
+
+      const compiler = getCompiler(this);
 
       const snippet = stripIndent`
         import Component from '@glimmer/component';
@@ -35,7 +40,7 @@ module('Rendering | compile()', function (hooks) {
 
       let component: ComponentLike | undefined;
 
-      await compile(snippet, {
+      const state = compile(compiler, snippet, {
         format: 'gjs',
         onSuccess: (comp) => (component = comp),
         onError: unexpectedErrorHandler,
@@ -43,6 +48,8 @@ module('Rendering | compile()', function (hooks) {
           /* not used */
         },
       });
+
+      await state.promise;
 
       debugAssert(`[BUG]`, component);
 

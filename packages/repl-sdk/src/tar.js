@@ -1,7 +1,7 @@
 import { parseTar } from 'tarparser';
 
 import { getNPMInfo, getTarUrl } from './npm.js';
-import { printError,Request,resolve } from './resolve.js';
+import { printError, Request, resolve } from './resolve.js';
 
 /**
  *
@@ -51,7 +51,6 @@ export function getFile(untarred, request, answer) {
 
   return { code, ext, resolvedAs: inTarFile };
 }
-
 
 /**
  * @param {string} name of the package

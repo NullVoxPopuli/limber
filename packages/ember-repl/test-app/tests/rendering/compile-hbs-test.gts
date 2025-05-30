@@ -2,7 +2,7 @@ import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import { compileHBS } from 'ember-repl/compile/formats/hbs';
+import { getCompiler } from 'ember-repl';
 
 import { Await } from '../helpers/await';
 
@@ -10,14 +10,16 @@ module('compileHBS()', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it works', async function (assert) {
-    const compile = () => {
+    const compile = async () => {
       const template = `
         {{#each (array 1 2) as |num|}}
           <output>{{num}}</output>
         {{/each}}
       `;
 
-      const { component, name, error } = compileHBS(template);
+      const compiler = getCompiler(this);
+
+      const { component, name, error } = await compiler.compileHBS(template);
 
       assert.notOk(error);
       assert.ok(name);
@@ -28,7 +30,7 @@ module('compileHBS()', function (hooks) {
     await render(
       <template>
         {{#let (compile) as |CustomComponent|}}
-          <CustomComponent />
+          <Await @promise={{CustomComponent}} />
         {{/let}}
       </template>
     );
@@ -43,8 +45,9 @@ module('compileHBS()', function (hooks) {
 
     const template = `Hi <SomeOtherComponent />`;
 
-    const compile = () => {
-      const { component, error, name } = compileHBS(template, {
+    const compile = async () => {
+      const compiler = getCompiler(this);
+      const { component, error, name } = await compiler.compileHBS(template, {
         scope: { SomeOtherComponent },
       });
 
@@ -57,7 +60,7 @@ module('compileHBS()', function (hooks) {
     await render(
       <template>
         {{#let (compile) as |CustomComponent|}}
-          <CustomComponent />
+          <Await @promise={{CustomComponent}} />
         {{/let}}
       </template>
     );
@@ -77,7 +80,8 @@ module('compileHBS()', function (hooks) {
           {{/each}}
         `;
 
-        const { component, name, error } = compileHBS(template);
+        const compiler = getCompiler(this);
+        const { component, error, name } = await compiler.compileHBS(template);
 
         assert.ok(error);
         assert.ok(name);
