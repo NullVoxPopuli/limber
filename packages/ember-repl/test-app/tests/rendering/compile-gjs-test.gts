@@ -5,7 +5,6 @@ import { setupRenderingTest } from 'ember-qunit';
 
 import { stripIndent } from 'common-tags';
 import { compile, getCompiler } from 'ember-repl';
-// import this so we don't tree-shake it away
 import ExampleComponent from 'ember-repl-test-app/components/example-component';
 
 import { setupCompiler } from 'ember-repl/test-support';
@@ -21,9 +20,10 @@ function unexpectedErrorHandler(error: unknown) {
 
 module('Rendering | compile()', function (hooks) {
   setupRenderingTest(hooks);
-  setupCompiler(hooks);
 
-  module('format: gjs', function () {
+  module('format: gjs', function (hooks) {
+    setupCompiler(hooks);
+
     test('gjs with imports works', async function (assert) {
       setupOnerror((e) => {
         assert.notOk(e, 'This should not error');
@@ -146,10 +146,16 @@ module('Rendering | compile()', function (hooks) {
 
       assert.dom().hasText('!!Example!!');
     });
+  });
+
+  module('format: gjs (custom scope)', function (hooks) {
+    const AComponent = <template>Custom extra module</template>;
+
+    setupCompiler(hooks, {
+      'my-silly-import-path/a-component': () => ({ default: AComponent }),
+    });
 
     test('extra modules may be passed, explicitly', async function (assert) {
-      const AComponent = <template>Custom extra module</template>;
-
       const compile = async () => {
         const template = `
         import Component from '@glimmer/component';
@@ -165,9 +171,7 @@ module('Rendering | compile()', function (hooks) {
 
         const compiler = getCompiler(this);
 
-        const { component, name, error } = await compiler.compileJS(template, {
-          'my-silly-import-path/a-component': AComponent,
-        });
+        const { component, name, error } = await compiler.compileGJS(template);
 
         assert.notOk(error);
         assert.ok(name);
