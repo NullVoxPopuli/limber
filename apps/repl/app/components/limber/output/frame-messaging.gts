@@ -70,7 +70,13 @@ async function setupEvents(
   Ember.onerror = (error: any) =>
     parent.error({ error: error.message || error, unrecoverable: true });
 
-  const handleError = (error: any) => parent.error({ error: error.message || error });
+  const handleError = (error: any) => {
+    parent.error({ error: error.message || error });
+
+    if ('stack' in error) {
+      console.error(error.stack);
+    }
+  };
 
   window.addEventListener('error', handleError);
 
