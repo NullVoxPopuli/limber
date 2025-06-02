@@ -1,4 +1,5 @@
 import { Compiler } from 'repl-sdk';
+import { stripIndent } from 'common-tags';
 import { describe, expect, test } from 'vitest';
 
 function escapeFence(code: string) {
@@ -118,6 +119,41 @@ graph TD;
       const rootSVG = element.querySelector('svg');
 
       expect(rootSVG, 'Mermaid draws in SVG inside the <pre> tag').toBeTruthy();
+    });
+  });
+
+  describe('markdown features', () => {
+    test('tables', async () => {
+      const compiler = new Compiler();
+      const snippet = stripIndent`
+        | Color | Food |
+        | ----  | ---- |
+        | red   | apple |
+        | yellow| banana |
+      `;
+
+      const element = await compiler.compile('md', snippet);
+
+      expect(element.querySelector('table')).toBeTruthy();
+      expect(element.querySelector('td')?.textContent).toContain('red');
+    });
+
+    test('footnotes', () => {});
+
+    describe('remark plugins', () => {
+      test('adding a remark plugin', () => {});
+
+      test('demo: remove pre code', () => {});
+
+      test('baseline: without the plugin, pre renders', () => {});
+
+      test('with the plugin: no pre renders', () => {});
+
+      test('can add code snippets', () => {});
+    });
+
+    describe('rehype plugins', () => {
+      test('addinga  rehype plugin', () => {});
     });
   });
 });

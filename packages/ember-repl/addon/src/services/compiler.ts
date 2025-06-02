@@ -24,6 +24,12 @@ function isOwner(context: object): context is Owner {
   return 'lookup' in context && 'register' in context;
 }
 
+/**
+ * This service doesn't have custom teardown / destory behavior.
+ * GC is sufficient.
+ */
+const serviceCache = new WeakMap<object, CompilerService>();
+
 export function getCompiler(context: object) {
   const owner = isOwner(context) ? context : getOwner(context);
 
@@ -32,11 +38,17 @@ export function getCompiler(context: object) {
     owner
   );
 
-  const service = owner.lookup('service:compiler') as CompilerService;
+  let existing = serviceCache.get(owner);
 
-  assert(`Could not locate the compiler service. Has setupCompiler been called?`, service);
+  if (existing) {
+    return existing;
+  }
 
-  return service;
+  existing = new CompilerService();
+
+  serviceCache.set(owner, existing);
+
+  return existing;
 }
 
 /**
