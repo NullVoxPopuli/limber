@@ -1,6 +1,7 @@
 import { Compiler } from 'repl-sdk';
 import { stripIndent } from 'common-tags';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, beforeEach } from 'vitest';
+import { allKnownModules, markdownModules, vueModules } from './setup.ts';
 
 function escapeFence(code: string) {
   return code.replace(/`/g, '\\`');
@@ -10,9 +11,13 @@ function fenced(code: string, meta: string) {
   return '```' + meta + '\n' + escapeFence(code) + '\n```';
 }
 
+beforeEach(() => {
+  delete (window as any)[Symbol.for('__repl-sdk__compiler__')];
+});
+
 describe('markdown', () => {
   test('it works', async () => {
-    const compiler = new Compiler();
+    const compiler = new Compiler({ resolve: allKnownModules });
     const element = await compiler.compile('md', `# Hello`);
 
     const h1 = element.querySelector('h1');
@@ -68,7 +73,10 @@ graph TD;
 `;
 
     test('vue live', async () => {
-      const compiler = new Compiler();
+      const compiler = new Compiler({ resolve: {
+      ...markdownModules,
+      ...vueModules,
+      });
       const element = await compiler.compile('md', `# Hello\n\n` + fenced(vue, 'vue live'));
 
       const h1 = element.querySelector('h1');
@@ -81,11 +89,11 @@ graph TD;
       expect(h2).toBeTruthy();
       expect(h1?.textContent).toContain('Hello');
       expect(h2?.textContent).toContain('GENERAL KENOBI!');
-      expect(window.getComputedStyle(h2).color).toBe('rgb(255, 0, 0)');
+      expect(window.getComputedStyle(h2!).color).toBe('rgb(255, 0, 0)');
     });
 
     test('jsx requires a flavor to be specified', async () => {
-      const compiler = new Compiler();
+      const compiler = new Compiler({ resolve: allKnownModules });
 
       expect(
         compiler.compile(
@@ -99,7 +107,7 @@ graph TD;
     });
 
     test('svelte live', async () => {
-      const compiler = new Compiler();
+      const compiler = new Compiler({ resolve: allKnownModules });
       const element = await compiler.compile('md', fenced(svelte, 'svelte live'));
 
       const h1 = element.querySelector('h1');
@@ -109,22 +117,29 @@ graph TD;
 
       expect(h1).toBeTruthy();
       expect(h1?.textContent).toContain('Hello');
-      expect(window.getComputedStyle(h1).color).toBe('rgb(255, 0, 0)');
+      expect(window.getComputedStyle(h1!).color).toBe('rgb(255, 0, 0)');
     });
 
     test('mermaid (no live)', async () => {
-      const compiler = new Compiler();
+      const compiler = new Compiler({ resolve: markdownModules });
       const element = await compiler.compile('md', fenced(mermaid, 'mermaid'));
 
       const rootSVG = element.querySelector('svg');
 
       expect(rootSVG, 'Mermaid draws in SVG inside the <pre> tag').toBeTruthy();
     });
+
+    test('unknown', async () => {
+      const compiler = new Compiler({ resolve: allKnownModules });
+      const element = await compiler.compile('md', fenced('hello', 'unknown-ext'));
+
+      expect(element.innerHTML).toMatchInlineSnapshot();
+    });
   });
 
   describe('markdown features', () => {
     test('tables', async () => {
-      const compiler = new Compiler();
+      const compiler = new Compiler({ resolve: allKnownModules });
       const snippet = stripIndent`
         | Color | Food |
         | ----  | ---- |
@@ -138,7 +153,19 @@ graph TD;
       expect(element.querySelector('td')?.textContent).toContain('red');
     });
 
-    test('footnotes', () => {});
+    test('footnotes', async () => {
+      const compiler = new Compiler({ resolve: allKnownModules });
+      const snippet = stripIndent`
+        text[^note]
+
+        [^note]: a note about a thing
+      `;
+
+      const element = await compiler.compile('md', snippet);
+
+      expect(element.querySelector('sup')).toBeTruthy();
+      expect(element.querySelectorAll('a').length).toBe(2);
+    });
 
     describe('remark plugins', () => {
       test('adding a remark plugin', () => {});

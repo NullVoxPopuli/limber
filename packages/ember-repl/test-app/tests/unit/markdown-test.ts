@@ -2,9 +2,11 @@ import { module, test } from 'qunit';
 
 import rehypeShiki from '@shikijs/rehype';
 import { stripIndent } from 'common-tags';
-import { invocationOf, nameFor } from 'ember-repl';
+import { getCompiler, invocationOf, nameFor } from 'ember-repl';
 // import { parseMarkdown } from 'ember-repl/compile/formats/markdown';
 import { visit } from 'unist-util-visit';
+
+import { setupCompiler } from 'ember-repl/test-support';
 
 /**
  * NOTE: there is a problem(?) with remark-hbs where all extra newlines and
@@ -17,50 +19,8 @@ function assertOutput(actual: string, expected: string) {
   QUnit.assert.equal(_actual, _expected);
 }
 
-module('Unit | parseMarkdown()', function () {
-  test('There are no code fences', async function (assert) {
-    const result = await parseMarkdown(stripIndent`
-      # Title
-
-      text
-    `);
-
-    assertOutput(
-      result.templateOnlyGlimdown,
-      stripIndent`
-        <h1>Title</h1>
-
-        <p>text</p>
-      `
-    );
-
-    assert.deepEqual(result.blocks, []);
-  });
-
-  test('There is code fence, but it is not gjs', async function (assert) {
-    const result = await parseMarkdown(
-      stripIndent`
-      # Title
-
-      \`\`\`js
-        const two = 2;
-      \`\`\`
-    `,
-      { CopyComponent: '<CopyMenu />' }
-    );
-
-    assertOutput(
-      result.templateOnlyGlimdown,
-      stripIndent`
-        <h1>Title</h1>
-
-        <div class=\"glimdown-snippet relative\"><pre><code class=\"language-js\">  const two = 2;
-        </code></pre><CopyMenu /></div>
-      `
-    );
-
-    assert.deepEqual(result.blocks, []);
-  });
+module('Unit | parseMarkdown()', function (hooks) {
+  setupCompiler(hooks);
 
   module('plugin options', function () {
     test('remarkPlugins', async function (assert) {

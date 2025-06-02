@@ -27,69 +27,6 @@ module('Rendering | compile()', function (hooks) {
   setupCompiler(hooks);
 
   module('markdown features', function () {
-    test('tables', async function (assert) {
-      setupOnerror(() => {
-        assert.notOk('This should not error');
-      });
-
-      const snippet = stripIndent`
-        | Color | Food |
-        | ----  | ---- |
-        | red   | apple |
-        | yellow| banana |
-      `;
-
-      let component: ComponentLike | undefined;
-
-      const compiler = getCompiler(this);
-
-      await compile(compiler, snippet, {
-        format: 'glimdown',
-        onSuccess: (comp) => (component = comp),
-        onError: unexpectedErrorHandler,
-        onCompileStart: () => {
-          /* not used */
-        },
-      });
-
-      debugAssert(`[BUG]`, component);
-
-      await render(component);
-
-      assert.dom('table').exists();
-      assert.dom('td').containsText('red');
-    });
-
-    test('footnotes', async function (assert) {
-      setupOnerror(() => {
-        assert.notOk('This should not error');
-      });
-
-      const snippet = stripIndent`
-        text[^note]
-
-        [^note]: a note about a thing
-      `;
-
-      let component: ComponentLike | undefined;
-
-      await compile(snippet, {
-        format: 'glimdown',
-        onSuccess: (comp) => (component = comp),
-        onError: unexpectedErrorHandler,
-        onCompileStart: () => {
-          /* not used */
-        },
-      });
-
-      debugAssert(`[BUG]`, component);
-
-      await render(component);
-
-      assert.dom('sup').exists();
-      assert.dom('a').exists({ count: 2 }); // to and from the footnote
-    });
-
     module('custom remark plugins', function () {
       module('demo: remove pre code', function (hooks) {
         let build: Build;

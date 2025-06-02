@@ -294,7 +294,7 @@ export class Compiler {
       return existing;
     }
 
-    let result = await this.#options.resolve[name];
+    let result = await this.#options.resolve?.[name];
 
     if (!result) {
       this.#log(`[#resolveManually] Could not resolve ${name}`);
