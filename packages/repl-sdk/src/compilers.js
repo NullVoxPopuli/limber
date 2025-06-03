@@ -140,8 +140,8 @@ export const compilers = {
       switch (id) {
         case 'vue':
           return `https://esm.sh/vue`;
-        case '@vue/repl':
-          return `https://esm.sh/@vue/repl`;
+        // case '@vue/repl':
+        // return `https://esm.sh/@vue/repl`;
       }
     },
     compiler: async (config = {}, api) => {

@@ -18,6 +18,10 @@
           Format
           <select name="format"></select>
         </label>
+        <label>
+          Debug
+          <input type="checkbox" name="debug" />
+        </label>
 
         <label class="flavor" style="visibility: hidden">
           Flavor
@@ -65,6 +69,9 @@
       import * as samples from "./samples.js";
 
       let config = new URLSearchParams(window.location.href.split("?")[1]);
+      let isDebug = config.get("debug") !== "false";
+
+      console.log({ config, isDebug });
 
       function setQP(k, v) {
         let search = new URLSearchParams(config);
@@ -73,7 +80,7 @@
       }
 
       let compiler = new Compiler({
-        logging: config.get("debug"),
+        logging: isDebug,
       });
 
       let e = {
@@ -82,6 +89,7 @@
         select: document.querySelector("select[name=format]"),
         flavor: document.querySelector("select[name=flavor]"),
         flavorL: document.querySelector("label.flavor"),
+        debug: document.querySelector("input[name=debug]"),
         code: document.querySelector("textarea"),
         error: document.querySelector(".error"),
       };
@@ -174,12 +182,18 @@
         }
       });
 
+      e.debug.addEventListener("change", (event) => {
+        setQP("debug", event.target.checked ? "true" : "false");
+      });
+
       let format = config.get("format") || "gjs";
       select(format);
 
       if (hasFlavors(format)) {
         setupFlavors(format);
       }
+
+      e.debug.checked = isDebug;
     </script>
   </body>
 </html>
