@@ -136,6 +136,14 @@ export const compilers = {
    * https://vuejs.org/
    */
   vue: {
+    resolve: (id) => {
+      switch (id) {
+        case 'vue':
+          return `https://esm.sh/vue`;
+        case '@vue/repl':
+          return `https://esm.sh/@vue/repl`;
+      }
+    },
     compiler: async (config = {}, api) => {
       const versions = config.versions || {};
 
