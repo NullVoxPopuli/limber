@@ -38,6 +38,13 @@ export class Compiler {
       // Permit overrides to import maps
       mapOverrides: true, // default false
       // Hook all module resolutions
+      /**
+       * Order of preference
+       * 1. manually resolved (from the caller)
+       * 2. specified in the compiler config (to use CDN)
+       * 3. download tarball from npm
+       *    or resolve from already downloaded tarball
+       */
       resolve: (id, parentUrl, resolve) => {
         /**
          * We have to strip the query params because our manual resolving
@@ -51,6 +58,18 @@ export class Compiler {
           this.#log(`[resolve] ${vanilla} found in manually specified resolver`);
 
           return `manual:${vanilla}`;
+        }
+
+        for (let compiler of this.#eachLoadedCompiler()) {
+          if (compiler.resolve) {
+            let result = compiler.resolve(vanilla);
+
+            if (result) {
+              this.#log(`[resolve] ${vanilla} found in compiler config at ${result}.`);
+
+              return result;
+            }
+          }
         }
 
         if (parentUrl.startsWith(tgzPrefix) && id.startsWith('.')) {
@@ -173,6 +192,12 @@ export class Compiler {
     }
 
     return code;
+  }
+
+  *#eachLoadedCompiler() {
+    for (let compiler of this.#compilers) {
+      yield compiler;
+    }
   }
 
   /**

@@ -64,7 +64,17 @@
       import { Compiler, defaultFormats, defaults } from "../src/index.js";
       import * as samples from "./samples.js";
 
-      let compiler = new Compiler();
+      let config = new URLSearchParams(window.location.href.split("?")[1]);
+
+      function setQP(k, v) {
+        let search = new URLSearchParams(config);
+        search.set(k, v);
+        history.pushState(null, null, search.toString());
+      }
+
+      let compiler = new Compiler({
+        logging: config.get("debug"),
+      });
 
       let e = {
         form: document.querySelector("form"),
@@ -88,7 +98,7 @@
 
       function select(fileType) {
         let option = [...e.select.querySelectorAll("option")].find((option) =>
-          option.textContent.includes("gjs"),
+          option.textContent.includes(fileType),
         );
 
         if (option) {
@@ -98,23 +108,34 @@
         e.code.innerHTML = samples[fileType];
       }
 
-      select("gjs");
+      function setupFlavors(format) {
+        e.flavor.innerHTML = "";
+        Object.keys(defaults.formats[format]).map((flv) => {
+          let option = document.createElement("option");
+          option.setAttribute("value", flv);
+          option.innerText = flv;
+          if (flv === config.get("flavor")) {
+            option.selected = true;
+          }
+          e.flavor.appendChild(option);
+        });
+        e.flavorL.style.visibility = "visible";
+        let firstFlavor = e.flavor.firstChild.value;
+        e.code.innerHTML = samples[format][firstFlavor];
+        return;
+      }
+
+      function hasFlavors(format) {
+        return !("compiler" in defaults.formats[format]);
+      }
 
       e.select.addEventListener("change", (event) => {
         let format = event.target.value;
 
-        let hasFlavors = !("compiler" in defaults.formats[format]);
-        if (hasFlavors) {
-          e.flavor.innerHTML = "";
-          Object.keys(defaults.formats[format]).map((flv) => {
-            let option = document.createElement("option");
-            option.setAttribute("value", flv);
-            option.innerText = flv;
-            e.flavor.appendChild(option);
-          });
-          e.flavorL.style.visibility = "visible";
-          let firstFlavor = e.flavor.firstChild.value;
-          e.code.innerHTML = samples[format][firstFlavor];
+        setQP("format", format);
+
+        if (hasFlavors(format)) {
+          setupFlavors(format);
           return;
         }
 
@@ -127,6 +148,8 @@
         let flavor = event.target.value;
         let format = e.select.value;
         e.code.innerHTML = samples[format][flavor];
+
+        setQP("flavor", flavor);
       });
 
       e.form.addEventListener("submit", async (event) => {
@@ -149,6 +172,13 @@
           throw error;
         }
       });
+
+      let format = config.get("format") || "gjs";
+      select(format);
+
+      if (hasFlavors(format)) {
+        setupFlavors(format);
+      }
     </script>
   </body>
 </html>
