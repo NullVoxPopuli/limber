@@ -29,8 +29,23 @@ export const compilers = {
      * https://react.dev/
      */
     react: {
+      resolve: (id) => {
+        switch (id) {
+          case 'react':
+            return `https://esm.sh/react`;
+          case 'react-dom/client':
+            return `https://esm.sh/react-dom/client`;
+          case '@babel/standalone':
+            return `https://esm.sh/@babel/standalone`;
+        }
+      },
       compiler: async (config = {}, api) => {
-        const [{ createRoot }, babel] = await api.tryResolveAll(['react-dom', '@babel/standalone']);
+        const [reactDom, babel] = await api.tryResolveAll([
+          'react-dom/client',
+          '@babel/standalone',
+        ]);
+
+        const { createRoot } = reactDom;
 
         return {
           compile: async (text) => {

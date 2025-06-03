@@ -109,6 +109,7 @@
       }
 
       function setupFlavors(format) {
+        if (!hasFlavors(format)) return;
         e.flavor.innerHTML = "";
         Object.keys(defaults.formats[format]).map((flv) => {
           let option = document.createElement("option");

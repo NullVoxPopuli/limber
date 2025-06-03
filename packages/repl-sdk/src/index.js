@@ -60,15 +60,13 @@ export class Compiler {
           return `manual:${vanilla}`;
         }
 
-        for (let compiler of this.#eachLoadedCompiler()) {
-          if (compiler.resolve) {
-            let result = compiler.resolve(vanilla);
+        for (let compilerResolve of this.#compilerResolvers) {
+          let result = compilerResolve(vanilla);
 
-            if (result) {
-              this.#log(`[resolve] ${vanilla} found in compiler config at ${result}.`);
+          if (result) {
+            this.#log(`[resolve] ${vanilla} found in compiler config at ${result}.`);
 
-              return result;
-            }
+            return result;
           }
         }
 
@@ -83,9 +81,10 @@ export class Compiler {
           return url.href;
         }
 
-        if (id.startsWith('blob:')) return id;
-        if (id.startsWith('https://')) return id;
+        if (id.startsWith('https://')) return resolve(id, parentUrl);
+        if (id.startsWith('blob:')) return resolve(id, parentUrl);
         if (id.startsWith('.')) return resolve(id, parentUrl);
+        if (parentUrl.startsWith('https://')) return resolve(id, parentUrl);
 
         if (id.startsWith('node:')) {
           this.#log(`Is known node module: ${id}. Grabbing polyfill`);
@@ -194,12 +193,6 @@ export class Compiler {
     return code;
   }
 
-  *#eachLoadedCompiler() {
-    for (let compiler of this.#compilers) {
-      yield compiler;
-    }
-  }
-
   /**
    * @param {string} format
    * @param {string} text
@@ -207,11 +200,14 @@ export class Compiler {
    * @returns {}
    */
   async compile(format, text, options = {}) {
+    this.#log('[compile] idempotently installing es-module-shim');
     await import('es-module-shims');
 
     let opts = { ...options };
 
     opts.fileName ||= `dynamic.${format}`;
+
+    this.#log('[compile] compiling');
 
     const compiler = await this.#getCompiler(format, opts.flavor);
     const compiled = await compiler.compile(text, opts.fileName);
@@ -238,6 +234,7 @@ export class Compiler {
 
   #compilerCache = new WeakMap();
   #compilers = new Set();
+  #compilerResolvers = new Set();
 
   /**
    * @param {string} format
@@ -248,6 +245,10 @@ export class Compiler {
 
     if (this.#compilerCache.has(config)) {
       return this.#compilerCache.get(config);
+    }
+
+    if (config.resolve) {
+      this.#compilerResolvers.add(config.resolve);
     }
 
     const compiler = await config.compiler(this.optionsFor(format, flavor), this.#nestedPublicAPI);
