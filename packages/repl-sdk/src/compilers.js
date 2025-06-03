@@ -106,13 +106,24 @@ export const compilers = {
    * https://svelte.dev/
    */
   svelte: {
+    /**
+     * Default config, known to work with how the compiler and render functions are configured.
+     */
+    resolve: (id) => {
+      switch (id) {
+        case 'svelte':
+          return `https://cdn.jsdelivr.net/npm/svelte@5.33.13/+esm`;
+        case 'svelte/compiler':
+          return `https://cdn.jsdelivr.net/npm/svelte@5.33.13/compiler/+esm`;
+      }
+    },
     compiler: async (config = {}, api) => {
       const versions = config.versions || {};
-      const { compile } = await api.tryResolve('svelte/compiler');
+      const compiler = await api.tryResolve('svelte/compiler');
 
       return {
         compile: async (text) => {
-          let output = await compile(text);
+          let output = await compiler.compile(text);
 
           return { compiled: output.js.code, css: output.css.code };
         },
@@ -136,12 +147,15 @@ export const compilers = {
    * https://vuejs.org/
    */
   vue: {
+    /**
+     * Default config, known to work with how the compiler and render functions are configured.
+     */
     resolve: (id) => {
       switch (id) {
         case 'vue':
-          return `https://esm.sh/vue`;
-        // case '@vue/repl':
-        // return `https://esm.sh/@vue/repl`;
+          return `https://cdn.jsdelivr.net/npm/vue@3.5.16/+esm`;
+        case '@vue/repl':
+          return `https://cdn.jsdelivr.net/npm/@vue/repl@4.5.1/+esm`;
       }
     },
     compiler: async (config = {}, api) => {

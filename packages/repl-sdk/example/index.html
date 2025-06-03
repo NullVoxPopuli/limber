@@ -76,7 +76,11 @@
       function setQP(k, v) {
         let search = new URLSearchParams(config);
         search.set(k, v);
-        history.pushState(null, null, search.toString());
+        let searchString = search.toString();
+        if (!searchString.startsWith("?")) {
+          searchString = "?" + searchString;
+        }
+        history.pushState(null, null, searchString);
       }
 
       let compiler = new Compiler({

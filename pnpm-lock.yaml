@@ -1533,6 +1533,9 @@ importers:
       es-module-shims:
         specifier: ^2.4.1
         version: 2.6.0
+      mime:
+        specifier: ^4.0.7
+        version: 4.0.7
       resolve.exports:
         specifier: ^2.0.3
         version: 2.0.3
@@ -10278,6 +10281,11 @@ packages:
   mime@1.6.0:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
     engines: {node: '>=4'}
+    hasBin: true
+
+  mime@4.0.7:
+    resolution: {integrity: sha512-2OfDPL+e03E0LrXaGYOtTFIYhiuzep94NSsuhrNULq+stylcJedcHdzHtz0atMUuGwJfFYs0YL5xeC/Ca2x0eQ==}
+    engines: {node: '>=16'}
     hasBin: true
 
   mimic-fn@1.2.0:
@@ -20919,7 +20927,7 @@ snapshots:
       tinyglobby: 0.2.13
       unrs-resolver: 1.7.2
     optionalDependencies:
-      eslint-plugin-import: 2.31.0(ebfdb8587d3f1b86893905581a5f4134)
+      eslint-plugin-import: 2.31.0(a0f8cce68075c90b1b5b5b85957dd9d6)
     transitivePeerDependencies:
       - supports-color
 
@@ -24042,6 +24050,8 @@ snapshots:
       mime-db: 1.54.0
 
   mime@1.6.0: {}
+
+  mime@4.0.7: {}
 
   mimic-fn@1.2.0: {}
 

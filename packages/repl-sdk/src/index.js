@@ -1,6 +1,8 @@
 /**
  * @typedef {import("./types.ts").Options} Options
  */
+import mime from 'mime/lite';
+
 import { secret, secretKey } from './cache.js';
 import { compilers } from './compilers.js';
 import { resolvePath } from './resolve.js';
@@ -104,7 +106,9 @@ export class Compiler {
       },
       // Hook source fetch function
       fetch: async (url, options) => {
-        this.#log(`[fetch] attempting to fetch: ${url}`);
+        let mimeType = mime.getType(url) ?? 'application/javascript';
+
+        this.#log(`[fetch] attempting to fetch: ${url}. Assuming ${mimeType}`);
 
         if (this.#options.resolve) {
           if (url.startsWith('manual:')) {
@@ -134,7 +138,7 @@ export class Compiler {
                 .join('\n')}
             `;
 
-            let blob = new Blob(Array.from(blobContent), { type: 'application/javascript' });
+            let blob = new Blob(Array.from(blobContent), { type: mimeType });
 
             this.#log(
               `[fetch] returning blob mapping to manually resolved import for ${name}`
@@ -228,6 +232,8 @@ export class Compiler {
     const asBlobUrl = textToBlobUrl(compiledText);
 
     const { default: defaultExport } = await shimmedImport(/* @vite-ignore */ asBlobUrl);
+
+    this.#log('[compile] preparing to render', defaultExport, extras);
 
     return this.#render(compiler, defaultExport, extras);
   }

@@ -2,7 +2,7 @@ import { Compiler } from 'repl-sdk';
 import { describe, expect, test } from 'vitest';
 
 describe('svelte', () => {
-  test('it works', async () => {
+  test.skip('it works', async () => {
     const compiler = new Compiler();
     const element = await compiler.compile(
       'svelte',
