@@ -20,6 +20,12 @@ const resolveCache = new Map();
 const AT = '___AT___';
 const fakeProtocol = 'repl://';
 
+/**
+ * 
+ * @param {*} start packageName or packageName with file
+ * @param {*} target file to resolve within the packageName
+ * @returns 
+ */
 export function resolvePath(start, target) {
   /**
    * How to make the whole package name look like one segment for URL
@@ -35,7 +41,8 @@ export function resolvePath(start, target) {
   return url.href
     .replace(fakeProtocol + fakeDomain, '')
     .replace(AT, '@')
-    .replace('___', '/');
+    .replace('___', '/')
+    .replace(/^\//, './');
 }
 
 /**
@@ -87,7 +94,7 @@ export function fromInternalImport(untarred, request, answer) {
 
   if (!answerFrom) printError(untarred, fromSpecifier, answer);
 
-  let inTarFile = resolvePath(answerFrom.inTarFile, request.to);
+  let inTarFile = resolvePath(fromSpecifier.name + '/' + answerFrom.inTarFile, request.to).replace(new RegExp(`^${fromSpecifier.name}/`), '');
   let result = checkFile(untarred, inTarFile);
 
   if (result) {

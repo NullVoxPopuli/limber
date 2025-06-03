@@ -9,7 +9,7 @@ const expect = errorExpect.soft;
 it('resolves the entrypoint (rehype-raw)', () => {
   const untarred = {
     contents: {
-      'pkg/index.js': 'entry file',
+      'index.js': 'entry file',
     },
     manifest: {
       exports: './index.js',
@@ -18,5 +18,5 @@ it('resolves the entrypoint (rehype-raw)', () => {
   const request = Request.fromSpecifier('rehype-raw');
   const answer = resolve(untarred as unknown as UntarredPackage, request);
 
-  expect(answer?.inTarFile).toBe('pkg/index.js');
+  expect(answer?.inTarFile).toBe('index.js');
 });

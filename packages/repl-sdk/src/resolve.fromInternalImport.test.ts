@@ -50,3 +50,20 @@ it('resolves a private file (rehype-raw)', () => {
 
   expect(answer?.inTarFile).toBe('pkg/lib/index.js');
 });
+
+
+it('resolves the entrypoint (unist-util-visit)', () => {
+  const untarred = {
+    contents: {
+      'index.js': 'contents',
+      'lib/index.js': 'contents',
+    },
+    manifest: {
+      exports: './index.js',
+    },
+  };
+  const request = Request.fromSpecifier('./lib/index.js?from=tgz://repl.sdk/unist-util-visit');
+  const answer = fromInternalImport(untarred as unknown as UntarredPackage, request, undefined);
+
+  expect(answer?.inTarFile).toBe('lib/index.js');
+});
