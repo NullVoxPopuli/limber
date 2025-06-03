@@ -35,6 +35,7 @@
       </fieldset>
     </div>
     <div class="error"></div>
+    <button type="button" id="delete-cache">Delete Resolve Cache</button>
 
     <style>
       * {
@@ -96,7 +97,12 @@
         debug: document.querySelector("input[name=debug]"),
         code: document.querySelector("textarea"),
         error: document.querySelector(".error"),
+        deleteCache: document.querySelector("#delete-cache"),
       };
+
+      e.deleteCache.addEventListener("click", (e) => {
+        Compiler.clearCache();
+      });
 
       defaultFormats.map((format) => {
         let option = document.createElement("option");

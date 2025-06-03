@@ -23,7 +23,7 @@ describe('svelte', () => {
 
     const h1 = element.querySelector('h1');
 
-    expect(h1.textContent).toContain('Hello world!');
-    expect(window.getComputedStyle(h1).color).toBe('rgb(255, 0, 0)');
+    expect(h1!.textContent).toContain('Hello world!');
+    expect(window.getComputedStyle(h1!).color).toBe('rgb(255, 0, 0)');
   });
 });

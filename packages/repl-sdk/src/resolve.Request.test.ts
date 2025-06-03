@@ -13,9 +13,9 @@ it('works with scope', () => {
   expect(request.version).toBe('latest');
 });
 
-it('works with from / to', () => {
+it('works with from', () => {
   const request = Request.fromSpecifier(
-    '@iconify/utils/foo.js?from=@iconify/utils/bar.js&to=./foo.js'
+    './foo.js?from=@iconify/utils/bar.js'
   );
 
   expect(request.name).toBe('@iconify/utils');
@@ -24,9 +24,9 @@ it('works with from / to', () => {
   expect(request.version).toBe('latest');
 });
 
-it('works with version and from / to', () => {
+it('works with version and from', () => {
   const request = Request.fromSpecifier(
-    '@iconify/utils@1.0.0/foo.js?from=@iconify/utils/bar.js&to=./foo.js'
+    './foo.js?from=@iconify/utils@1.0.0/bar.js'
   );
 
   expect(request.name).toBe('@iconify/utils');
@@ -34,3 +34,14 @@ it('works with version and from / to', () => {
   expect(request.to).toBe('./foo.js');
   expect(request.version).toBe('1.0.0');
 });
+
+it('works with subpath imports', () => {
+  const request = Request.fromSpecifier(
+    '#foo/hello.js?from=@iconify/utils/bar.js'
+  );
+
+  expect(request.name).toBe('@iconify/utils');
+  expect(request.from).toBe('@iconify/utils/bar.js');
+  expect(request.to).toBe('#foo/hello.js');
+  expect(request.version).toBe('latest');
+})

@@ -1,4 +1,5 @@
 import { exports as resolveExports } from 'resolve.exports';
+import { resolve as resolveImports } from 'resolve.imports';
 
 import { parseSpecifier } from './specifier.js';
 import { fakeDomain, tgzPrefix } from './utils.js';
@@ -45,12 +46,13 @@ export function resolvePath(start, target) {
 export function resolve(untarred, request) {
   let answer = undefined;
 
-  let { specifier } = request;
+  let { key } = request;
 
-  if (resolveCache.has(specifier)) {
-    return resolveCache.get(specifier);
+  if (resolveCache.has(key)) {
+    return resolveCache.get(key);
   }
 
+  answer ||= fromImports(untarred, request, answer);
   answer ||= fromInternalImport(untarred, request, answer);
   answer ||= fromExportsString(untarred, request, answer);
   answer ||= fromExports(untarred, request, answer);
@@ -60,7 +62,7 @@ export function resolve(untarred, request) {
   answer ||= fromIndex(untarred, request, answer);
   answer ||= fromFallback(untarred, request, answer);
 
-  resolveCache.set(specifier, answer);
+  resolveCache.set(key, answer);
 
   return answer;
 }
@@ -124,6 +126,33 @@ function fromExports(untarred, request, answer) {
       inTarFile: found,
       ext: extName(found),
       from: 'exports',
+    };
+  }
+}
+
+/**
+ * @param {import('./types.ts').UntarredPackage} untarred
+ * @param {Request} request
+ * @param {undefined | import('./types.ts').RequestAnswer} answer
+ * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
+ */
+export function fromImports(untarred, request, answer) {
+  if (answer) return answer;
+  if (!request.to.startsWith('#')) return answer;
+
+  let imports = untarred.manifest.imports;
+
+  if (!(typeof imports === 'object')) return answer;
+
+  let found = resolveImports({ content: untarred.manifest }, request.to, {
+    conditions: CONDITIONS,
+  });
+
+  if (found) {
+    return {
+      inTarFile: found.replace(/^\.\//, ''),
+      ext: extName(found),
+      from: 'imports',
     };
   }
 }
@@ -255,14 +284,17 @@ function fromFallback(untarred, request, answer) {
 function checkFile(untarred, filePath) {
   if (!filePath) return;
 
-  if (untarred.contents[filePath]) {
-    return filePath;
-  }
+  for (let prefix of ['', 'pkg/']) {
+    let path = prefix + filePath;
+    let dotless = prefix + filePath.replace(/^\.\//, '');
 
-  let dotless = filePath.replace(/^\.\//, '');
+    if (untarred.contents[path]) {
+      return path;
+    }
 
-  if (untarred.contents[dotless]) {
-    return dotless;
+    if (untarred.contents[dotless]) {
+      return dotless;
+    }
   }
 }
 
@@ -294,28 +326,55 @@ export class Request {
     let [full, query] = removedPrefix.split('?');
 
     this.original = specifier;
-    this.specifier = full;
 
-    let parsed = parseSpecifier(full);
-    let { name, version = 'latest', path } = parsed;
-
-    this.name = name;
-    this.version = version;
-    /**
-     * This will either be '.' or have the leading ./
-     */
-    this.#to = path;
+    if (full.startsWith('.') || full.startsWith('#')) {
+      if (!query) {
+        throw new Error(
+          `Missing query, ?from for specifier: ${specifier}. From is required for relative and subpath-imports.`
+        );
+      }
+    }
 
     if (query) {
       let search = new URLSearchParams(query);
 
-      this.from = search.get('from').replace('tgz://', '').split('?')[0].replace(/^\//, '');
-      this.#to = search.get('to').replace('//', '/');
+      let from = decodeURIComponent(
+        search
+          .get('from')
+          .replace('tgz://', '')
+          .replace(tgzPrefix, '')
+          .replace(fakeDomain + '/', '')
+          .replace(fakeDomain, '')
+          .split('?')[0]
+          .replace(/^\//, '')
+      );
+
+      this.#to = full;
+
+      let parsed = parseSpecifier(from);
+
+      this.from = resolvePath(parsed.name, parsed.path).replace(/\/$/, '');
+      this.name = parsed.name;
+      this.version = parsed.version || 'latest';
+    } else {
+      let parsed = parseSpecifier(full);
+      let { name, version = 'latest', path } = parsed;
+
+      this.name = name;
+      this.version = version;
+      /**
+       * This will either be '.' or have the leading ./
+       */
+      this.#to = path;
     }
   }
 
   get to() {
     return this.#to;
+  }
+
+  get key() {
+    return `${this.name}@${this.version} > ${this.to}`;
   }
 }
 
@@ -332,5 +391,5 @@ export function printError(untarred, request, answer) {
 
   // eslint-disable-next-line no-debugger
   debugger;
-  throw new Error(`Could not find file for ${request.specifier}`);
+  throw new Error(`Could not find file for ${request.original}`);
 }

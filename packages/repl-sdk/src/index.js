@@ -72,21 +72,15 @@ export class Compiler {
           }
         }
 
-        if (parentUrl.startsWith(tgzPrefix) && id.startsWith('.')) {
-          let newId = resolvePath(parentUrl.replace(tgzPrefix, ''), id);
-          // there has to be a better way to do this, yea?
-          let url = new URL(tgzPrefix + newId);
-
-          url.searchParams.set('from', parentUrl);
-          url.searchParams.set('to', id);
-
-          return url.href;
+        if (parentUrl.startsWith(tgzPrefix) && (id.startsWith('.') || id.startsWith('#'))) {
+          return tgzPrefix + id + '?from=' + parentUrl;
         }
 
         if (id.startsWith('https://')) return resolve(id, parentUrl);
         if (id.startsWith('blob:')) return resolve(id, parentUrl);
         if (id.startsWith('.')) return resolve(id, parentUrl);
-        if (parentUrl.startsWith('https://')) return resolve(id, parentUrl);
+        if (parentUrl.startsWith('https://') && parentUrl !== location.href)
+          return resolve(id, parentUrl);
 
         if (id.startsWith('node:')) {
           this.#log(`Is known node module: ${id}. Grabbing polyfill`);
@@ -316,6 +310,10 @@ export class Compiler {
       versions: this.#options.versions ?? {},
     };
   };
+
+  static clearCache() {
+    delete window[Symbol.for(secretKey)];
+  }
 
   #resolveManually = async (name, fallback) => {
     const existing = window[Symbol.for(secretKey)].resolves?.[name];

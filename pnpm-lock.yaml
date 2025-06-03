@@ -1539,6 +1539,9 @@ importers:
       resolve.exports:
         specifier: ^2.0.3
         version: 2.0.3
+      resolve.imports:
+        specifier: ^2.0.3
+        version: 2.0.3
       tarparser:
         specifier: ^0.0.4
         version: 0.0.4
@@ -11002,6 +11005,9 @@ packages:
     resolution: {integrity: sha512-vE7JKRyES09KiunauX7nd2Q9/L7lhok4smP9RZTDeD4MVs72Dp2qNFVz39Nz5a0FVEW0BJR6C0DYrq6unoziZA==}
     engines: {node: '>= 14.16'}
 
+  pattern-key-compare@2.0.0:
+    resolution: {integrity: sha512-b+yp/Q0KwFotxRgemVsNQ4qyqcA/LxzyfSjqJ7maKSlYTRmaUffwfX07l7KdxkVdc89k6WYtC3SwFCEo8GhbWQ==}
+
   pause-stream@0.0.11:
     resolution: {integrity: sha512-e3FBlXLmN/D1S+zHzanP4E/4Z60oFAa3O051qt1pxa7DEJWKAyil6upYVXCWadEnuoqa4Pkc9oUx9zsxYeRv8A==}
 
@@ -11707,6 +11713,9 @@ packages:
   resolve.exports@2.0.3:
     resolution: {integrity: sha512-OcXjMsGdhL4XnbShKpAcSqPMzQoYkYyhbEaeSko47MjRP9NfEQMhZkXL1DoFlt9LWQn4YttrdnV6X2OiyzBi+A==}
     engines: {node: '>=10'}
+
+  resolve.imports@2.0.3:
+    resolution: {integrity: sha512-aQaI4EGxTXnhA9EWScjgcpuUAbm51MXGkIHQ0WOEUyFMNjb8Yp/jIKGUu6y1SXMYG3FhTqnnscFNxs2+Pjp9YQ==}
 
   resolve@1.22.10:
     resolution: {integrity: sha512-NPRy+/ncIMeDlTAsuqwKIiferiawhefFJtkNSW0qZJEqMEb+qBt/77B/jGeeek+F0uOeN05CDa6HXbbIgtVX4w==}
@@ -24827,6 +24836,8 @@ snapshots:
 
   pathval@2.0.0: {}
 
+  pattern-key-compare@2.0.0: {}
+
   pause-stream@0.0.11:
     dependencies:
       through: 2.3.8
@@ -25574,6 +25585,10 @@ snapshots:
   resolve-url@0.2.1: {}
 
   resolve.exports@2.0.3: {}
+
+  resolve.imports@2.0.3:
+    dependencies:
+      pattern-key-compare: 2.0.0
 
   resolve@1.22.10:
     dependencies:

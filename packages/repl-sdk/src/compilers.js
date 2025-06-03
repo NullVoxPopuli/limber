@@ -109,14 +109,14 @@ export const compilers = {
     /**
      * Default config, known to work with how the compiler and render functions are configured.
      */
-    resolve: (id) => {
-      switch (id) {
-        case 'svelte':
-          return `https://cdn.jsdelivr.net/npm/svelte@5.33.13/+esm`;
-        case 'svelte/compiler':
-          return `https://cdn.jsdelivr.net/npm/svelte@5.33.13/compiler/+esm`;
-      }
-    },
+    // resolve: (id) => {
+    //   switch (id) {
+    //     case 'svelte':
+    //       return `https://cdn.jsdelivr.net/npm/svelte@5.33.13/+esm`;
+    //     case 'svelte/compiler':
+    //       return `https://cdn.jsdelivr.net/npm/svelte@5.33.13/compiler/+esm`;
+    //   }
+    // },
     compiler: async (config = {}, api) => {
       const versions = config.versions || {};
       const compiler = await api.tryResolve('svelte/compiler');
