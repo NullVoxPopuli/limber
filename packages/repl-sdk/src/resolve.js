@@ -25,13 +25,16 @@ export function resolvePath(start, target) {
    */
   let base = start.replace(/^@([^/]+)\/([^/]+)/, `${AT}$1___$2`);
 
-  let url = new URL(target, fakeProtocol + base);
+  let url = new URL(target, fakeProtocol + fakeDomain + base);
 
   /**
    * href omits the protocol
    * (which is what we want)
    */
-  return url.href.replace(fakeProtocol, '').replace(AT, '@').replace('___', '/');
+  return url.href
+    .replace(fakeProtocol + fakeDomain, '')
+    .replace(AT, '@')
+    .replace('___', '/');
 }
 
 /**
@@ -70,7 +73,7 @@ export function resolve(untarred, request) {
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
  */
-function fromInternalImport(untarred, request, answer) {
+export function fromInternalImport(untarred, request, answer) {
   if (answer) return answer;
 
   let isInternal = request.from && request.to;
@@ -82,11 +85,7 @@ function fromInternalImport(untarred, request, answer) {
 
   if (!answerFrom) printError(untarred, fromSpecifier, answer);
 
-  let url = answerFrom.inTarFile.includes('/')
-    ? new URL(request.to, 'file://' + answerFrom.inTarFile)
-    : { href: request.to };
-
-  let inTarFile = url.href.replace('file://', '');
+  let inTarFile = resolvePath(answerFrom.inTarFile, request.to);
   let result = checkFile(untarred, inTarFile);
 
   if (result) {
