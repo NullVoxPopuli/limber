@@ -2,7 +2,7 @@ import { exports as resolveExports } from 'resolve.exports';
 import { resolve as resolveImports } from 'resolve.imports';
 
 import { parseSpecifier } from './specifier.js';
-import { fakeDomain, tgzPrefix } from './utils.js';
+import { fakeDomain, tgzPrefix, unzippedPrefix } from './utils.js';
 
 /**
  * If a package wanted, they could provide a special export condition
@@ -21,10 +21,10 @@ const AT = '___AT___';
 const fakeProtocol = 'repl://';
 
 /**
- * 
+ *
  * @param {*} start packageName or packageName with file
  * @param {*} target file to resolve within the packageName
- * @returns 
+ * @returns
  */
 export function resolvePath(start, target) {
   /**
@@ -59,6 +59,15 @@ export function resolve(untarred, request) {
     return resolveCache.get(key);
   }
 
+  answer ||= _resolve(untarred, request, answer);
+  answer ||= _resolve(untarred, Request.fromRequest(request, { from: request.name }), answer);
+
+  resolveCache.set(key, answer);
+
+  return answer;
+}
+
+function _resolve(untarred, request, answer) {
   answer ||= fromImports(untarred, request, answer);
   answer ||= fromInternalImport(untarred, request, answer);
   answer ||= fromExportsString(untarred, request, answer);
@@ -68,8 +77,6 @@ export function resolve(untarred, request) {
   answer ||= fromMain(untarred, request, answer);
   answer ||= fromIndex(untarred, request, answer);
   answer ||= fromFallback(untarred, request, answer);
-
-  resolveCache.set(key, answer);
 
   return answer;
 }
@@ -94,7 +101,10 @@ export function fromInternalImport(untarred, request, answer) {
 
   if (!answerFrom) printError(untarred, fromSpecifier, answer);
 
-  let inTarFile = resolvePath(fromSpecifier.name + '/' + answerFrom.inTarFile, request.to).replace(new RegExp(`^${fromSpecifier.name}/`), '');
+  let inTarFile = resolvePath(fromSpecifier.name + '/' + answerFrom.inTarFile, request.to).replace(
+    new RegExp(`^${fromSpecifier.name}/`),
+    ''
+  );
   let result = checkFile(untarred, inTarFile);
 
   if (result) {
@@ -317,6 +327,13 @@ export class Request {
   static fromSpecifier(specifier) {
     return new Request(specifier);
   }
+  static fromRequest(otherRequest, overrides) {
+    let r = new Request(otherRequest.original);
+
+    Object.assign(r, overrides);
+
+    return r;
+  }
 
   /** @type {string} */
   #to;
@@ -326,9 +343,8 @@ export class Request {
    */
   constructor(specifier) {
     let removedPrefix = specifier
+      .replace(unzippedPrefix, '')
       .replace(tgzPrefix, '')
-      .replace(fakeDomain + '/', '')
-      .replace(fakeDomain, '')
       .replace(/^\//, '');
     let [full, query] = removedPrefix.split('?');
 
@@ -345,30 +361,26 @@ export class Request {
     if (query) {
       let search = new URLSearchParams(query);
 
-      let from = decodeURIComponent(
-        search
-          .get('from')
-          .replace('tgz://', '')
-          .replace(tgzPrefix, '')
-          .replace(fakeDomain + '/', '')
-          .replace(fakeDomain, '')
-          .split('?')[0]
-          .replace(/^\//, '')
-      );
+      let fQP = search.get('from').replace(unzippedPrefix, '').replace(/^\//, '');
+      let split = Request.splitKey(fQP);
+      let specifier = `${split.name}@${split.version}${split.path}`
 
       this.#to = full;
 
-      let parsed = parseSpecifier(from);
+      let parsed = parseSpecifier(specifier);
 
       this.from = resolvePath(parsed.name, parsed.path).replace(/\/$/, '');
       this.name = parsed.name;
-      this.version = parsed.version || 'latest';
+
+      let cleanedVersion = parsed.version?.replace(/\.+$/, '') || 'latest';
+
+      this.version = cleanedVersion;
     } else {
       let parsed = parseSpecifier(full);
       let { name, version = 'latest', path } = parsed;
 
       this.name = name;
-      this.version = version;
+      this.version = version.replace(/\.+$/, '');
       /**
        * This will either be '.' or have the leading ./
        */
@@ -380,8 +392,17 @@ export class Request {
     return this.#to;
   }
 
+  static splitKey(key) {
+    let noHash = key.split('#')[0];
+    let [nameStuff, versionAndPath] = noHash.split('[AT:V]');
+    let name = nameStuff.replace(/^__name__\//, '');
+    let [version, path] = versionAndPath.split('/__to__/');
+
+    return { name, version, path };
+  }
+
   get key() {
-    return `${this.name}@${this.version} > ${this.to}`;
+    return `__name__/${this.name}[AT:V]${this.version}/__to__/${this.to}`;
   }
 }
 

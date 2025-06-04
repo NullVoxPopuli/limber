@@ -16,4 +16,9 @@ export function nextId() {
 }
 
 export const fakeDomain = 'repl.sdk';
-export const tgzPrefix = 'tgz://repl.sdk/';
+export const tgzPrefix = 'file:///tgz.repl.sdk/';
+export const unzippedPrefix = 'file:///tgz.repl.sdk/unzipped';
+
+export function prefix_tgz(url) {
+  return `${tgzPrefix}${url}`;
+}

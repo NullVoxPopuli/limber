@@ -23,6 +23,10 @@ export async function getNPMInfo(name, version) {
 export async function getTarUrl(npmInfo, requestedVersion) {
   let json = npmInfo;
 
+  if (json.error) {
+    throw new Error(json.error);
+  }
+
   let tag =
     requestedVersion in json['dist-tags']
       ? json['dist-tags'][requestedVersion]

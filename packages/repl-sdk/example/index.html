@@ -182,13 +182,20 @@
 
         e.output.innerHTML = "Compiling...";
         e.error.innerText = "";
-        try {
+
+        if (isDebug) {
           let element = await compiler.compile(format, code, { flavor });
           e.output.innerHTML = "";
           e.output.appendChild(element);
-        } catch (error) {
-          e.error.innerText = error;
-          throw error;
+        } else {
+          try {
+            let element = await compiler.compile(format, code, { flavor });
+            e.output.innerHTML = "";
+            e.output.appendChild(element);
+          } catch (error) {
+            e.error.innerText = error;
+            throw error;
+          }
         }
       });
 

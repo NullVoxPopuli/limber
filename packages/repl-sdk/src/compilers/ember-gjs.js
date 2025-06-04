@@ -1,4 +1,4 @@
-import { secret } from '../cache.js';
+import { cache } from '../cache.js';
 import { renderApp } from './ember/render-app-island.js';
 
 const buildDependencies = [
@@ -166,7 +166,7 @@ export async function compiler(config = {}, api) {
             isDevelopingApp: () => true,
             getGlobalConfig: () => ({}),
             // Private
-            importSync: (x) => window[secret].resolves[x],
+            importSync: (x) => cache.resolves[x],
             moduleExists: () => false,
           };
         };

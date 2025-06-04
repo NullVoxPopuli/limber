@@ -1,53 +1,72 @@
 import { parseTar } from 'tarparser';
 
+import { cache } from './cache.js';
 import { getNPMInfo, getTarUrl } from './npm.js';
 import { printError, Request, resolve } from './resolve.js';
+import { unzippedPrefix } from './utils.js';
 
 /**
+ * Resolves the in-tar file from a specifier
  *
- * @type {Map<string, import('./types.ts').UntarredPackage)>} namp@version => untarred data
+ * @param {{ to: string, from: string }}} options
+ * @returns {string>} the location in the tar
  */
-const tarballCache = new Map();
+export function resolveFromTarball({ to, from }) {
+  let isRoot = to.match(/^[A-Za-z@]/);
+  let request = Request.fromSpecifier(isRoot ? to : `${to}?from=${encodeURIComponent(from)}`);
+
+  cache.requestCache.set(request.key, request);
+
+  return `${unzippedPrefix}/${request.key}`;
+}
 
 /**
- * @type {Map<string, unknown>} specifier => fileText
- */
-const fileCache = new Map();
-
-/**
- * @param {string} specifier
+ * @param {string} unzipped URL
  * @returns {Promise<{ code: string, ext: string }>}
  */
-export async function getFromTarball(specifier) {
-  let request = Request.fromSpecifier(specifier);
+export async function getFromTarball(url) {
+  let keyParts = Request.splitKey(url.replace(unzippedPrefix, '').replace(/^\//, ''));
+ 
+  let key = `__name__/${keyParts.name}[AT:V]${keyParts.version}/__to__/${keyParts.path}`;
 
-  if (fileCache.has(request.specifier)) {
-    return fileCache.get(request.specifier);
+  if (cache.fileCache.has(key)) {
+    return cache.fileCache.get(key);
   }
 
-  let untarred = await getTar(request.name, request.version);
-  let answer = resolve(untarred, request);
-  let result = getFile(untarred, request, answer);
+  if (cache.promiseCache.has(key)) {
+    await cache.promiseCache.get(key);
+  }
 
-  fileCache.set(specifier, result);
+  let request = cache.requestCache.get(key);
+
+  let untarred = await getTar(keyParts.name, keyParts.version);
+  let resolveCacheHit = await (async () => {
+    let untarred = await getTar(keyParts.name, keyParts.version);
+    let answer = resolve(untarred, request);
+
+    return { answer, name: request.name, version: request.version };   
+  })();
+  let result = getFile(untarred, key, resolveCacheHit.answer);
+
+  cache.fileCache.set(key, result);
 
   return result;
 }
 
 /**
  * @param {import('./types.ts').UntarredPackage} untarred
- * @param {import('./types.ts').Request} request
+ * @param {string} key
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {{ code: string, ext: string }}
  */
-export function getFile(untarred, request, answer) {
-  if (!answer) printError(untarred, request, answer);
+export function getFile(untarred, key, answer) {
+  if (!answer) printError(untarred, { original: key }, answer);
 
   let { inTarFile, ext } = answer;
 
   let code = untarred.contents[inTarFile]?.text;
 
-  if (!code) printError(untarred, request, answer);
+  if (!code) printError(untarred, { original: key, answer }, answer);
 
   return { code, ext, resolvedAs: inTarFile };
 }
@@ -58,7 +77,7 @@ export function getFile(untarred, request, answer) {
  */
 async function getTar(name, requestedVersion) {
   let key = `${name}@${requestedVersion}`;
-  let untarred = tarballCache.get(key);
+  let untarred = cache.tarballs.get(key);
 
   if (untarred) {
     return untarred;
@@ -79,7 +98,7 @@ async function getTar(name, requestedVersion) {
 
   let info = { manifest, contents };
 
-  tarballCache.set(key, info);
+  cache.tarballs.set(key, info);
 
   return info;
 }

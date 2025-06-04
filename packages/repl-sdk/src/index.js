@@ -3,11 +3,10 @@
  */
 import mime from 'mime/lite';
 
-import { secret, secretKey } from './cache.js';
+import { cache, secretKey } from './cache.js';
 import { compilers } from './compilers.js';
-import { resolvePath } from './resolve.js';
-import { getFromTarball } from './tar.js';
-import { assert, nextId, tgzPrefix } from './utils.js';
+import { getFromTarball, resolveFromTarball } from './tar.js';
+import { assert, nextId, prefix_tgz, tgzPrefix, unzippedPrefix } from './utils.js';
 
 assert(`There is no document. repl-sdk is meant to be ran in a browser`, globalThis.document);
 
@@ -16,11 +15,6 @@ export const defaultFormats = Object.keys(compilers);
 export const defaults = {
   formats: compilers,
 };
-
-assert(
-  `There is already an instance of repl-sdk, and there can only be one. Make sure that your dependency graph is correct.`,
-  !globalThis[secret]
-);
 
 export class Compiler {
   /** @type {Options} */
@@ -32,7 +26,6 @@ export class Compiler {
   constructor(options = defaults) {
     this.#options = Object.assign({}, defaults, options);
 
-    globalThis[secret] = this;
     globalThis.window.esmsInitOptions = {
       shimMode: true,
       skip: `https://esm.sh/`,
@@ -46,6 +39,9 @@ export class Compiler {
        * 2. specified in the compiler config (to use CDN)
        * 3. download tarball from npm
        *    or resolve from already downloaded tarball
+       *
+       * NOTE: when we return a new URL, we want to collapse the parentURI
+       *       so that we don't get compound query params in nested requests.
        */
       resolve: (id, parentUrl, resolve) => {
         /**
@@ -73,7 +69,9 @@ export class Compiler {
         }
 
         if (parentUrl.startsWith(tgzPrefix) && (id.startsWith('.') || id.startsWith('#'))) {
-          return tgzPrefix + id + '?from=' + parentUrl;
+          let answer = resolveFromTarball({ to: id, from: parentUrl });
+
+          return answer;
         }
 
         if (id.startsWith('https://')) return resolve(id, parentUrl);
@@ -84,22 +82,83 @@ export class Compiler {
 
         if (id.startsWith('node:')) {
           this.#log(`Is known node module: ${id}. Grabbing polyfill`);
-          if (id === 'node:process') return `tgz://process`;
-          if (id === 'node:buffer') return `tgz://buffer`;
-          if (id === 'node:events') return `tgz://events`;
-          if (id === 'node:path') return `tgz://path-browser`;
-          if (id === 'node:util') return `tgz://util-browser`;
-          if (id === 'node:crypto') return `tgz://crypto-browserify`;
-          if (id === 'node:stream') return `tgz://stream-browserify`;
-          if (id === 'node:fs') return `tgz://browserify-fs`;
+
+          if (id === 'node:process') return prefix_tgz(`process`);
+          if (id === 'node:buffer') return prefix_tgz(`buffer`);
+          if (id === 'node:events') return prefix_tgz(`events`);
+          if (id === 'node:path') return prefix_tgz(`path-browser`);
+          if (id === 'node:util') return prefix_tgz(`util-browser`);
+          if (id === 'node:crypto') return prefix_tgz(`crypto-browserify`);
+          if (id === 'node:stream') return prefix_tgz(`stream-browserify`);
+          if (id === 'node:fs') return prefix_tgz(`browserify-fs`);
         }
 
         this.#log(`[resolve] ${id} not found, deferring to npmjs.com's provided tarball`);
 
-        return tgzPrefix + id;
+        return resolveFromTarball({ to: id, from: parentUrl });
       },
       // Hook source fetch function
-      fetch: async (url, options) => {
+      source: async (url, fetchOpts, parent, defaultSourceHook) => {
+        let mimeType = mime.getType(url) ?? 'application/javascript';
+
+        this.#log(`[source] attempting to fetch: ${url}. Assuming ${mimeType}`);
+
+        if (url.startsWith('manual:')) {
+          let name = url.replace(/^manual:/, '');
+
+          this.#log('[fetch] resolved url in manually specified resolver', url);
+
+          let result = await this.#resolveManually(name);
+
+          let blobContent =
+            `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
+            `\n\n` +
+            `if (!mod) { throw new Error('Could not resolve \`${name}\`. Does the module exist? ( checked ${url} )') }` +
+            `\n\n` +
+            /**
+             * This is semi-trying to polyfill modules
+             * that aren't proper ESM. very annoying.
+             */
+            `${Object.keys(result)
+              .map((exportName) => {
+                if (exportName === 'default') {
+                  return `export default mod.default ?? mod;`;
+                }
+
+                return `export const ${exportName} = mod.${exportName};`;
+              })
+              .join('\n')}
+            `;
+
+          let blob = new Blob(Array.from(blobContent), { type: mimeType });
+
+          this.#log(
+            `[fetch] returning blob mapping to manually resolved import for ${name}`
+            // blobContent
+          );
+
+          return new Response(blob);
+        }
+
+        if (url.startsWith(unzippedPrefix)) {
+          this.#log('[source] resolved url via tgz resolver', url, options);
+
+          let { code, ext } = await getFromTarball(url);
+
+          /**
+           * We don't know if this code is completely ready to run in the browser yet, so we might need to run in through the compiler again
+           */
+          let file = await this.#postProcess(code, ext);
+
+          return {
+            type: ext,
+            source: file,
+          };
+        }
+
+        this.#log('[source]/fallback fetching url', url, options);
+      },
+      _fetch: async (url, options) => {
         let mimeType = mime.getType(url) ?? 'application/javascript';
 
         this.#log(`[fetch] attempting to fetch: ${url}. Assuming ${mimeType}`);
@@ -143,12 +202,10 @@ export class Compiler {
           }
         }
 
-        if (url.startsWith(tgzPrefix)) {
+        if (url.startsWith(unzippedPrefix)) {
           this.#log('[fetch] resolved url via tgz resolver', url, options);
 
-          let fullName = url.replace(tgzPrefix, '');
-
-          let { code, ext } = await getFromTarball(fullName);
+          let { code, ext } = await getFromTarball(url);
 
           /**
            * We don't know if this code is completely ready to run in the browser yet, so we might need to run in through the compiler again
@@ -312,11 +369,11 @@ export class Compiler {
   };
 
   static clearCache() {
-    delete window[Symbol.for(secretKey)];
+    cache.clear();
   }
 
   #resolveManually = async (name, fallback) => {
-    const existing = window[Symbol.for(secretKey)].resolves?.[name];
+    const existing = cache.resolves[name];
 
     if (existing) {
       this.#log('[#resolveManually]', name, 'already resolved');
@@ -346,8 +403,7 @@ export class Compiler {
       result = await fallback();
     }
 
-    window[secret].resolves ||= {};
-    window[secret].resolves[name] ||= await result;
+    cache.resolves[name] ||= await result;
 
     return result;
   };
