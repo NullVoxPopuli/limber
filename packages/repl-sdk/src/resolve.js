@@ -1,7 +1,9 @@
 import { exports as resolveExports } from 'resolve.exports';
 import { resolve as resolveImports } from 'resolve.imports';
 
-import { Request } from './request.js';
+/**
+ * @typedef {import('./types.ts').Request} Request
+ */
 import { assert, fakeDomain } from './utils.js';
 
 /**
@@ -13,7 +15,7 @@ import { assert, fakeDomain } from './utils.js';
 const CONDITIONS = ['repl', 'module', 'browser', 'import', 'default', 'development'];
 
 /**
- * @type {Map<string, string>} specifier => filePath in the tgz
+ * @type {Map<string, import('./types.ts').RequestAnswer>} specifier => filePath in the tgz
  */
 const resolveCache = new Map();
 
@@ -53,7 +55,7 @@ export function resolvePath(start, target) {
 export function resolve(untarred, request) {
   let answer = undefined;
 
-  let { key } = request;
+  let key = request.key;
 
   if (resolveCache.has(key)) {
     return resolveCache.get(key);
@@ -69,7 +71,9 @@ export function resolve(untarred, request) {
   answer ||= fromIndex(untarred, request, answer);
   answer ||= fromFallback(untarred, request, answer);
 
-  resolveCache.set(key, answer);
+  if (answer) {
+    resolveCache.set(key, answer);
+  }
 
   return answer;
 }
@@ -103,18 +107,7 @@ export function fromInternalImport(untarred, request, answer) {
   let result = checkFile(untarred, inTarFile);
 
   if (result) {
-    let ext = extName(result);
-
-    assert(
-      `All files must have an extension. This file (in ${request.name}) did not have an extension: ${result}`,
-      ext
-    );
-
-    return {
-      inTarFile: result,
-      ext,
-      from: 'internalImport',
-    };
+    return createAnswer(result, request, 'internalImport');
   }
 
   // Internal imports should always exist, unless a package is just broken.
@@ -138,14 +131,10 @@ function fromExports(untarred, request, answer) {
     conditions: CONDITIONS,
   });
 
-  let found = foundArray.map((f) => checkFile(untarred, f)).find(Boolean);
+  let found = foundArray?.map((f) => checkFile(untarred, f)).find(Boolean);
 
   if (found) {
-    return {
-      inTarFile: found,
-      ext: extName(found),
-      from: 'exports',
-    };
+    return createAnswer(found, request, 'exports');
   }
 }
 
@@ -168,11 +157,7 @@ export function fromImports(untarred, request, answer) {
   });
 
   if (found) {
-    return {
-      inTarFile: found.replace(/^\.\//, ''),
-      ext: extName(found),
-      from: 'imports',
-    };
+    return createAnswer(found.replace(/^\.\//, ''), request, 'imports');
   }
 }
 
@@ -238,18 +223,14 @@ function fromMain(untarred, request, answer) {
 function checkLegacyEntry(untarred, request, entryName) {
   if (request.to !== '.') return;
 
-  let filePath = untarred.manifest[entryName];
+  let filePath = untarred.manifest[/** @type {keyof typeof untarred.manifest} */ (entryName)];
 
   if (!filePath || typeof filePath !== 'string') return;
 
   let result = checkFile(untarred, filePath);
 
   if (result) {
-    return {
-      inTarFile: result,
-      ext: extName(result),
-      from: entryName,
-    };
+    return createAnswer(result, request, entryName);
   }
 }
 
@@ -286,11 +267,7 @@ function fromFallback(untarred, request, answer) {
   let result = checkFile(untarred, request.to);
 
   if (result) {
-    return {
-      inTarFile: result,
-      ext: extName(result),
-      from: 'fallback',
-    };
+    return createAnswer(result, request, 'fallback');
   }
 }
 
@@ -329,6 +306,26 @@ function extName(filePath) {
  */
 function hasExports(untarred) {
   return Boolean(untarred.manifest.exports);
+}
+
+/**
+ * @param {string} forFile
+ * @param {Request} request
+ * @param {string} fromMethod
+ */
+function createAnswer(forFile, request, fromMethod) {
+  let ext = extName(forFile);
+
+  assert(
+    `All files must have an extension. This file (in ${request.name}) did not have an extension: ${forFile}`,
+    ext
+  );
+
+  return {
+    inTarFile: forFile,
+    ext,
+    from: fromMethod,
+  };
 }
 
 /**

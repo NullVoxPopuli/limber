@@ -7,17 +7,33 @@ export const secretKey = '__repl-sdk__compiler__';
  * @property {string} name
  * @property {string} version
  * @property {import('./types.ts').RequestAnswer} path
+ *
+ *
+ * @typedef {typeof globalThis & { [secret]?: {
+ *   requestCache?: Map<string, Request>,
+ *   resolveId?: Map<string, ResolveIdValue>,
+ *   tarballs?: Map<string, import('./types.ts').UntarredPackage>,
+ *   resolves?: { [modulePath: string]: unknown },
+ *   promiseCache?: Map<string, Promise<unknown>>,
+ *   fileCache?: Map<string, string>
+ * } }} ExtendedWindow
  */
 const secret = Symbol.for(secretKey);
 
+function getGlobal() {
+  const global = /** @type {ExtendedWindow} */ (globalThis);
+
+  return global;
+}
+
 assert(
   `There is already an instance of repl-sdk, and there can only be one. Make sure that your dependency graph is correct.`,
-  !globalThis[secret]
+  !getGlobal()[secret]
 );
 
 class Caches {
   clear() {
-    delete globalThis[secret];
+    delete getGlobal()[secret];
   }
 
   /**
@@ -82,9 +98,11 @@ class Caches {
   }
 
   get #root() {
-    globalThis[secret] ||= {};
+    let global = getGlobal();
 
-    return globalThis[secret];
+    global[secret] ||= {};
+
+    return global[secret];
   }
 }
 

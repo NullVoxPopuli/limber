@@ -199,6 +199,8 @@ export interface Options {
   logging?: boolean | undefined;
 }
 
+import type { ImportMap as ManifestImports } from 'resolve.imports';
+
 export interface UntarredPackage {
   /**
    * the package.json
@@ -207,6 +209,7 @@ export interface UntarredPackage {
     name: string;
     version: string;
     exports?: ManifestExports;
+    imports?: Record<string, ManifestImports>;
     main?: string;
     module?: string;
     browser?: string;
