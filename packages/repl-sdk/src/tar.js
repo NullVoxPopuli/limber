@@ -2,33 +2,48 @@ import { parseTar } from 'tarparser';
 
 import { cache } from './cache.js';
 import { getNPMInfo, getTarUrl } from './npm.js';
+import { Request } from './request.js';
 import { printError, resolve } from './resolve.js';
-import { unzippedPrefix } from './utils.js';
+import { assert, unzippedPrefix } from './utils.js';
 
 /**
- * @param {string} unzipped URL
- * @returns {Promise<{ code: string, ext: string }>}
+ * @param {string} url request URL
+ * @returns {Promise<undefined | { code: string, ext: string }>}
  */
 export async function getFromTarball(url) {
-  let key = url.replace(unzippedPrefix + '/', '');
-  let request = cache.requestCache.get(key);
+  const key = url.replace(unzippedPrefix + '/', '');
+  const request = cache.requestCache.get(key);
+
+  assert(`Missing request for ${url}`, request);
 
   if (cache.fileCache.has(key)) {
     return cache.fileCache.get(key);
   }
 
-  if (cache.promiseCache.has(key)) {
-    await cache.promiseCache.get(key);
+  /**
+   * @type {Promise<{ answer: import('./types.ts').RequestAnswer, name: string, version: string}>}
+   */
+  let promise =
+    /** @type {undefined | Promise<{ answer: import('./types.ts').RequestAnswer, name: string, version: string}>} */ (
+      cache.promiseCache.get(key)
+    ) ||
+    (async () => {
+      let untarred = await getTar(request.name, request.version);
+      let answer = resolve(untarred, request);
+
+      return { answer, name: request.name, version: request.version };
+    })();
+
+  if (!cache.promiseCache.has(key)) {
+    cache.promiseCache.set(key, promise);
   }
 
+  let data = await promise;
   let untarred = await getTar(request.name, request.version);
-  let resolveCacheHit = await (async () => {
-    let untarred = await getTar(request.name, request.version);
-    let answer = resolve(untarred, request);
 
-    return { answer, name: request.name, version: request.version };
-  })();
-  let result = getFile(untarred, key, resolveCacheHit.answer);
+  let result = getFile(untarred, key, data.answer);
+
+  assert(`Missing file for ${url}`, result);
 
   cache.fileCache.set(key, result);
 
@@ -39,18 +54,28 @@ export async function getFromTarball(url) {
  * @param {import('./types.ts').UntarredPackage} untarred
  * @param {string} key
  * @param {undefined | import('./types.ts').RequestAnswer} answer
- * @returns {{ code: string, ext: string }}
+ * @returns {undefined | { code: string, ext: string }}
  */
 export function getFile(untarred, key, answer) {
-  if (!answer) printError(untarred, { original: key }, answer);
+  let request = Request.fromRequestId(key);
+
+  if (!answer) {
+    printError(untarred, request, answer);
+
+    return;
+  }
 
   let { inTarFile, ext } = answer;
 
   let code = untarred.contents[inTarFile]?.text;
 
-  if (!code) printError(untarred, { original: key, answer }, answer);
+  if (!code) {
+    printError(untarred, request, answer);
 
-  return { code, ext, resolvedAs: inTarFile };
+    return;
+  }
+
+  return { code, ext };
 }
 
 /**
@@ -74,18 +99,24 @@ async function getTar(name, requestedVersion) {
     },
   });
 
-  let contents = await untar(await response.arrayBuffer());
+  let contents = /** @type {any}*/ (await untar(await response.arrayBuffer()));
 
   let manifest = JSON.parse(contents['package.json'].text);
 
-  let info = { manifest, contents };
+  let info = /** @type {import('./types.ts').UntarredPackage}*/ ({ manifest, contents });
 
   cache.tarballs.set(key, info);
 
   return info;
 }
 
+/**
+ * @param {ArrayBuffer} arrayBuffer
+ */
 async function untar(arrayBuffer) {
+  /**
+   * @type {{ [name: string]: import('tarparser').FileDescription }}
+   */
   const contents = {};
 
   for (const file of await parseTar(arrayBuffer)) {

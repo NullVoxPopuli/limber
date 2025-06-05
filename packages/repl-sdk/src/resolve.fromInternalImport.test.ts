@@ -1,6 +1,7 @@
 import { expect as errorExpect, it } from 'vitest';
 
-import { fromInternalImport, Request } from './resolve.js';
+import { Request } from './request.js';
+import { fromInternalImport } from './resolve.js';
 
 import type { UntarredPackage } from './types.js';
 
@@ -25,14 +26,12 @@ it('resolves a private file (content-tag)', () => {
       },
     },
   };
-  const specifier =
-    './standalone/content_tag.js?from=tgz%3A%2F%2Frepl.sdk%2Fcontent-tag';
+  const specifier = './standalone/content_tag.js?from=tgz%3A%2F%2Frepl.sdk%2Fcontent-tag';
   const request = Request.fromSpecifier(specifier);
   const answer = fromInternalImport(untarred as unknown as UntarredPackage, request, undefined);
 
   expect(answer?.inTarFile).toBe('pkg/standalone/content_tag.js');
 });
-
 
 it('resolves a private file (rehype-raw)', () => {
   const untarred = {
@@ -51,7 +50,6 @@ it('resolves a private file (rehype-raw)', () => {
   expect(answer?.inTarFile).toBe('pkg/lib/index.js');
 });
 
-
 it('resolves the entrypoint (unist-util-visit)', () => {
   const untarred = {
     contents: {
@@ -67,3 +65,4 @@ it('resolves the entrypoint (unist-util-visit)', () => {
 
   expect(answer?.inTarFile).toBe('lib/index.js');
 });
+

@@ -7,6 +7,10 @@ import { assert } from './utils.js';
  */
 const npmInfoCache = new Map();
 
+/**
+ * @param {string} name
+ * @param {string} version
+ */
 export async function getNPMInfo(name, version) {
   let key = `${name}@${version}`;
 
@@ -29,6 +33,10 @@ export async function getNPMInfo(name, version) {
   return json;
 }
 
+/**
+ * @param {any} npmInfo
+ * @param {string} requestedVersion
+ */
 export async function getTarUrl(npmInfo, requestedVersion) {
   let json = npmInfo;
 

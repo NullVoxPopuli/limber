@@ -1,11 +1,20 @@
-import { splitSubPath } from './compilers/packages.js';
+import { parseSpecifier } from './specifier.js';
+
+/**
+ * @param {string} importPath
+ * @returns {[string, string]}
+ */
+function splitSubPath(importPath) {
+  let parsed = parseSpecifier(importPath);
+
+  return [parsed.name, parsed.path === '.' ? '' : parsed.path];
+}
 
 /**
  * Generate an import URL for esm.sh
  *
  * @param {Record<string, string>} versions
  * @param {string} importPath
- * @param {string} subPath
  */
 export function esmSh(versions, importPath) {
   let [name, subPath] = splitSubPath(importPath);
@@ -23,7 +32,6 @@ export function esmSh(versions, importPath) {
  *
  * @param {Record<string, string>} versions
  * @param {string} importPath
- * @param {string} subPath
  */
 export function esmRun(versions, importPath) {
   let [name, subPath] = splitSubPath(importPath);

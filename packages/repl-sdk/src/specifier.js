@@ -8,7 +8,7 @@
  *   pkgName@version/path
  *
  * @param {string} specifier
- * @returns {{ name: string, version: string, path: string }}
+ * @returns {{ name: string, version: string | undefined, path: string }}
  */
 export function parseSpecifier(specifier) {
   let name = '';

@@ -86,7 +86,8 @@
     },
     "patchedDependencies": {
       "browserslist-generator": "patches/browserslist-generator.patch",
-      "ember-source": "patches/ember-source.patch"
+      "ember-source": "patches/ember-source.patch",
+      "package-name-regex": "patches/package-name-regex.patch"
     }
   }
 }

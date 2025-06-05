@@ -1,5 +1,8 @@
 import { esmsh } from './cdn.js';
 
+/**
+ *@type {import('./types').Options['formats']}
+ */
 export const compilers = {
   /**
    * JSX is too overloaded to treat one way.
@@ -29,6 +32,9 @@ export const compilers = {
      * https://react.dev/
      */
     react: {
+      /**
+       * @param {string} id
+       */
       resolve: (id) => {
         switch (id) {
           case 'react':
@@ -40,23 +46,24 @@ export const compilers = {
         }
       },
       compiler: async (config = {}, api) => {
-        const [reactDom, babel] = await api.tryResolveAll([
-          'react-dom/client',
-          '@babel/standalone',
-        ]);
+        const [reactDom, babel] = /** @type {[any, any]} */ (
+          await api.tryResolveAll(['react-dom/client', '@babel/standalone'])
+        );
 
         const { createRoot } = reactDom;
 
         return {
-          compile: async (text) => {
+          async compile(text) {
+            // @ts-ignore
             const result = babel.transform(text, {
               filename: `repl.js`,
+              // @ts-ignore
               presets: [babel.availablePresets.react],
             });
 
             return result.code;
           },
-          render: async (element, component) => {
+          async render(element, component) {
             const root = createRoot(element);
 
             root.render(component);

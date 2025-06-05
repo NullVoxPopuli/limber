@@ -1,6 +1,7 @@
 import { expect as errorExpect, it } from 'vitest';
 
-import { Request, resolve } from './resolve.js';
+import { Request } from './request.js';
+import { resolve } from './resolve.js';
 
 import type { UntarredPackage } from './types.js';
 

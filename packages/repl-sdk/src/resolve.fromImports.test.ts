@@ -1,6 +1,8 @@
 import { expect as errorExpect, it } from 'vitest';
 
-import { fromImports, Request } from './resolve.js';
+import { Request } from './request.js';
+import { fromImports } from './resolve.js';
+
 import type { UntarredPackage } from './types.js';
 
 const expect = errorExpect.soft;

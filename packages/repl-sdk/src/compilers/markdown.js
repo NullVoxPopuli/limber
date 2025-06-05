@@ -10,10 +10,17 @@ const GLIMDOWN_RENDER = Symbol('__GLIMDOWN_RENDER__');
 export async function compiler(config = {}, api) {
   const versions = config.versions || {};
 
+  /**
+   * @param {string} lang
+   */
   function needsLive(lang) {
     return api.optionsFor(lang).needsLiveMeta;
   }
 
+  /**
+   * @param {string} meta
+   * @param {string} lang
+   */
   function isLive(meta, lang) {
     if (!needsLive(lang)) return true;
     if (!meta) return false;
@@ -21,12 +28,18 @@ export async function compiler(config = {}, api) {
     return meta.includes('live');
   }
 
+  /**
+   * @param {string} meta
+   */
   function isPreview(meta) {
     if (!meta) return false;
 
     return meta.includes('preview');
   }
 
+  /**
+   * @param {string} meta
+   */
   function isBelow(meta) {
     if (!meta) return false;
 
@@ -34,12 +47,19 @@ export async function compiler(config = {}, api) {
   }
 
   const [
+    // @ts-ignore
     { default: rehypeRaw },
+    // @ts-ignore
     { default: rehypeStringify },
+    // @ts-ignore
     { default: remarkGfm },
+    // @ts-ignore
     { default: remarkParse },
+    // @ts-ignore
     { default: remarkRehype },
+    // @ts-ignore
     { unified },
+    // @ts-ignore
     { visit },
   ] = await api.tryResolveAll([
     'rehype-raw',

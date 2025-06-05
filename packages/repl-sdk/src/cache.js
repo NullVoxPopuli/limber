@@ -16,7 +16,7 @@ export const secretKey = '__repl-sdk__compiler__';
  *   tarballs?: Map<string, import('./types.ts').UntarredPackage>,
  *   resolves?: { [modulePath: string]: unknown },
  *   promiseCache?: Map<string, Promise<unknown>>,
- *   fileCache?: Map<string, string>
+ *   fileCache?: Map<string, { code: string, ext: string }>
  * } }} ExtendedWindow
  */
 const secret = Symbol.for(secretKey);
@@ -73,7 +73,7 @@ class Caches {
   /**
    * Cache of request Key to file content string
    *
-   * @type {Map<string, string>}
+   * @type {Map<string, { code: string, ext: string }>}
    */
   get fileCache() {
     this.#root.fileCache ||= new Map();

@@ -23,6 +23,7 @@ export class Compiler {
 
   /**
    * Options may be passed to the compiler to add to its behavior.
+   * @param {Partial<Options>} options
    */
   constructor(options = defaults) {
     this.#options = Object.assign({}, defaults, options);
@@ -99,7 +100,7 @@ export class Compiler {
         return getTarRequestId({ to: id, from: parentUrl });
       },
       // Hook source fetch function
-      source: async (url, fetchOpts, parent, defaultSourceHook) => {
+      _source: async (url, fetchOpts, parent, defaultSourceHook) => {
         let mimeType = mime.getType(url) ?? 'application/javascript';
 
         this.#log(`[source] attempting to fetch: ${url}. Assuming ${mimeType}`);
@@ -159,48 +160,46 @@ export class Compiler {
 
         this.#log('[source]/fallback fetching url', url, options);
       },
-      _fetch: async (url, options) => {
+      fetch: async (url, options) => {
         let mimeType = mime.getType(url) ?? 'application/javascript';
 
         this.#log(`[fetch] attempting to fetch: ${url}. Assuming ${mimeType}`);
 
-        if (this.#options.resolve) {
-          if (url.startsWith('manual:')) {
-            let name = url.replace(/^manual:/, '');
+        if (url.startsWith('manual:')) {
+          let name = url.replace(/^manual:/, '');
 
-            this.#log('[fetch] resolved url in manually specified resolver', url);
+          this.#log('[fetch] resolved url in manually specified resolver', url);
 
-            let result = await this.#resolveManually(name);
+          let result = await this.#resolveManually(name);
 
-            let blobContent =
-              `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
-              `\n\n` +
-              `if (!mod) { throw new Error('Could not resolve \`${name}\`. Does the module exist? ( checked ${url} )') }` +
-              `\n\n` +
-              /**
-               * This is semi-trying to polyfill modules
-               * that aren't proper ESM. very annoying.
-               */
-              `${Object.keys(result)
-                .map((exportName) => {
-                  if (exportName === 'default') {
-                    return `export default mod.default ?? mod;`;
-                  }
+          let blobContent =
+            `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
+            `\n\n` +
+            `if (!mod) { throw new Error('Could not resolve \`${name}\`. Does the module exist? ( checked ${url} )') }` +
+            `\n\n` +
+            /**
+             * This is semi-trying to polyfill modules
+             * that aren't proper ESM. very annoying.
+             */
+            `${Object.keys(result)
+              .map((exportName) => {
+                if (exportName === 'default') {
+                  return `export default mod.default ?? mod;`;
+                }
 
-                  return `export const ${exportName} = mod.${exportName};`;
-                })
-                .join('\n')}
+                return `export const ${exportName} = mod.${exportName};`;
+              })
+              .join('\n')}
             `;
 
-            let blob = new Blob(Array.from(blobContent), { type: mimeType });
+          let blob = new Blob(Array.from(blobContent), { type: mimeType });
 
-            this.#log(
-              `[fetch] returning blob mapping to manually resolved import for ${name}`
-              // blobContent
-            );
+          this.#log(
+            `[fetch] returning blob mapping to manually resolved import for ${name}`
+            // blobContent
+          );
 
-            return new Response(blob);
-          }
+          return new Response(blob);
         }
 
         if (url.startsWith(unzippedPrefix)) {
@@ -253,10 +252,11 @@ export class Compiler {
    * @param {string} format
    * @param {string} text
    * @param {{ fileName?: string, flavor?: string }} [ options ]
-   * @returns {}
+   * @returns {Promise<Element>}
    */
   async compile(format, text, options = {}) {
     this.#log('[compile] idempotently installing es-module-shim');
+    // @ts-ignore
     await import('es-module-shims');
 
     let opts = { ...options };
@@ -283,6 +283,7 @@ export class Compiler {
 
     const asBlobUrl = textToBlobUrl(compiledText);
 
+    // @ts-ignore
     const { default: defaultExport } = await shimmedImport(/* @vite-ignore */ asBlobUrl);
 
     this.#log('[compile] preparing to render', defaultExport, extras);
@@ -409,6 +410,9 @@ export class Compiler {
     return result;
   };
 
+  /**
+   * @type {import('./types.ts').PublicMethods}
+   */
   #nestedPublicAPI = {
     tryResolve: async (name, fallback) => {
       const existing = await this.#resolveManually(name, fallback);
@@ -455,7 +459,13 @@ export class Compiler {
 
       return results;
     },
+    /**
+     * @param {Parameters<Compiler['compile']>} args
+     */
     compile: (...args) => this.compile(...args),
+    /**
+     * @param {Parameters<Compiler['optionsFor']>} args
+     */
     optionsFor: (...args) => this.optionsFor(...args),
   };
 
@@ -468,16 +478,26 @@ export class Compiler {
     return div;
   }
 
+  /**
+   * @param {Parameters<typeof console.debug>} args
+   */
   #log(...args) {
     if (this.#options.logging) {
       console.debug(...args);
     }
   }
+  /**
+   * @param {Parameters<typeof console.warn>} args
+   */
   #warn(...args) {
     if (this.#options.logging) {
       console.warn(...args);
     }
   }
+
+  /**
+   * @param {Parameters<typeof console.error>} args
+   */
   #error(...args) {
     if (this.#options.logging) {
       console.error(...args);
@@ -499,18 +519,23 @@ function textToBlobUrl(text) {
 /**
  * This should have happened at the beginning of the compile function.
  * If this error is ever thrown, something goofy has happened, and it would be very unexpected.
+
+ * @param {...any[]} args
  */
 function shimmedImport(...args) {
   if (!globalThis.importShim) {
     throw new Error(`Could not find importShim. Has the REPL been set up correctly?`);
   }
 
+  // @ts-ignore
   return globalThis.importShim(/* @vite-ignore */ ...args);
 }
 
 /**
  * CDNs will pre-process every file to make sure every import goes through them.
  * We don't want this.
+ *
+ * @param {string} id
  */
 function deCDN(id) {
   let noQPs = id.split('?')[0];

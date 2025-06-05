@@ -6,7 +6,7 @@ export interface RequestAnswer {
   from: string;
 }
 
-interface PublicMethods {
+export interface PublicMethods {
   /**
    * Will try to use a shimmed import, or will return null.
    */
@@ -39,7 +39,7 @@ export interface ResolvedCompilerOptions {
   importMap: { [importPath: string]: string };
   resolve: { [importPath: string]: unknown };
   needsLiveMeta?: boolean;
-  versions: { [packageName: string]: string };
+  versions?: { [packageName: string]: string };
 }
 
 export interface Compiler {
@@ -108,13 +108,26 @@ export interface CompilerConfig {
    */
   needsLiveMeta?: boolean;
 
+  /**
+   * Synchronously extend the way resolution works
+   * This is "import map as a function", which allows for more flexibility than just the static import map.
+   *
+   * This may not return a promise.
+   *
+   */
+  resolve?: (id: string) => string | undefined;
+
   compiler: (
     /**
      * The config for the compiler may be passed by the caller.
      * Common use case for this object is specifying what versions
      * of the compiler/library/framework dependencies to use.
      */
-    config: Record<string, unknown>
+    config: Record<string, unknown>,
+    /**
+     * The public methods provided from the compiler
+     */
+    api: PublicMethods
   ) => Promise<Compiler>;
 
   /**
