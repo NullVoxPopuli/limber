@@ -1,6 +1,6 @@
 import { expect as errorExpect, it } from 'vitest';
 
-import { Request } from './request.js';
+import { idForRequest, Request } from './request.js';
 import { fromImports } from './resolve.js';
 
 import type { UntarredPackage } from './types.js';
@@ -27,8 +27,8 @@ it('resolves subpath imports', () => {
       },
     },
   };
-  const specifier = '#compiler?from=tgz%3A%2F%2Frepl.sdk%2Fcontent-tag';
-  const request = Request.fromSpecifier(specifier);
+  const from = idForRequest({ to: 'content-tag' });
+  const request = Request.of({ to: '#compiler', from });
   const answer = fromImports(untarred as unknown as UntarredPackage, request, undefined);
 
   expect(answer?.inTarFile).toBe('pkg/compiler.js');

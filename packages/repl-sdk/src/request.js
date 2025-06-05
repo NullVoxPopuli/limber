@@ -9,10 +9,18 @@ function requestKey() {
 }
 
 /**
- * Resolves the in-tar file from a specifier
- *
  * @param {{ to: string, from?: string }} options
- * @returns {string} the location in the tar
+ * @returns {string} the id of the request
+ */
+export function idForRequest({ to, from }) {
+  let url = getTarRequestId({ to, from });
+
+  return idFromRequestUrl(url);
+}
+
+/**
+ * @param {{ to: string, from?: string }} options
+ * @returns {string} the URL of the request
  */
 export function getTarRequestId({ to, from }) {
   let request = Request.of({ to, from });
