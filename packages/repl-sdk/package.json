@@ -22,7 +22,8 @@
     "lint:types": "tsc --noEmit",
     "lint:js:fix": "pnpm -w exec lint js:fix",
     "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
-    "lint:prettier": "pnpm -w exec lint prettier"
+    "lint:prettier": "pnpm -w exec lint prettier",
+    "test:node": "vitest"
   },
   "keywords": [
     "repl",
