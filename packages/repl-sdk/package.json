@@ -19,6 +19,7 @@
     "prepack": "vite build",
     "lint:package": "pnpm publint",
     "lint:js": "pnpm -w exec lint js",
+    "lint:types": "tsc --noEmit",
     "lint:js:fix": "pnpm -w exec lint js:fix",
     "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
     "lint:prettier": "pnpm -w exec lint prettier"
@@ -47,7 +48,7 @@
     "eslint": "^9.26.0",
     "prettier": "^3.2.5",
     "publint": "^0.3.12",
-    "typescript": "^5.4.5",
+    "typescript": "^5.7.3",
     "vite": "^6.3.5",
     "vite-plugin-dts": "4.5.3",
     "vitest": "^3.1.2"

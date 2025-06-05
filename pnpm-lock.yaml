@@ -1568,7 +1568,7 @@ importers:
         specifier: ^0.3.12
         version: 0.3.12
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
       vite:
         specifier: ^6.3.5

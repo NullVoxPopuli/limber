@@ -2,7 +2,7 @@ import { exports as resolveExports } from 'resolve.exports';
 import { resolve as resolveImports } from 'resolve.imports';
 
 /**
- * @typedef {import('./types.ts').Request} Request
+ * @typedef {import('./request.js').Request} Request
  */
 import { assert, fakeDomain } from './utils.js';
 

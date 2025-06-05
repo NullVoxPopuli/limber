@@ -96,8 +96,11 @@ export class Request {
 
     if (query) {
       let search = new URLSearchParams(query);
+      let fromQp = search.get('from');
 
-      let from = Request.fromRequestId(search.get('from'));
+      assert(`Missing query, ?from for specifier: ${specifier}`, fromQp);
+
+      let from = Request.fromRequestId(fromQp);
 
       this.#from = from;
       this.name = from.name;

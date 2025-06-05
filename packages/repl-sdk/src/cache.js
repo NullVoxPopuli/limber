@@ -8,6 +8,7 @@ export const secretKey = '__repl-sdk__compiler__';
  * @property {string} version
  * @property {import('./types.ts').RequestAnswer} path
  *
+ * @typedef {import('./request.js').Request} Request
  *
  * @typedef {typeof globalThis & { [secret]?: {
  *   requestCache?: Map<string, Request>,
