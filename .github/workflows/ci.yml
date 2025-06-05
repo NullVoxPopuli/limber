@@ -89,6 +89,7 @@ jobs:
   tests:
     name: "Tests"
     strategy:
+      fail-fast: false
       matrix:
         environment:
         - chrome
