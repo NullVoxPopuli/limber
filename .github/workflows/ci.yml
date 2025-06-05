@@ -41,7 +41,20 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - run:  echo ${{ github.event.number }} > ./pr-number.txt
-    - run: pnpm turbo build build:prod --force
+    - run: pnpm turbo build --force
+
+  build_prod:
+    name: Build for Production
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [install_dependencies]
+
+    steps:
+    - uses: wyvox/action@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+    - run:  echo ${{ github.event.number }} > ./pr-number.txt
+    - run: pnpm turbo build:prod
     - run: ls -la ./apps/repl/dist
     - run: ls -la ./apps/tutorial/dist
     # Used for faster deploy so we don't need to checkout the repo
@@ -53,6 +66,8 @@ jobs:
           ./apps/**/dist/**/*
           !node_modules/
           !./**/node_modules/
+
+
 
 ##############################################################
 
@@ -169,7 +184,7 @@ jobs:
     if: github.ref == 'refs/heads/main' 
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    needs: [browserstack-test]
+    needs: [browserstack-test, build_prod]
     strategy: 
       matrix:
         app: 
