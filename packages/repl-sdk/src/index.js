@@ -5,7 +5,8 @@ import mime from 'mime/lite';
 
 import { cache, secretKey } from './cache.js';
 import { compilers } from './compilers.js';
-import { getFromTarball, resolveFromTarball } from './tar.js';
+import { getTarRequestId } from './request.js';
+import { getFromTarball } from './tar.js';
 import { assert, nextId, prefix_tgz, tgzPrefix, unzippedPrefix } from './utils.js';
 
 assert(`There is no document. repl-sdk is meant to be ran in a browser`, globalThis.document);
@@ -69,7 +70,7 @@ export class Compiler {
         }
 
         if (parentUrl.startsWith(tgzPrefix) && (id.startsWith('.') || id.startsWith('#'))) {
-          let answer = resolveFromTarball({ to: id, from: parentUrl });
+          let answer = getTarRequestId({ to: id, from: parentUrl });
 
           return answer;
         }
@@ -95,7 +96,7 @@ export class Compiler {
 
         this.#log(`[resolve] ${id} not found, deferring to npmjs.com's provided tarball`);
 
-        return resolveFromTarball({ to: id, from: parentUrl });
+        return getTarRequestId({ to: id, from: parentUrl });
       },
       // Hook source fetch function
       source: async (url, fetchOpts, parent, defaultSourceHook) => {

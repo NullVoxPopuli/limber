@@ -1536,6 +1536,9 @@ importers:
       mime:
         specifier: ^4.0.7
         version: 4.0.7
+      package-name-regex:
+        specifier: ^4.0.1
+        version: 4.0.1
       resolve.exports:
         specifier: ^2.0.3
         version: 2.0.3
@@ -10871,6 +10874,10 @@ packages:
   package-manager-detector@1.3.0:
     resolution: {integrity: sha512-ZsEbbZORsyHuO00lY1kV3/t72yp6Ysay6Pd17ZAlNGuGwmWDLCJxFpRs0IzfXfj1o4icJOkUEioexFHzyPurSQ==}
 
+  package-name-regex@4.0.1:
+    resolution: {integrity: sha512-0pfNOYKKkDKw3SCmcxJLXzpFO4Peg0dSRxNb8luy5W1Blp79V2r9sNMgi95ryW/CM3ykljCzvZFqteBaiJzJ4Q==}
+    engines: {node: '>=18'}
+
   package-up@5.0.0:
     resolution: {integrity: sha512-MQEgDUvXCa3sGvqHg3pzHO8e9gqTCMPVrWUko3vPQGntwegmFo52mZb2abIVTjFnUcW0BcPz0D93jV5Cas1DWA==}
     engines: {node: '>=18'}
@@ -14972,7 +14979,7 @@ snapshots:
       find-up: 5.0.0
       lodash: 4.17.21
       resolve: 1.22.10
-      semver: 7.7.1
+      semver: 7.7.2
     optionalDependencies:
       '@glint/template': 1.4.1-unstable.0e0d936
     transitivePeerDependencies:
@@ -24709,6 +24716,8 @@ snapshots:
       semver: 7.7.1
 
   package-manager-detector@1.3.0: {}
+
+  package-name-regex@4.0.1: {}
 
   package-up@5.0.0:
     dependencies:

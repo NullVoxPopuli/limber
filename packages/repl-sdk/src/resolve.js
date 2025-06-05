@@ -1,8 +1,8 @@
 import { exports as resolveExports } from 'resolve.exports';
 import { resolve as resolveImports } from 'resolve.imports';
 
-import { parseSpecifier } from './specifier.js';
-import { fakeDomain, tgzPrefix, unzippedPrefix } from './utils.js';
+import { Request } from './request.js';
+import { assert, fakeDomain } from './utils.js';
 
 /**
  * If a package wanted, they could provide a special export condition
@@ -59,15 +59,6 @@ export function resolve(untarred, request) {
     return resolveCache.get(key);
   }
 
-  answer ||= _resolve(untarred, request, answer);
-  answer ||= _resolve(untarred, Request.fromRequest(request, { from: request.name }), answer);
-
-  resolveCache.set(key, answer);
-
-  return answer;
-}
-
-function _resolve(untarred, request, answer) {
   answer ||= fromImports(untarred, request, answer);
   answer ||= fromInternalImport(untarred, request, answer);
   answer ||= fromExportsString(untarred, request, answer);
@@ -77,6 +68,8 @@ function _resolve(untarred, request, answer) {
   answer ||= fromMain(untarred, request, answer);
   answer ||= fromIndex(untarred, request, answer);
   answer ||= fromFallback(untarred, request, answer);
+
+  resolveCache.set(key, answer);
 
   return answer;
 }
@@ -92,14 +85,16 @@ function _resolve(untarred, request, answer) {
 export function fromInternalImport(untarred, request, answer) {
   if (answer) return answer;
 
-  let isInternal = request.from && request.to;
+  if (!request.from) return answer;
 
-  if (!isInternal) return answer;
-
-  let fromSpecifier = Request.fromSpecifier(request.from);
+  let fromSpecifier = request.from;
   let answerFrom = resolve(untarred, fromSpecifier);
 
-  if (!answerFrom) printError(untarred, fromSpecifier, answer);
+  if (!answerFrom) {
+    printError(untarred, fromSpecifier, answer);
+
+    return;
+  }
 
   let inTarFile = resolvePath(fromSpecifier.name + '/' + answerFrom.inTarFile, request.to).replace(
     new RegExp(`^${fromSpecifier.name}/`),
@@ -108,9 +103,16 @@ export function fromInternalImport(untarred, request, answer) {
   let result = checkFile(untarred, inTarFile);
 
   if (result) {
+    let ext = extName(result);
+
+    assert(
+      `All files must have an extension. This file (in ${request.name}) did not have an extension: ${result}`,
+      ext
+    );
+
     return {
       inTarFile: result,
-      ext: extName(result),
+      ext,
       from: 'internalImport',
     };
   }
@@ -296,7 +298,7 @@ function fromFallback(untarred, request, answer) {
  *
  * @param {import('./types.ts').UntarredPackage} untarred
  * @param {string | undefined} filePath
- * @returns {string} the variant
+ * @returns {string | undefined} the variant
  */
 function checkFile(untarred, filePath) {
   if (!filePath) return;
@@ -315,97 +317,26 @@ function checkFile(untarred, filePath) {
   }
 }
 
+/**
+ * @param {string} filePath
+ */
 function extName(filePath) {
   return filePath.split('.').pop();
 }
 
+/**
+ * @param {import('./types.ts').UntarredPackage} untarred
+ */
 function hasExports(untarred) {
   return Boolean(untarred.manifest.exports);
 }
 
-export class Request {
-  static fromSpecifier(specifier) {
-    return new Request(specifier);
-  }
-  static fromRequest(otherRequest, overrides) {
-    let r = new Request(otherRequest.original);
-
-    Object.assign(r, overrides);
-
-    return r;
-  }
-
-  /** @type {string} */
-  #to;
-
-  /**
-   * @private
-   */
-  constructor(specifier) {
-    let removedPrefix = specifier
-      .replace(unzippedPrefix, '')
-      .replace(tgzPrefix, '')
-      .replace(/^\//, '');
-    let [full, query] = removedPrefix.split('?');
-
-    this.original = specifier;
-
-    if (full.startsWith('.') || full.startsWith('#')) {
-      if (!query) {
-        throw new Error(
-          `Missing query, ?from for specifier: ${specifier}. From is required for relative and subpath-imports.`
-        );
-      }
-    }
-
-    if (query) {
-      let search = new URLSearchParams(query);
-
-      let fQP = search.get('from').replace(unzippedPrefix, '').replace(/^\//, '');
-      let split = Request.splitKey(fQP);
-      let specifier = `${split.name}@${split.version}${split.path}`
-
-      this.#to = full;
-
-      let parsed = parseSpecifier(specifier);
-
-      this.from = resolvePath(parsed.name, parsed.path).replace(/\/$/, '');
-      this.name = parsed.name;
-
-      let cleanedVersion = parsed.version?.replace(/\.+$/, '') || 'latest';
-
-      this.version = cleanedVersion;
-    } else {
-      let parsed = parseSpecifier(full);
-      let { name, version = 'latest', path } = parsed;
-
-      this.name = name;
-      this.version = version.replace(/\.+$/, '');
-      /**
-       * This will either be '.' or have the leading ./
-       */
-      this.#to = path;
-    }
-  }
-
-  get to() {
-    return this.#to;
-  }
-
-  static splitKey(key) {
-    let noHash = key.split('#')[0];
-    let [nameStuff, versionAndPath] = noHash.split('[AT:V]');
-    let name = nameStuff.replace(/^__name__\//, '');
-    let [version, path] = versionAndPath.split('/__to__/');
-
-    return { name, version, path };
-  }
-
-  get key() {
-    return `__name__/${this.name}[AT:V]${this.version}/__to__/${this.to}`;
-  }
-}
-
+/**
+ * @param {import('./types.ts').UntarredPackage} untarred
+ * @param {Request} request
+ * @param {undefined | import('./types.ts').RequestAnswer} answer
+ * @throws {Error}
+ */
 export function printError(untarred, request, answer) {
   let { name, exports, main, module, browser } = untarred.manifest;
 

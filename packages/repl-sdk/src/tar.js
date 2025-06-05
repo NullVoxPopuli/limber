@@ -2,32 +2,16 @@ import { parseTar } from 'tarparser';
 
 import { cache } from './cache.js';
 import { getNPMInfo, getTarUrl } from './npm.js';
-import { printError, Request, resolve } from './resolve.js';
+import { printError, resolve } from './resolve.js';
 import { unzippedPrefix } from './utils.js';
-
-/**
- * Resolves the in-tar file from a specifier
- *
- * @param {{ to: string, from: string }}} options
- * @returns {string>} the location in the tar
- */
-export function resolveFromTarball({ to, from }) {
-  let isRoot = to.match(/^[A-Za-z@]/);
-  let request = Request.fromSpecifier(isRoot ? to : `${to}?from=${encodeURIComponent(from)}`);
-
-  cache.requestCache.set(request.key, request);
-
-  return `${unzippedPrefix}/${request.key}`;
-}
 
 /**
  * @param {string} unzipped URL
  * @returns {Promise<{ code: string, ext: string }>}
  */
 export async function getFromTarball(url) {
-  let keyParts = Request.splitKey(url.replace(unzippedPrefix, '').replace(/^\//, ''));
- 
-  let key = `__name__/${keyParts.name}[AT:V]${keyParts.version}/__to__/${keyParts.path}`;
+  let key = url.replace(unzippedPrefix + '/', '');
+  let request = cache.requestCache.get(key);
 
   if (cache.fileCache.has(key)) {
     return cache.fileCache.get(key);
@@ -37,14 +21,12 @@ export async function getFromTarball(url) {
     await cache.promiseCache.get(key);
   }
 
-  let request = cache.requestCache.get(key);
-
-  let untarred = await getTar(keyParts.name, keyParts.version);
+  let untarred = await getTar(request.name, request.version);
   let resolveCacheHit = await (async () => {
-    let untarred = await getTar(keyParts.name, keyParts.version);
+    let untarred = await getTar(request.name, request.version);
     let answer = resolve(untarred, request);
 
-    return { answer, name: request.name, version: request.version };   
+    return { answer, name: request.name, version: request.version };
   })();
   let result = getFile(untarred, key, resolveCacheHit.answer);
 

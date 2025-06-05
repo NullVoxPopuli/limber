@@ -4,6 +4,7 @@
   "include": ["src/**/*", "unpublished-development-types/**/*"],
   "compilerOptions": {
     "allowJs": true,
+    "checkJs": true,
     "skipLibCheck": true,
     "allowImportingTsExtensions": true
   }
