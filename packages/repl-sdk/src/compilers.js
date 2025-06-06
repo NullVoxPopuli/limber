@@ -69,7 +69,7 @@ export const compilers = {
             root.render(component);
 
             // Wait for react-dom to render
-            await new Promise((resolve) => requestIdleCallback(resolve));
+            await new Promise((resolve) => requestAnimationFrame(resolve));
           },
         };
       },

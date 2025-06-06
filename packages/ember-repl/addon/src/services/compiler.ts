@@ -9,7 +9,7 @@ import { getOwner } from '@ember/owner';
 import Service from '@ember/service';
 import { precompileTemplate } from '@ember/template-compilation';
 import { template } from '@ember/template-compiler/runtime';
-import { waitFor, waitForPromise } from '@ember/test-waiters';
+import { waitFor } from '@ember/test-waiters';
 
 import { Compiler } from 'repl-sdk';
 
@@ -92,6 +92,14 @@ export default class CompilerService extends Service {
   };
 
   get compiler() {
+    /**
+     * This is useful for our own testing.
+     * not sure if this would be a footgun for consumers' usage
+     */
+    if (!this.#compiler) {
+      this.setup();
+    }
+
     assert(
       `Expected a compiled to be setup on the compiler service. Use \`compiler.setup()\` first.`,
       this.#compiler

@@ -1,7 +1,7 @@
 import { assert as debugAssert } from '@ember/debug';
-import { getPendingWaiterState } from '@ember/test-waiters';
 import { renderSettled } from '@ember/renderer';
-import { settled, click, render, setupOnerror } from '@ember/test-helpers';
+import { click, render, settled, setupOnerror } from '@ember/test-helpers';
+import { getPendingWaiterState } from '@ember/test-waiters';
 import QUnit, { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 

@@ -1,6 +1,8 @@
 let id = 0;
 
+/** @type {any} */
 let bootWaiter;
+/** @type {any} */
 let createWaiter;
 
 /**
@@ -10,19 +12,26 @@ let createWaiter;
  *
  * We really need renderComponent(...)
  *   https://github.com/emberjs/ember.js/pull/20781
+ *
+ * @param {{
+ *  compiler: import('../../types.ts').PublicMethods,
+ *  element: HTMLElement,
+ *  component: unknown
+ * }} options
  */
 export async function renderApp({ compiler, element, component }) {
-  const [application, resolver, router, route, testWaiters, runloop] = await compiler.tryResolveAll(
-    [
+  const [application, destroyable, resolver, router, route, testWaiters, runloop] =
+    await compiler.tryResolveAll([
       '@ember/application',
+      '@ember/destroyable',
       'ember-resolver',
       '@ember/routing/router',
       '@ember/routing/route',
       '@ember/test-waiters',
       '@ember/runloop',
-    ]
-  );
+    ]);
   const App = application.default;
+  const registerDestructor = destroyable.registerDestructor;
   const Resolver = resolver.default;
   const Router = router.default;
   const Route = route.default;
@@ -30,7 +39,7 @@ export async function renderApp({ compiler, element, component }) {
 
   element.id = `repl-output-${id++}`;
   bootWaiter ||= testWaiters.buildWaiter('repl-output:waiting-for-boot');
-  createWaiter ||= testWaiters.buildWaiter('ember-friendz:waiting-for-creation');
+  createWaiter ||= testWaiters.buildWaiter('repl-output:waiting-for-creation');
 
   let bootToken = bootWaiter.beginAsync();
   let createToken = createWaiter.beginAsync();
@@ -41,6 +50,13 @@ export async function renderApp({ compiler, element, component }) {
       'ephemeral-render-output/templates/application': { default: component },
       'ephemeral-render-output/routes/application': {
         default: class Application extends Route {
+          constructor(...args) {
+            super(...args);
+
+            registerDestructor(() => {
+              bootWaiter.endAsync(bootToken);
+            });
+          }
           afterModel() {
             schedule('afterRender', () => {
               requestAnimationFrame(() => {

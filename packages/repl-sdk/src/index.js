@@ -349,7 +349,7 @@ export class Compiler {
     await compiler.render(div, whatToRender, extras, this.#nestedPublicAPI);
 
     // Wait for render
-    await new Promise((resolve) => requestIdleCallback(resolve));
+    await new Promise((resolve) => requestAnimationFrame(resolve));
 
     return div;
   }
