@@ -1,23 +1,28 @@
 import { render } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import { compileHBS } from 'ember-repl/formats/hbs';
+import { getCompiler } from 'ember-repl';
+
+import { setupCompiler } from 'ember-repl/test-support';
 
 import { Await } from '../helpers/await';
 
 module('compileHBS()', function (hooks) {
   setupRenderingTest(hooks);
+  setupCompiler(hooks);
 
   test('it works', async function (assert) {
-    const compile = () => {
+    const compile = async () => {
       const template = `
         {{#each (array 1 2) as |num|}}
           <output>{{num}}</output>
         {{/each}}
       `;
 
-      const { component, name, error } = compileHBS(template);
+      const compiler = getCompiler(this);
+
+      const { component, name, error } = await compiler.compileHBS(template);
 
       assert.notOk(error);
       assert.ok(name);
@@ -28,7 +33,7 @@ module('compileHBS()', function (hooks) {
     await render(
       <template>
         {{#let (compile) as |CustomComponent|}}
-          <CustomComponent />
+          <Await @promise={{CustomComponent}} />
         {{/let}}
       </template>
     );
@@ -43,8 +48,9 @@ module('compileHBS()', function (hooks) {
 
     const template = `Hi <SomeOtherComponent />`;
 
-    const compile = () => {
-      const { component, error, name } = compileHBS(template, {
+    const compile = async () => {
+      const compiler = getCompiler(this);
+      const { component, error, name } = await compiler.compileHBS(template, {
         scope: { SomeOtherComponent },
       });
 
@@ -57,39 +63,48 @@ module('compileHBS()', function (hooks) {
     await render(
       <template>
         {{#let (compile) as |CustomComponent|}}
-          <CustomComponent />
+          <Await @promise={{CustomComponent}} />
         {{/let}}
       </template>
     );
 
-    assert.dom().containsText('Hi there!');
+    assert.dom().hasText('Hi there!');
   });
 
   module('deliberate errors', function () {
-    test('syntax', async function (assert) {
+    /**
+     * Temporarily skipped because it's not possible to catch errors right now...........
+     *
+     * https://github.com/emberjs/ember.js/issues/20914
+     *
+     */
+    skip('syntax', async function (assert) {
       const compile = async () => {
-        // What else do we await to convert this to promise?
-        await Promise.resolve();
-
         const template = `
-          {{#each (array 1 2) as |num|}}
+          {{#each array 1 2) as |num|}}
             <output>{{num}}</output>
           {{/each}}
         `;
 
-        const { component, name, error } = compileHBS(template);
+        const compiler = getCompiler(this);
 
-        assert.ok(error);
-        assert.ok(name);
-        assert.notOk(component);
+        try {
+          const { component, error, name } = await compiler.compileHBS(template);
 
-        return component;
+          assert.ok(error);
+          assert.ok(name);
+          assert.notOk(component);
+
+          return component;
+        } catch (e) {
+          return;
+        }
       };
 
       await render(
         <template>
-          {{#let (compile) as |CustomComponent|}}
-            <Await @promise={{CustomComponent}} />
+          {{#let (compile) as |promise|}}
+            <Await @promise={{promise}} />
           {{/let}}
         </template>
       );

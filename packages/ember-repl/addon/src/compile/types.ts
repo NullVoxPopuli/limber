@@ -1,12 +1,19 @@
 import type { ComponentLike } from '@glint/template';
 import type { Pluggable } from 'unified';
 
+export type Input = string | undefined | null;
+export type Format = 'glimdown' | 'gjs' | 'hbs' | 'mermaid';
+
 export interface EvalImportMap {
   [moduleName: string]: ScopeMap;
 }
 
 export interface ScopeMap {
   [localName: string]: unknown;
+}
+
+export interface ModuleMap {
+  [key: string]: () => Promise<unknown> | Record<string, unknown>;
 }
 
 export type UnifiedPlugin = Pluggable;

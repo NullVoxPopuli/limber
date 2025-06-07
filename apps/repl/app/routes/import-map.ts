@@ -1,85 +1,24 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // Some packages do not provide types
 
-import * as eDeepTracked from 'ember-deep-tracked';
 // @ts-expect-error
 import * as focusTrap from 'ember-focus-trap';
-import * as eModifier from 'ember-modifier';
 import * as ePrimitives from 'ember-primitives';
-import * as emberRepl from 'ember-repl';
 import * as eResources from 'ember-resources';
 import * as reactiveDebounce from 'reactiveweb/debounce';
 import * as reactiveFps from 'reactiveweb/fps';
 import * as reactiveFunction from 'reactiveweb/function';
-import * as reactiveImage from 'reactiveweb/image';
 import * as reactiveKeepLatest from 'reactiveweb/keep-latest';
 import * as reactiveLink from 'reactiveweb/link';
 import * as reactiveMap from 'reactiveweb/map';
 import * as reactiveRemoteData from 'reactiveweb/remote-data';
 import * as reactiveModifier from 'reactiveweb/resource/modifier';
 import * as reactiveService from 'reactiveweb/resource/service';
-import * as reactiveSync from 'reactiveweb/sync';
-import * as reactiveThrottle from 'reactiveweb/throttle';
-import * as reactiveWaitUntil from 'reactiveweb/wait-until';
-import * as trackedBuiltIns from 'tracked-built-ins';
 // @ts-expect-error
 import * as trackedToolbox from 'tracked-toolbox';
-import * as xstate from 'xstate';
-
-import * as limberHeader from 'limber/components/limber/header';
-import * as limberMenu from 'limber/components/limber/menu';
-import * as limberUi from 'limber-ui';
 import { ExternalLink } from 'limber-ui';
 
-export const importMap = {
-  // Own Stuff
-  // Something is weird with how this import map works.
-  // I can't wait to land the other which behaves a lot mormally
-  'limber/components/limber/menu': Object.assign(limberMenu.default, limberMenu),
-  'limber/components/limber/header': Object.assign(limberHeader.default, limberHeader),
-
-  // Legacy things that don't exist anymore
-  'limber/helpers/state': (...args: unknown[]) => {
-    const c = eResources.cell(...args);
-
-    return {
-      ...c,
-      // @ts-ignore
-      increment: () => c.current++,
-      get value() {
-        return c.current;
-      },
-    };
-  },
-
-  // Libraries
-  'ember-repl': emberRepl,
-  'limber-ui': limberUi,
-  xstate: xstate,
-  'ember-modifier': eModifier,
-  'tracked-built-ins': trackedBuiltIns,
-  'ember-focus-trap': focusTrap,
-  'ember-primitives': ePrimitives,
-  'tracked-toolbox': trackedToolbox,
-  'ember-deep-tracked': eDeepTracked,
-  'ember-resources': eResources,
-
-  // Reactiveweb *only* has path imports
-  'reactiveweb/debounce': reactiveDebounce,
-  'reactiveweb/ember-concurrency': reactiveDebounce,
-  'reactiveweb/fps': reactiveFps,
-  'reactiveweb/function': reactiveFunction,
-  'reactiveweb/image': reactiveImage,
-  'reactiveweb/keep-latest': reactiveKeepLatest,
-  'reactiveweb/link': reactiveLink,
-  'reactiveweb/map': reactiveMap,
-  'reactiveweb/remote-data': reactiveRemoteData,
-  'reactiveweb/modifier': reactiveModifier,
-  'reactiveweb/service': reactiveService,
-  'reactiveweb/sync': reactiveSync,
-  'reactiveweb/throttle': reactiveThrottle,
-  'reactiveweb/wait-until': reactiveWaitUntil,
-};
+export const importMap = {};
 
 function defineWithWarning(
   obj: object,

@@ -16,7 +16,7 @@ export default defineConfig(() => ({
   },
   optimizeDeps: {
     // a wasm-providing dependency
-    exclude: ['content-tag', 'ember-cached-decorator-polyfill'],
+    exclude: ['content-tag', 'ember-repl', 'ember-cached-decorator-polyfill'],
     // for top-level-await, etc
     esbuildOptions: {
       target: 'esnext',
