@@ -41,6 +41,8 @@ export async function renderApp({ compiler, element, component }) {
   bootWaiter ||= testWaiters.buildWaiter('repl-output:waiting-for-boot');
   createWaiter ||= testWaiters.buildWaiter('repl-output:waiting-for-creation');
 
+  console.log('booting');
+
   let bootToken = bootWaiter.beginAsync();
   let createToken = createWaiter.beginAsync();
 
@@ -60,6 +62,7 @@ export async function renderApp({ compiler, element, component }) {
           afterModel() {
             schedule('afterRender', () => {
               requestAnimationFrame(() => {
+                console.log('booted');
                 bootWaiter.endAsync(bootToken);
               });
             });
@@ -79,9 +82,11 @@ export async function renderApp({ compiler, element, component }) {
     await new Promise((resolve) => requestAnimationFrame(resolve));
 
     if (!document.getElementById(element.id)) {
+      console.log('waiting for target element to appear');
       continue;
     }
 
+    console.log('created element. app can start');
     EphemeralApp.create({
       rootElement: '#' + element.id,
     });

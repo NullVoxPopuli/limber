@@ -129,6 +129,8 @@ export default class CompilerService extends Service {
     try {
       const element = await this.#compile(ext, text);
 
+      console.log({ element });
+
       component = rendersElement(element);
     } catch (e) {
       console.error(e);
@@ -146,22 +148,8 @@ export default class CompilerService extends Service {
    *
    * @param {string} code the code to be compiled
    */
-  @waitFor
-  async compileGJS(code: string): Promise<CompileResult> {
-    const name = nameFor(code);
-    let component: undefined | ComponentLike;
-    let error: undefined | Error;
-
-    try {
-      const element = await this.#compile('gjs', code);
-
-      component = rendersElement(element);
-    } catch (e) {
-      console.error(e);
-      error = e as Error | undefined;
-    }
-
-    return { name, component, error };
+  compileGJS(code: string): Promise<CompileResult> {
+    return this.compile('gjs', code);
   }
 
   /**
@@ -201,21 +189,7 @@ export default class CompilerService extends Service {
     return { name, component, error };
   }
 
-  @waitFor
-  async compileMD(source: string): Promise<CompileResult> {
-    const name = nameFor(source);
-    let component: undefined | ComponentLike;
-    let error: undefined | Error;
-
-    try {
-      const element = await this.#compile('md', source);
-
-      component = rendersElement(element);
-    } catch (e) {
-      console.error(e);
-      error = e as Error | undefined;
-    }
-
-    return { name, component, error };
+  compileMD(source: string): Promise<CompileResult> {
+    return this.compile('md', source);
   }
 }

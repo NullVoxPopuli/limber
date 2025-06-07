@@ -59,7 +59,14 @@ module('Rendering | compile()', function (hooks) {
 
       debugAssert(`[BUG]`, component);
 
+      console.log({ component });
       await render(component);
+
+      snapshotTimers();
+
+      // await new Promise((resolve) => setTimeout(resolve, 400));
+
+      // snapshotTimers();
 
       assert.dom('button').hasText('Click');
     });
