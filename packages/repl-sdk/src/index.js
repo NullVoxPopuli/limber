@@ -212,7 +212,7 @@ export class Compiler {
     this.#log('[compile] compiling');
 
     const compiler = await this.#getCompiler(format, opts.flavor);
-    const compiled = await compiler.compile(text, opts.fileName);
+    const compiled = await compiler.compile(text, opts);
 
     let compiledText = 'export default "failed to compile"';
     let extras = {};

@@ -110,8 +110,8 @@ export default class CompilerService extends Service {
     return this.#compiler;
   }
 
-  async #compile(ext: string, text: string) {
-    return this.compiler.compile(ext, text);
+  async #compile(ext: string, text: string, options: unknown) {
+    return this.compiler.compile(ext, text, options);
   }
 
   /**
@@ -123,13 +123,13 @@ export default class CompilerService extends Service {
    * @param {string} text the code to be compiled using the configured compiler for the ext
    */
   @waitFor
-  async compile(ext: string, text: string) {
+  async compile(ext: string, text: string, options?: unknown) {
     const name = nameFor(text);
     let component: undefined | ComponentLike;
     let error: undefined | Error;
 
     try {
-      const element = await this.#compile(ext, text);
+      const element = await this.#compile(ext, text, options);
 
       component = rendersElement(element);
     } catch (e) {
@@ -190,7 +190,13 @@ export default class CompilerService extends Service {
   }
 
   @waitFor
-  compileMD(source: string): Promise<CompileResult> {
-    return this.compile('md', source);
+  compileMD(
+    source: string,
+    options?: {
+      remarkPlugins?: unknown[];
+      rehypePlugins?: unknown[];
+    }
+  ): Promise<CompileResult> {
+    return this.compile('md', source, options);
   }
 }

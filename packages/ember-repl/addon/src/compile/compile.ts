@@ -66,12 +66,13 @@ async function runTheCompiler({
 
   let result: CompileResult;
 
+  // TODO: just use compile, eliminate all this branching
   if (options.format === 'glimdown') {
-    result = await service.compileMD(text);
+    result = await service.compileMD(text, options);
   } else if (options.format === 'gjs') {
     result = await service.compileGJS(text);
   } else if (options.format === 'hbs') {
-    result = await service.compileHBS(text);
+    result = await service.compileHBS(text, options);
   } else {
     result = await service.compile(options.format, text);
   }

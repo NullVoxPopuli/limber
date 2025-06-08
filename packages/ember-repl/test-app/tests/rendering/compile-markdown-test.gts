@@ -90,7 +90,6 @@ module('Rendering | compile()', function (hooks) {
 
         // https://github.com/typed-ember/glint/issues/617
         test('baseline: without the plugin, pre renders', async function (assert) {
-          debugAssert(`[BUG]`, build);
           let component: ComponentLike | undefined;
           await makeComponent(this, (comp) => (component = comp));
           debugAssert(`[BUG]`, component);
@@ -131,7 +130,6 @@ module('Rendering | compile()', function (hooks) {
 
           // https://github.com/typed-ember/glint/issues/617
           test('no pre renders', async function (assert) {
-            debugAssert(`[BUG]`, build);
             let component: ComponentLike | undefined;
             await makeComponent(this, (comp) => (component = comp));
             debugAssert(`[BUG] component`, component);
@@ -145,12 +143,9 @@ module('Rendering | compile()', function (hooks) {
         module('with the plugin (configured for just this render)', function (hooks) {
           // https://github.com/typed-ember/glint/issues/617
           test('no pre renders', async function (assert) {
-            debugAssert(`[BUG]`, build);
             let component: ComponentLike | undefined;
             await makeComponent(this, (comp) => (component = comp), {
-              md: {
-                remarkPlugins: [removePre],
-              },
+              remarkPlugins: [removePre],
             });
             debugAssert(`[BUG] component`, component);
 
