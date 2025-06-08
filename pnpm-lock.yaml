@@ -40,9 +40,6 @@ patchedDependencies:
   ember-source:
     hash: ce25d468f4e598d7dacd16a6d27af9254ff94a9194ae612aec34111a65476b80
     path: patches/ember-source.patch
-  es-module-shims:
-    hash: 8054eb16624b828e566fb816bc7486aae28a3566481414f1c132246e0688a2f6
-    path: patches/es-module-shims.patch
   package-name-regex:
     hash: a76cde3a95736607671eda10910c067ba024cf7ba73d17e19aa1d9f29e3bc4cd
     path: patches/package-name-regex.patch
@@ -1538,7 +1535,7 @@ importers:
     dependencies:
       es-module-shims:
         specifier: ^2.4.1
-        version: 2.6.0(patch_hash=8054eb16624b828e566fb816bc7486aae28a3566481414f1c132246e0688a2f6)
+        version: 2.6.0
       mime:
         specifier: ^4.0.7
         version: 4.0.7
@@ -20790,7 +20787,7 @@ snapshots:
 
   es-module-lexer@1.7.0: {}
 
-  es-module-shims@2.6.0(patch_hash=8054eb16624b828e566fb816bc7486aae28a3566481414f1c132246e0688a2f6): {}
+  es-module-shims@2.6.0: {}
 
   es-object-atoms@1.1.1:
     dependencies:
