@@ -87,8 +87,7 @@
     "patchedDependencies": {
       "browserslist-generator": "patches/browserslist-generator.patch",
       "ember-source": "patches/ember-source.patch",
-      "package-name-regex": "patches/package-name-regex.patch",
-      "es-module-shims": "patches/es-module-shims.patch"
+      "package-name-regex": "patches/package-name-regex.patch"
     }
   }
 }

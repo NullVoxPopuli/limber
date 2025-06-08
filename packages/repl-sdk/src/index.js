@@ -5,6 +5,7 @@ import mime from 'mime/lite';
 
 import { cache, secretKey } from './cache.js';
 import { compilers } from './compilers.js';
+import { STABLE_REFERENCE } from './es-module-shim.js';
 import { getTarRequestId } from './request.js';
 import { getFromTarball } from './tar.js';
 import { assert, nextId, prefix_tgz, tgzPrefix, unzippedPrefix } from './utils.js';
@@ -28,147 +29,149 @@ export class Compiler {
   constructor(options = defaults) {
     this.#options = Object.assign({}, defaults, options);
 
-    globalThis.window.esmsInitOptions = {
-      shimMode: true,
-      skip: [`https://esm.sh/`, 'https://jspm.dev/', 'https://cdn.jsdelivr.net/'],
-      revokeBlobURLs: true, // default false
-      // Permit overrides to import maps
-      mapOverrides: true, // default false
-      // Hook all module resolutions
-      /**
-       * Order of preference
-       * 1. manually resolved (from the caller)
-       * 2. specified in the compiler config (to use CDN)
-       * 3. download tarball from npm
-       *    or resolve from already downloaded tarball
-       *
-       * NOTE: when we return a new URL, we want to collapse the parentURI
-       *       so that we don't get compound query params in nested requests.
-       */
-      resolve: (id, parentUrl, resolve) => {
+    STABLE_REFERENCE.resolve = this.#resolve;
+    STABLE_REFERENCE.fetch = this.#fetch;
+  }
+
+  /**
+   * Order of preference
+   * 1. manually resolved (from the caller)
+   * 2. specified in the compiler config (to use CDN)
+   * 3. download tarball from npm
+   *    or resolve from already downloaded tarball
+   *
+   * NOTE: when we return a new URL, we want to collapse the parentURI
+   *       so that we don't get compound query params in nested requests.
+   *
+   * @param {string} id
+   * @param {string} parentUrl
+   * @param {(id: string, parentUrl: string) => string} resolve
+   * @returns {string}
+   */
+  #resolve = (id, parentUrl, resolve) => {
+    /**
+     * We have to strip the query params because our manual resolving
+     * doesn't use them -- but CDNs do
+     */
+    let vanilla = deCDN(id);
+
+    this.#log('[resolve]', id, 'from', parentUrl);
+
+    if (this.#options.resolve?.[vanilla]) {
+      this.#log(`[resolve] ${vanilla} found in manually specified resolver`);
+
+      return `manual:${vanilla}`;
+    }
+
+    for (let compilerResolve of this.#compilerResolvers) {
+      let result = compilerResolve(vanilla);
+
+      if (result) {
+        this.#log(`[resolve] ${vanilla} found in compiler config at ${result}.`);
+
+        return result;
+      }
+    }
+
+    if (parentUrl.startsWith(tgzPrefix) && (id.startsWith('.') || id.startsWith('#'))) {
+      let answer = getTarRequestId({ to: id, from: parentUrl });
+
+      return answer;
+    }
+
+    if (id.startsWith('https://')) return resolve(id, parentUrl);
+    if (id.startsWith('blob:')) return resolve(id, parentUrl);
+    if (id.startsWith('.')) return resolve(id, parentUrl);
+    if (parentUrl.startsWith('https://') && parentUrl !== location.href)
+      return resolve(id, parentUrl);
+
+    if (id.startsWith('node:')) {
+      this.#log(`Is known node module: ${id}. Grabbing polyfill`);
+
+      if (id === 'node:process') return prefix_tgz(`process`);
+      if (id === 'node:buffer') return prefix_tgz(`buffer`);
+      if (id === 'node:events') return prefix_tgz(`events`);
+      if (id === 'node:path') return prefix_tgz(`path-browser`);
+      if (id === 'node:util') return prefix_tgz(`util-browser`);
+      if (id === 'node:crypto') return prefix_tgz(`crypto-browserify`);
+      if (id === 'node:stream') return prefix_tgz(`stream-browserify`);
+      if (id === 'node:fs') return prefix_tgz(`browserify-fs`);
+    }
+
+    this.#log(`[resolve] ${id} not found, deferring to npmjs.com's provided tarball`);
+
+    return getTarRequestId({ to: id, from: parentUrl });
+  };
+  /**
+   * @param {string} url
+   * @param {unknown} options
+   * @returns {Promise<Response>}
+   */
+  #fetch = async (url, options) => {
+    let mimeType = mime.getType(url) ?? 'application/javascript';
+
+    this.#log(`[fetch] attempting to fetch: ${url}. Assuming ${mimeType}`);
+
+    if (url.startsWith('manual:')) {
+      let name = url.replace(/^manual:/, '');
+
+      this.#log('[fetch] resolved url in manually specified resolver', url);
+
+      let result = await this.#resolveManually(name);
+
+      let blobContent =
+        `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
+        `\n\n` +
+        `if (!mod) { throw new Error('Could not resolve \`${name}\`. Does the module exist? ( checked ${url} )') }` +
+        `\n\n` +
         /**
-         * We have to strip the query params because our manual resolving
-         * doesn't use them -- but CDNs do
+         * This is semi-trying to polyfill modules
+         * that aren't proper ESM. very annoying.
          */
-        let vanilla = deCDN(id);
+        `${Object.keys(result)
+          .map((exportName) => {
+            if (exportName === 'default') {
+              return `export default mod.default ?? mod;`;
+            }
 
-        this.#log('[resolve]', id, 'from', parentUrl);
-
-        if (this.#options.resolve?.[vanilla]) {
-          this.#log(`[resolve] ${vanilla} found in manually specified resolver`);
-
-          return `manual:${vanilla}`;
-        }
-
-        for (let compilerResolve of this.#compilerResolvers) {
-          let result = compilerResolve(vanilla);
-
-          if (result) {
-            this.#log(`[resolve] ${vanilla} found in compiler config at ${result}.`);
-
-            return result;
-          }
-        }
-
-        if (parentUrl.startsWith(tgzPrefix) && (id.startsWith('.') || id.startsWith('#'))) {
-          let answer = getTarRequestId({ to: id, from: parentUrl });
-
-          return answer;
-        }
-
-        if (id.startsWith('https://')) return resolve(id, parentUrl);
-        if (id.startsWith('blob:')) return resolve(id, parentUrl);
-        if (id.startsWith('.')) return resolve(id, parentUrl);
-        if (parentUrl.startsWith('https://') && parentUrl !== location.href)
-          return resolve(id, parentUrl);
-
-        if (id.startsWith('node:')) {
-          this.#log(`Is known node module: ${id}. Grabbing polyfill`);
-
-          if (id === 'node:process') return prefix_tgz(`process`);
-          if (id === 'node:buffer') return prefix_tgz(`buffer`);
-          if (id === 'node:events') return prefix_tgz(`events`);
-          if (id === 'node:path') return prefix_tgz(`path-browser`);
-          if (id === 'node:util') return prefix_tgz(`util-browser`);
-          if (id === 'node:crypto') return prefix_tgz(`crypto-browserify`);
-          if (id === 'node:stream') return prefix_tgz(`stream-browserify`);
-          if (id === 'node:fs') return prefix_tgz(`browserify-fs`);
-        }
-
-        this.#log(`[resolve] ${id} not found, deferring to npmjs.com's provided tarball`);
-
-        return getTarRequestId({ to: id, from: parentUrl });
-      },
-      // NOTE: may need source hook
-      //       https://github.com/guybedford/es-module-shims?tab=readme-ov-file#source-hook
-      //
-      fetch: async (url, options) => {
-        let mimeType = mime.getType(url) ?? 'application/javascript';
-
-        this.#log(`[fetch] attempting to fetch: ${url}. Assuming ${mimeType}`);
-
-        if (url.startsWith('manual:')) {
-          let name = url.replace(/^manual:/, '');
-
-          this.#log('[fetch] resolved url in manually specified resolver', url);
-
-          let result = await this.#resolveManually(name);
-
-          let blobContent =
-            `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
-            `\n\n` +
-            `if (!mod) { throw new Error('Could not resolve \`${name}\`. Does the module exist? ( checked ${url} )') }` +
-            `\n\n` +
-            /**
-             * This is semi-trying to polyfill modules
-             * that aren't proper ESM. very annoying.
-             */
-            `${Object.keys(result)
-              .map((exportName) => {
-                if (exportName === 'default') {
-                  return `export default mod.default ?? mod;`;
-                }
-
-                return `export const ${exportName} = mod.${exportName};`;
-              })
-              .join('\n')}
+            return `export const ${exportName} = mod.${exportName};`;
+          })
+          .join('\n')}
             `;
 
-          let blob = new Blob(Array.from(blobContent), { type: mimeType });
+      let blob = new Blob(Array.from(blobContent), { type: mimeType });
 
-          this.#log(
-            `[fetch] returning blob mapping to manually resolved import for ${name}`
-            // blobContent
-          );
+      this.#log(
+        `[fetch] returning blob mapping to manually resolved import for ${name}`
+        // blobContent
+      );
 
-          return new Response(blob);
-        }
+      return new Response(blob);
+    }
 
-        if (url.startsWith(unzippedPrefix)) {
-          this.#log('[fetch] resolved url via tgz resolver', url, options);
+    if (url.startsWith(unzippedPrefix)) {
+      this.#log('[fetch] resolved url via tgz resolver', url, options);
 
-          let { code, ext } = await getFromTarball(url);
+      let { code, ext } = await getFromTarball(url);
 
-          /**
-           * We don't know if this code is completely ready to run in the browser yet, so we might need to run in through the compiler again
-           */
-          let file = await this.#postProcess(code, ext);
+      /**
+       * We don't know if this code is completely ready to run in the browser yet, so we might need to run in through the compiler again
+       */
+      let file = await this.#postProcess(code, ext);
 
-          return new Response(new Blob([file], { type: 'application/javascript' }));
-        }
+      return new Response(new Blob([file], { type: 'application/javascript' }));
+    }
 
-        this.#log('[fetch] fetching url', url, options);
+    this.#log('[fetch] fetching url', url, options);
 
-        const response = await fetch(url, options);
+    const response = await fetch(url, options);
 
-        if (!response.ok) return response;
+    if (!response.ok) return response;
 
-        const source = await response.text();
+    const source = await response.text();
 
-        return new Response(new Blob([source], { type: 'application/javascript' }));
-      },
-    };
-  }
+    return new Response(new Blob([source], { type: 'application/javascript' }));
+  };
 
   /**
    * NOTE: this does not resolve compilers that are not loaded yet.
