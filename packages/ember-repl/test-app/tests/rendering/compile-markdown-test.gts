@@ -64,73 +64,67 @@ module('Rendering | compile()', function (hooks) {
   module('markdown features', function () {
     module('custom remark plugins', function () {
       module('demo: remove pre code', function (hooks) {
-        let build: Build;
-        let component: ComponentLike | undefined;
+        const snippet = stripIndent`
+          text
 
-        hooks.beforeEach(function (assert) {
-          CACHE.clear();
-          component = undefined;
+          \`\`\`js
+          const two = 2;
+          \`\`\`
+        `;
 
-          const compiler = getCompiler(this);
+        async function makeComponent(context, onComponent, options) {
+          const compiler = getCompiler(context);
 
-          build = function build() {
-            compile(
-              compiler,
-              stripIndent`
-                text
+          compile(compiler, snippet, {
+            format: 'glimdown',
+            onSuccess: onComponent,
+            onError: unexpectedErrorHandler,
+            onCompileStart: () => {
+              /* not used */
+            },
+            ...options,
+          });
 
-                \`\`\`js
-                const two = 2;
-                \`\`\`
-              `,
-              {
-                format: 'glimdown',
-                onSuccess: (comp) => (component = comp),
-                onError: (e) => assert.notOk('did not expect error. ' + e),
-                onCompileStart: () => {
-                  /* not used */
-                },
-              }
-            );
-          };
-        });
+          await settled();
+        }
 
         // https://github.com/typed-ember/glint/issues/617
         test('baseline: without the plugin, pre renders', async function (assert) {
           debugAssert(`[BUG]`, build);
-          await build();
-          await settled();
+          let component: ComponentLike | undefined;
+          await makeComponent(this, (comp) => (component = comp));
           debugAssert(`[BUG]`, component);
 
           await render(component);
           assert.dom('pre').exists();
         });
 
-        module('with the plugin', function (hooks) {
+        const removePre =
+          /**
+           * Test plugin that just turns code into an
+           * unformatted mess in a p tag
+           */
+          (/* options */) => {
+            return function transformer(tree: Parameters<typeof visit>[0]) {
+              visit(tree, ['code'], function (node, index, parent: Parent) {
+                if (!parent) return;
+                if (undefined === index) return;
+
+                parent.children[index] = {
+                  type: 'html',
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  value: `<p>${node.value}</p>`,
+                };
+              });
+            };
+          };
+
+        module('with the plugin (globally configured)', function (hooks) {
           setupCompiler(hooks, {
             options: {
               md: {
-                remarkPlugins: [
-                  /**
-                   * Test plugin that just turns code into an
-                   * unformatted mess in a p tag
-                   */
-                  (/* options */) => {
-                    return function transformer(tree: Parameters<typeof visit>[0]) {
-                      visit(tree, ['code'], function (node, index, parent: Parent) {
-                        if (!parent) return;
-                        if (undefined === index) return;
-
-                        parent.children[index] = {
-                          type: 'html',
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                          // @ts-ignore
-                          value: `<p>${node.value}</p>`,
-                        };
-                      });
-                    };
-                  },
-                ],
+                remarkPlugins: [removePre],
               },
             },
           });
@@ -138,8 +132,26 @@ module('Rendering | compile()', function (hooks) {
           // https://github.com/typed-ember/glint/issues/617
           test('no pre renders', async function (assert) {
             debugAssert(`[BUG]`, build);
-            await build();
-            await settled();
+            let component: ComponentLike | undefined;
+            await makeComponent(this, (comp) => (component = comp));
+            debugAssert(`[BUG] component`, component);
+
+            await render(component);
+            // await this.pauseTest();
+            assert.dom('pre').doesNotExist();
+          });
+        });
+
+        module('with the plugin (configured for just this render)', function (hooks) {
+          // https://github.com/typed-ember/glint/issues/617
+          test('no pre renders', async function (assert) {
+            debugAssert(`[BUG]`, build);
+            let component: ComponentLike | undefined;
+            await makeComponent(this, (comp) => (component = comp), {
+              md: {
+                remarkPlugins: [removePre],
+              },
+            });
             debugAssert(`[BUG] component`, component);
 
             await render(component);
