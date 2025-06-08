@@ -1,5 +1,5 @@
 import { assert as debugAssert } from '@ember/debug';
-import { render, setupOnerror } from '@ember/test-helpers';
+import { render, settled, setupOnerror } from '@ember/test-helpers';
 import QUnit, { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -67,61 +67,31 @@ module('Rendering | compile()', function (hooks) {
         let build: Build;
         let component: ComponentLike | undefined;
 
-        const snippet = stripIndent`
-          text
-
-          \`\`\`js
-          const two = 2;
-          \`\`\`
-        `;
-
-        /**
-         * Test plugin that just turns code into an
-         * unformatted mess in a p tag
-         */
-        const uncodeSnippet: UnifiedPlugin = (/* options */) => {
-          return function transformer(tree: Parameters<typeof visit>[0]) {
-            visit(tree, ['code'], function (node, index, parent: Parent) {
-              if (!parent) return;
-              if (undefined === index) return;
-
-              parent.children[index] = {
-                type: 'html',
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                value: `<p>${node.value}</p>`,
-              };
-            });
-          };
-        };
-
         hooks.beforeEach(function (assert) {
           CACHE.clear();
           component = undefined;
 
           const compiler = getCompiler(this);
 
-          build = async function build(plugin?: UnifiedPlugin) {
-            if (plugin) {
-              return await compile(compiler, snippet, {
+          build = function build() {
+            compile(
+              compiler,
+              stripIndent`
+                text
+
+                \`\`\`js
+                const two = 2;
+                \`\`\`
+              `,
+              {
                 format: 'glimdown',
-                remarkPlugins: [plugin],
                 onSuccess: (comp) => (component = comp),
-                onError: unexpectedErrorHandler,
+                onError: (e) => assert.notOk('did not expect error. ' + e),
                 onCompileStart: () => {
                   /* not used */
                 },
-              });
-            }
-
-            await compile(compiler, snippet, {
-              format: 'glimdown',
-              onSuccess: (comp) => (component = comp),
-              onError: (e) => assert.notOk('did not expect error. ' + e),
-              onCompileStart: () => {
-                /* not used */
-              },
-            });
+              }
+            );
           };
         });
 
@@ -129,21 +99,53 @@ module('Rendering | compile()', function (hooks) {
         test('baseline: without the plugin, pre renders', async function (assert) {
           debugAssert(`[BUG]`, build);
           await build();
+          await settled();
           debugAssert(`[BUG]`, component);
 
           await render(component);
           assert.dom('pre').exists();
         });
 
-        // https://github.com/typed-ember/glint/issues/617
-        test('with the plugin: no pre renders', async function (assert) {
-          debugAssert(`[BUG]`, build);
-          await build(uncodeSnippet);
-          debugAssert(`[BUG] component`, component);
+        module('with the plugin', function (hooks) {
+          setupCompiler(hooks, {
+            options: {
+              md: {
+                remarkPlugins: [
+                  /**
+                   * Test plugin that just turns code into an
+                   * unformatted mess in a p tag
+                   */
+                  (/* options */) => {
+                    return function transformer(tree: Parameters<typeof visit>[0]) {
+                      visit(tree, ['code'], function (node, index, parent: Parent) {
+                        if (!parent) return;
+                        if (undefined === index) return;
 
-          await render(component);
-          // await this.pauseTest();
-          assert.dom('pre').doesNotExist();
+                        parent.children[index] = {
+                          type: 'html',
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                          // @ts-ignore
+                          value: `<p>${node.value}</p>`,
+                        };
+                      });
+                    };
+                  },
+                ],
+              },
+            },
+          });
+
+          // https://github.com/typed-ember/glint/issues/617
+          test('no pre renders', async function (assert) {
+            debugAssert(`[BUG]`, build);
+            await build();
+            await settled();
+            debugAssert(`[BUG] component`, component);
+
+            await render(component);
+            // await this.pauseTest();
+            assert.dom('pre').doesNotExist();
+          });
         });
       });
     });

@@ -9,6 +9,7 @@ const GLIMDOWN_RENDER = Symbol('__GLIMDOWN_RENDER__');
  */
 export async function compiler(config = {}, api) {
   const versions = config.versions || {};
+  const userOptions = config.userOptions || {};
 
   /**
    * @param {string} lang
@@ -375,24 +376,19 @@ export async function compiler(config = {}, api) {
 
   return {
     compile: async (text) => {
-      let result = await parseMarkdown(text, {});
+      let result = await parseMarkdown(text, userOptions);
       let escaped = result.text.replace(/`/g, '\\`');
-
-      console.log('md:compiled');
 
       return { compiled: `export default \`${escaped}\``, ...result };
     },
     render: async (element, compiled, extra, compiler) => {
       element.innerHTML = compiled;
-      console.log('md:render', extra);
 
       await Promise.all(
         extra.codeBlocks.map(async (info) => {
           let subElement = await compiler.compile(info.format, info.code, {
             flavor: info.flavor,
           });
-
-          console.log('md:render:compiled', subElement);
 
           let selector = `#${info.placeholderId}`;
           let target = element.querySelector(selector);

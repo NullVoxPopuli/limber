@@ -7,7 +7,10 @@ import type CompilerService from './services/compiler.ts';
 
 const NO_MODULES = Symbol.for('no custom modules configured');
 
-export function setup(context: object, options?: { modules?: ModuleMap }): CompilerService {
+export function setup(
+  context: object,
+  options?: { modules?: ModuleMap; options?: object }
+): CompilerService {
   const compiler = getCompiler(context);
 
   assert(`Could not find the compiler service.`, compiler);
@@ -15,7 +18,8 @@ export function setup(context: object, options?: { modules?: ModuleMap }): Compi
   compiler.setup(
     options?.modules ?? {
       [NO_MODULES]: true,
-    }
+    },
+    options?.options
   );
 
   return compiler;

@@ -290,6 +290,22 @@ export class Compiler {
   }
 
   /**
+   * @param {string} format
+   * @param {string | undefined} flavor
+   */
+  #resolveUserOptions(format, flavor) {
+    let config = this.#options.options?.[format];
+
+    if (!config) return {};
+
+    if (flavor && flavor in config) {
+      config = config[flavor];
+    }
+
+    return config ?? {};
+  }
+
+  /**
    * @param {import('./types.ts').Compiler} compiler
    * @param {string} whatToRender
    * @param {{ compiled: string } & Record<string, unknown>} extras
@@ -315,10 +331,11 @@ export class Compiler {
     const { needsLiveMeta } = this.#resolveFormat(format, flavor);
 
     return {
-      needsLiveMeta: needsLiveMeta ?? true,
+      needsLiveMeta: /* @type {boolean | undefined} */ needsLiveMeta ?? true,
       importMap: this.#options.importMap ?? {},
       resolve: this.#options.resolve ?? {},
       versions: this.#options.versions ?? {},
+      userOptions: this.#resolveUserOptions(format, flavor) ?? {},
     };
   };
 

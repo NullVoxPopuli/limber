@@ -75,12 +75,13 @@ export default class CompilerService extends Service {
    * @param {ModuleMap} [ extraModules ]: map of import paths to modules.
    *  These modules are useful if you need to document a library or a any design system or a styleguide or
    *  if there are additional modules that could be imported in the passed `code`.
+   * @param {object} [options] optional compiler options for each format/flavor
    *
    *  Later on, imports that are not present by default (ember/glimmer) or that
    *  are not provided by extraModules will be searched on npm to see if a package
    *  needs to be downloaded before running the `code` / invoking the component
    */
-  setup = (extraModules: ModuleMap = {}) => {
+  setup = (extraModules: ModuleMap = {}, options = {}) => {
     const localModules = modules(extraModules);
 
     this.#compiler = new Compiler({
@@ -88,6 +89,7 @@ export default class CompilerService extends Service {
       resolve: {
         ...localModules,
       },
+      options,
     });
   };
 

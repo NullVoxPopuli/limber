@@ -1,5 +1,7 @@
 import type { CompilerConfig, Options } from './types.ts';
 
+export type { Options } from './types.ts';
+
 export const defaultFormats: keyof Options['formats'];
 export const defaults: Options;
 

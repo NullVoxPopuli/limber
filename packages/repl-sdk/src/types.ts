@@ -43,6 +43,7 @@ export interface ResolvedCompilerOptions {
   resolve: { [importPath: string]: unknown };
   needsLiveMeta?: boolean;
   versions?: { [packageName: string]: string };
+  userOptions?: Options['options'];
 }
 
 export interface Compiler {
@@ -201,6 +202,9 @@ export interface Options {
    */
   versions?: { [packageName: string]: string };
 
+  /**
+   * Map of file extensions to compiler configurations
+   */
   formats: {
     [fileExtension: string]:
       | CompilerConfig
@@ -209,10 +213,30 @@ export interface Options {
         };
   };
 
+  options?: {
+    [format: string]:
+      | KnownDefaultOptions
+      | {
+          [flavor: string]: { [option: string]: unknown };
+        }
+      | {
+          [option: string]: unknown;
+        };
+  };
+
   /**
    * Show extra debug logging or not
    */
   logging?: boolean | undefined;
+}
+
+interface KnownDefaultOptions {
+  md?: {
+    rehypePlugins?: unknown[];
+    remarkPlugins?: unknown[];
+    CopyComponent?: string;
+    ShadowComponent?: string;
+  };
 }
 
 import type { ImportMap as ManifestImports } from 'resolve.imports';
