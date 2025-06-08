@@ -73,9 +73,11 @@ graph TD;
 `;
 
     test('vue live', async () => {
-      const compiler = new Compiler({ resolve: {
-      ...markdownModules,
-      ...vueModules,
+      const compiler = new Compiler({
+        resolve: {
+          ...markdownModules,
+          ...vueModules,
+        },
       });
       const element = await compiler.compile('md', `# Hello\n\n` + fenced(vue, 'vue live'));
 

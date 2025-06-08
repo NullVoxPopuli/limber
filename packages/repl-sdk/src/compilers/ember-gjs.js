@@ -189,7 +189,7 @@ export async function compiler(config = {}, api) {
        *    https://github.com/emberjs/rfcs/pull/1099
        *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
        */
-      let attribute = `data-repl-sdk-${elementId++}`;
+      let attribute = `data-repl-sdk-ember-gjs-${elementId++}`;
 
       element.setAttribute(attribute, '');
 

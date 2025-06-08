@@ -92,6 +92,23 @@ class Caches {
     return this.#root.promiseCache;
   }
 
+  /**
+   * @type {(key: string, callback: () => Promise<unknown>) => Promise<unknown>}
+   */
+  cachedPromise(key, callback) {
+    let existing = this.promiseCache.get(key);
+
+    if (existing) {
+      return existing;
+    }
+
+    let promise = callback();
+
+    this.promiseCache.set(key, promise);
+
+    return promise;
+  }
+
   get requestCache() {
     this.#root.requestCache ||= new Map();
 

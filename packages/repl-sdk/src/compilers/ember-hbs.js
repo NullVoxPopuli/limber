@@ -1,21 +1,31 @@
 import { renderApp } from './ember/render-app-island.js';
 
+let elementId = 0;
+
 /**
  * @param {import('../types.ts').ResolvedCompilerOptions} config
  * @param {import('../types.ts').PublicMethods} api
  */
-export function compiler(config = {}, api) {
-  return {
+export function compiler(config, api) {
+  let userOptions = config.userOptions || {};
+
+  /**
+   * @type {import('../types.ts').Compiler}
+   */
+  let hbsCompiler = {
     resolve: (id) => {
       if (id === '@ember/template-compiler/runtime') {
         return `https://esm.sh/*ember-source/dist/packages/@ember/template-compiler/runtime.js`;
       }
     },
-    compile: async (text) => {
+    compile: async (text, options) => {
       const { template } = await api.tryResolve('@ember/template-compiler/runtime');
 
       let component = template(text, {
-        scope: () => ({ ...config.defaultScope }),
+        scope: () => ({
+          ...userOptions.scope,
+          ...options.scope,
+        }),
       });
 
       /**
@@ -25,9 +35,45 @@ export function compiler(config = {}, api) {
       return component;
     },
     render: async (element, compiled, extra, compiler) => {
-      console.debug('[render:compiled]', compiled);
+      /**
+       *
+       * TODO: These will make things easier:
+       *    https://github.com/emberjs/rfcs/pull/1099
+       *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
+       */
+      let attribute = `data-repl-sdk-ember-hbs-${elementId++}`;
 
-      renderApp({ element, compiler, component: compiled });
+      element.setAttribute(attribute, '');
+
+      const [application, destroyable, resolver, router, route, testWaiters, runloop] =
+        await compiler.tryResolveAll([
+          '@ember/application',
+          '@ember/destroyable',
+          'ember-resolver',
+          '@ember/routing/router',
+          '@ember/routing/route',
+          '@ember/test-waiters',
+          '@ember/runloop',
+        ]);
+
+      // We don't want to await here, because we need to early
+      // return the element so that the app can render in to it.
+      // (Ember will only render in to an element if it's present in the DOM)
+      renderApp({
+        selector: `[${attribute}]`,
+        component: compiled,
+        modules: {
+          application,
+          destroyable,
+          resolver,
+          router,
+          route,
+          testWaiters,
+          runloop,
+        },
+      });
     },
   };
+
+  return hbsCompiler;
 }

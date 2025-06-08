@@ -386,8 +386,14 @@ export async function compiler(config = {}, api) {
 
       await Promise.all(
         extra.codeBlocks.map(async (info) => {
+          if (!api.canCompile(info.format, info.flavor)) {
+            return;
+          }
+
+          let flavor = info.flavor;
           let subElement = await compiler.compile(info.format, info.code, {
-            flavor: info.flavor,
+            ...compiler.optionsFor(info.format, flavor),
+            flavor: flavor,
           });
 
           let selector = `#${info.placeholderId}`;

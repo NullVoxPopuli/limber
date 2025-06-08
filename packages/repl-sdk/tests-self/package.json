@@ -3,6 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "start:chrome": "vitest --browser.name=chrome",
+    "start:firefox": "vitest --browser.name=firefox",
     "test": "pnpm test:firefox",
     "test:chrome": "vitest --browser.name=chrome --browser.headless=true",
     "test:firefox": "vitest --browser.name=firefox --browser.headless=true"
@@ -15,7 +17,8 @@
     "@testing-library/dom": "^10.3.2",
     "@tsconfig/ember": "^3.0.7",
     "@types/common-tags": "^1.8.4",
-    "@vitest/browser": "^3.0.0",
+    "@vitest/browser": "^3.2.2",
+    "@vitest/ui": "3.2.2",
     "@vue/repl": "^4.5.1",
     "mermaid": "^11.6.0",
     "react": "^19.1.0",

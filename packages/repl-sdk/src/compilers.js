@@ -76,6 +76,12 @@ export const compilers = {
     },
   },
   hbs: {
+    /**
+     * ember has historically used a subset of HBS, and then built its own features on top of.
+     *
+     * It is not "handlebars", but does share a lot of similarities.
+     * (and these continue in ember's new gjs and gts formats)
+     */
     ember: {
       compiler: async (...args) => {
         const hbs = await import('./compilers/ember-hbs.js');
@@ -116,21 +122,23 @@ export const compilers = {
     /**
      * Default config, known to work with how the compiler and render functions are configured.
      */
-    // resolve: (id) => {
-    //   switch (id) {
-    //     case 'svelte':
-    //       return `https://cdn.jsdelivr.net/npm/svelte@5.33.13/+esm`;
-    //     case 'svelte/compiler':
-    //       return `https://cdn.jsdelivr.net/npm/svelte@5.33.13/compiler/+esm`;
-    //   }
-    // },
+    resolve: (id) => {
+      switch (id) {
+        case 'svelte':
+          return `https://esm.sh/svelte?dev`;
+        case 'svelte/compiler':
+          return `https://esm.sh/svelte/compiler?dev`;
+      }
+    },
     compiler: async (config = {}, api) => {
       const versions = config.versions || {};
       const compiler = await api.tryResolve('svelte/compiler');
 
       return {
-        compile: async (text) => {
-          let output = await compiler.compile(text);
+        compile: async (text, options) => {
+          let output = await compiler.compile(text, {
+            /* this errors if unexpected options are passed */
+          });
 
           return { compiled: output.js.code, css: output.css.code };
         },
@@ -142,6 +150,7 @@ export const compilers = {
 
           element.appendChild(div);
           element.appendChild(style);
+          console.log({ element, component, css });
 
           new component({
             target: div,
@@ -176,13 +185,13 @@ export const compilers = {
       const store = useStore();
 
       return {
-        compile: async (text, fileName) => {
+        compile: async (text, options) => {
           const output = { js: '', css: '', ssr: '' };
 
           // @ts-ignore
           await compileFile(store, {
             code: text,
-            filename: fileName,
+            filename: options.fileName,
             language: 'vue',
             compiled: output,
           });

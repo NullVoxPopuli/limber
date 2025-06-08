@@ -68,6 +68,16 @@ function rendersElement(element: Element): ComponentLike {
   ) as ComponentLike;
 }
 
+interface CompilerOptions {
+  hbs?: {
+    scope?: Record<string, unknown>;
+  };
+  md?: {
+    remarkPlugins?: unknown[];
+    rehypePlugins?: unknown[];
+  };
+}
+
 export default class CompilerService extends Service {
   #compiler: Compiler | undefined;
 
@@ -81,7 +91,7 @@ export default class CompilerService extends Service {
    *  are not provided by extraModules will be searched on npm to see if a package
    *  needs to be downloaded before running the `code` / invoking the component
    */
-  setup = (extraModules: ModuleMap = {}, options = {}) => {
+  setup = (extraModules: ModuleMap = {}, options: CompilerOptions = {}) => {
     const localModules = modules(extraModules);
 
     this.#compiler = new Compiler({
@@ -89,7 +99,23 @@ export default class CompilerService extends Service {
       resolve: {
         ...localModules,
       },
-      options,
+      options: {
+        ...options,
+        hbs: {
+          ember: {
+            scope: {
+              array,
+              concat,
+              fn,
+              get,
+              hash,
+              on,
+              ...(options.hbs?.scope ?? {}),
+            },
+            ...(options.hbs ?? {}),
+          },
+        },
+      },
     });
   };
 
@@ -173,6 +199,14 @@ export default class CompilerService extends Service {
       scope?: Record<string, unknown>;
     } = {}
   ): Promise<CompileResult> {
+    return this.compile('hbs', source, {
+      ...options,
+      /**
+       * ember users don't want any other version of hbs
+       */
+      flavor: 'ember',
+    });
+
     const name = nameFor(source);
     let component: undefined | ComponentLike;
     let error: undefined | Error;

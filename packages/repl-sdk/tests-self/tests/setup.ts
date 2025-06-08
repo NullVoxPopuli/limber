@@ -23,7 +23,8 @@ export const mermaidModules = {
 };
 
 export const svelteModules = {
-  svelte: () => import('svelte'),
+  // Too many modules to load in the browser, takes too long to load them all
+  // svelte: () => import('svelte'),
 };
 
 export const vueModules = {

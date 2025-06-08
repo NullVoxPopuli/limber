@@ -84,6 +84,8 @@ export class Compiler {
     if (id.startsWith('.')) return resolve(id, parentUrl);
     if (parentUrl.startsWith('https://') && parentUrl !== location.href)
       return resolve(id, parentUrl);
+    if (parentUrl.startsWith('https://') && parentUrl.startsWith('/'))
+      return resolve(id, parentUrl);
 
     if (id.startsWith('node:')) {
       this.#log(`Is known node module: ${id}. Grabbing polyfill`);
@@ -196,7 +198,7 @@ export class Compiler {
   /**
    * @param {string} format
    * @param {string} text
-   * @param {{ fileName?: string, flavor?: string }} [ options ]
+   * @param {{ fileName?: string, flavor?: string, [key: string]: unknown }} [ options ]
    * @returns {Promise<Element>}
    */
   async compile(format, text, options = {}) {
@@ -331,11 +333,11 @@ export class Compiler {
     const { needsLiveMeta } = this.#resolveFormat(format, flavor);
 
     return {
-      needsLiveMeta: /* @type {boolean | undefined} */ needsLiveMeta ?? true,
       importMap: this.#options.importMap ?? {},
+      needsLiveMeta: /* @type {boolean | undefined} */ needsLiveMeta ?? true,
       resolve: this.#options.resolve ?? {},
       versions: this.#options.versions ?? {},
-      userOptions: this.#resolveUserOptions(format, flavor) ?? {},
+      ...(this.#resolveUserOptions(format, flavor) ?? {}),
     };
   };
 
@@ -448,6 +450,32 @@ export class Compiler {
      * @param {Parameters<Compiler['optionsFor']>} args
      */
     optionsFor: (...args) => this.optionsFor(...args),
+
+    canCompile: (format, flavor) => {
+      let config = this.#options.formats[format];
+
+      if (!config) {
+        return {
+          result: false,
+          reason:
+            `${format} is not a configured format / extension. ` +
+            `The currently configured formats are ${Object.keys(this.#options.formats).join(', ')}`,
+        };
+      }
+
+      if (flavor && flavor in config) {
+        config = config[flavor];
+      }
+
+      if ('compiler' in config) {
+        return { result: true };
+      }
+
+      return {
+        result: false,
+        reason: `The config for ${format}${flavor ? ` (using flavor ${flavor})` : ''} is missing the 'compiler' function. It had keys: ${Object.keys(config)}. If this is a language with multiple flavors, make sure you specify the flavor.`,
+      };
+    },
   };
 
   #createDiv() {

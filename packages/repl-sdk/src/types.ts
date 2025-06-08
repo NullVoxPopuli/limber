@@ -37,6 +37,18 @@ export interface PublicMethods {
   ) => Promise<HTMLElement>;
 
   optionsFor: (format: string, flavor?: string) => Omit<CompilerConfig, 'compiler'>;
+
+  /**
+   * Does this compiler support the given format?
+   */
+  canCompile: (
+    format: string,
+    flavor?: string
+  ) =>
+    | {
+        result: true;
+      }
+    | { result: false; reason: string };
 }
 export interface ResolvedCompilerOptions {
   importMap: { [importPath: string]: string };

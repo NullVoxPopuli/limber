@@ -1,5 +1,6 @@
 import packageNameRegex from 'package-name-regex';
 
+import { cache } from './cache.js';
 import { assert } from './utils.js';
 
 /**
@@ -22,15 +23,17 @@ export async function getNPMInfo(name, version) {
     return existing;
   }
 
-  assert(`Cannot get data from NPM without specifying the name of the package`, name);
-  assert(`Version is required. It may be 'latest'`, version);
+  return cache.cachedPromise(`getNPMInfo:${key}`, async () => {
+    assert(`Cannot get data from NPM without specifying the name of the package`, name);
+    assert(`Version is required. It may be 'latest'`, version);
 
-  let response = await fetch(`https://registry.npmjs.org/${name}`);
-  let json = await response.json();
+    let response = await fetch(`https://registry.npmjs.org/${name}`);
+    let json = await response.json();
 
-  npmInfoCache.set(key, json);
+    npmInfoCache.set(key, json);
 
-  return json;
+    return json;
+  });
 }
 
 /**
