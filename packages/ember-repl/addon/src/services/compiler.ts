@@ -187,6 +187,7 @@ export default class CompilerService extends Service {
     return { name, component, error };
   }
 
+  @waitFor
   compileMD(source: string): Promise<CompileResult> {
     return this.compile('md', source);
   }

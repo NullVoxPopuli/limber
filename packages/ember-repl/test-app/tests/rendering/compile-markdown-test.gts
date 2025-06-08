@@ -26,6 +26,41 @@ module('Rendering | compile()', function (hooks) {
   setupRenderingTest(hooks);
   setupCompiler(hooks);
 
+  module('format: md', function (hooks) {
+    test('it works', async function (assert) {
+      setupOnerror((e) => {
+        assert.notOk(e, 'This should not error');
+      });
+
+      const snippet = stripIndent`
+        # hello there
+
+        - one
+        - two
+      `;
+
+      let component: ComponentLike | undefined;
+      const compiler = getCompiler(this);
+      const state = compile(compiler, snippet, {
+        format: 'md',
+        onSuccess: (comp) => (component = comp),
+        onError: unexpectedErrorHandler,
+        onCompileStart: () => {
+          /* not used */
+        },
+      });
+
+      await state.promise;
+
+      debugAssert(`[BUG]`, component);
+
+      await render(component);
+
+      assert.dom('h1').exists();
+      assert.dom('li').exists({ count: 2 });
+    });
+  });
+
   module('markdown features', function () {
     module('custom remark plugins', function () {
       module('demo: remove pre code', function (hooks) {

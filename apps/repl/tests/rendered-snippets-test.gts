@@ -22,7 +22,7 @@ module('Rendered Snippets / Demos', function (hooks) {
     let component: ComponentLike | undefined;
     let error: string | undefined;
 
-    const { importMap } = await import('limber/components/limber/output/compiler/import-map');
+    const { importMap } = await import('limber/routes/import-map');
 
     await compileAnything(text, {
       format: 'glimdown',

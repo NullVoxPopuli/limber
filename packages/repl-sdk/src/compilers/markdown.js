@@ -378,16 +378,21 @@ export async function compiler(config = {}, api) {
       let result = await parseMarkdown(text, {});
       let escaped = result.text.replace(/`/g, '\\`');
 
+      console.log('md:compiled');
+
       return { compiled: `export default \`${escaped}\``, ...result };
     },
     render: async (element, compiled, extra, compiler) => {
       element.innerHTML = compiled;
+      console.log('md:render', extra);
 
       await Promise.all(
         extra.codeBlocks.map(async (info) => {
           let subElement = await compiler.compile(info.format, info.code, {
             flavor: info.flavor,
           });
+
+          console.log('md:render:compiled', subElement);
 
           let selector = `#${info.placeholderId}`;
           let target = element.querySelector(selector);
