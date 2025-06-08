@@ -5,6 +5,14 @@ import type { ModuleMap } from '../compile/types';
 
 export function clearCompileCache() {
   CACHE.clear();
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  if (globalThis.importShim) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    delete globalThis.importShim;
+  }
 }
 
 export function setupCompiler(

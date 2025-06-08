@@ -1,6 +1,8 @@
 import { cache } from '../cache.js';
 import { renderApp } from './ember/render-app-island.js';
 
+let elementId = 0;
+
 const buildDependencies = [
   /**
    * The only version of babel that is easily runnable in the browser
@@ -178,8 +180,6 @@ export async function compiler(config = {}, api) {
 
       let code = transformed.code;
 
-      // console.debug('[compile:code]', code);
-
       return code;
     },
     render: async (element, compiled, extra, compiler) => {
@@ -189,11 +189,37 @@ export async function compiler(config = {}, api) {
        *    https://github.com/emberjs/rfcs/pull/1099
        *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
        */
+      let attribute = `data-repl-sdk-${elementId++}`;
+
+      element.setAttribute(attribute, '');
+
+      const [application, destroyable, resolver, router, route, testWaiters, runloop] =
+        await compiler.tryResolveAll([
+          '@ember/application',
+          '@ember/destroyable',
+          'ember-resolver',
+          '@ember/routing/router',
+          '@ember/routing/route',
+          '@ember/test-waiters',
+          '@ember/runloop',
+        ]);
 
       // We don't want to await here, because we need to early
       // return the element so that the app can render in to it.
       // (Ember will only render in to an element if it's present in the DOM)
-      renderApp({ element, compiler, component: compiled });
+      renderApp({
+        selector: `[${attribute}]`,
+        component: compiled,
+        modules: {
+          application,
+          destroyable,
+          resolver,
+          router,
+          route,
+          testWaiters,
+          runloop,
+        },
+      });
     },
     handlers: {
       js: async (text) => {

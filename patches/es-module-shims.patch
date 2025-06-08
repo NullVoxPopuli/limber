@@ -1,0 +1,13 @@
+diff --git a/dist/es-module-shims.js b/dist/es-module-shims.js
+index ae8ece180de957cdf44f6502944072991eca4fbc..08a17eed385c3c383f85615c6425bc9b23a929e6 100644
+--- a/dist/es-module-shims.js
++++ b/dist/es-module-shims.js
+@@ -165,7 +165,7 @@
+   const dynamicImport = (u, errUrl) => import(u);
+ 
+   const defineValue = (obj, prop, value) =>
+-    Object.defineProperty(obj, prop, { writable: false, configurable: false, value });
++    Object.defineProperty(obj, prop, { writable: true, configurable: true, value });
+ 
+   const optionsScript = hasDocument ? document.querySelector('script[type=esms-options]') : undefined;
+ 

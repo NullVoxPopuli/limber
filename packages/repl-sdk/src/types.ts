@@ -10,7 +10,10 @@ export interface PublicMethods {
   /**
    * Will try to use a shimmed import, or will return null.
    */
-  tryResolve: (moduleName: string) => Promise<unknown>;
+  tryResolve: (
+    moduleName: string,
+    fallback?: (moduleName: string) => Promise<unknown>
+  ) => Promise<unknown>;
 
   /**
    * Import many modules in parallel.
@@ -82,7 +85,7 @@ export interface Compiler {
     defaultExport: unknown,
     extras: { compiled: string } & Record<string, unknown>,
     compiler: PublicMethods
-  ) => void;
+  ) => Promise<void>;
 }
 
 export interface CompilerConfig {

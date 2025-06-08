@@ -129,8 +129,6 @@ export default class CompilerService extends Service {
     try {
       const element = await this.#compile(ext, text);
 
-      console.log({ element });
-
       component = rendersElement(element);
     } catch (e) {
       console.error(e);

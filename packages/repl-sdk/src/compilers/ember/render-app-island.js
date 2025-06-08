@@ -1,5 +1,3 @@
-let id = 0;
-
 /** @type {any} */
 let bootWaiter;
 /** @type {any} */
@@ -14,34 +12,21 @@ let createWaiter;
  *   https://github.com/emberjs/ember.js/pull/20781
  *
  * @param {{
- *  compiler: import('../../types.ts').PublicMethods,
- *  element: HTMLElement,
+ *  modules: { [name: string]: any},
+ *  selector: string,
  *  component: unknown
  * }} options
  */
-export async function renderApp({ compiler, element, component }) {
-  const [application, destroyable, resolver, router, route, testWaiters, runloop] =
-    await compiler.tryResolveAll([
-      '@ember/application',
-      '@ember/destroyable',
-      'ember-resolver',
-      '@ember/routing/router',
-      '@ember/routing/route',
-      '@ember/test-waiters',
-      '@ember/runloop',
-    ]);
-  const App = application.default;
-  const registerDestructor = destroyable.registerDestructor;
-  const Resolver = resolver.default;
-  const Router = router.default;
-  const Route = route.default;
-  const schedule = runloop.schedule;
+export async function renderApp({ modules, selector, component }) {
+  const App = modules.application.default;
+  const registerDestructor = modules.destroyable.registerDestructor;
+  const Resolver = modules.resolver.default;
+  const Router = modules.router.default;
+  const Route = modules.route.default;
+  const schedule = modules.runloop.schedule;
 
-  element.id = `repl-output-${id++}`;
-  bootWaiter ||= testWaiters.buildWaiter('repl-output:waiting-for-boot');
-  createWaiter ||= testWaiters.buildWaiter('repl-output:waiting-for-creation');
-
-  console.log('booting');
+  bootWaiter ||= modules.testWaiters.buildWaiter('repl-output:waiting-for-boot');
+  createWaiter ||= modules.testWaiters.buildWaiter('repl-output:waiting-for-creation');
 
   let bootToken = bootWaiter.beginAsync();
   let createToken = createWaiter.beginAsync();
@@ -52,6 +37,9 @@ export async function renderApp({ compiler, element, component }) {
       'ephemeral-render-output/templates/application': { default: component },
       'ephemeral-render-output/routes/application': {
         default: class Application extends Route {
+          /**
+           * @param {unknown[]} args
+           */
           constructor(...args) {
             super(...args);
 
@@ -62,7 +50,6 @@ export async function renderApp({ compiler, element, component }) {
           afterModel() {
             schedule('afterRender', () => {
               requestAnimationFrame(() => {
-                console.log('booted');
                 bootWaiter.endAsync(bootToken);
               });
             });
@@ -78,21 +65,29 @@ export async function renderApp({ compiler, element, component }) {
     });
   }
 
-  while (true) {
-    await new Promise((resolve) => requestAnimationFrame(resolve));
+  await Promise.race([
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(`Timed out waiting for ${selector} to render`);
+      }, 5_000);
+    }),
+    // eslint-disable-next-line no-async-promise-executor
+    new Promise(async (resolve) => {
+      while (true) {
+        await new Promise((resolve) => requestAnimationFrame(resolve));
 
-    if (!document.getElementById(element.id)) {
-      console.log('waiting for target element to appear');
-      continue;
-    }
+        if (document.querySelector(selector)) {
+          break;
+        }
+      }
 
-    console.log('created element. app can start');
-    EphemeralApp.create({
-      rootElement: '#' + element.id,
-    });
+      resolve('done');
+    }),
+  ]);
 
-    createWaiter.endAsync(createToken);
+  EphemeralApp.create({
+    rootElement: selector,
+  });
 
-    break;
-  }
+  createWaiter.endAsync(createToken);
 }

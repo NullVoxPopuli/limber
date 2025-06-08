@@ -1,7 +1,5 @@
 import { assert as debugAssert } from '@ember/debug';
-import { renderSettled } from '@ember/renderer';
 import { click, render, settled, setupOnerror } from '@ember/test-helpers';
-import { getPendingWaiterState } from '@ember/test-waiters';
 import QUnit, { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -59,14 +57,7 @@ module('Rendering | compile()', function (hooks) {
 
       debugAssert(`[BUG]`, component);
 
-      console.log({ component });
       await render(component);
-
-      snapshotTimers();
-
-      // await new Promise((resolve) => setTimeout(resolve, 400));
-
-      // snapshotTimers();
 
       assert.dom('button').hasText('Click');
     });

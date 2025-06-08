@@ -30,7 +30,7 @@ export class Compiler {
 
     globalThis.window.esmsInitOptions = {
       shimMode: true,
-      skip: `https://esm.sh/`,
+      skip: [`https://esm.sh/`, 'https://jspm.dev/', 'https://cdn.jsdelivr.net/'],
       revokeBlobURLs: true, // default false
       // Permit overrides to import maps
       mapOverrides: true, // default false
@@ -99,67 +99,9 @@ export class Compiler {
 
         return getTarRequestId({ to: id, from: parentUrl });
       },
-      // Hook source fetch function
-      _source: async (url, fetchOpts, parent, defaultSourceHook) => {
-        let mimeType = mime.getType(url) ?? 'application/javascript';
-
-        this.#log(`[source] attempting to fetch: ${url}. Assuming ${mimeType}`);
-
-        if (url.startsWith('manual:')) {
-          let name = url.replace(/^manual:/, '');
-
-          this.#log('[fetch] resolved url in manually specified resolver', url);
-
-          let result = await this.#resolveManually(name);
-
-          let blobContent =
-            `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
-            `\n\n` +
-            `if (!mod) { throw new Error('Could not resolve \`${name}\`. Does the module exist? ( checked ${url} )') }` +
-            `\n\n` +
-            /**
-             * This is semi-trying to polyfill modules
-             * that aren't proper ESM. very annoying.
-             */
-            `${Object.keys(result)
-              .map((exportName) => {
-                if (exportName === 'default') {
-                  return `export default mod.default ?? mod;`;
-                }
-
-                return `export const ${exportName} = mod.${exportName};`;
-              })
-              .join('\n')}
-            `;
-
-          let blob = new Blob(Array.from(blobContent), { type: mimeType });
-
-          this.#log(
-            `[fetch] returning blob mapping to manually resolved import for ${name}`
-            // blobContent
-          );
-
-          return new Response(blob);
-        }
-
-        if (url.startsWith(unzippedPrefix)) {
-          this.#log('[source] resolved url via tgz resolver', url, options);
-
-          let { code, ext } = await getFromTarball(url);
-
-          /**
-           * We don't know if this code is completely ready to run in the browser yet, so we might need to run in through the compiler again
-           */
-          let file = await this.#postProcess(code, ext);
-
-          return {
-            type: ext,
-            source: file,
-          };
-        }
-
-        this.#log('[source]/fallback fetching url', url, options);
-      },
+      // NOTE: may need source hook
+      //       https://github.com/guybedford/es-module-shims?tab=readme-ov-file#source-hook
+      //
       fetch: async (url, options) => {
         let mimeType = mime.getType(url) ?? 'application/javascript';
 
@@ -256,6 +198,7 @@ export class Compiler {
    */
   async compile(format, text, options = {}) {
     this.#log('[compile] idempotently installing es-module-shim');
+
     // @ts-ignore
     await import('es-module-shims');
 
@@ -343,6 +286,12 @@ export class Compiler {
     return config;
   }
 
+  /**
+   * @param {import('./types.ts').Compiler} compiler
+   * @param {string} whatToRender
+   * @param {{ compiled: string } & Record<string, unknown>} extras
+   * @returns {Promise<Element>}
+   */
   async #render(compiler, whatToRender, extras) {
     const div = this.#createDiv();
 
@@ -414,6 +363,11 @@ export class Compiler {
    * @type {import('./types.ts').PublicMethods}
    */
   #nestedPublicAPI = {
+    /**
+     * @param {string} name
+     * @param {(name: string) => Promise<unknown>} [fallback]
+     * @returns {Promise<unknown>}
+     */
     tryResolve: async (name, fallback) => {
       const existing = await this.#resolveManually(name, fallback);
 
@@ -423,8 +377,14 @@ export class Compiler {
         return existing;
       }
 
+      // @ts-ignore
       return shimmedImport(/* vite-ignore */ name);
     },
+    /**
+     * @param {string[]} names
+     * @param {(name: string) => Promise<unknown>} [fallback]
+     * @returns {Promise<unknown[]>}
+     */
     tryResolveAll: async (names, fallback) => {
       let results = await Promise.all(
         names.map((name) => {
@@ -433,6 +393,7 @@ export class Compiler {
       );
 
       if (fallback) {
+        /** @type {Record<string, Promise<unknown>>} */
         let morePromises = {};
 
         for (let i = 0; i < results.length; i++) {

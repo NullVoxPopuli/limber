@@ -6,6 +6,8 @@
     "allowJs": true,
     "checkJs": true,
     "skipLibCheck": true,
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    // This is a dumb feature of TS
+    "noPropertyAccessFromIndexSignature": false,
   }
 }
