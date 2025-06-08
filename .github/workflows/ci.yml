@@ -43,6 +43,18 @@ jobs:
     - run:  echo ${{ github.event.number }} > ./pr-number.txt
     - run: pnpm turbo build --force
 
+  build_tests:
+    name: Build for Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [install_dependencies]
+
+    steps:
+    - uses: wyvox/action@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+    - run: pnpm turbo build:test
+
   build_prod:
     name: Build for Production
     runs-on: ubuntu-latest
@@ -98,7 +110,7 @@ jobs:
 
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: [install_dependencies]
+    needs: [build_tests]
 
     steps:
       - uses: wyvox/action@v1
