@@ -9,12 +9,17 @@ const GLIMDOWN_RENDER = Symbol('__GLIMDOWN_RENDER__');
  */
 export async function compiler(config = {}, api) {
   const versions = config.versions || {};
-  const userOptions = config.userOptions || {};
+  const userOptions = {
+    remarkPlugins: [...(config.remarkPlugins || [])],
+    rehypePlugins: [...(config.rehypePlugins || [])],
+  };
 
   /**
    * @param {string} lang
    */
   function needsLive(lang) {
+    if (!ALLOWED_FORMATS.includes(lang)) return false;
+
     return api.optionsFor(lang).needsLiveMeta;
   }
 
@@ -38,7 +43,7 @@ export async function compiler(config = {}, api) {
     return meta.includes('preview');
   }
 
-  /**
+  /*
    * @param {string} meta
    */
   function isBelow(meta) {

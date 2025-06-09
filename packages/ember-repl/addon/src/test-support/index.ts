@@ -1,8 +1,8 @@
 import { CACHE } from '../compile/compile.ts';
 import { setup } from '../setup.ts';
 
-import type { Options } from 'repl-sdk';
 import type { ModuleMap } from '../compile/types';
+import type { Options } from 'repl-sdk';
 
 export function clearCompileCache() {
   CACHE.clear();

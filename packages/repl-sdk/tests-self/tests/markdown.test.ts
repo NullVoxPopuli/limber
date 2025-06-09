@@ -1,7 +1,10 @@
+import type { Root } from 'mdast';
 import { Compiler } from 'repl-sdk';
 import { stripIndent } from 'common-tags';
 import { describe, expect, test, beforeEach } from 'vitest';
 import { allKnownModules, markdownModules, vueModules } from './setup.ts';
+import type { Plugin } from 'unified';
+import { visit } from 'unist-util-visit';
 
 function escapeFence(code: string) {
   return code.replace(/`/g, '\\`');
@@ -97,7 +100,7 @@ graph TD;
     test('jsx requires a flavor to be specified', async () => {
       const compiler = new Compiler({ resolve: allKnownModules });
 
-      expect(
+      await expect(
         compiler.compile(
           'md',
           `# Hello\n\n` +
@@ -135,7 +138,10 @@ graph TD;
       const compiler = new Compiler({ resolve: allKnownModules });
       const element = await compiler.compile('md', fenced('hello', 'unknown-ext'));
 
-      expect(element.innerHTML).toMatchInlineSnapshot();
+      expect(element.innerHTML).toMatchInlineSnapshot(`
+        "<div class=""><pre><code class="language-unknown-ext">hello
+        </code></pre></div>"
+      `);
     });
   });
 
@@ -168,21 +174,171 @@ graph TD;
       expect(element.querySelector('sup')).toBeTruthy();
       expect(element.querySelectorAll('a').length).toBe(2);
     });
+  });
 
-    describe('remark plugins', () => {
-      test('adding a remark plugin', () => {});
+  describe('remark plugins', () => {
+    test('adding a remark plugin', () => {});
 
-      test('demo: remove pre code', () => {});
+    describe('remove <pre>', () => {
+      const snippet = stripIndent`
+        text
 
-      test('baseline: without the plugin, pre renders', () => {});
+        \`\`\`js
+        const two = 2;
+        \`\`\`
+      `;
 
-      test('with the plugin: no pre renders', () => {});
+      /**
+       * Test plugin that just turns code into an
+       * unformatted mess in a p tag
+       */
+      const removePre: Plugin<[], Root> = (/* options */) => {
+        return function transformer(tree) {
+          visit(tree, ['code'], function (node, index, parent) {
+            if (!parent) return;
+            if (undefined === index) return;
 
-      test('can add code snippets', () => {});
+            parent.children[index] = {
+              type: 'html',
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              value: `<p>${node.value}</p>`,
+            };
+          });
+        };
+      };
+
+      test('without the plugin', async () => {
+        const compiler = new Compiler({ resolve: allKnownModules });
+        const element = await compiler.compile('md', snippet);
+
+        expect(element.querySelector('code')).toBeTruthy();
+      });
+
+      test('with the plugin (global)', async () => {
+        const compiler = new Compiler({
+          resolve: allKnownModules,
+          options: { md: { remarkPlugins: [removePre] } },
+        });
+        const element = await compiler.compile('md', snippet);
+
+        expect(element.querySelector('code')).not.toBeTruthy();
+      });
+
+      test('with the plugin (compile)', async () => {
+        const compiler = new Compiler({ resolve: allKnownModules });
+        const element = await compiler.compile('md', snippet, {
+          remarkPlugins: [removePre],
+        });
+
+        expect(element.querySelector('code')).not.toBeTruthy();
+      });
     });
 
-    describe('rehype plugins', () => {
-      test('addinga  rehype plugin', () => {});
+    describe('remark plugins can change the output', () => {
+      const snippet = stripIndent`
+        # Hello
+
+        \`\`\`gjs
+        <template>not a greeting</template>
+        \`\`\`
+
+        <Greeting />
+      `;
+
+      const codeSwapper: Plugin<[], Root> = (/* options */) => {
+        return (tree) => {
+          tree.children = tree.children.map((child) => {
+            if (child.type === 'code') {
+              return {
+                type: 'code',
+                lang: 'gjs',
+                value: `
+                  <template>a greeting</template>
+                `,
+              };
+            }
+            return child;
+          });
+        };
+      };
+
+      test('without the plugin', async () => {
+        const compiler = new Compiler({
+          resolve: allKnownModules,
+          options: { md: { remarkPlugins: [] } },
+        });
+        const element = await compiler.compile('md', snippet);
+
+        expect(element.querySelector('code')?.textContent).includes('not a greeting');
+      });
+
+      test('with the plugin', async () => {
+        const compiler = new Compiler({
+          resolve: allKnownModules,
+          options: { md: { remarkPlugins: [codeSwapper] } },
+        });
+        const element = await compiler.compile('md', snippet);
+        const text = element.querySelector('code')?.textContent;
+
+        expect(text).not.includes('not a greeting');
+        expect(text).includes('a greeting');
+      });
+    });
+  });
+
+  describe('rehype plugins', () => {
+    describe('downgrade h1 to h2', () => {
+      const snippet = '# Hello';
+      const noH1: Plugin<[], Root> = (/* options */) => {
+        return (tree) => {
+          return visit(tree, ['element'], function (node) {
+            if (!('tagName' in node)) return;
+
+            if (node.tagName === 'h1') {
+              node.tagName = 'h2';
+            }
+
+            return 'skip';
+          });
+        };
+      };
+
+      test('without the plugin', async () => {
+        const compiler = new Compiler({
+          resolve: allKnownModules,
+          options: { md: { rehypePlugins: [] } },
+        });
+        const element = await compiler.compile('md', snippet);
+        const text = element.innerHTML;
+
+        expect(text).not.includes('h2');
+        expect(text).includes('h1');
+      });
+
+      test('with the plugin (global)', async () => {
+        const compiler = new Compiler({
+          resolve: allKnownModules,
+          options: { md: { rehypePlugins: [noH1] } },
+        });
+        const element = await compiler.compile('md', snippet);
+        const text = element.innerHTML;
+
+        expect(text).not.includes('h1');
+        expect(text).includes('h2');
+      });
+
+      test('with the plugin (compile)', async () => {
+        const compiler = new Compiler({
+          resolve: allKnownModules,
+          options: { md: { rehypePlugins: [noH1] } },
+        });
+        const element = await compiler.compile('md', snippet);
+        const text = element.innerHTML;
+
+        expect(text).not.includes('h1');
+        expect(text).includes('h2');
+      });
     });
   });
 });

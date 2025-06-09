@@ -27,7 +27,7 @@ export const STABLE_REFERENCE = {
   },
 };
 
-globalThis.window.esmsInitOptions = {
+globalThis.esmsInitOptions = {
   shimMode: true,
   // skip: [`https://esm.sh`, 'https://jspm.dev/', 'https://cdn.jsdelivr.net/'],
   revokeBlobURLs: true, // default false

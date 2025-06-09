@@ -126,4 +126,12 @@ class Caches {
   }
 }
 
+export function deleteCache() {
+  if (!getGlobal()?.[secret]) {
+    return;
+  }
+
+  delete getGlobal()[secret];
+}
+
 export const cache = new Caches();

@@ -236,7 +236,7 @@ export class Compiler {
     const asBlobUrl = textToBlobUrl(compiledText);
 
     // @ts-ignore
-    const { default: defaultExport, ...rest } = await shimmedImport(/* @vite-ignore */ asBlobUrl);
+    const { default: defaultExport } = await shimmedImport(/* @vite-ignore */ asBlobUrl);
 
     this.#log('[compile] preparing to render', defaultExport, extras);
 
