@@ -151,7 +151,7 @@ export interface CompilerConfig {
      * Common use case for this object is specifying what versions
      * of the compiler/library/framework dependencies to use.
      */
-    config: Record<string, unknown>,
+    config: { versions: { [packageName: string]: string }; [option: string]: unknown },
     /**
      * The public methods provided from the compiler
      */

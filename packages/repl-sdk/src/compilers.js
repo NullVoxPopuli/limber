@@ -100,8 +100,9 @@ export const compilers = {
    */
   mermaid: {
     needsLiveMeta: false,
-    compiler: async (config = {}, api) => {
-      const versions = config.versions || {};
+    compiler: async (config, api) => {
+      const versions = config.versions;
+      // @ts-ignore
       const { default: mermaid } = await api.tryResolve('mermaid', () => {
         return esmsh.import(versions, 'mermaid');
       });
@@ -163,7 +164,7 @@ export const compilers = {
         return esmSh({}, id, false);
       }
     },
-    compiler: async (config = {}, api) => {
+    compiler: async (config, api) => {
       const versions = config.versions || {};
       const [svelte, compiler] = await api.tryResolveAll(['svelte', 'svelte/compiler']);
 
@@ -175,6 +176,7 @@ export const compilers = {
            * Usages:
            * https://github.com/sveltejs/svelte/blob/main/playgrounds/sandbox/run.js#L75
            */
+          // @ts-ignore
           let output = await compiler.compile(text, {
             /* this errors if unexpected options are passed */
             generate: 'client',
@@ -192,13 +194,14 @@ export const compilers = {
           if (css) {
             let style = document.createElement('style');
 
-            style.innerHTML = css;
+            style.innerHTML = /** @type {string} */ (css);
             element.appendChild(style);
           }
 
           element.appendChild(div);
 
           requestAnimationFrame(() => {
+            // @ts-ignore
             svelte.mount(component, {
               target: element,
               props: {
@@ -225,9 +228,10 @@ export const compilers = {
           return `https://cdn.jsdelivr.net/npm/@vue/repl@4.5.1/+esm`;
       }
     },
-    compiler: async (config = {}, api) => {
+    compiler: async (config, api) => {
       const versions = config.versions || {};
 
+      // @ts-ignore
       const [{ createApp }, { compileFile, useStore }] = await api.tryResolveAll([
         'vue',
         '@vue/repl',
@@ -253,7 +257,7 @@ export const compilers = {
           let div = document.createElement('div');
           let style = document.createElement('style');
 
-          style.innerHTML = css;
+          style.innerHTML = /** @type {string} */ (css);
 
           element.appendChild(div);
           element.appendChild(style);

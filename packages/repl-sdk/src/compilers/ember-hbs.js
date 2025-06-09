@@ -3,11 +3,21 @@ import { renderApp } from './ember/render-app-island.js';
 let elementId = 0;
 
 /**
+ * @param {unknown} [ options ]
+ * @returns {{ scope: Record<string, unknown> }}
+ */
+function filterOptions(options) {
+  return {
+    scope: /** @type {Record<string, unknown>}*/ (options?.scope || {}),
+  };
+}
+
+/**
  *
  * @type {import('../types.ts').CompilerConfig['compiler']}
  */
 export async function compiler(config, api) {
-  let userOptions = config.userOptions || {};
+  let userOptions = config.userOptions;
 
   /**
    * @type {import('../types.ts').Compiler}
@@ -19,8 +29,8 @@ export async function compiler(config, api) {
 
       let component = template(text, {
         scope: () => ({
-          ...userOptions.scope,
-          ...options.scope,
+          ...filterOptions(userOptions).scope,
+          ...filterOptions(options).scope,
         }),
       });
 
