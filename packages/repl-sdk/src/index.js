@@ -341,7 +341,6 @@ export class Compiler {
     return {
       importMap: this.#options.importMap ?? {},
       needsLiveMeta: /* @type {boolean | undefined} */ needsLiveMeta ?? true,
-      resolve: this.#options.resolve ?? {},
       versions: this.#options.versions ?? {},
       ...(this.#resolveUserOptions(format, flavor) ?? {}),
     };
@@ -554,9 +553,10 @@ function shimmedImport(...args) {
  * We don't want this.
  *
  * @param {string} id
+ * @returns {string}
  */
 function deCDN(id) {
   let noQPs = id.split('?')[0];
 
-  return noQPs;
+  return /** @type {string} */ (noQPs);
 }

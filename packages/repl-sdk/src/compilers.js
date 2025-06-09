@@ -83,6 +83,11 @@ export const compilers = {
      * (and these continue in ember's new gjs and gts formats)
      */
     ember: {
+      resolve: (id) => {
+        if (id === '@ember/template-compiler/runtime') {
+          return `https://esm.sh/*ember-source/dist/packages/@ember/template-compiler/runtime.js`;
+        }
+      },
       compiler: async (...args) => {
         const hbs = await import('./compilers/ember-hbs.js');
 

@@ -36,7 +36,15 @@ export interface PublicMethods {
     }
   ) => Promise<HTMLElement>;
 
-  optionsFor: (format: string, flavor?: string) => Omit<CompilerConfig, 'compiler'>;
+  optionsFor: (
+    format: string,
+    flavor?: string
+  ) => {
+    resolve?: (id: string) => string | undefined;
+    versions?: { [packageName: string]: string };
+    needsLiveMeta?: boolean;
+    [option: string]: unknown;
+  };
 
   /**
    * Does this compiler support the given format?
@@ -65,7 +73,11 @@ export interface Compiler {
    *
    * You may return either just a string, or an object with a `compiled` property that is a string -- any additional properties will be passde through to the render function -- which may be useful if there is accompanying CSS.
    */
-  compile: (text: string) => Promise<string | ({ compiled: string } & Record<string, unknown>)>;
+  compile: (
+    text: string,
+    options: Record<string, unknown>
+  ) => Promise<string | ({ compiled: string } & Record<string, unknown>)>;
+
   /**
    * For the root of a node rendered for this compiler,
    * how will this particular library / framework

@@ -3,22 +3,18 @@ import { renderApp } from './ember/render-app-island.js';
 let elementId = 0;
 
 /**
- * @param {import('../types.ts').ResolvedCompilerOptions} config
- * @param {import('../types.ts').PublicMethods} api
+ *
+ * @type {import('../types.ts').CompilerConfig['compiler']}
  */
-export function compiler(config, api) {
+export async function compiler(config, api) {
   let userOptions = config.userOptions || {};
 
   /**
    * @type {import('../types.ts').Compiler}
    */
   let hbsCompiler = {
-    resolve: (id) => {
-      if (id === '@ember/template-compiler/runtime') {
-        return `https://esm.sh/*ember-source/dist/packages/@ember/template-compiler/runtime.js`;
-      }
-    },
     compile: async (text, options) => {
+      // @ts-ignore
       const { template } = await api.tryResolve('@ember/template-compiler/runtime');
 
       let component = template(text, {
