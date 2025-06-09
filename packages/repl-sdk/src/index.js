@@ -164,6 +164,10 @@ export class Compiler {
       return new Response(new Blob([file], { type: 'application/javascript' }));
     }
 
+    if (url.startsWith('https://')) {
+      return fetch(url, options);
+    }
+
     this.#log('[fetch] fetching url', url, options);
 
     const response = await fetch(url, options);
@@ -232,7 +236,7 @@ export class Compiler {
     const asBlobUrl = textToBlobUrl(compiledText);
 
     // @ts-ignore
-    const { default: defaultExport } = await shimmedImport(/* @vite-ignore */ asBlobUrl);
+    const { default: defaultExport, ...rest } = await shimmedImport(/* @vite-ignore */ asBlobUrl);
 
     this.#log('[compile] preparing to render', defaultExport, extras);
 

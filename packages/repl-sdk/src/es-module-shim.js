@@ -29,7 +29,7 @@ export const STABLE_REFERENCE = {
 
 globalThis.window.esmsInitOptions = {
   shimMode: true,
-  skip: [`https://esm.sh`, 'https://jspm.dev/', 'https://cdn.jsdelivr.net/'],
+  // skip: [`https://esm.sh`, 'https://jspm.dev/', 'https://cdn.jsdelivr.net/'],
   revokeBlobURLs: true, // default false
   mapOverrides: true, // default false
 

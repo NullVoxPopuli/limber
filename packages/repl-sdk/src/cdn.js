@@ -16,15 +16,17 @@ function splitSubPath(importPath) {
  * @param {Record<string, string>} versions
  * @param {string} importPath
  */
-export function esmSh(versions, importPath) {
+export function esmSh(versions, importPath, allExternal = false) {
   let [name, subPath] = splitSubPath(importPath);
 
   let version = versions[name];
   let subPathExport = subPath.length === 0 || subPath.startsWith('/') ? subPath : `/${subPath}`;
 
+  let externals = allExternal ? '*' : '';
+
   return version
-    ? `https://esm.sh/${name}@${version}${subPathExport}`
-    : `https://esm.sh/${name}${subPathExport}`;
+    ? `https://esm.sh/${externals}${name}@${version}${subPathExport}`
+    : `https://esm.sh/${externals}${name}${subPathExport}`;
 }
 
 /**

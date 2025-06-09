@@ -17,6 +17,7 @@ export const secretKey = '__repl-sdk__compiler__';
  *   resolves?: { [modulePath: string]: unknown },
  *   promiseCache?: Map<string, Promise<unknown>>,
  *   fileCache?: Map<string, { code: string, ext: string }>
+ *   caches?: Caches
  * } }} ExtendedWindow
  */
 const secret = Symbol.for(secretKey);
@@ -119,6 +120,7 @@ class Caches {
     let global = getGlobal();
 
     global[secret] ||= {};
+    global[secret].caches ||= this;
 
     return global[secret];
   }
