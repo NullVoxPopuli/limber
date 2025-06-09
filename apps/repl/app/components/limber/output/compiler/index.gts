@@ -7,7 +7,7 @@ import { schedule } from '@ember/runloop';
 import { service } from '@ember/service';
 import { waitFor } from '@ember/test-waiters';
 
-import { CompilerService } from 'ember-repl';
+import { getCompiler } from 'ember-repl';
 
 import CopyMenu from 'limber/components/limber/copy-menu';
 
@@ -38,7 +38,6 @@ export default class Compiler extends Component<Signature> {
   <template>{{yield (hash component=this.component format=this.format)}}</template>
 
   @service declare router: RouterService;
-  @service declare compiler: CompilerService;
 
   @tracked component?: ComponentLike<never>;
   @tracked error: string | null = null;
@@ -94,9 +93,11 @@ export default class Compiler extends Component<Signature> {
       });
     };
 
+    let compiler = getCompiler(this);
+
     switch (format) {
       case 'glimdown':
-        return await this.compiler.compileMD(text, {
+        return await compiler.compileMD(text, {
           CopyComponent: '<CopyMenu />',
           topLevelScope: {
             CopyMenu: CopyMenu,
@@ -107,13 +108,13 @@ export default class Compiler extends Component<Signature> {
         });
 
       case 'gjs':
-        return await this.compiler.compileGJS(text, {
+        return await compiler.compileGJS(text, {
           onCompileStart: this.onCompileStart,
           onSuccess,
           onError: this.onError,
         });
       case 'hbs':
-        return await this.compiler.compileHBS(text, {
+        return await compiler.compileHBS(text, {
           topLevelScope: {
             CopyMenu: CopyMenu,
           },
