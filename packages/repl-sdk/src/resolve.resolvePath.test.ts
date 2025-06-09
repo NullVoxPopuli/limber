@@ -22,4 +22,3 @@ test({
   to: '../foo.js',
   expected: '@scope/pkgName/foo.js',
 });
-

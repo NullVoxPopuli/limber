@@ -136,8 +136,8 @@ export default class CompilerService extends Service {
     return this.#compiler;
   }
 
-  async #compile(ext: string, text: string, options: unknown) {
-    return this.compiler.compile(ext, text, options);
+  async #compile(ext: string, text: string, options?: Record<string, unknown>) {
+    return this.compiler.compile(ext, text, options ?? {});
   }
 
   /**
@@ -149,7 +149,7 @@ export default class CompilerService extends Service {
    * @param {string} text the code to be compiled using the configured compiler for the ext
    */
   @waitFor
-  async compile(ext: string, text: string, options?: unknown) {
+  async compile(ext: string, text: string, options?: Record<string, unknown>) {
     const name = nameFor(text);
     let component: undefined | ComponentLike;
     let error: undefined | Error;

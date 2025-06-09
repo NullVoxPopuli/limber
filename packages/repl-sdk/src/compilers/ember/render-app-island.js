@@ -79,8 +79,6 @@ export async function renderApp({ modules, selector, component }) {
         if (document.querySelector(selector)) {
           break;
         }
-
-        console.log('waiting for element');
       }
 
       resolve('done');
