@@ -12,7 +12,7 @@ export interface PublicMethods {
    */
   tryResolve: (
     moduleName: string,
-    fallback?: (moduleName: string) => Promise<unknown>
+    fallback?: (moduleName?: string) => Promise<unknown>
   ) => Promise<unknown>;
 
   /**
@@ -25,7 +25,7 @@ export interface PublicMethods {
    */
   tryResolveAll: (
     moduleNames: string[],
-    fallback?: (moduleName: string) => Promise<unknown>
+    fallback?: (moduleName?: string) => Promise<unknown>
   ) => Promise<unknown[]>;
   compile: (
     format: string,

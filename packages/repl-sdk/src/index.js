@@ -203,7 +203,7 @@ export class Compiler {
    * @param {string} format
    * @param {string} text
    * @param {{ fileName?: string, flavor?: string, [key: string]: unknown }} [ options ]
-   * @returns {Promise<Element>}
+   * @returns {Promise<HTMLElement>}
    */
   async compile(format, text, options = {}) {
     this.#log('[compile] idempotently installing es-module-shim');
@@ -273,6 +273,7 @@ export class Compiler {
   /**
    * @param {string} format
    * @param {string | undefined} flavor
+   * @returns {import('./types').CompilerConfig}
    */
   #resolveFormat(format, flavor) {
     let config = this.#options.formats[format];
@@ -284,20 +285,23 @@ export class Compiler {
     );
 
     if (flavor && flavor in config) {
-      config = config[flavor];
+      config = /** @type {{ [flavor: string]: import('./types').CompilerConfig}} */ (config)[
+        flavor
+      ];
     }
 
     assert(
-      `The config for ${format}${flavor ? ` (using flavor ${flavor})` : ''} is missing the 'compiler' function. It had keys: ${Object.keys(config)}. If this is a language with multiple flavors, make sure you specify the flavor.`,
-      'compiler' in config
+      `The config for ${format}${flavor ? ` (using flavor ${flavor})` : ''} is missing the 'compiler' function. It had keys: ${Object.keys(/** @type {any} */ (config))}. If this is a language with multiple flavors, make sure you specify the flavor.`,
+      'compiler' in /** @type {any} */ (config)
     );
 
-    return config;
+    return /** @type {import('./types').CompilerConfig} */ (config);
   }
 
   /**
    * @param {string} format
    * @param {string | undefined} flavor
+   * @returns {import('./types').Options['options']}
    */
   #resolveUserOptions(format, flavor) {
     let config = this.#options.options?.[format];
@@ -315,7 +319,7 @@ export class Compiler {
    * @param {import('./types.ts').Compiler} compiler
    * @param {string} whatToRender
    * @param {{ compiled: string } & Record<string, unknown>} extras
-   * @returns {Promise<Element>}
+   * @returns {Promise<HTMLElement>}
    */
   async #render(compiler, whatToRender, extras) {
     const div = this.#createDiv();
@@ -329,9 +333,7 @@ export class Compiler {
   }
 
   /**
-   * @param {string} format
-   * @param {string} [ flavor ]
-   * @returns {import('./types.ts').ResolvedCompilerOptions)}
+   * @type {import('./types').PublicMethods['optionsFor']}
    */
   optionsFor = (format, flavor) => {
     const { needsLiveMeta } = this.#resolveFormat(format, flavor);
@@ -349,6 +351,9 @@ export class Compiler {
     cache.clear();
   }
 
+  /**
+   * @type {(name: string, fallback?: (name?: string) => Promise<unknown>) => Promise<unknown>}
+   */
   #resolveManually = async (name, fallback) => {
     const existing = cache.resolves[name];
 
@@ -377,7 +382,7 @@ export class Compiler {
      * going through the shimmedImport / tgz / npm fallback.
      */
     if (fallback) {
-      result = await fallback();
+      result = await fallback(name);
     }
 
     cache.resolves[name] ||= await result;
@@ -391,7 +396,7 @@ export class Compiler {
   #nestedPublicAPI = {
     /**
      * @param {string} name
-     * @param {(name: string) => Promise<unknown>} [fallback]
+     * @param {(name?: string) => Promise<unknown>} [fallback]
      * @returns {Promise<unknown>}
      */
     tryResolve: async (name, fallback) => {
@@ -408,7 +413,7 @@ export class Compiler {
     },
     /**
      * @param {string[]} names
-     * @param {(name: string) => Promise<unknown>} [fallback]
+     * @param {(name?: string) => Promise<unknown>} [fallback]
      * @returns {Promise<unknown[]>}
      */
     tryResolveAll: async (names, fallback) => {

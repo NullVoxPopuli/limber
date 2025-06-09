@@ -20,19 +20,26 @@ export async function getFromTarball(url) {
     return cache.fileCache.get(key);
   }
 
+  let existing =
+    /** @type {undefined | Promise<{ answer: import('./types.ts').RequestAnswer, name: string, version: string}>} */ (
+      cache.promiseCache.get(key)
+    );
+
   /**
    * @type {Promise<{ answer: import('./types.ts').RequestAnswer, name: string, version: string}>}
    */
-  let promise =
-    /** @type {undefined | Promise<{ answer: import('./types.ts').RequestAnswer, name: string, version: string}>} */ (
-      cache.promiseCache.get(key)
-    ) ||
-    (async () => {
-      let untarred = await getTar(request.name, request.version);
-      let answer = resolve(untarred, request);
+  let promise = existing
+    ? existing
+    : (async function newPromise() {
+        let untarred = await getTar(request.name, request.version);
+        let answer = resolve(untarred, request);
 
-      return { answer, name: request.name, version: request.version };
-    })();
+        if (!answer) {
+          throw new Error(`Could not find file for ${request.original}`);
+        }
+
+        return { answer, name: request.name, version: request.version };
+      })();
 
   if (!cache.promiseCache.has(key)) {
     cache.promiseCache.set(key, promise);
