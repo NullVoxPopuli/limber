@@ -16,10 +16,8 @@ function iconFor(format: Format): string {
   switch (format) {
     case 'glimdown':
       return 'G⬇';
-    case 'gjs':
-      return 'GJS';
-    case 'hbs':
-      return 'HBS';
+    default:
+      return format.toUpperCase();
   }
 }
 
@@ -64,6 +62,16 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
         <Item {{on "click" (fn this.switch "hbs")}} class="{{this.isSelected 'hbs'}}">
           <div class={{menuIconClasses}}>{{iconFor "hbs"}}</div>
           Template
+        </Item>
+
+        <Item {{on "click" (fn this.switch "svelte")}} class="{{this.isSelected 'svelte'}}">
+          <div class={{menuIconClasses}}>{{iconFor "svelte"}}</div>
+          Svelte
+        </Item>
+
+        <Item {{on "click" (fn this.switch "vue")}} class="{{this.isSelected 'vue'}}">
+          <div class={{menuIconClasses}}>{{iconFor "vue"}}</div>
+          Svelte
         </Item>
       </:options>
     </Menu>
