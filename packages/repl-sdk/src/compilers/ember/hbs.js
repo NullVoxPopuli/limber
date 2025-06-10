@@ -1,4 +1,5 @@
-import { renderApp } from './ember/render-app-island.js';
+import { isRecord } from '../../utils.js';
+import { renderApp } from './render-app-island.js';
 
 let elementId = 0;
 
@@ -7,20 +8,23 @@ let elementId = 0;
  * @returns {{ scope: Record<string, unknown> }}
  */
 function filterOptions(options) {
+  if (!isRecord(options)) {
+    return { scope: {} };
+  }
+
   return {
     scope: /** @type {Record<string, unknown>}*/ (options?.scope || {}),
   };
 }
 
 /**
- *
- * @type {import('../types.ts').CompilerConfig['compiler']}
+ * @type {import('../../types.ts').CompilerConfig['compiler']}
  */
 export async function compiler(config, api) {
   let userOptions = config.userOptions;
 
   /**
-   * @type {import('../types.ts').Compiler}
+   * @type {import('../../types.ts').Compiler}
    */
   let hbsCompiler = {
     compile: async (text, options) => {

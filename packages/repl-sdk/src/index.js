@@ -1,6 +1,8 @@
 /**
  * @typedef {import("./types.ts").Options} Options
+ * @typedef {import('./types.ts').CompilerConfig} CompilerConfig
  */
+
 import mime from 'mime/lite';
 
 import { cache, secretKey } from './cache.js';
@@ -106,7 +108,7 @@ export class Compiler {
   };
   /**
    * @param {string} url
-   * @param {unknown} options
+   * @param {RequestInit} options
    * @returns {Promise<Response>}
    */
   #fetch = async (url, options) => {
@@ -120,6 +122,8 @@ export class Compiler {
       this.#log('[fetch] resolved url in manually specified resolver', url);
 
       let result = await this.#resolveManually(name);
+
+      assert(`Failed to resolve ${name}`, result);
 
       let blobContent =
         `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
@@ -154,7 +158,11 @@ export class Compiler {
     if (url.startsWith(unzippedPrefix)) {
       this.#log('[fetch] resolved url via tgz resolver', url, options);
 
-      let { code, ext } = await getFromTarball(url);
+      let tarInfo = await getFromTarball(url);
+
+      assert(`Could not find file for ${url}`, tarInfo);
+
+      let { code, ext } = tarInfo;
 
       /**
        * We don't know if this code is completely ready to run in the browser yet, so we might need to run in through the compiler again
@@ -221,7 +229,7 @@ export class Compiler {
     const compiled = await compiler.compile(text, opts);
 
     let compiledText = 'export default "failed to compile"';
-    let extras = {};
+    let extras = { compiled: '' };
 
     if (typeof compiled === 'string') {
       compiledText = compiled;
@@ -262,7 +270,8 @@ export class Compiler {
       this.#compilerResolvers.add(config.resolve);
     }
 
-    const compiler = await config.compiler(this.optionsFor(format, flavor), this.#nestedPublicAPI);
+    const options = this.optionsFor(format, flavor);
+    const compiler = await config.compiler(options, this.#nestedPublicAPI);
 
     this.#compilerCache.set(config, compiler);
     this.#compilers.add(compiler);
@@ -301,15 +310,15 @@ export class Compiler {
   /**
    * @param {string} format
    * @param {string | undefined} flavor
-   * @returns {import('./types').Options['options']}
+   * @returns {{ [key: string]: unknown }}
    */
   #resolveUserOptions(format, flavor) {
-    let config = this.#options.options?.[format];
+    let config = /** @type {{ [key: string]: unknown }} */ (this.#options.options?.[format]);
 
     if (!config) return {};
 
     if (flavor && flavor in config) {
-      config = config[flavor];
+      config = /** @type {{ [key: string]: unknown }} */ (config[flavor]);
     }
 
     return config ?? {};
@@ -333,13 +342,13 @@ export class Compiler {
   }
 
   /**
-   * @type {import('./types').PublicMethods['optionsFor']}
+   * @param {string} format
+   * @param {string | undefined} flavor
    */
   optionsFor = (format, flavor) => {
     const { needsLiveMeta } = this.#resolveFormat(format, flavor);
 
     return {
-      importMap: this.#options.importMap ?? {},
       needsLiveMeta: /* @type {boolean | undefined} */ needsLiveMeta ?? true,
       versions: this.#options.versions ?? {},
       ...(this.#resolveUserOptions(format, flavor) ?? {}),
@@ -351,7 +360,7 @@ export class Compiler {
   }
 
   /**
-   * @type {(name: string, fallback?: (name?: string) => Promise<unknown>) => Promise<unknown>}
+   * @type {(name: string, fallback?: (name?: string) => Promise<undefined | object>) => Promise<undefined | object>}
    */
   #resolveManually = async (name, fallback) => {
     const existing = cache.resolves[name];
@@ -472,7 +481,7 @@ export class Compiler {
       }
 
       if (flavor && flavor in config) {
-        config = config[flavor];
+        config = /** @type {CompilerConfig} */ (config[flavor]);
       }
 
       if ('compiler' in config) {
@@ -484,6 +493,8 @@ export class Compiler {
         reason: `The config for ${format}${flavor ? ` (using flavor ${flavor})` : ''} is missing the 'compiler' function. It had keys: ${Object.keys(config)}. If this is a language with multiple flavors, make sure you specify the flavor.`,
       };
     },
+
+    getCompiler: (format, flavor) => this.#getCompiler(format, flavor),
   };
 
   #createDiv() {

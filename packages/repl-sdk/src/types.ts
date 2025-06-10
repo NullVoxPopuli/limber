@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { FileDescription } from 'tarparser';
 
 export interface RequestAnswer {
@@ -7,13 +8,15 @@ export interface RequestAnswer {
 }
 
 export interface PublicMethods {
+  getCompiler: (format: string, flavor?: string) => Promise<Compiler>;
+
   /**
    * Will try to use a shimmed import, or will return null.
    */
   tryResolve: (
     moduleName: string,
     fallback?: (moduleName?: string) => Promise<unknown>
-  ) => Promise<unknown>;
+  ) => Promise<any>;
 
   /**
    * Import many modules in parallel.
@@ -26,7 +29,7 @@ export interface PublicMethods {
   tryResolveAll: (
     moduleNames: string[],
     fallback?: (moduleName?: string) => Promise<unknown>
-  ) => Promise<unknown[]>;
+  ) => Promise<any[]>;
   compile: (
     format: string,
     text: string,
@@ -59,12 +62,18 @@ export interface PublicMethods {
     | { result: false; reason: string };
 }
 export interface ResolvedCompilerOptions {
-  importMap: { [importPath: string]: string };
   resolve: { [importPath: string]: unknown };
   needsLiveMeta?: boolean;
   versions?: { [packageName: string]: string };
   userOptions?: Options['options'];
 }
+
+type CompileResult =
+  | string
+  | {
+      compiled: string;
+      [option: string]: unknown;
+    };
 
 export interface Compiler {
   /**
@@ -73,10 +82,7 @@ export interface Compiler {
    *
    * You may return either just a string, or an object with a `compiled` property that is a string -- any additional properties will be passde through to the render function -- which may be useful if there is accompanying CSS.
    */
-  compile: (
-    text: string,
-    options: Record<string, unknown>
-  ) => Promise<string | ({ compiled: string } & Record<string, unknown>)>;
+  compile: (text: string, options: Record<string, unknown>) => Promise<CompileResult>;
 
   /**
    * For the root of a node rendered for this compiler,
@@ -111,6 +117,52 @@ export interface Compiler {
     extras: { compiled: string } & Record<string, unknown>,
     compiler: PublicMethods
   ) => Promise<void>;
+
+  /**
+   * Sometimes libraries do not publish browser-compatible modules,
+   * and require additional transpilation.
+   * Usually this happens by the consuming application's build process -- but in this REPL,
+   * we are kind of not exactly a consuming application, but still need to handle the further
+   * build concerns.
+   *
+   * For example, `import.meta.env.DEV` is not a platform native thing that and requires
+   * a build plugin. Vite has one built in, but all other tools need to manually specify
+   * what to do with `import.meta.env.DEV`.
+   *
+   * Another example, some component frameworks may use templates, which can only be compiled
+   * by the host application, as the details of how a template is compiled are private API,
+   * and can vary in minor releases of the template compiler.
+   *
+   * This should be a map of file extensions to async functions that must return either the
+   * original file text or additionally transformed text.
+   *
+   * ```js
+   * handlers: {
+   *   // When resolving a .js file from a CDN or NPM, replace `import.meta.env.DEV` with `true`
+   *   js: async(text) => {
+   *     return text.replaceAll('import.meta.env.DEV', 'true');
+   *   }
+   * }
+   * ```
+   *
+   * This could also be used to run the same build step on fetched files as
+   * the files provided to the REPL.
+   *
+   * ```js
+   * let compiler = {
+   *   compile: async (text) => { ... },
+   *   render: async (element, compiled, ...rest) => { ... },
+   *   handlers: {
+   *     js: async(text) => {
+   *       return compiler.compile(text);
+   *     }
+   *   }
+   * }
+   * ```
+   */
+  handlers?: {
+    [fileExtension: string]: (text: string) => Promise<CompileResult>;
+  };
 }
 
 export interface CompilerConfig {
@@ -157,61 +209,9 @@ export interface CompilerConfig {
      */
     api: PublicMethods
   ) => Promise<Compiler>;
-
-  /**
-   * Sometimes libraries do not publish browser-compatible modules,
-   * and require additional transpilation.
-   * Usually this happens by the consuming application's build process -- but in this REPL,
-   * we are kind of not exactly a consuming application, but still need to handle the further
-   * build concerns.
-   *
-   * For example, `import.meta.env.DEV` is not a platform native thing that and requires
-   * a build plugin. Vite has one built in, but all other tools need to manually specify
-   * what to do with `import.meta.env.DEV`.
-   *
-   * Another example, some component frameworks may use templates, which can only be compiled
-   * by the host application, as the details of how a template is compiled are private API,
-   * and can vary in minor releases of the template compiler.
-   *
-   * This should be a map of file extensions to async functions that must return either the
-   * original file text or additionally transformed text.
-   *
-   * ```js
-   * handlers: {
-   *   // When resolving a .js file from a CDN or NPM, replace `import.meta.env.DEV` with `true`
-   *   js: async(text) => {
-   *     return text.replaceAll('import.meta.env.DEV', 'true');
-   *   }
-   * }
-   * ```
-   *
-   * This could also be used to run the same build step on fetched files as
-   * the files provided to the REPL.
-   *
-   * ```js
-   * let compiler = {
-   *   compile: async (text) => { ... },
-   *   render: async (element, compiled, ...rest) => { ... },
-   *   handlers: {
-   *     js: async(text) => {
-   *       return compiler.compile(text);
-   *     }
-   *   }
-   * }
-   * ```
-   */
-  handlers?: {
-    [fileExtension: string]: (text: string) => Promise<string>;
-  };
 }
 
 export interface Options {
-  /**
-   * Map of import paths to URLs
-   *
-   * Thehse will take precedence over the default CDN fallback.
-   */
-  importMap?: { [importPath: string]: string };
   /**
    * Map of pre-resolved JS values to use as the import map
    * These could assume the role of runtime virtual modules.

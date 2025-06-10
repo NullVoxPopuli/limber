@@ -1558,18 +1558,48 @@ importers:
       '@tsconfig/ember':
         specifier: ^3.0.7
         version: 3.0.10
+      '@types/mdast':
+        specifier: ^4.0.4
+        version: 4.0.4
       eslint:
         specifier: ^9.26.0
         version: 9.28.0(jiti@1.21.7)
+      mdast:
+        specifier: ^3.0.0
+        version: 3.0.0
       prettier:
         specifier: ^3.2.5
         version: 3.5.3
       publint:
         specifier: ^0.3.12
         version: 0.3.12
+      rehype-raw:
+        specifier: ^7.0.0
+        version: 7.0.0
+      rehype-stringify:
+        specifier: ^10.0.1
+        version: 10.0.1
+      remark-gfm:
+        specifier: ^4.0.1
+        version: 4.0.1
+      remark-parse:
+        specifier: ^11.0.0
+        version: 11.0.0
+      remark-rehype:
+        specifier: ^11.1.2
+        version: 11.1.2
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
+      unified:
+        specifier: ^11.0.5
+        version: 11.0.5
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
+      vfile:
+        specifier: ^6.0.3
+        version: 6.0.3
       vite:
         specifier: ^6.3.5
         version: 6.3.5(0e03f155f803884f566f7df1121c4a8d)
@@ -21012,7 +21042,7 @@ snapshots:
       tinyglobby: 0.2.13
       unrs-resolver: 1.7.2
     optionalDependencies:
-      eslint-plugin-import: 2.31.0(ebfdb8587d3f1b86893905581a5f4134)
+      eslint-plugin-import: 2.31.0(a0f8cce68075c90b1b5b5b85957dd9d6)
     transitivePeerDependencies:
       - supports-color
 

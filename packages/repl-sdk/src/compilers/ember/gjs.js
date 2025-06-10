@@ -1,5 +1,5 @@
-import { cache } from '../cache.js';
-import { renderApp } from './ember/render-app-island.js';
+import { cache } from '../../cache.js';
+import { renderApp } from './render-app-island.js';
 
 let elementId = 0;
 
@@ -48,10 +48,9 @@ const buildDependencies = [
 ];
 
 /**
- * @param {import('../types.ts').ResolvedCompilerOptions} config
- * @param {import('../types.ts').PublicMethods} api
+ * @type {import('../../types.ts').CompilerConfig['compiler']}
  */
-export async function compiler(config = {}, api) {
+export async function compiler(config, api) {
   const [
     _babel,
     _decoratorTransforms,
@@ -75,6 +74,9 @@ export async function compiler(config = {}, api) {
 
   // let macros = embroiderMacros.buildMacros();
 
+  /**
+   * @param {string} text
+   */
   async function transform(text) {
     return babel.transform(text, {
       filename: `dynamic-repl.js`,
@@ -144,37 +146,10 @@ export async function compiler(config = {}, api) {
   const preprocessor = new contentTag.Preprocessor();
 
   /**
-   * @type {import('../types.ts').Compiler}
+   * @type {import('../../types.ts').Compiler}
    */
   let gjsCompiler = {
-    resolve: (id) => {
-      if (id.startsWith('@ember')) {
-        return `https://esm.sh/*ember-source/dist/packages/${id}`;
-      }
-
-      if (id.startsWith('@glimmer')) {
-        return `https://esm.sh/*ember-source/dist/dependencies/${id}.js`;
-      }
-
-      console.debug('custom resolve for compiler', { id });
-
-      if (id.includes('@embroider/macros')) {
-        return () => {
-          return {
-            // passthrough, we are not doing dead-code-elimination
-            macroCondition: (x) => x,
-            // I *could* actually implement this
-            dependencySatisfies: () => true,
-            isDevelopingApp: () => true,
-            getGlobalConfig: () => ({}),
-            // Private
-            importSync: (x) => cache.resolves[x],
-            moduleExists: () => false,
-          };
-        };
-      }
-    },
-    compile: async (text) => {
+    compile: async (text, options) => {
       let { code: preprocessed } = preprocessor.process(text, { filename: 'dynamic-repl.js' });
       let transformed = await transform(preprocessed);
 
@@ -223,10 +198,10 @@ export async function compiler(config = {}, api) {
     },
     handlers: {
       js: async (text) => {
-        return gjsCompiler.compile(text);
+        return gjsCompiler.compile(text, {});
       },
       mjs: async (text) => {
-        return gjsCompiler.compile(text);
+        return gjsCompiler.compile(text, {});
       },
     },
   };
