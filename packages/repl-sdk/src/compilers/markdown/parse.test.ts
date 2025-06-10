@@ -30,8 +30,12 @@ const defaults = {
   },
   isPreview: (meta: string) => meta?.includes('preview'),
   isBelow: (meta: string) => meta?.includes('below'),
-  isLive: (meta: string, lang: string) =>
-    meta?.includes('live') || (!meta && ALLOWED_FORMATS.includes(lang)),
+  isLive: (meta: string, lang: string) => {
+    if (!defaults.needsLive(lang)) return true;
+    if (!meta) return false;
+
+    return meta.includes('live');
+  },
   ALLOWED_FORMATS,
 };
 
@@ -243,7 +247,7 @@ describe('options', () => {
 
         expect(result.text).toMatchInlineSnapshot(`
           "<h1>Title</h1>
-          <div id="repl_0" class="repl-sdk__demo"></div>"
+          <div id="repl_1" class="repl-sdk__demo"></div>"
         `);
 
         assertCodeBlocks(result.codeBlocks, [
@@ -321,7 +325,7 @@ describe('options', () => {
 
         expect(result.text).toMatchInlineSnapshot(`
           "<h1>Title</h1>
-          <div id="repl_1" class="repl-sdk__demo"></div>
+          <div id="repl_2" class="repl-sdk__demo"></div>
           <Demo />"
         `);
 
@@ -350,7 +354,7 @@ describe('options', () => {
 
         expect(result.text).toMatchInlineSnapshot(`
           "<p>hi</p>
-          <div id="repl_2" class="repl-sdk__demo"></div>
+          <div id="repl_3" class="repl-sdk__demo"></div>
           <div class="repl-sdk__snippet"><pre><code class="language-gjs">import Component from '@glimmer/component';
           import { on } from '@ember/modifier';
 
