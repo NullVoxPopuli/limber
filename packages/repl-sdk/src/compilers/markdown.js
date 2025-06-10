@@ -8,7 +8,7 @@ const GLIMDOWN_RENDER = Symbol('__GLIMDOWN_RENDER__');
 
 /**
  * @param {unknown} [ options ]
- * @returns {{ remarkPlugins: unknown[], rehypePlugins: unknown[] }}
+ * @returns {{ remarkPlugins: Plugin[], rehypePlugins: Plugin[] }}
  */
 function filterOptions(options) {
   if (!isRecord(options)) {
@@ -16,8 +16,8 @@ function filterOptions(options) {
   }
 
   return {
-    remarkPlugins: /** @type {unknown[]}*/ (options?.remarkPlugins || []),
-    rehypePlugins: /** @type {unknown[]}*/ (options?.rehypePlugins || []),
+    remarkPlugins: /** @type {Plugin[]}*/ (options?.remarkPlugins || []),
+    rehypePlugins: /** @type {Plugin[]}*/ (options?.rehypePlugins || []),
   };
 }
 
@@ -26,7 +26,8 @@ function filterOptions(options) {
  */
 export const md = {
   compiler: async (config, api) => {
-    const userOptions = filterOptions(config);
+    // Try both possible structures
+    const userOptions = filterOptions(/** @type {Record<string, unknown>} */ (config.userOptions)?.md || config);
 
     /**
      * @param {string} lang
@@ -162,19 +163,20 @@ export const md = {
 
       /**
        * @param {import('mdast').Code} code
+       * @param {string[]} [classes]
        */
-      function enhance(code) {
+      function enhance(code, classes = []) {
         code.data ??= {};
         code.data['hProperties'] ??= {};
         // This is secret-to-us-only API, so we don't really care about the type
-        code.data['hProperties'][GLIMDOWN_PREVIEW] = true;
+        code.data['hProperties'][/** @type {string} */ (/** @type {unknown} */ (GLIMDOWN_PREVIEW))] = true;
 
         return {
           data: {
-            hProperties: { className: snippetClasses },
+            hProperties: { className: classes },
           },
           type: 'div',
-          hProperties: { className: snippetClasses },
+          hProperties: { className: classes },
           children: [code],
         };
       }
@@ -197,24 +199,28 @@ export const md = {
         visit(tree, ['code'], function (node, index, parent) {
           if (parent === null || parent === undefined) return;
           if (index === null || index === undefined) return;
+          if (node.type !== 'code') return;
 
-          let isRelevant = isRelevantCode(node);
+          /** @type {import('mdast').Code} */
+          const codeNode = node;
+
+          let isRelevant = isRelevantCode(codeNode);
 
           if (!isRelevant) {
-            let enhanced = enhance(node);
+            let enhanced = enhance(codeNode, []); // Use empty classes for non-relevant code
 
-            parent.children[index] = enhanced;
+            /** @type {unknown[]} */ (parent.children)[index] = /** @type {unknown} */ (enhanced);
 
             return 'skip';
           }
 
-          if (seen.has(node)) {
+          if (seen.has(codeNode)) {
             return 'skip';
           }
 
-          seen.add(node);
+          seen.add(codeNode);
 
-          let { meta, lang, value } = node;
+          let { meta, lang, value } = codeNode;
 
           if (!lang) {
             return 'skip';
@@ -235,17 +241,17 @@ export const md = {
           let code = value.trim();
           let id = nextId();
 
-          let invokeNode = {
+          let invokeNode = /** @type {import('mdast').Html} */ ({
             type: 'html',
             data: {
-              hProperties: { [GLIMDOWN_RENDER]: true },
+              hProperties: { [/** @type {string} */ (/** @type {unknown} */ (GLIMDOWN_RENDER))]: true },
             },
             value: `<div id="${id}" class="${demoClasses}"></div>`,
-          };
+          });
 
-          let wrapper = enhance(node);
+          let wrapper = enhance(codeNode, snippetClasses);
 
-          file.data.liveCode.push({
+          /** @type {unknown[]} */ (file.data.liveCode).push({
             format: lang,
             /* flavor,  */
             code,
@@ -253,29 +259,29 @@ export const md = {
             meta,
           });
 
-          let live = isLive(meta, lang);
-          let preview = isPreview(meta);
-          let below = isBelow(meta);
+          let live = isLive(meta || '', lang);
+          let preview = isPreview(meta || '');
+          let below = isBelow(meta || '');
 
           if (live && preview && below) {
-            flatReplaceAt(parent.children, index, [wrapper, invokeNode]);
+            flatReplaceAt(/** @type {unknown[]} */ (parent.children), index, [/** @type {unknown} */ (wrapper), /** @type {unknown} */ (invokeNode)]);
 
             return 'skip';
           }
 
           if (live && preview) {
-            flatReplaceAt(parent.children, index, [invokeNode, wrapper]);
+            flatReplaceAt(/** @type {unknown[]} */ (parent.children), index, [/** @type {unknown} */ (invokeNode), /** @type {unknown} */ (wrapper)]);
 
             return 'skip';
           }
 
           if (live) {
-            parent.children[index] = invokeNode;
+            /** @type {unknown[]} */ (parent.children)[index] = /** @type {unknown} */ (invokeNode);
 
             return 'skip';
           }
 
-          parent.children[index] = wrapper;
+          /** @type {unknown[]} */ (parent.children)[index] = /** @type {unknown} */ (wrapper);
 
           return;
         });
@@ -283,17 +289,21 @@ export const md = {
     }
 
     /**
-     * @type {import('unified').Plugin<[], import('mdast').Root>}
+     * @type {import('unified').Plugin<[], import('hast').Root>}
      */
     function sanitizeForGlimmer(/* options */) {
-      return (tree) => {
-        visit(tree, 'element', (node) => {
-          if ('tagName' in node) {
-            if (!['pre', 'code'].includes(node.tagName)) return;
+      return function transformer(tree) {
+        visit(tree, 'element', function visitor(node) {
+          if (node.type === 'element' && 'tagName' in node) {
+            const element = /** @type {import('hast').Element} */ (node);
+            
+            if (!['pre', 'code'].includes(element.tagName)) return;
 
-            visit(node, 'text', (textNode) => {
-              if ('value' in textNode && textNode.value) {
-                textNode.value = textNode.value.replace(/{{/g, '\\{{');
+            visit(node, 'text', function textVisitor(textNode) {
+              if (textNode.type === 'text') {
+                const text = /** @type {import('hast').Text} */ (textNode);
+
+                text.value = text.value.replace(/{{/g, '\\{{');
               }
             });
 
@@ -303,7 +313,12 @@ export const md = {
       };
     }
 
+    /**
+     * @param {{ remarkPlugins?: Plugin[], rehypePlugins?: Plugin[], CopyComponent?: string, ShadowComponent?: string }} options
+     * @returns {unknown}
+     */
     function buildCompiler(options) {
+      // @ts-ignore - unified processor types are complex and change as plugins are added
       let compiler = unified().use(remarkParse).use(remarkGfm);
 
       /**
@@ -314,44 +329,52 @@ export const md = {
         options.remarkPlugins.forEach((plugin) => {
           // Arrays are how plugins are passed options (for some reason?)
           // why not just invoke the the function?
-          let p = Array.isArray(plugin) ? plugin : [plugin];
-
-          compiler = compiler.use(...p);
+          if (Array.isArray(plugin)) {
+            // @ts-ignore - unified processor types are complex and change as plugins are added
+            compiler = compiler.use(plugin[0], ...plugin.slice(1));
+          } else {
+            // @ts-ignore - unified processor types are complex and change as plugins are added
+            compiler = compiler.use(plugin);
+          }
         });
       }
 
       // TODO: we only want to do this when we have pre > code.
       //       code can exist inline.
+      // @ts-ignore - unified processor types are complex and change as plugins are added
       compiler = compiler.use(liveCodeExtraction, {
-        snippets: {
+        code: {
           classList: ['glimdown-snippet', 'relative'],
         },
         demo: {
           classList: ['glimdown-render'],
         },
-        copyComponent: options?.CopyComponent,
-        shadowComponent: options?.ShadowComponent,
       });
 
       // .use(() => (tree) => visit(tree, (node) => console.log('i', node)))
       // remark rehype is needed to convert markdown to HTML
       // However, it also changes all the nodes, so we need another pass
       // to make sure our Glimmer-aware nodes are in tact
+      // @ts-ignore - unified processor types are complex and change as plugins are added
       compiler = compiler.use(remarkRehype, { allowDangerousHtml: true });
 
       // Convert invocables to raw format, so Glimmer can invoke them
-      compiler = compiler.use(() => (tree) => {
-        visit(tree, function (node) {
+      // @ts-ignore - unified processor types are complex and change as plugins are added
+      compiler = compiler.use(() => (/** @type {unknown} */ tree) => {
+        visit(/** @type {import('hast').Root} */ (tree), function (node) {
           // We rely on an implicit transformation of data.hProperties => properties
-          let properties = node.properties;
+          let nodeObj = /** @type {Record<string, unknown>} */ (/** @type {unknown} */ (node));
+          let properties = /** @type {Record<string, unknown>} */ (
+            typeof node === 'object' && node !== null && 'properties' in node ? node.properties : {}
+          );
 
-          if (properties?.[GLIMDOWN_PREVIEW]) {
+          if (properties?.[/** @type {string} */ (/** @type {unknown} */ (GLIMDOWN_PREVIEW))]) {
             return 'skip';
           }
 
-          if (node.type === 'element' || ('tagName' in node && node.tagName === 'code')) {
-            if (properties?.[GLIMDOWN_RENDER]) {
-              node.type = 'glimmer_raw';
+          if (nodeObj.type === 'element' || ('tagName' in nodeObj && nodeObj.tagName === 'code')) {
+            if (properties?.[/** @type {string} */ (/** @type {unknown} */ (GLIMDOWN_RENDER))]) {
+              nodeObj.type = 'glimmer_raw';
 
               return;
             }
@@ -359,17 +382,17 @@ export const md = {
             return 'skip';
           }
 
-          if (node.type === 'text' || node.type === 'raw') {
+          if (nodeObj.type === 'text' || nodeObj.type === 'raw') {
             // definitively not the better way, but this is supposed to detect "glimmer" nodes
             if (
-              'value' in node &&
-              typeof node.value === 'string' &&
-              node.value.match(/<\/?[_A-Z:0-9].*>/g)
+              'value' in nodeObj &&
+              typeof nodeObj.value === 'string' &&
+              nodeObj.value.match(/<\/?[_A-Z:0-9].*>/g)
             ) {
-              node.type = 'glimmer_raw';
+              nodeObj.type = 'glimmer_raw';
             }
 
-            node.type = 'glimmer_raw';
+            nodeObj.type = 'glimmer_raw';
 
             return 'skip';
           }
@@ -382,23 +405,30 @@ export const md = {
         options.rehypePlugins.forEach((plugin) => {
           // Arrays are how plugins are passed options (for some reason?)
           // why not just invoke the the function?
-          let p = Array.isArray(plugin) ? plugin : [plugin];
-
-          compiler = compiler.use(...p);
+          if (Array.isArray(plugin)) {
+            // @ts-ignore - unified processor types are complex and change as plugins are added
+            compiler = compiler.use(plugin[0], ...plugin.slice(1));
+          } else {
+            // @ts-ignore - unified processor types are complex and change as plugins are added
+            compiler = compiler.use(plugin);
+          }
         });
       }
 
+      // @ts-ignore - unified processor types are complex and change as plugins are added
       compiler = compiler
         .use(rehypeRaw, { passThrough: ['glimmer_raw', 'raw'] })
-        .use(() => (tree) => {
-          visit(tree, 'glimmer_raw', (node) => {
-            node.type = 'raw';
+        .use(() => (/** @type {unknown} */ tree) => {
+          visit(/** @type {import('hast').Root} */ (tree), 'glimmer_raw', (node) => {
+            /** @type {Record<string, unknown>} */ (node).type = 'raw';
           });
         });
 
+      // @ts-ignore - unified processor types are complex and change as plugins are added
       compiler = compiler.use(sanitizeForGlimmer);
 
       // Finally convert to string! oofta!
+      // @ts-ignore - unified processor types are complex and change as plugins are added
       compiler = compiler.use(rehypeStringify, {
         collapseEmptyAttributes: true,
         closeSelfClosing: true,
@@ -417,10 +447,13 @@ export const md = {
      */
     async function parseMarkdown(input, options = {}) {
       let markdownCompiler = buildCompiler(options);
+      // @ts-ignore - markdownCompiler is typed as unknown due to unified processor complexity
       let processed = await markdownCompiler.process(input);
+      // @ts-ignore - processed is typed as unknown due to unified processor complexity
       let liveCode = /** @type {{ lang: string; flavor: string; code: string; name: string }[]} */ (
         processed.data.liveCode || []
       );
+      // @ts-ignore - processed is typed as unknown due to unified processor complexity
       let templateOnly = processed.toString();
 
       return { text: templateOnly, codeBlocks: liveCode };
@@ -431,35 +464,39 @@ export const md = {
      */
     return {
       compile: async (text, options) => {
+        const compileOptions = filterOptions(options);
         let result = await parseMarkdown(text, {
-          ...userOptions,
-          ...filterOptions(options),
+          remarkPlugins: [...userOptions.remarkPlugins, ...compileOptions.remarkPlugins],
+          rehypePlugins: [...userOptions.rehypePlugins, ...compileOptions.rehypePlugins],
         });
         let escaped = result.text.replace(/`/g, '\\`');
 
         return { compiled: `export default \`${escaped}\``, ...result };
       },
       render: async (element, compiled, extra, compiler) => {
-        element.innerHTML = compiled;
+        element.innerHTML = /** @type {string} */ (compiled);
 
         await Promise.all(
-          extra.codeBlocks.map(async (info) => {
-            if (!api.canCompile(info.format, info.flavor)) {
+          /** @type {unknown[]} */ (extra.codeBlocks).map(async (/** @type {unknown} */ info) => {
+            /** @type {Record<string, unknown>} */
+            const infoObj = /** @type {Record<string, unknown>} */ (info);
+            
+            if (!api.canCompile(/** @type {string} */ (infoObj.format), /** @type {string} */ (infoObj.flavor))) {
               return;
             }
 
-            let flavor = info.flavor;
-            let subElement = await compiler.compile(info.format, info.code, {
-              ...compiler.optionsFor(info.format, flavor),
+            let flavor = /** @type {string} */ (infoObj.flavor);
+            let subElement = await compiler.compile(/** @type {string} */ (infoObj.format), /** @type {string} */ (infoObj.code), {
+              ...compiler.optionsFor(/** @type {string} */ (infoObj.format), flavor),
               flavor: flavor,
             });
 
-            let selector = `#${info.placeholderId}`;
+            let selector = `#${/** @type {string} */ (infoObj.placeholderId)}`;
             let target = element.querySelector(selector);
 
             assert(
               `Could not find placeholder / target element (using selector: \`${selector}\`). ` +
-                `Could not render ${info.format} block.`,
+                `Could not render ${/** @type {string} */ (infoObj.format)} block.`,
               target
             );
 
