@@ -1,3 +1,6 @@
+/**
+ * @typedef {import('unified').Plugin} Plugin
+ */
 import { assert, isRecord, nextId } from '../utils.js';
 
 const GLIMDOWN_PREVIEW = Symbol('__GLIMDOWN_PREVIEW__');
@@ -64,15 +67,13 @@ export const md = {
     }
 
     const [
-      /** @type {import('rehype-raw').default} */
-      { default: rehypeRaw },
-      { default: rehypeStringify },
-      { default: remarkGfm },
-      { default: remarkParse },
-      { default: remarkRehype },
-      { unified },
-      /** @type {import('unist-util-visit').visit} */
-      { visit },
+      _rehypeRaw,
+      _rehypeStringify,
+      _remarkGfm,
+      _remarkParse,
+      _remarkRehype,
+      _unified,
+      _visit,
     ] = await api.tryResolveAll([
       'rehype-raw',
       'rehype-stringify',
@@ -82,6 +83,27 @@ export const md = {
       'unified',
       'unist-util-visit',
     ]);
+
+    /** @type {import('rehype-raw').default} */
+    const rehypeRaw = _rehypeRaw.default;
+
+    /** @type {import('rehype-stringify').default} */
+    const rehypeStringify = _rehypeStringify.default;
+
+    /** @type {import('remark-rehype').default} */
+    const remarkRehype = _remarkRehype.default;
+
+    /** @type {import('unified').unified} */
+    const unified = _unified.unified;
+
+    /** @type {import('remark-parse').default} */
+    const remarkParse = _remarkParse.default;
+
+    /** @type {import('remark-gfm').default} */
+    const remarkGfm = _remarkGfm.default;
+
+    /** @type {import('unist-util-visit').visit} */
+    const visit = _visit.visit;
 
     // Should be safe
     // eslint-disable-next-line import/no-cycle
@@ -113,6 +135,9 @@ export const md = {
       snippetClasses ??= [];
       demoClasses ??= [];
 
+      /**
+       * @param {import('mdast').Code} node
+       */
       function isRelevantCode(node) {
         if (node.type !== 'code') return false;
 
@@ -122,7 +147,7 @@ export const md = {
           return false;
         }
 
-        meta = meta?.trim();
+        meta = meta?.trim() ?? '';
 
         if (!isLive(meta, lang)) {
           return false;
@@ -135,6 +160,9 @@ export const md = {
         return true;
       }
 
+      /**
+       * @param {import('mdast').Code} code
+       */
       function enhance(code) {
         code.data ??= {};
         code.data['hProperties'] ??= {};
@@ -151,6 +179,12 @@ export const md = {
         };
       }
 
+      /**
+       * @template T
+       * @param {T[]} array
+       * @param {number} index
+       * @param {T[]} replacement
+       */
       function flatReplaceAt(array, index, replacement) {
         array.splice(index, 1, ...replacement);
       }
@@ -378,21 +412,29 @@ export const md = {
 
     /**
      * @param {string} input
-     * @param {{ CopyComponent?: string, ShadowComponent?: string, remarkPlugins?: UnifiedPlugin[], rehypePlugins?: UnifiedPlugin[] }} options
-     * @returns {Promise<{ compiled: string; liveCode: { lang: string; flavor: string; code: string; name: string }[] }>}
+     * @param {{ CopyComponent?: string, ShadowComponent?: string, remarkPlugins?: Plugin[], rehypePlugins?: Plugin[] }} options
+     * @returns {Promise<{ text: string; codeBlocks: { lang: string; flavor: string; code: string; name: string }[] }>}
      */
     async function parseMarkdown(input, options = {}) {
       let markdownCompiler = buildCompiler(options);
       let processed = await markdownCompiler.process(input);
-      let liveCode = processed.data.liveCode || [];
+      let liveCode = /** @type {{ lang: string; flavor: string; code: string; name: string }[]} */ (
+        processed.data.liveCode || []
+      );
       let templateOnly = processed.toString();
 
       return { text: templateOnly, codeBlocks: liveCode };
     }
 
+    /**
+     * @type {import('../types.ts').Compiler}
+     */
     return {
       compile: async (text, options) => {
-        let result = await parseMarkdown(text, { ...userOptions, ...options });
+        let result = await parseMarkdown(text, {
+          ...userOptions,
+          ...filterOptions(options),
+        });
         let escaped = result.text.replace(/`/g, '\\`');
 
         return { compiled: `export default \`${escaped}\``, ...result };
