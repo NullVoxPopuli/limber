@@ -45,9 +45,12 @@
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.23.9",
     "@nullvoxpopuli/eslint-configs": "^4.0.0",
+    "@shikijs/rehype": "^1.29.2",
     "@tsconfig/ember": "^3.0.7",
+    "@types/common-tags": "^1.8.4",
     "@types/hast": "^3.0.4",
     "@types/mdast": "^4.0.4",
+    "common-tags": "^1.8.2",
     "eslint": "^9.26.0",
     "mdast": "^3.0.0",
     "prettier": "^3.2.5",

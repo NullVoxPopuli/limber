@@ -1555,15 +1555,24 @@ importers:
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.0.0
         version: 5.1.2(6c97b808173ee926f28c5138de730830)
+      '@shikijs/rehype':
+        specifier: ^1.29.2
+        version: 1.29.2
       '@tsconfig/ember':
         specifier: ^3.0.7
         version: 3.0.10
+      '@types/common-tags':
+        specifier: ^1.8.4
+        version: 1.8.4
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
       '@types/mdast':
         specifier: ^4.0.4
         version: 4.0.4
+      common-tags:
+        specifier: ^1.8.2
+        version: 1.8.2
       eslint:
         specifier: ^9.26.0
         version: 9.28.0(jiti@1.21.7)
