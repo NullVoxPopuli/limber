@@ -15,7 +15,7 @@ export interface PublicMethods {
    */
   tryResolve: (
     moduleName: string,
-    fallback?: (moduleName?: string) => Promise<unknown>
+    fallback?: (moduleName?: string) => Promise<object | undefined>
   ) => Promise<any>;
 
   /**

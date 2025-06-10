@@ -294,9 +294,7 @@ export class Compiler {
     );
 
     if (flavor && flavor in config) {
-      config = /** @type {{ [flavor: string]: import('./types').CompilerConfig}} */ (config)[
-        flavor
-      ];
+      config = /** @type {{ [flavor: string]: CompilerConfig}} */ (config)[flavor];
     }
 
     assert(
@@ -360,7 +358,9 @@ export class Compiler {
   }
 
   /**
-   * @type {(name: string, fallback?: (name?: string) => Promise<undefined | object>) => Promise<undefined | object>}
+   * @param {string} name
+   * @param {(name?: string) => Promise<undefined | object>} [fallback]
+   * @returns {Promise<undefined | object>}
    */
   #resolveManually = async (name, fallback) => {
     const existing = cache.resolves[name];
@@ -371,7 +371,9 @@ export class Compiler {
       return existing;
     }
 
-    let result = await this.#options.resolve?.[name];
+    let result =
+      /** @type {object | undefined} */
+      (await this.#options.resolve?.[name]);
 
     if (!result) {
       this.#log(`[#resolveManually] Could not resolve ${name}`);
@@ -404,8 +406,8 @@ export class Compiler {
   #nestedPublicAPI = {
     /**
      * @param {string} name
-     * @param {(name?: string) => Promise<unknown>} [fallback]
-     * @returns {Promise<unknown>}
+     * @param {(name?: string) => Promise<object | undefined>} [fallback]
+     * @returns {Promise<object | undefined>}
      */
     tryResolve: async (name, fallback) => {
       const existing = await this.#resolveManually(name, fallback);
@@ -417,7 +419,8 @@ export class Compiler {
       }
 
       // @ts-ignore
-      return shimmedImport(/* vite-ignore */ name);
+      let shimmed = await shimmedImport(/* vite-ignore */ name);
+      return shimmed;
     },
     /**
      * @param {string[]} names
@@ -481,7 +484,16 @@ export class Compiler {
       }
 
       if (flavor && flavor in config) {
-        config = /** @type {CompilerConfig} */ (config[flavor]);
+        config = /** @type {{ [flavor: string]: CompilerConfig}} */ (config)[flavor];
+      }
+
+      if (!config) {
+        return {
+          result: false,
+          reason:
+            `${format} for ${flavor} is not a configured format / extension. ` +
+            `The currently configured formats are ${Object.keys(this.#options.formats).join(', ')}`,
+        };
       }
 
       if ('compiler' in config) {

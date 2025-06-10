@@ -11,7 +11,7 @@
 /**
  * @type {{
  *   resolve: (id: string, parentUrl: string, parentResolve: (id: string, parentUrl: string) => string) => string
- *   fetch: (id: string, options: unknown) => Promise<Response>
+ *   fetch: (id: string, options: RequestInit) => Promise<Response>
  * }}
  */
 export const STABLE_REFERENCE = {
@@ -46,7 +46,7 @@ globalThis.esmsInitOptions = {
 
   /**
    * @param {string} url
-   * @param {unknown} options
+   * @param {RequestInit} options
    * @returns {Promise<Response>}
    */
   fetch: (url, options) => STABLE_REFERENCE.fetch(url, options),
