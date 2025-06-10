@@ -5,17 +5,12 @@ import { setupRenderingTest } from 'ember-qunit';
 
 import { stripIndent } from 'common-tags';
 import { compile, getCompiler } from 'ember-repl';
-import { CACHE } from 'ember-repl/__PRIVATE__DO_NOT_USE__';
 import { visit } from 'unist-util-visit';
 
 import { setupCompiler } from 'ember-repl/test-support';
 
 import type { ComponentLike } from '@glint/template';
-import type { PluggableList } from 'unified';
 import type { Parent } from 'unist';
-
-type UnifiedPlugin = PluggableList[0];
-type Build = (plugin?: UnifiedPlugin) => Promise<void>;
 
 function unexpectedErrorHandler(error: unknown) {
   console.error(error);
@@ -26,7 +21,7 @@ module('Rendering | compile()', function (hooks) {
   setupRenderingTest(hooks);
   setupCompiler(hooks);
 
-  module('format: md', function (hooks) {
+  module('format: md', function () {
     test('it works', async function (assert) {
       setupOnerror((e) => {
         assert.notOk(e, 'This should not error');
@@ -63,7 +58,7 @@ module('Rendering | compile()', function (hooks) {
 
   module('markdown features', function () {
     module('custom remark plugins', function () {
-      module('demo: remove pre code', function (hooks) {
+      module('demo: remove pre code', function () {
         const snippet = stripIndent`
           text
 
@@ -72,7 +67,11 @@ module('Rendering | compile()', function (hooks) {
           \`\`\`
         `;
 
-        async function makeComponent(context, onComponent, options) {
+        async function makeComponent(
+          context: object,
+          onComponent: (comp: ComponentLike) => void,
+          options: Partial<Parameters<typeof compile>[2]> = {}
+        ) {
           const compiler = getCompiler(context);
 
           compile(compiler, snippet, {
@@ -142,7 +141,7 @@ module('Rendering | compile()', function (hooks) {
           });
         });
 
-        module('with the plugin (configured for just this render)', function (hooks) {
+        module('with the plugin (configured for just this render)', function () {
           // https://github.com/typed-ember/glint/issues/617
           test('no pre renders', async function (assert) {
             let component: ComponentLike | undefined;

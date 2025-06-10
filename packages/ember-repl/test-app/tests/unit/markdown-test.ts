@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 
 import rehypeShiki from '@shikijs/rehype';
 import { stripIndent } from 'common-tags';
-import { getCompiler, invocationOf, nameFor } from 'ember-repl';
+import { invocationOf, nameFor } from 'ember-repl';
 // import { parseMarkdown } from 'ember-repl/compile/formats/markdown';
 import { visit } from 'unist-util-visit';
 

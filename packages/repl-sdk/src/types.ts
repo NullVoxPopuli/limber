@@ -9,6 +9,7 @@ export interface RequestAnswer {
 
 export interface PublicMethods {
   getCompiler: (format: string, flavor?: string) => Promise<Compiler>;
+  getAllowedFormats: () => string[];
 
   /**
    * Will try to use a shimmed import, or will return null.

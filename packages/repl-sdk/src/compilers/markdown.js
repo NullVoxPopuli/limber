@@ -27,7 +27,9 @@ function filterOptions(options) {
 export const md = {
   compiler: async (config, api) => {
     // Try both possible structures
-    const userOptions = filterOptions(/** @type {Record<string, unknown>} */ (config.userOptions)?.md || config);
+    const userOptions = filterOptions(
+      /** @type {Record<string, unknown>} */ (config.userOptions)?.md || config
+    );
 
     /**
      * @param {string} lang
@@ -106,12 +108,8 @@ export const md = {
     /** @type {import('unist-util-visit').visit} */
     const visit = _visit.visit;
 
-    // Should be safe
-    // eslint-disable-next-line import/no-cycle
-    const { compilers } = await import('../compilers.js');
-
     // No recursing for now.
-    const ALLOWED_FORMATS = Object.keys(compilers).filter((format) => format !== 'md');
+    const ALLOWED_FORMATS = api.getAllowedFormats().filter((format) => format !== 'md');
 
     /**
      * Swaps live codeblocks with placeholders that the compiler can then
@@ -169,7 +167,9 @@ export const md = {
         code.data ??= {};
         code.data['hProperties'] ??= {};
         // This is secret-to-us-only API, so we don't really care about the type
-        code.data['hProperties'][/** @type {string} */ (/** @type {unknown} */ (GLIMDOWN_PREVIEW))] = true;
+        code.data['hProperties'][
+          /** @type {string} */ (/** @type {unknown} */ (GLIMDOWN_PREVIEW))
+        ] = true;
 
         return {
           data: {
@@ -244,7 +244,9 @@ export const md = {
           let invokeNode = /** @type {import('mdast').Html} */ ({
             type: 'html',
             data: {
-              hProperties: { [/** @type {string} */ (/** @type {unknown} */ (GLIMDOWN_RENDER))]: true },
+              hProperties: {
+                [/** @type {string} */ (/** @type {unknown} */ (GLIMDOWN_RENDER))]: true,
+              },
             },
             value: `<div id="${id}" class="${demoClasses}"></div>`,
           });
@@ -264,13 +266,19 @@ export const md = {
           let below = isBelow(meta || '');
 
           if (live && preview && below) {
-            flatReplaceAt(/** @type {unknown[]} */ (parent.children), index, [/** @type {unknown} */ (wrapper), /** @type {unknown} */ (invokeNode)]);
+            flatReplaceAt(/** @type {unknown[]} */ (parent.children), index, [
+              /** @type {unknown} */ (wrapper),
+              /** @type {unknown} */ (invokeNode),
+            ]);
 
             return 'skip';
           }
 
           if (live && preview) {
-            flatReplaceAt(/** @type {unknown[]} */ (parent.children), index, [/** @type {unknown} */ (invokeNode), /** @type {unknown} */ (wrapper)]);
+            flatReplaceAt(/** @type {unknown[]} */ (parent.children), index, [
+              /** @type {unknown} */ (invokeNode),
+              /** @type {unknown} */ (wrapper),
+            ]);
 
             return 'skip';
           }
@@ -296,7 +304,7 @@ export const md = {
         visit(tree, 'element', function visitor(node) {
           if (node.type === 'element' && 'tagName' in node) {
             const element = /** @type {import('hast').Element} */ (node);
-            
+
             if (!['pre', 'code'].includes(element.tagName)) return;
 
             visit(node, 'text', function textVisitor(textNode) {
@@ -480,16 +488,25 @@ export const md = {
           /** @type {unknown[]} */ (extra.codeBlocks).map(async (/** @type {unknown} */ info) => {
             /** @type {Record<string, unknown>} */
             const infoObj = /** @type {Record<string, unknown>} */ (info);
-            
-            if (!api.canCompile(/** @type {string} */ (infoObj.format), /** @type {string} */ (infoObj.flavor))) {
+
+            if (
+              !api.canCompile(
+                /** @type {string} */ (infoObj.format),
+                /** @type {string} */ (infoObj.flavor)
+              )
+            ) {
               return;
             }
 
             let flavor = /** @type {string} */ (infoObj.flavor);
-            let subElement = await compiler.compile(/** @type {string} */ (infoObj.format), /** @type {string} */ (infoObj.code), {
-              ...compiler.optionsFor(/** @type {string} */ (infoObj.format), flavor),
-              flavor: flavor,
-            });
+            let subElement = await compiler.compile(
+              /** @type {string} */ (infoObj.format),
+              /** @type {string} */ (infoObj.code),
+              {
+                ...compiler.optionsFor(/** @type {string} */ (infoObj.format), flavor),
+                flavor: flavor,
+              }
+            );
 
             let selector = `#${/** @type {string} */ (infoObj.placeholderId)}`;
             let target = element.querySelector(selector);

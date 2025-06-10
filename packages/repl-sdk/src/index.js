@@ -420,6 +420,7 @@ export class Compiler {
 
       // @ts-ignore
       let shimmed = await shimmedImport(/* vite-ignore */ name);
+
       return shimmed;
     },
     /**
@@ -507,6 +508,8 @@ export class Compiler {
     },
 
     getCompiler: (format, flavor) => this.#getCompiler(format, flavor),
+
+    getAllowedFormats: () => Object.keys(this.#options.formats),
   };
 
   #createDiv() {
