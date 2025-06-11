@@ -1,7 +1,7 @@
 /**
  * @typedef {import('unified').Plugin} Plugin
  */
-import { assert, isRecord, nextId } from '../utils.js';
+import { assert, isRecord } from '../utils.js';
 
 /**
  * @param {unknown} [ options ]
@@ -18,11 +18,17 @@ function filterOptions(options) {
   };
 }
 
+export function isNotMarkdownLike(lang) {
+  return lang !== 'md' && lang !== 'gmd' && lang !== 'mdx';
+}
+
 /**
  * @type {import('../types.ts').CompilerConfig}
  */
 export const md = {
   compiler: async (config, api) => {
+    const ALLOWED_FORMATS = api.getAllowedFormats().filter(isNotMarkdownLike);
+
     // Try both possible structures
     const userOptions = filterOptions(
       /** @type {Record<string, unknown>} */ (config.userOptions)?.md || config
@@ -67,7 +73,6 @@ export const md = {
     }
 
     // No recursing for now.
-    const ALLOWED_FORMATS = api.getAllowedFormats().filter((format) => format !== 'md');
 
     const { parseMarkdown } = await import(/* @vite-ignore */ './markdown/parse.js');
 
