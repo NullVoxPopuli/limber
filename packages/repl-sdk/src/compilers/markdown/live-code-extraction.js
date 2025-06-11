@@ -103,8 +103,8 @@ export function liveCodeExtraction(options) {
       let isRelevant = isRelevantCode(codeNode);
 
       if (!isRelevant) {
-        let enhanced = enhance(codeNode, []); // Use empty classes for non-relevant code
-
+        let enhanced = enhance(codeNode, snippetClasses); 
+        
         /** @type {unknown[]} */ (parent.children)[index] = /** @type {unknown} */ (enhanced);
 
         return 'skip';
