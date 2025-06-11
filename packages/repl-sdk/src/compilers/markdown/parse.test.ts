@@ -216,7 +216,7 @@ describe('options', () => {
           const two = 2;
         \`\`\`
       `,
-          { CopyComponent: '<CopyMenu />', ...defaults }
+          { ...defaults }
         );
 
         assertOutput(
@@ -225,7 +225,7 @@ describe('options', () => {
           <h1>Title</h1>
 
           <div class=\"repl-sdk__snippet\"><pre><code class=\"language-gjs\">  const two = 2;
-          </code></pre><CopyMenu /></div>
+          </code></pre></div>
         `
         );
 
@@ -349,7 +349,7 @@ describe('options', () => {
       `;
         const result = await parseMarkdown(
           `hi\n` + `\n` + '```gjs live preview\n' + snippet + '\n```',
-          { CopyComponent: '<CopyMenu />', ...defaults }
+          { ...defaults }
         );
 
         expect(result.text).toMatchInlineSnapshot(`

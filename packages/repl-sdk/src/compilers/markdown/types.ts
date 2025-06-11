@@ -9,8 +9,6 @@ export interface LiveCodeExtractionOptions {
 }
 
 export interface PublicOptions {
-  CopyComponent?: string;
-  ShadowComponent?: string;
   code?: {
     classList?: string[];
   };
