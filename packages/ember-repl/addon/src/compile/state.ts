@@ -13,7 +13,7 @@ interface State {
   promise: Promise<ComponentLike>;
 }
 
-export class CompileState implements PromiseLike<State>, State {
+export class CompileState implements State {
   @tracked component: undefined | ComponentLike;
   @tracked error: undefined | Error;
 
@@ -34,14 +34,8 @@ export class CompileState implements PromiseLike<State>, State {
     return this.#promise;
   }
 
-  then<TResult1 = State, TResult2 = never>(
-    onfulfilled?: ((value: State) => TResult1 | PromiseLike<TResult1>) | null  ,
-    onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null
-  ): PromiseLike<TResult1 | TResult2> {
-     this.#promise.then(() => onfulfilled?.(this)).catch((e) => onrejected?.(e));
-
-    // This is unused, but I don't know how to make TS happy about it.
-    return this as unknown as PromiseLike<TResult1 | TResult2>;
+  then(onfulfilled: (value: State) => void, onrejected: (reason: any) => void) {
+    this.#promise.then(() => onfulfilled(this)).catch((e) => onrejected(e));
   }
 
   /**

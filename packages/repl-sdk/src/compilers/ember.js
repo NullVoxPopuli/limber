@@ -59,3 +59,15 @@ export const hbs = {
     return hbs.compiler(...args);
   },
 };
+
+/**
+ * @type {CompilerConfig}
+ */
+export const gmd = {
+  resolve,
+  compiler: async (...args) => {
+    const hbs = await import('./ember/gmd.js');
+
+    return hbs.compiler(...args);
+  },
+};

@@ -19,8 +19,40 @@ export const compilers = {
      */
     ember: ember.hbs,
   },
+  /**
+   * Markdown, but every code fense can be a live "Island"
+   * if `live` is in the codefence's meta tag and the compiler
+   * is registered here, or by the user of repl-sdk.
+   */
   md: markdown.md,
+
+  /**
+   * Glimmer-flavored Markdown.
+   *
+   * Like the markdow renderer, but the resulting HTML
+   * is a Glimmer Component, rather than just plain HTML.
+   *
+   * https://emberjs.com
+   * https://repl.nullvoxpopuli.com
+   * https://kolay.nullvoxpopuli.com
+   * https://tutorial.glimdown.com
+   * https://limber.glimdown.com
+   */
+  gmd: ember.gmd,
+  /**
+   * Glimmer-Flavored JavaScript
+   *
+   * https://emberjs.com
+   */
   gjs: ember.gjs,
+  /**
+   * TODO:
+   * Glimmer-flavored TypeScript
+   *
+   * https://emberjs.com
+   */
+  // gts: ember.gts,
+
   /**
    * JSX is too overloaded to treat one way.
    * We need to split this, and then make folks choose which one to use
@@ -48,6 +80,12 @@ export const compilers = {
      * https://react.dev/
      */
     react: react.jsx,
+
+    /**
+     * TODO:
+     * https://www.solidjs.com/
+     */
+    // solid: solid.jsx,
   },
   /**
    * https://mermaid.js.org/
