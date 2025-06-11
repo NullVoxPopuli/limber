@@ -1,5 +1,7 @@
 import rehypeShiki from '@shikijs/rehype';
 import { stripIndent } from 'common-tags';
+import type { Element, Root as HastRoot } from 'hast';
+import type { Heading, Root as MdastRoot } from 'mdast';
 import { visit } from 'unist-util-visit';
 import { describe, expect as errorExpect, it } from 'vitest';
 
@@ -45,16 +47,12 @@ describe('options', () => {
       const result = await parseMarkdown(`# Title`, {
         ...defaults,
         remarkPlugins: [
-          function noH1(/* options */) {
-            return (tree) => {
-              return visit(tree, ['heading'], function (node) {
-                if (!('depth' in node)) return;
-
+          function noH1() {
+            return (tree: MdastRoot) => {
+              visit(tree, 'heading', function (node: Heading) {
                 if (node.depth === 1) {
                   node.depth = 2;
                 }
-
-                return 'skip';
               });
             };
           },
@@ -70,16 +68,12 @@ describe('options', () => {
         ...defaults,
         remarkPlugins: [
           [
-            function noH1(options: { depth: number }) {
-              return (tree) => {
-                return visit(tree, ['heading'], function (node) {
-                  if (!('depth' in node)) return;
-
+            function noH1(options: { depth: 1 | 2 | 3 | 4 | 5 | 6 }) {
+              return (tree: MdastRoot) => {
+                visit(tree, 'heading', function (node: Heading) {
                   if (node.depth === 1) {
                     node.depth = options.depth;
                   }
-
-                  return 'skip';
                 });
               };
             },
@@ -98,16 +92,12 @@ describe('options', () => {
       const result = await parseMarkdown(`# Title`, {
         ...defaults,
         rehypePlugins: [
-          function noH1(/* options */) {
-            return (tree) => {
-              return visit(tree, ['element'], function (node) {
-                if (!('tagName' in node)) return;
-
+          function noH1() {
+            return (tree: HastRoot) => {
+              visit(tree, 'element', function (node: Element) {
                 if (node.tagName === 'h1') {
                   node.tagName = 'h2';
                 }
-
-                return 'skip';
               });
             };
           },
@@ -123,16 +113,12 @@ describe('options', () => {
         ...defaults,
         rehypePlugins: [
           [
-            function noH1(options: { depth: number }) {
-              return (tree) => {
-                return visit(tree, ['element'], function (node) {
-                  if (!('tagName' in node)) return;
-
+            function noH1(options: { depth: 1 | 2 | 3 | 4 | 5 | 6 }) {
+              return (tree: HastRoot) => {
+                visit(tree, 'element', function (node: Element) {
                   if (node.tagName === 'h1') {
                     node.tagName = `h${options.depth ?? 2}`;
                   }
-
-                  return 'skip';
                 });
               };
             },

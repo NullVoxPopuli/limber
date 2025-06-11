@@ -1,5 +1,3 @@
-import type { Plugin } from 'unified';
-
 export interface LiveCodeExtractionOptions {
   isLive?: (meta: string, lang: string) => boolean;
   ALLOWED_FORMATS?: string[];
@@ -15,8 +13,8 @@ export interface PublicOptions {
   demo?: {
     classList?: string[];
   };
-  remarkPlugins?: Plugin[];
-  rehypePlugins?: Plugin[];
+  remarkPlugins?: unknown[];
+  rehypePlugins?: unknown[];
 }
 
 export type InternalOptions = PublicOptions & LiveCodeExtractionOptions;
