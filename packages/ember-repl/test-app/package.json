@@ -60,6 +60,7 @@
     "@rollup/plugin-babel": "^6.0.4",
     "@tsconfig/ember": "^3.0.9",
     "@types/common-tags": "^1.8.4",
+    "@types/mdast": "^4.0.4",
     "@types/qunit": "^2.19.12",
     "@types/rsvp": "^4.0.9",
     "babel-plugin-ember-template-compilation": "^2.3.0",
@@ -102,6 +103,9 @@
   "ember-addon": {
     "type": "app",
     "version": 2
+  },
+  "imports": {
+    "#components/*": "./app/components/*"
   },
   "exports": {
     "./tests/*": "./tests/*",

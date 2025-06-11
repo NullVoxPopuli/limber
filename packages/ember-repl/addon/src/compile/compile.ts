@@ -9,6 +9,8 @@ export const CACHE = new Map<string, ComponentLike>();
 
 interface Options {
   format: Format;
+  remarkPlugins?: unknown[];
+  rehypePlugins?: unknown[];
   onSuccess?: (component: ComponentLike) => Promise<unknown> | unknown;
   onError?: (error: string) => Promise<unknown> | unknown;
   onCompileStart?: () => Promise<unknown> | unknown;

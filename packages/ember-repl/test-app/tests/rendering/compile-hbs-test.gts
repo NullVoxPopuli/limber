@@ -6,7 +6,7 @@ import { getCompiler } from 'ember-repl';
 
 import { setupCompiler } from 'ember-repl/test-support';
 
-import { Await } from '../helpers/await';
+import { Await } from '../helpers/await.gts';
 
 module('compileHBS()', function (hooks) {
   setupRenderingTest(hooks);

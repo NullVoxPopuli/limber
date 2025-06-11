@@ -5,11 +5,12 @@ import { setupRenderingTest } from 'ember-qunit';
 
 import { stripIndent } from 'common-tags';
 import { compile, getCompiler } from 'ember-repl';
-import ExampleComponent from 'ember-repl-test-app/components/example-component';
+
+import ExampleComponent from '#components/example-component.gts';
 
 import { setupCompiler } from 'ember-repl/test-support';
 
-import { Await } from '../helpers/await';
+import { Await } from '../helpers/await.gts';
 
 import type { ComponentLike } from '@glint/template';
 

@@ -9,6 +9,8 @@ import { visit } from 'unist-util-visit';
 
 import { setupCompiler } from 'ember-repl/test-support';
 
+import type { Root } from 'mdast';
+import type { Plugin } from 'unified';
 import type { ComponentLike } from '@glint/template';
 import type { Parent } from 'unist';
 
@@ -98,7 +100,7 @@ module('Rendering | compile()', function (hooks) {
           assert.dom('pre').exists();
         });
 
-        const removePre =
+        const removePre: Plugin<[], Root> =
           /**
            * Test plugin that just turns code into an
            * unformatted mess in a p tag
@@ -360,7 +362,7 @@ module('Rendering | compile()', function (hooks) {
         },
         rehypePlugins: [
           function noH1(/* options */) {
-            return (tree) => {
+            return (tree: Root) => {
               return visit(tree, ['element'], function (node) {
                 if (!('tagName' in node)) return;
 
@@ -373,7 +375,7 @@ module('Rendering | compile()', function (hooks) {
                 return 'skip';
               });
             };
-          },
+          } as Plugin<[], Root>,
         ],
       });
 
