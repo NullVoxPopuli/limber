@@ -93,7 +93,7 @@ export default class Compiler extends Component<Signature> {
       });
     };
 
-    let compiler = getCompiler(this);
+    const compiler = getCompiler(this);
 
     switch (format) {
       case 'glimdown':

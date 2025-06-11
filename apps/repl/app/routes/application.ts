@@ -53,7 +53,8 @@ export default class ApplicationRoute extends Route {
 
             return {
               ...c,
-              // @ts-ignore
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-expect-error
               increment: () => c.current++,
               get value() {
                 return c.current;

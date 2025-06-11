@@ -1,11 +1,12 @@
 import rehypeShiki from '@shikijs/rehype';
 import { stripIndent } from 'common-tags';
-import type { Element, Root as HastRoot } from 'hast';
-import type { Heading, Root as MdastRoot } from 'mdast';
 import { visit } from 'unist-util-visit';
 import { describe, expect as errorExpect, it } from 'vitest';
 
 import { parseMarkdown } from './parse.js';
+
+import type { Element, Root as HastRoot } from 'hast';
+import type { Heading, Root as MdastRoot } from 'mdast';
 
 const expect = errorExpect.soft;
 
