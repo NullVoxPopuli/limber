@@ -5,7 +5,15 @@ import type { ComponentLike } from '@glint/template';
 export const RESOLVE = Symbol('CompileState::resolve');
 export const REJECT = Symbol('CompileState::reject');
 
-export class CompileState implements PromiseLike<CompileState> {
+interface State {
+  component: ComponentLike | undefined;
+  error: Error | undefined;
+  isReady: boolean;
+  reason: string | undefined;
+  promise: Promise<ComponentLike>;
+}
+
+export class CompileState implements PromiseLike<State>, State {
   @tracked component: undefined | ComponentLike;
   @tracked error: undefined | Error;
 
@@ -26,13 +34,14 @@ export class CompileState implements PromiseLike<CompileState> {
     return this.#promise;
   }
 
-  then<TResult1 = CompileState, TResult2 = never>(
-    onfulfilled?: ((value: CompileState) => TResult1 | PromiseLike<TResult1>) | null,
+  then<TResult1 = State, TResult2 = never>(
+    onfulfilled?: ((value: State) => TResult1 | PromiseLike<TResult1>) | null  ,
     onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null
   ): PromiseLike<TResult1 | TResult2> {
-    return this.#promise
-      .then(() => onfulfilled?.(this))
-      .catch((e) => onrejected?.(e)) as PromiseLike<TResult1 | TResult2>;
+     this.#promise.then(() => onfulfilled?.(this)).catch((e) => onrejected?.(e));
+
+    // This is unused, but I don't know how to make TS happy about it.
+    return this as unknown as PromiseLike<TResult1 | TResult2>;
   }
 
   /**
