@@ -12,10 +12,27 @@ let manifest = await (async () => {
   return JSON.parse(buffer.toString());
 })();
 
-let externals = Object.keys({
-  ...(manifest.dependencies || {}),
-  ...(manifest.peerDependencies || {}),
-});
+let forcedExternals = [
+  "unified",
+  "remark-parse",
+  "remark-rehype",
+  "remark-gfm",
+  "rehype-raw",
+  "rehype-stringify",
+  "mdast",
+  "hast",
+  "unist",
+  "unist-util-visit",
+  "vfile",
+];
+
+let externals = [
+  ...Object.keys({
+    ...(manifest.dependencies || {}),
+    ...(manifest.peerDependencies || {}),
+  }),
+  ...forcedExternals,
+];
 
 export default defineConfig({
   build: {

@@ -2,12 +2,13 @@
  * @typedef {import('unified').Plugin} Plugin
  */
 import { assert, isRecord } from '../utils.js';
+import { buildCodeFenceMetaUtils } from './markdown/utils.js';
 
 /**
  * @param {unknown} [ options ]
  * @returns {{ remarkPlugins: Plugin[], rehypePlugins: Plugin[] }}
  */
-function filterOptions(options) {
+export function filterOptions(options) {
   if (!isRecord(options)) {
     return { remarkPlugins: [], rehypePlugins: [] };
   }
@@ -18,59 +19,17 @@ function filterOptions(options) {
   };
 }
 
-export function isNotMarkdownLike(lang) {
-  return lang !== 'md' && lang !== 'gmd' && lang !== 'mdx';
-}
-
 /**
  * @type {import('../types.ts').CompilerConfig}
  */
 export const md = {
   compiler: async (config, api) => {
-    const ALLOWED_FORMATS = api.getAllowedFormats().filter(isNotMarkdownLike);
+    const { isLive, isPreview, needsLive, allowedFormats, isBelow } = buildCodeFenceMetaUtils(api);
 
     // Try both possible structures
     const userOptions = filterOptions(
       /** @type {Record<string, unknown>} */ (config.userOptions)?.md || config
     );
-
-    /**
-     * @param {string} lang
-     */
-    function needsLive(lang) {
-      if (!ALLOWED_FORMATS.includes(lang)) return false;
-
-      return api.optionsFor(lang).needsLiveMeta ?? true;
-    }
-
-    /**
-     * @param {string} meta
-     * @param {string} lang
-     */
-    function isLive(meta, lang) {
-      if (!needsLive(lang)) return true;
-      if (!meta) return false;
-
-      return meta.includes('live');
-    }
-
-    /**
-     * @param {string} meta
-     */
-    function isPreview(meta) {
-      if (!meta) return false;
-
-      return meta.includes('preview');
-    }
-
-    /**
-     * @param {string} meta
-     */
-    function isBelow(meta) {
-      if (!meta) return false;
-
-      return meta.includes('below');
-    }
 
     // No recursing for now.
 
@@ -89,7 +48,7 @@ export const md = {
           isPreview,
           isBelow,
           needsLive,
-          ALLOWED_FORMATS,
+          ALLOWED_FORMATS: allowedFormats,
         });
         let escaped = result.text.replace(/`/g, '\\`');
 

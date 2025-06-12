@@ -5,7 +5,7 @@ import { decompressFromEncodedURIComponent } from 'lz-string';
  *   (esp from various browser extensions)
  *
  */
-export type Format = 'glimdown' | 'gjs' | 'hbs';
+export type Format = 'glimdown' | 'gjs' | 'hbs' | 'svelte' | 'vue';
 
 export type NewContent = {
   format: Format;
