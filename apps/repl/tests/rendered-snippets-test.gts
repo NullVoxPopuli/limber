@@ -2,7 +2,7 @@ import { click, fillIn, render } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import { compile as compileAnything, type EvalImportMap } from 'ember-repl';
+import { compile as compileAnything, type EvalImportMap, getCompiler } from 'ember-repl';
 
 import { getFromLabel } from 'limber/snippets';
 import { importMap } from 'limber/routes/import-map';
@@ -22,7 +22,7 @@ module('Rendered Snippets / Demos', function (hooks) {
     let component: ComponentLike | undefined;
     let error: string | undefined;
 
-    await compileAnything(getService(context), text, {
+    await compileAnything(getCompiler(context), text, {
       format: 'glimdown',
       onCompileStart: async () => assert.step('start compile'),
       onSuccess: async (compiled) => {
