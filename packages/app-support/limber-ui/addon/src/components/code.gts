@@ -4,7 +4,7 @@ import { htmlSafe } from '@ember/template';
 
 import { link } from 'reactiveweb/link';
 
-type AllowedFormat = 'gjs' | 'gts' | 'hbs' | 'gmd';
+type AllowedFormat = 'gjs' | 'gts' | 'hbs' | 'gmd' | 'vue' | 'svelte' | 'mermaid';
 type Storage = 'local' | 'url';
 
 import { HostMessaging } from './frame-messaging.ts';

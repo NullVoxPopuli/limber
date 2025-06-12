@@ -1,26 +1,31 @@
-import { Compiled } from 'ember-repl';
+import { on } from '@ember/modifier';
 
-const options = {
-  gjs: {
-    format: 'gjs'
+import { Compiled } from 'ember-repl';
+import { cell } from 'ember-resources';
+
+function handleChange(fun) {
+  return (event) => {
+    fun(event.target.value);
   }
 }
 
-const gjs = `
+const gjs = cell(`
 <template>
   hello there!
 </template>
-`;
+`);
 
-const md = `
+const md = cell(`
 # Title
 
 **emphasis** text
-`;
+`);
 
 const GJSDemo = <template>
   <fieldset><legend>gjs</legend>
-  {{#let (Compiled @input options.gjs) as |compiled|}}
+    <textarea {{on 'change' (handleChange gjs.set)}} style="height: 100px; width: 300px;">{{gjs.current}}</textarea>
+
+  {{#let (Compiled gjs.current "gjs") as |compiled|}}
     <pre>{{JSON.stringify compiled}}</pre>
     {{compiled.error}}
     {{#if compiled.component}}
@@ -32,7 +37,9 @@ const GJSDemo = <template>
 
 const MarkdownDemo = <template>
 <fieldset><legend>Markdown</legend>
-  {{#let (Compiled @input) as |compiled|}}
+  <textarea {{on 'change' (handleChange md.set)}} style="height: 100px; width: 300px;">{{md.current}}</textarea>
+
+  {{#let (Compiled md.current) as |compiled|}}
     <pre>{{JSON.stringify compiled}}</pre>
     {{compiled.error}}
     {{#if compiled.component}}
@@ -43,6 +50,8 @@ const MarkdownDemo = <template>
 </template>;
 
 <template>
-  <GJSDemo @input={{gjs}} />
-  <MarkdownDemo @input={{md}} />
+  <div style="display: flex; flex-wrap: wrap;">
+    <GJSDemo />
+    <MarkdownDemo />
+  </div>
 </template>
