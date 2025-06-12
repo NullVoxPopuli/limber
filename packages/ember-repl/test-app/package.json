@@ -18,7 +18,7 @@
     "build:test": "NODE_ENV=development vite build --mode test",
     "test:chrome": "CI_BROWSER=Chrome pnpm dist:ember:test",
     "test:firefox": "CI_BROWSER=Firefox pnpm dist:ember:test",
-    "dist:ember:test": "ember test --path dist --config-file ./testem.cjs --test-port 0",
+    "dist:ember:test": "testem ci --port 0",
     "lint:types": "glint",
     "lint:js": "pnpm -w exec lint js",
     "lint:js:fix": "pnpm -w exec lint js:fix",
@@ -26,7 +26,7 @@
     "lint:hbs:fix": "pnpm -w exec lint hbs:fix",
     "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
     "lint:prettier": "pnpm -w exec lint prettier",
-    "test:ember": "vite build --mode test && ember test --path dist"
+    "test:ember": "vite build --mode test && testem ci"
   },
   "dependencies": {
     "@shikijs/rehype": "^1.29.2",
@@ -53,7 +53,7 @@
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
     "@glint/core": "1.4.1-unstable.0e0d936",
-    "@glint/environment-ember-loose": "1.5.2",
+    "@glint/environment-ember-loose": "1.4.1-unstable.0e0d936",
     "@glint/environment-ember-template-imports": "1.4.1-unstable.0e0d936",
     "@glint/template": "1.4.1-unstable.0e0d936",
     "@nullvoxpopuli/eslint-configs": "^5.0.0",
@@ -84,9 +84,10 @@
     "prettier-plugin-ember-template-tag": "2.0.4",
     "qunit": "^2.24.1",
     "qunit-dom": "3.4.0",
-    "typescript": "5.7.3",
-    "unified": "^10.1.2",
-    "vite": "^6.0.0",
+    "testem": "^3.16.0",
+    "typescript": "5.8.3",
+    "unified": "^11.0.5",
+    "vite": "^6.3.5",
     "vite-plugin-node-polyfills": "^0.23.0"
   },
   "engines": {

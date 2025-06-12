@@ -7,6 +7,7 @@ if (typeof module !== 'undefined') {
   module.exports = {
     test_page: 'tests/index.html?hidepassed',
     disable_watching: true,
+    cwd: 'dist',
     proxies: {
       '/output': {
         target: 'http://localhost:4200',

@@ -28,7 +28,7 @@
     "prettier": "^3.5.2",
     "prettier-plugin-ember-template-tag": "2.0.4",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "release-plan": "^0.16.0",
+    "release-plan": "^0.17.0",
     "turbo": "^2.4.2"
   },
   "packageManager": "pnpm@10.11.0",

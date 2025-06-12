@@ -44,7 +44,7 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.23.9",
-    "@nullvoxpopuli/eslint-configs": "^4.0.0",
+    "@nullvoxpopuli/eslint-configs": "^5.0.0",
     "@shikijs/rehype": "^1.29.2",
     "@tsconfig/ember": "^3.0.7",
     "@types/common-tags": "^1.8.4",
@@ -60,7 +60,7 @@
     "remark-gfm": "^4.0.1",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
-    "typescript": "^5.7.3",
+    "typescript": "^5.8.3",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0",
     "vfile": "^6.0.3",
@@ -71,7 +71,7 @@
   "dependencies": {
     "es-module-shims": "^2.4.1",
     "mime": "^4.0.7",
-    "package-name-regex": "^4.0.1",
+    "package-name-regex": "^4.0.3",
     "resolve.exports": "^2.0.3",
     "resolve.imports": "^2.0.3",
     "tarparser": "^0.0.4"

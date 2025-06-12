@@ -20,10 +20,10 @@
     "@nullvoxpopuli/eslint-configs": "^5.0.0",
     "@rollup/plugin-node-resolve": "^15.3.1",
     "eslint": "^9.25.1",
-    "mocha": "^10.8.2",
+    "mocha": "^11.6.0",
     "prettier": "^3.5.2",
     "rollup": "^4.40.1",
-    "typescript": "5.7.3"
+    "typescript": "5.8.3"
   },
   "dependencies": {
     "@lezer/highlight": "^1.2.1",
