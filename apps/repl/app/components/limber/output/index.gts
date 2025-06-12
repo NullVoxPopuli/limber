@@ -18,9 +18,11 @@ interface Signature {
 const Seconds = resource(({ on }) => {
   const value = cell(0);
 
-  setInterval(() => {
+  const interval = setInterval(() => {
     value.current++;
   }, 1000);
+
+  on.cleanup(() => clearInternal(interval));
 
   return () => value.current;
 });
@@ -43,12 +45,11 @@ export const Output: TOC<Signature> = <template>
 
         {{#if context.isWaiting}}
           Building for ...
-          {{Seconds}}
+          {{Seconds}}s
         {{/if}}
 
         {{#if context.component}}
           <div {{highlight context.component}}>
-            {{! @glint-ignore }}
             <context.component />
           </div>
         {{/if}}

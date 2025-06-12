@@ -28,7 +28,6 @@ export async function compiler(config, api) {
    */
   let hbsCompiler = {
     compile: async (text, options) => {
-      // @ts-ignore
       const { template } = await api.tryResolve('@ember/template-compiler/runtime');
 
       let component = template(text, {
