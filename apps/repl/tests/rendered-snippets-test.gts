@@ -18,13 +18,13 @@ module('Rendered Snippets / Demos', function (hooks) {
     clearCompileCache();
   });
 
-  async function compile(text: string, { assert }: { assert: QUnit['assert'] }) {
+  async function compile(context: object, text: string, { assert }: { assert: QUnit['assert'] }) {
     let component: ComponentLike | undefined;
     let error: string | undefined;
 
     const { importMap } = await import('limber/routes/import-map');
 
-    await compileAnything(text, {
+    await compileAnything(getService(context), text, {
       format: 'glimdown',
       importMap: importMap as unknown as EvalImportMap,
       onCompileStart: async () => assert.step('start compile'),
@@ -44,7 +44,7 @@ module('Rendered Snippets / Demos', function (hooks) {
   module('Welcome', function () {
     test('it renders', async function (assert) {
       const text = await getFromLabel('Welcome');
-      const { Component, error } = await compile(text, { assert });
+      const { Component, error } = await compile(this, text, { assert });
 
       assert.ok(Component, 'component rendered');
       assert.notOk(error, 'no error, because compilation was success');
@@ -62,7 +62,7 @@ module('Rendered Snippets / Demos', function (hooks) {
 
     hooks.beforeEach(async function (assert) {
       const text = await getFromLabel('With inline Javascript');
-      const { Component, error } = await compile(text, { assert });
+      const { Component, error } = await compile(this, text, { assert });
 
       assert.ok(Component, 'component rendered');
       assert.notOk(error, 'no error, because compilation was success');
@@ -97,7 +97,7 @@ module('Rendered Snippets / Demos', function (hooks) {
   module('With inline Templates', function () {
     test('it renders', async function (assert) {
       const text = await getFromLabel('With inline Templates');
-      const { Component, error } = await compile(text, { assert });
+      const { Component, error } = await compile(this, text, { assert });
 
       assert.ok(Component, 'component rendered');
       assert.notOk(error, 'no error, because compilation was success');
@@ -112,7 +112,7 @@ module('Rendered Snippets / Demos', function (hooks) {
   module('Styleguide Demo', function () {
     test('it renders', async function (assert) {
       const text = await getFromLabel('Styleguide Demo');
-      const { Component, error } = await compile(text, { assert });
+      const { Component, error } = await compile(this, text, { assert });
 
       assert.ok(Component, 'component rendered');
       assert.notOk(error, 'no error, because compilation was success');
@@ -127,7 +127,7 @@ module('Rendered Snippets / Demos', function (hooks) {
   module('Build your own REPL', function () {
     test('it renders', async function (assert) {
       const text = await getFromLabel('Styleguide Demo');
-      const { Component, error } = await compile(text, { assert });
+      const { Component, error } = await compile(this, text, { assert });
 
       assert.ok(Component, 'component rendered');
       assert.notOk(error, 'no error, because compilation was success');
@@ -142,7 +142,7 @@ module('Rendered Snippets / Demos', function (hooks) {
   module('Menu with focus trap', function () {
     test('it works', async function (assert) {
       const text = await getFromLabel('Menu with focus trap');
-      const { Component, error } = await compile(text, { assert });
+      const { Component, error } = await compile(this, text, { assert });
 
       assert.ok(Component, 'component rendered');
       assert.notOk(error, 'no error, because compilation was success');
@@ -160,7 +160,7 @@ module('Rendered Snippets / Demos', function (hooks) {
   module('Forms', function () {
     test('it works', async function (assert) {
       const text = await getFromLabel('Forms');
-      const { Component, error } = await compile(text, { assert });
+      const { Component, error } = await compile(this, text, { assert });
 
       assert.ok(Component, 'component rendered');
       assert.notOk(error, 'no error, because compilation was success');
@@ -180,7 +180,7 @@ module('Rendered Snippets / Demos', function (hooks) {
     // Bug in RemoteData
     skip('it works', async function (assert) {
       const text = await getFromLabel('RemoteData');
-      const { Component, error } = await compile(text, { assert });
+      const { Component, error } = await compile(this, text, { assert });
 
       assert.ok(Component, 'component rendered');
       assert.notOk(error, 'no error, because compilation was success');

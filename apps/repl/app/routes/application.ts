@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import Route from '@ember/routing/route';
 
 import { setupTabster } from 'ember-primitives/tabster';
@@ -27,13 +28,15 @@ export default class ApplicationRoute extends Route {
       modules: {
         // Ember Libraries Bundled with this REPL
         'ember-deep-tracked': () => import('ember-deep-tracked'),
-        'ember-focus-trap': () => import('ember-focus-trap'),
         'ember-modifier': () => import('ember-modifier'),
         'ember-primitives': () => import('ember-primitives'),
         'ember-resources': () => import('ember-resources'),
         'tracked-built-ins': () => import('tracked-built-ins'),
-        'tracked-toolbox': () => import('tracked-toolbox'),
         'ember-repl': () => import('ember-repl'),
+        // @ts-expect-error
+        'ember-focus-trap': () => import('ember-focus-trap'),
+        // @ts-expect-error
+        'tracked-toolbox': () => import('tracked-toolbox'),
 
         // Components from this app
         'limber-ui': () => import('limber-ui'),
@@ -53,7 +56,7 @@ export default class ApplicationRoute extends Route {
 
             return {
               ...c,
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
               // @ts-expect-error
               increment: () => c.current++,
               get value() {
