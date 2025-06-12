@@ -30,6 +30,10 @@ export class CompileState implements State {
     return this.error?.message;
   }
 
+  get isWaiting() {
+    return !this.isReady && !this.error;
+  }
+
   get promise() {
     return this.#promise;
   }
