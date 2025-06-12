@@ -24,7 +24,6 @@ module('Rendered Snippets / Demos', function (hooks) {
 
     await compileAnything(getService(context), text, {
       format: 'glimdown',
-      importMap: importMap as unknown as EvalImportMap,
       onCompileStart: async () => assert.step('start compile'),
       onSuccess: async (compiled) => {
         component = compiled;
