@@ -62,6 +62,8 @@ export const md = {
             /** @type {Record<string, unknown>} */
             const infoObj = /** @type {Record<string, unknown>} */ (info);
 
+            console.log(infoObj.format, infoObj.flavor);
+
             if (
               !api.canCompile(
                 /** @type {string} */ (infoObj.format),

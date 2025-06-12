@@ -206,21 +206,6 @@ export default class CompilerService extends Service {
        */
       flavor: 'ember',
     });
-
-    const name = nameFor(source);
-    let component: undefined | ComponentLike;
-    let error: undefined | Error;
-
-    try {
-      await Promise.resolve();
-      component = template(source, {
-        scope: () => ({ array, concat, fn, get, hash, on, ...(options?.scope ?? {}) }),
-      }) as unknown as ComponentLike;
-    } catch (e) {
-      error = e as Error | undefined;
-    }
-
-    return { name, component, error };
   }
 
   @waitFor

@@ -22,7 +22,7 @@ const Seconds = resource(({ on }) => {
     value.current++;
   }, 1000);
 
-  on.cleanup(() => clearInternal(interval));
+  on.cleanup(() => clearInterval(interval));
 
   return () => value.current;
 });

@@ -18,12 +18,8 @@ interface Signature {
   };
 }
 
-/**
- * The Receiving Component is Limber::FrameOutput
- */
 export default class Compiler extends Component<Signature> {
   <template>
-    {{log this.text this.format}}
     {{#let (Compiled this.text this.format) as |compiled|}}
       {{yield compiled}}
     {{/let}}
