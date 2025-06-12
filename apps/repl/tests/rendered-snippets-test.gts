@@ -5,24 +5,22 @@ import { setupRenderingTest } from 'ember-qunit';
 import { compile as compileAnything, type EvalImportMap } from 'ember-repl';
 
 import { getFromLabel } from 'limber/snippets';
-
-import { clearCompileCache } from 'ember-repl/test-support';
+import { importMap } from 'limber/routes/import-map';
 
 import type { ComponentLike } from '@glint/template';
 import type QUnit from 'qunit';
 
 module('Rendered Snippets / Demos', function (hooks) {
   setupRenderingTest(hooks);
-
-  hooks.beforeEach(function () {
-    clearCompileCache();
+  setupCompiler(hooks, {
+    modules: {
+      ...importMap,
+    },
   });
 
   async function compile(context: object, text: string, { assert }: { assert: QUnit['assert'] }) {
     let component: ComponentLike | undefined;
     let error: string | undefined;
-
-    const { importMap } = await import('limber/routes/import-map');
 
     await compileAnything(getService(context), text, {
       format: 'glimdown',
