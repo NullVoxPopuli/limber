@@ -2,6 +2,7 @@ import { click, fillIn, render } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
+import { setupCompiler } from 'ember-repl/test-support';
 import { compile as compileAnything, type EvalImportMap, getCompiler } from 'ember-repl';
 
 import { getFromLabel } from 'limber/snippets';
