@@ -23,8 +23,8 @@ interface Signature {
  */
 export default class Compiler extends Component<Signature> {
   <template>
+    {{log this.text this.format}}
     {{#let (Compiled this.text this.format) as |compiled|}}
-      {{log this.text this.format}}
       {{yield compiled}}
     {{/let}}
   </template>

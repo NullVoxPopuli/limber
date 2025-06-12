@@ -2,7 +2,7 @@
 import Route from '@ember/routing/route';
 
 import { setupTabster } from 'ember-primitives/tabster';
-import { setupCompiler } from 'ember-repl';
+import { getCompiler, setupCompiler } from 'ember-repl';
 import { cell } from 'ember-resources';
 
 import { importMap } from './import-map.ts';
@@ -19,6 +19,20 @@ export default class ApplicationRoute extends Route {
       setupTabster(this);
       map.add(this);
     }
+
+    /**
+     * This is for private debugging.
+     */
+    (globalThis as any)['REPL'] = {
+      state: {
+        get editor() {
+          return owner.lookup('service:editor');
+        },
+        get compiler() {
+          return getCompiler(owner);
+        },
+      },
+    };
 
     setupCompiler(this, {
       /**
