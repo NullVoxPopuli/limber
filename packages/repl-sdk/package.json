@@ -11,6 +11,16 @@
       "default": "./src/compilers/ember/*.js"
     }
   },
+  "keywords": [
+    "ember-addon"
+  ],
+  "ember-addon": {
+    "version": 2,
+    "type": "addon",
+    "public-assets": {
+      "./assets/tar-worker.js": "./dist/assets/tar-worker-FjwkBMqD.js"
+    }
+  },
   "scripts": {
     "build": "pnpm prepack",
     "lint:fix": "pnpm -w exec lint fix",
@@ -69,6 +79,7 @@
     "vitest": "^3.1.2"
   },
   "dependencies": {
+    "comlink": "^4.4.2",
     "es-module-shims": "^2.4.1",
     "mime": "^4.0.7",
     "package-name-regex": "^4.0.3",
