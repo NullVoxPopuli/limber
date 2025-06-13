@@ -29,6 +29,7 @@ export const jsx = {
       async render(element, component) {
         const root = createRoot(element);
 
+        await new Promise((resolve) => requestAnimationFrame(resolve));
         root.render(component);
 
         // Wait for react-dom to render

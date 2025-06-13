@@ -56,6 +56,7 @@ export function buildCompiler(options) {
     isBelow: options.isBelow,
     needsLive: options.needsLive,
     ALLOWED_FORMATS: options.ALLOWED_FORMATS,
+    getFlavorFromMeta: options.getFlavorFromMeta,
   });
 
   // .use(() => (tree) => visit(tree, (node) => console.log('i', node)))

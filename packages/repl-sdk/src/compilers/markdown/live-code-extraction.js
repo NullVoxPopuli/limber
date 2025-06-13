@@ -24,7 +24,8 @@ import { GLIMDOWN_PREVIEW, GLIMDOWN_RENDER } from './const.js';
  * ], import('mdast').Root>}
  */
 export function liveCodeExtraction(options) {
-  let { code, demo, isLive, ALLOWED_FORMATS, isPreview, isBelow, needsLive } = options;
+  let { code, demo, isLive, ALLOWED_FORMATS, isPreview, isBelow, needsLive, getFlavorFromMeta } =
+    options;
   let { classList: snippetClasses } = code || {};
   let { classList: demoClasses } = demo || {};
 
@@ -125,6 +126,9 @@ export function liveCodeExtraction(options) {
       /**
        * Sometimes, meta is not required,
        * like with the `mermaid` language
+       *
+       * NOTE: that if a flavor is required, meta is present
+       *       if the flavor is provided
        */
       if (!meta) {
         if (needsLive(lang)) {
@@ -151,7 +155,7 @@ export function liveCodeExtraction(options) {
 
       /** @type {unknown[]} */ (file.data.liveCode).push({
         format: lang,
-        /* flavor,  */
+        flavor: getFlavorFromMeta(meta, lang),
         code,
         placeholderId: id,
         meta,

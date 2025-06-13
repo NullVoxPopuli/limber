@@ -42,9 +42,25 @@ export function buildCodeFenceMetaUtils(api) {
   /**
    * @param {string} meta
    * @param {string} lang
-   * @param {string | undefined} [ flavor ]
    */
-  function isLive(meta, lang, flavor) {
+  function getFlavorFromMeta(meta, lang) {
+    const flavors = api.getFlavorsFor(lang);
+
+    const flavor = meta
+      ?.trim()
+      .split(' ')
+      .find((metum) => flavors.includes(metum));
+
+    return flavor;
+  }
+
+  /**
+   * @param {string} meta
+   * @param {string} lang
+   */
+  function isLive(meta, lang) {
+    const flavor = getFlavorFromMeta(meta, lang);
+
     if (!needsLive(lang, flavor)) return true;
     if (!meta) return false;
 
@@ -57,5 +73,6 @@ export function buildCodeFenceMetaUtils(api) {
     isLive,
     needsLive,
     allowedFormats,
+    getFlavorFromMeta,
   };
 }

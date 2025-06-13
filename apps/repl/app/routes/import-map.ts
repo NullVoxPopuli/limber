@@ -17,7 +17,18 @@ import * as reactiveService from 'reactiveweb/resource/service';
 
 import { ExternalLink } from 'limber-ui';
 
-export const importMap = {};
+export const importMap = {
+  'ember-async-data': () => import('ember-async-data'),
+  'reactiveweb/debounce': () => import('reactiveweb/debounce'),
+  'reactiveweb/fps': () => import('reactiveweb/fps'),
+  'reactiveweb/function': () => import('reactiveweb/function'),
+  'reactiveweb/keep-latest': () => import('reactiveweb/keep-latest'),
+  'reactiveweb/link': () => import('reactiveweb/link'),
+  'reactiveweb/map': () => import('reactiveweb/map'),
+  'reactiveweb/remote-data': () => import('reactiveweb/remote-data'),
+  'reactiveweb/resource/modifier': () => import('reactiveweb/resource/modifier'),
+  'reactiveweb/resource/service': () => import('reactiveweb/resource/service'),
+};
 
 function defineWithWarning(
   obj: object,

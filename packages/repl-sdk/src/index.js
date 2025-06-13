@@ -510,6 +510,19 @@ export class Compiler {
     getCompiler: (format, flavor) => this.#getCompiler(format, flavor),
 
     getAllowedFormats: () => Object.keys(this.#options.formats),
+
+    getFlavorsFor: (format) => {
+      let config = this.#options.formats[format];
+
+      if (!config) return [];
+      if (typeof config === 'function') return [];
+
+      if (typeof config === 'object') {
+        return Object.keys(config);
+      }
+
+      return [];
+    },
   };
 
   #createDiv() {

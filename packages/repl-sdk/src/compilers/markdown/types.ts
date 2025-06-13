@@ -4,6 +4,7 @@ export interface LiveCodeExtractionOptions {
   isPreview?: (meta: string) => boolean;
   isBelow?: (meta: string) => boolean;
   needsLive?: (lang: string) => boolean;
+  getFlavorFromMeta?: (meta: string, lang: string) => string;
 }
 
 export interface PublicOptions {

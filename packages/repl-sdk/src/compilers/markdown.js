@@ -24,7 +24,8 @@ export function filterOptions(options) {
  */
 export const md = {
   compiler: async (config, api) => {
-    const { isLive, isPreview, needsLive, allowedFormats, isBelow } = buildCodeFenceMetaUtils(api);
+    const { isLive, isPreview, needsLive, allowedFormats, isBelow, getFlavorFromMeta } =
+      buildCodeFenceMetaUtils(api);
 
     // Try both possible structures
     const userOptions = filterOptions(
@@ -49,6 +50,7 @@ export const md = {
           isBelow,
           needsLive,
           ALLOWED_FORMATS: allowedFormats,
+          getFlavorFromMeta,
         });
         let escaped = result.text.replace(/`/g, '\\`');
 
@@ -61,8 +63,6 @@ export const md = {
           /** @type {unknown[]} */ (extra.codeBlocks).map(async (/** @type {unknown} */ info) => {
             /** @type {Record<string, unknown>} */
             const infoObj = /** @type {Record<string, unknown>} */ (info);
-
-            console.log(infoObj.format, infoObj.flavor);
 
             if (
               !api.canCompile(
