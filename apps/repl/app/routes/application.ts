@@ -43,7 +43,6 @@ export default class ApplicationRoute extends Route {
         // Ember Libraries Bundled with this REPL
         'ember-deep-tracked': () => import('ember-deep-tracked'),
         'ember-modifier': () => import('ember-modifier'),
-        'ember-primitives': () => import('ember-primitives'),
         'ember-resources': () => import('ember-resources'),
         'tracked-built-ins': () => import('tracked-built-ins'),
         'ember-repl': () => import('ember-repl'),

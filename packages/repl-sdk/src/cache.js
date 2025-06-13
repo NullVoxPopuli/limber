@@ -94,13 +94,14 @@ class Caches {
   }
 
   /**
-   * @type {(key: string, callback: () => Promise<unknown>) => Promise<unknown>}
+   * @template Return
+   * @type {(key: string, callback: () => Promise<any>) => Promise<any>}
    */
   cachedPromise(key, callback) {
     let existing = this.promiseCache.get(key);
 
     if (existing) {
-      return existing;
+      return /** @type {Promise<Return>} */ (existing);
     }
 
     let promise = callback();

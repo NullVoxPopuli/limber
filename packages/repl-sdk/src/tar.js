@@ -20,32 +20,17 @@ export async function getFromTarball(url) {
     return cache.fileCache.get(key);
   }
 
-  let existing =
-    /** @type {undefined | Promise<{ answer: import('./types.ts').RequestAnswer, name: string, version: string}>} */ (
-      cache.promiseCache.get(key)
-    );
+  let data = await cache.cachedPromise(key, async () => {
+    let untarred = await getTar(request.name, request.version);
+    let answer = resolve(untarred, request);
 
-  /**
-   * @type {Promise<{ answer: import('./types.ts').RequestAnswer, name: string, version: string}>}
-   */
-  let promise = existing
-    ? existing
-    : (async function newPromise() {
-        let untarred = await getTar(request.name, request.version);
-        let answer = resolve(untarred, request);
+    if (!answer) {
+      throw new Error(`Could not find file for ${request.original}`);
+    }
 
-        if (!answer) {
-          throw new Error(`Could not find file for ${request.original}`);
-        }
+    return { answer, name: request.name, version: request.version };
+  });
 
-        return { answer, name: request.name, version: request.version };
-      })();
-
-  if (!cache.promiseCache.has(key)) {
-    cache.promiseCache.set(key, promise);
-  }
-
-  let data = await promise;
   let untarred = await getTar(request.name, request.version);
 
   let result = getFile(untarred, key, data.answer);
@@ -97,16 +82,18 @@ async function getTar(name, requestedVersion) {
     return untarred;
   }
 
-  let json = await getNPMInfo(name, requestedVersion);
-  let tgzUrl = await getTarUrl(json, requestedVersion);
+  let contents = await cache.cachedPromise(`getTar:${key}`, async () => {
+    let json = await getNPMInfo(name, requestedVersion);
+    let tgzUrl = await getTarUrl(json, requestedVersion);
 
-  let response = await fetch(tgzUrl, {
-    headers: {
-      ACCEPT: 'application/octet-stream',
-    },
+    let response = await fetch(tgzUrl, {
+      headers: {
+        ACCEPT: 'application/octet-stream',
+      },
+    });
+
+    return await untar(await response.arrayBuffer());
   });
-
-  let contents = /** @type {any}*/ (await untar(await response.arrayBuffer()));
 
   let manifest = JSON.parse(contents['package.json'].text);
 
