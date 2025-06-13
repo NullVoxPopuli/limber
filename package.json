@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.26.9",
-    "@glint/core": "1.4.1-unstable.0e0d936",
+    "@glint/core": "2.0.1-unstable.4151d64",
     "@nullvoxpopuli/eslint-configs": "^5.0.0",
     "concurrently": "^9.1.2",
     "dev-tools": "workspace:*",
@@ -31,27 +31,27 @@
     "release-plan": "^0.17.0",
     "turbo": "^2.4.2"
   },
-  "packageManager": "pnpm@10.11.0",
+  "packageManager": "pnpm@10.12.1",
   "engines": {
     "node": ">= 22.11"
   },
   "volta": {
     "node": "22.14.0",
-    "pnpm": "10.11.0"
+    "pnpm": "10.12.1"
   },
   "pnpm": {
     "overrides": {
       "@nullvoxpopuli/eslint-configs": "^5.0.0",
       "@glimmer/component": "^2.0.0",
-      "@glint/core": "1.4.1-unstable.0e0d936",
-      "@glint/environment-ember-loose": "1.4.1-unstable.0e0d936",
-      "@glint/environment-ember-template-imports": "1.4.1-unstable.0e0d936",
+      "@glint/core": "2.0.1-unstable.4151d64",
+      "@glint/environment-ember-loose": "2.0.1-unstable.4151d64",
+      "@glint/environment-ember-template-imports": "2.0.1-unstable.4151d64",
       "@ember/test-waiters": "^4.1.0",
       "ember-element-helper": "^0.8.7",
       "ember-get-config": "github:mansona/ember-get-config#config-meta-loader",
-      "ember-auto-import": "^2.9.0",
+      "ember-auto-import": "^2.10.0",
       "ember-repl": "workspace:*",
-      "ember-source": ">= 6.4.0-alpha.3",
+      "ember-source": ">= 6.7.0-alpha.1",
       "array-includes": "npm:@nolyfill/array-includes@^1",
       "array.prototype.findlastindex": "npm:@nolyfill/array.prototype.findlastindex@^1",
       "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@^1",

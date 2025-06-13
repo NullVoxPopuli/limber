@@ -31,19 +31,21 @@ export function buildCodeFenceMetaUtils(api) {
 
   /**
    * @param {string} lang
+   * @param {string | undefined} [ flavor ]
    */
-  function needsLive(lang) {
+  function needsLive(lang, flavor) {
     if (!allowedFormats.includes(lang)) return false;
 
-    return api.optionsFor(lang).needsLiveMeta ?? true;
+    return api.optionsFor(lang, flavor).needsLiveMeta ?? true;
   }
 
   /**
    * @param {string} meta
    * @param {string} lang
+   * @param {string | undefined} [ flavor ]
    */
-  function isLive(meta, lang) {
-    if (!needsLive(lang)) return true;
+  function isLive(meta, lang, flavor) {
+    if (!needsLive(lang, flavor)) return true;
     if (!meta) return false;
 
     return meta.includes('live');

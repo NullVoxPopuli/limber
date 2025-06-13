@@ -91,10 +91,10 @@
     "@glimmer/syntax": "^0.94.9",
     "@glimmer/tracking": "^1.1.2",
     "@glimmer/util": "^0.94.6",
-    "@glint/core": "1.4.1-unstable.0e0d936",
-    "@glint/environment-ember-loose": "1.4.1-unstable.0e0d936",
-    "@glint/environment-ember-template-imports": "1.4.1-unstable.0e0d936",
-    "@glint/template": "1.4.1-unstable.0e0d936",
+    "@glint/core": "2.0.1-unstable.4151d64",
+    "@glint/environment-ember-loose": "2.0.1-unstable.4151d64",
+    "@glint/environment-ember-template-imports": "2.0.1-unstable.4151d64",
+    "@glint/template": "1.5.2",
     "@nullvoxpopuli/eslint-configs": "^5.0.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^28.0.2",
@@ -159,7 +159,7 @@
   "peerDependencies": {
     "@glimmer/compiler": ">= 0.86.0",
     "@glimmer/syntax": ">= 0.86.0",
-    "@glint/template": "1.4.1-unstable.0e0d936",
+    "@glint/template": "1.5.2",
     "webpack": ">= 5.92.0"
   },
   "peerDependenciesMeta": {
