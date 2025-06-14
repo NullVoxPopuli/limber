@@ -69,6 +69,7 @@ module('Output > Demos', function (hooks) {
 
         const text = await getFromLabel(demo.label);
 
+        // eslint-disable-next-line no-console
         console.log({ text });
         await settled();
 
