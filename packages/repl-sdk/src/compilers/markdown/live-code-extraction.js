@@ -20,6 +20,7 @@ import { GLIMDOWN_PREVIEW, GLIMDOWN_RENDER } from './const.js';
  *     isPreview: (meta: string) => boolean,
  *     isBelow: (meta: string) => boolean,
  *     needsLive: (lang: string) => boolean
+ *     getFlavorFromMeta: (meta: string, lang: string) => string | undefined
  *   },
  * ], import('mdast').Root>}
  */
@@ -155,7 +156,7 @@ export function liveCodeExtraction(options) {
 
       /** @type {unknown[]} */ (file.data.liveCode).push({
         format: lang,
-        flavor: getFlavorFromMeta(meta, lang),
+        flavor: getFlavorFromMeta(meta ?? '', lang),
         code,
         placeholderId: id,
         meta,
