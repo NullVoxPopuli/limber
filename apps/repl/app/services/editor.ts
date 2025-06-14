@@ -1,5 +1,4 @@
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import Service, { service } from '@ember/service';
 
 import { link } from 'reactiveweb/link';
@@ -17,12 +16,19 @@ export default class EditorService extends Service {
   @tracked errorLine?: number;
   @tracked scrollbarWidth = 0;
 
-  @link(FileURIComponent) declare fileURIComponent: FileURIComponent;
+  #fileURIComponent: FileURIComponent | undefined;
+  get fileURIComponent() {
+    if (this.#fileURIComponent) return this.#fileURIComponent;
+    // eslint-disable-next-line ember/no-side-effects
+    this.#fileURIComponent = new FileURIComponent();
+    link(this.#fileURIComponent, this);
 
-  @action
-  updateText(text: string) {
-    this.fileURIComponent.queue(text, this.format);
+    return this.#fileURIComponent;
   }
+
+  updateText = (text: string) => {
+    this.fileURIComponent.queue(text, this.format);
+  };
 
   get text() {
     return this.fileURIComponent.decoded;
@@ -57,8 +63,7 @@ export default class EditorService extends Service {
     }
   }
 
-  @action
-  updateDemo(text: string, format: Format) {
+  updateDemo = (text: string, format: Format) => {
     if (!this._editorSwapText) {
       this.#pendingUpdate = () => this.updateDemo(text, format);
 
@@ -70,7 +75,7 @@ export default class EditorService extends Service {
 
     // Update the editor
     this._editorSwapText?.(text, format);
-  }
+  };
 }
 
 // DO NOT DELETE: this is how TypeScript knows how to look up your services.

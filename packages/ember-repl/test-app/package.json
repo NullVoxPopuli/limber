@@ -15,6 +15,10 @@
     "lint:fix": "pnpm -w exec lint fix",
     "start": "vite",
     "test:scenarios": "ember try:each",
+    "build:test": "NODE_ENV=development vite build --mode test",
+    "test:chrome": "CI_BROWSER=Chrome pnpm dist:ember:test",
+    "test:firefox": "CI_BROWSER=Firefox pnpm dist:ember:test",
+    "dist:ember:test": "testem ci --port 0",
     "lint:types": "glint",
     "lint:js": "pnpm -w exec lint js",
     "lint:js:fix": "pnpm -w exec lint js:fix",
@@ -22,7 +26,7 @@
     "lint:hbs:fix": "pnpm -w exec lint hbs:fix",
     "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
     "lint:prettier": "pnpm -w exec lint prettier",
-    "test:ember": "vite build --mode test && ember test --path dist"
+    "test:ember": "vite build --mode test && testem ci"
   },
   "dependencies": {
     "@shikijs/rehype": "^1.29.2",
@@ -48,20 +52,21 @@
     "@embroider/vite": "^1.1.0",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
-    "@glint/core": "1.4.1-unstable.0e0d936",
-    "@glint/environment-ember-loose": "1.5.2",
-    "@glint/environment-ember-template-imports": "1.4.1-unstable.0e0d936",
-    "@glint/template": "1.4.1-unstable.0e0d936",
+    "@glint/core": "2.0.1-unstable.4151d64",
+    "@glint/environment-ember-loose": "2.0.1-unstable.4151d64",
+    "@glint/environment-ember-template-imports": "2.0.1-unstable.4151d64",
+    "@glint/template": "1.5.2",
     "@nullvoxpopuli/eslint-configs": "^5.0.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@tsconfig/ember": "^3.0.9",
     "@types/common-tags": "^1.8.4",
+    "@types/mdast": "^4.0.4",
     "@types/qunit": "^2.19.12",
     "@types/rsvp": "^4.0.9",
     "babel-plugin-ember-template-compilation": "^2.3.0",
     "concurrently": "^9.1.2",
     "decorator-transforms": "^2.3.0",
-    "ember-auto-import": "^2.9.0",
+    "ember-auto-import": "^2.10.0",
     "ember-cli": "6.2.2",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-htmlbars": "^6.3.0",
@@ -69,7 +74,7 @@
     "ember-page-title": "^9.0.1",
     "ember-qunit": "^9.0.1",
     "ember-resolver": "^13.1.0",
-    "ember-source": ">= 6.4.0-alpha.3",
+    "ember-source": ">= 6.7.0-alpha.1",
     "ember-source-channel-url": "^3.0.0",
     "ember-template-lint": "^7.2.0",
     "ember-try": "^4.0.0",
@@ -79,9 +84,10 @@
     "prettier-plugin-ember-template-tag": "2.0.4",
     "qunit": "^2.24.1",
     "qunit-dom": "3.4.0",
-    "typescript": "5.7.3",
-    "unified": "^10.1.2",
-    "vite": "^6.0.0",
+    "testem": "^3.16.0",
+    "typescript": "5.8.3",
+    "unified": "^11.0.5",
+    "vite": "^6.3.5",
     "vite-plugin-node-polyfills": "^0.23.0"
   },
   "engines": {
@@ -98,6 +104,9 @@
   "ember-addon": {
     "type": "app",
     "version": 2
+  },
+  "imports": {
+    "#components/*": "./app/components/*"
   },
   "exports": {
     "./tests/*": "./tests/*",

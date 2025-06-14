@@ -1,3 +1,4 @@
+import { tracked } from '@glimmer/tracking';
 import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
 import { service } from '@ember/service';
 import { buildWaiter } from '@ember/test-waiters';
@@ -67,7 +68,15 @@ export class FileURIComponent {
   @service declare router: RouterService;
 
   #initialFile = fileFromParams();
-  #text = this.#initialFile.text;
+
+  @tracked _text = this.#initialFile.text;
+
+  get #text() {
+    return this._text;
+  }
+  set #text(value) {
+    this._text = value;
+  }
 
   get format() {
     const location = this.#currentURL();

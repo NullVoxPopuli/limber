@@ -1,24 +1,15 @@
-import { PortalTargets } from 'ember-primitives';
+import { PortalTargets } from 'ember-primitives/components/portal-targets';
+import { Seconds } from 'reactiveweb/interval';
 
 import highlight from 'limber/modifiers/highlight-code-blocks';
 
 import CopyMenu from '../copy-menu';
 import Compiler from './compiler';
 
-import type { MessagingAPI } from './frame-messaging';
-import type { TOC } from '@ember/component/template-only';
-import type { Format } from 'limber/utils/messaging';
+const isGJS = (format: string | undefined) => format === 'gjs';
 
-interface Signature {
-  Args: {
-    messagingAPI: MessagingAPI;
-  };
-}
-
-const isGJS = (format: Format | undefined) => format === 'gjs';
-
-export const Output: TOC<Signature> = <template>
-  <Compiler @messagingAPI={{@messagingAPI}} as |context|>
+export const Output = <template>
+  <Compiler as |context|>
     <div class="prose relative max-w-full p-4" data-test-compiled-output>
       {{!
             The copy menu exists here for two reasons:
@@ -31,9 +22,13 @@ export const Output: TOC<Signature> = <template>
       <div class={{if (isGJS context.format) "glimdown-render"}}>
         <PortalTargets />
 
+        {{#if context.isWaiting}}
+          Building for ...
+          {{Seconds}}s
+        {{/if}}
+
         {{#if context.component}}
           <div {{highlight context.component}}>
-            {{! @glint-ignore }}
             <context.component />
           </div>
         {{/if}}

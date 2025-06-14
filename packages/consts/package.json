@@ -22,7 +22,7 @@
     "eslint": "^9.25.1",
     "prettier": "^3.5.2",
     "prettier-plugin-ember-template-tag": "2.0.4",
-    "typescript": "5.7.3"
+    "typescript": "5.8.3"
   },
   "volta": {
     "extends": "../../package.json"

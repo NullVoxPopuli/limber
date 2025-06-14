@@ -4,7 +4,7 @@ import { htmlSafe } from '@ember/template';
 
 import { link } from 'reactiveweb/link';
 
-type AllowedFormat = 'gjs' | 'gts' | 'hbs' | 'gmd';
+type AllowedFormat = 'gjs' | 'gts' | 'hbs' | 'gmd' | 'vue' | 'svelte' | 'mermaid';
 type Storage = 'local' | 'url';
 
 import { HostMessaging } from './frame-messaging.ts';
@@ -99,6 +99,11 @@ export default class Code extends Component<Signature> {
     return this.args.title ?? guidFor(this.code);
   }
 
+  /**
+   * This uses iframe postMessage to efficiently update state within the
+   * iframe's app so that we don't have to reload the whole app if we want to change the
+   * URL / code.
+   */
   <template>
     <iframe
       {{this.messaging.postMessage this.code}}

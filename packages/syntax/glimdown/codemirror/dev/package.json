@@ -15,13 +15,13 @@
     "@codemirror/language": "^6.10.8",
     "@codemirror/state": "^6.5.2",
     "@codemirror/theme-one-dark": "^6.1.2",
-    "@codemirror/view": "^6.36.3",
+    "@codemirror/view": "^6.37.2",
     "@glimdown/codemirror-dev-preview": "workspace:*",
     "@nullvoxpopuli/eslint-configs": "^5.0.0",
     "eslint": "^9.25.1",
     "prettier": "^3.5.2",
-    "typescript": "5.7.3",
-    "vite": "^5.4.14"
+    "typescript": "5.8.3",
+    "vite": "^6.3.5"
   },
   "volta": {
     "extends": "../../../../../package.json"
