@@ -1,3 +1,5 @@
+import type { ComponentLike } from '@glint/template';
+
 export type Input = string | undefined | null;
 export type Format =
   | 'glimdown'
@@ -16,4 +18,10 @@ export interface ScopeMap {
 
 export interface ModuleMap {
   [key: string]: () => Promise<unknown> | Record<string, unknown>;
+}
+
+export interface CompileResult {
+  component?: ComponentLike;
+  error?: Error;
+  name: string;
 }

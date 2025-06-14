@@ -1,5 +1,4 @@
 import { PortalTargets } from 'ember-primitives/components/portal-targets';
-
 import { Seconds } from 'reactiveweb/interval';
 
 import highlight from 'limber/modifiers/highlight-code-blocks';
