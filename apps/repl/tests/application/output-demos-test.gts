@@ -1,4 +1,3 @@
-import { assert as debugAssert } from '@ember/debug';
 import { settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
@@ -8,16 +7,10 @@ import Route from 'ember-route-template';
 import { DemoSelect } from 'limber/components/limber/demo-select';
 import { Output } from 'limber/components/limber/output';
 import { ALL, getFromLabel } from 'limber/snippets';
-import { fileFromParams, type Format } from 'limber/utils/messaging';
+import { fileFromParams } from 'limber/utils/messaging';
 
 import { getService } from '../helpers';
 import { Page } from './-page';
-
-import type {
-  MessagingAPI,
-  ParentMethods,
-} from 'limber/components/limber/output/frame-messaging.gts';
-import type { AsyncMethodReturns } from 'penpal';
 
 module('Output > Demos', function (hooks) {
   setupApplicationTest(hooks);
@@ -60,21 +53,13 @@ module('Output > Demos', function (hooks) {
   module('The output frame renders every demo', function () {
     for (const demo of ALL) {
       test(demo.label, async function (assert) {
-        let makeComponent!: (format: Format, text: string) => void;
-        let setParentFrame!: (parentAPI: AsyncMethodReturns<ParentMethods>) => void;
-
-        const api = {
-          onReceiveText: (callback: typeof makeComponent) => (makeComponent = callback),
-          onConnect: (callback) => (setParentFrame = callback),
-        } satisfies MessagingAPI;
-
         this.owner.register(
           'template:edit',
           Route(
             <template>
               <fieldset class="border">
                 <legend>Limber::Output</legend>
-                <Output @messagingAPI={{api}} />
+                <Output />
               </fieldset>
             </template>
           )
@@ -82,21 +67,9 @@ module('Output > Demos', function (hooks) {
 
         await page.expectRedirectToContent('/edit');
 
-        debugAssert(`setParentFrame did not get set`, setParentFrame);
-        debugAssert(`makeComponent did not get set`, makeComponent);
-
-        setParentFrame({
-          beginCompile: async () => assert.step('begin compile'),
-
-          error: async (e: any) => assert.step(e),
-          ready: async () => {},
-          success: async () => assert.step('success'),
-          finishedRendering: async () => assert.step('finished rendering'),
-        });
-
         const text = await getFromLabel(demo.label);
 
-        makeComponent('glimdown', text);
+        console.log({ text });
         await settled();
 
         assert.verifySteps(['begin compile', 'success', 'finished rendering']);

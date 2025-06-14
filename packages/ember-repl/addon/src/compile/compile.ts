@@ -21,8 +21,10 @@ interface Options {
  * This function manages cache, and has events for folks building UIs to hook in to
  */
 export function compile(service: CompilerService, text: Input, options: Options): CompileState {
+  const data = { format: options.format };
+
   if (!text) {
-    return new MissingTextState();
+    return new MissingTextState(data);
   }
 
   const id = nameFor(`${options.format}:${text}`);
@@ -32,10 +34,10 @@ export function compile(service: CompilerService, text: Input, options: Options)
   if (existing) {
     options?.onSuccess?.(existing);
 
-    return new CachedCompileState(existing);
+    return new CachedCompileState(data, existing);
   }
 
-  const state = new CompileState();
+  const state = new CompileState(data);
 
   // Fills the cache as well
   runTheCompiler({ service, text, options, state, id });

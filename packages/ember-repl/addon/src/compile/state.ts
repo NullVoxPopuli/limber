@@ -11,6 +11,12 @@ interface State {
   isReady: boolean;
   reason: string | undefined;
   promise: Promise<ComponentLike>;
+  format: string;
+}
+
+interface Data {
+  format: string;
+  flavor?: string;
 }
 
 export class CompileState implements State {
@@ -19,12 +25,21 @@ export class CompileState implements State {
 
   @tracked isReady = false;
 
+  #data: Data;
   #resolve: undefined | ((value: ComponentLike) => void);
   #reject: undefined | ((reason?: any) => void);
   #promise = new Promise<ComponentLike>((resolve, reject) => {
     this.#resolve = resolve;
     this.#reject = reject;
   });
+
+  constructor(data: Data) {
+    this.#data = data;
+  }
+
+  get format() {
+    return this.#data.format;
+  }
 
   get reason() {
     return this.error?.message;
@@ -63,8 +78,8 @@ export class MissingTextState extends CompileState {}
 
 export class CachedCompileState extends CompileState {
   #resolvedPromise: Promise<ComponentLike>;
-  constructor(component: ComponentLike) {
-    super();
+  constructor(data: Data, component: ComponentLike) {
+    super(data);
 
     this.component = component;
     this.#resolvedPromise = Promise.resolve(component);

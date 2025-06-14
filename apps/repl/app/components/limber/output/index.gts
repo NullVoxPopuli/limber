@@ -1,35 +1,15 @@
-import { PortalTargets } from 'ember-primitives';
-import { cell, resource } from 'ember-resources';
+import { PortalTargets } from 'ember-primitives/components/portal-targets';
+
+import { Seconds } from 'reactiveweb/interval';
 
 import highlight from 'limber/modifiers/highlight-code-blocks';
 
 import CopyMenu from '../copy-menu';
 import Compiler from './compiler';
 
-import type { TOC } from '@ember/component/template-only';
-import type { Format } from 'limber/utils/messaging';
+const isGJS = (format: string | undefined) => format === 'gjs';
 
-interface Signature {
-  Args: {
-    messagingAPI: MessagingAPI;
-  };
-}
-
-const Seconds = resource(({ on }) => {
-  const value = cell(0);
-
-  const interval = setInterval(() => {
-    value.current++;
-  }, 1000);
-
-  on.cleanup(() => clearInterval(interval));
-
-  return () => value.current;
-});
-
-const isGJS = (format: Format | undefined) => format === 'gjs';
-
-export const Output: TOC<Signature> = <template>
+export const Output = <template>
   <Compiler as |context|>
     <div class="prose relative max-w-full p-4" data-test-compiled-output>
       {{!

@@ -2,7 +2,7 @@ import { on } from '@ember/modifier';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faQuestion, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { Modal } from 'ember-primitives';
+import { Dialog as Modal } from 'ember-primitives/components/dialog';
 import { notInIframe } from 'ember-primitives/iframe';
 
 import { Button, ExternalLink, FAB, FlatButton } from 'limber-ui';

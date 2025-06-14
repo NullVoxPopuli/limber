@@ -3,18 +3,12 @@ import { service } from '@ember/service';
 
 import { Compiled } from 'ember-repl';
 
-import type { ComponentLike } from '@glint/template';
+import type { CompileState } from 'ember-repl';
 import type EditorService from 'limber/services/editor';
-import type { Format } from 'limber/utils/messaging';
 
 interface Signature {
   Blocks: {
-    default: [
-      {
-        component: ComponentLike<never> | undefined;
-        format: Format | undefined;
-      },
-    ];
+    default: [CompileState];
   };
 }
 

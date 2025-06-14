@@ -1,7 +1,6 @@
 import compatModules from '@embroider/virtual/compat-modules';
 
 import PageTitleService from 'ember-page-title/services/page-title';
-import { CompilerService } from 'ember-repl';
 
 // Can't import this until it's a v2 addon (without compat support, that is)
 // import ResizeService from 'ember-resize-observer-service/services/resize-observer';
@@ -34,6 +33,5 @@ export const registry = {
   ...compatModules,
   // [`${appName}/services/resize-observer`]: ResizeService,
   [`${appName}/services/page-title`]: PageTitleService,
-  [`${appName}/compiler`]: CompilerService,
   ...resolverRegistry,
 };
