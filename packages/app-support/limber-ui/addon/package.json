@@ -38,7 +38,7 @@
     "ember-modifier": "^4.1.0",
     "ember-primitives": "^0.28.0",
     "ember-resources": ">= 6.4.2",
-    "ember-source": ">= 6.4.0-alpha.3",
+    "ember-source": ">= 6.7.0-alpha.1",
     "webpack": ">= 5.92.0"
   },
   "dependencies": {
@@ -75,12 +75,12 @@
     "@tsconfig/ember": "^3.0.9",
     "babel-plugin-ember-template-compilation": "^2.4.0",
     "concurrently": "^9.1.2",
-    "ember-async-data": "1.0.3",
+    "ember-async-data": "2.0.1",
     "ember-cli-htmlbars": "^6.3.0",
     "ember-modifier": "^4.2.0",
     "ember-primitives": "^0.32.0",
     "ember-resources": "^7.0.3",
-    "ember-source": ">= 6.4.0-alpha.3",
+    "ember-source": ">= 6.7.0-alpha.1",
     "ember-template-imports": "^4.3.0",
     "ember-template-lint": "^7.2.0",
     "eslint": "^9.25.1",
@@ -88,7 +88,7 @@
     "fix-bad-declaration-output": "^1.1.4",
     "prettier": "^3.5.2",
     "prettier-plugin-ember-template-tag": "2.0.4",
-    "rollup": "^4.40.1",
+    "rollup": "^4.43.0",
     "rollup-plugin-copy": "^3.5.0",
     "typescript": "5.8.3"
   },
