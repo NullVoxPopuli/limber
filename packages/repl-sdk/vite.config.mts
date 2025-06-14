@@ -35,15 +35,6 @@ let externals = [
 ];
 
 export default defineConfig({
-  worker: {
-    format: "es",
-    rollupOptions: {
-      output: {
-        dir: 'dist/data-worker.js',
-      }
-      external: [],
-    },
-  },
   build: {
     outDir: "dist",
     // These targets are not "support".

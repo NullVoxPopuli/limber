@@ -1,8 +1,9 @@
 import { wrap } from 'comlink';
-import { assert, unzippedPrefix } from './utils.js';
+
 import { cache } from './cache.js';
 import { Request } from './request.js';
 import { printError, resolve } from './resolve.js';
+import { assert, unzippedPrefix } from './utils.js';
 
 const worker = new Worker(new URL('./tar-worker.js', import.meta.url), {
   name: 'Tar & NPM Downloader Worker',

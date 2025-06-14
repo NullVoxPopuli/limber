@@ -11,9 +11,6 @@
       "default": "./src/compilers/ember/*.js"
     }
   },
-  "keywords": [
-    "ember-addon"
-  ],
   "ember-addon": {
     "version": 2,
     "type": "addon",

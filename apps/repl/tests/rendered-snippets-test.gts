@@ -2,11 +2,12 @@ import { click, fillIn, render } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import { setupCompiler } from 'ember-repl/test-support';
-import { compile as compileAnything, type EvalImportMap, getCompiler } from 'ember-repl';
+import { compile as compileAnything, getCompiler } from 'ember-repl';
 
-import { getFromLabel } from 'limber/snippets';
 import { importMap } from 'limber/routes/import-map';
+import { getFromLabel } from 'limber/snippets';
+
+import { setupCompiler } from 'ember-repl/test-support';
 
 import type { ComponentLike } from '@glint/template';
 import type QUnit from 'qunit';
