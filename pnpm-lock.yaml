@@ -236,7 +236,7 @@ importers:
         specifier: ^5.1.0
         version: 5.2.2(086a3f47dd64f7f99d943162ec3858e9)
       '@embroider/compat':
-        specifier: alpha
+        specifier: 4.1.0
         version: 4.1.0(4ef2a4c179fb7920ab3e105ee0d3129f)
       '@embroider/config-meta-loader':
         specifier: ^1.0.0
@@ -244,9 +244,6 @@ importers:
       '@embroider/core':
         specifier: ^4.0.2
         version: 4.1.0(@glint/template@1.5.2)
-      '@embroider/util':
-        specifier: alpha
-        version: 1.14.0-alpha.2(425be866dd2755c644c2d26e51d8897e)
       '@embroider/vite':
         specifier: ^1.1.0
         version: 1.1.5(25cc1814da98179b190ade8b25d30112)
@@ -534,7 +531,7 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(@glint/template@1.5.2)
       '@embroider/compat':
-        specifier: alpha
+        specifier: 4.1.0
         version: 4.1.0(4ef2a4c179fb7920ab3e105ee0d3129f)
       '@embroider/config-meta-loader':
         specifier: ^1.0.0
@@ -921,7 +918,7 @@ importers:
         specifier: ^3.0.9
         version: 3.0.10
       babel-plugin-ember-template-compilation:
-        specifier: ^2.4.0
+        specifier: ^2.4.1
         version: 2.4.1
       concurrently:
         specifier: ^9.1.2
@@ -1124,7 +1121,7 @@ importers:
         specifier: 1.18.0
         version: 1.18.0(@glint/template@1.5.2)
       babel-plugin-ember-template-compilation:
-        specifier: ^2.4.0
+        specifier: ^2.4.1
         version: 2.4.1
       broccoli-file-creator:
         specifier: ^2.1.1
@@ -1378,7 +1375,7 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(@glint/template@1.5.2)
       '@embroider/compat':
-        specifier: alpha
+        specifier: 4.1.0
         version: 4.1.0(4ef2a4c179fb7920ab3e105ee0d3129f)
       '@embroider/config-meta-loader':
         specifier: ^1.0.0
@@ -1432,7 +1429,7 @@ importers:
         specifier: ^4.0.9
         version: 4.0.9
       babel-plugin-ember-template-compilation:
-        specifier: ^2.3.0
+        specifier: ^2.4.1
         version: 2.4.1
       concurrently:
         specifier: ^9.1.2
@@ -3442,19 +3439,6 @@ packages:
       '@embroider/core':
         optional: true
       '@embroider/webpack':
-        optional: true
-
-  '@embroider/util@1.14.0-alpha.2':
-    resolution: {integrity: sha512-WUKPEd4ojF7Htqf/ReKOmghSUzWEu4k97tY9HEJHuUYkytn8Uqobjs5laRZ4olgLoI2Ev9Jtp6cb+agcOAFzvQ==}
-    engines: {node: 12.* || 14.* || >= 16}
-    peerDependencies:
-      '@glint/environment-ember-loose': 2.0.1-unstable.4151d64
-      '@glint/template': ^1.0.0
-      ember-source: '>= 6.7.0-alpha.1'
-    peerDependenciesMeta:
-      '@glint/environment-ember-loose':
-        optional: true
-      '@glint/template':
         optional: true
 
   '@embroider/vite@1.1.5':
@@ -14927,18 +14911,6 @@ snapshots:
     optionalDependencies:
       '@embroider/compat': 4.1.0(4ef2a4c179fb7920ab3e105ee0d3129f)
       '@embroider/core': 4.1.0(@glint/template@1.5.2)
-
-  '@embroider/util@1.14.0-alpha.2(425be866dd2755c644c2d26e51d8897e)':
-    dependencies:
-      '@embroider/macros': 1.18.0(@glint/template@1.5.2)
-      broccoli-funnel: 3.0.8
-      ember-cli-babel: 7.26.11
-      ember-source: 6.7.0-alpha.1(patch_hash=ce25d468f4e598d7dacd16a6d27af9254ff94a9194ae612aec34111a65476b80)(@glimmer/component@2.0.0)(rsvp@4.8.5)
-    optionalDependencies:
-      '@glint/environment-ember-loose': 2.0.1-unstable.4151d64(581766e65df697d95a2582e23d12116e)
-      '@glint/template': 1.5.2
-    transitivePeerDependencies:
-      - supports-color
 
   '@embroider/vite@1.1.5(25cc1814da98179b190ade8b25d30112)':
     dependencies:

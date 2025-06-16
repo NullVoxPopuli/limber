@@ -68,7 +68,7 @@
     "@ember/test-helpers": "^5.1.0",
     "@embroider/addon-shim": "1.10.0",
     "@embroider/macros": "1.18.0",
-    "babel-plugin-ember-template-compilation": "^2.4.0",
+    "babel-plugin-ember-template-compilation": "^2.4.1",
     "broccoli-file-creator": "^2.1.1",
     "content-tag": "^3.0.0",
     "decorator-transforms": "^2.3.0",

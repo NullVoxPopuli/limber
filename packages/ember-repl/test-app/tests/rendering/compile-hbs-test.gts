@@ -15,7 +15,7 @@ module('compileHBS()', function (hooks) {
   test('it works', async function (assert) {
     const compile = async () => {
       const template = `
-        {{#each (array 1 2) as |num|}}
+        {{#each (Array 1 2) as |num|}}
           <output>{{num}}</output>
         {{/each}}
       `;
@@ -80,10 +80,10 @@ module('compileHBS()', function (hooks) {
      */
     skip('syntax', async function (assert) {
       const compile = async () => {
+        // {{#each array 1 2) as |num|}}
+        //   <output>{{num}}</output>
+        // {{/each}}
         const template = `
-          {{#each array 1 2) as |num|}}
-            <output>{{num}}</output>
-          {{/each}}
         `;
 
         const compiler = getCompiler(this);
