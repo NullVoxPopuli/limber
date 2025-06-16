@@ -71,6 +71,10 @@ export class Compiler {
       if (result) {
         this.#log(`[resolve] ${vanilla} found in compiler config at ${result}.`);
 
+        if (typeof result === 'function') {
+          return `configured:${vanilla}`;
+        }
+
         return result;
       }
     }
@@ -149,6 +153,63 @@ export class Compiler {
 
       this.#log(
         `[fetch] returning blob mapping to manually resolved import for ${name}`
+        // blobContent
+      );
+
+      return new Response(blob);
+    }
+
+    if (url.startsWith('configured:')) {
+      let name = url.replace(/^configured:/, '');
+
+      this.#log(
+        '[fetch] resolved url in a preconfigured (in the compiler config) specified resolver',
+        url
+      );
+
+      let result;
+
+      /**
+       * Unlike the manual resolver, these are just functions per
+       * id, they represent a way to get a module
+       */
+      for (let compilerResolve of this.#compilerResolvers) {
+        let fn = compilerResolve(name);
+
+        if (fn) {
+          this.#log(`[fetch] ${name} found in compiler config at ${result}.`);
+
+          result = await fn();
+        }
+      }
+
+      assert(`Failed to resolve ${name}`, result);
+      cache.resolves[name] = result;
+
+      let blobContent =
+        `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
+        `\n\n` +
+        `if (!mod) { throw new Error('Could not resolve \`${name}\`. Does the module exist? ( checked ${url} )') }` +
+        `\n\n` +
+        /**
+         * This is semi-trying to polyfill modules
+         * that aren't proper ESM. very annoying.
+         */
+        `${Object.keys(result)
+          .map((exportName) => {
+            if (exportName === 'default') {
+              return `export default mod.default ?? mod;`;
+            }
+
+            return `export const ${exportName} = mod.${exportName};`;
+          })
+          .join('\n')}
+            `;
+
+      let blob = new Blob(Array.from(blobContent), { type: mimeType });
+
+      this.#log(
+        `[fetch] returning blob mapping to configured resolved import for ${name}`
         // blobContent
       );
 

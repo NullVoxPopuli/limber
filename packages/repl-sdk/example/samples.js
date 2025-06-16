@@ -6,6 +6,14 @@ graph TD;
   C-->D;
 `.trim();
 
+const emberHbs = `
+{{#let (Array 1 2 3) as |arr|}}
+  {{arr}}
+{{/let}}
+`;
+
+export const hbs = { ember: emberHbs };
+
 const react = `
 import React from 'react';
 

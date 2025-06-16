@@ -4,7 +4,7 @@
 
 /**
  * @param {string} id
- * @returns {string | undefined}
+ * @returns {string | undefined | (() => Record<string, unknown>)}
  */
 function resolve(id) {
   if (id === '@ember/template-compiler/runtime') {
@@ -19,21 +19,35 @@ function resolve(id) {
     return `https://esm.sh/*ember-source/dist/dependencies/${id}.js`;
   }
 
-  // if (id.includes('@embroider/macros')) {
-  //   return () => {
-  //     return {
-  //       // passthrough, we are not doing dead-code-elimination
-  //       macroCondition: (x) => x,
-  //       // I *could* actually implement this
-  //       dependencySatisfies: () => true,
-  //       isDevelopingApp: () => true,
-  //       getGlobalConfig: () => ({}),
-  //       // Private
-  //       importSync: (x) => cache.resolves[x],
-  //       moduleExists: () => false,
-  //     };
-  //   };
-  // }
+  if (id.startsWith('@embroider/macros')) {
+    return () => ({
+      // passthrough, we are not doing dead-code-elimination
+
+      /**
+       * @param {unknown} x
+       */
+      macroCondition: (x) => Boolean(x),
+      // I *could* actually implement this
+      dependencySatisfies: () => true,
+      isDevelopingApp: () => true,
+      getGlobalConfig: () => ({
+        WarpDrive: {
+          debug: false,
+          env: {
+            DEBUG: false,
+            TESTING: false,
+            PRODUCTION: true,
+          },
+          activeLogging: false,
+          compatWith: '99.0',
+          features: {},
+          deprecations: {},
+          polyfillUUID: false,
+          includeDataAdapter: false,
+        },
+      }),
+    });
+  }
 }
 
 /**

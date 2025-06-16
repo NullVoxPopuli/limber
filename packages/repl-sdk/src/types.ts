@@ -195,9 +195,16 @@ export interface CompilerConfig {
    * This is "import map as a function", which allows for more flexibility than just the static import map.
    *
    * This may not return a promise.
+   * But we can return functions that return promises.
    *
    */
-  resolve?: (id: string) => string | undefined;
+  resolve?: (
+    id: string
+  ) =>
+    | string
+    | (() => Record<string, unknown>)
+    | (() => Promise<Record<string, unknown>>)
+    | undefined;
 
   compiler: (
     /**
