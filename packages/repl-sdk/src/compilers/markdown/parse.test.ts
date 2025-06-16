@@ -4,6 +4,7 @@ import { visit } from 'unist-util-visit';
 import { describe, expect as errorExpect, it } from 'vitest';
 
 import { parseMarkdown } from './parse.js';
+import { buildCodeFenceMetaUtils } from './utils.js';
 
 import type { Element, Root as HastRoot } from 'hast';
 import type { Heading, Root as MdastRoot } from 'mdast';
@@ -26,19 +27,17 @@ function assertCodeBlocks(
 
 const ALLOWED_FORMATS = ['gjs', 'jsx', 'vue', 'svelte', 'hbs'];
 const defaults = {
-  needsLive: (lang: string) => {
-    if (!ALLOWED_FORMATS.includes(lang)) return false;
+  ...buildCodeFenceMetaUtils({
+    getAllowedFormats: () => ALLOWED_FORMATS,
+    getFlavorsFor: (lang) => {
+      if (lang === 'jsx') {
+        return ['react'];
+      }
 
-    return true;
-  },
-  isPreview: (meta: string) => meta?.includes('preview'),
-  isBelow: (meta: string) => meta?.includes('below'),
-  isLive: (meta: string, lang: string) => {
-    if (!defaults.needsLive(lang)) return true;
-    if (!meta) return false;
-
-    return meta.includes('live');
-  },
+      return [];
+    },
+    optionsFor: () => ({}),
+  }),
   ALLOWED_FORMATS,
 };
 

@@ -24,7 +24,7 @@ export function isBelow(meta) {
 }
 
 /**
- * @param {import('../../types').PublicMethods} api
+ * @param {Pick<import('../../types').PublicMethods, 'getAllowedFormats' | 'getFlavorsFor' | 'optionsFor'>} api
  */
 export function buildCodeFenceMetaUtils(api) {
   const allowedFormats = api.getAllowedFormats().filter(isNotMarkdownLike);
