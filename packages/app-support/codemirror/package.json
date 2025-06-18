@@ -56,9 +56,9 @@
     "concurrently": "^9.1.2",
     "esbuild": "0.25.5",
     "esbuild-plugin-alias": "^0.2.1",
-    "eslint": "^9.25.1",
+    "eslint": "^9.29.0",
     "prettier": "^3.5.2",
-    "prettier-plugin-ember-template-tag": "2.0.4",
+    "prettier-plugin-ember-template-tag": "2.0.6",
     "recursive-copy": "^2.0.14",
     "typescript": "5.8.3"
   },

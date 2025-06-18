@@ -19,9 +19,9 @@
     "@babel/core": "^7.26.9",
     "@nullvoxpopuli/eslint-configs": "^5.0.0",
     "concurrently": "^9.1.2",
-    "eslint": "^9.25.1",
+    "eslint": "^9.29.0",
     "prettier": "^3.5.2",
-    "prettier-plugin-ember-template-tag": "2.0.4",
+    "prettier-plugin-ember-template-tag": "2.0.6",
     "typescript": "5.8.3"
   },
   "volta": {
