@@ -57,6 +57,7 @@ export class Compiler {
      */
     let vanilla = deCDN(id);
 
+    this.#announce('info', `Loading ${vanilla}`);
     this.#log('[resolve]', id, 'from', parentUrl);
 
     if (this.#options.resolve?.[vanilla]) {
@@ -156,6 +157,8 @@ export class Compiler {
         // blobContent
       );
 
+      this.#announce('info', `Loaded ${name}`);
+
       return new Response(blob);
     }
 
@@ -213,6 +216,8 @@ export class Compiler {
         // blobContent
       );
 
+      this.#announce('info', `Loaded ${name}`);
+
       return new Response(blob);
     }
 
@@ -245,6 +250,8 @@ export class Compiler {
 
     const source = await response.text();
 
+    this.#announce('info', `Loaded ${url}`);
+
     return new Response(new Blob([source], { type: 'application/javascript' }));
   };
 
@@ -275,7 +282,7 @@ export class Compiler {
    * @returns {Promise<HTMLElement>}
    */
   async compile(format, text, options = {}) {
-    this.#announce('info', `Compliing ${format}`;
+    this.#announce('info', `Compliing ${format}`);
     this.#log('[compile] idempotently installing es-module-shim');
 
     // @ts-ignore
@@ -391,6 +398,8 @@ export class Compiler {
    * @returns {Promise<HTMLElement>}
    */
   async #render(compiler, whatToRender, extras) {
+    this.#announce('info', 'Rendering');
+
     const div = this.#createDiv();
 
     await compiler.render(div, whatToRender, extras, this.#nestedPublicAPI);

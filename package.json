@@ -42,6 +42,7 @@
   },
   "pnpm": {
     "overrides": {
+      "babel-plugin-ember-template-compilation@<3": "^2.4.1",
       "@nullvoxpopuli/eslint-configs": "^5.0.0",
       "@glimmer/component": "^2.0.0",
       "@glint/core": "alpha",

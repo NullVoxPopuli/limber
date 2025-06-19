@@ -109,7 +109,7 @@
     "qunit": "^2.24.1",
     "qunit-dom": "3.4.0",
     "tailwindcss": "^3.0.0",
-    "terser": "^5.43.0",
+    "terser": "^5.43.1",
     "testem-failure-only-reporter": "^1.0.0",
     "type-fest": "4.41.0",
     "typescript": "5.8.3",
