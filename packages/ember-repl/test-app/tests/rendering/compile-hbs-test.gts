@@ -41,6 +41,13 @@ module('compileHBS()', function (hooks) {
     assert.dom('output').exists({ count: 2 });
     assert.dom().containsText('1');
     assert.dom().containsText('2');
+
+    assert.deepEqual(getCompiler(this).messages, [
+      {
+        message: 'Compliing hbs',
+        type: 'info',
+      },
+    ]);
   });
 
   test('can render components passed to scope', async function (assert) {

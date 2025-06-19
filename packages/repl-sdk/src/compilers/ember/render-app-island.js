@@ -14,10 +14,11 @@ let createWaiter;
  * @param {{
  *  modules: { [name: string]: any},
  *  selector: string,
+ *  log: (type: 'error' | 'info', message: string) => void;
  *  component: unknown
  * }} options
  */
-export async function renderApp({ modules, selector, component }) {
+export async function renderApp({ modules, selector, component, log }) {
   const App = modules.application.default;
   const registerDestructor = modules.destroyable.registerDestructor;
   const Resolver = modules.resolver.default;
@@ -50,6 +51,7 @@ export async function renderApp({ modules, selector, component }) {
           afterModel() {
             schedule('afterRender', () => {
               requestAnimationFrame(() => {
+                log('info', 'Ember Island Rendered');
                 bootWaiter.endAsync(bootToken);
               });
             });
@@ -85,6 +87,7 @@ export async function renderApp({ modules, selector, component }) {
     }),
   ]);
 
+  log('info', 'Booting Ember Island');
   EphemeralApp.create({
     rootElement: selector,
   });

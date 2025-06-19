@@ -476,6 +476,13 @@ export class Compiler {
    */
   #nestedPublicAPI = {
     /**
+     * @param {'error' | 'info'} type
+     * @param {string} message
+     * @returns {void}
+     */
+    announce: (type, message) => this.#announce(type, message),
+
+    /**
      * @param {string} name
      * @param {(name?: string) => Promise<object | undefined>} [fallback]
      * @returns {Promise<object | undefined>}

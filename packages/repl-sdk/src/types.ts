@@ -8,6 +8,7 @@ export interface RequestAnswer {
 }
 
 export interface PublicMethods {
+  announce: (type: 'error' | 'info', message: string) => void;
   getCompiler: (format: string, flavor?: string) => Promise<Compiler>;
   getAllowedFormats: () => string[];
   getFlavorsFor: (format: string) => string[];

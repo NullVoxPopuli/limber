@@ -3,12 +3,30 @@
  */
 
 /**
+ * Other `@ember` (and `@glimmer`) packages are bundled in ember-source,
+ * and typecilaly use a build plugin to resolve from `@ember/*` imports.
+ */
+const externalPackages = [
+  '@ember/test-helpers',
+  '@ember/string',
+  '@ember/test-waiters',
+  '@ember/render-modifiers',
+  '@glimmer/component',
+];
+
+/**
  * @param {string} id
  * @returns {string | undefined | (() => Record<string, unknown>)}
  */
 function resolve(id) {
   if (id === '@ember/template-compiler/runtime') {
     return `https://esm.sh/*ember-source/dist/packages/@ember/template-compiler/runtime.js`;
+  }
+
+  let isExternalEmber = externalPackages.some((name) => id.startsWith(name));
+
+  if (isExternalEmber) {
+    return `https://esm.sh/*${id}`;
   }
 
   if (id.startsWith('@ember')) {

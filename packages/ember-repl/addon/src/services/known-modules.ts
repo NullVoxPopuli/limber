@@ -30,6 +30,8 @@ const frameworkModules = {
 };
 
 const emberCompilationModules = {
+  '@ember/template-compiler/runtime': () => import('@ember/template-compiler/runtime'),
+  '@ember/template-compiler': () => import('@ember/template-compiler/runtime'),
   'ember-source/dist/ember-template-compiler': () =>
     import(
       // eslint-disable-next-line

@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
+import { tracked } from '@glimmer/tracking';
 import { setComponentTemplate } from '@ember/component';
 import templateOnly from '@ember/component/template-only';
 import { assert } from '@ember/debug';
@@ -9,17 +10,16 @@ import { getOwner } from '@ember/owner';
 import Service from '@ember/service';
 import { precompileTemplate } from '@ember/template-compilation';
 import { waitFor } from '@ember/test-waiters';
-import { tracked } from '@glimmer/tracking';
 
 import { Compiler } from 'repl-sdk';
 
 import { nameFor } from '../compile/utils.ts';
 import { modules } from './known-modules.ts';
 
-import type { Message, InfoMessage, ErrorMessage } from 'repl-sdk';
 import type { CompileResult, ModuleMap } from '../compile/types.ts';
 import type Owner from '@ember/owner';
 import type { ComponentLike } from '@glint/template';
+import type { ErrorMessage, InfoMessage, Message } from 'repl-sdk';
 
 function isOwner(context: object): context is Owner {
   return 'lookup' in context && 'register' in context;
@@ -85,18 +85,22 @@ export default class CompilerService extends Service {
   @tracked messages: Message[] = [];
 
   get lastInfo(): InfoMessage | undefined {
-    let m = this.messages;
+    const m = this.messages;
+
     for (let i = m.length - 1; i >= 0; i--) {
-      let current = m[i];
-      if (current.type === 'info') return current;
+      const current = m[i];
+
+      if (current?.type === 'info') return current;
     }
   }
 
   get lastError(): ErrorMessage | undefined {
-    let m = this.messages;
+    const m = this.messages;
+
     for (let i = m.length - 1; i >= 0; i--) {
-      let current = m[i];
-      if (current.type === 'error') return current;
+      const current = m[i];
+
+      if (current?.type === 'error') return current;
     }
   }
 
