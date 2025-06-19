@@ -132,12 +132,69 @@ export default class CompilerService extends Service {
         hbs: {
           ember: {
             scope: {
+              // These are only added here because it's convenient for hbs
+              // to have them
               array,
               concat,
               fn,
               get,
               hash,
               on,
+              // The default available scope for gjs:
+              //
+              // We don't use gjs transpilation here, because hbs transpilation
+              // doesn't need to go through the babel infra, so it's faster this way,
+              // even though it's more "verbose" and could get out of sync from the
+              // implementations / source-of-truth.
+              //
+              // https://github.com/emberjs/babel-plugin-ember-template-compilation/blob/main/src/scope-locals.ts#L16
+              //
+              // ////////////////
+              // namespaces
+              // ////////////////
+              //   TC39
+              globalThis,
+              Atomics,
+              JSON,
+              Math,
+              Reflect,
+              //   WHATWG
+              localStorage,
+              sessionStorage,
+              // ////////////////
+              // functions / utilities
+              // ////////////////
+              //   TC39
+              isNaN,
+              isFinite,
+              parseInt,
+              parseFloat,
+              decodeURI,
+              decodeURIComponent,
+              encodeURI,
+              encodeURIComponent,
+              //   WHATWG
+              postMessage,
+              structuredClone,
+              // ////////////////
+              // new-less Constructors (still functions)
+              // ////////////////
+              //   TC39
+              Array, // different behavior from (array)
+              BigInt,
+              Boolean,
+              Date,
+              Number,
+              Object, // different behavior from (hash)
+              String,
+              // ////////////////
+              // Values
+              // ////////////////
+              //   TC39
+              Infinity,
+              NaN,
+              //   WHATWG
+              isSecureContext,
               ...(options.hbs?.scope ?? {}),
             },
             ...(options.hbs ?? {}),
@@ -147,7 +204,7 @@ export default class CompilerService extends Service {
     });
   };
 
-  get compiler() {
+  get compiler(): Compiler {
     /**
      * This is useful for our own testing.
      * not sure if this would be a footgun for consumers' usage

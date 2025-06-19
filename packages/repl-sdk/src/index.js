@@ -283,6 +283,28 @@ export class Compiler {
    */
   async compile(format, text, options = {}) {
     this.#announce('info', `Compliing ${format}`);
+
+    try {
+      return await this.#compile(format, text, options);
+    } catch (e) {
+      // for on.log usage
+      let message = e instanceof Error ? e.message : e;
+
+      this.#announce('error', String(message));
+
+      // Don't hide errors!
+      this.#error(e);
+      throw e;
+    }
+  }
+
+  /**
+   * @param {string} format
+   * @param {string} text
+   * @param {{ fileName?: string, flavor?: string, [key: string]: unknown }} [ options ]
+   * @returns {Promise<HTMLElement>}
+   */
+  async #compile(format, text, options) {
     this.#log('[compile] idempotently installing es-module-shim');
 
     // @ts-ignore
@@ -646,6 +668,13 @@ export class Compiler {
     if (this.#options.logging) {
       console.error(...args);
     }
+  }
+
+  /**
+   * @param {string} message
+   */
+  announceError(message) {
+    this.#announce('error', message);
   }
 }
 
