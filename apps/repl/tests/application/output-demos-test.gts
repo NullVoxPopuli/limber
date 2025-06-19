@@ -73,7 +73,7 @@ module('Output > Demos', function (hooks) {
         console.log({ text });
         await settled();
 
-        assert.verifySteps(['begin compile', 'success', 'finished rendering']);
+        assert.deepEqual(await getCompiler().messages, []);
       });
     }
   });

@@ -4,9 +4,10 @@ import { action } from '@ember/object';
 import { waitFor, waitForPromise } from '@ember/test-waiters';
 
 import { modifier } from 'ember-modifier';
-import { type Connection, connectToChild } from 'penpal';
+import { connectToChild } from 'penpal';
 
 import type { ModifierLike } from '@glint/template';
+import type { Connection } from 'penpal';
 
 /**
  * We can't post right away, because we might do so before the iframe is ready.

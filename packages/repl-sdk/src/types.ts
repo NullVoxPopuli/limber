@@ -222,6 +222,20 @@ export interface CompilerConfig {
 
 export interface Options {
   /**
+   * Events will be emitted on this object.
+   * Not required, but could be useful for providing lots of feedback to the user.
+   */
+  on?: {
+    /**
+     * Public-log messages will be emitted here.
+     * These include:
+     * - errors
+     * - what is being fetched / compiled
+     */
+    log?: (type: 'error' | 'info', message: string) => void;
+  };
+
+  /**
    * Map of pre-resolved JS values to use as the import map
    * These could assume the role of runtime virtual modules.
    *
@@ -297,3 +311,15 @@ type ManifestExport = string | string[] | { [condition: string]: ManifestExport 
 export interface ManifestExports {
   [importPath: string]: ManifestExport;
 }
+
+export interface InfoMessage {
+  type: 'info';
+  message: string;
+}
+
+export interface ErrorMessage {
+  type: 'error';
+  message: string;
+}
+
+export type Message = InfoMessage | ErrorMessage;

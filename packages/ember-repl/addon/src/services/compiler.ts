@@ -9,12 +9,14 @@ import { getOwner } from '@ember/owner';
 import Service from '@ember/service';
 import { precompileTemplate } from '@ember/template-compilation';
 import { waitFor } from '@ember/test-waiters';
+import { tracked } from '@glimmer/tracking';
 
 import { Compiler } from 'repl-sdk';
 
 import { nameFor } from '../compile/utils.ts';
 import { modules } from './known-modules.ts';
 
+import type { Message, InfoMessage, ErrorMessage } from 'repl-sdk';
 import type { CompileResult, ModuleMap } from '../compile/types.ts';
 import type Owner from '@ember/owner';
 import type { ComponentLike } from '@glint/template';
@@ -80,6 +82,24 @@ interface CompilerOptions {
 export default class CompilerService extends Service {
   #compiler: Compiler | undefined;
 
+  @tracked messages: Message[] = [];
+
+  get lastInfo(): InfoMessage | undefined {
+    let m = this.messages;
+    for (let i = m.length - 1; i >= 0; i--) {
+      let current = m[i];
+      if (current.type === 'info') return current;
+    }
+  }
+
+  get lastError(): ErrorMessage | undefined {
+    let m = this.messages;
+    for (let i = m.length - 1; i >= 0; i--) {
+      let current = m[i];
+      if (current.type === 'error') return current;
+    }
+  }
+
   /**
    * @param {ModuleMap} [ extraModules ]: map of import paths to modules.
    *  These modules are useful if you need to document a library or a any design system or a styleguide or
@@ -97,6 +117,11 @@ export default class CompilerService extends Service {
       logging: location.search.includes('debug'),
       resolve: {
         ...localModules,
+      },
+      on: {
+        log: (type: Message['type'], message: string) => {
+          this.messages.push({ type, message });
+        },
       },
       options: {
         ...options,

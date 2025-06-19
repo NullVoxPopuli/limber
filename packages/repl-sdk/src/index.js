@@ -275,6 +275,7 @@ export class Compiler {
    * @returns {Promise<HTMLElement>}
    */
   async compile(format, text, options = {}) {
+    this.#announce('info', `Compliing ${format}`;
     this.#log('[compile] idempotently installing es-module-shim');
 
     // @ts-ignore
@@ -593,6 +594,16 @@ export class Compiler {
     div.id = nextId();
 
     return div;
+  }
+
+  /**
+   * @param {'error' | 'info'} type
+   * @param {string} message
+   */
+  #announce(type, message) {
+    if (!this.#options?.on?.log) return;
+
+    this.#options.on.log(type, message);
   }
 
   /**
