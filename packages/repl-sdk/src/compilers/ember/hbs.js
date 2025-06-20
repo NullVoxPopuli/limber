@@ -21,8 +21,6 @@ function filterOptions(options) {
  * @type {import('../../types.ts').CompilerConfig['compiler']}
  */
 export async function compiler(config, api) {
-  let userOptions = config.userOptions;
-
   /**
    * @type {import('../../types.ts').Compiler}
    */
@@ -32,10 +30,23 @@ export async function compiler(config, api) {
 
       let component = template(text, {
         scope: () => ({
-          ...filterOptions(userOptions).scope,
+          ...filterOptions(config).scope,
           ...filterOptions(options).scope,
         }),
       });
+
+      /**
+       * Some versions of ember implement the runtime template compiler incorrectly (albeit, correct enough for the constraints at the time).
+       * So we need to wait longer than a microtask queue request could take.
+       *
+       * To make sure that the template is compiled, and "component"
+       * has a value.
+       *
+       * See:
+       * - https://github.com/emberjs/ember.js/issues/20913
+       * - https://github.com/emberjs/ember.js/issues/20914
+       */
+      await new Promise(requestAnimationFrame);
 
       /**
        * Is this allowed here? or do I just return text,
@@ -71,6 +82,7 @@ export async function compiler(config, api) {
       renderApp({
         selector: `[${attribute}]`,
         component: compiled,
+        log: compiler.announce,
         modules: {
           application,
           destroyable,

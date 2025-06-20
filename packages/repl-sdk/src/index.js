@@ -325,11 +325,19 @@ export class Compiler {
     if (typeof compiled === 'string') {
       compiledText = compiled;
       extras = { compiled: compiledText };
-    } else {
+    } else if (typeof compiled.compiled === 'string') {
       let { compiled: text } = compiled;
 
       compiledText = text;
       extras = compiled;
+    } else {
+      /**
+       * the compiler didn't return text, so we can skip import shimming
+       */
+      return this.#render(compiler, compiled, {
+        ...extras,
+        compiled,
+      });
     }
 
     const asBlobUrl = textToBlobUrl(compiledText);
@@ -423,6 +431,8 @@ export class Compiler {
     this.#announce('info', 'Rendering');
 
     const div = this.#createDiv();
+
+    assert(`Cannot render falsey values. Did compilation succeed?`, whatToRender);
 
     await compiler.render(div, whatToRender, extras, this.#nestedPublicAPI);
 
@@ -652,6 +662,7 @@ export class Compiler {
       console.debug(...args);
     }
   }
+
   /**
    * @param {Parameters<typeof console.warn>} args
    */

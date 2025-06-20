@@ -47,6 +47,18 @@ module('compileHBS()', function (hooks) {
         message: 'Compliing hbs',
         type: 'info',
       },
+      {
+        message: 'Rendering',
+        type: 'info',
+      },
+      {
+        message: 'Booting Ember Island',
+        type: 'info',
+      },
+      {
+        message: 'Ember Island Rendered',
+        type: 'info',
+      },
     ]);
   });
 
