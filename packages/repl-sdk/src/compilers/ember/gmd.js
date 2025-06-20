@@ -105,6 +105,7 @@ export async function compiler(config, api) {
       renderApp({
         selector: `[${attribute}]`,
         component: compiled,
+        log: compiler.announce,
         modules: {
           application,
           destroyable,

@@ -2,6 +2,7 @@ import { settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
+import { getCompiler } from 'ember-repl';
 import Route from 'ember-route-template';
 
 import { DemoSelect } from 'limber/components/limber/demo-select';
@@ -73,7 +74,7 @@ module('Output > Demos', function (hooks) {
         console.log({ text });
         await settled();
 
-        assert.deepEqual(await getCompiler().messages, []);
+        assert.deepEqual(getCompiler(this).messages, []);
       });
     }
   });
