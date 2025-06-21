@@ -15,8 +15,7 @@ import { inIframe } from 'ember-primitives/iframe';
 
 import currentURL from 'limber/helpers/current-url';
 
-import { Button, buttonClasses } from './button';
-import { FormatMenu } from './format-menu';
+import { Button } from './button';
 
 import type { TOC } from '@ember/component/template-only';
 
@@ -80,8 +79,6 @@ export const Controls: TOC<{
             <FaIcon @icon={{faExternalLinkAlt}} />
           </a>
         {{/if}}
-
-        <FormatMenu class={{buttonClasses}} />
       </div>
     {{/let}}
   {{/if}}

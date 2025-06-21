@@ -8,14 +8,34 @@ import { type ItemSignature, ToggleGroup } from 'ember-primitives/components/tog
 import { defaultSnippetForFormat } from 'limber/snippets';
 import { getStoredDocumentForFormat } from 'limber/utils/editor-text';
 
+import { FormatMenu } from './format-menu.gts';
+
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
 import type { ComponentLike } from '@glint/template';
 import type EditorService from 'limber/services/editor';
 import type { Format } from 'limber/utils/messaging';
 
+const buttonClasses = `
+ring-ember-brand relative px-2 py-1 text-left drop-shadow-md transition duration-150 ease-in-out hover:drop-shadow-xl focus:rounded focus:outline-none focus:ring-4 focus-visible:rounded focus-visible:outline-none sm:text-sm
+text-white
+select-none
+`;
+
 export const FormatButtons: TOC<object> = <template>
-  {{! template-lint-disable no-forbidden-elements }}
+  <ToggleGroup class="limber__toggle-group flex" as |t|>
+
+    {{#let (component Option item=t.Item) as |Option|}}
+
+      <Option @value="gjs" @description="Glimmer JS">GJS</Option>
+      <Option @value="glimdown" @description="Glimdown">GMD</Option>
+
+    {{/let}}
+
+    <FormatMenu class="{{buttonClasses}} bg-[#333]" />
+
+  </ToggleGroup>
+
   <style>
     .limber__toggle-group {
       button {
@@ -30,18 +50,6 @@ export const FormatButtons: TOC<object> = <template>
       }
     }
   </style>
-
-  <ToggleGroup class="limber__toggle-group flex" as |t|>
-
-    {{#let (component Option item=t.Item) as |Option|}}
-
-      <Option @value="glimdown" @description="Glimdown">GDM</Option>
-      <Option @value="gjs" @description="Glimmer JS">GJS</Option>
-      <Option @value="hbs" @description="Template">HBS</Option>
-
-    {{/let}}
-
-  </ToggleGroup>
 </template>;
 
 class Option extends Component<{
@@ -81,8 +89,7 @@ class Option extends Component<{
       {{on "click" (fn this.switch @value)}}
       aria-label={{@description}}
       title={{@description}}
-      class="ring-ember-brand relative -my-1 px-2 py-1 text-left drop-shadow-md transition duration-150 ease-in-out hover:drop-shadow-xl focus:rounded focus:outline-none focus:ring-4 focus-visible:rounded focus-visible:outline-none sm:text-sm
-        {{this.active @value}}"
+      class="{{buttonClasses}} {{this.active @value}}"
       ...attributes
     >
       {{yield}}

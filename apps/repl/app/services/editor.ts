@@ -12,8 +12,6 @@ export default class EditorService extends Service {
   @service declare router: RouterService;
 
   @tracked isCompiling = false;
-  @tracked error?: string;
-  @tracked errorLine?: number;
   @tracked scrollbarWidth = 0;
 
   #fileURIComponent: FileURIComponent | undefined;

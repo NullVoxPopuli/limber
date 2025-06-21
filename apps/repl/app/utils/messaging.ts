@@ -5,7 +5,7 @@ import { decompressFromEncodedURIComponent } from 'lz-string';
  *   (esp from various browser extensions)
  *
  */
-export type Format = 'glimdown' | 'gjs' | 'hbs' | 'svelte' | 'vue' | 'jsx';
+export type Format = 'glimdown' | 'gjs' | 'hbs' | 'svelte' | 'vue' | 'jsx' | 'mermaid';
 
 export type NewContent = {
   format: Format;
@@ -15,10 +15,7 @@ export type NewContent = {
 export type Ready = { status: 'ready' };
 export type Success = { status: 'success' };
 export type CompileBegin = { status: 'compile-begin' };
-export type Error =
-  | { error: string }
-  | { error: string; unrecoverable: true }
-  | { error: string; errorLine: number };
+export type Error = { error: string } | { error: string; unrecoverable: true };
 
 export type OutputError = Error;
 
@@ -32,7 +29,16 @@ export type FromOutput = FromLimberOutput & ToParent;
 export type ToParent = Ready | Error | Success | CompileBegin;
 
 export const DEFAULT_FORMAT = 'glimdown';
-export const ALLOWED_FORMATS = [DEFAULT_FORMAT, 'gjs', 'hbs'] as const;
+export const ALLOWED_FORMATS = [
+  DEFAULT_FORMAT,
+  'gjs',
+  'hbs',
+  'svelte',
+  'vue',
+  'jsx',
+  'mermaid',
+  'gmd',
+] as const;
 export const STATUSES = ['ready', 'error'] as const;
 
 export function isAllowedFormat(x?: string | null): x is Format {
@@ -41,6 +47,25 @@ export function isAllowedFormat(x?: string | null): x is Format {
 
 export function hasAllowedFormat<T extends { format?: string }>(x: T): x is T & NewContent {
   return isAllowedFormat(x.format);
+}
+
+const ALLOWED_FLAVORS = {
+  jsx: ['react'],
+} as Record<string, string[]>;
+
+function isAllowedFlavor(format: string, flavor: string) {
+  return (ALLOWED_FLAVORS[format] ?? []).includes(flavor);
+}
+
+export function flavorFrom(format: string | null, flavor?: string | null) {
+  if (!format) return;
+  if (!flavor) return;
+
+  if (isAllowedFlavor(format, flavor)) {
+    return flavor;
+  }
+
+  return;
 }
 
 export function formatFrom(x: string | undefined | null): Format {

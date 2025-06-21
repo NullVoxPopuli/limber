@@ -31,6 +31,8 @@ export async function getHighlighter(): Promise<HLJSApi> {
   HIGHLIGHT.registerAliases('gjs', { languageName: 'glimmer-javascript' });
   HIGHLIGHT.registerAliases('gts', { languageName: 'glimmer-javascript' });
   HIGHLIGHT.registerAliases('glimdown', { languageName: 'markdown' });
+  HIGHLIGHT.registerAliases('jsx', { languageName: 'javascript' });
+  HIGHLIGHT.registerAliases('svelte', { languageName: 'markdown' });
 
   return HIGHLIGHT;
 }

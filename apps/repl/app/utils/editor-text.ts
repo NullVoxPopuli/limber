@@ -6,7 +6,7 @@ import { isTesting, macroCondition } from '@embroider/macros';
 
 import { compressToEncodedURIComponent } from 'lz-string';
 
-import { fileFromParams, type Format, formatFrom } from 'limber/utils/messaging';
+import { fileFromParams, flavorFrom, type Format, formatFrom } from 'limber/utils/messaging';
 
 import type RouterService from '@ember/routing/router-service';
 
@@ -85,6 +85,15 @@ export class FileURIComponent {
     const queryParams = new URLSearchParams(search);
 
     return formatFrom(queryParams.get('format'));
+  }
+
+  get flavor() {
+    const location = this.#currentURL();
+
+    const search = location.split('?')[1];
+    const queryParams = new URLSearchParams(search);
+
+    return flavorFrom(this.format, queryParams.get('flavor'));
   }
 
   constructor() {
@@ -179,7 +188,7 @@ export class FileURIComponent {
     });
   };
 
-  #_updateQPs = async (rawText: string, format: Format) => {
+  #_updateQPs = async (rawText: string, format: Format, flavor?: string) => {
     if (this.#frame) cancelAnimationFrame(this.#frame);
 
     const encoded = compressToEncodedURIComponent(rawText);
@@ -188,6 +197,14 @@ export class FileURIComponent {
     qps.set('c', encoded);
     qps.delete('t');
     qps.set('format', formatFrom(format));
+
+    if (flavor) {
+      const exists = flavorFrom(qps.get('format'), flavor);
+
+      if (exists) {
+        qps.set('flavor', exists);
+      }
+    }
 
     // @ts-expect-error this works
     if (this.#qps?.c === qps.get('c') && this.#qps?.format === qps.get('format')) {
