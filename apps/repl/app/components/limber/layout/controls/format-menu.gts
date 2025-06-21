@@ -4,9 +4,20 @@ import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 import Menu from 'limber/components/limber/menu';
+
+import {
+  FileEmber,
+  FileGlimmer,
+  FileMarkdown,
+  FileMermaid,
+  FileReact,
+  FileSvelte,
+  FileVue,
+  NestedMarkdown,
+} from './icons.gts';
 
 import type RouterService from '@ember/routing/router-service';
 import type { Format } from 'limber/utils/messaging';
@@ -19,16 +30,12 @@ function iconFor(format: Format): string {
   switch (format) {
     case 'glimdown':
       return 'G⬇';
-    case 'mermaid':
-      return `🧜‍♀️`;
-    case 'react':
-      return '⚛️';
     default:
       return format.toUpperCase();
   }
 }
 
-const menuIconClasses = `inline-block bg-ember-black text-white text-xs px-1 rounded w-8 text-center`;
+const menuIconClasses = `inline-block w-8 text-center`;
 
 export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
   @service declare router: RouterService;
@@ -57,6 +64,16 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
 
   <template>
     <style>
+      .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .glimdown-markdown {
+        position: absolute;
+        top: 1rem;
+        left: 1.5rem;
+      }
       .menu-icon {
         transition: 0.25s all;
         &.upside-down {
@@ -73,41 +90,58 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
       </:trigger>
 
       <:options as |Item|>
-        <Item {{on "click" (fn this.switch "glimdown")}} class="{{this.isSelected 'glimdown'}}">
-          <div class={{menuIconClasses}}>{{iconFor "glimdown"}}</div>
+        <Item
+          {{on "click" (fn this.switch "glimdown")}}
+          class="menu-item {{this.isSelected 'glimdown'}}"
+        >
+          <div class={{menuIconClasses}}>
+            {{{FileGlimmer}}}
+            <span class="glimdown-markdown">{{{NestedMarkdown}}}</span>
+          </div>
           Glimdown
         </Item>
 
-        <Item {{on "click" (fn this.switch "gjs")}} class="{{this.isSelected 'gjs'}}">
-          <div class={{menuIconClasses}}>{{iconFor "gjs"}}</div>
+        <Item {{on "click" (fn this.switch "md")}} class="menu-item {{this.isSelected 'md'}}">
+          <div class={{menuIconClasses}}>{{{FileMarkdown}}}</div>
+          Markdown
+        </Item>
+
+        <Item {{on "click" (fn this.switch "gjs")}} class="menu-item {{this.isSelected 'gjs'}}">
+          <div class={{menuIconClasses}}>{{{FileGlimmer}}}</div>
           Glimmer JS
         </Item>
 
-        <Item {{on "click" (fn this.switch "hbs")}} class="{{this.isSelected 'hbs'}}">
-          <div class={{menuIconClasses}}>{{iconFor "hbs"}}</div>
+        <Item {{on "click" (fn this.switch "hbs")}} class="menu-item {{this.isSelected 'hbs'}}">
+          <div class={{menuIconClasses}}>{{{FileEmber}}}</div>
           Template
         </Item>
 
-        <Item {{on "click" (fn this.switch "svelte")}} class="{{this.isSelected 'svelte'}}">
-          <div class={{menuIconClasses}}>{{iconFor "svelte"}}</div>
+        <Item
+          {{on "click" (fn this.switch "svelte")}}
+          class="menu-item {{this.isSelected 'svelte'}}"
+        >
+          <div class={{menuIconClasses}}>{{{FileSvelte}}}</div>
           Svelte
         </Item>
 
-        <Item {{on "click" (fn this.switch "vue")}} class="{{this.isSelected 'vue'}}">
-          <div class={{menuIconClasses}}>{{iconFor "vue"}}</div>
+        <Item {{on "click" (fn this.switch "vue")}} class="menu-item {{this.isSelected 'vue'}}">
+          <div class={{menuIconClasses}}>{{{FileVue}}}</div>
           Vue
         </Item>
 
-        <Item {{on "click" (fn this.switch "mermaid")}} class="{{this.isSelected 'mermaid'}}">
-          <div class={{menuIconClasses}}>{{iconFor "mermaid"}}</div>
+        <Item
+          {{on "click" (fn this.switch "mermaid")}}
+          class="menu-item {{this.isSelected 'mermaid'}}"
+        >
+          <div class={{menuIconClasses}}>{{{FileMermaid}}}</div>
           Mermaid
         </Item>
 
         <Item
           {{on "click" (fn this.switch "jsx" "react")}}
-          class="{{this.isSelected 'jsx' 'react'}}"
+          class="menu-item {{this.isSelected 'jsx' 'react'}}"
         >
-          <div class={{menuIconClasses}}>{{iconFor "react"}}</div>
+          <div class={{menuIconClasses}}>{{{FileReact}}}</div>
           JSX | React
         </Item>
       </:options>

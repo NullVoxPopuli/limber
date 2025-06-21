@@ -1,4 +1,5 @@
 import { classicEmberSupport, ember, extensions } from '@embroider/vite';
+import Icons from 'unplugin-icons/vite';
 
 import { babel } from '@rollup/plugin-babel';
 import { defineConfig } from 'vite';
@@ -23,6 +24,9 @@ export default defineConfig(() => ({
     },
   },
   plugins: [
+    Icons({
+      autoInstall: true,
+    }),
     classicEmberSupport(),
     ember(),
     babel({

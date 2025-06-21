@@ -56,6 +56,9 @@
     "@glint/environment-ember-loose": "alpha",
     "@glint/environment-ember-template-imports": "alpha",
     "@glint/template": "1.5.2",
+    "@iconify-json/devicon": "^1.2.29",
+    "@iconify-json/mdi": "^1.2.3",
+    "@iconify-json/vscode-icons": "^1.2.23",
     "@nullvoxpopuli/eslint-configs": "^5.0.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@tsconfig/ember": "^3.0.9",
@@ -112,6 +115,7 @@
     "testem-failure-only-reporter": "^1.0.0",
     "type-fest": "4.41.0",
     "typescript": "5.8.3",
+    "unplugin-icons": "^22.1.0",
     "vfile": "^6.0.3",
     "vite": "^6.3.5",
     "webpack": "^5.98.0"

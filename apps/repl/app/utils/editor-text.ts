@@ -1,4 +1,5 @@
 import { tracked } from '@glimmer/tracking';
+import { assert } from '@ember/debug';
 import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
 import { service } from '@ember/service';
 import { buildWaiter } from '@ember/test-waiters';
@@ -267,13 +268,37 @@ export class FileURIComponent {
   };
 }
 
-export function setStoredDocument(format: string, text: string) {
-  localStorage.setItem('active-format', format);
-  localStorage.setItem(`${format}-doc`, text);
+function getKey(format: string, flavor: undefined | string) {
+  return flavor ? `${format}|${flavor}-doc` : `${format}-doc`;
 }
 
-export function getStoredDocumentForFormat(format: string) {
-  return localStorage.getItem(`${format}-doc`);
+function decomposeKey(key: string): {
+  format: string;
+  flavor: string | undefined;
+} {
+  const notation = key.replace(/-doc$/, '');
+
+  const parts = notation.split('|');
+
+  assert(`Missing format`, parts[0]);
+
+  return {
+    format: parts[0],
+    flavor: parts[1],
+  };
+}
+
+export function setStoredDocument(format: string, flavor: undefined | string, text: string) {
+  const key = getKey(format, flavor);
+
+  localStorage.setItem('active-format', key);
+  localStorage.setItem(key, text);
+}
+
+export function getStoredDocumentForFormat(format: string, flavor: undefined | string) {
+  const key = getKey(format, flavor);
+
+  return localStorage.getItem(key);
 }
 
 /**
@@ -292,10 +317,13 @@ export function getStoredDocument() {
   const active = localStorage.getItem('active-format');
 
   if (active) {
-    const activeDoc = localStorage.getItem(`${active}-doc`);
+    const key = `${active}-doc`;
+    const activeDoc = localStorage.getItem(key);
 
     if (activeDoc) {
-      return { format: active, doc: activeDoc };
+      const decomposed = decomposeKey(key);
+
+      return { format: decomposed.format, flavor: decomposed.flavor, doc: activeDoc };
     }
   }
 
