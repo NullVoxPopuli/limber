@@ -10,9 +10,9 @@ let elementId = 0;
 /**
  * @param {unknown} [ options ]
  * @returns {{
+ *   scope: Record<string, unknown>,
  *   remarkPlugins: Plugin[],
  *   rehypePlugins: Plugin[],
- *   topLevelScope: Record<string, unknown>,
  *   ShadowComponent: string | undefined,
  *   CopyComponent: string | undefined
  *   }}
@@ -20,18 +20,18 @@ let elementId = 0;
 export function filterOptions(options) {
   if (!isRecord(options)) {
     return {
+      scope: {},
       remarkPlugins: [],
       rehypePlugins: [],
-      topLevelScope: {},
       ShadowComponent: undefined,
       CopyComponent: undefined,
     };
   }
 
   return {
+    scope: /** @type {Record<string, unknown>}*/ (options?.scope || {}),
     remarkPlugins: /** @type {Plugin[]}*/ (options?.remarkPlugins || []),
     rehypePlugins: /** @type {Plugin[]}*/ (options?.rehypePlugins || []),
-    topLevelScope: /** @type {Record<string, unknown>}*/ (options?.topLevelScope || {}),
     ShadowComponent: /** @type {string}*/ (options?.ShadowComponent),
     CopyComponent: /** @type {string}*/ (options?.CopyComponent),
   };
@@ -69,8 +69,8 @@ export async function compiler(config, api) {
 
       let component = template(result.text, {
         scope: () => ({
-          ...filterOptions(userOptions).topLevelScope,
-          ...filterOptions(options).topLevelScope,
+          ...filterOptions(userOptions).scope,
+          ...filterOptions(options).scope,
           // TODO: compile all the components from "result" and add them to scope here
         }),
       });

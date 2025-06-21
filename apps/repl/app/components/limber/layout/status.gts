@@ -79,7 +79,7 @@ export class Status extends Component {
       }
       .layout__status__info {
         position: absolute;
-        top: 1rem;
+        bottom: 1rem;
         left: 1rem;
         opacity: 1;
         font-size: 0.8rem;

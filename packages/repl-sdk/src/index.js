@@ -334,9 +334,16 @@ export class Compiler {
       /**
        * the compiler didn't return text, so we can skip import shimming
        */
-      return this.#render(compiler, compiled, {
+      let value = compiled;
+
+      if ('compiled' in compiled) {
+        value = compiled.compiled;
+        extras = compiled;
+      }
+
+      return this.#render(compiler, value, {
         ...extras,
-        compiled,
+        compiled: value,
       });
     }
 

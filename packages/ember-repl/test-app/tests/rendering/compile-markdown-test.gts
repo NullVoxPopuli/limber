@@ -164,7 +164,7 @@ module('Rendering | compile()', function (hooks) {
 
   module('passing options', function () {
     skip('adding to top-level scope', async function (assert) {
-      const text = `This is a local component added to topLevelScope`;
+      const text = `This is a local component added to scope`;
       const LocalComponent = <template>{{text}}</template>;
 
       setupOnerror(() => {
@@ -188,7 +188,7 @@ module('Rendering | compile()', function (hooks) {
         },
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        topLevelScope: {
+        scope: {
           LocalComponent,
         },
       });
@@ -201,7 +201,7 @@ module('Rendering | compile()', function (hooks) {
     });
 
     skip('adding to top-level scope applies to rendered "hbs" codefences', async function (assert) {
-      const text = `This is a local component added to topLevelScope`;
+      const text = `This is a local component added to scope`;
       const LocalComponent = <template>{{text}}</template>;
 
       setupOnerror((e) => {
@@ -230,7 +230,7 @@ module('Rendering | compile()', function (hooks) {
         },
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        topLevelScope: {
+        scope: {
           LocalComponent,
         },
       });
