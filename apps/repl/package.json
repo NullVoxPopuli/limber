@@ -104,7 +104,6 @@
     "postcss-import": "^16.1.1",
     "prettier": "^3.5.2",
     "prettier-plugin-ember-template-tag": "2.0.6",
-    "prettier-plugin-tailwindcss": "^0.6.11",
     "process": "^0.11.10",
     "qunit": "^2.24.1",
     "qunit-dom": "3.4.0",

@@ -419,9 +419,6 @@ importers:
       prettier-plugin-ember-template-tag:
         specifier: 2.0.6
         version: 2.0.6(prettier@3.5.3)
-      prettier-plugin-tailwindcss:
-        specifier: ^0.6.11
-        version: 0.6.12(prettier@3.5.3)
       process:
         specifier: ^0.11.10
         version: 0.11.10

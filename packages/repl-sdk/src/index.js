@@ -282,7 +282,7 @@ export class Compiler {
    * @returns {Promise<HTMLElement>}
    */
   async compile(format, text, options = {}) {
-    this.#announce('info', `Compliing ${format}`);
+    this.#announce('info', `Compiling ${format}`);
 
     try {
       return await this.#compile(format, text, options);

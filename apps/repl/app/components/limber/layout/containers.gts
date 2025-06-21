@@ -1,5 +1,5 @@
 import Building from './building';
-import Error from './error';
+import { Status } from './status.gts';
 
 import type { TOC } from '@ember/component/template-only';
 
@@ -30,6 +30,6 @@ export const OutputContainer: TOC<{
     </div>
 
     <Building />
-    <Error />
+    <Status />
   </section>
 </template>;

@@ -19,13 +19,15 @@ export const Output = <template>
           }}
       <CopyMenu />
 
-      <div class={{if (isGJS context.format) "glimdown-render"}}>
-        <PortalTargets />
-
+      <div class="output__compiler__duration">
         {{#if context.isWaiting}}
-          Building for ...
+          building for ...
           {{Seconds}}s
         {{/if}}
+      </div>
+
+      <div class={{if (isGJS context.format) "glimdown-render"}}>
+        <PortalTargets />
 
         {{#if context.component}}
           <div {{highlight context.component}}>
@@ -37,6 +39,15 @@ export const Output = <template>
 
     </div>
   </Compiler>
+
+  <style>
+    .output__compiler__duration {
+      position: absolute;
+      top: 0.75rem;
+      right: 4rem;
+      font-size: 0.8rem;
+    }
+  </style>
 </template>;
 
 export default Output;

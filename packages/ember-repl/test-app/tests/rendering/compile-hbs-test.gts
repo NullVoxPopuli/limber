@@ -44,7 +44,7 @@ module('compileHBS()', function (hooks) {
 
     assert.deepEqual(getCompiler(this).messages, [
       {
-        message: 'Compliing hbs',
+        message: 'Compiling hbs',
         type: 'info',
       },
       {

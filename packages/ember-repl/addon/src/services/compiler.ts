@@ -4,10 +4,10 @@ import { tracked } from '@glimmer/tracking';
 import { setComponentTemplate } from '@ember/component';
 import templateOnly from '@ember/component/template-only';
 import { assert } from '@ember/debug';
+import { registerDestructor } from '@ember/destroyable';
 import { array, concat, fn, get, hash } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { getOwner } from '@ember/owner';
-import Service from '@ember/service';
 import { precompileTemplate } from '@ember/template-compilation';
 import { waitFor } from '@ember/test-waiters';
 
@@ -77,10 +77,96 @@ interface CompilerOptions {
     remarkPlugins?: unknown[];
     rehypePlugins?: unknown[];
   };
+  gmd?: {
+    scope?: Record<string, unknown>;
+    remarkPlugins?: unknown[];
+    rehypePlugins?: unknown[];
+  };
 }
 
-export default class CompilerService extends Service {
+/**
+ * Standard for the REPL, not real apps.
+ * HBS isn't used in real apps (that are fully up to date)
+ */
+const standardScope = {
+  // These are only added here because it's convenient for hbs
+  // to have them
+  array,
+  concat,
+  fn,
+  get,
+  hash,
+  on,
+  // The default available scope for gjs:
+  //
+  // We don't use gjs transpilation here, because hbs transpilation
+  // doesn't need to go through the babel infra, so it's faster this way,
+  // even though it's more "verbose" and could get out of sync from the
+  // implementations / source-of-truth.
+  //
+  // https://github.com/emberjs/babel-plugin-ember-template-compilation/blob/main/src/scope-locals.ts#L16
+  //
+  // ////////////////
+  // namespaces
+  // ////////////////
+  //   TC39
+  globalThis,
+  Atomics,
+  JSON,
+  Math,
+  Reflect,
+  //   WHATWG
+  localStorage,
+  sessionStorage,
+  // ////////////////
+  // functions / utilities
+  // ////////////////
+  //   TC39
+  isNaN,
+  isFinite,
+  parseInt,
+  parseFloat,
+  decodeURI,
+  decodeURIComponent,
+  encodeURI,
+  encodeURIComponent,
+  //   WHATWG
+  postMessage,
+  structuredClone,
+  // ////////////////
+  // new-less Constructors (still functions)
+  // ////////////////
+  //   TC39
+  Array, // different behavior from (array)
+  BigInt,
+  Boolean,
+  Date,
+  Number,
+  Object, // different behavior from (hash)
+  String,
+  // ////////////////
+  // Values
+  // ////////////////
+  //   TC39
+  Infinity,
+  NaN,
+  //   WHATWG
+  isSecureContext,
+};
+
+export default class CompilerService {
   #compiler: Compiler | undefined;
+
+  constructor() {
+    const global = getGlobal();
+
+    global.REPL ||= {};
+    global.REPL.compiler = this;
+
+    registerDestructor(this, () => {
+      delete global.REPL?.compiler;
+    });
+  }
 
   @tracked messages: Message[] = [];
 
@@ -125,79 +211,27 @@ export default class CompilerService extends Service {
       on: {
         log: (type: Message['type'], message: string) => {
           this.messages.push({ type, message });
+          // Waiting on better array primitive
+          // eslint-disable-next-line no-self-assign
+          this.messages = this.messages;
         },
       },
       options: {
         ...options,
+        gmd: {
+          ...(options.gmd ?? {}),
+          scope: {
+            ...standardScope,
+            ...(options.gmd?.scope ?? {}),
+          },
+        },
         hbs: {
           ember: {
+            ...(options.hbs ?? {}),
             scope: {
-              // These are only added here because it's convenient for hbs
-              // to have them
-              array,
-              concat,
-              fn,
-              get,
-              hash,
-              on,
-              // The default available scope for gjs:
-              //
-              // We don't use gjs transpilation here, because hbs transpilation
-              // doesn't need to go through the babel infra, so it's faster this way,
-              // even though it's more "verbose" and could get out of sync from the
-              // implementations / source-of-truth.
-              //
-              // https://github.com/emberjs/babel-plugin-ember-template-compilation/blob/main/src/scope-locals.ts#L16
-              //
-              // ////////////////
-              // namespaces
-              // ////////////////
-              //   TC39
-              globalThis,
-              Atomics,
-              JSON,
-              Math,
-              Reflect,
-              //   WHATWG
-              localStorage,
-              sessionStorage,
-              // ////////////////
-              // functions / utilities
-              // ////////////////
-              //   TC39
-              isNaN,
-              isFinite,
-              parseInt,
-              parseFloat,
-              decodeURI,
-              decodeURIComponent,
-              encodeURI,
-              encodeURIComponent,
-              //   WHATWG
-              postMessage,
-              structuredClone,
-              // ////////////////
-              // new-less Constructors (still functions)
-              // ////////////////
-              //   TC39
-              Array, // different behavior from (array)
-              BigInt,
-              Boolean,
-              Date,
-              Number,
-              Object, // different behavior from (hash)
-              String,
-              // ////////////////
-              // Values
-              // ////////////////
-              //   TC39
-              Infinity,
-              NaN,
-              //   WHATWG
-              isSecureContext,
+              ...standardScope,
               ...(options.hbs?.scope ?? {}),
             },
-            ...(options.hbs ?? {}),
           },
         },
       },
@@ -222,6 +256,8 @@ export default class CompilerService extends Service {
   }
 
   async #compile(ext: string, text: string, options?: Record<string, unknown>) {
+    this.messages = [];
+
     return this.compiler.compile(ext, text, options ?? {});
   }
 
@@ -303,4 +339,12 @@ export default class CompilerService extends Service {
   ): Promise<CompileResult> {
     return this.compile('md', source, options);
   }
+}
+
+function getGlobal() {
+  return globalThis as {
+    REPL?: {
+      compiler?: CompilerService;
+    };
+  };
 }
