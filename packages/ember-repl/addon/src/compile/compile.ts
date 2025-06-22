@@ -79,7 +79,11 @@ async function runTheCompiler({
   } else if (options.format === 'hbs') {
     result = await service.compileHBS(text, options as any);
   } else {
-    result = await service.compile(options.format, text);
+    result = await service.compile(
+      options.format,
+      text,
+      options as unknown as Record<string, unknown>
+    );
   }
 
   if (result.error) {
