@@ -4,10 +4,10 @@ import { service } from 'ember-primitives/helpers/service';
 import { resource, resourceFactory } from 'ember-resources';
 import { TrackedObject } from 'tracked-built-ins';
 
-import codemirror, { setupCodeMirror } from './-code-mirror';
-import Loader from './loader';
-import { LoadingError } from './loading-error';
-import { Placeholder } from './placeholder';
+import codemirror, { setupCodeMirror } from './-code-mirror.ts';
+import Loader from './loader.gts';
+import { LoadingError } from './loading-error.gts';
+import { Placeholder } from './placeholder.gts';
 
 import type { TOC } from '@ember/component/template-only';
 

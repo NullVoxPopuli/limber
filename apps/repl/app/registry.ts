@@ -22,8 +22,7 @@ function formatAsResolverEntries(imports: Record<string, unknown>) {
  * - Services can be referenced via import paths (rather than strings)
  * - we design a new routing system
  */
-const resolverRegistry = {
-  ...formatAsResolverEntries(import.meta.glob('./templates/**/*.{gjs,gts,js,ts}', { eager: true })),
+const autoRegistry = {
   ...formatAsResolverEntries(import.meta.glob('./services/**/*.{js,ts}', { eager: true })),
   ...formatAsResolverEntries(import.meta.glob('./routes/**/*.{js,ts}', { eager: true })),
   [`${appName}/router`]: Router,
@@ -33,5 +32,8 @@ export const registry = {
   ...compatModules,
   // [`${appName}/services/resize-observer`]: ResizeService,
   [`${appName}/services/page-title`]: PageTitleService,
-  ...resolverRegistry,
+  ...autoRegistry,
+  [`${appName}/templates/application`]: await import('./templates/application.gts'),
+  [`${appName}/templates/edit`]: await import('./templates/edit.gts'),
+  [`${appName}/templates/output`]: await import('./templates/output.gts'),
 };

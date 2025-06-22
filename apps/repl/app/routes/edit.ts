@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
-import { formatFrom } from '#languages';
+import { formatFrom } from '#app/languages.gts';
 
 import { DEFAULT_SNIPPET } from 'limber/snippets';
 import { getStoredDocument } from 'limber/utils/editor-text';

@@ -3,12 +3,13 @@ import { fn } from '@ember/helper';
 
 import { modifier } from 'ember-modifier';
 
-import Save from '../save';
-import { EditorContainer, OutputContainer } from './containers';
-import { Controls } from './controls';
-import { Orientation } from './orientation';
-import { ResizeHandle } from './resize-handle';
-import { isHorizontalSplit, LayoutState, setupResizeObserver } from './state';
+import Save from '#components/save.gts';
+
+import { EditorContainer, OutputContainer } from './containers.gts';
+import { Controls } from './controls/index.gts';
+import { Orientation } from './orientation.gts';
+import { ResizeHandle } from './resize-handle.gts';
+import { isHorizontalSplit, LayoutState, setupResizeObserver } from './state.ts';
 
 import type { TOC } from '@ember/component/template-only';
 import type { ReactiveActorFrom } from 'ember-statechart-component';

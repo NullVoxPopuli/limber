@@ -4,7 +4,7 @@ import { notInIframe } from 'ember-primitives/iframe';
 import { resource } from 'ember-resources';
 import { connectToParent } from 'penpal';
 
-import type { Format } from 'limber/utils/messaging';
+import type { Format } from '#app/languages.gts';
 
 interface ParentMethods {
   ready: () => void;

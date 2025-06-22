@@ -3,11 +3,11 @@ import { faEmber, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faCubes } from '@fortawesome/free-solid-svg-icons';
 import { notInIframe } from 'ember-primitives/iframe';
 
-import { FormatButtons } from 'limber/components/limber/layout/controls/format-buttons';
 import { ExternalLink } from 'limber-ui';
 
-import DemoSelect from './demo-select';
-import { Share } from './share';
+import DemoSelect from './demo-select.gts';
+import { FormatButtons } from './format-buttons.gts';
+import { Share } from './share.gts';
 
 <template>
   <header

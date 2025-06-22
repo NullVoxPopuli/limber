@@ -3,8 +3,8 @@ import { Seconds } from 'reactiveweb/interval';
 
 import highlight from 'limber/modifiers/highlight-code-blocks';
 
-import CopyMenu from '../copy-menu';
-import Compiler from './compiler';
+import Compiler from './compiler.gts';
+import CopyMenu from './copy-menu.gts';
 
 const isGJS = (format: string | undefined) => format === 'gjs';
 

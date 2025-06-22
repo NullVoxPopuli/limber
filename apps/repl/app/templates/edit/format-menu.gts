@@ -6,12 +6,13 @@ import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
+import Menu from '#components/menu.gts';
 import { flavorFrom, formatFrom, infoFor } from '#languages';
 
-import Menu from 'limber/components/limber/menu';
-
+import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
-import type { Format } from 'limber/utils/messaging';
+import type { ComponentLike } from '@glint/template';
+import type { Format } from '#app/languages.gts';
 
 function abbreviationFor(format: Format) {
   return format === 'glimdown' ? 'gdm' : format;
@@ -20,10 +21,10 @@ function abbreviationFor(format: Format) {
 const IconItem: TOC<{
   Args: {
     format: string;
-    flavor: string;
-    onClick: () => void;
+    flavor?: undefined | string;
+    onClick: (format: Format, flavor: string | undefined) => void;
     item: ComponentLike<{ Element: HTMLButtonElement; Blocks: { default: [] } }>;
-  };
+  }
 }> = <template>
   {{#let (infoFor @format @flavor) as |info|}}
     <@item {{on "click" (fn @onClick @format @flavor)}} class="menu-item">
@@ -55,7 +56,7 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
   }
 
   get flavor(): string | undefined {
-    return this.router.currentRoute?.queryParams?.flavor;
+    return this.router.currentRoute?.queryParams?.flavor as string | undefined;
   }
 
   <template>

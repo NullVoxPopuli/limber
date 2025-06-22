@@ -7,9 +7,9 @@ import { isTesting, macroCondition } from '@embroider/macros';
 
 import { compressToEncodedURIComponent } from 'lz-string';
 
-import { flavorFrom, formatFrom } from '#languages';
+import { flavorFrom, type Format, formatFrom } from '#app/languages.gts';
 
-import { fileFromParams, type Format } from 'limber/utils/messaging';
+import { fileFromParams } from 'limber/utils/messaging';
 
 import type RouterService from '@ember/routing/router-service';
 
@@ -270,7 +270,7 @@ export class FileURIComponent {
   };
 }
 
-function getKey(format: string, flavor: undefined | string) {
+function getKey(format: string, flavor: null | undefined | string) {
   return flavor ? `${format}|${flavor}-doc` : `${format}-doc`;
 }
 
@@ -290,7 +290,7 @@ function decomposeKey(key: string): {
   };
 }
 
-export function setStoredDocument(format: string, flavor: undefined | string, text: string) {
+export function setStoredDocument(format: string, flavor: null | undefined | string, text: string) {
   const key = getKey(format, flavor);
 
   localStorage.setItem('active-format', key);

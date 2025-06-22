@@ -1,6 +1,6 @@
 import { modifier } from 'ember-modifier';
 
-import { isAllowedFormat } from '#languages';
+import { isAllowedFormat } from '#app/languages.gts';
 
 import { getHighlighter } from './-utils/highlighting';
 

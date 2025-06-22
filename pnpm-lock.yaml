@@ -281,6 +281,9 @@ importers:
       '@glint/template':
         specifier: 1.5.2
         version: 1.5.2
+      '@glint/tsserver-plugin':
+        specifier: alpha
+        version: 2.0.0-alpha.2
       '@iconify-json/devicon':
         specifier: ^1.2.29
         version: 1.2.29

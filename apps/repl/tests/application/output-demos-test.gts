@@ -5,8 +5,9 @@ import { setupApplicationTest } from 'ember-qunit';
 import { getCompiler } from 'ember-repl';
 import Route from 'ember-route-template';
 
-import { DemoSelect } from 'limber/components/limber/demo-select';
-import { Output } from 'limber/components/limber/output';
+import { Output } from '#components/output.gts';
+import { DemoSelect } from '#edit/demo-select.gts';
+
 import { ALL, getFromLabel } from 'limber/snippets';
 import { fileFromParams } from 'limber/utils/messaging';
 

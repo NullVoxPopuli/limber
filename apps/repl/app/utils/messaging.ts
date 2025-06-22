@@ -1,11 +1,12 @@
 import { decompressFromEncodedURIComponent } from 'lz-string';
 
+import { type Format,formatFrom } from '#app/languages.gts';
+
 /**
  * NOTE: window's on message handler receives *a lot* of messages
  *   (esp from various browser extensions)
  *
  */
-export type Format = 'glimdown' | 'gjs' | 'hbs' | 'svelte' | 'vue' | 'jsx' | 'mermaid';
 
 export type NewContent = {
   format: Format;
@@ -27,8 +28,6 @@ export type ToOutput = NewContent;
 
 export type FromOutput = FromLimberOutput & ToParent;
 export type ToParent = Ready | Error | Success | CompileBegin;
-
-import { formatFrom } from '#languages';
 
 export const STATUSES = ['ready', 'error'] as const;
 

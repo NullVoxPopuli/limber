@@ -1,6 +1,6 @@
 import Route from 'ember-route-template';
 
-import Output from 'limber/components/limber/output';
+import Output from '#components/output.gts';
 
 export default Route(
   <template>

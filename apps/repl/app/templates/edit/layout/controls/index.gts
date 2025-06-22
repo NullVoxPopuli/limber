@@ -15,7 +15,7 @@ import { inIframe } from 'ember-primitives/iframe';
 
 import currentURL from 'limber/helpers/current-url';
 
-import { Button } from './button';
+import { Button } from './button.gts';
 
 import type { TOC } from '@ember/component/template-only';
 

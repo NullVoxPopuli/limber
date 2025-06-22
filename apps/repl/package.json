@@ -53,6 +53,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@glint/core": "alpha",
+    "@glint/tsserver-plugin": "alpha",
     "@glint/environment-ember-loose": "alpha",
     "@glint/environment-ember-template-imports": "alpha",
     "@glint/template": "1.5.2",
@@ -127,7 +128,10 @@
     "edition": "octane"
   },
   "imports": {
-    "#languages": "./app/languages.gts"
+    "#languages": "./app/languages.gts",
+    "#app/*": "./app/*",
+    "#components/*": "./app/components/*",
+    "#edit/*": "./app/templates/edit/*"
   },
   "exports": {
     "./tests/*": "./tests/*",

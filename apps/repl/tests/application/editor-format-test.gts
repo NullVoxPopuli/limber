@@ -4,7 +4,7 @@ import { setupApplicationTest } from 'ember-qunit';
 
 import Route from 'ember-route-template';
 
-import { Editor } from 'limber/components/limber/editor';
+import { Editor } from '#edit/editor/index.gts';
 
 import { Page } from './-page';
 

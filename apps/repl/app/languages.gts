@@ -9,11 +9,19 @@ import { default as FileGlimmer } from '~icons/vscode-icons/file-type-glimmer?ra
 import { default as FileMarkdown } from '~icons/vscode-icons/file-type-markdown?raw';
 import { default as FileMermaid } from '~icons/vscode-icons/file-type-mermaid?raw';
 
+import type { ComponentLike } from '@glint/template';
+
 /**
  * The compiler stettings for all these are configured in routes/application.ts
  */
 
-export const LANGUAGE = {
+const LANGUAGE: Record<
+  string,
+  {
+    name: string;
+    icon: ComponentLike<{ Element: null }>;
+  }
+> = {
   gjs: {
     name: 'Glimmer JS',
     icon: <template>
@@ -70,7 +78,7 @@ export const LANGUAGE = {
 const ALIASES = {
   glimdown: 'gmd',
   gdm: 'gmd',
-};
+} as Record<string, string>;
 
 export const DEFAULT_FORMAT = 'glimdown';
 export const ALLOWED_FORMATS = [
@@ -88,6 +96,8 @@ export const ALLOWED_FLAVORS = {
   jsx: ['react'],
 } as Record<string, string[]>;
 
+export type Format = (typeof ALLOWED_FORMATS)[number];
+
 function key(format: string, flavor: undefined | string) {
   const lang = flavor ? `${format}|${flavor}` : format;
 
@@ -97,8 +107,12 @@ function key(format: string, flavor: undefined | string) {
 export function infoFor(format: string, flavor: undefined | string) {
   const lang = flavor ? `${format}|${flavor}` : format;
 
+  let info = LANGUAGE[key(format, flavor)];
+
   // We have to do an alias check for all the prior former styles of formats
-  const info = LANGUAGE[key(format, flavor)] ?? LANGUAGE[key(ALIASES[format], flavor)];
+  if (!info && ALIASES[format]) {
+    info = LANGUAGE[key(ALIASES[format], flavor)];
+  }
 
   assert(`Could not find info for ${lang}${flavor ? ` and ${flavor}` : ''}`, info);
 
@@ -113,19 +127,15 @@ export function nameFor(format: string, flavor: undefined | string) {
   return infoFor(format, flavor).name;
 }
 
-export function isAllowedFormat(x?: string | null): x is Format {
+export function isAllowedFormat(x?: string | null): x is (typeof ALLOWED_FORMATS)[number] {
   return Boolean(x && (ALLOWED_FORMATS as readonly string[]).includes(x));
-}
-
-export function hasAllowedFormat<T extends { format?: string }>(x: T): x is T & NewContent {
-  return isAllowedFormat(x.format);
 }
 
 function isAllowedFlavor(format: string, flavor: string) {
   return (ALLOWED_FLAVORS[format] ?? []).includes(flavor);
 }
 
-export function flavorFrom(format: string | null, flavor?: string | null) {
+export function flavorFrom(format: string | undefined | null, flavor?: string | null) {
   if (!format) return;
   if (!flavor) return;
 
@@ -136,7 +146,7 @@ export function flavorFrom(format: string | null, flavor?: string | null) {
   return;
 }
 
-export function formatFrom(x: string | undefined | null): Format {
+export function formatFrom(x: string | undefined | null): (typeof ALLOWED_FORMATS)[number] {
   if (isAllowedFormat(x)) {
     return x;
   }

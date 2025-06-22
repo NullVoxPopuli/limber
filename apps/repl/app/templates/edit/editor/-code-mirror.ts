@@ -6,8 +6,8 @@ import Modifier from 'ember-modifier';
 
 import type { EditorView } from '@codemirror/view';
 import type RouterService from '@ember/routing/router-service';
+import type { Format } from '#app/languages.gts';
 import type EditorService from 'limber/services/editor';
-import type { Format } from 'limber/utils/messaging';
 
 type Signature = {
   Element: HTMLDivElement;

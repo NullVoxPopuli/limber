@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
+import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
@@ -53,7 +54,7 @@ export class Status extends Component {
     {{/if}}
 
     {{#if this.error}}
-      {{effect this.newError this.error}}
+      {{effect (fn this.newError this.error)}}
       {{#if this.showError}}
         <footer
           data-test-error

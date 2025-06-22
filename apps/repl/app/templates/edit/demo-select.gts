@@ -8,7 +8,8 @@ import { waitFor } from '@ember/test-waiters';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faAngleRight, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
-import Menu from 'limber/components/limber/menu';
+import Menu from '#components/menu.gts';
+
 import { getFromLabel, NAMES } from 'limber/snippets';
 
 import type RouterService from '@ember/routing/router-service';

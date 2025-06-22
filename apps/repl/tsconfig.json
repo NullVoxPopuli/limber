@@ -27,6 +27,7 @@
     "declaration": false,
     "declarationMap": false,
     "baseUrl": ".",
+    "rootDir": "./",
     "experimentalDecorators": true,
     "paths": {
       "limber/tests/*": ["tests/*"],

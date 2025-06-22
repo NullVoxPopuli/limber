@@ -13,8 +13,8 @@ import { FormatMenu } from './format-menu.gts';
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
 import type { ComponentLike } from '@glint/template';
+import type { Format } from '#app/languages.gts';
 import type EditorService from 'limber/services/editor';
-import type { Format } from 'limber/utils/messaging';
 
 const buttonClasses = `
 ring-ember-brand relative px-2 py-1 text-left drop-shadow-md transition duration-150 ease-in-out hover:drop-shadow-xl focus:rounded focus:outline-none focus:ring-4 focus-visible:rounded focus-visible:outline-none sm:text-sm
@@ -72,8 +72,8 @@ class Option extends Component<{
    * Because most of the formats are not cross-compatible with each other,
    * we'll want to also swap the document
    */
-  switch = (format: Format): void => {
-    const stored = getStoredDocumentForFormat(format);
+  switch = (format: Format, flavor: string | undefined): void => {
+    const stored = getStoredDocumentForFormat(format, flavor);
 
     this.editor.fileURIComponent.set(stored ?? defaultSnippetForFormat(format), format);
   };

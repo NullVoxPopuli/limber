@@ -6,7 +6,7 @@ import { link } from 'reactiveweb/link';
 import { FileURIComponent } from 'limber/utils/editor-text';
 
 import type RouterService from '@ember/routing/router-service';
-import type { Format } from 'limber/utils/messaging';
+import type { Format } from '#app/languages.gts';
 
 export default class EditorService extends Service {
   @service declare router: RouterService;

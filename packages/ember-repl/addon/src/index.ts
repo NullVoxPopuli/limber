@@ -6,4 +6,4 @@ export { setup as setupCompiler } from './setup.ts';
 
 // Public Types
 export type { CompileState } from './compile/state.ts';
-export type { ModuleMap, ScopeMap } from './compile/types';
+export type { Format, ModuleMap, ScopeMap } from './compile/types';

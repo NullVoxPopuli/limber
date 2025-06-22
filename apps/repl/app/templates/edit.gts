@@ -1,12 +1,13 @@
 import { notInIframe } from 'ember-primitives/iframe';
 import Route from 'ember-route-template';
 
-import Editor from 'limber/components/limber/editor';
-import Guest from 'limber/components/limber/guest';
-import Header from 'limber/components/limber/header';
-import Help from 'limber/components/limber/help';
-import Layout from 'limber/components/limber/layout';
-import Output from 'limber/components/limber/output';
+import Output from '#components/output.gts';
+
+import Editor from './edit/editor/index.gts';
+import Guest from './edit/guest.gts';
+import Header from './edit/header';
+import Help from './edit/help.gts';
+import Layout from './edit/layout/index.gts';
 
 export default Route(
   <template>
