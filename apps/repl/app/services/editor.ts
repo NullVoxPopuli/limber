@@ -35,6 +35,9 @@ export default class EditorService extends Service {
   get format() {
     return this.fileURIComponent.format;
   }
+  get flavor() {
+    return this.fileURIComponent.flavor;
+  }
 
   /**
    * This function is set by a modifier,

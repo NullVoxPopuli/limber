@@ -28,53 +28,9 @@ export type ToOutput = NewContent;
 export type FromOutput = FromLimberOutput & ToParent;
 export type ToParent = Ready | Error | Success | CompileBegin;
 
-export const DEFAULT_FORMAT = 'glimdown';
-export const ALLOWED_FORMATS = [
-  DEFAULT_FORMAT,
-  'gjs',
-  'hbs',
-  'svelte',
-  'vue',
-  'jsx',
-  'mermaid',
-  'gmd',
-] as const;
+import { formatFrom } from '#languages';
+
 export const STATUSES = ['ready', 'error'] as const;
-
-export function isAllowedFormat(x?: string | null): x is Format {
-  return Boolean(x && (ALLOWED_FORMATS as readonly string[]).includes(x));
-}
-
-export function hasAllowedFormat<T extends { format?: string }>(x: T): x is T & NewContent {
-  return isAllowedFormat(x.format);
-}
-
-const ALLOWED_FLAVORS = {
-  jsx: ['react'],
-} as Record<string, string[]>;
-
-function isAllowedFlavor(format: string, flavor: string) {
-  return (ALLOWED_FLAVORS[format] ?? []).includes(flavor);
-}
-
-export function flavorFrom(format: string | null, flavor?: string | null) {
-  if (!format) return;
-  if (!flavor) return;
-
-  if (isAllowedFlavor(format, flavor)) {
-    return flavor;
-  }
-
-  return;
-}
-
-export function formatFrom(x: string | undefined | null): Format {
-  if (isAllowedFormat(x)) {
-    return x;
-  }
-
-  return DEFAULT_FORMAT;
-}
 
 export const hasFrom = (x?: object): x is { from: unknown } => Boolean(x && 'from' in x);
 export const hasFormat = (x?: object): x is { format: unknown } => Boolean(x && 'format' in x);

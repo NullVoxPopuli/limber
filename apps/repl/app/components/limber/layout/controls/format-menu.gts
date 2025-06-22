@@ -6,18 +6,9 @@ import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
-import Menu from 'limber/components/limber/menu';
+import { flavorFrom, formatFrom, iconFor, infoFor } from '#languages';
 
-import {
-  FileEmber,
-  FileGlimmer,
-  FileMarkdown,
-  FileMermaid,
-  FileReact,
-  FileSvelte,
-  FileVue,
-  NestedMarkdown,
-} from './icons.gts';
+import Menu from 'limber/components/limber/menu';
 
 import type RouterService from '@ember/routing/router-service';
 import type { Format } from 'limber/utils/messaging';
@@ -26,16 +17,23 @@ function abbreviationFor(format: Format) {
   return format === 'glimdown' ? 'gdm' : format;
 }
 
-function iconFor(format: Format): string {
-  switch (format) {
-    case 'glimdown':
-      return 'G⬇';
-    default:
-      return format.toUpperCase();
-  }
-}
+// const menuIconClasses = `inline-block w-8 text-center`;
 
-const menuIconClasses = `inline-block w-8 text-center`;
+const IconItem: TOC<{
+  Args: {
+    format: string;
+    flavor: string;
+    onClick: () => void;
+    item: ComponentLike<{ Element: HTMLButtonElement; Blocks: { default: [] } }>;
+  };
+}> = <template>
+  {{#let (infoFor @format @flavor) as |info|}}
+    <@item {{on "click" (fn @onClick @format @flavor)}} class="menu-item">
+      <info.icon />
+      {{info.name}}
+    </@item>
+  {{/let}}
+</template>;
 
 export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
   @service declare router: RouterService;
@@ -67,12 +65,12 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
       .menu-item {
         display: flex;
         align-items: center;
-        gap: 0.25rem;
+        gap: 0.75rem;
       }
-      .glimdown-markdown {
-        position: absolute;
-        top: 1rem;
-        left: 1.5rem;
+      .menu-trigger {
+        display: grid;
+        grid-auto-flow: column;
+        gap: 0.75rem;
       }
       .menu-icon {
         transition: 0.25s all;
@@ -83,67 +81,26 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
     </style>
     <Menu>
       <:trigger as |t|>
-        <t.Button title="Change document language" ...attributes>
-          {{iconFor this.format}}
+        <t.Button title="Change document language" ...attributes class="menu-trigger">
+          {{#let (infoFor (formatFrom this.format) (flavorFrom this.flavor)) as |info|}}
+            <info.icon />
+            <span>{{info.name}}</span>
+          {{/let}}
           <FaIcon @icon={{faCaretDown}} class="menu-icon {{if t.isOpen 'upside-down'}}" />
         </t.Button>
       </:trigger>
 
       <:options as |Item|>
-        <Item
-          {{on "click" (fn this.switch "glimdown")}}
-          class="menu-item {{this.isSelected 'glimdown'}}"
-        >
-          <div class={{menuIconClasses}}>
-            {{{FileGlimmer}}}
-            <span class="glimdown-markdown">{{{NestedMarkdown}}}</span>
-          </div>
-          Glimdown
-        </Item>
-
-        <Item {{on "click" (fn this.switch "md")}} class="menu-item {{this.isSelected 'md'}}">
-          <div class={{menuIconClasses}}>{{{FileMarkdown}}}</div>
-          Markdown
-        </Item>
-
-        <Item {{on "click" (fn this.switch "gjs")}} class="menu-item {{this.isSelected 'gjs'}}">
-          <div class={{menuIconClasses}}>{{{FileGlimmer}}}</div>
-          Glimmer JS
-        </Item>
-
-        <Item {{on "click" (fn this.switch "hbs")}} class="menu-item {{this.isSelected 'hbs'}}">
-          <div class={{menuIconClasses}}>{{{FileEmber}}}</div>
-          Template
-        </Item>
-
-        <Item
-          {{on "click" (fn this.switch "svelte")}}
-          class="menu-item {{this.isSelected 'svelte'}}"
-        >
-          <div class={{menuIconClasses}}>{{{FileSvelte}}}</div>
-          Svelte
-        </Item>
-
-        <Item {{on "click" (fn this.switch "vue")}} class="menu-item {{this.isSelected 'vue'}}">
-          <div class={{menuIconClasses}}>{{{FileVue}}}</div>
-          Vue
-        </Item>
-
-        <Item
-          {{on "click" (fn this.switch "mermaid")}}
-          class="menu-item {{this.isSelected 'mermaid'}}"
-        >
-          <div class={{menuIconClasses}}>{{{FileMermaid}}}</div>
-          Mermaid
-        </Item>
-
-        <Item
-          {{on "click" (fn this.switch "jsx" "react")}}
-          class="menu-item {{this.isSelected 'jsx' 'react'}}"
-        >
-          <div class={{menuIconClasses}}>{{{FileReact}}}</div>
-          JSX | React
-        </Item>
+        {{#let (component IconItem item=Item onClick=this.click) as |Button|}}
+          <Button @format="gmd" />
+          <Button @format="md" />
+          <Button @format="gjs" />
+          <Button @format="hbs" />
+          <Button @format="svelte" />
+          <Button @format="vue" />
+          <Button @format="mermaid" />
+          <Button @format="jsx" @flavor="react" />
+        {{/let}}
       </:options>
     </Menu>
   </template>

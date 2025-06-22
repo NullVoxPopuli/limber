@@ -126,6 +126,9 @@
   "ember": {
     "edition": "octane"
   },
+  "imports": {
+    "#languages": "./app/languages.gts"
+  },
   "exports": {
     "./tests/*": "./tests/*",
     "./*": "./app/*"

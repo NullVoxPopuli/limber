@@ -7,7 +7,9 @@ import { isTesting, macroCondition } from '@embroider/macros';
 
 import { compressToEncodedURIComponent } from 'lz-string';
 
-import { fileFromParams, flavorFrom, type Format, formatFrom } from 'limber/utils/messaging';
+import { flavorFrom, formatFrom } from '#languages';
+
+import { fileFromParams, type Format } from 'limber/utils/messaging';
 
 import type RouterService from '@ember/routing/router-service';
 

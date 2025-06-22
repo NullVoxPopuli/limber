@@ -16,5 +16,12 @@ module.exports = {
         'no-forbidden-elements': 'off',
       },
     },
+    {
+      files: ['**/languages.gts'],
+      rules: {
+        'no-triple-curlies': 'off',
+        'no-inline-styles': 'off',
+      },
+    },
   ],
 };

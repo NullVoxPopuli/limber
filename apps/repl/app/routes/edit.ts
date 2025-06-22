@@ -1,9 +1,10 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
+import { formatFrom } from '#languages';
+
 import { DEFAULT_SNIPPET } from 'limber/snippets';
 import { getStoredDocument } from 'limber/utils/editor-text';
-import { formatFrom } from 'limber/utils/messaging';
 
 import type RouterService from '@ember/routing/router-service';
 import type Transition from '@ember/routing/transition';
