@@ -59,9 +59,9 @@ export const LANGUAGE = {
   gmd: {
     name: 'Glimdown',
     icon: <template>
-      <span>
+      <span style="position: relative;">
         <span>{{{FileGlimmer}}}</span>
-        <span style="position: absolute; top: 1rem; left: 1.5rem">{{{NestedMarkdown}}}</span>
+        <span style="position: absolute; top: 0.3rem; left: 0.4rem;">{{{NestedMarkdown}}}</span>
       </span>
     </template>,
   },
@@ -71,6 +71,7 @@ const ALIASES = {
   glimdown: 'gmd',
   gdm: 'gmd',
 };
+
 export const DEFAULT_FORMAT = 'glimdown';
 export const ALLOWED_FORMATS = [
   DEFAULT_FORMAT,
@@ -79,6 +80,7 @@ export const ALLOWED_FORMATS = [
   'svelte',
   'vue',
   'jsx',
+  'md',
   'mermaid',
   'gmd',
 ] as const;

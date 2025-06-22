@@ -17,8 +17,6 @@ function abbreviationFor(format: Format) {
   return format === 'glimdown' ? 'gdm' : format;
 }
 
-// const menuIconClasses = `inline-block w-8 text-center`;
-
 const IconItem: TOC<{
   Args: {
     format: string;
@@ -71,6 +69,7 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
         display: grid;
         grid-auto-flow: column;
         gap: 0.75rem;
+        align-items: center;
       }
       .menu-icon {
         transition: 0.25s all;
@@ -91,7 +90,7 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
       </:trigger>
 
       <:options as |Item|>
-        {{#let (component IconItem item=Item onClick=this.click) as |Button|}}
+        {{#let (component IconItem item=Item onClick=this.switch) as |Button|}}
           <Button @format="gmd" />
           <Button @format="md" />
           <Button @format="gjs" />

@@ -76,7 +76,6 @@ class Option extends Component<{
     const stored = getStoredDocumentForFormat(format);
 
     this.editor.fileURIComponent.set(stored ?? defaultSnippetForFormat(format), format);
-    // this.router.transitionTo({ queryParams: { format,  } });
   };
 
   get format(): Format {

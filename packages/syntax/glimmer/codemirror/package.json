@@ -25,7 +25,7 @@
     "@lezer/generator": "^1.7.2",
     "@nullvoxpopuli/eslint-configs": "^5.0.0",
     "@tsconfig/ember": "^3.0.9",
-    "codemirror": "^6.0.1",
+    "codemirror": "^6.0.2",
     "concurrently": "^9.1.2",
     "eslint": "^9.29.0",
     "prettier": "^3.5.2",

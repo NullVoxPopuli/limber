@@ -1,5 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
+import { use } from 'ember-resources';
+import { debounce } from 'reactiveweb/debounce';
 
 import { Compiled } from 'ember-repl';
 
@@ -25,7 +27,5 @@ export default class Compiler extends Component<Signature> {
     return this.editor.format;
   }
 
-  get text() {
-    return this.editor.text;
-  }
+  @use text = debounce(300, () => this.editor.text);
 }

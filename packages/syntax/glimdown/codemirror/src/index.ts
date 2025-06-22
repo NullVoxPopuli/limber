@@ -135,6 +135,39 @@ export function glimdown() {
           return gts();
         },
       }),
+      LanguageDescription.of({
+        name: 'vue',
+        extensions: ['vue'],
+        async load() {
+          // @ts-ignore
+          const { vue } = await import('@codemirror/lang-vue');
+
+          return vue();
+        },
+      }),
+      LanguageDescription.of({
+        name: 'svelte',
+        extensions: ['svelte'],
+        async load() {
+          // @ts-ignore
+          const { svelte, svelteLanguage } = await import('@replit/codemirror-lang-svelte');
+
+          let s = svelte();
+          console.log(s, svelteLanguage);
+
+          return s;
+        },
+      }),
+      LanguageDescription.of({
+        name: 'javascript',
+        extensions: ['javascript', 'jsx', 'react'],
+        async load() {
+          // @ts-ignore
+          const { javascript } = await import('@codemirror/lang-javascript');
+
+          return javascript();
+        },
+      }),
     ],
   });
 }

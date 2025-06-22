@@ -11,7 +11,6 @@ import type { Format } from 'limber/utils/messaging';
 export default class EditorService extends Service {
   @service declare router: RouterService;
 
-  @tracked isCompiling = false;
   @tracked scrollbarWidth = 0;
 
   #fileURIComponent: FileURIComponent | undefined;

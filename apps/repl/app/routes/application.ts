@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import { getOwner } from '@ember/owner';
 import Route from '@ember/routing/route';
 
 import { setupTabster } from 'ember-primitives/tabster';
@@ -32,6 +33,7 @@ export default class ApplicationRoute extends Route {
           return getCompiler(owner);
         },
       },
+      owner: getOwner(this),
     };
 
     setupCompiler(this, {

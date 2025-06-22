@@ -85,6 +85,8 @@ export const svelte = {
               /* no props */
             },
           });
+
+          api.announce('info', 'Done');
         });
       },
     };

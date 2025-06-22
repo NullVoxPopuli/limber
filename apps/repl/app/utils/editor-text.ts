@@ -219,7 +219,7 @@ export class FileURIComponent {
       return;
     }
 
-    setStoredDocument(formatFrom(format), rawText);
+    setStoredDocument(formatFrom(format), flavorFrom(flavor), rawText);
 
     this.#qps = {
       ...this.#qps,

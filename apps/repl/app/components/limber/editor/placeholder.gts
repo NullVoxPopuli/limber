@@ -15,14 +15,15 @@ export const Placeholder: TOC<{
       Glimmer + Markdown Code Editor
     </label>
 
-    <pre
+    <div
       data-test-placeholder
       id="initial-editor"
       spellcheck="false"
       class="font-sm h-full w-full px-6 py-2 font-mono text-white"
+      data-format={{orGlimdown (qp "format")}}
       {{! @glint-ignore }}
       {{highlighted context.text}}
       ...attributes
-    ><code class="{{orGlimdown (qp 'format')}} hljs">{{context.text}}</code></pre>
+    ><pre>{{context.text}}</pre></div>
   {{/let}}
 </template>;

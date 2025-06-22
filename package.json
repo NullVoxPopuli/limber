@@ -28,7 +28,7 @@
     "eslint": "^9.29.0",
     "prettier": "^3.5.2",
     "prettier-plugin-ember-template-tag": "2.0.6",
-    "prettier-plugin-tailwindcss": "^0.6.11",
+    "prettier-plugin-tailwindcss": "^0.6.13",
     "release-plan": "^0.17.0",
     "turbo": "^2.4.2"
   },
