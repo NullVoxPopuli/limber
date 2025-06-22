@@ -1,9 +1,9 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { use } from 'ember-resources';
-import { debounce } from 'reactiveweb/debounce';
 
 import { Compiled } from 'ember-repl';
+import { use } from 'ember-resources';
+import { debounce } from 'reactiveweb/debounce';
 
 import type { CompileState } from 'ember-repl';
 import type EditorService from 'limber/services/editor';

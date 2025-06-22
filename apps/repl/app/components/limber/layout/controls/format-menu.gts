@@ -6,7 +6,7 @@ import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
-import { flavorFrom, formatFrom, iconFor, infoFor } from '#languages';
+import { flavorFrom, formatFrom, infoFor } from '#languages';
 
 import Menu from 'limber/components/limber/menu';
 

@@ -39,6 +39,7 @@ export async function getHighlighter(): Promise<HighlighterGeneric<never, never>
       {
         // This *does* have embeddedLanguagesLazy
         // Just not embeddedLanguages
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         ...markdown.default[0]!,
         embeddedLangs: [
           'javascript',

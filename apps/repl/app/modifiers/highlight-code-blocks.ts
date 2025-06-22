@@ -22,6 +22,7 @@ export default modifier((element: HTMLElement, [_]: unknown[]) => {
       const hljs = await getHighlighter();
 
       const content = element.textContent;
+
       if (!content) continue;
 
       const classes = [...element.classList];
@@ -42,6 +43,7 @@ export default modifier((element: HTMLElement, [_]: unknown[]) => {
 
       temp.innerHTML = highlighted;
 
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const highlightedCode = temp.querySelector('code')!;
 
       element.classList.add('shiki');

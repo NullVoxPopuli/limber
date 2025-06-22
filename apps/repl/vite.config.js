@@ -1,7 +1,7 @@
 import { classicEmberSupport, ember, extensions } from '@embroider/vite';
-import Icons from 'unplugin-icons/vite';
 
 import { babel } from '@rollup/plugin-babel';
+import Icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig(() => ({
