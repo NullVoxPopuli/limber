@@ -95,6 +95,8 @@ export const md = {
             target.appendChild(subElement);
           })
         );
+
+        compiler.announce('info', 'Done');
       },
     };
   },

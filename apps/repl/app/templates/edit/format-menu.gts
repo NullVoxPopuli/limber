@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { service } from '@ember/service';
@@ -59,6 +60,14 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
     return this.router.currentRoute?.queryParams?.flavor as string | undefined;
   }
 
+  @cached
+  get currentInfo() {
+    const format = formatFrom(this.format);
+    const flavor = flavorFrom(format, this.flavor);
+
+    return infoFor(format, flavor);
+  }
+
   <template>
     <style>
       .menu-item {
@@ -82,10 +91,8 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
     <Menu>
       <:trigger as |t|>
         <t.Button title="Change document language" ...attributes class="menu-trigger">
-          {{#let (infoFor (formatFrom this.format) (flavorFrom this.flavor)) as |info|}}
-            <info.icon />
-            <span>{{info.name}}</span>
-          {{/let}}
+          <this.currentInfo.icon />
+          <span>{{this.currentInfo.name}}</span>
           <FaIcon @icon={{faCaretDown}} class="menu-icon {{if t.isOpen 'upside-down'}}" />
         </t.Button>
       </:trigger>
