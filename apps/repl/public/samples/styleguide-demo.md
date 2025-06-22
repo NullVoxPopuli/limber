@@ -1,26 +1,9 @@
 # Use with your styleguide
 
-In Ember's strict mode, components must be imported in order
-to be rendered. The default resolver, which has everything available
-in the global namespace, is not used.
+All code fences are strict mode, which means all components must be imported in order to be rendered.
 
-For more information on template-strict-mode, view
+For more information on ember's template-strict-mode, view
 [RFC#496](https://github.com/emberjs/rfcs/pull/496)
-
-With embroider, you'll want to add this to your `extraPublicTrees` list:
-
-```js
-extraPublicTrees: [
-  // ...
-  require('ember-repl').buildComponentMap([
-    'limber/components/limber/menu',
-    'limber/components/limber/header',
-    'limber/components/external-link',
-    'ember-primitives',
-    'ember-repl',
-  ]),
-];
-```
 
 <hr>
 

@@ -16,7 +16,7 @@ import { Share } from './share.gts';
     <div class="flex items-center gap-2">
       <h1 class="text-ember-brand flex items-center gap-2">
         <a
-          class="focus:outline-none focus:ring-4 focus-visible:outline-none"
+          class="focus:outline-none focus:ring-4 focus-visible:outline-none hidden md:inline-block"
           href="https://emberjs.com"
           target="_blank"
           rel="noreferrer noopener"
@@ -35,26 +35,26 @@ import { Share } from './share.gts';
     <nav class="flex items-baseline gap-2 text-white">
       <DemoSelect />
 
-      <ExternalLink href="/bundle.html">
+      <ExternalLink href="/bundle.html" class="hidden sm:block">
         <:custom as |DefaultContent|>
-          <span class="hidden sm:block">
+          <span class="hidden md:block">
             <DefaultContent>
               Bundle
             </DefaultContent>
           </span>
-          <span class="block px-2 sm:hidden">
+          <span class="md:hidden">
             <FaIcon @icon={{faCubes}} />
           </span>
         </:custom>
       </ExternalLink>
-      <ExternalLink href="https://github.com/nullvoxpopuli/limber">
+      <ExternalLink href="https://github.com/nullvoxpopuli/limber" class="hidden px-2 sm:block">
         <:custom as |DefaultContent|>
-          <span class="hidden sm:block">
+          <span class="hidden md:block">
             <DefaultContent>
               GitHub
             </DefaultContent>
           </span>
-          <span class="block px-2 sm:hidden">
+          <span class="md:hidden">
             <FaIcon @icon={{faGithub}} />
           </span>
         </:custom>

@@ -45,7 +45,8 @@ export async function compiler(config, api) {
     /** @type {Record<string, unknown>} */ (config.userOptions)?.gmd || config
   );
 
-  const { isLive, isPreview, needsLive, allowedFormats, isBelow } = buildCodeFenceMetaUtils(api);
+  const { isLive, isPreview, needsLive, allowedFormats, getFlavorFromMeta, isBelow } =
+    buildCodeFenceMetaUtils(api);
 
   const { parseMarkdown } = await import(/* @vite-ignore */ '../markdown/parse.js');
 
@@ -63,6 +64,7 @@ export async function compiler(config, api) {
         isBelow,
         needsLive,
         ALLOWED_FORMATS: allowedFormats,
+        getFlavorFromMeta,
       });
 
       const { template } = await api.tryResolve('@ember/template-compiler/runtime');

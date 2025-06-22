@@ -8,9 +8,10 @@ import { waitFor } from '@ember/test-waiters';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faAngleRight, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
+import { infoFor } from '#app/languages.gts';
 import Menu from '#components/menu.gts';
 
-import { getFromLabel, NAMES } from 'limber/snippets';
+import { ALL,getFromLabel } from 'limber/snippets';
 
 import type RouterService from '@ember/routing/router-service';
 import type EditorService from 'limber/services/editor';
@@ -31,7 +32,7 @@ export class DemoSelect extends Component {
     <Menu @inline={{true}}>
       <:trigger as |t|>
         <t.Default data-test-demo-select as |menu|>
-          <span class="grid grid-flow-col items-center gap-2">
+          <span class="grid grid-flow-col items-center gap-2 whitespace-nowrap">
             Select demo
 
             {{#if menu.isOpen}}
@@ -44,13 +45,25 @@ export class DemoSelect extends Component {
       </:trigger>
 
       <:options as |Item|>
-        {{#each NAMES as |demoName|}}
-          <Item {{on "click" (fn this.select demoName)}} data-test-demo>
-            {{demoName}}
+        {{#each ALL as |demo|}}
+          <Item {{on "click" (fn this.select demo.label)}} data-test-demo>
+            <div class="menu-item-with-icon">
+              {{#let (infoFor demo.format demo.flavor) as |info|}}
+                <info.icon />
+              {{/let}}
+              <span>{{demo.label}}</span>
+            </div>
           </Item>
         {{/each}}
       </:options>
     </Menu>
+    <style>
+      .menu-item-with-icon {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+      }
+    </style>
   </template>
 }
 

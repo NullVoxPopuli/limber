@@ -1,3 +1,5 @@
+import { assert } from '@ember/debug';
+
 export const DEFAULT_GJS = `// Welcome!
 
 const who = 'world';
@@ -50,18 +52,33 @@ List of links:
 [2]: https://github.com/ember-template-imports/ember-template-imports
 [3]: https://github.com/NullVoxPopuli/limber/issues/14`;
 
+/**
+ * NOTE: label must be unique
+ */
 export const ALL = [
-  { label: 'Welcome', snippet: DEFAULT_SNIPPET },
-  { label: 'With inline Javascript', path: '/samples/live-js.md' },
-  { label: 'With inline Templates', path: '/samples/live-hbs.md' },
-  { label: 'Styleguide Demo', path: '/samples/styleguide-demo.md' },
-  { label: 'Build your own REPL', path: '/samples/repl.md' },
-  { label: 'Menu with focus trap', path: '/samples/menu-with-focus-trap.md' },
-  { label: 'Forms', path: '/samples/forms/intro.md' },
-  { label: 'RemoteData', path: '/samples/remote-data.md' },
-] as const;
+  { format: 'gdm', label: 'Welcome', snippet: DEFAULT_SNIPPET },
+  { format: 'md', label: 'All Frameworks in Markdown', path: '/samples/all-md.md' },
+  { format: 'md', label: 'With inline Javascript', path: '/samples/live-js.md' },
+  { format: 'gmd', label: 'With inline Templates', path: '/samples/live-hbs.md' },
+  { format: 'md', label: 'Styleguide Demo', path: '/samples/styleguide-demo.md' },
+  { format: 'md', label: 'Build your own REPL', path: '/samples/repl.md' },
+  { format: 'md', label: 'Menu with focus trap', path: '/samples/menu-with-focus-trap.md' },
+  { format: 'md', label: 'Forms', path: '/samples/forms/intro.md' },
+  { format: 'md', label: 'RemoteData', path: '/samples/remote-data.md' },
+  { format: 'gjs', label: 'GJS Demo', path: '/samples/gjs-demo.gjs' },
+  { format: 'hbs', label: 'HBS Demo', path: '/samples/hbs-demo.hbs' },
+  { format: 'svelte', label: 'Svelte Demo', path: '/samples/svelte-demo.svelte' },
+  { format: 'vue', label: 'Vue Demo', path: '/samples/vue-demo.vue' },
+  { format: 'mermaid', label: 'Mermaid Demo', path: '/samples/mermaid-demo.mermaid' },
+  { format: 'jsx', flavor: 'react', label: 'React Demo', path: '/samples/jsx-react-demo.jsx' },
+];
 
 export const NAMES = ALL.map((demo) => demo.label);
+
+assert(
+  `Expected every label of the list of Demo snippets to be unique`,
+  new Set(NAMES).size === ALL.length
+);
 
 export const LOADED = new Set([DEFAULT_SNIPPET]);
 
@@ -70,7 +87,7 @@ export async function getFromLabel(label: string): Promise<string> {
 
   if (!entry) return DEFAULT_SNIPPET;
 
-  if ('snippet' in entry) {
+  if ('snippet' in entry && typeof entry.snippet === 'string') {
     return entry.snippet;
   }
 
