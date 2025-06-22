@@ -1,6 +1,6 @@
 import { decompressFromEncodedURIComponent } from 'lz-string';
 
-import { type Format,formatFrom } from '#app/languages.gts';
+import { type Format, formatFrom } from '#app/languages.gts';
 
 /**
  * NOTE: window's on message handler receives *a lot* of messages
