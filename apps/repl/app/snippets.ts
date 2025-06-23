@@ -56,8 +56,8 @@ List of links:
  * NOTE: label must be unique
  */
 export const ALL = [
-  { format: 'gdm', label: 'Welcome', snippet: DEFAULT_SNIPPET },
-  { format: 'md', label: 'All Frameworks in Markdown', path: '/samples/all-md.md' },
+  { format: 'gmd', label: 'Welcome', snippet: DEFAULT_SNIPPET },
+  { format: 'md', label: 'All Frameworks in Markdown', path: '/samples/all.md' },
   { format: 'md', label: 'With inline Javascript', path: '/samples/live-js.md' },
   { format: 'gmd', label: 'With inline Templates', path: '/samples/live-hbs.md' },
   { format: 'md', label: 'Styleguide Demo', path: '/samples/styleguide-demo.md' },
@@ -69,9 +69,12 @@ export const ALL = [
   { format: 'hbs', label: 'HBS Demo', path: '/samples/hbs-demo.hbs' },
   { format: 'svelte', label: 'Svelte Demo', path: '/samples/svelte-demo.svelte' },
   { format: 'vue', label: 'Vue Demo', path: '/samples/vue-demo.vue' },
+  // Yaml
   { format: 'mermaid', label: 'Mermaid Demo', path: '/samples/mermaid-demo.mermaid' },
   { format: 'jsx', flavor: 'react', label: 'React Demo', path: '/samples/jsx-react-demo.jsx' },
 ];
+
+export type DemoEntry = (typeof ALL)[number];
 
 export const NAMES = ALL.map((demo) => demo.label);
 

@@ -31,6 +31,7 @@ export default modifier((element: HTMLElement, [_]: unknown[]) => {
       lang = lang.replace('language-', '');
 
       if (!isAllowedFormat(lang)) {
+        console.log('lang', { lang });
         continue;
       }
 

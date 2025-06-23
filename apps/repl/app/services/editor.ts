@@ -24,7 +24,7 @@ export default class EditorService extends Service {
   }
 
   updateText = (text: string) => {
-    this.fileURIComponent.queue(text, this.format);
+    this.fileURIComponent.queue(text);
   };
 
   get text() {
@@ -49,7 +49,7 @@ export default class EditorService extends Service {
    * exists and _then_ finish calling update demo.
    *
    */
-  #editorSwapText?: (text: string, format: Format) => void;
+  #editorSwapText?: (text: string, format: Format, flavor?: string) => void;
   #pendingUpdate?: () => void;
 
   get _editorSwapText() {
@@ -63,18 +63,19 @@ export default class EditorService extends Service {
     }
   }
 
-  updateDemo = (text: string, format: Format) => {
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-type-constituents
+  updateDemo = (text: string, format: Format, flavor?: string | undefined) => {
     if (!this._editorSwapText) {
-      this.#pendingUpdate = () => this.updateDemo(text, format);
+      this.#pendingUpdate = () => this.updateDemo(text, format, flavor);
 
       return;
     }
 
     // Update ourselves
-    this.fileURIComponent.set(text, format);
+    this.fileURIComponent.set(text, format, flavor);
 
     // Update the editor
-    this._editorSwapText?.(text, format);
+    this._editorSwapText?.(text, format, flavor);
   };
 }
 

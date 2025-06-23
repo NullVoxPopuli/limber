@@ -67,8 +67,9 @@ export default class CodeMirror extends Modifier<Signature> {
      * This has to be defined on the service so that
      * the demo selector can also affect both the URL and the editor
      */
-    this.editor._editorSwapText = (text, format) => {
+    this.editor._editorSwapText = (text, format, flavor) => {
       element.setAttribute('data-format', format);
+      element.setAttribute('data-flavor', flavor || '');
 
       setText(text, format); // update the editor
     };

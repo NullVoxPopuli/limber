@@ -2,15 +2,20 @@
 import { getOwner } from '@ember/owner';
 import Route from '@ember/routing/route';
 
+import rehypeShikiFromHighlighter from '@shikijs/rehype/core';
 import { setupTabster } from 'ember-primitives/tabster';
 import { getCompiler, setupCompiler } from 'ember-repl';
 import { cell } from 'ember-resources';
+
+import { getHighlighter } from '#app/modifiers/-utils/highlighting.ts';
 
 import { importMap } from './import-map.ts';
 
 import type Owner from '@ember/owner';
 
 const map = new WeakSet();
+
+const highlighter = await getHighlighter();
 
 export default class ApplicationRoute extends Route {
   constructor(owner: Owner) {
@@ -37,6 +42,30 @@ export default class ApplicationRoute extends Route {
     };
 
     setupCompiler(this, {
+      options: {
+        gmd: {
+          rehypePlugins: [
+            [
+              rehypeShikiFromHighlighter,
+              highlighter,
+              {
+                theme: 'github-dark',
+              },
+            ],
+          ],
+        },
+        md: {
+          rehypePlugins: [
+            [
+              rehypeShikiFromHighlighter,
+              highlighter,
+              {
+                theme: 'github-dark',
+              },
+            ],
+          ],
+        },
+      },
       /**
        * Anything not specified here comes from NPM via
        * ember-repl

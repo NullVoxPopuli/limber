@@ -8,10 +8,10 @@ import { waitFor } from '@ember/test-waiters';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faAngleRight, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
-import { infoFor } from '#app/languages.gts';
+import { type Format, infoFor } from '#app/languages.gts';
 import Menu from '#components/menu.gts';
 
-import { ALL,getFromLabel } from 'limber/snippets';
+import { ALL, type DemoEntry, getFromLabel } from 'limber/snippets';
 
 import type RouterService from '@ember/routing/router-service';
 import type EditorService from 'limber/services/editor';
@@ -22,10 +22,10 @@ export class DemoSelect extends Component {
 
   @action
   @waitFor
-  async select(demoName: string) {
-    const demo = await getFromLabel(demoName);
+  async select(demo: DemoEntry) {
+    const text = await getFromLabel(demo.label);
 
-    this.editor.updateDemo(demo, 'glimdown');
+    this.editor.updateDemo(text, demo.format as Format, demo.flavor);
   }
 
   <template>
@@ -46,7 +46,7 @@ export class DemoSelect extends Component {
 
       <:options as |Item|>
         {{#each ALL as |demo|}}
-          <Item {{on "click" (fn this.select demo.label)}} data-test-demo>
+          <Item {{on "click" (fn this.select demo)}} data-test-demo>
             <div class="menu-item-with-icon">
               {{#let (infoFor demo.format demo.flavor) as |info|}}
                 <info.icon />

@@ -136,8 +136,11 @@ export class FileURIComponent {
   /**
    * Called during normal typing.
    */
-  set = (rawText: string, format: Format) => {
-    this.#updateQPs(rawText, format);
+  set = (rawText: string, format: Format, flavor?: string | undefined) => {
+    this.#updateTextQP(rawText);
+    this.#updateFormatQP(format);
+    this.#updateFlavorQP(flavor);
+    this.#pushUpdate();
   };
 
   /**
@@ -147,14 +150,16 @@ export class FileURIComponent {
    * talking about what should be rendered / placed in the editor.
    */
   forceFormat = (format: Format) => {
-    this.set(this.decoded ?? '', format);
+    this.#updateFormatQP(format);
+    this.#pushUpdate();
   };
 
   #timeout?: ReturnType<typeof setTimeout>;
   #queuedFn?: () => void;
 
-  queue = (rawText: string, format: Format) => {
-    this.set(rawText, format);
+  queue = (rawText: string) => {
+    this.#updateQP('rawText', rawText);
+    this.#pushUpdate();
   };
 
   #flush = () => {
@@ -178,12 +183,9 @@ export class FileURIComponent {
   };
 
   #frame?: number;
-  #qps: URLSearchParams | undefined;
+  #qps = new URLSearchParams();
+  #lastRawText?: string;
   #tokens: unknown[] = [];
-  #updateQPs = async (rawText: string, format: Format) => {
-    this.#tokens.push(queueWaiter.beginAsync());
-    this.#_updateQPs(rawText, format);
-  };
 
   #cleanup = () => {
     this.#tokens.forEach((token) => {
@@ -191,40 +193,84 @@ export class FileURIComponent {
     });
   };
 
-  #_updateQPs = async (rawText: string, format: Format, flavor?: string) => {
-    if (this.#frame) cancelAnimationFrame(this.#frame);
+  #updateQP = (key: string, value: string | undefined) => {
+    this.#tokens.push(queueWaiter.beginAsync());
 
-    const encoded = compressToEncodedURIComponent(rawText);
-    const qps = new URLSearchParams(location.search);
+    this.#qps ||= new URLSearchParams();
 
-    qps.set('c', encoded);
-    qps.delete('t');
-    qps.set('format', formatFrom(format));
-
-    if (flavor) {
-      const exists = flavorFrom(qps.get('format'), flavor);
-
-      if (exists) {
-        qps.set('flavor', exists);
-      }
-    }
-
-    // @ts-expect-error this works
-    if (this.#qps?.c === qps.get('c') && this.#qps?.format === qps.get('format')) {
-      // no-op, we should not have gotten here
-      // it's a mistake to have tried to have update QPs.
-      // Someone should debug this.
-      this.#cleanup();
+    if (value) {
+      this.#qps.set(key, value);
 
       return;
     }
 
-    setStoredDocument(formatFrom(format), flavorFrom(flavor), rawText);
+    this.#qps.delete(key);
+  };
 
-    this.#qps = {
-      ...this.#qps,
-      ...qps,
-    };
+  #updateTextQP = (rawText: string | undefined) => {
+    if (!rawText) return;
+
+    this.#lastRawText = rawText;
+
+    this.#tokens.push(queueWaiter.beginAsync());
+
+    const encoded = compressToEncodedURIComponent(rawText);
+
+    this.#qps ||= new URLSearchParams();
+    this.#qps.set('c', encoded);
+    this.#qps.delete('t');
+  };
+
+  #updateFormatQP = (format: string | undefined) => {
+    this.#tokens.push(queueWaiter.beginAsync());
+    this.#qps ||= new URLSearchParams();
+
+    if (format) {
+      this.#qps.set('format', formatFrom(format));
+    }
+  };
+
+  #updateFlavorQP = (flavor: string | undefined) => {
+    this.#tokens.push(queueWaiter.beginAsync());
+    this.#qps ||= new URLSearchParams();
+
+    if (flavor) {
+      const exists = flavorFrom(this.#qps.get('format'), flavor);
+
+      if (exists) {
+        this.#qps.set('flavor', exists);
+      }
+    }
+  };
+
+  #pushUpdate = async () => {
+    if (this.#frame) cancelAnimationFrame(this.#frame);
+
+    const qps = new URLSearchParams(location.search);
+
+    if (this.#qps) {
+      if (
+        this.#qps.get('c') === qps.get('c') &&
+        this.#qps.get('format') === qps.get('format') &&
+        this.#qps.get('flavor') === qps.get('flavor')
+      ) {
+        // no-op, we should not have gotten here
+        // it's a mistake to have tried to have update QPs.
+        // Someone should debug this.
+        this.#cleanup();
+
+        return;
+      }
+    }
+
+    this.#qps = new URLSearchParams(
+      Object.fromEntries([...qps.entries(), ...(this.#qps?.entries() ?? [])])
+    );
+
+    if (this.#lastRawText) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      setStoredDocument(this.#qps.get('format')!, this.#qps.get('flavor'), this.#lastRawText);
+    }
 
     this.#frame = requestAnimationFrame(async () => {
       if (isDestroyed(this) || isDestroying(this)) {
@@ -261,10 +307,15 @@ export class FileURIComponent {
        * we don't want them though, so we'll strip them
        */
 
-      const next = `${base}?${qps}`;
+      const rawText = this.#qps.get('rawText') ?? this.#lastRawText;
+
+      this.#qps.delete('rawText');
+
+      const next = `${base}?${this.#qps}`;
 
       this.router.replaceWith(next);
-      this.#text = rawText;
+      if (rawText) this.#text = rawText;
+
       this.#cleanup();
     });
   };

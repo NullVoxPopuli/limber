@@ -1,8 +1,6 @@
 import { PortalTargets } from 'ember-primitives/components/portal-targets';
 import { Seconds } from 'reactiveweb/interval';
 
-import highlight from 'limber/modifiers/highlight-code-blocks';
-
 import Compiler from './compiler.gts';
 import CopyMenu from './copy-menu.gts';
 
@@ -30,7 +28,7 @@ export const Output = <template>
         <PortalTargets />
 
         {{#if context.component}}
-          <div {{highlight context.component}}>
+          <div>
             <context.component />
           </div>
         {{/if}}

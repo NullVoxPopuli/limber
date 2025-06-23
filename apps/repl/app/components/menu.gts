@@ -112,7 +112,9 @@ const Menu: TOC<{
           {{menu.arrow}}
         ></div>
 
-        <div class="grid min-w-max rounded border bg-white drop-shadow-xl">
+        <div
+          class="grid max-h-[80dvh] min-w-max overflow-auto rounded border bg-white drop-shadow-xl"
+        >
           {{yield (component Button content=content) to="options"}}
         </div>
 

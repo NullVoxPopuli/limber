@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
-import { formatFrom } from '#app/languages.gts';
+import { flavorFrom, formatFrom } from '#app/languages.gts';
 
 import { DEFAULT_SNIPPET } from 'limber/snippets';
 import { getStoredDocument } from 'limber/utils/editor-text';
@@ -43,12 +43,12 @@ export default class EditRoute extends Route {
        * user-configurable.
        * (whatever they did last)
        */
-      const { format, doc } = getStoredDocument();
+      const { format, flavor, doc } = getStoredDocument();
 
       if (format && doc) {
         console.info(`Found format and document in localStorage. Using those.`);
         transition.abort();
-        this.editor.fileURIComponent.set(doc, formatFrom(format));
+        this.editor.fileURIComponent.set(doc, formatFrom(format), flavorFrom(flavor));
 
         return;
       }
@@ -59,7 +59,7 @@ export default class EditRoute extends Route {
       );
 
       transition.abort();
-      this.editor.fileURIComponent.set(DEFAULT_SNIPPET, 'glimdown');
+      this.editor.fileURIComponent.set(DEFAULT_SNIPPET, 'glimdown', undefined);
     } else if (!hasFormat) {
       console.warn('URL contained no format SearchParam. Assuming glimdown');
 

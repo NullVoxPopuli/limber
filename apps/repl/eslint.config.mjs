@@ -13,6 +13,11 @@ export default [
   {
     files: ["**/*"],
     rules: {
+      // This rule is just wrong
+      // param?: X | undefined is meaningful (passing, but has undefined value)
+      "@typescript-eslint/no-duplicate-type-constituents": "off",
+
+      // Debt During Update, maybe
       "@typescript-eslint/no-unsafe-assignment": "off",
       "@typescript-eslint/no-unsafe-member-access": "off",
       "@typescript-eslint/restrict-template-expressions": "off",

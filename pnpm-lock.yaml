@@ -115,6 +115,9 @@ importers:
       '@nullvoxpopuli/limber-transpilation':
         specifier: workspace:*
         version: link:../../packages/app-support/transpilation
+      '@shikijs/rehype':
+        specifier: ^1.29.2
+        version: 1.29.2
       '@xstate/inspect':
         specifier: ^0.8.0
         version: 0.8.0(41f68ba38104bbb422fd65253df464b3)

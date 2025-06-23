@@ -1,26 +1,38 @@
-import type { DOMPurify } from 'dompurify';
 import type { HighlighterGeneric } from 'shiki';
 
 let HIGHLIGHT: HighlighterGeneric<never, never>;
+let promise: Promise<HighlighterGeneric<never, never>>;
 
 export async function getHighlighter(): Promise<HighlighterGeneric<never, never>> {
+  if (promise) {
+    await promise;
+  }
+
   if (HIGHLIGHT) return HIGHLIGHT;
 
-  const [{ createHighlighterCore }, { createOnigurumaEngine }, wasm, markdown, dark] =
+  const [{ createHighlighterCore }, { createOnigurumaEngine }, wasm, markdown, dark, oneDarkPro] =
     await Promise.all([
       import('shiki/core'),
       import('shiki/engine/oniguruma'),
       import('shiki/wasm'),
       import('shiki/langs/markdown.mjs'),
       import('shiki/themes/github-dark.mjs'),
+      import('shiki/themes/one-dark-pro.mjs'),
     ]);
 
-  const highlighter = await createHighlighterCore({
+  promise = createHighlighterCore({
     themes: [
       {
         ...dark.default,
         colors: {
           ...dark.default.colors,
+          'editor.background': 'var(--code-bg)',
+        },
+      },
+      {
+        ...oneDarkPro.default,
+        colors: {
+          ...oneDarkPro.default.colors,
           'editor.background': 'var(--code-bg)',
         },
       },
@@ -72,17 +84,9 @@ export async function getHighlighter(): Promise<HighlighterGeneric<never, never>
     engine: createOnigurumaEngine(() => wasm),
   });
 
+  const highlighter = await promise;
+
   HIGHLIGHT = highlighter;
 
   return highlighter;
-}
-
-let PURIFY: DOMPurify;
-
-export async function getPurifier() {
-  if (PURIFY) return PURIFY;
-
-  PURIFY = (await import('dompurify')).default;
-
-  return PURIFY;
 }
