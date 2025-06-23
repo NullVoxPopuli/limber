@@ -41,19 +41,9 @@ export default class ApplicationController extends Controller {
     //  - gjs
     //  - hbs
     //  - svelte
-    //  - jsx
+    //  - jsx|react
     //  - vue
     //  - mermaid
     'format',
-
-    // For formats that can have multiple implementations (primarily JSX)
-    //
-    // Supported
-    //  - none / null / "" (for most formats)
-    //  - react (for JSX)
-    //
-    // Planned:
-    //  - solid (for JSX)
-    'flavor',
   ];
 }

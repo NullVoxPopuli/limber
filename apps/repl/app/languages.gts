@@ -217,13 +217,11 @@ export function formatFrom(x: string | undefined | null): (typeof ALLOWED_FORMAT
 class Usage {
   #ownKey = `repl-language-usage`;
 
-  track(format: string, flavor: undefined | string) {
+  track(formatQP: FormatQP) {
     const data = this.read();
 
-    const k = key(format, flavor);
-
-    data[k] ||= 0;
-    data[k]++;
+    data[formatQP] ||= 0;
+    data[formatQP]++;
 
     this.#set(data);
   }

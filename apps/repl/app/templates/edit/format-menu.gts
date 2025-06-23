@@ -13,7 +13,7 @@ import { formatQPFrom, infoFor, usage } from '#languages';
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
 import type { ComponentLike } from '@glint/template';
-import type { Format } from '#app/languages.gts';
+import type { Format, FormatQP } from '#app/languages.gts';
 
 function abbreviationFor(format: Format) {
   return format === 'glimdown' ? 'gmd' : format;
@@ -22,13 +22,12 @@ function abbreviationFor(format: Format) {
 const IconItem: TOC<{
   Args: {
     format: string;
-    flavor?: undefined | string;
-    onClick: (format: Format, flavor: string | undefined) => void;
+    onClick: (format: FormatQP, flavor: string | undefined) => void;
     item: ComponentLike<{ Element: HTMLButtonElement; Blocks: { default: [] } }>;
   }
 }> = <template>
-  {{#let (infoFor @format @flavor) as |info|}}
-    <@item {{on "click" (fn @onClick @format @flavor)}} class="menu-item">
+  {{#let (infoFor @format) as |info|}}
+    <@item {{on "click" (fn @onClick @format)}} class="menu-item">
       <info.icon />
       {{info.name}}
     </@item>
@@ -39,9 +38,9 @@ const IconItem: TOC<{
 export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
   @service declare router: RouterService;
 
-  switch = (format: Format, flavor: string | undefined): void => {
-    usage.track(format, flavor);
-    this.router.transitionTo({ queryParams: { format, flavor } });
+  switch = (format: FormatQP): void => {
+    usage.track(format);
+    this.router.transitionTo({ queryParams: { format } });
   };
 
   isSelected = (format: Format) => {
