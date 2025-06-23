@@ -23,12 +23,20 @@ export default class Compiler extends Component<Signature> {
 
   @service declare editor: EditorService;
 
+  get formatQP() {
+    return this.editor.format;
+  }
+
+  get formatQPParts() {
+    return this.formatQP.split('|');
+  }
+
   get format() {
-    return this.editor.format as Format;
+    return this.formatQPParts[0] as Format;
   }
 
   get flavor() {
-    return this.editor.flavor;
+    return this.formatQPParts[1] as string | undefined;
   }
 
   @use text = debounce(300, () => this.editor.text);

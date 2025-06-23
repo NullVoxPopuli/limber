@@ -8,7 +8,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 import Menu from '#components/menu.gts';
-import { flavorFrom, formatFrom, infoFor } from '#languages';
+import { formatQPFrom, infoFor, usage } from '#languages';
 
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
@@ -16,7 +16,7 @@ import type { ComponentLike } from '@glint/template';
 import type { Format } from '#app/languages.gts';
 
 function abbreviationFor(format: Format) {
-  return format === 'glimdown' ? 'gdm' : format;
+  return format === 'glimdown' ? 'gmd' : format;
 }
 
 const IconItem: TOC<{
@@ -35,19 +35,17 @@ const IconItem: TOC<{
   {{/let}}
 </template>;
 
+
 export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
   @service declare router: RouterService;
 
   switch = (format: Format, flavor: string | undefined): void => {
+    usage.track(format, flavor);
     this.router.transitionTo({ queryParams: { format, flavor } });
   };
 
-  isSelected = (format: Format, flavor?: Event | string) => {
+  isSelected = (format: Format) => {
     const fmt = abbreviationFor(this.format);
-
-    if (typeof flavor === 'string') {
-      return fmt === format && this.flavor === flavor;
-    }
 
     return fmt === format;
   };
@@ -62,10 +60,9 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
 
   @cached
   get currentInfo() {
-    const format = formatFrom(this.format);
-    const flavor = flavorFrom(format, this.flavor);
+    const format = formatQPFrom(this.format);
 
-    return infoFor(format, flavor);
+    return infoFor(format);
   }
 
   <template>
@@ -106,7 +103,7 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
           <Button @format="svelte" />
           <Button @format="vue" />
           <Button @format="mermaid" />
-          <Button @format="jsx" @flavor="react" />
+          <Button @format="jsx|react" />
         {{/let}}
       </:options>
     </Menu>

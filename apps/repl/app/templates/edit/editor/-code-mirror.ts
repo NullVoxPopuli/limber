@@ -6,7 +6,7 @@ import Modifier from 'ember-modifier';
 
 import type { EditorView } from '@codemirror/view';
 import type RouterService from '@ember/routing/router-service';
-import type { Format } from '#app/languages.gts';
+import type { FormatQP } from '#app/languages.gts';
 import type EditorService from 'limber/services/editor';
 
 type Signature = {
@@ -33,7 +33,7 @@ export default class CodeMirror extends Modifier<Signature> {
   // (Since auto-tracking is _by-reference_ for now)
   //
   // We only want to re-create the editor when the format changes value
-  previousFormat: Format | undefined;
+  previousFormat: FormatQP | undefined;
 
   setup = async (element: Element) => {
     const { format } = this.editor;
@@ -67,9 +67,8 @@ export default class CodeMirror extends Modifier<Signature> {
      * This has to be defined on the service so that
      * the demo selector can also affect both the URL and the editor
      */
-    this.editor._editorSwapText = (text, format, flavor) => {
-      element.setAttribute('data-format', format);
-      element.setAttribute('data-flavor', flavor || '');
+    this.editor._editorSwapText = (text, formatQP) => {
+      element.setAttribute('data-formatQP', formatQP);
 
       setText(text, format); // update the editor
     };
@@ -89,9 +88,9 @@ let CODEMIRROR:
   | ((
       element: HTMLElement,
       value: string | null,
-      format: Format,
+      format: FormatQP,
       updateText: (text: string) => void
-    ) => { view: EditorView; setText: (text: string, format: Format) => void });
+    ) => { view: EditorView; setText: (text: string, format: FormatQP) => void });
 
 /**
  * This is called from the state machine which manages loading state

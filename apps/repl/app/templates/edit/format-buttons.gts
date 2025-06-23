@@ -5,6 +5,8 @@ import { service } from '@ember/service';
 
 import { type ItemSignature, ToggleGroup } from 'ember-primitives/components/toggle-group';
 
+import { usage } from '#app/languages.gts';
+
 import { defaultSnippetForFormat } from 'limber/snippets';
 import { getStoredDocumentForFormat } from 'limber/utils/editor-text';
 
@@ -13,7 +15,7 @@ import { FormatMenu } from './format-menu.gts';
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
 import type { ComponentLike } from '@glint/template';
-import type { Format } from '#app/languages.gts';
+import type { FormatQP } from '#app/languages.gts';
 import type EditorService from 'limber/services/editor';
 
 const buttonClasses = `
@@ -22,14 +24,23 @@ text-white
 select-none
 `;
 
+const top2 =  usage.top2();
+
+function toUpper(ext: string) {
+  return ext.toUpperCase();
+}
+
 export const FormatButtons: TOC<object> = <template>
   <ToggleGroup class="limber__toggle-group flex" as |t|>
 
     {{#let (component Option item=t.Item) as |Option|}}
 
-      <Option @value="gjs" @description="Glimmer JS" class="hidden md:inline-block">GJS</Option>
-      <Option @value="glimdown" @description="Glimdown" class="hidden md:inline-block">GMD</Option>
-
+      {{#each top2 as |info|}}
+        <Option
+          @value={{info.formatQP}}
+          @description={{info.name}}
+          class="hidden md:inline-block">{{toUpper info.ext}}</Option>
+      {{/each}}
     {{/let}}
 
     <FormatMenu class="{{buttonClasses}} bg-[#333]" />
@@ -56,7 +67,7 @@ class Option extends Component<{
   Element: HTMLButtonElement;
   Args: {
     item: ComponentLike<ItemSignature>;
-    value: Format;
+    value: string;
     description: string;
   };
   Blocks: { default: [] };
@@ -64,7 +75,7 @@ class Option extends Component<{
   @service declare router: RouterService;
   @service declare editor: EditorService;
 
-  active = (format: Format) => {
+  active = (format: string) => {
     return this.format === format ? 'bg-[#333] text-white' : 'bg-ember-black text-white';
   };
 
@@ -72,14 +83,14 @@ class Option extends Component<{
    * Because most of the formats are not cross-compatible with each other,
    * we'll want to also swap the document
    */
-  switch = (format: Format, flavor: string | undefined): void => {
-    const stored = getStoredDocumentForFormat(format, flavor);
+  switch = (value: FormatQP): void => {
+    const stored = getStoredDocumentForFormat(value);
 
-    this.editor.fileURIComponent.set(stored ?? defaultSnippetForFormat(format), format);
+    this.editor.fileURIComponent.set(stored ?? defaultSnippetForFormat(value), value);
   };
 
-  get format(): Format {
-    return this.router.currentRoute?.queryParams?.format as Format;
+  get format(): FormatQP {
+    return this.router.currentRoute?.queryParams?.format as FormatQP;
   }
 
   <template>

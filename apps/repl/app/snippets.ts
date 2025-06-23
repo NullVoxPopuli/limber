@@ -58,6 +58,13 @@ List of links:
 export const ALL = [
   { format: 'gmd', label: 'Welcome', snippet: DEFAULT_SNIPPET },
   { format: 'md', label: 'All Frameworks in Markdown', path: '/samples/all.md' },
+  { format: 'gjs', label: 'Ember GJS', path: '/samples/gjs-demo.gjs' },
+  { format: 'svelte', label: 'Svelte', path: '/samples/svelte-demo.svelte' },
+  // Yaml
+  { format: 'mermaid', label: 'Mermaid', path: '/samples/mermaid-demo.mermaid' },
+  { format: 'vue', label: 'Vue', path: '/samples/vue-demo.vue' },
+  { format: 'jsx|react', label: 'React JSX', path: '/samples/jsx-react-demo.jsx' },
+  { format: 'hbs', label: 'Ember HBS', path: '/samples/hbs-demo.hbs' },
   { format: 'md', label: 'With inline Javascript', path: '/samples/live-js.md' },
   { format: 'gmd', label: 'With inline Templates', path: '/samples/live-hbs.md' },
   { format: 'md', label: 'Styleguide Demo', path: '/samples/styleguide-demo.md' },
@@ -65,14 +72,7 @@ export const ALL = [
   { format: 'md', label: 'Menu with focus trap', path: '/samples/menu-with-focus-trap.md' },
   { format: 'md', label: 'Forms', path: '/samples/forms/intro.md' },
   { format: 'md', label: 'RemoteData', path: '/samples/remote-data.md' },
-  { format: 'gjs', label: 'GJS Demo', path: '/samples/gjs-demo.gjs' },
-  { format: 'hbs', label: 'HBS Demo', path: '/samples/hbs-demo.hbs' },
-  { format: 'svelte', label: 'Svelte Demo', path: '/samples/svelte-demo.svelte' },
-  { format: 'vue', label: 'Vue Demo', path: '/samples/vue-demo.vue' },
-  // Yaml
-  { format: 'mermaid', label: 'Mermaid Demo', path: '/samples/mermaid-demo.mermaid' },
-  { format: 'jsx', flavor: 'react', label: 'React Demo', path: '/samples/jsx-react-demo.jsx' },
-];
+] as const;
 
 export type DemoEntry = (typeof ALL)[number];
 
@@ -94,13 +94,17 @@ export async function getFromLabel(label: string): Promise<string> {
     return entry.snippet;
   }
 
-  const path = entry.path;
-  const response = await fetch(path);
-  const text = await response.text();
+  if ('path' in entry) {
+    const path = entry.path;
+    const response = await fetch(path);
+    const text = await response.text();
 
-  LOADED.add(text);
+    LOADED.add(text);
 
-  return text;
+    return text;
+  }
+
+  throw new Error(`Unhandled snippet control flow. Please open an issue`);
 }
 
 export function defaultSnippetForFormat(format: string) {

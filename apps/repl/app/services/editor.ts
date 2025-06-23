@@ -6,7 +6,7 @@ import { link } from 'reactiveweb/link';
 import { FileURIComponent } from 'limber/utils/editor-text';
 
 import type RouterService from '@ember/routing/router-service';
-import type { Format } from '#app/languages.gts';
+import type { FormatQP } from '#app/languages.gts';
 
 export default class EditorService extends Service {
   @service declare router: RouterService;
@@ -31,11 +31,8 @@ export default class EditorService extends Service {
     return this.fileURIComponent.decoded;
   }
 
-  get format() {
+  get format(): FormatQP {
     return this.fileURIComponent.format;
-  }
-  get flavor() {
-    return this.fileURIComponent.flavor;
   }
 
   /**
@@ -49,7 +46,7 @@ export default class EditorService extends Service {
    * exists and _then_ finish calling update demo.
    *
    */
-  #editorSwapText?: (text: string, format: Format, flavor?: string) => void;
+  #editorSwapText?: (text: string, format: FormatQP) => void;
   #pendingUpdate?: () => void;
 
   get _editorSwapText() {
@@ -63,19 +60,18 @@ export default class EditorService extends Service {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-duplicate-type-constituents
-  updateDemo = (text: string, format: Format, flavor?: string | undefined) => {
+  updateDemo = (text: string, formatQP: FormatQP) => {
     if (!this._editorSwapText) {
-      this.#pendingUpdate = () => this.updateDemo(text, format, flavor);
+      this.#pendingUpdate = () => this.updateDemo(text, formatQP);
 
       return;
     }
 
     // Update ourselves
-    this.fileURIComponent.set(text, format, flavor);
+    this.fileURIComponent.set(text, formatQP);
 
     // Update the editor
-    this._editorSwapText?.(text, format, flavor);
+    this._editorSwapText?.(text, formatQP);
   };
 }
 

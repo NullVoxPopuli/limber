@@ -11,61 +11,73 @@ import { default as FileMermaid } from '~icons/vscode-icons/file-type-mermaid?ra
 
 import type { ComponentLike } from '@glint/template';
 
+type Language = (typeof LANGUAGE)[number];
 /**
+ * Since the pair of format + flavor is always coupled,
+ * we're treating them as a single QP
+ */
+export type FormatQP = keyof typeof languages;
+
+/**
+ * This data is the source of truth, and is enriched afterwards
+ *
+ * { lang-key: lang-info }
+ *
  * The compiler stettings for all these are configured in routes/application.ts
  */
-
-const LANGUAGE: Record<
-  string,
-  {
-    name: string;
-    icon: ComponentLike<{ Element: null }>;
-  }
-> = {
+const languages = {
   gjs: {
     name: 'Glimmer JS',
+    ext: 'gjs',
     icon: <template>
       <span>{{{FileGlimmer}}}</span>
     </template>,
   },
   hbs: {
     name: 'Ember Template',
+    ext: 'hbs',
     icon: <template>
       <span>{{{FileEmber}}}</span>
     </template>,
   },
   vue: {
     name: 'Vue',
+    ext: 'vue',
     icon: <template>
       <span>{{{FileVue}}}</span>
     </template>,
   },
   svelte: {
     name: 'Svelte',
+    ext: 'sevlte',
     icon: <template>
       <span>{{{FileSvelte}}}</span>
     </template>,
   },
   'jsx|react': {
     name: 'JSX | React',
+    ext: 'jsx',
     icon: <template>
       <span>{{{FileReact}}}</span>
     </template>,
   },
   mermaid: {
     name: 'Mermaid',
+    ext: 'yaml',
     icon: <template>
       <span>{{{FileMermaid}}}</span>
     </template>,
   },
   md: {
     name: 'Markdown',
+    ext: 'md',
     icon: <template>
       <span>{{{FileMarkdown}}}</span>
     </template>,
   },
   gmd: {
     name: 'Glimdown',
+    ext: 'gmd',
     icon: <template>
       <span style="position: relative;">
         <span>{{{FileGlimmer}}}</span>
@@ -73,7 +85,41 @@ const LANGUAGE: Record<
       </span>
     </template>,
   },
-};
+} as const;
+
+const LANGUAGE = Object.entries(languages).reduce(
+  /**
+   * Add the key to each entry, which would make for easier iterating
+   * in some cases
+   */
+  (result, [key, entry]) => {
+    const data = {
+      ...entry,
+      key,
+      formatQP: key,
+    };
+
+    result[key] = data;
+
+    return result;
+  },
+  {} as Record<
+    string,
+    {
+      name: string;
+      /**
+       * Filetype (usually)
+       */
+      ext: string;
+      /**
+       * Includes the flavor
+       */
+      formatQP: string;
+      key: string;
+      icon: ComponentLike<{ Element: null }>;
+    }
+  >
+);
 
 const ALIASES = {
   glimdown: 'gmd',
@@ -104,7 +150,7 @@ function key(format: string, flavor: undefined | string) {
   return lang;
 }
 
-export function infoFor(format: string, flavor: undefined | string) {
+export function infoFor(format: string, flavor?: undefined | string) {
   const lang = flavor ? `${format}|${flavor}` : format;
 
   let info = LANGUAGE[key(format, flavor)];
@@ -146,6 +192,20 @@ export function flavorFrom(format: string | undefined | null, flavor?: string | 
   return;
 }
 
+export function formatQPFrom(x: string | undefined | null): FormatQP {
+  assert(`Expected formatQP to be set`, x);
+  assert(
+    `Expected ${x} to be one of ${Object.keys(languages).join(', ')}`,
+    Object.keys(languages).includes(x)
+  );
+
+  // Historical Compat
+  if (x === 'glimdown') return 'gmd';
+  if (x === 'gdm') return 'gmd';
+
+  return x as FormatQP;
+}
+
 export function formatFrom(x: string | undefined | null): (typeof ALLOWED_FORMATS)[number] {
   if (isAllowedFormat(x)) {
     return x;
@@ -153,3 +213,64 @@ export function formatFrom(x: string | undefined | null): (typeof ALLOWED_FORMAT
 
   return DEFAULT_FORMAT;
 }
+
+class Usage {
+  #ownKey = `repl-language-usage`;
+
+  track(format: string, flavor: undefined | string) {
+    const data = this.read();
+
+    const k = key(format, flavor);
+
+    data[k] ||= 0;
+    data[k]++;
+
+    this.#set(data);
+  }
+
+  read(): Record<string, number> {
+    const raw = localStorage.getItem(this.#ownKey);
+
+    if (!raw) return {};
+
+    try {
+      const parsed = JSON.parse(raw);
+
+      if (typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)) {
+        return parsed;
+      }
+
+      return {};
+    } catch (e) {
+      console.debug('Malformed usage data in localStorage');
+      console.debug(e);
+
+      return {};
+    }
+  }
+
+  top2() {
+    const data = this.read();
+    const sorted = Object.entries(data)
+      .sort((a, b) => a[1] - b[1])
+      .map((a) => {
+        return LANGUAGE[a[0]];
+      }) as Language[];
+
+    const top = sorted.slice(0, 1);
+
+    return this.#withDefaultLangs(top);
+  }
+
+  #withDefaultLangs(langs: Language[]): Language[] {
+    const result = new Set([...langs, LANGUAGE.gjs!, LANGUAGE.gmd!]);
+
+    return [...result.values()];
+  }
+
+  #set(data: Record<string, number>) {
+    localStorage.setItem(this.#ownKey, JSON.stringify(data));
+  }
+}
+
+export const usage = new Usage();

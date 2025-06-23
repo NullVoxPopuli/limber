@@ -7,7 +7,7 @@ import { isTesting, macroCondition } from '@embroider/macros';
 
 import { compressToEncodedURIComponent } from 'lz-string';
 
-import { flavorFrom, type Format, formatFrom } from '#app/languages.gts';
+import { flavorFrom, type FormatQP, formatQPFrom } from '#app/languages.gts';
 
 import { fileFromParams } from 'limber/utils/messaging';
 
@@ -87,7 +87,7 @@ export class FileURIComponent {
     const search = location.split('?')[1];
     const queryParams = new URLSearchParams(search);
 
-    return formatFrom(queryParams.get('format'));
+    return formatQPFrom(queryParams.get('format'));
   }
 
   get flavor() {
@@ -136,10 +136,9 @@ export class FileURIComponent {
   /**
    * Called during normal typing.
    */
-  set = (rawText: string, format: Format, flavor?: string | undefined) => {
+  set = (rawText: string, format: FormatQP) => {
     this.#updateTextQP(rawText);
     this.#updateFormatQP(format);
-    this.#updateFlavorQP(flavor);
     this.#pushUpdate();
   };
 
@@ -149,7 +148,7 @@ export class FileURIComponent {
    * Today, both format and text are required whenever
    * talking about what should be rendered / placed in the editor.
    */
-  forceFormat = (format: Format) => {
+  forceFormat = (format: FormatQP) => {
     this.#updateFormatQP(format);
     this.#pushUpdate();
   };
@@ -221,25 +220,12 @@ export class FileURIComponent {
     this.#qps.delete('t');
   };
 
-  #updateFormatQP = (format: string | undefined) => {
+  #updateFormatQP = (format: string) => {
     this.#tokens.push(queueWaiter.beginAsync());
     this.#qps ||= new URLSearchParams();
 
     if (format) {
-      this.#qps.set('format', formatFrom(format));
-    }
-  };
-
-  #updateFlavorQP = (flavor: string | undefined) => {
-    this.#tokens.push(queueWaiter.beginAsync());
-    this.#qps ||= new URLSearchParams();
-
-    if (flavor) {
-      const exists = flavorFrom(this.#qps.get('format'), flavor);
-
-      if (exists) {
-        this.#qps.set('flavor', exists);
-      }
+      this.#qps.set('format', formatQPFrom(format));
     }
   };
 
@@ -249,11 +235,7 @@ export class FileURIComponent {
     const qps = new URLSearchParams(location.search);
 
     if (this.#qps) {
-      if (
-        this.#qps.get('c') === qps.get('c') &&
-        this.#qps.get('format') === qps.get('format') &&
-        this.#qps.get('flavor') === qps.get('flavor')
-      ) {
+      if (this.#qps.get('c') === qps.get('c') && this.#qps.get('format') === qps.get('format')) {
         // no-op, we should not have gotten here
         // it's a mistake to have tried to have update QPs.
         // Someone should debug this.
@@ -268,8 +250,9 @@ export class FileURIComponent {
     );
 
     if (this.#lastRawText) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      setStoredDocument(this.#qps.get('format')!, this.#qps.get('flavor'), this.#lastRawText);
+      const formatQP = formatQPFrom(this.#qps.get('format'));
+
+      setStoredDocument(formatQP, this.#lastRawText);
     }
 
     this.#frame = requestAnimationFrame(async () => {
@@ -311,8 +294,10 @@ export class FileURIComponent {
 
       this.#qps.delete('rawText');
 
+      const qps = Object.fromEntries(this.#qps.entries());
       const next = `${base}?${this.#qps}`;
 
+      console.debug(`Attempting to navigate to `, { next, qps });
       this.router.replaceWith(next);
       if (rawText) this.#text = rawText;
 
@@ -321,8 +306,8 @@ export class FileURIComponent {
   };
 }
 
-function getKey(format: string, flavor: null | undefined | string) {
-  return flavor ? `${format}|${flavor}-doc` : `${format}-doc`;
+function getKey(formatQP: FormatQP) {
+  return `${formatQP}-doc`;
 }
 
 function decomposeKey(key: string): {
@@ -341,15 +326,15 @@ function decomposeKey(key: string): {
   };
 }
 
-export function setStoredDocument(format: string, flavor: null | undefined | string, text: string) {
-  const key = getKey(format, flavor);
+export function setStoredDocument(formatQP: FormatQP, text: string) {
+  const key = getKey(formatQP);
 
   localStorage.setItem('active-format', key);
   localStorage.setItem(key, text);
 }
 
-export function getStoredDocumentForFormat(format: string, flavor: undefined | string) {
-  const key = getKey(format, flavor);
+export function getStoredDocumentForFormat(formatQP: FormatQP) {
+  const key = getKey(formatQP);
 
   return localStorage.getItem(key);
 }

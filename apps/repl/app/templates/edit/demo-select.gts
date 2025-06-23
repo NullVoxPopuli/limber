@@ -8,7 +8,7 @@ import { waitFor } from '@ember/test-waiters';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faAngleRight, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
-import { type Format, infoFor } from '#app/languages.gts';
+import { infoFor } from '#app/languages.gts';
 import Menu from '#components/menu.gts';
 
 import { ALL, type DemoEntry, getFromLabel } from 'limber/snippets';
@@ -25,7 +25,7 @@ export class DemoSelect extends Component {
   async select(demo: DemoEntry) {
     const text = await getFromLabel(demo.label);
 
-    this.editor.updateDemo(text, demo.format as Format, demo.flavor);
+    this.editor.updateDemo(text, demo.format);
   }
 
   <template>
@@ -48,7 +48,7 @@ export class DemoSelect extends Component {
         {{#each ALL as |demo|}}
           <Item {{on "click" (fn this.select demo)}} data-test-demo>
             <div class="menu-item-with-icon">
-              {{#let (infoFor demo.format demo.flavor) as |info|}}
+              {{#let (infoFor demo.format) as |info|}}
                 <info.icon />
               {{/let}}
               <span>{{demo.label}}</span>

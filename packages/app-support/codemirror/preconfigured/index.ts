@@ -14,6 +14,7 @@ import { glimdown } from 'codemirror-lang-glimdown';
 import { glimmer } from 'codemirror-lang-glimmer';
 // @ts-ignore
 import { gjs } from 'codemirror-lang-glimmer-js';
+import { yaml } from '@codemirror/lang-yaml';
 
 import { HorizonSyntaxTheme } from './horizon-syntax-theme';
 import { HorizonTheme } from './horizon-ui-theme';
@@ -28,6 +29,7 @@ type Format =
   | 'vue'
   | 'md'
   | 'jsx'
+  | 'jsx|react'
   | 'mermaid'
   | 'react';
 
@@ -63,8 +65,10 @@ export default function newEditor(
       case 'md':
         return markdown();
       case 'jsx':
-      case 'react':
-        return javascript();
+      case 'jsx|react':
+        return javascript({ jsx: true });
+      case 'mermaid':
+        return yaml();
       default:
         throw new Error(`Unrecognized format: ${format}`);
     }
@@ -82,7 +86,9 @@ export default function newEditor(
       case 'svelte':
       case 'md':
       case 'jsx':
+      case 'jsx|react':
       case 'react':
+      case 'mermaid':
         return []; // these include their support
       default:
         throw new Error(`Unrecognized format: ${format}`);

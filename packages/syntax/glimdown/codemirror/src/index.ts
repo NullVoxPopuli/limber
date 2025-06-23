@@ -160,12 +160,33 @@ export function glimdown() {
       }),
       LanguageDescription.of({
         name: 'javascript',
-        extensions: ['javascript', 'jsx', 'react'],
+        extensions: ['javascript'],
         async load() {
           // @ts-ignore
           const { javascript } = await import('@codemirror/lang-javascript');
 
           return javascript();
+        },
+      }),
+      LanguageDescription.of({
+        name: 'javascript-jsx',
+        extensions: ['jsx', 'react'],
+        async load() {
+          // @ts-ignore
+          const { javascript } = await import('@codemirror/lang-javascript');
+
+          return javascript({ jsx: true });
+        },
+      }),
+
+      LanguageDescription.of({
+        name: 'yaml',
+        extensions: ['yaml', 'yml', 'mermaid'],
+        async load() {
+          // @ts-ignore
+          const { yaml } = await import('@codemirror/lang-yaml');
+
+          return yaml();
         },
       }),
     ],
