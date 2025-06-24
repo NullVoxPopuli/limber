@@ -15,6 +15,7 @@ import { glimmer } from 'codemirror-lang-glimmer';
 // @ts-ignore
 import { gjs } from 'codemirror-lang-glimmer-js';
 import { yaml } from '@codemirror/lang-yaml';
+import { mermaid, foldByIndent } from 'codemirror-lang-mermaid';
 
 import { HorizonSyntaxTheme } from './horizon-syntax-theme';
 import { HorizonTheme } from './horizon-ui-theme';
@@ -68,6 +69,8 @@ export default function newEditor(
       case 'jsx|react':
         return javascript({ jsx: true });
       case 'mermaid':
+        return mermaid();
+      case 'yaml':
         return yaml();
       default:
         throw new Error(`Unrecognized format: ${format}`);
@@ -102,6 +105,7 @@ export default function newEditor(
       extensions: [
         // features
         basicSetup,
+        foldByIndent(),
         // Language
         languageForFormat(format),
         ...supportForFormat(format),

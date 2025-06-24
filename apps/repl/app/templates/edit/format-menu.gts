@@ -14,6 +14,7 @@ import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
 import type { ComponentLike } from '@glint/template';
 import type { Format, FormatQP } from '#app/languages.gts';
+import type EditorService from '#app/services/editor.ts';
 
 function abbreviationFor(format: Format) {
   return format === 'glimdown' ? 'gmd' : format;
@@ -37,10 +38,11 @@ const IconItem: TOC<{
 
 export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
   @service declare router: RouterService;
+  @service declare editor: EditorService;
 
   switch = (format: FormatQP): void => {
     usage.track(format);
-    this.router.transitionTo({ queryParams: { format } });
+    this.editor.fileURIComponent.format = format;
   };
 
   isSelected = (format: Format) => {

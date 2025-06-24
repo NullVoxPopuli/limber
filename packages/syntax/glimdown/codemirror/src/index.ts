@@ -180,8 +180,18 @@ export function glimdown() {
       }),
 
       LanguageDescription.of({
+        name: 'mermaid',
+        extensions: ['mermaid'],
+        async load() {
+          // @ts-ignore
+          const { mermaid } = await import('codemirror-lang-mermaid');
+
+          return mermaid();
+        },
+      }),
+      LanguageDescription.of({
         name: 'yaml',
-        extensions: ['yaml', 'yml', 'mermaid'],
+        extensions: ['yaml', 'yml'],
         async load() {
           // @ts-ignore
           const { yaml } = await import('@codemirror/lang-yaml');

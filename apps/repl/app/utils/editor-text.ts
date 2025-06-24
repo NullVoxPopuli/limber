@@ -89,6 +89,10 @@ export class FileURIComponent {
 
     return formatQPFrom(queryParams.get('format'));
   }
+  set format(value: FormatQP) {
+    this.#updateFormatQP(value);
+    this.#pushUpdate();
+  }
 
   get flavor() {
     const location = this.#currentURL();

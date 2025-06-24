@@ -820,6 +820,9 @@ importers:
       codemirror-lang-glimmer-js:
         specifier: workspace:*
         version: link:../../syntax/glimmer-js/codemirror
+      codemirror-lang-mermaid:
+        specifier: ^0.5.0
+        version: 0.5.0
       codemirror-languageserver:
         specifier: ^1.12.1
         version: 1.12.1(encoding@0.1.13)
@@ -1868,6 +1871,9 @@ importers:
       codemirror-lang-glimmer-js:
         specifier: workspace:*
         version: link:../../glimmer-js/codemirror
+      codemirror-lang-mermaid:
+        specifier: ^0.5.0
+        version: 0.5.0
     devDependencies:
       '@babel/core':
         specifier: ^7.26.9
@@ -6550,6 +6556,9 @@ packages:
   clsx@2.1.1:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
     engines: {node: '>=6'}
+
+  codemirror-lang-mermaid@0.5.0:
+    resolution: {integrity: sha512-Taw/2gPCyNArQJCxIP/HSUif+3zrvD+6Ugt7KJZ2dUKou/8r3ZhcfG8krNTZfV2iu8AuGnymKuo7bLPFyqsh/A==}
 
   codemirror-languageserver@1.12.1:
     resolution: {integrity: sha512-B71XofYRsVsyUpkiWtdTcHIwVoEpws01PqHpkr/o5k4EET9kQEpRqDH/G+f+hQI4eZxwONOx8n5Dz2fsf02PrA==}
@@ -18753,6 +18762,12 @@ snapshots:
   clone@2.1.2: {}
 
   clsx@2.1.1: {}
+
+  codemirror-lang-mermaid@0.5.0:
+    dependencies:
+      '@codemirror/language': 6.11.1
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.2
 
   codemirror-languageserver@1.12.1(encoding@0.1.13):
     dependencies:

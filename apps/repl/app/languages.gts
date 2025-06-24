@@ -250,20 +250,22 @@ class Usage {
   top2() {
     const data = this.read();
     const sorted = Object.entries(data)
-      .sort((a, b) => a[1] - b[1])
+      .sort((a, b) => b[1] - a[1])
       .map((a) => {
         return LANGUAGE[a[0]];
       }) as Language[];
 
-    const top = sorted.slice(0, 1);
+    const top = sorted.slice(0, 2);
 
-    return this.#withDefaultLangs(top);
+    const result = this.#withDefaultLangs(top);
+
+    return result;
   }
 
   #withDefaultLangs(langs: Language[]): Language[] {
     const result = new Set([...langs, LANGUAGE.gjs!, LANGUAGE.gmd!]);
 
-    return [...result.values()];
+    return [...result.values()].slice(0, 2);
   }
 
   #set(data: Record<string, number>) {

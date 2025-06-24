@@ -48,7 +48,8 @@
     "@lezer/markdown": "^1.4.1",
     "@replit/codemirror-lang-svelte": "^6.0.0",
     "codemirror-lang-glimmer": "workspace:*",
-    "codemirror-lang-glimmer-js": "workspace:*"
+    "codemirror-lang-glimmer-js": "workspace:*",
+    "codemirror-lang-mermaid": "^0.5.0"
   },
   "scripts": {
     "dev": "node ./dev/watch.cjs src/index.ts",
