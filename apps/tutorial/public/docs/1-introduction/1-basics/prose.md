@@ -139,5 +139,5 @@ However, because there are a number of more foundational concepts to cover, this
   cd my-app
   pnpm start
   ```
-  Or try it out a starter project on [Stackblitz](https://stackblitz.com/github/nullVoxPopuli/polaris-starter/tree/main?file=README.md)
+  Or try it out in a starter project on [Stackblitz](https://stackblitz.com/github/nullVoxPopuli/polaris-starter/tree/main?file=README.md)
 
