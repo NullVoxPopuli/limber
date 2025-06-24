@@ -130,10 +130,6 @@ export default function newEditor(
   });
 
   let setText = (text: string, format: Format) => {
-    let current = view.state.doc.toString();
-
-    if (text === current) return;
-
     view.dispatch({
       changes: {
         from: 0,

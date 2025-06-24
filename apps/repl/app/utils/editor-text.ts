@@ -161,6 +161,8 @@ export class FileURIComponent {
   #queuedFn?: () => void;
 
   queue = (rawText: string) => {
+    if (rawText === this.decoded) return;
+
     this.#updateQP('rawText', rawText);
     this.#pushUpdate();
   };
