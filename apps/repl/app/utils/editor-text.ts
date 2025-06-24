@@ -193,6 +193,7 @@ export class FileURIComponent {
   #tokens: unknown[] = [];
 
   #cleanup = () => {
+    this.#qps = new URLSearchParams();
     this.#tokens.forEach((token) => {
       queueWaiter.endAsync(token);
     });
@@ -212,18 +213,22 @@ export class FileURIComponent {
     this.#qps.delete(key);
   };
 
+  /**
+   * The raw text.
+   * For efficiency, we don't compress it until we are about to write to the URL
+   */
   #updateTextQP = (rawText: string | undefined) => {
-    if (!rawText) return;
-
-    this.#lastRawText = rawText;
-
     this.#tokens.push(queueWaiter.beginAsync());
 
-    const encoded = compressToEncodedURIComponent(rawText);
+    if (!rawText) {
+      this.#qps.delete('rawText');
 
-    this.#qps ||= new URLSearchParams();
-    this.#qps.set('c', encoded);
+      return;
+    }
+
+    this.#qps.set('rawText', rawText);
     this.#qps.delete('t');
+    this.#qps.delete('c');
   };
 
   #updateFormatQP = (format: string) => {
@@ -241,7 +246,13 @@ export class FileURIComponent {
     const qps = new URLSearchParams(location.search);
 
     if (this.#qps) {
-      if (this.#qps.get('c') === qps.get('c') && this.#qps.get('format') === qps.get('format')) {
+      const needsToCompareC = [this.#qps.get('c'), qps.get('c')].map(Boolean).some(Boolean);
+      const needsToCompareT = [this.#qps.get('t'), qps.get('t')].map(Boolean).some(Boolean);
+      const isOldTextSame = needsToCompareT && this.#qps.get('t') === qps.get('t');
+      const isTextSame = isOldTextSame || (needsToCompareC && this.#qps.get('c') === qps.get('c'));
+      const isFormatSame = this.#qps.get('format') === qps.get('format');
+
+      if (isTextSame && isFormatSame) {
         // no-op, we should not have gotten here
         // it's a mistake to have tried to have update QPs.
         // Someone should debug this.
@@ -296,14 +307,26 @@ export class FileURIComponent {
        * we don't want them though, so we'll strip them
        */
 
-      const rawText = this.#qps.get('rawText') ?? this.#lastRawText;
+      const rawText = this.#qps.get('rawText');
+      let encoded = '';
 
-      this.#qps.delete('rawText');
+      if (rawText) {
+        encoded = compressToEncodedURIComponent(rawText);
+        this.#qps.delete('rawText');
+      }
 
-      const qps = Object.fromEntries(this.#qps.entries());
-      const next = `${base}?${this.#qps}`;
+      const qps = new URLSearchParams(this.#qps);
 
-      console.debug(`Attempting to navigate to `, { next, qps });
+      if (encoded) {
+        qps.set('c', encoded);
+      }
+
+      if (!qps.has('format')) {
+        qps.set('format', this.format);
+      }
+
+      const next = `${base}?${qps}`;
+
       this.router.replaceWith(next);
       if (rawText) this.#text = rawText;
 
