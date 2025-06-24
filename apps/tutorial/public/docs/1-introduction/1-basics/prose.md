@@ -131,21 +131,13 @@ However, because there are a number of more foundational concepts to cover, this
 
 ## How do I get started with a bleeding-edge Ember app today?
 
-- For Webpack:
+- For Vite 
   ```bash
-  git clone --branch webpack git@github.com:NullVoxPopuli/polaris-starter.git 
-  cd polaris-starter
-  pnpm install
+  npx ember-cli@latest new my-app \
+    --blueprint @ember/app-blueprint \
+    --pnpm
+  cd my-app
   pnpm start
   ```
-  Or try it out on [Stackblitz](https://stackblitz.com/github/nullVoxPopuli/polaris-starter/tree/webpack?file=README.md) (however, Stackblitz may be [broken with Webpack](https://github.com/stackblitz/core/issues/2926) atm)
-
-- For Vite (alpha / unstable)
-  ```bash
-  git clone git@github.com:NullVoxPopuli/polaris-starter.git 
-  cd polaris-starter
-  pnpm install
-  pnpm start
-  ```
-  Or try it out on [Stackblitz](https://stackblitz.com/github/nullVoxPopuli/polaris-starter/tree/main?file=README.md)
+  Or try it out a starter project on [Stackblitz](https://stackblitz.com/github/nullVoxPopuli/polaris-starter/tree/main?file=README.md)
 
