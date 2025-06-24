@@ -3,11 +3,13 @@ import { getOwner } from '@ember/owner';
 import Route from '@ember/routing/route';
 
 import rehypeShikiFromHighlighter from '@shikijs/rehype/core';
+import Shadowed from 'ember-primitives/components/shadowed';
 import { setupTabster } from 'ember-primitives/tabster';
 import { getCompiler, setupCompiler } from 'ember-repl';
 import { cell } from 'ember-resources';
 
 import { getHighlighter } from '#app/modifiers/-utils/highlighting.ts';
+import CopyMenu from '#components/copy-menu.gts';
 
 import { importMap } from './import-map.ts';
 
@@ -44,6 +46,10 @@ export default class ApplicationRoute extends Route {
     setupCompiler(this, {
       options: {
         gmd: {
+          scope: {
+            CopyMenu,
+            Shadowed,
+          },
           rehypePlugins: [
             [
               rehypeShikiFromHighlighter,
