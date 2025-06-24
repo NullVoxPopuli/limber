@@ -1,6 +1,7 @@
 import { PortalTargets } from 'ember-primitives/components/portal-targets';
 import { Seconds } from 'reactiveweb/interval';
 
+import { clearError } from './clear-error.ts';
 import Compiler from './compiler.gts';
 import CopyMenu from './copy-menu.gts';
 
@@ -29,6 +30,7 @@ export const Output = <template>
 
         {{#if context.component}}
           <div>
+            {{clearError context.component}}
             <context.component />
           </div>
         {{/if}}

@@ -245,22 +245,23 @@ export class FileURIComponent {
 
     const qps = new URLSearchParams(location.search);
 
-    if (this.#qps) {
-      const needsToCompareC = [this.#qps.get('c'), qps.get('c')].map(Boolean).some(Boolean);
-      const needsToCompareT = [this.#qps.get('t'), qps.get('t')].map(Boolean).some(Boolean);
-      const isOldTextSame = needsToCompareT && this.#qps.get('t') === qps.get('t');
-      const isTextSame = isOldTextSame || (needsToCompareC && this.#qps.get('c') === qps.get('c'));
-      const isFormatSame = this.#qps.get('format') === qps.get('format');
-
-      if (isTextSame && isFormatSame) {
-        // no-op, we should not have gotten here
-        // it's a mistake to have tried to have update QPs.
-        // Someone should debug this.
-        this.#cleanup();
-
-        return;
-      }
-    }
+    // This logic needs reworked
+    // if (this.#qps) {
+    //   const needsToCompareC = [this.#qps.get('c'), qps.get('c')].map(Boolean).some(Boolean);
+    //   const needsToCompareT = [this.#qps.get('t'), qps.get('t')].map(Boolean).some(Boolean);
+    //   const isOldTextSame = needsToCompareT && this.#qps.get('t') === qps.get('t');
+    //   const isTextSame = isOldTextSame || (needsToCompareC && this.#qps.get('c') === qps.get('c'));
+    //   const isFormatSame = this.#qps.get('format') === qps.get('format');
+    //
+    //   if (isTextSame && isFormatSame) {
+    //     // no-op, we should not have gotten here
+    //     // it's a mistake to have tried to have update QPs.
+    //     // Someone should debug this.
+    //     this.#cleanup();
+    //
+    //     return;
+    //   }
+    // }
 
     this.#qps = new URLSearchParams(
       Object.fromEntries([...qps.entries(), ...(this.#qps?.entries() ?? [])])

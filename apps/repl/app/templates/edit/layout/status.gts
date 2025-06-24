@@ -1,15 +1,16 @@
 import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
+import { service } from '@ember/service';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { modifier as eModifier } from 'ember-modifier';
-import { getCompiler } from 'ember-repl';
 import { effect } from 'reactiveweb/effect';
 
 import { FlatButton } from 'limber-ui';
+
+import type StatusService from '#app/services/status.ts';
 
 const FADE_MS = 1_000;
 
@@ -28,23 +29,15 @@ const fadeOut = eModifier((element, [msg]) => {
 });
 
 export class Status extends Component {
-  @cached
-  get compiler() {
-    return getCompiler(this);
-  }
+  @service declare status: StatusService;
 
   get last() {
-    return this.compiler.lastInfo?.message;
+    return this.status.last;
   }
 
   get error() {
-    return this.compiler.lastError?.message;
+    return this.status.error;
   }
-
-  @tracked showError = true;
-
-  hideError = () => (this.showError = false);
-  newError = () => (this.showError = true);
 
   <template>
     {{#if this.last}}
@@ -54,14 +47,14 @@ export class Status extends Component {
     {{/if}}
 
     {{#if this.error}}
-      {{effect (fn this.newError this.error)}}
-      {{#if this.showError}}
+      {{effect (fn this.status.newError this.error)}}
+      {{#if this.status.showError}}
         <footer
           data-test-error
           class="layout__status__error rounded border border-red-700 bg-red-100 drop-shadow-md"
         >
           <FlatButton
-            {{on "click" this.hideError}}
+            {{on "click" this.status.hideError}}
             class="layout__status__error__close"
             aria-label="hide the help information"
           >
