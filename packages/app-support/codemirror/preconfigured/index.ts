@@ -10,7 +10,7 @@ import { markdown } from '@codemirror/lang-markdown';
 import { basicSetup, EditorView } from 'codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 // @ts-ignore
-import { glimdown } from 'codemirror-lang-glimdown';
+import { glimdown, codeLanguages } from 'codemirror-lang-glimdown';
 import { glimmer } from 'codemirror-lang-glimmer';
 // @ts-ignore
 import { gjs } from 'codemirror-lang-glimmer-js';
@@ -34,6 +34,9 @@ type Format =
   | 'mermaid'
   | 'react';
 
+/**
+ * TODO: make this async so we can await-import all the language support packages
+ */
 export default function newEditor(
   element: HTMLElement,
   value: string,
@@ -64,12 +67,16 @@ export default function newEditor(
       case 'vue':
         return vue();
       case 'md':
-        return markdown();
+        return markdown({
+          codeLanguages,
+        });
       case 'jsx':
       case 'jsx|react':
         return javascript({ jsx: true });
       case 'mermaid':
         return mermaid();
+      // For later?
+      // @ts-ignore
       case 'yaml':
         return yaml();
       default:
