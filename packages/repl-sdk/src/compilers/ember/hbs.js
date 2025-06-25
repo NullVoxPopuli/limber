@@ -80,6 +80,7 @@ export async function compiler(config, api) {
       // return the element so that the app can render in to it.
       // (Ember will only render in to an element if it's present in the DOM)
       renderApp({
+        element,
         selector: `[${attribute}]`,
         component: compiled,
         log: compiler.announce,

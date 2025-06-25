@@ -12,13 +12,14 @@ let createWaiter;
  *   https://github.com/emberjs/ember.js/pull/20781
  *
  * @param {{
+ *  element: Element,
  *  modules: { [name: string]: any},
  *  selector: string,
  *  log: (type: 'error' | 'info', message: string) => void;
  *  component: unknown
  * }} options
  */
-export async function renderApp({ modules, selector, component, log }) {
+export async function renderApp({ element, modules, selector, component, log }) {
   const App = modules.application.default;
   const registerDestructor = modules.destroyable.registerDestructor;
   const Resolver = modules.resolver.default;
@@ -34,6 +35,7 @@ export async function renderApp({ modules, selector, component, log }) {
 
   class EphemeralApp extends App {
     modulePrefix = 'ephemeral-render-output';
+    rootElement = element;
     Resolver = Resolver.withModules({
       'ephemeral-render-output/templates/application': { default: component },
       'ephemeral-render-output/routes/application': {
@@ -67,29 +69,9 @@ export async function renderApp({ modules, selector, component, log }) {
     });
   }
 
-  await Promise.race([
-    new Promise((resolve, reject) => {
-      setTimeout(() => {
-        reject(`Timed out waiting for ${selector} to render`);
-      }, 5_000);
-    }),
-    // eslint-disable-next-line no-async-promise-executor
-    new Promise(async (resolve) => {
-      while (true) {
-        await new Promise((resolve) => requestAnimationFrame(resolve));
-
-        if (document.querySelector(selector)) {
-          break;
-        }
-      }
-
-      resolve('done');
-    }),
-  ]);
-
   log('info', 'Booting Ember Island');
   EphemeralApp.create({
-    rootElement: selector,
+    rootElement: element,
   });
 
   createWaiter.endAsync(createToken);

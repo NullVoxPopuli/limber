@@ -1,0 +1,29 @@
+<ul>
+  {{#each (array
+    (hash href='https://emberjs.com' text='Ember home page')
+    (hash href='https://github.com/nullvoxpopuli' text='My GitHub')
+    (hash href='https://twitter.com/nullvoxpopuli' text='My Twitter')
+  ) as |site|}}
+    <li>
+      <a
+        href={{site.href}}
+        target="_blank"
+        rel="noopener noreferrer">{{site.text}}</a>
+    </li>
+  {{/each}}
+</ul>
+
+
+Default globals in this REPL configured for this templat mode:
+
+<ul>
+  <li>array</li>
+  <li>concat</li>
+  <li>fn</li>
+  <li>get</li>
+  <li>hash</li>
+  <li>on</li>
+  <li>
+    <a href="https://github.com/emberjs/babel-plugin-ember-template-compilation/blob/main/src/scope-locals.ts#L16">all allowed JS globals</a>
+  </li>
+</ul>
