@@ -34,7 +34,7 @@ export const vue = {
 
         return { compiled: output.js, css: output.css };
       },
-      render: async (element, component, { css }) => {
+      render: async (element, component, { css }, compiler) => {
         let div = document.createElement('div');
         let style = document.createElement('style');
 
@@ -44,6 +44,7 @@ export const vue = {
         element.appendChild(style);
 
         createApp(component).mount(div);
+        compiler.announce('info', 'Done');
       },
     };
   },

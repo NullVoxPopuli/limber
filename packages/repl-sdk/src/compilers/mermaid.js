@@ -17,10 +17,11 @@ export const mermaid = {
       compile: async (text) => {
         return `export default \`${text}\`;`;
       },
-      render: async (element, text) => {
+      render: async (element, text, _, compiler) => {
         let { svg } = await mermaid.render('graphDiv' + id++, text);
 
         element.innerHTML = svg;
+        compiler.announce('info', 'Done');
       },
     };
   },

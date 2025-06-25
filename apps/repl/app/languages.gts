@@ -127,17 +127,11 @@ const ALIASES = {
 } as Record<string, string>;
 
 export const DEFAULT_FORMAT = 'glimdown';
-export const ALLOWED_FORMATS = [
-  DEFAULT_FORMAT,
-  'gjs',
-  'hbs',
-  'svelte',
-  'vue',
-  'jsx',
-  'md',
-  'mermaid',
-  'gmd',
-] as const;
+
+const ALIAS_FORMATS = ['glimdown', 'gdm'];
+
+export const ALLOWED_FORMATS = [...ALIAS_FORMATS, ...Object.keys(languages)] as const;
+
 export const ALLOWED_FLAVORS = {
   jsx: ['react'],
 } as Record<string, string[]>;
@@ -174,7 +168,7 @@ export function nameFor(format: string, flavor: undefined | string) {
 }
 
 export function isAllowedFormat(x?: string | null): x is (typeof ALLOWED_FORMATS)[number] {
-  return Boolean(x && (ALLOWED_FORMATS as readonly string[]).includes(x));
+  return Boolean(x && ALLOWED_FORMATS.includes(x));
 }
 
 function isAllowedFlavor(format: string, flavor: string) {
@@ -206,12 +200,12 @@ export function formatQPFrom(x: string | undefined | null): FormatQP {
   return x as FormatQP;
 }
 
-export function formatFrom(x: string | undefined | null): (typeof ALLOWED_FORMATS)[number] {
+export function formatFrom(x: string | undefined | null): FormatQP {
   if (isAllowedFormat(x)) {
-    return x;
+    return x as FormatQP;
   }
 
-  return DEFAULT_FORMAT;
+  return 'gmd';
 }
 
 class Usage {

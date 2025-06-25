@@ -7,7 +7,7 @@ import { isTesting, macroCondition } from '@embroider/macros';
 
 import { compressToEncodedURIComponent } from 'lz-string';
 
-import { flavorFrom, type FormatQP, formatQPFrom } from '#app/languages.gts';
+import { flavorFrom, formatFrom, type FormatQP, formatQPFrom } from '#app/languages.gts';
 
 import { fileFromParams } from 'limber/utils/messaging';
 
@@ -81,15 +81,15 @@ export class FileURIComponent {
     this._text = value;
   }
 
-  get format() {
+  get format(): FormatQP {
     const location = this.#currentURL();
 
     const search = location.split('?')[1];
     const queryParams = new URLSearchParams(search);
 
-    return formatQPFrom(queryParams.get('format'));
+    return formatFrom(queryParams.get('format'));
   }
-  set format(value: FormatQP) {
+  set format(value: string) {
     this.#updateFormatQP(value);
     this.#pushUpdate();
   }
@@ -231,7 +231,8 @@ export class FileURIComponent {
     const rawText = this.#qps.get('rawText');
 
     if (rawText) {
-      const formatQP = formatQPFrom(this.#qps.get('format'));
+      const formatQP = formatFrom(this.#qps.get('format'));
+
       setStoredDocument(formatQP, rawText);
     }
 
@@ -297,6 +298,15 @@ export class FileURIComponent {
     if (!qps.has('format')) {
       qps.set('format', this.format);
     }
+
+    if (!qps.has('c') && this.#text) {
+      const encoded = compressToEncodedURIComponent(this.#text);
+
+      qps.set('c', encoded);
+    }
+
+    assert(`Cannot update URL without required QP:format`, qps.get('format'));
+    assert(`Cannot update URL without required QP:c (compressed text)`, qps.get('c'));
 
     const next = `${base}?${qps}&`;
 
@@ -380,6 +390,7 @@ export function getStoredDocument() {
  */
 function makeDebounced(fu: () => void) {
   let timeout: number;
+
   return () => {
     clearTimeout(timeout);
     timeout = setTimeout(fu, DEBOUNCE_MS);
