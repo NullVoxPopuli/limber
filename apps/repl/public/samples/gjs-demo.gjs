@@ -10,6 +10,6 @@ export default class HelloWorld extends Component {
   <template>
     <p>You have clicked the button {{this.count}} times.</p>
 
-    <button {{on "click" this.increment}}>Click</button>
+    <button type="button" {{on "click" this.increment}}>Click</button>
   </template>
 }

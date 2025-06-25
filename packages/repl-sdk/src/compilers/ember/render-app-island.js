@@ -55,6 +55,7 @@ export async function renderApp({ element, modules, selector, component, log }) 
               requestAnimationFrame(() => {
                 log('info', 'Ember Island Rendered');
                 bootWaiter.endAsync(bootToken);
+                createWaiter.endAsync(createToken);
               });
             });
           }
@@ -73,6 +74,4 @@ export async function renderApp({ element, modules, selector, component, log }) 
   EphemeralApp.create({
     rootElement: element,
   });
-
-  createWaiter.endAsync(createToken);
 }
