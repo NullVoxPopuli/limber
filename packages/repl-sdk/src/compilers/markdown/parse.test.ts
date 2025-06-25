@@ -153,7 +153,7 @@ describe('options', () => {
       assertOutput(
         result.text,
         `<h1>Title</h1>
-<div class="repl-sdk__snippet"><pre class="shiki github-dark" style="background-color:#24292e;color:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> two</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 2</span></span>
+<div class="repl-sdk__snippet" data-repl-output><pre class="shiki github-dark" style="background-color:#24292e;color:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> two</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 2</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#85E89D">template</span><span style="color:#E1E4E8">></span></span>
 <span class="line"><span style="color:#F97583">  \\{{</span><span style="color:#79B8FF">two</span><span style="color:#F97583">}}</span></span>
@@ -210,7 +210,7 @@ describe('options', () => {
           stripIndent`
           <h1>Title</h1>
 
-          <div class=\"repl-sdk__snippet\"><pre><code class=\"language-gjs\">  const two = 2;
+          <div class=\"repl-sdk__snippet\" data-repl-output><pre><code class=\"language-gjs\">  const two = 2;
           </code></pre></div>
         `
         );
@@ -266,7 +266,7 @@ describe('options', () => {
           stripIndent`
           <h1>Title</h1>
 
-          <div class=\"repl-sdk__snippet\"><pre><code class=\"language-gjs\">const two = 2
+          <div class=\"repl-sdk__snippet\" data-repl-output><pre><code class=\"language-gjs\">const two = 2
 
           &#x3C;template>
             \\{{two}}
@@ -341,7 +341,7 @@ describe('options', () => {
         expect(result.text).toMatchInlineSnapshot(`
           "<p>hi</p>
           <div id="repl_3" class="repl-sdk__demo"></div>
-          <div class="repl-sdk__snippet"><pre><code class="language-gjs">import Component from '@glimmer/component';
+          <div class="repl-sdk__snippet" data-repl-output><pre><code class="language-gjs">import Component from '@glimmer/component';
           import { on } from '@ember/modifier';
 
           &#x3C;template>
