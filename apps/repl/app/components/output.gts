@@ -1,9 +1,11 @@
 import { PortalTargets } from 'ember-primitives/components/portal-targets';
+import { Shadowed } from 'ember-primitives/components/shadowed';
 import { Seconds } from 'reactiveweb/interval';
 
 import { clearError } from './clear-error.ts';
 import Compiler from './compiler.gts';
 import CopyMenu from './copy-menu.gts';
+import resetsCSS from './output-reset.css?url';
 
 const isGJS = (format: string | undefined) => format === 'gjs';
 
@@ -29,10 +31,11 @@ export const Output = <template>
         <PortalTargets />
 
         {{#if context.component}}
-          <div>
-            {{clearError context.component}}
+          {{clearError context.component}}
+          <Shadowed>
+            <link rel="stylesheet" href={{resetsCSS}} />
             <context.component />
-          </div>
+          </Shadowed>
         {{/if}}
 
       </div>

@@ -1,5 +1,4 @@
 import { notInIframe } from 'ember-primitives/iframe';
-import Route from 'ember-route-template';
 
 import Output from '#components/output.gts';
 
@@ -9,30 +8,28 @@ import Header from './edit/header';
 import Help from './edit/help.gts';
 import Layout from './edit/layout/index.gts';
 
-export default Route(
-  <template>
-    <Guest />
+<template>
+  <Guest />
 
-    <main
-      class="grid grid-flow-col h-screen max-h-screen grid {{if (notInIframe) 'grid-rows-editor'}} "
-    >
-      {{#if (notInIframe)}}
-        <Header />
-      {{/if}}
+  <main
+    class="grid grid-flow-col h-screen max-h-screen grid {{if (notInIframe) 'grid-rows-editor'}} "
+  >
+    {{#if (notInIframe)}}
+      <Header />
+    {{/if}}
 
-      <Layout>
-        <:editor>
-          <Editor />
-        </:editor>
+    <Layout>
+      <:editor>
+        <Editor />
+      </:editor>
 
-        <:output>
-          <div class="h-full w-full">
-            <Output />
-          </div>
-        </:output>
-      </Layout>
+      <:output>
+        <div class="h-full w-full">
+          <Output />
+        </div>
+      </:output>
+    </Layout>
 
-      <Help />
-    </main>
-  </template>
-);
+    <Help />
+  </main>
+</template>

@@ -71,7 +71,7 @@ export function liveCodeExtraction(options) {
 
     return {
       data: {
-        hProperties: { className: classes },
+        hProperties: { className: classes, 'data-repl-output': true },
       },
       type: 'div',
       hProperties: { className: classes },

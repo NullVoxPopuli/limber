@@ -35,17 +35,16 @@
       };
     </script>
 
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="preload"
       as="style"
       onload="this.onload=null;this.rel='stylesheet'"
       ref="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap"
-    >
+    />
   </head>
-  <body class="overflow-hidden syntax-dark syntax-bright">
+  <body class="syntax-dark syntax-bright overflow-hidden">
     <div id="initial-loader">
       <style>
         body,
@@ -105,13 +104,11 @@
       }
     </script>
 
-
     <link rel="stylesheet" href="./app/styles/app.css" />
 
-    <script src="/@embroider/virtual/vendor.js"></script>
     <script type="module">
-      import Application from './app/app';
-      import environment from './app/config/environment';
+      import Application from "./app/app";
+      import environment from "./app/config/environment";
 
       Application.create(environment.APP);
     </script>

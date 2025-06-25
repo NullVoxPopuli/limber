@@ -16,18 +16,20 @@ import { on } from '@ember/modifier';
 
 export default class HelloWorld extends Component {
   @tracked count = 0;
-  increment = () => this.count += 1;
+  increment = () => this.count++;
+  decrement = () => this.count--;
 
   <template>
-    <p>You have clicked the button {{this.count}} times.</p>
+    <p>Count: {{this.count}}</p>
 
-    <button {{on "click" this.increment}}>Click</button>
+    <button {{on "click" this.increment}}>Increment</button>
+    <button {{on "click" this.decrement}}>Decrement</button>
   </template>
 }
 ```
 
 
-Alternate format that exists only in this REPL
+<details><summary>Alternate format that exists only in this REPL</summary>
 
 ```hbs ember live
 <ul>
@@ -43,6 +45,8 @@ Alternate format that exists only in this REPL
 </ul>
 ```
 
+</details>
+
 ## Svelte
 
 ```svelte live
@@ -50,23 +54,26 @@ Alternate format that exists only in this REPL
 	let value = $state(0);
 </script>
 
-<p>The current value is {value}</p>
+<p>Count: {value}</p>
 
-<button onclick={() => value -= 1}>-1</button>
-<button onclick={() => value += 1}>+1</button>
+<button onclick={() => value += 1}>Increment</button>
+<button onclick={() => value -= 1}>Decrement</button>
 ```
 
 ## Vue
 
 ```vue live
 <script setup>
-import { ref } from 'vue'
+  import { ref } from 'vue'
 
-const count = ref(0)
+  const count = ref(0)
 </script>
 
 <template>
-  <button @click="count++">You clicked me {{ count }} times.</button>
+  <p>Count: {{ count }}</p>
+
+  <button @click="count++">Increment</button>
+  <button @click="count--">Decrement</button>
 </template>
 ```
 
@@ -97,11 +104,11 @@ function Counter() {
   const decrement = () => setCount((prevCount) => prevCount - 1);  
 
   return (  
-    <div>  
-      <h2>Count: {count}</h2>  
+    <>
+      <p>Count: {count}</p>
       <button onClick={increment}>Increment</button>  
       <button onClick={decrement}>Decrement</button>  
-    </div>  
+    </>
   );
 } 
 
