@@ -22,6 +22,7 @@
     "lint:types": "glint",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "vite --port 4201",
+    "start:build": "NODE_ENV=development vite build --mode=development --watch",
     "start:iframe": "pnpx http-server ./public -i -p 4204",
     "test:browserstack": "./scripts/browserstack.sh",
     "test:chrome": "CI_BROWSER=Chrome pnpm dist:ember:test",
@@ -43,8 +44,6 @@
     "@ember/optional-features": "^2.2.0",
     "@ember/string": "^4.0.1",
     "@ember/test-helpers": "^5.1.0",
-    "@embroider/compat": "4.1.0",
-    "@embroider/config-meta-loader": "^1.0.0",
     "@embroider/core": "^4.0.2",
     "@embroider/vite": "^1.1.0",
     "@fortawesome/ember-fontawesome": "^3.0.0",
@@ -129,6 +128,7 @@
   },
   "imports": {
     "#languages": "./app/languages.gts",
+    "#config": "./app/config/environment.ts",
     "#app/*": "./app/*",
     "#components/*": "./app/components/*",
     "#edit/*": "./app/templates/edit/*"

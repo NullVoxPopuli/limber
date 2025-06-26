@@ -187,15 +187,15 @@ export function flavorFrom(format: string | undefined | null, flavor?: string | 
 }
 
 export function formatQPFrom(x: string | undefined | null): FormatQP {
+  // Historical Compat
+  if (x === 'glimdown') return 'gmd';
+  if (x === 'gdm') return 'gmd';
+
   assert(`Expected formatQP to be set`, x);
   assert(
     `Expected ${x} to be one of ${Object.keys(languages).join(', ')}`,
     Object.keys(languages).includes(x)
   );
-
-  // Historical Compat
-  if (x === 'glimdown') return 'gmd';
-  if (x === 'gdm') return 'gmd';
 
   return x as FormatQP;
 }

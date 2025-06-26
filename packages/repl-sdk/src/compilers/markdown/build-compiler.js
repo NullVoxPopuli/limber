@@ -10,6 +10,7 @@ import { unified } from 'unified';
 import { visit } from 'unist-util-visit';
 
 import { GLIMDOWN_PREVIEW, GLIMDOWN_RENDER } from './const.js';
+import { headingId } from './heading-id.js';
 import { liveCodeExtraction } from './live-code-extraction.js';
 import { sanitizeForGlimmer } from './sanitize-for-glimmer.js';
 
@@ -19,7 +20,7 @@ import { sanitizeForGlimmer } from './sanitize-for-glimmer.js';
  * @returns {import('unified').Processor<import('hast').Root>}
  */
 export function buildCompiler(options) {
-  let compiler = unified().use(remarkParse).use(remarkGfm, { singleTilde: true });
+  let compiler = unified().use(remarkParse).use(remarkGfm, { singleTilde: true }).use(headingId);
 
   /**
    * If this were "use"d after `remarkRehype`,

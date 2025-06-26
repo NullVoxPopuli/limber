@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { getOwner } from '@ember/owner';
 import Route from '@ember/routing/route';
+import { waitForPromise } from '@ember/test-waiters';
 
 import rehypeShikiFromHighlighter from '@shikijs/rehype/core';
 import Shadowed from 'ember-primitives/components/shadowed';
@@ -16,8 +17,6 @@ import { importMap } from './import-map.ts';
 import type Owner from '@ember/owner';
 
 const map = new WeakSet();
-
-const highlighter = await getHighlighter();
 
 export default class ApplicationRoute extends Route {
   constructor(owner: Owner) {
@@ -42,6 +41,14 @@ export default class ApplicationRoute extends Route {
       },
       owner: getOwner(this),
     };
+
+    this.#promise = waitForPromise(this.#setup());
+  }
+
+  #promise: Promise<unknown> | undefined;
+
+  async #setup() {
+    const highlighter = await getHighlighter();
 
     setupCompiler(this, {
       options: {
@@ -120,7 +127,8 @@ export default class ApplicationRoute extends Route {
     });
   }
 
-  model() {
+  async model() {
+    await this.#promise;
     document.querySelector('#initial-loader')?.remove();
   }
 }

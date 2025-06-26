@@ -1,5 +1,3 @@
-import compatModules from '@embroider/virtual/compat-modules';
-
 import PageTitleService from 'ember-page-title/services/page-title';
 
 // Can't import this until it's a v2 addon (without compat support, that is)
@@ -29,8 +27,20 @@ const autoRegistry = {
 };
 
 export const registry = {
-  ...compatModules,
-  // [`${appName}/services/resize-observer`]: ResizeService,
+  // /////////////////
+  // To Eliminate
+  // /////////////////
+
+  // Used by ember-container-query
+  [`${appName}/services/resize-observer`]: await import(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    'ember-resize-observer-service/addon/services/resize-observer'
+  ),
+
+  // /////////////////
+  // To keep
+  // /////////////////
   [`${appName}/services/page-title`]: PageTitleService,
   ...autoRegistry,
   [`${appName}/templates/application`]: await import('./templates/application.gts'),

@@ -4,18 +4,9 @@ import { markdownKeymap } from '@codemirror/lang-markdown';
 import { syntaxHighlighting } from '@codemirror/language';
 import { Compartment, EditorSelection, EditorState } from '@codemirror/state';
 import { keymap } from '@codemirror/view';
-import { svelte } from '@replit/codemirror-lang-svelte';
-import { vue } from '@codemirror/lang-vue';
-import { markdown } from '@codemirror/lang-markdown';
 import { basicSetup, EditorView } from 'codemirror';
-import { javascript } from '@codemirror/lang-javascript';
 // @ts-ignore
-import { glimdown, codeLanguages } from 'codemirror-lang-glimdown';
-import { glimmer } from 'codemirror-lang-glimmer';
-// @ts-ignore
-import { gjs } from 'codemirror-lang-glimmer-js';
-import { yaml } from '@codemirror/lang-yaml';
-import { mermaid, foldByIndent } from 'codemirror-lang-mermaid';
+import { foldByIndent } from 'codemirror-lang-mermaid';
 
 import { HorizonSyntaxTheme } from './horizon-syntax-theme';
 import { HorizonTheme } from './horizon-ui-theme';
@@ -37,7 +28,7 @@ type Format =
 /**
  * TODO: make this async so we can await-import all the language support packages
  */
-export default function newEditor(
+export default async function newEditor(
   element: HTMLElement,
   value: string,
   format: Format,
@@ -52,43 +43,64 @@ export default function newEditor(
     }
   });
 
-  function languageForFormat(format: Format) {
+  async function languageForFormat(format: Format) {
+    // @ts-ignore
+    const { glimdown, codeLanguages } = await import('codemirror-lang-glimdown');
+
     switch (format) {
       case 'glimdown':
       case 'gdm':
       case 'gmd':
         return glimdown();
       case 'gjs':
+        // @ts-ignore
+        const { gjs } = await import('codemirror-lang-glimmer-js');
+
         return gjs();
       case 'hbs':
+        const { glimmer } = await import('codemirror-lang-glimmer');
+
         return glimmer();
       case 'svelte':
+        const { svelte } = await import('@replit/codemirror-lang-svelte');
+
         return svelte();
       case 'vue':
+        const { vue } = await import('@codemirror/lang-vue');
+
         return vue();
       case 'md':
+        const { markdown } = await import('@codemirror/lang-markdown');
         return markdown({
           codeLanguages,
         });
       case 'jsx':
       case 'jsx|react':
+        const { javascript } = await import('@codemirror/lang-javascript');
+
         return javascript({ jsx: true });
       case 'mermaid':
+        const { mermaid } = await import('codemirror-lang-mermaid');
         return mermaid();
       // For later?
       // @ts-ignore
       case 'yaml':
+        const { yaml } = await import('@codemirror/lang-yaml');
+
         return yaml();
       default:
         throw new Error(`Unrecognized format: ${format}`);
     }
   }
 
-  function supportForFormat(format: Format) {
+  async function supportForFormat(format: Format) {
     switch (format) {
       case 'gdm':
       case 'gmd':
       case 'glimdown':
+        // @ts-ignore
+        const { gjs } = await import('codemirror-lang-glimmer-js');
+
         return [gjs().support];
       case 'gjs':
       case 'hbs':
@@ -105,6 +117,11 @@ export default function newEditor(
     }
   }
 
+  const [language, support] = await Promise.all([
+    languageForFormat(format),
+    supportForFormat(format),
+  ]);
+
   let view = new EditorView({
     parent: element,
     state: EditorState.create({
@@ -114,8 +131,8 @@ export default function newEditor(
         basicSetup,
         foldByIndent(),
         // Language
-        languageForFormat(format),
-        ...supportForFormat(format),
+        language,
+        ...support,
 
         updateListener,
         EditorView.lineWrapping,
@@ -136,14 +153,14 @@ export default function newEditor(
     }),
   });
 
-  let setText = (text: string, format: Format) => {
+  let setText = async (text: string, format: Format) => {
     view.dispatch({
       changes: {
         from: 0,
         to: view.state.doc.length,
         insert: text,
       },
-      effects: languageConf.reconfigure(languageForFormat(format)),
+      effects: languageConf.reconfigure(await languageForFormat(format)),
     });
   };
 
@@ -157,7 +174,7 @@ export default function newEditor(
   view.dispatch({
     effects: [
       tabSize.reconfigure(EditorState.tabSize.of(2)),
-      languageConf.reconfigure(languageForFormat(format)),
+      // languageConf.reconfigure(languageForFormat(format)),
     ],
   });
 

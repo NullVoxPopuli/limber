@@ -147,12 +147,9 @@ export const codeLanguages = [
     extensions: ['svelte'],
     async load() {
       // @ts-ignore
-      const { svelte, svelteLanguage } = await import('@replit/codemirror-lang-svelte');
+      const { svelte } = await import('@replit/codemirror-lang-svelte');
 
-      let s = svelte();
-      console.log(s, svelteLanguage);
-
-      return s;
+      return svelte();
     },
   }),
   LanguageDescription.of({

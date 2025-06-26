@@ -1,6 +1,7 @@
 import { assert } from '@ember/debug';
 import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
 import { service } from '@ember/service';
+import { waitForPromise } from '@ember/test-waiters';
 
 import Modifier from 'ember-modifier';
 
@@ -70,7 +71,7 @@ export default class CodeMirror extends Modifier<Signature> {
     this.editor._editorSwapText = (text, formatQP) => {
       element.setAttribute('data-formatQP', formatQP);
 
-      setText(text, format); // update the editor
+      waitForPromise(setText(text, format)); // update the editor
     };
 
     const scrollable = document.querySelector('.cm-scroller');
@@ -90,7 +91,7 @@ let CODEMIRROR:
       value: string | null,
       format: FormatQP,
       updateText: (text: string) => void
-    ) => { view: EditorView; setText: (text: string, format: FormatQP) => void });
+    ) => { view: EditorView; setText: (text: string, format: FormatQP) => Promise<void> });
 
 /**
  * This is called from the state machine which manages loading state

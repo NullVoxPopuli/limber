@@ -1,14 +1,10 @@
-import { classicEmberSupport, ember, extensions } from '@embroider/vite';
+import { ember, extensions } from '@embroider/vite';
 
 import { babel } from '@rollup/plugin-babel';
 import icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig(({ mode }) => ({
-  build: {
-    sourcemap: true,
-    minify: mode === 'production' ? 'terser' : '',
-  },
   resolve: {
     extensions,
   },
@@ -27,7 +23,6 @@ export default defineConfig(({ mode }) => ({
     icons({
       autoInstall: true,
     }),
-    classicEmberSupport(),
     ember(),
     babel({
       babelHelpers: 'runtime',

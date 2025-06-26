@@ -10,8 +10,9 @@ import * as QUnit from 'qunit';
 import { setup } from 'qunit-dom';
 import { setupEmberOnerrorValidation, start as qunitStart } from 'ember-qunit';
 
+import config, { enterTestMode } from '#config';
+
 import Application from 'limber/app';
-import config, { enterTestMode } from 'limber/config/environment';
 
 Object.assign(window, {
   getSettledState,

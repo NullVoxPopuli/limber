@@ -6,7 +6,7 @@ import Application from '@ember/application';
 
 import Resolver from 'ember-resolver';
 
-import config from 'limber/config/environment';
+import config from '#config';
 
 import { registry } from './registry.ts';
 

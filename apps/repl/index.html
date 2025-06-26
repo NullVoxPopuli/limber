@@ -106,11 +106,6 @@
 
     <link rel="stylesheet" href="./app/styles/app.css" />
 
-    <script type="module">
-      import Application from "./app/app.ts";
-      import environment from "./app/config/environment.js";
-
-      Application.create(environment.APP);
-    </script>
+    <script type="module" src="./app/boot.ts"></script>
   </body>
 </html>

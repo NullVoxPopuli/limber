@@ -1,26 +1,9 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// Some packages do not provide types
-
-// @ts-expect-error
-import * as focusTrap from 'ember-focus-trap';
-import * as ePrimitives from 'ember-primitives';
-import * as eResources from 'ember-resources';
-import * as reactiveDebounce from 'reactiveweb/debounce';
-import * as reactiveFps from 'reactiveweb/fps';
-import * as reactiveFunction from 'reactiveweb/function';
-import * as reactiveKeepLatest from 'reactiveweb/keep-latest';
-import * as reactiveLink from 'reactiveweb/link';
-import * as reactiveMap from 'reactiveweb/map';
-import * as reactiveRemoteData from 'reactiveweb/remote-data';
-import * as reactiveModifier from 'reactiveweb/resource/modifier';
-import * as reactiveService from 'reactiveweb/resource/service';
-
 import { ExternalLink } from 'limber-ui';
 
 export const importMap = {};
 
 function defineWithWarning(
-  obj: object,
+  obj: object | (() => unknown),
   { name, original, replacement }: { name?: string; original: string; replacement?: string }
 ) {
   Object.defineProperty(importMap, original, {
@@ -37,6 +20,10 @@ function defineWithWarning(
         console.warn(
           `The import you are using at ${original} no longerg exists and has been aliased for you. ${suggestion}`
         );
+      }
+
+      if (typeof obj === 'function') {
+        return obj();
       }
 
       return obj;
@@ -57,57 +44,75 @@ defineWithWarning(ExternalLink, {
   replacement: 'limber-ui',
 });
 defineWithWarning(
-  { default: ePrimitives.Shadowed, Shadowed: ePrimitives.Shadowed },
+  async () => {
+    const ePrimitives = await import('ember-primitives');
+
+    return { default: ePrimitives.Shadowed, Shadowed: ePrimitives.Shadowed };
+  },
   { name: '<Shadowed />', original: 'limber/components/shadowed', replacement: 'ember-primitives' }
 );
-defineWithWarning(eResources, { original: 'ember-resources/core', replacement: 'ember-resources' });
-defineWithWarning(reactiveLink, {
+defineWithWarning(() => import('ember-resources'), {
+  original: 'ember-resources/core',
+  replacement: 'ember-resources',
+});
+defineWithWarning(() => import('reactiveweb/link'), {
   name: 'link',
   original: 'ember-resources/link',
   replacement: 'reactiveweb/link',
 });
-defineWithWarning(reactiveService, {
+defineWithWarning(() => import('reactiveweb/resource/service'), {
   name: 'service',
   original: 'ember-resources/service',
   replacement: 'reactiveweb/resource/service',
 });
-defineWithWarning(reactiveModifier, {
+defineWithWarning(() => import('reactiveweb/resource/modifier'), {
   name: 'modifier',
   original: 'ember-resources/modifier',
   replacement: 'reactiveweb/resource/modifier',
 });
-defineWithWarning(reactiveMap, {
+defineWithWarning(() => import('reactiveweb/map'), {
   name: 'map',
   original: 'ember-resources/util/map',
   replacement: 'reactiveweb/map',
 });
-defineWithWarning(reactiveDebounce, {
+defineWithWarning(() => import('reactiveweb/debounce'), {
   name: 'debounce',
   original: 'ember-resources/util/debounce',
   replacement: 'reactiveweb/debounce',
 });
-defineWithWarning(reactiveKeepLatest, {
+defineWithWarning(() => import('reactiveweb/keep-latest'), {
   name: 'keepLatest',
   original: 'ember-resources/util/keep-latest',
   replacement: 'reactiveweb/keep-latest',
 });
-defineWithWarning(reactiveFunction, {
+defineWithWarning(() => import('reactiveweb/function'), {
   name: 'function',
   original: 'ember-resources/util/function',
   replacement: 'reactiveweb/function',
 });
-defineWithWarning(reactiveFps, {
+defineWithWarning(() => import('reactiveweb/fps'), {
   name: 'FrameRate or UpdateFrequency',
   original: 'ember-resources/util/fps',
   replacement: 'reactiveweb/fps',
 });
-defineWithWarning(reactiveRemoteData, {
+defineWithWarning(() => import('reactiveweb/remote-data'), {
   name: 'RemoteData',
   original: 'ember-resources/util/remote-data',
   replacement: 'reactiveweb/remote-data',
 });
-defineWithWarning(focusTrap.focusTrap, {
-  name: 'focusTrap',
-  original: 'ember-focus-trap/modifiers/focus-trap',
-  replacement: 'ember-focus-trap',
-});
+defineWithWarning(
+  async () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    const module = await import('ember-focus-trap');
+
+    return {
+      default: module.focusTrap,
+    };
+  },
+  {
+    name: 'focusTrap',
+    original: 'ember-focus-trap/modifiers/focus-trap',
+    replacement: 'ember-focus-trap',
+  }
+);
