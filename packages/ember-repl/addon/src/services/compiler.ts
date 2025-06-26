@@ -256,6 +256,15 @@ export default class CompilerService {
   }
 
   async #compile(ext: string, text: string, options?: Record<string, unknown>) {
+    /**
+     * Protect from accidental backtracking-render assertions
+     * (infinite loop protection)
+     *
+     * This function doesn't ready any tracked data, so we don't need to
+     * worry about invalidation or anything.
+     */
+    await Promise.resolve();
+
     this.messages = [];
 
     return this.compiler.compile(ext, text, options ?? {});
