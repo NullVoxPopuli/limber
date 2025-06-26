@@ -59,7 +59,7 @@ describe('options', () => {
         ],
       });
 
-      expect(result.text).toBe('<h2>Title</h2>');
+      expect(result.text).toBe('<h2 id="title">Title</h2>');
       expect(result.codeBlocks).to.deep.equal([]);
     });
 
@@ -82,7 +82,7 @@ describe('options', () => {
         ],
       });
 
-      expect(result.text).toBe('<h3>Title</h3>');
+      expect(result.text).toBe('<h3 id="title">Title</h3>');
       expect(result.codeBlocks).to.deep.equal([]);
     });
   });
@@ -104,7 +104,7 @@ describe('options', () => {
         ],
       });
 
-      expect(result.text).toBe('<h2>Title</h2>');
+      expect(result.text).toBe('<h2 id="title">Title</h2>');
       expect(result.codeBlocks).to.deep.equal([]);
     });
 
@@ -127,7 +127,7 @@ describe('options', () => {
         ],
       });
 
-      expect(result.text).toBe('<h3>Title</h3>');
+      expect(result.text).toBe('<h3 id="title">Title</h3>');
       expect(result.codeBlocks).to.deep.equal([]);
     });
 
@@ -152,7 +152,7 @@ describe('options', () => {
 
       assertOutput(
         result.text,
-        `<h1>Title</h1>
+        `<h1 id="title">Title</h1>
 <div class="repl-sdk__snippet" data-repl-output><pre class="shiki github-dark" style="background-color:#24292e;color:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> two</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 2</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#85E89D">template</span><span style="color:#E1E4E8">></span></span>
@@ -178,7 +178,7 @@ describe('options', () => {
         );
 
         expect(result.text).toMatchInlineSnapshot(`
-          "<h1>Title</h1>
+          "<h1 id="title">Title</h1>
           <div id="repl_0" class="repl-sdk__demo"></div>"
         `);
 
@@ -208,7 +208,7 @@ describe('options', () => {
         assertOutput(
           result.text,
           stripIndent`
-          <h1>Title</h1>
+          <h1 id="title">Title</h1>
 
           <div class=\"repl-sdk__snippet\" data-repl-output><pre><code class=\"language-gjs\">  const two = 2;
           </code></pre></div>
@@ -232,7 +232,7 @@ describe('options', () => {
         );
 
         expect(result.text).toMatchInlineSnapshot(`
-          "<h1>Title</h1>
+          "<h1 id="title">Title</h1>
           <div id="repl_1" class="repl-sdk__demo"></div>"
         `);
 
@@ -264,7 +264,7 @@ describe('options', () => {
         assertOutput(
           result.text,
           stripIndent`
-          <h1>Title</h1>
+          <h1 id="title">Title</h1>
 
           <div class=\"repl-sdk__snippet\" data-repl-output><pre><code class=\"language-gjs\">const two = 2
 
@@ -289,7 +289,7 @@ describe('options', () => {
         assertOutput(
           result.text,
           stripIndent`
-          <h1>Title</h1>
+          <h1 id="title">Title</h1>
           <p><code>\\{{ foo }}</code></p>
         `
         );
@@ -310,7 +310,7 @@ describe('options', () => {
         );
 
         expect(result.text).toMatchInlineSnapshot(`
-          "<h1>Title</h1>
+          "<h1 id="title">Title</h1>
           <div id="repl_2" class="repl-sdk__demo"></div>
           <Demo />"
         `);
