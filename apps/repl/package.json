@@ -149,7 +149,6 @@
     "@embroider/macros": "1.18.0",
     "@embroider/router": "3.0.1",
     "@glimmer/component": "^2.0.0",
-    "@glimmer/tracking": "^1.1.2",
     "@nullvoxpopuli/horizon-theme": "workspace:*",
     "@nullvoxpopuli/limber-codemirror": "workspace:*",
     "@nullvoxpopuli/limber-styles": "workspace:*",

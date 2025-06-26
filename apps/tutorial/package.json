@@ -37,9 +37,7 @@
   },
   "dependencies": {
     "@glimmer/component": "^2.0.0",
-    "@glimmer/tracking": "^1.1.2",
     "@shikijs/rehype": "^1.29.2",
-    "@universal-ember/kolay-ui": "^0.0.13",
     "ember-async-data": "2.0.1",
     "ember-modifier": "^4.2.0",
     "ember-primitives": "^0.32.0",
@@ -87,7 +85,6 @@
     "broccoli-funnel": "^3.0.8",
     "concurrently": "^9.1.2",
     "ember-auto-import": "^2.10.0",
-    "ember-cached-decorator-polyfill": "^1.0.2",
     "ember-cli": "6.5.0",
     "ember-cli-babel": "^8.2.0",
     "ember-load-initializers": "^3.0.1",

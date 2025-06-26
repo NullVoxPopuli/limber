@@ -90,7 +90,6 @@
     "@glimmer/interfaces": "^0.94.5",
     "@glimmer/reference": "^0.94.8",
     "@glimmer/syntax": "^0.94.9",
-    "@glimmer/tracking": "^1.1.2",
     "@glimmer/util": "^0.94.6",
     "@glint/core": "alpha",
     "@glint/environment-ember-loose": "alpha",
