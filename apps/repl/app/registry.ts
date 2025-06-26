@@ -26,6 +26,11 @@ const autoRegistry = {
   [`${appName}/router`]: Router,
 };
 
+import ApplicationController from './controllers/application.ts';
+import ApplicationTemplate from './templates/application.gts';
+import EditTemplate from './templates/edit.gts';
+import OutputTemplate from './templates/output.gts';
+
 export const registry = {
   // /////////////////
   // To Eliminate
@@ -43,7 +48,8 @@ export const registry = {
   // /////////////////
   [`${appName}/services/page-title`]: PageTitleService,
   ...autoRegistry,
-  [`${appName}/templates/application`]: await import('./templates/application.gts'),
-  [`${appName}/templates/edit`]: await import('./templates/edit.gts'),
-  [`${appName}/templates/output`]: await import('./templates/output.gts'),
+  [`${appName}/controllers/application`]: ApplicationController,
+  [`${appName}/templates/application`]: ApplicationTemplate,
+  [`${appName}/templates/edit`]: EditTemplate,
+  [`${appName}/templates/output`]: OutputTemplate,
 };

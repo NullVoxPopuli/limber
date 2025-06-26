@@ -27,7 +27,7 @@ export default class CodeMirror extends Modifier<Signature> {
   @service declare router: RouterService;
 
   modify(element: Element) {
-    this.setup(element);
+    waitForPromise(this.setup(element));
   }
 
   // For deduping incidental changes to the *format* Signal
@@ -62,7 +62,9 @@ export default class CodeMirror extends Modifier<Signature> {
     element.innerHTML = '';
     element.setAttribute('data-format', format);
 
-    const { view, setText } = CODEMIRROR(element, value, format, updateText);
+    const { view, setText } = await CODEMIRROR(element, value, format, updateText);
+
+    if (isDestroyed(this) || isDestroying(this)) return;
 
     /**
      * This has to be defined on the service so that
@@ -91,16 +93,28 @@ let CODEMIRROR:
       value: string | null,
       format: FormatQP,
       updateText: (text: string) => void
-    ) => { view: EditorView; setText: (text: string, format: FormatQP) => Promise<void> });
+    ) => Promise<{ view: EditorView; setText: (text: string, format: FormatQP) => Promise<void> }>);
+
+
+let promise: Promise<typeof CODEMIRROR>;
 
 /**
  * This is called from the state machine which manages loading state
  */
 export async function setupCodeMirror() {
-  if (CODEMIRROR) return;
+  if (promise) await promise;
+  if (CODEMIRROR) return CODEMIRROR;
 
   // TypeScript doesn't have a way to type files in the public folder
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  CODEMIRROR = (await import('@nullvoxpopuli/limber-codemirror/preconfigured')).default;
+  promise = (async () => {
+    const module = await (import('@nullvoxpopuli/limber-codemirror/preconfigured'));
+
+    return module.default
+  })();
+
+  CODEMIRROR = await promise;
+
+  return CODEMIRROR;
 }

@@ -65,23 +65,11 @@ export function headingId(options = { defaults: false }) {
         let matched = string.match(/ {#([^]+?)}$/);
 
         if (matched) {
-          let id = matched[1];
-
-          if (id?.length) {
-            setNodeId(node, id);
-
-            string = string.substring(0, matched.index);
-            lastChild.value = string;
-
-            return;
-          }
+          return;
         }
       }
 
-      if (options.defaults) {
-        // If no custom id was found, use default instead
-        setNodeId(node, getDefaultId(node.children));
-      }
+      setNodeId(node, getDefaultId(node.children));
     });
   };
 }
