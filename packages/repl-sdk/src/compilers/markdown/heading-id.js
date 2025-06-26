@@ -15,17 +15,22 @@ function getDefaultId(children) {
  */
 function extractText(children) {
   return children
-    .map((child) => {
-      let isEmpty = !child.value?.trim();
+    .map(
+      /**
+       * @param {any} child
+       */
+      (child) => {
+        let isEmpty = !child.value?.trim();
 
-      if (!isEmpty) {
-        return child.value;
-      } else if (child.children && child.children.length > 0) {
-        return extractText(child.children);
-      } else {
-        return '';
+        if (!isEmpty) {
+          return child.value;
+        } else if (child.children && child.children.length > 0) {
+          return extractText(child.children);
+        } else {
+          return '';
+        }
       }
-    })
+    )
     .join(' ');
 }
 
@@ -44,7 +49,7 @@ function setNodeId(node, id) {
   if (!node.data) node.data = {};
   if (!node.data.hProperties) node.data.hProperties = {};
 
-  node.data.id = node.data.hProperties.id = id;
+  /** @type {any} */ (node.data).id = node.data.hProperties.id = id;
 }
 
 export function headingId(options = { defaults: false }) {
@@ -62,7 +67,7 @@ export function headingId(options = { defaults: false }) {
         if (matched) {
           let id = matched[1];
 
-          if (id.length) {
+          if (id?.length) {
             setNodeId(node, id);
 
             string = string.substring(0, matched.index);

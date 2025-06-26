@@ -4,7 +4,7 @@ import { babel } from '@rollup/plugin-babel';
 import icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vite';
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(() => ({
   resolve: {
     extensions,
   },
