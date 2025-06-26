@@ -45,6 +45,7 @@
     "ember-route-template": "^1.0.3",
     "kolay": "^3.5.5",
     "limber-ui": "workspace:*",
+    "ember-repl": "workspace:*",
     "reactiveweb": "^1.6.0",
     "rehype-raw": "^7.0.0",
     "rehype-stringify": "^10.0.1",

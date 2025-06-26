@@ -482,6 +482,9 @@ importers:
       ember-primitives:
         specifier: ^0.32.0
         version: 0.32.0(483bb2da26faf65b469a97ed1db4fb11)
+      ember-repl:
+        specifier: workspace:*
+        version: link:../../packages/ember-repl/addon
       ember-resources:
         specifier: ^7.0.3
         version: 7.0.6(807cfcd3020ea8ad8edb1795de9ad08f)
