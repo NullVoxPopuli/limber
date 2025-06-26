@@ -7,9 +7,21 @@ import Compiler from './compiler.gts';
 import CopyMenu from './copy-menu.gts';
 import resetsCSS from './output-reset.css?url';
 
+import type { TOC } from '@ember/component/template-only';
+
 const isGJS = (format: string | undefined) => format === 'gjs';
 
-export const Output = <template>
+function wantsShadow(arg: boolean | undefined) {
+  if (arg === undefined) return true;
+
+  return arg;
+}
+
+export const Output: TOC<{
+  Args: {
+    shadow?: boolean;
+  };
+}> = <template>
   <Compiler as |context|>
     <div class="prose relative max-w-full p-4" data-test-compiled-output>
       {{!
@@ -32,10 +44,15 @@ export const Output = <template>
 
         {{#if context.component}}
           {{clearError context.component}}
-          <Shadowed>
-            <link rel="stylesheet" href={{resetsCSS}} />
+
+          {{#if (wantsShadow @shadow)}}
+            <Shadowed>
+              <link rel="stylesheet" href={{resetsCSS}} />
+              <context.component />
+            </Shadowed>
+          {{else}}
             <context.component />
-          </Shadowed>
+          {{/if}}
         {{/if}}
 
       </div>

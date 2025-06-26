@@ -1,5 +1,5 @@
 import Output from '#components/output.gts';
 
 <template>
-  <Output />
+  <Output @shadow={{false}} />
 </template>
