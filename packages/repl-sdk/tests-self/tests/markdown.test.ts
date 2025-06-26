@@ -139,7 +139,7 @@ graph TD;
       const element = await compiler.compile('md', fenced('hello', 'unknown-ext'));
 
       expect(element.innerHTML).toMatchInlineSnapshot(`
-        "<div class="repl-sdk__snippet"><pre><code class="language-unknown-ext">hello
+        "<div class="repl-sdk__snippet" data-repl-output=""><pre><code class="language-unknown-ext">hello
         </code></pre></div>"
       `);
     });
