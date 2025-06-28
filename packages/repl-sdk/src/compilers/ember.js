@@ -73,6 +73,35 @@ function resolve(id) {
  */
 export const gjs = {
   resolve,
+
+  /*
+    Example:
+     
+    Uncaught (in promise) Error: Assertion Failed: You attempted to update `count` on `Demo`, but it had already been used previously in the same computation.  Attempting to update a value after using it in a computation can cause logical errors, infinite revalidation bugs, and performance issues, and is not supported.
+
+    `count` was first used:
+
+    - While rendering:
+      {{outlet}} for -top-level
+        -top-level
+          {{outlet}} for application
+            Demo
+              this.foos.value
+                this.foos
+
+    Stack trace for the update:
+  */
+  onUnhandled(e, handle) {
+    if (!e.reason?.message) return;
+
+    let reason = e.reason.message;
+
+    if (reason.includes('Stack trace for the update:')) {
+      reason += ' (see console)';
+    }
+
+    handle(reason);
+  },
   compiler: async (...args) => {
     const gjs = await import('./ember/gjs.js');
 

@@ -33,7 +33,28 @@ export class Compiler {
 
     STABLE_REFERENCE.resolve = this.#resolve;
     STABLE_REFERENCE.fetch = this.#fetch;
+
+    window.addEventListener('unhandledrejection', this.#handleUnhandledRejection);
   }
+
+  /**
+   * @param {PromiseRejectionEvent} e
+   */
+  #handleUnhandledRejection = (e) => {
+    let handled = false;
+
+    for (let onUnhandled of this.#compilerOnUnhandled) {
+      onUnhandled(e, (message) => {
+        this.#announce('error', message);
+        handled = true;
+      });
+      if (handled) break;
+    }
+
+    if (handled) return;
+
+    this.#announce('error', e.reason);
+  };
 
   /**
    * Order of preference
@@ -364,6 +385,10 @@ export class Compiler {
   #compilerCache = new WeakMap();
   #compilers = new Set();
   #compilerResolvers = new Set();
+  /**
+   * @type {Set<(e: PromiseRejectionEvent, handle: (message: string) => void) => void>}
+   */
+  #compilerOnUnhandled = new Set();
 
   /**
    * @param {string} format
@@ -378,6 +403,10 @@ export class Compiler {
 
     if (config.resolve) {
       this.#compilerResolvers.add(config.resolve);
+    }
+
+    if (config.onUnhandled) {
+      this.#compilerOnUnhandled.add(config.onUnhandled);
     }
 
     const options = this.optionsFor(format, flavor);

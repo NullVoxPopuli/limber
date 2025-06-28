@@ -207,6 +207,11 @@ export interface CompilerConfig {
     | (() => Promise<Record<string, unknown>>)
     | undefined;
 
+  /**
+   * This optional method provides the opportunity to reformat messages that would be displayed to the REPL.
+   */
+  onUnhandled?: (e: PromiseRejectionEvent, handle: (msg: string) => void) => void;
+
   compiler: (
     /**
      * The config for the compiler may be passed by the caller.

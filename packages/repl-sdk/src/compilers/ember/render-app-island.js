@@ -33,35 +33,6 @@ export async function renderApp({ element, modules, selector, component, log }) 
   let bootToken = bootWaiter.beginAsync();
   let createToken = createWaiter.beginAsync();
 
-  /*
-  Example:
-   
-  Uncaught (in promise) Error: Assertion Failed: You attempted to update `count` on `Demo`, but it had already been used previously in the same computation.  Attempting to update a value after using it in a computation can cause logical errors, infinite revalidation bugs, and performance issues, and is not supported.
-
-  `count` was first used:
-
-  - While rendering:
-    {{outlet}} for -top-level
-      -top-level
-        {{outlet}} for application
-          Demo
-            this.foos.value
-              this.foos
-
-  Stack trace for the update:
-  */
-  function handleUnhandledRejection(e) {
-    if (!e.reason?.message) return;
-
-    let reason = e.reason.message;
-
-    if (reason.includes('Stack trace for the update:')) {
-      reason += ' (see console)';
-    }
-
-    log('error', reason);
-  }
-
   class EphemeralApp extends App {
     modulePrefix = 'ephemeral-render-output';
     rootElement = element;
@@ -75,11 +46,8 @@ export async function renderApp({ element, modules, selector, component, log }) 
           constructor(...args) {
             super(...args);
 
-            window.addEventListener('unhandledrejection', handleUnhandledRejection);
-
             registerDestructor(() => {
               bootWaiter.endAsync(bootToken);
-              window.removeEventListener('unhandledrejection', handleUnhandledRejection);
             });
           }
           afterModel() {
