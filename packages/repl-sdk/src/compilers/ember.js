@@ -69,12 +69,6 @@ function resolve(id) {
 }
 
 /**
- * @type {CompilerConfig}
- */
-export const gjs = {
-  resolve,
-
-  /*
     Example:
      
     Uncaught (in promise) Error: Assertion Failed: You attempted to update `count` on `Demo`, but it had already been used previously in the same computation.  Attempting to update a value after using it in a computation can cause logical errors, infinite revalidation bugs, and performance issues, and is not supported.
@@ -90,18 +84,28 @@ export const gjs = {
                 this.foos
 
     Stack trace for the update:
+  *
+  * @param {PromiseRejectionEvent} e
+  * @param {(message: string) => void} handle
   */
-  onUnhandled(e, handle) {
-    if (!e.reason?.message) return;
+function onUnhandled(e, handle) {
+  if (!e.reason?.message) return;
 
-    let reason = e.reason.message;
+  let reason = e.reason.message;
 
-    if (reason.includes('Stack trace for the update:')) {
-      reason += ' (see console)';
-    }
+  if (reason.includes('Stack trace for the update:')) {
+    reason += ' (see console)';
+  }
 
-    handle(reason);
-  },
+  handle(reason);
+}
+
+/**
+ * @type {CompilerConfig}
+ */
+export const gjs = {
+  resolve,
+  onUnhandled,
   compiler: async (...args) => {
     const gjs = await import('./ember/gjs.js');
 
@@ -114,6 +118,7 @@ export const gjs = {
  */
 export const hbs = {
   resolve,
+  onUnhandled,
   compiler: async (...args) => {
     const hbs = await import('./ember/hbs.js');
 
@@ -126,6 +131,7 @@ export const hbs = {
  */
 export const gmd = {
   resolve,
+  onUnhandled,
   compiler: async (...args) => {
     const hbs = await import('./ember/gmd.js');
 
