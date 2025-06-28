@@ -4,6 +4,8 @@ import { hash } from '@ember/helper';
 import { focusTrap } from 'ember-focus-trap';
 import { Menu as HeadlessMenu } from 'ember-primitives/components/menu';
 
+import { GlobalHint } from './global-hint.gts';
+
 import type { TOC } from '@ember/component/template-only';
 import type { ComponentLike, WithBoundArgs } from '@glint/template';
 import type { ItemSignature, Signature as MenuSignature } from 'ember-primitives/components/menu';
@@ -119,6 +121,12 @@ const Menu: TOC<{
         </div>
 
       </menu.Content>
+
+      {{#if menu.isOpen}}
+        <GlobalHint>
+          <div>Press <kbd>esc</kbd> to close</div>
+        </GlobalHint>
+      {{/if}}
     </div>
   </HeadlessMenu>
 </template>;

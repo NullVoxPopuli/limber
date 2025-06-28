@@ -74,6 +74,7 @@
     "@types/rsvp": "^4.0.9",
     "@types/unist": "^3.0.3",
     "autoprefixer": "^10.4.20",
+    "babel-plugin-ember-template-compilation": "^2.4.1",
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-merge-trees": "^4.2.0",
     "build-time-reporter-webpack-plugin": "^1.4.3",
