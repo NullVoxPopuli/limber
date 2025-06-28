@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "build:test": "NODE_ENV=development vite build --mode test",
-    "build:prod": "vite build",
+    "build:prod": "NODE_ENV=development vite build --mode development",
     "lint:types": "glint",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "vite --port 4201",
