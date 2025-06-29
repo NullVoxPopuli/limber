@@ -41,6 +41,7 @@
     "pnpm": "10.12.1"
   },
   "pnpm": {
+    "_ember-repl": "workspace:*",
     "overrides": {
       "babel-plugin-ember-template-compilation@<3": "^2.4.1",
       "@nullvoxpopuli/eslint-configs": "^5.0.0",
@@ -52,7 +53,6 @@
       "ember-element-helper": "^0.8.7",
       "ember-get-config": "github:mansona/ember-get-config#config-meta-loader",
       "ember-auto-import": "^2.10.0",
-      "ember-repl": "workspace:*",
       "ember-source": ">= 6.7.0-alpha.1",
       "array-includes": "npm:@nolyfill/array-includes@^1",
       "array.prototype.findlastindex": "npm:@nolyfill/array.prototype.findlastindex@^1",

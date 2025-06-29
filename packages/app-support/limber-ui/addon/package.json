@@ -51,7 +51,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "decorator-transforms": "^2.3.0",
     "penpal": "^6.2.2",
-    "reactiveweb": "^1.6.0"
+    "reactiveweb": "^1.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.27.7",
