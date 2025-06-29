@@ -40,7 +40,7 @@
     "@shikijs/rehype": "^3.7.0",
     "ember-async-data": "2.0.1",
     "ember-modifier": "^4.2.0",
-    "ember-primitives": "^0.32.0",
+    "ember-primitives": "^0.33.0",
     "ember-repl": "latest",
     "ember-resources": "^7.0.3",
     "ember-route-template": "^1.0.3",

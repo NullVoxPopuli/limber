@@ -1,5 +1,6 @@
 import { PortalTargets } from 'ember-primitives/components/portal-targets';
 import { Shadowed } from 'ember-primitives/components/shadowed';
+import { castToBoolean, qp } from 'ember-primitives/qp';
 import { Seconds } from 'reactiveweb/interval';
 
 import { clearError } from './clear-error.ts';
@@ -8,11 +9,14 @@ import CopyMenu from './copy-menu.gts';
 import resetsCSS from './output-reset.css?url';
 
 import type { TOC } from '@ember/component/template-only';
-import qp from '#app/helpers/qp.ts';
 
 const isGJS = (format: string | undefined) => format === 'gjs';
 
-function wantsShadow(arg: boolean | undefined, qp: string) {
+function wantsShadow(arg: boolean | undefined, qp: string | undefined) {
+  if (qp !== undefined) {
+    return castToBoolean(qp);
+  }
+
   if (arg === undefined) return true;
 
   return arg;
