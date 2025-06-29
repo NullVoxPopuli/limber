@@ -1,5 +1,8 @@
+import './styles.css';
+
 import { waitForPromise } from '@ember/test-waiters';
 
+import { Key } from 'ember-primitives/components/keys';
 import { service } from 'ember-primitives/helpers/service';
 import { resource, resourceFactory } from 'ember-resources';
 import { TrackedObject } from 'tracked-built-ins';
@@ -62,7 +65,8 @@ export const Editor: TOC<{
     {{#if state.isDone}}
 
       {{#let (service "editor") as |context|}}
-        <div class="overflow-hidden overflow-y-auto">
+        <div class="overflow-hidden overflow-y-auto limber__editor">
+          <div class="limber__editor__tab-help">press <Key>esc</Key> to <Key>tab</Key> out</div>
           {{! template-lint-disable no-inline-styles }}
           <div style="width: 100%; height: 100%;" {{codemirror}}>{{context.text}}</div>
         </div>

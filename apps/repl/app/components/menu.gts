@@ -2,6 +2,7 @@ import { hash } from '@ember/helper';
 
 // @ts-expect-error - they still don't have types
 import { focusTrap } from 'ember-focus-trap';
+import { Key } from 'ember-primitives/components/keys';
 import { Menu as HeadlessMenu } from 'ember-primitives/components/menu';
 import { FloatingUI } from 'ember-primitives/floating-ui';
 
@@ -133,7 +134,7 @@ const Menu: TOC<{
           <div
             class="menu__keyboard__help"
             {{floating placement="bottom-end" offsetOptions=keyboardHelp}}
-          >press <kbd>esc</kbd> to close</div>
+          >press <Key>esc</Key> to close</div>
         {{/if}}
       </FloatingUI>
 

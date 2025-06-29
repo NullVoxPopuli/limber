@@ -289,6 +289,8 @@ export default class CompilerService {
 
       component = rendersElement(element);
     } catch (e) {
+      // Put a breakpoint here to debug
+      // debugger;
       console.error(e);
       error = e as Error | undefined;
     }
