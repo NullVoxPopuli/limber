@@ -172,7 +172,7 @@
     "remark-parse": "10.0.2",
     "remark-rehype": "^10.1.0",
     "stringify-object": "^5.0.0",
-    "tabster": "8.5.4",
+    "tabster": "8.5.6",
     "tracked-built-ins": "^4.0.0",
     "tracked-toolbox": "^2.0.0",
     "unified": "^10.1.2",
