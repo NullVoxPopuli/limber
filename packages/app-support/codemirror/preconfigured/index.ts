@@ -151,7 +151,6 @@ export default async function newEditor(
           ...completionKeymap,
           ...markdownKeymap,
         ]),
-        tabIndicator,
 
         // lsp,
 
