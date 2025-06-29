@@ -311,10 +311,6 @@ export class Compiler {
       // for on.log usage
       let message = e instanceof Error ? e.message : e;
 
-      message = String(message).split('\n').reverse().join('\n');
-
-      /** @type{any} */ (e).message = message;
-
       this.#announce('error', String(message));
 
       // Don't hide errors!
