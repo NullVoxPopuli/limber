@@ -131,16 +131,7 @@ const Menu: TOC<{
         </menu.Content>
         {{#if menu.isOpen}}
           <div
-            {{! template-lint-disable no-inline-styles }}
-            style="
-              font-size: 0.65rem;
-              padding: 0.1rem 0.6rem 0.3rem 1rem;
-              background: white;
-              color: black;
-              z-index: -1;
-              border-bottom-left-radius: 0.25rem;
-              border-bottom-right-radius: 0.25rem;
-            "
+            class="menu__keyboard__help"
             {{floating placement="bottom-end" offsetOptions=keyboardHelp}}
           >press <kbd>esc</kbd> to close</div>
         {{/if}}
