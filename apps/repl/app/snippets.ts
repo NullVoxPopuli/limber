@@ -23,9 +23,21 @@ if you're interested in a tutorial, check out
 </a>
 `;
 
-export const DEFAULT_SNIPPET = `# Limber Editor
+export const DEFAULT_SNIPPET = `# Welcome!
 
-**glimdown** //  _Ember or Glimmer  rendered with markdown_
+This REPL supports the following:
+
+| Demo | Docs |
+| -------------- | ----------- |
+| [Svelte][svelte-demo] | [svelte.dev][docs-svelte] ↗
+| [Vue][vue-demo] | [vuejs.org][docs-vue] ↗
+| React ([jsx][jsx-react-demo]) | [react.dev][docs-react] ↗
+| Ember ([gjs][gjs-ember-demo], [hbs][hbs-ember-demo]) | [emberjs.com][docs-ember] ↗
+| [Mermaid][mermaid-demo] | [mermaid.js.org][docs-mermaid] ↗
+| [Markdown][md-demo] with live islands | [@ GitHub][docs-markdown] ↗
+| [Glimdown][gmd-demo] (this doc) |
+
+**glimdown** //  _Ember or Glimmer rendered with markdown_
 
 <p class="hidden sm:block">
   Select demos from the menu in the header or write your own custom content and share it with others! ❤️
@@ -33,7 +45,27 @@ export const DEFAULT_SNIPPET = `# Limber Editor
 
 **NOTE:** to tab out of the editor, first press the escape key.
 
-## Template only content
+<hr>
+
+[svelte-demo]: /?format=svelte&file=/samples/svelte-demo.svelte
+[vue-demo]: /?format=vue&file=/samples/vue-demo.vue
+[jsx-react-demo]: /?format=jsx|react&file=/samples/jsx-react-demo.jsx&shadowdom=false
+[gjs-ember-demo]: /?format=gjs&file=/samples/gjs-demo.gjs
+[hbs-ember-demo]: /?format=hbs|ember&file=/samples/hbs-demo.hbs
+[mermaid-demo]: /?format=mermaid&file=/samples/mermaid-demo.mermaid
+[md-demo]: /?format=md&file=/samples/all.md
+[gmd-demo]: /
+
+[docs-svelte]: https://svelte.dev/
+[docs-vue]: https://vuejs.org/
+[docs-react]: https://react.dev/
+[docs-ember]: https://emberjs.com/
+[docs-mermaid]: https://mermaid.js.org/
+[docs-markdown]: https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
+
+## Glimdown
+
+Some globally available (predefined) functions can be invoked in glimdown, for example, using \`array\` and \`hash\`:
 
 List of links:
 <ul>
@@ -48,9 +80,28 @@ List of links:
   {{/each}}
 </ul>
 
+This list is user-configurable via:
+\`\`\`js
+import { setupCompiler } from 'ember-repl';
+
+// ...
+
+setupCompiler(this, {
+  options: {
+    gmd: {
+      scope: {
+        // your scope additions here
+      },
+    },
+  },
+);
+\`\`\`
+
 [1]: https://github.com/glimmerjs/glimmer-experimental/tree/master/packages/examples/playground
 [2]: https://github.com/ember-template-imports/ember-template-imports
-[3]: https://github.com/NullVoxPopuli/limber/issues/14`;
+[3]: https://github.com/NullVoxPopuli/limber/issues/14
+
+`;
 
 /**
  * NOTE: label must be unique
@@ -63,7 +114,12 @@ export const ALL = [
   // Yaml
   { format: 'mermaid', label: 'Mermaid', path: '/samples/mermaid-demo.mermaid' },
   { format: 'vue', label: 'Vue', path: '/samples/vue-demo.vue' },
-  { format: 'jsx|react', label: 'React JSX', path: '/samples/jsx-react-demo.jsx' },
+  {
+    format: 'jsx|react',
+    label: 'React JSX',
+    path: '/samples/jsx-react-demo.jsx',
+    qps: { shadowdom: '0' },
+  },
   { format: 'hbs', label: 'Ember HBS', path: '/samples/hbs-demo.hbs' },
   { format: 'md', label: 'With inline Javascript', path: '/samples/live-js.md' },
   { format: 'gmd', label: 'With inline Templates', path: '/samples/live-hbs.md' },

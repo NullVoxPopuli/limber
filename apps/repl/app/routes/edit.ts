@@ -36,6 +36,17 @@ export default class EditRoute extends Route {
 
     const hasCode = Boolean(qps.t || qps.c);
     const hasFormat = qps.format !== undefined;
+    const hasFileReference = Boolean(qps.file);
+
+    if (hasFileReference && hasFormat) {
+      transition.abort();
+
+      let format = formatQPFrom(qps.format as string);
+      let response = await fetch(qps.file as string);
+      let text = await response.text();
+
+      this.editor.fileURIComponent.set(text, format);
+    }
 
     if (!hasCode) {
       /**

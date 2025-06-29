@@ -141,8 +141,8 @@ export class FileURIComponent {
    * Called during normal typing.
    */
   set = (rawText: string, format: FormatQP) => {
-    this.#updateTextQP(rawText);
     this.#updateFormatQP(format);
+    this.#updateTextQP(rawText);
     this.#pushUpdate();
   };
 

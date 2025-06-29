@@ -60,7 +60,7 @@ export class Status extends Component {
           >
             <FaIcon @size="xs" @icon={{faXmark}} class="aspect-square" />
           </FlatButton>
-          <pre class="whitespace-pre-wrap font-[monospace] text-base">{{this.error}}</pre>
+          <pre class="layout__status__error__details">{{this.error}}</pre>
         </footer>
       {{/if}}
     {{/if}}
@@ -91,6 +91,15 @@ export class Status extends Component {
         max-width: 60dvw;
         padding: 1rem;
         color: black;
+      }
+
+      .layout__status__error__details {
+        max-height: 80dvh;
+        overflow: auto;
+        font-size: 1rem;
+        font-family: monospace;
+        line-height: 1.5rem;
+        white-space: pre-wrap;
       }
     </style>
   </template>

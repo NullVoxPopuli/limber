@@ -43,7 +43,6 @@ export default modifier<Signature>((element: Element, [code]) => {
       }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     let lang = element.getAttribute('data-format') ?? element.classList[0]!;
 
     lang = lang.replace('language-', '');
@@ -55,6 +54,8 @@ export default modifier<Signature>((element: Element, [code]) => {
     if (!isAllowedFormat(lang)) {
       return;
     }
+
+    lang = lang.split('|')[0]!;
 
     const html = hljs.codeToHtml(code, { lang, theme: 'github-dark' });
 

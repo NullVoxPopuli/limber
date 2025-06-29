@@ -8,10 +8,11 @@ import CopyMenu from './copy-menu.gts';
 import resetsCSS from './output-reset.css?url';
 
 import type { TOC } from '@ember/component/template-only';
+import qp from '#app/helpers/qp.ts';
 
 const isGJS = (format: string | undefined) => format === 'gjs';
 
-function wantsShadow(arg: boolean | undefined) {
+function wantsShadow(arg: boolean | undefined, qp: string) {
   if (arg === undefined) return true;
 
   return arg;
@@ -45,7 +46,7 @@ export const Output: TOC<{
         {{#if context.component}}
           {{clearError context.component}}
 
-          {{#if (wantsShadow @shadow)}}
+          {{#if (wantsShadow @shadow (qp "shadowdom"))}}
             <Shadowed>
               <link rel="stylesheet" href={{resetsCSS}} />
               <context.component />

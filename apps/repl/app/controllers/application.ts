@@ -45,5 +45,12 @@ export default class ApplicationController extends Controller {
     //  - vue
     //  - mermaid
     'format',
+
+    // Load a file from the public directory
+    'file',
+
+    // Force the output to be rendered in to a shadow-dom
+    // or force it to not be rendered in to a shadow-dom if falsey value is passed
+    'shadowdom',
   ];
 }
