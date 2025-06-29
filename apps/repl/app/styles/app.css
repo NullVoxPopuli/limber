@@ -100,3 +100,9 @@ kbd {
     display: none;
   }
 }
+
+pre.shiki {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: inset 0px 1px 1px 1px black;
+}
