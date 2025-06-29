@@ -3,14 +3,22 @@ import { hash } from '@ember/helper';
 // @ts-expect-error - they still don't have types
 import { focusTrap } from 'ember-focus-trap';
 import { Menu as HeadlessMenu } from 'ember-primitives/components/menu';
-
-import { GlobalHint } from './global-hint.gts';
+import { FloatingUI } from 'ember-primitives/floating-ui';
 
 import type { TOC } from '@ember/component/template-only';
 import type { ComponentLike, WithBoundArgs } from '@glint/template';
 import type { ItemSignature, Signature as MenuSignature } from 'ember-primitives/components/menu';
 
 type MenuType = MenuSignature['Blocks']['default'][0];
+
+const keyboardHelp = {
+  crossAxis: -8,
+};
+
+const focusTrapOptions = {
+  clickOutsideDeactivates: true,
+  allowOutsideClick: true,
+};
 
 const Button: TOC<{
   Element: HTMLButtonElement;
@@ -88,7 +96,7 @@ const Menu: TOC<{
     @flipOptions={{hash padding=8}}
     as |menu|
   >
-    <div {{focusTrap isActive=menu.isOpen}}>
+    <div {{focusTrap isActive=menu.isOpen focusTrapOptions=focusTrapOptions}}>
       {{yield
         (hash
           menu=menu
@@ -98,12 +106,12 @@ const Menu: TOC<{
         )
         to="trigger"
       }}
-
-      <menu.Content data-test-menu-items class="limber__menu__content" as |content|>
-        {{! template-lint-disable no-inline-styles }}
-        <div
-          class="border"
-          style="
+      <FloatingUI as |reference floating|>
+        <menu.Content data-test-menu-items {{reference}} class="limber__menu__content" as |content|>
+          {{! template-lint-disable no-inline-styles }}
+          <div
+            class="border"
+            style="
           position: absolute;
           background: white;
           width: 8px;
@@ -111,22 +119,33 @@ const Menu: TOC<{
           transform: rotate(45deg);
           z-index: 0;
         "
-          {{menu.arrow}}
-        ></div>
+            {{menu.arrow}}
+          ></div>
 
-        <div
-          class="grid max-h-[80dvh] min-w-max overflow-auto rounded border bg-white drop-shadow-xl"
-        >
-          {{yield (component Button content=content) to="options"}}
-        </div>
+          <div
+            class="grid max-h-[80dvh] min-w-max overflow-auto rounded border bg-white drop-shadow-xl"
+          >
+            {{yield (component Button content=content) to="options"}}
+          </div>
 
-      </menu.Content>
+        </menu.Content>
+        {{#if menu.isOpen}}
+          <div
+            {{! template-lint-disable no-inline-styles }}
+            style="
+              font-size: 0.65rem;
+              padding: 0.1rem 0.6rem 0.3rem 1rem;
+              background: white;
+              color: black;
+              z-index: -1;
+              border-bottom-left-radius: 0.25rem;
+              border-bottom-right-radius: 0.25rem;
+            "
+            {{floating placement="bottom-end" offsetOptions=keyboardHelp}}
+          >press <kbd>esc</kbd> to close</div>
+        {{/if}}
+      </FloatingUI>
 
-      {{#if menu.isOpen}}
-        <GlobalHint>
-          <div>Press <kbd>esc</kbd> to close</div>
-        </GlobalHint>
-      {{/if}}
     </div>
   </HeadlessMenu>
 </template>;

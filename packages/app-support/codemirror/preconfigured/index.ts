@@ -3,7 +3,7 @@ import { indentWithTab } from '@codemirror/commands';
 import { markdownKeymap } from '@codemirror/lang-markdown';
 import { syntaxHighlighting } from '@codemirror/language';
 import { Compartment, EditorSelection, EditorState } from '@codemirror/state';
-import { keymap } from '@codemirror/view';
+import { keymap, ViewPlugin } from '@codemirror/view';
 import { basicSetup, EditorView } from 'codemirror';
 // @ts-ignore
 import { foldByIndent } from 'codemirror-lang-mermaid';
@@ -122,6 +122,9 @@ export default async function newEditor(
     supportForFormat(format),
   ]);
 
+  let doc = document.createElement('div');
+  doc.textContent = 'Press escape to tab out';
+
   let view = new EditorView({
     parent: element,
     state: EditorState.create({
@@ -136,6 +139,11 @@ export default async function newEditor(
 
         updateListener,
         EditorView.lineWrapping,
+        // EditorView.focusChangeEffect((state, focusing) => {
+        //   view.dom.nextSibling?.appendChild(doc);
+        //   return [];
+        // }),
+
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         keymap.of([
           // Intentionally do not capture the tab key -- otherwise we can't leave the editor.
@@ -143,6 +151,7 @@ export default async function newEditor(
           ...completionKeymap,
           ...markdownKeymap,
         ]),
+        tabIndicator,
 
         // lsp,
 

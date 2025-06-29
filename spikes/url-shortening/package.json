@@ -15,7 +15,7 @@
   "devDependencies": {
     "@nullvoxpopuli/eslint-configs": "^5.0.0",
     "eslint": "^9.29.0",
-    "prettier": "^3.5.2",
+    "prettier": "^3.6.2",
     "prettier-plugin-ember-template-tag": "2.0.6",
     "typescript": "5.8.3",
     "vitest": "^3.2.4"

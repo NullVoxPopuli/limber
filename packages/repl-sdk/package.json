@@ -52,7 +52,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.23.9",
     "@nullvoxpopuli/eslint-configs": "^5.0.0",
-    "@shikijs/rehype": "^1.29.2",
+    "@shikijs/rehype": "^3.7.0",
     "@tsconfig/ember": "^3.0.7",
     "@types/common-tags": "^1.8.4",
     "@types/hast": "^3.0.4",
@@ -60,7 +60,7 @@
     "common-tags": "^1.8.2",
     "eslint": "^9.29.0",
     "mdast": "^3.0.0",
-    "prettier": "^3.2.5",
+    "prettier": "^3.6.2",
     "publint": "^0.3.12",
     "rehype-raw": "^7.0.0",
     "rehype-stringify": "^10.0.1",
@@ -78,7 +78,7 @@
   "dependencies": {
     "change-case": "^5.4.4",
     "comlink": "^4.4.2",
-    "es-module-shims": "^2.4.1",
+    "es-module-shims": "^2.6.1",
     "mime": "^4.0.7",
     "package-name-regex": "^4.0.3",
     "resolve.exports": "^2.0.3",
