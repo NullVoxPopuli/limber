@@ -69,13 +69,13 @@ dialog::backdrop {
 }
 
 .menu__keyboard__help {
-              font-size: 0.65rem;
-              padding: 0.1rem 0.6rem 0.3rem 1rem;
-              background: white;
-              color: black;
-              z-index: -1;
-              border-bottom-left-radius: 0.25rem;
-              border-bottom-right-radius: 0.25rem;
+  font-size: 0.65rem;
+  padding: 0.1rem 0.6rem 0.3rem 1rem;
+  background: white;
+  color: black;
+  z-index: -1;
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
 }
 
 @media (pointer:coarse) {
@@ -89,3 +89,11 @@ pre.shiki {
   border-radius: 0.5rem;
   box-shadow: inset 0px 1px 1px 1px black;
 }
+
+.limber__editor-placeholder pre.shiki {
+  padding: 0;
+  padding-left: 1rem;
+  box-shadow: none;
+}
+
+

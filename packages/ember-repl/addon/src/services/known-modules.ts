@@ -26,6 +26,7 @@ const frameworkModules = {
   '@ember/owner': () => import('@ember/owner'),
   '@glimmer/component': () => import('@glimmer/component'),
   '@glimmer/tracking': () => import('@glimmer/tracking'),
+  '@glimmer/tracking/primitives/cache': () => import('@glimmer/tracking/primitives/cache'),
   'ember-resolver': () => import('ember-resolver'),
 };
 

@@ -11,15 +11,11 @@ export const Placeholder: TOC<{
   Element: HTMLPreElement;
 }> = <template>
   {{#let (service "editor") as |context|}}
-    <label class="sr-only" for="initial-editor">
-      Glimmer + Markdown Code Editor
-    </label>
-
     <div
       data-test-placeholder
       id="initial-editor"
       spellcheck="false"
-      class="font-sm h-full w-full px-6 py-2 font-mono text-white"
+      class="limber__editor-placeholder font-sm h-full w-full px-6 py-2 font-mono text-white"
       data-format={{orGlimdown (qp "format")}}
       {{! @glint-ignore }}
       {{highlighted context.text}}
