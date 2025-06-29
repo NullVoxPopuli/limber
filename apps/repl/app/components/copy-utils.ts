@@ -23,15 +23,11 @@ export function getSnippetElement(event: Event) {
       return element;
     }
 
-    if (element.getAttribute('data-test-output')) {
+    if (element.hasAttribute('data-test-output')) {
       return element;
     }
 
-    if (element.getAttribute('data-test-compiled-output')) {
-      return element;
-    }
-
-    if (element === document.body) {
+    if (element.hasAttribute('data-test-compiled-output')) {
       return element;
     }
   }
