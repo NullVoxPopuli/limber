@@ -8,12 +8,11 @@ your app's time-to-interactive will be unaffected.
 
 ### Usage of `ember-repl` may look like this
 
-```gjs live preview
+```gjs live
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import { on } from '@ember/modifier';
-import { compile } from 'ember-repl';
+import { Compiled } from 'ember-repl';
 
 const STARTING_CODE = `import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
@@ -33,61 +32,37 @@ export default class HelloWorld extends Component {
 
 export default class ExampleREPL extends Component {
   @tracked code = STARTING_CODE;
-  @tracked component;
-  @tracked error;
 
-  @action setCode(inputEvent) {
+  setCode = (inputEvent) => {
     this.code = inputEvent.target.value;
   }
 
-  @action async render(submitEvent) {
-    submitEvent.preventDefault();
-    this.error = null;
-
-    let error;
-    let component;
-
-    try {
-       await compile(this.code, { 
-        format: 'gjs',
-        onCompileStart() {},
-        onSuccess(c) {
-          component = c;
-        },
-        onError(e) {
-          error = e;
-        },
-      });
-
-      if (error) {
-        this.error = error;
-        return;
-      }
-      this.component = component;
-    } catch (e) {
-      this.error = e.message;
-    }
-  }
-
   <template>
-    {{#if this.error}}
-      {{this.error}}
-    {{/if}}
-
-    <form {{on 'submit' this.render}} class='grid gap-4 border p-4'>
+    <div class='grid gap-4 border p-4'>
       <div class='flex justify-between'>
         <label for='code'>Type your glimmer javascript here</label>
-        <button type='submit'>Render</button>
       </div>
 
       <textarea
         {{on 'input' this.setCode}}
         id='code' class='border p-2' rows="6">{{this.code}}</textarea>
-    </form>
+    </div>
 
-    {{#if this.component}}
-      <div class='border p-4'><this.component /></div>
-    {{/if}}
+    {{#let (Compiled this.code "gjs") as |state|}}
+      {{#if state.isWaiting}}
+        building ...
+      {{/if}}
+
+
+      {{#if state.error}}
+        {{state.error}}
+      {{/if}}
+
+      {{#if state.component}}
+        <div class='border p-4'><state.component /></div>
+      {{/if}}
+
+    {{/let}}
   </template>
 }
 ```

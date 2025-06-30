@@ -1,10 +1,7 @@
-import { PortalTargets } from 'ember-primitives';
-import Route from 'ember-route-template';
+import { PortalTargets } from 'ember-primitives/components/portal-targets';
 
-export default Route(
-  <template>
-    <PortalTargets />
+<template>
+  <PortalTargets />
 
-    {{outlet}}
-  </template>
-);
+  {{outlet}}
+</template>

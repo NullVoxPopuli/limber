@@ -4,7 +4,9 @@ import { guidFor } from '@ember/object/internals';
 
 import { modifier } from 'ember-modifier';
 
-import { getHighlighter, getPurifier } from './-utils/highlighting';
+import { isAllowedFormat } from '#app/languages.gts';
+
+import { getHighlighter } from './-utils/highlighting';
 
 interface Signature {
   Element: HTMLPreElement;
@@ -21,17 +23,13 @@ export default modifier<Signature>((element: Element, [code]) => {
   element.setAttribute('id', guid);
 
   (async () => {
-    const [hljs, purify] = await Promise.all([getHighlighter(), getPurifier()]);
+    const hljs = await getHighlighter();
 
     // because the above is async, it's possible that the element
     // has been removed from the DOM
     if (!document.getElementById(guid)) {
       return;
     }
-
-    const target = element.querySelector('code');
-
-    if (!target) return;
 
     if (DEBUG) {
       warn(`Cannot highlight code with undefined/null code`, Boolean(code), {
@@ -45,9 +43,22 @@ export default modifier<Signature>((element: Element, [code]) => {
       }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const { value } = hljs.highlight(code, { language: target.classList[0]! });
+    let lang = element.getAttribute('data-format') ?? element.classList[0]!;
 
-    target.innerHTML = purify.sanitize(value);
+    lang = lang.replace('language-', '');
+
+    if (lang === 'glimdown') {
+      lang = 'markdown';
+    }
+
+    if (!isAllowedFormat(lang)) {
+      return;
+    }
+
+    lang = lang.split('|')[0]!;
+
+    const html = hljs.codeToHtml(code, { lang, theme: 'github-dark' });
+
+    element.innerHTML = html;
   })();
 });

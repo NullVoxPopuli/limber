@@ -1,5 +1,4 @@
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import Service, { service } from '@ember/service';
 
 import { link } from 'reactiveweb/link';
@@ -7,28 +6,32 @@ import { link } from 'reactiveweb/link';
 import { FileURIComponent } from 'limber/utils/editor-text';
 
 import type RouterService from '@ember/routing/router-service';
-import type { Format } from 'limber/utils/messaging';
+import type { FormatQP } from '#app/languages.gts';
 
 export default class EditorService extends Service {
   @service declare router: RouterService;
 
-  @tracked isCompiling = false;
-  @tracked error?: string;
-  @tracked errorLine?: number;
   @tracked scrollbarWidth = 0;
 
-  @link(FileURIComponent) declare fileURIComponent: FileURIComponent;
+  #fileURIComponent: FileURIComponent | undefined;
+  get fileURIComponent() {
+    if (this.#fileURIComponent) return this.#fileURIComponent;
+    // eslint-disable-next-line ember/no-side-effects
+    this.#fileURIComponent = new FileURIComponent();
+    link(this.#fileURIComponent, this);
 
-  @action
-  updateText(text: string) {
-    this.fileURIComponent.queue(text, this.format);
+    return this.#fileURIComponent;
   }
+
+  updateText = (text: string) => {
+    this.fileURIComponent.queue(text);
+  };
 
   get text() {
     return this.fileURIComponent.decoded;
   }
 
-  get format() {
+  get format(): FormatQP {
     return this.fileURIComponent.format;
   }
 
@@ -43,7 +46,7 @@ export default class EditorService extends Service {
    * exists and _then_ finish calling update demo.
    *
    */
-  #editorSwapText?: (text: string, format: Format) => void;
+  #editorSwapText?: (text: string, format: FormatQP) => void;
   #pendingUpdate?: () => void;
 
   get _editorSwapText() {
@@ -57,20 +60,19 @@ export default class EditorService extends Service {
     }
   }
 
-  @action
-  updateDemo(text: string, format: Format) {
+  updateDemo = (text: string, formatQP: FormatQP) => {
     if (!this._editorSwapText) {
-      this.#pendingUpdate = () => this.updateDemo(text, format);
+      this.#pendingUpdate = () => this.updateDemo(text, formatQP);
 
       return;
     }
 
     // Update ourselves
-    this.fileURIComponent.set(text, format);
+    this.fileURIComponent.set(text, formatQP);
 
     // Update the editor
-    this._editorSwapText?.(text, format);
-  }
+    this._editorSwapText?.(text, formatQP);
+  };
 }
 
 // DO NOT DELETE: this is how TypeScript knows how to look up your services.

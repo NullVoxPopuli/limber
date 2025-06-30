@@ -8,6 +8,7 @@ if (typeof module !== 'undefined') {
   module.exports = {
     test_page: 'tests/index.html?hidepassed',
     disable_watching: true,
+    cwd: 'dist',
     launch_in_ci: [CI_BROWSER],
     launch_in_dev: [DEFAULT_BROWSER],
     browser_start_timeout: 120,

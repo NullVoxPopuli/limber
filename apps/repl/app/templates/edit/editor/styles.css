@@ -1,0 +1,35 @@
+.limber__editor {
+  position: relative;
+
+  .limber__editor__tab-help {
+    position: absolute;
+    bottom: 0.25rem;
+    right: 0;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    color: white;
+    font-size: 0.75rem;
+    padding: 0.125rem 1rem;
+    text-shadow: 0 1px 2px black;
+    kbd {
+      text-shadow: none;
+    }
+  }
+
+  &:has(.cm-focused) {
+    .limber__editor__tab-help {
+      opacity: 1;
+    }
+  }
+}
+
+@media (pointer:coarse) {
+  .limber__editor .limber__editor__tab-help {
+    /**
+     * Touch devices don't usually use keyboards
+     */
+    display: none !important;
+  }
+}
+

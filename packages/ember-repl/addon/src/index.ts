@@ -1,5 +1,9 @@
-export { compile, Compiled } from './compile/index.ts';
+export { compile } from './compile/compile.ts';
+export { Compiled } from './compile/Compiled.ts';
 export { invocationName, invocationOf, nameFor } from './compile/utils.ts';
+export { getCompiler } from './services/compiler.ts';
+export { setup as setupCompiler } from './setup.ts';
 
 // Public Types
-export type { CompileResult, EvalImportMap, ScopeMap, UnifiedPlugin } from './compile/types';
+export type { CompileState } from './compile/state.ts';
+export type { Format, ModuleMap, ScopeMap } from './compile/types';

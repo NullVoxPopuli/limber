@@ -1,13 +1,10 @@
-import { classicEmberSupport, ember, extensions } from '@embroider/vite';
+import { ember, extensions } from '@embroider/vite';
 
 import { babel } from '@rollup/plugin-babel';
+import icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig(() => ({
-  build: {
-    sourcemap: true,
-    minify: 'terser',
-  },
   resolve: {
     extensions,
   },
@@ -16,14 +13,16 @@ export default defineConfig(() => ({
   },
   optimizeDeps: {
     // a wasm-providing dependency
-    exclude: ['content-tag', 'ember-cached-decorator-polyfill'],
+    exclude: ['content-tag', 'ember-repl'],
     // for top-level-await, etc
     esbuildOptions: {
       target: 'esnext',
     },
   },
   plugins: [
-    classicEmberSupport(),
+    icons({
+      autoInstall: true,
+    }),
     ember(),
     babel({
       babelHelpers: 'runtime',

@@ -1,35 +1,58 @@
+import Component from '@glimmer/component';
+import { service } from '@ember/service';
+
 import { notInIframe } from 'ember-primitives/iframe';
-import Route from 'ember-route-template';
 
-import Editor from 'limber/components/limber/editor';
-import FrameOutput from 'limber/components/limber/frame-output';
-import Guest from 'limber/components/limber/guest';
-import Header from 'limber/components/limber/header';
-import Help from 'limber/components/limber/help';
-import Layout from 'limber/components/limber/layout';
+import Output from '#components/output.gts';
 
-export default Route(
+import { ExternalLink as Link } from 'limber-ui';
+
+import Editor from './edit/editor/index.gts';
+import Guest from './edit/guest.gts';
+import Header from './edit/header';
+import Help from './edit/help.gts';
+import Layout from './edit/layout/index.gts';
+
+import type RouterService from '@ember/routing/router-service';
+
+class OpenOutput extends Component {
+  @service declare router: RouterService;
+
+  get href() {
+    return this.router.currentURL?.replace('/edit?', '/output?');
+  }
+
   <template>
-    <Guest />
-
-    <main
-      class="grid grid-flow-col h-screen max-h-screen grid {{if (notInIframe) 'grid-rows-editor'}} "
-    >
-      {{#if (notInIframe)}}
-        <Header />
-      {{/if}}
-
-      <Layout>
-        <:editor>
-          <Editor />
-        </:editor>
-
-        <:output>
-          <FrameOutput />
-        </:output>
-      </Layout>
-
-      <Help />
-    </main>
+    {{!-- template-lint-disable no-inline-styles --}}
+    <div style="position: absolute; top: 3rem; right: 1rem; color: rgb(80,80,80);">
+      <Link href={{this.href}} target="_blank" title="Open output" style="padding: 0.5rem;" @iconOnly={{true}} />
+    </div>
   </template>
-);
+}
+
+<template>
+  <Guest />
+
+  <main
+    class="grid grid-flow-col h-screen max-h-screen grid {{if (notInIframe) 'grid-rows-editor'}} "
+  >
+    {{#if (notInIframe)}}
+      <Header />
+    {{/if}}
+
+    <Layout>
+      <:editor>
+        <Editor />
+      </:editor>
+
+      <:output>
+        <div class="h-full w-full">
+          <Output />
+          <OpenOutput />
+        </div>
+      </:output>
+    </Layout>
+
+    <Help />
+  </main>
+</template>

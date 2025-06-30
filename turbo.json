@@ -58,13 +58,22 @@
       "dependsOn": ["build"]
     },
     "build:prod": { "outputs": ["dist/**"], "dependsOn": ["^build"] },
+    "build:test": { "outputs": ["dist/**"], "dependsOn": ["^build"] },
     "build": {
       "outputs": ["dist/**", "declarations/**"],
       "dependsOn": ["^build"]
     },
     "test:node": {
       "outputs": [],
-      "dependsOn": []
+      "dependsOn": ["^build", "build:test"]
+    },
+    "test:firefox": {
+      "outputs": [],
+      "dependsOn": ["^build", "build:test"]
+    },
+    "test:chrome": {
+      "outputs": [],
+      "dependsOn": ["^build", "build:test"]
     },
     // Apps will have test:ember and test:browserstack
     // They are separate so that they can cache independently
@@ -75,7 +84,7 @@
         "EMBER_TRY_CURRENT_SCENARIO", 
         "EMBROIDER_TEST_SETUP_OPTIONS"
       ],
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build", "build:test"]
     },
     "test:browserstack": {
       "dependsOn": ["^build"],

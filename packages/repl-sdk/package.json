@@ -1,0 +1,91 @@
+{
+  "name": "repl-sdk",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./compilers/ember/*": {
+      "default": "./src/compilers/ember/*.js"
+    }
+  },
+  "ember-addon": {
+    "version": 2,
+    "type": "addon",
+    "public-assets": {
+      "./assets/tar-worker.js": "./dist/assets/tar-worker-FjwkBMqD.js"
+    }
+  },
+  "scripts": {
+    "build": "pnpm prepack",
+    "lint:fix": "pnpm -w exec lint fix",
+    "example": "cd example && vite",
+    "start": "vite build --watch",
+    "prepack": "vite build",
+    "lint:package": "pnpm publint",
+    "lint:js": "pnpm -w exec lint js",
+    "lint:types": "tsc --noEmit",
+    "lint:js:fix": "pnpm -w exec lint js:fix",
+    "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
+    "lint:prettier": "pnpm -w exec lint prettier",
+    "test:node": "vitest"
+  },
+  "keywords": [
+    "repl",
+    "playground",
+    "SDK",
+    "render",
+    "play",
+    "javascript",
+    "live",
+    "interactive"
+  ],
+  "author": "NullVoxPopuli",
+  "files": [
+    "dist",
+    "declarations",
+    "src"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.23.9",
+    "@nullvoxpopuli/eslint-configs": "^5.0.0",
+    "@shikijs/rehype": "^3.7.0",
+    "@tsconfig/ember": "^3.0.7",
+    "@types/common-tags": "^1.8.4",
+    "@types/hast": "^3.0.4",
+    "@types/mdast": "^4.0.4",
+    "common-tags": "^1.8.2",
+    "eslint": "^9.29.0",
+    "mdast": "^3.0.0",
+    "prettier": "^3.6.2",
+    "publint": "^0.3.12",
+    "rehype-raw": "^7.0.0",
+    "rehype-stringify": "^10.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "typescript": "^5.8.3",
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.0.0",
+    "vfile": "^6.0.3",
+    "vite": "^6.3.5",
+    "vite-plugin-dts": "4.5.4",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "change-case": "^5.4.4",
+    "comlink": "^4.4.2",
+    "es-module-shims": "^2.6.1",
+    "mime": "^4.0.7",
+    "package-name-regex": "^4.0.3",
+    "resolve.exports": "^2.0.3",
+    "resolve.imports": "^2.0.3",
+    "tarparser": "^0.0.4"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  }
+}
