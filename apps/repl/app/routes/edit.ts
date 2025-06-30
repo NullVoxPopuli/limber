@@ -41,9 +41,9 @@ export default class EditRoute extends Route {
     if (hasFileReference && hasFormat) {
       transition.abort();
 
-      let format = formatQPFrom(qps.format as string);
-      let response = await fetch(qps.file as string);
-      let text = await response.text();
+      const format = formatQPFrom(qps.format as string);
+      const response = await fetch(qps.file as string);
+      const text = await response.text();
 
       this.editor.fileURIComponent.set(text, format);
     }
