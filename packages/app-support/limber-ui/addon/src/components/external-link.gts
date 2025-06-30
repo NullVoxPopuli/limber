@@ -12,6 +12,9 @@ const DefaultContent: TOC<{ Blocks: { default: [] } }> = <template>
 
 export const ExternalLink: TOC<{
   Element: HTMLAnchorElement;
+  Args: {
+    iconOnly?: true;
+  };
   Blocks: {
     default: [];
     custom: [typeof DefaultContent];
@@ -27,6 +30,8 @@ export const ExternalLink: TOC<{
       </DefaultContent>
     {{else if (has-block "custom")}}
       {{yield DefaultContent to="custom"}}
+    {{else if @iconOnly}}
+      <FaIcon @icon={{faExternalLinkAlt}} />
     {{/if}}
   </PrimitiveExternalLink>
 </template>;

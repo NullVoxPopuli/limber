@@ -8,11 +8,12 @@ import { ExternalLink as Link } from 'limber-ui';
 import type RouterService from '@ember/routing/router-service';
 
 class EditThis extends Component {
-@service declare router: RouterService;
+  @service declare router: RouterService;
 
   get href() {
     return this.router.currentURL?.replace('/output?', '/edit?');
   }
+
   <template>
     {{!-- template-lint-disable no-inline-styles --}}
     <div style="position: fixed; bottom: 1rem; right: 1rem;">
