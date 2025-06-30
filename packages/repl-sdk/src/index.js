@@ -255,8 +255,9 @@ export class Compiler {
        * We don't know if this code is completely ready to run in the browser yet, so we might need to run in through the compiler again
        */
       let file = await this.#postProcess(code, ext);
+      let type = mime.getType(ext);
 
-      return new Response(new Blob([file], { type: 'application/javascript' }));
+      return new Response(new Blob([file], { type }));
     }
 
     if (url.startsWith('https://')) {

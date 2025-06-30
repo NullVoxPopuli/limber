@@ -139,8 +139,8 @@ importers:
         specifier: ^4.2.0
         version: 4.2.2(@babel/core@7.27.7)
       ember-primitives:
-        specifier: ^0.33.0
-        version: 0.33.0(6c98c0a79848ce8beb1ad80690d67516)
+        specifier: ^0.34.0
+        version: 0.34.0(6c98c0a79848ce8beb1ad80690d67516)
       ember-repl:
         specifier: workspace:*
         version: link:../../packages/ember-repl/addon
@@ -482,8 +482,8 @@ importers:
         specifier: ^4.2.0
         version: 4.2.2(@babel/core@7.27.7)
       ember-primitives:
-        specifier: ^0.33.0
-        version: 0.33.0(6c98c0a79848ce8beb1ad80690d67516)
+        specifier: ^0.34.0
+        version: 0.34.0(6c98c0a79848ce8beb1ad80690d67516)
       ember-repl:
         specifier: latest
         version: 6.0.0(195a05b01182dfe3c5bd09fac10054f9)
@@ -951,8 +951,8 @@ importers:
         specifier: ^4.2.0
         version: 4.2.2(@babel/core@7.27.7)
       ember-primitives:
-        specifier: ^0.33.0
-        version: 0.33.0(6c98c0a79848ce8beb1ad80690d67516)
+        specifier: ^0.34.0
+        version: 0.34.0(6c98c0a79848ce8beb1ad80690d67516)
       ember-resources:
         specifier: ^7.0.3
         version: 7.0.6(807cfcd3020ea8ad8edb1795de9ad08f)
@@ -7418,8 +7418,8 @@ packages:
       '@glint/template':
         optional: true
 
-  ember-primitives@0.33.0:
-    resolution: {integrity: sha512-NvC450JGoR2Y/ajyZPs9qKh/I7mbdW0Tf1CeXrQRhQoLeefFvJW8FXjMEZtaDARt6JGcKZF7B1XpLlZJLBmWrw==}
+  ember-primitives@0.34.0:
+    resolution: {integrity: sha512-59oHlBhapr13pvilzqPypWnPH4uL8OUejjcrXEO/RoI31ehRda1XuRMdtNg5Tz4uWlvdB/NI8wqEtJhiwFPBIQ==}
     peerDependencies:
       '@ember/test-helpers': '>= 3.2.0'
       '@ember/test-waiters': ^4.1.0
@@ -19778,7 +19778,7 @@ snapshots:
       - ember-source
       - supports-color
 
-  ember-primitives@0.33.0(6c98c0a79848ce8beb1ad80690d67516):
+  ember-primitives@0.34.0(6c98c0a79848ce8beb1ad80690d67516):
     dependencies:
       '@babel/runtime': 7.27.6
       '@ember/test-waiters': 4.1.0(@glint/template@1.5.2)

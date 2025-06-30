@@ -1,7 +1,5 @@
-import Helper from '@ember/component/helper';
 import { concat, fn } from '@ember/helper';
 import { on } from '@ember/modifier';
-import { service as eService } from '@ember/service';
 import { htmlSafe } from '@ember/template';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
@@ -16,7 +14,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { service } from 'ember-primitives/helpers/service';
 import { inIframe } from 'ember-primitives/iframe';
-import { castToBoolean,qp } from 'ember-primitives/qp';
+import { castToBoolean,qp, withQP } from 'ember-primitives/qp';
 
 import currentURL from 'limber/helpers/current-url';
 
@@ -26,21 +24,10 @@ import type { TOC } from '@ember/component/template-only';
 
 const or = (a: boolean, b: boolean) => a || b;
 
-class updateQP extends Helper<{ Args: { Positional: [string, string]}, Return: string }> {
-@eService router;
-compute([qpName, nextValue]: [string, string]) {
-const url = new URL(this.router.currentURL, location.origin);
+function getShadowValue(qpValue: string | undefined) {
+  if (qpValue === undefined) return true;
 
-  url.searchParams.set(qpName, nextValue);
-
-  return (url.href);
-}
-}
-
-function getShadowValue(qpValue) {
-if (qpValue === undefined) return true;
-
-return castToBoolean(qpValue);
+  return castToBoolean(qpValue);
 }
 
 export const Controls: TOC<{
@@ -92,7 +79,7 @@ export const Controls: TOC<{
         {{#let (getShadowValue (qp 'shadowdom')) as |shadow|}}
           <a
             title="Toggle Shadow DOM wrapper (currently: {{if shadow 'on' 'off'}})"
-            href={{updateQP "shadowdom" (if shadow "off" "on")}}
+            href={{withQP "shadowdom" (if shadow "off" "on")}}
             class="flex select-none items-center px-3 py-2 text-xs text-white ring-inset hover:bg-[#9b2918] focus:outline-none focus:ring-4 disabled:opacity-30"
           >
             {{#if shadow}}
