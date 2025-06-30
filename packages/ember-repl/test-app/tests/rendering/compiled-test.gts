@@ -21,7 +21,7 @@ module('Rendering | Compiled()', function (hooks) {
       <template>
         {{#let (Compiled doc) as |state|}}
           <div id="ready">{{state.isReady}}</div>
-          <div id="error">{{String state.error}}</div>
+          <div id="error">{{if state.error (String state.error) ""}}</div>
           <div id="component">
             {{#if state.component}}
               <state.component />

@@ -13,6 +13,12 @@ import { start as qunitStart } from 'ember-qunit';
 import Application from 'ember-repl-test-app/app';
 import config from 'ember-repl-test-app/config/environment';
 
+// skipped tests seem to mess up the nesting here
+QUnit.moduleStart(({ name }) => console.group(name));
+QUnit.testStart(({ name }) => console.group(name));
+QUnit.testDone(() => console.groupEnd());
+QUnit.moduleDone(() => console.groupEnd());
+
 Object.assign(window, {
   getSettledState,
   getPendingWaiterState,
@@ -38,7 +44,6 @@ export function start() {
 
   setup(QUnit.assert);
   QUnit.testDone(resetOnerror);
-  Object.assign(window, { getSettledState });
 
   qunitStart();
 }
