@@ -257,7 +257,7 @@ export class Compiler {
       let file = await this.#postProcess(code, ext);
       let type = mime.getType(ext);
 
-      return new Response(new Blob([file], { type }));
+      return new Response(new Blob([file], { type: type ?? 'application/javascript' }));
     }
 
     if (url.startsWith('https://')) {

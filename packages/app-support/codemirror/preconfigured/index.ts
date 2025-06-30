@@ -3,7 +3,7 @@ import { indentWithTab } from '@codemirror/commands';
 import { markdownKeymap } from '@codemirror/lang-markdown';
 import { syntaxHighlighting } from '@codemirror/language';
 import { Compartment, EditorSelection, EditorState } from '@codemirror/state';
-import { keymap, ViewPlugin } from '@codemirror/view';
+import { keymap } from '@codemirror/view';
 import { basicSetup, EditorView } from 'codemirror';
 // @ts-ignore
 import { foldByIndent } from 'codemirror-lang-mermaid';
