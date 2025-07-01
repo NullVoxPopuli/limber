@@ -226,8 +226,8 @@ export default class CompilerService {
             ...(options.gmd?.scope ?? {}),
           },
           remarkPlugins: [
-            () =>
-              function transformer(tree: any) {
+            function defaultHbsToEmber() {
+              return function transformer(tree: any) {
                 visit(tree, 'code', (node) => {
                   if (node.lang === 'hbs') {
                     if (!node.meta) {
@@ -241,7 +241,9 @@ export default class CompilerService {
                 });
 
                 return tree;
-              },
+              };
+            },
+            ...(options.gmd?.remarkPlugins ?? []),
           ],
         },
         hbs: {

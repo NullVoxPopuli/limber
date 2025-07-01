@@ -21,7 +21,6 @@ function unexpectedErrorHandler(error: unknown) {
 
 module('Rendering | compile()', function (hooks) {
   setupRenderingTest(hooks);
-  setupCompiler(hooks);
 
   module('format: md', function () {
     test('it works', async function (assert) {
@@ -76,7 +75,7 @@ module('Rendering | compile()', function (hooks) {
         ) {
           const compiler = getCompiler(context);
 
-          compile(compiler, snippet, {
+          const state = compile(compiler, snippet, {
             format: 'glimdown',
             onSuccess: onComponent,
             onError: unexpectedErrorHandler,
@@ -85,6 +84,8 @@ module('Rendering | compile()', function (hooks) {
             },
             ...options,
           });
+
+          await state.promise;
 
           await settled();
         }
@@ -107,7 +108,7 @@ module('Rendering | compile()', function (hooks) {
            */
           (/* options */) => {
             return function transformer(tree: Parameters<typeof visit>[0]) {
-              visit(tree, ['code'], function (node, index, parent: Parent) {
+              visit(tree, 'code', function (node, index, parent: Parent) {
                 if (!parent) return;
                 if (undefined === index) return;
 
@@ -124,7 +125,7 @@ module('Rendering | compile()', function (hooks) {
         module('with the plugin (globally configured)', function (hooks) {
           setupCompiler(hooks, {
             options: {
-              md: {
+              gmd: {
                 remarkPlugins: [removePre],
               },
             },
