@@ -12,6 +12,7 @@ import { precompileTemplate } from '@ember/template-compilation';
 import { waitFor } from '@ember/test-waiters';
 
 import { Compiler } from 'repl-sdk';
+import { visit } from 'unist-util-visit';
 
 import { nameFor } from '../compile/utils.ts';
 import { modules } from './known-modules.ts';
@@ -224,6 +225,24 @@ export default class CompilerService {
             ...standardScope,
             ...(options.gmd?.scope ?? {}),
           },
+          remarkPlugins: [
+            () =>
+              function transformer(tree: any) {
+                visit(tree, 'code', (node) => {
+                  if (node.lang === 'hbs') {
+                    if (!node.meta) {
+                      node.meta = 'ember';
+                    } else {
+                      node.meta += ' ember';
+                    }
+
+                    return node;
+                  }
+                });
+
+                return tree;
+              },
+          ],
         },
         hbs: {
           ember: {

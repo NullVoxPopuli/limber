@@ -1,7 +1,7 @@
 /**
  * @typedef {import('unified').Plugin} Plugin
  */
-import { isRecord } from '../../utils.js';
+import { assert, isRecord } from '../../utils.js';
 import { buildCodeFenceMetaUtils } from '../markdown/utils.js';
 import { renderApp } from './render-app-island.js';
 
@@ -69,15 +69,20 @@ export async function compiler(config, api) {
 
       const { template } = await api.tryResolve('@ember/template-compiler/runtime');
 
+      let scope = {
+        ...filterOptions(userOptions).scope,
+        ...filterOptions(options).scope,
+      };
+
       let component = template(result.text, {
         scope: () => ({
-          ...filterOptions(userOptions).scope,
-          ...filterOptions(options).scope,
+          ...scope,
           // TODO: compile all the components from "result" and add them to scope here
+          //       would this be better than the markdown style multiple islands
         }),
       });
 
-      return { compiled: component, ...result };
+      return { compiled: component, ...result, scope };
     },
     render: async (element, compiled, extra, compiler) => {
       /**
@@ -119,6 +124,50 @@ export async function compiler(config, api) {
           runloop,
         },
       });
+
+      await Promise.all(
+        /** @type {unknown[]} */ (extra.codeBlocks).map(async (/** @type {unknown} */ info) => {
+          /** @type {Record<string, unknown>} */
+          const infoObj = /** @type {Record<string, unknown>} */ (info);
+
+          if (
+            !api.canCompile(
+              /** @type {string} */ (infoObj.format),
+              /** @type {string} */ (infoObj.flavor)
+            )
+          ) {
+            return;
+          }
+
+          let flavor = /** @type {string} */ (infoObj.flavor);
+          let hasScope = flavor === 'ember' || infoObj.format === 'gjs' || infoObj.format === 'hbs';
+          let subElement = await compiler.compile(
+            /** @type {string} */ (infoObj.format),
+            /** @type {string} */ (infoObj.code),
+            {
+              ...compiler.optionsFor(/** @type {string} */ (infoObj.format), flavor),
+              flavor: flavor,
+              // @ts-ignore
+              ...(hasScope
+                ? {
+                    scope: extra.scope,
+                  }
+                : {}),
+            }
+          );
+
+          let selector = `#${/** @type {string} */ (infoObj.placeholderId)}`;
+          let target = element.querySelector(selector);
+
+          assert(
+            `Could not find placeholder / target element (using selector: \`${selector}\`). ` +
+              `Could not render ${/** @type {string} */ (infoObj.format)} block.`,
+            target
+          );
+
+          target.appendChild(subElement);
+        })
+      );
     },
   };
 
