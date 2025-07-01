@@ -24,7 +24,7 @@ module('Rendered Snippets / Demos', function (hooks) {
     let component: ComponentLike | undefined;
     let error: string | undefined;
 
-    await compileAnything(getCompiler(context), text, {
+    const state = compileAnything(getCompiler(context), text, {
       format: 'glimdown',
       onCompileStart: async () => assert.step('start compile'),
       onSuccess: async (compiled) => {
@@ -36,6 +36,8 @@ module('Rendered Snippets / Demos', function (hooks) {
         assert.step('error');
       },
     });
+
+    await state.promise;
 
     return { Component: component, error };
   }

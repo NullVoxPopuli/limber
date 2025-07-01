@@ -1,6 +1,6 @@
 import { assert as debugAssert } from '@ember/debug';
 import { render, settled, setupOnerror } from '@ember/test-helpers';
-import QUnit, { module, skip, test } from 'qunit';
+import QUnit, { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import { stripIndent } from 'common-tags';
@@ -163,7 +163,7 @@ module('Rendering | compile()', function (hooks) {
   });
 
   module('passing options', function () {
-    skip('adding to top-level scope', async function (assert) {
+    test('adding to top-level scope', async function (assert) {
       const text = `This is a local component added to scope`;
       const LocalComponent = <template>{{text}}</template>;
 
@@ -179,7 +179,7 @@ module('Rendering | compile()', function (hooks) {
 
       const compiler = getCompiler(this);
 
-      await compile(compiler, snippet, {
+      const state = compile(compiler, snippet, {
         format: 'glimdown',
         onSuccess: (comp) => (component = comp),
         onError: unexpectedErrorHandler,
@@ -193,6 +193,8 @@ module('Rendering | compile()', function (hooks) {
         },
       });
 
+      await state.promise;
+
       debugAssert(`[BUG]`, component);
 
       await render(component);
@@ -200,7 +202,7 @@ module('Rendering | compile()', function (hooks) {
       assert.dom().hasText(text);
     });
 
-    skip('adding to top-level scope applies to rendered "hbs" codefences', async function (assert) {
+    test('adding to top-level scope applies to rendered "hbs" codefences', async function (assert) {
       const text = `This is a local component added to scope`;
       const LocalComponent = <template>{{text}}</template>;
 
@@ -221,7 +223,7 @@ module('Rendering | compile()', function (hooks) {
 
       const compiler = getCompiler(this);
 
-      await compile(compiler, snippet, {
+      const state = compile(compiler, snippet, {
         format: 'glimdown',
         onSuccess: (comp) => (component = comp),
         onError: unexpectedErrorHandler,
@@ -234,6 +236,8 @@ module('Rendering | compile()', function (hooks) {
           LocalComponent,
         },
       });
+
+      await state.promise;
 
       debugAssert(`[BUG]`, component);
 
@@ -254,7 +258,7 @@ module('Rendering | compile()', function (hooks) {
 
       const compiler = getCompiler(this);
 
-      await compile(compiler, snippet, {
+      const state = compile(compiler, snippet, {
         format: 'glimdown',
         onSuccess: (comp) => (component = comp),
         onError: unexpectedErrorHandler,
@@ -278,6 +282,8 @@ module('Rendering | compile()', function (hooks) {
           },
         ],
       });
+
+      await state.promise;
 
       debugAssert(`[BUG]`, component);
 
@@ -305,7 +311,7 @@ module('Rendering | compile()', function (hooks) {
 
       const compiler = getCompiler(this);
 
-      await compile(compiler, snippet, {
+      const state = compile(compiler, snippet, {
         format: 'glimdown',
         onSuccess: (comp) => (component = comp),
         onError: unexpectedErrorHandler,
@@ -338,6 +344,8 @@ module('Rendering | compile()', function (hooks) {
         ],
       });
 
+      await state.promise;
+
       debugAssert(`[BUG]`, component);
 
       await render(component);
@@ -357,7 +365,7 @@ module('Rendering | compile()', function (hooks) {
 
       const compiler = getCompiler(this);
 
-      await compile(compiler, snippet, {
+      const state = compile(compiler, snippet, {
         format: 'glimdown',
         onSuccess: (comp) => (component = comp),
         onError: unexpectedErrorHandler,
@@ -380,6 +388,8 @@ module('Rendering | compile()', function (hooks) {
           } as Plugin<[], Root>,
         ],
       });
+
+      await state.promise;
 
       debugAssert(`[BUG]`, component);
 

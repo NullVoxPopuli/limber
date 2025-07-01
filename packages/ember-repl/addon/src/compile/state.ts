@@ -53,22 +53,6 @@ export class CompileState implements State {
     return this.#promise;
   }
 
-  count = 0;
-  then(onfulfilled: (value: State) => void, onrejected: (reason: any) => void) {
-    this.count++;
-    this.#promise
-      .then(() => {
-        console.log(onfulfilled);
-
-        if (this.count > 10) {
-          throw new Error('hmmmmm');
-        }
-
-        return onfulfilled(this);
-      })
-      .catch((e) => onrejected(e));
-  }
-
   /**
    * @private
    */
