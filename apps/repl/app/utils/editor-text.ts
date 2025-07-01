@@ -74,6 +74,13 @@ export class FileURIComponent {
 
   @tracked _text = this.#initialFile.text;
 
+  /**
+   * Used so we no-op when qps match
+   */
+  get #currentQPs() {
+    return this.router.currentRoute?.queryParams ?? ({} as Record<string, unknown>);
+  }
+
   get #text() {
     return this._text;
   }
@@ -277,24 +284,6 @@ export class FileURIComponent {
       qps.set('c', encoded);
     }
 
-    // This logic needs reworked
-    // if (this.#qps) {
-    //   const needsToCompareC = [this.#qps.get('c'), qps.get('c')].map(Boolean).some(Boolean);
-    //   const needsToCompareT = [this.#qps.get('t'), qps.get('t')].map(Boolean).some(Boolean);
-    //   const isOldTextSame = needsToCompareT && this.#qps.get('t') === qps.get('t');
-    //   const isTextSame = isOldTextSame || (needsToCompareC && this.#qps.get('c') === qps.get('c'));
-    //   const isFormatSame = this.#qps.get('format') === qps.get('format');
-    //
-    //   if (isTextSame && isFormatSame) {
-    //     // no-op, we should not have gotten here
-    //     // it's a mistake to have tried to have update QPs.
-    //     // Someone should debug this.
-    //     this.#cleanup();
-    //
-    //     return;
-    //   }
-    // }
-
     if (!qps.has('format')) {
       qps.set('format', this.format);
     }
@@ -307,6 +296,22 @@ export class FileURIComponent {
 
     assert(`Cannot update URL without required QP:format`, qps.get('format'));
     assert(`Cannot update URL without required QP:c (compressed text)`, qps.get('c'));
+
+    /**
+     * We convert to an object here because URLSearchParams returns `null`
+     * when a param is missing, and we want to compare undefined when a value is missing
+     */
+    const q = Object.fromEntries(qps);
+
+    if (
+      q.c === this.#currentQPs.c &&
+      q.t === this.#currentQPs.t &&
+      q.format === this.#currentQPs.format
+    ) {
+      this.#cleanup();
+
+      return;
+    }
 
     const next = `${base}?${qps}&`;
 
