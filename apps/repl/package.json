@@ -75,8 +75,6 @@
     "@types/unist": "^3.0.3",
     "autoprefixer": "^10.4.20",
     "babel-plugin-ember-template-compilation": "^2.4.1",
-    "broccoli-asset-rev": "^3.0.0",
-    "broccoli-merge-trees": "^4.2.0",
     "build-time-reporter-webpack-plugin": "^1.4.3",
     "chalk": "^5.4.1",
     "common-tags": "^1.8.2",
@@ -119,6 +117,7 @@
     "unplugin-icons": "^22.1.0",
     "vfile": "^6.0.3",
     "vite": "^6.3.5",
+    "vite-plugin-circular-dependency": "^0.5.0",
     "webpack": "^5.98.0"
   },
   "engines": {

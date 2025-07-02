@@ -334,12 +334,6 @@ importers:
       babel-plugin-ember-template-compilation:
         specifier: ^2.4.1
         version: 2.4.1
-      broccoli-asset-rev:
-        specifier: ^3.0.0
-        version: 3.0.0
-      broccoli-merge-trees:
-        specifier: ^4.2.0
-        version: 4.2.0
       build-time-reporter-webpack-plugin:
         specifier: ^1.4.3
         version: 1.4.3(webpack@5.99.9)
@@ -463,6 +457,9 @@ importers:
       vite:
         specifier: ^6.3.5
         version: 6.3.5(8c458d10456fc315d1676c3f4c279c5f)
+      vite-plugin-circular-dependency:
+        specifier: ^0.5.0
+        version: 0.5.0(rollup@4.44.0)
       webpack:
         specifier: ^5.98.0
         version: 5.99.9
@@ -12759,6 +12756,9 @@ packages:
     resolution: {integrity: sha512-EbKSKh+bh1E1IFxeO0pg1n4dvoOTt0UDiXMd/qn++r98+jPO1xtJilvXldeuQ8giIB5IkpjCgMleHMNEsGH6pg==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
+
+  vite-plugin-circular-dependency@0.5.0:
+    resolution: {integrity: sha512-7SQX1IZbf5to/S3A3/syfntRNg20Cth6KgTCwHpNZIcuDCtPclV2Bwvdd9HWG+alKZ04mmdlchNOPQgBl7/vQQ==}
 
   vite-plugin-dts@4.5.4:
     resolution: {integrity: sha512-d4sOM8M/8z7vRXHHq/ebbblfaxENjogAAekcfcDCCwAyvGqnPrc7f4NZbvItS+g4WTgerW0xDwSz5qz11JT3vg==}
@@ -26527,6 +26527,13 @@ snapshots:
       - terser
       - tsx
       - yaml
+
+  vite-plugin-circular-dependency@0.5.0(rollup@4.44.0):
+    dependencies:
+      '@rollup/pluginutils': 5.2.0(rollup@4.44.0)
+      chalk: 4.1.2
+    transitivePeerDependencies:
+      - rollup
 
   vite-plugin-dts@4.5.4(2f023d249cd22ff295c10df6dedd6efe):
     dependencies:

@@ -3,6 +3,7 @@ import { ember, extensions } from '@embroider/vite';
 import { babel } from '@rollup/plugin-babel';
 import icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vite';
+import circleDependency from 'vite-plugin-circular-dependency';
 
 export default defineConfig(() => ({
   resolve: {
@@ -20,6 +21,7 @@ export default defineConfig(() => ({
     },
   },
   plugins: [
+    circleDependency(),
     icons({
       autoInstall: true,
     }),

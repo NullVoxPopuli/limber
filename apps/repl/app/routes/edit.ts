@@ -79,7 +79,7 @@ export default class EditRoute extends Route {
       this.editor.fileURIComponent.forceFormat('gmd');
     }
 
-    this.editor.fileURIComponent.flush();
+    await this.editor.fileURIComponent.flush();
 
     // By the time execution gets here, we'll either:
     // - already have the required queryParams, and everything is skipped

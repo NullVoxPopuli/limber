@@ -28,6 +28,8 @@ module('Editor > Format', function (hooks) {
   });
 
   test('defaults to glimdown', async function (assert) {
+    await visit('/edit');
+    await this.pauseTest();
     await page.expectRedirectToContent('/edit', {
       format: 'glimdown',
     });

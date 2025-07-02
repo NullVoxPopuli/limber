@@ -168,7 +168,8 @@ export class FileURIComponent {
     this.#pushUpdate();
   };
 
-  flush = () => {
+  flush = async () => {
+    await 0;
     this.#setURL();
   };
 
@@ -263,6 +264,12 @@ export class FileURIComponent {
       base ??= window.location.pathname;
     }
 
+    if (base === '/') {
+      base = '/edit/';
+    }
+
+    console.log({ base });
+
     /**
      * At some point this added qps
      * we don't want them though, so we'll strip them
@@ -311,13 +318,15 @@ export class FileURIComponent {
       return;
     }
 
-    const next = `${base}?${qps}&`;
+    const next = `${base}?${qps}`;
 
     this.router.replaceWith(next);
     if (rawText) this.#text = rawText;
 
     this.#cleanup();
   };
+
+  nextURL() {}
 }
 
 function getKey(formatQP: FormatQP) {

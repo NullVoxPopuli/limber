@@ -1,4 +1,3 @@
-import { _backburner } from '@ember/runloop';
 import {
   currentRouteName,
   currentURL,
@@ -15,10 +14,8 @@ import { setupEmberOnerrorValidation, start as qunitStart } from 'ember-qunit';
 // @ts-expect-error
 import { getGlobalConfig } from '@embroider/macros/src/addon/runtime';
 
-import App from '@ember/application';
-import Resolver from 'ember-resolver';
-import { registry } from '#app/registry.ts';
-import Router from '#app/router.ts';
+import Application from '@ember/application';
+import config, { enterTestMode } from '#config';
 
 Object.assign(window, {
   visit,
@@ -40,28 +37,13 @@ Object.assign(window, {
 });
 
 export function start() {
+  enterTestMode();
+
   const macros = getGlobalConfig()['@embroider/macros'];
 
   if (macros) macros.isTesting = true;
 
-  const testRegistry = {
-    ...registry,
-    'limber/router': class TestRouter extends Router {
-      location = 'none' as const;
-      rootURL = '/';
-    },
-  };
-
-  _backburner.DEBUG = true;
-  setApplication(
-    class TestApp extends App {
-      modulePrefix = 'limber';
-      Resolver = Resolver.withModules(testRegistry);
-    }.create({
-      rootElement: '#ember-testing',
-      autoboot: false,
-    })
-  );
+  setApplication(Application.create(config.APP));
 
   setup(QUnit.assert);
   setupEmberOnerrorValidation();
