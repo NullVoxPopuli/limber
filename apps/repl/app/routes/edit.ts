@@ -60,6 +60,7 @@ export default class EditRoute extends Route {
         console.info(`Found format and document in localStorage. Using those.`);
         transition.abort();
         this.editor.fileURIComponent.set(doc, formatQPFrom(format));
+        this.editor.fileURIComponent.flush();
 
         return;
       }
@@ -77,6 +78,8 @@ export default class EditRoute extends Route {
       transition.abort();
       this.editor.fileURIComponent.forceFormat('gmd');
     }
+
+    this.editor.fileURIComponent.flush();
 
     // By the time execution gets here, we'll either:
     // - already have the required queryParams, and everything is skipped

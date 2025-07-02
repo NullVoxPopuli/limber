@@ -112,8 +112,7 @@ export class FileURIComponent {
 
   constructor() {
     registerDestructor(this, () => {
-      clearTimeout(this.#timeout);
-      queueTokens.forEach((token) => queueWaiter.endAsync(token));
+      this.#cleanup();
     });
   }
 
@@ -128,7 +127,7 @@ export class FileURIComponent {
    *   - display a message to the user that the URL is now in their clipboard
    */
   toClipboard = async () => {
-    this.#flush();
+    this.flush();
 
     let url = location.origin + this.router.currentURL;
 
@@ -164,18 +163,13 @@ export class FileURIComponent {
     this.#pushUpdate();
   };
 
-  #timeout?: ReturnType<typeof setTimeout>;
-  #queuedFn?: () => void;
-
   queue = (rawText: string) => {
     this.#updateTextQP(rawText);
     this.#pushUpdate();
   };
 
-  #flush = () => {
-    if (this.#timeout) clearTimeout(this.#timeout);
-
-    this.#queuedFn?.();
+  flush = () => {
+    this.#setURL();
   };
 
   #currentURL = () => {
@@ -253,6 +247,10 @@ export class FileURIComponent {
       return;
     }
 
+    this.#setURL();
+  });
+
+  #setURL = () => {
     // On initial load, if we call #updateQPs,
     // we may not have a currentURL, because the first transition has yet to complete
     let base = this.router.currentURL?.split('?')[0];
@@ -319,7 +317,7 @@ export class FileURIComponent {
     if (rawText) this.#text = rawText;
 
     this.#cleanup();
-  });
+  };
 }
 
 function getKey(formatQP: FormatQP) {
