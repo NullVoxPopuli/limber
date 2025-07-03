@@ -15,7 +15,6 @@ import type RouterService from '@ember/routing/router-service';
 
 const DEBOUNCE_MS = 400;
 const queueWaiter = buildWaiter('FileURIComponent::queue');
-const queueTokens: unknown[] = [];
 
 export async function shortenUrl(url: string) {
   const response = await fetch(`https://api.nvp.gg/v1/links`, {
@@ -179,7 +178,7 @@ export class FileURIComponent {
     let base = this.router.currentURL;
 
     if (macroCondition(isTesting())) {
-      base ??= (this.router as any) /* private API? */?.location;
+      base ??= (this.router as any) /* private API? */?.location?.path;
     } else {
       base ??= window.location.toString();
     }
@@ -268,8 +267,6 @@ export class FileURIComponent {
       base = '/edit/';
     }
 
-    console.log({ base });
-
     /**
      * At some point this added qps
      * we don't want them though, so we'll strip them
@@ -325,8 +322,6 @@ export class FileURIComponent {
 
     this.#cleanup();
   };
-
-  nextURL() {}
 }
 
 function getKey(formatQP: FormatQP) {

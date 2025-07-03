@@ -14,7 +14,7 @@ import { setupEmberOnerrorValidation, start as qunitStart } from 'ember-qunit';
 // @ts-expect-error
 import { getGlobalConfig } from '@embroider/macros/src/addon/runtime';
 
-import Application from '@ember/application';
+import Application from '#app/app.ts';
 import config, { enterTestMode } from '#config';
 
 Object.assign(window, {
