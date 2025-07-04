@@ -69,13 +69,28 @@ module('Output > Demos', function (hooks) {
 
         await page.expectRedirectToContent('/edit');
 
+        if ('snippet' in demo) {
+          this.owner.lookup('service:editor').updateDemo(demo.snippet, demo.format);
+        } else {
+          const response = await fetch(demo.path);
+          const text = await response.text();
+
+          this.owner.lookup('service:editor').updateDemo(text, demo.format);
+        }
+
+        await settled();
+
         const text = await getFromLabel(demo.label);
 
         // eslint-disable-next-line no-console
         console.log({ text });
         await settled();
 
-        assert.deepEqual(getCompiler(this).messages, []);
+        // NOTE: These messages are dynamic
+        assert.ok(
+          getCompiler(this).messages.length > 0,
+          `Renderer has messages for the status output`
+        );
       });
     }
   });
