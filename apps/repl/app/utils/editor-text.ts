@@ -145,9 +145,16 @@ export class FileURIComponent {
   /**
    * Called during normal typing.
    */
-  set = (rawText: string, format: FormatQP) => {
+  set = (rawText: string, format: FormatQP, extraQPs?: undefined | Record<string, string>) => {
     this.#updateFormatQP(format);
     this.#updateTextQP(rawText);
+
+    if (extraQPs) {
+      for (const [k, v] of Object.entries(extraQPs)) {
+        this.#qps.set(k, v);
+      }
+    }
+
     this.#pushUpdate();
   };
 
@@ -201,8 +208,6 @@ export class FileURIComponent {
    * For efficiency, we don't compress it until we are about to write to the URL
    */
   #updateTextQP = (rawText: string | undefined) => {
-    if (rawText === this.decoded) return;
-
     this.#tokens.push(queueWaiter.beginAsync());
     this.#qps ||= new URLSearchParams();
 
@@ -218,8 +223,6 @@ export class FileURIComponent {
   };
 
   #updateFormatQP = (format: string) => {
-    if (format === this.format) return;
-
     this.#tokens.push(queueWaiter.beginAsync());
     this.#qps ||= new URLSearchParams();
 
@@ -282,6 +285,13 @@ export class FileURIComponent {
 
     const qps = new URLSearchParams(this.#qps);
 
+    if (qps.size === 0) {
+      this.#cleanup();
+      console.debug(`No query params, not redirecting`);
+
+      return;
+    }
+
     if (encoded) {
       qps.set('c', encoded);
     }
@@ -308,9 +318,11 @@ export class FileURIComponent {
     if (
       q.c === this.#currentQPs.c &&
       q.t === this.#currentQPs.t &&
-      q.format === this.#currentQPs.format
+      q.format === this.#currentQPs.format &&
+      q.shadowdom === this.#currentQPs.shadowdom
     ) {
       this.#cleanup();
+      console.debug(`All query params that affect the render output are the same`);
 
       return;
     }

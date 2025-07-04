@@ -1153,6 +1153,9 @@ importers:
       decorator-transforms:
         specifier: ^2.3.0
         version: 2.3.0(@babel/core@7.27.7)
+      ember-primitives:
+        specifier: ^0.34.0
+        version: 0.34.0(6c98c0a79848ce8beb1ad80690d67516)
       ember-resolver:
         specifier: ^13.1.0
         version: 13.1.1

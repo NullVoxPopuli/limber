@@ -99,7 +99,7 @@ export default class ApplicationRoute extends Route {
         // Used in demos
         'limber-ui': () => import('limber-ui'),
         'limber/components/limber/header': () => import('#edit/header.gts'),
-        'limber/components/limber/menu': () => import('#components/menu.gts'),
+        'limber/components/menu': () => import('#components/menu.gts'),
 
         // non-ember libraries
         xstate: () => import('xstate'),

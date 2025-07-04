@@ -25,7 +25,7 @@ export class DemoSelect extends Component {
   async select(demo: DemoEntry) {
     const text = await getFromLabel(demo.label);
 
-    this.editor.updateDemo(text, demo.format);
+    this.editor.updateDemo(text, demo);
   }
 
   <template>

@@ -32,6 +32,7 @@ const frameworkModules = {
 const coreLibraries = {
   'ember-resolver': () => import('ember-resolver'),
   'ember-resources': () => import('ember-resources'),
+  'ember-primitives': () => import('ember-primitives'),
   'repl-sdk': () => import('repl-sdk'),
 };
 

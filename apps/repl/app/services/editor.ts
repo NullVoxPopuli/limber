@@ -5,6 +5,7 @@ import { link } from 'reactiveweb/link';
 
 import { FileURIComponent } from 'limber/utils/editor-text';
 
+import type { DemoEntry } from '../snippets';
 import type RouterService from '@ember/routing/router-service';
 import type { FormatQP } from '#app/languages.gts';
 
@@ -53,10 +54,10 @@ export default class EditorService extends Service {
   #editorSwapText?: (text: string, format: FormatQP) => void;
   #pendingUpdate?: () => void;
 
-  get _editorSwapText() {
+  get setCodemirrorState() {
     return this.#editorSwapText;
   }
-  set _editorSwapText(value) {
+  set setCodemirrorState(value) {
     this.#editorSwapText = value;
 
     if (this.#pendingUpdate) {
@@ -64,18 +65,20 @@ export default class EditorService extends Service {
     }
   }
 
-  updateDemo = (text: string, formatQP: FormatQP) => {
-    if (!this._editorSwapText) {
-      this.#pendingUpdate = () => this.updateDemo(text, formatQP);
+  updateDemo = (text: string, demo: DemoEntry) => {
+    const { format } = demo;
+
+    if (!this.setCodemirrorState) {
+      this.#pendingUpdate = () => this.updateDemo(text, demo);
 
       return;
     }
 
     // Update ourselves
-    this.fileURIComponent.set(text, formatQP);
+    this.fileURIComponent.set(text, format, demo && 'qps' in demo ? demo.qps : {});
 
     // Update the editor
-    this._editorSwapText?.(text, formatQP);
+    this.setCodemirrorState?.(text, format);
   };
 }
 

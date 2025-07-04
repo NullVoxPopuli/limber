@@ -123,9 +123,19 @@ export const ALL = [
   { format: 'hbs', label: 'Ember HBS', path: '/samples/hbs-demo.hbs' },
   { format: 'md', label: 'With inline Javascript', path: '/samples/live-js.md' },
   { format: 'gmd', label: 'With inline Templates', path: '/samples/live-hbs.md' },
-  { format: 'md', label: 'Styleguide Demo', path: '/samples/styleguide-demo.md' },
+  {
+    format: 'md',
+    label: 'Styleguide Demo',
+    path: '/samples/styleguide-demo.md',
+    qps: { shadowdom: '0' },
+  },
   { format: 'md', label: 'Build your own REPL', path: '/samples/repl.md' },
-  { format: 'md', label: 'Menu with focus trap', path: '/samples/menu-with-focus-trap.md' },
+  {
+    format: 'md',
+    label: 'Menu with focus trap',
+    path: '/samples/menu-with-focus-trap.md',
+    qps: { shadowdom: '0' },
+  },
   { format: 'md', label: 'Forms', path: '/samples/forms/intro.md' },
   { format: 'md', label: 'RemoteData', path: '/samples/remote-data.md' },
 ] as const;

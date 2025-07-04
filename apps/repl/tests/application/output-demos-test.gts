@@ -28,7 +28,7 @@ module('Output > Demos', function (hooks) {
    * be ignored.
    */
   hooks.beforeEach(function () {
-    this.owner.lookup('service:editor')._editorSwapText = () => {};
+    this.owner.lookup('service:editor').setCodemirrorState = () => {};
   });
 
   module('every option correctly changes the query params', function () {
@@ -70,12 +70,12 @@ module('Output > Demos', function (hooks) {
         await page.expectRedirectToContent('/edit');
 
         if ('snippet' in demo) {
-          this.owner.lookup('service:editor').updateDemo(demo.snippet, demo.format);
+          this.owner.lookup('service:editor').updateDemo(demo.snippet, demo);
         } else {
           const response = await fetch(demo.path);
           const text = await response.text();
 
-          this.owner.lookup('service:editor').updateDemo(text, demo.format);
+          this.owner.lookup('service:editor').updateDemo(text, demo);
         }
 
         await settled();

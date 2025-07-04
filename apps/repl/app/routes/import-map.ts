@@ -51,6 +51,10 @@ defineWithWarning(
   },
   { name: '<Shadowed />', original: 'limber/components/shadowed', replacement: 'ember-primitives' }
 );
+defineWithWarning(() => import('#components/menu.gts'), {
+  original: 'limber/components/limber/menu',
+  replacement: 'limber/components/menu',
+});
 defineWithWarning(() => import('ember-resources'), {
   original: 'ember-resources/core',
   replacement: 'ember-resources',

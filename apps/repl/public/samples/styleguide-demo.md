@@ -46,10 +46,11 @@ app.
 
 ```gjs live preview
 import Header from 'limber/components/limber/header';
-import { Shadowed } from 'ember-primitives';
+import { Shadowed, PortalTargets } from 'ember-primitives';
 
 <template>
   <Shadowed @includeStyles={{true}}>
+    <PortalTargets />
     <Header />
   </Shadowed>
 </template>
@@ -61,11 +62,12 @@ The `<Menu />` component takes no arguments, but still allows for
 customization of the trigger content and the the list.
 
 ```gjs live preview
-import Menu from 'limber/components/limber/menu';
-import { Shadowed } from 'ember-primitives';
+import Menu from 'limber/components/menu';
+import { Shadowed, PortalTargets } from 'ember-primitives';
 
 <template>
   <Shadowed @includeStyles={{true}}>
+    <PortalTargets />
     <Menu>
       <:trigger as |t|>
         <t.Default>

@@ -70,7 +70,7 @@ export default class CodeMirror extends Modifier<Signature> {
      * This has to be defined on the service so that
      * the demo selector can also affect both the URL and the editor
      */
-    this.editor._editorSwapText = (text, formatQP) => {
+    this.editor.setCodemirrorState = (text, formatQP) => {
       element.setAttribute('data-formatQP', formatQP);
 
       waitForPromise(setText(text, format)); // update the editor

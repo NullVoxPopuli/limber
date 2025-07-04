@@ -76,7 +76,11 @@ export default class EditRoute extends Route {
       transition.abort();
       this.editor.fileURIComponent.set(DEFAULT_SNIPPET, 'gmd');
       await this.editor.fileURIComponent.flush();
-    } else if (!hasFormat) {
+
+      return;
+    }
+
+    if (!hasFormat) {
       console.warn('URL contained no format SearchParam. Assuming glimdown');
 
       transition.abort();

@@ -61,6 +61,8 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
 
   @cached
   get currentInfo() {
+    if (!this.format) return;
+
     const format = formatQPFrom(this.format);
 
     return infoFor(format);
@@ -89,8 +91,12 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
     <Menu>
       <:trigger as |t|>
         <t.Button title="Change document language" ...attributes class="menu-trigger">
-          <this.currentInfo.icon />
-          <span>{{this.currentInfo.name}}</span>
+          {{#if this.currentInfo}}
+            <this.currentInfo.icon />
+            <span>{{this.currentInfo.name}}</span>
+          {{else}}
+            <span>Select</span>
+          {{/if}}
           <FaIcon @icon={{faCaretDown}} class="menu-icon {{if t.isOpen 'upside-down'}}" />
         </t.Button>
       </:trigger>
