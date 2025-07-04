@@ -78,7 +78,9 @@ module('Editor > Format', function (hooks) {
 
     assert.strictEqual(page.editor.format, 'gmd');
 
-    this.owner.lookup('service:editor').updateDemo(defaultText, 'gjs');
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    this.owner.lookup('service:editor').updateDemo(defaultText, { format: 'gjs' });
     await settled();
 
     assert.strictEqual(page.editor.format, 'gjs');

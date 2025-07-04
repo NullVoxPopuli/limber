@@ -15,14 +15,28 @@ type Hooks = {
 
 export function setupCompiler(
   hooks: Hooks,
-  options?: { modules?: ModuleMap; options?: Options['options'] }
+  options?: {
+    modules?: ModuleMap;
+    /**
+     * Clearl all the compile caches between tests.
+     * This is false by default, so that tests run faster, and
+     * we thrash the network less.
+     */
+    clearCache?: true;
+    options?: Options['options'];
+  }
 ) {
   hooks.beforeEach(function (this: object) {
-    clearCompileCache();
+    if (options?.clearCache) {
+      clearCompileCache();
+    }
+
     setup(this, options);
   });
 
   hooks.afterEach(function () {
-    clearCompileCache();
+    if (options?.clearCache) {
+      clearCompileCache();
+    }
   });
 }

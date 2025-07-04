@@ -24,7 +24,9 @@ const guestFrame = resource(({ on, owner }) => {
       update(format: FormatQP, text: string) {
         const editor = owner.lookup('service:editor');
 
-        editor.updateDemo(text, format);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        editor.updateDemo(text, { format });
       },
     },
   });

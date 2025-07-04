@@ -44,7 +44,6 @@ export function start() {
   if (macros) macros.isTesting = true;
 
   setApplication(Application.create(config.APP));
-
   setup(QUnit.assert);
   setupEmberOnerrorValidation();
 
