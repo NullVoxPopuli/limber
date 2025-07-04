@@ -4,6 +4,7 @@ import { babel } from '@rollup/plugin-babel';
 import icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vite';
 import circleDependency from 'vite-plugin-circular-dependency';
+import mkcert from 'vite-plugin-mkcert';
 
 export default defineConfig(() => ({
   resolve: {
@@ -22,6 +23,9 @@ export default defineConfig(() => ({
   },
   plugins: [
     circleDependency(),
+    mkcert({
+      savePath: 'node_modules/.vite-plugin-mkcert/',
+    }),
     icons({
       autoInstall: true,
     }),

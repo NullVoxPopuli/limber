@@ -226,6 +226,9 @@ importers:
       '@babel/core':
         specifier: ^7.27.7
         version: 7.27.7
+      '@babel/plugin-transform-runtime':
+        specifier: ^7.27.4
+        version: 7.27.4(@babel/core@7.27.7)
       '@babel/plugin-transform-typescript':
         specifier: ^7.26.8
         version: 7.27.1(@babel/core@7.27.7)
@@ -460,6 +463,9 @@ importers:
       vite-plugin-circular-dependency:
         specifier: ^0.5.0
         version: 0.5.0(rollup@4.44.0)
+      vite-plugin-mkcert:
+        specifier: ^1.17.8
+        version: 1.17.8(b6180693ed26d1b7a1153265ba481eba)
       webpack:
         specifier: ^5.98.0
         version: 5.99.9
@@ -5637,6 +5643,9 @@ packages:
   available-typed-arrays@1.0.7:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
+
+  axios@1.10.0:
+    resolution: {integrity: sha512-/1xYAC4MP/HEG+3duIhFr4ZQXR4sQXOIe+o6sdqzeykGLx6Upp/1p8MHqhINOvGeP7xyNHe7tsiJByc4SSVUxw==}
 
   axobject-query@4.1.0:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
@@ -12769,6 +12778,12 @@ packages:
       vite:
         optional: true
 
+  vite-plugin-mkcert@1.17.8:
+    resolution: {integrity: sha512-S+4tNEyGqdZQ3RLAG54ETeO2qyURHWrVjUWKYikLAbmhh/iJ+36gDEja4OWwFyXNuvyXcZwNt5TZZR9itPeG5Q==}
+    engines: {node: '>=v16.7.0'}
+    peerDependencies:
+      vite: '>=3'
+
   vite-plugin-node-polyfills@0.23.0:
     resolution: {integrity: sha512-4n+Ys+2bKHQohPBKigFlndwWQ5fFKwaGY6muNDMTb0fSQLyBzS+jjUNRZG9sKF0S/Go4ApG6LFnUGopjkILg3w==}
     peerDependencies:
@@ -17325,6 +17340,14 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.1.0
 
+  axios@1.10.0(debug@4.4.1):
+    dependencies:
+      follow-redirects: 1.15.9(debug@4.4.1)
+      form-data: 4.0.3
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
   axobject-query@4.1.0: {}
 
   b4a@1.6.7: {}
@@ -20850,7 +20873,9 @@ snapshots:
     dependencies:
       tabbable: 5.3.3
 
-  follow-redirects@1.15.9: {}
+  follow-redirects@1.15.9(debug@4.4.1):
+    optionalDependencies:
+      debug: 4.4.1(supports-color@8.1.1)
 
   for-each@0.3.5:
     dependencies:
@@ -21609,7 +21634,7 @@ snapshots:
   http-proxy@1.18.1:
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.15.9
+      follow-redirects: 1.15.9(debug@4.4.1)
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
@@ -26552,6 +26577,15 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
       - rollup
+      - supports-color
+
+  vite-plugin-mkcert@1.17.8(b6180693ed26d1b7a1153265ba481eba):
+    dependencies:
+      axios: 1.10.0(debug@4.4.1)
+      debug: 4.4.1(supports-color@8.1.1)
+      picocolors: 1.1.1
+      vite: 6.3.5(8c458d10456fc315d1676c3f4c279c5f)
+    transitivePeerDependencies:
       - supports-color
 
   vite-plugin-node-polyfills@0.23.0(c12a7027306cfedcbe4a580b859170c2):

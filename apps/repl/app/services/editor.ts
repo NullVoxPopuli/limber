@@ -35,6 +35,10 @@ export default class EditorService extends Service {
     return this.fileURIComponent.format;
   }
 
+  get nohighlight() {
+    return (this.router.currentRoute?.queryParams ?? {}).nohighlight;
+  }
+
   /**
    * This function is set by a modifier,
    * which means the timing of its existence is dependent on

@@ -55,7 +55,7 @@ module('Editor > Format', function (hooks) {
   });
 
   test('after selecting text, it loads again when visiting /', async function (assert) {
-    await visit(`/edit?format=gjs&t=${defaultText}`);
+    await visit(`/edit?format=gjs&t=${defaultText}&nohighlight=1`);
     await page.editor.load();
 
     assert.strictEqual(page.editor.format, 'gjs');
