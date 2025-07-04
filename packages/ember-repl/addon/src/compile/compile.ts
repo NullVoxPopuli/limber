@@ -1,4 +1,4 @@
-import { CachedCompileState, CompileState, MissingTextState, REJECT, RESOLVE } from './state.ts';
+import { CompileState, MissingTextState, REJECT, RESOLVE } from './state.ts';
 import { nameFor } from './utils.ts';
 
 import type CompilerService from '../services/compiler.ts';
@@ -17,10 +17,6 @@ interface Options {
   onCompileStart?: () => Promise<unknown> | unknown;
 }
 
-/**
- * This compileMD is a more robust version of the raw compiling used in "formats".
- * This function manages cache, and has events for folks building UIs to hook in to
- */
 export function compile(service: CompilerService, text: Input, options: Options): CompileState {
   const data = { format: options.format };
 
@@ -29,14 +25,6 @@ export function compile(service: CompilerService, text: Input, options: Options)
   }
 
   const id = nameFor(`${options.format}:${text}`);
-
-  const existing = CACHE.get(id);
-
-  if (existing) {
-    options?.onSuccess?.(existing);
-
-    return new CachedCompileState(data, existing);
-  }
 
   const state = new CompileState(data);
 

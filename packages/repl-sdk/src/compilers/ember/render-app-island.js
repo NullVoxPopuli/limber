@@ -22,6 +22,7 @@ let createWaiter;
 export async function renderApp({ element, modules, selector, component, log }) {
   const App = modules.application.default;
   const registerDestructor = modules.destroyable.registerDestructor;
+  const destroy = modules.destroyable.destroy;
   const Resolver = modules.resolver.default;
   const Router = modules.router.default;
   const Route = modules.route.default;
@@ -71,7 +72,12 @@ export async function renderApp({ element, modules, selector, component, log }) 
   }
 
   log('info', 'Booting Ember Island');
-  EphemeralApp.create({
+
+  const app = EphemeralApp.create({
     rootElement: element,
   });
+
+  return () => {
+    destroy(app);
+  };
 }

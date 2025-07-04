@@ -12,7 +12,9 @@ export function assert(message, test) {
 let i = 0;
 
 export function nextId() {
-  return `repl_${i++}`;
+  i += 1;
+
+  return `repl_${i}`;
 }
 
 export const fakeDomain = 'repl.sdk';

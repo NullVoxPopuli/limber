@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
+import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { setComponentTemplate } from '@ember/component';
 import templateOnly from '@ember/component/template-only';
@@ -11,6 +12,7 @@ import { getOwner } from '@ember/owner';
 import { precompileTemplate } from '@ember/template-compilation';
 import { waitFor } from '@ember/test-waiters';
 
+import { resource } from 'ember-resources';
 import { Compiler } from 'repl-sdk';
 import { visit } from 'unist-util-visit';
 
@@ -60,11 +62,19 @@ export function getCompiler(context: object) {
  * The runtime compiler doesn't allow you to catch compiler errors.
  * This particular component doesn't need to be runtime anyway.
  */
-function rendersElement(element: Element): ComponentLike {
+function rendersElement(x: { element: Element; destroy: () => void }): ComponentLike {
+  const render = resource(({ on }) => {
+    on.cleanup(() => {
+      x.destroy();
+    });
+
+    return x.element;
+  });
+
   return setComponentTemplate(
-    precompileTemplate(`{{element}}`, {
+    precompileTemplate(`{{render}}`, {
       strictMode: true,
-      scope: () => ({ element }),
+      scope: () => ({ render }),
     }),
     templateOnly()
   ) as ComponentLike;
@@ -306,9 +316,9 @@ export default class CompilerService {
     let error: undefined | Error;
 
     try {
-      const element = await this.#compile(ext, text, options);
+      const result = await this.#compile(ext, text, options);
 
-      component = rendersElement(element);
+      component = rendersElement(result);
     } catch (e) {
       // Put a breakpoint here to debug
       // debugger;

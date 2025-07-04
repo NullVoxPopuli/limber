@@ -15,7 +15,7 @@ export class Compiler {
       flavor?: string;
       fileName?: string;
     }
-  ): Promise<HTMLElement>;
+  ): Promise<{ element: HTMLElement, destroy: () => void }>;
 
   optionsFor(format: string, flavor?: string): Omit<CompilerConfig, 'compiler'>;
 }

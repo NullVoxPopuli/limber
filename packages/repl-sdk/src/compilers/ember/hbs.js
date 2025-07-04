@@ -76,10 +76,7 @@ export async function compiler(config, api) {
           '@ember/runloop',
         ]);
 
-      // We don't want to await here, because we need to early
-      // return the element so that the app can render in to it.
-      // (Ember will only render in to an element if it's present in the DOM)
-      renderApp({
+      return renderApp({
         element,
         selector: `[${attribute}]`,
         component: compiled,

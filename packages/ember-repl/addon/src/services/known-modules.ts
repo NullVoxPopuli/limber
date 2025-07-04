@@ -12,22 +12,27 @@ const frameworkModules = {
   '@ember/helper': () => import('@ember/helper'),
   '@ember/modifier': () => import('@ember/modifier'),
   '@ember/object': () => import('@ember/object'),
+  '@ember/owner': () => import('@ember/owner'),
   '@ember/routing': () => import('@ember/routing'),
   '@ember/routing/route': () => import('@ember/routing/route'),
   '@ember/routing/router': () => import('@ember/routing/router'),
   '@ember/runloop': () => import('@ember/runloop'),
   '@ember/service': () => import('@ember/service'),
+  '@ember/template': () => import('@ember/template'),
+  '@ember/template-compilation': () => import('@ember/template-compilation'),
+  '@ember/template-factory': () => import('@ember/template-factory'),
   '@ember/test-helpers': () => import('@ember/test-helpers'),
   '@ember/test-waiters': () => import('@ember/test-waiters'),
-  '@ember/template-factory': () => import('@ember/template-factory'),
-  '@ember/template-compilation': () => import('@ember/template-compilation'),
   '@ember/utils': () => import('@ember/utils'),
-  '@ember/template': () => import('@ember/template'),
-  '@ember/owner': () => import('@ember/owner'),
   '@glimmer/component': () => import('@glimmer/component'),
   '@glimmer/tracking': () => import('@glimmer/tracking'),
   '@glimmer/tracking/primitives/cache': () => import('@glimmer/tracking/primitives/cache'),
+};
+
+const coreLibraries = {
   'ember-resolver': () => import('ember-resolver'),
+  'ember-resources': () => import('ember-resources'),
+  'repl-sdk': () => import('repl-sdk'),
 };
 
 const emberCompilationModules = {
@@ -102,6 +107,7 @@ const markdownCompilationModules = {
  * instead of loading from this pre-made bundle.
  */
 export const modules = (extraModules: ModuleMap): ModuleMap => ({
+  ...coreLibraries,
   ...frameworkModules,
   ...extraModules,
   ...emberCompilationModules,

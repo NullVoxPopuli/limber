@@ -59,6 +59,11 @@ export const md = {
       render: async (element, compiled, extra, compiler) => {
         element.innerHTML = /** @type {string} */ (compiled);
 
+        /**
+         * @type {(() => void)[]}
+         */
+        const destroyables = [];
+
         await Promise.all(
           /** @type {unknown[]} */ (extra.codeBlocks).map(async (/** @type {unknown} */ info) => {
             /** @type {Record<string, unknown>} */
@@ -74,7 +79,7 @@ export const md = {
             }
 
             let flavor = /** @type {string} */ (infoObj.flavor);
-            let subElement = await compiler.compile(
+            let subRender = await compiler.compile(
               /** @type {string} */ (infoObj.format),
               /** @type {string} */ (infoObj.code),
               {
@@ -92,11 +97,18 @@ export const md = {
               target
             );
 
-            target.appendChild(subElement);
+            destroyables.push(subRender.destroy);
+            target.appendChild(subRender.element);
           })
         );
 
         compiler.announce('info', 'Done');
+
+        return () => {
+          for (let subDestroy of destroyables) {
+            subDestroy();
+          }
+        };
       },
     };
   },

@@ -109,7 +109,7 @@ export async function compiler(config, api) {
       // We don't want to await here, because we need to early
       // return the element so that the app can render in to it.
       // (Ember will only render in to an element if it's present in the DOM)
-      renderApp({
+      const destroy = await renderApp({
         element,
         selector: `[${attribute}]`,
         component: compiled,
@@ -124,6 +124,11 @@ export async function compiler(config, api) {
           runloop,
         },
       });
+
+      /**
+       * @type {(() => void)[]}
+       */
+      const destroyables = [];
 
       await Promise.all(
         /** @type {unknown[]} */ (extra.codeBlocks).map(async (/** @type {unknown} */ info) => {
@@ -141,7 +146,7 @@ export async function compiler(config, api) {
 
           let flavor = /** @type {string} */ (infoObj.flavor);
           let hasScope = flavor === 'ember' || infoObj.format === 'gjs' || infoObj.format === 'hbs';
-          let subElement = await compiler.compile(
+          let subRender = await compiler.compile(
             /** @type {string} */ (infoObj.format),
             /** @type {string} */ (infoObj.code),
             {
@@ -165,9 +170,18 @@ export async function compiler(config, api) {
             target
           );
 
-          target.appendChild(subElement);
+          destroyables.push(subRender.destroy);
+          target.appendChild(subRender.element);
         })
       );
+
+      return () => {
+        for (let subDestroy of destroyables) {
+          subDestroy();
+        }
+
+        destroy();
+      };
     },
   };
 

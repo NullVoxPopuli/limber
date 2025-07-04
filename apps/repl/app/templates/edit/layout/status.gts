@@ -72,6 +72,7 @@ export class Status extends Component {
         left: -1rem;
       }
       .layout__status__info {
+        pointer-events: none;
         position: absolute;
         bottom: 1rem;
         left: 1rem;
@@ -84,6 +85,7 @@ export class Status extends Component {
         }
       }
       .layout__status__error {
+        pointer-events: none;
         position: fixed;
         bottom: 1rem;
         right: 1rem;

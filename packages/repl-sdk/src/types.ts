@@ -40,7 +40,7 @@ export interface PublicMethods {
       flavor?: string;
       fileName?: string;
     }
-  ) => Promise<HTMLElement>;
+  ) => Promise<{ element: HTMLElement; destroy: () => void }>;
 
   optionsFor: (
     format: string,
@@ -119,7 +119,7 @@ export interface Compiler {
     defaultExport: unknown,
     extras: { compiled: string } & Record<string, unknown>,
     compiler: PublicMethods
-  ) => Promise<void>;
+  ) => Promise<undefined | (() => void)>;
 
   /**
    * Sometimes libraries do not publish browser-compatible modules,

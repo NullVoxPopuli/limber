@@ -8,11 +8,13 @@ export function clearCompileCache() {
   CACHE.clear();
 }
 
+type Hooks = {
+  beforeEach: (callback: (...args: unknown[]) => void | Promise<void>) => void | Promise<void>;
+  afterEach: (callback: (...args: unknown[]) => void | Promise<void>) => void | Promise<void>;
+};
+
 export function setupCompiler(
-  hooks: {
-    beforeEach: (callback: (...args: unknown[]) => void | Promise<void>) => void | Promise<void>;
-    afterEach: (callback: (...args: unknown[]) => void | Promise<void>) => void | Promise<void>;
-  },
+  hooks: Hooks,
   options?: { modules?: ModuleMap; options?: Options['options'] }
 ) {
   hooks.beforeEach(function (this: object) {

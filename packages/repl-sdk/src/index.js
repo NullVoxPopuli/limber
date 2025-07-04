@@ -301,7 +301,7 @@ export class Compiler {
    * @param {string} format
    * @param {string} text
    * @param {{ fileName?: string, flavor?: string, [key: string]: unknown }} [ options ]
-   * @returns {Promise<HTMLElement>}
+   * @returns {Promise<{ element: HTMLElement, destroy: () => void }>}
    */
   async compile(format, text, options = {}) {
     this.#announce('info', `Compiling ${format}`);
@@ -324,7 +324,7 @@ export class Compiler {
    * @param {string} format
    * @param {string} text
    * @param {{ fileName?: string, flavor?: string, [key: string]: unknown }} [ options ]
-   * @returns {Promise<HTMLElement>}
+   * @returns {Promise<{ element: HTMLElement, destroy: () => void }>}
    */
   async #compile(format, text, options) {
     this.#log('[compile] idempotently installing es-module-shim');
@@ -462,7 +462,7 @@ export class Compiler {
    * @param {import('./types.ts').Compiler} compiler
    * @param {string} whatToRender
    * @param {{ compiled: string } & Record<string, unknown>} extras
-   * @returns {Promise<HTMLElement>}
+   * @returns {Promise<{ element: HTMLElement, destroy: () => void }>}
    */
   async #render(compiler, whatToRender, extras) {
     this.#announce('info', 'Rendering');
@@ -471,12 +471,19 @@ export class Compiler {
 
     assert(`Cannot render falsey values. Did compilation succeed?`, whatToRender);
 
-    await compiler.render(div, whatToRender, extras, this.#nestedPublicAPI);
+    const destroy = await compiler.render(div, whatToRender, extras, this.#nestedPublicAPI);
 
     // Wait for render
     await new Promise((resolve) => requestAnimationFrame(resolve));
 
-    return div;
+    return {
+      element: div,
+      destroy: () => {
+        if (destroy) {
+          return destroy();
+        }
+      },
+    };
   }
 
   /**

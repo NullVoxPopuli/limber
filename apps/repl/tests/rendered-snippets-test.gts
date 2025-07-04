@@ -54,7 +54,7 @@ module('Rendered Snippets / Demos', function (hooks) {
       assert.verifySteps(['start compile', 'compiled']);
 
       assert.dom('li').exists({ count: 3 });
-      assert.dom('a').exists({ count: 3 });
+      assert.dom('a').exists({ count: 17 });
     });
   });
 
@@ -83,7 +83,7 @@ module('Rendered Snippets / Demos', function (hooks) {
       await render(<template><TheComponent /></template>);
       assert.verifySteps(['start compile', 'compiled']);
 
-      const output = '.glimdown-render p';
+      const output = '[data-repl-output]';
 
       assert.dom(output).containsText('You have clicked the button 0 times.');
 
@@ -151,10 +151,10 @@ module('Rendered Snippets / Demos', function (hooks) {
       await render(<template><Component /></template>);
       assert.verifySteps(['start compile', 'compiled']);
 
-      assert.dom('.glimdown-render button').exists({ count: 1 });
+      assert.dom('[data-repl-output] button').exists({ count: 1 });
 
       await click('button');
-      assert.dom('.glimdown-render button').exists({ count: 4 });
+      assert.dom('[data-repl-output] button').exists({ count: 4 });
     });
   });
 
