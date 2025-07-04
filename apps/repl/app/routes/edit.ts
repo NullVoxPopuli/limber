@@ -46,6 +46,9 @@ export default class EditRoute extends Route {
       const text = await response.text();
 
       this.editor.fileURIComponent.set(text, format);
+      await this.editor.fileURIComponent.flush();
+
+      return;
     }
 
     if (!hasCode) {
@@ -60,7 +63,7 @@ export default class EditRoute extends Route {
         console.info(`Found format and document in localStorage. Using those.`);
         transition.abort();
         this.editor.fileURIComponent.set(doc, formatQPFrom(format));
-        this.editor.fileURIComponent.flush();
+        await this.editor.fileURIComponent.flush();
 
         return;
       }
@@ -72,14 +75,14 @@ export default class EditRoute extends Route {
 
       transition.abort();
       this.editor.fileURIComponent.set(DEFAULT_SNIPPET, 'gmd');
+      await this.editor.fileURIComponent.flush();
     } else if (!hasFormat) {
       console.warn('URL contained no format SearchParam. Assuming glimdown');
 
       transition.abort();
       this.editor.fileURIComponent.forceFormat('gmd');
+      await this.editor.fileURIComponent.flush();
     }
-
-    await this.editor.fileURIComponent.flush();
 
     // By the time execution gets here, we'll either:
     // - already have the required queryParams, and everything is skipped

@@ -25,6 +25,12 @@ if you're interested in a tutorial, check out
 
 export const DEFAULT_SNIPPET = `# Welcome!
 
+<p class="hidden sm:block">
+  Select demos from the menu in the header or write your own custom content and share it with others! ❤️
+</p>
+
+**NOTE:** to tab out of the editor, first press the escape key.
+
 This REPL supports the following:
 
 | Demo | Docs |
@@ -38,12 +44,6 @@ This REPL supports the following:
 | [Glimdown][gmd-demo] (this doc) |
 
 **glimdown** //  _Ember or Glimmer rendered with markdown_
-
-<p class="hidden sm:block">
-  Select demos from the menu in the header or write your own custom content and share it with others! ❤️
-</p>
-
-**NOTE:** to tab out of the editor, first press the escape key.
 
 <hr>
 

@@ -13,7 +13,7 @@ import { fileFromParams } from 'limber/utils/messaging';
 
 import type RouterService from '@ember/routing/router-service';
 
-const DEBOUNCE_MS = 400;
+const DEBOUNCE_MS = 250;
 const queueWaiter = buildWaiter('FileURIComponent::queue');
 
 export async function shortenUrl(url: string) {
