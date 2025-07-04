@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>REPL SDK Example</title>
+  </head>
+
+  <body>
+    <div class="layout">
+      <form>
+        <label>
+          <span>Code</span>
+          <textarea name="code" lines="10"></textarea>
+        </label>
+        <label>
+          Format
+          <select name="format"></select>
+        </label>
+        <label>
+          Debug
+          <input type="checkbox" name="debug" />
+        </label>
+
+        <label class="flavor" style="visibility: hidden">
+          Flavor
+          <select name="flavor"></select>
+        </label>
+        <button type="submit">Submit</button>
+      </form>
+      <fieldset>
+        <legend>output</legend>
+        <output></output>
+      </fieldset>
+    </div>
+    <div class="error"></div>
+    <button type="button" id="delete-cache">Delete Resolve Cache</button>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      .layout {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: start;
+
+        label {
+          width: 100%;
+        }
+
+        textarea {
+          height: 200px;
+          width: 100%;
+        }
+      }
+    </style>
+
+    <script type="module">
+      import { Compiler, defaultFormats, defaults } from "../src/index.js";
+      import * as samples from "./samples.js";
+
+      let config = new URLSearchParams(window.location.href.split("?")[1]);
+      let isDebug = config.get("debug") !== "false";
+
+      console.log({ config, isDebug });
+
+      function setQP(k, v) {
+        let search = new URLSearchParams(config);
+        search.set(k, v);
+        let searchString = search.toString();
+        if (!searchString.startsWith("?")) {
+          searchString = "?" + searchString;
+        }
+        history.pushState(null, null, searchString);
+      }
+
+      let compiler = new Compiler({
+        logging: isDebug,
+      });
+
+      let e = {
+        form: document.querySelector("form"),
+        output: document.querySelector("output"),
+        select: document.querySelector("select[name=format]"),
+        flavor: document.querySelector("select[name=flavor]"),
+        flavorL: document.querySelector("label.flavor"),
+        debug: document.querySelector("input[name=debug]"),
+        code: document.querySelector("textarea"),
+        error: document.querySelector(".error"),
+        deleteCache: document.querySelector("#delete-cache"),
+      };
+
+      e.deleteCache.addEventListener("click", (e) => {
+        Compiler.clearCache();
+      });
+
+      defaultFormats.map((format) => {
+        let option = document.createElement("option");
+        option.setAttribute("value", format);
+        option.innerText = `.${format}`;
+        if (format === "mermaid") {
+          option.setAttribute("selected", "selected");
+        }
+        e.select.appendChild(option);
+      });
+
+      function select(fileType) {
+        let option = [...e.select.querySelectorAll("option")].find((option) =>
+          option.textContent.includes(fileType),
+        );
+
+        if (option) {
+          option.selected = true;
+        }
+
+        e.code.innerHTML = samples[fileType];
+      }
+
+      function setupFlavors(format) {
+        if (!hasFlavors(format)) return;
+        e.flavor.innerHTML = "";
+        Object.keys(defaults.formats[format]).map((flv) => {
+          let option = document.createElement("option");
+          option.setAttribute("value", flv);
+          option.innerText = flv;
+          if (flv === config.get("flavor")) {
+            option.selected = true;
+          }
+          e.flavor.appendChild(option);
+        });
+        e.flavorL.style.visibility = "visible";
+        let firstFlavor = e.flavor.firstChild.value;
+        e.code.innerHTML = samples[format][firstFlavor];
+        return;
+      }
+
+      function hasFlavors(format) {
+        return !("compiler" in defaults.formats[format]);
+      }
+
+      e.select.addEventListener("change", (event) => {
+        let format = event.target.value;
+
+        setQP("format", format);
+
+        if (hasFlavors(format)) {
+          setupFlavors(format);
+          return;
+        }
+
+        e.flavorL.style.visibility = "hidden";
+        e.flavor.innerHTML = "";
+        e.code.innerHTML = samples[format];
+      });
+
+      e.flavor.addEventListener("change", (event) => {
+        let flavor = event.target.value;
+        let format = e.select.value;
+        e.code.innerHTML = samples[format][flavor];
+
+        setQP("flavor", flavor);
+      });
+
+      e.form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        let formData = new FormData(event.currentTarget);
+
+        let code = formData.get("code");
+        let format = formData.get("format");
+        let flavor = formData.get("flavor");
+
+        e.output.innerHTML = "Compiling...";
+        e.error.innerText = "";
+
+        if (isDebug) {
+          let element = await compiler.compile(format, code, { flavor });
+          e.output.innerHTML = "";
+          e.output.appendChild(element);
+        } else {
+          try {
+            let element = await compiler.compile(format, code, { flavor });
+            e.output.innerHTML = "";
+            e.output.appendChild(element);
+          } catch (error) {
+            e.error.innerText = error;
+            throw error;
+          }
+        }
+      });
+
+      e.debug.addEventListener("change", (event) => {
+        setQP("debug", event.target.checked ? "true" : "false");
+      });
+
+      let format = config.get("format") || "gjs";
+      select(format);
+
+      if (hasFlavors(format)) {
+        setupFlavors(format);
+      }
+
+      e.debug.checked = isDebug;
+    </script>
+  </body>
+</html>

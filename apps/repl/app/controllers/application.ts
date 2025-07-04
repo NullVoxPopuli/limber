@@ -40,6 +40,21 @@ export default class ApplicationController extends Controller {
     //  - glimdown (default)
     //  - gjs
     //  - hbs
+    //  - svelte
+    //  - jsx|react
+    //  - vue
+    //  - mermaid
     'format',
+
+    // Load a file from the public directory
+    'file',
+
+    // Force the output to be rendered in to a shadow-dom
+    // or force it to not be rendered in to a shadow-dom if falsey value is passed
+    'shadowdom',
+
+    // Disable shiki highlighting on page load
+    // this is primarily an optimization for tests
+    'nohighlight',
   ];
 }

@@ -1,0 +1,47 @@
+diff --git a/dist/packages/@ember/-internals/views/lib/system/event_dispatcher.js b/dist/packages/@ember/-internals/views/lib/system/event_dispatcher.js
+index e1525ab88772a03d6aa3b190ea21a9785271edd4..9a2a11a83d90e69600777ae4a401efecf99be4fc 100644
+--- a/dist/packages/@ember/-internals/views/lib/system/event_dispatcher.js
++++ b/dist/packages/@ember/-internals/views/lib/system/event_dispatcher.js
+@@ -147,26 +147,6 @@ class EventDispatcher extends EmberObject {
+     let rootElement = typeof specifiedRootElement !== 'string' ? specifiedRootElement : document.querySelector(specifiedRootElement);
+     (isDevelopingApp() && !(rootElement) && assert(`Could not find rootElement (${specifiedRootElement})`, rootElement));
+     (isDevelopingApp() && !(!rootElement.classList.contains(ROOT_ELEMENT_CLASS)) && assert(`You cannot use the same root element (${specifiedRootElement}) multiple times in an Ember.Application`, !rootElement.classList.contains(ROOT_ELEMENT_CLASS)));
+-    (isDevelopingApp() && !((() => {
+-      let target = rootElement.parentNode;
+-      while (target instanceof Element) {
+-        if (target.classList.contains(ROOT_ELEMENT_CLASS)) {
+-          return false;
+-        }
+-        target = target.parentNode;
+-      }
+-      return true;
+-    })()) && assert('You cannot make a new Ember.Application using a root element that is a descendent of an existing Ember.Application', (() => {
+-      let target = rootElement.parentNode;
+-      while (target instanceof Element) {
+-        if (target.classList.contains(ROOT_ELEMENT_CLASS)) {
+-          return false;
+-        }
+-        target = target.parentNode;
+-      }
+-      return true;
+-    })()));
+-    (isDevelopingApp() && !(!rootElement.querySelector(ROOT_ELEMENT_SELECTOR)) && assert('You cannot make a new Ember.Application using a root element that is an ancestor of an existing Ember.Application', !rootElement.querySelector(ROOT_ELEMENT_SELECTOR)));
+     rootElement.classList.add(ROOT_ELEMENT_CLASS);
+     (isDevelopingApp() && !(rootElement.classList.contains(ROOT_ELEMENT_CLASS)) && assert(`Unable to add '${ROOT_ELEMENT_CLASS}' class to root element (${get(this, 'rootElement') || rootElement.tagName}). Make sure you set rootElement to the body or an element in the body.`, rootElement.classList.contains(ROOT_ELEMENT_CLASS))); // save off the final sanitized root element (for usage in setupHandler)
+     this._sanitizedRootElement = rootElement;
+diff --git a/dist/packages/@ember/template-compiler/lib/template.js b/dist/packages/@ember/template-compiler/lib/template.js
+index a70b8d37d008ee91df0a25677e435573f14f195b..e4f3142947b6959ed8510dae70a31211eb46e89b 100644
+--- a/dist/packages/@ember/template-compiler/lib/template.js
++++ b/dist/packages/@ember/template-compiler/lib/template.js
+@@ -2110,11 +2110,9 @@ function template(templateString, providedOptions) {
+   const evaluate = buildEvaluator(options);
+   const normalizedOptions = compileOptions(options);
+   const component = normalizedOptions.component ?? templateOnly();
+-  queueMicrotask(() => {
+     const source = precompile(templateString, normalizedOptions);
+     const template = templateFactory(evaluate(`(${source})`));
+     setComponentTemplate(template, component);
+-  });
+   return component;
+ }
+ const evaluator = source => {

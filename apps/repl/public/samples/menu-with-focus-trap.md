@@ -4,16 +4,22 @@ want the ability to toggle the button to close/open the menu.
 More details as well as a tutorial
 [here](https://gist.github.com/MelSumner/1e724431bcb3ec666408240a85fa94db)
 
-```gjs live preview
+```gjs live
 import { on } from '@ember/modifier';
 
 import { focusTrap } from 'ember-focus-trap';
-import { PortalTargets, Menu } from 'ember-primitives';
+import { PortalTargets } from 'ember-primitives/components/portal-targets';
+import { Menu } from 'ember-primitives/components/menu';
+
+const options = {
+  clickOutsideDeactivates: true,
+  allowOutsideClick: true,
+};
 
 <template>
   <div>
     <Menu as |m|>
-      <div {{focusTrap isActive=m.isOpen}}>
+      <div {{focusTrap isActive=m.isOpen focusTrapOptions=options}}>
         <m.Trigger class="trigger">
           Toggle Menu
         </m.Trigger>

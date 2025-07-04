@@ -1,3 +1,5 @@
+import { tracked } from '@glimmer/tracking';
+import { assert } from '@ember/debug';
 import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
 import { service } from '@ember/service';
 import { buildWaiter } from '@ember/test-waiters';
@@ -5,13 +7,14 @@ import { isTesting, macroCondition } from '@embroider/macros';
 
 import { compressToEncodedURIComponent } from 'lz-string';
 
-import { fileFromParams, type Format, formatFrom } from 'limber/utils/messaging';
+import { flavorFrom, formatFrom, type FormatQP, formatQPFrom } from '#app/languages.gts';
+
+import { fileFromParams } from 'limber/utils/messaging';
 
 import type RouterService from '@ember/routing/router-service';
 
-const DEBOUNCE_MS = 300;
+const DEBOUNCE_MS = 250;
 const queueWaiter = buildWaiter('FileURIComponent::queue');
-const queueTokens: unknown[] = [];
 
 export async function shortenUrl(url: string) {
   const response = await fetch(`https://api.nvp.gg/v1/links`, {
@@ -67,9 +70,24 @@ export class FileURIComponent {
   @service declare router: RouterService;
 
   #initialFile = fileFromParams();
-  #text = this.#initialFile.text;
 
-  get format() {
+  @tracked _text = this.#initialFile.text;
+
+  /**
+   * Used so we no-op when qps match
+   */
+  get #currentQPs() {
+    return this.router.currentRoute?.queryParams ?? ({} as Record<string, unknown>);
+  }
+
+  get #text() {
+    return this._text;
+  }
+  set #text(value) {
+    this._text = value;
+  }
+
+  get format(): FormatQP {
     const location = this.#currentURL();
 
     const search = location.split('?')[1];
@@ -77,11 +95,23 @@ export class FileURIComponent {
 
     return formatFrom(queryParams.get('format'));
   }
+  set format(value: string) {
+    this.#updateFormatQP(value);
+    this.#pushUpdate();
+  }
+
+  get flavor() {
+    const location = this.#currentURL();
+
+    const search = location.split('?')[1];
+    const queryParams = new URLSearchParams(search);
+
+    return flavorFrom(this.format, queryParams.get('flavor'));
+  }
 
   constructor() {
     registerDestructor(this, () => {
-      clearTimeout(this.#timeout);
-      queueTokens.forEach((token) => queueWaiter.endAsync(token));
+      this.#cleanup();
     });
   }
 
@@ -96,7 +126,7 @@ export class FileURIComponent {
    *   - display a message to the user that the URL is now in their clipboard
    */
   toClipboard = async () => {
-    this.#flush();
+    this.flush();
 
     let url = location.origin + this.router.currentURL;
 
@@ -115,8 +145,17 @@ export class FileURIComponent {
   /**
    * Called during normal typing.
    */
-  set = (rawText: string, format: Format) => {
-    this.#updateQPs(rawText, format);
+  set = (rawText: string, format: FormatQP, extraQPs?: undefined | Record<string, string>) => {
+    this.#updateFormatQP(format);
+    this.#updateTextQP(rawText);
+
+    if (extraQPs) {
+      for (const [k, v] of Object.entries(extraQPs)) {
+        this.#qps.set(k, v);
+      }
+    }
+
+    this.#pushUpdate();
   };
 
   /**
@@ -125,21 +164,19 @@ export class FileURIComponent {
    * Today, both format and text are required whenever
    * talking about what should be rendered / placed in the editor.
    */
-  forceFormat = (format: Format) => {
-    this.set(this.decoded ?? '', format);
+  forceFormat = (format: FormatQP) => {
+    this.#updateFormatQP(format);
+    this.#pushUpdate();
   };
 
-  #timeout?: ReturnType<typeof setTimeout>;
-  #queuedFn?: () => void;
-
-  queue = (rawText: string, format: Format) => {
-    this.set(rawText, format);
+  queue = (rawText: string) => {
+    this.#updateTextQP(rawText);
+    this.#pushUpdate();
   };
 
-  #flush = () => {
-    if (this.#timeout) clearTimeout(this.#timeout);
-
-    this.#queuedFn?.();
+  flush = async () => {
+    await Promise.resolve();
+    this.#setURL();
   };
 
   #currentURL = () => {
@@ -148,7 +185,7 @@ export class FileURIComponent {
     let base = this.router.currentURL;
 
     if (macroCondition(isTesting())) {
-      base ??= (this.router as any) /* private API? */?.location;
+      base ??= (this.router as any) /* private API? */?.location?.path;
     } else {
       base ??= window.location.toString();
     }
@@ -156,98 +193,180 @@ export class FileURIComponent {
     return base ?? window.location.toString();
   };
 
-  #frame?: number;
-  #qps: URLSearchParams | undefined;
+  #qps = new URLSearchParams();
   #tokens: unknown[] = [];
-  #updateQPs = async (rawText: string, format: Format) => {
-    this.#tokens.push(queueWaiter.beginAsync());
-    this.#_updateQPs(rawText, format);
-  };
 
   #cleanup = () => {
+    this.#qps = new URLSearchParams();
     this.#tokens.forEach((token) => {
       queueWaiter.endAsync(token);
     });
   };
 
-  #_updateQPs = async (rawText: string, format: Format) => {
-    if (this.#frame) cancelAnimationFrame(this.#frame);
+  /**
+   * The raw text.
+   * For efficiency, we don't compress it until we are about to write to the URL
+   */
+  #updateTextQP = (rawText: string | undefined) => {
+    this.#tokens.push(queueWaiter.beginAsync());
+    this.#qps ||= new URLSearchParams();
 
-    const encoded = compressToEncodedURIComponent(rawText);
-    const qps = new URLSearchParams(location.search);
+    if (!rawText) {
+      this.#qps.delete('rawText');
 
-    qps.set('c', encoded);
-    qps.delete('t');
-    qps.set('format', formatFrom(format));
+      return;
+    }
 
-    // @ts-expect-error this works
-    if (this.#qps?.c === qps.get('c') && this.#qps?.format === qps.get('format')) {
-      // no-op, we should not have gotten here
-      // it's a mistake to have tried to have update QPs.
-      // Someone should debug this.
+    this.#qps.set('rawText', rawText);
+    this.#qps.delete('t');
+    this.#qps.delete('c');
+  };
+
+  #updateFormatQP = (format: string) => {
+    this.#tokens.push(queueWaiter.beginAsync());
+    this.#qps ||= new URLSearchParams();
+
+    if (format) {
+      this.#qps.set('format', formatQPFrom(format));
+    }
+  };
+
+  #pushUpdate = () => {
+    const rawText = this.#qps.get('rawText');
+
+    if (rawText) {
+      const formatQP = formatFrom(this.#qps.get('format'));
+
+      setStoredDocument(formatQP, rawText);
+    }
+
+    this.#pushUpdateToURL();
+  };
+
+  #pushUpdateToURL = makeDebounced(() => {
+    if (isDestroyed(this) || isDestroying(this)) {
       this.#cleanup();
 
       return;
     }
 
-    setStoredDocument(formatFrom(format), rawText);
+    this.#setURL();
+  });
 
-    this.#qps = {
-      ...this.#qps,
-      ...qps,
-    };
+  #setURL = () => {
+    // On initial load, if we call #updateQPs,
+    // we may not have a currentURL, because the first transition has yet to complete
+    let base = this.router.currentURL?.split('?')[0];
 
-    this.#frame = requestAnimationFrame(async () => {
-      if (isDestroyed(this) || isDestroying(this)) {
-        this.#cleanup();
+    if (macroCondition(isTesting())) {
+      base ??= (this.router as any) /* private API? */?.location?.path;
+      // @ts-expect-error private api
+      base = base.split('?')[0];
+    } else {
+      base ??= window.location.pathname;
+    }
 
-        return;
-      }
+    if (base === '/') {
+      base = '/edit/';
+    }
 
-      /**
-       * Debounce so we are kinder on the CPU
-       */
-      await new Promise((resolve) => setTimeout(resolve, DEBOUNCE_MS));
+    /**
+     * At some point this added qps
+     * we don't want them though, so we'll strip them
+     */
 
-      if (isDestroyed(this) || isDestroying(this)) {
-        this.#cleanup();
+    const rawText = this.#qps.get('rawText');
+    let encoded = '';
 
-        return;
-      }
+    if (rawText) {
+      encoded = compressToEncodedURIComponent(rawText);
+      this.#qps.delete('rawText');
+    }
 
-      // On initial load, if we call #updateQPs,
-      // we may not have a currentURL, because the first transition has yet to complete
-      let base = this.router.currentURL?.split('?')[0];
+    const qps = new URLSearchParams(this.#qps);
 
-      if (macroCondition(isTesting())) {
-        base ??= (this.router as any) /* private API? */?.location?.path;
-        // @ts-expect-error private api
-        base = base.split('?')[0];
-      } else {
-        base ??= window.location.pathname;
-      }
-
-      /**
-       * At some point this added qps
-       * we don't want them though, so we'll strip them
-       */
-
-      const next = `${base}?${qps}`;
-
-      this.router.replaceWith(next);
-      this.#text = rawText;
+    if (qps.size === 0) {
       this.#cleanup();
-    });
+      console.debug(`No query params, not redirecting`);
+
+      return;
+    }
+
+    if (encoded) {
+      qps.set('c', encoded);
+    }
+
+    if (!qps.has('format')) {
+      qps.set('format', this.format);
+    }
+
+    if (!qps.has('c') && this.#text) {
+      const encoded = compressToEncodedURIComponent(this.#text);
+
+      qps.set('c', encoded);
+    }
+
+    assert(`Cannot update URL without required QP:format`, qps.get('format'));
+    assert(`Cannot update URL without required QP:c (compressed text)`, qps.get('c'));
+
+    /**
+     * We convert to an object here because URLSearchParams returns `null`
+     * when a param is missing, and we want to compare undefined when a value is missing
+     */
+    const q = Object.fromEntries(qps);
+
+    if (
+      q.c === this.#currentQPs.c &&
+      q.t === this.#currentQPs.t &&
+      q.format === this.#currentQPs.format &&
+      q.shadowdom === this.#currentQPs.shadowdom
+    ) {
+      this.#cleanup();
+      console.debug(`All query params that affect the render output are the same`);
+
+      return;
+    }
+
+    const next = `${base}?${qps}`;
+
+    this.router.replaceWith(next);
+    if (rawText) this.#text = rawText;
+
+    this.#cleanup();
   };
 }
 
-export function setStoredDocument(format: string, text: string) {
-  localStorage.setItem('active-format', format);
-  localStorage.setItem(`${format}-doc`, text);
+function getKey(formatQP: FormatQP) {
+  return `${formatQP}-doc`;
 }
 
-export function getStoredDocumentForFormat(format: string) {
-  return localStorage.getItem(`${format}-doc`);
+function decomposeKey(key: string): {
+  format: string;
+  flavor: string | undefined;
+} {
+  const notation = key.replace(/-doc$/, '');
+
+  const parts = notation.split('|');
+
+  assert(`Missing format`, parts[0]);
+
+  return {
+    format: parts[0],
+    flavor: parts[1],
+  };
+}
+
+export function setStoredDocument(formatQP: FormatQP, text: string) {
+  const key = getKey(formatQP);
+
+  localStorage.setItem('active-format', key);
+  localStorage.setItem(key, text);
+}
+
+export function getStoredDocumentForFormat(formatQP: FormatQP) {
+  const key = getKey(formatQP);
+
+  return localStorage.getItem(key);
 }
 
 /**
@@ -266,10 +385,13 @@ export function getStoredDocument() {
   const active = localStorage.getItem('active-format');
 
   if (active) {
-    const activeDoc = localStorage.getItem(`${active}-doc`);
+    const key = `${active}-doc`;
+    const activeDoc = localStorage.getItem(key);
 
     if (activeDoc) {
-      return { format: active, doc: activeDoc };
+      const decomposed = decomposeKey(key);
+
+      return { format: decomposed.format, flavor: decomposed.flavor, doc: activeDoc };
     }
   }
 
@@ -279,4 +401,17 @@ export function getStoredDocument() {
   const doc = localStorage.getItem('document');
 
   return { format, doc };
+}
+
+/**
+ * Don't invoke a function if we try to invoke again within
+ * the timeout.
+ */
+function makeDebounced(fu: () => void) {
+  let timeout: number;
+
+  return () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(fu, DEBOUNCE_MS);
+  };
 }

@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Limber » Ember Markdown Playground</title>
+    <title>Limber » Playground and REPL</title>
     <meta
       name="description"
-      content="Limber is a Glimdown playground for demonstrating how Glimmer and Markdown can be used together to write documentation"
+      content="Limber is a playground and REPL for various web technologies, such as Svelte, Vue, Mermaid, Ember, React, and more. It also demonstrates how documentation can have live islands of different frameworks rendering all from the same document"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -34,18 +34,8 @@
         resolve: (...args) => args.join("/"),
       };
     </script>
-
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      rel="preload"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-      ref="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap"
-    >
   </head>
-  <body class="overflow-hidden syntax-dark syntax-bright">
+  <body class="syntax-dark syntax-bright">
     <div id="initial-loader">
       <style>
         body,
@@ -105,15 +95,8 @@
       }
     </script>
 
-
     <link rel="stylesheet" href="./app/styles/app.css" />
 
-    <script src="/@embroider/virtual/vendor.js"></script>
-    <script type="module">
-      import Application from './app/app';
-      import environment from './app/config/environment';
-
-      Application.create(environment.APP);
-    </script>
+    <script type="module" src="./app/boot.ts"></script>
   </body>
 </html>

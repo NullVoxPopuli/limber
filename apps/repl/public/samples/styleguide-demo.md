@@ -1,26 +1,9 @@
 # Use with your styleguide
 
-In Ember's strict mode, components must be imported in order
-to be rendered. The default resolver, which has everything available
-in the global namespace, is not used.
+All code fences are strict mode, which means all components must be imported in order to be rendered.
 
-For more information on template-strict-mode, view
+For more information on ember's template-strict-mode, view
 [RFC#496](https://github.com/emberjs/rfcs/pull/496)
-
-With embroider, you'll want to add this to your `extraPublicTrees` list:
-
-```js
-extraPublicTrees: [
-  // ...
-  require('ember-repl').buildComponentMap([
-    'limber/components/limber/menu',
-    'limber/components/limber/header',
-    'limber/components/external-link',
-    'ember-primitives',
-    'ember-repl',
-  ]),
-];
-```
 
 <hr>
 
@@ -63,10 +46,11 @@ app.
 
 ```gjs live preview
 import Header from 'limber/components/limber/header';
-import { Shadowed } from 'ember-primitives';
+import { Shadowed, PortalTargets } from 'ember-primitives';
 
 <template>
   <Shadowed @includeStyles={{true}}>
+    <PortalTargets />
     <Header />
   </Shadowed>
 </template>
@@ -78,11 +62,12 @@ The `<Menu />` component takes no arguments, but still allows for
 customization of the trigger content and the the list.
 
 ```gjs live preview
-import Menu from 'limber/components/limber/menu';
-import { Shadowed } from 'ember-primitives';
+import Menu from 'limber/components/menu';
+import { Shadowed, PortalTargets } from 'ember-primitives';
 
 <template>
   <Shadowed @includeStyles={{true}}>
+    <PortalTargets />
     <Menu>
       <:trigger as |t|>
         <t.Default>

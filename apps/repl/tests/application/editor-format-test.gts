@@ -4,7 +4,7 @@ import { setupApplicationTest } from 'ember-qunit';
 
 import Route from 'ember-route-template';
 
-import { Editor } from 'limber/components/limber/editor';
+import { Editor } from '#edit/editor/index.gts';
 
 import { Page } from './-page';
 
@@ -29,21 +29,21 @@ module('Editor > Format', function (hooks) {
 
   test('defaults to glimdown', async function (assert) {
     await page.expectRedirectToContent('/edit', {
-      format: 'glimdown',
+      format: 'gmd',
     });
 
     await page.editor.load();
 
-    assert.strictEqual(page.editor.format, 'glimdown');
+    assert.strictEqual(page.editor.format, 'gmd');
   });
 
   test('when choosing a format, text is required -- otherwise glimdown is chosen', async function (assert) {
     await page.expectRedirectToContent('/edit?format=gjs', {
-      format: 'glimdown',
+      format: 'gmd',
     });
 
     await page.editor.load();
-    assert.strictEqual(page.editor.format, 'glimdown');
+    assert.strictEqual(page.editor.format, 'gmd');
   });
 
   test('can start with a different text', async function (assert) {
@@ -55,7 +55,7 @@ module('Editor > Format', function (hooks) {
   });
 
   test('after selecting text, it loads again when visiting /', async function (assert) {
-    await visit(`/edit?format=gjs&t=${defaultText}`);
+    await visit(`/edit?format=gjs&t=${defaultText}&nohighlight=1`);
     await page.editor.load();
 
     assert.strictEqual(page.editor.format, 'gjs');
@@ -72,13 +72,15 @@ module('Editor > Format', function (hooks) {
 
   test('can start with glimdown, and change to gjs', async function (assert) {
     await page.expectRedirectToContent(`/edit`, {
-      format: 'glimdown',
+      format: 'gmd',
     });
     await page.editor.load();
 
-    assert.strictEqual(page.editor.format, 'glimdown');
+    assert.strictEqual(page.editor.format, 'gmd');
 
-    this.owner.lookup('service:editor').updateDemo(defaultText, 'gjs');
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    this.owner.lookup('service:editor').updateDemo(defaultText, { format: 'gjs' });
     await settled();
 
     assert.strictEqual(page.editor.format, 'gjs');
@@ -86,11 +88,11 @@ module('Editor > Format', function (hooks) {
 
   test('can start with glimdown, and is able to change formats via the URL', async function (assert) {
     await page.expectRedirectToContent(`/edit`, {
-      format: 'glimdown',
+      format: 'gmd',
     });
     await page.editor.load();
 
-    assert.strictEqual(page.editor.format, 'glimdown');
+    assert.strictEqual(page.editor.format, 'gmd');
 
     await visit(`/edit?format=gjs&t=${defaultText}`);
 

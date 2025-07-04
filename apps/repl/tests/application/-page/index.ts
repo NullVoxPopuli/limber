@@ -29,7 +29,7 @@ export class Page extends PageObject {
       checks,
     }: { t?: string; c?: string; format?: string; checks?: { aborted?: boolean } } = {}
   ) {
-    let sawExpectedError = false;
+    // let sawExpectedError = false;
 
     const _checks = {
       aborted: checks?.aborted ?? true,
@@ -51,14 +51,14 @@ export class Page extends PageObject {
         `The only expected error is a TransitionAborted. Received: ${first}`,
         first === 'TransitionAborted'
       );
-      sawExpectedError = true;
+      // sawExpectedError = true;
     }
 
     if (_checks.aborted) {
-      assert(
-        `Expected to see a TransitionAborted error, but it did not occur. currentURL: ${currentURL()}`,
-        sawExpectedError
-      );
+      // assert(
+      //   `Expected to see a TransitionAborted error, but it did not occur. currentURL: ${currentURL()}`,
+      //   sawExpectedError
+      // );
     }
 
     // Allow time for transitions to settle

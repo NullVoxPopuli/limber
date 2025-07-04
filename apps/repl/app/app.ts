@@ -6,7 +6,7 @@ import Application from '@ember/application';
 
 import Resolver from 'ember-resolver';
 
-import config from 'limber/config/environment';
+import config from '#config';
 
 import { registry } from './registry.ts';
 
@@ -22,4 +22,10 @@ Object.assign(window, {
 export default class App extends Application {
   modulePrefix = config.modulePrefix;
   Resolver = Resolver.withModules(registry);
+
+  // LOG_RESOLVER = true;
+  // LOG_ACTIVE_GENERATION = true;
+  // LOG_TRANSITIONS = true;
+  // LOG_TRANSITIONS_INTERNAL = true;
+  // LOG_VIEW_LOOKUPS = true;
 }

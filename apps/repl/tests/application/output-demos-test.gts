@@ -1,23 +1,18 @@
-import { assert as debugAssert } from '@ember/debug';
 import { settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
+import { getCompiler } from 'ember-repl';
 import Route from 'ember-route-template';
 
-import { DemoSelect } from 'limber/components/limber/demo-select';
-import { Output } from 'limber/components/limber/output';
+import { Output } from '#components/output.gts';
+import { DemoSelect } from '#edit/demo-select.gts';
+
 import { ALL, getFromLabel } from 'limber/snippets';
-import { fileFromParams, type Format } from 'limber/utils/messaging';
+import { fileFromParams } from 'limber/utils/messaging';
 
 import { getService } from '../helpers';
 import { Page } from './-page';
-
-import type {
-  MessagingAPI,
-  ParentMethods,
-} from 'limber/components/limber/output/frame-messaging.gts';
-import type { AsyncMethodReturns } from 'penpal';
 
 module('Output > Demos', function (hooks) {
   setupApplicationTest(hooks);
@@ -33,7 +28,7 @@ module('Output > Demos', function (hooks) {
    * be ignored.
    */
   hooks.beforeEach(function () {
-    this.owner.lookup('service:editor')._editorSwapText = () => {};
+    this.owner.lookup('service:editor').setCodemirrorState = () => {};
   });
 
   module('every option correctly changes the query params', function () {
@@ -48,7 +43,7 @@ module('Output > Demos', function (hooks) {
 
         const file = fileFromParams(queryParams);
 
-        assert.strictEqual(queryParams.format, 'glimdown');
+        assert.strictEqual(queryParams.format, demo.format);
         assert.strictEqual(file.format, queryParams.format, 'format matches queryParams');
         assert.strictEqual(queryParams.t, undefined, 'old format is no longer in use');
         assert.notStrictEqual(queryParams.c, undefined, 'new format is is what is used');
@@ -60,21 +55,13 @@ module('Output > Demos', function (hooks) {
   module('The output frame renders every demo', function () {
     for (const demo of ALL) {
       test(demo.label, async function (assert) {
-        let makeComponent!: (format: Format, text: string) => void;
-        let setParentFrame!: (parentAPI: AsyncMethodReturns<ParentMethods>) => void;
-
-        const api = {
-          onReceiveText: (callback: typeof makeComponent) => (makeComponent = callback),
-          onConnect: (callback) => (setParentFrame = callback),
-        } satisfies MessagingAPI;
-
         this.owner.register(
           'template:edit',
           Route(
             <template>
               <fieldset class="border">
                 <legend>Limber::Output</legend>
-                <Output @messagingAPI={{api}} />
+                <Output />
               </fieldset>
             </template>
           )
@@ -82,24 +69,28 @@ module('Output > Demos', function (hooks) {
 
         await page.expectRedirectToContent('/edit');
 
-        debugAssert(`setParentFrame did not get set`, setParentFrame);
-        debugAssert(`makeComponent did not get set`, makeComponent);
+        if ('snippet' in demo) {
+          this.owner.lookup('service:editor').updateDemo(demo.snippet, demo);
+        } else {
+          const response = await fetch(demo.path);
+          const text = await response.text();
 
-        setParentFrame({
-          beginCompile: async () => assert.step('begin compile'),
+          this.owner.lookup('service:editor').updateDemo(text, demo);
+        }
 
-          error: async (e: any) => assert.step(e),
-          ready: async () => {},
-          success: async () => assert.step('success'),
-          finishedRendering: async () => assert.step('finished rendering'),
-        });
+        await settled();
 
         const text = await getFromLabel(demo.label);
 
-        makeComponent('glimdown', text);
+        // eslint-disable-next-line no-console
+        console.log({ text });
         await settled();
 
-        assert.verifySteps(['begin compile', 'success', 'finished rendering']);
+        // NOTE: These messages are dynamic
+        assert.ok(
+          getCompiler(this).messages.length > 0,
+          `Renderer has messages for the status output`
+        );
       });
     }
   });

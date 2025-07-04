@@ -1,46 +1,92 @@
-import type { DOMPurify } from 'dompurify';
-import type { HLJSApi } from 'highlight.js';
+import type { HighlighterGeneric } from 'shiki';
 
-let HIGHLIGHT: HLJSApi;
+let HIGHLIGHT: HighlighterGeneric<never, never>;
+let promise: Promise<HighlighterGeneric<never, never>>;
 
-export async function getHighlighter(): Promise<HLJSApi> {
+export async function getHighlighter(): Promise<HighlighterGeneric<never, never>> {
+  if (promise) {
+    await promise;
+  }
+
   if (HIGHLIGHT) return HIGHLIGHT;
 
-  /**
-   * highlight.js is 282kb in total,
-   * since we now use hljs on initial page load, eagerly, we want to load
-   * as little as possible
-   */
-  const [hljs, glimmer, javascript, typescript, markdown, css] = await Promise.all([
-    import('highlight.js/lib/core'),
-    import('highlightjs-glimmer'),
-    import('highlight.js/lib/languages/javascript'),
-    import('highlight.js/lib/languages/typescript'),
-    import('highlight.js/lib/languages/markdown'),
-    import('highlight.js/lib/languages/css'),
-  ]);
+  const [{ createHighlighterCore }, { createOnigurumaEngine }, wasm, markdown, dark, oneDarkPro] =
+    await Promise.all([
+      import('shiki/core'),
+      import('shiki/engine/oniguruma'),
+      import('shiki/wasm'),
+      import('shiki/langs/markdown.mjs'),
+      import('shiki/themes/github-dark.mjs'),
+      import('shiki/themes/one-dark-pro.mjs'),
+    ]);
 
-  HIGHLIGHT = hljs.default;
-  HIGHLIGHT.registerLanguage('javascript', javascript.default);
-  HIGHLIGHT.registerLanguage('typescript', typescript.default);
-  HIGHLIGHT.registerLanguage('markdown', markdown.default);
-  HIGHLIGHT.registerLanguage('css', css.default);
+  promise = createHighlighterCore({
+    themes: [
+      {
+        ...dark.default,
+        colors: {
+          ...dark.default.colors,
+          'editor.background': 'var(--code-bg)',
+        },
+      },
+      {
+        ...oneDarkPro.default,
+        colors: {
+          ...oneDarkPro.default.colors,
+          'editor.background': 'var(--code-bg)',
+        },
+      },
+      // import('shiki/themes/github-light.mjs'),
+    ],
+    langs: [
+      import('shiki/langs/javascript.mjs'),
+      import('shiki/langs/css.mjs'),
+      import('shiki/langs/html.mjs'),
+      import('shiki/langs/glimmer-js.mjs'),
+      // Soon?
+      // import('shiki/langs/typescript.mjs'),
+      // import('shiki/langs/glimmer-ts.mjs'),
+      import('shiki/langs/handlebars.mjs'),
+      import('shiki/langs/jsonc.mjs'),
+      import('shiki/langs/svelte.mjs'),
+      {
+        // This *does* have embeddedLanguagesLazy
+        // Just not embeddedLanguages
 
-  glimmer.setup(HIGHLIGHT);
+        ...markdown.default[0]!,
+        embeddedLangs: [
+          'javascript',
+          'css',
+          'html',
+          'glimmer-js',
+          // 'glimmer-ts',
+          // 'typescript',
+          'handlebars',
+          'jsonc',
+          'svelte',
+          'vue',
+          'jsx',
+          'mermaid',
+        ],
+      },
+      import('shiki/langs/vue.mjs'),
+      import('shiki/langs/jsx.mjs'),
+      import('shiki/langs/mermaid.mjs'),
+    ],
+    langAlias: {
+      gjs: 'glimmer-js',
+      gts: 'glimmer-ts',
+      glimdown: 'markdown',
+      gmd: 'markdown',
+      gdm: 'markdown',
+      json: 'jsonc',
+    },
+    engine: createOnigurumaEngine(() => wasm),
+  });
 
-  HIGHLIGHT.registerAliases('gjs', { languageName: 'glimmer-javascript' });
-  HIGHLIGHT.registerAliases('gts', { languageName: 'glimmer-javascript' });
-  HIGHLIGHT.registerAliases('glimdown', { languageName: 'markdown' });
+  const highlighter = await promise;
 
-  return HIGHLIGHT;
-}
+  HIGHLIGHT = highlighter;
 
-let PURIFY: DOMPurify;
-
-export async function getPurifier() {
-  if (PURIFY) return PURIFY;
-
-  PURIFY = (await import('dompurify')).default;
-
-  return PURIFY;
+  return highlighter;
 }

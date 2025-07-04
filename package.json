@@ -18,40 +18,42 @@
     "start:tutorial": "pnpm --filter=tutorial start"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.9",
-    "@glint/core": "1.4.1-unstable.0e0d936",
+    "@babel/core": "^7.27.7",
+    "@glint/core": "alpha",
+    "@glint/tsserver-plugin": "alpha",
     "@nullvoxpopuli/eslint-configs": "^5.0.0",
     "concurrently": "^9.1.2",
     "dev-tools": "workspace:*",
-    "ember-template-lint": "^7.2.0",
-    "eslint": "^9.25.1",
-    "prettier": "^3.5.2",
-    "prettier-plugin-ember-template-tag": "2.0.4",
-    "prettier-plugin-tailwindcss": "^0.6.11",
-    "release-plan": "^0.16.0",
+    "ember-template-lint": "^7.9.1",
+    "eslint": "^9.29.0",
+    "prettier": "^3.6.2",
+    "prettier-plugin-ember-template-tag": "2.0.6",
+    "prettier-plugin-tailwindcss": "^0.6.13",
+    "release-plan": "^0.17.0",
     "turbo": "^2.4.2"
   },
-  "packageManager": "pnpm@10.5.2",
+  "packageManager": "pnpm@10.12.1",
   "engines": {
     "node": ">= 22.11"
   },
   "volta": {
     "node": "22.14.0",
-    "pnpm": "10.5.2"
+    "pnpm": "10.12.1"
   },
   "pnpm": {
+    "_ember-repl": "workspace:*",
     "overrides": {
+      "babel-plugin-ember-template-compilation@<3": "^2.4.1",
       "@nullvoxpopuli/eslint-configs": "^5.0.0",
       "@glimmer/component": "^2.0.0",
-      "@glint/core": "1.4.1-unstable.0e0d936",
-      "@glint/environment-ember-loose": "1.4.1-unstable.0e0d936",
-      "@glint/environment-ember-template-imports": "1.4.1-unstable.0e0d936",
+      "@glint/core": "alpha",
+      "@glint/environment-ember-loose": "alpha",
+      "@glint/environment-ember-template-imports": "alpha",
       "@ember/test-waiters": "^4.1.0",
       "ember-element-helper": "^0.8.7",
       "ember-get-config": "github:mansona/ember-get-config#config-meta-loader",
-      "ember-auto-import": "^2.9.0",
-      "ember-repl": "workspace:*",
-      "ember-source": ">= 6.4.0-alpha.3",
+      "ember-auto-import": "^2.10.0",
+      "ember-source": ">= 6.7.0-alpha.1",
       "array-includes": "npm:@nolyfill/array-includes@^1",
       "array.prototype.findlastindex": "npm:@nolyfill/array.prototype.findlastindex@^1",
       "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@^1",
@@ -85,7 +87,8 @@
       ]
     },
     "patchedDependencies": {
-      "browserslist-generator": "patches/browserslist-generator.patch"
+      "browserslist-generator": "patches/browserslist-generator.patch",
+      "ember-source": "patches/ember-source.patch"
     }
   }
 }

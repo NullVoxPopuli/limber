@@ -41,7 +41,32 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - run:  echo ${{ github.event.number }} > ./pr-number.txt
-    - run: pnpm turbo build build:prod --force
+    - run: pnpm turbo build --force
+
+  build_tests:
+    name: Build for Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [install_dependencies]
+
+    steps:
+    - uses: wyvox/action@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+    - run: pnpm turbo build:test
+
+  build_prod:
+    name: Build for Production
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [install_dependencies]
+
+    steps:
+    - uses: wyvox/action@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+    - run:  echo ${{ github.event.number }} > ./pr-number.txt
+    - run: pnpm turbo build:prod
     - run: ls -la ./apps/repl/dist
     - run: ls -la ./apps/tutorial/dist
     # Used for faster deploy so we don't need to checkout the repo
@@ -53,6 +78,8 @@ jobs:
           ./apps/**/dist/**/*
           !node_modules/
           !./**/node_modules/
+
+
 
 ##############################################################
 
@@ -71,34 +98,19 @@ jobs:
 
 ##############################################################
 
-
-  tests_node:
-    name: "Node Tests"
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [install_dependencies]
-
-    steps:
-      - uses: wyvox/action@v1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Test
-        run: pnpm turbo test:node 
-
-
   tests:
-    name: "Ember Tests"
+    name: "Tests"
     strategy:
+      fail-fast: false
       matrix:
-        # os: [ubuntu-latest, macOS-latest, windows-latest]
-        # browsers: [chrome, firefox, safari, edge]
-        ci_browser:
-        - Chrome
-        - Firefox
+        environment:
+        - chrome
+        - firefox
+        - node
 
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: [install_dependencies]
+    needs: [build_tests]
 
     steps:
       - uses: wyvox/action@v1
@@ -111,27 +123,7 @@ jobs:
           echo "Node: $( node --version )"
           echo "NPM: $( npm --version )"
           echo "pnpm: $( pnpm --version )"
-      - name: Test
-        run: pnpm turbo test:ember
-        env:
-          CI_BROWSER: ${{ matrix.ci_browser }}
-
-  # try-scenarios:
-  #   name: "Test try-scenarios" 
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 15
-  #   needs: [tests]
-  #   # I need to figure out a better way to handle this with turbo
-  #   continue-on-error: true
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - name: TurboRepo local server
-  #     uses: felixmosh/turborepo-gh-artifacts@v2
-  #     with:
-  #       repo-token: ${{ secrets.GITHUB_TOKEN }}
-  #   - uses: NullVoxPopuli/action-setup-pnpm@v2.0.0
-  #   - name: Test
-  #     run: pnpm turbo test:scenarios
+      - run: pnpm turbo test:${{ matrix.environment }}
 
 
   browserstack-test:
@@ -169,7 +161,7 @@ jobs:
     if: github.ref == 'refs/heads/main' 
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    needs: [browserstack-test]
+    needs: [browserstack-test, build_prod]
     strategy: 
       matrix:
         app: 

@@ -24,6 +24,10 @@ export default class ApplicationRoute extends Route {
         import('shiki/langs/glimmer-ts.mjs'),
         import('shiki/langs/handlebars.mjs'),
         import('shiki/langs/jsonc.mjs'),
+        import('shiki/langs/svelte.mjs'),
+        import('shiki/langs/vue.mjs'),
+        import('shiki/langs/jsx.mjs'),
+        import('shiki/langs/mermaid.mjs'),
       ],
       loadWasm: getWasm,
     });

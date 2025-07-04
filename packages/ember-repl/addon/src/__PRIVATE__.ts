@@ -1,1 +1,1 @@
-export { CACHE } from './compile/index.ts';
+export { CACHE } from './compile/compile.ts';

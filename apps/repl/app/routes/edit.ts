@@ -1,9 +1,10 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
+import { formatQPFrom } from '#app/languages.gts';
+
 import { DEFAULT_SNIPPET } from 'limber/snippets';
 import { getStoredDocument } from 'limber/utils/editor-text';
-import { formatFrom } from 'limber/utils/messaging';
 
 import type RouterService from '@ember/routing/router-service';
 import type Transition from '@ember/routing/transition';
@@ -35,6 +36,20 @@ export default class EditRoute extends Route {
 
     const hasCode = Boolean(qps.t || qps.c);
     const hasFormat = qps.format !== undefined;
+    const hasFileReference = Boolean(qps.file);
+
+    if (hasFileReference && hasFormat) {
+      transition.abort();
+
+      const format = formatQPFrom(qps.format as string);
+      const response = await fetch(qps.file as string);
+      const text = await response.text();
+
+      this.editor.fileURIComponent.set(text, format);
+      await this.editor.fileURIComponent.flush();
+
+      return;
+    }
 
     if (!hasCode) {
       /**
@@ -47,7 +62,8 @@ export default class EditRoute extends Route {
       if (format && doc) {
         console.info(`Found format and document in localStorage. Using those.`);
         transition.abort();
-        this.editor.fileURIComponent.set(doc, formatFrom(format));
+        this.editor.fileURIComponent.set(doc, formatQPFrom(format));
+        await this.editor.fileURIComponent.flush();
 
         return;
       }
@@ -58,12 +74,18 @@ export default class EditRoute extends Route {
       );
 
       transition.abort();
-      this.editor.fileURIComponent.set(DEFAULT_SNIPPET, 'glimdown');
-    } else if (!hasFormat) {
+      this.editor.fileURIComponent.set(DEFAULT_SNIPPET, 'gmd');
+      await this.editor.fileURIComponent.flush();
+
+      return;
+    }
+
+    if (!hasFormat) {
       console.warn('URL contained no format SearchParam. Assuming glimdown');
 
       transition.abort();
-      this.editor.fileURIComponent.forceFormat('glimdown');
+      this.editor.fileURIComponent.forceFormat('gmd');
+      await this.editor.fileURIComponent.flush();
     }
 
     // By the time execution gets here, we'll either:

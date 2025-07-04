@@ -40,7 +40,7 @@ export class Await extends Component<Args> {
   <template>
     {{#if this.error}}
       Error:
-      {{this.error.toString}}
+      {{String this.error}}
     {{else if this.isPending}}
       Building...
     {{else}}
