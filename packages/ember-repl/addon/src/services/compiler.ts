@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { setComponentTemplate } from '@ember/component';
 import templateOnly from '@ember/component/template-only';

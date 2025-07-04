@@ -119,7 +119,7 @@ export interface Compiler {
     defaultExport: unknown,
     extras: { compiled: string } & Record<string, unknown>,
     compiler: PublicMethods
-  ) => Promise<undefined | (() => void)>;
+  ) => Promise<void | (() => void)>;
 
   /**
    * Sometimes libraries do not publish browser-compatible modules,

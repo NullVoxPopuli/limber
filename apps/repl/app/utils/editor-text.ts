@@ -168,7 +168,7 @@ export class FileURIComponent {
   };
 
   flush = async () => {
-    await 0;
+    await Promise.resolve();
     this.#setURL();
   };
 

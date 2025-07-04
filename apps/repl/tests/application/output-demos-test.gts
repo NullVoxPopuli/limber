@@ -43,7 +43,7 @@ module('Output > Demos', function (hooks) {
 
         const file = fileFromParams(queryParams);
 
-        assert.strictEqual(queryParams.format, 'glimdown');
+        assert.strictEqual(queryParams.format, demo.format);
         assert.strictEqual(file.format, queryParams.format, 'format matches queryParams');
         assert.strictEqual(queryParams.t, undefined, 'old format is no longer in use');
         assert.notStrictEqual(queryParams.c, undefined, 'new format is is what is used');
