@@ -1,6 +1,6 @@
 'use strict';
 
-import { join } from 'node:path';
+const { join } = require('path');
 
 const { addonV1Shim } = require('@embroider/addon-shim');
 
