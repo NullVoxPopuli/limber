@@ -6,7 +6,7 @@ describe('jsx', () => {
     test('it works', async () => {
       const compiler = new Compiler();
       // React comes from esm.sh
-      const element = await compiler.compile(
+      const { element } = await compiler.compile(
         'jsx',
         `
         import React from 'react';

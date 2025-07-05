@@ -1,6 +1,54 @@
+import { cell } from 'ember-resources';
+
 import { ExternalLink } from 'limber-ui';
 
-export const importMap = {};
+export const importMap = {
+  // Ember Libraries Bundled with this REPL
+  'ember-deep-tracked': () => import('ember-deep-tracked'),
+  'ember-modifier': () => import('ember-modifier'),
+  'ember-resources': () => import('ember-resources'),
+  'tracked-built-ins': () => import('tracked-built-ins'),
+  'ember-repl': () => import('ember-repl'),
+  // Library does not provide types :(
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  'ember-focus-trap': () => import('ember-focus-trap'),
+  // Library does not provide types :(
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  'tracked-toolbox': () => import('tracked-toolbox'),
+
+  // Components from this app
+  // Used in demos
+  'limber-ui': () => import('limber-ui'),
+  'limber/components/limber/header': () => import('#edit/header.gts'),
+  'limber/components/limber/menu': () => import('#components/menu.gts'),
+  'limber/components/menu': () => import('#components/menu.gts'),
+
+  // non-ember libraries
+  xstate: () => import('xstate'),
+
+  // Polyfills for old behavior
+  // We still want old links to work
+  // aka Legacy things that don't exist anymore
+  'limber/helpers/state':
+    async () =>
+    (...args: unknown[]) => {
+      const c = cell(...args);
+
+      return {
+        ...c,
+
+        // I don't want to type this, and the type wouldn't be used by anything
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        increment: () => c.current++,
+        get value() {
+          return c.current;
+        },
+      };
+    },
+};
 
 function defineWithWarning(
   obj: object | (() => unknown),

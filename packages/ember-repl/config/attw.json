@@ -1,0 +1,7 @@
+{
+  "pack": true,
+  "color": true,
+  "ignoreRules": [],
+  "profile": "esm-only",
+  "excludeEntrypoints": ["addon-main.js"]
+}

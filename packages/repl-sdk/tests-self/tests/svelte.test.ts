@@ -4,7 +4,7 @@ import { describe, expect, test } from 'vitest';
 describe('svelte', () => {
   test.skip('it works', async () => {
     const compiler = new Compiler();
-    const element = await compiler.compile(
+    const { element } = await compiler.compile(
       'svelte',
       `
       <script>

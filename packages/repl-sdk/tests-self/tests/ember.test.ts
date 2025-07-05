@@ -5,7 +5,7 @@ describe('ember', () => {
   describe('gjs', () => {
     test.skip('template-only', async () => {
       const compiler = new Compiler();
-      const element = await compiler.compile(
+      const { element } = await compiler.compile(
         'gjs',
         `
           const name = 'world';

@@ -21,7 +21,7 @@ beforeEach(() => {
 describe('markdown', () => {
   test('it works', async () => {
     const compiler = new Compiler({ resolve: allKnownModules });
-    const element = await compiler.compile('md', `# Hello`);
+    const { element } = await compiler.compile('md', `# Hello`);
 
     const h1 = element.querySelector('h1');
 
@@ -82,7 +82,7 @@ graph TD;
           ...vueModules,
         },
       });
-      const element = await compiler.compile('md', `# Hello\n\n` + fenced(vue, 'vue live'));
+      const { element } = await compiler.compile('md', `# Hello\n\n` + fenced(vue, 'vue live'));
 
       const h1 = element.querySelector('h1');
       const h2 = element.querySelector('h2');
@@ -113,7 +113,7 @@ graph TD;
 
     test('svelte live', async () => {
       const compiler = new Compiler({ resolve: allKnownModules });
-      const element = await compiler.compile('md', fenced(svelte, 'svelte live'));
+      const { element } = await compiler.compile('md', fenced(svelte, 'svelte live'));
 
       const h1 = element.querySelector('h1');
 
@@ -127,7 +127,7 @@ graph TD;
 
     test('mermaid (no live)', async () => {
       const compiler = new Compiler({ resolve: markdownModules });
-      const element = await compiler.compile('md', fenced(mermaid, 'mermaid'));
+      const { element } = await compiler.compile('md', fenced(mermaid, 'mermaid'));
 
       const rootSVG = element.querySelector('svg');
 
@@ -136,7 +136,7 @@ graph TD;
 
     test('unknown', async () => {
       const compiler = new Compiler({ resolve: allKnownModules });
-      const element = await compiler.compile('md', fenced('hello', 'unknown-ext'));
+      const { element } = await compiler.compile('md', fenced('hello', 'unknown-ext'));
 
       expect(element.innerHTML).toMatchInlineSnapshot(`
         "<div class="repl-sdk__snippet" data-repl-output=""><pre><code class="language-unknown-ext">hello
@@ -155,7 +155,7 @@ graph TD;
         | yellow| banana |
       `;
 
-      const element = await compiler.compile('md', snippet);
+      const { element } = await compiler.compile('md', snippet);
 
       expect(element.querySelector('table')).toBeTruthy();
       expect(element.querySelector('td')?.textContent).toContain('red');
@@ -169,7 +169,7 @@ graph TD;
         [^note]: a note about a thing
       `;
 
-      const element = await compiler.compile('md', snippet);
+      const { element } = await compiler.compile('md', snippet);
 
       expect(element.querySelector('sup')).toBeTruthy();
       expect(element.querySelectorAll('a').length).toBe(2);
@@ -210,7 +210,7 @@ graph TD;
 
       test('without the plugin', async () => {
         const compiler = new Compiler({ resolve: allKnownModules });
-        const element = await compiler.compile('md', snippet);
+        const { element } = await compiler.compile('md', snippet);
 
         expect(element.querySelector('code')).toBeTruthy();
       });
@@ -220,14 +220,14 @@ graph TD;
           resolve: allKnownModules,
           options: { md: { remarkPlugins: [removePre] } },
         });
-        const element = await compiler.compile('md', snippet);
+        const { element } = await compiler.compile('md', snippet);
 
         expect(element.querySelector('code')).not.toBeTruthy();
       });
 
       test('with the plugin (compile)', async () => {
         const compiler = new Compiler({ resolve: allKnownModules });
-        const element = await compiler.compile('md', snippet, {
+        const { element } = await compiler.compile('md', snippet, {
           remarkPlugins: [removePre],
         });
 
@@ -268,7 +268,7 @@ graph TD;
           resolve: allKnownModules,
           options: { md: { remarkPlugins: [] } },
         });
-        const element = await compiler.compile('md', snippet);
+        const { element } = await compiler.compile('md', snippet);
 
         expect(element.querySelector('code')?.textContent).includes('not a greeting');
       });
@@ -278,7 +278,7 @@ graph TD;
           resolve: allKnownModules,
           options: { md: { remarkPlugins: [codeSwapper] } },
         });
-        const element = await compiler.compile('md', snippet);
+        const { element } = await compiler.compile('md', snippet);
         const text = element.querySelector('code')?.textContent;
 
         expect(text).not.includes('not a greeting');
@@ -309,7 +309,7 @@ graph TD;
           resolve: allKnownModules,
           options: { md: { rehypePlugins: [] } },
         });
-        const element = await compiler.compile('md', snippet);
+        const { element } = await compiler.compile('md', snippet);
         const text = element.innerHTML;
 
         expect(text).not.includes('h2');
@@ -321,7 +321,7 @@ graph TD;
           resolve: allKnownModules,
           options: { md: { rehypePlugins: [noH1] } },
         });
-        const element = await compiler.compile('md', snippet);
+        const { element } = await compiler.compile('md', snippet);
         const text = element.innerHTML;
 
         expect(text).not.includes('h1');
@@ -333,7 +333,7 @@ graph TD;
           resolve: allKnownModules,
           options: { md: { rehypePlugins: [noH1] } },
         });
-        const element = await compiler.compile('md', snippet);
+        const { element } = await compiler.compile('md', snippet);
         const text = element.innerHTML;
 
         expect(text).not.includes('h1');
