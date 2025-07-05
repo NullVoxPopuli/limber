@@ -1,0 +1,18 @@
+# compiled output
+dist/
+dist-tests/
+declarations/
+
+# from scenarios
+tmp/
+config/optional-features.json
+ember-cli-build.js
+
+# npm/pnpm/yarn pack output
+*.tgz
+!.env.test
+
+# deps & caches
+node_modules/
+.eslintcache
+.prettiercache
