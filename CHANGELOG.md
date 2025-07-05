@@ -1,5 +1,61 @@
 # Changelog
 
+## Release (2025-07-05)
+
+* limber-ui 4.0.0 (major)
+* ember-repl 7.0.0 (major)
+* repl-sdk 1.0.0 (major)
+* codemirror-lang-glimdown 2.0.0 (major)
+* @glimdown/lezer 2.0.0 (major)
+* codemirror-lang-glimmer-js 2.0.0 (major)
+* @glimdown/lezer-glimmer-expression 2.0.0 (major)
+* codemirror-lang-glimmer-ts 2.0.0 (major)
+* codemirror-lang-glimmer 2.0.0 (major)
+* lezer-glimmer 2.0.0 (major)
+* @nullvoxpopuli/ember-repl-es-module-shim 2.0.0 (major)
+
+#### :boom: Breaking Change
+* `limber-ui`, `ember-repl`, `repl-sdk`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`, `@nullvoxpopuli/ember-repl-es-module-shim`
+  * [#1925](https://github.com/NullVoxPopuli/limber/pull/1925) new repl infra (enabling importing from CDN (no v1 addons)) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :rocket: Enhancement
+* `limber-ui`, `ember-repl`, `repl-sdk`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`, `@nullvoxpopuli/ember-repl-es-module-shim`
+  * [#1925](https://github.com/NullVoxPopuli/limber/pull/1925) new repl infra (enabling importing from CDN (no v1 addons)) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* Other
+  * [#1917](https://github.com/NullVoxPopuli/limber/pull/1917) Fix doc swapping and loading ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber-ui`, `ember-repl`
+  * [#1914](https://github.com/NullVoxPopuli/limber/pull/1914) Upgrade template-compilation ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* [#1904](https://github.com/NullVoxPopuli/limber/pull/1904) Tutorial navigation selected state ([@tcjr](https://github.com/tcjr))
+
+#### :memo: Documentation
+* `limber-ui`, `ember-repl`, `repl-sdk`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`, `@nullvoxpopuli/ember-repl-es-module-shim`
+  * [#1925](https://github.com/NullVoxPopuli/limber/pull/1925) new repl infra (enabling importing from CDN (no v1 addons)) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* Other
+  * [#1936](https://github.com/NullVoxPopuli/limber/pull/1936) Update prose.md ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1929](https://github.com/NullVoxPopuli/limber/pull/1929) Remove unused option block ([@mrloop](https://github.com/mrloop))
+  * [#1928](https://github.com/NullVoxPopuli/limber/pull/1928) Rename swapi.dev to swapi.tech ([@mrloop](https://github.com/mrloop))
+  * [#1918](https://github.com/NullVoxPopuli/limber/pull/1918) Bring back helpers/state import ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1904](https://github.com/NullVoxPopuli/limber/pull/1904) Tutorial navigation selected state ([@tcjr](https://github.com/tcjr))
+* `ember-repl`
+  * [#1930](https://github.com/NullVoxPopuli/limber/pull/1930) Update keepLatest README example ([@mrloop](https://github.com/mrloop))
+  * [#1922](https://github.com/NullVoxPopuli/limber/pull/1922) Try to use RFC #931 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :house: Internal
+* `limber-ui`, `ember-repl`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`
+  * [#1921](https://github.com/NullVoxPopuli/limber/pull/1921) Convert ember-repl test-app to vite. ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber-ui`
+  * [#1906](https://github.com/NullVoxPopuli/limber/pull/1906) Upgrade ember-primitives, use KeyCombo component ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1902](https://github.com/NullVoxPopuli/limber/pull/1902) Update ember-primitives ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* Other
+  * [#1905](https://github.com/NullVoxPopuli/limber/pull/1905) Improve share dialog ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 3
+- Ewan McDougall ([@mrloop](https://github.com/mrloop))
+- Tom Carter ([@tcjr](https://github.com/tcjr))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2025-03-03)
 
 limber-ui 3.0.0 (major)
