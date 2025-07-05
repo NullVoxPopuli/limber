@@ -179,7 +179,7 @@ describe('options', () => {
 
         expect(result.text).toMatchInlineSnapshot(`
           "<h1 id="title">Title</h1>
-          <div id="repl_0" class="repl-sdk__demo"></div>"
+          <div id="repl_1" class="repl-sdk__demo"></div>"
         `);
 
         assertCodeBlocks(result.codeBlocks, [
@@ -233,7 +233,7 @@ describe('options', () => {
 
         expect(result.text).toMatchInlineSnapshot(`
           "<h1 id="title">Title</h1>
-          <div id="repl_1" class="repl-sdk__demo"></div>"
+          <div id="repl_2" class="repl-sdk__demo"></div>"
         `);
 
         assertCodeBlocks(result.codeBlocks, [
@@ -311,7 +311,7 @@ describe('options', () => {
 
         expect(result.text).toMatchInlineSnapshot(`
           "<h1 id="title">Title</h1>
-          <div id="repl_2" class="repl-sdk__demo"></div>
+          <div id="repl_3" class="repl-sdk__demo"></div>
           <Demo />"
         `);
 
@@ -340,7 +340,7 @@ describe('options', () => {
 
         expect(result.text).toMatchInlineSnapshot(`
           "<p>hi</p>
-          <div id="repl_3" class="repl-sdk__demo"></div>
+          <div id="repl_4" class="repl-sdk__demo"></div>
           <div class="repl-sdk__snippet" data-repl-output><pre><code class="language-gjs">import Component from '@glimmer/component';
           import { on } from '@ember/modifier';
 
