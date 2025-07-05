@@ -65,7 +65,7 @@ export class Status extends Component {
       {{/if}}
     {{/if}}
 
-    <style scoped>
+    <style>
       .layout__status__error__close {
         position: fixed;
         top: -1rem;

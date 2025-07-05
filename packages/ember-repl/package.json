@@ -78,7 +78,10 @@
     "@rollup/plugin-commonjs": "^28.0.6",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@types/babel__standalone": "^7.1.9",
+    "@types/common-tags": "^1.8.4",
+    "@types/mdast": "^4.0.4",
     "@types/qunit": "^2.19.12",
+    "@types/unist": "^3.0.3",
     "babel-import-util": "^3.0.1",
     "babel-plugin-debug-macros": "^1.0.2",
     "babel-plugin-ember-template-compilation": "^2.2.5",
@@ -116,7 +119,7 @@
     "vite-plugin-mkcert": "^1.17.8"
   },
   "peerDependencies": {
-    "@glint/template": ">= 1.5.2"
+    "@glint/template": ">= 1.5.2 || ^1.6.0-alpha.1"
   },
   "peerDependenciesMeta": {
     "@glint/template": {
