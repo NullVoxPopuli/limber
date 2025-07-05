@@ -3,6 +3,10 @@ dist/
 dist-tests/
 declarations/
 
+# accidental compiled output
+src/**/*.d.ts
+src/**/*.d.ts.map
+
 # from scenarios
 tmp/
 config/optional-features.json
@@ -11,6 +15,7 @@ ember-cli-build.js
 # npm/pnpm/yarn pack output
 *.tgz
 !.env.test
+!.env.development
 
 # deps & caches
 node_modules/
