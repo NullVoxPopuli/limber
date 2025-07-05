@@ -28,6 +28,8 @@
     "build:tests": "pnpm :vite build --mode=development --out-dir dist-tests",
     "format": "prettier . --cache --write",
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\" --prefixColors auto",
+    "lint:package": "pnpm publint",
+    "lint:published-types": "attw *.tgz || exit 0",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" --prefixColors auto && pnpm run format",
     "lint:format": "prettier . --cache --check",
     "lint:js": "eslint . --cache",
@@ -51,6 +53,7 @@
     "repl-sdk": "workspace:*"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
     "@babel/core": "^7.28.0",
     "@babel/eslint-parser": "^7.28.0",
     "@babel/plugin-transform-typescript": "^7.28.0",
@@ -93,6 +96,7 @@
     "globals": "^16.3.0",
     "prettier": "^3.4.2",
     "prettier-plugin-ember-template-tag": "^2.0.4",
+    "publint": "^0.3.12",
     "qunit": "^2.24.1",
     "qunit-dom": "^3.4.0",
     "rehype-raw": "^7.0.0",
