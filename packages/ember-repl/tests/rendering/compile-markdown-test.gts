@@ -337,7 +337,6 @@ module('Rendering | compile()', function (hooks) {
                     <template><p class="greeting">a greeting</p></template>
                   `,
                   // where is the type for a code node?
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } as any;
               });
             };

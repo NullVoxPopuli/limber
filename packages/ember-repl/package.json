@@ -29,7 +29,7 @@
     "format": "prettier . --cache --write",
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\" --prefixColors auto",
     "lint:package": "pnpm publint",
-    "lint:published-types": "attw *.tgz || exit 0",
+    "lint:published-types": "attw --config-path ./config/attw.json",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" --prefixColors auto && pnpm run format",
     "lint:format": "prettier . --cache --check",
     "lint:js": "eslint . --cache",
@@ -140,13 +140,9 @@
       "types": "./declarations/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./*": {
-      "types": "./declarations/*.d.ts",
-      "default": "./dist/*.js"
-    },
     "./test-support": {
-      "types": "./declarations/test-support/index.d.ts",
-      "default": "./dist/test-support/index.js"
+      "types": "./declarations/test-support.d.ts",
+      "default": "./dist/test-support.js"
     },
     "./addon-main.js": "./config/addon-main.cjs"
   },

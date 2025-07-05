@@ -2,9 +2,9 @@ import Application from '@ember/application';
 
 import Resolver from 'ember-resolver';
 
-import EntryTemplate from './templates/application.gjs';
 import config from './config.ts';
 import Router from './router';
+import EntryTemplate from './templates/application.gjs';
 
 // @babel/traverse (from babel-plugin-ember-template-imports)
 // accesses process.....

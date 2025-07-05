@@ -1,9 +1,10 @@
-import { babel } from "@rollup/plugin-babel";
 import { Addon } from "@embroider/addon-dev/rollup";
 import { resolve } from "node:path";
+
+import { babel } from "@rollup/plugin-babel";
 import cjs from "@rollup/plugin-commonjs";
-import nodePolyfills from "rollup-plugin-node-polyfills";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
+import nodePolyfills from "rollup-plugin-node-polyfills";
 
 const addon = new Addon({
   srcDir: "src",

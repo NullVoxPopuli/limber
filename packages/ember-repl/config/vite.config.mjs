@@ -1,7 +1,8 @@
-import { defineConfig } from "vite";
+import { ember, extensions } from "@embroider/vite";
 import { join } from "node:path";
-import { extensions, ember } from "@embroider/vite";
+
 import { babel } from "@rollup/plugin-babel";
+import { defineConfig } from "vite";
 import mkcert from "vite-plugin-mkcert";
 
 export default defineConfig({

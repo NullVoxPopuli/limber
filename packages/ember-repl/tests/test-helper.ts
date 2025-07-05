@@ -1,3 +1,5 @@
+import EmberApp from '@ember/application';
+import EmberRouter from '@ember/routing/router';
 import {
   currentRouteName,
   currentURL,
@@ -6,12 +8,11 @@ import {
   setApplication,
 } from '@ember/test-helpers';
 import { getPendingWaiterState } from '@ember/test-waiters';
-import EmberApp from '@ember/application';
-import Resolver from 'ember-resolver';
-import EmberRouter from '@ember/routing/router';
 import * as QUnit from 'qunit';
 import { setup } from 'qunit-dom';
-import { start as qunitStart, setupEmberOnerrorValidation } from 'ember-qunit';
+import { setupEmberOnerrorValidation, start as qunitStart } from 'ember-qunit';
+
+import Resolver from 'ember-resolver';
 
 class Router extends EmberRouter {
   location = 'none';
@@ -43,7 +44,6 @@ Object.assign(window, {
 
     console.debug(label ?? 'snapshotTimers', result);
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return result;
   },
 });

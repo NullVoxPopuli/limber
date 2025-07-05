@@ -1,5 +1,6 @@
-import { Compiled } from 'ember-repl';
 import { on } from '@ember/modifier';
+
+import { Compiled } from 'ember-repl';
 import { cell } from 'ember-resources';
 
 function handleChange(fun) {
