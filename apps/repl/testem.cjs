@@ -8,11 +8,6 @@ if (typeof module !== 'undefined') {
     test_page: 'tests/index.html?hidepassed',
     disable_watching: true,
     cwd: 'dist',
-    proxies: {
-      '/output': {
-        target: 'http://localhost:4200',
-      },
-    },
     launch_in_ci: [CI_BROWSER],
     launch_in_dev: [DEFAULT_BROWSER],
     browser_start_timeout: 120,
