@@ -861,7 +861,7 @@ importers:
         version: 1.10.0
       '@embroider/macros':
         specifier: 1.18.0
-        version: 1.18.0(@glint/template@1.5.2)
+        version: 1.18.0(@glint/template@1.6.0-alpha.1)
       '@fortawesome/ember-fontawesome':
         specifier: ^3.0.0
         version: 3.0.1(4a12eb098ca1bed4b5215fa2aae4d12b)
@@ -885,7 +885,7 @@ importers:
         version: 6.2.2
       reactiveweb:
         specifier: ^1.6.2
-        version: 1.6.2(752d8e73f0791d5fdf782be4b4d821fb)
+        version: 1.6.2(bf73563c7c46c518eb6554c80944b1cf)
     devDependencies:
       '@babel/core':
         specifier: ^7.27.7
@@ -910,10 +910,10 @@ importers:
         version: 1.1.3
       '@ember/test-waiters':
         specifier: ^4.1.0
-        version: 4.1.0(@glint/template@1.5.2)
+        version: 4.1.0(@glint/template@1.6.0-alpha.1)
       '@embroider/addon-dev':
         specifier: ^7.0.0
-        version: 7.1.5(@glint/template@1.5.2)(rollup@4.44.0)
+        version: 7.1.5(2186a6fe3257472edc163adef5e3f4d4)
       '@glimmer/component':
         specifier: ^2.0.0
         version: 2.0.0
@@ -922,13 +922,13 @@ importers:
         version: 2.0.0-alpha.2(typescript@5.8.3)
       '@glint/environment-ember-loose':
         specifier: alpha
-        version: 2.0.0-alpha.2(78dfa0aa056494065dc7f85bef240c2b)
+        version: 2.0.0-alpha.2(0d620093658cc225482c2fa47e042690)
       '@glint/environment-ember-template-imports':
         specifier: alpha
-        version: 2.0.0-alpha.2(2d6b24ad1f33a1c0662557a0468023b6)
+        version: 2.0.0-alpha.2(0c9eeee81f249ae63d765d215aa0f1fd)
       '@glint/template':
-        specifier: 1.5.2
-        version: 1.5.2
+        specifier: alpha
+        version: 1.6.0-alpha.1
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.0.0
         version: 5.1.2(f0745b5c01653b894ee6244d44294065)
@@ -946,7 +946,7 @@ importers:
         version: 9.2.0
       ember-async-data:
         specifier: 2.0.1
-        version: 2.0.1(a6fa8d0f1f3c894a01569e258197c230)
+        version: 2.0.1(273b090f21ffd9d2c9984661d71ba031)
       ember-cli-htmlbars:
         specifier: ^6.3.0
         version: 6.3.0
@@ -955,10 +955,10 @@ importers:
         version: 4.2.2(@babel/core@7.27.7)
       ember-primitives:
         specifier: ^0.34.0
-        version: 0.34.0(6c98c0a79848ce8beb1ad80690d67516)
+        version: 0.34.0(607f0f024681bd242008008494fe4a9d)
       ember-resources:
         specifier: ^7.0.3
-        version: 7.0.6(807cfcd3020ea8ad8edb1795de9ad08f)
+        version: 7.0.6(4f2e80f0a0bd25f30177abf189405398)
       ember-source:
         specifier: '>= 6.7.0-alpha.1'
         version: 6.7.0-alpha.3(patch_hash=ce25d468f4e598d7dacd16a6d27af9254ff94a9194ae612aec34111a65476b80)(@glimmer/component@2.0.0)(rsvp@4.8.5)
@@ -14874,9 +14874,9 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  '@embroider/addon-dev@7.1.5(@glint/template@1.5.2)(rollup@4.44.0)':
+  '@embroider/addon-dev@7.1.5(2186a6fe3257472edc163adef5e3f4d4)':
     dependencies:
-      '@embroider/core': 3.5.7(@glint/template@1.5.2)
+      '@embroider/core': 3.5.7(@glint/template@1.6.0-alpha.1)
       '@rollup/pluginutils': 4.2.1
       content-tag: 3.1.3
       execa: 5.1.1
@@ -15046,12 +15046,12 @@ snapshots:
 
   '@embroider/config-meta-loader@1.0.0': {}
 
-  '@embroider/core@3.5.7(@glint/template@1.5.2)':
+  '@embroider/core@3.5.7(@glint/template@1.6.0-alpha.1)':
     dependencies:
       '@babel/core': 7.27.7
       '@babel/parser': 7.28.0
       '@babel/traverse': 7.28.0
-      '@embroider/macros': 1.16.13(@glint/template@1.5.2)
+      '@embroider/macros': 1.16.13(@glint/template@1.6.0-alpha.1)
       '@embroider/shared-internals': 2.9.1
       assert-never: 1.4.0
       babel-plugin-ember-template-compilation: 2.4.1
@@ -15152,7 +15152,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@embroider/macros@1.16.13(@glint/template@1.5.2)':
+  '@embroider/macros@1.16.13(@glint/template@1.6.0-alpha.1)':
     dependencies:
       '@embroider/shared-internals': 2.9.0
       assert-never: 1.4.0
@@ -15163,7 +15163,7 @@ snapshots:
       resolve: 1.22.10
       semver: 7.7.2
     optionalDependencies:
-      '@glint/template': 1.5.2
+      '@glint/template': 1.6.0-alpha.1
     transitivePeerDependencies:
       - supports-color
 
