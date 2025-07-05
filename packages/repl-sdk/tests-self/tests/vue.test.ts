@@ -5,7 +5,7 @@ describe('vue', () => {
   test('it works', async () => {
     const compiler = new Compiler();
     // Vue comes from esm.sh
-    const element = await compiler.compile(
+    const { element } = await compiler.compile(
       'vue',
       `
       <style scoped>

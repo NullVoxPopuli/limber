@@ -20,7 +20,7 @@ describe('custom', () => {
       },
     });
 
-    const element = await compiler.compile('custom', `example text`);
+    const { element } = await compiler.compile('custom', `example text`);
 
     expect(element.textContent).toContain('example text!!');
   });
