@@ -29,9 +29,16 @@ export async function shortenUrl(url: string) {
   const json = await response.json();
   const shortUrl = json.data.attributes.shortUrl;
 
-  // fake our custom domain
-  // Will be done for us later
-  return shortUrl.replace('nvp.gg', 'share.glimdown.com');
+  /**
+   * We don't need to replace if the REPL is on the nvp.gg domain
+   */
+  if (location.href.includes('glimdown.com')) {
+    // fake our custom domain
+    // Will be done for us later
+    return shortUrl.replace('nvp.gg', 'share.glimdown.com');
+  }
+
+  return shortUrl;
 }
 
 /**
