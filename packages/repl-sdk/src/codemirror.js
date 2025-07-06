@@ -62,7 +62,7 @@ export async function buildCodemirror({
    * @param {string} format
    */
   async function supportForFormat(format) {
-    let support = getSupport(format);
+    let support = await getSupport(format);
 
     if (!support) {
       return [];
@@ -76,31 +76,32 @@ export async function buildCodemirror({
     supportForFormat(format),
   ]);
 
+  const editorExtensions = [
+    // features
+    basicSetup,
+    foldByIndent(),
+    // Language
+    language,
+    ...support,
+
+    updateListener,
+    EditorView.lineWrapping,
+    keymap.of([
+      // Intentionally do not capture the tab key -- otherwise we can't leave the editor.
+      indentWithTab,
+      ...completionKeymap,
+      ...markdownKeymap,
+    ]),
+
+    // TODO: lsp,
+
+    ...(extensions ?? []),
+  ].filter(Boolean);
+
   let view = new EditorView({
     parent: element,
     state: EditorState.create({
-      // doc: value,
-      extensions: [
-        // features
-        basicSetup,
-        foldByIndent(),
-        // Language
-        language,
-        ...support,
-
-        updateListener,
-        EditorView.lineWrapping,
-        keymap.of([
-          // Intentionally do not capture the tab key -- otherwise we can't leave the editor.
-          indentWithTab,
-          ...completionKeymap,
-          ...markdownKeymap,
-        ]),
-
-        // TODO: lsp,
-
-        ...(extensions ?? []),
-      ],
+      extensions: editorExtensions,
     }),
   });
 
@@ -109,13 +110,17 @@ export async function buildCodemirror({
    * @param {string} format
    */
   let setText = async (text, format) => {
+    let lang = await languageForFormat(format);
+
+    console.debug(`Codemirror changing to ${format}: ${lang ? 'ok' : 'not ok'}`);
+
     view.dispatch({
       changes: {
         from: 0,
         to: view.state.doc.length,
         insert: text,
       },
-      effects: languageConf.reconfigure(await languageForFormat(format)),
+      effects: languageConf.reconfigure(lang),
     });
   };
 

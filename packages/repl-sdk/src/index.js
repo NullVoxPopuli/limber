@@ -66,7 +66,7 @@ export class Compiler {
             loadLang
           );
 
-          return loadLang();
+          return await loadLang();
         },
         getSupport: async (format) => {
           const [lang, flavor] = format.split('|');
@@ -76,7 +76,7 @@ export class Compiler {
           const compiler = this.#resolveFormat(lang, flavor);
           let loadSupport = compiler.codemirror.support;
 
-          return loadSupport?.();
+          return await loadSupport?.();
         },
       });
     });
