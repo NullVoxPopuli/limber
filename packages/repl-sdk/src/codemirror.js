@@ -9,6 +9,19 @@ import { foldByIndent } from 'codemirror-lang-mermaid';
 
 /**
  * Builds and creates a codemirror instance for the given element
+ *
+ * @typedef {any} Extension
+ *
+ * @typedef {object} CodemirrorOptions
+ * @property {HTMLElement} element
+ * @property {string} text
+ * @property {string} format
+ * @property {Extension[]} [ extensions ]
+ * @property {(text: string) => void} handleUpdate
+ * @property {(format: string) => Promise<Extension>} getLang
+ * @property {(format: string) => Promise<Extension>} getSupport
+ *
+ * @param {CodemirrorOptions} options
  */
 export async function buildCodemirror({
   element,
@@ -28,6 +41,9 @@ export async function buildCodemirror({
     }
   });
 
+  /**
+   * @param {string} format
+   */
   async function languageForFormat(format) {
     switch (format) {
       case 'glimdown':
@@ -42,6 +58,9 @@ export async function buildCodemirror({
     }
   }
 
+  /**
+   * @param {string} format
+   */
   async function supportForFormat(format) {
     let support = getSupport(format);
 
@@ -85,6 +104,10 @@ export async function buildCodemirror({
     }),
   });
 
+  /**
+   * @param {string} text
+   * @param {string} format
+   */
   let setText = async (text, format) => {
     view.dispatch({
       changes: {

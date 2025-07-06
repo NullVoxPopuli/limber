@@ -54,7 +54,6 @@ class CodeMirror extends Modifier<Signature> {
       return;
     }
 
-
     const cleanup = () => {
       if (this.#load) {
         window.removeEventListener('mousemove', this.#load);
@@ -66,6 +65,7 @@ class CodeMirror extends Modifier<Signature> {
     this.#load = () => {
       cleanup();
       named.onStateChange?.({ isLoading: true, isDone: false, error: null });
+
       this.setup(element)
         .then(() => {
           named.onStateChange?.({ isLoading: false, isDone: true, error: null });

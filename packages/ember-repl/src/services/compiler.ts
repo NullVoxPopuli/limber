@@ -289,7 +289,7 @@ export default class CompilerService {
   async createEditor(
     element: HTMLElement,
     options: {
-      text: string;
+      text: string | null | undefined;
       format: string;
       handleUpdate: (text: string) => void;
     }

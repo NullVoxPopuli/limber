@@ -17,11 +17,28 @@
     }
   }
 
+  .limber__editor__codemirror {
+    width: 100%;
+    height: 100%;
+  }
+
   &:has(.cm-focused) {
     .limber__editor__tab-help {
       opacity: 1;
     }
   }
+}
+
+.limber__editor__pending {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  background: var(--code-bg);
+  overflow: hidden;
+  border: 1px solid oklch(21% 0.034 264.665);
+  width: 100%;
+  height: 100%;
 }
 
 @media (pointer:coarse) {

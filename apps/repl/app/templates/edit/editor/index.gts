@@ -14,35 +14,32 @@ import { Placeholder } from './placeholder.gts';
 import type EditorService from '#app/services/editor.ts';
 
 
-export class Editor extends Component<{ Element: HTMLDivElement }> {
+export class Editor extends Component {
   @service declare editor: EditorService;
 
-@tracked isLoading = false;
-@tracked isDone = false;
-@tracked error = null;
+  @tracked isLoading = false;
+  @tracked isDone = false;
+  @tracked error = null;
 
-handleStateChange = (state: { isLoading: boolean, isDone: boolean, error: unknown}) => {
-  Object.assign(this, state);
-};
-
-
-
-<template>
-  <div class="overflow-hidden overflow-y-auto limber__editor">
-    <div class="limber__editor__tab-help">press <Key>esc</Key> to <Key>tab</Key> out</div>
-    {{! template-lint-disable no-inline-styles }}
-    <div style="width: 100%; height: 100%;" {{codemirror defer=true onStateChange=this.handleStateChange}}>{{this.editor.text}}</div>
-  </div>
+  handleStateChange = (state: { isLoading: boolean, isDone: boolean, error: unknown}) => {
+    // What could go wrong? ;)
+    Object.assign(this, state);
+  };
 
 
-    {{#if this.isDone}}
-
-
-    {{else}}
+  <template>
+    <div class="overflow-hidden overflow-y-auto limber__editor">
+      <div class="limber__editor__tab-help">press <Key>esc</Key> to <Key>tab</Key> out</div>
       <div
-        class="syntax-dark bg-code-bg relative overflow-hidden border border-gray-900"
-        ...attributes
-      >
+        class="limber__editor__codemirror"
+        {{codemirror
+          defer=true
+          onStateChange=this.handleStateChange}}
+        >{{this.editor.text}}</div>
+    </div>
+
+    {{#unless this.isDone}}
+      <div class="limber__editor__pending syntax-dark">
 
         {{#if this.isLoading}}
           <Loader />
@@ -54,6 +51,6 @@ handleStateChange = (state: { isLoading: boolean, isDone: boolean, error: unknow
 
         <Placeholder />
       </div>
-    {{/if}}
-</template>;
+    {{/unless}}
+  </template>;
 }
