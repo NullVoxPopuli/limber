@@ -1,6 +1,7 @@
 import { tracked } from '@glimmer/tracking';
 import Service, { service } from '@ember/service';
 
+import { getCompiler } from 'ember-repl';
 import { link } from 'reactiveweb/link';
 
 import { FileURIComponent } from 'limber/utils/editor-text';

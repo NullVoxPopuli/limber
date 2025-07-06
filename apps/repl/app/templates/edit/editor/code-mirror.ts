@@ -3,18 +3,33 @@ import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyabl
 import { service } from '@ember/service';
 import { waitForPromise } from '@ember/test-waiters';
 
-import Modifier from 'ember-modifier';
 import { syntaxHighlighting } from '@codemirror/language';
+import Modifier from 'ember-modifier';
+import { getCompiler } from 'ember-repl';
 
-import type { EditorView } from '@codemirror/view';
+import { HorizonSyntaxTheme, HorizonTheme } from './theme.ts';
+
 import type RouterService from '@ember/routing/router-service';
 import type { FormatQP } from '#app/languages.gts';
 import type EditorService from 'limber/services/editor';
-import { getCompiler } from 'ember-repl';
-import { HorizonSyntaxTheme, HorizonTheme } from './theme.ts';
 
 type Signature = {
   Element: HTMLDivElement;
+  Args: {
+    Positional: never[];
+    Named: {
+      /**
+       * Default: false
+       */
+      defer?: boolean,
+      onStateChange?: (state: {
+        isLoading: boolean,
+        isDone: boolean,
+        error: undefined | null | string;
+      }) => void;
+
+    }
+  }
 };
 
 /**
@@ -24,22 +39,48 @@ type Signature = {
  *
  * This modifier is a class-based modifier _solely_ for getting easier access to services
  */
-
-let CODEMIRROR:
-  | undefined
-  | ((
-      element: HTMLElement,
-      value: string | null,
-      format: FormatQP,
-      handleUpdate: (text: string) => void
-    ) => Promise<{ view: EditorView; setText: (text: string, format: FormatQP) => Promise<void> }>);
-
-export default class CodeMirror extends Modifier<Signature> {
+class CodeMirror extends Modifier<Signature> {
   @service declare editor: EditorService;
   @service declare router: RouterService;
 
-  modify(element: Element) {
-    waitForPromise(this.setup(element));
+  #load?: () => void;
+
+  modify(element: Element, _: never[], named: Signature['Args']['Named']) {
+    if (this.#load) return;
+
+    if (!named.defer) {
+      waitForPromise(this.setup(element));
+
+      return;
+    }
+
+
+    const cleanup = () => {
+      if (this.#load) {
+        window.removeEventListener('mousemove', this.#load);
+        window.removeEventListener('keydown', this.#load);
+        window.removeEventListener('touchstart', this.#load);
+      }
+    };
+
+    this.#load = () => {
+      cleanup();
+      named.onStateChange?.({ isLoading: true, isDone: false, error: null });
+      this.setup(element)
+        .then(() => {
+          named.onStateChange?.({ isLoading: false, isDone: true, error: null });
+        }).catch((e) => {
+          named.onStateChange?.({ isLoading: false, isDone: false, error: e })
+        });
+    }
+
+    window.addEventListener('mousemove', this.#load, { passive: true });
+    window.addEventListener('keydown', this.#load, { passive: true });
+    window.addEventListener('touchstart', this.#load, { passive: true });
+
+    registerDestructor(this, () => {
+      cleanup();
+    })
   }
 
   // For deduping incidental changes to the *format* Signal
@@ -48,7 +89,17 @@ export default class CodeMirror extends Modifier<Signature> {
   // We only want to re-create the editor when the format changes value
   previousFormat: FormatQP | undefined;
 
+  /**
+   * We don't allow thish to run more than once.
+   * The editor has to be managed imperatively / with callbacks
+   * from this point forward
+   */
+  #isSetup = false;
+
   setup = async (element: Element) => {
+    if (this.#isSetup) return;
+    this.#isSetup = true;
+
     const { format } = this.editor;
 
     if (format === this.previousFormat) {
@@ -108,3 +159,5 @@ export default class CodeMirror extends Modifier<Signature> {
 }
 
 
+
+export const codemirror = CodeMirror;

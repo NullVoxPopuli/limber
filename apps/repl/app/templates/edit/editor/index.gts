@@ -1,76 +1,42 @@
 import './styles.css';
 
-import { waitForPromise } from '@ember/test-waiters';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { service } from '@ember/service';
 
 import { Key } from 'ember-primitives/components/keys';
-import { service } from 'ember-primitives/helpers/service';
-import { resource, resourceFactory } from 'ember-resources';
-import { TrackedObject } from 'tracked-built-ins';
 
-import codemirror, { setupCodeMirror } from './-code-mirror.ts';
+import { codemirror } from './code-mirror.ts';
 import Loader from './loader.gts';
 import { LoadingError } from './loading-error.gts';
 import { Placeholder } from './placeholder.gts';
 
-import type { TOC } from '@ember/component/template-only';
+import type EditorService from '#app/services/editor.ts';
 
-function deferCodemirror() {
-  const state = new TrackedObject({ isLoading: false, isDone: false, error: null });
 
-  function getEditor() {
-    state.isLoading = true;
-    waitForPromise(setupCodeMirror())
-      .then(() => {
-        state.isDone = true;
-      })
-      .catch((error) => (state.error = error))
-      .finally(() => {
-        state.isLoading = false;
-      });
-  }
+export class Editor extends Component<{ Element: HTMLDivElement }> {
+  @service declare editor: EditorService;
 
-  function cleanup() {
-    window.removeEventListener('mousemove', load);
-    window.removeEventListener('keydown', load);
-    window.removeEventListener('touchstart', load);
-  }
+@tracked isLoading = false;
+@tracked isDone = false;
+@tracked error = null;
 
-  const load = () => {
-    getEditor();
-    cleanup();
-  };
+handleStateChange = (state: { isLoading: boolean, isDone: boolean, error: unknown}) => {
+  Object.assign(this, state);
+};
 
-  return resource(({ on, owner }) => {
-    if (owner.lookup('service:router').currentRoute?.queryParams?.['forceEditor'] === 'true') {
-      load();
-    }
 
-    on.cleanup(() => cleanup());
 
-    window.addEventListener('mousemove', load, { passive: true });
-    window.addEventListener('keydown', load, { passive: true });
-    window.addEventListener('touchstart', load, { passive: true });
+<template>
+  <div class="overflow-hidden overflow-y-auto limber__editor">
+    <div class="limber__editor__tab-help">press <Key>esc</Key> to <Key>tab</Key> out</div>
+    {{! template-lint-disable no-inline-styles }}
+    <div style="width: 100%; height: 100%;" {{codemirror defer=true onStateChange=this.handleStateChange}}>{{this.editor.text}}</div>
+  </div>
 
-    return state;
-  });
-}
 
-resourceFactory(deferCodemirror);
+    {{#if this.isDone}}
 
-export const Editor: TOC<{
-  Element: HTMLDivElement;
-}> = <template>
-  {{#let (deferCodemirror) as |state|}}
-
-    {{#if state.isDone}}
-
-      {{#let (service "editor") as |context|}}
-        <div class="overflow-hidden overflow-y-auto limber__editor">
-          <div class="limber__editor__tab-help">press <Key>esc</Key> to <Key>tab</Key> out</div>
-          {{! template-lint-disable no-inline-styles }}
-          <div style="width: 100%; height: 100%;" {{codemirror}}>{{context.text}}</div>
-        </div>
-      {{/let}}
 
     {{else}}
       <div
@@ -78,19 +44,16 @@ export const Editor: TOC<{
         ...attributes
       >
 
-        {{#if state.isLoading}}
+        {{#if this.isLoading}}
           <Loader />
         {{/if}}
 
-        {{#if state.error}}
-          <LoadingError @error={{state.error}} />
+        {{#if this.error}}
+          <LoadingError @error={{this.error}} />
         {{/if}}
 
         <Placeholder />
       </div>
     {{/if}}
-
-  {{/let}}
 </template>;
-
-export default Editor;
+}
