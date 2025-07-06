@@ -37,6 +37,23 @@ export class Compiler {
     window.addEventListener('unhandledrejection', this.#handleUnhandledRejection);
   }
 
+  async createEditor(element, { text, format, handleUpdate, extensions }) {
+    // Only one instance is allowed
+    return cache.cachedPromise('codemirror', async () => {
+      const { buildCodemirror } = await import('./codemirror.js');
+
+      return buildCodemirror({
+        element,
+        text,
+        format,
+        extensions,
+        handleUpdate,
+        getLang: (format) => {},
+        getSupport: (format) => {},
+      });
+    });
+  }
+
   /**
    * @param {PromiseRejectionEvent} e
    */

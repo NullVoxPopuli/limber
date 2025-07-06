@@ -21,6 +21,7 @@ import { modules } from './known-modules.ts';
 import type { CompileResult, ModuleMap } from '../compile/types.ts';
 import type Owner from '@ember/owner';
 import type { ComponentLike } from '@glint/template';
+import type { EditorView } from 'codemirror';
 import type { ErrorMessage, InfoMessage, Message } from 'repl-sdk';
 
 function isOwner(context: object): context is Owner {
@@ -283,6 +284,17 @@ export default class CompilerService {
     );
 
     return this.#compiler;
+  }
+
+  async createEditor(
+    element: HTMLElement,
+    options: {
+      text: string;
+      format: string;
+      handleUpdate: (text: string) => void;
+    }
+  ): Promise<{ view: EditorView; setText: (text: string, format: string) => Promise<void> }> {
+    return this.compiler.createEditor(element, options);
   }
 
   async #compile(ext: string, text: string, options?: Record<string, unknown>) {

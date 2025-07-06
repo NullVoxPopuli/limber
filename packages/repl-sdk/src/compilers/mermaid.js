@@ -5,6 +5,13 @@ import { esmsh } from '../cdn.js';
  */
 export const mermaid = {
   needsLiveMeta: false,
+  codemirror: {
+    lang: async () => {
+      const { mermaid } = await import('codemirror-lang-mermaid');
+
+      return mermaid();
+    },
+  },
   compiler: async (config, api) => {
     const versions = config.versions;
     const { default: mermaid } = await api.tryResolve('mermaid', () => {

@@ -106,6 +106,13 @@ function onUnhandled(e, handle) {
 export const gjs = {
   resolve,
   onUnhandled,
+  codemirror: {
+    lang: async () => {
+      const { gjs } = await import('codemirror-lang-glimmer-js');
+
+      return gjs();
+    },
+  },
   compiler: async (...args) => {
     const gjs = await import('./ember/gjs.js');
 
@@ -119,6 +126,13 @@ export const gjs = {
 export const hbs = {
   resolve,
   onUnhandled,
+  codemirror: {
+    lang: async () => {
+      const { glimmer } = await import('codemirror-lang-glimmer');
+
+      return glimmer();
+    },
+  },
   compiler: async (...args) => {
     const hbs = await import('./ember/hbs.js');
 
@@ -132,6 +146,18 @@ export const hbs = {
 export const gmd = {
   resolve,
   onUnhandled,
+  codemirror: {
+    lang: async () => {
+      const { glimdown } = await import('codemirror-lang-glimdown');
+
+      return glimdown();
+    },
+    support: async () => {
+      const { gjs } = await import('codemirror-lang-glimmer-js');
+
+      return [gjs().support];
+    },
+  },
   compiler: async (...args) => {
     const hbs = await import('./ember/gmd.js');
 

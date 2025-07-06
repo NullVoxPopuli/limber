@@ -18,6 +18,13 @@ export const compilers = {
      *
      */
     ember: ember.hbs,
+    codemirror: {
+      lang: async () => {
+        const { glimmer } = await import('codemirror-lang-glimmer');
+
+        return glimmer();
+      },
+    },
   },
   /**
    * Markdown, but every code fense can be a live "Island"

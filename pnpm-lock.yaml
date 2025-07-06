@@ -87,6 +87,9 @@ importers:
 
   apps/repl:
     dependencies:
+      '@codemirror/language':
+        specifier: ^6.11.2
+        version: 6.11.2
       '@ember/test-waiters':
         specifier: ^4.1.0
         version: 4.1.0(@glint/template@1.6.0-alpha.1)
@@ -99,12 +102,12 @@ importers:
       '@glimmer/component':
         specifier: ^2.0.0
         version: 2.0.0
+      '@lezer/highlight':
+        specifier: ^1.2.1
+        version: 1.2.1
       '@nullvoxpopuli/horizon-theme':
         specifier: workspace:*
         version: link:../../packages/horizon-theme
-      '@nullvoxpopuli/limber-codemirror':
-        specifier: workspace:*
-        version: link:../../packages/app-support/codemirror
       '@nullvoxpopuli/limber-styles':
         specifier: workspace:*
         version: link:../../packages/app-support/styles
@@ -733,124 +736,6 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
 
-  packages/app-support/codemirror:
-    dependencies:
-      '@codemirror/autocomplete':
-        specifier: 6.18.6
-        version: 6.18.6
-      '@codemirror/commands':
-        specifier: 6.8.1
-        version: 6.8.1
-      '@codemirror/lang-html':
-        specifier: ^6.4.9
-        version: 6.4.9
-      '@codemirror/lang-javascript':
-        specifier: 6.2.4
-        version: 6.2.4
-      '@codemirror/lang-markdown':
-        specifier: 6.3.3
-        version: 6.3.3
-      '@codemirror/lang-vue':
-        specifier: ^0.1.3
-        version: 0.1.3
-      '@codemirror/lang-yaml':
-        specifier: ^6.1.2
-        version: 6.1.2
-      '@codemirror/language':
-        specifier: ^6.11.2
-        version: 6.11.2
-      '@codemirror/language-data':
-        specifier: ^6.5.1
-        version: 6.5.1
-      '@codemirror/lint':
-        specifier: ^6.8.4
-        version: 6.8.5
-      '@codemirror/search':
-        specifier: 6.5.11
-        version: 6.5.11
-      '@codemirror/state':
-        specifier: 6.5.2
-        version: 6.5.2
-      '@codemirror/view':
-        specifier: 6.37.2
-        version: 6.37.2
-      '@lezer/common':
-        specifier: ^1.2.3
-        version: 1.2.3
-      '@lezer/highlight':
-        specifier: ^1.2.1
-        version: 1.2.1
-      '@lezer/html':
-        specifier: ^1.3.10
-        version: 1.3.10
-      '@lezer/markdown':
-        specifier: ^1.4.1
-        version: 1.4.3
-      '@nullvoxpopuli/horizon-theme':
-        specifier: workspace:*
-        version: link:../../horizon-theme
-      '@replit/codemirror-lang-svelte':
-        specifier: ^6.0.0
-        version: 6.0.0(8ea3a73854c03a97a986b4fe3900fecd)
-      assert:
-        specifier: npm:@nolyfill/assert@^1
-        version: '@nolyfill/assert@1.0.26'
-      broccoli-funnel:
-        specifier: ^3.0.8
-        version: 3.0.8
-      codemirror:
-        specifier: ^6.0.2
-        version: 6.0.2
-      codemirror-lang-glimdown:
-        specifier: workspace:*
-        version: link:../../syntax/glimdown/codemirror
-      codemirror-lang-glimmer:
-        specifier: workspace:*
-        version: link:../../syntax/glimmer/codemirror
-      codemirror-lang-glimmer-js:
-        specifier: workspace:*
-        version: link:../../syntax/glimmer-js/codemirror
-      codemirror-lang-mermaid:
-        specifier: ^0.5.0
-        version: 0.5.0
-      codemirror-languageserver:
-        specifier: ^1.12.1
-        version: 1.12.1(encoding@0.1.13)
-      path-browserify:
-        specifier: ^1.0.1
-        version: 1.0.1
-    devDependencies:
-      '@babel/core':
-        specifier: ^7.27.7
-        version: 7.27.7
-      '@nullvoxpopuli/eslint-configs':
-        specifier: ^5.0.0
-        version: 5.1.2(f0745b5c01653b894ee6244d44294065)
-      concurrently:
-        specifier: ^9.1.2
-        version: 9.2.0
-      esbuild:
-        specifier: 0.25.5
-        version: 0.25.5
-      esbuild-plugin-alias:
-        specifier: ^0.2.1
-        version: 0.2.1
-      eslint:
-        specifier: ^9.29.0
-        version: 9.29.0(jiti@2.4.2)
-      prettier:
-        specifier: ^3.6.2
-        version: 3.6.2
-      prettier-plugin-ember-template-tag:
-        specifier: 2.0.6
-        version: 2.0.6(prettier@3.6.2)
-      recursive-copy:
-        specifier: ^2.0.14
-        version: 2.0.14
-      typescript:
-        specifier: 5.8.3
-        version: 5.8.3
-
   packages/app-support/limber-ui/addon:
     dependencies:
       '@babel/runtime':
@@ -1144,6 +1029,9 @@ importers:
       babel-plugin-ember-template-compilation:
         specifier: ^2.4.1
         version: 2.4.1
+      codemirror:
+        specifier: ^6.0.2
+        version: 6.0.2
       content-tag:
         specifier: ^3.0.0
         version: 3.1.3
@@ -1373,9 +1261,81 @@ importers:
 
   packages/repl-sdk:
     dependencies:
+      '@codemirror/autocomplete':
+        specifier: 6.18.6
+        version: 6.18.6
+      '@codemirror/commands':
+        specifier: 6.8.1
+        version: 6.8.1
+      '@codemirror/lang-html':
+        specifier: ^6.4.9
+        version: 6.4.9
+      '@codemirror/lang-javascript':
+        specifier: 6.2.4
+        version: 6.2.4
+      '@codemirror/lang-markdown':
+        specifier: 6.3.3
+        version: 6.3.3
+      '@codemirror/lang-vue':
+        specifier: ^0.1.3
+        version: 0.1.3
+      '@codemirror/lang-yaml':
+        specifier: ^6.1.2
+        version: 6.1.2
+      '@codemirror/language':
+        specifier: ^6.11.2
+        version: 6.11.2
+      '@codemirror/language-data':
+        specifier: ^6.5.1
+        version: 6.5.1
+      '@codemirror/lint':
+        specifier: ^6.8.4
+        version: 6.8.5
+      '@codemirror/search':
+        specifier: 6.5.11
+        version: 6.5.11
+      '@codemirror/state':
+        specifier: 6.5.2
+        version: 6.5.2
+      '@codemirror/view':
+        specifier: 6.37.2
+        version: 6.37.2
+      '@lezer/common':
+        specifier: ^1.2.3
+        version: 1.2.3
+      '@lezer/highlight':
+        specifier: ^1.2.1
+        version: 1.2.1
+      '@lezer/html':
+        specifier: ^1.3.10
+        version: 1.3.10
+      '@lezer/markdown':
+        specifier: ^1.4.1
+        version: 1.4.3
+      '@replit/codemirror-lang-svelte':
+        specifier: ^6.0.0
+        version: 6.0.0(8ea3a73854c03a97a986b4fe3900fecd)
       change-case:
         specifier: ^5.4.4
         version: 5.4.4
+      codemirror:
+        specifier: ^6.0.2
+        version: 6.0.2
+      codemirror-lang-glimdown:
+        specifier: workspace:*
+        version: link:../syntax/glimdown/codemirror
+      codemirror-lang-glimmer:
+        specifier: workspace:*
+        version: link:../syntax/glimmer/codemirror
+      codemirror-lang-glimmer-js:
+        specifier: workspace:*
+        version: link:../syntax/glimmer-js/codemirror
+      codemirror-lang-mermaid:
+        specifier: ^0.5.0
+        version: 0.5.0
+      codemirror-languageserver:
+        specifier: ^1.12.1
+        version: 1.12.1(encoding@0.1.13)
       comlink:
         specifier: ^4.4.2
         version: 4.4.2
@@ -3908,10 +3868,6 @@ packages:
     resolution: {integrity: sha512-P6OsaEUrpBJ9NdNekFDQVM9LOFHPDKSJzwOWRBaC6LqREX+4lkZT2Q+to78R6aG6atuOQsxBVqPjMGCKjWdvyQ==}
     engines: {node: '>=12.4.0'}
 
-  '@nolyfill/assert@1.0.26':
-    resolution: {integrity: sha512-xYXWX/30t7LmvXry+FF2nJKwFxNHZeprLy4KvfqK0ViAozp3+oXI3X4ANe8RQqZ7KaRc4OsEd5nzcvLKO+60Ng==}
-    engines: {node: '>=12.4.0'}
-
   '@nolyfill/hasown@1.0.44':
     resolution: {integrity: sha512-GA/21lkTr2PAQuT6jGnhLuBD5IFd/AEhBXJ/tf33+/bVxPxg+5ejKx9jGQGnyV/P0eSmdup5E+s8b2HL6lOrwQ==}
     engines: {node: '>=12.4.0'}
@@ -3920,24 +3876,12 @@ packages:
     resolution: {integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==}
     engines: {node: '>=12.4.0'}
 
-  '@nolyfill/is-nan@1.0.24':
-    resolution: {integrity: sha512-YllFbNnCilGfWfgr/09fjk1Rn0krSgBG3D8aMIMApCorSqMDEqgdIIwAZqo8VpMNDHAqWe/+L9qqvRvSN3H2JA==}
-    engines: {node: '>=12.4.0'}
-
   '@nolyfill/isarray@1.0.44':
     resolution: {integrity: sha512-NTSBKMkzaaVG3lVR5/lMTnW2y26XRQAgkdHMNaBviexwHgmtPsONFJ/HhQDak16BOrpYLasGMKGsgk3oKez57g==}
     engines: {node: '>=12.4.0'}
 
   '@nolyfill/json-stable-stringify@1.0.44':
     resolution: {integrity: sha512-ArCR39UyNH4a+ZTD77n+GcOCPlQTvDC1n4ubLmN5pk14Y7/sg1lRs0nRP8SCTJZJG4/J3IzsJR2hu8DGm0rjeg==}
-    engines: {node: '>=12.4.0'}
-
-  '@nolyfill/object-is@1.0.24':
-    resolution: {integrity: sha512-e8f31gXl7CdOFHNEvmU4XE6sG8+aKH7mIw9qydbu45+4agyexxrX9r6rlYzmXXaucdHIQlr6D8BrtT+YEtlCjg==}
-    engines: {node: '>=12.4.0'}
-
-  '@nolyfill/object.assign@1.0.24':
-    resolution: {integrity: sha512-s1UPaJu730s6WWct5+NZVCDxu3OXM74ZvWxfnluNp89Rha92xDn5QpRqtHolB2WsTXBwQJDqZV72Jhr1gPTIbw==}
     engines: {node: '>=12.4.0'}
 
   '@nolyfill/object.fromentries@1.0.44':
@@ -3951,9 +3895,6 @@ packages:
   '@nolyfill/object.values@1.0.44':
     resolution: {integrity: sha512-bwIpVzFMudUC0ofnvdSDB/OyGUizcU+r32ZZ0QTMbN03gUttMtdCFDekuSYT0XGFgufTQyZ4ONBnAeb3DFCPGQ==}
     engines: {node: '>=12.4.0'}
-
-  '@nolyfill/shared@1.0.24':
-    resolution: {integrity: sha512-TGCpg3k5N7jj9AgU/1xFw9K1g4AC1vEE5ZFkW77oPNNLzprxT17PvFaNr/lr3BkkT5fJ5LNMntaTIq+pyWaeEA==}
 
   '@nolyfill/shared@1.0.44':
     resolution: {integrity: sha512-NI1zxDh4LYL7PYlKKCwojjuc5CEZslywrOTKBNyodjmWjRiZ4AlCMs3Gp+zDoPQPNkYCSQp/luNojHmJWWfCbw==}
@@ -5572,38 +5513,19 @@ packages:
     resolution: {integrity: sha512-sKpyeERZ02v1FeCZT8lrfJq5u6goHCtpTAzPwJYe7c8SPFOboNjNg1vz2L4VTn9T4PQxEx13TbXLmYUcS6Ug7Q==}
     engines: {node: '>=0.10.0'}
 
-  array-differ@1.0.0:
-    resolution: {integrity: sha512-LeZY+DZDRnvP7eMuQ6LHfCzUGxAAIViUBliK24P3hWXL6y4SortgR6Nim6xrkfSLlmH0+k+9NYNwVC2s53ZrYQ==}
-    engines: {node: '>=0.10.0'}
-
   array-equal@1.0.2:
     resolution: {integrity: sha512-gUHx76KtnhEgB3HOuFYiCm3FIdEs6ocM2asHvNTkfu/Y09qQVrrVVaOKENmS2KkSaGoxgXNqC+ZVtR/n0MOkSA==}
 
   array-flatten@1.1.1:
     resolution: {integrity: sha512-PCVAQswWemu6UdxsDFFX/+gVeYqKAod3D3UVm91jHwynguOwAvYPhx8nNlM++NqRcK6CxxpUafjmhIdKiHibqg==}
 
-  array-union@1.0.2:
-    resolution: {integrity: sha512-Dxr6QJj/RdU/hCaBjOfxW+q6lyuVE6JFWIrAUpuOOhoJJoQ99cUn3igRaHVB5P9WrgFVN0FfArM3x0cueOU8ng==}
-    engines: {node: '>=0.10.0'}
-
   array-union@2.1.0:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  array-uniq@1.0.3:
-    resolution: {integrity: sha512-MNha4BWQ6JbwhFhj03YK552f7cb3AzoE8SzeljgChvL1dl3IcvggXVz1DilzySZkCja+CXuZbdW7yATchWn8/Q==}
-    engines: {node: '>=0.10.0'}
-
   array-unique@0.3.2:
     resolution: {integrity: sha512-SleRWjh9JUud2wH1hPs9rZBZ33H6T9HOiL0uwGnGx9FpE6wKGyfWugmbkEOIs6qWrZhg0LWeLziLrEwQJhs5mQ==}
     engines: {node: '>=0.10.0'}
-
-  arrify@1.0.1:
-    resolution: {integrity: sha512-3CYzex9M9FGQjCGMGyi6/31c8GJbgb0qGyrx5HWxPd0aCwh4cB2YjMb2Xf9UuoogrMrlO9cTqnB5rI5GHZTcUA==}
-    engines: {node: '>=0.10.0'}
-
-  asap@2.0.6:
-    resolution: {integrity: sha512-BSHWgDSAiKs50o2Re8ppvp3seVHXSRM44cdSsT9FfNEUUZLOGWVCsiWaRPWM1Znn+mqZ1OfVZ3z3DWEzSp7hRA==}
 
   assert-never@1.4.0:
     resolution: {integrity: sha512-5oJg84os6NMQNl27T9LnZkvvqzvAnHu03ShCnoj6bsJwS7L8AO4lf+C/XjK/nvzEqQB744moC6V128RucQd1jA==}
@@ -7516,10 +7438,6 @@ packages:
     resolution: {integrity: sha512-e64Qj9+4aZzjzzFpZC7p5kmm/ccCrbLhAJplhsDXQFs87XTsXwOpH4s1Io2s90Tau/8r2j9f4l/thhDevRjzxw==}
     engines: {node: '>=0.8'}
 
-  errno@0.1.8:
-    resolution: {integrity: sha512-dJ6oBr5SQ1VSd9qkk7ByRgb/1SH4JZjCHSW/mr63/QcXO9zLVxvJ6Oy13nio03rxpSnVDDjFor75SjVeZWPW/A==}
-    hasBin: true
-
   error-ex@1.3.2:
     resolution: {integrity: sha512-7dFHNmqeFSEt2ZBsCriorKnn3Z2pj+fd9kmI6QoWw4//DL+icEBfc0U7qJCisqrTsKTjw4fNFy2pW9OqStD84g==}
 
@@ -7558,9 +7476,6 @@ packages:
     resolution: {integrity: sha512-D7HeJNdkDKKMarPQO/3dlJT6RwN2YJO7ENU6RPlpOz5YxSHnUNi2yvW41Bckvi1EVwctIaLzlb0ni5ag2GINYA==}
     peerDependencies:
       webpack: ^4.40.0 || ^5.0.0
-
-  esbuild-plugin-alias@0.2.1:
-    resolution: {integrity: sha512-jyfL/pwPqaFXyKnj8lP8iLk6Z0m099uXR45aSN8Av1XD4vhvQutxxPzgA2bTcAwQpa1zCXDcWOlhFgyP3GKqhQ==}
 
   esbuild@0.25.5:
     resolution: {integrity: sha512-P8OtKZRv/5J5hhz0cUAdu/cLuPIKXpQl1R9pZtvmHWQvrAUVd0UNIPT4IB4W3rNOqVO0rlqHmCIbSwxh/c9yUQ==}
@@ -9122,10 +9037,6 @@ packages:
   jszip@3.10.1:
     resolution: {integrity: sha512-xXDvecyTpGLrqFrvkrUSoxxfJI5AH7U8zxxtVclpsUtMCq4JQ290LY8AW5c7Ggnr/Y/oK+bQMbqK2qmtk3pN4g==}
 
-  junk@1.0.3:
-    resolution: {integrity: sha512-3KF80UaaSSxo8jVnRYtMKNGFOoVPBdkkVPsw+Ad0y4oxKXPduS6G6iHkrf69yJVff/VAaYXkV42rtZ7daJxU3w==}
-    engines: {node: '>=0.10.0'}
-
   katex@0.16.22:
     resolution: {integrity: sha512-XCHRdUw4lf3SKBaJe4EvgqIuWwkPSo9XoeO8GjQW94Bp7TWv9hNhzZjZ+OH9yf1UmLygb7DIT5GSFQiyt16zYg==}
     hasBin: true
@@ -9454,10 +9365,6 @@ packages:
 
   mathml-tag-names@2.1.3:
     resolution: {integrity: sha512-APMBEanjybaPzUrfqU0IMU5I0AswKMH7k8OTLs0vvV4KZpExkTkY87nR/zpbuTPj+gARop7aGUbl11pnDfW6xg==}
-
-  maximatch@0.1.0:
-    resolution: {integrity: sha512-9ORVtDUFk4u/NFfo0vG/ND/z7UQCVZBL539YW0+U1I7H1BkZwizcPx5foFv7LCPcBnm2U6RjFnQOsIvN4/Vm2A==}
-    engines: {node: '>=0.10.0'}
 
   mdast-util-definitions@5.1.2:
     resolution: {integrity: sha512-8SVPMuHqlPME/z3gqVwWY4zVXn8lqKv/pAhC57FuJ40ImXyBpmO5ukh98zB2v7Blql2FiHjHv9LVztSIqjY+MA==}
@@ -10803,9 +10710,6 @@ packages:
     resolution: {integrity: sha512-KYcnXctWUWyVD3W3Ye0ZDuA1N8Szrh85cVCxpG6xYrOk/0CttRtYCmU30nWsUch0NuExQQ63QXvzRE6FLimZmg==}
     engines: {node: 10.* || >= 12.*}
 
-  promise@7.3.1:
-    resolution: {integrity: sha512-nolQXZ/4L+bP/UGlkfaIujX9BKxGwmQ9OT4mOt5yvy8iK1h3wqTEJCijzGANTCCl9nWjY41juyAn2K3Q1hLLTg==}
-
   proper-lockfile@4.1.2:
     resolution: {integrity: sha512-TjNPblN4BwAWMXU8s9AEz4JmQxnD1NNL7bNOY/AKUzyamc379FWASUhc/K1pL2noVb+XmZKLL68cjzLsiOAMaA==}
 
@@ -10828,9 +10732,6 @@ packages:
 
   proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
-
-  prr@1.0.1:
-    resolution: {integrity: sha512-yPw4Sng1gWghHQWj0B3ZggWUm4qVbPwPFcRG8KyxiU7J2OHFSoEHKS+EZ3fv5l1t9CyCiop6l/ZYeWbrgoQejw==}
 
   ps-tree@1.2.0:
     resolution: {integrity: sha512-0VnamPPYHl4uaU/nSFeZZpR21QAWRz+sRv4iW9+v/GS/J5U5iZB5BNN6J0RMoOvdx2gWM2+ZFMIm58q24e4UYA==}
@@ -10972,9 +10873,6 @@ packages:
   rechoir@0.8.0:
     resolution: {integrity: sha512-/vxpCXddiX8NGfGO/mTafwjq4aFa/71pvamip0++IQk3zG8cbCj0fifNPrjjF1XMXUne91jL9OoxmdykoEtifQ==}
     engines: {node: '>= 10.13.0'}
-
-  recursive-copy@2.0.14:
-    resolution: {integrity: sha512-K8WNY8f8naTpfbA+RaXmkaQuD1IeW9EgNEfyGxSqqTQukpVtoOKros9jUqbpEsSw59YOmpd8nCBgtqJZy5nvog==}
 
   redeyed@1.0.1:
     resolution: {integrity: sha512-8eEWsNCkV2rvwKLS1Cvp5agNjMhwRe2um+y32B2+3LqOzg4C9BBPs6vzAfV16Ivb8B9HPNKIqd8OrdBws8kNlQ==}
@@ -11520,10 +11418,6 @@ packages:
   skin-tone@2.0.0:
     resolution: {integrity: sha512-kUMbT1oBJCpgrnKoSr0o6wPtvRWT9W9UKvGLwfJYO2WuahZRHOpEyL1ckyMGgMWh0UdpmaoFqKKD29WTomNEGA==}
     engines: {node: '>=8'}
-
-  slash@1.0.0:
-    resolution: {integrity: sha512-3TYDR7xWt4dIqV2JauJr+EJeW356RXijHeUlO+8djJ+uBXPn8/2dpzBc8yQhh583sVvc9CvFAeQVgijsH+PNNg==}
-    engines: {node: '>=0.10.0'}
 
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
@@ -16149,31 +16043,13 @@ snapshots:
     dependencies:
       '@nolyfill/shared': 1.0.44
 
-  '@nolyfill/assert@1.0.26':
-    dependencies:
-      '@nolyfill/is-nan': 1.0.24
-      '@nolyfill/object-is': 1.0.24
-      '@nolyfill/object.assign': 1.0.24
-
   '@nolyfill/hasown@1.0.44': {}
 
   '@nolyfill/is-core-module@1.0.39': {}
 
-  '@nolyfill/is-nan@1.0.24':
-    dependencies:
-      '@nolyfill/shared': 1.0.24
-
   '@nolyfill/isarray@1.0.44': {}
 
   '@nolyfill/json-stable-stringify@1.0.44': {}
-
-  '@nolyfill/object-is@1.0.24':
-    dependencies:
-      '@nolyfill/shared': 1.0.24
-
-  '@nolyfill/object.assign@1.0.24':
-    dependencies:
-      '@nolyfill/shared': 1.0.24
 
   '@nolyfill/object.fromentries@1.0.44':
     dependencies:
@@ -16186,8 +16062,6 @@ snapshots:
   '@nolyfill/object.values@1.0.44':
     dependencies:
       '@nolyfill/shared': 1.0.44
-
-  '@nolyfill/shared@1.0.24': {}
 
   '@nolyfill/shared@1.0.44': {}
 
@@ -18175,25 +18049,13 @@ snapshots:
 
   arr-union@3.1.0: {}
 
-  array-differ@1.0.0: {}
-
   array-equal@1.0.2: {}
 
   array-flatten@1.1.1: {}
 
-  array-union@1.0.2:
-    dependencies:
-      array-uniq: 1.0.3
-
   array-union@2.1.0: {}
 
-  array-uniq@1.0.3: {}
-
   array-unique@0.3.2: {}
-
-  arrify@1.0.1: {}
-
-  asap@2.0.6: {}
 
   assert-never@1.4.0: {}
 
@@ -21200,10 +21062,6 @@ snapshots:
 
   errlop@2.2.0: {}
 
-  errno@0.1.8:
-    dependencies:
-      prr: 1.0.1
-
   error-ex@1.3.2:
     dependencies:
       is-arrayish: 0.2.1
@@ -21244,8 +21102,6 @@ snapshots:
       loader-utils: 2.0.4
       webpack: 5.99.9
       webpack-sources: 1.4.3
-
-  esbuild-plugin-alias@0.2.1: {}
 
   esbuild@0.25.5:
     optionalDependencies:
@@ -23481,8 +23337,6 @@ snapshots:
       readable-stream: 2.3.8
       setimmediate: 1.0.5
 
-  junk@1.0.3: {}
-
   katex@0.16.22:
     dependencies:
       commander: 8.3.0
@@ -23879,13 +23733,6 @@ snapshots:
   math-intrinsics@1.1.0: {}
 
   mathml-tag-names@2.1.3: {}
-
-  maximatch@0.1.0:
-    dependencies:
-      array-differ: 1.0.0
-      array-union: 1.0.2
-      arrify: 1.0.1
-      minimatch: 3.1.2
 
   mdast-util-definitions@5.1.2:
     dependencies:
@@ -25577,10 +25424,6 @@ snapshots:
 
   promise.hash.helper@1.0.8: {}
 
-  promise@7.3.1:
-    dependencies:
-      asap: 2.0.6
-
   proper-lockfile@4.1.2:
     dependencies:
       graceful-fs: 4.2.11
@@ -25612,8 +25455,6 @@ snapshots:
       - supports-color
 
   proxy-from-env@1.1.0: {}
-
-  prr@1.0.1: {}
 
   ps-tree@1.2.0:
     dependencies:
@@ -25820,18 +25661,6 @@ snapshots:
   rechoir@0.8.0:
     dependencies:
       resolve: 1.22.10
-
-  recursive-copy@2.0.14:
-    dependencies:
-      errno: 0.1.8
-      graceful-fs: 4.2.11
-      junk: 1.0.3
-      maximatch: 0.1.0
-      mkdirp: 0.5.6
-      pify: 2.3.0
-      promise: 7.3.1
-      rimraf: 2.7.1
-      slash: 1.0.0
 
   redeyed@1.0.1:
     dependencies:
@@ -26546,8 +26375,6 @@ snapshots:
   skin-tone@2.0.0:
     dependencies:
       unicode-emoji-modifier-base: 1.0.0
-
-  slash@1.0.0: {}
 
   slash@3.0.0: {}
 

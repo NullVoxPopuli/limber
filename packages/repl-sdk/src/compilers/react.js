@@ -2,6 +2,13 @@
  * @type {import('../types.ts').CompilerConfig}
  */
 export const jsx = {
+  codemirror: {
+    lang: async () => {
+      const { javascript } = await import('@codemirror/lang-javascript');
+
+      return javascript({ jsx: true });
+    },
+  },
   resolve: (id) => {
     switch (id) {
       case 'react':

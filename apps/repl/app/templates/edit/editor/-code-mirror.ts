@@ -4,11 +4,14 @@ import { service } from '@ember/service';
 import { waitForPromise } from '@ember/test-waiters';
 
 import Modifier from 'ember-modifier';
+import { syntaxHighlighting } from '@codemirror/language';
 
 import type { EditorView } from '@codemirror/view';
 import type RouterService from '@ember/routing/router-service';
 import type { FormatQP } from '#app/languages.gts';
 import type EditorService from 'limber/services/editor';
+import { getCompiler } from 'ember-repl';
+import { HorizonSyntaxTheme, HorizonTheme } from './theme.ts';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -21,6 +24,15 @@ type Signature = {
  *
  * This modifier is a class-based modifier _solely_ for getting easier access to services
  */
+
+let CODEMIRROR:
+  | undefined
+  | ((
+      element: HTMLElement,
+      value: string | null,
+      format: FormatQP,
+      handleUpdate: (text: string) => void
+    ) => Promise<{ view: EditorView; setText: (text: string, format: FormatQP) => Promise<void> }>);
 
 export default class CodeMirror extends Modifier<Signature> {
   @service declare editor: EditorService;
@@ -53,16 +65,25 @@ export default class CodeMirror extends Modifier<Signature> {
 
     if (isDestroyed(this) || isDestroying(this)) return;
 
-    assert(`Expected CODEMIRROR to exist`, CODEMIRROR);
     assert(`can only install codemirror editor an an HTMLElement`, element instanceof HTMLElement);
 
     const { text: value } = this.editor;
     const updateText = this.editor.updateText;
+    const compiler = getCompiler(this);
 
     element.innerHTML = '';
     element.setAttribute('data-format', format);
 
-    const { view, setText } = await CODEMIRROR(element, value, format, updateText);
+
+    const { view, setText } = await compiler.createEditor(element, {
+      text: value,
+      format,
+      handleUpdate: updateText,
+      extensions: [
+        HorizonTheme,
+        syntaxHighlighting(HorizonSyntaxTheme),
+      ]
+    });
 
     if (isDestroyed(this) || isDestroying(this)) return;
 
@@ -86,35 +107,4 @@ export default class CodeMirror extends Modifier<Signature> {
   };
 }
 
-let CODEMIRROR:
-  | undefined
-  | ((
-      element: HTMLElement,
-      value: string | null,
-      format: FormatQP,
-      updateText: (text: string) => void
-    ) => Promise<{ view: EditorView; setText: (text: string, format: FormatQP) => Promise<void> }>);
 
-
-let promise: Promise<typeof CODEMIRROR>;
-
-/**
- * This is called from the state machine which manages loading state
- */
-export async function setupCodeMirror() {
-  if (promise) await promise;
-  if (CODEMIRROR) return CODEMIRROR;
-
-  // TypeScript doesn't have a way to type files in the public folder
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  promise = (async () => {
-    const module = await (import('@nullvoxpopuli/limber-codemirror/preconfigured'));
-
-    return module.default
-  })();
-
-  CODEMIRROR = await promise;
-
-  return CODEMIRROR;
-}

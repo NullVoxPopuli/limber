@@ -170,6 +170,14 @@ export interface Compiler {
 
 export interface CompilerConfig {
   /**
+   * Extensions for codemirror, providing syntax highlighting and other editor features (completions, etc)
+   */
+  codemirror: {
+    lang: () => Promise<unknown>;
+    support?: () => Promise<unknown>;
+  };
+
+  /**
    * When using this file extension in markdown documents,
    * should we only evaluate the code block if the "live"
    * meta is attached to the codefence?

@@ -4,6 +4,14 @@ import { esmSh } from '../cdn.js';
  * @type {import('../types.ts').CompilerConfig}
  */
 export const svelte = {
+  codemirror: {
+    lang: async () => {
+      const { svelte } = await import('@replit/codemirror-lang-svelte');
+
+      return svelte();
+    },
+  },
+
   /**
    * Default config, known to work with how the compiler and render functions are configured.
    */
