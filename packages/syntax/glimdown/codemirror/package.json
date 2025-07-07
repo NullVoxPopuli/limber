@@ -5,10 +5,8 @@
   "license": "MIT",
   "type": "module",
   "exports": {
-    "import": {
-      "types": "./declarations/src/index.d.ts",
-      "default": "./dist/index.js"
-    },
+    "types": "./declarations/index.d.ts",
+    "import": "./dist/index.js",
     "require": "./dist/index.cjs"
   },
   "main": "dist/index.cjs",
