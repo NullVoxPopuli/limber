@@ -10,7 +10,6 @@ import { getCompiler } from 'ember-repl';
 import { HorizonSyntaxTheme, HorizonTheme } from './theme.ts';
 
 import type RouterService from '@ember/routing/router-service';
-import type { FormatQP } from '#app/languages.gts';
 import type EditorService from 'limber/services/editor';
 
 type Signature = {
@@ -83,12 +82,6 @@ class CodeMirror extends Modifier<Signature> {
     })
   }
 
-  // For deduping incidental changes to the *format* Signal
-  // (Since auto-tracking is _by-reference_ for now)
-  //
-  // We only want to re-create the editor when the format changes value
-  previousFormat: string | undefined;
-
   /**
    * We don't allow thish to run more than once.
    * The editor has to be managed imperatively / with callbacks
@@ -101,12 +94,6 @@ class CodeMirror extends Modifier<Signature> {
     this.#isSetup = true;
 
     let format: string = this.editor.format;
-
-    if (format === this.previousFormat) {
-      return;
-    }
-
-    this.previousFormat = format;
 
     /**
      * As long as tracked data is accessed after this await,

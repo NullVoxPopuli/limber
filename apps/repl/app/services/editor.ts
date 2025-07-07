@@ -52,6 +52,10 @@ export default class EditorService extends Service {
    *
    */
   #editorSwapText?: (text: string, format: FormatQP) => void;
+  /**
+   * Exists if we are fast enough to try updating the demo
+   * before the editor loads (which would set the above #editorSwapText)
+   */
   #pendingUpdate?: () => void;
 
   get setCodemirrorState() {
@@ -64,6 +68,14 @@ export default class EditorService extends Service {
       this.#pendingUpdate();
     }
   }
+
+  updateFormat = (format: FormatQP) => {
+    // Update ourselves
+    this.fileURIComponent.set(this.text ?? '', format);
+
+    // Update the editor
+    this.setCodemirrorState?.(this.text ?? '', format === 'hbs' ? 'hbs|ember' : format);
+  };
 
   updateDemo = (text: string, demo: DemoEntry) => {
     const format = demo.format;

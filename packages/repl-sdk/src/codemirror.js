@@ -33,6 +33,7 @@ export async function buildCodemirror({
   getSupport,
 }) {
   let languageConf = new Compartment();
+  let supportConf = new Compartment();
   let tabSize = new Compartment();
 
   let updateListener = EditorView.updateListener.of(({ state, docChanged }) => {
@@ -81,8 +82,8 @@ export async function buildCodemirror({
     basicSetup,
     foldByIndent(),
     // Language
-    language,
-    ...support,
+    languageConf.of(language),
+    supportConf.of(support),
 
     updateListener,
     EditorView.lineWrapping,
@@ -105,9 +106,12 @@ export async function buildCodemirror({
    * @param {string} format
    */
   let setText = async (text, format) => {
-    let lang = await languageForFormat(format);
+    const [language, support] = await Promise.all([
+      languageForFormat(format),
+      supportForFormat(format),
+    ]);
 
-    console.debug(`Codemirror changing to ${format}: ${lang ? 'ok' : 'not ok'}`);
+    console.debug(`Codemirror changing to ${format}: ${language ? 'ok' : 'not ok'}`);
 
     view.dispatch({
       changes: {
@@ -115,7 +119,7 @@ export async function buildCodemirror({
         to: view.state.doc.length,
         insert: text,
       },
-      effects: languageConf.reconfigure(lang),
+      effects: [languageConf.reconfigure(language), supportConf.reconfigure(support)],
     });
   };
 

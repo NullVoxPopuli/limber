@@ -3,8 +3,8 @@
   "extends": "@tsconfig/ember/tsconfig.json",
   "include": ["src/**/*", "unpublished-development-types/**/*"],
   "compilerOptions": {
-    "allowJs": true,
     "checkJs": true,
+    "allowJs": true,
     "skipLibCheck": true,
     "allowImportingTsExtensions": true,
     // This is a dumb feature of TS
