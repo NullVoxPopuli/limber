@@ -38,6 +38,51 @@ export class Compiler {
   }
 
   /**
+   *
+   * @param {HTMLElement} element
+   * @param {any} options
+   */
+  async createEditor(element, { text, format, handleUpdate, extensions }) {
+    // Only one instance is allowed
+    return cache.cachedPromise('codemirror', async () => {
+      const { buildCodemirror } = await import('./codemirror.js');
+
+      return buildCodemirror({
+        element,
+        text,
+        format,
+        extensions,
+        handleUpdate,
+        getLang: async (format) => {
+          const [lang, flavor] = format.split('|');
+
+          assert(`Could not determine 'lang' from format: ${format}`, lang);
+
+          const compiler = this.#resolveFormat(lang, flavor);
+          let loadLang = compiler.codemirror?.lang;
+
+          assert(
+            `The compiler for '${format}' is missing its configuration for 'codemirror.lang'`,
+            loadLang
+          );
+
+          return await loadLang();
+        },
+        getSupport: async (format) => {
+          const [lang, flavor] = format.split('|');
+
+          assert(`Could not determine 'lang' from format: ${format}`, lang);
+
+          const compiler = this.#resolveFormat(lang, flavor);
+          let loadSupport = compiler.codemirror.support;
+
+          return await loadSupport?.();
+        },
+      });
+    });
+  }
+
+  /**
    * @param {PromiseRejectionEvent} e
    */
   #handleUnhandledRejection = (e) => {

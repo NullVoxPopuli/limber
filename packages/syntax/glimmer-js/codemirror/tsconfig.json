@@ -1,3 +1,10 @@
 {
-  "extends": "@tsconfig/ember/tsconfig.json"
+  "extends": "@tsconfig/ember/tsconfig.json",
+  "include": ["src"],
+  "exclude": ["dev", "dist", "node_modules", "declarations"],
+  "compilerOptions": {
+    "declarationDir": "declarations",
+    "noEmit": false,
+    "emitDeclarationOnly": true
+  }
 }

@@ -2,6 +2,13 @@
  * @type {import('../types.ts').CompilerConfig}
  */
 export const vue = {
+  codemirror: {
+    lang: async () => {
+      const { vue } = await import('@codemirror/lang-vue');
+
+      return vue();
+    },
+  },
   /**
    * Default config, known to work with how the compiler and render functions are configured.
    */

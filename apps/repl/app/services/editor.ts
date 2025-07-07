@@ -52,33 +52,30 @@ export default class EditorService extends Service {
    *
    */
   #editorSwapText?: (text: string, format: FormatQP) => void;
-  #pendingUpdate?: () => void;
 
   get setCodemirrorState() {
     return this.#editorSwapText;
   }
   set setCodemirrorState(value) {
     this.#editorSwapText = value;
-
-    if (this.#pendingUpdate) {
-      this.#pendingUpdate();
-    }
   }
 
+  updateFormat = (format: FormatQP) => {
+    // Update ourselves
+    this.fileURIComponent.set(this.text ?? '', format);
+
+    // Update the editor
+    this.setCodemirrorState?.(this.text ?? '', format === 'hbs' ? 'hbs|ember' : format);
+  };
+
   updateDemo = (text: string, demo: DemoEntry) => {
-    const { format } = demo;
-
-    if (!this.setCodemirrorState) {
-      this.#pendingUpdate = () => this.updateDemo(text, demo);
-
-      return;
-    }
+    const format = demo.format;
 
     // Update ourselves
     this.fileURIComponent.set(text, format, demo && 'qps' in demo ? demo.qps : {});
 
     // Update the editor
-    this.setCodemirrorState?.(text, format);
+    this.setCodemirrorState?.(text, format === 'hbs' ? 'hbs|ember' : format);
   };
 }
 

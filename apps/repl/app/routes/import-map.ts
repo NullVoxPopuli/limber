@@ -3,6 +3,7 @@ import { cell } from 'ember-resources';
 import { ExternalLink } from 'limber-ui';
 
 export const importMap = {
+  // svelte: () => import('svelte'),
   // Ember Libraries Bundled with this REPL
   'ember-deep-tracked': () => import('ember-deep-tracked'),
   'ember-modifier': () => import('ember-modifier'),

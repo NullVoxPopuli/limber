@@ -11,6 +11,7 @@ import { assert, fakeDomain } from './utils.js';
  * targeting REPLs.
  *
  * This format should still be ESM.
+ * CJS is not supported in browsers, and I won't support CJS in this REPL.
  */
 const CONDITIONS = ['repl', 'module', 'browser', 'import', 'default', 'development'];
 

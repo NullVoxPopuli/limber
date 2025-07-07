@@ -7,7 +7,7 @@ import Output from '#components/output.gts';
 
 import { ExternalLink as Link } from 'limber-ui';
 
-import Editor from './edit/editor/index.gts';
+import { Editor } from './edit/editor/index.gts';
 import Guest from './edit/guest.gts';
 import Header from './edit/header';
 import Help from './edit/help.gts';

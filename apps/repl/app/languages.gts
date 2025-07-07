@@ -33,7 +33,11 @@ const languages = {
       <span>{{{FileGlimmer}}}</span>
     </template>,
   },
-  hbs: {
+  // an alias
+  get hbs() {
+    return languages['hbs|ember'];
+  },
+  ['hbs|ember']: {
     name: 'Ember Template',
     ext: 'hbs',
     icon: <template>

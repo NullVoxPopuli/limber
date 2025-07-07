@@ -23,6 +23,16 @@ export function filterOptions(options) {
  * @type {import('../types.ts').CompilerConfig}
  */
 export const md = {
+  codemirror: {
+    lang: async () => {
+      const { glimdown } = await import('codemirror-lang-glimdown');
+
+      /**
+       * pre-configured markdown with GFM, and a few other extensions
+       */
+      return glimdown();
+    },
+  },
   compiler: async (config, api) => {
     const { isLive, isPreview, needsLive, allowedFormats, isBelow, getFlavorFromMeta } =
       buildCodeFenceMetaUtils(api);

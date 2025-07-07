@@ -3,6 +3,7 @@ import { oneDark } from '@codemirror/theme-one-dark';
 import { EditorView } from '@codemirror/view';
 import { basicSetup } from 'codemirror';
 
+// @ts-ignore
 import { glimdown } from '../dist/';
 
 const testDoc = `# Title 
@@ -78,5 +79,5 @@ export const mainView = new EditorView({
       EditorView.lineWrapping,
     ],
   }),
-  parent: document.querySelector('#editor'),
+  parent: document.querySelector('#editor')!,
 });

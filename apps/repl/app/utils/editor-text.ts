@@ -242,7 +242,8 @@ export class FileURIComponent {
     const rawText = this.#qps.get('rawText');
 
     if (rawText) {
-      const formatQP = formatFrom(this.#qps.get('format'));
+      const format = this.#qps.get('format') ?? this.format;
+      const formatQP = formatFrom(format);
 
       setStoredDocument(formatQP, rawText);
     }
@@ -292,15 +293,15 @@ export class FileURIComponent {
 
     const qps = new URLSearchParams(this.#qps);
 
+    if (encoded) {
+      qps.set('c', encoded);
+    }
+
     if (qps.size === 0) {
       this.#cleanup();
       console.debug(`No query params, not redirecting`);
 
       return;
-    }
-
-    if (encoded) {
-      qps.set('c', encoded);
     }
 
     if (!qps.has('format')) {

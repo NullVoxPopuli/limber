@@ -1,5 +1,3 @@
-// Much of this is taken from: https://github.com/codemirror/lang-markdown/blob/main/src/markdown.ts
-// import { completeFromList } from '@codemirror/autocomplete';
 import { markdown } from '@codemirror/lang-markdown';
 import {
   defineLanguageFacet,

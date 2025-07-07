@@ -21,6 +21,7 @@ import { modules } from './known-modules.ts';
 import type { CompileResult, ModuleMap } from '../compile/types.ts';
 import type Owner from '@ember/owner';
 import type { ComponentLike } from '@glint/template';
+import type { EditorView } from 'codemirror';
 import type { ErrorMessage, InfoMessage, Message } from 'repl-sdk';
 
 function isOwner(context: object): context is Owner {
@@ -285,6 +286,22 @@ export default class CompilerService {
     return this.#compiler;
   }
 
+  async createEditor(
+    element: HTMLElement,
+    options: {
+      text: string | null | undefined;
+      format: string;
+      handleUpdate: (text: string) => void;
+      extensions?: unknown[];
+    }
+  ): Promise<{
+    view: EditorView;
+    setText: (text: string, format: string) => Promise<void>;
+    setFormat: (format: string) => Promise<void>;
+  }> {
+    return this.compiler.createEditor(element, options);
+  }
+
   async #compile(ext: string, text: string, options?: Record<string, unknown>) {
     /**
      * Protect from accidental backtracking-render assertions
@@ -315,6 +332,14 @@ export default class CompilerService {
     let error: undefined | Error;
 
     try {
+      if (ext === 'hbs') {
+        /**
+         * Are there other hbs-using frameworks?
+         */
+        options ||= {};
+        options.flavor = 'ember';
+      }
+
       const result = await this.#compile(ext, text, options);
 
       component = rendersElement(result);
@@ -361,13 +386,7 @@ export default class CompilerService {
       scope?: Record<string, unknown>;
     } = {}
   ): Promise<CompileResult> {
-    return this.compile('hbs', source, {
-      ...options,
-      /**
-       * ember users don't want any other version of hbs
-       */
-      flavor: 'ember',
-    });
+    return this.compile('hbs', source, options);
   }
 
   @waitFor

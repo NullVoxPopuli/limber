@@ -7,6 +7,7 @@
   "module": "dist/index.js",
   "type": "module",
   "exports": {
+    "types": "./declarations/index.d.ts",
     "import": "./dist/index.js",
     "require": "./dist/index.cjs"
   },
@@ -45,7 +46,9 @@
   },
   "scripts": {
     "dev": "node ./dev/watch.cjs src/index.ts",
-    "build": "rollup -c",
+    "build": "pnpm build:js && pnpm build:types",
+    "build:js": "rollup -c",
+    "build:types": "tsc --declaration --declarationDir ./declarations",
     "lint": "pnpm -w exec lint",
     "lint:fix": "pnpm -w exec lint fix",
     "lint:prettier:fix": "pnpm -w exec lint prettier:fix",

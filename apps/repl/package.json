@@ -147,12 +147,13 @@
     "extends": "../../package.json"
   },
   "dependencies": {
+    "@codemirror/language": "^6.11.2",
     "@ember/test-waiters": "^4.1.0",
     "@embroider/macros": "1.18.0",
     "@embroider/router": "3.0.1",
     "@glimmer/component": "^2.0.0",
+    "@lezer/highlight": "^1.2.1",
     "@nullvoxpopuli/horizon-theme": "workspace:*",
-    "@nullvoxpopuli/limber-codemirror": "workspace:*",
     "@nullvoxpopuli/limber-styles": "workspace:*",
     "@nullvoxpopuli/limber-transpilation": "workspace:*",
     "@shikijs/rehype": "^3.7.0",
@@ -185,6 +186,7 @@
     "remark-rehype": "^11.1.2",
     "shiki": "^3.7.0",
     "stringify-object": "^5.0.0",
+    "svelte": "^5.34.9",
     "tabster": "8.5.6",
     "tracked-built-ins": "^4.0.0",
     "tracked-toolbox": "^2.0.0",
