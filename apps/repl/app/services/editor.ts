@@ -52,21 +52,12 @@ export default class EditorService extends Service {
    *
    */
   #editorSwapText?: (text: string, format: FormatQP) => void;
-  /**
-   * Exists if we are fast enough to try updating the demo
-   * before the editor loads (which would set the above #editorSwapText)
-   */
-  #pendingUpdate?: () => void;
 
   get setCodemirrorState() {
     return this.#editorSwapText;
   }
   set setCodemirrorState(value) {
     this.#editorSwapText = value;
-
-    if (this.#pendingUpdate) {
-      this.#pendingUpdate();
-    }
   }
 
   updateFormat = (format: FormatQP) => {
@@ -79,12 +70,6 @@ export default class EditorService extends Service {
 
   updateDemo = (text: string, demo: DemoEntry) => {
     const format = demo.format;
-
-    if (!this.setCodemirrorState) {
-      this.#pendingUpdate = () => this.updateDemo(text, demo);
-
-      return;
-    }
 
     // Update ourselves
     this.fileURIComponent.set(text, format, demo && 'qps' in demo ? demo.qps : {});

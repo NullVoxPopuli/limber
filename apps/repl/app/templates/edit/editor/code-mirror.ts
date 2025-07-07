@@ -93,7 +93,6 @@ class CodeMirror extends Modifier<Signature> {
     if (this.#isSetup) return;
     this.#isSetup = true;
 
-    let format: string = this.editor.format;
 
     /**
      * As long as tracked data is accessed after this await,
@@ -102,6 +101,8 @@ class CodeMirror extends Modifier<Signature> {
     await Promise.resolve();
 
     if (isDestroyed(this) || isDestroying(this)) return;
+
+    let format: string = this.editor.format;
 
     assert(`can only install codemirror editor an an HTMLElement`, element instanceof HTMLElement);
 

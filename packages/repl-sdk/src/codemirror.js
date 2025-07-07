@@ -102,6 +102,8 @@ export async function buildCodemirror({
   });
 
   /**
+   * Called from the host app to update the editor.
+   *
    * @param {string} text
    * @param {string} format
    */
