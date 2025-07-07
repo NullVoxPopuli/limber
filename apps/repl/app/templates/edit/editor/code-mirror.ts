@@ -65,12 +65,12 @@ class CodeMirror extends Modifier<Signature> {
       cleanup();
       named.onStateChange?.({ isLoading: true, isDone: false, error: null });
 
-      this.setup(element)
+      waitForPromise(this.setup(element)
         .then(() => {
           named.onStateChange?.({ isLoading: false, isDone: true, error: null });
         }).catch((e) => {
           named.onStateChange?.({ isLoading: false, isDone: false, error: e })
-        });
+        }));
     }
 
     window.addEventListener('mousemove', this.#load, { passive: true });
