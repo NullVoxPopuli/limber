@@ -25,14 +25,12 @@ export function filterOptions(options) {
 export const md = {
   codemirror: {
     lang: async () => {
-      const [{ markdown }, { codeLanguages }] = await Promise.all([
-        import('@codemirror/lang-markdown'),
-        import('codemirror-lang-glimdown'),
-      ]);
+      const { glimdown } = await import('codemirror-lang-glimdown');
 
-      return markdown({
-        codeLanguages,
-      });
+      /**
+       * pre-configured markdown with GFM, and a few other extensions
+       */
+      return glimdown();
     },
   },
   compiler: async (config, api) => {

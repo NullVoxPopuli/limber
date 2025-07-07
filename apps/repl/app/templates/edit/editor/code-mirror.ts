@@ -87,7 +87,7 @@ class CodeMirror extends Modifier<Signature> {
   // (Since auto-tracking is _by-reference_ for now)
   //
   // We only want to re-create the editor when the format changes value
-  previousFormat: FormatQP | undefined;
+  previousFormat: string | undefined;
 
   /**
    * We don't allow thish to run more than once.
@@ -100,7 +100,7 @@ class CodeMirror extends Modifier<Signature> {
     if (this.#isSetup) return;
     this.#isSetup = true;
 
-    let { format } = this.editor;
+    let format: string = this.editor.format;
 
     if (format === this.previousFormat) {
       return;
