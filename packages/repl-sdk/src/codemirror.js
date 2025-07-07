@@ -125,6 +125,11 @@ export async function buildCodemirror({
     });
   };
 
+  /**
+   * Changes just the format of the editor.
+   *
+   * @param {string} format
+   */
   let setFormat = async (format) => {
     const [language, support] = await Promise.all([
       languageForFormat(format),
