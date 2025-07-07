@@ -117,9 +117,6 @@ importers:
       '@shikijs/rehype':
         specifier: ^3.7.0
         version: 3.7.0
-      '@vue/repl':
-        specifier: ^4.6.1
-        version: 4.6.1
       '@xstate/inspect':
         specifier: ^0.8.0
         version: 0.8.0(41f68ba38104bbb422fd65253df464b3)
@@ -177,21 +174,12 @@ importers:
       lz-string:
         specifier: ^1.5.0
         version: 1.5.0
-      mermaid:
-        specifier: ^11.7.0
-        version: 11.7.0
       path-browserify:
         specifier: ^1.0.1
         version: 1.0.1
       penpal:
         specifier: ^6.2.2
         version: 6.2.2
-      react:
-        specifier: ^19.1.0
-        version: 19.1.0
-      react-dom:
-        specifier: ^19.1.0
-        version: 19.1.0(react@19.1.0)
       reactiveweb:
         specifier: ^1.6.2
         version: 1.6.2(7fdb88b52bcd2f4f525f3df3b3e5926a)
@@ -216,9 +204,6 @@ importers:
       stringify-object:
         specifier: ^5.0.0
         version: 5.0.0
-      svelte:
-        specifier: ^5.34.9
-        version: 5.34.9
       tabster:
         specifier: 8.5.6
         version: 8.5.6
@@ -237,9 +222,6 @@ importers:
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
-      vue:
-        specifier: ^3.5.17
-        version: 3.5.17(typescript@5.8.3)
       xstate:
         specifier: 5.19.4
         version: 5.19.4
@@ -381,7 +363,7 @@ importers:
         version: 2.10.0(5d11119fc4c549a458783a5b8b604a63)
       ember-cli:
         specifier: 6.5.0
-        version: 6.5.0(4bf4bb3cfc76dbcaf0003a8968c8c53a)
+        version: 6.5.0
       ember-cli-babel:
         specifier: ^8.2.0
         version: 8.2.0(@babel/core@7.28.0)
@@ -465,7 +447,7 @@ importers:
         version: 5.43.1
       testem-failure-only-reporter:
         specifier: ^1.0.0
-        version: 1.0.0(4bf4bb3cfc76dbcaf0003a8968c8c53a)
+        version: 1.0.0
       type-fest:
         specifier: 4.41.0
         version: 4.41.0
@@ -18033,15 +18015,6 @@ snapshots:
       mustache: 4.2.0
       underscore: 1.13.7
 
-  consolidate@0.16.0(bbb119118865f88c91e438c7ba866a13):
-    dependencies:
-      bluebird: 3.7.2
-    optionalDependencies:
-      lodash: 4.17.21
-      mustache: 4.2.0
-      react: 19.1.0
-      react-dom: 19.1.0(react@19.1.0)
-
   content-disposition@0.5.4:
     dependencies:
       safe-buffer: 5.2.1
@@ -18993,147 +18966,6 @@ snapshots:
       symlink-or-copy: 1.3.1
       temp: 0.9.4
       testem: 3.16.0(handlebars@4.7.8)(underscore@1.13.7)
-      tiny-lr: 2.0.0
-      tree-sync: 2.1.0
-      walk-sync: 3.0.0
-      watch-detector: 1.0.2
-      workerpool: 9.3.2
-      yam: 1.0.0
-    transitivePeerDependencies:
-      - arc-templates
-      - atpl
-      - babel-core
-      - bracket-template
-      - bufferutil
-      - coffee-script
-      - debug
-      - dot
-      - dust
-      - dustjs-helpers
-      - dustjs-linkedin
-      - eco
-      - ect
-      - ejs
-      - haml-coffee
-      - hamlet
-      - hamljs
-      - handlebars
-      - hogan.js
-      - htmling
-      - jade
-      - jazz
-      - jqtpl
-      - just
-      - liquid-node
-      - liquor
-      - marko
-      - mote
-      - nunjucks
-      - plates
-      - pug
-      - qejs
-      - ractive
-      - razor-tmpl
-      - react
-      - react-dom
-      - slm
-      - squirrelly
-      - supports-color
-      - swig
-      - swig-templates
-      - teacup
-      - templayed
-      - then-jade
-      - then-pug
-      - tinyliquid
-      - toffee
-      - twig
-      - twing
-      - underscore
-      - utf-8-validate
-      - vash
-      - velocityjs
-      - walrus
-      - whiskers
-
-  ember-cli@6.5.0(4bf4bb3cfc76dbcaf0003a8968c8c53a):
-    dependencies:
-      '@pnpm/find-workspace-dir': 1000.1.0
-      babel-remove-types: 1.0.1
-      broccoli: 3.5.2
-      broccoli-concat: 4.2.5
-      broccoli-config-loader: 1.0.1
-      broccoli-config-replace: 1.1.2
-      broccoli-debug: 0.6.5
-      broccoli-funnel: 3.0.8
-      broccoli-funnel-reducer: 1.0.0
-      broccoli-merge-trees: 4.2.0
-      broccoli-middleware: 2.1.1
-      broccoli-slow-trees: 3.1.0
-      broccoli-source: 3.0.1
-      broccoli-stew: 3.0.0
-      calculate-cache-key-for-tree: 2.0.0
-      capture-exit: 2.0.0
-      chalk: 4.1.2
-      ci-info: 4.2.0
-      clean-base-url: 1.0.0
-      compression: 1.8.0
-      configstore: 5.0.1
-      console-ui: 3.1.2
-      content-tag: 3.1.3
-      core-object: 3.1.5
-      dag-map: 2.0.2
-      diff: 7.0.0
-      ember-cli-is-package-missing: 1.0.0
-      ember-cli-normalize-entity-name: 1.0.0
-      ember-cli-preprocess-registry: 5.0.1
-      ember-cli-string-utils: 1.1.0
-      ensure-posix-path: 1.1.1
-      execa: 5.1.1
-      exit: 0.1.2
-      express: 4.21.2
-      filesize: 10.1.6
-      find-up: 5.0.0
-      find-yarn-workspace-root: 2.0.0
-      fixturify-project: 2.1.1
-      fs-extra: 11.3.0
-      fs-tree-diff: 2.0.1
-      get-caller-file: 2.0.5
-      git-repo-info: 2.1.1
-      glob: 8.1.0
-      heimdalljs: 0.2.6
-      heimdalljs-fs-monitor: 1.1.1
-      heimdalljs-graph: 1.0.0
-      heimdalljs-logger: 0.1.10
-      http-proxy: 1.18.1
-      inflection: 2.0.1
-      inquirer: 9.3.7
-      is-git-url: 1.0.0
-      is-language-code: 3.1.0
-      isbinaryfile: 5.0.4
-      lodash: 4.17.21
-      markdown-it: 14.1.0
-      markdown-it-terminal: 0.4.0(markdown-it@14.1.0)
-      minimatch: 7.4.6
-      morgan: 1.10.0
-      nopt: 3.0.6
-      npm-package-arg: 12.0.2
-      os-locale: 5.0.0
-      p-defer: 3.0.0
-      portfinder: 1.0.37
-      promise-map-series: 0.3.0
-      promise.hash.helper: 1.0.8
-      quick-temp: 0.1.8
-      resolve: 1.22.10
-      resolve-package-path: 4.0.3
-      safe-stable-stringify: 2.5.0
-      sane: 5.0.1
-      semver: 7.7.2
-      silent-error: 1.1.1
-      sort-package-json: 2.15.1
-      symlink-or-copy: 1.3.1
-      temp: 0.9.4
-      testem: 3.16.0(4bf4bb3cfc76dbcaf0003a8968c8c53a)
       tiny-lr: 2.0.0
       tree-sync: 2.1.0
       walk-sync: 3.0.0
@@ -25225,93 +25057,9 @@ snapshots:
       commander: 2.20.3
       source-map-support: 0.5.21
 
-  testem-failure-only-reporter@1.0.0(4bf4bb3cfc76dbcaf0003a8968c8c53a):
+  testem-failure-only-reporter@1.0.0:
     dependencies:
-      testem: 3.16.0(4bf4bb3cfc76dbcaf0003a8968c8c53a)
-    transitivePeerDependencies:
-      - arc-templates
-      - atpl
-      - babel-core
-      - bracket-template
-      - bufferutil
-      - coffee-script
-      - debug
-      - dot
-      - dust
-      - dustjs-helpers
-      - dustjs-linkedin
-      - eco
-      - ect
-      - ejs
-      - haml-coffee
-      - hamlet
-      - hamljs
-      - handlebars
-      - hogan.js
-      - htmling
-      - jade
-      - jazz
-      - jqtpl
-      - just
-      - liquid-node
-      - liquor
-      - marko
-      - mote
-      - nunjucks
-      - plates
-      - pug
-      - qejs
-      - ractive
-      - razor-tmpl
-      - react
-      - react-dom
-      - slm
-      - squirrelly
-      - supports-color
-      - swig
-      - swig-templates
-      - teacup
-      - templayed
-      - then-jade
-      - then-pug
-      - tinyliquid
-      - toffee
-      - twig
-      - twing
-      - underscore
-      - utf-8-validate
-      - vash
-      - velocityjs
-      - walrus
-      - whiskers
-
-  testem@3.16.0(4bf4bb3cfc76dbcaf0003a8968c8c53a):
-    dependencies:
-      '@xmldom/xmldom': 0.8.10
-      backbone: 1.6.1
-      bluebird: 3.7.2
-      charm: 1.0.2
-      commander: 2.20.3
-      compression: 1.8.0
-      consolidate: 0.16.0(bbb119118865f88c91e438c7ba866a13)
-      execa: 1.0.0
-      express: 4.21.2
-      fireworm: 0.7.2
-      glob: 7.2.3
-      http-proxy: 1.18.1
-      js-yaml: 3.14.1
-      lodash: 4.17.21
-      mkdirp: 3.0.1
-      mustache: 4.2.0
-      node-notifier: 10.0.1
-      npmlog: 6.0.2
-      printf: 0.6.1
-      rimraf: 3.0.2
-      socket.io: 4.8.1
-      spawn-args: 0.2.0
-      styled_string: 0.0.1
-      tap-parser: 7.0.0
-      tmp: 0.0.33
+      testem: 3.16.0(handlebars@4.7.8)(underscore@1.13.7)
     transitivePeerDependencies:
       - arc-templates
       - atpl
