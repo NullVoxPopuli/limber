@@ -66,7 +66,7 @@ export default class EditorService extends Service {
   }
 
   updateDemo = (text: string, demo: DemoEntry) => {
-    const { format } = demo;
+    const format = demo.format;
 
     if (!this.setCodemirrorState) {
       this.#pendingUpdate = () => this.updateDemo(text, demo);
@@ -78,7 +78,7 @@ export default class EditorService extends Service {
     this.fileURIComponent.set(text, format, demo && 'qps' in demo ? demo.qps : {});
 
     // Update the editor
-    this.setCodemirrorState?.(text, format);
+    this.setCodemirrorState?.(text, format === 'hbs' ? 'hbs|ember' : format);
   };
 }
 

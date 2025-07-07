@@ -86,12 +86,7 @@ export async function buildCodemirror({
 
     updateListener,
     EditorView.lineWrapping,
-    keymap.of([
-      // Intentionally do not capture the tab key -- otherwise we can't leave the editor.
-      indentWithTab,
-      ...completionKeymap,
-      ...markdownKeymap,
-    ]),
+    keymap.of([indentWithTab, ...completionKeymap, ...markdownKeymap]),
 
     // TODO: lsp,
 

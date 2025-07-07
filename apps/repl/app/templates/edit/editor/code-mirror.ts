@@ -100,7 +100,7 @@ class CodeMirror extends Modifier<Signature> {
     if (this.#isSetup) return;
     this.#isSetup = true;
 
-    const { format } = this.editor;
+    let { format } = this.editor;
 
     if (format === this.previousFormat) {
       return;
@@ -121,6 +121,10 @@ class CodeMirror extends Modifier<Signature> {
     const { text: value } = this.editor;
     const updateText = this.editor.updateText;
     const compiler = getCompiler(this);
+
+    if (format === 'hbs') {
+      format = 'hbs|ember';
+    }
 
     element.innerHTML = '';
     element.setAttribute('data-format', format);
@@ -145,7 +149,7 @@ class CodeMirror extends Modifier<Signature> {
     this.editor.setCodemirrorState = (text, formatQP) => {
       element.setAttribute('data-formatQP', formatQP);
 
-      waitForPromise(setText(text, format)); // update the editor
+      waitForPromise(setText(text, formatQP));
     };
 
     const scrollable = document.querySelector('.cm-scroller');
