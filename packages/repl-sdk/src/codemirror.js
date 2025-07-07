@@ -125,6 +125,19 @@ export async function buildCodemirror({
     });
   };
 
+  let setFormat = async (format) => {
+    const [language, support] = await Promise.all([
+      languageForFormat(format),
+      supportForFormat(format),
+    ]);
+
+    console.debug(`Codemirror changing to ${format}: ${language ? 'ok' : 'not ok'}`);
+
+    view.dispatch({
+      effects: [languageConf.reconfigure(language), supportConf.reconfigure(support)],
+    });
+  };
+
   view.dispatch(
     view.state.changeByRange((range) => ({
       changes: [{ from: range.from, insert: text }],
@@ -139,5 +152,5 @@ export async function buildCodemirror({
     ],
   });
 
-  return { view, setText };
+  return { view, setText, setFormat };
 }

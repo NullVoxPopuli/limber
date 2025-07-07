@@ -294,7 +294,11 @@ export default class CompilerService {
       handleUpdate: (text: string) => void;
       extensions?: unknown[];
     }
-  ): Promise<{ view: EditorView; setText: (text: string, format: string) => Promise<void> }> {
+  ): Promise<{
+    view: EditorView;
+    setText: (text: string, format: string) => Promise<void>;
+    setFormat: (format: string) => Promise<void>;
+  }> {
     return this.compiler.createEditor(element, options);
   }
 

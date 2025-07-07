@@ -46,5 +46,9 @@ export class Compiler {
        */
       handleUpdate?: (updatedText: string) => void;
     }
-  ): Promise<{ view: EditorView; setText: (text: string, format: string) => Promise<void> }>;
+  ): Promise<{
+    view: EditorView;
+    setText: (text: string, format: string) => Promise<void>;
+    setFormat: (format: string) => Promise<void>;
+  }>;
 }

@@ -45,6 +45,8 @@ class CodeMirror extends Modifier<Signature> {
   #load?: () => void;
 
   modify(element: Element, _: never[], named: Signature['Args']['Named']) {
+    this.#checkFormat();
+
     if (this.#load) return;
 
     if (!named.defer) {
@@ -82,6 +84,18 @@ class CodeMirror extends Modifier<Signature> {
     })
   }
 
+  #previousFormat?: string;
+  #setFormat?: (format: string) => void;
+  #checkFormat = async () => {
+    const format = this.editor.format;
+
+    if (format === this.#previousFormat) {
+      return;
+    }
+
+    return this.#setFormat?.(format);
+  }
+
   /**
    * We don't allow thish to run more than once.
    * The editor has to be managed imperatively / with callbacks
@@ -102,25 +116,27 @@ class CodeMirror extends Modifier<Signature> {
 
     if (isDestroyed(this) || isDestroying(this)) return;
 
-    let format: string = this.editor.format;
-
     assert(`can only install codemirror editor an an HTMLElement`, element instanceof HTMLElement);
 
     const { text: value } = this.editor;
+    let formatFromURL: string = this.editor.format;
+
+    this.#previousFormat = formatFromURL;
+
     const updateText = this.editor.updateText;
     const compiler = getCompiler(this);
 
-    if (format === 'hbs') {
-      format = 'hbs|ember';
+    if (formatFromURL === 'hbs') {
+      formatFromURL = 'hbs|ember';
     }
 
     element.innerHTML = '';
-    element.setAttribute('data-format', format);
+    element.setAttribute('data-format', formatFromURL);
 
 
-    const { view, setText } = await compiler.createEditor(element, {
+    const { view, setText, setFormat } = await compiler.createEditor(element, {
       text: value,
-      format,
+      format: formatFromURL,
       handleUpdate: updateText,
       extensions: [
         HorizonTheme,
@@ -130,13 +146,20 @@ class CodeMirror extends Modifier<Signature> {
 
     if (isDestroyed(this) || isDestroying(this)) return;
 
+    this.#setFormat = (format: string) => {
+      element.setAttribute('data-format', format);
+      this.#previousFormat = format;
+      waitForPromise(setFormat(format));
+    };
+
     /**
      * This has to be defined on the service so that
      * the demo selector can also affect both the URL and the editor
      */
     this.editor.setCodemirrorState = (text, formatQP) => {
-      element.setAttribute('data-formatQP', formatQP);
+      element.setAttribute('data-format', formatQP);
 
+      this.#previousFormat = formatQP;
       waitForPromise(setText(text, formatQP));
     };
 
