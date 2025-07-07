@@ -3,6 +3,14 @@ import { cell } from 'ember-resources';
 import { ExternalLink } from 'limber-ui';
 
 export const importMap = {
+  // Default modules for the other frameworks
+  // svelte: () => import('svelte'),
+  vue: () => import('vue'),
+  '@vue/repl': () => import('@vue/repl'),
+  // react: () => import('react'),
+  // 'react-dom': () => import('react-dom'),
+  mermaid: () => import('mermaid'),
+
   // Ember Libraries Bundled with this REPL
   'ember-deep-tracked': () => import('ember-deep-tracked'),
   'ember-modifier': () => import('ember-modifier'),
