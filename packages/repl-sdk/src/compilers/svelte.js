@@ -17,7 +17,7 @@ export const svelte = {
    */
   resolve: (id) => {
     // This is basically an importmap.
-    // Because Svelt 5 is no longer bundled, we need another service to provide
+    // Because Svelte 5 is no longer bundled, we need another service to provide
     // these.
     //
     // Svelte 5 has a tooooon of modules, and repl-sdk (at the time of writing)
@@ -28,7 +28,7 @@ export const svelte = {
     //
     // See also: https://github.com/sveltejs/svelte/discussions/15658
     if (['svelte'].some((x) => id.startsWith(x))) {
-      return esmSh({}, id, false) + '?dev&target=esnext&keep-names';
+      return esmSh({}, id, false) + '?target=esnext'; //+ '?dev&target=esnext&keep-names';
     }
 
     // dependencies of svelte / the compiler
