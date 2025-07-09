@@ -11,7 +11,7 @@ import { Share } from './share.gts';
 
 <template>
   <header
-    class="bg-ember-black z-20 flex max-h-12 items-center justify-between px-4 py-2 drop-shadow-lg"
+    class="bg-ember-black z-20 flex max-h-12 items-center justify-between px-1 md:px-4 py-2 drop-shadow-lg"
   >
     <div class="flex items-center gap-2">
       <h1 class="text-ember-brand flex items-center gap-2">
@@ -29,12 +29,11 @@ import { Share } from './share.gts';
       {{#if (notInIframe)}}
         <FormatButtons />
       {{/if}}
+      <DemoSelect />
       <Share />
     </div>
 
     <nav class="flex items-baseline gap-2 text-white">
-      <DemoSelect />
-
       <ExternalLink href="/bundle.html" class="hidden sm:block">
         <:custom as |DefaultContent|>
           <span class="hidden md:block">

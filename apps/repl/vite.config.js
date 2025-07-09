@@ -26,6 +26,7 @@ export default defineConfig(() => ({
     analyzer({
       enabled: true,
       fileName: 'bundle.html',
+      analyzerMode: 'static',
       openAnalyzer: false,
       defaultSizes: 'brotli',
     }),
