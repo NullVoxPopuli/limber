@@ -3,6 +3,7 @@ import { ember, extensions } from '@embroider/vite';
 import { babel } from '@rollup/plugin-babel';
 import icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vite';
+import { analyzer } from 'vite-bundle-analyzer';
 import circleDependency from 'vite-plugin-circular-dependency';
 import mkcert from 'vite-plugin-mkcert';
 
@@ -22,6 +23,12 @@ export default defineConfig(() => ({
     },
   },
   plugins: [
+    analyzer({
+      enabled: true,
+      fileName: 'bundle.html',
+      openAnalyzer: false,
+      defaultSizes: 'brotli',
+    }),
     circleDependency(),
     mkcert({
       savePath: 'node_modules/.vite-plugin-mkcert/',

@@ -466,6 +466,9 @@ importers:
       vite:
         specifier: ^6.3.5
         version: 6.3.5(8c458d10456fc315d1676c3f4c279c5f)
+      vite-bundle-analyzer:
+        specifier: ^1.0.0
+        version: 1.0.0
       vite-plugin-circular-dependency:
         specifier: ^0.5.0
         version: 0.5.0(rollup@4.44.2)
@@ -12168,6 +12171,10 @@ packages:
 
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
+
+  vite-bundle-analyzer@1.0.0:
+    resolution: {integrity: sha512-Y9u467LqvDyvvd7+6BVm9drgIUGrRbZHcV//GUsziTvIKm+cQcREDrZFBiLzShvUokmUCA9BVeLGuIiNhkxGUQ==}
+    hasBin: true
 
   vite-node@3.2.4:
     resolution: {integrity: sha512-EbKSKh+bh1E1IFxeO0pg1n4dvoOTt0UDiXMd/qn++r98+jPO1xtJilvXldeuQ8giIB5IkpjCgMleHMNEsGH6pg==}
@@ -25769,6 +25776,8 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
+
+  vite-bundle-analyzer@1.0.0: {}
 
   vite-node@3.2.4(8c458d10456fc315d1676c3f4c279c5f):
     dependencies:
