@@ -105,6 +105,7 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
         {{#let (component IconItem item=Item onClick=this.switch) as |Button|}}
           <Button @format="gmd" />
           <Button @format="md" />
+          <Button @format="js" />
           <Button @format="gjs" />
           <Button @format="hbs" />
           <Button @format="svelte" />
