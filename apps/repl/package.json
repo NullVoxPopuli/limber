@@ -118,6 +118,7 @@
     "unplugin-icons": "^22.1.0",
     "vfile": "^6.0.3",
     "vite": "^6.3.5",
+    "vite-bundle-analyzer": "^1.0.0",
     "vite-plugin-circular-dependency": "^0.5.0",
     "vite-plugin-mkcert": "^1.17.8",
     "webpack": "^5.98.0"

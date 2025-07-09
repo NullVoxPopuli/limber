@@ -33,7 +33,8 @@ export class DemoSelect extends Component {
       <:trigger as |t|>
         <t.Default data-test-demo-select as |menu|>
           <span class="grid grid-flow-col items-center gap-2 whitespace-nowrap">
-            Select demo
+            <span class="hidden md:inline-block">Select demo</span>
+            <span class="inline-block md:hidden">Demo</span>
 
             {{#if menu.isOpen}}
               <FaIcon @icon={{faAngleUp}} class="min-w-3" />
