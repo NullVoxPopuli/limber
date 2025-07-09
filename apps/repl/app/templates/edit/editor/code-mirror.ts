@@ -65,7 +65,6 @@ class CodeMirror extends Modifier<Signature> {
 
     this.#load = () => {
       cleanup();
-
       named.onStateChange?.({ isLoading: true, isDone: false, error: null });
 
       waitForPromise(this.setup(element)
