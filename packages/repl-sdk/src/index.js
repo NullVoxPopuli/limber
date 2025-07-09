@@ -33,6 +33,7 @@ export class Compiler {
 
     STABLE_REFERENCE.resolve = this.#resolve;
     STABLE_REFERENCE.fetch = this.#fetch;
+    STABLE_REFERENCE.onimport = this.#onimport;
 
     window.addEventListener('unhandledrejection', this.#handleUnhandledRejection);
   }
@@ -101,6 +102,11 @@ export class Compiler {
     this.#announce('error', e.reason);
   };
 
+  #onimport = async (url, options, parentUrl, source) => {
+    await new Promise((r) => setTimeout(r, 50));
+    this.#log('[onimport]', url);
+    console.log(url, options, parentUrl, source);
+  };
   /**
    * Order of preference
    * 1. manually resolved (from the caller)

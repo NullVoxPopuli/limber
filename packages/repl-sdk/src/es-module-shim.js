@@ -15,6 +15,11 @@
  * }}
  */
 export const STABLE_REFERENCE = {
+  onimport: async () => {
+    throw new Error(
+      `'fetch' not implemented in STABLE_REFERENCE. Has the Compiler been set up correctly?`
+    );
+  },
   resolve: () => {
     throw new Error(
       `'resolve' not implemented in STABLE_REFERENCE. Has the Compiler been set up correctly?`
@@ -32,6 +37,16 @@ globalThis.esmsInitOptions = {
   // skip: [`https://esm.sh`, 'https://jspm.dev/', 'https://cdn.jsdelivr.net/'],
   revokeBlobURLs: true, // default false
   mapOverrides: true, // default false
+
+  /**
+* @param {string} url
+* @param {unknown} options
+* @param {string} parentUrl
+* @param {string} source
+@returns {void}
+  */
+  onimport: (url, options, parentUrl, source) =>
+    STABLE_REFERENCE.onimport(url, options, parentUrl, source),
 
   /**
    * @param {string} id
