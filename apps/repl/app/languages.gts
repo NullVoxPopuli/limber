@@ -1,5 +1,6 @@
 import { assert } from '@ember/debug';
 
+import { default as FileJavaScript } from '~icons/devicon/javascript?raw';
 import { default as FileReact } from '~icons/devicon/react?raw';
 import { default as FileSvelte } from '~icons/devicon/svelte?raw';
 import { default as FileVue } from '~icons/devicon/vuejs?raw';
@@ -26,6 +27,13 @@ export type FormatQP = keyof typeof languages;
  * The compiler stettings for all these are configured in routes/application.ts
  */
 const languages = {
+  js: {
+    name: 'Vanilla JS',
+    ext: 'js',
+    icon: <template>
+      <span>{{{FileJavaScript}}}</span>
+    </template>,
+  },
   gjs: {
     name: 'Glimmer JS',
     ext: 'gjs',

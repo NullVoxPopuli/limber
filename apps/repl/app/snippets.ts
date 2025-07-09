@@ -111,6 +111,7 @@ export const ALL = [
   { format: 'md', label: 'All Frameworks in Markdown', path: '/samples/all.md' },
   { format: 'gjs', label: 'Ember GJS', path: '/samples/gjs-demo.gjs' },
   { format: 'svelte', label: 'Svelte', path: '/samples/svelte-demo.svelte' },
+  { format: 'js', label: 'Vanilla JS', path: '/samples/js-demo.js' },
   // Yaml
   { format: 'mermaid', label: 'Mermaid', path: '/samples/mermaid-demo.mermaid' },
   { format: 'vue', label: 'Vue', path: '/samples/vue-demo.vue' },
