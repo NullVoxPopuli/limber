@@ -1,4 +1,5 @@
 import * as ember from './compilers/ember.js';
+import { js } from './compilers/js.js';
 import * as markdown from './compilers/markdown.js';
 import { mermaid } from './compilers/mermaid.js';
 import * as react from './compilers/react.js';
@@ -52,6 +53,11 @@ export const compilers = {
    * https://emberjs.com
    */
   // gts: ember.gts,
+
+  /**
+   * Just vanilla JS.
+   */
+  js,
 
   /**
    * JSX is too overloaded to treat one way.
