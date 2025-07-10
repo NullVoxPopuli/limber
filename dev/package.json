@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "chalk": "^5.4.1",
-    "ember-apply": "^2.15.0",
+    "ember-apply": "^2.15.1",
     "execa": "^9.5.2",
     "fs-extra": "^11.3.0",
     "yargs": "^17.7.2"
@@ -20,7 +20,7 @@
   "devDependencies": {
     "@babel/core": "^7.27.7",
     "@nullvoxpopuli/eslint-configs": "^5.0.0",
-    "@types/node": "^24.0.3",
+    "@types/node": "^24.0.12",
     "@types/yargs": "^17.0.33",
     "eslint": "^9.29.0",
     "prettier": "^3.6.2",
