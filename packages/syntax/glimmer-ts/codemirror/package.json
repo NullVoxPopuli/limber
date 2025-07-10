@@ -19,7 +19,7 @@
   "devDependencies": {
     "@babel/core": "^7.27.7",
     "@codemirror/buildhelper": "^1.0.2",
-    "@codemirror/view": "^6.37.2",
+    "@codemirror/view": "^6.38.0",
     "@glimdown/lezer-infra": "workspace:*",
     "@lezer/common": "^1.2.3",
     "@lezer/generator": "^1.7.2",
