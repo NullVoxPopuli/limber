@@ -91,7 +91,7 @@ importers:
         specifier: ^6.11.2
         version: 6.11.2
       '@ember/test-waiters':
-        specifier: ^4.1.1
+        specifier: ^4.1.0
         version: 4.1.1(@glint/template@1.6.0-alpha.1)
       '@embroider/macros':
         specifier: 1.18.0
@@ -552,7 +552,7 @@ importers:
         specifier: ^5.1.0
         version: 5.2.2(90bc9fe324bef9c1e7c73154e05becf7)
       '@ember/test-waiters':
-        specifier: ^4.1.1
+        specifier: ^4.1.0
         version: 4.1.1(@glint/template@1.5.2)
       '@embroider/compat':
         specifier: 4.1.0
@@ -800,7 +800,7 @@ importers:
         specifier: ^1.1.3
         version: 1.1.3
       '@ember/test-waiters':
-        specifier: ^4.1.1
+        specifier: ^4.1.0
         version: 4.1.1(@glint/template@1.6.0-alpha.1)
       '@embroider/addon-dev':
         specifier: ^7.0.0
@@ -1027,7 +1027,7 @@ importers:
         specifier: ^5.1.0
         version: 5.2.2(039cd1fcd98b21610dcc92fbca61ccb1)
       '@ember/test-waiters':
-        specifier: ^4.1.1
+        specifier: ^4.1.0
         version: 4.1.1(@glint/template@1.6.0-alpha.1)
       '@embroider/addon-shim':
         specifier: ^1.8.9
