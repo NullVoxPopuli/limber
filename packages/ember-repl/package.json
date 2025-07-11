@@ -42,13 +42,13 @@
   },
   "dependencies": {
     "@ember/test-helpers": "^5.1.0",
-    "@ember/test-waiters": "^4.1.1",
+    "@ember/test-waiters": "^4.1.0",
     "@embroider/addon-shim": "^1.8.9",
     "babel-plugin-ember-template-compilation": "^2.4.1",
     "codemirror": "^6.0.2",
     "content-tag": "^3.0.0",
     "decorator-transforms": "^2.3.0",
-    "ember-primitives": "^0.34.0",
+    "ember-primitives": "^0.35.0",
     "ember-resolver": "^13.1.0",
     "ember-resources": "^7.0.3",
     "repl-sdk": "workspace:*"
