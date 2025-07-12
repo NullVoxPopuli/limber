@@ -70,7 +70,7 @@ export async function compiler(config, api) {
       ? _emberTemplateCompilation.default
       : _emberTemplateCompilation;
 
-  let babel = 'availablePlugins' in _babel ? _babel : _babel.default;
+  const babel = 'availablePlugins' in _babel ? _babel : _babel.default;
 
   // let macros = embroiderMacros.buildMacros();
 
@@ -148,12 +148,12 @@ export async function compiler(config, api) {
   /**
    * @type {import('../../types.ts').Compiler}
    */
-  let gjsCompiler = {
+  const gjsCompiler = {
     compile: async (text, options) => {
-      let { code: preprocessed } = preprocessor.process(text, { filename: 'dynamic-repl.js' });
-      let transformed = await transform(preprocessed);
+      const { code: preprocessed } = preprocessor.process(text, { filename: 'dynamic-repl.js' });
+      const transformed = await transform(preprocessed);
 
-      let code = transformed.code;
+      const code = transformed.code;
 
       return code;
     },
@@ -164,7 +164,7 @@ export async function compiler(config, api) {
        *    https://github.com/emberjs/rfcs/pull/1099
        *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
        */
-      let attribute = `data-repl-sdk-ember-gjs-${elementId++}`;
+      const attribute = `data-repl-sdk-ember-gjs-${elementId++}`;
 
       element.setAttribute(attribute, '');
 

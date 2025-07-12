@@ -31,8 +31,8 @@ export async function renderApp({ element, modules, selector, component, log }) 
   bootWaiter ||= modules.testWaiters.buildWaiter('repl-output:waiting-for-boot');
   createWaiter ||= modules.testWaiters.buildWaiter('repl-output:waiting-for-creation');
 
-  let bootToken = bootWaiter.beginAsync();
-  let createToken = createWaiter.beginAsync();
+  const bootToken = bootWaiter.beginAsync();
+  const createToken = createWaiter.beginAsync();
 
   class EphemeralApp extends App {
     modulePrefix = 'ephemeral-render-output';

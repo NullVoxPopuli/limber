@@ -98,13 +98,13 @@ class Caches {
    * @type {(key: string, callback: () => Promise<any>) => Promise<any>}
    */
   cachedPromise(key, callback) {
-    let existing = this.promiseCache.get(key);
+    const existing = this.promiseCache.get(key);
 
     if (existing) {
       return /** @type {Promise<Return>} */ (existing);
     }
 
-    let promise = callback();
+    const promise = callback();
 
     this.promiseCache.set(key, promise);
 
@@ -118,7 +118,7 @@ class Caches {
   }
 
   get #root() {
-    let global = getGlobal();
+    const global = getGlobal();
 
     global[secret] ||= {};
     global[secret].caches ||= this;

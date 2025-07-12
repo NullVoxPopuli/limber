@@ -25,7 +25,7 @@ import { GLIMDOWN_PREVIEW, GLIMDOWN_RENDER } from './const.js';
  * ], import('mdast').Root>}
  */
 export function liveCodeExtraction(options) {
-  let { code, demo, isLive, ALLOWED_FORMATS, isPreview, isBelow, needsLive, getFlavorFromMeta } =
+  const { code, demo, isLive, ALLOWED_FORMATS, isPreview, isBelow, needsLive, getFlavorFromMeta } =
     options;
   let { classList: snippetClasses } = code || {};
   let { classList: demoClasses } = demo || {};
@@ -102,10 +102,10 @@ export function liveCodeExtraction(options) {
       /** @type {import('mdast').Code} */
       const codeNode = node;
 
-      let isRelevant = isRelevantCode(codeNode);
+      const isRelevant = isRelevantCode(codeNode);
 
       if (!isRelevant) {
-        let enhanced = enhance(codeNode, snippetClasses);
+        const enhanced = enhance(codeNode, snippetClasses);
 
         /** @type {unknown[]} */ (parent.children)[index] = /** @type {unknown} */ (enhanced);
 
@@ -118,7 +118,7 @@ export function liveCodeExtraction(options) {
 
       seen.add(codeNode);
 
-      let { meta, lang, value } = codeNode;
+      const { meta, lang, value } = codeNode;
 
       if (!lang) {
         return 'skip';
@@ -139,10 +139,10 @@ export function liveCodeExtraction(options) {
 
       file.data.liveCode ??= [];
 
-      let code = value.trim();
-      let id = nextId();
+      const code = value.trim();
+      const id = nextId();
 
-      let invokeNode = /** @type {import('mdast').Html} */ ({
+      const invokeNode = /** @type {import('mdast').Html} */ ({
         type: 'html',
         data: {
           hProperties: {
@@ -152,7 +152,7 @@ export function liveCodeExtraction(options) {
         value: `<div id="${id}" class="${demoClasses}"></div>`,
       });
 
-      let wrapper = enhance(codeNode, snippetClasses);
+      const wrapper = enhance(codeNode, snippetClasses);
 
       /** @type {unknown[]} */ (file.data.liveCode).push({
         format: lang,
@@ -162,9 +162,9 @@ export function liveCodeExtraction(options) {
         meta,
       });
 
-      let live = isLive(meta || '', lang);
-      let preview = isPreview(meta || '');
-      let below = isBelow(meta || '');
+      const live = isLive(meta || '', lang);
+      const preview = isPreview(meta || '');
+      const below = isBelow(meta || '');
 
       if (live && preview && below) {
         flatReplaceAt(/** @type {unknown[]} */ (parent.children), index, [

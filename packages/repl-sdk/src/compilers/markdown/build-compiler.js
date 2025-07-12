@@ -72,8 +72,8 @@ export function buildCompiler(options) {
   compiler = compiler.use(() => (/** @type {unknown} */ tree) => {
     visit(/** @type {import('hast').Root} */ (tree), function (node) {
       // We rely on an implicit transformation of data.hProperties => properties
-      let nodeObj = /** @type {Record<string, unknown>} */ (/** @type {unknown} */ (node));
-      let properties = /** @type {Record<string, unknown>} */ (
+      const nodeObj = /** @type {Record<string, unknown>} */ (/** @type {unknown} */ (node));
+      const properties = /** @type {Record<string, unknown>} */ (
         typeof node === 'object' && node !== null && 'properties' in node ? node.properties : {}
       );
 

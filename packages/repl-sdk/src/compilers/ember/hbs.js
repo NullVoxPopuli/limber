@@ -24,11 +24,11 @@ export async function compiler(config, api) {
   /**
    * @type {import('../../types.ts').Compiler}
    */
-  let hbsCompiler = {
+  const hbsCompiler = {
     compile: async (text, options) => {
       const { template } = await api.tryResolve('@ember/template-compiler/runtime');
 
-      let component = template(text, {
+      const component = template(text, {
         scope: () => ({
           ...filterOptions(config).scope,
           ...filterOptions(options).scope,
@@ -61,7 +61,7 @@ export async function compiler(config, api) {
        *    https://github.com/emberjs/rfcs/pull/1099
        *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
        */
-      let attribute = `data-repl-sdk-ember-hbs-${elementId++}`;
+      const attribute = `data-repl-sdk-ember-hbs-${elementId++}`;
 
       element.setAttribute(attribute, '');
 
