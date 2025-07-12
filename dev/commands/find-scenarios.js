@@ -4,18 +4,18 @@ import { packageJson, project } from 'ember-apply';
 import fse from 'fs-extra';
 
 export async function findScenarios() {
-  let result = [];
+  const result = [];
 
-  for await (let workspace of await project.eachWorkspace()) {
-    let config = await emberTry(workspace);
+  for await (const workspace of await project.eachWorkspace()) {
+    const config = await emberTry(workspace);
 
     if (!config) continue;
 
-    let pkg = await packageJson.read(workspace);
-    let module = await import(config);
+    const pkg = await packageJson.read(workspace);
+    const module = await import(config);
 
-    let name = pkg.name;
-    let evaluatedConfig = await module.default();
+    const name = pkg.name;
+    const evaluatedConfig = await module.default();
 
     result.push({
       name,
@@ -28,8 +28,8 @@ export async function findScenarios() {
 }
 
 async function emberTry(workspace) {
-  let a = path.join(workspace, 'config/ember-try.js');
-  let b = path.join(workspace, 'tests/dummy/config/ember-try.js');
+  const a = path.join(workspace, 'config/ember-try.js');
+  const b = path.join(workspace, 'tests/dummy/config/ember-try.js');
 
   if (await fse.pathExists(a)) {
     return a;

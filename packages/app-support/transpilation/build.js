@@ -9,11 +9,11 @@ const appFolder = path.join(__dirname, '..', 'app');
 const workerRoot = path.join(appFolder, 'workers');
 
 function detectWorkers() {
-  let workers = {};
-  let dir = fs.readdirSync(workerRoot);
+  const workers = {};
+  const dir = fs.readdirSync(workerRoot);
 
   for (let i = 0; i < dir.length; i++) {
-    let name = dir[i];
+    const name = dir[i];
 
     workers[name] = path.join(workerRoot, name, 'index.js');
   }
@@ -38,17 +38,17 @@ function configureWorkerTree({ isProduction, buildDir }) {
 }
 
 function buildWorkers(env) {
-  let inputs = detectWorkers();
-  let workerBuilder = configureWorkerTree(env);
+  const inputs = detectWorkers();
+  const workerBuilder = configureWorkerTree(env);
 
   // separate build from ember, will be detached, won't watch
   Object.entries(inputs).map(workerBuilder);
 }
 
 function workersFunnel({ isProduction }) {
-  let buildDir = fs.mkdtempSync(path.join(os.tmpdir(), 'limber--workers'));
+  const buildDir = fs.mkdtempSync(path.join(os.tmpdir(), 'limber--workers'));
 
-  let options = {
+  const options = {
     isProduction,
     buildDir,
   };

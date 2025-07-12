@@ -70,7 +70,7 @@ function turbo(cmd) {
     filterArgs = ['--filter', manifest.name];
   }
 
-  let args = [
+  const args = [
     'turbo',
     '--color',
     '--no-update-notifier',

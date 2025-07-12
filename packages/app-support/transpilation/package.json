@@ -27,7 +27,7 @@
     "last 1 Safari versions"
   ],
   "dependencies": {
-    "@babel/standalone": "^7.27.7",
+    "@babel/standalone": "^7.28.1",
     "babel-plugin-htmlbars-inline-precompile": "^5.3.1",
     "path-browserify": "^1.0.1"
   },
@@ -42,14 +42,14 @@
     "@babel/plugin-transform-typescript": "^7.26.8",
     "@babel/types": "^7.27.7",
     "@glimmer/component": "^2.0.0",
-    "@nullvoxpopuli/eslint-configs": "^5.0.0",
+    "@nullvoxpopuli/eslint-configs": "^5.2.0",
     "@types/babel__core": "^7.20.5",
     "@types/babel__standalone": "^7.1.9",
     "@types/htmlbars-inline-precompile": "^3.0.4",
     "babel-loader": "^10.0.0",
     "ember-source": ">= 6.7.0-alpha.1",
     "esbuild": "0.25.6",
-    "eslint": "^9.29.0",
+    "eslint": "^9.31.0",
     "prettier": "^3.6.2",
     "prettier-plugin-ember-template-tag": "2.0.6",
     "typescript": "5.8.3",

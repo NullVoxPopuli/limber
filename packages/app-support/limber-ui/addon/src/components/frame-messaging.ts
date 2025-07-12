@@ -31,7 +31,7 @@ function PostMessage(handleUpdate: (data: string) => void): ModifierLike<{
 function HandleMessage(
   createConnection: (element: HTMLIFrameElement) => () => void
 ): ModifierLike<{ Element: HTMLIFrameElement }> {
-  return modifier((element) => createConnection(element));
+  return modifier((element: HTMLIFrameElement) => createConnection(element));
 }
 
 export class HostMessaging {

@@ -19,10 +19,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.27.7",
-    "@nullvoxpopuli/eslint-configs": "^5.0.0",
+    "@nullvoxpopuli/eslint-configs": "^5.2.0",
     "@types/node": "^24.0.12",
     "@types/yargs": "^17.0.33",
-    "eslint": "^9.29.0",
+    "eslint": "^9.31.0",
     "prettier": "^3.6.2",
     "prettier-plugin-ember-template-tag": "2.0.6",
     "typescript": "5.8.3"

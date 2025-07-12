@@ -2,16 +2,16 @@ import { execaCommand } from 'execa';
 
 import { findScenarios } from './commands/find-scenarios.js';
 
-let skip = 'limber-ui';
-let results = [];
-let errors = [];
+const skip = 'limber-ui';
+const results = [];
+const errors = [];
 
-let groups = await findScenarios();
+const groups = await findScenarios();
 
-for (let group of groups) {
+for (const group of groups) {
   if (group.name.includes(skip)) continue;
 
-  for (let scenario of group.scenarios) {
+  for (const scenario of group.scenarios) {
     console.info(`Running ${group.name} :: ${scenario}...`);
 
     try {
