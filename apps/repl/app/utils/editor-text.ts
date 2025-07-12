@@ -282,16 +282,8 @@ export class FileURIComponent {
   #setURL = () => {
     this.#pushUpdateToURL.clear();
 
-    // On initial load, if we call #updateQPs,
-    // we may not have a currentURL, because the first transition has yet to complete
     const current = this.#currentURL();
     let { pathname: base, searchParams: activeQPs } = new URL(current);
-
-    assert(`The URL is missing`, base);
-
-    if (base.startsWith(window.location.origin)) {
-      base = base.replace(window.location.origin, '');
-    }
 
     if (base === '/') {
       base = '/edit/';

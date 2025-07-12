@@ -1,3 +1,4 @@
+/* eslint-disable getter-return */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { tracked } from '@glimmer/tracking';
