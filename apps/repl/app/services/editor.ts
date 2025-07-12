@@ -25,7 +25,9 @@ export default class EditorService extends Service {
   }
 
   updateText = (text: string) => {
-    this.fileURIComponent.queue(text);
+    if (text !== this.text) {
+      this.fileURIComponent.queue(text);
+    }
   };
 
   get text() {
