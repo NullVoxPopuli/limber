@@ -7,7 +7,13 @@ import { isTesting, macroCondition } from '@embroider/macros';
 
 import { compressToEncodedURIComponent } from 'lz-string';
 
-import { flavorFrom, formatFrom, type FormatQP, formatQPFrom } from '#app/languages.gts';
+import {
+  flavorFrom,
+  formatFrom,
+  type FormatQP,
+  formatQPFrom,
+  isAllowedFormat,
+} from '#app/languages.gts';
 
 import { fileFromParams } from 'limber/utils/messaging';
 
@@ -100,7 +106,17 @@ export class FileURIComponent {
     const search = location.split('?')[1];
     const queryParams = new URLSearchParams(search);
 
-    return formatFrom(queryParams.get('format'));
+    const format = queryParams.get('format');
+
+    if (isAllowedFormat(format)) {
+      return format as FormatQP;
+    }
+
+    if (format === 'glimdown' || format === 'gdm') {
+      return 'gmd';
+    }
+
+    return 'gmd';
   }
   set format(value: string) {
     this.#updateFormatQP(value);

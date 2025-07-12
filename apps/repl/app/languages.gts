@@ -140,9 +140,7 @@ const ALIASES = {
 
 export const DEFAULT_FORMAT = 'glimdown';
 
-const ALIAS_FORMATS = ['glimdown', 'gdm'];
-
-export const ALLOWED_FORMATS = [...ALIAS_FORMATS, ...Object.keys(languages)] as const;
+export const ALLOWED_FORMATS = Object.keys(languages);
 
 export const ALLOWED_FLAVORS = {
   jsx: ['react'],

@@ -31,6 +31,12 @@ export default class EditRoute extends Route {
   @service declare router: RouterService;
   @service declare editor: EditorService;
 
+  /**
+   * My preferred way to deal with qps would be to redirect old params
+   * to the correct / new params. *but*, the router system is ... not good.
+   *
+   * It's on the chopping block / re-do block post-polaris.
+   */
   async beforeModel(transition: Transition) {
     const qps = transition.to?.queryParams ?? {};
 
