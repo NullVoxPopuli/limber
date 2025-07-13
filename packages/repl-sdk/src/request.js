@@ -41,7 +41,10 @@ export function idFromRequestUrl(url) {
 }
 
 export class Request {
-  static #idCache = cache.requestCache;
+  static get #idCache() {
+    return cache.requestCache;
+  }
+
   /**
    * @param {{ to: string, from?: string }} toFrom
    */

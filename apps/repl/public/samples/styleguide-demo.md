@@ -45,7 +45,7 @@ It is not intended to be reusable, as it is the banner that goes across the whol
 app.
 
 ```gjs live preview
-import Header from 'limber/components/limber/header';
+import Header from 'limber/components/header';
 import { Shadowed, PortalTargets } from 'ember-primitives';
 
 <template>
