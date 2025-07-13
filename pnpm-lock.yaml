@@ -166,7 +166,7 @@ importers:
         version: 1.11.13
       kolay:
         specifier: ^3.5.5
-        version: 3.7.2(fa1b6317227ecb0a8f7a5953ef15d772)
+        version: 3.9.1(fa1b6317227ecb0a8f7a5953ef15d772)
       limber-ui:
         specifier: workspace:*
         version: link:../../packages/app-support/limber-ui/addon
@@ -506,7 +506,7 @@ importers:
         version: 1.0.3
       kolay:
         specifier: ^3.5.5
-        version: 3.7.2(964261fa9830655077809fe28733eeed)
+        version: 3.9.1(964261fa9830655077809fe28733eeed)
       limber-ui:
         specifier: workspace:*
         version: link:../../packages/app-support/limber-ui/addon
@@ -9219,8 +9219,8 @@ packages:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
 
-  kolay@3.7.2:
-    resolution: {integrity: sha512-hPQtmzQmjwzp4eXKyyGbNg4MaHTt2d/iP5XcCWuNXY5HTU9/qfdTKNdkNaRvnX5rlxOqrnwk9EXT06c9OQkW1g==}
+  kolay@3.9.1:
+    resolution: {integrity: sha512-74MW59MtTquPUmzJZFYvYQLPbE0TuwwR58hJ9IddCN8tWq5lbUoIsVf7b/eGK3BD5Fuv9rRSgOAgPg2rPrusow==}
     engines: {node: '>= 18'}
     peerDependencies:
       '@glint/template': '*'
@@ -22421,7 +22421,7 @@ snapshots:
 
   kleur@4.1.5: {}
 
-  kolay@3.7.2(964261fa9830655077809fe28733eeed):
+  kolay@3.9.1(964261fa9830655077809fe28733eeed):
     dependencies:
       '@ember/test-waiters': 4.1.1(@glint/template@1.5.2)
       '@embroider/addon-shim': 1.10.0
@@ -22451,7 +22451,7 @@ snapshots:
       - typescript
       - webpack
 
-  kolay@3.7.2(fa1b6317227ecb0a8f7a5953ef15d772):
+  kolay@3.9.1(fa1b6317227ecb0a8f7a5953ef15d772):
     dependencies:
       '@ember/test-waiters': 4.1.1(@glint/template@1.6.0-alpha.1)
       '@embroider/addon-shim': 1.10.0
