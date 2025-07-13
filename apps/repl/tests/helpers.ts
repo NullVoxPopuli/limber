@@ -1,5 +1,6 @@
 import { getContext } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
+
 import { clearCache } from 'ember-repl/test-support';
 
 import type { Registry } from '@ember/service';
