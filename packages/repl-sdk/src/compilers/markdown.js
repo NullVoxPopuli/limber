@@ -52,7 +52,7 @@ export const md = {
     return {
       compile: async (text, options) => {
         const compileOptions = filterOptions(options);
-        let result = await parseMarkdown(text, {
+        const result = await parseMarkdown(text, {
           remarkPlugins: [...userOptions.remarkPlugins, ...compileOptions.remarkPlugins],
           rehypePlugins: [...userOptions.rehypePlugins, ...compileOptions.rehypePlugins],
           isLive,
@@ -62,7 +62,7 @@ export const md = {
           ALLOWED_FORMATS: allowedFormats,
           getFlavorFromMeta,
         });
-        let escaped = result.text.replace(/`/g, '\\`');
+        const escaped = result.text.replace(/`/g, '\\`');
 
         return { compiled: `export default \`${escaped}\``, ...result };
       },
@@ -88,8 +88,8 @@ export const md = {
               return;
             }
 
-            let flavor = /** @type {string} */ (infoObj.flavor);
-            let subRender = await compiler.compile(
+            const flavor = /** @type {string} */ (infoObj.flavor);
+            const subRender = await compiler.compile(
               /** @type {string} */ (infoObj.format),
               /** @type {string} */ (infoObj.code),
               {
@@ -98,8 +98,8 @@ export const md = {
               }
             );
 
-            let selector = `#${/** @type {string} */ (infoObj.placeholderId)}`;
-            let target = element.querySelector(selector);
+            const selector = `#${/** @type {string} */ (infoObj.placeholderId)}`;
+            const target = element.querySelector(selector);
 
             assert(
               `Could not find placeholder / target element (using selector: \`${selector}\`). ` +
@@ -115,7 +115,7 @@ export const md = {
         compiler.announce('info', 'Done');
 
         return () => {
-          for (let subDestroy of destroyables) {
+          for (const subDestroy of destroyables) {
             subDestroy();
           }
         };

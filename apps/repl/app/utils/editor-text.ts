@@ -78,6 +78,8 @@ export async function shortenUrl(url: string) {
  *
  *  - on ctrl+s
  *    - write URL to clipboard
+ *
+ * We do this here instead if a route, because the routing system can't be trusted :(
  */
 export class FileURIComponent {
   @service declare router: RouterService;
@@ -205,12 +207,17 @@ export class FileURIComponent {
   #currentURL = () => {
     // On initial load,
     // we may not have a currentURL, because the first transition has yet to complete
+    // NOTE: this omits the origin. We add the origin later so we can use `new URL(..)`
     let base = this.router.currentURL;
 
     if (macroCondition(isTesting())) {
       base ??= (this.router as any) /* private API? */?.location?.path;
     } else {
       base ??= window.location.toString();
+    }
+
+    if (base && !base.includes(window.origin)) {
+      return window.origin + base;
     }
 
     return base ?? window.location.toString();
@@ -278,17 +285,10 @@ export class FileURIComponent {
   });
 
   #setURL = () => {
-    // On initial load, if we call #updateQPs,
-    // we may not have a currentURL, because the first transition has yet to complete
-    let base = this.router.currentURL?.split('?')[0];
+    this.#pushUpdateToURL.clear();
 
-    if (macroCondition(isTesting())) {
-      base ??= (this.router as any) /* private API? */?.location?.path;
-      // @ts-expect-error private api
-      base = base.split('?')[0];
-    } else {
-      base ??= window.location.pathname;
-    }
+    const current = this.#currentURL();
+    let { pathname: base, searchParams: activeQPs } = new URL(current);
 
     if (base === '/') {
       base = '/edit/';
@@ -330,6 +330,8 @@ export class FileURIComponent {
       qps.set('c', encoded);
     }
 
+    // If either of these throw, we have something to debug.
+    // Correct path execution should not result in these throwing
     assert(`Cannot update URL without required QP:format`, qps.get('format'));
     assert(`Cannot update URL without required QP:c (compressed text)`, qps.get('c'));
 
@@ -351,7 +353,14 @@ export class FileURIComponent {
       return;
     }
 
-    const next = `${base}?${qps}`;
+    // These are all required to be in `qps`
+    activeQPs.delete('c');
+    activeQPs.delete('t');
+    activeQPs.delete('format');
+
+    const nextQPs = mergeQPs(activeQPs, qps);
+
+    const next = `${base}?${nextQPs}`;
 
     this.router.replaceWith(next);
     if (rawText) this.#text = rawText;
@@ -434,8 +443,20 @@ export function getStoredDocument() {
 function makeDebounced(fu: () => void) {
   let timeout: number;
 
-  return () => {
+  function runner() {
     clearTimeout(timeout);
-    timeout = setTimeout(fu, DEBOUNCE_MS);
-  };
+    timeout = setTimeout(() => {
+      fu();
+    }, DEBOUNCE_MS);
+  }
+
+  runner.clear = () => clearTimeout(timeout);
+
+  return runner;
+}
+
+function mergeQPs(...qps: URLSearchParams[]) {
+  const result = Object.assign({}, ...qps.map((qp) => Object.fromEntries(qp)));
+
+  return new URLSearchParams(result);
 }

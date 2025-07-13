@@ -13,11 +13,11 @@ const npmInfoCache = new Map();
  * @param {string} version
  */
 export async function getNPMInfo(name, version) {
-  let key = `${name}@${version}`;
+  const key = `${name}@${version}`;
 
   assert(`Must pass valid npm-compatible package name`, packageNameRegex.test(name));
 
-  let existing = npmInfoCache.get(key);
+  const existing = npmInfoCache.get(key);
 
   if (existing) {
     return existing;
@@ -27,8 +27,8 @@ export async function getNPMInfo(name, version) {
     assert(`Cannot get data from NPM without specifying the name of the package`, name);
     assert(`Version is required. It may be 'latest'`, version);
 
-    let response = await fetch(`https://registry.npmjs.org/${name}`);
-    let json = await response.json();
+    const response = await fetch(`https://registry.npmjs.org/${name}`);
+    const json = await response.json();
 
     npmInfoCache.set(key, json);
 
@@ -41,18 +41,18 @@ export async function getNPMInfo(name, version) {
  * @param {string} requestedVersion
  */
 export async function getTarUrl(npmInfo, requestedVersion) {
-  let json = npmInfo;
+  const json = npmInfo;
 
   if (json.error) {
     throw new Error(json.error);
   }
 
-  let tag =
+  const tag =
     requestedVersion in json['dist-tags']
       ? json['dist-tags'][requestedVersion]
       : (requestedVersion ?? json['dist-tags'].latest);
 
-  let requested = json.versions[tag];
+  const requested = json.versions[tag];
 
   return requested.dist.tarball;
 }

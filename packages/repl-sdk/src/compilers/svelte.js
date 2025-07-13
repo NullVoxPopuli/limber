@@ -62,7 +62,7 @@ export const svelte = {
          * Usages:
          * https://github.com/sveltejs/svelte/blob/main/playgrounds/sandbox/run.js#L75
          */
-        let output = await compiler.compile(text, {
+        const output = await compiler.compile(text, {
           /* this errors if unexpected options are passed */
           generate: 'client',
           fragments: 'html',
@@ -74,10 +74,10 @@ export const svelte = {
         return { compiled: output.js.code, css: output.css?.code };
       },
       render: async (element, component, { css }) => {
-        let div = document.createElement('div');
+        const div = document.createElement('div');
 
         if (css) {
-          let style = document.createElement('style');
+          const style = document.createElement('style');
 
           style.innerHTML = /** @type {string} */ (css);
           element.appendChild(style);

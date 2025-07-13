@@ -7,7 +7,7 @@ import { hideBin } from 'yargs/helpers';
 import { findScenarios } from './commands/find-scenarios.js';
 import { symlinkEverywhere } from './commands/symlink-everywhere.js';
 
-let yarg = yargs(hideBin(process.argv));
+const yarg = yargs(hideBin(process.argv));
 
 yarg.wrap(yarg.terminalWidth());
 
@@ -32,7 +32,7 @@ yarg
     'finds all ember-try scenarios in the project',
     () => {},
     async () => {
-      let scenarios = await findScenarios();
+      const scenarios = await findScenarios();
 
       // eslint-disable-next-line no-console
       console.log(JSON.stringify(scenarios, null, 2));

@@ -13,7 +13,7 @@ function requestKey() {
  * @returns {string} the id of the request
  */
 export function idForRequest({ to, from }) {
-  let url = getTarRequestId({ to, from });
+  const url = getTarRequestId({ to, from });
 
   return idFromRequestUrl(url);
 }
@@ -23,9 +23,9 @@ export function idForRequest({ to, from }) {
  * @returns {string} the URL of the request
  */
 export function getTarRequestId({ to, from }) {
-  let request = Request.of({ to, from });
+  const request = Request.of({ to, from });
 
-  let key = requestKey();
+  const key = requestKey();
 
   cache.requestCache.set(key, request);
 
@@ -41,14 +41,17 @@ export function idFromRequestUrl(url) {
 }
 
 export class Request {
-  static #idCache = cache.requestCache;
+  static get #idCache() {
+    return cache.requestCache;
+  }
+
   /**
    * @param {{ to: string, from?: string }} toFrom
    */
   static of({ to, from }) {
-    let isRoot = to.match(/^[A-Za-z@]/);
-    let fromId = from?.replace(unzippedPrefix + '/', '');
-    let request = Request.fromSpecifier(isRoot ? to : `${to}?from=${fromId}`);
+    const isRoot = to.match(/^[A-Za-z@]/);
+    const fromId = from?.replace(unzippedPrefix + '/', '');
+    const request = Request.fromSpecifier(isRoot ? to : `${to}?from=${fromId}`);
 
     return request;
   }
@@ -57,7 +60,7 @@ export class Request {
    * @param {string} id
    */
   static fromRequestId(id) {
-    let request = Request.#idCache.get(id);
+    const request = Request.#idCache.get(id);
 
     assert(`Could not find request from id:${id}`, request);
 
@@ -82,8 +85,8 @@ export class Request {
    * @param {string} specifier
    */
   constructor(specifier) {
-    let removedPrefix = specifier.replace(unzippedPrefix, '');
-    let [full, query] = removedPrefix.split('?');
+    const removedPrefix = specifier.replace(unzippedPrefix, '');
+    const [full, query] = removedPrefix.split('?');
 
     this.original = specifier;
 
@@ -103,19 +106,19 @@ export class Request {
     this.#to = full;
 
     if (query) {
-      let search = new URLSearchParams(query);
-      let fromQp = search.get('from');
+      const search = new URLSearchParams(query);
+      const fromQp = search.get('from');
 
       assert(`Missing query, ?from for specifier: ${specifier}`, fromQp);
 
-      let from = Request.fromRequestId(fromQp);
+      const from = Request.fromRequestId(fromQp);
 
       this.#from = from;
       this.name = from.name;
       this.version = from.version;
     } else {
-      let parsed = parseSpecifier(full);
-      let { name, version = 'latest', path } = parsed;
+      const parsed = parseSpecifier(full);
+      const { name, version = 'latest', path } = parsed;
 
       this.name = name;
       this.version = version.replace(/\.+$/, '');

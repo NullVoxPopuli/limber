@@ -1,6 +1,7 @@
 import { click, visit } from '@ember/test-helpers';
 import { module, skip } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+
+import { setupApplicationCompilerTest } from '#tests/helpers.ts';
 
 // import { stripIndent } from 'common-tags';
 import { DEFAULT_SNIPPET, getFromLabel } from 'limber/snippets';
@@ -12,11 +13,7 @@ import { Page } from './-page';
 const test = skip;
 
 module('Scenarios', function (hooks) {
-  setupApplicationTest(hooks);
-
-  hooks.beforeEach(function () {
-    localStorage.clear();
-  });
+  setupApplicationCompilerTest(hooks);
 
   const page = new Page();
 

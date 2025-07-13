@@ -5,9 +5,7 @@ import { configs } from "@nullvoxpopuli/eslint-configs";
 export default [
   ...configs.ember(import.meta.dirname),
   {
-    ignores: ["dist", "dist-tests", "declarations", "node_modules"],
-  },
-  {
+    name: "local:tech-debt",
     files: ["**/*"],
     rules: {
       "@typescript-eslint/no-unsafe-assignment": "off",

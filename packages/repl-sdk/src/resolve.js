@@ -33,9 +33,9 @@ export function resolvePath(start, target) {
   /**
    * How to make the whole package name look like one segment for URL
    */
-  let base = start.replace(/^@([^/]+)\/([^/]+)/, `${AT}$1___$2`);
+  const base = start.replace(/^@([^/]+)\/([^/]+)/, `${AT}$1___$2`);
 
-  let url = new URL(target, fakeProtocol + fakeDomain + base);
+  const url = new URL(target, fakeProtocol + fakeDomain + base);
 
   /**
    * href omits the protocol
@@ -56,7 +56,7 @@ export function resolvePath(start, target) {
 export function resolve(untarred, request) {
   let answer = undefined;
 
-  let key = request.key;
+  const key = request.key;
 
   if (resolveCache.has(key)) {
     return resolveCache.get(key);
@@ -92,8 +92,8 @@ export function fromInternalImport(untarred, request, answer) {
 
   if (!request.from) return answer;
 
-  let fromSpecifier = request.from;
-  let answerFrom = resolve(untarred, fromSpecifier);
+  const fromSpecifier = request.from;
+  const answerFrom = resolve(untarred, fromSpecifier);
 
   if (!answerFrom) {
     printError(untarred, fromSpecifier, answer);
@@ -101,11 +101,11 @@ export function fromInternalImport(untarred, request, answer) {
     return;
   }
 
-  let inTarFile = resolvePath(fromSpecifier.name + '/' + answerFrom.inTarFile, request.to).replace(
-    new RegExp(`^${fromSpecifier.name}/`),
-    ''
-  );
-  let result = checkFile(untarred, inTarFile);
+  const inTarFile = resolvePath(
+    fromSpecifier.name + '/' + answerFrom.inTarFile,
+    request.to
+  ).replace(new RegExp(`^${fromSpecifier.name}/`), '');
+  const result = checkFile(untarred, inTarFile);
 
   if (result) {
     return createAnswer(result, request, 'internalImport');
@@ -124,15 +124,15 @@ export function fromInternalImport(untarred, request, answer) {
 function fromExports(untarred, request, answer) {
   if (answer) return answer;
 
-  let exports = untarred.manifest.exports;
+  const exports = untarred.manifest.exports;
 
   if (!(typeof exports === 'object')) return answer;
 
-  let foundArray = resolveExports(untarred.manifest, request.to, {
+  const foundArray = resolveExports(untarred.manifest, request.to, {
     conditions: CONDITIONS,
   });
 
-  let found = foundArray?.map((f) => checkFile(untarred, f)).find(Boolean);
+  const found = foundArray?.map((f) => checkFile(untarred, f)).find(Boolean);
 
   if (found) {
     return createAnswer(found, request, 'exports');
@@ -149,11 +149,11 @@ export function fromImports(untarred, request, answer) {
   if (answer) return answer;
   if (!request.to.startsWith('#')) return answer;
 
-  let imports = untarred.manifest.imports;
+  const imports = untarred.manifest.imports;
 
   if (!(typeof imports === 'object')) return answer;
 
-  let found = resolveImports({ content: untarred.manifest }, request.to, {
+  const found = resolveImports({ content: untarred.manifest }, request.to, {
     conditions: CONDITIONS,
   });
 
@@ -224,11 +224,11 @@ function fromMain(untarred, request, answer) {
 function checkLegacyEntry(untarred, request, entryName) {
   if (request.to !== '.') return;
 
-  let filePath = untarred.manifest[/** @type {keyof typeof untarred.manifest} */ (entryName)];
+  const filePath = untarred.manifest[/** @type {keyof typeof untarred.manifest} */ (entryName)];
 
   if (!filePath || typeof filePath !== 'string') return;
 
-  let result = checkFile(untarred, filePath);
+  const result = checkFile(untarred, filePath);
 
   if (result) {
     return createAnswer(result, request, entryName);
@@ -265,7 +265,7 @@ function fromIndex(untarred, request, answer) {
 function fromFallback(untarred, request, answer) {
   if (answer) return answer;
 
-  let result = checkFile(untarred, request.to);
+  const result = checkFile(untarred, request.to);
 
   if (result) {
     return createAnswer(result, request, 'fallback');
@@ -281,9 +281,9 @@ function fromFallback(untarred, request, answer) {
 function checkFile(untarred, filePath) {
   if (!filePath) return;
 
-  for (let prefix of ['', 'pkg/']) {
-    let path = prefix + filePath;
-    let dotless = prefix + filePath.replace(/^\.\//, '');
+  for (const prefix of ['', 'pkg/']) {
+    const path = prefix + filePath;
+    const dotless = prefix + filePath.replace(/^\.\//, '');
 
     if (untarred.contents[path]) {
       return path;
@@ -315,7 +315,7 @@ function hasExports(untarred) {
  * @param {string} fromMethod
  */
 function createAnswer(forFile, request, fromMethod) {
-  let ext = extName(forFile);
+  const ext = extName(forFile);
 
   assert(
     `All files must have an extension. This file (in ${request.name}) did not have an extension: ${forFile}`,
@@ -336,7 +336,7 @@ function createAnswer(forFile, request, fromMethod) {
  * @throws {Error}
  */
 export function printError(untarred, request, answer) {
-  let { name, exports, main, module, browser } = untarred.manifest;
+  const { name, exports, main, module, browser } = untarred.manifest;
 
   console.group(`${name} file info`);
   console.info(`${name} has these files: `, Object.keys(untarred.contents));

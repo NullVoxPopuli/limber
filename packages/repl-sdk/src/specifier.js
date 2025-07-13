@@ -15,9 +15,9 @@ export function parseSpecifier(specifier) {
   let version = '';
   let path = '.';
 
-  let chars = specifier.split('');
+  const chars = specifier.split('');
 
-  let hasScope = chars[0] === '@';
+  const hasScope = chars[0] === '@';
 
   let isVersion = false;
   let isPath = false;
@@ -25,7 +25,7 @@ export function parseSpecifier(specifier) {
   let slashCount = 0;
 
   for (let i = 0; i < chars.length; i++) {
-    let char = chars[i];
+    const char = chars[i];
 
     // Enter version mode
     // Goes until the end, or a slash

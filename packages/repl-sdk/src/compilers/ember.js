@@ -23,7 +23,7 @@ function resolve(id) {
     return `https://esm.sh/*ember-source/dist/packages/@ember/template-compiler/runtime.js`;
   }
 
-  let isExternalEmber = externalPackages.some((name) => id.startsWith(name));
+  const isExternalEmber = externalPackages.some((name) => id.startsWith(name));
 
   if (isExternalEmber) {
     return `https://esm.sh/*${id}`;

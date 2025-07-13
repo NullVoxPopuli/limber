@@ -32,11 +32,11 @@ export async function buildCodemirror({
   getLang,
   getSupport,
 }) {
-  let languageConf = new Compartment();
-  let supportConf = new Compartment();
-  let tabSize = new Compartment();
+  const languageConf = new Compartment();
+  const supportConf = new Compartment();
+  const tabSize = new Compartment();
 
-  let updateListener = EditorView.updateListener.of(({ state, docChanged }) => {
+  const updateListener = EditorView.updateListener.of(({ state, docChanged }) => {
     if (docChanged) {
       handleUpdate(state.doc.toString());
     }
@@ -63,7 +63,7 @@ export async function buildCodemirror({
    * @param {string} format
    */
   async function supportForFormat(format) {
-    let support = await getSupport(format);
+    const support = await getSupport(format);
 
     if (!support) {
       return [];
@@ -94,7 +94,7 @@ export async function buildCodemirror({
     ...(extensions ?? []),
   ].filter(Boolean);
 
-  let view = new EditorView({
+  const view = new EditorView({
     parent: element,
     state: EditorState.create({
       extensions: editorExtensions,
@@ -107,7 +107,7 @@ export async function buildCodemirror({
    * @param {string} text
    * @param {string} format
    */
-  let setText = async (text, format) => {
+  const setText = async (text, format) => {
     const [language, support] = await Promise.all([
       languageForFormat(format),
       supportForFormat(format),
@@ -130,7 +130,7 @@ export async function buildCodemirror({
    *
    * @param {string} format
    */
-  let setFormat = async (format) => {
+  const setFormat = async (format) => {
     const [language, support] = await Promise.all([
       languageForFormat(format),
       supportForFormat(format),

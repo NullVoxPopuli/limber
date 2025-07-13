@@ -20,7 +20,7 @@ function extractText(children) {
        * @param {any} child
        */
       (child) => {
-        let isEmpty = !child.value?.trim();
+        const isEmpty = !child.value?.trim();
 
         if (!isEmpty) {
           return child.value;
@@ -58,11 +58,11 @@ export function headingId(options = { defaults: false }) {
    */
   return function (node) {
     visit(node, 'heading', (node) => {
-      let lastChild = node.children[node.children.length - 1];
+      const lastChild = node.children[node.children.length - 1];
 
       if (lastChild && lastChild.type === 'text') {
-        let string = lastChild.value.replace(/ +$/, '');
-        let matched = string.match(/ {#([^]+?)}$/);
+        const string = lastChild.value.replace(/ +$/, '');
+        const matched = string.match(/ {#([^]+?)}$/);
 
         if (matched) {
           return;

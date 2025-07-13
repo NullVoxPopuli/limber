@@ -5,7 +5,7 @@ import { parseSpecifier } from './specifier.js';
  * @returns {[string, string]}
  */
 function splitSubPath(importPath) {
-  let parsed = parseSpecifier(importPath);
+  const parsed = parseSpecifier(importPath);
 
   return [parsed.name, parsed.path === '.' ? '' : parsed.path];
 }
@@ -17,12 +17,12 @@ function splitSubPath(importPath) {
  * @param {string} importPath
  */
 export function esmSh(versions, importPath, allExternal = false) {
-  let [name, subPath] = splitSubPath(importPath);
+  const [name, subPath] = splitSubPath(importPath);
 
-  let version = versions[name];
-  let subPathExport = subPath.length === 0 || subPath.startsWith('/') ? subPath : `/${subPath}`;
+  const version = versions[name];
+  const subPathExport = subPath.length === 0 || subPath.startsWith('/') ? subPath : `/${subPath}`;
 
-  let externals = allExternal ? '*' : '';
+  const externals = allExternal ? '*' : '';
 
   return version
     ? `https://esm.sh/${externals}${name}@${version}${subPathExport}`
@@ -36,10 +36,10 @@ export function esmSh(versions, importPath, allExternal = false) {
  * @param {string} importPath
  */
 export function esmRun(versions, importPath) {
-  let [name, subPath] = splitSubPath(importPath);
+  const [name, subPath] = splitSubPath(importPath);
 
-  let version = versions[name];
-  let subPathExport = subPath.length === 0 || subPath.startsWith('/') ? subPath : `/${subPath}`;
+  const version = versions[name];
+  const subPathExport = subPath.length === 0 || subPath.startsWith('/') ? subPath : `/${subPath}`;
 
   return version
     ? `https://esm.run/${name}@latest${subPathExport}`
@@ -52,7 +52,7 @@ export const jsdelivr = {
    * @param {string} importPath
    */
   async import(versions, importPath) {
-    let url = esmRun(versions, importPath);
+    const url = esmRun(versions, importPath);
 
     return await import(/* @vite-ignore */ url);
   },
@@ -75,7 +75,7 @@ export const esmsh = {
    * @param {string} importPath
    */
   async import(versions, importPath) {
-    let url = esmSh(versions, importPath);
+    const url = esmSh(versions, importPath);
 
     return await import(/* @vite-ignore */ url);
   },

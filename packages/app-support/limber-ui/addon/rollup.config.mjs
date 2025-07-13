@@ -35,7 +35,7 @@ export default defineConfig({
         await execaCommand(`pnpm glint --declaration`, { stdio: "inherit" });
 
         await fixBadDeclarationOutput("declarations/**/*.d.ts", ["TypeScript#56571", "Glint#628"]);
-        // eslint-disable-next-line no-console
+
         console.log("⚠️ Dangerously (but neededly) fixed bad declaration output from typescript");
       },
     },

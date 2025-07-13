@@ -25,7 +25,7 @@ export const mermaid = {
         return `export default \`${text}\`;`;
       },
       render: async (element, text, _, compiler) => {
-        let { svg } = await mermaid.render('graphDiv' + id++, text);
+        const { svg } = await mermaid.render('graphDiv' + id++, text);
 
         element.innerHTML = svg;
         compiler.announce('info', 'Done');

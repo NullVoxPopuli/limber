@@ -22,6 +22,7 @@ export const importMap = {
   // Components from this app
   // Used in demos
   'limber-ui': () => import('limber-ui'),
+  'limber/components/header': () => import('#edit/header.gts'),
   'limber/components/limber/header': () => import('#edit/header.gts'),
   'limber/components/limber/menu': () => import('#components/menu.gts'),
   'limber/components/menu': () => import('#components/menu.gts'),
@@ -103,6 +104,10 @@ defineWithWarning(
 defineWithWarning(() => import('#components/menu.gts'), {
   original: 'limber/components/limber/menu',
   replacement: 'limber/components/menu',
+});
+defineWithWarning(() => import('#edit/header.gts'), {
+  original: 'limber/components/limber/header',
+  replacement: 'limber/components/header',
 });
 defineWithWarning(() => import('ember-resources'), {
   original: 'ember-resources/core',

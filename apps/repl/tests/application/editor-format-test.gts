@@ -1,15 +1,15 @@
 import { settled, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
 
 import Route from 'ember-route-template';
 
 import { Editor } from '#edit/editor/index.gts';
+import { setupApplicationCompilerTest } from '#tests/helpers.ts';
 
 import { Page } from './-page';
 
 module('Editor > Format', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationCompilerTest(hooks);
 
   const page = new Page();
   const defaultText = '<template>hi</template>';
@@ -54,6 +54,9 @@ module('Editor > Format', function (hooks) {
     assert.true(page.editor.hasText('hi'), 'has passed text as well');
   });
 
+  /**
+   * Skipped because we have some global state somewhere
+   */
   test('after selecting text, it loads again when visiting /', async function (assert) {
     await visit(`/edit?format=gjs&t=${defaultText}&nohighlight=1`);
     await page.editor.load();

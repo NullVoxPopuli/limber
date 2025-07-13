@@ -25,9 +25,9 @@ export async function getFromTarball(url) {
     return cache.fileCache.get(key);
   }
 
-  let data = await cache.cachedPromise(key, async () => {
-    let untarred = await com.getTar(request.name, request.version);
-    let answer = resolve(untarred, request);
+  const data = await cache.cachedPromise(key, async () => {
+    const untarred = await com.getTar(request.name, request.version);
+    const answer = resolve(untarred, request);
 
     if (!answer) {
       throw new Error(`Could not find file for ${request.original}`);
@@ -36,9 +36,9 @@ export async function getFromTarball(url) {
     return { answer, name: request.name, version: request.version };
   });
 
-  let untarred = await com.getTar(request.name, request.version);
+  const untarred = await com.getTar(request.name, request.version);
 
-  let result = getFile(untarred, key, data.answer);
+  const result = getFile(untarred, key, data.answer);
 
   assert(`Missing file for ${url}`, result);
 
@@ -54,7 +54,7 @@ export async function getFromTarball(url) {
  * @returns {undefined | { code: string, ext: string }}
  */
 function getFile(untarred, key, answer) {
-  let request = Request.fromRequestId(key);
+  const request = Request.fromRequestId(key);
 
   if (!answer) {
     printError(untarred, request, answer);
@@ -62,9 +62,9 @@ function getFile(untarred, key, answer) {
     return;
   }
 
-  let { inTarFile, ext } = answer;
+  const { inTarFile, ext } = answer;
 
-  let code = untarred.contents[inTarFile]?.text;
+  const code = untarred.contents[inTarFile]?.text;
 
   if (!code) {
     printError(untarred, request, answer);

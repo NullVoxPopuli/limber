@@ -53,10 +53,10 @@ export async function compiler(config, api) {
   /**
    * @type {import('../../types.ts').Compiler}
    */
-  let gmdCompiler = {
+  const gmdCompiler = {
     compile: async (text, options) => {
       const compileOptions = filterOptions(options);
-      let result = await parseMarkdown(text, {
+      const result = await parseMarkdown(text, {
         remarkPlugins: [...userOptions.remarkPlugins, ...compileOptions.remarkPlugins],
         rehypePlugins: [...userOptions.rehypePlugins, ...compileOptions.rehypePlugins],
         isLive,
@@ -69,12 +69,12 @@ export async function compiler(config, api) {
 
       const { template } = await api.tryResolve('@ember/template-compiler/runtime');
 
-      let scope = {
+      const scope = {
         ...filterOptions(userOptions).scope,
         ...filterOptions(options).scope,
       };
 
-      let component = template(result.text, {
+      const component = template(result.text, {
         scope: () => ({
           ...scope,
           // TODO: compile all the components from "result" and add them to scope here
@@ -91,7 +91,7 @@ export async function compiler(config, api) {
        *    https://github.com/emberjs/rfcs/pull/1099
        *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
        */
-      let attribute = `data-repl-sdk-ember-gmd-${elementId++}`;
+      const attribute = `data-repl-sdk-ember-gmd-${elementId++}`;
 
       element.setAttribute(attribute, '');
 
@@ -144,9 +144,10 @@ export async function compiler(config, api) {
             return;
           }
 
-          let flavor = /** @type {string} */ (infoObj.flavor);
-          let hasScope = flavor === 'ember' || infoObj.format === 'gjs' || infoObj.format === 'hbs';
-          let subRender = await compiler.compile(
+          const flavor = /** @type {string} */ (infoObj.flavor);
+          const hasScope =
+            flavor === 'ember' || infoObj.format === 'gjs' || infoObj.format === 'hbs';
+          const subRender = await compiler.compile(
             /** @type {string} */ (infoObj.format),
             /** @type {string} */ (infoObj.code),
             {
@@ -161,8 +162,8 @@ export async function compiler(config, api) {
             }
           );
 
-          let selector = `#${/** @type {string} */ (infoObj.placeholderId)}`;
-          let target = element.querySelector(selector);
+          const selector = `#${/** @type {string} */ (infoObj.placeholderId)}`;
+          const target = element.querySelector(selector);
 
           assert(
             `Could not find placeholder / target element (using selector: \`${selector}\`). ` +
@@ -176,7 +177,7 @@ export async function compiler(config, api) {
       );
 
       return () => {
-        for (let subDestroy of destroyables) {
+        for (const subDestroy of destroyables) {
           subDestroy();
         }
 

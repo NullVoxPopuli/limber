@@ -59,7 +59,7 @@ export class Compiler {
           assert(`Could not determine 'lang' from format: ${format}`, lang);
 
           const compiler = this.#resolveFormat(lang, flavor);
-          let loadLang = compiler.codemirror?.lang;
+          const loadLang = compiler.codemirror?.lang;
 
           assert(
             `The compiler for '${format}' is missing its configuration for 'codemirror.lang'`,
@@ -74,7 +74,7 @@ export class Compiler {
           assert(`Could not determine 'lang' from format: ${format}`, lang);
 
           const compiler = this.#resolveFormat(lang, flavor);
-          let loadSupport = compiler.codemirror.support;
+          const loadSupport = compiler.codemirror.support;
 
           return await loadSupport?.();
         },
@@ -88,7 +88,7 @@ export class Compiler {
   #handleUnhandledRejection = (e) => {
     let handled = false;
 
-    for (let onUnhandled of this.#compilerOnUnhandled) {
+    for (const onUnhandled of this.#compilerOnUnhandled) {
       onUnhandled(e, (message) => {
         this.#announce('error', message);
         handled = true;
@@ -121,7 +121,7 @@ export class Compiler {
      * We have to strip the query params because our manual resolving
      * doesn't use them -- but CDNs do
      */
-    let vanilla = deCDN(id);
+    const vanilla = deCDN(id);
 
     this.#announce('info', `Loading ${vanilla}`);
     this.#log('[resolve]', id, 'from', parentUrl);
@@ -132,8 +132,8 @@ export class Compiler {
       return `manual:${vanilla}`;
     }
 
-    for (let compilerResolve of this.#compilerResolvers) {
-      let result = compilerResolve(vanilla);
+    for (const compilerResolve of this.#compilerResolvers) {
+      const result = compilerResolve(vanilla);
 
       if (result) {
         this.#log(`[resolve] ${vanilla} found in compiler config at ${result}.`);
@@ -147,7 +147,7 @@ export class Compiler {
     }
 
     if (parentUrl.startsWith(tgzPrefix) && (id.startsWith('.') || id.startsWith('#'))) {
-      let answer = getTarRequestId({ to: id, from: parentUrl });
+      const answer = getTarRequestId({ to: id, from: parentUrl });
 
       return answer;
     }
@@ -183,20 +183,20 @@ export class Compiler {
    * @returns {Promise<Response>}
    */
   #fetch = async (url, options) => {
-    let mimeType = mime.getType(url) ?? 'application/javascript';
+    const mimeType = mime.getType(url) ?? 'application/javascript';
 
     this.#log(`[fetch] attempting to fetch: ${url}. Assuming ${mimeType}`);
 
     if (url.startsWith('manual:')) {
-      let name = url.replace(/^manual:/, '');
+      const name = url.replace(/^manual:/, '');
 
       this.#log('[fetch] resolved url in manually specified resolver', url);
 
-      let result = await this.#resolveManually(name);
+      const result = await this.#resolveManually(name);
 
       assert(`Failed to resolve ${name}`, result);
 
-      let blobContent =
+      const blobContent =
         `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
         `\n\n` +
         `if (!mod) { throw new Error('Could not resolve \`${name}\`. Does the module exist? ( checked ${url} )') }` +
@@ -216,7 +216,7 @@ export class Compiler {
           .join('\n')}
             `;
 
-      let blob = new Blob(Array.from(blobContent), { type: mimeType });
+      const blob = new Blob(Array.from(blobContent), { type: mimeType });
 
       this.#log(
         `[fetch] returning blob mapping to manually resolved import for ${name}`
@@ -229,7 +229,7 @@ export class Compiler {
     }
 
     if (url.startsWith('configured:')) {
-      let name = url.replace(/^configured:/, '');
+      const name = url.replace(/^configured:/, '');
 
       this.#log(
         '[fetch] resolved url in a preconfigured (in the compiler config) specified resolver',
@@ -242,8 +242,8 @@ export class Compiler {
        * Unlike the manual resolver, these are just functions per
        * id, they represent a way to get a module
        */
-      for (let compilerResolve of this.#compilerResolvers) {
-        let fn = compilerResolve(name);
+      for (const compilerResolve of this.#compilerResolvers) {
+        const fn = compilerResolve(name);
 
         if (fn) {
           this.#log(`[fetch] ${name} found in compiler config at ${result}.`);
@@ -255,7 +255,7 @@ export class Compiler {
       assert(`Failed to resolve ${name}`, result);
       cache.resolves[name] = result;
 
-      let blobContent =
+      const blobContent =
         `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
         `\n\n` +
         `if (!mod) { throw new Error('Could not resolve \`${name}\`. Does the module exist? ( checked ${url} )') }` +
@@ -275,7 +275,7 @@ export class Compiler {
           .join('\n')}
             `;
 
-      let blob = new Blob(Array.from(blobContent), { type: mimeType });
+      const blob = new Blob(Array.from(blobContent), { type: mimeType });
 
       this.#log(
         `[fetch] returning blob mapping to configured resolved import for ${name}`
@@ -290,17 +290,17 @@ export class Compiler {
     if (url.startsWith(unzippedPrefix)) {
       this.#log('[fetch] resolved url via tgz resolver', url, options);
 
-      let tarInfo = await getFromTarball(url);
+      const tarInfo = await getFromTarball(url);
 
       assert(`Could not find file for ${url}`, tarInfo);
 
-      let { code, ext } = tarInfo;
+      const { code, ext } = tarInfo;
 
       /**
        * We don't know if this code is completely ready to run in the browser yet, so we might need to run in through the compiler again
        */
-      let file = await this.#postProcess(code, ext);
-      let type = mime.getType(ext);
+      const file = await this.#postProcess(code, ext);
+      const type = mime.getType(ext);
 
       return new Response(new Blob([file], { type: type ?? 'application/javascript' }));
     }
@@ -333,7 +333,7 @@ export class Compiler {
   async #postProcess(text, ext) {
     let code = text;
 
-    for (let compiler of this.#compilers) {
+    for (const compiler of this.#compilers) {
       if (compiler.handlers?.[ext]) {
         code = await compiler.handlers[ext](code);
       }
@@ -355,7 +355,7 @@ export class Compiler {
       return await this.#compile(format, text, options);
     } catch (e) {
       // for on.log usage
-      let message = e instanceof Error ? e.message : e;
+      const message = e instanceof Error ? e.message : e;
 
       this.#announce('error', String(message));
 
@@ -377,7 +377,7 @@ export class Compiler {
     // @ts-ignore
     await import('es-module-shims');
 
-    let opts = { ...options };
+    const opts = { ...options };
 
     opts.fileName ||= `dynamic.${format}`;
 
@@ -393,7 +393,7 @@ export class Compiler {
       compiledText = compiled;
       extras = { compiled: compiledText };
     } else if (typeof compiled.compiled === 'string') {
-      let { compiled: text } = compiled;
+      const { compiled: text } = compiled;
 
       compiledText = text;
       extras = compiled;
@@ -618,7 +618,7 @@ export class Compiler {
       }
 
       // @ts-ignore
-      let shimmed = await shimmedImport(/* vite-ignore */ name);
+      const shimmed = await shimmedImport(/* vite-ignore */ name);
 
       return shimmed;
     },
@@ -628,7 +628,7 @@ export class Compiler {
      * @returns {Promise<unknown[]>}
      */
     tryResolveAll: async (names, fallback) => {
-      let results = await Promise.all(
+      const results = await Promise.all(
         names.map((name) => {
           return this.#nestedPublicAPI.tryResolve(name);
         })
@@ -636,11 +636,11 @@ export class Compiler {
 
       if (fallback) {
         /** @type {Record<string, Promise<unknown>>} */
-        let morePromises = {};
+        const morePromises = {};
 
         for (let i = 0; i < results.length; i++) {
-          let result = results[i];
-          let name = names[i];
+          const result = results[i];
+          const name = names[i];
 
           if (!result) {
             this.#warn(`Could not load ${name}. Trying fallback.`);
@@ -711,7 +711,7 @@ export class Compiler {
     getAllowedFormats: () => Object.keys(this.#options.formats),
 
     getFlavorsFor: (format) => {
-      let config = this.#options.formats[format];
+      const config = this.#options.formats[format];
 
       if (!config) return [];
       if (typeof config === 'function') return [];
@@ -725,7 +725,7 @@ export class Compiler {
   };
 
   #createDiv() {
-    let div = document.createElement('div');
+    const div = document.createElement('div');
 
     div.setAttribute('data-repl-output', '');
     div.id = nextId();
@@ -812,7 +812,7 @@ function shimmedImport(...args) {
  * @returns {string}
  */
 function deCDN(id) {
-  let noQPs = id.split('?')[0];
+  const noQPs = id.split('?')[0];
 
   return /** @type {string} */ (noQPs);
 }
