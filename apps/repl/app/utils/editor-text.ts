@@ -207,12 +207,17 @@ export class FileURIComponent {
   #currentURL = () => {
     // On initial load,
     // we may not have a currentURL, because the first transition has yet to complete
+    // NOTE: this omits the origin. We add the origin later so we can use `new URL(..)`
     let base = this.router.currentURL;
 
     if (macroCondition(isTesting())) {
       base ??= (this.router as any) /* private API? */?.location?.path;
     } else {
       base ??= window.location.toString();
+    }
+
+    if (base && !base.includes(window.origin)) {
+      return window.origin + base;
     }
 
     return base ?? window.location.toString();
@@ -440,7 +445,9 @@ function makeDebounced(fu: () => void) {
 
   function runner() {
     clearTimeout(timeout);
-    timeout = setTimeout(fu, DEBOUNCE_MS);
+    timeout = setTimeout(() => {
+      fu();
+    }, DEBOUNCE_MS);
   }
 
   runner.clear = () => clearTimeout(timeout);

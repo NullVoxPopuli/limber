@@ -1,12 +1,12 @@
 import { settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
 
 import { getCompiler } from 'ember-repl';
 import Route from 'ember-route-template';
 
 import { Output } from '#components/output.gts';
 import { DemoSelect } from '#edit/demo-select.gts';
+import { setupApplicationCompilerTest } from '#tests/helpers.ts';
 
 import { ALL, getFromLabel } from 'limber/snippets';
 import { fileFromParams } from 'limber/utils/messaging';
@@ -15,7 +15,7 @@ import { getService } from '../helpers';
 import { Page } from './-page';
 
 module('Output > Demos', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationCompilerTest(hooks);
 
   const page = new Page();
 

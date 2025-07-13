@@ -1,17 +1,15 @@
 import { settled, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
 
 import Route from 'ember-route-template';
 
-import { clearCache } from 'ember-repl/test-support';
 import { Editor } from '#edit/editor/index.gts';
+import { setupApplicationCompilerTest } from '#tests/helpers.ts';
 
 import { Page } from './-page';
 
 module('Editor > Format', function (hooks) {
-  setupApplicationTest(hooks);
-  clearCache(hooks);
+  setupApplicationCompilerTest(hooks);
 
   const page = new Page();
   const defaultText = '<template>hi</template>';

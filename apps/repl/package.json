@@ -133,6 +133,7 @@
     "#languages": "./app/languages.gts",
     "#config": "./app/config/environment.ts",
     "#app/*": "./app/*",
+    "#tests/*": "./tests/*",
     "#components/*": "./app/components/*",
     "#edit/*": "./app/templates/edit/*"
   },
