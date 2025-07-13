@@ -1,7 +1,10 @@
+import { Compiler } from 'repl-sdk';
+
 import { CACHE } from './compile/compile.ts';
 import { setup } from './setup.ts';
 
 import type { ModuleMap } from './compile/types.ts';
+import type { TestContext } from '@ember/test-helpers';
 import type { Options } from 'repl-sdk';
 
 export function clearCompileCache() {
@@ -9,16 +12,31 @@ export function clearCompileCache() {
 }
 
 type Hooks = {
-  beforeEach: (callback: (...args: unknown[]) => void | Promise<void>) => void | Promise<void>;
-  afterEach: (callback: (...args: unknown[]) => void | Promise<void>) => void | Promise<void>;
+  beforeEach: (
+    this: object,
+    callback: (...args: unknown[]) => void | Promise<void>
+  ) => void | Promise<void>;
+  afterEach: (
+    this: object,
+    callback: (...args: unknown[]) => void | Promise<void>
+  ) => void | Promise<void>;
 };
+
+export function clearCache(hooks: Hooks) {
+  hooks.beforeEach(function (this: TestContext) {
+    Compiler.clearCache();
+  });
+  hooks.afterEach(function (this: TestContext) {
+    Compiler.clearCache();
+  });
+}
 
 export function setupCompiler(
   hooks: Hooks,
   options?: {
     modules?: ModuleMap;
     /**
-     * Clearl all the compile caches between tests.
+     * Clear all the compile caches between tests.
      * This is false by default, so that tests run faster, and
      * we thrash the network less.
      */
@@ -26,7 +44,9 @@ export function setupCompiler(
     options?: Options['options'];
   }
 ) {
-  hooks.beforeEach(function (this: object) {
+  hooks.beforeEach(function (this: TestContext) {
+    Compiler.clearCache();
+
     if (options?.clearCache) {
       clearCompileCache();
     }
@@ -34,7 +54,9 @@ export function setupCompiler(
     setup(this, options);
   });
 
-  hooks.afterEach(function () {
+  hooks.afterEach(function (this: TestContext) {
+    Compiler.clearCache();
+
     if (options?.clearCache) {
       clearCompileCache();
     }

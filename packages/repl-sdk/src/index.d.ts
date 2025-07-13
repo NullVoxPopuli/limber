@@ -51,4 +51,9 @@ export class Compiler {
     setText: (text: string, format: string) => Promise<void>;
     setFormat: (format: string) => Promise<void>;
   }>;
+
+  /**
+   * Clear promise, npm, tarball, (etc) caches
+   */
+  static clearCache: () => void;
 }
