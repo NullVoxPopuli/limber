@@ -1,8 +1,6 @@
 import { settled, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 
-import Route from 'ember-route-template';
-
 import { Editor } from '#edit/editor/index.gts';
 import { setupApplicationCompilerTest } from '#tests/helpers.ts';
 
@@ -17,13 +15,11 @@ module('Editor > Format', function (hooks) {
   hooks.beforeEach(function () {
     this.owner.register(
       'template:edit',
-      Route(
-        <template>
-          <div data-test-editor-panel>
-            <Editor />
-          </div>
-        </template>
-      )
+      <template>
+        <div data-test-editor-panel>
+          <Editor />
+        </div>
+      </template>
     );
   });
 

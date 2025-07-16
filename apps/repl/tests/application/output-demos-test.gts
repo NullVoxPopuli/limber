@@ -2,7 +2,6 @@ import { settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 
 import { getCompiler } from 'ember-repl';
-import Route from 'ember-route-template';
 
 import { Output } from '#components/output.gts';
 import { DemoSelect } from '#edit/demo-select.gts';
@@ -34,7 +33,7 @@ module('Output > Demos', function (hooks) {
   module('every option correctly changes the query params', function () {
     for (const demo of ALL) {
       test(demo.label, async function (assert) {
-        this.owner.register('template:edit', Route(<template><DemoSelect /></template>));
+        this.owner.register('template:edit', <template><DemoSelect /></template>);
 
         await page.expectRedirectToContent('/edit');
         await page.selectDemo(demo.label);
@@ -57,14 +56,12 @@ module('Output > Demos', function (hooks) {
       test(demo.label, async function (assert) {
         this.owner.register(
           'template:edit',
-          Route(
-            <template>
-              <fieldset class="border">
-                <legend>Limber::Output</legend>
-                <Output />
-              </fieldset>
-            </template>
-          )
+          <template>
+            <fieldset class="border">
+              <legend>Limber::Output</legend>
+              <Output />
+            </fieldset>
+          </template>
         );
 
         await page.expectRedirectToContent('/edit');
