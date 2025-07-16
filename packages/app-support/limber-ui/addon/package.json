@@ -74,7 +74,6 @@
     "babel-plugin-ember-template-compilation": "^2.4.1",
     "concurrently": "^9.1.2",
     "ember-async-data": "2.0.1",
-    "ember-cli-htmlbars": "^6.3.0",
     "ember-modifier": "^4.2.0",
     "ember-primitives": "^0.35.0",
     "ember-resources": "^7.0.3",

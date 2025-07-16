@@ -272,10 +272,10 @@ importers:
         version: 2.0.0-alpha.2(typescript@5.8.3)
       '@glint/environment-ember-loose':
         specifier: alpha
-        version: 2.0.0-alpha.2(328051120bf60c16ed4e08674f7f5a44)
+        version: 2.0.0-alpha.2(78f0b6bbd34182d3b6321a17d47d2e5a)
       '@glint/environment-ember-template-imports':
         specifier: alpha
-        version: 2.0.0-alpha.2(def1ff5b330753cc170d5af4906a1397)
+        version: 2.0.0-alpha.2(80a829f9a1af505d401e51634125e791)
       '@glint/template':
         specifier: alpha
         version: 1.6.0-alpha.1
@@ -576,10 +576,10 @@ importers:
         version: 2.0.0-alpha.2(typescript@5.8.3)
       '@glint/environment-ember-loose':
         specifier: alpha
-        version: 2.0.0-alpha.2(caa6e899414d9cbd2c293f45cacc946e)
+        version: 2.0.0-alpha.2(132bdcbf9b51e01b58c8da5ff8a5d420)
       '@glint/environment-ember-template-imports':
         specifier: alpha
-        version: 2.0.0-alpha.2(3e132917c1a7aece0202d26b26207a62)
+        version: 2.0.0-alpha.2(c649f34771bf66b31fe4d411499efa09)
       '@glint/template':
         specifier: 1.5.2
         version: 1.5.2
@@ -794,10 +794,10 @@ importers:
         version: 2.0.0-alpha.2(typescript@5.8.3)
       '@glint/environment-ember-loose':
         specifier: alpha
-        version: 2.0.0-alpha.2(328051120bf60c16ed4e08674f7f5a44)
+        version: 2.0.0-alpha.2(78f0b6bbd34182d3b6321a17d47d2e5a)
       '@glint/environment-ember-template-imports':
         specifier: alpha
-        version: 2.0.0-alpha.2(def1ff5b330753cc170d5af4906a1397)
+        version: 2.0.0-alpha.2(80a829f9a1af505d401e51634125e791)
       '@glint/template':
         specifier: alpha
         version: 1.6.0-alpha.1
@@ -819,9 +819,6 @@ importers:
       ember-async-data:
         specifier: 2.0.1
         version: 2.0.1(039cd1fcd98b21610dcc92fbca61ccb1)
-      ember-cli-htmlbars:
-        specifier: ^6.3.0
-        version: 6.3.0
       ember-modifier:
         specifier: ^4.2.0
         version: 4.2.2(@babel/core@7.28.0)
@@ -1088,10 +1085,10 @@ importers:
         version: 2.0.0-alpha.2(typescript@5.8.3)
       '@glint/environment-ember-loose':
         specifier: alpha
-        version: 2.0.0-alpha.2(328051120bf60c16ed4e08674f7f5a44)
+        version: 2.0.0-alpha.2(78f0b6bbd34182d3b6321a17d47d2e5a)
       '@glint/environment-ember-template-imports':
         specifier: alpha
-        version: 2.0.0-alpha.2(def1ff5b330753cc170d5af4906a1397)
+        version: 2.0.0-alpha.2(80a829f9a1af505d401e51634125e791)
       '@glint/template':
         specifier: ^1.6.0-alpha.1
         version: 1.6.0-alpha.1
@@ -7241,10 +7238,6 @@ packages:
   ember-cli-htmlbars@5.7.2:
     resolution: {integrity: sha512-Uj6R+3TtBV5RZoJY14oZn/sNPnc+UgmC8nb5rI4P3fR/gYoyTFIZSXiIM7zl++IpMoIrocxOrgt+mhonKphgGg==}
     engines: {node: 10.* || >= 12.*}
-
-  ember-cli-htmlbars@6.3.0:
-    resolution: {integrity: sha512-N9Y80oZfcfWLsqickMfRd9YByVcTGyhYRnYQ2XVPVrp6jyUyOeRWmEAPh7ERSXpp8Ws4hr/JB9QVQrn/yZa+Ag==}
-    engines: {node: 12.* || 14.* || >= 16}
 
   ember-cli-is-package-missing@1.0.0:
     resolution: {integrity: sha512-9hEoZj6Au5onlSDdcoBqYEPT8ehlYntZPxH8pBKV0GO7LNel88otSAQsCfXvbi2eKE+MaSeLG/gNaCI5UdWm9g==}
@@ -15262,36 +15255,34 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@glint/environment-ember-loose@2.0.0-alpha.2(328051120bf60c16ed4e08674f7f5a44)':
+  '@glint/environment-ember-loose@2.0.0-alpha.2(132bdcbf9b51e01b58c8da5ff8a5d420)':
+    dependencies:
+      '@glimmer/component': 2.0.0
+      '@glint/core': 2.0.0-alpha.2(typescript@5.8.3)
+      '@glint/template': 1.5.2
+    optionalDependencies:
+      ember-modifier: 4.2.2(@babel/core@7.28.0)
+
+  '@glint/environment-ember-loose@2.0.0-alpha.2(78f0b6bbd34182d3b6321a17d47d2e5a)':
     dependencies:
       '@glimmer/component': 2.0.0
       '@glint/core': 2.0.0-alpha.2(typescript@5.8.3)
       '@glint/template': 1.6.0-alpha.1
     optionalDependencies:
-      ember-cli-htmlbars: 6.3.0
       ember-modifier: 4.2.2(@babel/core@7.28.0)
 
-  '@glint/environment-ember-loose@2.0.0-alpha.2(caa6e899414d9cbd2c293f45cacc946e)':
-    dependencies:
-      '@glimmer/component': 2.0.0
-      '@glint/core': 2.0.0-alpha.2(typescript@5.8.3)
-      '@glint/template': 1.5.2
-    optionalDependencies:
-      ember-cli-htmlbars: 6.3.0
-      ember-modifier: 4.2.2(@babel/core@7.28.0)
-
-  '@glint/environment-ember-template-imports@2.0.0-alpha.2(3e132917c1a7aece0202d26b26207a62)':
+  '@glint/environment-ember-template-imports@2.0.0-alpha.2(80a829f9a1af505d401e51634125e791)':
     dependencies:
       '@glint/core': 2.0.0-alpha.2(typescript@5.8.3)
-      '@glint/environment-ember-loose': 2.0.0-alpha.2(caa6e899414d9cbd2c293f45cacc946e)
-      '@glint/template': 1.5.2
+      '@glint/environment-ember-loose': 2.0.0-alpha.2(78f0b6bbd34182d3b6321a17d47d2e5a)
+      '@glint/template': 1.6.0-alpha.1
       content-tag: 3.1.3
 
-  '@glint/environment-ember-template-imports@2.0.0-alpha.2(def1ff5b330753cc170d5af4906a1397)':
+  '@glint/environment-ember-template-imports@2.0.0-alpha.2(c649f34771bf66b31fe4d411499efa09)':
     dependencies:
       '@glint/core': 2.0.0-alpha.2(typescript@5.8.3)
-      '@glint/environment-ember-loose': 2.0.0-alpha.2(328051120bf60c16ed4e08674f7f5a44)
-      '@glint/template': 1.6.0-alpha.1
+      '@glint/environment-ember-loose': 2.0.0-alpha.2(132bdcbf9b51e01b58c8da5ff8a5d420)
+      '@glint/template': 1.5.2
       content-tag: 3.1.3
 
   '@glint/template@1.5.2': {}
@@ -19462,25 +19453,6 @@ snapshots:
       semver: 7.7.2
       silent-error: 1.1.1
       strip-bom: 4.0.0
-      walk-sync: 2.2.0
-    transitivePeerDependencies:
-      - supports-color
-
-  ember-cli-htmlbars@6.3.0:
-    dependencies:
-      '@ember/edition-utils': 1.2.0
-      babel-plugin-ember-template-compilation: 2.4.1
-      babel-plugin-htmlbars-inline-precompile: 5.3.1
-      broccoli-debug: 0.6.5
-      broccoli-persistent-filter: 3.1.3
-      broccoli-plugin: 4.0.7
-      ember-cli-version-checker: 5.1.2
-      fs-tree-diff: 2.0.1
-      hash-for-dep: 1.5.1
-      heimdalljs-logger: 0.1.10
-      js-string-escape: 1.0.1
-      semver: 7.7.2
-      silent-error: 1.1.1
       walk-sync: 2.2.0
     transitivePeerDependencies:
       - supports-color
