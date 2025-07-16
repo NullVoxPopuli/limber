@@ -6,6 +6,7 @@ if (typeof module !== 'undefined') {
 
   module.exports = {
     test_page: 'tests/index.html?hidepassed',
+    cwd: 'dist',
     disable_watching: true,
     launch_in_ci: [CI_BROWSER],
     launch_in_dev: [DEFAULT_BROWSER],

@@ -27,7 +27,7 @@
     "test:chrome": "CI_BROWSER=Chrome pnpm dist:ember:test",
     "test:firefox": "CI_BROWSER=Firefox pnpm dist:ember:test",
     "test:preview": "pnpm vite preview",
-    "dist:ember:test": "ember test --path dist --config-file ./testem.cjs --test-port 0",
+    "dist:ember:test": "testem ci --port 0",
     "lint:js": "pnpm -w exec lint js",
     "lint:js:fix": "pnpm -w exec lint js:fix",
     "lint:hbs": "pnpm -w exec lint hbs",
