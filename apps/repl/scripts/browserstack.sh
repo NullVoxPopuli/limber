@@ -10,6 +10,6 @@ trap cleanup SIGINT
 
 pnpm vite build --mode test
 pnpm ember browserstack:connect
-pnpm ember test --path ./dist --test-port=7774 --host 127.0.0.1 --config-file=browserstack.testem.cjs
+pnpm testem ci --cwd ./dist --port=7774 --host 127.0.0.1 --file=browserstack.testem.cjs
 pnpm ember browserstack:results
 

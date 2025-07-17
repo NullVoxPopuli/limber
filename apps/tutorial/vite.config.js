@@ -1,4 +1,4 @@
-import { classicEmberSupport, ember, extensions } from '@embroider/vite';
+import { ember, extensions } from '@embroider/vite';
 
 import { babel } from '@rollup/plugin-babel';
 import { kolay } from 'kolay/vite';
@@ -39,7 +39,6 @@ export default defineConfig(({ mode /* command, isSsrBuild, isPreview */ }) => (
       onlyDirectories: true,
       packages: [],
     }),
-    classicEmberSupport(),
     ember(),
     babel({
       babelHelpers: 'runtime',

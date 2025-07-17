@@ -4,8 +4,16 @@ import os from 'node:os';
 import path from 'node:path';
 
 import chalk from 'chalk';
-import { packageJson, project } from 'ember-apply';
 import { execa, execaCommand } from 'execa';
+
+const root = path.join(import.meta.dirname, '../../');
+
+async function readPackageJSON(cwd) {
+  const pPath = path.join(cwd, 'package.json');
+  const buffer = fs.readFile(pPath);
+
+  return JSON.stringify(buffer.toString());
+}
 
 const [, , command, ...userArgs] = process.argv;
 // process.cwd() is whatever pnpm decides to do
@@ -19,8 +27,7 @@ const [, , command, ...userArgs] = process.argv;
 //  OLDPWD
 const cwd = process.env['INIT_CWD'];
 
-const root = await project.gitRoot();
-const manifest = await packageJson.read(cwd);
+const manifest = await readPackageJSON(cwd);
 const relative = path.relative(root, cwd);
 
 if (process.env['DEBUG']) {
