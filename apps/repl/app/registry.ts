@@ -28,6 +28,7 @@ const autoRegistry = {
 
 import ApplicationController from './controllers/application.ts';
 import ApplicationTemplate from './templates/application.gts';
+import DocsTemplate from './templates/docs.gts';
 import EditTemplate from './templates/edit.gts';
 import OutputTemplate from './templates/output.gts';
 
@@ -50,6 +51,7 @@ export const registry = {
   ...autoRegistry,
   [`${appName}/controllers/application`]: ApplicationController,
   [`${appName}/templates/application`]: ApplicationTemplate,
+  [`${appName}/templates/docs`]: DocsTemplate,
   [`${appName}/templates/edit`]: EditTemplate,
   [`${appName}/templates/output`]: OutputTemplate,
 };
