@@ -3,6 +3,8 @@ import { faEmber, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faCubes } from '@fortawesome/free-solid-svg-icons';
 import { notInIframe } from 'ember-primitives/iframe';
 
+import { default as Docs } from '~icons/pajamas/document?raw';
+
 import { ExternalLink } from 'limber-ui';
 
 import DemoSelect from './demo-select.gts';
@@ -34,6 +36,19 @@ import { Share } from './share.gts';
     </div>
 
     <nav class="flex items-baseline gap-2 text-white">
+      <ExternalLink href="/docs" class="hidden sm:block">
+        <:custom as |DefaultContent|>
+          <span class="hidden md:block">
+            <DefaultContent>
+              Documentation
+            </DefaultContent>
+          </span>
+          <span class="md:hidden">
+            {{!-- template-lint-disable no-triple-curlies --}}
+            {{{Docs}}}
+          </span>
+        </:custom>
+      </ExternalLink>
       <ExternalLink href="/bundle.html" class="hidden sm:block">
         <:custom as |DefaultContent|>
           <span class="hidden md:block">
