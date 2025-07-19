@@ -22,7 +22,7 @@ Router.map(function () {
    */
   this.route('ember');
   this.route('output');
-  // this.route('docs');
+  this.route('docs');
 
   this.route('error', { path: '*' });
 });
