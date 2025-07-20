@@ -1,14 +1,48 @@
-import EmberRouter from '@embroider/router';
+import EmbroiderRouter from '@embroider/router';
 
 import { properLinks } from 'ember-primitives/proper-links';
 
 import config from '#config';
 
 @properLinks
-export default class Router extends EmberRouter {
+export default class Router extends EmbroiderRouter {
   location = config.locationType;
   rootURL = config.rootURL;
+
+  constructor(...args) {
+    super(...args);
+  }
 }
+
+/**
+ * See: https://github.com/embroider-build/embroider/issues/2521
+ */
+function bundle(name: string, loader: () => Promise<{ default: unknown }>[]) {
+  return {
+    names: [name],
+    load: async () => {
+      const [template, route, controller] = await Promise.all(loader());
+      const slashName = name.replaceAll('.', '/');
+      const results: Record<string, unknown> = {};
+
+      if (template) results[`limber/templates/${slashName}`] = template.default;
+      if (route) results[`limber/routes/${slashName}`] = route.default;
+      if (controller) results[`limber/controllers/${slashName}`] = controller.default;
+
+      return {
+        default: results,
+      };
+    },
+  };
+}
+
+(window as any)._embroiderRouteBundles_ = [
+  bundle('docs', () => [import('./templates/docs.gts')]),
+  bundle('docs.repl-sdk', () => [import('./templates/docs/repl-sdk.gts')]),
+  bundle('docs.ember-repl', () => [import('./templates/docs/ember-repl.gts')]),
+  bundle('docs.embedding', () => [import('./templates/docs/embedding.gts')]),
+  bundle('docs.editor', () => [import('./templates/docs/editor.gts')]),
+];
 
 Router.map(function () {
   /**
@@ -22,7 +56,12 @@ Router.map(function () {
    */
   this.route('ember');
   this.route('output');
-  this.route('docs');
+  this.route('docs', function () {
+    this.route('repl-sdk');
+    this.route('ember-repl');
+    this.route('embedding');
+    this.route('editor');
+  });
 
   this.route('error', { path: '*' });
 });

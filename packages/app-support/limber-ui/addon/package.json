@@ -51,7 +51,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "decorator-transforms": "^2.3.0",
     "penpal": "^6.2.2",
-    "reactiveweb": "^1.7.0"
+    "reactiveweb": "^1.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.27.7",
@@ -76,7 +76,7 @@
     "ember-async-data": "2.0.1",
     "ember-cli-htmlbars": "^6.3.0",
     "ember-modifier": "^4.2.0",
-    "ember-primitives": "^0.35.0",
+    "ember-primitives": "^0.36.0",
     "ember-resources": "^7.0.3",
     "ember-source": ">= 6.7.0-alpha.1",
     "ember-template-imports": "^4.3.0",

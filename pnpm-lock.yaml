@@ -141,8 +141,8 @@ importers:
         specifier: ^4.2.0
         version: 4.2.2(@babel/core@7.28.0)
       ember-primitives:
-        specifier: ^0.35.0
-        version: 0.35.0(4d0d27d15130494486279fad092c3369)
+        specifier: ^0.36.0
+        version: 0.36.0(4d0d27d15130494486279fad092c3369)
       ember-repl:
         specifier: workspace:*
         version: link:../../packages/ember-repl
@@ -180,8 +180,8 @@ importers:
         specifier: ^6.2.2
         version: 6.2.2
       reactiveweb:
-        specifier: ^1.7.0
-        version: 1.7.0(cef36f3ca1d903be8f6a31ad723afeb3)
+        specifier: ^1.8.0
+        version: 1.8.0(cef36f3ca1d903be8f6a31ad723afeb3)
       rehype-raw:
         specifier: ^7.0.0
         version: 7.0.0
@@ -496,8 +496,8 @@ importers:
         specifier: ^4.2.0
         version: 4.2.2(@babel/core@7.28.0)
       ember-primitives:
-        specifier: ^0.35.0
-        version: 0.35.0(bca47cab46937275e0099107419486a3)
+        specifier: ^0.36.0
+        version: 0.36.0(bca47cab46937275e0099107419486a3)
       ember-repl:
         specifier: latest
         version: 6.0.0(d2518f7a2d5c82ab489a8285020e9671)
@@ -514,8 +514,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/app-support/limber-ui/addon
       reactiveweb:
-        specifier: ^1.7.0
-        version: 1.7.0(f2ef3cbd8e34c4567407bd8bd428161d)
+        specifier: ^1.8.0
+        version: 1.8.0(f2ef3cbd8e34c4567407bd8bd428161d)
       rehype-raw:
         specifier: ^7.0.0
         version: 7.0.0
@@ -707,8 +707,8 @@ importers:
         specifier: ^5.4.1
         version: 5.4.1
       ember-apply:
-        specifier: ^2.15.1
-        version: 2.15.1
+        specifier: ^2.15.2
+        version: 2.15.2
       execa:
         specifier: ^9.5.2
         version: 9.6.0
@@ -777,8 +777,8 @@ importers:
         specifier: ^6.2.2
         version: 6.2.2
       reactiveweb:
-        specifier: ^1.7.0
-        version: 1.7.0(cef36f3ca1d903be8f6a31ad723afeb3)
+        specifier: ^1.8.0
+        version: 1.8.0(cef36f3ca1d903be8f6a31ad723afeb3)
     devDependencies:
       '@babel/core':
         specifier: ^7.27.7
@@ -847,8 +847,8 @@ importers:
         specifier: ^4.2.0
         version: 4.2.2(@babel/core@7.28.0)
       ember-primitives:
-        specifier: ^0.35.0
-        version: 0.35.0(4d0d27d15130494486279fad092c3369)
+        specifier: ^0.36.0
+        version: 0.36.0(4d0d27d15130494486279fad092c3369)
       ember-resources:
         specifier: ^7.0.3
         version: 7.0.6(4f2e80f0a0bd25f30177abf189405398)
@@ -1047,8 +1047,8 @@ importers:
         specifier: ^2.3.0
         version: 2.3.0(@babel/core@7.28.0)
       ember-primitives:
-        specifier: ^0.35.0
-        version: 0.35.0(4d0d27d15130494486279fad092c3369)
+        specifier: ^0.36.0
+        version: 0.36.0(4d0d27d15130494486279fad092c3369)
       ember-resolver:
         specifier: ^13.1.0
         version: 13.1.1
@@ -2867,8 +2867,8 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
-  '@babel/plugin-transform-regenerator@7.28.0':
-    resolution: {integrity: sha512-LOAozRVbqxEVjSKfhGnuLoE4Kz4Oc5UJzuvFUhSsQzdCdaAQu06mG8zDv2GFSerM62nImUZ7K92vxnQcLSDlCQ==}
+  '@babel/plugin-transform-regenerator@7.28.1':
+    resolution: {integrity: sha512-P0QiV/taaa3kXpLY+sXla5zec4E+4t4Aqc9ggHlfZ7a2cp8/x/Gv08jfwEtn9gnnYIMvHx6aoOZ8XJL8eU71Dg==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -7250,8 +7250,8 @@ packages:
   electron-to-chromium@1.5.174:
     resolution: {integrity: sha512-HE43yYdUUiJVjewV2A9EP8o89Kb4AqMKplMQP2IxEPUws1Etu/ZkdsgUDabUZ/WmbP4ZbvJDOcunvbBUPPIfmw==}
 
-  ember-apply@2.15.1:
-    resolution: {integrity: sha512-+Un8DOzyopfAz+y6IscqsfIYONYV7Jzaoc6SKxf+Hgz1pI3SHGA+6S0k2tAFMq7ArITKUV1K+6NdTQJBIkmPOw==}
+  ember-apply@2.15.2:
+    resolution: {integrity: sha512-xLYNSe7JV9CtLwGDoYAXc1hYBDsxh9fdlAVxGc8wA/Lyyxt+Y61iQ5FySpFrWZnduulkZ5/XthcxwUK4oTvFrQ==}
     engines: {node: '>=16.0.0'}
     hasBin: true
 
@@ -7403,8 +7403,8 @@ packages:
       '@glint/template':
         optional: true
 
-  ember-primitives@0.35.0:
-    resolution: {integrity: sha512-lzaE60Td2kTO7hOXsf8CKuggSGYsrSQVtrRvCqN2uFB3fJa9yNanpnbw3XqJymqPyj0TaeFsXsyiWvw8Aqwbfg==}
+  ember-primitives@0.36.0:
+    resolution: {integrity: sha512-wwZJwrZxrIAdC1ovuQR+mZQRtgAhm+qYU4krE9w0io8S7GdYA4VZHEG52+A8jOZH1Zg0hqpsXRMz0/FVnGNdeg==}
     peerDependencies:
       '@ember/test-helpers': '>= 3.2.0'
       '@ember/test-waiters': ^4.1.0
@@ -10988,8 +10988,8 @@ packages:
     resolution: {integrity: sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==}
     engines: {node: '>=0.10.0'}
 
-  reactiveweb@1.7.0:
-    resolution: {integrity: sha512-z02Hfd3bxkOhBjsv5MxZnUkigpwZxOtpTBb0IkCojdEeVM8SCHUO6TcG0kkb70HdmPMKmjMDzoe5d7hIa7MJlQ==}
+  reactiveweb@1.8.0:
+    resolution: {integrity: sha512-cj2vQhS3a4/5swQXgCO79BdtxqJkhUmgu+BqOSt3O6vFzsNHLJf8oCoODxSJHLRZ5mnie2+OxoqGTx/LfhSFYA==}
     peerDependencies:
       '@ember/test-waiters': ^4.1.0
 
@@ -12663,8 +12663,8 @@ packages:
       '@volar/language-service':
         optional: true
 
-  volar-service-typescript@0.0.64:
-    resolution: {integrity: sha512-FN2H97iqjR1id8AM4fH7lTXuTx2on9zD6QlUFllaiHKqgNrEITlQwm/9Ujrd9ST7MUzhgIKyUsa2WlanX9kkMg==}
+  volar-service-typescript@0.0.65:
+    resolution: {integrity: sha512-zPJuLIMs7lkQCvL+Rza8+3/EIoXEIkX8+DL7bNNfPgnbalbvRDhqWLVMJ6Zk3pINjLJafDqyhSbw8srfkUv97w==}
     peerDependencies:
       '@volar/language-service': ~2.4.0
     peerDependenciesMeta:
@@ -13741,7 +13741,7 @@ snapshots:
       '@babel/core': 7.28.0
       '@babel/helper-plugin-utils': 7.27.1
 
-  '@babel/plugin-transform-regenerator@7.28.0(@babel/core@7.28.0)':
+  '@babel/plugin-transform-regenerator@7.28.1(@babel/core@7.28.0)':
     dependencies:
       '@babel/core': 7.28.0
       '@babel/helper-plugin-utils': 7.27.1
@@ -13966,7 +13966,7 @@ snapshots:
       '@babel/plugin-transform-private-methods': 7.27.1(@babel/core@7.28.0)
       '@babel/plugin-transform-private-property-in-object': 7.27.1(@babel/core@7.28.0)
       '@babel/plugin-transform-property-literals': 7.27.1(@babel/core@7.28.0)
-      '@babel/plugin-transform-regenerator': 7.28.0(@babel/core@7.28.0)
+      '@babel/plugin-transform-regenerator': 7.28.1(@babel/core@7.28.0)
       '@babel/plugin-transform-regexp-modifiers': 7.27.1(@babel/core@7.28.0)
       '@babel/plugin-transform-reserved-words': 7.27.1(@babel/core@7.28.0)
       '@babel/plugin-transform-shorthand-properties': 7.27.1(@babel/core@7.28.0)
@@ -15371,7 +15371,7 @@ snapshots:
       typescript: 5.8.3
       uuid: 8.3.2
       volar-service-html: 0.0.64(@volar/language-service@2.4.12)
-      volar-service-typescript: 0.0.64(@volar/language-service@2.4.12)
+      volar-service-typescript: 0.0.65(@volar/language-service@2.4.12)
       vscode-languageserver-protocol: 3.17.5
       vscode-languageserver-textdocument: 1.0.12
       vscode-uri: 3.1.0
@@ -19319,7 +19319,7 @@ snapshots:
 
   electron-to-chromium@1.5.174: {}
 
-  ember-apply@2.15.1:
+  ember-apply@2.15.2:
     dependencies:
       '@babel/core': 7.28.0
       '@babel/preset-env': 7.28.0(@babel/core@7.28.0)
@@ -19959,7 +19959,7 @@ snapshots:
       ember-modifier: 4.2.2(@babel/core@7.28.0)
       ember-resources: 7.0.6(4f2e80f0a0bd25f30177abf189405398)
       form-data-utils: 0.6.0
-      reactiveweb: 1.7.0(cef36f3ca1d903be8f6a31ad723afeb3)
+      reactiveweb: 1.8.0(cef36f3ca1d903be8f6a31ad723afeb3)
       should-handle-link: 1.3.0
       tabster: 8.5.6
       tracked-built-ins: 4.0.0(@babel/core@7.28.0)
@@ -19985,7 +19985,7 @@ snapshots:
       ember-modifier: 4.2.2(@babel/core@7.28.0)
       ember-resources: 7.0.6(807cfcd3020ea8ad8edb1795de9ad08f)
       form-data-utils: 0.6.0
-      reactiveweb: 1.7.0(f2ef3cbd8e34c4567407bd8bd428161d)
+      reactiveweb: 1.8.0(f2ef3cbd8e34c4567407bd8bd428161d)
       should-handle-link: 1.3.0
       tabster: 8.5.6
       tracked-built-ins: 4.0.0(@babel/core@7.28.0)
@@ -19998,7 +19998,7 @@ snapshots:
       - ember-source
       - supports-color
 
-  ember-primitives@0.35.0(4d0d27d15130494486279fad092c3369):
+  ember-primitives@0.36.0(4d0d27d15130494486279fad092c3369):
     dependencies:
       '@babel/runtime': 7.27.6
       '@ember/test-waiters': 4.1.1(@glint/template@1.6.0-alpha.1)
@@ -20011,7 +20011,7 @@ snapshots:
       ember-modifier: 4.2.2(@babel/core@7.28.0)
       ember-resources: 7.0.6(4f2e80f0a0bd25f30177abf189405398)
       form-data-utils: 0.6.0
-      reactiveweb: 1.7.0(cef36f3ca1d903be8f6a31ad723afeb3)
+      reactiveweb: 1.8.0(cef36f3ca1d903be8f6a31ad723afeb3)
       should-handle-link: 1.3.0
       tabster: 8.5.6
       tracked-built-ins: 4.0.0(@babel/core@7.28.0)
@@ -20024,7 +20024,7 @@ snapshots:
       - ember-source
       - supports-color
 
-  ember-primitives@0.35.0(bca47cab46937275e0099107419486a3):
+  ember-primitives@0.36.0(bca47cab46937275e0099107419486a3):
     dependencies:
       '@babel/runtime': 7.27.6
       '@ember/test-waiters': 4.1.1(@glint/template@1.5.2)
@@ -20037,7 +20037,7 @@ snapshots:
       ember-modifier: 4.2.2(@babel/core@7.28.0)
       ember-resources: 7.0.6(807cfcd3020ea8ad8edb1795de9ad08f)
       form-data-utils: 0.6.0
-      reactiveweb: 1.7.0(f2ef3cbd8e34c4567407bd8bd428161d)
+      reactiveweb: 1.8.0(f2ef3cbd8e34c4567407bd8bd428161d)
       should-handle-link: 1.3.0
       tabster: 8.5.6
       tracked-built-ins: 4.0.0(@babel/core@7.28.0)
@@ -22446,7 +22446,7 @@ snapshots:
       globby: 14.1.0
       json5: 2.2.3
       package-up: 5.0.0
-      reactiveweb: 1.7.0(f2ef3cbd8e34c4567407bd8bd428161d)
+      reactiveweb: 1.8.0(f2ef3cbd8e34c4567407bd8bd428161d)
       send: 1.2.0
       tracked-built-ins: 4.0.0(@babel/core@7.28.0)
       typedoc: 0.28.4(typescript@5.8.3)
@@ -22476,7 +22476,7 @@ snapshots:
       globby: 14.1.0
       json5: 2.2.3
       package-up: 5.0.0
-      reactiveweb: 1.7.0(cef36f3ca1d903be8f6a31ad723afeb3)
+      reactiveweb: 1.8.0(cef36f3ca1d903be8f6a31ad723afeb3)
       send: 1.2.0
       tracked-built-ins: 4.0.0(@babel/core@7.28.0)
       typedoc: 0.28.4(typescript@5.8.3)
@@ -24616,7 +24616,7 @@ snapshots:
 
   react@19.1.0: {}
 
-  reactiveweb@1.7.0(cef36f3ca1d903be8f6a31ad723afeb3):
+  reactiveweb@1.8.0(cef36f3ca1d903be8f6a31ad723afeb3):
     dependencies:
       '@ember/test-waiters': 4.1.1(@glint/template@1.6.0-alpha.1)
       '@embroider/addon-shim': 1.10.0
@@ -24630,7 +24630,7 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  reactiveweb@1.7.0(f2ef3cbd8e34c4567407bd8bd428161d):
+  reactiveweb@1.8.0(f2ef3cbd8e34c4567407bd8bd428161d):
     dependencies:
       '@ember/test-waiters': 4.1.1(@glint/template@1.5.2)
       '@embroider/addon-shim': 1.10.0
@@ -26755,7 +26755,7 @@ snapshots:
     optionalDependencies:
       '@volar/language-service': 2.4.12
 
-  volar-service-typescript@0.0.64(@volar/language-service@2.4.12):
+  volar-service-typescript@0.0.65(@volar/language-service@2.4.12):
     dependencies:
       path-browserify: 1.0.1
       semver: 7.7.2
