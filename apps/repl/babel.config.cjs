@@ -1,6 +1,11 @@
 const { buildMacros } = require('@embroider/macros/babel');
 
-const macros = buildMacros();
+const macros = buildMacros({
+  configure(config) {
+    config.setGlobalConfig(__filename, '@embroider/core', { active: true });
+    console.log(config);
+  },
+});
 
 module.exports = {
   plugins: [

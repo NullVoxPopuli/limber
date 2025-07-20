@@ -58,7 +58,6 @@
     "@glint/tsserver-plugin": "alpha",
     "@iconify-json/devicon": "^1.2.29",
     "@iconify-json/mdi": "^1.2.3",
-    "@iconify-json/pajamas": "^1.2.12",
     "@iconify-json/vscode-icons": "^1.2.23",
     "@nullvoxpopuli/eslint-configs": "^5.3.4",
     "@rollup/plugin-babel": "^6.0.4",
