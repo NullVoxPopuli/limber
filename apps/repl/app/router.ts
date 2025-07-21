@@ -8,10 +8,6 @@ import config from '#config';
 export default class Router extends EmbroiderRouter {
   location = config.locationType;
   rootURL = config.rootURL;
-
-  constructor(...args) {
-    super(...args);
-  }
 }
 
 /**
