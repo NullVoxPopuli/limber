@@ -1,0 +1,24 @@
+.docs-nav {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+
+  a {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 0.5rem;
+    align-items: center;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+}
+
+.centered-content {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
