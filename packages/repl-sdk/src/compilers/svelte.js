@@ -15,7 +15,7 @@ export const svelte = {
   /**
    * Default config, known to work with how the compiler and render functions are configured.
    */
-  _resolve: (id) => {
+  resolve: (id) => {
     // This is basically an importmap.
     // Because Svelte 5 is no longer bundled, we need another service to provide
     // these.
@@ -29,7 +29,13 @@ export const svelte = {
     // See also: https://github.com/sveltejs/svelte/discussions/15658
     if (['svelte'].some((x) => id.startsWith(x))) {
       return (
-        esmSh({}, id, false) +
+        esmSh(
+          {
+            svelte: '5.35.7',
+          },
+          id,
+          false
+        ) +
         // + '?target=esnext';
         '?dev&target=esnext&keep-names'
       );

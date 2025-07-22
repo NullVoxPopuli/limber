@@ -3,22 +3,23 @@ import { cell } from 'ember-resources';
 import { ExternalLink } from 'limber-ui';
 
 export const importMap = {
-  // NOTE: importing this reveals a module cycle. And the REPL doesn't currently support cycles
-  svelte: () => import('svelte'),
-  'svelte/animate': () => import('svelte/animate'),
-  'svelte/attachments': () => import('svelte/attachments'),
-  'svelte/compiler': () => import('svelte/compiler'),
-  'svelte/easing': () => import('svelte/easing'),
-  'svelte/events': () => import('svelte/events'),
-  'svelte/internal': () => import('svelte/internal'),
-  'svelte/internal/disclose-version': () => import('svelte/internal/disclose-version'),
-  'svelte/internal/client': () => import('svelte/internal/client'),
-  'svelte/legacy': () => import('svelte/legacy'),
-  'svelte/motion': () => import('svelte/motion'),
-  'svelte/reactivity': () => import('svelte/reactivity'),
-  'svelte/reactivity/window': () => import('svelte/reactivity/window'),
-  'svelte/store': () => import('svelte/store'),
-  'svelte/transition': () => import('svelte/transition'),
+  // NOTE: exposes/internal/client an export called `await`, which is not a valid identifier,
+  //       and that currently breaks repl-sdk, because for pre-resolved
+  // svelte: () => import('svelte'),
+  // 'svelte/animate': () => import('svelte/animate'),
+  // 'svelte/attachments': () => import('svelte/attachments'),
+  // 'svelte/compiler': () => import('svelte/compiler'),
+  // 'svelte/easing': () => import('svelte/easing'),
+  // 'svelte/events': () => import('svelte/events'),
+  // 'svelte/internal': () => import('svelte/internal'),
+  // 'svelte/internal/disclose-version': () => import('svelte/internal/disclose-version'),
+  // 'svelte/internal/client': () => import('svelte/internal/client'),
+  // 'svelte/legacy': () => import('svelte/legacy'),
+  // 'svelte/motion': () => import('svelte/motion'),
+  // 'svelte/reactivity': () => import('svelte/reactivity'),
+  // 'svelte/reactivity/window': () => import('svelte/reactivity/window'),
+  // 'svelte/store': () => import('svelte/store'),
+  // 'svelte/transition': () => import('svelte/transition'),
 
   // Ember Libraries Bundled with this REPL
   'ember-deep-tracked': () => import('ember-deep-tracked'),

@@ -20,62 +20,6 @@ export const defaults = {
   formats: compilers,
 };
 
-const KEYWORDS = new Set([
-  `await`,
-  'break',
-  `async`,
-  'case',
-  'catch',
-  'class',
-  'const',
-  'continue',
-  'debugger',
-  'default',
-  'delete',
-  'do',
-  'else',
-  'export',
-  'extends',
-  'false',
-  'finally',
-  'for',
-  'function',
-  'if',
-  'implements',
-  'import',
-  'in',
-  'instanceof',
-  'interface',
-  'let',
-  'new',
-  'null',
-  'package',
-  'private',
-  'protected',
-  'public',
-  'return',
-  'super',
-  'switch',
-  'static',
-  'this',
-  'throw',
-  'try',
-  'true',
-  'typeof',
-  'var',
-  'void',
-  'while',
-  'with',
-  'yield',
-]);
-
-/**
- * @param {string} identifier
- */
-function isNotKeyword(identifier) {
-  return !KEYWORDS.has(identifier);
-}
-
 export class Compiler {
   /** @type {Options} */
   #options;
@@ -261,17 +205,18 @@ export class Compiler {
          * This is semi-trying to polyfill modules
          * that aren't proper ESM. very annoying.
          */
-        `${Object.keys(result)
-          .filter(isNotKeyword)
-          .map((exportName) => {
-            if (exportName === 'default') {
-              return `export default mod.default ?? mod;`;
-            }
-
-            return `export const ${exportName} = mod.${exportName};`;
-          })
-          .join('\n')}
-            `;
+        'export default mod;\n';
+      // `${Object.keys(result)
+      //   .filter(isNotKeyword)
+      //   .map((exportName) => {
+      //     if (exportName === 'default') {
+      //       return `export default mod.default ?? mod;`;
+      //     }
+      //
+      //     return `export const ${exportName} = mod.${exportName};`;
+      //   })
+      //   .join('\n')}
+      // `;
 
       const blob = new Blob(Array.from(blobContent), { type: mimeType });
 
@@ -316,22 +261,21 @@ export class Compiler {
         `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
         `\n\n` +
         `if (!mod) { throw new Error('Could not resolve \`${name}\`. Does the module exist? ( checked ${url} )') }` +
-        `\n\n` +
-        /**
-         * This is semi-trying to polyfill modules
-         * that aren't proper ESM. very annoying.
-         */
-        `${Object.keys(result)
-          .filter(isNotKeyword)
-          .map((exportName) => {
-            if (exportName === 'default') {
-              return `export default mod.default ?? mod;`;
-            }
-
-            return `export const ${exportName} = mod.${exportName};`;
-          })
-          .join('\n')}
-            `;
+        `\n\n export default mod;`;
+      // /**
+      //  * This is semi-trying to polyfill modules
+      //  * that aren't proper ESM. very annoying.
+      //  */
+      // `${Object.keys(result)
+      //   .filter(isNotKeyword)
+      //   .map((exportName) => {
+      //       return `export default mod;`;
+      //     }
+      //
+      //     return `export const ${exportName} = mod.${exportName};`;
+      //   })
+      //   .join('\n')}
+      //     `;
 
       const blob = new Blob(Array.from(blobContent), { type: mimeType });
 
