@@ -3,7 +3,23 @@ import { cell } from 'ember-resources';
 import { ExternalLink } from 'limber-ui';
 
 export const importMap = {
-  // svelte: () => import('svelte'),
+  // NOTE: importing this reveals a module cycle. And the REPL doesn't currently support cycles
+  svelte: () => import('svelte'),
+  'svelte/animate': () => import('svelte/animate'),
+  'svelte/attachments': () => import('svelte/attachments'),
+  'svelte/compiler': () => import('svelte/compiler'),
+  'svelte/easing': () => import('svelte/easing'),
+  'svelte/events': () => import('svelte/events'),
+  'svelte/internal': () => import('svelte/internal'),
+  'svelte/internal/disclose-version': () => import('svelte/internal/disclose-version'),
+  'svelte/internal/client': () => import('svelte/internal/client'),
+  'svelte/legacy': () => import('svelte/legacy'),
+  'svelte/motion': () => import('svelte/motion'),
+  'svelte/reactivity': () => import('svelte/reactivity'),
+  'svelte/reactivity/window': () => import('svelte/reactivity/window'),
+  'svelte/store': () => import('svelte/store'),
+  'svelte/transition': () => import('svelte/transition'),
+
   // Ember Libraries Bundled with this REPL
   'ember-deep-tracked': () => import('ember-deep-tracked'),
   'ember-modifier': () => import('ember-modifier'),

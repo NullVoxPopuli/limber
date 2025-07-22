@@ -20,6 +20,62 @@ export const defaults = {
   formats: compilers,
 };
 
+const KEYWORDS = new Set([
+  `await`,
+  'break',
+  `async`,
+  'case',
+  'catch',
+  'class',
+  'const',
+  'continue',
+  'debugger',
+  'default',
+  'delete',
+  'do',
+  'else',
+  'export',
+  'extends',
+  'false',
+  'finally',
+  'for',
+  'function',
+  'if',
+  'implements',
+  'import',
+  'in',
+  'instanceof',
+  'interface',
+  'let',
+  'new',
+  'null',
+  'package',
+  'private',
+  'protected',
+  'public',
+  'return',
+  'super',
+  'switch',
+  'static',
+  'this',
+  'throw',
+  'try',
+  'true',
+  'typeof',
+  'var',
+  'void',
+  'while',
+  'with',
+  'yield',
+]);
+
+/**
+ * @param {string} identifier
+ */
+function isNotKeyword(identifier) {
+  return !KEYWORDS.has(identifier);
+}
+
 export class Compiler {
   /** @type {Options} */
   #options;
@@ -206,6 +262,7 @@ export class Compiler {
          * that aren't proper ESM. very annoying.
          */
         `${Object.keys(result)
+          .filter(isNotKeyword)
           .map((exportName) => {
             if (exportName === 'default') {
               return `export default mod.default ?? mod;`;
@@ -265,6 +322,7 @@ export class Compiler {
          * that aren't proper ESM. very annoying.
          */
         `${Object.keys(result)
+          .filter(isNotKeyword)
           .map((exportName) => {
             if (exportName === 'default') {
               return `export default mod.default ?? mod;`;
