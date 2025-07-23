@@ -1,0 +1,14 @@
+# Unlabeled Changes
+
+* `repl-sdk`
+  * [#1965](https://github.com/NullVoxPopuli/limber/pull/1965) Try to fix Svelte ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* Other
+  * [#1957](https://github.com/NullVoxPopuli/limber/pull/1957) Closes [#1956](https://github.com/NullVoxPopuli/limber/issues/1956) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1952](https://github.com/NullVoxPopuli/limber/pull/1952) Add vite bundle analyzer ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber-ui`, `ember-repl`
+  * [#1954](https://github.com/NullVoxPopuli/limber/pull/1954) Update core libraries ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber-ui`, `ember-repl`, `repl-sdk`, `codemirror-lang-glimdown`, `codemirror-lang-glimmer-js`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`
+  * [#1953](https://github.com/NullVoxPopuli/limber/pull/1953) Update deps ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+
+*Cannot plan release until the above changes are labeled*.
