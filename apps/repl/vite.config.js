@@ -15,8 +15,13 @@ export default defineConfig(() => ({
     postcss: './config/postcss.config.mjs',
   },
   optimizeDeps: {
-    // a wasm-providing dependency
-    exclude: ['content-tag', 'ember-repl'],
+    exclude: [
+      // a wasm-providing dependency
+      'content-tag',
+      // Exclude so we keep hot-loading as we develop these packages
+      'ember-repl',
+      'repl-sdk',
+    ],
     // for top-level-await, etc
     esbuildOptions: {
       target: 'esnext',

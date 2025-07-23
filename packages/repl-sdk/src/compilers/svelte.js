@@ -28,7 +28,17 @@ export const svelte = {
     //
     // See also: https://github.com/sveltejs/svelte/discussions/15658
     if (['svelte'].some((x) => id.startsWith(x))) {
-      return esmSh({}, id, false) + '?target=esnext'; //+ '?dev&target=esnext&keep-names';
+      return (
+        esmSh(
+          {
+            svelte: '5.35.7',
+          },
+          id,
+          false
+        ) +
+        // + '?target=esnext';
+        '?dev&target=esnext&keep-names'
+      );
     }
 
     // dependencies of svelte / the compiler
@@ -66,9 +76,13 @@ export const svelte = {
           /* this errors if unexpected options are passed */
           generate: 'client',
           fragments: 'html',
-          filename: 'repl-sdk.js',
-          dev: false,
+          // Placeholder for now until multiple files are supported
+          filename: 'repl-sdk.svelte',
+          dev: true,
           runes: true,
+          // experimental: {
+          //   async: true,
+          // },
         });
 
         return { compiled: output.js.code, css: output.css?.code };

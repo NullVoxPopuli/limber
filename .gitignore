@@ -20,4 +20,4 @@ package-lock.json
 .turbo
 npm-debug.log*
 yarn-error.log
-
+.DS_Store
