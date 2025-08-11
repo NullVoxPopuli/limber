@@ -13,17 +13,17 @@ let manifest = await (async () => {
 })();
 
 let forcedExternals = [
-  "unified",
-  "remark-parse",
-  "remark-rehype",
-  "remark-gfm",
-  "rehype-raw",
-  "rehype-stringify",
-  "mdast",
-  "hast",
-  "unist",
-  "unist-util-visit",
-  "vfile",
+  // "unified",
+  // "remark-parse",
+  // "remark-rehype",
+  // "remark-gfm",
+  // "rehype-raw",
+  // "rehype-stringify",
+  // "mdast",
+  // "hast",
+  // "unist",
+  // "unist-util-visit",
+  // "vfile",
 ];
 
 let externals = [
@@ -32,7 +32,9 @@ let externals = [
     ...(manifest.peerDependencies || {}),
   }),
   ...forcedExternals,
-];
+].filter((x) => {
+  return !x.includes("codemirror");
+});
 
 export default defineConfig({
   build: {
@@ -50,11 +52,9 @@ export default defineConfig({
     sourcemap: true,
     lib: {
       // Could also be a dictionary or array of multiple entry points
-      entry: resolve(__dirname, "src/index.js"),
+      entry: [resolve(__dirname, "src/index.js")],
       name: "repl-sdk",
       formats: ["es"],
-      // the proper extensions will be added
-      fileName: "index",
     },
     rollupOptions: {
       external: externals,
