@@ -6,21 +6,232 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Glimdown</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Racing+Sans+One&family=Yellowtail&display=swap');
+
+    html,
+    body {
+      padding: 0 !important;
+      margin: 0;
+    }
+
+
+    .why {
+      padding: 1rem;
+      margin-top: 1rem;
+      font-family: sans-serif;
+    }
+
+    #app {
+      height: 100vh;
+      width: 100vw;
+      perspective: 800px;
+      overflow: hidden;
+      background-image: linear-gradient(to top,
+          #0f0209,
+          #23061d,
+          #330531,
+          #3e024b,
+          #41056a,
+          #520578,
+          #640385,
+          #770092,
+          #9b0089,
+          #b8007e,
+          #ce1173,
+          #e03168);
+
+      .background {
+        background-size: 40px 40px;
+        background-image:
+          linear-gradient(to right, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+        height: inherit;
+        transform: rotateX(20deg);
+        transform-origin: top center;
+        animation: 20s linear infinite crawlingWall;
+        background-position-y: top;
+      }
+
+      .shadow-box {
+        background: rgba(20, 20, 20, 0.6);
+        color: white;
+        padding: 3vmin;
+        margin: 1rem;
+        border-radius: 0.5rem;
+        font-family: sans-serif;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(0, 0, 0, 0.75);
+        /* https://www.joshwcomeau.com/css/designing-shadows/ */
+        box-shadow:
+          0 1px 1px hsl(0deg 0% 0% / 0.075),
+          0 2px 2px hsl(0deg 0% 0% / 0.075),
+          0 4px 4px hsl(0deg 0% 0% / 0.075),
+          0 8px 8px hsl(0deg 0% 0% / 0.075),
+          0 16px 16px hsl(0deg 0% 0% / 0.075);
+        text-align: center;
+        line-height: 1.5rem;
+
+      }
+
+      .message {
+        aspect-ratio: 3 / 1;
+        width: 50vmax;
+        position: fixed;
+        top: 40%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        font-size: 1.5vmax;
+        line-height: 1.5vmax;
+        line-height: calc(2vmin);
+
+        h1 {
+          margin: 0;
+          font-size: 8vmax;
+          line-height: 7vmax;
+          transform: translateX(-15vmin) translateY(-10vmin);
+
+          font-family: "Racing Sans One", sans-serif;
+          transition: all 0.5s;
+          -webkit-text-stroke: 4px #ededed;
+          font-variation-settings: "wght" 900, "ital" 1;
+          text-align: center;
+          color: transparent;
+          text-shadow:
+            10px 10px 0px #09ddcc,
+            15px 15px 0px #e600d0,
+            20px 20px 0px #e9018a,
+            25px 25px 0px #ff0070,
+            45px 45px 10px #4035bb;
+        }
+
+        .offset-text {
+          transform: translateY(-4vmin);
+        }
+
+        a,
+        a:visited {
+          transition: 0.2s all;
+          cursor: pointer;
+          color: white;
+          font-size: 4vmax;
+          line-height: 4vmax;
+          max-width: 90dvw;
+          font-family: 'Yellowtail', serif;
+        }
+
+        .horizontal {
+          position: absolute;
+          display: grid;
+          width: 100%;
+          gap: 1rem;
+          grid-template-columns: 1fr 0.2fr 1fr;
+        }
+
+
+        .repl {
+          transform: rotate(-6deg);
+          text-align: right;
+
+          code {
+            font-family: Arial, sans-serif;
+          }
+
+          &:hover {
+            transform: rotate(-6deg) scale(1.2);
+          }
+        }
+
+        .tutorial {
+          transform: rotate(6deg);
+          text-align: left;
+
+          &:hover {
+            transform: rotate(6deg) scale(1.2);
+          }
+        }
+      }
+
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition-duration: 0.05s !important;
+      }
+
+      .background {
+        animation: 60s linear infinite crawlingWall;
+      }
+    }
+
+    @media (max-width: 800px) {
+      #app .message .offset-text {
+        margin-top: 1rem;
+      }
+
+      #app .message .horizontal {
+        display: flex;
+        gap: 3rem;
+        flex-direction: column;
+        align-items: center;
+
+        a {
+          text-align: center;
+        }
+      }
+    }
+
+    @media (max-width: 1000px) {
+      #app .message h1 {
+        transform: translateX(-5vmin) translateY(-10vmin);
+        font-size: 6vmax;
+        line-height: 5vmax;
+      }
+    }
+
+    @keyframes crawlingWall {
+      to {
+        background-position-y: bottom;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <div id="app">
+    <div class="background"></div>
+    <div class="message shadow-box">
 
-  <h1>Welcome to Glimdown</h1>
+      <h1 class="shadow-dance-text">Welcome to Glimdown</h1>
 
-  <br><br>
-  You may be looking for:
-  <br><br>
+      <div class="offset-text">
+        You may be looking for:
+        <br><br>
 
-  <a href="https://limber.glimdown.com">The REPL / Playground: Limber</a>
+        <div class="horizontal">
+          <a class="repl" href="https://limber.glimdown.com">The <code>REPL</code> Playground</a>
 
-  <br><br>or<br><br>
+          <span>or</span>
 
-  <a href="https://tutorial.glimdown.com">The Tutorial</a>
+          <a class="tutorial title" href="https://tutorial.glimdown.com">The Tutorial
+            <div class="aurora">
+              <div class="aurora__item"></div>
+              <div class="aurora__item"></div>
+              <div class="aurora__item"></div>
+              <div class="aurora__item"></div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="why">Why is this site like this?
+    <br>
+    Some security tool, a DNS Filter, flagged this site as a parked domain. Which, technically it is, since the real
+    apps are on subdomains... but ugh 😩
+    <br>
+
+  </p>
 </body>
 
 </html>
