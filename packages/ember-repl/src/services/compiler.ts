@@ -130,6 +130,7 @@ const standardScope = {
   //   WHATWG
   localStorage,
   sessionStorage,
+  URL,
   // ////////////////
   // functions / utilities
   // ////////////////
