@@ -52,7 +52,7 @@ export default defineConfig({
     sourcemap: true,
     lib: {
       // Could also be a dictionary or array of multiple entry points
-      entry: [resolve(__dirname, "src/index.js")],
+      entry: resolve(__dirname, "src/index.js"),
       name: "repl-sdk",
       formats: ["es"],
     },
