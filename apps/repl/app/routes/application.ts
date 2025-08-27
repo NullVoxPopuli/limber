@@ -2,12 +2,11 @@ import { getOwner } from '@ember/owner';
 import Route from '@ember/routing/route';
 import { waitForPromise } from '@ember/test-waiters';
 
-import rehypeShikiFromHighlighter from '@shikijs/rehype/core';
 import Shadowed from 'ember-primitives/components/shadowed';
 import { setupTabster } from 'ember-primitives/tabster';
-import { getCompiler, setupCompiler } from 'ember-repl';
+import { getCompiler, setupCompiler } from '@nullvoxpopuli/limber-repl';
 
-import { getHighlighter } from '#app/modifiers/-utils/highlighting.ts';
+import { getHighlighting } from '#app/highlighting.ts';
 import CopyMenu from '#components/copy-menu.gts';
 
 import { importMap } from './import-map.ts';
@@ -46,7 +45,7 @@ export default class ApplicationRoute extends Route {
   #promise: Promise<unknown> | undefined;
 
   async #setup() {
-    const highlighter = await getHighlighter();
+    const { highlighter, rehypePlugin: shikiRehype } = await getHighlighting();
 
     setupCompiler(this, {
       options: {
@@ -57,7 +56,7 @@ export default class ApplicationRoute extends Route {
           },
           rehypePlugins: [
             [
-              rehypeShikiFromHighlighter,
+              shikiRehype,
               highlighter,
               {
                 theme: 'github-dark',
@@ -68,7 +67,7 @@ export default class ApplicationRoute extends Route {
         md: {
           rehypePlugins: [
             [
-              rehypeShikiFromHighlighter,
+              shikiRehype,
               highlighter,
               {
                 theme: 'github-dark',

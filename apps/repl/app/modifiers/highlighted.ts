@@ -4,9 +4,8 @@ import { guidFor } from '@ember/object/internals';
 
 import { modifier } from 'ember-modifier';
 
+import { getHighlighter } from '#app/highlighting.ts';
 import { isAllowedFormat } from '#app/languages.gts';
-
-import { getHighlighter } from './-utils/highlighting';
 
 interface Signature {
   Element: HTMLPreElement;

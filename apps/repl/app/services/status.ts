@@ -1,7 +1,7 @@
 import { cached, tracked } from '@glimmer/tracking';
 import Service from '@ember/service';
 
-import { getCompiler } from 'ember-repl';
+import { getCompiler } from '@nullvoxpopuli/limber-repl';
 
 export default class StatusService extends Service {
   @cached
