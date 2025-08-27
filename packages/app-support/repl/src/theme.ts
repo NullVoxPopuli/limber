@@ -1,5 +1,6 @@
 import { HighlightStyle } from '@codemirror/language';
 import { EditorView } from '@codemirror/view';
+import type { Extension } from '@codemirror/state';
 import { tags as t } from '@lezer/highlight';
 
 import { alpha, syntax, ui } from '@nullvoxpopuli/horizon-theme';
@@ -41,7 +42,7 @@ export const HorizonSyntaxTheme = HighlightStyle.define([
   { tag: t.invalid, color: syntax.cranberry },
 ]);
 
-export const HorizonTheme = EditorView.theme(
+export const HorizonTheme: Extension = EditorView.theme(
   {
     '&': {
       color: ui.lightText,

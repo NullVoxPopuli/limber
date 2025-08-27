@@ -12,6 +12,7 @@ const frameworkModules = {
   '@ember/helper': () => import('@ember/helper'),
   '@ember/modifier': () => import('@ember/modifier'),
   '@ember/object': () => import('@ember/object'),
+  '@ember/object/internals': () => import('@ember/object/internals'),
   '@ember/owner': () => import('@ember/owner'),
   '@ember/routing': () => import('@ember/routing'),
   '@ember/routing/route': () => import('@ember/routing/route'),

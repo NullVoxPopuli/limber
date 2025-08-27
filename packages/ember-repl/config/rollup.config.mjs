@@ -17,7 +17,7 @@ const tsConfig = resolve(import.meta.dirname, "./tsconfig.publish.json");
 export default {
   output: addon.output(),
   plugins: [
-    addon.publicEntrypoints(["**/*.js"]),
+    addon.publicEntrypoints(["index.js", "externals.js", "test-support.js"]),
     addon.dependencies(),
     babel({
       extensions: [".js", ".gjs", ".ts", ".gts"],

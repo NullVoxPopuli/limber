@@ -3,11 +3,9 @@ import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyabl
 import { service } from '@ember/service';
 import { waitForPromise } from '@ember/test-waiters';
 
-import { syntaxHighlighting } from '@codemirror/language';
 import Modifier from 'ember-modifier';
-import { getCompiler } from 'ember-repl';
 
-import { HorizonSyntaxTheme, HorizonTheme } from './theme.ts';
+import { getCodeMirror } from '@nullvoxpopuli/limber-repl';
 
 import type RouterService from '@ember/routing/router-service';
 import type EditorService from 'limber/services/editor';
@@ -124,7 +122,6 @@ class CodeMirror extends Modifier<Signature> {
     this.#previousFormat = formatFromURL;
 
     const updateText = this.editor.updateText;
-    const compiler = getCompiler(this);
 
     if (formatFromURL === 'hbs') {
       formatFromURL = 'hbs|ember';
@@ -133,16 +130,12 @@ class CodeMirror extends Modifier<Signature> {
     element.innerHTML = '';
     element.setAttribute('data-format', formatFromURL);
 
-
-    const { view, setText, setFormat } = await compiler.createEditor(element, {
-      text: value,
-      format: formatFromURL,
-      handleUpdate: updateText,
-      extensions: [
-        HorizonTheme,
-        syntaxHighlighting(HorizonSyntaxTheme),
-      ]
-    });
+    const { view, setText, setFormat } = await getCodeMirror(this, {
+      element,
+      value,
+      formatFromURL,
+      updateText,
+    })
 
     if (isDestroyed(this) || isDestroying(this)) return;
 

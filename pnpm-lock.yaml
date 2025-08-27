@@ -84,9 +84,6 @@ importers:
 
   apps/repl:
     dependencies:
-      '@codemirror/language':
-        specifier: ^6.11.2
-        version: 6.11.2
       '@ember/test-waiters':
         specifier: ^4.1.0
         version: 4.1.1(@glint/template@1.6.0-alpha.2)
@@ -99,12 +96,12 @@ importers:
       '@glimmer/component':
         specifier: ^2.0.0
         version: 2.0.0
-      '@lezer/highlight':
-        specifier: ^1.2.1
-        version: 1.2.1
       '@nullvoxpopuli/horizon-theme':
         specifier: workspace:*
         version: link:../../packages/horizon-theme
+      '@nullvoxpopuli/limber-repl':
+        specifier: workspace:*
+        version: link:../../packages/app-support/repl
       '@nullvoxpopuli/limber-styles':
         specifier: workspace:*
         version: link:../../packages/app-support/styles
@@ -138,9 +135,6 @@ importers:
       ember-primitives:
         specifier: ^0.35.0
         version: 0.35.0(8423a10cdc41b635dba349abe25a88d2)
-      ember-repl:
-        specifier: workspace:*
-        version: link:../../packages/ember-repl
       ember-resize-observer-service:
         specifier: ^1.1.0
         version: 1.1.0
@@ -232,9 +226,6 @@ importers:
       '@babel/plugin-transform-typescript':
         specifier: ^7.26.8
         version: 7.28.0(@babel/core@7.28.0)
-      '@codemirror/view':
-        specifier: 6.38.0
-        version: 6.38.0
       '@ember/string':
         specifier: ^4.0.1
         version: 4.0.1
@@ -298,9 +289,6 @@ importers:
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
-      '@types/codemirror':
-        specifier: 5.60.16
-        version: 5.60.16
       '@types/common-tags':
         specifier: ^1.8.4
         version: 1.8.4
@@ -826,6 +814,55 @@ importers:
       typescript:
         specifier: 5.8.3
         version: 5.8.3
+
+  packages/app-support/repl:
+    dependencies:
+      '@ember/test-helpers':
+        specifier: ^5.2.2
+        version: 5.2.2(a09592f6fca6cd9ea37222143b6b8bfd)
+      '@ember/test-waiters':
+        specifier: ^4.1.0
+        version: 4.1.1(@glint/template@1.6.0-alpha.2)
+      ember-primitives:
+        specifier: ^0.35.0
+        version: 0.35.0(8423a10cdc41b635dba349abe25a88d2)
+      ember-resolver:
+        specifier: ^13.1.1
+        version: 13.1.1
+      ember-resources:
+        specifier: ^7.0.6
+        version: 7.0.6(a04480772aa757b6e15072c9e8dc4514)
+    devDependencies:
+      '@codemirror/language':
+        specifier: ^6.11.2
+        version: 6.11.2
+      '@codemirror/state':
+        specifier: ^6.5.2
+        version: 6.5.2
+      '@codemirror/view':
+        specifier: ^6.38.1
+        version: 6.38.1
+      '@ember/library-tsconfig':
+        specifier: ^1.1.3
+        version: 1.1.3
+      '@embroider/addon-shim':
+        specifier: ^1.10.0
+        version: 1.10.0
+      '@lezer/highlight':
+        specifier: ^1.2.1
+        version: 1.2.1
+      '@nullvoxpopuli/horizon-theme':
+        specifier: workspace:*
+        version: link:../../horizon-theme
+      ember-repl:
+        specifier: workspace:*
+        version: link:../../ember-repl
+      vite:
+        specifier: ^7.1.1
+        version: 7.1.1(ecb5a5223f2c8dee63f3a5938968ff89)
+      vite-plugin-dts:
+        specifier: 4.5.4
+        version: 4.5.4(70a0d5a4a5d361b5bae8856c16906aa9)
 
   packages/app-support/styles:
     dependencies:
@@ -2799,10 +2836,6 @@ packages:
     resolution: {integrity: sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/standalone@7.28.0':
-    resolution: {integrity: sha512-KwedtFtU9oE/1zih0Cxb7Orudibv40KfklaQvUexeQ/2b6dktEHwa/Uqpdqr0AM1vD1+QZSQOXHwRQpt/JO0hQ==}
-    engines: {node: '>=6.9.0'}
-
   '@babel/standalone@7.28.1':
     resolution: {integrity: sha512-BghtJUtfeZLN2wu0L0cdFWkObTF4vN4eptXw1ol1bM2KmYC8oFsYQjWIztgnJuSX4RFz9cMe/dpqIPusZocajg==}
     engines: {node: '>=6.9.0'}
@@ -2945,6 +2978,9 @@ packages:
 
   '@codemirror/view@6.38.0':
     resolution: {integrity: sha512-yvSchUwHOdupXkd7xJ0ob36jdsSR/I+/C+VbY0ffBiL5NiSTEBDfB1ZGWbbIlDd5xgdUkody+lukAdOxYrOBeg==}
+
+  '@codemirror/view@6.38.1':
+    resolution: {integrity: sha512-RmTOkE7hRU3OVREqFVITWHz6ocgBjv08GoePscAakgVQfciA3SGCEk7mb9IzwW61cKKmlTpHXG6DUE5Ubx+MGQ==}
 
   '@colors/colors@1.5.0':
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
@@ -4295,9 +4331,6 @@ packages:
   '@types/chai@5.2.2':
     resolution: {integrity: sha512-8kB30R7Hwqf40JPiKhVzodJs2Qc1ZJ5zuT3uzw5Hq/dhNCl3G3l83jfpdI1e20BP348+fV7VIL/+FxaXkqBmWg==}
 
-  '@types/codemirror@5.60.16':
-    resolution: {integrity: sha512-V/yHdamffSS075jit+fDxaOAmdP2liok8NSNJnAZfDJErzOheuygHZEhAJrfmk5TEyM32MhkZjwo/idX791yxw==}
-
   '@types/common-tags@1.8.4':
     resolution: {integrity: sha512-S+1hLDJPjWNDhcGxsxEbepzaxWqURP/o+3cP4aa2w7yBXgdcmKGQtZzP8JbyfOd0m+33nh+8+kvxYE2UJtBDkg==}
 
@@ -4530,9 +4563,6 @@ packages:
 
   '@types/symlink-or-copy@1.2.2':
     resolution: {integrity: sha512-MQ1AnmTLOncwEf9IVU+B2e4Hchrku5N67NkgcAHW0p3sdzPe0FNMANxEm6OJUzPniEQGkeT3OROLlCwZJLWFZA==}
-
-  '@types/tern@0.23.9':
-    resolution: {integrity: sha512-ypzHFE/wBzh+BlH6rrBgS5I/Z7RD21pGhZ2rltb/+ZrVM1awdZwjx7hE5XfuYgHWk9uvV5HLZN3SloevCAp3Bw==}
 
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
@@ -12320,8 +12350,6 @@ snapshots:
 
   '@babel/runtime@7.27.6': {}
 
-  '@babel/standalone@7.28.0': {}
-
   '@babel/standalone@7.28.1': {}
 
   '@babel/template@7.27.2':
@@ -12596,7 +12624,7 @@ snapshots:
   '@codemirror/language@6.11.2':
     dependencies:
       '@codemirror/state': 6.5.2
-      '@codemirror/view': 6.38.0
+      '@codemirror/view': 6.38.1
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
       '@lezer/lr': 1.4.2
@@ -12630,6 +12658,13 @@ snapshots:
       '@lezer/highlight': 1.2.1
 
   '@codemirror/view@6.38.0':
+    dependencies:
+      '@codemirror/state': 6.5.2
+      crelt: 1.0.6
+      style-mod: 4.1.2
+      w3c-keyname: 2.2.8
+
+  '@codemirror/view@6.38.1':
     dependencies:
       '@codemirror/state': 6.5.2
       crelt: 1.0.6
@@ -14694,10 +14729,6 @@ snapshots:
     dependencies:
       '@types/deep-eql': 4.0.2
 
-  '@types/codemirror@5.60.16':
-    dependencies:
-      '@types/tern': 0.23.9
-
   '@types/common-tags@1.8.4': {}
 
   '@types/connect@3.4.38':
@@ -14961,10 +14992,6 @@ snapshots:
   '@types/sinonjs__fake-timers@8.1.5': {}
 
   '@types/symlink-or-copy@1.2.2': {}
-
-  '@types/tern@0.23.9':
-    dependencies:
-      '@types/estree': 1.0.8
 
   '@types/trusted-types@2.0.7':
     optional: true
@@ -17622,7 +17649,7 @@ snapshots:
   ember-repl@6.0.0(3d1d7e694eceaa83311af82a80927cb6):
     dependencies:
       '@babel/helper-plugin-utils': 7.27.1
-      '@babel/standalone': 7.28.0
+      '@babel/standalone': 7.28.1
       '@embroider/addon-shim': 1.8.9
       '@embroider/macros': 1.16.9(@glint/template@1.5.2)
       babel-import-util: 3.0.1
@@ -17658,7 +17685,7 @@ snapshots:
   ember-repl@6.0.0(849a323286a2cd0727d040a441005e95):
     dependencies:
       '@babel/helper-plugin-utils': 7.27.1
-      '@babel/standalone': 7.28.0
+      '@babel/standalone': 7.28.1
       '@embroider/addon-shim': 1.8.9
       '@embroider/macros': 1.16.9(@glint/template@1.6.0-alpha.2)
       babel-import-util: 3.0.1
@@ -23175,7 +23202,7 @@ snapshots:
   unplugin@2.3.5:
     dependencies:
       acorn: 8.15.0
-      picomatch: 4.0.2
+      picomatch: 4.0.3
       webpack-virtual-modules: 0.6.2
 
   unrs-resolver@1.11.1:
@@ -23318,6 +23345,25 @@ snapshots:
       chalk: 4.1.2
     transitivePeerDependencies:
       - rollup
+
+  vite-plugin-dts@4.5.4(70a0d5a4a5d361b5bae8856c16906aa9):
+    dependencies:
+      '@microsoft/api-extractor': 7.52.8(@types/node@24.0.12)
+      '@rollup/pluginutils': 5.2.0(rollup@4.45.0)
+      '@volar/typescript': 2.4.15
+      '@vue/language-core': 2.2.0(typescript@5.8.3)
+      compare-versions: 6.1.1
+      debug: 4.4.1(supports-color@8.1.1)
+      kolorist: 1.8.0
+      local-pkg: 1.1.1
+      magic-string: 0.30.17
+      typescript: 5.8.3
+    optionalDependencies:
+      vite: 7.1.1(ecb5a5223f2c8dee63f3a5938968ff89)
+    transitivePeerDependencies:
+      - '@types/node'
+      - rollup
+      - supports-color
 
   vite-plugin-dts@4.5.4(ded0b01d8b60d212207c15f416c8a534):
     dependencies:

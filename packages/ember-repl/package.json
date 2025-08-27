@@ -144,6 +144,10 @@
       "types": "./declarations/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./externals": {
+      "types": "./declarations/externals.d.ts",
+      "default": "./dist/externals.js"
+    },
     "./test-support": {
       "types": "./declarations/test-support.d.ts",
       "default": "./dist/test-support.js"
