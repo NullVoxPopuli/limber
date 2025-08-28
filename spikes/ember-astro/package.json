@@ -10,7 +10,7 @@
     "./server.js": "./src/server.js",
     "./package.json": "./package.json"
   },
-  "keywords": [],
+  "keywords": ["ember-addon"],
   "scripts": {
     "lint:types": "tsc --noEmit"
   },
@@ -18,6 +18,7 @@
   "license": "MIT",
   "packageManager": "pnpm@10.12.1",
   "peerDependencies": {
+    "@glimmer/component": "^2.0.0",
     "astro": "^5.0.0",
     "ember-source": "^6.7.0-alpha.3"
   },
@@ -28,9 +29,11 @@
     "@embroider/vite": "^1.2.0",
     "@rollup/plugin-babel": "^6.0.4",
     "babel-plugin-ember-template-compilation": "^2.4.1",
+    "ember-strict-application-resolver": "^0.1.0",
     "repl-sdk": "workspace:*"
   },
   "devDependencies": {
-    "@ember/library-tsconfig": "^1.1.3"
+    "@ember/library-tsconfig": "^1.1.3",
+    "@glimmer/component": "^2.0.0"
   }
 }

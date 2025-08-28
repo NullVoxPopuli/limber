@@ -1,6 +1,6 @@
 // waiting on renderComponent
 // https://github.com/emberjs/ember.js/pull/20962
-import { Compiler } from 'repl-sdk';
+import { renderAppIsland } from './render-app-island.js';
 
 /**
  * @type {WeakMap<HTMLElement, unknown>}
@@ -8,10 +8,6 @@ import { Compiler } from 'repl-sdk';
 const existingApplications = new WeakMap();
 
 export default function emberAstroClientRenderer(element) {
-  let compiler = new Compiler({
-    logging: location.search.includes('debug'),
-  });
-
   return async (component, props, slotted) => {
     console.log({ component, props, slotted });
 
@@ -23,9 +19,7 @@ export default function emberAstroClientRenderer(element) {
       return;
     }
 
-    let result = await compiler.compile(component);
-
-    element.appendChild(result.element);
+    let result = await renderAppIsland({ element, component });
 
     existingApplications.set(element, result);
     element.addEventListener('astro:unmount', () => result.destroy(), { once: true });
