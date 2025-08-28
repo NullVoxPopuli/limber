@@ -1,0 +1,7 @@
+{
+  "extends": "@ember/library-tsconfig",
+  "include": ["src"],
+  "compilerOptions": {
+    "verbatimModuleSyntax": false
+  }
+}
