@@ -10,7 +10,9 @@
     "./server.js": "./src/server.js",
     "./package.json": "./package.json"
   },
-  "keywords": ["ember-addon"],
+  "keywords": [
+    "ember-addon"
+  ],
   "scripts": {
     "lint:types": "tsc --noEmit"
   },
@@ -20,7 +22,7 @@
   "peerDependencies": {
     "@glimmer/component": "^2.0.0",
     "astro": "^5.0.0",
-    "ember-source": "^6.7.0-alpha.3"
+    "ember-source": ">= 6.7.0-alpha.1"
   },
   "dependencies": {
     "@babel/core": "^7.28.3",
