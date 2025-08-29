@@ -4,6 +4,7 @@ const macros = buildMacros();
 
 module.exports = {
   plugins: [
+
     [
       '@babel/plugin-transform-typescript',
       {

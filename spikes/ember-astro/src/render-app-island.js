@@ -1,4 +1,4 @@
-import Router from '@ember/router';
+import Router from '@ember/routing/router';
 import App from 'ember-strict-application-resolver';
 import { destroy } from '@ember/destroyable';
 

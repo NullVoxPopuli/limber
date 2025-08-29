@@ -21,56 +21,17 @@ export function getContainerRenderer() {
   };
 }
 
-export default function emberIntegration(options) {
+export default function emberIntegration(/* options */) {
   return {
     name: 'ember-astro',
     hooks: {
-      'astro:config:setup': async ({ updateConfig, addRenderer }) => {
+      'astro:config:setup': async (options) => {
+        let { updateConfig, addRenderer } = options;
+
         addRenderer(getRenderer());
+
         updateConfig({
           vite: {
-            // overridden by astro, anyway
-            esbuild: false,
-            resolve: {
-              extensions,
-            },
-            optimizeDeps: {
-              entries: [],
-              esbuildOptions: {
-                external: [
-                  'src/components/demo.gjs',
-                  '@ember/router',
-                  '@ember/destroyable',
-                  'ember-astro',
-                  'ember-strict-application-resolver',
-                  'ember-astro/render-app-island.js',
-                  'ember-astro/client.js',
-                  'ember-astro/server.js',
-                  'ember-astro/index.js',
-                  'ember-astro/src/render-app-island.js',
-                  'ember-astro/src/client.js',
-                  'ember-astro/src/server.js',
-                  'ember-astro/src/index.js',
-                ],
-              },
-              exclude: [
-                'src/components/demo.gjs',
-                '@ember/router',
-                '@ember/destroyable',
-                '@glimmer/component',
-                'ember-strict-application-resolver',
-
-                'ember-astro',
-                'ember-astro/render-app-island.js',
-                'ember-astro/client.js',
-                'ember-astro/server.js',
-                'ember-astro/index.js',
-                'ember-astro/src/render-app-island.js',
-                'ember-astro/src/client.js',
-                'ember-astro/src/server.js',
-                'ember-astro/src/index.js',
-              ],
-            },
             plugins: [
               ember(),
               babel({

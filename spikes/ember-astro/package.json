@@ -8,11 +8,17 @@
     ".": "./src/index.js",
     "./client.js": "./src/client.js",
     "./server.js": "./src/server.js",
+    "./ember-addon-main": "./ember-addon-main.cjs",
     "./package.json": "./package.json"
   },
   "keywords": [
     "ember-addon"
   ],
+  "ember-addon": {
+    "version": 2,
+    "type": "addon",
+    "main": "./ember-addon-main.cjs"
+  },
   "scripts": {
     "lint:types": "tsc --noEmit"
   },
