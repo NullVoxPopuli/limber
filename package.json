@@ -43,6 +43,7 @@
   "pnpm": {
     "_ember-repl": "workspace:*",
     "overrides": {
+      "esbuild": "0.25.9",
       "babel-plugin-ember-template-compilation@<3": "^2.4.1",
       "@glimmer/component": "^2.0.0",
       "@glint/core": "alpha",
