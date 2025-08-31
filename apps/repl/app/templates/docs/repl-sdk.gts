@@ -11,7 +11,7 @@
       Those two responsibilities:
       <ul>
         <li>render *something* based on the input (text + format)</li>
-        <li>create an editor with syntax highlighting, folding, etc</li>
+        <li>(optionally) create an editor with syntax highlighting, folding, etc</li>
       </ul>
     </p>
   </section>
