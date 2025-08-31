@@ -77,6 +77,18 @@ class CodeMirror extends Modifier<Signature> {
       );
     };
 
+    if (this.router.currentRoute?.queryParams?.forceEditor) {
+      waitForPromise(
+        (async () => {
+          await Promise.resolve();
+
+          this.#load?.();
+        })()
+      );
+
+      return;
+    }
+
     window.addEventListener('mousemove', this.#load, { passive: true });
     window.addEventListener('keydown', this.#load, { passive: true });
     window.addEventListener('touchstart', this.#load, { passive: true });
