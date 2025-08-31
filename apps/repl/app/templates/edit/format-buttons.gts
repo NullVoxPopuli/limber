@@ -24,7 +24,7 @@ text-white
 select-none
 `;
 
-const top2 =  usage.top2();
+const top2 = usage.top2();
 
 function toUpper(ext: string) {
   return ext.toUpperCase();
@@ -39,7 +39,8 @@ export const FormatButtons: TOC<object> = <template>
         <Option
           @value={{info.formatQP}}
           @description={{info.name}}
-          class="hidden md:inline-block">{{toUpper info.ext}}</Option>
+          class="hidden md:inline-block"
+        >{{toUpper info.ext}}</Option>
       {{/each}}
     {{/let}}
 

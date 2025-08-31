@@ -25,7 +25,7 @@ const IconItem: TOC<{
     format: string;
     onClick: (format: FormatQP, flavor: string | undefined) => void;
     item: ComponentLike<{ Element: HTMLButtonElement; Blocks: { default: [] } }>;
-  }
+  };
 }> = <template>
   {{#let (infoFor @format) as |info|}}
     <@item {{on "click" (fn @onClick @format)}} class="menu-item">
@@ -34,7 +34,6 @@ const IconItem: TOC<{
     </@item>
   {{/let}}
 </template>;
-
 
 export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
   @service declare router: RouterService;

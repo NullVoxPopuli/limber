@@ -14,7 +14,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { service } from 'ember-primitives/helpers/service';
 import { inIframe } from 'ember-primitives/iframe';
-import { castToBoolean,qp, withQP } from 'ember-primitives/qp';
+import { castToBoolean, qp, withQP } from 'ember-primitives/qp';
 
 import currentURL from 'limber/helpers/current-url';
 
@@ -76,7 +76,7 @@ export const Controls: TOC<{
         >
           <FaIcon @icon={{faRotate}} />
         </Button>
-        {{#let (getShadowValue (qp 'shadowdom')) as |shadow|}}
+        {{#let (getShadowValue (qp "shadowdom")) as |shadow|}}
           <a
             title="Toggle Shadow DOM wrapper (currently: {{if shadow 'on' 'off'}})"
             href={{withQP "shadowdom" (if shadow "off" "on")}}

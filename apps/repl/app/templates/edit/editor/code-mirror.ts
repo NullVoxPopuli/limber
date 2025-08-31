@@ -20,15 +20,14 @@ type Signature = {
       /**
        * Default: false
        */
-      defer?: boolean,
+      defer?: boolean;
       onStateChange?: (state: {
-        isLoading: boolean,
-        isDone: boolean,
+        isLoading: boolean;
+        isDone: boolean;
         error: undefined | null | string;
       }) => void;
-
-    }
-  }
+    };
+  };
 };
 
 /**
@@ -67,13 +66,16 @@ class CodeMirror extends Modifier<Signature> {
       cleanup();
       named.onStateChange?.({ isLoading: true, isDone: false, error: null });
 
-      waitForPromise(this.setup(element)
-        .then(() => {
-          named.onStateChange?.({ isLoading: false, isDone: true, error: null });
-        }).catch((e) => {
-          named.onStateChange?.({ isLoading: false, isDone: false, error: e })
-        }));
-    }
+      waitForPromise(
+        this.setup(element)
+          .then(() => {
+            named.onStateChange?.({ isLoading: false, isDone: true, error: null });
+          })
+          .catch((e) => {
+            named.onStateChange?.({ isLoading: false, isDone: false, error: e });
+          })
+      );
+    };
 
     window.addEventListener('mousemove', this.#load, { passive: true });
     window.addEventListener('keydown', this.#load, { passive: true });
@@ -81,7 +83,7 @@ class CodeMirror extends Modifier<Signature> {
 
     registerDestructor(this, () => {
       cleanup();
-    })
+    });
   }
 
   #previousFormat?: string;
@@ -94,7 +96,7 @@ class CodeMirror extends Modifier<Signature> {
     }
 
     return this.#setFormat?.(format);
-  }
+  };
 
   /**
    * We don't allow thish to run more than once.
@@ -106,7 +108,6 @@ class CodeMirror extends Modifier<Signature> {
   setup = async (element: Element) => {
     if (this.#isSetup) return;
     this.#isSetup = true;
-
 
     /**
      * As long as tracked data is accessed after this await,
@@ -133,15 +134,11 @@ class CodeMirror extends Modifier<Signature> {
     element.innerHTML = '';
     element.setAttribute('data-format', formatFromURL);
 
-
     const { view, setText, setFormat } = await compiler.createEditor(element, {
       text: value,
       format: formatFromURL,
       handleUpdate: updateText,
-      extensions: [
-        HorizonTheme,
-        syntaxHighlighting(HorizonSyntaxTheme),
-      ]
+      extensions: [HorizonTheme, syntaxHighlighting(HorizonSyntaxTheme)],
     });
 
     if (isDestroyed(this) || isDestroying(this)) return;
@@ -172,7 +169,5 @@ class CodeMirror extends Modifier<Signature> {
     registerDestructor(this, () => view.destroy());
   };
 }
-
-
 
 export const codemirror = CodeMirror;

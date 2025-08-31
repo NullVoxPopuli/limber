@@ -11,12 +11,12 @@ import { Share } from './share.gts';
 
 <template>
   <header
-    class="bg-ember-black z-20 flex max-h-12 items-center justify-between px-1 md:px-4 py-2 drop-shadow-lg"
+    class="bg-ember-black z-20 flex max-h-12 items-center justify-between px-1 py-2 drop-shadow-lg md:px-4"
   >
     <div class="flex items-center gap-2">
       <h1 class="text-ember-brand flex items-center gap-2">
         <a
-          class="focus:outline-none focus:ring-4 focus-visible:outline-none hidden md:inline-block"
+          class="hidden focus:outline-none focus:ring-4 focus-visible:outline-none md:inline-block"
           href="https://emberjs.com"
           target="_blank"
           rel="noreferrer noopener"
