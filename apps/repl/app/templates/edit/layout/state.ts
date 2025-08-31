@@ -5,9 +5,45 @@ import { getService } from 'ember-statechart-component';
 import { assign, setup } from 'xstate';
 
 interface Context {
+  handle?: HTMLElement;
   container?: HTMLElement;
+  maximize?: () => void;
+  minimize?: () => void;
+  editorRequest?: {
+    /**
+     * should the editor start fullscreen
+     */
+    max: boolean;
+    /**
+     * should the editor start minimized
+     */
+    min: boolean;
+    /**
+     * should the editor start with a horizontal split, and what percontage of the screen space should it take?
+     */
+    hSplit: false | number;
+    /**
+     * should the editor start with a vertical split, and what percontage of the screen space should it take?
+     */
+    vSplit: false | number;
+  };
+  /**
+   * Should only be true if we receive an hSplit or vSplit state
+   */
+  orientationChangesPrevented?: boolean;
+  /**
+   * e.g.: clicking the "rotate" button
+   */
   manualOrientation?: Direction;
+  /**
+   * The actual orientation of the content window
+   */
   actualOrientation?: Direction;
+  /**
+   * This is kept track of so we can unobserve when we no longer are rendering this state machine.
+   * Also will influence the orientation.
+   */
+  observer?: ResizeObserver;
 }
 
 interface Data {
@@ -35,11 +71,23 @@ function detectAspectRatio() {
 const isTouchDevice = () => window.matchMedia('(pointer: coarse)').matches;
 const isNonTouchDevice = () => !isTouchDevice();
 
+function canChangeOrientation({ context }: Data) {
+  if (context.orientationChangesPrevented) return false;
+
+  return isNonTouchDevice();
+}
+
 function isVerticalSplit(x: Data) {
+  if (x.context.editorRequest?.vSplit) return true;
+  if (x.context.editorRequest?.hSplit) return false;
+
   return hasHorizontalOrientation(x);
 }
 
 export function isHorizontalSplit(x: Data) {
+  if (x.context.editorRequest?.hSplit) return true;
+  if (x.context.editorRequest?.vSplit) return false;
+
   return hasVerticalOrientation(x);
 }
 
@@ -61,6 +109,51 @@ function hasManualOrientation({ context }: Data): boolean {
   return context.manualOrientation !== undefined;
 }
 
+function hasVerticalSplitRequest(editorQP: unknown): number | false {
+  if (typeof editorQP !== 'string') return false;
+  if (!editorQP.endsWith('v')) return false;
+
+  const value = parseInt(editorQP, 10);
+
+  if (isNaN(value)) return false;
+  if (value === 0 || value === 100) return false;
+
+  return value;
+}
+
+function hasHorizontalSplitRequset(editorQP: unknown): number | false {
+  if (typeof editorQP !== 'string') return false;
+  if (!editorQP.endsWith('h')) return false;
+
+  const value = parseInt(editorQP, 10);
+
+  if (isNaN(value)) return false;
+  if (value === 0 || value === 100) return false;
+
+  return value;
+}
+
+function isOrientationPrevented({ context }: Data) {
+  const request = getEditorRequest({ context });
+
+  return Boolean(request.vSplit || request.hSplit);
+}
+
+function getEditorRequest({ context }: Data) {
+  const router = getService(context, 'router');
+  const editor = router.currentRoute?.queryParams.editor;
+
+  const requestingVerticalSplit = hasVerticalSplitRequest(editor);
+  const requestingHorizontalSplit = hasHorizontalSplitRequset(editor);
+
+  return {
+    max: editor === 'max',
+    min: editor === 'min',
+    vSplit: requestingVerticalSplit,
+    hSplit: requestingHorizontalSplit,
+  };
+}
+
 interface ContainerFoundData {
   container: HTMLElement;
   observer: ResizeObserver;
@@ -78,43 +171,26 @@ export const LayoutState = setup({
   actions: {
     maximizeEditor: ({ context }) => maximizeEditor({ context }),
     minimizeEditor: ({ context }) => minimizeEditor({ context }),
-    restoreEditor: ({ context }) => {
-      const { container, maximize, minimize } = context;
-
-      if (!container) return;
-
-      const router = getService(context, 'router');
-      const editor = router.currentRoute?.queryParams.editor;
-      const requestingMax = editor === 'max';
-      const requestingMin = editor === 'min';
-
-      if (maximize && requestingMax) {
-        maximize();
-      } else if (minimize && requestingMin) {
-        minimize();
-      } else {
-        if (isVerticalSplit({ context })) {
-          restoreWidth(container);
-          clearHeight(container);
-        } else {
-          restoreHeight(container);
-          clearWidth(container);
-        }
-      }
-    },
-
     clearHeight: ({ context }) => context.container && clearHeight(context.container),
     clearWidth: ({ context }) => context.container && clearWidth(context.container),
 
-    restoreVerticalSplitSize: ({ context }) => {
+    restoreVerticalSplitSize: ({ context }: Data) => {
       if (!context.container) return;
 
-      restoreWidth(context.container);
+      const override = context.editorRequest?.vSplit
+        ? `${context.editorRequest.vSplit}%`
+        : undefined;
+
+      restoreWidth(context.container, override);
     },
-    restoreHorizontalSplitSize: ({ context }) => {
+    restoreHorizontalSplitSize: ({ context }: Data) => {
       if (!context.container) return;
 
-      restoreHeight(context.container);
+      const override = context.editorRequest?.hSplit
+        ? `${context.editorRequest.hSplit}%`
+        : undefined;
+
+      restoreHeight(context.container, override);
     },
 
     observe: ({ context }) => {
@@ -164,6 +240,7 @@ export const LayoutState = setup({
       observer?: ResizeObserver;
       maximize?: () => void;
       minimize?: () => void;
+      orientationChangePrevented?: boolean;
       manualOrientation?: Direction;
       actualOrientation?: Direction;
     },
@@ -182,7 +259,10 @@ export const LayoutState = setup({
       description: DEBUG && `The editor has been rendered.`,
       target: '.hasContainer',
       actions: assign({
-        handle: ({ event }) => event.container.nextElementSibling,
+        /**
+         * This state machine isn't a generic thing and we always know the structure of our DOM
+         */
+        handle: ({ event }) => event.container.nextElementSibling as HTMLElement,
         container: ({ event }) => event.container,
         observer: ({ event }) => event.observer,
         maximize: ({ event }) => event.maximize,
@@ -196,7 +276,7 @@ export const LayoutState = setup({
     },
     ORIENTATION: {
       description: DEBUG && `Determine initial orientation for initial layout.`,
-      guard: isNonTouchDevice,
+      guard: canChangeOrientation,
       actions: assign({
         actualOrientation: ({ event }) => (event.isVertical ? VERTICAL : HORIZONTAL),
       }),
@@ -206,7 +286,13 @@ export const LayoutState = setup({
     hasContainer: {
       initial: 'default',
       description: DEBUG && `When we have a div to observe, begin watching for events.`,
-      entry: [assign({ actualOrientation: detectAspectRatio })],
+      entry: [
+        assign({
+          actualOrientation: detectAspectRatio,
+          editorRequest: getEditorRequest,
+          orientationChangesPrevented: isOrientationPrevented,
+        }),
+      ],
       states: {
         default: {
           entry: ['observe'],
@@ -241,7 +327,8 @@ export const LayoutState = setup({
                   {
                     description:
                       'Viewport orientation changed to be more vertical. But on touch devices, we ignore this.',
-                    guard: ({ event }) => event.isVertical === true && isNonTouchDevice(),
+                    guard: ({ event, context }) =>
+                      event.isVertical === true && canChangeOrientation({ context }),
                     target: 'horizontallySplit',
                     actions: assign({
                       actualOrientation: ({ event }) => (event.isVertical ? VERTICAL : HORIZONTAL),
@@ -250,7 +337,8 @@ export const LayoutState = setup({
                   {
                     description:
                       'Viewport orientation changed to be more horizontal. But on touch devices, we ignore this.',
-                    guard: ({ event }) => event.isVertical === false && isNonTouchDevice(),
+                    guard: ({ event, context }) =>
+                      event.isVertical === false && canChangeOrientation({ context }),
                     target: 'verticallySplit',
                     actions: assign({
                       actualOrientation: ({ event }) => (event.isVertical ? VERTICAL : HORIZONTAL),
@@ -264,7 +352,12 @@ export const LayoutState = setup({
                 DEBUG &&
                 `By default, the view is horizontally split when the orientation is more vertical. ` +
                   `The vertical orientation displays the editor above and the rendered output below.`,
-              entry: ['restoreHorizontalSplitSize'],
+              entry: [
+                'restoreHorizontalSplitSize',
+                assign({
+                  editorRequest: undefined,
+                }),
+              ],
               on: {
                 MINIMIZE: {
                   actions: 'persistHorizontalSplitSize',
@@ -280,7 +373,7 @@ export const LayoutState = setup({
                       'Viewport orientation changed to be more horizontal. But on touch devices, we ignore this.',
                     guard: ({ event, context }) =>
                       event.isVertical === false &&
-                      isNonTouchDevice() &&
+                      canChangeOrientation({ context }) &&
                       !hasManualOrientation({ context }),
                     target: 'verticallySplit',
                     actions: assign({
@@ -308,7 +401,12 @@ export const LayoutState = setup({
                 DEBUG &&
                 `By default, the view is vertically split when the orientation is more horizontal. ` +
                   `The horizontal orientation displays the editor to the left and the rendered output to the right.`,
-              entry: ['restoreVerticalSplitSize'],
+              entry: [
+                'restoreVerticalSplitSize',
+                assign({
+                  editorRequest: undefined,
+                }),
+              ],
               on: {
                 MINIMIZE: {
                   actions: 'persistVerticalSplitSize',
@@ -325,7 +423,7 @@ export const LayoutState = setup({
                       'Viewport orientation changed to be more vertical. But on touch devices, we ignore this.',
                     guard: ({ event, context }) =>
                       event.isVertical === true &&
-                      isNonTouchDevice() &&
+                      canChangeOrientation({ context }) &&
                       !hasManualOrientation({ context }),
                     target: 'horizontallySplit',
                     actions: assign({
@@ -412,18 +510,18 @@ const maximizeEditor = ({ context }: Data) => {
 
 const clearHeight = (element: HTMLElement) => (element.style.height = '');
 const clearWidth = (element: HTMLElement) => (element.style.width = '');
-const restoreWidth = (element: HTMLElement) => {
-  const size = getSize(WHEN_VERTICALLY_SPLIT) ?? '';
+const restoreWidth = (element: HTMLElement, overrideWidth?: string) => {
+  const size = overrideWidth ?? getSize(WHEN_VERTICALLY_SPLIT) ?? '';
 
   element.style.width = size;
   element.style.maxHeight = '';
   element.style.height = '100%';
   element.style.maxWidth = 'calc(100vw - 72px)';
 };
-const restoreHeight = (element: HTMLElement) => {
+const restoreHeight = (element: HTMLElement, overrideHeight?: string) => {
   const offset = document.querySelector('main > header')?.getBoundingClientRect().height || 0;
 
-  const size = getSize(WHEN_HORIZONTALLY_SPLIT) ?? '';
+  const size = overrideHeight ?? getSize(WHEN_HORIZONTALLY_SPLIT) ?? '';
 
   element.style.height = size;
   element.style.maxWidth = '';

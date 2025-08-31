@@ -13,7 +13,6 @@ import { Placeholder } from './placeholder.gts';
 
 import type EditorService from '#app/services/editor.ts';
 
-
 export class Editor extends Component {
   @service declare editor: EditorService;
 
@@ -21,21 +20,18 @@ export class Editor extends Component {
   @tracked isDone = false;
   @tracked error = null;
 
-  handleStateChange = (state: { isLoading: boolean, isDone: boolean, error: unknown}) => {
+  handleStateChange = (state: { isLoading: boolean; isDone: boolean; error: unknown }) => {
     // What could go wrong? ;)
     Object.assign(this, state);
   };
 
-
   <template>
-    <div class="overflow-hidden overflow-y-auto limber__editor">
+    <div class="limber__editor overflow-hidden overflow-y-auto">
       <div class="limber__editor__tab-help">press <Key>esc</Key> to <Key>tab</Key> out</div>
       <div
         class="limber__editor__codemirror"
-        {{codemirror
-          defer=true
-          onStateChange=this.handleStateChange}}
-        >{{this.editor.text}}</div>
+        {{codemirror defer=true onStateChange=this.handleStateChange}}
+      >{{this.editor.text}}</div>
     </div>
 
     {{#unless this.isDone}}
@@ -52,5 +48,5 @@ export class Editor extends Component {
         <Placeholder />
       </div>
     {{/unless}}
-  </template>;
+  </template>
 }

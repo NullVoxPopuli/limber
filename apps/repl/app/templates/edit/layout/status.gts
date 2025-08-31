@@ -79,7 +79,7 @@ export class Status extends Component {
         opacity: 1;
         font-size: 0.8rem;
         transition: opacity 0.25s linear;
-        text-shadow: 1px 1px 0px rgba(255,255,255,1);
+        text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
 
         &.fade-out {
           opacity: 0;

@@ -5,9 +5,6 @@
 renovate.json5
 docs/
 
-# errors at the moment on gts files in here
-app/templates/
-
 node_modules/
 dist/
 declarations/

@@ -13,8 +13,24 @@ export default class ApplicationController extends Controller {
     't', // legacy format, plaintext
     'c', // new format, uses lz-string for compressing text
 
-    // Maximize / Minimize of the Editor
-    // "min" | "max"
+    /**
+     * Maximize / Minimize of the Editor
+     *
+     *   "min" | "max"
+     *
+     * Additionally this option can be used to set the editor size as a percent.
+     * This should only be used in specific situations where you can
+     *  guarantee the aspect ratio.
+     *
+     *  60v - vertical split, editor takes up 60% of the available space
+     *  30h - horizontal split, editor takes up 30% of the available space
+     *
+     * The remainder of the space will be the output region.
+     *
+     * Omitting the 'v' or 'h' will be treated as if the option has not been passed at all.
+     *
+     * A value of 0 or 100 is not allowed use min/max for that.
+     */
     'editor',
 
     // Normally the editor will load automatically upon detecting

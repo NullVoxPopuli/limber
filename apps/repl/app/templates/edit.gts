@@ -23,9 +23,15 @@ class OpenOutput extends Component {
   }
 
   <template>
-    {{!-- template-lint-disable no-inline-styles --}}
+    {{! template-lint-disable no-inline-styles }}
     <div style="position: absolute; top: 3rem; right: 1rem; color: rgb(80,80,80);">
-      <Link href={{this.href}} target="_blank" title="Open output" style="padding: 0.5rem;" @iconOnly={{true}} />
+      <Link
+        href={{this.href}}
+        target="_blank"
+        title="Open output"
+        style="padding: 0.5rem;"
+        @iconOnly={{true}}
+      />
     </div>
   </template>
 }
@@ -33,9 +39,7 @@ class OpenOutput extends Component {
 <template>
   <Guest />
 
-  <main
-    class="grid grid-flow-col h-screen max-h-screen grid {{if (notInIframe) 'grid-rows-editor'}} "
-  >
+  <main class="grid h-screen max-h-screen grid-flow-col {{if (notInIframe) 'grid-rows-editor'}} ">
     {{#if (notInIframe)}}
       <Header />
     {{/if}}

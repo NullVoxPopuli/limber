@@ -1,10 +1,15 @@
 import { Compiler } from 'repl-sdk';
 import { describe, expect, test } from 'vitest';
+import { reactModules } from '../setup.ts';
 
 describe('jsx', () => {
   describe('react', () => {
     test('it works', async () => {
-      const compiler = new Compiler();
+      const compiler = new Compiler({
+        resolve: {
+          ...reactModules,
+        },
+      });
       // React comes from esm.sh
       const { element } = await compiler.compile(
         'jsx',
