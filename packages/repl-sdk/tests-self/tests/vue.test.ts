@@ -1,9 +1,14 @@
 import { Compiler } from 'repl-sdk';
 import { describe, expect, test } from 'vitest';
+import { vueModules } from './setup.ts';
 
 describe('vue', () => {
   test('it works', async () => {
-    const compiler = new Compiler();
+    const compiler = new Compiler({
+      resolve: {
+        ...vueModules,
+      },
+    });
     // Vue comes from esm.sh
     const { element } = await compiler.compile(
       'vue',
