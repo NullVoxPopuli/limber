@@ -5,7 +5,10 @@ import { getService } from 'ember-statechart-component';
 import { assign, setup } from 'xstate';
 
 interface Context {
+  handle?: HTMLElement;
   container?: HTMLElement;
+  maximize?: () => void;
+  minimize?: () => void;
   editorRequest?: {
     /**
      * should the editor start fullscreen
@@ -36,6 +39,11 @@ interface Context {
    * The actual orientation of the content window
    */
   actualOrientation?: Direction;
+  /**
+   * This is kept track of so we can unobserve when we no longer are rendering this state machine.
+   * Also will influence the orientation.
+   */
+  observer?: ResizeObserver;
 }
 
 interface Data {
@@ -128,7 +136,7 @@ function hasHorizontalSplitRequset(editorQP: unknown): number | false {
 function isOrientationPrevented({ context }: Data) {
   const request = getEditorRequest({ context });
 
-  return request.vSplit || request.hSplit;
+  return Boolean(request.vSplit || request.hSplit);
 }
 
 function getEditorRequest({ context }: Data) {
@@ -232,6 +240,7 @@ export const LayoutState = setup({
       observer?: ResizeObserver;
       maximize?: () => void;
       minimize?: () => void;
+      orientationChangePrevented?: boolean;
       manualOrientation?: Direction;
       actualOrientation?: Direction;
     },
@@ -250,7 +259,10 @@ export const LayoutState = setup({
       description: DEBUG && `The editor has been rendered.`,
       target: '.hasContainer',
       actions: assign({
-        handle: ({ event }) => event.container.nextElementSibling,
+        /**
+         * This state machine isn't a generic thing and we always know the structure of our DOM
+         */
+        handle: ({ event }) => event.container.nextElementSibling as HTMLElement,
         container: ({ event }) => event.container,
         observer: ({ event }) => event.observer,
         maximize: ({ event }) => event.maximize,
