@@ -210,7 +210,11 @@ export default class CompilerService {
       options: {
         ...options,
         gjs: {
-          owner: getOwner(this),
+          // owner: getOwner(this),
+          owner: {
+            lookup: () => {},
+            resolveRegistration: () => {},
+          },
         },
         gmd: {
           ...(options.gmd ?? {}),
