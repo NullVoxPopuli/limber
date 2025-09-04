@@ -1,5 +1,4 @@
 import { isRecord } from '../../utils.js';
-import { renderApp } from './render-app-island.js';
 
 let elementId = 0;
 
@@ -55,42 +54,22 @@ export async function compiler(config, api) {
       return component;
     },
     render: async (element, compiled, extra, compiler) => {
-      /**
-       *
-       * TODO: These will make things easier:
-       *    https://github.com/emberjs/rfcs/pull/1099
-       *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
-       */
       const attribute = `data-repl-sdk-ember-hbs-${elementId++}`;
 
       element.setAttribute(attribute, '');
 
-      const [application, destroyable, resolver, router, route, testWaiters, runloop] =
-        await compiler.tryResolveAll([
-          '@ember/application',
-          '@ember/destroyable',
-          'ember-resolver',
-          '@ember/routing/router',
-          '@ember/routing/route',
-          '@ember/test-waiters',
-          '@ember/runloop',
-        ]);
+      const renderer = await compiler.tryResolve('@ember/renderer');
+      const { renderComponent } = renderer;
 
-      return renderApp({
-        element,
-        selector: `[${attribute}]`,
-        component: compiled,
-        log: compiler.announce,
-        modules: {
-          application,
-          destroyable,
-          resolver,
-          router,
-          route,
-          testWaiters,
-          runloop,
-        },
-      });
+      compiler.announce('info', 'Booting Ember Island');
+
+      const result = renderComponent(compiled, { into: element });
+
+      compiler.announce('info', 'Ember Island Rendered');
+
+      return () => {
+        result.destroy();
+      };
     },
   };
 

@@ -50,7 +50,7 @@
       "@glint/environment-ember-template-imports": "alpha",
       "@ember/test-waiters": "^4.1.0",
       "ember-element-helper": "^0.8.7",
-      "ember-source": ">= 6.7.0-alpha.1",
+      "ember-source": ">= 6.8.0-alpha.7",
       "array-includes": "npm:@nolyfill/array-includes@^1",
       "array.prototype.findlastindex": "npm:@nolyfill/array.prototype.findlastindex@^1",
       "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@^1",
