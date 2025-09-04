@@ -166,7 +166,7 @@ export async function compiler(config, api) {
 
       compiler.announce('info', 'Booting Ember Island');
 
-      const result = renderComponent(compiled, { into: element });
+      const result = renderComponent(compiled, { into: element, owner: config.owner });
 
       compiler.announce('info', 'Ember Island Rendered');
 
