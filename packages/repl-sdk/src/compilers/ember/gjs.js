@@ -76,7 +76,7 @@ export async function compiler(config, api) {
    */
   async function transform(text) {
     return babel.transform(text, {
-      filename: `dynamic-repl.js`,
+      filename: `repl-user-input.gjs`,
       plugins: [
         [
           emberTemplateCompilation,
@@ -147,7 +147,9 @@ export async function compiler(config, api) {
    */
   const gjsCompiler = {
     compile: async (text, options) => {
-      const { code: preprocessed } = preprocessor.process(text, { filename: 'dynamic-repl.js' });
+      const { code: preprocessed } = preprocessor.process(text, {
+        filename: 'repl-user-input.gjs',
+      });
       const transformed = await transform(preprocessed);
 
       const code = transformed.code;

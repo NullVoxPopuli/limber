@@ -12,8 +12,8 @@
   "author": "NullvoxPopuli",
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.28.0",
-    "@babel/standalone": "^7.28.1",
-    "@nullvoxpopuli/eslint-configs": "^5.2.0",
+    "@babel/standalone": "^7.28.3",
+    "@nullvoxpopuli/eslint-configs": "^5.3.4",
     "@testing-library/dom": "^10.3.2",
     "@tsconfig/ember": "^3.0.7",
     "@types/common-tags": "^1.8.4",

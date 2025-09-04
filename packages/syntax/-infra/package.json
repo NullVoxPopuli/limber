@@ -9,16 +9,16 @@
     "@lezer/generator": "^1.7.2",
     "@lezer/highlight": "^1.2.1",
     "@rollup/plugin-node-resolve": "^15.3.1",
-    "rollup": "^4.45.0"
+    "rollup": "^4.50.0"
   },
   "volta": {
     "extends": "../../../package.json"
   },
   "devDependencies": {
-    "@babel/core": "^7.27.7",
-    "@nullvoxpopuli/eslint-configs": "^5.2.0",
+    "@babel/core": "^7.28.3",
+    "@nullvoxpopuli/eslint-configs": "^5.3.4",
     "@types/mocha": "^10.0.10",
-    "eslint": "^9.31.0",
+    "eslint": "^9.34.0",
     "mocha": "^11.6.0",
     "prettier": "^3.6.2",
     "typescript": "5.8.3"
