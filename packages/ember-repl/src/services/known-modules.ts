@@ -74,6 +74,15 @@ const emberCompilationModules = {
     // I *could* actually implement this
     dependencySatisfies: () => true,
     isDevelopingApp: () => true,
+    // Trying to use warp-drive in a REPL environment may be impossible, since they
+    // encourage choosing your own adventure without a buildless recommended path.
+    // The use of nested configs (specifically env) is also problematic for
+    // "falling back to false" as what all other macros-using libraries use.
+    //   (many of us have seen "Cannot access DEBUG on undefined" in build errors)
+    // Even with this config, I have not successfully been able to use warp-drive
+    // in any of my REPL-based projects.
+    //
+    // (Its also perfectly fine for warp-drive to decide they don't care about the same things I do)
     getGlobalConfig: () => ({
       WarpDrive: {
         debug: false,
