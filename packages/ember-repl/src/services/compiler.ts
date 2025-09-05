@@ -12,6 +12,7 @@ import { getOwner } from '@ember/owner';
 import { precompileTemplate } from '@ember/template-compilation';
 import { waitFor } from '@ember/test-waiters';
 
+import { createStore } from 'ember-primitives/store';
 import { resource } from 'ember-resources';
 import { Compiler } from 'repl-sdk';
 import { visit } from 'unist-util-visit';
@@ -20,40 +21,16 @@ import { nameFor } from '../compile/utils.ts';
 import { modules } from './known-modules.ts';
 
 import type { CompileResult, ModuleMap } from '../compile/types.ts';
-import type Owner from '@ember/owner';
 import type { ComponentLike } from '@glint/template';
 import type { EditorView } from 'codemirror';
 import type { ErrorMessage, InfoMessage, Message } from 'repl-sdk';
 
-function isOwner(context: object): context is Owner {
-  return 'lookup' in context && 'register' in context;
-}
-
-/**
- * This service doesn't have custom teardown / destory behavior.
- * GC is sufficient.
- */
-const serviceCache = new WeakMap<object, CompilerService>();
-
 export function getCompiler(context: object) {
-  const owner = isOwner(context) ? context : getOwner(context);
+  const owner = getOwner(context) ?? context;
 
-  assert(
-    `Owner does not exist on passed context. Cannot look up the compiler service without an owner.`,
-    owner
-  );
+  assert(`Missing owner. Cannot use ember-repl's compiler without an owner.`, owner);
 
-  let existing = serviceCache.get(owner);
-
-  if (existing) {
-    return existing;
-  }
-
-  existing = new CompilerService();
-
-  serviceCache.set(owner, existing);
-
-  return existing;
+  return createStore(owner, CompilerService);
 }
 
 /**
@@ -174,6 +151,11 @@ export default class CompilerService {
     const global = getGlobal();
 
     global.REPL ||= {};
+
+    if (global.REPL.compiler) {
+      return global.REPL.compiler;
+    }
+
     global.REPL.compiler = this;
 
     registerDestructor(this, () => {
@@ -231,6 +213,13 @@ export default class CompilerService {
       },
       options: {
         ...options,
+        gjs: {
+          // owner: getOwner(this),
+          owner: {
+            lookup: () => {},
+            resolveRegistration: () => {},
+          },
+        },
         gmd: {
           ...(options.gmd ?? {}),
           scope: {

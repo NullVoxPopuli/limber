@@ -77,12 +77,6 @@ module('Output > Demos', function (hooks) {
 
         await settled();
 
-        const text = await getFromLabel(demo.label);
-
-        // eslint-disable-next-line no-console
-        console.log({ text });
-        await settled();
-
         // NOTE: These messages are dynamic
         assert.ok(
           getCompiler(this).messages.length > 0,
