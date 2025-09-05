@@ -98,18 +98,33 @@ export default defineConfig(() => ({
       autoInstall: true,
     }),
     ember(),
-     {
+    {
       /**
        * See: https://github.com/embroider-build/embroider/issues/2548
        */
-      async config(config) {
+      async config(config, { command }) {
+        const isServe = command === 'serve';
+
+        delete config.build.rollupOptions.input.tests;
+
         config.optimizeDeps.rollupOptions.plugins = [
           withFilter(
             babel({
               babelHelpers: 'runtime',
               extensions,
-              configFile: false,
               plugins: [
+                ...(isServe
+                  ? []
+                  : [
+                      [
+                        '@babel/plugin-transform-typescript',
+                        {
+                          allExtensions: true,
+                          onlyRemoveTypeImports: true,
+                          allowDeclareFields: true,
+                        },
+                      ],
+                    ]),
                 [
                   'babel-plugin-ember-template-compilation',
                   {
@@ -143,7 +158,7 @@ export default defineConfig(() => ({
                 ...macros.babelMacros,
               ],
             }),
-            { load: { id: /\.js/ }}
+            { load: { id: /\.js$/ } }
           ),
         ];
       },
