@@ -26,7 +26,11 @@ import type { EditorView } from 'codemirror';
 import type { ErrorMessage, InfoMessage, Message } from 'repl-sdk';
 
 export function getCompiler(context: object) {
-  return createStore(context, CompilerService);
+  const owner = getOwner(context) ?? context;
+
+  assert(`Missing owner. Cannot use ember-repl's compiler without an owner.`, owner);
+
+  return createStore(owner, CompilerService);
 }
 
 /**
