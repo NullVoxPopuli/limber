@@ -107,6 +107,9 @@ export default defineConfig(() => ({
 
         delete config.build.rollupOptions.input.tests;
 
+        config.oxc = true;
+        config.esbuild = true;
+
         config.optimizeDeps.rollupOptions.plugins = [
           withFilter(
             babel({
