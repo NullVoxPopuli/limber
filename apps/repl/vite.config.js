@@ -1,11 +1,14 @@
-import { ember, extensions } from '@embroider/vite';
+import { buildMacros } from '@embroider/macros/babel';
+import { ember, extensions, resolver } from '@embroider/vite';
 
 import { babel } from '@rollup/plugin-babel';
 import icons from 'unplugin-icons/vite';
-import { defineConfig } from 'vite';
+import { defineConfig, withFilter } from 'vite';
 import { analyzer } from 'vite-bundle-analyzer';
 import circleDependency from 'vite-plugin-circular-dependency';
 import mkcert from 'vite-plugin-mkcert';
+
+const macros = buildMacros();
 
 export default defineConfig(() => ({
   resolve: {
@@ -95,6 +98,56 @@ export default defineConfig(() => ({
       autoInstall: true,
     }),
     ember(),
+     {
+      /**
+       * See: https://github.com/embroider-build/embroider/issues/2548
+       */
+      async config(config) {
+        config.optimizeDeps.rollupOptions.plugins = [
+          withFilter(
+            babel({
+              babelHelpers: 'runtime',
+              extensions,
+              configFile: false,
+              plugins: [
+                [
+                  'babel-plugin-ember-template-compilation',
+                  {
+                    compilerPath: 'ember-source/dist/ember-template-compiler.js',
+                    enableLegacyModules: [
+                      'ember-cli-htmlbars',
+                      'ember-cli-htmlbars-inline-precompile',
+                      'htmlbars-inline-precompile',
+                    ],
+                    transforms: [...macros.templateMacros],
+                  },
+                ],
+                // Needed until we move to spec decorators
+                [
+                  'module:decorator-transforms',
+                  {
+                    runtime: {
+                      import: import.meta.resolve('decorator-transforms/runtime-esm'),
+                    },
+                  },
+                ],
+                // needed because we use babel :(
+                [
+                  '@babel/plugin-transform-runtime',
+                  {
+                    absoluteRuntime: import.meta.dirname,
+                    useESModules: true,
+                    regenerator: false,
+                  },
+                ],
+                ...macros.babelMacros,
+              ],
+            }),
+            { load: { id: /\.js/ }}
+          ),
+        ];
+      },
+    },
     babel({
       babelHelpers: 'runtime',
       extensions,
