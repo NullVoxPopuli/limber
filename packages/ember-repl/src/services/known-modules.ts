@@ -14,6 +14,7 @@ const frameworkModules = {
   '@ember/object': () => import('@ember/object'),
   '@ember/owner': () => import('@ember/owner'),
   '@ember/reactive': () => import('@ember/reactive'),
+  '@ember/reactive/collections': () => import('@ember/reactive/collections'),
   '@ember/renderer': () => import('@ember/renderer'),
   '@ember/routing': () => import('@ember/routing'),
   '@ember/routing/route': () => import('@ember/routing/route'),
