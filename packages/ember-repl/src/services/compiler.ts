@@ -66,6 +66,9 @@ interface CompilerOptions {
     remarkPlugins?: unknown[];
     rehypePlugins?: unknown[];
   };
+  gjs?: {
+    owner?: unknown;
+  };
   gmd?: {
     scope?: Record<string, unknown>;
     remarkPlugins?: unknown[];
@@ -214,11 +217,12 @@ export default class CompilerService {
       options: {
         ...options,
         gjs: {
-          owner: getOwner(this),
-          // owner: {
-          //   lookup: () => {},
-          //   resolveRegistration: () => {},
-          // },
+          owner: {
+            name: 'empty default owner',
+            lookup: () => {},
+            resolveRegistration: () => {},
+          },
+          ...(options.gjs ?? {}),
         },
         gmd: {
           ...(options.gmd ?? {}),
