@@ -167,7 +167,7 @@ export async function compiler(config, api) {
 
       const { renderComponent } = await compiler.tryResolve('@ember/renderer');
 
-      const result = renderComponent(compiled, { into: element, owner: config.options });
+      const result = renderComponent(compiled, { into: element, owner: config.owner });
 
       return () => result.destroy();
     },
