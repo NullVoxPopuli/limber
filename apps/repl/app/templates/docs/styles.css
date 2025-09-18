@@ -18,7 +18,84 @@
 
 .centered-content {
   margin-top: 1rem;
+  padding-bottom: 80px;
   display: flex;
   justify-content: center;
+
+  iframe {
+    width: 100%;
+    border: 1px solid;
+    border-radius: 0.5rem;
+  }
+
+  section.options {
+    h2 {
+      border-bottom: 1px dashed gray;
+      margin-bottom: 0;
+    }
+
+    display: grid;
+    gap: 1rem;
+  }
+
+  .limber__docs__option {
+    display: grid;
+    gap: 0.5rem;
+    align-items: center;
+    grid-template-areas:
+      "name . . type"
+      "description description description description";
+
+
+    > h3 {
+      margin: 0;
+      display: inline-block;
+      grid-area: name;
+    }
+    > p {
+      margin: 0;
+      grid-area: description;
+    }
+    > pre {
+      margin: 0;
+      display: inline-block;
+      grid-area: type;
+
+      code {
+      }
+    }
+  }
 }
 
+
+.limber__docs__option__example {
+  display: grid;
+    gap: 0.5rem;
+  grid-template-areas:
+    "code code label"
+    "output output output";
+
+  pre {
+    margin: 0;
+  }
+
+  .label {
+    width: min-content;
+    grid-area: label;
+    label {
+      display: grid;
+      grid-auto-flow: row;
+    }
+    input {
+      width: 100%;
+      border: 1px solid;
+      padding: 0.125rem 0.25rem;
+    }
+  }
+  .code {
+    grid-area: code;
+  }
+  .output{
+    grid-area: output;
+  }
+}

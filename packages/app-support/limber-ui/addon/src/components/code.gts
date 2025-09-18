@@ -20,6 +20,12 @@ interface Signature {
      * The title of the snippet
      */
     title?: string;
+
+    /**
+    * Set the height of the iframe in lines
+    */
+    lines?: number;
+
     /**
      * What kind of file the `code` should be interpreted as.
      */
@@ -73,8 +79,17 @@ if (initialQPs.get('local')) {
   HOST = `http://localhost:${initialQPs.get('local')}`;
 }
 
-const INITIAL_URL = (force?: boolean) =>
-  `${HOST}?format=gjs&t=<template></template>` + (force ? `&forceEditor=${force}` : '');
+const INITIAL_URL = (options: Record<string, string | boolean | number>): string => {
+const { code, editor, shadowdom, nohighlight, format, forceEditor } = options;
+
+return `${HOST}?format=gjs&t=<template></template>`
+    + (forceEditor ? `&forceEditor=${forceEditor}` : '')
+    + (editor ? `&editor=${editor}` : '')
+    + (shadowdom ? `&shadowdom=${shadowdom}` : '')
+    + (format ? `&format=${format}` : '')
+    + (nohighlight ? `&nohighlight=${nohighlight}` : '')
+    + (code ? `&t=${encodeURIComponent(code as string)}` : '')
+};
 
 function defaultStyle(lines: number) {
   return `height: calc(1.5rem * ${lines});`;
@@ -92,7 +107,7 @@ export default class Code extends Component<Signature> {
   }
 
   get lines() {
-    return this.code?.split('\n')?.length ?? DEFAULT_NUMBER_OF_LINES;
+    return this.args.lines ?? this.code?.split('\n')?.length ?? DEFAULT_NUMBER_OF_LINES;
   }
 
   get title() {
@@ -109,7 +124,7 @@ export default class Code extends Component<Signature> {
       {{this.messaging.postMessage this.code}}
       {{this.messaging.onMessage}}
       title={{this.title}}
-      src={{htmlSafe (INITIAL_URL @editor)}}
+      src={{htmlSafe (INITIAL_URL this.args)}}
       style={{htmlSafe (defaultStyle this.lines)}}
       ...attributes
     >
