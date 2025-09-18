@@ -37,18 +37,20 @@ export default class ApplicationController extends Controller {
     // activity -- this is to optimize page-load (as editors can be heavy
     // when fully featured)
     //
-    // when this is 'true', the user will have to click a button to start editing.
-    // This can be useful when limber is embedded for code samples on documentation sites
-    // where the primary use case is reading, rather than tinkering.
-    'noAutoEditor',
-
-    // Normally the editor will load automatically upon detecting
-    // activity -- this is to optimize page-load (as editors can be heavy
-    // when fully featured)
-    //
     // when this is 'true', the editor will automatically load, without
     // requiring user interaction.
     'forceEditor',
+
+    // Determines how the editor should load.
+    // Normally the editor will load automatically upon detecting interaction activity. This is to optimize page-load as editors can be heavy when fully featured.
+    //
+    // When this is set to:
+    // - "force" - the editor will always load
+    // - "onclick" - the editor will only load when the user clicks that they want to edit
+    // - "never" - the editor is entirely disabled and the left-hand side is just a highlighted code snippet
+    //
+    //
+    'editorLoad',
 
     // This is the file format to use for the editor.
     //

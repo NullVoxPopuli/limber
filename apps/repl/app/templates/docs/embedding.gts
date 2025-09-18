@@ -65,6 +65,22 @@ const EXAMPLES = {
       default the format is gjs, so the passed code should be written in gjs.
     </Option>
 
+    <Option @name="@format" @type="string">
+      This is the format that the REPL should both render and load the editor for.
+      The default is "gjs", but valid options are:
+  <ul>
+    <li>gjs</li>
+    <li>js</li>
+    <li>gmd</li>
+    <li>svelte</li>
+    <li>vue</li>
+    <li>mermaid</li>
+    <li>hbs|ember</li>
+    <li>jsx|react</li>
+  </ul>
+
+    </Option>
+
     <Option @name="@clickToLoad" @type="boolean">
       By default, the REPL will load when its dimensions approach the viewport. Settings <code>@clickToLoad</code> will require user interaction before loading the iframe.
       <br>

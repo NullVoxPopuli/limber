@@ -93,12 +93,11 @@ if (initialQPs.get('local')) {
  * NOTE: updates the the `src` URL do not update the iframe
  */
 const INITIAL_URL = (options: Record<string, string | boolean | number>): string => {
-  const { code, editor, shadowdom, nohighlight, format, forceEditor } = options;
+  const { code, editor, shadowdom, nohighlight, format, editorLoad } = options;
 
   return (
     `${HOST}?format=gjs&t=<template></template>` +
-    (forceEditor ? `&forceEditor=${forceEditor}` : '') +
-    (noAutoEditor ? `&noAutoEditor=${noAutoEditor}` : '') +
+    (editorLoad ? `&editorLoad=${editorLoad}` : '') +
     (editor ? `&editor=${editor}` : '') +
     (shadowdom ? `&shadowdom=${shadowdom}` : '') +
     (format ? `&format=${format}` : '') +
