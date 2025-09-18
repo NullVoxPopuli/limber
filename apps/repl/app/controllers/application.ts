@@ -72,5 +72,8 @@ export default class ApplicationController extends Controller {
     // Disable shiki highlighting on page load
     // this is primarily an optimization for tests
     'nohighlight',
+
+    // For dev only. When present, will tell certain components to use localhost
+    'local',
   ];
 }

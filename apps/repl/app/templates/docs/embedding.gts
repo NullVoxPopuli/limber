@@ -37,7 +37,7 @@ const EXAMPLES = {
   editor: (editor = 4) => `import { REPL } from 'limber-ui';
 
 <template>
-  <REPL @code="..." @editor={{${editor}}} />
+  <REPL @code="..." @editor="${editor}" />
 </template>`,
 };
 
@@ -51,7 +51,7 @@ const EXAMPLES = {
   <div data-format="gjs" {{highlighted EXAMPLES.basic}}></div>
 
   Output:
-  <Code @code={{counter}} />
+  <Code @code={{counter}} @editor="60h" />
 
   The
   <code>Code</code>
@@ -63,6 +63,16 @@ const EXAMPLES = {
     <Option @name="@code" @type="string">
       This is the code that both shows up in the editor and is rendered in the output pane. By
       default the format is gjs, so the passed code should be written in gjs.
+    </Option>
+
+    <Option @name="@clickToLoad" @type="boolean">
+      By default, the REPL will load when its dimensions approach the viewport. Settings <code>@clickToLoad</code> will require user interaction before loading the iframe.
+      <br>
+      <br>
+
+      The UI for click to load has stable CSS classes available for customization. <code>.limber__code__click-to-load</code> and <code>.limber__code__click-to-load__button</code>
+
+      <Example @name="clickToLoad" @clickToLoad={{true}} @code={{hello}} />
     </Option>
 
     <Option @name="@editor" @type="boolean">
@@ -77,14 +87,13 @@ const EXAMPLES = {
       <code>30h</code>
       will cause a horizontal split where the editor takes up 30% of the available space.
 
-      <Example @editor="30h" @name="editor">
-        <:code as |config|>
-          <div data-format="gjs" {{highlighted (EXAMPLES.editor config.editor)}}></div>
-        </:code>
-        <:output as |config|>
-          <Code @code={{hello}} @lines={{config.editor}} />
-        </:output>
-      </Example>
+      <Example @editor="30v" @name="editor" @code={{hello}} />
+    </Option>
+
+    <Option @name="@lines" @type="number">
+      Sets the height of the iframe via specifying the number of lines of code to show.
+
+      <Example @lines={{4}} @name="lines" @code={{hello}} />
     </Option>
 
     <Option @name="@title" @type="string">
@@ -95,17 +104,5 @@ const EXAMPLES = {
       is not passed, this value will be generated for you. Helps with screen readers.
     </Option>
 
-    <Option @name="@lines" @type="number">
-      Sets the height of the iframe via specifying the number of lines of code to show.
-
-      <Example @lines={{4}} @name="lines">
-        <:code as |config|>
-          <div data-format="gjs" {{highlighted (EXAMPLES.lines config.lines)}}></div>
-        </:code>
-        <:output as |config|>
-          <Code @code={{hello}} @lines={{config.lines}} />
-        </:output>
-      </Example>
-    </Option>
   </section>
 </template>

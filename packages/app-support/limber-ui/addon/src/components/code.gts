@@ -1,4 +1,8 @@
+import './code.css';
+
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
 
@@ -12,6 +16,12 @@ import { HostMessaging } from './frame-messaging.ts';
 interface Signature {
   Element: HTMLIFrameElement;
   Args: {
+/**
+* Don't load the iframe contents until the user
+* confirms that they want to
+*/
+clickToLoad?: boolean;
+
     /**
      * code-snippet to use
      */
@@ -88,6 +98,7 @@ const INITIAL_URL = (options: Record<string, string | boolean | number>): string
   return (
     `${HOST}?format=gjs&t=<template></template>` +
     (forceEditor ? `&forceEditor=${forceEditor}` : '') +
+    (noAutoEditor ? `&noAutoEditor=${noAutoEditor}` : '') +
     (editor ? `&editor=${editor}` : '') +
     (shadowdom ? `&shadowdom=${shadowdom}` : '') +
     (format ? `&format=${format}` : '') +
@@ -102,6 +113,16 @@ function defaultStyle(lines: number) {
 
 export default class Code extends Component<Signature> {
   @link(HostMessaging) declare messaging: HostMessaging;
+
+  @tracked manualLoad = false;
+
+  get load() {
+    if (this.args.clickToLoad) {
+      return this.manualLoad;
+    }
+
+    return true;
+  }
 
   get code() {
     if ('code' in this.args) {
@@ -119,20 +140,37 @@ export default class Code extends Component<Signature> {
     return this.args.title ?? guidFor(this.code);
   }
 
+triggerLoad = () => {
+this.manualLoad = true;
+};
+
   /**
    * This uses iframe postMessage to efficiently update state within the
    * iframe's app so that we don't have to reload the whole app if we want to change the
    * URL / code.
    */
   <template>
-    <iframe
-      {{this.messaging.postMessage this.code}}
-      {{this.messaging.onMessage}}
-      title={{this.title}}
-      src={{htmlSafe (INITIAL_URL this.args)}}
-      style={{htmlSafe (defaultStyle this.lines)}}
-      ...attributes
-    >
-    </iframe>
+    {{#if this.load}}
+      <iframe
+        loading="lazy"
+        data-lines="{{this.lines}}"
+        {{this.messaging.postMessage this.code}}
+        {{this.messaging.onMessage}}
+        title={{this.title}}
+        src={{htmlSafe (INITIAL_URL this.args)}}
+        style={{htmlSafe (defaultStyle this.lines)}}
+        ...attributes
+      >
+      </iframe>
+    {{else}}
+      <div class="limber__code__click-to-load">
+        <button
+          class="limber__code__click-to-load__button"
+          {{on "click" this.triggerLoad}}
+        >
+          Click to Load REPL
+        </button>
+      </div>
+    {{/if}}
   </template>
 }
