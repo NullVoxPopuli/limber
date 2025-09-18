@@ -16,11 +16,11 @@ import { HostMessaging } from './frame-messaging.ts';
 interface Signature {
   Element: HTMLIFrameElement;
   Args: {
-/**
-* Don't load the iframe contents until the user
-* confirms that they want to
-*/
-clickToLoad?: boolean;
+    /**
+     * Don't load the iframe contents until the user
+     * confirms that they want to
+     */
+    clickToLoad?: boolean;
 
     /**
      * code-snippet to use
@@ -139,9 +139,9 @@ export default class Code extends Component<Signature> {
     return this.args.title ?? guidFor(this.code);
   }
 
-triggerLoad = () => {
-this.manualLoad = true;
-};
+  triggerLoad = () => {
+    this.manualLoad = true;
+  };
 
   /**
    * This uses iframe postMessage to efficiently update state within the
@@ -165,6 +165,7 @@ this.manualLoad = true;
       <div class="limber__code__click-to-load">
         <button
           class="limber__code__click-to-load__button"
+          type="button"
           {{on "click" this.triggerLoad}}
         >
           Click to Load REPL

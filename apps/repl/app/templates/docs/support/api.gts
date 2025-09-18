@@ -33,19 +33,19 @@ export const Option: TOC<{
 </template>;
 
 const allowed = new Set([
-'code',
-'lines',
-'clickToLoad',
-'editor',
-'format',
-'title',
-'forceEditor',
-'shadowdom',
-'nohighlight',
-])
+  'code',
+  'lines',
+  'clickToLoad',
+  'editor',
+  'format',
+  'title',
+  'forceEditor',
+  'shadowdom',
+  'nohighlight',
+]);
 
 function allow(object: Record<string, any>) {
-  return Object.fromEntries(Object.entries(object).filter(([key]) => allowed.has(key)))
+  return Object.fromEntries(Object.entries(object).filter(([key]) => allowed.has(key)));
 }
 
 export class Example extends Component<{
@@ -90,18 +90,17 @@ export class Example extends Component<{
 
     for (let [key, value] of entries) {
       if (key === 'code') {
-      value = '...';
+        value = '...';
       }
 
       if (typeof value === 'string') {
-      value = `"${value}"`
+        value = `"${value}"`;
       } else if (typeof value === 'boolean') {
-      value = `{{${String(value)}}}`
+        value = `{{${String(value)}}}`;
       }
 
-      output +=`\n  @${key}=${value}`
+      output += `\n  @${key}=${value}`;
     }
-
 
     output += '/>';
 
@@ -109,12 +108,11 @@ export class Example extends Component<{
   }
 
   get withDefaults() {
-return {
-lines: 5,
-...this.config,
-
-};
-}
+    return {
+      lines: 5,
+      ...this.config,
+    };
+  }
 
   <template>
     <div class="limber__docs__option__example">
