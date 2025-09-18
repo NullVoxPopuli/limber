@@ -66,27 +66,34 @@ const EXAMPLES = {
     </Option>
 
     <Option @name="@format" @type="string">
-      This is the format that the REPL should both render and load the editor for.
-      The default is "gjs", but valid options are:
-  <ul>
-    <li>"gjs"</li>
-    <li>"js"</li>
-    <li>"gmd"</li>
-    <li>"svelte"</li>
-    <li>"vue"</li>
-    <li>"mermaid"</li>
-    <li>"hbs|ember"</li>
-    <li>"jsx|react"</li>
-  </ul>
+      This is the format that the REPL should both render and load the editor for. The default is
+      "gjs", but valid options are:
+      <ul>
+        <li>"gjs"</li>
+        <li>"js"</li>
+        <li>"gmd"</li>
+        <li>"svelte"</li>
+        <li>"vue"</li>
+        <li>"mermaid"</li>
+        <li>"hbs|ember"</li>
+        <li>"jsx|react"</li>
+      </ul>
 
     </Option>
 
     <Option @name="@clickToLoad" @type="boolean">
-      By default, the REPL will load when its dimensions approach the viewport (<ExternalLink href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe#lazy">via loading=lazy</ExternalLink>). Setting <code>@clickToLoad</code> will require user interaction before loading the iframe.
-      <br>
-      <br>
+      By default, the REPL will load when its bounding box approaches the viewport (<ExternalLink
+        href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe#lazy"
+      >via loading=lazy</ExternalLink>). Setting
+      <code>@clickToLoad</code>
+      will require user interaction before loading the iframe.
+      <br />
+      <br />
 
-      The UI for click to load has stable CSS classes available for customization. <code>.limber__code__click-to-load</code> and <code>.limber__code__click-to-load__button</code>
+      The UI for click to load has stable CSS classes available for customization.
+      <code>.limber__code__click-to-load</code>
+      and
+      <code>.limber__code__click-to-load__button</code>
 
       <Example @name="clickToLoad" @clickToLoad={{true}} @code={{hello}} />
     </Option>
@@ -107,21 +114,23 @@ const EXAMPLES = {
     </Option>
 
     <Option @name="@editorLoad" @type="string">
-  Determines how the editor should load. Normally the editor will load automatically upon detecting interaction activity. This is to optimize page-load as editors can be a few MB when fully featured.
-
-    Valid options:
-    <ul>
-    <li>
-      "force" - the editor will always load eagerly
-    </li>
-    <li>
-      "onclick" - the editor will only load when the user clicks that they want to edit the example
-    </li>
-    <li>
-      "never" - the editor is entirely disabled and the left-hand side is only a highlighted code snippet as is not editable
-    </li>
-  </ul>
-</Option>
+      Determines how the editor should load. Normally the editor will load automatically upon
+      detecting interaction activity. This is to optimize page-load as editors can be a few MB when
+      fully featured. Valid options:
+      <ul>
+        <li>
+          "force" - the editor will always load eagerly
+        </li>
+        <li>
+          "onclick" - the editor will only load when the user clicks that they want to edit the
+          example
+        </li>
+        <li>
+          "never" - the editor is entirely disabled and the left-hand side is only a highlighted
+          code snippet as is not editable
+        </li>
+      </ul>
+    </Option>
 
     <Option @name="@lines" @type="number">
       Sets the height of the iframe via specifying the number of lines of code to show.
@@ -138,17 +147,17 @@ const EXAMPLES = {
     </Option>
 
     <Option @name="@shadowdom" @type="boolean">
-      Sets whether or not the output area should be rendered within a shadow-dom.
-      The default is to render the output in a shadow-dom (true).
-      <br>
-      <br>
-      Changing this can be helpful if importing a library only knows how to mutate the document's head (for styles or otherwise)
+      Sets whether or not the output area should be rendered within a shadow-dom. The default is to
+      render the output in a shadow-dom (true).
+      <br />
+      <br />
+      Changing this can be helpful if importing a library only knows how to mutate the document's
+      head (for styles or otherwise)
     </Option>
 
     <Option @name="@nohighlight" @type="boolean">
-      If set to true, the preview code shown before the editor loads will not have highlighting enabled.
-
-      This option has no affect when the editor is forced to eagerly load.
+      If set to true, the preview code shown before the editor loads will not have highlighting
+      enabled. This option has no affect when the editor is forced to eagerly load.
     </Option>
 
   </section>
