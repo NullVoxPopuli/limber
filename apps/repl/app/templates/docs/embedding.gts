@@ -1,5 +1,5 @@
 import highlighted from 'limber/modifiers/highlighted';
-import { Code } from 'limber-ui';
+import { Code, ExternalLink } from 'limber-ui';
 
 import { Example, Option } from './support/api.gts';
 
@@ -69,20 +69,20 @@ const EXAMPLES = {
       This is the format that the REPL should both render and load the editor for.
       The default is "gjs", but valid options are:
   <ul>
-    <li>gjs</li>
-    <li>js</li>
-    <li>gmd</li>
-    <li>svelte</li>
-    <li>vue</li>
-    <li>mermaid</li>
-    <li>hbs|ember</li>
-    <li>jsx|react</li>
+    <li>"gjs"</li>
+    <li>"js"</li>
+    <li>"gmd"</li>
+    <li>"svelte"</li>
+    <li>"vue"</li>
+    <li>"mermaid"</li>
+    <li>"hbs|ember"</li>
+    <li>"jsx|react"</li>
   </ul>
 
     </Option>
 
     <Option @name="@clickToLoad" @type="boolean">
-      By default, the REPL will load when its dimensions approach the viewport. Settings <code>@clickToLoad</code> will require user interaction before loading the iframe.
+      By default, the REPL will load when its dimensions approach the viewport (<ExternalLink href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe#lazy">via loading=lazy</ExternalLink>). Setting <code>@clickToLoad</code> will require user interaction before loading the iframe.
       <br>
       <br>
 
