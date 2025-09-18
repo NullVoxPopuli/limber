@@ -2,13 +2,15 @@ import 'limber-ui/theme.css';
 import 'ember-statechart-component';
 import './icons.ts';
 
-import Application from '@ember/application';
+import PageTitleService from 'ember-page-title/services/page-title';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore - no types
+import EmberResizeObserverService from 'ember-resize-observer-service/addon/services/resize-observer';
+import Application from 'ember-strict-application-resolver';
 
-import Resolver from 'ember-resolver';
+import Router from './router.ts';
 
-import config from '#config';
 
-import { registry } from './registry.ts';
 
 // @babel/traverse (from babel-plugin-ember-template-imports)
 // accesses process.....
@@ -20,8 +22,26 @@ Object.assign(window, {
 });
 
 export default class App extends Application {
-  modulePrefix = config.modulePrefix;
-  Resolver = Resolver.withModules(registry);
+  modules = {
+    './router': Router,
+    ...import.meta.glob('./routes/{edit,index,application,error}.ts', { eager: true }),
+    ...import.meta.glob('./services/{editor,status}.ts', { eager: true }),
+    ...import.meta.glob('./controllers/*.ts', { eager: true }),
+    ...import.meta.glob('./templates/docs/*.gts', { eager: true }),
+    ...import.meta.glob('./templates/{application,edit,output}*.gts', { eager: true }),
+
+  // /////////////////
+  // To Eliminate
+  // /////////////////
+
+  // Used by ember-container-query
+  './services/resize-observer': EmberResizeObserverService,
+
+  // /////////////////
+  // To keep
+  // /////////////////
+  './services/page-title': PageTitleService,
+}
 
   // LOG_RESOLVER = true;
   // LOG_ACTIVE_GENERATION = true;
