@@ -1,4 +1,3 @@
 <template>
-
-<h1>Editing</h1>
-  </template>
+  <h1>Editing</h1>
+</template>

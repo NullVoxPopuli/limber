@@ -22,8 +22,8 @@ interface Signature {
     title?: string;
 
     /**
-    * Set the height of the iframe in lines
-    */
+     * Set the height of the iframe in lines
+     */
     lines?: number;
 
     /**
@@ -79,16 +79,21 @@ if (initialQPs.get('local')) {
   HOST = `http://localhost:${initialQPs.get('local')}`;
 }
 
+/**
+ * NOTE: updates the the `src` URL do not update the iframe
+ */
 const INITIAL_URL = (options: Record<string, string | boolean | number>): string => {
-const { code, editor, shadowdom, nohighlight, format, forceEditor } = options;
+  const { code, editor, shadowdom, nohighlight, format, forceEditor } = options;
 
-return `${HOST}?format=gjs&t=<template></template>`
-    + (forceEditor ? `&forceEditor=${forceEditor}` : '')
-    + (editor ? `&editor=${editor}` : '')
-    + (shadowdom ? `&shadowdom=${shadowdom}` : '')
-    + (format ? `&format=${format}` : '')
-    + (nohighlight ? `&nohighlight=${nohighlight}` : '')
-    + (code ? `&t=${encodeURIComponent(code as string)}` : '')
+  return (
+    `${HOST}?format=gjs&t=<template></template>` +
+    (forceEditor ? `&forceEditor=${forceEditor}` : '') +
+    (editor ? `&editor=${editor}` : '') +
+    (shadowdom ? `&shadowdom=${shadowdom}` : '') +
+    (format ? `&format=${format}` : '') +
+    (nohighlight ? `&nohighlight=${nohighlight}` : '') +
+    (code ? `&t=${encodeURIComponent(code as string)}` : '')
+  );
 };
 
 function defaultStyle(lines: number) {
