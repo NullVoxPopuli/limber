@@ -44,7 +44,7 @@ import { Share } from './share.gts';
             </DefaultContent>
           </span>
           <span class="md:hidden">
-            {{!-- template-lint-disable no-triple-curlies --}}
+            {{! template-lint-disable no-triple-curlies }}
             {{{Docs}}}
           </span>
         </:custom>

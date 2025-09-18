@@ -1,16 +1,20 @@
-import "./docs/styles.css";
+import './docs/styles.css';
 
 import Package from '~icons/raphael/package?raw';
 
-import type { TOC } from "@ember/component/template-only";
+import type { TOC } from '@ember/component/template-only';
 
-const NavLink: TOC<{ Element: HTMLAnchorElement, Args: { icon?: string }, Blocks: { default: [] }}> = <template>
-  {{!-- template-lint-disable link-href-attributes --}}
+const NavLink: TOC<{
+  Element: HTMLAnchorElement;
+  Args: { icon?: string };
+  Blocks: { default: [] };
+}> = <template>
+  {{! template-lint-disable link-href-attributes }}
   <a ...attributes>
     {{#if @icon}}
-      <span>{{!-- template-lint-disable no-triple-curlies --}}
-            {{{@icon}}}</span>
-  {{/if}}
+      <span>{{! template-lint-disable no-triple-curlies }}
+        {{{@icon}}}</span>
+    {{/if}}
     <span>{{yield}}</span>
   </a>
 </template>;

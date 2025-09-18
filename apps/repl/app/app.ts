@@ -10,8 +10,6 @@ import Application from 'ember-strict-application-resolver';
 
 import Router from './router.ts';
 
-
-
 // @babel/traverse (from babel-plugin-ember-template-imports)
 // accesses process.....
 // maybe one day we can have a browser-only verison?
@@ -28,20 +26,20 @@ export default class App extends Application {
     ...import.meta.glob('./services/{editor,status}.ts', { eager: true }),
     ...import.meta.glob('./controllers/*.ts', { eager: true }),
     ...import.meta.glob('./templates/docs/*.gts', { eager: true }),
-    ...import.meta.glob('./templates/{application,edit,output}*.gts', { eager: true }),
+    ...import.meta.glob('./templates/{application,edit,output,docs}.gts', { eager: true }),
 
-  // /////////////////
-  // To Eliminate
-  // /////////////////
+    // /////////////////
+    // To Eliminate
+    // /////////////////
 
-  // Used by ember-container-query
-  './services/resize-observer': EmberResizeObserverService,
+    // Used by ember-container-query
+    './services/resize-observer': EmberResizeObserverService,
 
-  // /////////////////
-  // To keep
-  // /////////////////
-  './services/page-title': PageTitleService,
-}
+    // /////////////////
+    // To keep
+    // /////////////////
+    './services/page-title': PageTitleService,
+  };
 
   // LOG_RESOLVER = true;
   // LOG_ACTIVE_GENERATION = true;
