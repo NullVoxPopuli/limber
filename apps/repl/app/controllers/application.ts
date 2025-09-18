@@ -45,7 +45,7 @@ export default class ApplicationController extends Controller {
     // Normally the editor will load automatically upon detecting interaction activity. This is to optimize page-load as editors can be heavy when fully featured.
     //
     // When this is set to:
-    // - "force" - the editor will always load
+    // - "force" - the editor will always load eagerly
     // - "onclick" - the editor will only load when the user clicks that they want to edit
     // - "never" - the editor is entirely disabled and the left-hand side is just a highlighted code snippet
     //
