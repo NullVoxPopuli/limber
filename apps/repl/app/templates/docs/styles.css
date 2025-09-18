@@ -65,6 +65,11 @@
       }
     }
   }
+
+  .prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::before,
+  .prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::after {
+    content: unset;
+  }
 }
 
 
@@ -74,6 +79,12 @@
   grid-template-areas:
     "code code label"
     "output output output";
+
+  &[data-configurable="false"] {
+    grid-template-areas:
+      "code code code"
+      "output output output";
+  }
 
   pre {
     margin: 0;
@@ -99,3 +110,4 @@
     grid-area: output;
   }
 }
+

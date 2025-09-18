@@ -49,7 +49,7 @@ importers:
         specifier: alpha
         version: 2.0.0-alpha.7(typescript@5.8.3)
       '@glint/tsserver-plugin':
-        specifier: alpha
+        specifier: 2.0.0-alpha.7
         version: 2.0.0-alpha.7
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.3.4
@@ -268,17 +268,11 @@ importers:
       '@glint/core':
         specifier: alpha
         version: 2.0.0-alpha.7(typescript@5.8.3)
-      '@glint/environment-ember-loose':
-        specifier: alpha
-        version: 2.0.0-alpha.3(da6473c28b3053326d9223a74b24004a)
-      '@glint/environment-ember-template-imports':
-        specifier: alpha
-        version: 2.0.0-alpha.3(c661376093c4d54e610f8111213fb94e)
       '@glint/template':
-        specifier: alpha
+        specifier: 1.6.0-alpha.2
         version: 1.6.0-alpha.2
       '@glint/tsserver-plugin':
-        specifier: alpha
+        specifier: 2.0.0-alpha.7
         version: 2.0.0-alpha.7
       '@iconify-json/devicon':
         specifier: ^1.2.29

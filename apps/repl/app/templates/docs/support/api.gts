@@ -33,7 +33,7 @@ export const Option: TOC<{
 </template>;
 
 const allowed = new Set([
-  'code',
+  // 'code', // handled separately
   'lines',
   'clickToLoad',
   'editor',
@@ -49,7 +49,10 @@ function allow(object: Record<string, any>) {
 }
 
 export class Example extends Component<{
-  Args: Record<string, any>;
+  Args: {
+    code: string;
+    configurable?: boolean;
+  } & Record<string, any>;
   Blocks: {
     code: [config: Record<string, any>];
     output: [config: Record<string, any>];
@@ -84,7 +87,9 @@ export class Example extends Component<{
   }
 
   get code() {
-    let output = `<REPL`;
+    const begin = `<REPL`;
+    const end = '/>';
+    const body = [];
 
     const entries = Object.entries(this.config);
 
@@ -95,16 +100,25 @@ export class Example extends Component<{
 
       if (typeof value === 'string') {
         value = `"${value}"`;
-      } else if (typeof value === 'boolean') {
+      } else if (typeof value === 'boolean' || typeof value === 'number') {
         value = `{{${String(value)}}}`;
       }
 
-      output += `\n  @${key}=${value}`;
+      body.push(`@${key}=${value}`);
     }
 
-    output += '/>';
+    return (
+      begin +
+      (body.length > 1
+        ? '\n' + body.map((x) => `\n  ${x}`).join('')
+        : body.map((x) => ` ${x}`).join('')) +
+      ' ' +
+      end
+    );
+  }
 
-    return output;
+  get isConfigurable() {
+    return this.args.configurable ?? true;
   }
 
   get withDefaults() {
@@ -115,31 +129,33 @@ export class Example extends Component<{
   }
 
   <template>
-    <div class="limber__docs__option__example">
-      <div class="label">
-        <label>
-          {{#if this.isNumber}}
-            <span><code>@lines</code></span>
-            <input
-              type="number"
-              required
-              value={{@lines}}
-              {{on "input" (fn this.update "lines")}}
-            />
-          {{else if this.isBoolean}}
-            <span><code>@forceEditor</code></span>
-            <input
-              type="checkbox"
-              required
-              checked={{@forceEditor}}
-              {{on "input" (fn this.update "forceEditor")}}
-            />
-          {{else if this.isString}}
-            <span><code>@editor</code></span>
-            <input required value={{@editor}} {{on "input" (fn this.update "editor")}} />
-          {{/if}}
-        </label>
-      </div>
+    <div class="limber__docs__option__example" data-configurable={{String this.isConfigurable}}>
+      {{#if this.isConfigurable}}
+        <div class="label">
+          <label>
+            {{#if this.isNumber}}
+              <span><code>@lines</code></span>
+              <input
+                type="number"
+                required
+                value={{@lines}}
+                {{on "input" (fn this.update "lines")}}
+              />
+            {{else if this.isBoolean}}
+              <span><code>@forceEditor</code></span>
+              <input
+                type="checkbox"
+                required
+                checked={{@forceEditor}}
+                {{on "input" (fn this.update "forceEditor")}}
+              />
+            {{else if this.isString}}
+              <span><code>@editor</code></span>
+              <input required value={{@editor}} {{on "input" (fn this.update "editor")}} />
+            {{/if}}
+          </label>
+        </div>
+      {{/if}}
       <div class="code">
         {{yield this.config to="code"}}
         <div data-format="hbs" {{highlighted this.code}}></div>

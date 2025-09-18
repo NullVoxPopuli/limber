@@ -95,7 +95,7 @@ const EXAMPLES = {
       and
       <code>.limber__code__click-to-load__button</code>
 
-      <Example @name="clickToLoad" @clickToLoad={{true}} @code={{hello}} />
+      <Example @clickToLoad={{true}} @code={{hello}} @configurable={{false}} />
     </Option>
 
     <Option @name="@editor" @type="string">
@@ -110,7 +110,7 @@ const EXAMPLES = {
       <code>30h</code>
       will cause a horizontal split where the editor takes up 30% of the available space.
 
-      <Example @editor="30v" @name="editor" @code={{hello}} />
+      <Example @editor="30v" @code={{hello}} />
     </Option>
 
     <Option @name="@editorLoad" @type="string">
@@ -135,7 +135,7 @@ const EXAMPLES = {
     <Option @name="@lines" @type="number">
       Sets the height of the iframe via specifying the number of lines of code to show.
 
-      <Example @lines={{4}} @name="lines" @code={{hello}} />
+      <Example @lines={{4}} @code={{hello}} />
     </Option>
 
     <Option @name="@title" @type="string">
