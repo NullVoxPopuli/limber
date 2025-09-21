@@ -103,7 +103,7 @@
     "tailwindcss": "^3.0.0",
     "terser": "^5.44.0",
     "testem": "^3.16.0",
-    "typescript": "5.8.3",
+    "typescript": "5.9.2",
     "unplugin": "^1.16.1",
     "vite": "^6.3.5"
   },
