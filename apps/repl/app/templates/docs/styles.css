@@ -96,15 +96,25 @@
     label {
       display: grid;
       grid-auto-flow: row;
+
+      &:has([type="radio"]) {
+        display: flex;
+        gap: 0.5rem;
+      }
     }
     input {
       width: 100%;
       border: 1px solid;
       padding: 0.125rem 0.25rem;
+
+      &[type="radio"] {
+        width: auto;
+      }
     }
   }
   .code {
     grid-area: code;
+    align-self: end;
   }
   .output{
     grid-area: output;

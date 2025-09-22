@@ -1,5 +1,5 @@
 import highlighted from 'limber/modifiers/highlighted';
-import { Code, ExternalLink } from 'limber-ui';
+import { ExternalLink, REPL } from 'limber-ui';
 
 import { Example, Option } from './support/api.gts';
 
@@ -27,7 +27,9 @@ const EXAMPLES = {
   basic: `import { REPL } from 'limber-ui';
 
 <template>
-  <REPL @code="..." />
+  <REPL
+    @code="..."
+    {{! ...options }} />
 </template>`,
   lines: (lines = 4) => `import { REPL } from 'limber-ui';
 
@@ -45,16 +47,16 @@ const EXAMPLES = {
   <h1>Embedding</h1>
 
   The REPL can be embedded via invocation of the
-  <code>Code</code>
+  <code>REPL</code>
   component.
 
   <div data-format="gjs" {{highlighted EXAMPLES.basic}}></div>
 
   Output:
-  <Code @code={{counter}} @editor="60h" />
+  <REPL @code={{counter}} @editor="60h" />
 
   The
-  <code>Code</code>
+  <code>REPL</code>
   component interprets and configures the URL set on the iframe that loads the REPL.
 
   <section class="options">
@@ -95,7 +97,7 @@ const EXAMPLES = {
       and
       <code>.limber__code__click-to-load__button</code>
 
-      <Example @clickToLoad={{true}} @code={{hello}} @configurable={{false}} />
+      <Example @clickToLoad={{true}} @editorLoad="force" @code={{hello}} @configurable={{false}} />
     </Option>
 
     <Option @name="@editor" @type="string">
@@ -130,6 +132,8 @@ const EXAMPLES = {
           code snippet as is not editable
         </li>
       </ul>
+
+      <Example @editorLoad={{"never"}} @code={{hello}} />
     </Option>
 
     <Option @name="@lines" @type="number">
@@ -158,6 +162,8 @@ const EXAMPLES = {
     <Option @name="@nohighlight" @type="boolean">
       If set to true, the preview code shown before the editor loads will not have highlighting
       enabled. This option has no affect when the editor is forced to eagerly load.
+
+      <Example @nohighlight={{true}} @code={{hello}} />
     </Option>
 
   </section>

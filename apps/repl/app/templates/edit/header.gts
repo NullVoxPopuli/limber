@@ -40,7 +40,7 @@ import { Share } from './share.gts';
         <:custom as |DefaultContent|>
           <span class="hidden md:block">
             <DefaultContent>
-              Documentation
+              Docs
             </DefaultContent>
           </span>
           <span class="md:hidden">

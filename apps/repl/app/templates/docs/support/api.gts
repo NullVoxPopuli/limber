@@ -1,8 +1,9 @@
 import Component from '@glimmer/component';
-import { assert } from '@ember/debug';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { trackedObject } from '@ember/reactive/collections';
+
+import { Form } from 'ember-primitives/components/form';
 
 import highlighted from 'limber/modifiers/highlighted';
 import { Code } from 'limber-ui';
@@ -37,6 +38,7 @@ const allowed = new Set([
   'lines',
   'clickToLoad',
   'editor',
+  'editorLoad',
   'format',
   'title',
   'forceEditor',
@@ -60,30 +62,30 @@ export class Example extends Component<{
 }> {
   config = trackedObject<Record<string, any>>(allow(this.args));
 
-  update = (key: string, event: InputEvent) => {
-    assert(`[BUG] event needs a target`, event.target instanceof HTMLInputElement);
+  update = (newValues: Record<string, unknown>) => {
+    if (typeof newValues !== 'object') return;
 
-    const target = event.target;
-
-    if (target.type === 'checkbox') {
-      this.config[key] = Boolean(event.target.value);
-
-      return;
+    for (const [key, value] of Object.entries(newValues)) {
+      if (this.config[key] !== value) {
+        this.config[key] = value;
+      }
     }
-
-    this.config[key] = event.target.value;
   };
 
-  get isString() {
+  get isEditor() {
     return 'editor' in this.config;
   }
 
-  get isNumber() {
+  get isLines() {
     return 'lines' in this.config;
   }
 
-  get isBoolean() {
+  get isForceEditor() {
     return 'forceEditor' in this.config;
+  }
+
+  get isEditorLoad() {
+    return 'editorLoad' in this.config;
   }
 
   get code() {
@@ -131,30 +133,64 @@ export class Example extends Component<{
   <template>
     <div class="limber__docs__option__example" data-configurable={{String this.isConfigurable}}>
       {{#if this.isConfigurable}}
-        <div class="label">
-          <label>
-            {{#if this.isNumber}}
-              <span><code>@lines</code></span>
-              <input
-                type="number"
-                required
-                value={{@lines}}
-                {{on "input" (fn this.update "lines")}}
-              />
-            {{else if this.isBoolean}}
-              <span><code>@forceEditor</code></span>
-              <input
-                type="checkbox"
-                required
-                checked={{@forceEditor}}
-                {{on "input" (fn this.update "forceEditor")}}
-              />
-            {{else if this.isString}}
-              <span><code>@editor</code></span>
-              <input required value={{@editor}} {{on "input" (fn this.update "editor")}} />
+        <Form @onChange={{this.update}}>
+          <div class="label">
+            {{#if this.isEditorLoad}}
+              <fieldset><legend>@editorLoad</legend>
+                <label>
+                  <span><code>"force"</code></span>
+                  <input type="radio" name="editorLoad" value="force" />
+                </label>
+                <label>
+                  <span><code>"onclick"</code></span>
+                  <input type="radio" name="editorLoad" value="onclick" />
+                </label>
+                <label>
+                  <span><code>"never"</code></span>
+                  <input type="radio" name="editorLoad" checked value="never" />
+                </label>
+              </fieldset>
             {{/if}}
-          </label>
-        </div>
+
+            {{#if this.isLines}}
+              <label>
+                <span><code>@lines</code></span>
+                <input
+                  type="number"
+                  name="lines"
+                  required
+                  value={{@lines}}
+                  {{on "input" (fn this.update "lines")}}
+                />
+              </label>
+            {{/if}}
+
+            {{#if this.isForceEditor}}
+              <label>
+                <span><code>@forceEditor</code></span>
+                <input
+                  type="checkbox"
+                  name="forceEditor"
+                  required
+                  checked={{@forceEditor}}
+                  {{on "input" (fn this.update "forceEditor")}}
+                />
+              </label>
+            {{/if}}
+
+            {{#if this.isEditor}}
+              <label>
+                <span><code>@editor</code></span>
+                <input
+                  required
+                  name="editor"
+                  value={{@editor}}
+                  {{on "input" (fn this.update "editor")}}
+                />
+              </label>
+            {{/if}}
+          </div>
+        </Form>
       {{/if}}
       <div class="code">
         {{yield this.config to="code"}}
