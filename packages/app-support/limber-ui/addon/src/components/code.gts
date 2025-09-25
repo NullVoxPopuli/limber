@@ -49,9 +49,10 @@ interface Signature {
     storage?: Storage;
 
     /**
-     * When true, forces the editor to load immediately.
+     *
      */
-    editor?: boolean;
+    editor?: string;
+    editorLoad?: 'force' | 'onclick' | 'never';
   };
   /**
    * Example usage:
@@ -66,11 +67,6 @@ interface Signature {
   //     path: `${string}.${AllowedFormat}`;
 
   //     /**
-  //      * The title of the snippet
-  //      */
-  //     title?: string;
-
-  //     /**
   //      * Where to store in-progress content.
   //      * by default, the URL will be used -- but for larger documents,
   //      * local storage may be used instead.
@@ -80,14 +76,7 @@ interface Signature {
 }
 
 const DEFAULT_NUMBER_OF_LINES = 7;
-// TODO: allow import.meta.env to override this
-let HOST = 'https://limber.glimdown.com/edit';
-
-const initialQPs = new URLSearchParams(window.location.search);
-
-if (initialQPs.get('local')) {
-  HOST = `http://localhost:${initialQPs.get('local')}`;
-}
+const HOST = 'https://limber.glimdown.com/edit';
 
 /**
  * NOTE: updates the the `src` URL do not update the iframe
@@ -95,13 +84,20 @@ if (initialQPs.get('local')) {
 const INITIAL_URL = (options: Record<string, string | boolean | number>): string => {
   const { code, editor, shadowdom, nohighlight, format, editorLoad } = options;
 
+  const initialQPs = new URLSearchParams(window.location.search);
+  const local = initialQPs.get('local');
+  const host = initialQPs.has('local') ? `https://localhost:${local || '4201'}/edit` : HOST;
+
+  console.log({ code });
+
   return (
-    `${HOST}?format=gjs&t=<template></template>` +
+    `${host}?t=<template></template>` +
     (editorLoad ? `&editorLoad=${editorLoad}` : '') +
     (editor ? `&editor=${editor}` : '') +
     (shadowdom ? `&shadowdom=${shadowdom}` : '') +
-    (format ? `&format=${format}` : '') +
+    (format ? `&format=${format}` : 'BUG:MISSING') +
     (nohighlight ? `&nohighlight=${nohighlight}` : '') +
+    (local ? `&local` : '') +
     (code ? `&t=${encodeURIComponent(code as string)}` : '')
   );
 };
@@ -131,12 +127,38 @@ export default class Code extends Component<Signature> {
     return '';
   }
 
+  get format() {
+    if ('format' in this.args) {
+      return this.args.format;
+    }
+
+    return 'gjs';
+  }
+
   get lines() {
     return this.args.lines ?? this.code?.split('\n')?.length ?? DEFAULT_NUMBER_OF_LINES;
   }
 
   get title() {
     return this.args.title ?? guidFor(this.code);
+  }
+
+  get liveData() {
+    return {
+      code: this.code,
+      format: this.format,
+    };
+  }
+
+  get initialData() {
+    return {
+      editorLoad: this.args.editorLoad,
+      editor: this.args.editor,
+      nohighlight: this.args.nohighlight,
+      shadowdom: this.args.shadowdom,
+      code: this.code,
+      format: this.format,
+    };
   }
 
   triggerLoad = () => {
@@ -153,10 +175,10 @@ export default class Code extends Component<Signature> {
       <iframe
         loading="lazy"
         data-lines="{{this.lines}}"
-        {{this.messaging.postMessage this.code}}
+        {{this.messaging.postMessage this.liveData}}
         {{this.messaging.onMessage}}
         title={{this.title}}
-        src={{htmlSafe (INITIAL_URL this.args)}}
+        src={{htmlSafe (INITIAL_URL this.initialData)}}
         style={{htmlSafe (defaultStyle this.lines)}}
         ...attributes
       >

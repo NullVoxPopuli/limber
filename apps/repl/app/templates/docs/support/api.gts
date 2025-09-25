@@ -10,16 +10,24 @@ import { Code } from 'limber-ui';
 
 import type { TOC } from '@ember/component/template-only';
 
+export const Live = <template>
+  <span aria-label="live" style="display: inline-block">⚡</span>
+</template>;
+export const Refresh = <template>
+  <span aria-label="Refresh" style="display: inline-block">🔃</span>
+</template>;
+
 export const Option: TOC<{
   Args: {
     name: string;
     type: string;
     description?: string;
+    live?: boolean;
   };
   Blocks: { default: [] };
 }> = <template>
   <div class="limber__docs__option">
-    <h3>{{@name}}</h3>
+    <h3>{{@name}} {{#if @live}}<Live />{{else}}<Refresh />{{/if}}</h3>
 
     <pre><code>{{@type}}</code></pre>
 
@@ -111,19 +119,13 @@ export class Example extends Component<{
 
     body = body.map((x) => x.trim()).filter(Boolean);
 
-
-    const result = (
+    const result =
       begin +
-      (body.length > 1
-        ? body.map((x) => `\n  ${x}`).join('')
-        : body.map((x) => ` ${x}`).join('')) +
+      (body.length > 1 ? body.map((x) => `\n  ${x}`).join('') : body.map((x) => ` ${x}`).join('')) +
       ' ' +
-      end
-    );
+      end;
 
-console.log({ result, body });
-
-return result;
+    return result;
   }
 
   get isConfigurable() {

@@ -1,7 +1,7 @@
 import highlighted from 'limber/modifiers/highlighted';
 import { ExternalLink, REPL } from 'limber-ui';
 
-import { Example, Option } from './support/api.gts';
+import { Example, Live, Option, Refresh } from './support/api.gts';
 
 const hello = `<template>
   hello world
@@ -53,7 +53,7 @@ const EXAMPLES = {
   <div data-format="gjs" {{highlighted EXAMPLES.basic}}></div>
 
   Output:
-  <REPL @code={{counter}} @editor="60h" />
+  <REPL @code={{counter}} @editor="60h" @editorLoad="force" />
 
   The
   <code>REPL</code>
@@ -62,12 +62,29 @@ const EXAMPLES = {
   <section class="options">
     <h2>Options</h2>
 
-    <Option @name="@code" @type="string">
+    <p>
+      For each option:
+
+      <dl>
+        <dt><Live /></dt>
+        <dd>changes to this argument will update the REPL (or its container) without a full refresh
+          of the iframe</dd>
+        <dt><Refresh /></dt>
+        <dd>changes to this argument will cause the REPL to fully reload</dd>
+      </dl>
+
+      These (both
+      <Live />
+      and
+      <Refresh />) are inverses of each other.
+    </p>
+
+    <Option @name="@code" @type="string" @live={{true}}>
       This is the code that both shows up in the editor and is rendered in the output pane. By
       default the format is gjs, so the passed code should be written in gjs.
     </Option>
 
-    <Option @name="@format" @type="string">
+    <Option @name="@format" @type="string" @live={{true}}>
       This is the format that the REPL should both render and load the editor for. The default is
       "gjs", but valid options are:
       <ul>
@@ -136,13 +153,13 @@ const EXAMPLES = {
       <Example @editorLoad={{"never"}} @code={{hello}} />
     </Option>
 
-    <Option @name="@lines" @type="number">
+    <Option @name="@lines" @type="number" @live={{true}}>
       Sets the height of the iframe via specifying the number of lines of code to show.
 
       <Example @lines={{4}} @code={{hello}} />
     </Option>
 
-    <Option @name="@title" @type="string">
+    <Option @name="@title" @type="string" @live={{true}}>
       Sets the
       <code>title</code>
       attribute on the iframe. If
@@ -150,7 +167,7 @@ const EXAMPLES = {
       is not passed, this value will be generated for you. Helps with screen readers.
     </Option>
 
-    <Option @name="@shadowdom" @type="boolean">
+    <Option @name="@shadowdom" @type="boolean" @live={{true}}>
       Sets whether or not the output area should be rendered within a shadow-dom. The default is to
       render the output in a shadow-dom (true).
       <br />

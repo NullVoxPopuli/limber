@@ -9,22 +9,25 @@ import { connectToChild } from 'penpal';
 import type { ModifierLike } from '@glint/template';
 import type { Connection } from 'penpal';
 
+interface Doc {
+  code: string;
+  format: string;
+}
+
 /**
  * We can't post right away, because we might do so before the iframe is ready.
  * We need to wait until the frame initiates contact.
  */
-function PostMessage(handleUpdate: (data: string) => void): ModifierLike<{
+function PostMessage(handleUpdate: (data: Doc) => void): ModifierLike<{
   Element: HTMLIFrameElement;
   Args: {
     Positional: [data: string | null];
   };
 }> {
-  return modifier((element, [data]: [string | null]) => {
+  return modifier((element, [data]: [Doc]) => {
     if (!element.contentWindow) return;
 
-    if (data) {
-      handleUpdate(data);
-    }
+    handleUpdate(data);
   });
 }
 
@@ -45,7 +48,7 @@ export class HostMessaging {
    * We can't post right away, because we might do so before the iframe is ready.
    * We need to wait until the frame initiates contact.
    */
-  postMessage = PostMessage((data) => void this.queuePayload('gjs', data));
+  postMessage = PostMessage((data) => void this.queuePayload(data.format, data.code));
   onMessage = HandleMessage((element) => {
     this.connection = connectToChild({
       iframe: element,
