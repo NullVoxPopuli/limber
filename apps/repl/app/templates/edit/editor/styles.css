@@ -46,6 +46,7 @@
   inset: 0;
   text-align: center;
   color: white;
+  background: rgba(0,0,0,0.5);
   font-weight: bold;
   cursor: pointer;
   border: none;
