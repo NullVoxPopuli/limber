@@ -21,7 +21,7 @@ export const Placeholder: TOC<{
       class="limber__editor-placeholder font-sm h-full w-full px-6 py-2 font-mono text-white"
       data-format={{orGlimdown (qp "format")}}
       {{! @glint-ignore }}
-      {{(if (not (qp "nohighlight")) highlighted context.text)}}
+      {{(if (not (qp "nohighlight")) (modifier highlighted context.text))}}
       ...attributes
     ><pre>{{context.text}}</pre></div>
   {{/let}}
