@@ -59,5 +59,5 @@ Router.map(function () {
     this.route('editor');
   });
 
-  this.route('error', { path: '*' });
+  this.route('error-404', { path: '*' });
 });

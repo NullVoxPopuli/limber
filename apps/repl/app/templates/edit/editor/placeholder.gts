@@ -7,9 +7,12 @@ import type { TOC } from '@ember/component/template-only';
 
 const orGlimdown = (format: string | undefined) => format || 'glimdown';
 
+const not = (x: unknown) => !x;
+
 export const Placeholder: TOC<{
   Element: HTMLPreElement;
 }> = <template>
+  {{log "QP:" (qp "nohighlight")}}
   {{#let (service "editor") as |context|}}
     <div
       data-test-placeholder
@@ -18,7 +21,7 @@ export const Placeholder: TOC<{
       class="limber__editor-placeholder font-sm h-full w-full px-6 py-2 font-mono text-white"
       data-format={{orGlimdown (qp "format")}}
       {{! @glint-ignore }}
-      {{highlighted context.text}}
+      {{(if (not (qp "nohighlight")) highlighted context.text)}}
       ...attributes
     ><pre>{{context.text}}</pre></div>
   {{/let}}

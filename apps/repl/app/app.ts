@@ -2,6 +2,8 @@ import 'limber-ui/theme.css';
 import 'ember-statechart-component';
 import './icons.ts';
 
+import { isDevelopingApp, macroCondition } from '@embroider/macros';
+
 import PageTitleService from 'ember-page-title/services/page-title';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore - no types
@@ -22,11 +24,13 @@ Object.assign(window, {
 export default class App extends Application {
   modules = {
     './router': Router,
-    ...import.meta.glob('./routes/{edit,index,application,error}.ts', { eager: true }),
+    ...import.meta.glob('./routes/{edit,index,application,error-404}.ts', { eager: true }),
     ...import.meta.glob('./services/{editor,status}.ts', { eager: true }),
     ...import.meta.glob('./controllers/*.ts', { eager: true }),
     ...import.meta.glob('./templates/docs/*.gts', { eager: true }),
-    ...import.meta.glob('./templates/{application,edit,output,docs}.gts', { eager: true }),
+    ...import.meta.glob('./templates/{application,edit,output,docs,error-404}.gts', {
+      eager: true,
+    }),
 
     // /////////////////
     // To Eliminate
@@ -40,10 +44,14 @@ export default class App extends Application {
     // /////////////////
     './services/page-title': PageTitleService,
   };
+}
 
-  // LOG_RESOLVER = true;
-  // LOG_ACTIVE_GENERATION = true;
-  // LOG_TRANSITIONS = true;
-  // LOG_TRANSITIONS_INTERNAL = true;
-  // LOG_VIEW_LOOKUPS = true;
+if (macroCondition(isDevelopingApp())) {
+  Object.assign(App, {
+    LOG_RESOLVER: true,
+    LOG_ACTIVE_GENERATION: true,
+    LOG_TRANSITIONS: true,
+    LOG_TRANSITIONS_INTERNAL: true,
+    LOG_VIEW_LOOKUPS: true
+  });
 }

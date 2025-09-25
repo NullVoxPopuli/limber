@@ -91,7 +91,7 @@ export class Example extends Component<{
   get code() {
     const begin = `<REPL`;
     const end = '/>';
-    const body = [];
+    let body = [];
 
     const entries = Object.entries(this.config);
 
@@ -109,14 +109,21 @@ export class Example extends Component<{
       body.push(`@${key}=${value}`);
     }
 
-    return (
+    body = body.map((x) => x.trim()).filter(Boolean);
+
+
+    const result = (
       begin +
       (body.length > 1
-        ? '\n' + body.map((x) => `\n  ${x}`).join('')
+        ? body.map((x) => `\n  ${x}`).join('')
         : body.map((x) => ` ${x}`).join('')) +
       ' ' +
       end
     );
+
+console.log({ result, body });
+
+return result;
   }
 
   get isConfigurable() {
