@@ -41,6 +41,19 @@
   height: 100%;
 }
 
+.limber__editor__click-to-edit {
+  position: absolute;
+  inset: 0;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  &:hover, &:focus-visible {
+    background: rgba(0,0,0,0.35);
+  }
+}
+
 @media (pointer:coarse) {
   .limber__editor .limber__editor__tab-help {
     /**

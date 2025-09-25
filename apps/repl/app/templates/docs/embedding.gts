@@ -105,7 +105,9 @@ const EXAMPLES = {
         href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe#lazy"
       >via loading=lazy</ExternalLink>). Setting
       <code>@clickToLoad</code>
-      will require user interaction before <em>rendering</em> the iframe.
+      will require user interaction before
+      <em>rendering</em>
+      the iframe.
       <br />
       <br />
 

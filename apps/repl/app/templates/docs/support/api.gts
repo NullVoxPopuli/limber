@@ -211,6 +211,7 @@ export class Example extends Component<{
           {{! Optional: }}
           @lines={{this.withDefaults.lines}}
           @editor={{this.config.editor}}
+          @editorLoad={{this.config.editorLoad}}
           @format={{this.config.format}}
           @title={{this.config.title}}
           @forceEditor={{this.config.forceEditor}}

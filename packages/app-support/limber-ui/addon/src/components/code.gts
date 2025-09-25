@@ -9,9 +9,18 @@ import { htmlSafe } from '@ember/template';
 import { link } from 'reactiveweb/link';
 
 type AllowedFormat = 'gjs' | 'gts' | 'hbs' | 'gmd' | 'vue' | 'svelte' | 'mermaid';
-type Storage = 'local' | 'url';
+// type Storage = 'local' | 'url';
 
 import { HostMessaging } from './frame-messaging.ts';
+
+const DEFAULT_DEMO = `
+// Welcome
+//
+// Whatever is export-defaulted is what is rendered
+<template>
+  hello world!
+</template>
+`
 
 interface Signature {
   Element: HTMLIFrameElement;
@@ -97,7 +106,7 @@ const HOST = 'https://limber.glimdown.com/edit';
 /**
  * NOTE: updates the the `src` URL do not update the iframe
  */
-const INITIAL_URL = (options: Record<string, string | boolean | number>): string => {
+const INITIAL_URL = (options: Record<string, any>): string => {
   const { code, editor, shadowdom, nohighlight, format, editorLoad } = options;
 
   const initialQPs = new URLSearchParams(window.location.search);
@@ -105,14 +114,14 @@ const INITIAL_URL = (options: Record<string, string | boolean | number>): string
   const host = initialQPs.has('local') ? `https://localhost:${local || '4201'}/edit` : HOST;
 
   return (
-    `${host}?t=<template></template>` +
+    `${host}?` +
     (editorLoad ? `&editorLoad=${editorLoad}` : '') +
     (editor ? `&editor=${editor}` : '') +
     (shadowdom ? `&shadowdom=${shadowdom}` : '') +
-    (format ? `&format=${format}` : 'BUG:MISSING') +
+    (format ? `&format=${format}` : '&format=BUG:MISSING') +
     (nohighlight ? `&nohighlight=${nohighlight}` : '') +
     (local ? `&local` : '') +
-    (code ? `&t=${encodeURIComponent(code as string)}` : '')
+    (code ? `&t=${encodeURIComponent(code as string)}` : DEFAULT_DEMO)
   );
 };
 
@@ -143,7 +152,7 @@ export default class Code extends Component<Signature> {
 
   get format() {
     if ('format' in this.args) {
-      return this.args.format;
+      return this.args.format ?? 'gjs';
     }
 
     return 'gjs';
@@ -161,6 +170,7 @@ export default class Code extends Component<Signature> {
     return {
       code: this.code,
       format: this.format,
+      shadowdom: this.args.shadowdom,
     };
   }
 
