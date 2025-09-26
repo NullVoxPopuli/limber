@@ -52,7 +52,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@glint/core": "2.0.0-alpha.7",
-    "@glint/template": "1.6.0-alpha.2",
+    "@glint/template": "1.6.0-alpha.3",
     "@glint/tsserver-plugin": "2.0.0-alpha.7",
     "@iconify-json/devicon": "^1.2.29",
     "@iconify-json/mdi": "^1.2.3",

@@ -19,8 +19,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.3",
-    "@glint/core": "2.0.0-alpha.7",
-    "@glint/tsserver-plugin": "2.0.0-alpha.7",
+    "@glint/core": "2.0.0-alpha.9",
+    "@glint/tsserver-plugin": "2.0.0-alpha.9",
     "@nullvoxpopuli/eslint-configs": "^5.3.4",
     "concurrently": "^9.2.1",
     "dev-tools": "workspace:*",
