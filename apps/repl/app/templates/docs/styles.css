@@ -175,3 +175,9 @@ a:has(h3), a:has(h2) {
   }
 }
 
+
+a.code-link {
+  h2, h3 {
+    font-weight: normal;
+  }
+}

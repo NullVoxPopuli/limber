@@ -72,6 +72,7 @@ export async function getHighlighter(): Promise<HighlighterGeneric<never, never>
       import('shiki/langs/vue.mjs'),
       import('shiki/langs/jsx.mjs'),
       import('shiki/langs/mermaid.mjs'),
+      import('shiki/langs/bash.mjs'),
     ],
     langAlias: {
       gjs: 'glimmer-js',
