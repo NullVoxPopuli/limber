@@ -1,5 +1,4 @@
-import { element } from 'ember-element-helper';
-
+import highlighted from 'limber/modifiers/highlighted';
 import { ExternalLink } from 'limber-ui';
 
 import type { TOC } from '@ember/component/template-only';
@@ -8,8 +7,16 @@ export const sample = '```{language} {...metadata}\n' + 'code\n' + '```';
 
 export const example = '```gjs live\n' + '<template>\n' + '  code\n' + '</template>\n' + '```';
 
+export const exampleMermaid =
+  '```mermaid\n' +
+  `pie title Pets adopted by volunteers
+    "Dogs" : 386
+    "Cats" : 85
+    "Rats" : 15\n` +
+  '```';
+
 export const CodeBlock: TOC<{ Args: { code: string } }> = <template>
-  <pre><code class="hljs language-markdown">{{@code}}</code></pre>
+  <div data-format="md" {{highlighted @code}}><pre><code>{{@code}}</code></pre></div>
 </template>;
 
 export const Tutorial = <template>
@@ -46,4 +53,10 @@ export const H3: Heading = <template>
   <a href="#{{@id}}">
     {{hFor 3 @text @id}}
   </a>
+</template>;
+
+export const TryIt: TOC<{ Element: HTMLAnchorElement }> = <template>
+  <ExternalLink ...attributes>
+    try it now
+  </ExternalLink>
 </template>;

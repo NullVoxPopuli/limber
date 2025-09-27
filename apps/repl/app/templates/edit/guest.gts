@@ -24,9 +24,9 @@ const guestFrame = resource(({ on, owner }) => {
       update(data: { format: FormatQP; text: string }) {
         const { format, text } = data;
         const editor = owner.lookup('service:editor');
-  //       const router = owner.lookup('service:router');
-  //
-  // console.log(router.currentURL)
+        //       const router = owner.lookup('service:router');
+        //
+        // console.log(router.currentURL)
 
         console.debug(`Update received`, { format, text }, 'existing', {
           format: editor.format,

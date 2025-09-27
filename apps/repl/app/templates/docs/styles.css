@@ -56,6 +56,13 @@
     border-radius: 0.5rem;
   }
 
+article header {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
   section.options {
     h2 {
       border-bottom: 1px dashed gray;
