@@ -116,12 +116,12 @@ const Overview = <template>
 
   <H3 @id="imports" @text="Imports" />
 
-  In javascript-like languages and formats (or that have a javascript like section of their format),
+  In javascript-like languages and formats (or that have a javascript-like section of their format),
   may import from anywhere. This includes NPM, CDNs, etc. Bare specifiers, such as in
   <code>import { ... } from 'package-name';</code>
-  will reach out to NPM to download the tarball at the
+  will reach out to NPM to download the tarball using the
   <code>latest</code>
-  and extract its contents. This behavior can be changed by adding more to the import path.
+  tag and extract its contents. This behavior can be changed by adding more to the import path.
 
   <ul>
     <li>
