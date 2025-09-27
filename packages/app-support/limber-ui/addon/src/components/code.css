@@ -1,0 +1,13 @@
+.limber__code__click-to-load {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid;
+  border-radius: 0.5rem;
+  padding: 2rem;
+}
+.limber__code__click-to-load__button {
+  padding: 1rem 2rem;
+  border: 1px solid;
+  border-radius: 0.25rem;
+}

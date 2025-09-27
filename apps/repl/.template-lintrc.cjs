@@ -14,6 +14,8 @@ module.exports = {
         'no-curly-component-invocation': 'off',
         // Don't care
         'no-forbidden-elements': 'off',
+        // Incorrect, because it matches anything that looks like an arg, even if it's a string (intentionally)
+        'no-potential-path-strings': 'off',
       },
     },
     {

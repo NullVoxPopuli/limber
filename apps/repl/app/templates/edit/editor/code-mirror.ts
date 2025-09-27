@@ -44,6 +44,20 @@ class CodeMirror extends Modifier<Signature> {
   #load?: () => void;
 
   modify(element: Element, _: never[], named: Signature['Args']['Named']) {
+    /**
+     * Supporting legacy URLs: &forceEditor
+     *
+     * New Scheme:
+     * - editorLoad=force
+     * - editorLoad=onclick
+     * - editorLoad=never
+     */
+    const { editorLoad, forceEditor } = this.router.currentRoute?.queryParams ?? {};
+
+    if (editorLoad === 'never') {
+      return;
+    }
+
     this.#checkFormat();
 
     if (this.#load) return;
@@ -59,6 +73,7 @@ class CodeMirror extends Modifier<Signature> {
         window.removeEventListener('mousemove', this.#load);
         window.removeEventListener('keydown', this.#load);
         window.removeEventListener('touchstart', this.#load);
+        window.removeEventListener('click', this.#load);
       }
     };
 
@@ -77,7 +92,7 @@ class CodeMirror extends Modifier<Signature> {
       );
     };
 
-    if (this.router.currentRoute?.queryParams?.forceEditor) {
+    if (forceEditor || editorLoad === 'force') {
       waitForPromise(
         (async () => {
           await Promise.resolve();
@@ -89,13 +104,19 @@ class CodeMirror extends Modifier<Signature> {
       return;
     }
 
-    window.addEventListener('mousemove', this.#load, { passive: true });
-    window.addEventListener('keydown', this.#load, { passive: true });
-    window.addEventListener('touchstart', this.#load, { passive: true });
-
     registerDestructor(this, () => {
       cleanup();
     });
+
+    if (editorLoad === 'onclick') {
+      window.addEventListener('click', this.#load, { passive: true });
+
+      return;
+    }
+
+    window.addEventListener('mousemove', this.#load, { passive: true });
+    window.addEventListener('keydown', this.#load, { passive: true });
+    window.addEventListener('touchstart', this.#load, { passive: true });
   }
 
   #previousFormat?: string;
@@ -111,7 +132,7 @@ class CodeMirror extends Modifier<Signature> {
   };
 
   /**
-   * We don't allow thish to run more than once.
+   * We don't allow this to run more than once.
    * The editor has to be managed imperatively / with callbacks
    * from this point forward
    */
