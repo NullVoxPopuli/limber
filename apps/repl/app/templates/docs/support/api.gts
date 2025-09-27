@@ -11,10 +11,10 @@ import { Code } from 'limber-ui';
 import type { TOC } from '@ember/component/template-only';
 
 export const Live = <template>
-  <span aria-label="live" style="display: inline-block">⚡</span>
+  <span class="tag-label" aria-label="live" style="display: inline-block">⚡ live</span>
 </template>;
 export const Refresh = <template>
-  <span aria-label="Refresh" style="display: inline-block">🔃</span>
+  <span class="tag-label" aria-label="Refresh" style="display: inline-block">🔃 reload</span>
 </template>;
 
 export const Option: TOC<{
