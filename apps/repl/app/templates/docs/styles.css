@@ -181,3 +181,19 @@ a.code-link {
     font-weight: normal;
   }
 }
+
+.poor-mans-typedoc > li > div {
+  display: grid;
+  grid-template-areas:
+    "property . type"
+    "description description description";
+  > code {
+    grid-area: property;
+  }
+  > span {
+    grid-area: type;
+  }
+  > p {
+    grid-area: description;
+  }
+}

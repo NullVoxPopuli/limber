@@ -23,6 +23,18 @@ import { H2, H3 } from './support/code.gts';
   <div data-format="bash" {{highlighted "pnpm add ember-repl"}}></div>
   (etc)
 
+  <H2 @id="compatibility">Compatibility</H2>
+
+  <ul>
+    <li><code>vite</code> @ ^6+ | only vite-using ember projects are supported</li>
+    <li><code>ember-source</code> @ ^6.8+</li>
+  </ul>
+
+  It's
+  <em>possible</em>
+  that other environments and ember-source versions could work, but I don't want to formally spend
+  time figuring out how to support them.
+
   <H2 @id="usage">Usage</H2>
 
   The following modules are available:
@@ -43,6 +55,30 @@ import { H2, H3 } from './support/code.gts';
   <H3 class="code-link" @id="index-Format">type
     <code>Format</code>
     from ember-repl</H3>
+
+  <H3 class="code-link" @id="index-Format">type
+    <code>CompileState</code>
+    from ember-repl</H3>
+
+  This type is the return value from
+  <code>compile</code>
+  and
+  <code>Compiled</code>. The important properties on this type:
+  <ul class="poor-mans-typedoc">
+    <li><div><code>component</code>
+        <span><code>ComponentLike | undefined</code></span>
+        <p>
+          This is the returned component, if compilation was successful.
+        </p>
+      </div>
+    </li>
+    <li><code>error</code></li>
+    <li><code>isReady</code></li>
+    <li><code>format</code></li>
+    <li><code>reason</code></li>
+    <li><code>isWaiting</code></li>
+    <li><code>promise</code></li>
+  </ul>
 
   <H3 class="code-link" @id="test-support-setupCompiler"><code>setupCompiler</code>
     from ember-repl/test-support</H3>
