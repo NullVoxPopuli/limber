@@ -84,7 +84,8 @@ const Overview = <template>
   For any issues / questions, please file an
   <IssueLink />.
 
-  <br /><br />
+  <hr />
+
   <Overview />
 
   <H2 @id="general-editing" @text="General Editing" />
