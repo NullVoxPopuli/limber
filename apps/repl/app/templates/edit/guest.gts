@@ -21,19 +21,14 @@ const guestFrame = resource(({ on, owner }) => {
 
   const connection = connectToParent<ParentMethods>({
     methods: {
-      update(data: { format: FormatQP; text: string }) {
-        const { format, text } = data;
+      update(data: { format: FormatQP; code: string }) {
+        const { format, code: text } = data;
         const editor = owner.lookup('service:editor');
         //       const router = owner.lookup('service:router');
         //
         // console.log(router.currentURL)
 
-        // console.debug(`Update received`, { format, text }, 'existing', {
-        //   format: editor.format,
-        //   text: editor.text,
-        // });
-        if (format) editor.updateFormat(format);
-        if (text) editor.updateText(text);
+        editor.update(text, format);
       },
     },
   });

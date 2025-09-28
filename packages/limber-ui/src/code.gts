@@ -2,6 +2,7 @@
 import './code.css';
 
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import { guidFor } from '@ember/object/internals';
@@ -134,6 +135,21 @@ export default class Code extends Component<Signature> {
 
   @tracked manualLoad = false;
 
+  initialData: Record<string, any>;
+
+  constructor(owner: Owner, args: Signature['Args']) {
+    super(owner, args);
+
+    this.initialData = {
+      editorLoad: this.args.editorLoad,
+      editor: this.args.editor,
+      nohighlight: this.args.nohighlight,
+      shadowdom: this.args.shadowdom,
+      code: this.code,
+      format: this.format,
+    };
+  }
+
   get load() {
     if (this.args.clickToLoad) {
       return this.manualLoad;
@@ -171,17 +187,6 @@ export default class Code extends Component<Signature> {
       code: this.code,
       format: this.format,
       shadowdom: this.args.shadowdom,
-    };
-  }
-
-  get initialData() {
-    return {
-      editorLoad: this.args.editorLoad,
-      editor: this.args.editor,
-      nohighlight: this.args.nohighlight,
-      shadowdom: this.args.shadowdom,
-      code: this.code,
-      format: this.format,
     };
   }
 

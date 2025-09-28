@@ -32,7 +32,14 @@ export const Editor: TOC<{
 
       {{#let (codeFor docs) as |code|}}
         {{#if code}}
-          <REPL @code={{code}} @format="gjs" @editor={{true}} ...attributes />
+          <REPL
+            @code={{code}}
+            @format="gjs"
+            @editorLoad="force"
+            @title="workbook-area"
+            @nohighlight={{true}}
+            ...attributes
+          />
         {{/if}}
 
       {{/let}}

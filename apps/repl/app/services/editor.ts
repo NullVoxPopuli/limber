@@ -62,6 +62,16 @@ export default class EditorService extends Service {
     this.#editorSwapText = value;
   }
 
+  update = (text: string, format: FormatQP) => {
+    // Update ourselves
+    this.fileURIComponent.set(text, format);
+
+    // Update the editor
+    this.setCodemirrorState?.(text, format === 'hbs' ? 'hbs|ember' : format);
+
+    // this.fileURIComponent.flush();
+  };
+
   updateFormat = (format: FormatQP) => {
     // Update ourselves
     this.fileURIComponent.set(this.text ?? '', format);
