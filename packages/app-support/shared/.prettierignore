@@ -1,1 +1,14 @@
-../../../../.prettierignore
+*.yml
+*.yaml
+*.md
+*.json
+renovate.json5
+public/docs/
+
+node_modules/
+dist/
+declarations/
+public/
+vendor/
+coverage/
+.lint-todo/
