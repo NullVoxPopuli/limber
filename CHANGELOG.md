@@ -1,5 +1,92 @@
 # Changelog
 
+## Release (2025-09-28)
+
+* ember-repl 7.0.0 (major)
+* limber-ui 4.0.0 (major)
+* repl-sdk 1.0.0 (major)
+* codemirror-lang-glimdown 2.0.0 (major)
+* @glimdown/lezer 2.0.0 (major)
+* codemirror-lang-glimmer-js 2.0.0 (major)
+* @glimdown/lezer-glimmer-expression 2.0.0 (major)
+* codemirror-lang-glimmer-ts 2.0.0 (major)
+* codemirror-lang-glimmer 2.0.0 (major)
+* lezer-glimmer 2.0.0 (major)
+
+#### :boom: Breaking Change
+* `ember-repl`, `limber-ui`
+  * [#1962](https://github.com/NullVoxPopuli/limber/pull/1962) Docs + <REPL> enhancements ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `ember-repl`, `repl-sdk`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`
+  * [#1925](https://github.com/NullVoxPopuli/limber/pull/1925) new repl infra (enabling importing from CDN (no v1 addons)) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :rocket: Enhancement
+* `ember-repl`, `limber-ui`
+  * [#1962](https://github.com/NullVoxPopuli/limber/pull/1962) Docs + <REPL> enhancements ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `ember-repl`
+  * [#1975](https://github.com/NullVoxPopuli/limber/pull/1975) Add collections ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1914](https://github.com/NullVoxPopuli/limber/pull/1914) Upgrade template-compilation ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `repl-sdk`
+  * [#1950](https://github.com/NullVoxPopuli/limber/pull/1950) Add Vanilla JS ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `ember-repl`, `repl-sdk`, `codemirror-lang-glimdown`, `codemirror-lang-glimmer-js`
+  * [#1947](https://github.com/NullVoxPopuli/limber/pull/1947) Better editor bundling, adding codemirror to repl-sdk so others can boot up the same editor ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `ember-repl`, `repl-sdk`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`
+  * [#1925](https://github.com/NullVoxPopuli/limber/pull/1925) new repl infra (enabling importing from CDN (no v1 addons)) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* Other
+  * [#1917](https://github.com/NullVoxPopuli/limber/pull/1917) Fix doc swapping and loading ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* `repl-sdk`
+  * [#1965](https://github.com/NullVoxPopuli/limber/pull/1965) Try to fix Svelte ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `ember-repl`, `repl-sdk`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`
+  * [#1958](https://github.com/NullVoxPopuli/limber/pull/1958) Closes [#1955](https://github.com/NullVoxPopuli/limber/issues/1955) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* Other
+  * [#1957](https://github.com/NullVoxPopuli/limber/pull/1957) Closes [#1956](https://github.com/NullVoxPopuli/limber/issues/1956) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1904](https://github.com/NullVoxPopuli/limber/pull/1904) Tutorial navigation selected state ([@tcjr](https://github.com/tcjr))
+* `ember-repl`, `repl-sdk`
+  * [#1943](https://github.com/NullVoxPopuli/limber/pull/1943) Get tests passing + minor dependency fixes ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :memo: Documentation
+* Other
+  * [#1982](https://github.com/NullVoxPopuli/limber/pull/1982) docs(contributor): contributors readme action update ([@github-actions[bot]](https://github.com/apps/github-actions))
+  * [#1936](https://github.com/NullVoxPopuli/limber/pull/1936) Update prose.md ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1929](https://github.com/NullVoxPopuli/limber/pull/1929) Remove unused option block ([@mrloop](https://github.com/mrloop))
+  * [#1928](https://github.com/NullVoxPopuli/limber/pull/1928) Rename swapi.dev to swapi.tech ([@mrloop](https://github.com/mrloop))
+  * [#1918](https://github.com/NullVoxPopuli/limber/pull/1918) Bring back helpers/state import ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1904](https://github.com/NullVoxPopuli/limber/pull/1904) Tutorial navigation selected state ([@tcjr](https://github.com/tcjr))
+* `ember-repl`
+  * [#1976](https://github.com/NullVoxPopuli/limber/pull/1976) Add comment about warp-drive ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1930](https://github.com/NullVoxPopuli/limber/pull/1930) Update keepLatest README example ([@mrloop](https://github.com/mrloop))
+  * [#1922](https://github.com/NullVoxPopuli/limber/pull/1922) Try to use RFC #931 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `repl-sdk`
+  * [#1973](https://github.com/NullVoxPopuli/limber/pull/1973) Enable the editor param and allow it to specify the initial vertical or horizontal split ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `ember-repl`, `repl-sdk`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`
+  * [#1925](https://github.com/NullVoxPopuli/limber/pull/1925) new repl infra (enabling importing from CDN (no v1 addons)) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :house: Internal
+* `ember-repl`, `repl-sdk`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`
+  * [#1974](https://github.com/NullVoxPopuli/limber/pull/1974) Move from nested apps to renderComponent ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `ember-repl`
+  * [#1970](https://github.com/NullVoxPopuli/limber/pull/1970) Add URL to imports in compiler service ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1954](https://github.com/NullVoxPopuli/limber/pull/1954) Update core libraries ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* Other
+  * [#1961](https://github.com/NullVoxPopuli/limber/pull/1961) Remove ember-cli ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1952](https://github.com/NullVoxPopuli/limber/pull/1952) Add vite bundle analyzer ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1906](https://github.com/NullVoxPopuli/limber/pull/1906) Upgrade ember-primitives, use KeyCombo component ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1905](https://github.com/NullVoxPopuli/limber/pull/1905) Improve share dialog ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#1902](https://github.com/NullVoxPopuli/limber/pull/1902) Update ember-primitives ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `ember-repl`, `repl-sdk`, `codemirror-lang-glimdown`, `codemirror-lang-glimmer-js`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`
+  * [#1953](https://github.com/NullVoxPopuli/limber/pull/1953) Update deps ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `ember-repl`, `repl-sdk`
+  * [#1943](https://github.com/NullVoxPopuli/limber/pull/1943) Get tests passing + minor dependency fixes ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `ember-repl`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`
+  * [#1921](https://github.com/NullVoxPopuli/limber/pull/1921) Convert ember-repl test-app to vite. ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 4
+- Ewan McDougall ([@mrloop](https://github.com/mrloop))
+- Tom Carter ([@tcjr](https://github.com/tcjr))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+- [@github-actions[bot]](https://github.com/apps/github-actions)
+
 ## Release (2025-03-03)
 
 limber-ui 3.0.0 (major)
