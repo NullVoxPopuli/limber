@@ -6,8 +6,7 @@ import { trackedObject } from '@ember/reactive/collections';
 import { Form } from 'ember-primitives/components/form';
 
 import highlighted from 'limber/modifiers/highlighted';
-
-import { Code } from '@nullvoxpopuli/limber-shared';
+import { REPL } from 'limber-ui';
 
 import type { TOC } from '@ember/component/template-only';
 
@@ -207,7 +206,7 @@ export class Example extends Component<{
         <div data-format="hbs" {{highlighted this.code}}></div>
       </div>
       <div class="output">
-        <Code
+        <REPL
           @code={{@code}}
           {{! Optional: }}
           @lines={{this.withDefaults.lines}}
