@@ -192,6 +192,7 @@ a.code-link {
   }
   > span {
     grid-area: type;
+    justify-self: end;
   }
   > p {
     grid-area: description;

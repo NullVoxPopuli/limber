@@ -1,5 +1,108 @@
+import { ExternalLink } from 'limber-ui';
 import highlighted from '../../modifiers/highlighted.ts';
 import { H2, H3 } from './support/code.gts';
+import { Type } from './support/type.gts';
+
+const samples = {
+  setup: {
+    basic: `import { setupCompiler } from 'ember-repl';
+
+export default class Application extends Route {
+  async beforeModel() {
+    await setupCompiler(this, {
+      options: {
+        md: {
+          rehypePlugins: [ /* ... */ ],
+          remarkPlugins: [ /* ... */ ],
+        },
+      },
+      modules: {
+        'some-path': () => import('some-path'),
+        'stubbed-or-fake': () => ({ value: 'here' }),
+      }
+    });
+  }
+}`,
+  },
+  compile: {
+    basic: `import { compile, getCompiler } from 'ember-repl';
+
+export default class Demo extends Service {
+  @tracked doc = '...';
+
+  someMethod = () => {
+    let compiler = getCompiler(this):
+
+    return compile(compiler, this.doc, {
+      format: 'gjs',
+    });
+  }
+}
+`,
+  },
+  Compiled: {
+    svelte: `import { Compiled } from 'ember-repl';
+
+const doc = '...';
+
+<template>
+    {{#let (Compiled doc 'svelte') as |state|}}
+      {{#if state.component}}
+        <state.component />
+      {{/if}}
+
+      {{#if state.error}}
+        oof, {{state.reason}}
+      {{/if}}
+    {{/let}}
+</template>`,
+    inJS: `import { Compiled } from 'ember-repl';
+import { use } from 'ember-resources';
+
+class Demo extends Component {
+  @use compileState = Compiled(doc, 'gjs');
+
+  get component() {
+    return this.compileState.component;
+  }
+
+  <template>
+    {{#if this.component}}
+      <this.component />
+    {{/if}}
+
+    {{#if this.compileState.error}}
+      oh no, {{this.compileState.reason}}
+    {{/if}}
+  </template>
+}
+`,
+    inJSReactive: `import { Compiled } from 'ember-repl';
+import { use } from 'ember-resources';
+
+class Demo extends Component {
+  @tracked doc = '...';
+  @tracked format = '...';
+
+  @use compileState = Compiled(() => this.doc, () => this.format);
+
+  get component() {
+    return this.compileState.component;
+  }
+
+  <template>
+    {{#if this.component}}
+      <this.component />
+    {{/if}}
+
+    {{#if this.compileState.error}}
+      oh no, {{this.compileState.reason}}
+    {{/if}}
+  </template>
+}
+`,
+  },
+};
 
 <template>
   <h1>ember-repl</h1>
@@ -43,41 +146,149 @@ import { H2, H3 } from './support/code.gts';
     <li><code>import { ... } from "ember-repl/test-support";</code></li>
   </ul>
 
+  For deeper understand of what is possible, you'll want to
+  <ExternalLink
+    href="https://github.com/NullVoxPopuli/limber/blob/main/packages/ember-repl/src/index.ts"
+  >read the source</ExternalLink>
+  for the real function's method signatures. The full signatures are abbreviated here in this
+  document for brevity.
+
   <H3 class="code-link" @id="index-setupCompiler"><code>setupCompiler</code>
     from ember-repl</H3>
+
+  This is the main setup method for the compiler -- it allows you to specify default options for the
+  compilers, and define your import-map, allowing you to smoothly use
+  <code>ember-repl</code>
+  for any set of code (even private unpublished code), or entirely unpublished modules. For example,
+  it may be set up in the application's beforeModel hook:
+
+  <div data-format="js" {{highlighted samples.setup.basic}}></div>
+
+  All key-value pairs passed to the second argument of
+  <code>setupCompiler</code>
+  are optional.
+
   <H3 class="code-link" @id="index-compile"><code>compile</code>
     from ember-repl</H3>
+
+  Returns a
+  <a href="#index-CompileState">CompileState</a>.
+  <br />
+  This function takes the
+  <code>CompilerService</code>
+  a text document, and a bag of options, depending on what format is specified (which is required).
+
+  <br /><br />Example:
+  <div data-format="js" {{highlighted samples.compile.basic}}></div>
+
   <H3 class="code-link" @id="index-Compiled"><code>Compiled</code>
     from ember-repl</H3>
+
+  Returns a
+  <a href="#index-CompileState">CompileState</a>.
+  <br />
+  A reactive utility for building dynamic components / render-outputs of an input document. This
+  wraps the above
+  <a href="#index-compile">compile</a>
+  function.
+
+  <br /><br />Example:
+  <div data-format="gjs" {{highlighted samples.Compiled.svelte}}></div>
+
+  This can also be used in a class:
+  <div data-format="gjs" {{highlighted samples.Compiled.inJS}}></div>
+
+  And there are sufficient overloads to allow reactive class usage via lazy access via arrow
+  functions:
+  <div data-format="gjs" {{highlighted samples.Compiled.inJSReactive}}></div>
+
   <H3 class="code-link" @id="index-getCompiler"><code>getCompiler</code>
     from ember-repl</H3>
+
+  This returns the
+  <code>CompilerService</code>
+  for the given
+  <code>owner</code>
+  -- and if an owner isn't provided, we'll try to call
+  <code>getOwner</code>
+  for you. You are only allowed one compiler for a whole browser document. Example:
+
+  <div
+    data-format="js"
+    {{highlighted
+      "import { getCompiler } from 'ember-repl';
+// ...
+export default class Application extends Route {
+  beforeModel() {
+    const compiler = getCompiler(this);
+    // ...
+  }
+}"
+    }}
+  ></div>
 
   <H3 class="code-link" @id="index-Format">type
     <code>Format</code>
     from ember-repl</H3>
 
-  <H3 class="code-link" @id="index-Format">type
+  This is the union of all allowed
+  <code>filetype</code>
+  formats. As in what the file extension would be if the provided REPL document were an actual file.
+
+  <H3 class="code-link" @id="index-CompileState">type
     <code>CompileState</code>
     from ember-repl</H3>
 
   This type is the return value from
   <code>compile</code>
   and
-  <code>Compiled</code>. The important properties on this type:
+  <code>Compiled</code>. It represents the state and progress of a compile attempt. The important
+  properties on this type:
   <ul class="poor-mans-typedoc">
-    <li><div><code>component</code>
-        <span><code>ComponentLike | undefined</code></span>
-        <p>
-          This is the returned component, if compilation was successful.
-        </p>
-      </div>
+    <li>
+      <Type @name="component" @type="ComponentLike | undefined">
+        This is the returned component, if compilation was successful.
+      </Type>
     </li>
-    <li><code>error</code></li>
-    <li><code>isReady</code></li>
-    <li><code>format</code></li>
-    <li><code>reason</code></li>
-    <li><code>isWaiting</code></li>
-    <li><code>promise</code></li>
+    <li>
+      <Type @name="error" @type="Error | undefined">
+        If an error ocurred, this will be the thrown error.
+      </Type>
+    </li>
+    <li>
+      <Type @name="isReady" @type="boolean">
+        indicates if rendering is in progress (false) or if we're ready to render the component
+        (true)
+      </Type>
+    </li>
+    <li>
+      <Type @name="format" @type="string">
+        The compiler format used for this compile
+      </Type>
+    </li>
+    <li>
+      <Type @name="reason" @type="string | undefined">
+        If an error occurred, this property represents a (hopefully) human readable representation
+        of what happened or what caused the error.
+      </Type>
+    </li>
+    <li>
+      <Type @name="isWaiting" @type="boolean">
+        Are we waiting for the compilation attempt to finish? This is more precise than
+        <code>isReady</code>
+        for "completion", because an error also causes
+        <code>isWaiting</code>
+        to flip -- whereas if we have an error, we are
+        <em>not</em>
+        ready (<code>isReady</code>
+        === false) to render.
+      </Type>
+    </li>
+    <li>
+      <Type @name="promise" @type="Promise">
+        For imperative usage, you may await the compilation.
+      </Type>
+    </li>
   </ul>
 
   <H3 class="code-link" @id="test-support-setupCompiler"><code>setupCompiler</code>
