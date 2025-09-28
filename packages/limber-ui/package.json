@@ -54,7 +54,7 @@
     "@glint/template": "alpha",
     "@nullvoxpopuli/eslint-configs": "^5.3.4",
     "@rollup/plugin-babel": "^6.0.4",
-    "babel-plugin-ember-template-compilation": "^2.4.1",
+    "babel-plugin-ember-template-compilation": "^3.0.0",
     "concurrently": "^9.2.1",
     "ember-async-data": "2.0.1",
     "ember-primitives": "^0.40.0",
