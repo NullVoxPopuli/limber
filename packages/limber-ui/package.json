@@ -1,6 +1,6 @@
 {
   "name": "limber-ui",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Components for interacting with the Limber REPL",
   "keywords": [
     "ember-addon"

@@ -1,6 +1,6 @@
 {
   "name": "ember-repl",
-  "version": "6.0.0",
+  "version": "7.0.0",
   "type": "module",
   "description": "Library for enabling REPL and Playground creation with Ember/Glimmer",
   "keywords": [
