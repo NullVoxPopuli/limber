@@ -1,4 +1,5 @@
 import { ExternalLink } from 'limber-ui';
+
 import highlighted from '../../modifiers/highlighted.ts';
 import { H2, H3 } from './support/code.gts';
 import { Type } from './support/type.gts';
@@ -138,7 +139,7 @@ class Demo extends Component {
   that other environments and ember-source versions could work, but I don't want to formally spend
   time figuring out how to support them.
 
-  <H2 @id="usage">Usage</H2>
+  <H2 @id="api-overview">API Overview</H2>
 
   The following modules are available:
   <ul>
@@ -167,6 +168,13 @@ class Demo extends Component {
   All key-value pairs passed to the second argument of
   <code>setupCompiler</code>
   are optional.
+  <br /><br />
+  In
+  <code>ember-repl</code>
+  some modules are configured for you. These may be reviewed
+  <ExternalLink
+    href="https://github.com/NullVoxPopuli/limber/blob/main/packages/ember-repl/src/services/known-modules.ts"
+  >here, in known-modules.ts</ExternalLink>
 
   <H3 class="code-link" @id="index-compile"><code>compile</code>
     from ember-repl</H3>

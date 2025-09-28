@@ -83,6 +83,17 @@ export const H3: Heading = <template>
   </a>
 </template>;
 
+export const H4: Heading = <template>
+  <a href="#{{@id}}" ...attributes>
+    {{hFor 4 @text @id}}
+    {{#if (has-block)}}
+      {{#in-element (getH 4 @id)}}
+        {{yield}}
+      {{/in-element}}
+    {{/if}}
+  </a>
+</template>;
+
 export const TryIt: TOC<{ Element: HTMLAnchorElement }> = <template>
   <ExternalLink ...attributes>
     try it now

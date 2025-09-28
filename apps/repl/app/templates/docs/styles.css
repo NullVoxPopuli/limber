@@ -157,28 +157,32 @@ article header {
 }
 
 
-a:has(h3), a:has(h2) {
+a:has(h4), a:has(h3), a:has(h2) {
   position: relative;
-  display: block;
+  display: flex;
   text-decoration: none !important;
+  align-items: baseline;
+  /* important as the psuedo elements would use gap */
+  gap: 0rem;
 
   &:hover {
     &::before{
       content: '#';
       opacity: 0.9;
       display: inline-block;
-      position: absolute;
-      left: -1rem;
-      top: 0.2rem;
-
+      position: relative;
+      width: 0;
+      transform: translateX(-1rem);
     }
   }
 }
 
 
 a.code-link {
-  h2, h3 {
+  h2, h3, h4 {
     font-weight: normal;
+    margin-left: -1rem;
+    padding-left: 1rem;
   }
 }
 
