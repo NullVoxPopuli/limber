@@ -21,7 +21,7 @@ import type { TOC } from '@ember/component/template-only';
           but it is not a valid path, so I can't help, sorry.
 
           <br />
-          Perhaps, check if the URL is valid? I can't tell 🤔
+          Perhaps, check if the URL is what you intended it to be? I can't tell 🤔
         {{/if}}
       </p>
 

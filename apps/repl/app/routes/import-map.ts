@@ -21,11 +21,13 @@ export const importMap = {
 
   // Components from this app
   // Used in demos
+  'limber-ui': () => import('limber-ui'),
   '@nullvoxpopuli/limber-shared': () => import('@nullvoxpopuli/limber-shared'),
   'limber/components/header': () => import('#edit/header.gts'),
   'limber/components/limber/header': () => import('#edit/header.gts'),
   'limber/components/limber/menu': () => import('#components/menu.gts'),
   'limber/components/menu': () => import('#components/menu.gts'),
+  '@fortawesome/fontawesome-svg-core': () => import('@fortawesome/fontawesome-svg-core'),
 
   // non-ember libraries
   xstate: () => import('xstate'),
