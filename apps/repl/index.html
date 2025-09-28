@@ -51,7 +51,7 @@
       -->
       <div style="height: 100vh; width: 100vw; display: grid; grid-template-rows: min-content 1fr">
         <!-- header -->
-        <div style="background: var(--ember-black); height: 45px; width: 100%"></div>
+        <div id="initial-header" style="background: var(--ember-black); height: 45px; width: 100%"></div>
 
         <!-- everything else -->
         <div
@@ -90,7 +90,8 @@
 
     <script>
       if (window.self !== window.parent) {
-        window.self.document.querySelector("#initial-loader").style.display = "none";
+        window.self.document.querySelector("#initial-header").style.display = "none";
+        window.self.document.querySelector("#initial-loader > div").style.gridTemplateRows = "1fr";
         window.self.document.body.classList.remove("overflow-hidden");
       }
     </script>

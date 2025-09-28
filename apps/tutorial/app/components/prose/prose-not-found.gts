@@ -1,6 +1,6 @@
 import { service } from 'ember-primitives/helpers/service';
 
-import { ExternalLink, Link } from 'limber-ui';
+import { ExternalLink, Link } from '@nullvoxpopuli/limber-shared';
 
 const ReportIssue = <template>
   If the tutorial navigated you here,

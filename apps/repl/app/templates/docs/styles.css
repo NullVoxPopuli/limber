@@ -1,0 +1,204 @@
+.docs-nav, .vertical-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 1rem;
+  padding: 1rem;
+  flex-wrap: wrap;
+
+  .left-nav, .right-nav {
+    flex-wrap: wrap;
+    display: flex;
+    gap: 1rem;
+  }
+
+  a {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 0.5rem;
+    align-items: center;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+}
+
+.vertical-nav {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 1rem;
+}
+
+.tag-label {
+  font-size: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  background: #fafafa;
+  box-shadow: inset 0 -1px 0px 0px white;
+  padding: 1px 4px;
+  color: #222;
+  text-transform: uppercase;
+}
+
+.centered-content {
+  margin-top: 1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-bottom: 80px;
+  display: flex;
+  justify-content: center;
+
+  iframe {
+    width: 100%;
+    border: 1px solid;
+    border-radius: 0.5rem;
+  }
+
+article header {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+  section.options {
+    h2 {
+      border-bottom: 1px dashed gray;
+      margin-bottom: 0;
+    }
+
+    display: grid;
+    gap: 1rem;
+  }
+
+  .limber__docs__option {
+    display: grid;
+    gap: 0.5rem;
+    align-items: center;
+    grid-template-areas:
+      "name . . type"
+      "description description description description";
+
+
+    > h3 {
+      margin: 0;
+      display: inline-block;
+      grid-area: name;
+    }
+    > p {
+      margin: 0;
+      grid-area: description;
+    }
+    > pre {
+      margin: 0;
+      display: inline-block;
+      grid-area: type;
+
+      code {
+      }
+    }
+  }
+
+  .prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::before,
+  .prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::after {
+    content: unset;
+  }
+}
+
+
+.limber__docs__option__example {
+  display: grid;
+    gap: 0.5rem;
+  grid-template-areas:
+    "code code label"
+    "output output output";
+
+  &[data-configurable="false"] {
+    grid-template-areas:
+      "code code code"
+      "output output output";
+  }
+
+  pre {
+    margin: 0;
+  }
+
+  .label {
+    width: min-content;
+    grid-area: label;
+    label {
+      display: grid;
+      grid-auto-flow: row;
+
+      &:has([type="radio"]) {
+        display: flex;
+        gap: 0.5rem;
+      }
+    }
+    input {
+      width: 100%;
+      border: 1px solid;
+      padding: 0.125rem 0.25rem;
+
+      &[type="radio"] {
+        width: auto;
+      }
+    }
+  }
+  .code {
+    grid-area: code;
+    align-self: end;
+  }
+  .output{
+    grid-area: output;
+  }
+}
+
+
+a:has(h4), a:has(h3), a:has(h2) {
+  position: relative;
+  display: flex;
+  text-decoration: none !important;
+  align-items: baseline;
+  /* important as the psuedo elements would use gap */
+  gap: 0rem;
+
+  &:hover {
+    &::before{
+      content: '#';
+      opacity: 0.9;
+      display: inline-block;
+      position: relative;
+      width: 0;
+      transform: translateX(-1rem);
+    }
+  }
+}
+
+
+a.code-link {
+  h2, h3, h4 {
+    font-weight: normal;
+    margin-left: -1rem;
+    padding-left: 1rem;
+  }
+}
+
+.poor-mans-typedoc > li > div {
+  display: grid;
+  grid-template-areas:
+    "property . type"
+    "description description description";
+  > code {
+    grid-area: property;
+  }
+  > span {
+    grid-area: type;
+    justify-self: end;
+  }
+  > p {
+    grid-area: description;
+  }
+}

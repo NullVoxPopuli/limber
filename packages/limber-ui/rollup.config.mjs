@@ -14,7 +14,7 @@ const addon = new Addon({
 export default defineConfig({
   output: addon.output(),
   plugins: [
-    addon.publicEntrypoints(["**/*.js"]),
+    addon.publicEntrypoints(["index.js"]),
     addon.dependencies(),
 
     babel({

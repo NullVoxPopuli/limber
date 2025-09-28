@@ -13,7 +13,7 @@ All external links should use the `<ExternalLink />` component.
 An icon on the right side of the link indicates that the link is external.
 
 ```gjs live preview
-import { ExternalLink } from 'limber-ui';
+import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
 <template>
   <ExternalLink href="#">Link</ExternalLink>

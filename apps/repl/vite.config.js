@@ -19,6 +19,8 @@ export default defineConfig(() => ({
       // a wasm-providing dependency
       'content-tag',
       // Exclude so we keep hot-loading as we develop these packages
+      '@nullvoxpopuli/limber-shared',
+      'limber-ui',
       'ember-repl',
       'repl-sdk',
     ],

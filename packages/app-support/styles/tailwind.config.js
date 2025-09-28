@@ -5,7 +5,7 @@ const path = require('path');
 const repoRoot = path.join(__dirname, '../../../');
 const replRoot = path.join(repoRoot, 'apps/repl');
 const tutorialRoot = path.join(repoRoot, 'apps/tutorial');
-const uiRoot = path.join(repoRoot, 'packages/app-support/limber-ui/addon');
+const uiRoot = path.join(repoRoot, 'packages/app-support/shared');
 
 module.exports = {
   content: [

@@ -17,7 +17,8 @@ import { cell } from 'ember-resources';
 import { SaveBanner, SHOW_TIME } from '#components/save.gts';
 
 import { shortenUrl } from 'limber/utils/editor-text';
-import { FlatButton } from 'limber-ui';
+
+import { FlatButton } from '@nullvoxpopuli/limber-shared';
 
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';

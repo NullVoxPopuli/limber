@@ -21,12 +21,14 @@ const guestFrame = resource(({ on, owner }) => {
 
   const connection = connectToParent<ParentMethods>({
     methods: {
-      update(format: FormatQP, text: string) {
+      update(data: { format: FormatQP; code: string }) {
+        const { format, code: text } = data;
         const editor = owner.lookup('service:editor');
+        //       const router = owner.lookup('service:router');
+        //
+        // console.log(router.currentURL)
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        editor.updateDemo(text, { format });
+        editor.update(text, format);
       },
     },
   });

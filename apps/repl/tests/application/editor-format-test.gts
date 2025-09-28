@@ -1,4 +1,4 @@
-import { settled, visit } from '@ember/test-helpers';
+import { currentURL, settled, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 
 import { Editor } from '#edit/editor/index.gts';
@@ -50,9 +50,6 @@ module('Editor > Format', function (hooks) {
     assert.true(page.editor.hasText('hi'), 'has passed text as well');
   });
 
-  /**
-   * Skipped because we have some global state somewhere
-   */
   test('after selecting text, it loads again when visiting /', async function (assert) {
     await visit(`/edit?format=gjs&t=${defaultText}&nohighlight=1`);
     await page.editor.load();
@@ -60,13 +57,10 @@ module('Editor > Format', function (hooks) {
     assert.strictEqual(page.editor.format, 'gjs');
     assert.true(page.editor.hasText('hi'), 'has passed text as well');
 
-    await page.expectRedirectToContent(`application`, {
-      format: 'gjs',
-      t: defaultText,
-      checks: { aborted: false },
-    });
-    assert.strictEqual(page.editor.format, 'gjs');
-    assert.true(page.editor.hasText('hi'), 'has passed text as well');
+    // there is no /application route
+    await page.expectRedirectToContent(`application`);
+    assert.strictEqual(currentURL(), 'application', 'URL is left alone for debugging');
+    assert.dom().containsText('ope!');
   });
 
   test('can start with glimdown, and change to gjs', async function (assert) {

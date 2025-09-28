@@ -1,7 +1,7 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
-import { ExternalLink } from 'limber-ui';
+import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
 export const Footer = <template>
   <footer class="grid w-full border-t p-2 shadow">

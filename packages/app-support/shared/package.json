@@ -1,14 +1,14 @@
 {
-  "name": "limber-ui",
-  "version": "3.0.0",
-  "description": "The default blueprint for Embroider v2 addons.",
+  "name": "@nullvoxpopuli/limber-shared",
+  "version": "0.0.1",
+  "private": true,
   "keywords": [
     "ember-addon"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/NullVoxPopuli/limber.git",
-    "directory": "packages/app-support/limber-ui/addon"
+    "directory": "packages/app-support/shared"
   },
   "license": "MIT",
   "author": "NullVoxPopuli",

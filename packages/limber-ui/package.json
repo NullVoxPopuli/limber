@@ -1,0 +1,103 @@
+{
+  "name": "limber-ui",
+  "version": "3.0.0",
+  "description": "Components for interacting with the Limber REPL",
+  "keywords": [
+    "ember-addon"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NullVoxPopuli/limber.git",
+    "directory": "packages/limber-ui"
+  },
+  "license": "MIT",
+  "author": "NullVoxPopuli",
+  "files": [
+    "addon-main.cjs",
+    "dist",
+    "declarations"
+  ],
+  "scripts": {
+    "build": "rollup --config",
+    "lint:types": "glint",
+    "lint:fix": "pnpm -w exec lint fix",
+    "start": "rollup --config --watch",
+    "lint": "pnpm -w exec lint",
+    "lint:js": "pnpm -w exec lint js",
+    "lint:js:fix": "pnpm -w exec lint js:fix",
+    "lint:hbs": "pnpm -w exec lint hbs",
+    "lint:hbs:fix": "pnpm -w exec lint hbs:fix",
+    "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
+    "lint:prettier": "pnpm -w exec lint prettier"
+  },
+  "dependencies": {
+    "@ember/test-waiters": "^4.1.1",
+    "@embroider/addon-shim": "1.10.0",
+    "@glimmer/component": "^2.0.0",
+    "decorator-transforms": "^2.2.2",
+    "ember-modifier": "^4.2.2",
+    "penpal": "^6.2.2",
+    "reactiveweb": "^1.9.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.3",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-decorators": "^7.28.0",
+    "@babel/plugin-syntax-decorators": "^7.27.1",
+    "@babel/plugin-transform-typescript": "^7.26.8",
+    "@babel/preset-typescript": "^7.27.1",
+    "@ember/library-tsconfig": "^1.1.3",
+    "@embroider/addon-dev": "^8.1.0",
+    "@glint/core": "alpha",
+    "@glint/environment-ember-loose": "alpha",
+    "@glint/environment-ember-template-imports": "alpha",
+    "@glint/template": "alpha",
+    "@nullvoxpopuli/eslint-configs": "^5.3.4",
+    "@rollup/plugin-babel": "^6.0.4",
+    "babel-plugin-ember-template-compilation": "^2.4.1",
+    "concurrently": "^9.2.1",
+    "ember-async-data": "2.0.1",
+    "ember-primitives": "^0.40.0",
+    "ember-resources": "^7.0.7",
+    "ember-source": ">= 6.8.0-alpha.7",
+    "ember-template-lint": "^7.9.3",
+    "eslint": "^9.34.0",
+    "execa": "^9.5.2",
+    "fix-bad-declaration-output": "^1.1.4",
+    "prettier": "^3.6.2",
+    "prettier-plugin-ember-template-tag": "2.1.0",
+    "rollup": "^4.50.0",
+    "rollup-plugin-copy": "^3.5.0",
+    "typescript": "5.8.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "version": 2,
+    "type": "addon",
+    "main": "addon-main.cjs",
+    "app-js": {}
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*"
+      ]
+    }
+  },
+  "exports": {
+    ".": {
+      "types": "./declarations/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./addon-main.js": "./addon-main.cjs"
+  },
+  "volta": {
+    "extends": "../../../../package.json"
+  }
+}

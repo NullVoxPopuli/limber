@@ -8,7 +8,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { modifier as eModifier } from 'ember-modifier';
 import { effect } from 'reactiveweb/effect';
 
-import { FlatButton } from 'limber-ui';
+import { FlatButton } from '@nullvoxpopuli/limber-shared';
 
 import type StatusService from '#app/services/status.ts';
 

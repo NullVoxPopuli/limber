@@ -51,7 +51,9 @@ export default modifier<Signature>((element: Element, [code]) => {
       lang = 'markdown';
     }
 
-    if (!isAllowedFormat(lang)) {
+    const isAllowed = isAllowedFormat(lang) || lang === 'bash';
+
+    if (!isAllowed) {
       return;
     }
 

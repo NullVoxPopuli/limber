@@ -1,14 +1,17 @@
-import 'limber-ui/theme.css';
 import 'ember-statechart-component';
 import './icons.ts';
 
-import Application from '@ember/application';
+import { isDevelopingApp, macroCondition } from '@embroider/macros';
 
-import Resolver from 'ember-resolver';
+import PageTitleService from 'ember-page-title/services/page-title';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore - no types
+import EmberResizeObserverService from 'ember-resize-observer-service/addon/services/resize-observer';
+import Application from 'ember-strict-application-resolver';
 
-import config from '#config';
+import '@nullvoxpopuli/limber-shared/theme.css';
 
-import { registry } from './registry.ts';
+import Router from './router.ts';
 
 // @babel/traverse (from babel-plugin-ember-template-imports)
 // accesses process.....
@@ -20,12 +23,36 @@ Object.assign(window, {
 });
 
 export default class App extends Application {
-  modulePrefix = config.modulePrefix;
-  Resolver = Resolver.withModules(registry);
+  modules = {
+    './router': Router,
+    ...import.meta.glob('./routes/{edit,index,application,error-404}.ts', { eager: true }),
+    ...import.meta.glob('./services/{editor,status}.ts', { eager: true }),
+    ...import.meta.glob('./controllers/*.ts', { eager: true }),
+    ...import.meta.glob('./templates/docs/*.gts', { eager: true }),
+    ...import.meta.glob('./templates/{application,edit,output,docs,error-404}.gts', {
+      eager: true,
+    }),
 
-  // LOG_RESOLVER = true;
-  // LOG_ACTIVE_GENERATION = true;
-  // LOG_TRANSITIONS = true;
-  // LOG_TRANSITIONS_INTERNAL = true;
-  // LOG_VIEW_LOOKUPS = true;
+    // /////////////////
+    // To Eliminate
+    // /////////////////
+
+    // Used by ember-container-query
+    './services/resize-observer': EmberResizeObserverService,
+
+    // /////////////////
+    // To keep
+    // /////////////////
+    './services/page-title': PageTitleService,
+  };
+}
+
+if (macroCondition(isDevelopingApp())) {
+  Object.assign(App, {
+    LOG_RESOLVER: true,
+    LOG_ACTIVE_GENERATION: true,
+    LOG_TRANSITIONS: true,
+    LOG_TRANSITIONS_INTERNAL: true,
+    LOG_VIEW_LOOKUPS: true,
+  });
 }
