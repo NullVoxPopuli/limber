@@ -42,6 +42,12 @@
   text-transform: uppercase;
 }
 
+@media (max-width: 600px) {
+  .centered-content main.prose {
+    max-width: calc(100dvw - 1rem);
+  }
+}
+
 .centered-content {
   margin-top: 1rem;
   padding-left: 0.5rem;
