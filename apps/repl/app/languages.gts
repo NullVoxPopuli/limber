@@ -203,7 +203,7 @@ export function formatQPFrom(x: string | undefined | null): FormatQP {
 
   assert(`Expected formatQP to be set`, x);
   assert(
-    `Expected ${x} to be one of ${Object.keys(languages).join(', ')}`,
+    `Expected ${JSON.stringify(x)} to be one of ${Object.keys(languages).join(', ')}`,
     Object.keys(languages).includes(x)
   );
 

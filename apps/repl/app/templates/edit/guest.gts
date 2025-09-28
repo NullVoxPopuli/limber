@@ -28,10 +28,10 @@ const guestFrame = resource(({ on, owner }) => {
         //
         // console.log(router.currentURL)
 
-        console.debug(`Update received`, { format, text }, 'existing', {
-          format: editor.format,
-          text: editor.text,
-        });
+        // console.debug(`Update received`, { format, text }, 'existing', {
+        //   format: editor.format,
+        //   text: editor.text,
+        // });
         if (format) editor.updateFormat(format);
         if (text) editor.updateText(text);
       },
