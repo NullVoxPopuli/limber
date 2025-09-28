@@ -7,6 +7,8 @@ module.exports = {
     {
       files: ['**/*.gts', '**/*.gjs'],
       rules: {
+        // eh
+        'no-inline-styles': 'off',
         // Handled by ESLint
         //   otherwise gives false negatives
         'no-implicit-this': 'off',

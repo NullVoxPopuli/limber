@@ -1,4 +1,5 @@
 import highlighted from 'limber/modifiers/highlighted';
+
 import { ExternalLink, REPL } from '@nullvoxpopuli/limber-shared';
 
 import { Example, Live, Option, Refresh } from './support/api.gts';
@@ -161,7 +162,7 @@ const EXAMPLES = {
         </li>
       </ul>
 
-      <Example @editorLoad={{"never"}} @code={{hello}} />
+      <Example @editorLoad="never" @code={{hello}} />
     </Option>
 
     <Option @name="@lines" @type="number" @live={{true}}>

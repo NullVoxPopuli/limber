@@ -1,4 +1,3 @@
-import '@nullvoxpopuli/limber-shared/theme.css';
 import 'ember-statechart-component';
 import './icons.ts';
 
@@ -9,6 +8,8 @@ import PageTitleService from 'ember-page-title/services/page-title';
 // @ts-ignore - no types
 import EmberResizeObserverService from 'ember-resize-observer-service/addon/services/resize-observer';
 import Application from 'ember-strict-application-resolver';
+
+import '@nullvoxpopuli/limber-shared/theme.css';
 
 import Router from './router.ts';
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import './code.css';
 
 import Component from '@glimmer/component';
@@ -20,27 +21,26 @@ const DEFAULT_DEMO = `
 <template>
   hello world!
 </template>
-`
+`;
 
 interface Signature {
   Element: HTMLIFrameElement;
   Args: {
-
     /**
-      * This is the code that both shows up in the editor and is rendered in the output pane. By default the format is gjs, so the passed code should be written in gjs.
+     * This is the code that both shows up in the editor and is rendered in the output pane. By default the format is gjs, so the passed code should be written in gjs.
      */
     code: string;
 
     /**
      * This is the format that the REPL should both render and load the editor for. The default is "gjs", but valid options are:
-    * - gjs
-    * - js
-    * - gmd
-    * - svelte
-    * - vue
-    * - mermaid
-    * - hbs|ember
-    * - jsx|react
+     * - gjs
+     * - js
+     * - gmd
+     * - svelte
+     * - vue
+     * - mermaid
+     * - hbs|ember
+     * - jsx|react
      */
     format: AllowedFormat;
 
@@ -55,12 +55,12 @@ interface Signature {
     title?: string;
 
     /**
-      * By default, the REPL will load when its bounding box approaches the viewport ([via `loading=lazy`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe#lazy)). Setting `@clickToLoad` will require user interaction before _rendering_ the iframe.
-      *
-      * The UI for click to load has stable CSS classes available for customization.
-      *
-      * - `.limber__code__click-to-load`
-      * - `.limber__code__click-to-load__button`
+     * By default, the REPL will load when its bounding box approaches the viewport ([via `loading=lazy`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe#lazy)). Setting `@clickToLoad` will require user interaction before _rendering_ the iframe.
+     *
+     * The UI for click to load has stable CSS classes available for customization.
+     *
+     * - `.limber__code__click-to-load`
+     * - `.limber__code__click-to-load__button`
      */
     clickToLoad?: boolean;
 

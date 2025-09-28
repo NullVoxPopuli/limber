@@ -16,7 +16,7 @@ export const Placeholder: TOC<{
 }> = <template>
   {{#let (service "editor") as |context|}}
     {{#if (wantsOnClick (qp "editorLoad"))}}
-      <button class="limber__editor__click-to-edit">
+      <button class="limber__editor__click-to-edit" type="button">
         <span>Click to Edit</span>
       </button>
     {{/if}}

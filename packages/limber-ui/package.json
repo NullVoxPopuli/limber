@@ -31,8 +31,10 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "dependencies": {
+    "@ember/test-waiters": "^4.1.1",
     "@embroider/addon-shim": "1.10.0",
     "@glimmer/component": "^2.0.0",
+    "ember-modifier": "^4.2.2",
     "penpal": "^6.2.2",
     "reactiveweb": "^1.9.0"
   },
