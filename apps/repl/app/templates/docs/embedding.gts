@@ -2,6 +2,7 @@ import highlighted from 'limber/modifiers/highlighted';
 import { ExternalLink, REPL } from 'limber-ui';
 
 import { Example, Live, Option, Refresh } from './support/api.gts';
+import { H2 } from './support/code.gts';
 
 const hello = `<template>
   hello world
@@ -58,6 +59,14 @@ const EXAMPLES = {
   The
   <code>REPL</code>
   component interprets and configures the URL set on the iframe that loads the REPL.
+
+  <H2 @id="install">Install</H2>
+
+  With your favorite package manager
+
+  <div data-format="bash" {{highlighted "npm add limber-ui"}}></div>
+  <div data-format="bash" {{highlighted "pnpm add limber-ui"}}></div>
+  (etc)
 
   <section class="options">
     <h2>Options</h2>
