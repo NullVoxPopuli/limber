@@ -1,5 +1,10 @@
 # Changelog
 
+
+
+
+
+
 ## Release (2025-09-28)
 
 * ember-repl 7.0.0 (major)
