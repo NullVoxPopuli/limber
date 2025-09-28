@@ -1,6 +1,6 @@
 import { cell } from 'ember-resources';
 
-import { ExternalLink } from 'limber-ui';
+import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
 export const importMap = {
   // svelte: () => import('svelte'),
@@ -21,7 +21,7 @@ export const importMap = {
 
   // Components from this app
   // Used in demos
-  'limber-ui': () => import('limber-ui'),
+  '@nullvoxpopuli/limber-shared': () => import('@nullvoxpopuli/limber-shared'),
   'limber/components/header': () => import('#edit/header.gts'),
   'limber/components/limber/header': () => import('#edit/header.gts'),
   'limber/components/limber/menu': () => import('#components/menu.gts'),
@@ -91,7 +91,7 @@ function defineWithWarning(
 defineWithWarning(ExternalLink, {
   name: '<ExternalLink />',
   original: 'limber/components/external-link',
-  replacement: 'limber-ui',
+  replacement: '@nullvoxpopuli/limber-shared',
 });
 defineWithWarning(
   async () => {

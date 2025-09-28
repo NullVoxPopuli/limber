@@ -1,4 +1,4 @@
-import { ExternalLink } from 'limber-ui';
+import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
 import highlighted from '../../modifiers/highlighted';
 import {

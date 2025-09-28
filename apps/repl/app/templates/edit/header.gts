@@ -5,7 +5,7 @@ import { notInIframe } from 'ember-primitives/iframe';
 
 import { default as Docs } from '~icons/pajamas/document?raw';
 
-import { ExternalLink } from 'limber-ui';
+import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
 import DemoSelect from './demo-select.gts';
 import { FormatButtons } from './format-buttons.gts';

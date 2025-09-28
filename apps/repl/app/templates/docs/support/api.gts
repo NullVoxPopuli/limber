@@ -6,7 +6,7 @@ import { trackedObject } from '@ember/reactive/collections';
 import { Form } from 'ember-primitives/components/form';
 
 import highlighted from 'limber/modifiers/highlighted';
-import { Code } from 'limber-ui';
+import { Code } from '@nullvoxpopuli/limber-shared';
 
 import type { TOC } from '@ember/component/template-only';
 

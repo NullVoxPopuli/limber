@@ -4,7 +4,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { service } from 'ember-primitives/helpers/service';
 
-import { Button } from 'limber-ui';
+import { Button } from '@nullvoxpopuli/limber-shared';
 
 import type { TOC } from '@ember/component/template-only';
 

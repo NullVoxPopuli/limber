@@ -1,4 +1,4 @@
-import 'limber-ui/theme.css';
+import '@nullvoxpopuli/limber-shared/theme.css';
 import 'ember-statechart-component';
 import './icons.ts';
 

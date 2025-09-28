@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 
 import Output from '#components/output.gts';
 
-import { ExternalLink as Link } from 'limber-ui';
+import { ExternalLink as Link } from '@nullvoxpopuli/limber-shared';
 
 import type RouterService from '@ember/routing/router-service';
 

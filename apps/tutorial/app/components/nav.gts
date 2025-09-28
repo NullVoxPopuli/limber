@@ -3,7 +3,7 @@ import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { service } from 'ember-primitives/helpers/service';
 import { not } from 'tutorial/utils';
 
-import { Link } from 'limber-ui';
+import { Link } from '@nullvoxpopuli/limber-shared';
 
 import { Selection } from './selection';
 

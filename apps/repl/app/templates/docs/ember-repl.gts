@@ -1,4 +1,4 @@
-import { ExternalLink } from 'limber-ui';
+import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
 import highlighted from '../../modifiers/highlighted.ts';
 import { H2, H3 } from './support/code.gts';

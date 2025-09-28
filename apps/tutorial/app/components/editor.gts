@@ -1,6 +1,6 @@
 import { service } from 'ember-primitives/helpers/service';
 
-import { REPL } from 'limber-ui';
+import { REPL } from '@nullvoxpopuli/limber-shared';
 
 import type { TOC } from '@ember/component/template-only';
 import type DocsService from 'tutorial/services/docs';

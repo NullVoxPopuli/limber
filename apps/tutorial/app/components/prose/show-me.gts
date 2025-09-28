@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
-import { Button } from 'limber-ui';
+import { Button } from '@nullvoxpopuli/limber-shared';
 
 import type DocsService from 'tutorial/services/docs';
 

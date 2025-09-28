@@ -5,7 +5,7 @@ import { notInIframe } from 'ember-primitives/iframe';
 
 import Output from '#components/output.gts';
 
-import { ExternalLink as Link } from 'limber-ui';
+import { ExternalLink as Link } from '@nullvoxpopuli/limber-shared';
 
 import { Editor } from './edit/editor/index.gts';
 import Guest from './edit/guest.gts';

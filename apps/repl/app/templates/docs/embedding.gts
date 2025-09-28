@@ -1,5 +1,5 @@
 import highlighted from 'limber/modifiers/highlighted';
-import { ExternalLink, REPL } from 'limber-ui';
+import { ExternalLink, REPL } from '@nullvoxpopuli/limber-shared';
 
 import { Example, Live, Option, Refresh } from './support/api.gts';
 import { H2 } from './support/code.gts';
@@ -25,19 +25,19 @@ export default class HelloWorld extends Component {
 `;
 
 const EXAMPLES = {
-  basic: `import { REPL } from 'limber-ui';
+  basic: `import { REPL } from '@nullvoxpopuli/limber-shared';
 
 <template>
   <REPL
     @code="..."
     {{! ...options }} />
 </template>`,
-  lines: (lines = 4) => `import { REPL } from 'limber-ui';
+  lines: (lines = 4) => `import { REPL } from '@nullvoxpopuli/limber-shared';
 
 <template>
   <REPL @code="..." @lines={{${lines}}} />
 </template>`,
-  editor: (editor = 4) => `import { REPL } from 'limber-ui';
+  editor: (editor = 4) => `import { REPL } from '@nullvoxpopuli/limber-shared';
 
 <template>
   <REPL @code="..." @editor="${editor}" />
