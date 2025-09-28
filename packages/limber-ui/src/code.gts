@@ -2,13 +2,14 @@
 import './code.css';
 
 import Component from '@glimmer/component';
-import type Owner from '@ember/owner';
 import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
 
 import { link } from 'reactiveweb/link';
+
+import type Owner from '@ember/owner';
 
 type AllowedFormat = 'gjs' | 'gts' | 'hbs' | 'gmd' | 'vue' | 'svelte' | 'mermaid';
 // type Storage = 'local' | 'url';
