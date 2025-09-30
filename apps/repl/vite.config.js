@@ -1,5 +1,5 @@
 import { buildMacros } from '@embroider/macros/babel';
-import { ember, extensions, resolver } from '@embroider/vite';
+import { ember, extensions, templateTag, resolver } from '@embroider/vite';
 
 import { babel } from '@rollup/plugin-babel';
 import icons from 'unplugin-icons/vite';
@@ -32,6 +32,7 @@ export default defineConfig(() => ({
     // So we can boost initial load perf by eagerly optimizing them instead of waiting for the module graph crawl
     include: [
       // Our Runtime
+      '@ember/test-helpers',
       '@shikijs/rehype/core',
       'shiki/core',
       'shiki/langs/*',
@@ -110,7 +111,17 @@ export default defineConfig(() => ({
         config.oxc = true;
         config.esbuild = true;
 
+        debugger;
         config.optimizeDeps.rollupOptions.plugins = [
+          withFilter(
+            templateTag(),
+            { load: { id: /\.g(j|t)s$/ } }
+          ),
+          withFilter(
+            resolver(),
+            [
+            { load: { id: /\.g(j|t)s$/ } },
+            ]),
           withFilter(
             babel({
               babelHelpers: 'runtime',
@@ -161,7 +172,12 @@ export default defineConfig(() => ({
                 ...macros.babelMacros,
               ],
             }),
-            { load: { id: /\.js$/ } }
+            [
+              { load: { id: /\.gts$/ } },
+              { load: { id: /\.gjs$/ } },
+              { load: { id: /\.ts$/ } },
+              { load: { id: /ember-source\// } },
+            ]
           ),
         ];
       },
