@@ -27,19 +27,19 @@ export default class HelloWorld extends Component {
 `;
 
 const EXAMPLES = {
-  basic: `import { REPL } from '@nullvoxpopuli/limber-shared';
+  basic: `import { REPL } from 'limber-ui';
 
 <template>
   <REPL
     @code="..."
     {{! ...options }} />
 </template>`,
-  lines: (lines = 4) => `import { REPL } from '@nullvoxpopuli/limber-shared';
+  lines: (lines = 4) => `import { REPL } from 'limber-ui';
 
 <template>
   <REPL @code="..." @lines={{${lines}}} />
 </template>`,
-  editor: (editor = 4) => `import { REPL } from '@nullvoxpopuli/limber-shared';
+  editor: (editor = 4) => `import { REPL } from 'limber-ui';
 
 <template>
   <REPL @code="..." @editor="${editor}" />
