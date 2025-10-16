@@ -1,8 +1,5 @@
 {
   "extends": "@tsconfig/ember",
-  "glint": {
-    "environment": ["ember-loose", "ember-template-imports"]
-  },
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     // Stylistic
@@ -29,7 +26,7 @@
       "limber/*": ["app/*"],
       "*": ["types/*"]
     },
-    "types": ["vite/client","@embroider/core/virtual", "@glint/core/types"
+    "types": ["vite/client","@embroider/core/virtual", "@glint/ember-tsc/types"
     ]
   },
   "include": ["app/**/*", "tests/**/*", "types/**/*"]

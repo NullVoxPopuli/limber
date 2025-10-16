@@ -14,7 +14,7 @@
       "tutorial/*": ["./app/*"],
       "*": ["./types/*"]
     },
-    "types": ["vite/client", "ember-source/types", "@embroider/core/virtual", "@glint/core/types"]
+    "types": ["vite/client", "ember-source/types", "@embroider/core/virtual", "@glint/ember-tsc/types"]
   },
   "include": ["app/**/*", "tests/**/*", "types/**/*"]
 }
