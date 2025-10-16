@@ -5,9 +5,6 @@
     "unpublished-development-types/**/*"
   ],
   "exclude": ["declarations", "dist"],
-  "glint": {
-    "environment": ["ember-loose", "ember-template-imports"]
-  },
   "compilerOptions": {
     "allowJs": true,
     "declarationDir": "declarations",

@@ -19,7 +19,7 @@
   "scripts": {
     "build:test": "NODE_ENV=development vite build --mode test",
     "build:prod": "NODE_ENV=development vite build --mode development",
-    "lint:types": "glint",
+    "lint:types": "ember-tsc --noEmit",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "vite --port 4201",
     "start:build": "NODE_ENV=development vite build --mode=development --watch",

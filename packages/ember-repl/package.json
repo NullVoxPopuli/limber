@@ -34,7 +34,7 @@
     "lint:format": "prettier . --cache --check",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
-    "lint:types": "glint",
+    "lint:types": "ember-tsc --noEmit",
     "start": "pnpm :vite dev",
     "test:ci": "pnpm :testem ci",
     "test:ember": "pnpm build:tests && pnpm test:ci",

@@ -20,7 +20,7 @@
     "build:test": "NODE_ENV=development vite build --mode test",
     "build:prod": "vite build",
     "lint": "pnpm -w exec lint",
-    "lint:types": "glint",
+    "lint:types": "ember-tsc --noEmit",
     "lint:fix": "pnpm -w exec lint fix",
     "cf": "cd dist && npx wrangler pages dev --port 42000 ./",
     "start": "vite --port 4200",

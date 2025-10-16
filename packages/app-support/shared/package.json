@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "build": "rollup --config",
-    "lint:types": "glint",
+    "lint:types": "ember-tsc --noEmit",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "rollup --config --watch",
     "lint": "pnpm -w exec lint",
