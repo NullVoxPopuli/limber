@@ -49,7 +49,6 @@ const allowed = new Set([
   'editorLoad',
   'format',
   'title',
-  'forceEditor',
   'shadowdom',
   'nohighlight',
 ]);
@@ -86,10 +85,6 @@ export class Example extends Component<{
 
   get isLines() {
     return 'lines' in this.config;
-  }
-
-  get isForceEditor() {
-    return 'forceEditor' in this.config;
   }
 
   get isEditorLoad() {
@@ -174,19 +169,6 @@ export class Example extends Component<{
               </label>
             {{/if}}
 
-            {{#if this.isForceEditor}}
-              <label>
-                <span><code>@forceEditor</code></span>
-                <input
-                  type="checkbox"
-                  name="forceEditor"
-                  required
-                  checked={{@forceEditor}}
-                  {{on "input" (fn this.update "forceEditor")}}
-                />
-              </label>
-            {{/if}}
-
             {{#if this.isEditor}}
               <label>
                 <span><code>@editor</code></span>
@@ -214,7 +196,6 @@ export class Example extends Component<{
           @editorLoad={{this.config.editorLoad}}
           @format={{this.config.format}}
           @title={{this.config.title}}
-          @forceEditor={{this.config.forceEditor}}
           @shadowdom={{this.config.shadowdom}}
           @nohighlight={{this.config.nohighlight}}
           @clickToLoad={{this.config.clickToLoad}}

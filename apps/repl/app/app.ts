@@ -1,6 +1,7 @@
 import 'ember-statechart-component';
 import './icons.ts';
 
+import setupInspector from '@embroider/legacy-inspector-support/ember-source-4.12';
 import { isDevelopingApp, macroCondition } from '@embroider/macros';
 
 import PageTitleService from 'ember-page-title/services/page-title';
@@ -23,6 +24,7 @@ Object.assign(window, {
 });
 
 export default class App extends Application {
+  inspector = setupInspector(this);
   modules = {
     './router': Router,
     ...import.meta.glob('./routes/{edit,index,application,error-404}.ts', { eager: true }),
