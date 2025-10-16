@@ -36,7 +36,7 @@ export default {
     cjs(),
 
     // Emit .d.ts declaration files
-    addon.declarations("declarations", `pnpm glint --declaration --project ${tsConfig}`),
+    addon.declarations("declarations", `pnpm ember-tsc --declaration --project ${tsConfig}`),
 
     // Remove leftover build artifacts when starting a new build.
     addon.clean(),
