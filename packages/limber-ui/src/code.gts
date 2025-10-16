@@ -44,7 +44,7 @@ interface Signature {
      * - hbs|ember
      * - jsx|react
      */
-    format: AllowedFormat;
+    format?: AllowedFormat;
 
     /**
      * Sets the height of the iframe via specifying the number of lines of code to show.
