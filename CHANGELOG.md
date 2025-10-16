@@ -1,5 +1,17 @@
 # Changelog
 
+## Release (2025-10-16)
+
+* ember-repl 7.0.1 (patch)
+* limber-ui 4.0.1 (patch)
+
+#### :bug: Bug Fix
+* `ember-repl`, `limber-ui`
+  * [#1986](https://github.com/NullVoxPopuli/limber/pull/1986) Fix issue where `@format` was accidentally required for the `<REPL>` component ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2025-09-28)
 
 * ember-repl 7.0.0 (major)
