@@ -38,6 +38,7 @@ export async function buildCodemirror({
   const languageConf = new Compartment();
   const supportConf = new Compartment();
   const tabSize = new Compartment();
+  const shikiConf = new Compartment();
 
   const updateListener = EditorView.updateListener.of(({ state, docChanged }) => {
     if (docChanged) {
@@ -83,13 +84,28 @@ export async function buildCodemirror({
   const highlighter = createHighlighterCore({
     langs: [
       import('@shikijs/langs/javascript'),
-      import('@shikijs/langs/typescript'),
       import('@shikijs/langs/glimmer-js'),
-      import('@shikijs/langs/glimmer-ts'),
+      import('@shikijs/langs/markdown'),
+      import('@shikijs/langs/svelte'),
+      import('@shikijs/langs/vue'),
     ],
     themes: [import('@shikijs/themes/one-dark-pro')],
     engine: createOnigurumaEngine(import('shiki/wasm')),
   });
+
+  const formatToLanguage = {
+    js: 'javascript',
+    jsx: 'javascript',
+    ts: 'typescript',
+    tsx: 'typescript',
+    gdm: 'markdown',
+    gmd: 'markdown',
+    glimdown: 'markdown',
+    svelte: 'svelte',
+    vue: 'vue',
+    gjs: 'glimmer-js',
+    gts: 'glimmer-ts',
+  };
 
   const editorExtensions = [
     // features
@@ -103,11 +119,14 @@ export async function buildCodemirror({
     EditorView.lineWrapping,
     keymap.of([indentWithTab, ...completionKeymap, ...markdownKeymap]),
 
-    shiki({
-      highlighter,
-      language: 'glimmer-js',
-      theme: 'one-dark-pro',
-    }),
+    shikiConf.of(
+      shiki({
+        highlighter,
+        // @ts-ignore
+        language: formatToLanguage[format] || 'javascript',
+        theme: 'one-dark-pro',
+      })
+    ),
 
     // TODO: lsp,
 
@@ -141,7 +160,18 @@ export async function buildCodemirror({
         to: view.state.doc.length,
         insert: text,
       },
-      effects: [languageConf.reconfigure(language), supportConf.reconfigure(support)],
+      effects: [
+        languageConf.reconfigure(language),
+        supportConf.reconfigure(support),
+        shikiConf.reconfigure([
+          shiki({
+            highlighter,
+            // @ts-ignore
+            language: formatToLanguage[format] || 'javascript',
+            theme: 'one-dark-pro',
+          }),
+        ]),
+      ],
     });
   };
 
@@ -159,7 +189,18 @@ export async function buildCodemirror({
     console.debug(`Codemirror changing to ${format}: ${language ? 'ok' : 'not ok'}`);
 
     view.dispatch({
-      effects: [languageConf.reconfigure(language), supportConf.reconfigure(support)],
+      effects: [
+        languageConf.reconfigure(language),
+        supportConf.reconfigure(support),
+        shikiConf.reconfigure([
+          shiki({
+            highlighter,
+            // @ts-ignore
+            language: formatToLanguage[format] || 'javascript',
+            theme: 'one-dark-pro',
+          }),
+        ]),
+      ],
     });
   };
 
