@@ -22,6 +22,14 @@ export const CodeBlock: TOC<{ Args: { code: string } }> = <template>
   <div data-format="md" {{highlighted @code}}><pre><code>{{@code}}</code></pre></div>
 </template>;
 
+const JSCodeBlock: TOC<{ Args: { code: string } }> = <template>
+  <div data-format="js" {{highlighted @code}}><pre><code>{{@code}}</code></pre></div>
+</template>;
+
+export const snippet = {
+  js: JSCodeBlock,
+} as const;
+
 export const Tutorial = <template>
   <ExternalLink class="m-0" href="https://tutorial.glimdown.com/">
     The Tutorial

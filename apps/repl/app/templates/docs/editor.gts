@@ -39,7 +39,6 @@ const MetadataTags = <template>
 </template>;
 
 const Overview = <template>
-  Overview:
   <nav>
     <ul>
       <li>
@@ -72,6 +71,11 @@ const Overview = <template>
 </template>;
 
 <template>
+  <aside>
+
+  <Overview />
+  </aside>
+  <div class="main-content">
   <h1>Editing</h1>
 
   This REPL uses
@@ -84,9 +88,6 @@ const Overview = <template>
   For any issues / questions, please file an
   <IssueLink />.
 
-  <hr />
-
-  <Overview />
 
   <H2 @id="general-editing" @text="General Editing" />
 
@@ -379,4 +380,5 @@ const Overview = <template>
 
   For any issues / questions, please file an
   <IssueLink />.
+  </div>
 </template>
