@@ -96,7 +96,7 @@ export async function buildCodemirror({
     basicSetup,
     foldByIndent(),
     // Language
-    // languageConf.of(language),
+    languageConf.of(language),
     supportConf.of(support),
 
     updateListener,
