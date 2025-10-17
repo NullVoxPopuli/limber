@@ -47,6 +47,17 @@ const EXAMPLES = {
 };
 
 <template>
+  <aside>
+    <nav>
+      <ul>
+        <li><a href="#install">Install</a></li>
+        <li><a href="#options">Options</a>
+        </li>
+
+      </ul>
+    </nav>
+  </aside>
+  <div class="main-content">
   <h1>Embedding</h1>
 
   The REPL can be embedded via invocation of the
@@ -197,4 +208,5 @@ const EXAMPLES = {
     </Option>
 
   </section>
+  </div>
 </template>

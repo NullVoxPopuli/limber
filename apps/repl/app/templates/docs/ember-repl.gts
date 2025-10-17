@@ -106,6 +106,37 @@ class Demo extends Component {
 };
 
 <template>
+  <aside>
+    <nav>
+      <ul>
+        <li><a href="#install">Install</a></li>
+        <li><a href="#compatibility">Compatibility</a></li>
+        <li><a href="#api-overview">API Overview</a>
+          <ul>
+        <li><a href="#index-setupCompiler">setupCompiler</a></li>
+        <li><a href="#index-compile">compile</a></li>
+        <li><a href="#index-Compiled">Compiled</a></li>
+        <li><a href="#index-getCompiler">getCompiler</a></li>
+        <li><a href="#index-Format">Format</a></li>
+        <li><a href="#index-CompileState">CompileState</a></li>
+        <li>test-support
+<ul>
+
+        <li><a href="#test-support-setupCompiler">setupCompiler</a></li>
+        <li><a href="#test-support-clearCache">clearCache</a></li>
+        <li><a href="#test-support-clearCompileCache">clearCompileCache</a></li>
+              </ul>
+            </li>
+
+          </ul>
+
+        </li>
+
+      </ul>
+    </nav>
+
+  </aside>
+  <div class="main-content">
   <h1>ember-repl</h1>
 
   <code>ember-repl</code>
@@ -459,4 +490,6 @@ module('a scenario', function (hooks) {
 });"
     }}
   ></div>
+
+  </div>
 </template>

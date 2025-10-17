@@ -89,8 +89,14 @@
         list-style: none;
       }
     }
-    > section {
+    /**
+* TODO: change this to a div with a class, since sections have meaning
+*       change to `main`?
+*/
+    > section, > .main-content {
       grid-area: content;
+      max-width: 100ch;
+      width: 80ch;
     }
   }
 
@@ -157,7 +163,7 @@ article header {
   .centered-content main.prose {
     max-width: calc(100dvw - 1rem);
     display: block;
-    section {
+    section, .main-content {
       pre > code {
         white-space: pre-wrap;
         overflow-wrap: break-word;

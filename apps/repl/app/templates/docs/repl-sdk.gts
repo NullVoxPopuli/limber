@@ -142,7 +142,7 @@ const compiler = new Compiler({
     </nav>
   </aside>
 
-  <section>
+  <div class="main-content">
     <h1>repl-sdk</h1>
 
     <p>
@@ -285,5 +285,5 @@ const compiler = new Compiler({
     Each compiler is
     <code>await import</code>'d so omitting compilers from this options object will omit their code
     from your final bundles.
-  </section>
+  </div>
 </template>
