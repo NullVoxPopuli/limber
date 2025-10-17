@@ -13,8 +13,6 @@ import { NavLink, Topics } from './docs/topics.gts';
     </div>
   </nav>
 
-  <hr />
-
   <div class="centered-content">
     <main class="prose">
       {{outlet}}

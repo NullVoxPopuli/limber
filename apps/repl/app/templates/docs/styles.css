@@ -1,3 +1,11 @@
+.docs-nav {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 1;
+  border-bottom: 1px solid;
+}
+
 .docs-nav, .vertical-nav {
   display: flex;
   justify-content: space-between;
@@ -42,6 +50,10 @@
   text-transform: uppercase;
 }
 
+.centered-content main.prose {
+  max-width: unset;
+}
+
 @media (max-width: 600px) {
   .centered-content main.prose {
     max-width: calc(100dvw - 1rem);
@@ -61,6 +73,25 @@
     border: 1px solid;
     border-radius: 0.5rem;
   }
+
+  > main:has(aside) {
+    display: grid;
+    grid-template-areas: ". content toc";
+    gap: 2rem;
+    position: relative;
+    overflow: auto;
+
+    > aside {
+      position: sticky;
+      top: 80px;
+      grid-area: toc;
+      padding-right: 2rem;
+    }
+    > section {
+      grid-area: content;
+    }
+  }
+
 
 article header {
     display: flex;

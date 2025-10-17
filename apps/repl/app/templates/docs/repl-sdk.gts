@@ -1,6 +1,7 @@
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
 import highlighted from '../../modifiers/highlighted';
+import { formats } from './repl-sdk/formats.ts';
 import { H2, H3, H4 } from './support/code.gts';
 
 const samples = {
@@ -98,6 +99,49 @@ const compiler = new Compiler({
 };
 
 <template>
+  <aside>
+    <nav>
+      <ul>
+        <li><a href="#install">Install</a></li>
+        <li><a href="#bundled-compilers">Bundled Compilers</a>
+          <ul>
+            <li><a href="#format-gjs">gjs</a></li>
+            <li><a href="#format-gmd">gmd</a></li>
+            <li><a href="#format-hbs">hbs</a>
+              (
+              <a href="#format-hbs-ember">ember</a>
+              )
+            </li>
+            <li><a href="#format-js">js</a></li>
+            <li><a href="#format-jsx">jsx</a>
+              (
+              <a href="#format-jsx-react">React</a>
+              )
+            </li>
+            <li><a href="#format-md">md</a></li>
+            <li><a href="#format-mermaid">mermaid</a></li>
+            <li><a href="#format-svelte">svelte</a></li>
+            <li><a href="#format-vue">vue</a></li>
+          </ul>
+        </li>
+        <li><a href="#api-overview">API Overview</a>
+          <ul>
+
+            <li><a href="#index-Compiler">Compiler</a>
+              <ul>
+                <li><a href="#index-Compiler-compile">Compiler#compile</a></li>
+                <li><a href="#index-Compiler-createEditor">Compiler#createEditor</a></li>
+              </ul>
+            </li>
+            <li><a href="#index-defaults">defaults</a></li>
+
+          </ul>
+
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
   <section>
     <h1>repl-sdk</h1>
 
@@ -108,7 +152,17 @@ const compiler = new Compiler({
       <code>Compiler</code>
       class that has two responsibilities, once configured. Those two responsibilities:
       <ul>
-        <li>render *something* based on the input (text + format)</li>
+        <li>render
+          <em>something</em>
+          based on the input (text + format)<br />
+          This includes:
+          <ul>
+            <li>downloading imported dependencies from npm</li>
+            <li>dynamically loading support for implemented compilers</li>
+            <li>handle custom compilers provided by a consumer</li>
+            <li>out of the box compilers are configurable</li>
+          </ul>
+        </li>
         <li>(optionally) create an editor with syntax highlighting, folding, etc</li>
       </ul>
     </p>
@@ -120,6 +174,27 @@ const compiler = new Compiler({
     <div data-format="bash" {{highlighted "npm add repl-sdk"}}></div>
     <div data-format="bash" {{highlighted "pnpm add repl-sdk"}}></div>
     (etc)
+
+    <H2 @id="bundled-compilers">Bundled Compilers</H2>
+
+    repl-sdk will not load any compiler out of the box on its, unless a
+    <code>compile</code>
+    request is made for that compiler's registered
+    <code>format</code>
+    (sometimes narrowed by a "<code>flavor</code>").
+
+    <br /><br />
+    Each
+    <code>format</code>
+    represents a
+    <i>file extension</i>. For some
+    <code>format</code>s, there are multiple
+    <code>flavor</code>s, like for
+    <code>jsx</code>.
+
+    {{#each formats as |format|}}
+      <format />
+    {{/each}}
 
     <H2 @id="api-overview">API Overview</H2>
 
