@@ -7,7 +7,7 @@ import { syntaxHighlighting } from '@codemirror/language';
 import Modifier from 'ember-modifier';
 import { getCompiler } from 'ember-repl';
 
-import { HorizonSyntaxTheme, HorizonTheme } from './theme.ts';
+import { DisabledSyntaxTheme, HorizonTheme } from './theme.ts';
 
 import type RouterService from '@ember/routing/router-service';
 import type EditorService from 'limber/services/editor';
@@ -171,7 +171,7 @@ class CodeMirror extends Modifier<Signature> {
       text: value,
       format: formatFromURL,
       handleUpdate: updateText,
-      extensions: [HorizonTheme, syntaxHighlighting(HorizonSyntaxTheme)],
+      extensions: [HorizonTheme, syntaxHighlighting(DisabledSyntaxTheme)],
     });
 
     if (isDestroyed(this) || isDestroying(this)) return;
