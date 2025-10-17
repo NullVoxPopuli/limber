@@ -3,11 +3,10 @@ import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyabl
 import { service } from '@ember/service';
 import { waitForPromise } from '@ember/test-waiters';
 
-import { syntaxHighlighting } from '@codemirror/language';
 import Modifier from 'ember-modifier';
 import { getCompiler } from 'ember-repl';
 
-import { HorizonSyntaxTheme, HorizonTheme } from './theme.ts';
+import { HorizonTheme } from './theme.ts';
 
 import type RouterService from '@ember/routing/router-service';
 import type EditorService from 'limber/services/editor';
@@ -171,7 +170,7 @@ class CodeMirror extends Modifier<Signature> {
       text: value,
       format: formatFromURL,
       handleUpdate: updateText,
-      extensions: [HorizonTheme, syntaxHighlighting(HorizonSyntaxTheme)],
+      extensions: [HorizonTheme],
     });
 
     if (isDestroyed(this) || isDestroying(this)) return;

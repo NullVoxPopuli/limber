@@ -94,6 +94,8 @@
     "@lezer/html": "^1.3.10",
     "@lezer/markdown": "^1.4.1",
     "@replit/codemirror-lang-svelte": "^6.0.0",
+    "@shikijs/langs": "^3.13.0",
+    "@shikijs/themes": "^3.13.0",
     "change-case": "^5.4.4",
     "codemirror": "^6.0.2",
     "codemirror-lang-glimdown": "workspace:*",
@@ -101,12 +103,14 @@
     "codemirror-lang-glimmer-js": "workspace:*",
     "codemirror-lang-mermaid": "^0.5.0",
     "codemirror-languageserver": "^1.12.1",
+    "codemirror-shiki": "^0.3.0",
     "comlink": "^4.4.2",
     "es-module-shims": "^2.6.1",
     "mime": "^4.0.7",
     "package-name-regex": "^4.0.3",
     "resolve.exports": "^2.0.3",
     "resolve.imports": "^2.0.3",
+    "shiki": "^3.13.0",
     "tarparser": "^0.0.5"
   },
   "volta": {

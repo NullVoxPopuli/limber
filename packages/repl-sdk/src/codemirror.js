@@ -6,6 +6,9 @@ import { keymap } from '@codemirror/view';
 import { basicSetup, EditorView } from 'codemirror';
 // @ts-ignore
 import { foldByIndent } from 'codemirror-lang-mermaid';
+import shiki from 'codemirror-shiki';
+import { createHighlighterCore } from 'shiki/core';
+import { createOnigurumaEngine } from 'shiki/engine/oniguruma';
 
 /**
  * Builds and creates a codemirror instance for the given element
@@ -77,17 +80,34 @@ export async function buildCodemirror({
     supportForFormat(format),
   ]);
 
+  const highlighter = createHighlighterCore({
+    langs: [
+      import('@shikijs/langs/javascript'),
+      import('@shikijs/langs/typescript'),
+      import('@shikijs/langs/glimmer-js'),
+      import('@shikijs/langs/glimmer-ts'),
+    ],
+    themes: [import('@shikijs/themes/one-dark-pro')],
+    engine: createOnigurumaEngine(import('shiki/wasm')),
+  });
+
   const editorExtensions = [
     // features
     basicSetup,
     foldByIndent(),
     // Language
-    languageConf.of(language),
+    // languageConf.of(language),
     supportConf.of(support),
 
     updateListener,
     EditorView.lineWrapping,
     keymap.of([indentWithTab, ...completionKeymap, ...markdownKeymap]),
+
+    shiki({
+      highlighter,
+      language: 'glimmer-js',
+      theme: 'one-dark-pro',
+    }),
 
     // TODO: lsp,
 
