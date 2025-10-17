@@ -104,7 +104,7 @@ const compiler = new Compiler({
       <ul>
         <li><a href="#install">Install</a></li>
         <li><a href="#bundled-compilers">Bundled Compilers</a>
-          <ul>
+          <ul class="toc-formats">
             <li><a href="#format-gjs">gjs</a></li>
             <li><a href="#format-gmd">gmd</a></li>
             <li><a href="#format-hbs">hbs</a>
@@ -115,7 +115,7 @@ const compiler = new Compiler({
             <li><a href="#format-js">js</a></li>
             <li><a href="#format-jsx">jsx</a>
               (
-              <a href="#format-jsx-react">React</a>
+              <a href="#format-jsx-react">react</a>
               )
             </li>
             <li><a href="#format-md">md</a></li>

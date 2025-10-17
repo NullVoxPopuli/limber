@@ -50,16 +50,6 @@
   text-transform: uppercase;
 }
 
-.centered-content main.prose {
-  max-width: unset;
-}
-
-@media (max-width: 600px) {
-  .centered-content main.prose {
-    max-width: calc(100dvw - 1rem);
-  }
-}
-
 .centered-content {
   margin-top: 1rem;
   padding-left: 0.5rem;
@@ -76,16 +66,28 @@
 
   > main:has(aside) {
     display: grid;
+    grid-template-columns: 1fr min-content 1fr;
     grid-template-areas: ". content toc";
     gap: 2rem;
     position: relative;
-    overflow: auto;
+    overflow: visible;
+    align-items: start;
 
     > aside {
       position: sticky;
       top: 80px;
       grid-area: toc;
       padding-right: 2rem;
+      z-index: 1;
+      align-self: start;
+      height: fit-content;
+
+      .toc-formats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        list-style: none;
+      }
     }
     > section {
       grid-area: content;
@@ -144,6 +146,32 @@ article header {
   }
 }
 
+.centered-content main.prose {
+  max-width: unset;
+  section {
+    max-width: 100ch;
+  }
+}
+
+@media (max-width: 1000px) {
+  .centered-content main.prose {
+    max-width: calc(100dvw - 1rem);
+    display: block;
+    section {
+      pre > code {
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+    }
+  }
+
+  .centered-content > main:has(aside) {
+    aside {
+      display: none;
+    }
+  }
+}
 
 .limber__docs__option__example {
   display: grid;
