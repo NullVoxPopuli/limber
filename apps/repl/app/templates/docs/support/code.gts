@@ -26,8 +26,18 @@ const JSCodeBlock: TOC<{ Args: { code: string } }> = <template>
   <div data-format="js" {{highlighted @code}}><pre><code>{{@code}}</code></pre></div>
 </template>;
 
+const MDCodeBlock: TOC<{ Args: { code: string } }> = <template>
+  <div data-format="md" {{highlighted @code}}><pre><code>{{@code}}</code></pre></div>
+</template>;
+
+const VueCodeBlock: TOC<{ Args: { code: string } }> = <template>
+  <div data-format="vue" {{highlighted @code}}><pre><code>{{@code}}</code></pre></div>
+</template>;
+
 export const snippet = {
   js: JSCodeBlock,
+  md: MDCodeBlock,
+  vue: VueCodeBlock,
 } as const;
 
 export const Tutorial = <template>

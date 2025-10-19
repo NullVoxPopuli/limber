@@ -236,6 +236,10 @@ a:has(h4), a:has(h3), a:has(h2) {
   /* important as the psuedo elements would use gap */
   gap: 0rem;
 
+  h2, h3, h4 {
+    scroll-margin-top: 80px;
+  }
+
   &:hover {
     &::before{
       content: '#';

@@ -18,6 +18,12 @@ module.exports = {
         'no-forbidden-elements': 'off',
         // Incorrect, because it matches anything that looks like an arg, even if it's a string (intentionally)
         'no-potential-path-strings': 'off',
+
+        // Broke with formatDocs here:
+        // {{#each formats as |formatDocs|}}
+        //   <formatDocs />
+        // {{/each}}
+        'no-shadowed-elements': 'off',
       },
     },
     {

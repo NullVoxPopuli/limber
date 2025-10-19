@@ -1,7 +1,7 @@
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
 import highlighted from '../../modifiers/highlighted';
-import { formats } from './repl-sdk/formats.ts';
+import { formats } from './repl-sdk/formats.gts';
 import { H2, H3, H4 } from './support/code.gts';
 
 const samples = {
@@ -192,8 +192,8 @@ const compiler = new Compiler({
     <code>flavor</code>s, like for
     <code>jsx</code>.
 
-    {{#each formats as |format|}}
-      <format />
+    {{#each formats as |formatDocs|}}
+      <formatDocs />
     {{/each}}
 
     <H2 @id="api-overview">API Overview</H2>
