@@ -472,7 +472,7 @@ importers:
         version: 0.40.0(26a482c5f89fb72edd76dffe317483fb)
       ember-repl:
         specifier: latest
-        version: 7.0.0(d19b4f53cae6558f7d34488bf8cc1673)
+        version: 7.0.1(6e3ff2842ba468e8d1332163fa22ba88)
       ember-resources:
         specifier: ^7.0.7
         version: 7.0.7(0b2137a339483510843f9f1309186110)
@@ -1295,6 +1295,12 @@ importers:
       '@replit/codemirror-lang-svelte':
         specifier: ^6.0.0
         version: 6.0.0(5458bb07fcb4199f68819c59557bf066)
+      '@shikijs/langs':
+        specifier: ^3.13.0
+        version: 3.13.0
+      '@shikijs/themes':
+        specifier: ^3.13.0
+        version: 3.13.0
       change-case:
         specifier: ^5.4.4
         version: 5.4.4
@@ -1316,6 +1322,9 @@ importers:
       codemirror-languageserver:
         specifier: ^1.12.1
         version: 1.12.1(encoding@0.1.13)
+      codemirror-shiki:
+        specifier: ^0.3.0
+        version: 0.3.0(4a832fb061dee512392c52b479686556)
       comlink:
         specifier: ^4.4.2
         version: 4.4.2
@@ -1334,6 +1343,9 @@ importers:
       resolve.imports:
         specifier: ^2.0.3
         version: 2.0.3
+      shiki:
+        specifier: ^3.13.0
+        version: 3.13.0
       tarparser:
         specifier: ^0.0.5
         version: 0.0.5
@@ -4344,6 +4356,9 @@ packages:
   '@shikijs/core@3.12.2':
     resolution: {integrity: sha512-L1Safnhra3tX/oJK5kYHaWmLEBJi1irASwewzY3taX5ibyXyMkkSDZlq01qigjryOBwrXSdFgTiZ3ryzSNeu7Q==}
 
+  '@shikijs/core@3.13.0':
+    resolution: {integrity: sha512-3P8rGsg2Eh2qIHekwuQjzWhKI4jV97PhvYjYUzGqjvJfqdQPz+nMlfWahU24GZAyW1FxFI1sYjyhfh5CoLmIUA==}
+
   '@shikijs/core@3.7.0':
     resolution: {integrity: sha512-yilc0S9HvTPyahHpcum8eonYrQtmGTU0lbtwxhA6jHv4Bm1cAdlPFRCJX4AHebkCm75aKTjjRAW+DezqD1b/cg==}
 
@@ -4352,6 +4367,9 @@ packages:
 
   '@shikijs/engine-javascript@3.12.2':
     resolution: {integrity: sha512-Nm3/azSsaVS7hk6EwtHEnTythjQfwvrO5tKqMlaH9TwG1P+PNaR8M0EAKZ+GaH2DFwvcr4iSfTveyxMIvXEHMw==}
+
+  '@shikijs/engine-javascript@3.13.0':
+    resolution: {integrity: sha512-Ty7xv32XCp8u0eQt8rItpMs6rU9Ki6LJ1dQOW3V/56PKDcpvfHPnYFbsx5FFUP2Yim34m/UkazidamMNVR4vKg==}
 
   '@shikijs/engine-javascript@3.7.0':
     resolution: {integrity: sha512-0t17s03Cbv+ZcUvv+y33GtX75WBLQELgNdVghnsdhTgU3hVcWcMsoP6Lb0nDTl95ZJfbP1mVMO0p3byVh3uuzA==}
@@ -4362,6 +4380,9 @@ packages:
   '@shikijs/engine-oniguruma@3.12.2':
     resolution: {integrity: sha512-hozwnFHsLvujK4/CPVHNo3Bcg2EsnG8krI/ZQ2FlBlCRpPZW4XAEQmEwqegJsypsTAN9ehu2tEYe30lYKSZW/w==}
 
+  '@shikijs/engine-oniguruma@3.13.0':
+    resolution: {integrity: sha512-O42rBGr4UDSlhT2ZFMxqM7QzIU+IcpoTMzb3W7AlziI1ZF7R8eS2M0yt5Ry35nnnTX/LTLXFPUjRFCIW+Operg==}
+
   '@shikijs/engine-oniguruma@3.7.0':
     resolution: {integrity: sha512-5BxcD6LjVWsGu4xyaBC5bu8LdNgPCVBnAkWTtOCs/CZxcB22L8rcoWfv7Hh/3WooVjBZmFtyxhgvkQFedPGnFw==}
 
@@ -4370,6 +4391,9 @@ packages:
 
   '@shikijs/langs@3.12.2':
     resolution: {integrity: sha512-bVx5PfuZHDSHoBal+KzJZGheFuyH4qwwcwG/n+MsWno5cTlKmaNtTsGzJpHYQ8YPbB5BdEdKU1rga5/6JGY8ww==}
+
+  '@shikijs/langs@3.13.0':
+    resolution: {integrity: sha512-672c3WAETDYHwrRP0yLy3W1QYB89Hbpj+pO4KhxK6FzIrDI2FoEXNiNCut6BQmEApYLfuYfpgOZaqbY+E9b8wQ==}
 
   '@shikijs/langs@3.7.0':
     resolution: {integrity: sha512-1zYtdfXLr9xDKLTGy5kb7O0zDQsxXiIsw1iIBcNOO8Yi5/Y1qDbJ+0VsFoqTlzdmneO8Ij35g7QKF8kcLyznCQ==}
@@ -4383,6 +4407,9 @@ packages:
   '@shikijs/themes@3.12.2':
     resolution: {integrity: sha512-fTR3QAgnwYpfGczpIbzPjlRnxyONJOerguQv1iwpyQZ9QXX4qy/XFQqXlf17XTsorxnHoJGbH/LXBvwtqDsF5A==}
 
+  '@shikijs/themes@3.13.0':
+    resolution: {integrity: sha512-Vxw1Nm1/Od8jyA7QuAenaV78BG2nSr3/gCGdBkLpfLscddCkzkL36Q5b67SrLLfvAJTOUzW39x4FHVCFriPVgg==}
+
   '@shikijs/themes@3.7.0':
     resolution: {integrity: sha512-VJx8497iZPy5zLiiCTSIaOChIcKQwR0FebwE9S3rcN0+J/GTWwQ1v/bqhTbpbY3zybPKeO8wdammqkpXc4NVjQ==}
 
@@ -4391,6 +4418,9 @@ packages:
 
   '@shikijs/types@3.12.2':
     resolution: {integrity: sha512-K5UIBzxCyv0YoxN3LMrKB9zuhp1bV+LgewxuVwHdl4Gz5oePoUFrr9EfgJlGlDeXCU1b/yhdnXeuRvAnz8HN8Q==}
+
+  '@shikijs/types@3.13.0':
+    resolution: {integrity: sha512-oM9P+NCFri/mmQ8LoFGVfVyemm5Hi27330zuOBp0annwJdKH1kOLndw3zCtAVDehPLg9fKqoEx3Ht/wNZxolfw==}
 
   '@shikijs/types@3.7.0':
     resolution: {integrity: sha512-MGaLeaRlSWpnP0XSAum3kP3a8vtcTsITqoEPYdt3lQG3YCdQH4DnEhodkYcNMcU0uW0RffhoD1O3e0vG5eSBBg==}
@@ -5973,6 +6003,13 @@ packages:
   codemirror-languageserver@1.12.1:
     resolution: {integrity: sha512-B71XofYRsVsyUpkiWtdTcHIwVoEpws01PqHpkr/o5k4EET9kQEpRqDH/G+f+hQI4eZxwONOx8n5Dz2fsf02PrA==}
 
+  codemirror-shiki@0.3.0:
+    resolution: {integrity: sha512-KSrfcm8RNSgTl3+Vgq+HuGA/bQGbxBMGosoFXL77yWc6r8JjLygIBndqL9evCv2ED9EOoeZozROcXNanN7Mabg==}
+    peerDependencies:
+      '@codemirror/state': ^6
+      '@codemirror/view': ^6
+      shiki: '>=2.0.0'
+
   codemirror@6.0.2:
     resolution: {integrity: sha512-VhydHotNW5w1UGK0Qj96BwSk/Zqbp9WbnyK2W/eVMv4QyF41INRGpjUhFJY7/uDNuudSc33a/PKr4iDqRduvHw==}
 
@@ -6949,8 +6986,8 @@ packages:
       '@glint/template':
         optional: true
 
-  ember-repl@7.0.0:
-    resolution: {integrity: sha512-sodaNV1tXyQIaw5Q6a1ECnPcdfIN+hac3YNL6xn1LMSCzuyJeKiGv/Q80SJuXzN5M8SM0fJdrXUxwQyKAvXl/g==}
+  ember-repl@7.0.1:
+    resolution: {integrity: sha512-U5UkG3C8XSpL4HZeCBZStzsffqCcCW1H5KJzjTFfo7RP1HnuIOmB58Dv4Iz6dTztVgwWUM6wvBKFgnp8jVdK8g==}
     peerDependencies:
       '@glint/template': '>= 1.5.2 || ^1.6.0-alpha.1'
     peerDependenciesMeta:
@@ -10526,6 +10563,9 @@ packages:
 
   shiki@3.12.2:
     resolution: {integrity: sha512-uIrKI+f9IPz1zDT+GMz+0RjzKJiijVr6WDWm9Pe3NNY6QigKCfifCEv9v9R2mDASKKjzjQ2QpFLcxaR3iHSnMA==}
+
+  shiki@3.13.0:
+    resolution: {integrity: sha512-aZW4l8Og16CokuCLf8CF8kq+KK2yOygapU5m3+hoGw0Mdosc6fPitjM+ujYarppj5ZIKGyPDPP1vqmQhr+5/0g==}
 
   shiki@3.7.0:
     resolution: {integrity: sha512-ZcI4UT9n6N2pDuM2n3Jbk0sR4Swzq43nLPgS/4h0E3B/NrFn2HKElrDtceSf8Zx/OWYOo7G1SAtBLypCp+YXqg==}
@@ -14756,6 +14796,13 @@ snapshots:
       '@types/hast': 3.0.4
       hast-util-to-html: 9.0.5
 
+  '@shikijs/core@3.13.0':
+    dependencies:
+      '@shikijs/types': 3.13.0
+      '@shikijs/vscode-textmate': 10.0.2
+      '@types/hast': 3.0.4
+      hast-util-to-html: 9.0.5
+
   '@shikijs/core@3.7.0':
     dependencies:
       '@shikijs/types': 3.7.0
@@ -14775,6 +14822,12 @@ snapshots:
       '@shikijs/vscode-textmate': 10.0.2
       oniguruma-to-es: 4.3.3
 
+  '@shikijs/engine-javascript@3.13.0':
+    dependencies:
+      '@shikijs/types': 3.13.0
+      '@shikijs/vscode-textmate': 10.0.2
+      oniguruma-to-es: 4.3.3
+
   '@shikijs/engine-javascript@3.7.0':
     dependencies:
       '@shikijs/types': 3.7.0
@@ -14791,6 +14844,11 @@ snapshots:
       '@shikijs/types': 3.12.2
       '@shikijs/vscode-textmate': 10.0.2
 
+  '@shikijs/engine-oniguruma@3.13.0':
+    dependencies:
+      '@shikijs/types': 3.13.0
+      '@shikijs/vscode-textmate': 10.0.2
+
   '@shikijs/engine-oniguruma@3.7.0':
     dependencies:
       '@shikijs/types': 3.7.0
@@ -14803,6 +14861,10 @@ snapshots:
   '@shikijs/langs@3.12.2':
     dependencies:
       '@shikijs/types': 3.12.2
+
+  '@shikijs/langs@3.13.0':
+    dependencies:
+      '@shikijs/types': 3.13.0
 
   '@shikijs/langs@3.7.0':
     dependencies:
@@ -14825,6 +14887,10 @@ snapshots:
     dependencies:
       '@shikijs/types': 3.12.2
 
+  '@shikijs/themes@3.13.0':
+    dependencies:
+      '@shikijs/types': 3.13.0
+
   '@shikijs/themes@3.7.0':
     dependencies:
       '@shikijs/types': 3.7.0
@@ -14835,6 +14901,11 @@ snapshots:
       '@types/hast': 3.0.4
 
   '@shikijs/types@3.12.2':
+    dependencies:
+      '@shikijs/vscode-textmate': 10.0.2
+      '@types/hast': 3.0.4
+
+  '@shikijs/types@3.13.0':
     dependencies:
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
@@ -16909,6 +16980,12 @@ snapshots:
       - encoding
       - utf-8-validate
 
+  codemirror-shiki@0.3.0(4a832fb061dee512392c52b479686556):
+    dependencies:
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.38.0
+      shiki: 3.13.0
+
   codemirror@6.0.2:
     dependencies:
       '@codemirror/autocomplete': 6.18.6
@@ -17981,7 +18058,7 @@ snapshots:
       - '@glimmer/component'
       - supports-color
 
-  ember-repl@7.0.0(d19b4f53cae6558f7d34488bf8cc1673):
+  ember-repl@7.0.1(6e3ff2842ba468e8d1332163fa22ba88):
     dependencies:
       '@ember/test-helpers': 5.2.2(f9dfbf4fac3dbc0e0370b14ce6056988)
       '@ember/test-waiters': 4.1.1(@glint/template@1.6.1)
@@ -17993,7 +18070,7 @@ snapshots:
       ember-primitives: 0.40.0(26a482c5f89fb72edd76dffe317483fb)
       ember-resolver: 13.1.1
       ember-resources: 7.0.7(0b2137a339483510843f9f1309186110)
-      repl-sdk: 1.0.0(b911f762b840833cafb152ec0acffb75)
+      repl-sdk: 1.0.0(59341cc0c192dad95cd11861b1678c69)
     optionalDependencies:
       '@glint/template': 1.6.1
     transitivePeerDependencies:
@@ -22100,7 +22177,7 @@ snapshots:
 
   repeat-string@1.6.1: {}
 
-  repl-sdk@1.0.0(b911f762b840833cafb152ec0acffb75):
+  repl-sdk@1.0.0(59341cc0c192dad95cd11861b1678c69):
     dependencies:
       '@codemirror/autocomplete': 6.18.6
       '@codemirror/commands': 6.8.1
@@ -22582,6 +22659,17 @@ snapshots:
       '@shikijs/langs': 3.12.2
       '@shikijs/themes': 3.12.2
       '@shikijs/types': 3.12.2
+      '@shikijs/vscode-textmate': 10.0.2
+      '@types/hast': 3.0.4
+
+  shiki@3.13.0:
+    dependencies:
+      '@shikijs/core': 3.13.0
+      '@shikijs/engine-javascript': 3.13.0
+      '@shikijs/engine-oniguruma': 3.13.0
+      '@shikijs/langs': 3.13.0
+      '@shikijs/themes': 3.13.0
+      '@shikijs/types': 3.13.0
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
 
