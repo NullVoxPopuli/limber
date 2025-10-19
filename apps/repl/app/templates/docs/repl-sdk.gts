@@ -169,28 +169,30 @@ const compiler = new Compiler({
 
     <H2 @id="install">Install</H2>
 
-    With your favorite package manager
+    <p>
+      With your favorite package manager
 
-    <div data-format="bash" {{highlighted "npm add repl-sdk"}}></div>
-    <div data-format="bash" {{highlighted "pnpm add repl-sdk"}}></div>
-    (etc)
+      <div data-format="bash" {{highlighted "npm add repl-sdk"}}></div>
+      <div data-format="bash" {{highlighted "pnpm add repl-sdk"}}></div>
+      (etc)
 
-    <H2 @id="bundled-compilers">Bundled Compilers</H2>
+      <H2 @id="bundled-compilers">Bundled Compilers</H2>
 
-    repl-sdk will not load any compiler out of the box on its, unless a
-    <code>compile</code>
-    request is made for that compiler's registered
-    <code>format</code>
-    (sometimes narrowed by a "<code>flavor</code>").
+      repl-sdk will not load any compiler out of the box on its, unless a
+      <code>compile</code>
+      request is made for that compiler's registered
+      <code>format</code>
+      (sometimes narrowed by a "<code>flavor</code>").
 
-    <br /><br />
-    Each
-    <code>format</code>
-    represents a
-    <i>file extension</i>. For some
-    <code>format</code>s, there are multiple
-    <code>flavor</code>s, like for
-    <code>jsx</code>.
+      <br /><br />
+      Each
+      <code>format</code>
+      represents a
+      <i>file extension</i>. For some
+      <code>format</code>s, there are multiple
+      <code>flavor</code>s, like for
+      <code>jsx</code>.
+    </p>
 
     {{#each formats as |formatDocs|}}
       <formatDocs />
@@ -198,92 +200,101 @@ const compiler = new Compiler({
 
     <H2 @id="api-overview">API Overview</H2>
 
-    There is only available module, and two exports from that module
+    <p>
+      There is only available module, and two exports from that module
 
-    <div data-format="js" {{highlighted "import {
+      <div data-format="js" {{highlighted "import {
   Compiler,
   defaults
 } from 'repl-sdk';"}}></div>
+    </p>
 
     <H3 class="code-link" @id="index-Compiler"><code>Compiler</code>
       from repl-sdk</H3>
+    <p>
 
-    By default, no configuration is needed.
+      By default, no configuration is needed.
 
-    <div data-format="js" {{highlighted samples.Compiler.basic}}></div>
+      <div data-format="js" {{highlighted samples.Compiler.basic}}></div>
 
-    Debug logging can be configured on or conditionally on via any means you choose. Here we can
-    configure logging when
-    <code>debug</code>
-    is present in the query params. This is
-    <em>very</em>
-    noisy for some module graphs, but is helpful in debugging the internal of
-    <code>repl-sdk</code>.
+      Debug logging can be configured on or conditionally on via any means you choose. Here we can
+      configure logging when
+      <code>debug</code>
+      is present in the query params. This is
+      <em>very</em>
+      noisy for some module graphs, but is helpful in debugging the internal of
+      <code>repl-sdk</code>.
 
-    <div data-format="js" {{highlighted samples.Compiler.debug}}></div>
+      <div data-format="js" {{highlighted samples.Compiler.debug}}></div>
 
-    If you want to wire up the higher-level messaging from each compiler to your UI, there is this
-    <code>on.log</code>
-    function that can be configured to push log messages outside of the
-    <code>Compiler</code>
+      If you want to wire up the higher-level messaging from each compiler to your UI, there is this
+      <code>on.log</code>
+      function that can be configured to push log messages outside of the
+      <code>Compiler</code>
 
-    <div data-format="js" {{highlighted samples.Compiler.onlog}}></div>
+      <div data-format="js" {{highlighted samples.Compiler.onlog}}></div>
 
-    The
-    <code>Compiler</code>
-    can take an options object for configuring each of the compilers. They each may take a different
-    configuration, and will ignore any options that are not expected.
+      The
+      <code>Compiler</code>
+      can take an options object for configuring each of the compilers. They each may take a
+      different configuration, and will ignore any options that are not expected.
 
-    <div data-format="js" {{highlighted samples.Compiler.options}}></div>
+      <div data-format="js" {{highlighted samples.Compiler.options}}></div>
+    </p>
 
     <H4 class="code-link" @id="index-Compiler-compile"><code>&lt;Compiler#compile&gt;</code></H4>
+    <p>
+      Calling compile takes 2 to 3 arguments, the file format, the file to compile, and then an
+      optional set of options. The options are optional for all file formats except when there is
+      some ambiguity -- such as for the
+      <code>jsx</code>
+      and
+      <code>hbs</code>
+      file formats.
 
-    Calling compile takes 2 to 3 arguments, the file format, the file to compile, and then an
-    optional set of options. The options are optional for all file formats except when there is some
-    ambiguity -- such as for the
-    <code>jsx</code>
-    and
-    <code>hbs</code>
-    file formats.
+      <br /><br />
+      The element doesn't need to be immediately attached anywhere, but in order for the user to
+      view what was compiled, it will need to be placed somewhere.
 
-    <br /><br />
-    The element doesn't need to be immediately attached anywhere, but in order for the user to view
-    what was compiled, it will need to be placed somewhere.
-
-    <div data-format="js" {{highlighted samples.compile.basic}}></div>
+      <div data-format="js" {{highlighted samples.compile.basic}}></div>
+    </p>
 
     <H4 class="code-link" @id="index-Compiler-createEditor"><code
       >&lt;Compiler#createEditor&gt;</code></H4>
+    <p>
 
-    This editor uses
-    <ExternalLink href="https://codemirror.net/">codemirror</ExternalLink>
-    which supports editing on both mobile and desktop devices, as well as proper keyboard
-    accessibility.
-    <br /><br />
-    It has all extensions and syntax configured for each of the supported language formats.
+      This editor uses
+      <ExternalLink href="https://codemirror.net/">codemirror</ExternalLink>
+      which supports editing on both mobile and desktop devices, as well as proper keyboard
+      accessibility.
+      <br /><br />
+      It has all extensions and syntax configured for each of the supported language formats.
 
-    <br /><br />
-    This is
-    <code>await import</code>'d, so if you don't want to use codemirror, you will not pay for the
-    bytes of codemirror in your bundled project.
+      <br /><br />
+      This is
+      <code>await import</code>'d, so if you don't want to use codemirror, you will not pay for the
+      bytes of codemirror in your bundled project.
 
-    <div data-format="js" {{highlighted samples.createEditor.basic}}></div>
+      <div data-format="js" {{highlighted samples.createEditor.basic}}></div>
+    </p>
 
     <H3 class="code-link" @id="index-defaults"><code>defaults</code>
       from repl-sdk</H3>
+    <p>
 
-    This is the default configuration for the
-    <code>Compiler</code>. It provides only the
-    <code>formats</code>
-    configuration with all the default compilers.
+      This is the default configuration for the
+      <code>Compiler</code>. It provides only the
+      <code>formats</code>
+      configuration with all the default compilers.
 
-    <br /><br />This can be used to add custom compilers, remove existing compilers, or replace them
-    entirely.
+      <br /><br />This can be used to add custom compilers, remove existing compilers, or replace
+      them entirely.
 
-    <div data-format="js" {{highlighted samples.defaults.basic}}></div>
+      <div data-format="js" {{highlighted samples.defaults.basic}}></div>
 
-    Each compiler is
-    <code>await import</code>'d so omitting compilers from this options object will omit their code
-    from your final bundles.
+      Each compiler is
+      <code>await import</code>'d so omitting compilers from this options object will omit their
+      code from your final bundles.
+    </p>
   </div>
 </template>

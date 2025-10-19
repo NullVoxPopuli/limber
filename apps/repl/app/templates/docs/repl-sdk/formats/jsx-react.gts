@@ -1,3 +1,5 @@
+import { ExternalLink } from '@nullvoxpopuli/limber-shared';
+
 import { H4, snippet } from '../../support/code.gts';
 
 import type { SimpleComponent } from '#types';
@@ -26,7 +28,10 @@ export const JSXReact = <template>
   <H4 @id="format-jsx-react">jsx:React</H4>
 
   <p>
-    text here
+    This is the
+    <ExternalLink href="https://react.dev/">React</ExternalLink>
+    implementation of JSX.
+
     <snippet.js @code={{usage}} />
   </p>
 </template> satisfies SimpleComponent;
