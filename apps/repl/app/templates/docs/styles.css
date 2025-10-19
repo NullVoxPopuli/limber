@@ -1,3 +1,11 @@
+.docs-nav {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 1;
+  border-bottom: 1px solid;
+}
+
 .docs-nav, .vertical-nav {
   display: flex;
   justify-content: space-between;
@@ -42,12 +50,6 @@
   text-transform: uppercase;
 }
 
-@media (max-width: 600px) {
-  .centered-content main.prose {
-    max-width: calc(100dvw - 1rem);
-  }
-}
-
 .centered-content {
   margin-top: 1rem;
   padding-left: 0.5rem;
@@ -61,6 +63,43 @@
     border: 1px solid;
     border-radius: 0.5rem;
   }
+
+  > main:has(aside) {
+    display: grid;
+    grid-template-columns: 1fr min-content 1fr;
+    grid-template-areas: ". content toc";
+    gap: 2rem;
+    position: relative;
+    overflow: visible;
+    align-items: start;
+
+    > aside {
+      position: sticky;
+      top: 80px;
+      grid-area: toc;
+      padding-right: 2rem;
+      z-index: 1;
+      align-self: start;
+      height: fit-content;
+
+      .toc-formats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        list-style: none;
+      }
+    }
+    /**
+* TODO: change this to a div with a class, since sections have meaning
+*       change to `main`?
+*/
+    > section, > .main-content {
+      grid-area: content;
+      max-width: 100ch;
+      width: 80ch;
+    }
+  }
+
 
 article header {
     display: flex;
@@ -113,6 +152,32 @@ article header {
   }
 }
 
+.centered-content main.prose {
+  max-width: unset;
+  section {
+    max-width: 100ch;
+  }
+}
+
+@media (max-width: 1000px) {
+  .centered-content main.prose {
+    max-width: calc(100dvw - 1rem);
+    display: block;
+    section, .main-content {
+      pre > code {
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+    }
+  }
+
+  .centered-content > main:has(aside) {
+    aside {
+      display: none;
+    }
+  }
+}
 
 .limber__docs__option__example {
   display: grid;
@@ -170,6 +235,10 @@ a:has(h4), a:has(h3), a:has(h2) {
   align-items: baseline;
   /* important as the psuedo elements would use gap */
   gap: 0rem;
+
+  h2, h3, h4 {
+    scroll-margin-top: 80px;
+  }
 
   &:hover {
     &::before{

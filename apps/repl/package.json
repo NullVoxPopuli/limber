@@ -120,6 +120,7 @@
     "edition": "octane"
   },
   "imports": {
+    "#types": "./app/types.ts",
     "#languages": "./app/languages.gts",
     "#config": "./app/config/environment.ts",
     "#app/*": "./app/*",
