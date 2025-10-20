@@ -13,7 +13,31 @@ export const qunit = {
   compiler: async (config, api) => {
     return {
       compile: async (text, options) => {},
-      render: async (element, component, extras, compiler) => {},
+      render: async (element, component, extras, compiler) => {
+        element.innerHTML = `
+          <div id="qunit"></div>
+          <div id="qunit-fixture"></div>
+          <link href="https://cdn.jsdelivr.net/npm/qunit@2.23.1/qunit/qunit.min.css " rel="stylesheet">
+          <style>
+             [data-test-compiled-output] {
+               padding: 0 !important;
+             }
+             #qunit {
+               position: static;
+             }
+          </styl>
+        `;
+
+        requestAnimationFrame(() => {
+          globalThis.QUnit.start();
+        });
+
+        return () => {
+          /* How do we cleanup?
+           * - Can we assure than cleanup happens before the next completion of render?
+           * */
+        };
+      },
     };
   },
 };
