@@ -12,6 +12,7 @@ const frameworkModules = {
   '@ember/helper': () => import('@ember/helper'),
   '@ember/modifier': () => import('@ember/modifier'),
   '@ember/object': () => import('@ember/object'),
+  '@ember/object/observers': () => import('@ember/object/observers'),
   '@ember/owner': () => import('@ember/owner'),
   '@ember/reactive': () => import('@ember/reactive'),
   '@ember/reactive/collections': () => import('@ember/reactive/collections'),
