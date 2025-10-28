@@ -4,6 +4,8 @@ import { tags as t } from '@lezer/highlight';
 
 import { alpha, syntax, ui } from '@nullvoxpopuli/horizon-theme';
 
+export const DisabledSyntaxTheme = HighlightStyle.define([]);
+
 export const HorizonSyntaxTheme = HighlightStyle.define([
   { tag: [t.meta, t.comment], color: `${syntax.gray}${alpha.medLow}` },
   { tag: t.number, color: `${syntax.apricot}${alpha.high}` },
