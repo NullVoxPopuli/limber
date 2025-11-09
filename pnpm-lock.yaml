@@ -122,8 +122,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.6
       ember-container-query:
-        specifier: 6.0.1
-        version: 6.0.1(@babel/core@7.28.3)
+        specifier: 6.1.0
+        version: 6.1.0(@babel/core@7.28.3)
       ember-deep-tracked:
         specifier: ^2.0.1
         version: 2.0.1(@glint/template@1.6.1)
@@ -472,7 +472,7 @@ importers:
         version: 0.40.0(26a482c5f89fb72edd76dffe317483fb)
       ember-repl:
         specifier: latest
-        version: 7.0.0(d19b4f53cae6558f7d34488bf8cc1673)
+        version: 7.0.1(d19b4f53cae6558f7d34488bf8cc1673)
       ember-resources:
         specifier: ^7.0.7
         version: 7.0.7(0b2137a339483510843f9f1309186110)
@@ -6832,8 +6832,8 @@ packages:
     resolution: {integrity: sha512-BtkjulweiXo9c3yVWrtexw2dTmBrvavD/xixNC6TKOBdrixUwU+6nuOO9dufDWsMxoid7MvtmDpzc9+mE8PdaA==}
     engines: {node: 10.* || >= 12.*}
 
-  ember-container-query@6.0.1:
-    resolution: {integrity: sha512-MTttEwVboK82sCCLsTbDLXQfaaDkIdU058yO4laV/lCQeEsIpjqgICPAzQ5VrvinNT/Rol0AIPCX3jby2rZ8Rg==}
+  ember-container-query@6.1.0:
+    resolution: {integrity: sha512-MJiAdL7x5zAs4W631Ck1Ylt2wzXvsvk3FCvaWLS0qmkKyPyQl5H0phzE8Lqio6p3y04QT8Y3moMwjJCsfWDfPA==}
     engines: {node: 20.* || >= 22}
 
   ember-deep-tracked@2.0.1:
@@ -6949,8 +6949,8 @@ packages:
       '@glint/template':
         optional: true
 
-  ember-repl@7.0.0:
-    resolution: {integrity: sha512-sodaNV1tXyQIaw5Q6a1ECnPcdfIN+hac3YNL6xn1LMSCzuyJeKiGv/Q80SJuXzN5M8SM0fJdrXUxwQyKAvXl/g==}
+  ember-repl@7.0.1:
+    resolution: {integrity: sha512-U5UkG3C8XSpL4HZeCBZStzsffqCcCW1H5KJzjTFfo7RP1HnuIOmB58Dv4Iz6dTztVgwWUM6wvBKFgnp8jVdK8g==}
     peerDependencies:
       '@glint/template': '>= 1.5.2 || ^1.6.0-alpha.1'
     peerDependenciesMeta:
@@ -17753,7 +17753,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-container-query@6.0.1(@babel/core@7.28.3):
+  ember-container-query@6.1.0(@babel/core@7.28.3):
     dependencies:
       '@embroider/addon-shim': 1.10.0
       decorator-transforms: 2.3.0(@babel/core@7.28.3)
@@ -17981,7 +17981,7 @@ snapshots:
       - '@glimmer/component'
       - supports-color
 
-  ember-repl@7.0.0(d19b4f53cae6558f7d34488bf8cc1673):
+  ember-repl@7.0.1(d19b4f53cae6558f7d34488bf8cc1673):
     dependencies:
       '@ember/test-helpers': 5.2.2(f9dfbf4fac3dbc0e0370b14ce6056988)
       '@ember/test-waiters': 4.1.1(@glint/template@1.6.1)
