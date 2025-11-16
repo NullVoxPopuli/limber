@@ -904,8 +904,8 @@ importers:
         specifier: ^1.8.9
         version: 1.10.0
       babel-plugin-ember-template-compilation:
-        specifier: ^2.4.1
-        version: 2.4.1
+        specifier: ^3.0.0
+        version: 3.0.1
       codemirror:
         specifier: ^6.0.2
         version: 6.0.2
