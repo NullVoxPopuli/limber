@@ -10,7 +10,7 @@
 
 /**
  * @type {{
- *   onimport: (url: string, options: RequestInit, parentUrl: string, source: string) => Promise<void>;
+ *   onimport: (url: string, options: RequestInit, parentUrl: string, source: string | undefined) => Promise<void>;
  *   resolve: (id: string, parentUrl: string, parentResolve: (id: string, parentUrl: string) => string) => string;
  *   fetch: (id: string, options: RequestInit) => Promise<Response>;
  * }}
@@ -44,6 +44,7 @@ globalThis.esmsInitOptions = {
    * @param {RequestInit} options - options for fetch
    * @param {string} parentUrl
    * @param {string | undefined} source - will be undefined if top-level import
+   * @returns {Promise<void>}
    */
   onimport: (url, options, parentUrl, source) =>
     STABLE_REFERENCE.onimport(url, options, parentUrl, source),

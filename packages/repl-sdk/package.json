@@ -102,6 +102,7 @@
     "codemirror-lang-mermaid": "^0.5.0",
     "codemirror-languageserver": "^1.12.1",
     "comlink": "^4.4.2",
+    "es-module-lexer": "^1.7.0",
     "es-module-shims": "^2.6.2",
     "mime": "^4.1.0",
     "package-name-regex": "^4.0.3",
