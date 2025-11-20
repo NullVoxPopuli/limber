@@ -10,11 +10,17 @@
 
 /**
  * @type {{
- *   resolve: (id: string, parentUrl: string, parentResolve: (id: string, parentUrl: string) => string) => string
- *   fetch: (id: string, options: RequestInit) => Promise<Response>
+ *   onimport: (url: string, options: RequestInit, parentUrl: string, source: string | undefined) => Promise<void>;
+ *   resolve: (id: string, parentUrl: string, parentResolve: (id: string, parentUrl: string) => string) => string;
+ *   fetch: (id: string, options: RequestInit) => Promise<Response>;
  * }}
  */
 export const STABLE_REFERENCE = {
+  onimport: () => {
+    throw new Error(
+      `'resolve' not implemented in STABLE_REFERENCE. Has the Compiler been set up correctly?`
+    );
+  },
   resolve: () => {
     throw new Error(
       `'resolve' not implemented in STABLE_REFERENCE. Has the Compiler been set up correctly?`
@@ -29,9 +35,19 @@ export const STABLE_REFERENCE = {
 
 globalThis.esmsInitOptions = {
   shimMode: true,
-  // skip: [`https://esm.sh`, 'https://jspm.dev/', 'https://cdn.jsdelivr.net/'],
+  skip: [`https://jsbin.com`, `https://esm.sh`, 'https://jspm.dev/', 'https://cdn.jsdelivr.net/'],
   revokeBlobURLs: true, // default false
   mapOverrides: true, // default false
+
+  /**
+   * @param {string} url
+   * @param {RequestInit} options - options for fetch
+   * @param {string} parentUrl
+   * @param {string | undefined} source - will be undefined if top-level import
+   * @returns {Promise<void>}
+   */
+  onimport: (url, options, parentUrl, source) =>
+    STABLE_REFERENCE.onimport(url, options, parentUrl, source),
 
   /**
    * @param {string} id
