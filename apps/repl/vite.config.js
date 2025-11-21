@@ -98,6 +98,12 @@ export default defineConfig(() => ({
       autoInstall: true,
     }),
     ember(),
+    // {
+    //   name: 'inspect resolve',
+    //   resolveId(id) {
+    //     console.log(id);
+    //   },
+    // },
     {
       /**
        * See: https://github.com/embroider-build/embroider/issues/2548
@@ -109,8 +115,9 @@ export default defineConfig(() => ({
 
         config.oxc = true;
         config.esbuild = true;
+        delete config.optimizeDeps.esbuildOptions;
 
-        config.optimizeDeps.rollupOptions.plugins = [
+        config.optimizeDeps.rolldownOptions.plugins = [
           withFilter(
             babel({
               babelHelpers: 'runtime',
