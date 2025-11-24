@@ -8,6 +8,7 @@ import mime from 'mime/lite';
 import { cache, secretKey } from './cache.js';
 import { compilers } from './compilers.js';
 import { STABLE_REFERENCE } from './es-module-shim.js';
+import { virtualFSPrefix, crawlImports } from './fs.js';
 import { getTarRequestId } from './request.js';
 import { getFromTarball } from './tar.js';
 import { assert, nextId, prefix_tgz, tgzPrefix, unzippedPrefix } from './utils.js';
@@ -33,6 +34,7 @@ export class Compiler {
 
     STABLE_REFERENCE.resolve = this.#resolve;
     STABLE_REFERENCE.fetch = this.#fetch;
+    STABLE_REFERENCE.onimport = this.#onimport;
 
     window.addEventListener('unhandledrejection', this.#handleUnhandledRejection);
   }
@@ -99,6 +101,26 @@ export class Compiler {
     if (handled) return;
 
     this.#announce('error', e.reason);
+  };
+
+  /**
+   * Because es-module-shims doesn't implement an async resolve hook,
+   * we have to handle that in this hook.
+   *
+   * In onimport, we preprocess the entire module graph, 
+   * loading all dependencies as needed, downloading from NPM, etc.
+   *
+   * The files found from this process are stored in a virtual filesystem 
+  
+   *
+   * @param {string} url
+   * @param {RequestInit} options - options for fetch
+   * @param {string} parentUrl
+   * @param {string | undefined} source - will be undefined if top-level import
+   * @returns {Promise<void>}
+   */
+  #onimport = async (url, options, parentUrl, source) => {
+    await crawlImports(source, parentUrl);
   };
 
   /**
