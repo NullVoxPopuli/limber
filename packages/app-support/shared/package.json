@@ -73,7 +73,7 @@
     "concurrently": "^9.2.1",
     "ember-async-data": "2.0.1",
     "ember-modifier": "^4.2.0",
-    "ember-primitives": "^0.40.0",
+    "ember-primitives": "^0.47.0",
     "ember-resources": "^7.0.7",
     "ember-source": ">= 6.8.0-alpha.7",
     "ember-template-lint": "^7.9.3",
@@ -81,10 +81,10 @@
     "execa": "^9.5.2",
     "fix-bad-declaration-output": "^1.1.4",
     "prettier": "^3.6.2",
-    "prettier-plugin-ember-template-tag": "2.1.0",
+    "prettier-plugin-ember-template-tag": "2.1.2",
     "rollup": "^4.50.0",
     "rollup-plugin-copy": "^3.5.0",
-    "typescript": "5.8.3"
+    "typescript": "5.9.3"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"

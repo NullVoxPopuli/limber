@@ -32,7 +32,7 @@
     "prettier": "^3.6.2",
     "rollup": "^4.50.0",
     "rollup-plugin-ts": "^3.4.5",
-    "typescript": "5.8.3"
+    "typescript": "5.9.3"
   },
   "dependencies": {
     "@codemirror/lang-html": "^6.4.9",
