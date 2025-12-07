@@ -23,8 +23,8 @@
     "@types/yargs": "^17.0.33",
     "eslint": "^9.34.0",
     "prettier": "^3.6.2",
-    "prettier-plugin-ember-template-tag": "2.1.0",
-    "typescript": "5.8.3"
+    "prettier-plugin-ember-template-tag": "2.1.2",
+    "typescript": "5.9.3"
   },
   "engines": {
     "node": ">= 22",
