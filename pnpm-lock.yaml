@@ -835,7 +835,7 @@ importers:
     dependencies:
       '@tailwindcss/typography':
         specifier: ^0.5.16
-        version: 0.5.16(tailwindcss@3.4.17)
+        version: 0.5.19(tailwindcss@3.4.17)
       broccoli-funnel:
         specifier: ^3.0.8
         version: 3.0.8
@@ -1428,7 +1428,7 @@ importers:
         version: 7.28.3
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.3.4
-        version: 5.3.4(1984f17943ff94168fa168c421bcdced)
+        version: 5.3.4(660bbb2484f7ab7a7dc4b5c2f1ce7557)
       '@testing-library/dom':
         specifier: ^10.3.2
         version: 10.4.0
@@ -3543,6 +3543,10 @@ packages:
     resolution: {integrity: sha512-gtF186CXhIl1p4pJNGZw8Yc6RlshoePRvE0X91oPGb3vZ8pM3qOS9W9NGPat9LziaBV7XrJWGylNQXkGcnM3IQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
+  '@eslint/eslintrc@3.3.3':
+    resolution: {integrity: sha512-Kr+LPIUVKz2qkx1HAMH8q1q6azbqBAsXJUxBl/ODDuVPX45Z9DfwB8tPjTi6nNZ8BuM3nbJxC5zCAg5elnBUTQ==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
   '@eslint/js@9.31.0':
     resolution: {integrity: sha512-LOm5OVt7D4qiKCqoiPbA7LWmI+tbw1VbTUowBcUMgQSuM6poJufkFkYDcQpo5KfgD39TnNySV26QjOh7VFpSyw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -4500,8 +4504,8 @@ packages:
     peerDependencies:
       acorn: ^8.9.0
 
-  '@tailwindcss/typography@0.5.16':
-    resolution: {integrity: sha512-0wDLwCVF5V3x3b1SGXPCDcdsbDHMBe+lkFzBRaHeLvNi+nrrnZ1lA18u+OTWO8iSWU2GxUOCvlXtDuqftc1oiA==}
+  '@tailwindcss/typography@0.5.19':
+    resolution: {integrity: sha512-w31dd8HOx3k9vPtcQh5QHP9GwKcgbMp87j58qi6xgiBnFFtKEAgCWnDw4qUT8aHwkCp8bKvb/KGKWWHedP0AAg==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders || >=4.0.0-alpha.20 || >=4.0.0-beta.1'
 
@@ -8481,6 +8485,10 @@ packages:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
     hasBin: true
 
+  js-yaml@4.1.1:
+    resolution: {integrity: sha512-qQKT4zQxXl8lLwBtHMWwaTcGfFOZviOJet3Oy/xmGk2gZH677CJM9EvtfdSkgWcATZhj/55JZ0rmy3myCT5lsA==}
+    hasBin: true
+
   jsbn@1.1.0:
     resolution: {integrity: sha512-4bYVV3aAMtDTTu4+xsDYa6sy9GyJ69/amsu9sYF2zqjiEoZA5xJi3BrfX3uY+/IekIu7MwdObdbDWpoZdBv3/A==}
 
@@ -8698,9 +8706,6 @@ packages:
   lodash.camelcase@4.3.0:
     resolution: {integrity: sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA==}
 
-  lodash.castarray@4.4.0:
-    resolution: {integrity: sha512-aVx8ztPv7/2ULbArGJ2Y42bG1mEQ5mGjpdvrbJcJFU3TbYybe+QlLS4pst9zV52ymy2in1KpFPiZnAOATxD4+Q==}
-
   lodash.clonedeep@4.5.0:
     resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
 
@@ -8718,9 +8723,6 @@ packages:
 
   lodash.isarray@3.0.4:
     resolution: {integrity: sha512-JwObCrNJuT0Nnbuecmqr5DgtuBppuCvGD9lxjFpAzwnVtdGoDQ1zig+5W8k5/6Gcn0gZ3936HDAlGd28i7sOGQ==}
-
-  lodash.isplainobject@4.0.6:
-    resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
 
   lodash.kebabcase@4.1.1:
     resolution: {integrity: sha512-N8XRTIMMqqDgSy4VLKPnJ/+hpGZN+PHQiJnSenYqPaVV/NCqEogTnAdZLQiGKhxX+JCs8waWq2t1XHWKOmlY8g==}
@@ -9879,8 +9881,8 @@ packages:
     resolution: {integrity: sha512-Q8qQfPiZ+THO/3ZrOrO0cJJKfpYCagtMUkXbnEfmgUjwXg6z/WBeOyS9APBBPCTSiDV+s4SwQGu8yFsiMRIudg==}
     engines: {node: '>=4'}
 
-  postcss-selector-parser@7.1.0:
-    resolution: {integrity: sha512-8sLjZwK0R+JlxlYcTuVnyT2v+htpdrjDOKuMcOVdYjt52Lh8hWRYpxBPoKx/Zg+bcjc3wx6fmQevMmUztS/ccA==}
+  postcss-selector-parser@7.1.1:
+    resolution: {integrity: sha512-orRsuYpJVw8LdAwqqLykBj9ecS5/cRHlI5+nvTo8LcCKmzDmqVORXtOIYEEQuL9D4BxtA1lm5isAqzQZCoQ6Eg==}
     engines: {node: '>=4'}
 
   postcss-value-parser@4.2.0:
@@ -9968,6 +9970,11 @@ packages:
 
   prettier@3.6.2:
     resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
+    engines: {node: '>=14'}
+    hasBin: true
+
+  prettier@3.7.4:
+    resolution: {integrity: sha512-v6UNi1+3hSlVvv8fSaoUbggEM5VErKmmpGA7Pl3HF8V6uKY7rvClBOJlH6yNwQtfTueNkGVpOv/mtWL9L4bgRA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -13967,6 +13974,20 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@eslint/eslintrc@3.3.3':
+    dependencies:
+      ajv: 6.12.6
+      debug: 4.4.3
+      espree: 10.4.0
+      globals: 14.0.0
+      ignore: 5.3.2
+      import-fresh: 3.3.1
+      js-yaml: 4.1.1
+      minimatch: 3.1.2
+      strip-json-comments: 3.1.1
+    transitivePeerDependencies:
+      - supports-color
+
   '@eslint/js@9.31.0': {}
 
   '@eslint/js@9.34.0': {}
@@ -14636,7 +14657,7 @@ snapshots:
     dependencies:
       which: 5.0.0
 
-  '@nullvoxpopuli/eslint-configs@5.3.4(1984f17943ff94168fa168c421bcdced)':
+  '@nullvoxpopuli/eslint-configs@5.3.4(660bbb2484f7ab7a7dc4b5c2f1ce7557)':
     dependencies:
       '@babel/core': 7.28.5
       '@eslint/js': 9.34.0
@@ -14651,11 +14672,11 @@ snapshots:
       eslint-plugin-n: 17.21.3(dd79bc552d6fe6a5977137c36a8e4d9a)
       eslint-plugin-simple-import-sort: 12.1.1(eslint@9.39.1(jiti@2.4.2))
       globals: 16.3.0
-      prettier-plugin-ember-template-tag: 2.1.0(prettier@3.6.2)
+      prettier-plugin-ember-template-tag: 2.1.0(prettier@3.7.4)
     optionalDependencies:
       '@babel/eslint-parser': 7.28.0(ba12e1db6ea1515fe7fd6b26c68d7836)
       '@babel/plugin-proposal-decorators': 7.28.0(@babel/core@7.28.5)
-      prettier: 3.6.2
+      prettier: 3.7.4
     transitivePeerDependencies:
       - eslint-import-resolver-webpack
       - eslint-plugin-import-x
@@ -15201,11 +15222,8 @@ snapshots:
     dependencies:
       acorn: 8.15.0
 
-  '@tailwindcss/typography@0.5.16(tailwindcss@3.4.17)':
+  '@tailwindcss/typography@0.5.19(tailwindcss@3.4.17)':
     dependencies:
-      lodash.castarray: 4.4.0
-      lodash.isplainobject: 4.0.6
-      lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.4.17
 
@@ -19148,7 +19166,7 @@ snapshots:
       '@eslint/config-array': 0.21.1
       '@eslint/config-helpers': 0.4.2
       '@eslint/core': 0.17.0
-      '@eslint/eslintrc': 3.3.1
+      '@eslint/eslintrc': 3.3.3
       '@eslint/js': 9.39.1
       '@eslint/plugin-kit': 0.4.1
       '@humanfs/node': 0.16.7
@@ -20496,6 +20514,10 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
+  js-yaml@4.1.1:
+    dependencies:
+      argparse: 2.0.1
+
   jsbn@1.1.0: {}
 
   jscodeshift@0.15.2(3fe8f303a52589052b0089e038dc1199):
@@ -20791,8 +20813,6 @@ snapshots:
 
   lodash.camelcase@4.3.0: {}
 
-  lodash.castarray@4.4.0: {}
-
   lodash.clonedeep@4.5.0: {}
 
   lodash.debounce@3.1.1:
@@ -20809,8 +20829,6 @@ snapshots:
   lodash.isarguments@3.1.0: {}
 
   lodash.isarray@3.0.4: {}
-
-  lodash.isplainobject@4.0.6: {}
 
   lodash.kebabcase@4.1.1: {}
 
@@ -22316,13 +22334,13 @@ snapshots:
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.6)
       postcss: 8.5.6
-      postcss-selector-parser: 7.1.0
+      postcss-selector-parser: 7.1.1
       postcss-value-parser: 4.2.0
 
   postcss-modules-scope@3.2.1(postcss@8.5.6):
     dependencies:
       postcss: 8.5.6
-      postcss-selector-parser: 7.1.0
+      postcss-selector-parser: 7.1.1
 
   postcss-modules-values@4.0.0(postcss@8.5.6):
     dependencies:
@@ -22344,7 +22362,7 @@ snapshots:
       cssesc: 3.0.0
       util-deprecate: 1.0.2
 
-  postcss-selector-parser@7.1.0:
+  postcss-selector-parser@7.1.1:
     dependencies:
       cssesc: 3.0.0
       util-deprecate: 1.0.2
@@ -22367,6 +22385,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  prettier-plugin-ember-template-tag@2.1.0(prettier@3.7.4):
+    dependencies:
+      '@babel/core': 7.28.3
+      content-tag: 4.0.0
+      prettier: 3.7.4
+    transitivePeerDependencies:
+      - supports-color
+
   prettier-plugin-tailwindcss@0.6.14(prettier@3.6.2):
     dependencies:
       prettier: 3.6.2
@@ -22374,6 +22400,8 @@ snapshots:
   prettier@2.8.8: {}
 
   prettier@3.6.2: {}
+
+  prettier@3.7.4: {}
 
   pretty-format@27.5.1:
     dependencies:
