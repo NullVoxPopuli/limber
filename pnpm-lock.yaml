@@ -472,7 +472,7 @@ importers:
         version: 0.40.0(26a482c5f89fb72edd76dffe317483fb)
       ember-repl:
         specifier: latest
-        version: 7.0.1(98c68bfc4ad3110981d79949c80722ba)
+        version: 7.0.1(a064c593ed59fb84d53e90c3cf5e8aea)
       ember-resources:
         specifier: ^7.0.7
         version: 7.0.7(0b2137a339483510843f9f1309186110)
@@ -1294,7 +1294,7 @@ importers:
         version: 1.4.3
       '@replit/codemirror-lang-svelte':
         specifier: ^6.0.0
-        version: 6.0.0(4d4b3c202ea4321b8eeae2e208781df7)
+        version: 6.0.0(fcf18433128b63d354d2689ccde9ef7a)
       change-case:
         specifier: ^5.4.4
         version: 5.4.4
@@ -1607,13 +1607,13 @@ importers:
         version: 1.5.4
       '@lezer/lr':
         specifier: ^1.4.2
-        version: 1.4.2
+        version: 1.4.4
       '@lezer/markdown':
         specifier: ^1.4.1
         version: 1.4.3
       '@replit/codemirror-lang-svelte':
         specifier: ^6.0.0
-        version: 6.0.0(0270e345607ad79b04034faf56d4c733)
+        version: 6.0.0(fcf18433128b63d354d2689ccde9ef7a)
       codemirror-lang-glimmer:
         specifier: workspace:*
         version: link:../../glimmer/codemirror
@@ -1731,7 +1731,7 @@ importers:
         version: 1.2.1
       '@lezer/lr':
         specifier: ^1.4.2
-        version: 1.4.2
+        version: 1.4.4
     devDependencies:
       '@babel/core':
         specifier: ^7.28.3
@@ -1786,7 +1786,7 @@ importers:
         version: 1.5.4
       '@lezer/lr':
         specifier: ^1.4.2
-        version: 1.4.2
+        version: 1.4.4
       codemirror-lang-glimmer:
         specifier: workspace:*
         version: link:../../glimmer/codemirror
@@ -1880,7 +1880,7 @@ importers:
         version: 1.2.1
       '@lezer/lr':
         specifier: ^1.4.2
-        version: 1.4.2
+        version: 1.4.4
     devDependencies:
       '@babel/core':
         specifier: ^7.28.3
@@ -1932,7 +1932,7 @@ importers:
         version: 1.5.4
       '@lezer/lr':
         specifier: ^1.4.2
-        version: 1.4.2
+        version: 1.4.4
       codemirror-lang-glimmer:
         specifier: workspace:*
         version: link:../../glimmer/codemirror
@@ -2053,7 +2053,7 @@ importers:
         version: 1.5.4
       '@lezer/lr':
         specifier: ^1.4.2
-        version: 1.4.2
+        version: 1.4.4
       lezer-glimmer:
         specifier: workspace:*
         version: link:../lezer
@@ -2159,7 +2159,7 @@ importers:
         version: 1.5.4
       '@lezer/lr':
         specifier: ^1.4.2
-        version: 1.4.2
+        version: 1.4.4
     devDependencies:
       '@babel/core':
         specifier: ^7.28.3
@@ -3827,6 +3827,9 @@ packages:
 
   '@lezer/lr@1.4.3':
     resolution: {integrity: sha512-yenN5SqAxAPv/qMnpWW0AT7l+SxVrgG+u0tNsRQWqbrz66HIl8DnEbBObvy21J5K7+I1v7gsAnlE2VQ5yYVSeA==}
+
+  '@lezer/lr@1.4.4':
+    resolution: {integrity: sha512-LHL17Mq0OcFXm1pGQssuGTQFPPdxARjKM8f7GA5+sGtHi0K3R84YaSbmche0+RKWHnCsx9asEe5OWOI4FHfe4A==}
 
   '@lezer/markdown@1.4.3':
     resolution: {integrity: sha512-kfw+2uMrQ/wy/+ONfrH83OkdFNM0ye5Xq96cLlaCy7h5UT9FO54DU4oRoIc0CSBh5NWmWuiIJA7NGLMJbQ+Oxg==}
@@ -13186,7 +13189,7 @@ snapshots:
       '@codemirror/language': 6.11.2
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@codemirror/lang-cpp@6.0.3':
     dependencies:
@@ -13247,7 +13250,7 @@ snapshots:
       '@codemirror/language': 6.11.2
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@codemirror/lang-liquid@6.2.3':
     dependencies:
@@ -13258,7 +13261,7 @@ snapshots:
       '@codemirror/view': 6.38.0
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@codemirror/lang-markdown@6.3.3':
     dependencies:
@@ -13306,7 +13309,7 @@ snapshots:
       '@codemirror/state': 6.5.2
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@codemirror/lang-vue@0.1.3':
     dependencies:
@@ -13322,7 +13325,7 @@ snapshots:
       '@codemirror/language': 6.11.2
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@codemirror/lang-xml@6.1.0':
     dependencies:
@@ -14061,7 +14064,7 @@ snapshots:
   '@glimdown/lezer-glimmer-expression@2.0.0':
     dependencies:
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@glimmer/compiler@0.94.11':
     dependencies:
@@ -14359,13 +14362,13 @@ snapshots:
     dependencies:
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@lezer/css@1.2.1':
     dependencies:
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@lezer/generator@1.8.0':
     dependencies:
@@ -14376,7 +14379,7 @@ snapshots:
     dependencies:
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@lezer/highlight@1.2.1':
     dependencies:
@@ -14392,31 +14395,35 @@ snapshots:
     dependencies:
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@lezer/javascript@1.5.1':
     dependencies:
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@lezer/javascript@1.5.4':
     dependencies:
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.2
+      '@lezer/lr': 1.4.4
 
   '@lezer/json@1.0.3':
     dependencies:
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@lezer/lr@1.4.2':
     dependencies:
       '@lezer/common': 1.2.3
 
   '@lezer/lr@1.4.3':
+    dependencies:
+      '@lezer/common': 1.2.3
+
+  '@lezer/lr@1.4.4':
     dependencies:
       '@lezer/common': 1.2.3
 
@@ -14429,31 +14436,31 @@ snapshots:
     dependencies:
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@lezer/python@1.1.18':
     dependencies:
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@lezer/rust@1.0.2':
     dependencies:
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@lezer/sass@1.1.0':
     dependencies:
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@lezer/xml@1.0.6':
     dependencies:
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@lezer/yaml@1.0.3':
     dependencies:
@@ -14853,7 +14860,7 @@ snapshots:
       - bare-buffer
       - supports-color
 
-  '@replit/codemirror-lang-svelte@6.0.0(0270e345607ad79b04034faf56d4c733)':
+  '@replit/codemirror-lang-svelte@6.0.0(fcf18433128b63d354d2689ccde9ef7a)':
     dependencies:
       '@codemirror/autocomplete': 6.18.6
       '@codemirror/lang-css': 6.3.1
@@ -14865,21 +14872,7 @@ snapshots:
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
       '@lezer/javascript': 1.5.4
-      '@lezer/lr': 1.4.2
-
-  '@replit/codemirror-lang-svelte@6.0.0(4d4b3c202ea4321b8eeae2e208781df7)':
-    dependencies:
-      '@codemirror/autocomplete': 6.18.6
-      '@codemirror/lang-css': 6.3.1
-      '@codemirror/lang-html': 6.4.9
-      '@codemirror/lang-javascript': 6.2.4
-      '@codemirror/language': 6.11.2
-      '@codemirror/state': 6.5.2
-      '@codemirror/view': 6.38.0
-      '@lezer/common': 1.2.3
-      '@lezer/highlight': 1.2.1
-      '@lezer/javascript': 1.5.4
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   '@rollup/plugin-babel@6.0.4(77a9ccd5df6e967b404c5dbf3f51a1eb)':
     dependencies:
@@ -17258,9 +17251,9 @@ snapshots:
       '@lezer/highlight': 1.2.1
       '@lezer/html': 1.3.12
       '@lezer/javascript': 1.5.4
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
       '@lezer/markdown': 1.4.3
-      '@replit/codemirror-lang-svelte': 6.0.0(4d4b3c202ea4321b8eeae2e208781df7)
+      '@replit/codemirror-lang-svelte': 6.0.0(fcf18433128b63d354d2689ccde9ef7a)
       codemirror-lang-glimmer: 2.0.0(@lezer/common@1.2.3)
       codemirror-lang-glimmer-js: 2.0.0(93ee892e9b11f5e1608e05edbfc91c9b)
       codemirror-lang-mermaid: 0.5.0
@@ -17278,7 +17271,7 @@ snapshots:
       '@codemirror/view': 6.38.0
       '@lezer/highlight': 1.2.1
       '@lezer/javascript': 1.5.4
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
       codemirror-lang-glimmer: 2.0.0(@lezer/common@1.2.3)
     transitivePeerDependencies:
       - '@lezer/common'
@@ -17296,7 +17289,7 @@ snapshots:
       '@lezer/highlight': 1.2.1
       '@lezer/html': 1.3.12
       '@lezer/javascript': 1.5.4
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
       lezer-glimmer: 2.0.0
 
   codemirror-lang-mermaid@0.5.0:
@@ -18463,7 +18456,7 @@ snapshots:
       - '@glimmer/component'
       - supports-color
 
-  ember-repl@7.0.1(98c68bfc4ad3110981d79949c80722ba):
+  ember-repl@7.0.1(a064c593ed59fb84d53e90c3cf5e8aea):
     dependencies:
       '@ember/test-helpers': 5.2.2(f9dfbf4fac3dbc0e0370b14ce6056988)
       '@ember/test-waiters': 4.1.1(@glint/template@1.6.1)
@@ -18475,7 +18468,7 @@ snapshots:
       ember-primitives: 0.40.0(26a482c5f89fb72edd76dffe317483fb)
       ember-resolver: 13.1.1
       ember-resources: 7.0.7(0b2137a339483510843f9f1309186110)
-      repl-sdk: 1.0.0(93ffcda4f1a5073904a1e7299fa1c603)
+      repl-sdk: 1.0.0(9bf81b3812919f78b0940638f27b6872)
     optionalDependencies:
       '@glint/template': 1.6.1
     transitivePeerDependencies:
@@ -20746,7 +20739,7 @@ snapshots:
       '@lezer/highlight': 1.2.1
       '@lezer/html': 1.3.12
       '@lezer/javascript': 1.5.4
-      '@lezer/lr': 1.4.3
+      '@lezer/lr': 1.4.4
 
   lie@3.3.0:
     dependencies:
@@ -22801,7 +22794,7 @@ snapshots:
 
   repeat-string@1.6.1: {}
 
-  repl-sdk@1.0.0(93ffcda4f1a5073904a1e7299fa1c603):
+  repl-sdk@1.0.0(9bf81b3812919f78b0940638f27b6872):
     dependencies:
       '@codemirror/autocomplete': 6.18.6
       '@codemirror/commands': 6.8.1
@@ -22820,7 +22813,7 @@ snapshots:
       '@lezer/highlight': 1.2.1
       '@lezer/html': 1.3.12
       '@lezer/markdown': 1.4.3
-      '@replit/codemirror-lang-svelte': 6.0.0(4d4b3c202ea4321b8eeae2e208781df7)
+      '@replit/codemirror-lang-svelte': 6.0.0(fcf18433128b63d354d2689ccde9ef7a)
       change-case: 5.4.4
       codemirror: 6.0.2
       codemirror-lang-glimdown: 2.0.0(48429f148c5391ed4747a58c453f34c8)
