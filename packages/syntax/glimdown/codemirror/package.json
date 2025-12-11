@@ -18,7 +18,7 @@
     "directory": "packages/syntax/glimdown/codemirror"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.3",
+    "@babel/core": "^7.28.5",
     "@codemirror/buildhelper": "^1.0.2",
     "@codemirror/language": "^6.11.2",
     "@codemirror/state": "^6.5.2",
@@ -28,9 +28,9 @@
     "@tsconfig/ember": "^3.0.9",
     "codemirror": "^6.0.2",
     "concurrently": "^9.2.1",
-    "eslint": "^9.34.0",
-    "prettier": "^3.6.2",
-    "rollup": "^4.50.0",
+    "eslint": "^9.39.1",
+    "prettier": "^3.7.4",
+    "rollup": "^4.53.3",
     "rollup-plugin-ts": "^3.4.5",
     "typescript": "5.8.3"
   },

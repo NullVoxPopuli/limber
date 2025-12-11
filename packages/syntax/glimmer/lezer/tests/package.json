@@ -6,10 +6,10 @@
     "extends": "../../../../../package.json"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.3",
+    "@babel/core": "^7.28.5",
     "@nullvoxpopuli/eslint-configs": "^5.3.4",
-    "eslint": "^9.34.0",
-    "prettier": "^3.6.2",
+    "eslint": "^9.39.1",
+    "prettier": "^3.7.4",
     "typescript": "5.8.3"
   },
   "scripts": {
