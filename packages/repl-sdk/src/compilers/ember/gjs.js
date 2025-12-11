@@ -78,7 +78,7 @@ export async function compiler(config, api) {
    * @param {string} text
    */
   async function transform(text) {
-    return babel.transformAsync(text, {
+    return babel.transform(text, {
       filename: `dynamic-repl.js`,
       plugins: [
         [

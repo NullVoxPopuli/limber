@@ -40,6 +40,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5
+      '@babel/standalone':
+        specifier: ^7.28.5
+        version: 7.28.5(patch_hash=f8fdde7b389b77c83ccde66f800caaa449bdadfa51b92297f976fdfae66bfef7)
       '@glint/ember-tsc':
         specifier: ^1.0.8
         version: 1.0.8(typescript@5.9.3)
