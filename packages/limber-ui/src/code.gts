@@ -1,27 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import "./code.css";
+import './code.css';
 
-import Component from "@glimmer/component";
-import { tracked } from "@glimmer/tracking";
-import { on } from "@ember/modifier";
-import { guidFor } from "@ember/object/internals";
-import { htmlSafe } from "@ember/template";
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
+import { guidFor } from '@ember/object/internals';
+import { htmlSafe } from '@ember/template';
 
-import { link } from "reactiveweb/link";
+import { link } from 'reactiveweb/link';
 
-import type Owner from "@ember/owner";
+import type Owner from '@ember/owner';
 
 type AllowedFormat =
-  | "gjs"
-  | "gts"
-  | "hbs"
-  | "gmd"
-  | "vue"
-  | "svelte"
-  | "mermaid";
+  | 'gjs'
+  | 'gts'
+  | 'hbs'
+  | 'gmd'
+  | 'vue'
+  | 'svelte'
+  | 'mermaid';
 // type Storage = 'local' | 'url';
 
-import { HostMessaging } from "./frame-messaging.ts";
+import { HostMessaging } from './frame-messaging.ts';
 
 const DEFAULT_DEMO = `
 // Welcome
@@ -93,7 +93,7 @@ interface Signature {
      * - "onclick" - the editor will only load when the user clicks that they want to edit the example
      *   - "never" - the editor is entirely disabled and the left-hand side is only a highlighted code snippet as is not editable
      */
-    editorLoad?: "force" | "onclick" | "never";
+    editorLoad?: 'force' | 'onclick' | 'never';
 
     /**
      * If set to true, the preview code shown before the editor loads will not have highlighting enabled. This option has no affect when the editor is forced to eagerly load.
@@ -110,7 +110,7 @@ interface Signature {
 }
 
 const DEFAULT_NUMBER_OF_LINES = 7;
-const HOST = "https://limber.glimdown.com/edit";
+const HOST = 'https://limber.glimdown.com/edit';
 
 /**
  * NOTE: updates the the `src` URL do not update the iframe
@@ -119,19 +119,19 @@ const INITIAL_URL = (options: Record<string, any>): string => {
   const { code, editor, shadowdom, nohighlight, format, editorLoad } = options;
 
   const initialQPs = new URLSearchParams(window.location.search);
-  const local = initialQPs.get("local");
-  const host = initialQPs.has("local")
-    ? `https://localhost:${local || "4201"}/edit`
+  const local = initialQPs.get('local');
+  const host = initialQPs.has('local')
+    ? `https://localhost:${local || '4201'}/edit`
     : HOST;
 
   return (
     `${host}?` +
-    (editorLoad ? `&editorLoad=${editorLoad}` : "") +
-    (editor ? `&editor=${editor}` : "") +
-    (shadowdom ? `&shadowdom=${shadowdom}` : "") +
-    (format ? `&format=${format}` : "&format=BUG:MISSING") +
-    (nohighlight ? `&nohighlight=${nohighlight}` : "") +
-    (local ? `&local` : "") +
+    (editorLoad ? `&editorLoad=${editorLoad}` : '') +
+    (editor ? `&editor=${editor}` : '') +
+    (shadowdom ? `&shadowdom=${shadowdom}` : '') +
+    (format ? `&format=${format}` : '&format=BUG:MISSING') +
+    (nohighlight ? `&nohighlight=${nohighlight}` : '') +
+    (local ? `&local` : '') +
     (code ? `&t=${encodeURIComponent(code as string)}` : DEFAULT_DEMO)
   );
 };
@@ -147,7 +147,7 @@ export default class Code extends Component<Signature> {
 
   initialData: Record<string, any>;
 
-  constructor(owner: Owner, args: Signature["Args"]) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     this.initialData = {
@@ -169,25 +169,25 @@ export default class Code extends Component<Signature> {
   }
 
   get code() {
-    if ("code" in this.args) {
+    if ('code' in this.args) {
       return this.args.code;
     }
 
-    return "";
+    return '';
   }
 
   get format() {
-    if ("format" in this.args) {
-      return this.args.format ?? "gjs";
+    if ('format' in this.args) {
+      return this.args.format ?? 'gjs';
     }
 
-    return "gjs";
+    return 'gjs';
   }
 
   get lines() {
     return (
       this.args.lines ??
-      this.code?.split("\n")?.length ??
+      this.code?.split('\n')?.length ??
       DEFAULT_NUMBER_OF_LINES
     );
   }

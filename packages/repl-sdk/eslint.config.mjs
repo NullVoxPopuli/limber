@@ -1,6 +1,7 @@
 import { configs } from "@nullvoxpopuli/eslint-configs";
 
 export default [
+  // eslint-disable-next-line n/no-unsupported-features/node-builtins
   ...configs.ember(import.meta.dirname),
   {
     ignores: ["tests-ember", "tests-self"],

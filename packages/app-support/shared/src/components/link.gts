@@ -1,6 +1,6 @@
-import { htmlSafe } from "@ember/template";
+import { htmlSafe } from '@ember/template';
 
-import type { TOC } from "@ember/component/template-only";
+import type { TOC } from '@ember/component/template-only';
 
 const classList = htmlSafe(`
   inline-block items-center grid-flow-col
