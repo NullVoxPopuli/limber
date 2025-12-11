@@ -24,7 +24,10 @@ export class Selection extends Component {
   }
 
   handleChange = (event: Event) => {
-    assert(`Target must be select element`, event.target instanceof HTMLSelectElement);
+    assert(
+      `Target must be select element`,
+      event.target instanceof HTMLSelectElement
+    );
 
     this.router.transitionTo(event.target.value);
   };
@@ -39,7 +42,7 @@ export class Selection extends Component {
     <label class="relative w-full">
       <span class="sr-only">Change tutorial</span>
       <span
-        class="sr-hidden z-1 pointer-events-none absolute grid h-full w-full grid-flow-col items-center justify-start gap-3 px-4"
+        class="sr-hidden gap-3 px-4 pointer-events-none absolute z-1 grid h-full w-full grid-flow-col items-center justify-start"
       >
         <FaIcon @icon={{faBars}} />
         <span class="limber__selected">{{this.humanSelected}}</span>
@@ -55,7 +58,7 @@ export class Selection extends Component {
 
       <select
         name="tutorial"
-        class="font-lg h-full w-full rounded border border-gray-900 bg-none p-2 indent-[-100000px]"
+        class="font-lg rounded border-gray-900 p-2 h-full w-full border bg-none indent-[-100000px]"
         {{on "change" this.handleChange}}
       >
         {{#each this.docs.grouped.pages as |group|}}

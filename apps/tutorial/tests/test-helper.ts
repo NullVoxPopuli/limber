@@ -20,7 +20,12 @@ export function start() {
   // Fast test timeout, because I'm impatient
   QUnit.config.testTimeout = 10_000;
 
-  Object.assign(window, { getSettledState, getPendingWaiterState, currentURL, currentRouteName });
+  Object.assign(window, {
+    getSettledState,
+    getPendingWaiterState,
+    currentURL,
+    currentRouteName,
+  });
   setup(QUnit.assert);
   setupEmberOnerrorValidation();
 

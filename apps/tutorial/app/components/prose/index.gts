@@ -41,7 +41,7 @@ export const Prose: TOC<{ Element: HTMLDivElement }> = <template>
       }
     </style>
     <StickyFooter
-      class="grid w-fit w-full gap-4 overflow-auto"
+      class="gap-4 grid w-fit w-full overflow-auto"
       ...attributes
       {{resetScroll docs.selected.prose}}
     >

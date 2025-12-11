@@ -39,6 +39,7 @@
     "@glimmer/component": "^2.0.0",
     "@nullvoxpopuli/limber-shared": "workspace:*",
     "@shikijs/rehype": "^3.7.0",
+    "decorator-transforms": "^2.3.0",
     "ember-async-data": "2.0.1",
     "ember-modifier": "^4.2.0",
     "ember-primitives": "^0.48.1",

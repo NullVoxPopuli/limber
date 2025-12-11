@@ -15,12 +15,19 @@ module('Integration | Component | selection', function (hooks) {
   });
 
   test('it renders groups and options', async function (assert) {
-    const docsSvc = this.owner.lookup('service:docs') as unknown as MockDocsService;
+    const docsSvc = this.owner.lookup(
+      'service:docs'
+    ) as unknown as MockDocsService;
 
     docsSvc._setGroupsData([
       [
         '1-introduction',
-        ['1-basics', '2-adding-data', '3-transforming-data', '4-multiple-transforms'],
+        [
+          '1-basics',
+          '2-adding-data',
+          '3-transforming-data',
+          '4-multiple-transforms',
+        ],
       ],
       ['2-reactivity', ['1-values', '2-decorated-values', '3-derived-values']],
       ['3-event-handling', ['1-dom-events']],
@@ -38,19 +45,27 @@ module('Integration | Component | selection', function (hooks) {
     assert
       .dom('optgroup:nth-child(1) option:nth-child(4)')
       .hasValue('/1-introduction/4-multiple-transforms');
-    assert.dom('optgroup:nth-child(1) option:nth-child(4)').hasText('Multiple Transforms');
+    assert
+      .dom('optgroup:nth-child(1) option:nth-child(4)')
+      .hasText('Multiple Transforms');
     assert
       .dom('optgroup:nth-child(2) option:nth-child(2)')
       .hasValue('/2-reactivity/2-decorated-values');
-    assert.dom('optgroup:nth-child(2) option:nth-child(2)').hasText('Decorated Values');
+    assert
+      .dom('optgroup:nth-child(2) option:nth-child(2)')
+      .hasText('Decorated Values');
   });
 
   test('it handles selection', async function (assert) {
-    const routerSvc = this.owner.lookup('service:router') as unknown as MockRouterService;
+    const routerSvc = this.owner.lookup(
+      'service:router'
+    ) as unknown as MockRouterService;
 
     routerSvc._setAssert(assert);
 
-    const docsSvc = this.owner.lookup('service:docs') as unknown as MockDocsService;
+    const docsSvc = this.owner.lookup(
+      'service:docs'
+    ) as unknown as MockDocsService;
 
     docsSvc._setGroupsData([
       ['english', ['one', 'two', 'three']],
@@ -76,6 +91,9 @@ module('Integration | Component | selection', function (hooks) {
     docsSvc._setCurrentPath('/english/three');
     assert.dom('option:checked').hasValue('/english/three').hasText('Three');
 
-    assert.verifySteps(['transition to: /german/eins', 'transition to: /english/three']);
+    assert.verifySteps([
+      'transition to: /german/eins',
+      'transition to: /english/three',
+    ]);
   });
 });
