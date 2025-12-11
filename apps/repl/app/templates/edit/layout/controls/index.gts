@@ -44,7 +44,7 @@ export const Controls: TOC<{
       <div
         data-is-minimized="{{@isMinimized}}"
         style={{htmlSafe (concat "right: " editor.scrollbarWidth "px;")}}
-        class="absolute right-0 top-0 z-[1]
+        class="right-0 top-0 absolute z-[1]
           {{if @splitHorizontally 'flex flex-row-reverse' 'grid'}}
           {{if @isMinimized 'bg-ember-black h-full content-start'}}
           "
@@ -78,9 +78,13 @@ export const Controls: TOC<{
         </Button>
         {{#let (getShadowValue (qp "shadowdom")) as |shadow|}}
           <a
-            title="Toggle Shadow DOM wrapper (currently: {{if shadow 'on' 'off'}})"
+            title="Toggle Shadow DOM wrapper (currently: {{if
+              shadow
+              'on'
+              'off'
+            }})"
             href={{withQP "shadowdom" (if shadow "off" "on")}}
-            class="flex select-none items-center px-3 py-2 text-xs text-white ring-inset hover:bg-[#9b2918] focus:outline-none focus:ring-4 disabled:opacity-30"
+            class="px-3 py-2 text-xs text-white flex items-center select-none ring-inset hover:bg-[#9b2918] focus:ring-4 focus:outline-none disabled:opacity-30"
           >
             {{#if shadow}}
               <FaIcon @icon={{faCircleNotch}} />
@@ -96,7 +100,7 @@ export const Controls: TOC<{
             href={{(currentURL)}}
             rel="noreferrer noopener"
             target="_blank"
-            class="flex select-none items-center px-3 py-2 text-xs text-white ring-inset hover:bg-[#9b2918] focus:outline-none focus:ring-4 disabled:opacity-30"
+            class="px-3 py-2 text-xs text-white flex items-center select-none ring-inset hover:bg-[#9b2918] focus:ring-4 focus:outline-none disabled:opacity-30"
           >
             <FaIcon @icon={{faExternalLinkAlt}} />
           </a>

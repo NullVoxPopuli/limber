@@ -16,7 +16,9 @@ export default modifier((element) => {
   };
 });
 
-function constrain(element: Pick<HTMLElement, 'getBoundingClientRect' | 'setAttribute'>) {
+function constrain(
+  element: Pick<HTMLElement, 'getBoundingClientRect' | 'setAttribute'>
+) {
   let offset = element.getBoundingClientRect().y;
 
   /**

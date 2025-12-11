@@ -23,7 +23,7 @@ export default class CopyMenu extends Component {
   <template>
     <Menu data-test-copy-menu>
       <:trigger as |t|>
-        <t.Default class="absolute right-4 top-3 z-10" data-test-copy-menu>
+        <t.Default class="right-4 top-3 absolute z-10" data-test-copy-menu>
           📋
         </t.Default>
       </:trigger>

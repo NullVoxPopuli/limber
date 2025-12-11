@@ -108,12 +108,20 @@ setupCompiler(this, {
  */
 export const ALL = [
   { format: 'gmd', label: 'Welcome', snippet: DEFAULT_SNIPPET },
-  { format: 'md', label: 'All Frameworks in Markdown', path: '/samples/all.md' },
+  {
+    format: 'md',
+    label: 'All Frameworks in Markdown',
+    path: '/samples/all.md',
+  },
   { format: 'gjs', label: 'Ember GJS', path: '/samples/gjs-demo.gjs' },
   { format: 'svelte', label: 'Svelte', path: '/samples/svelte-demo.svelte' },
   { format: 'js', label: 'Vanilla JS', path: '/samples/js-demo.js' },
   // Yaml
-  { format: 'mermaid', label: 'Mermaid', path: '/samples/mermaid-demo.mermaid' },
+  {
+    format: 'mermaid',
+    label: 'Mermaid',
+    path: '/samples/mermaid-demo.mermaid',
+  },
   { format: 'vue', label: 'Vue', path: '/samples/vue-demo.vue' },
   {
     format: 'jsx|react',
@@ -122,8 +130,16 @@ export const ALL = [
     qps: { shadowdom: '0' },
   },
   { format: 'hbs', label: 'Ember HBS', path: '/samples/hbs-demo.hbs' },
-  { format: 'md', label: 'With inline Javascript', path: '/samples/live-js.md' },
-  { format: 'gmd', label: 'With inline Templates', path: '/samples/live-hbs.md' },
+  {
+    format: 'md',
+    label: 'With inline Javascript',
+    path: '/samples/live-js.md',
+  },
+  {
+    format: 'gmd',
+    label: 'With inline Templates',
+    path: '/samples/live-hbs.md',
+  },
   {
     format: 'md',
     label: 'Styleguide Demo',

@@ -47,13 +47,13 @@ const emberCompilationModules = {
   '@ember/template-compiler': () => import('@ember/template-compiler/runtime'),
   'ember-source/dist/ember-template-compiler': () =>
     import(
-      // eslint-disable-next-line
+       
       // @ts-ignore
       'ember-source/dist/ember-template-compiler.js'
     ),
   'ember-source/dist/ember-template-compiler.js': () =>
     import(
-      // eslint-disable-next-line
+       
       // @ts-ignore
       'ember-source/dist/ember-template-compiler.js'
     ),
@@ -66,7 +66,7 @@ const emberCompilationModules = {
     import('babel-plugin-ember-template-compilation'),
   // Dependencies of the above
   'babel-import-util': () => import('babel-import-util'),
-  // eslint-disable-next-line
+   
   // @ts-ignore
   'babel-plugin-debug-macros': () => import('babel-plugin-debug-macros'),
   '@embroider/macros': () => ({
@@ -101,7 +101,7 @@ const emberCompilationModules = {
       },
     }),
     // Private
-    // eslint-disable-next-line
+     
     // @ts-ignore
     importSync: (x: string) => window[Symbol.for('__repl-sdk__compiler__')].resolves[x],
     moduleExists: () => false,

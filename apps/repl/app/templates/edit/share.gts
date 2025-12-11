@@ -29,12 +29,21 @@ const not = (x: unknown) => !x;
 
 export const Share = <template>
   <Modal as |m|>
-    <button data-share-button type="button" {{on "click" m.open}} {{m.focusOnClose}}>
-      <span class="hidden sm:inline-flex">Share</span>
+    <button
+      data-share-button
+      type="button"
+      {{on "click" m.open}}
+      {{m.focusOnClose}}
+    >
+      <span class="sm:inline-flex hidden">Share</span>
       <FaIcon @icon={{faShareFromSquare}} />
     </button>
 
-    <m.Dialog class="preem" inert={{not m.isOpen}} {{focusTrap isActive=m.isOpen}}>
+    <m.Dialog
+      class="preem"
+      inert={{not m.isOpen}}
+      {{focusTrap isActive=m.isOpen}}
+    >
       <SaveBanner @isShowing={{isShowing.current}} />
 
       {{#if m.isOpen}}
@@ -78,7 +87,11 @@ class ShareModal extends Component<{ onCancel: () => void }> {
       <footer>
         <div class="right">
           <div class="buttons">
-            <button type="button" class="cancel" {{on "click" @onCancel}}>Close</button>
+            <button
+              type="button"
+              class="cancel"
+              {{on "click" @onCancel}}
+            >Close</button>
             {{#unless this.shortUrl}}
               <button type="submit">Create Link</button>
             {{/unless}}
@@ -120,7 +133,8 @@ class ShareModal extends Component<{ onCancel: () => void }> {
 
     if (!href.includes('glimdown.com')) {
       if (href.includes('localhost')) {
-        this.error = "You're on localhost, silly, here is a fake error with fake URL";
+        this.error =
+          "You're on localhost, silly, here is a fake error with fake URL";
         this.shortUrl = 'https://share.glimdown.com/something';
       } else {
         this.error = 'This is only supported on glimdown.com';
@@ -167,7 +181,10 @@ const ReadonlyField: TOC<{
     <span class="field-input">
       <input value={{@value}} name="share-copy" readonly ...attributes />
       {{#if @copyable}}
-        <button type="button" {{on "click" (fn writeToClipboard @value)}}>Copy</button>
+        <button
+          type="button"
+          {{on "click" (fn writeToClipboard @value)}}
+        >Copy</button>
       {{/if}}
     </span>
   </span>

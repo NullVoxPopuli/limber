@@ -19,8 +19,9 @@ export const GMD = <template>
 
   <p>
     This is the Glimmer-flavored markdown experiment that started the
-    <ExternalLink href="https://limber.glimdown.com">Limber REPL</ExternalLink>. It uses
-    GitHub-flavored markdown while allowing some Glimmer syntax without the need for a
+    <ExternalLink href="https://limber.glimdown.com">Limber REPL</ExternalLink>.
+    It uses GitHub-flavored markdown while allowing some Glimmer syntax without
+    the need for a
     <em>live code fence</em>
     -- though live code fences are supported just as they are in regular
     <code>md</code>.

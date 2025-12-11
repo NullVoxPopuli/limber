@@ -13,12 +13,12 @@ import { Share } from './share.gts';
 
 <template>
   <header
-    class="bg-ember-black z-20 flex max-h-12 items-center justify-between px-1 py-2 drop-shadow-lg md:px-4"
+    class="bg-ember-black max-h-12 px-1 py-2 drop-shadow-lg md:px-4 z-20 flex items-center justify-between"
   >
-    <div class="flex items-center gap-2">
-      <h1 class="text-ember-brand flex items-center gap-2">
+    <div class="gap-2 flex items-center">
+      <h1 class="text-ember-brand gap-2 flex items-center">
         <a
-          class="hidden focus:outline-none focus:ring-4 focus-visible:outline-none md:inline-block"
+          class="md:inline-block hidden focus:ring-4 focus:outline-none focus-visible:outline-none"
           href="https://emberjs.com"
           target="_blank"
           rel="noreferrer noopener"
@@ -35,10 +35,10 @@ import { Share } from './share.gts';
       <Share />
     </div>
 
-    <nav class="flex items-baseline gap-2 text-white">
-      <ExternalLink href="/docs" class="hidden sm:block">
+    <nav class="gap-2 text-white flex items-baseline">
+      <ExternalLink href="/docs" class="sm:block hidden">
         <:custom as |DefaultContent|>
-          <span class="hidden md:block">
+          <span class="md:block hidden">
             <DefaultContent>
               Docs
             </DefaultContent>
@@ -49,9 +49,9 @@ import { Share } from './share.gts';
           </span>
         </:custom>
       </ExternalLink>
-      <ExternalLink href="/bundle.html" class="hidden sm:block">
+      <ExternalLink href="/bundle.html" class="sm:block hidden">
         <:custom as |DefaultContent|>
-          <span class="hidden md:block">
+          <span class="md:block hidden">
             <DefaultContent>
               Bundle
             </DefaultContent>
@@ -61,9 +61,12 @@ import { Share } from './share.gts';
           </span>
         </:custom>
       </ExternalLink>
-      <ExternalLink href="https://github.com/nullvoxpopuli/limber" class="hidden px-2 sm:block">
+      <ExternalLink
+        href="https://github.com/nullvoxpopuli/limber"
+        class="px-2 sm:block hidden"
+      >
         <:custom as |DefaultContent|>
-          <span class="hidden md:block">
+          <span class="md:block hidden">
             <DefaultContent>
               GitHub
             </DefaultContent>

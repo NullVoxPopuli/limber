@@ -114,7 +114,7 @@
     "vite-plugin-mkcert": "^1.17.9"
   },
   "engines": {
-    "node": ">= v22"
+    "node": ">= v24"
   },
   "ember": {
     "edition": "octane"

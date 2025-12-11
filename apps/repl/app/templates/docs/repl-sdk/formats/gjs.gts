@@ -19,7 +19,9 @@ export const GJS = <template>
 
   <p>
     This is the Glimmer-flavored JavaScript syntax from
-    <ExternalLink href="https://guides.emberjs.com/release/components/template-tag-format/">Ember JS</ExternalLink>.
+    <ExternalLink
+      href="https://guides.emberjs.com/release/components/template-tag-format/"
+    >Ember JS</ExternalLink>.
 
     <snippet.js @code={{usage}} />
   </p>

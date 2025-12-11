@@ -23,9 +23,10 @@ export const HBSEmber = <template>
   <p>
     While sharing the exetnsion for handlebars, this format used by
     <ExternalLink href="https://emberjs.com/">emberjs</ExternalLink>
-    is not strictly handlebars. It is both subset and superset, in that not all handlebars features
-    are supported (for clarity reasons), and there are additional syntaxes that don't make sense in
-    handlebars (such as component syntaxes).
+    is not strictly handlebars. It is both subset and superset, in that not all
+    handlebars features are supported (for clarity reasons), and there are
+    additional syntaxes that don't make sense in handlebars (such as component
+    syntaxes).
 
     <snippet.js @code={{usage}} />
   </p>

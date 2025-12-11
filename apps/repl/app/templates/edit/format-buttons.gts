@@ -3,7 +3,10 @@ import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
-import { type ItemSignature, ToggleGroup } from 'ember-primitives/components/toggle-group';
+import {
+  type ItemSignature,
+  ToggleGroup,
+} from 'ember-primitives/components/toggle-group';
 
 import { usage } from '#app/languages.gts';
 
@@ -39,7 +42,7 @@ export const FormatButtons: TOC<object> = <template>
         <Option
           @value={{info.formatQP}}
           @description={{info.name}}
-          class="hidden md:inline-block"
+          class="md:inline-block hidden"
         >{{toUpper info.ext}}</Option>
       {{/each}}
     {{/let}}
@@ -77,7 +80,9 @@ class Option extends Component<{
   @service declare editor: EditorService;
 
   active = (format: string) => {
-    return this.format === format ? 'bg-[#333] text-white' : 'bg-ember-black text-white';
+    return this.format === format
+      ? 'bg-[#333] text-white'
+      : 'bg-ember-black text-white';
   };
 
   /**
@@ -87,7 +92,10 @@ class Option extends Component<{
   switch = (value: FormatQP): void => {
     const stored = getStoredDocumentForFormat(value);
 
-    this.editor.fileURIComponent.set(stored ?? defaultSnippetForFormat(value), value);
+    this.editor.fileURIComponent.set(
+      stored ?? defaultSnippetForFormat(value),
+      value
+    );
   };
 
   get format(): FormatQP {

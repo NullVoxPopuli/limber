@@ -10,16 +10,31 @@ export const HorizonSyntaxTheme = HighlightStyle.define([
   { tag: t.string, color: `${syntax.rosebud}${alpha.high}` },
   { tag: t.regexp, color: `${syntax.apricot}${alpha.high}` },
   { tag: t.constant(t.name), color: `${syntax.apricot}${alpha.high}` },
-  { tag: t.keyword, color: `${syntax.lavender}${alpha.high}`, fontStyle: 'italic' },
+  {
+    tag: t.keyword,
+    color: `${syntax.lavender}${alpha.high}`,
+    fontStyle: 'italic',
+  },
   { tag: t.link, textDecoration: 'underline' },
   { tag: t.strong, fontWeight: 'bold' },
   { tag: t.emphasis, fontStyle: 'italic' },
-  { tag: t.heading, color: `${syntax.lavender}${alpha.high}`, fontWeight: 'bold' },
+  {
+    tag: t.heading,
+    color: `${syntax.lavender}${alpha.high}`,
+    fontWeight: 'bold',
+  },
   { tag: t.definition(t.name), color: `${syntax.cranberry}${alpha.high}` },
   { tag: t.className, color: `${syntax.cranberry}${alpha.high}` },
   { tag: t.typeName, color: `${syntax.cranberry}${alpha.high}` },
-  { tag: t.propertyName, color: `${syntax.apricot}${alpha.high}`, fontStyle: 'italic' },
-  { tag: t.function(t.variableName), color: `${syntax.turquoise}${alpha.high}` },
+  {
+    tag: t.propertyName,
+    color: `${syntax.apricot}${alpha.high}`,
+    fontStyle: 'italic',
+  },
+  {
+    tag: t.function(t.variableName),
+    color: `${syntax.turquoise}${alpha.high}`,
+  },
   { tag: t.labelName, color: `${syntax.rosebud}${alpha.high}` },
   { tag: t.self, color: `${syntax.cranberry}${alpha.high}` },
   { tag: t.namespace, color: `${syntax.cranberry}${alpha.high}` },
@@ -36,7 +51,10 @@ export const HorizonSyntaxTheme = HighlightStyle.define([
   { tag: t.inserted, color: ui.darkText, backgroundColor: ui.positive },
 
   // ??
-  { tag: [t.color, t.constant(t.name), t.standard(t.name)], color: syntax.apricot },
+  {
+    tag: [t.color, t.constant(t.name), t.standard(t.name)],
+    color: syntax.apricot,
+  },
   { tag: [t.atom, t.bool, t.special(t.variableName)], color: syntax.lavender },
   { tag: t.invalid, color: syntax.cranberry },
 ]);
@@ -64,9 +82,10 @@ export const HorizonTheme = EditorView.theme(
     },
 
     '&.cm-focused .cm-cursor': { borderLeftColor: ui.lightText },
-    '&.cm-focused .cm-selectionBackground, .cm-selectionBackground, ::selection': {
-      backgroundColor: ui.backgroundAlt,
-    },
+    '&.cm-focused .cm-selectionBackground, .cm-selectionBackground, ::selection':
+      {
+        backgroundColor: ui.backgroundAlt,
+      },
     '&.cm-focused .cm-matchingBracket': {
       'background-color': `${ui.backgroundAlt}`,
     },

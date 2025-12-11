@@ -93,7 +93,9 @@ const languages = {
     icon: <template>
       <span style="position: relative;">
         <span>{{{FileGlimmer}}}</span>
-        <span style="position: absolute; top: 0.3rem; left: 0.4rem;">{{{NestedMarkdown}}}</span>
+        <span
+          style="position: absolute; top: 0.3rem; left: 0.4rem;"
+        >{{{NestedMarkdown}}}</span>
       </span>
     </template>,
   },
@@ -164,7 +166,10 @@ export function infoFor(format: string, flavor?: undefined | string) {
     info = LANGUAGE[key(ALIASES[format], flavor)];
   }
 
-  assert(`Could not find info for ${lang}${flavor ? ` and ${flavor}` : ''}`, info);
+  assert(
+    `Could not find info for ${lang}${flavor ? ` and ${flavor}` : ''}`,
+    info
+  );
 
   return info;
 }
@@ -177,7 +182,9 @@ export function nameFor(format: string, flavor: undefined | string) {
   return infoFor(format, flavor).name;
 }
 
-export function isAllowedFormat(x?: string | null): x is (typeof ALLOWED_FORMATS)[number] {
+export function isAllowedFormat(
+  x?: string | null
+): x is (typeof ALLOWED_FORMATS)[number] {
   return Boolean(x && ALLOWED_FORMATS.includes(x));
 }
 
@@ -185,7 +192,10 @@ function isAllowedFlavor(format: string, flavor: string) {
   return (ALLOWED_FLAVORS[format] ?? []).includes(flavor);
 }
 
-export function flavorFrom(format: string | undefined | null, flavor?: string | null) {
+export function flavorFrom(
+  format: string | undefined | null,
+  flavor?: string | null
+) {
   if (!format) return;
   if (!flavor) return;
 
@@ -238,7 +248,11 @@ class Usage {
     try {
       const parsed = JSON.parse(raw);
 
-      if (typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)) {
+      if (
+        typeof parsed === 'object' &&
+        parsed !== null &&
+        !Array.isArray(parsed)
+      ) {
         return parsed;
       }
 

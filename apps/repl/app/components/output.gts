@@ -28,7 +28,7 @@ export const Output: TOC<{
   };
 }> = <template>
   <Compiler as |context|>
-    <div class="prose relative max-w-full p-4" data-test-compiled-output>
+    <div class="prose p-4 relative max-w-full" data-test-compiled-output>
       {{!
             The copy menu exists here for two reasons:
              - we need to statically reference this component so that it doesn't get tree-shaken away

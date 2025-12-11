@@ -53,7 +53,8 @@ const Overview = <template>
         </ul>
       </li>
       <li>
-        <a href="#supported-languages-and-formats">Supported Languages and Formats</a>
+        <a href="#supported-languages-and-formats">Supported Languages and
+          Formats</a>
         <ul>
           <li><a href="#supported-markdown">Markdown</a></li>
           <li><a href="#supported-ember-gjs">Ember GJS</a></li>
@@ -80,8 +81,8 @@ const Overview = <template>
 
     This REPL uses
     <ExternalLink href="https://codemirror.net/">codemirror</ExternalLink>
-    which supports editing on both mobile and desktop devices, as well as proper keyboard
-    accessibility.
+    which supports editing on both mobile and desktop devices, as well as proper
+    keyboard accessibility.
 
     <br /><br />
 
@@ -90,9 +91,10 @@ const Overview = <template>
 
     <H2 @id="general-editing" @text="General Editing" />
 
-    Most of the supported languages and formats that build on top of javascript will require a
-    default export so that the renderer knows what to call. But for non-javascript formats where
-    there are no exports, this detail doesn't matter (such as when authoring
+    Most of the supported languages and formats that build on top of javascript
+    will require a default export so that the renderer knows what to call. But
+    for non-javascript formats where there are no exports, this detail doesn't
+    matter (such as when authoring
     <ExternalLink href="https://mermaid.js.org/">mermaid</ExternalLink>
     documents).
 
@@ -102,20 +104,23 @@ const Overview = <template>
     When using the keyboard, the
     <kbd>TAB</kbd>
     key will indent code, or dedent (via
-    <kbd>SHIFT</kbd>+<kbd>TAB</kbd>), as you may be used to in normal out-of-browser editors. In
-    order to tab-out of the editor, you'll need to press the
+    <kbd>SHIFT</kbd>+<kbd>TAB</kbd>), as you may be used to in normal
+    out-of-browser editors. In order to tab-out of the editor, you'll need to
+    press the
     <kbd>ESCAPE</kbd>
-    key first. When tabbing out of the editor, focus will hit the resize handle to change the size
-    of the editor and output pane.
+    key first. When tabbing out of the editor, focus will hit the resize handle
+    to change the size of the editor and output pane.
 
     <H3 @id="imports" @text="Imports" />
 
-    In javascript-like languages and formats (or that have a javascript-like section of their
-    format), may import from anywhere. This includes NPM, CDNs, etc. Bare specifiers, such as in
+    In javascript-like languages and formats (or that have a javascript-like
+    section of their format), may import from anywhere. This includes NPM, CDNs,
+    etc. Bare specifiers, such as in
     <code>import { ... } from 'package-name';</code>
     will reach out to NPM to download the tarball using the
     <code>latest</code>
-    tag and extract its contents. This behavior can be changed by adding more to the import path.
+    tag and extract its contents. This behavior can be changed by adding more to
+    the import path.
 
     <ul>
       <li>
@@ -128,9 +133,11 @@ const Overview = <template>
       </li>
       <li>
         <code>import { ... } from 'package-name/sub-path'</code>
-        to request a particular sub-path of the package. This is resolved via first downloading the
-        package, and then referencing the
-        <ExternalLink href="https://nodejs.org/api/packages.html#subpath-exports">sub-path exports</ExternalLink>
+        to request a particular sub-path of the package. This is resolved via
+        first downloading the package, and then referencing the
+        <ExternalLink
+          href="https://nodejs.org/api/packages.html#subpath-exports"
+        >sub-path exports</ExternalLink>
       </li>
       <li>
         <code>import { ... } from 'package-name@1.2.3/sub-path'</code>
@@ -138,28 +145,34 @@ const Overview = <template>
       </li>
       <li>
         <code>import { ... } from 'https://domain.com/any-path'</code>
-        to request a module from another server. Any URL is supported. If you find something that
-        doesn't work, please
+        to request a module from another server. Any URL is supported. If you
+        find something that doesn't work, please
         <ExternalLink href={{issueURL}}>open an issue</ExternalLink>
       </li>
       <li>
         <code>import { ... } from 'https://esm.sh/react-dom@19.1.0/client'</code>
         to request a module from
-        <ExternalLink href="https://esm.sh/">esm.sh</ExternalLink>. Any of esm.sh's URLs and query
-        parameters are supported. If you find something that doesn't work, please
+        <ExternalLink href="https://esm.sh/">esm.sh</ExternalLink>. Any of
+        esm.sh's URLs and query parameters are supported. If you find something
+        that doesn't work, please
         <ExternalLink href={{issueURL}}>open an issue</ExternalLink>
       </li>
       <li>
-        <code>import { ... } from 'https://unpkg.com/three@0.174.0/build/three.module.min.js'</code>
+        <code>import { ... } from
+          'https://unpkg.com/three@0.174.0/build/three.module.min.js'</code>
         to request a module from
-        <ExternalLink href="https://unpkg.com/">unpkg</ExternalLink>. Any of unpkg's URLs and query
-        parameters are supported. If you find something that doesn't work, please
+        <ExternalLink href="https://unpkg.com/">unpkg</ExternalLink>. Any of
+        unpkg's URLs and query parameters are supported. If you find something
+        that doesn't work, please
         <ExternalLink href={{issueURL}}>open an issue</ExternalLink>
       </li>
 
     </ul>
 
-    <H2 @id="supported-languages-and-formats" @text="Supported Languages and Formats" />
+    <H2
+      @id="supported-languages-and-formats"
+      @text="Supported Languages and Formats"
+    />
 
     <article>
       <header aria-label="Supported: Markdown">
@@ -174,17 +187,20 @@ const Overview = <template>
       ecosystem's
       <ExternalLink href="https://remark.js.org/">remark</ExternalLink>
       and
-      <ExternalLink href="https://github.com/rehypejs/rehype">rehype</ExternalLink>. By default, it
-      uses
-      <ExternalLink href="https://github.com/remarkjs/remark-gfm">GitHub-flavored Markdown</ExternalLink>
+      <ExternalLink
+        href="https://github.com/rehypejs/rehype"
+      >rehype</ExternalLink>. By default, it uses
+      <ExternalLink
+        href="https://github.com/remarkjs/remark-gfm"
+      >GitHub-flavored Markdown</ExternalLink>
       as well as header-auto-linking. Docs for GitHub-flavored Markdown
       <ExternalLink
         href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax"
-      >can be found here</ExternalLink>. Code fences can be extracted and rendered as live-demo
-      regions via using the
+      >can be found here</ExternalLink>. Code fences can be extracted and
+      rendered as live-demo regions via using the
       <code>live</code>
-      metadata on a codefence (if required by the language -- which is currently all of them except
-      mermaid). Example:
+      metadata on a codefence (if required by the language -- which is currently
+      all of them except mermaid). Example:
       <ul>
         <li>for gjs
           <CodeBlock @code={{example}} />
@@ -205,12 +221,13 @@ const Overview = <template>
 
       <code>.gjs</code>
       is the standard component file format for
-      <ExternalLink href="https://emberjs.com/">emberjs</ExternalLink>. It should function exactly
-      as you'd be used to in your local ember projects.
+      <ExternalLink href="https://emberjs.com/">emberjs</ExternalLink>. It
+      should function exactly as you'd be used to in your local ember projects.
       <br /><br />
       if GJS is new to you, you may find more information on it
-      <ExternalLink href="https://guides.emberjs.com/release/components/template-tag-format/">here,
-        on the official docs</ExternalLink>
+      <ExternalLink
+        href="https://guides.emberjs.com/release/components/template-tag-format/"
+      >here, on the official docs</ExternalLink>
       and via
       <ExternalLink class="m-0" href="https://tutorial.glimdown.com/">
         the interactive tutorial
@@ -235,8 +252,9 @@ const Overview = <template>
       </header>
 
       <ExternalLink href="https://mermaid.js.org/">Mermaid</ExternalLink>
-      is a diagramming and charting tool. It supports a vast variety of different chart types is a
-      very useful tool for aiding in bringing visualizations to markdown-based documentation.
+      is a diagramming and charting tool. It supports a vast variety of
+      different chart types is a very useful tool for aiding in bringing
+      visualizations to markdown-based documentation.
     </article>
 
     <article>
@@ -249,11 +267,12 @@ const Overview = <template>
 
       <code>.svelte</code>
       is the standard component file format for
-      <ExternalLink href="https://svelte.dev/">svelte</ExternalLink>. It should function exactly as
-      you'd be used to in your local svelte projects. As far as REPLs go though, the
+      <ExternalLink href="https://svelte.dev/">svelte</ExternalLink>. It should
+      function exactly as you'd be used to in your local svelte projects. As far
+      as REPLs go though, the
       <code>.svelte</code>
-      syntax is limited to only one component per file. So more complex usage of Svelte will be
-      limited until multi-file support is added to this REPL.
+      syntax is limited to only one component per file. So more complex usage of
+      Svelte will be limited until multi-file support is added to this REPL.
     </article>
 
     <article>
@@ -264,8 +283,8 @@ const Overview = <template>
         />
       </header>
 
-      This mode is a no-frills, "just use JavaScript" mode. You are given an element and are free to
-      manipulate that element however you wish.
+      This mode is a no-frills, "just use JavaScript" mode. You are given an
+      element and are free to manipulate that element however you wish.
 
       <div
         data-format="javascript"
@@ -287,11 +306,12 @@ const Overview = <template>
 
       <code>.vue</code>
       is the standard component file format for
-      <ExternalLink href="https://vuejs.org/">vue</ExternalLink>. It should function exactly as
-      you'd be used to in your local vue projects. As far as REPLs go though, the
+      <ExternalLink href="https://vuejs.org/">vue</ExternalLink>. It should
+      function exactly as you'd be used to in your local vue projects. As far as
+      REPLs go though, the
       <code>.vue</code>
-      syntax is limited to only one component per file. So more complex usage of Vue will be limited
-      until multi-file support is added to this REPL.
+      syntax is limited to only one component per file. So more complex usage of
+      Vue will be limited until multi-file support is added to this REPL.
     </article>
     <article>
       <header aria-label="Supported: React JSX">
@@ -303,8 +323,9 @@ const Overview = <template>
 
       <code>.jsx</code>
       is the stand component file format for
-      <ExternalLink href="https://react.dev/">react</ExternalLink>. It should function exactly as
-      you'd be used to in your local react projects. In particular,
+      <ExternalLink href="https://react.dev/">react</ExternalLink>. It should
+      function exactly as you'd be used to in your local react projects. In
+      particular,
       <ul>
         <li>block-scope behavior</li>
         <li>"infinite" nesting of JSX -> JS -> JSX -> etc expressions</li>
@@ -320,12 +341,15 @@ const Overview = <template>
       </header>
 
       <code>.hbs</code>
-      is a legacy format of Ember, and is not used in new projects. This version of
+      is a legacy format of Ember, and is not used in new projects. This version
+      of
       <code>.hbs</code>
-      is not exactly that legacy version, but is more a the "template region" of modern ember
-      components -- in that all referenced invokables are strictly defined (hard-coded as far as the
-      REPL is concerned). This mode somewhat acts like
-      <code>HTML</code>, but with extra dynamic capabilities. The invokables that are in scope for
+      is not exactly that legacy version, but is more a the "template region" of
+      modern ember components -- in that all referenced invokables are strictly
+      defined (hard-coded as far as the REPL is concerned). This mode somewhat
+      acts like
+      <code>HTML</code>, but with extra dynamic capabilities. The invokables
+      that are in scope for
       <code>.hbs</code>
       in this REPL are:
       <ul>
@@ -351,8 +375,8 @@ const Overview = <template>
 
     glimdown or
     <code>gmd</code>
-    is the glimmer-flavored-markdown language format for aiding in creating documentation with
-    highlighted and interactive code blocks.
+    is the glimmer-flavored-markdown language format for aiding in creating
+    documentation with highlighted and interactive code blocks.
 
     <br /><br />
     It differs from markdown in that it supports some light
@@ -361,14 +385,15 @@ const Overview = <template>
 
     <br />
     <br />
-    When in glimdown mode, code fences can be used to live-render components via metadata tags as
-    well as render the code snippet the live code comes from.
+    When in glimdown mode, code fences can be used to live-render components via
+    metadata tags as well as render the code snippet the live code comes from.
 
     <CodeBlock @code={{sample}} />
 
     <MetadataTags />
 
-    All supported languages and formats can be used in the codefence blocks. Example for live gjs
+    All supported languages and formats can be used in the codefence blocks.
+    Example for live gjs
     <CodeBlock @code={{example}} />
 
     Example for live mermaid

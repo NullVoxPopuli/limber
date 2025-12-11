@@ -27,7 +27,12 @@ export class Page extends PageObject {
       t,
       format,
       checks,
-    }: { t?: string; c?: string; format?: string; checks?: { aborted?: boolean } } = {}
+    }: {
+      t?: string;
+      c?: string;
+      format?: string;
+      checks?: { aborted?: boolean };
+    } = {}
   ) {
     // let sawExpectedError = false;
 
@@ -38,7 +43,10 @@ export class Page extends PageObject {
     try {
       await visit(to);
     } catch (e) {
-      assert('Expected error to be an object', typeof e === 'object' && e !== null);
+      assert(
+        'Expected error to be an object',
+        typeof e === 'object' && e !== null
+      );
       assert(
         'Expected error to have a message property',
         'message' in e && typeof e.message === 'string'

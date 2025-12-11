@@ -9,7 +9,7 @@ export const HBS = <template>
 
   <p>
     This is the extension used for
-    <ExternalLink href="https://handlebarsjs.com/">Handlebars</ExternalLink>. Actual handlebars
-    itself has no renderer at the moment.
+    <ExternalLink href="https://handlebarsjs.com/">Handlebars</ExternalLink>.
+    Actual handlebars itself has no renderer at the moment.
   </p>
 </template> satisfies SimpleComponent;

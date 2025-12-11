@@ -11,10 +11,12 @@ import { REPL } from 'limber-ui';
 import type { TOC } from '@ember/component/template-only';
 
 export const Live = <template>
-  <span class="tag-label" aria-label="live" style="display: inline-block">⚡ live</span>
+  <span class="tag-label" aria-label="live" style="display: inline-block">⚡
+    live</span>
 </template>;
 export const Refresh = <template>
-  <span class="tag-label" aria-label="Refresh" style="display: inline-block">🔃 reload</span>
+  <span class="tag-label" aria-label="Refresh" style="display: inline-block">🔃
+    reload</span>
 </template>;
 
 export const Option: TOC<{
@@ -54,7 +56,9 @@ const allowed = new Set([
 ]);
 
 function allow(object: Record<string, any>) {
-  return Object.fromEntries(Object.entries(object).filter(([key]) => allowed.has(key)));
+  return Object.fromEntries(
+    Object.entries(object).filter(([key]) => allowed.has(key))
+  );
 }
 
 export class Example extends Component<{
@@ -116,7 +120,9 @@ export class Example extends Component<{
 
     const result =
       begin +
-      (body.length > 1 ? body.map((x) => `\n  ${x}`).join('') : body.map((x) => ` ${x}`).join('')) +
+      (body.length > 1
+        ? body.map((x) => `\n  ${x}`).join('')
+        : body.map((x) => ` ${x}`).join('')) +
       ' ' +
       end;
 
@@ -135,7 +141,10 @@ export class Example extends Component<{
   }
 
   <template>
-    <div class="limber__docs__option__example" data-configurable={{String this.isConfigurable}}>
+    <div
+      class="limber__docs__option__example"
+      data-configurable={{String this.isConfigurable}}
+    >
       {{#if this.isConfigurable}}
         <Form @onChange={{this.update}}>
           <div class="label">

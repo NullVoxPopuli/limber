@@ -1,5 +1,9 @@
 import { assert } from '@ember/debug';
-import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
+import {
+  isDestroyed,
+  isDestroying,
+  registerDestructor,
+} from '@ember/destroyable';
 import { service } from '@ember/service';
 import { waitForPromise } from '@ember/test-waiters';
 
@@ -52,7 +56,8 @@ class CodeMirror extends Modifier<Signature> {
      * - editorLoad=onclick
      * - editorLoad=never
      */
-    const { editorLoad, forceEditor } = this.router.currentRoute?.queryParams ?? {};
+    const { editorLoad, forceEditor } =
+      this.router.currentRoute?.queryParams ?? {};
 
     if (editorLoad === 'never') {
       return;
@@ -84,10 +89,18 @@ class CodeMirror extends Modifier<Signature> {
       waitForPromise(
         this.setup(element)
           .then(() => {
-            named.onStateChange?.({ isLoading: false, isDone: true, error: null });
+            named.onStateChange?.({
+              isLoading: false,
+              isDone: true,
+              error: null,
+            });
           })
           .catch((e) => {
-            named.onStateChange?.({ isLoading: false, isDone: false, error: e });
+            named.onStateChange?.({
+              isLoading: false,
+              isDone: false,
+              error: e,
+            });
           })
       );
     };
@@ -150,7 +163,10 @@ class CodeMirror extends Modifier<Signature> {
 
     if (isDestroyed(this) || isDestroying(this)) return;
 
-    assert(`can only install codemirror editor an an HTMLElement`, element instanceof HTMLElement);
+    assert(
+      `can only install codemirror editor an an HTMLElement`,
+      element instanceof HTMLElement
+    );
 
     const { text: value } = this.editor;
     let formatFromURL: string = this.editor.format;
@@ -196,7 +212,8 @@ class CodeMirror extends Modifier<Signature> {
     const scrollable = document.querySelector('.cm-scroller');
 
     if (scrollable instanceof HTMLElement) {
-      this.editor.scrollbarWidth = scrollable.offsetWidth - scrollable.clientWidth;
+      this.editor.scrollbarWidth =
+        scrollable.offsetWidth - scrollable.clientWidth;
     }
 
     registerDestructor(this, () => view.destroy());

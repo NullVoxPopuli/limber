@@ -5,7 +5,6 @@ import Resolver from 'ember-resolver';
 import config from './config.ts';
 import Router from './router';
 // I don't want to make this TS
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import EntryTemplate from './templates/application.gjs';
 

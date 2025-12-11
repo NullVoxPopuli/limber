@@ -23,7 +23,8 @@ function bundle(name: string, loader: () => Promise<{ default: unknown }>[]) {
 
       if (template) results[`limber/templates/${slashName}`] = template.default;
       if (route) results[`limber/routes/${slashName}`] = route.default;
-      if (controller) results[`limber/controllers/${slashName}`] = controller.default;
+      if (controller)
+        results[`limber/controllers/${slashName}`] = controller.default;
 
       return {
         default: results,

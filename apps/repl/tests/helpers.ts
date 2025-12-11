@@ -5,7 +5,9 @@ import { clearCache } from 'ember-repl/test-support';
 
 import type { Registry } from '@ember/service';
 
-export function getService<Key extends keyof Registry>(name: Key): Registry[Key] {
+export function getService<Key extends keyof Registry>(
+  name: Key
+): Registry[Key] {
   return (getContext() as any).owner /* TYPE IS INCORRECT */
     .lookup(`service:${name}`);
 }

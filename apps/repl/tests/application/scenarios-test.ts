@@ -54,7 +54,10 @@ module('Scenarios', function (hooks) {
         assert.true(page.editor.hasText(demoText), 'snippet loaded');
 
         assert.true(page.out.hasCodeSnippets, 'snippets exist');
-        assert.true(page.out.hasRenderedSnippets, 'snippet content is rendered');
+        assert.true(
+          page.out.hasRenderedSnippets,
+          'snippet content is rendered'
+        );
         assert.true(
           page.out.content?.includes('clicked the button 0 times'),
           'output text is present'
@@ -80,7 +83,10 @@ module('Scenarios', function (hooks) {
         assert.true(page.out.hasCodeSnippets);
         assert.true(page.out.hasRenderedSnippets);
 
-        assert.true(page.out.content?.includes(`Ember.JS' Site`), 'Text is rendered');
+        assert.true(
+          page.out.content?.includes(`Ember.JS' Site`),
+          'Text is rendered'
+        );
       });
 
       test('REPL', async function (assert) {
@@ -96,7 +102,10 @@ module('Scenarios', function (hooks) {
         assert.true(page.out.hasCodeSnippets);
         assert.true(page.out.hasRenderedSnippets);
 
-        assert.true(page.out.content?.includes('Render'), 'Render button .. rendered');
+        assert.true(
+          page.out.content?.includes('Render'),
+          'Render button .. rendered'
+        );
       });
     });
 
@@ -130,7 +139,10 @@ module('Scenarios', function (hooks) {
         assert.true(page.editor.hasText(demoText), 'snippet loaded');
 
         assert.true(page.out.hasCodeSnippets, 'snippets exist');
-        assert.true(page.out.hasRenderedSnippets, 'snippet content is rendered');
+        assert.true(
+          page.out.hasRenderedSnippets,
+          'snippet content is rendered'
+        );
         assert.true(
           page.out.content?.includes('clicked the button 0 times'),
           'output text is present'

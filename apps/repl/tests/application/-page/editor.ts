@@ -8,7 +8,8 @@ import { diffText } from 'onp/dist';
 
 import { s } from './-helpers';
 
-const removeInvisibleCharacters = (text: string) => text.replaceAll(/[\n\r\s]+/g, '');
+const removeInvisibleCharacters = (text: string) =>
+  text.replaceAll(/[\n\r\s]+/g, '');
 
 export class Editor extends PageObject {
   async load() {
@@ -20,7 +21,10 @@ export class Editor extends PageObject {
   get format() {
     const element = this.element?.querySelector('div[data-format]');
 
-    assert(`Could not find element that codemirror should be attached to`, element);
+    assert(
+      `Could not find element that codemirror should be attached to`,
+      element
+    );
 
     return element.getAttribute('data-format');
   }

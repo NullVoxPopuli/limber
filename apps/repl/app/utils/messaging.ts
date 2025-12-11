@@ -31,11 +31,16 @@ export type ToParent = Ready | Error | Success | CompileBegin;
 
 export const STATUSES = ['ready', 'error'] as const;
 
-export const hasFrom = (x?: object): x is { from: unknown } => Boolean(x && 'from' in x);
-export const hasFormat = (x?: object): x is { format: unknown } => Boolean(x && 'format' in x);
-export const hasContent = (x?: object): x is { content: unknown } => Boolean(x && 'content' in x);
+export const hasFrom = (x?: object): x is { from: unknown } =>
+  Boolean(x && 'from' in x);
+export const hasFormat = (x?: object): x is { format: unknown } =>
+  Boolean(x && 'format' in x);
+export const hasContent = (x?: object): x is { content: unknown } =>
+  Boolean(x && 'content' in x);
 
-export function fromOutput<T extends { from?: string }>(x?: T | null): x is T & FromOutput {
+export function fromOutput<T extends { from?: string }>(
+  x?: T | null
+): x is T & FromOutput {
   if (!x) return false;
 
   if ('from' in x && x.from) {
@@ -45,7 +50,9 @@ export function fromOutput<T extends { from?: string }>(x?: T | null): x is T & 
   return false;
 }
 
-export function fromParent<T extends { from?: string }>(x?: T | null): x is T & FromParent {
+export function fromParent<T extends { from?: string }>(
+  x?: T | null
+): x is T & FromParent {
   if (!x) return false;
 
   if ('from' in x && x.from) {
@@ -56,7 +63,9 @@ export function fromParent<T extends { from?: string }>(x?: T | null): x is T & 
 }
 
 export function fileFromParams(search: string | object = location.search) {
-  const qps = new URLSearchParams(typeof search === 'string' ? search : Object.entries(search));
+  const qps = new URLSearchParams(
+    typeof search === 'string' ? search : Object.entries(search)
+  );
 
   return {
     text: getText(qps) ?? null,

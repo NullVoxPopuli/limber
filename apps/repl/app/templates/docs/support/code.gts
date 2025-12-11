@@ -8,7 +8,8 @@ import type { TOC } from '@ember/component/template-only';
 
 export const sample = '```{language} {...metadata}\n' + 'code\n' + '```';
 
-export const example = '```gjs live\n' + '<template>\n' + '  code\n' + '</template>\n' + '```';
+export const example =
+  '```gjs live\n' + '<template>\n' + '  code\n' + '</template>\n' + '```';
 
 export const exampleMermaid =
   '```mermaid\n' +
@@ -19,19 +20,23 @@ export const exampleMermaid =
   '```';
 
 export const CodeBlock: TOC<{ Args: { code: string } }> = <template>
-  <div data-format="md" {{highlighted @code}}><pre><code>{{@code}}</code></pre></div>
+  <div data-format="md" {{highlighted @code}}><pre><code
+      >{{@code}}</code></pre></div>
 </template>;
 
 const JSCodeBlock: TOC<{ Args: { code: string } }> = <template>
-  <div data-format="js" {{highlighted @code}}><pre><code>{{@code}}</code></pre></div>
+  <div data-format="js" {{highlighted @code}}><pre><code
+      >{{@code}}</code></pre></div>
 </template>;
 
 const MDCodeBlock: TOC<{ Args: { code: string } }> = <template>
-  <div data-format="md" {{highlighted @code}}><pre><code>{{@code}}</code></pre></div>
+  <div data-format="md" {{highlighted @code}}><pre><code
+      >{{@code}}</code></pre></div>
 </template>;
 
 const VueCodeBlock: TOC<{ Args: { code: string } }> = <template>
-  <div data-format="vue" {{highlighted @code}}><pre><code>{{@code}}</code></pre></div>
+  <div data-format="vue" {{highlighted @code}}><pre><code
+      >{{@code}}</code></pre></div>
 </template>;
 
 export const snippet = {
