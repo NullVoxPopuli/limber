@@ -21,7 +21,7 @@
     "@babel/core": "^7.28.5",
     "@glint/ember-tsc": "^1.0.8",
     "@glint/tsserver-plugin": "^2.0.8",
-    "@nullvoxpopuli/eslint-configs": "^5.3.4",
+    "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "concurrently": "^9.2.1",
     "dev-tools": "workspace:*",
     "ember-template-lint": "^7.9.3",

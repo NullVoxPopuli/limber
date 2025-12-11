@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",
-    "@nullvoxpopuli/eslint-configs": "^5.3.4",
+    "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "autoprefixer": "^10.4.22",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.1",

@@ -13,7 +13,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.28.0",
     "@babel/standalone": "^7.28.5",
-    "@nullvoxpopuli/eslint-configs": "^5.3.4",
+    "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "@testing-library/dom": "^10.4.1",
     "@tsconfig/ember": "^3.0.7",
     "@types/common-tags": "^1.8.4",

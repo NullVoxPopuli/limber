@@ -32,11 +32,18 @@ export default defineConfig({
          * Generate the types (these include /// <reference types="ember-source/types"
          * but our consumers may not be using those, or have a new enough ember-source that provides them.
          */
-        await execaCommand(`pnpm ember-tsc --declaration`, { stdio: "inherit" });
+        await execaCommand(`pnpm ember-tsc --declaration`, {
+          stdio: "inherit",
+        });
 
-        await fixBadDeclarationOutput("declarations/**/*.d.ts", ["TypeScript#56571", "Glint#628"]);
+        await fixBadDeclarationOutput("declarations/**/*.d.ts", [
+          "TypeScript#56571",
+          "Glint#628",
+        ]);
 
-        console.log("⚠️ Dangerously (but neededly) fixed bad declaration output from typescript");
+        console.log(
+          "⚠️ Dangerously (but neededly) fixed bad declaration output from typescript",
+        );
       },
     },
   ],

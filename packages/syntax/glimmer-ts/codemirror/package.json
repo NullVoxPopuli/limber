@@ -23,7 +23,7 @@
     "@glimdown/lezer-infra": "workspace:*",
     "@lezer/common": "^1.2.3",
     "@lezer/generator": "^1.7.2",
-    "@nullvoxpopuli/eslint-configs": "^5.3.4",
+    "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "@tsconfig/ember": "^3.0.9",
     "codemirror": "^6.0.2",
     "concurrently": "^9.2.1",
@@ -31,7 +31,7 @@
     "prettier": "^3.7.4",
     "rollup": "^4.53.3",
     "rollup-plugin-ts": "^3.4.5",
-    "typescript": "5.8.3"
+    "typescript": "5.9.3"
   },
   "dependencies": {
     "@codemirror/lang-css": "^6.3.1",

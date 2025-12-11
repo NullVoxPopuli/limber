@@ -22,12 +22,12 @@
     "@babel/core": "^7.28.5",
     "@glimdown/lezer-infra": "workspace:*",
     "@lezer/generator": "^1.7.2",
-    "@nullvoxpopuli/eslint-configs": "^5.3.4",
+    "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "eslint": "^9.39.1",
     "prettier": "^3.7.4",
     "rollup": "^4.53.3",
-    "typescript": "5.8.3"
+    "typescript": "5.9.3"
   },
   "dependencies": {
     "@lezer/highlight": "^1.2.1",
