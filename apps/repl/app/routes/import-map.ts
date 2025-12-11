@@ -27,8 +27,7 @@ export const importMap = {
   'limber/components/limber/header': () => import('#edit/header.gts'),
   'limber/components/limber/menu': () => import('#components/menu.gts'),
   'limber/components/menu': () => import('#components/menu.gts'),
-  '@fortawesome/fontawesome-svg-core': () =>
-    import('@fortawesome/fontawesome-svg-core'),
+  '@fortawesome/fontawesome-svg-core': () => import('@fortawesome/fontawesome-svg-core'),
 
   // non-ember libraries
   xstate: () => import('xstate'),
@@ -57,11 +56,7 @@ export const importMap = {
 
 function defineWithWarning(
   obj: object | (() => unknown),
-  {
-    name,
-    original,
-    replacement,
-  }: { name?: string; original: string; replacement?: string }
+  { name, original, replacement }: { name?: string; original: string; replacement?: string }
 ) {
   Object.defineProperty(importMap, original, {
     get() {
@@ -106,11 +101,7 @@ defineWithWarning(
 
     return { default: ePrimitives.Shadowed, Shadowed: ePrimitives.Shadowed };
   },
-  {
-    name: '<Shadowed />',
-    original: 'limber/components/shadowed',
-    replacement: 'ember-primitives',
-  }
+  { name: '<Shadowed />', original: 'limber/components/shadowed', replacement: 'ember-primitives' }
 );
 defineWithWarning(() => import('#components/menu.gts'), {
   original: 'limber/components/limber/menu',

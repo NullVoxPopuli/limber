@@ -6,16 +6,13 @@ export class OutputArea extends PageObject {
   get content() {
     assert('Output frame does not exist', this._innerDocument);
 
-    return this._innerDocument.querySelector('[data-test-compiled-output]')
-      ?.textContent;
+    return this._innerDocument.querySelector('[data-test-compiled-output]')?.textContent;
   }
 
   get firstButton() {
     assert('Output frame does not exist', this._innerDocument);
 
-    const buttonsList = this._innerDocument.querySelectorAll(
-      '.glimdown-render > button'
-    );
+    const buttonsList = this._innerDocument.querySelectorAll('.glimdown-render > button');
     const buttons = [...buttonsList] as HTMLButtonElement[];
     const button = buttons.find((button) => !button.dataset['test-copy-menu']);
 
@@ -25,10 +22,7 @@ export class OutputArea extends PageObject {
   }
 
   get hasRenderedSnippets() {
-    return (
-      (this._innerDocument?.querySelectorAll('.glimdown-render')?.length || 0) >
-      0
-    );
+    return (this._innerDocument?.querySelectorAll('.glimdown-render')?.length || 0) > 0;
   }
 
   get hasCodeSnippets() {

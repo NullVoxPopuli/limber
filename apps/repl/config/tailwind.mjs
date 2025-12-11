@@ -4,10 +4,7 @@ import path from 'node:path';
 const require = createRequire(import.meta.url);
 
 const replRoot = path.join(import.meta.dirname, '..');
-const uiRoot = path.join(
-  import.meta.dirname,
-  '../../../packages/app-support/limber-ui/addon'
-);
+const uiRoot = path.join(import.meta.dirname, '../../../packages/app-support/limber-ui/addon');
 
 export default {
   content: [

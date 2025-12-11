@@ -8,10 +8,7 @@ import { FloatingUI } from 'ember-primitives/floating-ui';
 
 import type { TOC } from '@ember/component/template-only';
 import type { ComponentLike, WithBoundArgs } from '@glint/template';
-import type {
-  ItemSignature,
-  Signature as MenuSignature,
-} from 'ember-primitives/components/menu';
+import type { ItemSignature, Signature as MenuSignature } from 'ember-primitives/components/menu';
 
 type MenuType = MenuSignature['Blocks']['default'][0];
 
@@ -111,12 +108,7 @@ const Menu: TOC<{
         to="trigger"
       }}
       <FloatingUI as |reference floating|>
-        <menu.Content
-          data-test-menu-items
-          {{reference}}
-          class="limber__menu__content"
-          as |content|
-        >
+        <menu.Content data-test-menu-items {{reference}} class="limber__menu__content" as |content|>
           {{! template-lint-disable no-inline-styles }}
           <div
             class="border"

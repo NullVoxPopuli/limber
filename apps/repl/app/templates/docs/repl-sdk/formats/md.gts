@@ -38,11 +38,9 @@ export const MD = <template>
     >GitHub-flavored Markdown</ExternalLink>. It uses
     <ExternalLink href="https://remark.js.org/">Remark</ExternalLink>
     for parsing markdown, and
-    <ExternalLink
-      href="https://github.com/rehypejs/rehype"
-    >Rehype</ExternalLink>
-    for converting to HTML for actual rendering. Both remark and rehype plugins
-    are supported and configurable.
+    <ExternalLink href="https://github.com/rehypejs/rehype">Rehype</ExternalLink>
+    for converting to HTML for actual rendering. Both remark and rehype plugins are supported and
+    configurable.
     <br />
     <br />Every supported format by the compiler can be rendered via codefence.
 

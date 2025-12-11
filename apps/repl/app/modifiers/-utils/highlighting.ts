@@ -3,30 +3,22 @@ import type { HighlighterGeneric } from 'shiki';
 let HIGHLIGHT: HighlighterGeneric<never, never>;
 let promise: Promise<HighlighterGeneric<never, never>>;
 
-export async function getHighlighter(): Promise<
-  HighlighterGeneric<never, never>
-> {
+export async function getHighlighter(): Promise<HighlighterGeneric<never, never>> {
   if (promise) {
     await promise;
   }
 
   if (HIGHLIGHT) return HIGHLIGHT;
 
-  const [
-    { createHighlighterCore },
-    { createOnigurumaEngine },
-    wasm,
-    markdown,
-    dark,
-    oneDarkPro,
-  ] = await Promise.all([
-    import('shiki/core'),
-    import('shiki/engine/oniguruma'),
-    import('shiki/wasm'),
-    import('shiki/langs/markdown.mjs'),
-    import('shiki/themes/github-dark.mjs'),
-    import('shiki/themes/one-dark-pro.mjs'),
-  ]);
+  const [{ createHighlighterCore }, { createOnigurumaEngine }, wasm, markdown, dark, oneDarkPro] =
+    await Promise.all([
+      import('shiki/core'),
+      import('shiki/engine/oniguruma'),
+      import('shiki/wasm'),
+      import('shiki/langs/markdown.mjs'),
+      import('shiki/themes/github-dark.mjs'),
+      import('shiki/themes/one-dark-pro.mjs'),
+    ]);
 
   promise = createHighlighterCore({
     themes: [

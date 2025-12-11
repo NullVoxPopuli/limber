@@ -30,8 +30,7 @@ export default class Save extends Component {
     super(owner, args);
 
     const handler = (e: KeyboardEvent) => {
-      const isSave =
-        (e.ctrlKey && e.key === 's') || (e.metaKey && e.key === 's');
+      const isSave = (e.ctrlKey && e.key === 's') || (e.metaKey && e.key === 's');
 
       if (isSave) {
         e.preventDefault();
@@ -44,9 +43,7 @@ export default class Save extends Component {
 
     window.addEventListener('keydown', handler);
 
-    registerDestructor(this, () =>
-      window.removeEventListener('keydown', handler)
-    );
+    registerDestructor(this, () => window.removeEventListener('keydown', handler));
   }
 
   onSave = async () => {

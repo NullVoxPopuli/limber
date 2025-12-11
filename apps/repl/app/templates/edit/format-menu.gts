@@ -24,10 +24,7 @@ const IconItem: TOC<{
   Args: {
     format: string;
     onClick: (format: FormatQP, flavor: string | undefined) => void;
-    item: ComponentLike<{
-      Element: HTMLButtonElement;
-      Blocks: { default: [] };
-    }>;
+    item: ComponentLike<{ Element: HTMLButtonElement; Blocks: { default: [] } }>;
   };
 }> = <template>
   {{#let (infoFor @format) as |info|}}
@@ -92,21 +89,14 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
     </style>
     <Menu>
       <:trigger as |t|>
-        <t.Button
-          title="Change document language"
-          ...attributes
-          class="menu-trigger"
-        >
+        <t.Button title="Change document language" ...attributes class="menu-trigger">
           {{#if this.currentInfo}}
             <this.currentInfo.icon />
             <span>{{this.currentInfo.name}}</span>
           {{else}}
             <span>Select</span>
           {{/if}}
-          <FaIcon
-            @icon={{faCaretDown}}
-            class="menu-icon {{if t.isOpen 'upside-down'}}"
-          />
+          <FaIcon @icon={{faCaretDown}} class="menu-icon {{if t.isOpen 'upside-down'}}" />
         </t.Button>
       </:trigger>
 

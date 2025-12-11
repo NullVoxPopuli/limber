@@ -78,11 +78,7 @@ export const Controls: TOC<{
         </Button>
         {{#let (getShadowValue (qp "shadowdom")) as |shadow|}}
           <a
-            title="Toggle Shadow DOM wrapper (currently: {{if
-              shadow
-              'on'
-              'off'
-            }})"
+            title="Toggle Shadow DOM wrapper (currently: {{if shadow 'on' 'off'}})"
             href={{withQP "shadowdom" (if shadow "off" "on")}}
             class="px-3 py-2 text-xs text-white flex items-center select-none ring-inset hover:bg-[#9b2918] focus:ring-4 focus:outline-none disabled:opacity-30"
           >

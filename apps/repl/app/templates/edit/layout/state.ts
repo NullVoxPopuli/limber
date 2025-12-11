@@ -171,10 +171,8 @@ export const LayoutState = setup({
   actions: {
     maximizeEditor: ({ context }) => maximizeEditor({ context }),
     minimizeEditor: ({ context }) => minimizeEditor({ context }),
-    clearHeight: ({ context }) =>
-      context.container && clearHeight(context.container),
-    clearWidth: ({ context }) =>
-      context.container && clearWidth(context.container),
+    clearHeight: ({ context }) => context.container && clearHeight(context.container),
+    clearWidth: ({ context }) => context.container && clearWidth(context.container),
 
     restoreVerticalSplitSize: ({ context }: Data) => {
       if (!context.container) return;
@@ -264,8 +262,7 @@ export const LayoutState = setup({
         /**
          * This state machine isn't a generic thing and we always know the structure of our DOM
          */
-        handle: ({ event }) =>
-          event.container.nextElementSibling as HTMLElement,
+        handle: ({ event }) => event.container.nextElementSibling as HTMLElement,
         container: ({ event }) => event.container,
         observer: ({ event }) => event.observer,
         maximize: ({ event }) => event.maximize,
@@ -281,16 +278,14 @@ export const LayoutState = setup({
       description: DEBUG && `Determine initial orientation for initial layout.`,
       guard: canChangeOrientation,
       actions: assign({
-        actualOrientation: ({ event }) =>
-          event.isVertical ? VERTICAL : HORIZONTAL,
+        actualOrientation: ({ event }) => (event.isVertical ? VERTICAL : HORIZONTAL),
       }),
     },
   },
   states: {
     hasContainer: {
       initial: 'default',
-      description:
-        DEBUG && `When we have a div to observe, begin watching for events.`,
+      description: DEBUG && `When we have a div to observe, begin watching for events.`,
       entry: [
         assign({
           actualOrientation: detectAspectRatio,
@@ -333,24 +328,20 @@ export const LayoutState = setup({
                     description:
                       'Viewport orientation changed to be more vertical. But on touch devices, we ignore this.',
                     guard: ({ event, context }) =>
-                      event.isVertical === true &&
-                      canChangeOrientation({ context }),
+                      event.isVertical === true && canChangeOrientation({ context }),
                     target: 'horizontallySplit',
                     actions: assign({
-                      actualOrientation: ({ event }) =>
-                        event.isVertical ? VERTICAL : HORIZONTAL,
+                      actualOrientation: ({ event }) => (event.isVertical ? VERTICAL : HORIZONTAL),
                     }),
                   },
                   {
                     description:
                       'Viewport orientation changed to be more horizontal. But on touch devices, we ignore this.',
                     guard: ({ event, context }) =>
-                      event.isVertical === false &&
-                      canChangeOrientation({ context }),
+                      event.isVertical === false && canChangeOrientation({ context }),
                     target: 'verticallySplit',
                     actions: assign({
-                      actualOrientation: ({ event }) =>
-                        event.isVertical ? VERTICAL : HORIZONTAL,
+                      actualOrientation: ({ event }) => (event.isVertical ? VERTICAL : HORIZONTAL),
                     }),
                   },
                 ],
@@ -386,21 +377,18 @@ export const LayoutState = setup({
                       !hasManualOrientation({ context }),
                     target: 'verticallySplit',
                     actions: assign({
-                      actualOrientation: ({ event }) =>
-                        event.isVertical ? VERTICAL : HORIZONTAL,
+                      actualOrientation: ({ event }) => (event.isVertical ? VERTICAL : HORIZONTAL),
                     }),
                   },
                 ],
                 ROTATE: {
-                  description:
-                    DEBUG && `User manually changed the split direction`,
+                  description: DEBUG && `User manually changed the split direction`,
                   target: 'verticallySplit',
                   actions: assign({ manualOrientation: (_, __) => HORIZONTAL }),
                 },
                 RESIZE: [
                   {
-                    description:
-                      'if we retain the same orientation, persist the editor height',
+                    description: 'if we retain the same orientation, persist the editor height',
                     guard: isHorizontalSplit,
                     target: 'horizontallySplit',
                     actions: ['persistHorizontalSplitSize'],
@@ -439,21 +427,18 @@ export const LayoutState = setup({
                       !hasManualOrientation({ context }),
                     target: 'horizontallySplit',
                     actions: assign({
-                      actualOrientation: ({ event }) =>
-                        event.isVertical ? VERTICAL : HORIZONTAL,
+                      actualOrientation: ({ event }) => (event.isVertical ? VERTICAL : HORIZONTAL),
                     }),
                   },
                 ],
                 ROTATE: {
-                  description:
-                    DEBUG && `User manually changed the split direction`,
+                  description: DEBUG && `User manually changed the split direction`,
                   target: 'horizontallySplit',
                   actions: assign({ manualOrientation: (_, __) => VERTICAL }),
                 },
                 RESIZE: [
                   {
-                    description:
-                      'if we retain the same orientation, persist the editor width',
+                    description: 'if we retain the same orientation, persist the editor width',
                     guard: isVerticalSplit,
                     target: 'verticallySplit',
                     actions: ['persistVerticalSplitSize'],
@@ -534,9 +519,7 @@ const restoreWidth = (element: HTMLElement, overrideWidth?: string) => {
   element.style.maxWidth = 'calc(100vw - 72px)';
 };
 const restoreHeight = (element: HTMLElement, overrideHeight?: string) => {
-  const offset =
-    document.querySelector('main > header')?.getBoundingClientRect().height ||
-    0;
+  const offset = document.querySelector('main > header')?.getBoundingClientRect().height || 0;
 
   const size = overrideHeight ?? getSize(WHEN_HORIZONTALLY_SPLIT) ?? '';
 

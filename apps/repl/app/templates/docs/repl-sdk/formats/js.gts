@@ -24,9 +24,8 @@ export const JS = <template>
   <H3 @id="format-js">js</H3>
 
   <p>
-    This vanilla JavaScript renderer is simple in that it does nothing special
-    and leaves all the rendering to the author of the input file. A function
-    must be
+    This vanilla JavaScript renderer is simple in that it does nothing special and leaves all the
+    rendering to the author of the input file. A function must be
     <code>export default</code>ed, and it will recieve the
     <code>element</code>
     to render in to.

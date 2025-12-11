@@ -59,11 +59,7 @@ module('Editor > Format', function (hooks) {
 
     // there is no /application route
     await page.expectRedirectToContent(`application`);
-    assert.strictEqual(
-      currentURL(),
-      'application',
-      'URL is left alone for debugging'
-    );
+    assert.strictEqual(currentURL(), 'application', 'URL is left alone for debugging');
     assert.dom().containsText('ope!');
   });
 
@@ -75,11 +71,9 @@ module('Editor > Format', function (hooks) {
 
     assert.strictEqual(page.editor.format, 'gmd');
 
-    this.owner
-      .lookup('service:editor')
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      .updateDemo(defaultText, { format: 'gjs' });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    this.owner.lookup('service:editor').updateDemo(defaultText, { format: 'gjs' });
     await settled();
 
     assert.strictEqual(page.editor.format, 'gjs');

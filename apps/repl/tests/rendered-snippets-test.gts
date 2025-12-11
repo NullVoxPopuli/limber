@@ -20,11 +20,7 @@ module('Rendered Snippets / Demos', function (hooks) {
     },
   });
 
-  async function compile(
-    context: object,
-    text: string,
-    { assert }: { assert: QUnit['assert'] }
-  ) {
+  async function compile(context: object, text: string, { assert }: { assert: QUnit['assert'] }) {
     let component: ComponentLike | undefined;
     let error: string | undefined;
 

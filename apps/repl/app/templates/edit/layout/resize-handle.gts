@@ -45,15 +45,9 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] } }> {
   }
 
   setup = () => {
-    this.dragHandle.addEventListener('touchstart', this.dragStartHandler, {
-      passive: true,
-    });
-    this.dragHandle.addEventListener('mousedown', this.dragStartHandler, {
-      passive: true,
-    });
-    this.dragHandle.addEventListener('keydown', this.keyHandler, {
-      passive: true,
-    });
+    this.dragHandle.addEventListener('touchstart', this.dragStartHandler, { passive: true });
+    this.dragHandle.addEventListener('mousedown', this.dragStartHandler, { passive: true });
+    this.dragHandle.addEventListener('keydown', this.keyHandler, { passive: true });
 
     registerDestructor(this, () => {
       this.dragHandle.removeEventListener('touchstart', this.dragStartHandler);
@@ -67,11 +61,7 @@ class ResizePrevious extends Modifier<{ Args: { Positional: [string] } }> {
   };
 
   setPosition = (event: MouseEvent | PointerEvent | TouchEvent) => {
-    if (
-      'TouchEvent' in window &&
-      event instanceof TouchEvent &&
-      event.touches[0]
-    ) {
+    if ('TouchEvent' in window && event instanceof TouchEvent && event.touches[0]) {
       this.pointerX = event.touches[0].clientX;
       this.pointerY = event.touches[0].clientY;
     } else if (event instanceof PointerEvent || event instanceof MouseEvent) {
@@ -187,11 +177,7 @@ export const ResizeHandle: TOC<{
     direction: 'vertical' | 'horizontal';
   };
 }> = <template>
-  <div
-    class="relative
-      {{if (eq @direction 'horizontal') 'w-2 py-2 h-full' 'h-2 px-2 w-full'}}
-      "
-  >
+  <div class="relative {{if (eq @direction 'horizontal') 'w-2 py-2 h-full' 'h-2 px-2 w-full'}} ">
     <button
       class="{{if
           (eq @direction 'horizontal')

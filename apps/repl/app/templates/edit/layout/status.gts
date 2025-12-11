@@ -41,11 +41,7 @@ export class Status extends Component {
 
   <template>
     {{#if this.last}}
-      <footer
-        {{fadeOut this.last}}
-        data-test-status
-        class="layout__status__info"
-      >
+      <footer {{fadeOut this.last}} data-test-status class="layout__status__info">
         {{this.last}}
       </footer>
     {{/if}}

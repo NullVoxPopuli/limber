@@ -77,21 +77,14 @@ export default class EditorService extends Service {
     this.fileURIComponent.set(this.text ?? '', format);
 
     // Update the editor
-    this.setCodemirrorState?.(
-      this.text ?? '',
-      format === 'hbs' ? 'hbs|ember' : format
-    );
+    this.setCodemirrorState?.(this.text ?? '', format === 'hbs' ? 'hbs|ember' : format);
   };
 
   updateDemo = (text: string, demo: DemoEntry) => {
     const format = demo.format;
 
     // Update ourselves
-    this.fileURIComponent.set(
-      text,
-      format,
-      demo && 'qps' in demo ? demo.qps : {}
-    );
+    this.fileURIComponent.set(text, format, demo && 'qps' in demo ? demo.qps : {});
 
     // Update the editor
     this.setCodemirrorState?.(text, format === 'hbs' ? 'hbs|ember' : format);

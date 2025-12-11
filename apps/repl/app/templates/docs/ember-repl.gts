@@ -124,9 +124,7 @@ class Demo extends Component {
 
                 <li><a href="#test-support-setupCompiler">setupCompiler</a></li>
                 <li><a href="#test-support-clearCache">clearCache</a></li>
-                <li><a
-                    href="#test-support-clearCompileCache"
-                  >clearCompileCache</a></li>
+                <li><a href="#test-support-clearCompileCache">clearCompileCache</a></li>
               </ul>
             </li>
 
@@ -144,15 +142,13 @@ class Demo extends Component {
     <code>ember-repl</code>
     is an ember-specific integration with
     <a href="/docs/repl-sdk"><code>repl-sdk</code></a>
-    providing reactive APIs, test utilities, default module configurations --
-    making
+    providing reactive APIs, test utilities, default module configurations -- making
     <code>repl-sdk</code>
     more ergonomic to use in ember projects.
     <br /><br />
 
     Just like with
-    <code>repl-sdk</code>, all languages and formats can be used in the same
-    project.
+    <code>repl-sdk</code>, all languages and formats can be used in the same project.
 
     <H2 @id="install">Install</H2>
 
@@ -165,15 +161,14 @@ class Demo extends Component {
     <H2 @id="compatibility">Compatibility</H2>
 
     <ul>
-      <li><code>vite</code>
-        @ ^6+ | only vite-using ember projects are supported</li>
+      <li><code>vite</code> @ ^6+ | only vite-using ember projects are supported</li>
       <li><code>ember-source</code> @ ^6.8+</li>
     </ul>
 
     It's
     <em>possible</em>
-    that other environments and ember-source versions could work, but I don't
-    want to formally spend time figuring out how to support them.
+    that other environments and ember-source versions could work, but I don't want to formally spend
+    time figuring out how to support them.
 
     <H2 @id="api-overview">API Overview</H2>
 
@@ -187,19 +182,17 @@ class Demo extends Component {
     <ExternalLink
       href="https://github.com/NullVoxPopuli/limber/blob/main/packages/ember-repl/src/index.ts"
     >read the source</ExternalLink>
-    for the real function's method signatures. The full signatures are
-    abbreviated here in this document for brevity.
+    for the real function's method signatures. The full signatures are abbreviated here in this
+    document for brevity.
 
     <H3 class="code-link" @id="index-setupCompiler"><code>setupCompiler</code>
       from ember-repl</H3>
 
-    This is the main setup method for the compiler -- it allows you to specify
-    default options for the compilers, and define your import-map, allowing you
-    to smoothly use
+    This is the main setup method for the compiler -- it allows you to specify default options for
+    the compilers, and define your import-map, allowing you to smoothly use
     <code>ember-repl</code>
-    for any set of code (even private unpublished code), or entirely unpublished
-    modules. For example, it may be set up in the application's beforeModel
-    hook:
+    for any set of code (even private unpublished code), or entirely unpublished modules. For
+    example, it may be set up in the application's beforeModel hook:
 
     <div data-format="js" {{highlighted samples.setup.basic}}></div>
 
@@ -222,8 +215,8 @@ class Demo extends Component {
     <br />
     This function takes the
     <code>CompilerService</code>
-    a text document, and a bag of options, depending on what format is specified
-    (which is required).
+    a text document, and a bag of options, depending on what format is specified (which is
+    required).
 
     <br /><br />Example:
     <div data-format="js" {{highlighted samples.compile.basic}}></div>
@@ -234,8 +227,8 @@ class Demo extends Component {
     Returns a
     <a href="#index-CompileState">CompileState</a>.
     <br />
-    A reactive utility for building dynamic components / render-outputs of an
-    input document. This wraps the above
+    A reactive utility for building dynamic components / render-outputs of an input document. This
+    wraps the above
     <a href="#index-compile">compile</a>
     function.
 
@@ -245,8 +238,8 @@ class Demo extends Component {
     This can also be used in a class:
     <div data-format="gjs" {{highlighted samples.Compiled.inJS}}></div>
 
-    And there are sufficient overloads to allow reactive class usage via lazy
-    access via arrow functions:
+    And there are sufficient overloads to allow reactive class usage via lazy access via arrow
+    functions:
     <div data-format="gjs" {{highlighted samples.Compiled.inJSReactive}}></div>
 
     <H3 class="code-link" @id="index-getCompiler"><code>getCompiler</code>
@@ -258,8 +251,7 @@ class Demo extends Component {
     <code>owner</code>
     -- and if an owner isn't provided, we'll try to call
     <code>getOwner</code>
-    for you. You are only allowed one compiler for a whole browser document.
-    Example:
+    for you. You are only allowed one compiler for a whole browser document. Example:
 
     <div
       data-format="js"
@@ -281,8 +273,8 @@ export default class Application extends Route {
 
     This is the union of all allowed
     <code>filetype</code>
-    formats. As in what the file extension would be if the provided REPL
-    document were an actual file.
+    formats. As in what the file extension would be if the provided REPL document were an actual
+    file.
 
     <H3 class="code-link" @id="index-CompileState">type
       <code>CompileState</code>
@@ -291,8 +283,8 @@ export default class Application extends Route {
     This type is the return value from
     <code>compile</code>
     and
-    <code>Compiled</code>. It represents the state and progress of a compile
-    attempt. The important properties on this type:
+    <code>Compiled</code>. It represents the state and progress of a compile attempt. The important
+    properties on this type:
     <ul class="poor-mans-typedoc">
       <li>
         <Type @name="component" @type="ComponentLike | undefined">
@@ -306,8 +298,8 @@ export default class Application extends Route {
       </li>
       <li>
         <Type @name="isReady" @type="boolean">
-          indicates if rendering is in progress (false) or if we're ready to
-          render the component (true)
+          indicates if rendering is in progress (false) or if we're ready to render the component
+          (true)
         </Type>
       </li>
       <li>
@@ -317,14 +309,13 @@ export default class Application extends Route {
       </li>
       <li>
         <Type @name="reason" @type="string | undefined">
-          If an error occurred, this property represents a (hopefully) human
-          readable representation of what happened or what caused the error.
+          If an error occurred, this property represents a (hopefully) human readable representation
+          of what happened or what caused the error.
         </Type>
       </li>
       <li>
         <Type @name="isWaiting" @type="boolean">
-          Are we waiting for the compilation attempt to finish? This is more
-          precise than
+          Are we waiting for the compilation attempt to finish? This is more precise than
           <code>isReady</code>
           for "completion", because an error also causes
           <code>isWaiting</code>
@@ -341,19 +332,16 @@ export default class Application extends Route {
       </li>
     </ul>
 
-    <H3 class="code-link" @id="test-support-setupCompiler"><code
-      >setupCompiler</code>
+    <H3 class="code-link" @id="test-support-setupCompiler"><code>setupCompiler</code>
       from ember-repl/test-support</H3>
 
-    This test utility should be the main one used for your tests, as it
-    configures each test to start with a clean environment, clear of the main
-    caches. It does not clear the compile cache by default because the same
-    input should always create the same output -- which helps speed up test
+    This test utility should be the main one used for your tests, as it configures each test to
+    start with a clean environment, clear of the main caches. It does not clear the compile cache by
+    default because the same input should always create the same output -- which helps speed up test
     execution for repeat code samples.
 
     <br />
-    NOTE that this is not needed if your test ultimately runs code that runs the
-    app
+    NOTE that this is not needed if your test ultimately runs code that runs the app
     <code>setupCompiler</code>
     (descscribed above from the
     <code>ember-repl</code>
@@ -377,9 +365,9 @@ module('a scenario', function (hooks) {
       }}
     ></div>
 
-    By default this only provides the basics. For improving test speed, and
-    avoiding hitting the internet during testing, you may want to specify an
-    import map (which allows you to also stub modules):
+    By default this only provides the basics. For improving test speed, and avoiding hitting the
+    internet during testing, you may want to specify an import map (which allows you to also stub
+    modules):
 
     <div
       data-format="js"
@@ -420,8 +408,7 @@ module('a scenario', function (hooks) {
     Lastly,
     <code>setupCompiler</code>
     supports configuring the compilers provided by
-    <code>repl-sdk</code>, similarly to how you'd configure the compiler in your
-    actual app code:
+    <code>repl-sdk</code>, similarly to how you'd configure the compiler in your actual app code:
 
     <div
       data-format="js"
@@ -443,9 +430,9 @@ module('a scenario', function (hooks) {
       }}
     ></div>
 
-    If you have a heavy amount of configuration of the compiler in your actual
-    app code, it may be beneficial to extract that configuration to a variable
-    for sharing with this test-support version of
+    If you have a heavy amount of configuration of the compiler in your actual app code, it may be
+    beneficial to extract that configuration to a variable for sharing with this test-support
+    version of
     <code>setupCompiler</code>
 
     <H3 class="code-link" @id="test-support-clearCache"><code>clearCache</code>
@@ -481,8 +468,7 @@ module('a scenario', function (hooks) {
     However, this is not needed if you are using
     <code>setupComplier</code>.
 
-    <H3 class="code-link" @id="test-support-clearCompileCache"><code
-      >clearCompileCache</code>
+    <H3 class="code-link" @id="test-support-clearCompileCache"><code>clearCompileCache</code>
       from ember-repl/test-support</H3>
 
     This test utility will clear the overall compile cache managed by

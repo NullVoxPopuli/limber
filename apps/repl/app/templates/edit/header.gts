@@ -61,10 +61,7 @@ import { Share } from './share.gts';
           </span>
         </:custom>
       </ExternalLink>
-      <ExternalLink
-        href="https://github.com/nullvoxpopuli/limber"
-        class="px-2 sm:block hidden"
-      >
+      <ExternalLink href="https://github.com/nullvoxpopuli/limber" class="px-2 sm:block hidden">
         <:custom as |DefaultContent|>
           <span class="md:block hidden">
             <DefaultContent>

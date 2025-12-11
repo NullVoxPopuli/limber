@@ -33,10 +33,7 @@ module('Output > Demos', function (hooks) {
   module('every option correctly changes the query params', function () {
     for (const demo of ALL) {
       test(demo.label, async function (assert) {
-        this.owner.register(
-          'template:edit',
-          <template><DemoSelect /></template>
-        );
+        this.owner.register('template:edit', <template><DemoSelect /></template>);
 
         await page.expectRedirectToContent('/edit');
         await page.selectDemo(demo.label);
@@ -46,26 +43,10 @@ module('Output > Demos', function (hooks) {
         const file = fileFromParams(queryParams);
 
         assert.strictEqual(queryParams.format, demo.format);
-        assert.strictEqual(
-          file.format,
-          queryParams.format,
-          'format matches queryParams'
-        );
-        assert.strictEqual(
-          queryParams.t,
-          undefined,
-          'old format is no longer in use'
-        );
-        assert.notStrictEqual(
-          queryParams.c,
-          undefined,
-          'new format is is what is used'
-        );
-        assert.strictEqual(
-          file.text,
-          await getFromLabel(demo.label),
-          'detected text matches demo'
-        );
+        assert.strictEqual(file.format, queryParams.format, 'format matches queryParams');
+        assert.strictEqual(queryParams.t, undefined, 'old format is no longer in use');
+        assert.notStrictEqual(queryParams.c, undefined, 'new format is is what is used');
+        assert.strictEqual(file.text, await getFromLabel(demo.label), 'detected text matches demo');
       });
     }
   });

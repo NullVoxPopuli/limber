@@ -1,9 +1,7 @@
 export default {
-  plugins: [
-    'prettier-plugin-ember-template-tag',
-    'prettier-plugin-tailwindcss',
-  ],
+  plugins: ['prettier-plugin-ember-template-tag', 'prettier-plugin-tailwindcss'],
   tailwindStylesheet: './app/styles/app.css',
+  printWidth: 100,
   overrides: [
     {
       files: ['*.js', '*.ts', '*.cjs', '*.mjs', '*.cts', '*.mts', '*.cts'],

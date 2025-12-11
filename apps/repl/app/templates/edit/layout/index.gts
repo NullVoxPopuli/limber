@@ -9,48 +9,38 @@ import { EditorContainer, OutputContainer } from './containers.gts';
 import { Controls } from './controls/index.gts';
 import { Orientation } from './orientation.gts';
 import { ResizeHandle } from './resize-handle.gts';
-import {
-  isHorizontalSplit,
-  LayoutState,
-  setupResizeObserver,
-} from './state.ts';
+import { isHorizontalSplit, LayoutState, setupResizeObserver } from './state.ts';
 
 import type { TOC } from '@ember/component/template-only';
 import type { ReactiveActorFrom } from 'ember-statechart-component';
 
 type ReactiveActor = ReactiveActorFrom<typeof LayoutState>;
 
-const setupState = modifier(
-  (element: Element, [send]: [(event: string) => void]) => {
-    assert(`Element is not resizable`, element instanceof HTMLElement);
+const setupState = modifier((element: Element, [send]: [(event: string) => void]) => {
+  assert(`Element is not resizable`, element instanceof HTMLElement);
 
-    const observer = setupResizeObserver(() => send('RESIZE'));
+  const observer = setupResizeObserver(() => send('RESIZE'));
 
-    // @ts-expect-error need to fix the type of this for ember-statechart-component
-    send({
-      type: 'CONTAINER_FOUND',
-      container: element,
-      observer,
-      maximize: () => send('MAXIMIZE'),
-      minimize: () => send('MINIMIZE'),
-    });
+  // @ts-expect-error need to fix the type of this for ember-statechart-component
+  send({
+    type: 'CONTAINER_FOUND',
+    container: element,
+    observer,
+    maximize: () => send('MAXIMIZE'),
+    minimize: () => send('MINIMIZE'),
+  });
 
-    return () => send('CONTAINER_REMOVED');
-  }
-);
+  return () => send('CONTAINER_REMOVED');
+});
 
-const resizeDirection = (horzSplit: boolean) =>
-  horzSplit ? 'vertical' : 'horizontal';
+const resizeDirection = (horzSplit: boolean) => (horzSplit ? 'vertical' : 'horizontal');
 const toBoolean = (x: unknown) => Boolean(x);
 const effect = (fn: (...args: unknown[]) => void) => {
   fn();
 };
 
 const isResizable = (state: ReactiveActor) => {
-  return !(
-    state.matches('hasContainer.minimized') ||
-    state.matches('hasContainer.maximized')
-  );
+  return !(state.matches('hasContainer.minimized') || state.matches('hasContainer.maximized'));
 };
 
 /**
@@ -90,14 +80,10 @@ export const Layout: TOC<{
 
         <div
           {{! row = left to right, col = top to bottom }}
-          class="{{if horizontallySplit 'flex-col' 'flex-row'}}
-            flex overflow-hidden"
+          class="{{if horizontallySplit 'flex-col' 'flex-row'}} flex overflow-hidden"
         >
 
-          <EditorContainer
-            @splitHorizontally={{horizontallySplit}}
-            {{setupState state.send}}
-          >
+          <EditorContainer @splitHorizontally={{horizontallySplit}} {{setupState state.send}}>
             <Save />
             <Controls
               @isMinimized={{state.matches "hasContainer.minimized"}}

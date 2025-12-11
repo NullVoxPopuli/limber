@@ -14,15 +14,10 @@ export class DemoSelect extends PageObject {
     await settled();
     await click(toggleButton);
 
-    const options = [
-      ...(this.element?.parentElement?.querySelectorAll(dt('demo')) || []),
-    ];
+    const options = [...(this.element?.parentElement?.querySelectorAll(dt('demo')) || [])];
 
     const option = options.find((option) => {
-      assert(
-        `option's element has been removed`,
-        option && option instanceof HTMLButtonElement
-      );
+      assert(`option's element has been removed`, option && option instanceof HTMLButtonElement);
 
       return new RegExp(`\\b${text}\\b`).test(option.innerHTML);
     });

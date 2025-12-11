@@ -1,10 +1,6 @@
 import { tracked } from '@glimmer/tracking';
 import { assert } from '@ember/debug';
-import {
-  isDestroyed,
-  isDestroying,
-  registerDestructor,
-} from '@ember/destroyable';
+import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
 import { service } from '@ember/service';
 import { buildWaiter } from '@ember/test-waiters';
 import { isTesting, macroCondition } from '@embroider/macros';
@@ -96,9 +92,7 @@ export class FileURIComponent {
    * Used so we no-op when qps match
    */
   get #currentQPs() {
-    return (
-      this.router.currentRoute?.queryParams ?? ({} as Record<string, unknown>)
-    );
+    return this.router.currentRoute?.queryParams ?? ({} as Record<string, unknown>);
   }
 
   get #text() {
@@ -176,11 +170,7 @@ export class FileURIComponent {
   /**
    * Called during normal typing.
    */
-  set = (
-    rawText: string,
-    format: FormatQP,
-    extraQPs?: undefined | Record<string, string>
-  ) => {
+  set = (rawText: string, format: FormatQP, extraQPs?: undefined | Record<string, string>) => {
     this.#updateFormatQP(format);
     this.#updateTextQP(rawText);
 
@@ -343,10 +333,7 @@ export class FileURIComponent {
     // If either of these throw, we have something to debug.
     // Correct path execution should not result in these throwing
     assert(`Cannot update URL without required QP:format`, qps.get('format'));
-    assert(
-      `Cannot update URL without required QP:c (compressed text)`,
-      qps.get('c')
-    );
+    assert(`Cannot update URL without required QP:c (compressed text)`, qps.get('c'));
 
     /**
      * We convert to an object here because URLSearchParams returns `null`
@@ -361,9 +348,7 @@ export class FileURIComponent {
       q.shadowdom === this.#currentQPs.shadowdom
     ) {
       this.#cleanup();
-      console.debug(
-        `All query params that affect the render output are the same`
-      );
+      console.debug(`All query params that affect the render output are the same`);
 
       return;
     }
@@ -439,11 +424,7 @@ export function getStoredDocument() {
     if (activeDoc) {
       const decomposed = decomposeKey(key);
 
-      return {
-        format: decomposed.format,
-        flavor: decomposed.flavor,
-        doc: activeDoc,
-      };
+      return { format: decomposed.format, flavor: decomposed.flavor, doc: activeDoc };
     }
   }
 

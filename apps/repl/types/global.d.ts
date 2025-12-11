@@ -44,8 +44,5 @@ declare module '@ember/template-compilation' {
       ast: Array<unknown>;
     };
   }
-  export function compileTemplate(
-    template: string,
-    options: CompileOptions
-  ): any;
+  export function compileTemplate(template: string, options: CompileOptions): any;
 }
