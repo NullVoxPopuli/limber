@@ -78,7 +78,7 @@ export async function compiler(config, api) {
    * @param {string} text
    */
   async function transform(text) {
-    return babel.transform(text, {
+    return babel.transformAsync(text, {
       filename: `dynamic-repl.js`,
       plugins: [
         [
@@ -96,7 +96,7 @@ export async function compiler(config, api) {
           decoratorTransforms,
           {
             runtime: {
-              import: 'decorator-transforms/runtime',
+              import: 'decorator-transforms/runtime-esm',
             },
           },
         ],

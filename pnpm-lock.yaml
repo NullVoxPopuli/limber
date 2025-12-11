@@ -23,6 +23,9 @@ overrides:
   string.prototype.trimend: npm:@nolyfill/string.prototype.trimend@^1
 
 patchedDependencies:
+  '@babel/standalone':
+    hash: f8fdde7b389b77c83ccde66f800caaa449bdadfa51b92297f976fdfae66bfef7
+    path: patches/@babel__standalone.patch
   browserslist-generator:
     hash: 8012b033c48b9eeeb2a450dd39dcc4fd9632dda6b3697bfddcd5371ab1866ebe
     path: patches/browserslist-generator.patch
@@ -942,7 +945,7 @@ importers:
         version: 7.28.4
       '@babel/standalone':
         specifier: ^7.28.5
-        version: 7.28.5
+        version: 7.28.5(patch_hash=f8fdde7b389b77c83ccde66f800caaa449bdadfa51b92297f976fdfae66bfef7)
       '@ember/app-tsconfig':
         specifier: ^2.0.0
         version: 2.0.0
@@ -1422,7 +1425,7 @@ importers:
         version: 7.28.0(@babel/core@7.28.5)
       '@babel/standalone':
         specifier: ^7.28.5
-        version: 7.28.5
+        version: 7.28.5(patch_hash=f8fdde7b389b77c83ccde66f800caaa449bdadfa51b92297f976fdfae66bfef7)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
         version: 5.4.0(6058c65674ac8c01d58a011d0ce365a5)
@@ -12266,7 +12269,7 @@ snapshots:
 
   '@babel/runtime@7.28.4': {}
 
-  '@babel/standalone@7.28.5': {}
+  '@babel/standalone@7.28.5(patch_hash=f8fdde7b389b77c83ccde66f800caaa449bdadfa51b92297f976fdfae66bfef7)': {}
 
   '@babel/template@7.27.2':
     dependencies:
@@ -17121,7 +17124,7 @@ snapshots:
   ember-repl@6.0.0(0504b4dd70abfabe369ad6aa1e10c07e):
     dependencies:
       '@babel/helper-plugin-utils': 7.27.1
-      '@babel/standalone': 7.28.5
+      '@babel/standalone': 7.28.5(patch_hash=f8fdde7b389b77c83ccde66f800caaa449bdadfa51b92297f976fdfae66bfef7)
       '@embroider/addon-shim': 1.8.9
       '@embroider/macros': 1.16.9(@glint/template@1.7.3)
       babel-import-util: 3.0.1

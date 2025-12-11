@@ -78,7 +78,8 @@
     },
     "patchedDependencies": {
       "browserslist-generator": "patches/browserslist-generator.patch",
-      "ember-source": "patches/ember-source.patch"
+      "ember-source": "patches/ember-source.patch",
+      "@babel/standalone": "patches/@babel__standalone.patch"
     }
   }
 }
