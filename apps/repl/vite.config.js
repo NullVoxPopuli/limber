@@ -45,6 +45,31 @@ function resolveDebugger() {
   };
 }
 
+import { transform } from 'oxc-transform';
+
+function rolldownTS() {
+  return {
+    name: 'limber:ts',
+    transform: {
+      filter: {
+        id: /\.ts/,
+      },
+      async handler(code, id) {
+        const result = await transform(id, code, {
+          typescript: {
+            onlyRemoveTypeImports: true,
+            allowNamespaces: false,
+            removeClassFieldsWithoutInitializer: false,
+            rewriteImportExtensions: false,
+          },
+        });
+
+        return result;
+      },
+    },
+  };
+}
+
 export function maybeBabel(config) {
   const original = babel(config);
 
@@ -95,23 +120,20 @@ function rolldownEmberConfig() {
 
       if (!isServe) return;
 
-      // config.experimental ||= {};
+      config.experimental ||= {};
       // config.experimental.bundledDev = true;
-      config.oxc = true;
+      ((config.experimental.nativeMagicString = true), (config.oxc = true));
       delete config.resolve.extensions;
       delete config.optimizeDeps.esbuildOptions;
 
-      config.optimizeDeps.rolldownOptions ||= {}
+      config.optimizeDeps.rolldownOptions ||= {};
       config.optimizeDeps.rolldownOptions.tsconfig = true;
       config.optimizeDeps.rolldownOptions.plugins = [
         rolldownTemplateTag(),
-        resolver({ rolldown: true }),
-        // maybeBabel({
-          //   babelHelpers: 'runtime',
-          //   extensions,
-          //   configFile: require.resolve('./babel.config.mjs'),
-          // }),
-        ];
+        // resolver not needed, because everything is pmorted
+        // resolver({ rolldown: true }),
+        rolldownTS(),
+      ];
     },
   };
 }
