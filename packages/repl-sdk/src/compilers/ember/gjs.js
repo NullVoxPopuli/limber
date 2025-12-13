@@ -74,11 +74,12 @@ export async function compiler(config, api) {
 
   // let macros = embroiderMacros.buildMacros();
 
+  console.log(babel);
   /**
    * @param {string} text
    */
   async function transform(text) {
-    return babel.transform(text, {
+    return babel.transformAsync(text, {
       filename: `dynamic-repl.js`,
       plugins: [
         [

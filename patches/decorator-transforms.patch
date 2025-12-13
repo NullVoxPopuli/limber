@@ -1,0 +1,13 @@
+diff --git a/dist/index.js b/dist/index.js
+index 03e910075124f2db872f7d24c7f43ec5e94e4fb1..572c92915292fa363083f42f34718a98894443c3 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -539,7 +539,7 @@ function makeVisitor(babel) {
+                 t.thisExpression(),
+                 valueForFieldKey(t, path.node.key)
+               ]),
+-              t.identifier("void 0")
++              t.unaryExpression('void', t.numericLiteral(0), true),
+             ])
+           )
+         );

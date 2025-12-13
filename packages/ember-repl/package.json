@@ -59,7 +59,7 @@
     "@babel/eslint-parser": "^7.28.5",
     "@babel/plugin-transform-typescript": "^7.28.5",
     "@babel/runtime": "^7.28.3",
-    "@babel/standalone": "^7.28.5",
+    "@babel/standalone": "file:../../babel-standalone.tgz",
     "@ember/app-tsconfig": "^2.0.0",
     "@ember/library-tsconfig": "^2.0.0",
     "@ember/test-helpers": "^5.2.1",
