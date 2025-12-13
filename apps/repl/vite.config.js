@@ -3,7 +3,7 @@ import { createRequire } from 'node:module';
 
 import { babel } from '@rollup/plugin-babel';
 import icons from 'unplugin-icons/vite';
-import { build, defineConfig } from 'vite';
+import { defineConfig } from 'vite';
 import { analyzer } from 'vite-bundle-analyzer';
 import circleDependency from 'vite-plugin-circular-dependency';
 import mkcert from 'vite-plugin-mkcert';
@@ -12,12 +12,6 @@ const require = createRequire(import.meta.url);
 // TODO: export this separately
 const emberConfig = ember()[3];
 
-const buildMacros = [
-  '@embroider/macros',
-  '@glimmer/env',
-  '@ember/debug',
-  '@ember/application/deprecations',
-];
 /**
  * These imports are compiled away by 2 of the babel plugins
  */
@@ -25,25 +19,13 @@ const babelRequiredImports = [
   // Templates
   '@ember/template-compiler',
   '@ember/template-compilation',
-  'ember-cli-htmlbars',
-  'ember-cli-htmlbars-inline-precompile',
-  'htmlbars-inline-precompile',
 
-  ...buildMacros,
-
-  // vite-optimized variants of the above
-  '@ember_template-compiler',
-  '@ember_template-compilation',
+  // Macros
+  '@embroider/macros',
+  '@glimmer/env',
+  '@ember/debug',
+  '@ember/application/deprecations',
 ];
-
-function resolveDebugger() {
-  return {
-    name: 'limber:resolve-debugger',
-    resolveId(id, parent) {
-      console.debug({ id, parent });
-    },
-  };
-}
 
 import { transform } from 'oxc-transform';
 
@@ -52,7 +34,7 @@ function rolldownTS() {
     name: 'limber:ts',
     transform: {
       filter: {
-        id: /\.ts/,
+        id: [/\.ts/, /\.gts/],
       },
       async handler(code, id) {
         const result = await transform(id, code, {
@@ -70,14 +52,15 @@ function rolldownTS() {
   };
 }
 
-export function maybeBabel(config) {
-  const original = babel(config);
+import { transformAsync } from '@babel/core';
 
+export function maybeBabel(config) {
   return {
-    ...original,
+    name: 'limber:maybeBabel',
     transform: {
       filter: {
         code: [
+          /precompileTemplate/,
           /@action/,
           /@action\s+[a-zA-Z0-0]+/,
           /@tracked\s+[a-zA-Z0-0]+/,
@@ -85,11 +68,13 @@ export function maybeBabel(config) {
           // We don't use from "<path>" for the regex
           // because the paths can be re-written by the time babel
           // would be able to parse them
-          babelRequiredImports.map((importPath) => new RegExp(RegExp.escape(importPath))),
+          ...babelRequiredImports.map((importPath) => new RegExp(RegExp.escape(importPath))),
         ],
       },
       async handler(code, id) {
-        return original.transform.call(this, code, id);
+        return transformAsync(code, {
+          filename: id,
+        });
       },
     },
   };
@@ -116,13 +101,11 @@ function rolldownEmberConfig() {
       // mutates
       await emberConfig.config(config, env);
 
-      const isServe = env.command === 'serve';
-
-      if (!isServe) return;
-
+      config.oxc = true;
       config.experimental ||= {};
       // config.experimental.bundledDev = true;
       ((config.experimental.nativeMagicString = true), (config.oxc = true));
+      delete config.esbuild;
       delete config.resolve.extensions;
       delete config.optimizeDeps.esbuildOptions;
 
@@ -130,9 +113,16 @@ function rolldownEmberConfig() {
       config.optimizeDeps.rolldownOptions.tsconfig = true;
       config.optimizeDeps.rolldownOptions.plugins = [
         rolldownTemplateTag(),
-        // resolver not needed, because everything is pmorted
-        // resolver({ rolldown: true }),
+        resolver({ rolldown: true }),
         rolldownTS(),
+        // Libraries will have precompileTemplate and macros, etc,
+        // and we need to compile that away using this app's
+        // template compiler
+        maybeBabel({
+          babelHelpers: 'runtime',
+          extensions,
+          configFile: require.resolve('./babel.config.mjs'),
+        }),
       ];
     },
   };
@@ -151,8 +141,6 @@ export default defineConfig(() => ({
     exclude: [
       // type-only dependencies
       '@glint/template',
-      // macros must be processed by babel
-      ...buildMacros,
       // a wasm-providing dependency
       'content-tag',
       // In monorepo deps that we always want watched
@@ -177,6 +165,7 @@ export default defineConfig(() => ({
       // Theme and Syntax
       '@codemirror/language',
       '@codemirror/view',
+      '@fortawesome/ember-fontawesome/components/fa-icon',
       // REPL + Editor
       // These are all await imports for production, but for dev, we're impatient
       'ember-repl > codemirror',
@@ -245,6 +234,5 @@ export default defineConfig(() => ({
       extensions,
       configFile: require.resolve('./babel.config.mjs'),
     }),
-    // resolveDebugger(),
   ].flat(),
 }));
