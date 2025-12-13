@@ -86,6 +86,9 @@
 
       let compiler = new Compiler({
         logging: isDebug,
+        resolve: {
+          "@babel/standalone": () => import("@babel/standalone"),
+        },
       });
 
       let e = {
@@ -184,7 +187,7 @@
         e.error.innerText = "";
 
         if (isDebug) {
-          let element = await compiler.compile(format, code, { flavor });
+          let { element } = await compiler.compile(format, code, { flavor });
           e.output.innerHTML = "";
           e.output.appendChild(element);
         } else {
