@@ -3,13 +3,24 @@ import { createRequire } from 'node:module';
 
 import { babel } from '@rollup/plugin-babel';
 import icons from 'unplugin-icons/vite';
-import { defineConfig } from 'vite';
+import { build, defineConfig } from 'vite';
 import { analyzer } from 'vite-bundle-analyzer';
 import circleDependency from 'vite-plugin-circular-dependency';
 import mkcert from 'vite-plugin-mkcert';
 
 const require = createRequire(import.meta.url);
+// TODO: export this separately
+const emberConfig = ember()[3];
 
+const buildMacros = [
+  '@embroider/macros',
+  '@glimmer/env',
+  '@ember/debug',
+  '@ember/application/deprecations',
+];
+/**
+ * These imports are compiled away by 2 of the babel plugins
+ */
 const babelRequiredImports = [
   // Templates
   '@ember/template-compiler',
@@ -18,119 +29,116 @@ const babelRequiredImports = [
   'ember-cli-htmlbars-inline-precompile',
   'htmlbars-inline-precompile',
 
-  // Macros
-  '@embroider/macros',
-  '@glimmer/env',
-  '@ember/debug',
-  '@ember/application/deprecations',
+  ...buildMacros,
+
+  // vite-optimized variants of the above
+  '@ember_template-compiler',
+  '@ember_template-compilation',
 ];
 
-export function maybeBabel(config) {
-  const extensions = config.extensions;
-  const idRegex = new RegExp(`(${extensions.map((ext) => ext.replace('.', '\\.')).join('|')})$`);
-
-  const original = babel(config);
-
-  return [
-    {
-      ...original,
-      name: 'limber:maybeBabel:js-ts',
-      transform: {
-        filter: {
-          code: [
-            babelRequiredImports.map(
-              (importPath) => new RegExp(`from\\s+['"]${importPath.replace('/', '\\/')}['"]`)
-            ),
-          ],
-        },
-        async handler(code, id) {
-          return original.transform.call(this, code, id);
-        },
-      },
+function resolveDebugger() {
+  return {
+    name: 'limber:resolve-debugger',
+    resolveId(id, parent) {
+      console.debug({ id, parent });
     },
-    {
-      ...original,
-      name: 'limber:maybeBabel:gjs-gts',
-      transform: {
-        filter: {
-          id: idRegex,
-        },
-        async handler(code, id) {
-          return original.transform.call(this, code, id);
-        },
-      },
-    },
-  ];
+  };
 }
 
-function patchPlugins() {
+export function maybeBabel(config) {
+  const original = babel(config);
+
   return {
-    name: 'limber:rolldown-optimize',
-    config(config, { command }) {
-      const isServe = command === 'serve';
+    ...original,
+    transform: {
+      filter: {
+        code: [
+          /@action/,
+          /@action\s+[a-zA-Z0-0]+/,
+          /@tracked\s+[a-zA-Z0-0]+/,
+          /@cached\s+[a-zA-Z0-0]+/,
+          // We don't use from "<path>" for the regex
+          // because the paths can be re-written by the time babel
+          // would be able to parse them
+          babelRequiredImports.map((importPath) => new RegExp(RegExp.escape(importPath))),
+        ],
+      },
+      async handler(code, id) {
+        return original.transform.call(this, code, id);
+      },
+    },
+  };
+}
+
+function rolldownTemplateTag() {
+  const plugin = templateTag();
+
+  return {
+    ...plugin,
+    transform: {
+      filter: {
+        id: [/\.gjs/, /\.gts/],
+      },
+      handler: plugin.transform,
+    },
+  };
+}
+
+function rolldownEmberConfig() {
+  return {
+    name: 'limber:rolldown-config',
+    async config(config, env) {
+      // mutates
+      await emberConfig.config(config, env);
+
+      const isServe = env.command === 'serve';
 
       if (!isServe) return;
 
       // config.experimental ||= {};
       // config.experimental.bundledDev = true;
-      // config.oxc = true;
+      config.oxc = true;
+      delete config.resolve.extensions;
+      delete config.optimizeDeps.esbuildOptions;
 
-      function rolldownTemplateTag() {
-        const plugin = templateTag();
-
-        return {
-          ...plugin,
-          transform: {
-            filter: {
-              id: [/\.gjs.*/, /\.gts.*/],
-            },
-            handler: plugin.transform,
-          },
-        };
-      }
-
-      // config.plugins = config.plugins.flat().map((plugin) => {
-      //   if (plugin.name === 'embroider-template-tag') {
-      //     return rolldownTemplateTag(plugin);
-      //   }
-
-      //   return plugin;
-      // });
-
-      // config.optimizeDeps.rolldownOptions.plugins = [
-      //   rolldownTemplateTag(),
-      //   maybeBabel({
-      //     babelHelpers: 'runtime',
-      //     extensions,
-      //     configFile: require.resolve('./babel.config.mjs'),
-      //   }),
-      //   resolver({ rolldown: true })
-      // ];
+      config.optimizeDeps.rolldownOptions ||= {}
+      config.optimizeDeps.rolldownOptions.tsconfig = true;
+      config.optimizeDeps.rolldownOptions.plugins = [
+        rolldownTemplateTag(),
+        resolver({ rolldown: true }),
+        // maybeBabel({
+          //   babelHelpers: 'runtime',
+          //   extensions,
+          //   configFile: require.resolve('./babel.config.mjs'),
+          // }),
+        ];
     },
   };
 }
 
 export default defineConfig(() => ({
-  resolve: {
-    extensions,
+  build: {
+    rolldownOptions: {
+      treeshake: true,
+    },
   },
-  // build: {
-  //   rolldownOptions: {
-  //     treeshake: true,
-  //   }
-  // },
   css: {
     postcss: './config/postcss.config.mjs',
   },
   optimizeDeps: {
     exclude: [
+      // type-only dependencies
+      '@glint/template',
+      // macros must be processed by babel
+      ...buildMacros,
       // a wasm-providing dependency
       'content-tag',
-      // Exclude so we keep hot-loading as we develop these packages
+      // In monorepo deps that we always want watched
       '@nullvoxpopuli/limber-shared',
       'limber-ui',
       'ember-repl',
       'repl-sdk',
+      'ember-primitives',
     ],
     // These dependencies are *always*
     // needed on initial load.
@@ -198,12 +206,23 @@ export default defineConfig(() => ({
     icons({
       autoInstall: true,
     }),
-    ember(),
+    /**
+     * normally this is the ember() plugin
+     */
+    [
+      resolver({ rolldown: true }),
+      rolldownTemplateTag(),
+      /**
+       * wraps the config edits from the ember plugin,
+       * and then edits the config, for better filtering.
+       */
+      rolldownEmberConfig(),
+    ],
     babel({
       babelHelpers: 'runtime',
       extensions,
       configFile: require.resolve('./babel.config.mjs'),
     }),
-    patchPlugins(),
-  ],
+    // resolveDebugger(),
+  ].flat(),
 }));
