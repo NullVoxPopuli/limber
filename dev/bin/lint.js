@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import assert from 'node:assert';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -10,9 +11,9 @@ const root = path.join(import.meta.dirname, '../../');
 
 async function readPackageJSON(cwd) {
   const pPath = path.join(cwd, 'package.json');
-  const buffer = fs.readFile(pPath);
+  const buffer = await fs.readFile(pPath);
 
-  return JSON.stringify(buffer.toString());
+  return JSON.parse(buffer.toString());
 }
 
 const [, , command, ...userArgs] = process.argv;
@@ -72,6 +73,8 @@ function exec(command) {
 
 function turbo(cmd) {
   let filterArgs = [];
+
+  assert(manifest.name, `package.json in ${cwd} does not have a name. this is required`);
 
   if (cwd !== root) {
     filterArgs = ['--filter', manifest.name];

@@ -54,7 +54,7 @@ function rolldownTS() {
 
 import { transformAsync } from '@babel/core';
 
-export function maybeBabel(config) {
+export function maybeBabel() {
   return {
     name: 'limber:maybeBabel',
     transform: {
@@ -103,8 +103,9 @@ function rolldownEmberConfig() {
 
       config.oxc = true;
       config.experimental ||= {};
+      // Can't use because `__rolldown_runtime__ is not defined`
       // config.experimental.bundledDev = true;
-      ((config.experimental.nativeMagicString = true), (config.oxc = true));
+      config.experimental.nativeMagicString = true;
       delete config.esbuild;
       delete config.resolve.extensions;
       delete config.optimizeDeps.esbuildOptions;
