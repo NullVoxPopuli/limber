@@ -74,7 +74,6 @@ export async function compiler(config, api) {
 
   // let macros = embroiderMacros.buildMacros();
 
-  console.log(babel);
   /**
    * @param {string} text
    */
