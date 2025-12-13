@@ -1,12 +1,12 @@
-const { buildMacros } = require('@embroider/macros/babel');
+import { buildMacros } from '@embroider/macros/babel';
 
 const macros = buildMacros({
   configure(config) {
-    config.setGlobalConfig(__filename, '@embroider/core', { active: true });
+    config.setGlobalConfig(import.meta.filename, '@embroider/core', { active: true });
   },
 });
 
-module.exports = {
+export default {
   plugins: [
     [
       '@babel/plugin-transform-typescript',
@@ -32,14 +32,14 @@ module.exports = {
       'module:decorator-transforms',
       {
         runtime: {
-          import: require.resolve('decorator-transforms/runtime-esm'),
+          import: import.meta.resolve('decorator-transforms/runtime-esm'),
         },
       },
     ],
     [
       '@babel/plugin-transform-runtime',
       {
-        absoluteRuntime: __dirname,
+        absoluteRuntime: import.meta.dirname,
         useESModules: true,
         regenerator: false,
       },
