@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",
-    "@babel/standalone": "^7.28.5",
+    "@babel/standalone": "file:./babel-standalone.tgz",
     "@glint/ember-tsc": "^1.0.8",
     "@glint/tsserver-plugin": "^2.0.8",
     "@nullvoxpopuli/eslint-configs": "^5.4.0",

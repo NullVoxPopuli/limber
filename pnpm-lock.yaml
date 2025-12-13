@@ -41,8 +41,8 @@ importers:
         specifier: ^7.28.5
         version: 7.28.5
       '@babel/standalone':
-        specifier: ^7.28.5
-        version: 7.28.5(patch_hash=f8fdde7b389b77c83ccde66f800caaa449bdadfa51b92297f976fdfae66bfef7)
+        specifier: file:./babel-standalone.tgz
+        version: file:babel-standalone.tgz(patch_hash=f8fdde7b389b77c83ccde66f800caaa449bdadfa51b92297f976fdfae66bfef7)
       '@glint/ember-tsc':
         specifier: ^1.0.8
         version: 1.0.8(typescript@5.9.3)
@@ -2910,6 +2910,11 @@ packages:
   '@babel/standalone@7.28.5':
     resolution: {integrity: sha512-1DViPYJpRU50irpGMfLBQ9B4kyfQuL6X7SS7pwTeWeZX0mNkjzPi0XFqxCjSdddZXUQy4AhnQnnesA/ZHnvAdw==}
     engines: {node: '>=6.9.0'}
+
+  '@babel/standalone@file:babel-standalone.tgz':
+    resolution: {integrity: sha512-hqqAhKmxJ4EYhmUuu4BsoHAkw558/UA/4H4wOB4c+54/YRuor5x3YOPJa5HdJ8qsTMomPwYNc0R5amwljkXfkQ==, tarball: file:babel-standalone.tgz}
+    version: 7.28.5
+    engines: {node: ^20.19.0 || >=22.12.0}
 
   '@babel/template@7.27.2':
     resolution: {integrity: sha512-LPDZ85aEJyYSd18/DkjNh4/y1ntkE5KwUHWTiqgRxruuZL2F1yuHligVHLvcHY2vMHXttKFpJn6LwfI7cw7ODw==}
@@ -12273,6 +12278,8 @@ snapshots:
   '@babel/runtime@7.28.4': {}
 
   '@babel/standalone@7.28.5(patch_hash=f8fdde7b389b77c83ccde66f800caaa449bdadfa51b92297f976fdfae66bfef7)': {}
+
+  '@babel/standalone@file:babel-standalone.tgz(patch_hash=f8fdde7b389b77c83ccde66f800caaa449bdadfa51b92297f976fdfae66bfef7)': {}
 
   '@babel/template@7.27.2':
     dependencies:
