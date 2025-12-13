@@ -7,7 +7,7 @@ import { analyzer } from 'vite-bundle-analyzer';
 import circleDependency from 'vite-plugin-circular-dependency';
 import mkcert from 'vite-plugin-mkcert';
 
-const babelRequiredImports = new Set([
+const babelRequiredImports = [
   // Templates
   '@ember/template-compiler',
   '@ember/template-compilation',
@@ -20,16 +20,11 @@ const babelRequiredImports = new Set([
   '@glimmer/env',
   '@ember/debug',
   '@ember/application/deprecations',
-]);
+];
 
 export function maybeBabel(config) {
   const extensions = config.extensions;
-  const decoratorRegex = /\s*@[A-Za-z_][A-Za-z0-9_]*/g;
   const idRegex = new RegExp(`(${extensions.map((ext) => ext.replace('.', '\\.')).join('|')})$`);
-  const importRegex = new RegExp(
-    `from\\s+['"](${[...babelRequiredImports].map((imp) => imp.replace('/', '\\/')).join('|')})['"]`,
-    'g'
-  );
 
   const original = babel(config);
 
@@ -39,7 +34,11 @@ export function maybeBabel(config) {
       name: 'limber:maybeBabel:js-ts',
       transform: {
         filter: {
-          code: [decoratorRegex, importRegex],
+          code: [
+            babelRequiredImports.map(
+              (importPath) => new RegExp(`from\\s+['"]${importPath.replace('/', '\\/')}['"]`)
+            ),
+          ],
         },
         async handler(code, id) {
           return original.transform.call(this, code, id);
@@ -59,6 +58,91 @@ export function maybeBabel(config) {
       },
     },
   ];
+}
+
+function patchPlugins() {
+  return {
+    name: 'limber:rolldown-optimize',
+    config(config, { command }) {
+      const isServe = command === 'serve';
+
+      if (!isServe) return;
+
+      config.experimental ||= {};
+      config.experimental.bundledDev = true;
+      config.oxc = true;
+
+      const optimizeBabel = maybeBabel({
+        babelHelpers: 'runtime',
+        extensions,
+        configFile: import.meta.resolve('./babel.config.cjs'),
+      });
+
+      function patchHBS(plugin) {
+        return {
+          ...plugin,
+          transform: {
+            filter: {
+              id: ['**/*.hbs?([?]*)', /\.hbs/],
+            },
+            handler: plugin.transform,
+          },
+        };
+      }
+
+      function patchTemplateTag(plugin) {
+        return {
+          ...plugin,
+          transform: {
+            filter: {
+              id: [/\.gjs/, /\.gts/],
+            },
+            handler: plugin.transform,
+          },
+        };
+      }
+
+      config.plugins = config.plugins.map((plugin) => {
+        if (plugin.name === 'babel') {
+          return optimizeBabel;
+        }
+
+        if (Array.isArray(plugin)) {
+          return plugin.map((subPlugin) => {
+            if (subPlugin.name === 'rollup-hbs-plugin') {
+              return patchHBS(subPlugin);
+            }
+
+            if (subPlugin.name === 'embroider-template-tag') {
+              return patchTemplateTag(subPlugin);
+            }
+
+            return subPlugin;
+          });
+        }
+
+        return plugin;
+      });
+
+      config.optimizeDeps.rolldownOptions.plugins = config.optimizeDeps.rolldownOptions.plugins.map(
+        (plugin) => {
+          if (plugin.name === 'babel') {
+            return optimizeBabel;
+          }
+
+          if (plugin.name === 'rollup-hbs-plugin') {
+            return patchHBS(plugin);
+          }
+
+          if (plugin.name === 'embroider-template-tag') {
+            return patchTemplateTag(plugin);
+          }
+
+          return plugin;
+        }
+      );
+    },
+  };
 }
 
 export default defineConfig(() => ({
@@ -94,6 +178,7 @@ export default defineConfig(() => ({
       '@codemirror/language',
       '@codemirror/view',
       // REPL + Editor
+      // These are all await imports for production, but for dev, we're impatient
       'ember-repl > codemirror',
       'ember-repl > repl-sdk > codemirror',
       'ember-repl > repl-sdk > codemirror-lang-mermaid',
@@ -127,11 +212,6 @@ export default defineConfig(() => ({
       'ember-repl > repl-sdk > @codemirror/state',
       'ember-repl > repl-sdk > @codemirror/view',
     ],
-
-    // for top-level-await, etc
-    esbuildOptions: {
-      target: 'esnext',
-    },
   },
   plugins: [
     analyzer({
@@ -149,76 +229,11 @@ export default defineConfig(() => ({
       autoInstall: true,
     }),
     ember(),
-    // {
-    //   name: 'inspect resolve',
-    //   resolveId(id) {
-    //     console.log(id);
-    //   },
-    // },
-    {
-      name: 'limber:rolldown-optimize',
-      config(config, { command }) {
-        const isServe = command === 'serve';
-
-        if (!isServe) return;
-
-        config.experimental ||= {};
-        config.experimental.bundledDev = true;
-        config.oxc = true;
-
-        const optimizeBabel = maybeBabel({
-          babelHelpers: 'runtime',
-          extensions,
-          configFile: require.resolve('./babel.config.cjs'),
-        });
-
-        config.plugins = config.plugins.map((plugin) => {
-          if (plugin.name === 'babel') {
-            return optimizeBabel;
-          }
-
-          if (Array.isArray(plugin)) {
-            return plugin.map((subPlugin) => {
-              if (subPlugin.name === 'rollup-hbs-plugin') {
-                return {
-                  ...subPlugin,
-                  transform: {
-                    filter: {
-                      id: /\.hbs/,
-                    },
-                    handler: subPlugin.transform,
-                  },
-                };
-              }
-
-              if (subPlugin.name === 'embroider-template-tag') {
-                return {
-                  ...subPlugin,
-                  transform: {
-                    filter: {
-                      id: /\.(gjs|gts)$/,
-                    },
-                    handler: subPlugin.transform,
-                  },
-                };
-              }
-
-              return subPlugin;
-            });
-          }
-
-          return plugin;
-        });
-
-        config.optimizeDeps.rolldownOptions.plugins =
-          config.optimizeDeps.rolldownOptions.plugins.map((plugin) => {
-            if (plugin.name === 'babel') {
-              return optimizeBabel;
-            }
-
-            return plugin;
-          });
-      },
-    },
+    maybeBabel({
+      babelHelpers: 'runtime',
+      extensions,
+      configFile: import.meta.resolve('./babel.config.cjs'),
+    }),
+    patchPlugins(),
   ],
 }));
