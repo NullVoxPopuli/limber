@@ -1,5 +1,31 @@
 # Changelog
 
+## Release (2025-12-13)
+
+* ember-repl 7.0.2 (patch)
+* limber-ui 4.0.2 (patch)
+* repl-sdk 1.0.1 (patch)
+* codemirror-lang-glimdown 2.0.1 (patch)
+* @glimdown/lezer 2.0.1 (patch)
+* codemirror-lang-glimmer-js 2.0.1 (patch)
+* @glimdown/lezer-glimmer-expression 2.0.1 (patch)
+* codemirror-lang-glimmer-ts 2.0.1 (patch)
+* codemirror-lang-glimmer 2.0.1 (patch)
+* lezer-glimmer 2.0.1 (patch)
+
+#### :memo: Documentation
+* `limber-ui`
+  * [#1991](https://github.com/NullVoxPopuli/limber/pull/1991) Add docs link for limber-ui ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* Other
+  * [#1988](https://github.com/NullVoxPopuli/limber/pull/1988) More REPL-sdk docs ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :house: Internal
+* `ember-repl`, `limber-ui`, `repl-sdk`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`
+  * [#2001](https://github.com/NullVoxPopuli/limber/pull/2001) Update all the things ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2025-10-16)
 
 * ember-repl 7.0.1 (patch)
