@@ -14,7 +14,7 @@ const not = (x: unknown) => !x;
 export const FooterContent = <template>
   {{#let (service "docs") as |docs|}}
 
-    <footer class="grid gap-4 bg-[#eee] p-2 text-sm drop-shadow-2xl">
+    <footer class="gap-4 p-2 text-sm drop-shadow-2xl grid bg-[#eee]">
       <div class="flex w-full items-center justify-between justify-self-end">
         {{#if docs.selected.hasAnswer}}
           {{#if docs.showAnswer}}
@@ -26,7 +26,11 @@ export const FooterContent = <template>
           <span></span>
         {{/if}}
 
-        <Link data-test-next href={{docs.selected.next}} @isDisabled={{not docs.selected.next}}>
+        <Link
+          data-test-next
+          href={{docs.selected.next}}
+          @isDisabled={{not docs.selected.next}}
+        >
           <span>Next</span>
           <FaIcon @icon={{faAngleRight}} />
         </Link>

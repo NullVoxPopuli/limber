@@ -24,7 +24,7 @@ export const OutputContainer: TOC<{
   Blocks: { default: [] };
 }> = <template>
   <section class="drop-shadow-inner relative grid flex-1 overflow-hidden">
-    <div class="relative flex overflow-auto bg-white" data-test-output>
+    <div class="bg-white relative flex overflow-auto" data-test-output>
       {{yield}}
     </div>
 

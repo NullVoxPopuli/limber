@@ -69,12 +69,20 @@ module('every tutorial chapter', function (hooks) {
 
           debugAssert(`Expected href of [data-test-next] to exist`, actualHref);
 
-          assert.notStrictEqual(actualHref, fullPath, `${actualHref} is not ${fullPath}`);
+          assert.notStrictEqual(
+            actualHref,
+            fullPath,
+            `${actualHref} is not ${fullPath}`
+          );
           await click('[data-test-next]');
 
           const current = currentURL();
 
-          assert.notEqual(current, previous, `Navigated from ${previous} to ${current}`);
+          assert.notEqual(
+            current,
+            previous,
+            `Navigated from ${previous} to ${current}`
+          );
         });
       }
     }

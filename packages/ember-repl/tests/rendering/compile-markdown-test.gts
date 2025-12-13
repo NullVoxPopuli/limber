@@ -114,7 +114,7 @@ module('Rendering | compile()', function (hooks) {
 
                 parent.children[index] = {
                   type: 'html',
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                   
                   // @ts-ignore
                   value: `<p>${node.value}</p>`,
                 };
@@ -187,7 +187,7 @@ module('Rendering | compile()', function (hooks) {
         onCompileStart: () => {
           /* not used */
         },
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+         
         // @ts-ignore
         scope: {
           LocalComponent,
@@ -231,7 +231,7 @@ module('Rendering | compile()', function (hooks) {
         onCompileStart: () => {
           /* not used */
         },
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+         
         // @ts-ignore
         scope: {
           LocalComponent,

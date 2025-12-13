@@ -11,7 +11,7 @@ export const SHOW_TIME = 2000;
 
 export const SaveBanner = <template>
   <div
-    class="pointer-events-none absolute top-[39%] z-[100] w-full border-y border-slate-800/50 bg-slate-800/30 p-10 text-center text-2xl text-white shadow-2xl shadow-stone-900/50 backdrop-blur-md transition-all duration-300
+    class="border-slate-800/50 bg-slate-800/30 p-10 text-2xl text-white shadow-2xl shadow-stone-900/50 backdrop-blur-md pointer-events-none absolute top-[39%] z-[100] w-full border-y text-center transition-all duration-300
       {{if @isShowing 'opacity-100' 'opacity-0'}}
       "
   >

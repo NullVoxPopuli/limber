@@ -1202,7 +1202,8 @@ export const tmpData = {
                     cleanedName: 'prose',
                   },
                 ],
-                first: '/6-component-patterns/6-provider-components-too/prose.md',
+                first:
+                  '/6-component-patterns/6-provider-components-too/prose.md',
               },
               {
                 path: '7-dynamically-chosen-component',
@@ -1216,7 +1217,8 @@ export const tmpData = {
                     cleanedName: 'prose',
                   },
                 ],
-                first: '/6-component-patterns/7-dynamically-chosen-component/prose.md',
+                first:
+                  '/6-component-patterns/7-dynamically-chosen-component/prose.md',
               },
               {
                 path: '8-arg-components',

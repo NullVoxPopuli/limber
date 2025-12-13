@@ -14,14 +14,14 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.3",
-    "@nullvoxpopuli/eslint-configs": "^5.3.4",
-    "autoprefixer": "^10.4.20",
+    "@babel/core": "^7.28.5",
+    "@nullvoxpopuli/eslint-configs": "^5.4.0",
+    "autoprefixer": "^10.4.22",
     "concurrently": "^9.2.1",
-    "eslint": "^9.34.0",
+    "eslint": "^9.39.1",
     "postcss": "^8.5.6",
-    "prettier": "^3.6.2",
-    "prettier-plugin-ember-template-tag": "2.1.0",
+    "prettier": "^3.7.4",
+    "prettier-plugin-ember-template-tag": "2.1.2",
     "tailwindcss": "^3.0.0"
   },
   "dependencies": {

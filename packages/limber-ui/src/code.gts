@@ -11,7 +11,14 @@ import { link } from 'reactiveweb/link';
 
 import type Owner from '@ember/owner';
 
-type AllowedFormat = 'gjs' | 'gts' | 'hbs' | 'gmd' | 'vue' | 'svelte' | 'mermaid';
+type AllowedFormat =
+  | 'gjs'
+  | 'gts'
+  | 'hbs'
+  | 'gmd'
+  | 'vue'
+  | 'svelte'
+  | 'mermaid';
 // type Storage = 'local' | 'url';
 
 import { HostMessaging } from './frame-messaging.ts';
@@ -113,7 +120,9 @@ const INITIAL_URL = (options: Record<string, any>): string => {
 
   const initialQPs = new URLSearchParams(window.location.search);
   const local = initialQPs.get('local');
-  const host = initialQPs.has('local') ? `https://localhost:${local || '4201'}/edit` : HOST;
+  const host = initialQPs.has('local')
+    ? `https://localhost:${local || '4201'}/edit`
+    : HOST;
 
   return (
     `${host}?` +
@@ -176,7 +185,11 @@ export default class Code extends Component<Signature> {
   }
 
   get lines() {
-    return this.args.lines ?? this.code?.split('\n')?.length ?? DEFAULT_NUMBER_OF_LINES;
+    return (
+      this.args.lines ??
+      this.code?.split('\n')?.length ??
+      DEFAULT_NUMBER_OF_LINES
+    );
   }
 
   get title() {

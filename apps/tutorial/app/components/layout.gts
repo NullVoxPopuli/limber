@@ -17,11 +17,11 @@ function removeAppShell() {
       {{(removeAppShell)}}
 
       <main
-        class="grid h-[100dvh] max-h-[100dvh] w-full md:grid-cols-[minmax(min-content,_50%)_1fr] lg:grid-cols-[640px_1fr]"
+        class="md:grid-cols-[minmax(min-content,_50%)_1fr] lg:grid-cols-[640px_1fr] grid h-[100dvh] max-h-[100dvh] w-full"
         data-container
       >
         <section
-          class="z-10 flex max-h-[100dvh] max-w-[100dvw] flex-col justify-between border-r border-r-[#ccc] bg-[#eee] text-black drop-shadow transition-transform md:translate-x-0"
+          class="text-black drop-shadow md:translate-x-0 z-10 flex max-h-[100dvh] max-w-[100dvw] flex-col justify-between border-r border-r-[#ccc] bg-[#eee] transition-transform"
           data-words
         >
           <div class="grid grid-rows-[min-content_1fr]">
@@ -30,8 +30,8 @@ function removeAppShell() {
           </div>
           <Footer />
         </section>
-        <Editor class="fixed inset-0 z-0 md:static" />
-        <SmallScreenToggle class="fixed bottom-4 right-4 z-20 md:hidden" />
+        <Editor class="inset-0 md:static fixed z-0" />
+        <SmallScreenToggle class="bottom-4 right-4 md:hidden fixed z-20" />
       </main>
     {{/if}}
   {{/let}}

@@ -51,7 +51,7 @@ export class Status extends Component {
       {{#if this.status.showError}}
         <footer
           data-test-error
-          class="layout__status__error rounded border border-red-700 bg-red-100 drop-shadow-md"
+          class="layout__status__error rounded border-red-700 bg-red-100 drop-shadow-md border"
         >
           <FlatButton
             {{on "click" this.status.hideError}}

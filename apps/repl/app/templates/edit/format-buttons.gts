@@ -39,7 +39,7 @@ export const FormatButtons: TOC<object> = <template>
         <Option
           @value={{info.formatQP}}
           @description={{info.name}}
-          class="hidden md:inline-block"
+          class="md:inline-block hidden"
         >{{toUpper info.ext}}</Option>
       {{/each}}
     {{/let}}

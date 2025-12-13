@@ -1,7 +1,7 @@
 <template>
   <div
     data-test-editor-loader
-    class="absolute inset-0 z-10 grid content-center items-center bg-gray-800 bg-opacity-40 text-center text-3xl font-semibold text-white"
+    class="inset-0 bg-gray-800 bg-opacity-40 text-3xl font-semibold text-white absolute z-10 grid content-center items-center text-center"
   >
     Loading Editor...
   </div>

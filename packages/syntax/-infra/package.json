@@ -8,20 +8,20 @@
     "@codemirror/view": "^6.38.0",
     "@lezer/generator": "^1.7.2",
     "@lezer/highlight": "^1.2.1",
-    "@rollup/plugin-node-resolve": "^15.3.1",
-    "rollup": "^4.50.0"
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "rollup": "^4.53.3"
   },
   "volta": {
     "extends": "../../../package.json"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.3",
-    "@nullvoxpopuli/eslint-configs": "^5.3.4",
+    "@babel/core": "^7.28.5",
+    "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "@types/mocha": "^10.0.10",
-    "eslint": "^9.34.0",
+    "eslint": "^9.39.1",
     "mocha": "^11.6.0",
-    "prettier": "^3.6.2",
-    "typescript": "5.8.3"
+    "prettier": "^3.7.4",
+    "typescript": "5.9.3"
   },
   "scripts": {
     "lint:fix": "pnpm -w exec lint fix",

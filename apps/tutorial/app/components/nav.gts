@@ -8,7 +8,7 @@ import { Link } from '@nullvoxpopuli/limber-shared';
 import { Selection } from './selection';
 
 export const Nav = <template>
-  <nav class="grid grid-cols-[min-content_1fr_min-content] gap-2 p-2 shadow">
+  <nav class="gap-2 p-2 shadow grid grid-cols-[min-content_1fr_min-content]">
     {{#let (service "selected") as |selected|}}
       <Link href={{selected.previous}} @isDisabled={{not selected.previous}}>
         <FaIcon @icon={{faAngleLeft}} />

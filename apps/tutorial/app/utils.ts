@@ -18,7 +18,10 @@ export function isNotHidden(page: Page | Collection) {
   return !isHidden(page);
 }
 
-export function nextPage(pages: Page[], current: Page | undefined): string | undefined {
+export function nextPage(
+  pages: Page[],
+  current: Page | undefined
+): string | undefined {
   let found = false;
 
   for (const tutorial of pages) {
@@ -73,6 +76,8 @@ export function titleize(str: string) {
   return str
     .split('-')
     .filter((text) => !text.match(/^[\d]+$/))
-    .map((text) => `${text[0]?.toLocaleUpperCase()}${text.slice(1, text.length)}`)
+    .map(
+      (text) => `${text[0]?.toLocaleUpperCase()}${text.slice(1, text.length)}`
+    )
     .join(' ');
 }

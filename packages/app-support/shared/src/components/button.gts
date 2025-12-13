@@ -1,6 +1,8 @@
 import type { TOC } from '@ember/component/template-only';
 
-const colorsFor = (variant: 'primary' | 'default' | 'secondary' | undefined) => {
+const colorsFor = (
+  variant: 'primary' | 'default' | 'secondary' | undefined
+) => {
   if (variant === 'default' || variant === undefined) {
     return 'text-white bg-[var(--code-bg)] hover:bg-[var(--code-highlight-bg)]';
   }

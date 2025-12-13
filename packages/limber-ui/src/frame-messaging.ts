@@ -18,7 +18,9 @@ interface ParentToChildData {
  * We can't post right away, because we might do so before the iframe is ready.
  * We need to wait until the frame initiates contact.
  */
-function PostMessage(handleUpdate: (data: ParentToChildData) => void): ModifierLike<{
+function PostMessage(
+  handleUpdate: (data: ParentToChildData) => void
+): ModifierLike<{
   Element: HTMLIFrameElement;
   Args: {
     Positional: [data: ParentToChildData];

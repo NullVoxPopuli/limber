@@ -177,14 +177,14 @@ export const ResizeHandle: TOC<{
     direction: 'vertical' | 'horizontal';
   };
 }> = <template>
-  <div class="relative {{if (eq @direction 'horizontal') 'h-full w-2 py-2' 'h-2 w-full px-2'}} ">
+  <div class="relative {{if (eq @direction 'horizontal') 'w-2 py-2 h-full' 'h-2 px-2 w-full'}} ">
     <button
       class="{{if
           (eq @direction 'horizontal')
-          'h-full w-2 cursor-col-resize py-2'
-          'h-2 w-full cursor-row-resize px-2'
+          'w-2 py-2 h-full cursor-col-resize'
+          'h-2 px-2 w-full cursor-row-resize'
         }}
-        bg-horizon-lavender group absolute inset-0 flex items-end justify-end leading-4 text-white shadow focus:outline-none focus:ring-4 focus-visible:outline-none"
+        bg-horizon-lavender group inset-0 leading-4 text-white shadow absolute flex items-end justify-end focus:ring-4 focus:outline-none focus-visible:outline-none"
       {{! template-lint-disable no-inline-styles }}
       style="text-shadow: 1px 1px 1px black"
       aria-label="resize the editor"

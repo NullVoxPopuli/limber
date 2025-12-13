@@ -31,7 +31,7 @@ const Button: TOC<{
   };
 }> = <template>
   <@content.Item
-    class="block w-full select-none bg-transparent px-4 py-2 text-left text-black ring-inset hover:bg-gray-100 focus:outline-none focus:ring-4"
+    class="px-4 py-2 text-black hover:bg-gray-100 block w-full bg-transparent text-left select-none ring-inset focus:ring-4 focus:outline-none"
     tabindex="0"
     data-test-menu-button
     ...attributes
@@ -50,7 +50,7 @@ const DefaultTrigger: TOC<{
   };
 }> = <template>
   <@menu.Trigger
-    class="ring-ember-brand -my-1 rounded border bg-white px-2 py-1 text-left text-black drop-shadow-md transition duration-150 ease-in-out hover:drop-shadow-xl focus:outline-none focus:ring-4 focus-visible:outline-none sm:text-sm"
+    class="ring-ember-brand -my-1 rounded bg-white px-2 py-1 text-black drop-shadow-md ease-in-out hover:drop-shadow-xl sm:text-sm border text-left transition duration-150 focus:ring-4 focus:outline-none focus-visible:outline-none"
     ...attributes
   >
     {{yield @menu}}
@@ -124,7 +124,7 @@ const Menu: TOC<{
           ></div>
 
           <div
-            class="grid max-h-[80dvh] min-w-max overflow-auto rounded border bg-white drop-shadow-xl"
+            class="rounded bg-white drop-shadow-xl grid max-h-[80dvh] min-w-max overflow-auto border"
           >
             {{yield (component Button content=content) to="options"}}
           </div>
