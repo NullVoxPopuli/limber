@@ -1,4 +1,5 @@
 import { ember, extensions, resolver, templateTag } from '@embroider/vite';
+import { createRequire } from 'node:module';
 
 import { babel } from '@rollup/plugin-babel';
 import icons from 'unplugin-icons/vite';
@@ -6,7 +7,6 @@ import { defineConfig } from 'vite';
 import { analyzer } from 'vite-bundle-analyzer';
 import circleDependency from 'vite-plugin-circular-dependency';
 import mkcert from 'vite-plugin-mkcert';
-import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
 
@@ -71,9 +71,9 @@ function patchPlugins() {
 
       if (!isServe) return;
 
-      config.experimental ||= {};
-      config.experimental.bundledDev = true;
-      config.oxc = true;
+      // config.experimental ||= {};
+      // config.experimental.bundledDev = true;
+      // config.oxc = true;
 
       function rolldownTemplateTag() {
         const plugin = templateTag();
@@ -89,13 +89,13 @@ function patchPlugins() {
         };
       }
 
-      config.plugins = config.plugins.flat().map((plugin) => {
-        if (plugin.name === 'embroider-template-tag') {
-          return rolldownTemplateTag(plugin);
-        }
+      // config.plugins = config.plugins.flat().map((plugin) => {
+      //   if (plugin.name === 'embroider-template-tag') {
+      //     return rolldownTemplateTag(plugin);
+      //   }
 
-        return plugin;
-      });
+      //   return plugin;
+      // });
 
       // config.optimizeDeps.rolldownOptions.plugins = [
       //   rolldownTemplateTag(),
@@ -111,14 +111,14 @@ function patchPlugins() {
 }
 
 export default defineConfig(() => ({
-  // resolve: {
-  //   extensions,
-  // },
-  build: {
-    rolldownOptions: {
-      treeshake: true,
-    }
+  resolve: {
+    extensions,
   },
+  // build: {
+  //   rolldownOptions: {
+  //     treeshake: true,
+  //   }
+  // },
   css: {
     postcss: './config/postcss.config.mjs',
   },
