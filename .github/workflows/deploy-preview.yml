@@ -65,7 +65,7 @@ jobs:
     timeout-minutes: 15
     needs: [determinePR]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           # Defaults to ${{ github.repository }}, but that doesn't work for forks
           # This should also make it obvious why this is in a separate workflow
