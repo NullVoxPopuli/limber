@@ -61,16 +61,16 @@ function maybeBabel(options = {}) {
     babelMacros.delete('@ember/assert');
   }
 
-  env.i ||= 0;
-  env.t ||= 0;
+  // env.i ||= 0;
+  // env.t ||= 0;
 
   return {
     ...original,
     name: 'limber:babel',
     enforce: 'pre',
-    buildEnd() {
-      console.debug({ i: env.i, t: env.t });
-    },
+    // buildEnd() {
+    //   console.debug({ i: env.i, t: env.t });
+    // },
     transform: {
       filter: {
         id: [/\.js/, /\.gjs/, /\.ts/, /\.gts/],
@@ -89,39 +89,31 @@ function maybeBabel(options = {}) {
           estree.program,
           /* state */ {},
           {
-            // PropertyDefinition
-            // MethodDefinition (methods and getters)
-            // node.decorators.length
-            Decorator() {
+            Decorator(_node, { stop }) {
               hasDecorators = true;
+              stop();
             },
-            ImportDeclaration(node) {
+            ImportDeclaration(node, { stop }) {
               if (babelMacros.has(node.source.value)) {
                 hasBabelRequiredImport = true;
+                stop();
               }
             },
           }
         );
 
-        env.t++;
+        // env.t++;
 
         if (hasDecorators || hasBabelRequiredImport) {
-          env.i++;
+          // env.i++;
 
           const result = await original.transform(code, id);
-
-          // if (id.includes('editor-text')) {
-          //   console.log(
-          //     id,
-          //     result.code,
-          //     result.code.includes('oxc-project') && 'oxc got to it first :('
-          //   );
-          // }
 
           return result;
         }
 
-        return transform(id, code, {
+        const result = await transform(id, code, {
+          lang,
           typescript: {
             onlyRemoveTypeImports: true,
             allowNamespaces: false,
@@ -129,6 +121,12 @@ function maybeBabel(options = {}) {
             rewriteImportExtensions: false,
           },
         });
+
+        if (result.errors?.length) {
+          throw result.errors;
+        }
+
+        return result;
       },
     },
   };
@@ -283,7 +281,8 @@ export default defineConfig((env) => {
       // NOTE: for some reason this isn't loading some files
       // maybeBabel({ env }),
       (() => {
-        const plugin = babel({
+        const plugin = maybeBabel({
+          env,
           babelHelpers: 'runtime',
           extensions,
           configFile: require.resolve('./babel.config.mjs'),
