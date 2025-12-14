@@ -27,9 +27,6 @@ declare module '@ember/template-compilation';
 declare module '@ember/template-factory';
 declare module 'ember-source/dist/ember-template-compiler';
 declare module '@glimmer/babel-preset';
-declare module 'highlightjs-glimmer';
-declare module 'highlightjs-glimmer/vendor/highlight.js';
-declare module 'highlightjs-glimmer/vendor/javascript.min';
 declare module 'split-grid';
 declare module 'unist-util-flatmap';
 

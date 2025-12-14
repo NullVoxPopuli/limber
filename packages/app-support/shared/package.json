@@ -68,6 +68,7 @@
     "@glint/tsserver-plugin": "^2.0.8",
     "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "@rollup/plugin-babel": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
     "@tsconfig/ember": "^3.0.9",
     "babel-plugin-ember-template-compilation": "^3.0.1",
     "concurrently": "^9.2.1",
@@ -84,6 +85,7 @@
     "prettier-plugin-ember-template-tag": "2.1.2",
     "rollup": "^4.53.3",
     "rollup-plugin-copy": "^3.5.0",
+    "shiki": "^3.20.0",
     "typescript": "5.9.3"
   },
   "publishConfig": {

@@ -39,9 +39,10 @@ Object.assign(window, {
 export function start() {
   enterTestMode();
 
-  const macros = getGlobalConfig()['@embroider/macros'];
+  const theMacrosGlobal = getGlobalConfig();
 
-  if (macros) macros.isTesting = true;
+  theMacrosGlobal['@embroider/macros'] ||= {};
+  theMacrosGlobal['@embroider/macros'].isTesting ||= true;
 
   setApplication(Application.create(config.APP));
   setup(QUnit.assert);
