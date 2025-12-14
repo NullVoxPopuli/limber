@@ -116,7 +116,7 @@ importers:
         version: 3.20.0
       '@xstate/inspect':
         specifier: ^0.8.0
-        version: 0.8.0(2fb713b7f28fcff92680ed9ce494f070)
+        version: 0.8.0(de15395f4f1c7c34a287dd140e34e1d0)
       browserslist:
         specifier: ^4.28.1
         version: 4.28.1
@@ -149,7 +149,7 @@ importers:
         version: 7.0.7(66147294c81f5083ed2f65d9a770bc61)
       ember-statechart-component:
         specifier: 7.1.0
-        version: 7.1.0(acac3926d8473e8853c82e4d6470feb6)
+        version: 7.1.0(ac973995369ed36f4d96e933fa5a663c)
       ember-strict-application-resolver:
         specifier: ^0.1.1
         version: 0.1.1(@babel/core@7.28.5)
@@ -217,8 +217,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       xstate:
-        specifier: 5.20.1
-        version: 5.20.1
+        specifier: 5.25.0
+        version: 5.25.0
     devDependencies:
       '@babel/core':
         specifier: ^7.28.5
@@ -11807,8 +11807,8 @@ packages:
   xmlchars@2.2.0:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
 
-  xstate@5.20.1:
-    resolution: {integrity: sha512-i9ZpNnm/XhCOMUxae1suT8PjYNTStZWbhmuKt4xeTPaYG5TS0Fz0i+Ka5yxoNPpaHW3VW6JIowrwFgSTZONxig==}
+  xstate@5.25.0:
+    resolution: {integrity: sha512-yyWzfhVRoTHNLjLoMmdwZGagAYfmnzpm9gPjlX2MhJZsDojXGqRxODDOi4BsgGRKD46NZRAdcLp6CKOyvQS0Bw==}
 
   y18n@5.0.8:
     resolution: {integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==}
@@ -15558,11 +15558,11 @@ snapshots:
 
   '@xmldom/xmldom@0.8.11': {}
 
-  '@xstate/inspect@0.8.0(2fb713b7f28fcff92680ed9ce494f070)':
+  '@xstate/inspect@0.8.0(de15395f4f1c7c34a287dd140e34e1d0)':
     dependencies:
       fast-safe-stringify: 2.1.1
       ws: 8.18.3
-      xstate: 5.20.1
+      xstate: 5.25.0
     optionalDependencies:
       '@types/ws': 8.18.1
 
@@ -17883,14 +17883,14 @@ snapshots:
       - rsvp
       - supports-color
 
-  ember-statechart-component@7.1.0(acac3926d8473e8853c82e4d6470feb6):
+  ember-statechart-component@7.1.0(ac973995369ed36f4d96e933fa5a663c):
     dependencies:
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.3)
       '@embroider/addon-shim': 1.10.2
       '@glimmer/component': 2.0.0
       '@glint/template': 1.7.3
       decorator-transforms: 2.3.0(patch_hash=4ad3c409cd8142dbee4f619fc569e853ea53eed39bc24633cf6ef28ddd93e891)(@babel/core@7.28.5)
-      xstate: 5.20.1
+      xstate: 5.25.0
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -23950,7 +23950,7 @@ snapshots:
 
   xmlchars@2.2.0: {}
 
-  xstate@5.20.1: {}
+  xstate@5.25.0: {}
 
   y18n@5.0.8: {}
 
