@@ -21,9 +21,9 @@ function bundle(name: string, loader: () => Promise<{ default: unknown }>[]) {
       const slashName = name.replaceAll('.', '/');
       const results: Record<string, unknown> = {};
 
-      if (template) results[`limber/templates/${slashName}`] = template.default;
-      if (route) results[`limber/routes/${slashName}`] = route.default;
-      if (controller) results[`limber/controllers/${slashName}`] = controller.default;
+      if (template) results[`./templates/${slashName}`] = template.default;
+      if (route) results[`./routes/${slashName}`] = route.default;
+      if (controller) results[`./controllers/${slashName}`] = controller.default;
 
       return {
         default: results,
@@ -34,6 +34,7 @@ function bundle(name: string, loader: () => Promise<{ default: unknown }>[]) {
 
 (window as any)._embroiderRouteBundles_ = [
   bundle('docs', () => [import('./templates/docs.gts')]),
+  bundle('docs.index', () => [import('./templates/docs/index.gts')]),
   bundle('docs.repl-sdk', () => [import('./templates/docs/repl-sdk.gts')]),
   bundle('docs.ember-repl', () => [import('./templates/docs/ember-repl.gts')]),
   bundle('docs.embedding', () => [import('./templates/docs/embedding.gts')]),

@@ -290,7 +290,7 @@ export class FileURIComponent {
     const current = this.#currentURL();
     let { pathname: base, searchParams: activeQPs } = new URL(current);
 
-    if (base === '/') {
+    if (base === '/' || base.startsWith('/docs')) {
       base = '/edit/';
     }
 
