@@ -7,8 +7,9 @@ import Shadowed from 'ember-primitives/components/shadowed';
 import { setupTabster } from 'ember-primitives/tabster';
 import { getCompiler, setupCompiler } from 'ember-repl';
 
-import { getHighlighter } from '#app/modifiers/-utils/highlighting.ts';
 import CopyMenu from '#components/copy-menu.gts';
+
+import { getHighlighter } from '@nullvoxpopuli/limber-shared';
 
 import { importMap } from './import-map.ts';
 

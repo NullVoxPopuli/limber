@@ -6,7 +6,7 @@ import { modifier } from 'ember-modifier';
 
 import { isAllowedFormat } from '#app/languages.gts';
 
-import { getHighlighter } from './-utils/highlighting';
+import { getHighlighter } from '@nullvoxpopuli/limber-shared';
 
 interface Signature {
   Element: HTMLPreElement;

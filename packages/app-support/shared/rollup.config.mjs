@@ -6,6 +6,8 @@ import { execaCommand } from 'execa';
 import { fixBadDeclarationOutput } from 'fix-bad-declaration-output';
 import { defineConfig } from 'rollup';
 
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+
 const addon = new Addon({
   srcDir: 'src',
   destDir: 'dist',
@@ -16,6 +18,7 @@ export default defineConfig({
   plugins: [
     addon.publicEntrypoints(['index.js']),
     addon.dependencies(),
+    nodeResolve({ browser: true, modulesOnly: true }),
 
     babel({
       extensions: ['.js', '.gjs', '.ts', '.gts'],

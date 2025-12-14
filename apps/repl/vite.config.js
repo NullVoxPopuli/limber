@@ -188,10 +188,6 @@ export default defineConfig((env) => {
       include: [
         // Our Runtime
         '@shikijs/rehype/core',
-        'shiki/core',
-        'shiki/langs/*',
-        'shiki/wasm',
-        'shiki/themes/github-*',
         // Framework
         // 'ember-source/@ember/**/*',
         // Theme and Syntax
