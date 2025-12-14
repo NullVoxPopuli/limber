@@ -17,7 +17,7 @@
     "last 1 safari versions"
   ],
   "scripts": {
-    "build:test": "NODE_ENV=development vite build --mode test",
+    "build:test": "NODE_ENV=development vite build --mode development",
     "build:prod": "NODE_ENV=development vite build --mode development",
     "lint:types": "ember-tsc --noEmit",
     "lint:fix": "pnpm -w exec lint fix",

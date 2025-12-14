@@ -48,7 +48,7 @@ export async function compiler(config, api) {
   const { isLive, isPreview, needsLive, allowedFormats, getFlavorFromMeta, isBelow } =
     buildCodeFenceMetaUtils(api);
 
-  const { parseMarkdown } = await import(/* @vite-ignore */ '../markdown/parse.js');
+  const { parseMarkdown } = await import('../markdown/parse.js');
 
   /**
    * @type {import('../../types.ts').Compiler}
