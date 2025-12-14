@@ -144,9 +144,6 @@ importers:
       ember-repl:
         specifier: workspace:*
         version: link:../../packages/ember-repl
-      ember-resize-observer-service:
-        specifier: ^1.1.0
-        version: 1.1.0
       ember-resources:
         specifier: ^7.0.7
         version: 7.0.7(66147294c81f5083ed2f65d9a770bc61)

@@ -162,7 +162,6 @@
     "ember-modifier": "^4.2.0",
     "ember-primitives": "^0.48.1",
     "ember-repl": "workspace:*",
-    "ember-resize-observer-service": "^1.1.0",
     "ember-resources": "^7.0.7",
     "ember-statechart-component": "7.1.0",
     "ember-strict-application-resolver": "^0.1.1",
