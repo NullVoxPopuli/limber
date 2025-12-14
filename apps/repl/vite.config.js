@@ -30,22 +30,6 @@ const babelRequiredImports = [
   '@ember/debug',
 ];
 
-const babelFilter = {
-  code: [
-    /precompileTemplate/,
-    /macroCondition/,
-    /@action/,
-    /@tracked/,
-    /@action\s+[a-zA-Z0-0]+/,
-    /@tracked\s+[a-zA-Z0-0]+/,
-    /@cached\s+[a-zA-Z0-0]+/,
-    // We don't use from "<path>" for the regex
-    // because the paths can be re-written by the time babel
-    // would be able to parse them
-    ...babelRequiredImports.map((importPath) => new RegExp(RegExp.escape(importPath))),
-  ],
-};
-
 import { transform } from 'oxc-transform';
 
 function maybeBabel(options = {}) {
@@ -176,7 +160,6 @@ function rolldownEmberConfig() {
   };
 }
 
-// eslint-disable-next-line no-unused-vars
 export default defineConfig((env) => {
   return {
     build: {
@@ -278,22 +261,7 @@ export default defineConfig((env) => {
          */
         rolldownEmberConfig(),
       ],
-      // NOTE: for some reason this isn't loading some files
-      // maybeBabel({ env }),
-      (() => {
-        const plugin = maybeBabel({
-          env,
-          babelHelpers: 'runtime',
-          extensions,
-          configFile: require.resolve('./babel.config.mjs'),
-        });
-
-        // If we don't set this, then rolldown processes the TS files first.
-        // Which is a problem because it does decorators not how we want (stage 1)
-        plugin.enforce = 'pre';
-
-        return plugin;
-      })(),
+      maybeBabel({ env }),
     ].flat(),
   };
 });
