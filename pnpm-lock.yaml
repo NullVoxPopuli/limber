@@ -153,12 +153,6 @@ importers:
       ember-strict-application-resolver:
         specifier: ^0.1.1
         version: 0.1.1(@babel/core@7.28.5)
-      highlight.js:
-        specifier: ^11.11.1
-        version: 11.11.1
-      highlightjs-glimmer:
-        specifier: ^2.2.2
-        version: 2.2.2(highlight.js@11.11.1)
       html-to-image:
         specifier: ^1.11.13
         version: 1.11.13
@@ -7935,16 +7929,6 @@ packages:
 
   highlight.js@10.7.3:
     resolution: {integrity: sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==}
-
-  highlight.js@11.11.1:
-    resolution: {integrity: sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w==}
-    engines: {node: '>=12.0.0'}
-
-  highlightjs-glimmer@2.2.2:
-    resolution: {integrity: sha512-4Mx/BSXeXidvurvGDxA80npLlDPuznbFMKeVzgVNFhmMOWCr7JUw55dMDGarb0OS4ma6dZL+TdpxqD2zhh5vZQ==}
-    engines: {node: ^14 || ^16 || ^18 || >= 20}
-    peerDependencies:
-      highlight.js: '>= 11.0.0'
 
   homedir-polyfill@1.0.3:
     resolution: {integrity: sha512-eSmmWE5bZTK2Nou4g0AI3zZ9rswp7GRKoKXS1BLUkvPviOqs4YTN1djQIqrXy9k5gEtdLPy86JjRwsNM9tnDcA==}
@@ -19222,12 +19206,6 @@ snapshots:
   helpertypes@0.0.19: {}
 
   highlight.js@10.7.3: {}
-
-  highlight.js@11.11.1: {}
-
-  highlightjs-glimmer@2.2.2(highlight.js@11.11.1):
-    dependencies:
-      highlight.js: 11.11.1
 
   homedir-polyfill@1.0.3:
     dependencies:
