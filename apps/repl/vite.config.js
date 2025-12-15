@@ -57,9 +57,17 @@ function maybeBabel(options = {}) {
     // },
     transform: {
       filter: {
-        id: [/\.js/, /\.gjs/, /\.ts/, /\.gts/],
+        id: {
+          // $ omitted in case these have query params
+          include: [/\.js/, /\.gjs/, /\.ts/, /\.gts/],
+          exclude: [/\.json/],
+        },
       },
       async handler(code, id) {
+        /**
+         * NOTE: this way of getting the extension isn't bullet proof, but happens to work for this app
+         *       (query params could have . in them)
+         */
         const ext = id.split('.').at(-1);
         const lang = ext === 'gjs' ? 'js' : ext === 'gts' ? 'ts' : ext;
 
@@ -96,6 +104,10 @@ function maybeBabel(options = {}) {
           return result;
         }
 
+        if (ext === 'js' || ext === 'gjs') {
+          return;
+        }
+
         const result = await transform(id, code, {
           lang,
           typescript: {
@@ -107,7 +119,14 @@ function maybeBabel(options = {}) {
         });
 
         if (result.errors?.length) {
-          throw result.errors;
+          console.error(`Errors during oxc-tranform of ${id}`);
+
+          for (const err of result.errors) {
+            if (err.labels) console.error(err.labels);
+            console.error(err.codeframe || err.message);
+          }
+
+          throw new Error();
         }
 
         return result;
