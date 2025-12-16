@@ -37,6 +37,7 @@ function maybeBabel(options = {}) {
   const babelMacros = new Set(babelRequiredImports);
   const original = babel({
     babelHelpers: 'runtime',
+    skipPreflightCheck: true,
     extensions,
     configFile: require.resolve('./babel.config.mjs'),
   });
