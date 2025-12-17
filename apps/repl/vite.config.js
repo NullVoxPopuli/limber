@@ -37,6 +37,7 @@ function maybeBabel(options = {}) {
   const babelMacros = new Set(babelRequiredImports);
   const original = babel({
     babelHelpers: 'runtime',
+    skipPreflightCheck: true,
     extensions,
     configFile: require.resolve('./babel.config.mjs'),
   });
@@ -104,10 +105,12 @@ function maybeBabel(options = {}) {
           return result;
         }
 
-        if (ext === 'js' || ext === 'gjs') {
+        // All of these can be handle by the default compiler
+        if (ext === 'js' || ext === 'gjs' || ext === 'ts') {
           return;
         }
 
+        // What remains: gts that happens to not have <template>
         const result = await transform(id, code, {
           lang,
           typescript: {
