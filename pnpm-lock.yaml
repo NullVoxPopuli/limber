@@ -349,6 +349,9 @@ importers:
       ember-async-data:
         specifier: 2.0.1
         version: 2.0.1(41dbc40bfe763063746c2ae01dde51bb)
+      ember-cli-deprecation-workflow:
+        specifier: ^4.0.0
+        version: 4.0.0(@babel/core@7.28.5)
       ember-load-initializers:
         specifier: ^3.0.1
         version: 3.0.1(77fcd965aa33fdf02092d6c4b06d9459)
@@ -6777,6 +6780,9 @@ packages:
     engines: {node: 16.* || 18.* || >= 20}
     peerDependencies:
       '@babel/core': ^7.12.0
+
+  ember-cli-deprecation-workflow@4.0.0:
+    resolution: {integrity: sha512-HGF7LSz6f8Vx3sISYXnoiuk+8eBULUt7cS/U1YwGMAJtXvL1jvz8PvyAPyrBpcyNP85U+u+3UdKeTWG0HuLbNw==}
 
   ember-cli-get-component-path-option@1.0.0:
     resolution: {integrity: sha512-k47TDwcJ2zPideBCZE8sCiShSxQSpebY2BHcX2DdipMmBox5gsfyVrbKJWIHeSTTKyEUgmBIvQkqTOozEziCZA==}
@@ -17458,6 +17464,14 @@ snapshots:
       resolve-package-path: 4.0.3
       semver: 7.7.3
     transitivePeerDependencies:
+      - supports-color
+
+  ember-cli-deprecation-workflow@4.0.0(@babel/core@7.28.5):
+    dependencies:
+      '@embroider/addon-shim': 1.10.2
+      decorator-transforms: 2.3.0(patch_hash=4ad3c409cd8142dbee4f619fc569e853ea53eed39bc24633cf6ef28ddd93e891)(@babel/core@7.28.5)
+    transitivePeerDependencies:
+      - '@babel/core'
       - supports-color
 
   ember-cli-get-component-path-option@1.0.0: {}

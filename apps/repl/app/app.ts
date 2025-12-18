@@ -1,3 +1,4 @@
+import './deprecation-workflow.ts';
 import 'ember-statechart-component';
 import './icons.ts';
 
