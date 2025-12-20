@@ -166,8 +166,8 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0
       nvp.ui:
-        specifier: ^0.4.0
-        version: 0.4.0(659bea5e805a371a8b1ed0c6fea1cfaf)
+        specifier: ^0.5.0
+        version: 0.5.0(659bea5e805a371a8b1ed0c6fea1cfaf)
       path-browserify:
         specifier: ^1.0.1
         version: 1.0.1
@@ -3163,15 +3163,6 @@ packages:
       '@glint/template':
         optional: true
 
-  '@embroider/macros@1.18.1':
-    resolution: {integrity: sha512-hOQyzFBT1Rd6RdY4AbRSSGSeXyUzUrU9o6GWGD/kxg7cggKQax4R486KE10ZVSPRNqhRiNUcqe2VWc/+e8Z0MQ==}
-    engines: {node: 12.* || 14.* || >= 16}
-    peerDependencies:
-      '@glint/template': ^1.0.0
-    peerDependenciesMeta:
-      '@glint/template':
-        optional: true
-
   '@embroider/macros@1.19.5':
     resolution: {integrity: sha512-zwpe7J9jyh8YPLzblk8WR3AQf6m+Ln/8Prlz9/DEwHD1m7GjJog1TIT0Sjv8guEj/hXCGntbNOzfE2Vj1T0Uug==}
     engines: {node: 12.* || 14.* || >= 16}
@@ -3199,10 +3190,6 @@ packages:
 
   '@embroider/shared-internals@2.9.2':
     resolution: {integrity: sha512-d96ub/WkS1Gx6dRDxZ0mCRPwFAHIMlMr2iti6uTYxTFzC85Wgt6j7bYr6ppkEuwEwKQVyzKRT0kTsJz6P74caQ==}
-    engines: {node: 12.* || 14.* || >= 16}
-
-  '@embroider/shared-internals@3.0.0':
-    resolution: {integrity: sha512-5J5ipUMCAinQS38WW7wedruq5Z4VnHvNo+ZgOduw0PtI9w0CQWx7/HE+98PBDW8jclikeF+aHwF317vc1hwuzg==}
     engines: {node: 12.* || 14.* || >= 16}
 
   '@embroider/shared-internals@3.0.1':
@@ -9348,8 +9335,8 @@ packages:
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
 
-  nvp.ui@0.4.0:
-    resolution: {integrity: sha512-Wf/p6zw4EnOH13qhdrz8d1nPpIX/sg2Mr5D1nFWGHtk2etXAMNw44kdKOAwBlYln4C+hzbcJhAYL2Oa6SKHMBQ==}
+  nvp.ui@0.5.0:
+    resolution: {integrity: sha512-ymK++5ToNG1/OWyd59Xej78D/1aFsCCZrfa8s2LAeLyL/eDGsDizFBp9lryaIgfDcVIv1bzCZ3cFh7W43BCizQ==}
 
   nwsapi@2.2.23:
     resolution: {integrity: sha512-7wfH4sLbt4M0gCDzGE6vzQBo0bfTKjU7Sfpqy/7gs1qBfYz2vEJH6vXcBKpO3+6Yu1telwd0t9HpyOoLEQQbIQ==}
@@ -13279,21 +13266,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@embroider/macros@1.18.1(@glint/template@1.7.3)':
-    dependencies:
-      '@embroider/shared-internals': 3.0.0
-      assert-never: 1.4.0
-      babel-import-util: 3.0.1
-      ember-cli-babel: 7.26.11
-      find-up: 5.0.0
-      lodash: 4.17.21
-      resolve: 1.22.11
-      semver: 7.7.3
-    optionalDependencies:
-      '@glint/template': 1.7.3
-    transitivePeerDependencies:
-      - supports-color
-
   '@embroider/macros@1.19.5(@glint/template@1.7.3)':
     dependencies:
       '@embroider/shared-internals': 3.0.1
@@ -13353,24 +13325,6 @@ snapshots:
       minimatch: 3.1.2
       pkg-entry-points: 1.1.1
       resolve-package-path: 4.0.3
-      semver: 7.7.3
-      typescript-memoize: 1.1.1
-    transitivePeerDependencies:
-      - supports-color
-
-  '@embroider/shared-internals@3.0.0':
-    dependencies:
-      babel-import-util: 3.0.1
-      debug: 4.4.3(supports-color@8.1.1)
-      ember-rfc176-data: 0.3.18
-      fs-extra: 9.1.0
-      is-subdir: 1.2.0
-      js-string-escape: 1.0.1
-      lodash: 4.17.21
-      minimatch: 3.1.2
-      pkg-entry-points: 1.1.1
-      resolve-package-path: 4.0.3
-      resolve.exports: 2.0.3
       semver: 7.7.3
       typescript-memoize: 1.1.1
     transitivePeerDependencies:
@@ -21046,17 +21000,17 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
-  nvp.ui@0.4.0(659bea5e805a371a8b1ed0c6fea1cfaf):
+  nvp.ui@0.5.0(659bea5e805a371a8b1ed0c6fea1cfaf):
     dependencies:
       '@ember/test-helpers': 5.4.1(41dbc40bfe763063746c2ae01dde51bb)
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.3)
       '@embroider/addon-shim': 1.10.2
-      '@embroider/macros': 1.18.1(@glint/template@1.7.3)
+      '@embroider/macros': 1.19.5(@glint/template@1.7.3)
       '@glimmer/component': 2.0.0
       '@glint/template': 1.7.3
       decorator-transforms: 2.3.0(patch_hash=4ad3c409cd8142dbee4f619fc569e853ea53eed39bc24633cf6ef28ddd93e891)(@babel/core@7.28.5)
       ember-modifier: 4.2.2(@babel/core@7.28.5)
-      ember-primitives: 0.40.0(e0d54849f75ec5f741c59fe3adb3e9d6)
+      ember-primitives: 0.48.1(e0d54849f75ec5f741c59fe3adb3e9d6)
       ember-resources: 7.0.7(66147294c81f5083ed2f65d9a770bc61)
     transitivePeerDependencies:
       - '@babel/core'

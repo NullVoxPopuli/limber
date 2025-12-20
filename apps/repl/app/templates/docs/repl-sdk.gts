@@ -1,3 +1,5 @@
+import { Tabs } from 'nvp.ui/tabs';
+
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
 import highlighted from '../../modifiers/highlighted';
@@ -172,9 +174,14 @@ const compiler = new Compiler({
     <p>
       With your favorite package manager
 
-      <div data-format="bash" {{highlighted "npm add repl-sdk"}}></div>
-      <div data-format="bash" {{highlighted "pnpm add repl-sdk"}}></div>
-      (etc)
+      <Tabs as |Tab|>
+        <Tab @label="npm">
+          <div data-format="bash" {{highlighted "npm add repl-sdk"}}></div>
+        </Tab>
+        <Tab @label="pnpm">
+          <div data-format="bash" {{highlighted "pnpm add repl-sdk"}}></div>
+        </Tab>
+      </Tabs>
 
       <H2 @id="bundled-compilers">Bundled Compilers</H2>
 
@@ -194,6 +201,13 @@ const compiler = new Compiler({
       <code>jsx</code>.
     </p>
 
+    <Tabs as |Tab|>
+      {{#each-in formats as |format docs|}}
+        <Tab @label={{format}}>
+          <docs />
+        </Tab>
+      {{/each-in}}
+    </Tabs>
     {{#each formats as |formatDocs|}}
       <formatDocs />
     {{/each}}
