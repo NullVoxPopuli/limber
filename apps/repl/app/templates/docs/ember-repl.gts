@@ -156,7 +156,7 @@ class Demo extends Component {
 
     <div data-format="bash" {{highlighted "npm add ember-repl"}}></div>
     <div data-format="bash" {{highlighted "pnpm add ember-repl"}}></div>
-    (etc) For the time being, until
+    For the time being, until
     <ExternalLink href="https://github.com/babel/babel/pull/17653">babel#17635</ExternalLink>
     is merged and released, we need to use a different version of
     <code>@babel/standalone</code>
