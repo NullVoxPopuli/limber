@@ -474,7 +474,7 @@ importers:
         version: 0.48.1(e0d54849f75ec5f741c59fe3adb3e9d6)
       ember-repl:
         specifier: latest
-        version: 7.0.1(98528c686a2f7a925be5161a698b4dd7)
+        version: 7.1.1(98528c686a2f7a925be5161a698b4dd7)
       ember-resources:
         specifier: ^7.0.7
         version: 7.0.7(66147294c81f5083ed2f65d9a770bc61)
@@ -3446,8 +3446,8 @@ packages:
   '@gerrit0/mini-shiki@3.20.0':
     resolution: {integrity: sha512-Wa57i+bMpK6PGJZ1f2myxo3iO+K/kZikcyvH8NIqNNZhQUbDav7V9LQmWOXhf946mz5c1NZ19WMsGYiDKTryzQ==}
 
-  '@glimdown/lezer-glimmer-expression@2.0.0':
-    resolution: {integrity: sha512-vm2P/bVRhkcLBVJFBnCRqAoKYND/hhjV2jiLKlB8y6e2dzSygMGxgJmrTlIb/7HT4jqQzX4aoLphqDCyAlgyBA==}
+  '@glimdown/lezer-glimmer-expression@2.0.1':
+    resolution: {integrity: sha512-zL95gEqHCyNQF/waWYnTyCMvrPsyuyXjO9pmFSimsvw27mKxORDF9qk2uDUj5CCYvlmegdrFpsd1Xm0YHQR11w==}
 
   '@glimmer/compiler@0.94.11':
     resolution: {integrity: sha512-t9eyLZIFsiwAib8Zyfu67yBep5Vn2bd5DScIE2hharPE/OKKI7cpQYi6BzQhSGYEBVU82ITd/2TLvJ1K8eIahA==}
@@ -5921,19 +5921,19 @@ packages:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
     engines: {node: '>=6'}
 
-  codemirror-lang-glimdown@2.0.0:
-    resolution: {integrity: sha512-MllK4VY3fdgpFmjQ1nYCkyLCWRhKSHgo6VKI9k+WN/p0VKyKTfArlOywvjILfYOwZ5Scyq5tJGTNmk3TzJw1DA==}
+  codemirror-lang-glimdown@2.0.1:
+    resolution: {integrity: sha512-/P+Ewk2gCaI9WW47HH3Y885S93BQhCni+YiZ3Toka0T5H99G7Z/WntUy5RkNNDqcU0cddX7Rd1s+QZK0r+4Jew==}
     peerDependencies:
       '@codemirror/state': ^6.3.3
       '@codemirror/view': ^6.22.3
 
-  codemirror-lang-glimmer-js@2.0.0:
-    resolution: {integrity: sha512-YbY9pljNU/UDzPYnH19JDxM5BigUZZTCphDCqUln/vbT7/YduAgX0tUxCUSlBxOEpQErGKyVbp6iNFgmpiIrZg==}
+  codemirror-lang-glimmer-js@2.0.1:
+    resolution: {integrity: sha512-P9pLYEwIgR+mTRjv5vOWWy0G3nFI3ceOkLwYQxuipaIhI82QoOb/Os1B9uPlTZvn9VejhDj6XJHTz7Sx8NYeUw==}
     peerDependencies:
       '@codemirror/view': ^6.22.3
 
-  codemirror-lang-glimmer@2.0.0:
-    resolution: {integrity: sha512-IsI5kU4IBRLgM0fTJtonX6wRwJYH216Z8plWsnMmjVeTcJJforaCgkFpJGuOQAUVXRM0v3YigQcercczxolk8g==}
+  codemirror-lang-glimmer@2.0.1:
+    resolution: {integrity: sha512-TuK/MR3+JedCGyyzXe9ycGmrSRsPGlUy+QlvOoVaNvbH5XWIHFDD3st3EW3f+CxQpBBwLJXwDWj6QWy5UvaxSQ==}
     peerDependencies:
       '@lezer/common': ^1.1.2
 
@@ -6870,21 +6870,6 @@ packages:
       '@glint/template':
         optional: true
 
-  ember-primitives@0.40.0:
-    resolution: {integrity: sha512-qnxMvkVEuq40mHrwvQkx/fndi9xCBpIaylU2MMqCyZQ0wnAmnZkUn9nxT/GVqTNwajIfjtoV+JP8jNrXvGuzLA==}
-    peerDependencies:
-      '@ember/test-helpers': '>= 3.2.0'
-      '@ember/test-waiters': '>= 3.0.2'
-      '@glimmer/component': ^2.0.0
-      '@glint/template': '>= 1.0.0'
-      ember-modifier: '>= 4.1.0'
-      ember-resources: '>= 6.1.0'
-    peerDependenciesMeta:
-      '@ember/test-helpers':
-        optional: true
-      '@glint/template':
-        optional: true
-
   ember-primitives@0.48.1:
     resolution: {integrity: sha512-OxOVk17I9nDQqO6ISXKtTLbN8+z7ycI8XExzTrD7rpJA+UmEKIqF0zXTpodSdhT0L5lMMBF/Deqf36/bXrNCEQ==}
     peerDependencies:
@@ -6921,8 +6906,8 @@ packages:
       '@glint/template':
         optional: true
 
-  ember-repl@7.0.1:
-    resolution: {integrity: sha512-U5UkG3C8XSpL4HZeCBZStzsffqCcCW1H5KJzjTFfo7RP1HnuIOmB58Dv4Iz6dTztVgwWUM6wvBKFgnp8jVdK8g==}
+  ember-repl@7.1.1:
+    resolution: {integrity: sha512-Jq0jP1kqMmSv82qQW2Q9bycbEd/09d8ve3HY4sZnT8kIXr8VmnE0BbQjGs21RmBjEFJZSvSNvjvBb6VE83uYsg==}
     peerDependencies:
       '@glint/template': '>= 1.5.2 || ^1.6.0-alpha.1'
     peerDependenciesMeta:
@@ -8448,8 +8433,8 @@ packages:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
 
-  lezer-glimmer@2.0.0:
-    resolution: {integrity: sha512-U/+nt+d4EKYVWxJyix+f2K0DOiiTb1vUXlsv9mmbo8PF1XkPpvOL2g4Rx7NNAtSx5iP+i+2559UcHj1FVEHrhA==}
+  lezer-glimmer@2.0.1:
+    resolution: {integrity: sha512-RaxLk6B3MLYPsFabDr6DYbzWQrWjgnvZdUZMAg1oIDADhSPQ7n5LRJXnbW7owmdyUVdM2yKTSK5ObyzjjMRw8w==}
 
   lie@3.3.0:
     resolution: {integrity: sha512-UaiMJzeWRlEujzAuw5LokY1L5ecNQYZKfmyZ9L7wDHb/p5etKaxXhohBcrw0EYby+G/NA52vRSN4N39dxHAIwQ==}
@@ -10146,8 +10131,8 @@ packages:
     resolution: {integrity: sha512-PV0dzCYDNfRi1jCDbJzpW7jNNDRuCOG/jI5ctQcGKt/clZD+YcPS3yIlWuTJMmESC8aevCFmWJy5wjAFgNqN6w==}
     engines: {node: '>=0.10'}
 
-  repl-sdk@1.0.0:
-    resolution: {integrity: sha512-IgoFVGEmKMQfx+3zOYETzW2sLy+eD26tINeUTfr8jId7B7UiJy0lsH0KkYvEzfPdLiUuiEYXDpnZr9+lFj+FXg==}
+  repl-sdk@1.0.1:
+    resolution: {integrity: sha512-rP/YrZuPAZp1RToJxFGGnOksiA9xjlGkmd7rawAnVPO54n+5qSzsJKuU/sZK+Pp0GO/26FANpKmjAnONPuMw+w==}
 
   request-light@0.7.0:
     resolution: {integrity: sha512-lMbBMrDoxgsyO+yB3sDcrDuX85yYt7sS8BfQd11jtbW/z5ZWgLZRcEGLsLoYw7I0WSUGQBs8CC8ScIxkTX1+6Q==}
@@ -13593,7 +13578,7 @@ snapshots:
       '@shikijs/types': 3.20.0
       '@shikijs/vscode-textmate': 10.0.2
 
-  '@glimdown/lezer-glimmer-expression@2.0.0':
+  '@glimdown/lezer-glimmer-expression@2.0.1':
     dependencies:
       '@lezer/highlight': 1.2.3
       '@lezer/lr': 1.4.5
@@ -14782,7 +14767,7 @@ snapshots:
 
   '@types/chai-as-promised@7.1.8':
     dependencies:
-      '@types/chai': 4.3.20
+      '@types/chai': 5.2.3
 
   '@types/chai@4.3.20': {}
 
@@ -15568,7 +15553,7 @@ snapshots:
 
   ajv-formats@3.0.1:
     dependencies:
-      ajv: 8.13.0
+      ajv: 8.17.1
 
   ajv-keywords@3.5.2(ajv@6.12.6):
     dependencies:
@@ -16568,7 +16553,7 @@ snapshots:
 
   clsx@2.1.1: {}
 
-  codemirror-lang-glimdown@2.0.0(20fa7fefff82a8bba2b4c2abf416dd8f):
+  codemirror-lang-glimdown@2.0.1(20fa7fefff82a8bba2b4c2abf416dd8f):
     dependencies:
       '@codemirror/lang-html': 6.4.11
       '@codemirror/lang-javascript': 6.2.4
@@ -16585,15 +16570,15 @@ snapshots:
       '@lezer/lr': 1.4.5
       '@lezer/markdown': 1.6.1
       '@replit/codemirror-lang-svelte': 6.0.0(4e09e0246eca4301e00908d163f31d57)
-      codemirror-lang-glimmer: 2.0.0(@lezer/common@1.4.0)
-      codemirror-lang-glimmer-js: 2.0.0(6d75a3c0d190fcbcaf9187c66c00d4dd)
+      codemirror-lang-glimmer: 2.0.1(@lezer/common@1.4.0)
+      codemirror-lang-glimmer-js: 2.0.1(6d75a3c0d190fcbcaf9187c66c00d4dd)
       codemirror-lang-mermaid: 0.5.0
     transitivePeerDependencies:
       - '@codemirror/autocomplete'
       - '@codemirror/lang-css'
       - '@codemirror/language'
 
-  codemirror-lang-glimmer-js@2.0.0(6d75a3c0d190fcbcaf9187c66c00d4dd):
+  codemirror-lang-glimmer-js@2.0.1(6d75a3c0d190fcbcaf9187c66c00d4dd):
     dependencies:
       '@codemirror/lang-css': 6.3.1
       '@codemirror/lang-html': 6.4.11
@@ -16603,11 +16588,11 @@ snapshots:
       '@lezer/highlight': 1.2.3
       '@lezer/javascript': 1.5.4
       '@lezer/lr': 1.4.5
-      codemirror-lang-glimmer: 2.0.0(@lezer/common@1.4.0)
+      codemirror-lang-glimmer: 2.0.1(@lezer/common@1.4.0)
     transitivePeerDependencies:
       - '@lezer/common'
 
-  codemirror-lang-glimmer@2.0.0(@lezer/common@1.4.0):
+  codemirror-lang-glimmer@2.0.1(@lezer/common@1.4.0):
     dependencies:
       '@codemirror/autocomplete': 6.18.6
       '@codemirror/lang-css': 6.3.1
@@ -16615,13 +16600,13 @@ snapshots:
       '@codemirror/lang-javascript': 6.2.4
       '@codemirror/state': 6.5.2
       '@codemirror/view': 6.38.0
-      '@glimdown/lezer-glimmer-expression': 2.0.0
+      '@glimdown/lezer-glimmer-expression': 2.0.1
       '@lezer/common': 1.4.0
       '@lezer/highlight': 1.2.3
       '@lezer/html': 1.3.12
       '@lezer/javascript': 1.5.4
       '@lezer/lr': 1.4.5
-      lezer-glimmer: 2.0.0
+      lezer-glimmer: 2.0.1
 
   codemirror-lang-mermaid@0.5.0:
     dependencies:
@@ -17629,32 +17614,6 @@ snapshots:
       - ember-source
       - supports-color
 
-  ember-primitives@0.40.0(e0d54849f75ec5f741c59fe3adb3e9d6):
-    dependencies:
-      '@babel/runtime': 7.28.4
-      '@ember/test-waiters': 4.1.1(@glint/template@1.7.3)
-      '@embroider/addon-shim': 1.10.2
-      '@embroider/macros': 1.19.5(@glint/template@1.7.3)
-      '@floating-ui/dom': 1.7.4
-      '@glimmer/component': 2.0.0
-      decorator-transforms: 2.3.0(patch_hash=4ad3c409cd8142dbee4f619fc569e853ea53eed39bc24633cf6ef28ddd93e891)(@babel/core@7.28.5)
-      ember-element-helper: 0.8.8
-      ember-modifier: 4.2.2(@babel/core@7.28.5)
-      ember-resources: 7.0.7(66147294c81f5083ed2f65d9a770bc61)
-      form-data-utils: 0.6.0
-      reactiveweb: 1.9.0(2578247c2fc6be162cd93b1c00a6570d)
-      should-handle-link: 1.3.0
-      tabster: 8.6.2
-      tracked-built-ins: 4.0.0(@babel/core@7.28.5)
-      tracked-toolbox: 2.0.0(659bea5e805a371a8b1ed0c6fea1cfaf)
-    optionalDependencies:
-      '@ember/test-helpers': 5.4.1(41dbc40bfe763063746c2ae01dde51bb)
-      '@glint/template': 1.7.3
-    transitivePeerDependencies:
-      - '@babel/core'
-      - ember-source
-      - supports-color
-
   ember-primitives@0.48.1(e0d54849f75ec5f741c59fe3adb3e9d6):
     dependencies:
       '@babel/runtime': 7.28.4
@@ -17729,19 +17688,18 @@ snapshots:
       - '@glimmer/component'
       - supports-color
 
-  ember-repl@7.0.1(98528c686a2f7a925be5161a698b4dd7):
+  ember-repl@7.1.1(98528c686a2f7a925be5161a698b4dd7):
     dependencies:
       '@ember/test-helpers': 5.4.1(41dbc40bfe763063746c2ae01dde51bb)
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.3)
       '@embroider/addon-shim': 1.10.2
-      babel-plugin-ember-template-compilation: 2.4.1
       codemirror: 6.0.2
-      content-tag: 3.1.3
+      content-tag: 4.0.0
       decorator-transforms: 2.3.0(patch_hash=4ad3c409cd8142dbee4f619fc569e853ea53eed39bc24633cf6ef28ddd93e891)(@babel/core@7.28.5)
-      ember-primitives: 0.40.0(e0d54849f75ec5f741c59fe3adb3e9d6)
+      ember-primitives: 0.48.1(e0d54849f75ec5f741c59fe3adb3e9d6)
       ember-resolver: 13.1.1
       ember-resources: 7.0.7(66147294c81f5083ed2f65d9a770bc61)
-      repl-sdk: 1.0.0(500ebda877f078bc70b6663923416fee)
+      repl-sdk: 1.0.1(500ebda877f078bc70b6663923416fee)
     optionalDependencies:
       '@glint/template': 1.7.3
     transitivePeerDependencies:
@@ -19720,9 +19678,9 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
 
-  lezer-glimmer@2.0.0:
+  lezer-glimmer@2.0.1:
     dependencies:
-      '@glimdown/lezer-glimmer-expression': 2.0.0
+      '@glimdown/lezer-glimmer-expression': 2.0.1
       '@lezer/common': 1.4.0
       '@lezer/highlight': 1.2.3
       '@lezer/html': 1.3.12
@@ -21860,7 +21818,7 @@ snapshots:
 
   repeat-string@1.6.1: {}
 
-  repl-sdk@1.0.0(500ebda877f078bc70b6663923416fee):
+  repl-sdk@1.0.1(500ebda877f078bc70b6663923416fee):
     dependencies:
       '@codemirror/autocomplete': 6.18.6
       '@codemirror/commands': 6.8.1
@@ -21882,9 +21840,9 @@ snapshots:
       '@replit/codemirror-lang-svelte': 6.0.0(4e09e0246eca4301e00908d163f31d57)
       change-case: 5.4.4
       codemirror: 6.0.2
-      codemirror-lang-glimdown: 2.0.0(20fa7fefff82a8bba2b4c2abf416dd8f)
-      codemirror-lang-glimmer: 2.0.0(@lezer/common@1.4.0)
-      codemirror-lang-glimmer-js: 2.0.0(6d75a3c0d190fcbcaf9187c66c00d4dd)
+      codemirror-lang-glimdown: 2.0.1(20fa7fefff82a8bba2b4c2abf416dd8f)
+      codemirror-lang-glimmer: 2.0.1(@lezer/common@1.4.0)
+      codemirror-lang-glimmer-js: 2.0.1(6d75a3c0d190fcbcaf9187c66c00d4dd)
       codemirror-lang-mermaid: 0.5.0
       codemirror-languageserver: 1.18.1(encoding@0.1.13)
       comlink: 4.4.2
