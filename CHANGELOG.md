@@ -2,6 +2,18 @@
 
 ## Release (2025-12-22)
 
+* ember-repl 7.1.3 (patch)
+* repl-sdk 1.0.3 (patch)
+
+#### :bug: Bug Fix
+* `repl-sdk`
+  * [#2021](https://github.com/NullVoxPopuli/limber/pull/2021) repl-sdk: move more deps to depndencies ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
+## Release (2025-12-22)
+
 * ember-repl 7.1.2 (patch)
 * repl-sdk 1.0.2 (patch)
 
