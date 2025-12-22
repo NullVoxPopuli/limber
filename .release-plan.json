@@ -2,13 +2,13 @@
   "solution": {
     "ember-repl": {
       "impact": "patch",
-      "oldVersion": "7.1.0",
-      "newVersion": "7.1.1",
+      "oldVersion": "7.1.1",
+      "newVersion": "7.1.2",
       "tagName": "latest",
       "constraints": [
         {
           "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
+          "reason": "Has dependency `workspace:*` on repl-sdk"
         }
       ],
       "pkgJSONPath": "./packages/ember-repl/package.json"
@@ -17,7 +17,17 @@
       "oldVersion": "4.0.2"
     },
     "repl-sdk": {
-      "oldVersion": "1.0.1"
+      "impact": "patch",
+      "oldVersion": "1.0.1",
+      "newVersion": "1.0.2",
+      "tagName": "latest",
+      "constraints": [
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :bug: Bug Fix"
+        }
+      ],
+      "pkgJSONPath": "./packages/repl-sdk/package.json"
     },
     "codemirror-lang-glimdown": {
       "oldVersion": "2.0.1"
@@ -41,5 +51,5 @@
       "oldVersion": "2.0.1"
     }
   },
-  "description": "## Release (2025-12-22)\n\n* ember-repl 7.1.1 (patch)\n\n#### :bug: Bug Fix\n* `ember-repl`\n  * [#2017](https://github.com/NullVoxPopuli/limber/pull/2017) Markdown deps are bundled, don't define imports for them in ember-repl ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2025-12-22)\n\n* ember-repl 7.1.2 (patch)\n* repl-sdk 1.0.2 (patch)\n\n#### :bug: Bug Fix\n* `repl-sdk`\n  * [#2019](https://github.com/NullVoxPopuli/limber/pull/2019) Clean repl-sdk pacakge.json ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }
