@@ -2,6 +2,17 @@
 
 ## Release (2025-12-22)
 
+* ember-repl 7.1.1 (patch)
+
+#### :bug: Bug Fix
+* `ember-repl`
+  * [#2017](https://github.com/NullVoxPopuli/limber/pull/2017) Markdown deps are bundled, don't define imports for them in ember-repl ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
+## Release (2025-12-22)
+
 * ember-repl 7.1.0 (minor)
 
 #### :rocket: Enhancement

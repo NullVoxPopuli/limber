@@ -1,14 +1,14 @@
 {
   "solution": {
     "ember-repl": {
-      "impact": "minor",
-      "oldVersion": "7.0.2",
-      "newVersion": "7.1.0",
+      "impact": "patch",
+      "oldVersion": "7.1.0",
+      "newVersion": "7.1.1",
       "tagName": "latest",
       "constraints": [
         {
-          "impact": "minor",
-          "reason": "Appears in changelog section :rocket: Enhancement"
+          "impact": "patch",
+          "reason": "Appears in changelog section :bug: Bug Fix"
         }
       ],
       "pkgJSONPath": "./packages/ember-repl/package.json"
@@ -41,5 +41,5 @@
       "oldVersion": "2.0.1"
     }
   },
-  "description": "## Release (2025-12-22)\n\n* ember-repl 7.1.0 (minor)\n\n#### :rocket: Enhancement\n* `ember-repl`\n  * [#2015](https://github.com/NullVoxPopuli/limber/pull/2015) Update content-tag to v4, and bundlne some babel behavior ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :memo: Documentation\n* [#2016](https://github.com/NullVoxPopuli/limber/pull/2016) Related projects ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n* [#2010](https://github.com/NullVoxPopuli/limber/pull/2010) Tabify the docs ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n* [#2008](https://github.com/NullVoxPopuli/limber/pull/2008) Update ember-repl instructions to use babel#17653 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2025-12-22)\n\n* ember-repl 7.1.1 (patch)\n\n#### :bug: Bug Fix\n* `ember-repl`\n  * [#2017](https://github.com/NullVoxPopuli/limber/pull/2017) Markdown deps are bundled, don't define imports for them in ember-repl ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }
