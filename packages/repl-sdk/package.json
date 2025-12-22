@@ -5,22 +5,16 @@
   "exports": {
     ".": {
       "types": "./src/index.d.ts",
-      "default": "./dist/repl-sdk.js"
+      "default": "./src/index.js"
     }
   },
   "ember-addon": {
     "version": 2,
-    "type": "addon",
-    "public-assets": {
-      "./assets/tar-worker.js": "./dist/assets/tar-worker-FjwkBMqD.js"
-    }
+    "type": "addon"
   },
   "scripts": {
-    "build": "vite build",
     "lint:fix": "pnpm -w exec lint fix",
     "example": "cd example && vite",
-    "start": "vite build --watch",
-    "prepack": "vite build",
     "lint:package": "pnpm publint",
     "lint:js": "pnpm -w exec lint js",
     "lint:types": "tsc --noEmit",
