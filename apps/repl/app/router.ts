@@ -39,6 +39,7 @@ function bundle(name: string, loader: () => Promise<{ default: unknown }>[]) {
   bundle('docs.ember-repl', () => [import('./templates/docs/ember-repl.gts')]),
   bundle('docs.embedding', () => [import('./templates/docs/embedding.gts')]),
   bundle('docs.editor', () => [import('./templates/docs/editor.gts')]),
+  bundle('docs.related-projects', () => [import('./templates/docs/related-projects.gts')]),
 ];
 
 Router.map(function () {
@@ -58,6 +59,7 @@ Router.map(function () {
     this.route('ember-repl');
     this.route('embedding');
     this.route('editor');
+    this.route('related-pprojects');
   });
 
   this.route('error-404', { path: '*' });
