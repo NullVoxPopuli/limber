@@ -5,7 +5,7 @@
   "exports": {
     ".": {
       "types": "./src/index.d.ts",
-      "default": "./dist/index.js"
+      "default": "./dist/repl-sdk.js"
     }
   },
   "ember-addon": {
@@ -16,7 +16,7 @@
     }
   },
   "scripts": {
-    "build": "pnpm prepack",
+    "build": "vite build",
     "lint:fix": "pnpm -w exec lint fix",
     "example": "cd example && vite",
     "start": "vite build --watch",
