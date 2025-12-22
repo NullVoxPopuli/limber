@@ -1303,6 +1303,9 @@ importers:
       '@replit/codemirror-lang-svelte':
         specifier: ^6.0.0
         version: 6.0.0(4e09e0246eca4301e00908d163f31d57)
+      '@shikijs/rehype':
+        specifier: ^3.7.0
+        version: 3.20.0
       change-case:
         specifier: ^5.4.4
         version: 5.4.4
@@ -1330,12 +1333,30 @@ importers:
       es-module-shims:
         specifier: ^2.6.1
         version: 2.7.0
+      mdast:
+        specifier: ^3.0.0
+        version: 3.0.0
       mime:
         specifier: ^4.0.7
         version: 4.1.0
       package-name-regex:
         specifier: ^4.0.3
         version: 4.0.3
+      rehype-raw:
+        specifier: ^7.0.0
+        version: 7.0.0
+      rehype-stringify:
+        specifier: ^10.0.1
+        version: 10.0.1
+      remark-gfm:
+        specifier: ^4.0.1
+        version: 4.0.1
+      remark-parse:
+        specifier: ^11.0.0
+        version: 11.0.0
+      remark-rehype:
+        specifier: ^11.1.2
+        version: 11.1.2
       resolve.exports:
         specifier: ^2.0.3
         version: 2.0.3
@@ -1345,13 +1366,19 @@ importers:
       tarparser:
         specifier: ^0.0.5
         version: 0.0.5
+      unified:
+        specifier: ^11.0.5
+        version: 11.0.5
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
+      vfile:
+        specifier: ^6.0.3
+        version: 6.0.3
     devDependencies:
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
         version: 5.4.0(8c66d53c455d371732a7109c72bf636c)
-      '@shikijs/rehype':
-        specifier: ^3.7.0
-        version: 3.20.0
       '@tsconfig/ember':
         specifier: ^3.0.7
         version: 3.0.12
@@ -1370,42 +1397,15 @@ importers:
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.4.2)
-      mdast:
-        specifier: ^3.0.0
-        version: 3.0.0
       prettier:
         specifier: ^3.7.4
         version: 3.7.4
       publint:
         specifier: ^0.3.16
         version: 0.3.16
-      rehype-raw:
-        specifier: ^7.0.0
-        version: 7.0.0
-      rehype-stringify:
-        specifier: ^10.0.1
-        version: 10.0.1
-      remark-gfm:
-        specifier: ^4.0.1
-        version: 4.0.1
-      remark-parse:
-        specifier: ^11.0.0
-        version: 11.0.0
-      remark-rehype:
-        specifier: ^11.1.2
-        version: 11.1.2
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
-      unified:
-        specifier: ^11.0.5
-        version: 11.0.5
-      unist-util-visit:
-        specifier: ^5.0.0
-        version: 5.0.0
-      vfile:
-        specifier: ^6.0.3
-        version: 6.0.3
       vite:
         specifier: ^7.2.7
         version: 7.2.7(37b867916236617cb069bf12e19a914e)
