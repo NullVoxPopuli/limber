@@ -12,6 +12,11 @@ import * as vue from './formats/vue.gts';
 
 import type { SimpleComponent } from '#types';
 
+const overrideName = {
+  jsxreact: 'jsx (react)',
+  hbsember: 'hbs (ember)',
+} as Record<string, string>;
+
 /**
  * This is meant to be alphabetical
  */
@@ -28,6 +33,16 @@ export const formats = [
   mermaid,
   svelte,
   vue,
-]
-  .map((x) => Object.values(x))
-  .flat() as SimpleComponent[];
+].reduce(
+  (result, item) => {
+    for (const [key, value] of Object.entries(item)) {
+      let name = key.toLowerCase();
+
+      name = overrideName[name] || name;
+      result[name] = value;
+    }
+
+    return result;
+  },
+  {} as Record<string, SimpleComponent>
+);

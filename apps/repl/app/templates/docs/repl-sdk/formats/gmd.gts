@@ -10,7 +10,25 @@ const compiler = new Compiler();
 
 const { element, destroy } = await compiler.compile(
   'gmd',
-  '... file contents ...',
+  \`
+# Heading
+
+\`\`\`react live
+react code
+\`\`\`
+
+\`\`\`mermaid
+mermaid configuration
+\`\`\`
+
+\`\`\`gjs live
+glimmer/ember code
+\`\`\`
+
+\`\`\`svelte
+with "live", only the code snippet is shown
+\`\`\`
+  \`,
   { /* options */ });
 `;
 

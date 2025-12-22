@@ -1,3 +1,5 @@
+import { Tabs } from 'nvp.ui/tabs';
+
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
 import highlighted from '../../modifiers/highlighted.ts';
@@ -154,8 +156,16 @@ class Demo extends Component {
 
     With your favorite package manager
 
-    <div data-format="bash" {{highlighted "npm add ember-repl"}}></div>
-    <div data-format="bash" {{highlighted "pnpm add ember-repl"}}></div>
+    <Tabs as |Tab|>
+      {{! @glint-expect-error TODO: fix this in nvp.ui }}
+      <Tab @label="npm">
+        <div data-format="bash" {{highlighted "npm add ember-repl"}}></div>
+      </Tab>
+      {{! @glint-expect-error TODO: fix this in nvp.ui }}
+      <Tab @label="pnpm">
+        <div data-format="bash" {{highlighted "pnpm add ember-repl"}}></div>
+      </Tab>
+    </Tabs>
     For the time being, until
     <ExternalLink href="https://github.com/babel/babel/pull/17653">babel#17635</ExternalLink>
     is merged and released, we need to use a different version of

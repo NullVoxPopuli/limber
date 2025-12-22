@@ -1,3 +1,5 @@
+import { Tabs } from 'nvp.ui/tabs';
+
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
 import highlighted from '../../modifiers/highlighted';
@@ -103,27 +105,7 @@ const compiler = new Compiler({
     <nav>
       <ul>
         <li><a href="#install">Install</a></li>
-        <li><a href="#bundled-compilers">Bundled Compilers</a>
-          <ul class="toc-formats">
-            <li><a href="#format-gjs">gjs</a></li>
-            <li><a href="#format-gmd">gmd</a></li>
-            <li><a href="#format-hbs">hbs</a>
-              (
-              <a href="#format-hbs-ember">ember</a>
-              )
-            </li>
-            <li><a href="#format-js">js</a></li>
-            <li><a href="#format-jsx">jsx</a>
-              (
-              <a href="#format-jsx-react">react</a>
-              )
-            </li>
-            <li><a href="#format-md">md</a></li>
-            <li><a href="#format-mermaid">mermaid</a></li>
-            <li><a href="#format-svelte">svelte</a></li>
-            <li><a href="#format-vue">vue</a></li>
-          </ul>
-        </li>
+        <li><a href="#bundled-compilers">Bundled Compilers</a></li>
         <li><a href="#api-overview">API Overview</a>
           <ul>
 
@@ -172,9 +154,16 @@ const compiler = new Compiler({
     <p>
       With your favorite package manager
 
-      <div data-format="bash" {{highlighted "npm add repl-sdk"}}></div>
-      <div data-format="bash" {{highlighted "pnpm add repl-sdk"}}></div>
-      (etc)
+      <Tabs as |Tab|>
+        {{! @glint-expect-error TODO: fix this in nvp.ui }}
+        <Tab @label="npm">
+          <div data-format="bash" {{highlighted "npm add repl-sdk"}}></div>
+        </Tab>
+        {{! @glint-expect-error TODO: fix this in nvp.ui }}
+        <Tab @label="pnpm">
+          <div data-format="bash" {{highlighted "pnpm add repl-sdk"}}></div>
+        </Tab>
+      </Tabs>
 
       <H2 @id="bundled-compilers">Bundled Compilers</H2>
 
@@ -194,10 +183,14 @@ const compiler = new Compiler({
       <code>jsx</code>.
     </p>
 
-    {{#each formats as |formatDocs|}}
-      <formatDocs />
-    {{/each}}
-
+    <Tabs as |Tab|>
+      {{#each-in formats as |format docs|}}
+        {{! @glint-expect-error TODO: fix this in nvp.ui }}
+        <Tab @label={{format}}>
+          <docs />
+        </Tab>
+      {{/each-in}}
+    </Tabs>
     <H2 @id="api-overview">API Overview</H2>
 
     <p>
