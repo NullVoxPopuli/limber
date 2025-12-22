@@ -18,8 +18,8 @@ export const NavLink: TOC<{
 </template>;
 
 export const Topics = <template>
-  <NavLink href="/docs/repl-sdk" @icon={{Package}}>repl-sdk</NavLink>
-  <NavLink href="/docs/ember-repl" @icon={{Package}}>ember-repl</NavLink>
-  <NavLink href="/docs/embedding">embedding</NavLink>
   <NavLink href="/docs/editor">editor</NavLink>
+  <NavLink href="/docs/embedding">embedding</NavLink>
+  <NavLink href="/docs/ember-repl" @icon={{Package}}>ember-repl</NavLink>
+  <NavLink href="/docs/repl-sdk" @icon={{Package}}>repl-sdk</NavLink>
 </template>;
