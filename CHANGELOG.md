@@ -1,5 +1,21 @@
 # Changelog
 
+## Release (2025-12-22)
+
+* ember-repl 7.1.0 (minor)
+
+#### :rocket: Enhancement
+* `ember-repl`
+  * [#2015](https://github.com/NullVoxPopuli/limber/pull/2015) Update content-tag to v4, and bundlne some babel behavior ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :memo: Documentation
+* [#2016](https://github.com/NullVoxPopuli/limber/pull/2016) Related projects ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#2010](https://github.com/NullVoxPopuli/limber/pull/2010) Tabify the docs ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#2008](https://github.com/NullVoxPopuli/limber/pull/2008) Update ember-repl instructions to use babel#17653 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2025-12-20)
 
 * ember-repl 7.0.2 (patch)
