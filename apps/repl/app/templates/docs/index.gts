@@ -1,7 +1,7 @@
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
 import { issueURL } from './support/code.gts';
-import { Topics } from './topics.gts';
+import { NavLink, Topics } from './topics.gts';
 
 <template>
   <br /><br />
@@ -20,6 +20,8 @@ import { Topics } from './topics.gts';
 
         <nav class="vertical-nav">
           <Topics />
+          <span></span>
+          <NavLink href="/docs/related">related projects</NavLink>
         </nav>
       </p>
     </main>
