@@ -166,8 +166,8 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0
       nvp.ui:
-        specifier: ^0.5.0
-        version: 0.5.0(659bea5e805a371a8b1ed0c6fea1cfaf)
+        specifier: ^0.5.1
+        version: 0.5.1(659bea5e805a371a8b1ed0c6fea1cfaf)
       path-browserify:
         specifier: ^1.0.1
         version: 1.0.1
@@ -9335,8 +9335,8 @@ packages:
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
 
-  nvp.ui@0.5.0:
-    resolution: {integrity: sha512-ymK++5ToNG1/OWyd59Xej78D/1aFsCCZrfa8s2LAeLyL/eDGsDizFBp9lryaIgfDcVIv1bzCZ3cFh7W43BCizQ==}
+  nvp.ui@0.5.1:
+    resolution: {integrity: sha512-jheiKe6fm/unCsI7tiZrvofd6xFbzKKxU311pDtEWqTMbuwrP+351BEm7khFGHM5F0QqMKRJ1l2HFcR1RD09fQ==}
 
   nwsapi@2.2.23:
     resolution: {integrity: sha512-7wfH4sLbt4M0gCDzGE6vzQBo0bfTKjU7Sfpqy/7gs1qBfYz2vEJH6vXcBKpO3+6Yu1telwd0t9HpyOoLEQQbIQ==}
@@ -21000,7 +21000,7 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
-  nvp.ui@0.5.0(659bea5e805a371a8b1ed0c6fea1cfaf):
+  nvp.ui@0.5.1(659bea5e805a371a8b1ed0c6fea1cfaf):
     dependencies:
       '@ember/test-helpers': 5.4.1(41dbc40bfe763063746c2ae01dde51bb)
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.3)
