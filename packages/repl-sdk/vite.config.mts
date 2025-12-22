@@ -61,9 +61,9 @@ export default defineConfig({
     },
   },
   plugins: [
-    dts({
-      rollupTypes: true,
-      outDir: "declarations",
-    }),
+    // dts({
+    //   rollupTypes: true,
+    //   outDir: "declarations",
+    // }),
   ],
 });
