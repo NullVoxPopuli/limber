@@ -109,13 +109,14 @@ const emberCompilationModules = {
 };
 
 const markdownCompilationModules = {
-  'rehype-raw': () => import('rehype-raw'),
-  'rehype-stringify': () => import('rehype-stringify'),
-  'remark-gfm': () => import('remark-gfm'),
-  'remark-parse': () => import('remark-parse'),
-  'remark-rehype': () => import('remark-rehype'),
-  unified: () => import('unified'),
-  'unist-util-visit': () => import('unist-util-visit'),
+  // Provided directly in repl-sdk, but could be overridden
+  // 'rehype-raw': () => import('rehype-raw'),
+  // 'rehype-stringify': () => import('rehype-stringify'),
+  // 'remark-gfm': () => import('remark-gfm'),
+  // 'remark-parse': () => import('remark-parse'),
+  // 'remark-rehype': () => import('remark-rehype'),
+  // unified: () => import('unified'),
+  // 'unist-util-visit': () => import('unist-util-visit'),
 };
 
 /**
