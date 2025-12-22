@@ -911,15 +911,12 @@ importers:
       '@embroider/addon-shim':
         specifier: ^1.10.2
         version: 1.10.2
-      babel-plugin-ember-template-compilation:
-        specifier: ^3.0.1
-        version: 3.0.1
       codemirror:
         specifier: ^6.0.2
         version: 6.0.2
       content-tag:
-        specifier: ^3.0.0
-        version: 3.1.3
+        specifier: ^4.0.0
+        version: 4.0.0
       decorator-transforms:
         specifier: 2.3.0
         version: 2.3.0(patch_hash=4ad3c409cd8142dbee4f619fc569e853ea53eed39bc24633cf6ef28ddd93e891)(@babel/core@7.28.5)
@@ -1020,6 +1017,9 @@ importers:
       babel-plugin-debug-macros:
         specifier: ^2.0.0
         version: 2.0.0(@babel/core@7.28.5)
+      babel-plugin-ember-template-compilation:
+        specifier: ^3.0.1
+        version: 3.0.1
       change-case:
         specifier: ^5.4.4
         version: 5.4.4
