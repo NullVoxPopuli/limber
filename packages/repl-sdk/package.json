@@ -4,11 +4,8 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./src/index.d.ts",
-      "default": "./src/index.js"
-    },
-    "./compilers/ember/*": {
-      "default": "./src/compilers/ember/*.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
   "ember-addon": {
