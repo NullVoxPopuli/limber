@@ -22,4 +22,6 @@ export const Topics = <template>
   <NavLink href="/docs/ember-repl" @icon={{Package}}>ember-repl</NavLink>
   <NavLink href="/docs/embedding">embedding</NavLink>
   <NavLink href="/docs/editor">editor</NavLink>
+  <hr />
+  <NavLink href="/docs/related-projects">related projects</NavLink>
 </template>;
