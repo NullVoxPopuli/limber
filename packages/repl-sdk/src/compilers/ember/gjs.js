@@ -167,7 +167,18 @@ export async function compiler(config, api) {
 
       const { renderComponent } = await compiler.tryResolve('@ember/renderer');
 
-      const result = renderComponent(compiled, { into: element, owner: config.owner });
+      const owner = {
+        lookup(name) {
+          if (typeof config.owner !== 'object') return;
+          if (!config.owner) return;
+          if (!('lookup' in config.owner)) return;
+          if (typeof config.owner.lookup !== 'function') return;
+
+          return config.owner.lookup(name);
+        },
+      };
+
+      const result = renderComponent(compiled, { into: element, owner });
 
       return () => result.destroy();
     },
