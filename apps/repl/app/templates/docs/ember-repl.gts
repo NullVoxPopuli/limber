@@ -166,17 +166,6 @@ class Demo extends Component {
         <div data-format="bash" {{highlighted "pnpm add ember-repl"}}></div>
       </Tab>
     </Tabs>
-    For the time being, until
-    <ExternalLink href="https://github.com/babel/babel/pull/17653">babel#17635</ExternalLink>
-    is merged and released, we need to use a different version of
-    <code>@babel/standalone</code>
-    that supports async plugins.
-
-    <pre>"pnpm": {
-  "overrides": {
-    "@babel/standalone": "https://pkg.pr.new/babel/babel/@babel/standalone@0fe661460049cbc4f2b96fdeb0d6ce17b89b3bef"
-  }
-}</pre>
 
     <H2 @id="compatibility">Compatibility</H2>
 
