@@ -169,7 +169,6 @@ export async function compiler(config, api) {
 
       const { renderComponent } = await compiler.tryResolve('@ember/renderer');
 
-      console.log(extra);
       const owner = makeOwner(extra?.options?.owner ?? config.owner);
       const result = renderComponent(compiled, { into: element, owner });
 

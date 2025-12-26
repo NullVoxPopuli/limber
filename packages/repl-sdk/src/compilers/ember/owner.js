@@ -3,6 +3,7 @@
  */
 export function makeOwner(owner) {
   return {
+    name: 'inner owner',
     /**
      * @param {string} name
      */
