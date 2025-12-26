@@ -45,6 +45,7 @@
     "_repl-sdk": "workspace:*",
     "_ember-repl": "workspace:*",
     "overrides": {
+      "reactiveweb": "1.9.1",
       "@babel/standalone": "file:./babel-standalone.tgz",
       "decorator-transforms": "2.3.0",
       "array-includes": "npm:@nolyfill/array-includes@^1",

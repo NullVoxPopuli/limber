@@ -1,3 +1,4 @@
+import { getOwner } from '@ember/owner';
 import {
   currentRouteName,
   currentURL,
@@ -23,6 +24,7 @@ Object.assign(window, {
   getPendingWaiterState,
   currentURL,
   currentRouteName,
+  getOwner,
   snapshotTimers: (label?: string) => {
     console.debug(
       label ?? 'snapshotTimers',
