@@ -1,11 +1,15 @@
 {
   "solution": {
     "ember-repl": {
-      "impact": "patch",
-      "oldVersion": "7.1.2",
-      "newVersion": "7.1.3",
+      "impact": "minor",
+      "oldVersion": "7.1.3",
+      "newVersion": "7.2.0",
       "tagName": "latest",
       "constraints": [
+        {
+          "impact": "minor",
+          "reason": "Appears in changelog section :rocket: Enhancement"
+        },
         {
           "impact": "patch",
           "reason": "Has dependency `workspace:*` on repl-sdk"
@@ -17,14 +21,14 @@
       "oldVersion": "4.0.2"
     },
     "repl-sdk": {
-      "impact": "patch",
-      "oldVersion": "1.0.2",
-      "newVersion": "1.0.3",
+      "impact": "minor",
+      "oldVersion": "1.0.3",
+      "newVersion": "1.1.0",
       "tagName": "latest",
       "constraints": [
         {
-          "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
+          "impact": "minor",
+          "reason": "Appears in changelog section :rocket: Enhancement"
         }
       ],
       "pkgJSONPath": "./packages/repl-sdk/package.json"
@@ -51,5 +55,5 @@
       "oldVersion": "2.0.1"
     }
   },
-  "description": "## Release (2025-12-22)\n\n* ember-repl 7.1.3 (patch)\n* repl-sdk 1.0.3 (patch)\n\n#### :bug: Bug Fix\n* `repl-sdk`\n  * [#2021](https://github.com/NullVoxPopuli/limber/pull/2021) repl-sdk: move more deps to depndencies ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2025-12-26)\n\n* ember-repl 7.2.0 (minor)\n* repl-sdk 1.1.0 (minor)\n\n#### :rocket: Enhancement\n* `ember-repl`, `repl-sdk`\n  * [#1977](https://github.com/NullVoxPopuli/limber/pull/1977) Will `renderComponent` work for everything? ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }

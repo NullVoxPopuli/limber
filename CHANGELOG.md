@@ -1,5 +1,17 @@
 # Changelog
 
+## Release (2025-12-26)
+
+* ember-repl 7.2.0 (minor)
+* repl-sdk 1.1.0 (minor)
+
+#### :rocket: Enhancement
+* `ember-repl`, `repl-sdk`
+  * [#1977](https://github.com/NullVoxPopuli/limber/pull/1977) Will `renderComponent` work for everything? ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2025-12-22)
 
 * ember-repl 7.1.3 (patch)
