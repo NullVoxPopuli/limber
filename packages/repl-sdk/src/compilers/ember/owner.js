@@ -8,7 +8,6 @@ export function makeOwner(owner) {
      * @param {string} name
      */
     lookup(name) {
-      console.log(name, owner, owner?.lookup(name));
       if (typeof owner !== 'object') return;
       if (!owner) return;
       if (!('lookup' in owner)) return;

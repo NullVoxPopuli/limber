@@ -42,10 +42,6 @@ const coreLibraries = {
   'ember-resolver': () => import('ember-resolver'),
   'ember-resources': () => import('ember-resources'),
   'ember-primitives': () => import('ember-primitives'),
-  'ember-primitives/components/portal-targets': () =>
-    import('ember-primitives/components/portal-targets'),
-  'ember-primitives/components/menu': () =>
-    import('ember-primitives/components/menu'),
   'repl-sdk': () => import('repl-sdk'),
 };
 

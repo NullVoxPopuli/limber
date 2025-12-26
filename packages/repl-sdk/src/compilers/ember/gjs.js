@@ -154,7 +154,7 @@ export async function compiler(config, api) {
 
       const code = transformed.code;
 
-      return { compiled: code, options };
+      return code;
     },
     render: async (element, compiled, extra, compiler) => {
       /**
@@ -169,7 +169,7 @@ export async function compiler(config, api) {
 
       const { renderComponent } = await compiler.tryResolve('@ember/renderer');
 
-      const owner = makeOwner(extra?.options?.owner ?? config.owner);
+      const owner = makeOwner(config.owner);
       const result = renderComponent(compiled, { into: element, owner });
 
       return () => result.destroy();

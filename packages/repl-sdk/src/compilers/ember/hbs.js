@@ -52,7 +52,7 @@ export async function compiler(config, api) {
        * Is this allowed here? or do I just return text,
        * and do the above in 'render'
        */
-      return { compiled: component, options };
+      return component;
     },
     render: async (element, compiled, extra, compiler) => {
       /**
@@ -66,7 +66,7 @@ export async function compiler(config, api) {
       element.setAttribute(attribute, '');
 
       const { renderComponent } = await compiler.tryResolve('@ember/renderer');
-      const owner = makeOwner(extra?.options?.owner ?? config.owner);
+      const owner = makeOwner(config.owner);
       const result = renderComponent(compiled, { into: element, owner });
 
       return () => result.destroy();

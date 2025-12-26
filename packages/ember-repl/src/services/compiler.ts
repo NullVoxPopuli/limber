@@ -354,7 +354,6 @@ export default class CompilerService {
     let error: undefined | Error;
 
     options ||= {};
-    options.owner ||= getOwner(this);
 
     try {
       if (ext === 'hbs') {

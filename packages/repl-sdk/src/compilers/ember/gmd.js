@@ -14,6 +14,7 @@ let elementId = 0;
  *   rehypePlugins: Plugin[],
  *   ShadowComponent: string | undefined,
  *   CopyComponent: string | undefined
+ *   owner?: unknown | undefined
  *   }}
  */
 export function filterOptions(options) {
@@ -28,6 +29,7 @@ export function filterOptions(options) {
   }
 
   return {
+    owner: options?.owner,
     scope: /** @type {Record<string, unknown>}*/ (options?.scope || {}),
     remarkPlugins: /** @type {Plugin[]}*/ (options?.remarkPlugins || []),
     rehypePlugins: /** @type {Plugin[]}*/ (options?.rehypePlugins || []),
@@ -96,7 +98,10 @@ export async function compiler(config, api) {
 
       const { renderComponent } = await compiler.tryResolve('@ember/renderer');
 
-      const result = renderComponent(compiled, { into: element, owner: config.options });
+      const result = renderComponent(compiled, {
+        into: element,
+        owner: userOptions.owner,
+      });
 
       const destroy = () => result.destroy();
 

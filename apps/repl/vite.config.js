@@ -203,6 +203,7 @@ export default defineConfig((env) => {
         'limber-ui',
         'ember-repl',
         'repl-sdk',
+        'ember-repl > repl-sdk > content-tag',
       ],
       // These dependencies are *always*
       // needed on initial load.
