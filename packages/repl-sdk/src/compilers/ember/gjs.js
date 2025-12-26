@@ -1,5 +1,4 @@
-import { cache } from '../../cache.js';
-import { renderApp } from './render-app-island.js';
+import { makeOwner } from './owner.js';
 
 let elementId = 0;
 
@@ -168,35 +167,12 @@ export async function compiler(config, api) {
 
       element.setAttribute(attribute, '');
 
-      const [application, destroyable, resolver, router, route, testWaiters, runloop] =
-        await compiler.tryResolveAll([
-          '@ember/application',
-          '@ember/destroyable',
-          'ember-resolver',
-          '@ember/routing/router',
-          '@ember/routing/route',
-          '@ember/test-waiters',
-          '@ember/runloop',
-        ]);
+      const { renderComponent } = await compiler.tryResolve('@ember/renderer');
 
-      // We don't want to await here, because we need to early
-      // return the element so that the app can render in to it.
-      // (Ember will only render in to an element if it's present in the DOM)
-      return renderApp({
-        element,
-        selector: `[${attribute}]`,
-        component: compiled,
-        log: compiler.announce,
-        modules: {
-          application,
-          destroyable,
-          resolver,
-          router,
-          route,
-          testWaiters,
-          runloop,
-        },
-      });
+      const owner = makeOwner(config.owner);
+      const result = renderComponent(compiled, { into: element, owner });
+
+      return () => result.destroy();
     },
     handlers: {
       js: async (text) => {

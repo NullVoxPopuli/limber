@@ -1,5 +1,5 @@
 /* eslint-disable getter-return */
- 
+
 // @ts-ignore
 import { tracked } from '@glimmer/tracking';
 import { setComponentTemplate } from '@ember/component';
@@ -28,7 +28,10 @@ import type { ErrorMessage, InfoMessage, Message } from 'repl-sdk';
 export function getCompiler(context: object) {
   const owner = getOwner(context) ?? context;
 
-  assert(`Missing owner. Cannot use ember-repl's compiler without an owner.`, owner);
+  assert(
+    `Missing owner. Cannot use ember-repl's compiler without an owner.`,
+    owner
+  );
 
   return createStore(owner, CompilerService);
 }
@@ -40,7 +43,10 @@ export function getCompiler(context: object) {
  * The runtime compiler doesn't allow you to catch compiler errors.
  * This particular component doesn't need to be runtime anyway.
  */
-function rendersElement(x: { element: Element; destroy: () => void }): ComponentLike {
+function rendersElement(x: {
+  element: Element;
+  destroy: () => void;
+}): ComponentLike {
   const render = resource(({ on }) => {
     on.cleanup(() => {
       x.destroy();
@@ -65,6 +71,9 @@ interface CompilerOptions {
   md?: {
     remarkPlugins?: unknown[];
     rehypePlugins?: unknown[];
+  };
+  gjs?: {
+    owner?: unknown;
   };
   gmd?: {
     scope?: Record<string, unknown>;
@@ -198,6 +207,29 @@ export default class CompilerService {
   setup = (extraModules: ModuleMap = {}, options: CompilerOptions = {}) => {
     const localModules = modules(extraModules);
 
+    const parentOwner = getOwner(this);
+    const owner = {
+      name: 'ember-repl owner',
+      parent: parentOwner,
+      /**
+       * @param {string} name
+       */
+      lookup(name: `${string}:${string}`): unknown {
+        if (!parentOwner) return;
+
+        return parentOwner.lookup(name);
+      },
+      /**
+       * @param {string} name
+       */
+      resolveRegistration(name: string): unknown {
+        if (!parentOwner) return;
+
+        // @ts-expect-error
+        return parentOwner.resolveRegistration(name);
+      },
+    };
+
     this.#compiler = new Compiler({
       logging: location.search.includes('debug'),
       resolve: {
@@ -214,13 +246,11 @@ export default class CompilerService {
       options: {
         ...options,
         gjs: {
-          // owner: getOwner(this),
-          owner: {
-            lookup: () => {},
-            resolveRegistration: () => {},
-          },
+          owner,
+          ...(options.gjs ?? {}),
         },
         gmd: {
+          owner,
           ...(options.gmd ?? {}),
           scope: {
             ...standardScope,
@@ -249,6 +279,7 @@ export default class CompilerService {
         },
         hbs: {
           ember: {
+            owner,
             ...(options.hbs ?? {}),
             scope: {
               ...standardScope,
@@ -322,12 +353,13 @@ export default class CompilerService {
     let component: undefined | ComponentLike;
     let error: undefined | Error;
 
+    options ||= {};
+
     try {
       if (ext === 'hbs') {
         /**
          * Are there other hbs-using frameworks?
          */
-        options ||= {};
         options.flavor = 'ember';
       }
 

@@ -3,7 +3,6 @@
  */
 import { assert, isRecord } from '../../utils.js';
 import { buildCodeFenceMetaUtils } from '../markdown/utils.js';
-import { renderApp } from './render-app-island.js';
 
 let elementId = 0;
 
@@ -15,6 +14,7 @@ let elementId = 0;
  *   rehypePlugins: Plugin[],
  *   ShadowComponent: string | undefined,
  *   CopyComponent: string | undefined
+ *   owner?: unknown | undefined
  *   }}
  */
 export function filterOptions(options) {
@@ -29,6 +29,7 @@ export function filterOptions(options) {
   }
 
   return {
+    owner: options?.owner,
     scope: /** @type {Record<string, unknown>}*/ (options?.scope || {}),
     remarkPlugins: /** @type {Plugin[]}*/ (options?.remarkPlugins || []),
     rehypePlugins: /** @type {Plugin[]}*/ (options?.rehypePlugins || []),
@@ -95,35 +96,14 @@ export async function compiler(config, api) {
 
       element.setAttribute(attribute, '');
 
-      const [application, destroyable, resolver, router, route, testWaiters, runloop] =
-        await compiler.tryResolveAll([
-          '@ember/application',
-          '@ember/destroyable',
-          'ember-resolver',
-          '@ember/routing/router',
-          '@ember/routing/route',
-          '@ember/test-waiters',
-          '@ember/runloop',
-        ]);
+      const { renderComponent } = await compiler.tryResolve('@ember/renderer');
 
-      // We don't want to await here, because we need to early
-      // return the element so that the app can render in to it.
-      // (Ember will only render in to an element if it's present in the DOM)
-      const destroy = await renderApp({
-        element,
-        selector: `[${attribute}]`,
-        component: compiled,
-        log: compiler.announce,
-        modules: {
-          application,
-          destroyable,
-          resolver,
-          router,
-          route,
-          testWaiters,
-          runloop,
-        },
+      const result = renderComponent(compiled, {
+        into: element,
+        owner: userOptions.owner,
       });
+
+      const destroy = () => result.destroy();
 
       /**
        * @type {(() => void)[]}

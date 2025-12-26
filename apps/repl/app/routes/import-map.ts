@@ -8,12 +8,17 @@ export const importMap = {
   'ember-deep-tracked': () => import('ember-deep-tracked'),
   'ember-modifier': () => import('ember-modifier'),
   'ember-resources': () => import('ember-resources'),
+  tabster: () => import('tabster'),
+  'ember-primitives/components/portal-targets': () =>
+    import('ember-primitives/components/portal-targets'),
+  'ember-primitives/components/menu': () => import('ember-primitives/components/menu'),
   'tracked-built-ins': () => import('tracked-built-ins'),
   'ember-repl': () => import('ember-repl'),
   // Library does not provide types :(
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   'ember-focus-trap': () => import('ember-focus-trap'),
+  'ember-element-helper': () => import('ember-element-helper'),
   // Library does not provide types :(
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error

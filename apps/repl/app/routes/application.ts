@@ -48,9 +48,13 @@ export default class ApplicationRoute extends Route {
 
   async #setup() {
     const highlighter = await getHighlighter();
+    const owner = getOwner(this);
 
     setupCompiler(this, {
       options: {
+        gjs: {
+          owner,
+        },
         gmd: {
           scope: {
             CopyMenu,
