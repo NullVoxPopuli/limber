@@ -1,3 +1,5 @@
+import { makeOwner } from './owner.js';
+
 let elementId = 0;
 
 const buildDependencies = [
@@ -167,17 +169,7 @@ export async function compiler(config, api) {
 
       const { renderComponent } = await compiler.tryResolve('@ember/renderer');
 
-      const owner = {
-        lookup(name) {
-          if (typeof config.owner !== 'object') return;
-          if (!config.owner) return;
-          if (!('lookup' in config.owner)) return;
-          if (typeof config.owner.lookup !== 'function') return;
-
-          return config.owner.lookup(name);
-        },
-      };
-
+      const owner = makeOwner(config.owner);
       const result = renderComponent(compiled, { into: element, owner });
 
       return () => result.destroy();

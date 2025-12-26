@@ -1,4 +1,5 @@
 import { isRecord } from '../../utils.js';
+import { makeOwner } from './owner.js';
 
 let elementId = 0;
 
@@ -65,7 +66,8 @@ export async function compiler(config, api) {
       element.setAttribute(attribute, '');
 
       const { renderComponent } = await compiler.tryResolve('@ember/renderer');
-      const result = renderComponent(compiled, { into: element, owner: config.options });
+      const owner = makeOwner(config.owner);
+      const result = renderComponent(compiled, { into: element, owner });
 
       return () => result.destroy();
     },
