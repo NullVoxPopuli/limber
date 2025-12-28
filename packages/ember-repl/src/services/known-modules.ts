@@ -75,6 +75,8 @@ const emberCompilationModules = {
     // passthrough, we are not doing dead-code-elimination
     macroCondition: (x: boolean) => x,
     // I *could* actually implement this
+    appEmberSatisfies: () => true,
+    // I *could* actually implement this
     dependencySatisfies: () => true,
     isDevelopingApp: () => true,
     // Trying to use warp-drive in a REPL environment may be impossible, since they
