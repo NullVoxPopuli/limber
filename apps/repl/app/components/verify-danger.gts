@@ -8,8 +8,7 @@ import { cell } from 'ember-resources';
 
 import { Button } from '@nullvoxpopuli/limber-shared';
 
-import { type Format, SCRIPTABLE_FORMATS } from '../languages.gts';
-
+import type { Format } from '../languages.gts';
 import type EditorService from '#services/editor.ts';
 
 const userAllowed = cell(false);
@@ -17,16 +16,33 @@ const allowCodeExecution = () => (userAllowed.current = true);
 
 const emberjs = 'emberjs.com';
 const ALLOWED = Object.freeze([]);
+const MARKUP_FORMATS = new Set([
+  'js',
+  'gjs',
+  'vue',
+  'jsx',
+  'jsx|react',
+  'svelte',
+  'md',
+  'gmd',
+  'hbs',
+  'hbs|ember',
+]);
+const SCRIPT_FORMATS = new Set(['js', 'gjs', 'vue', 'jsx', 'jsx|react', 'svelte']);
+
+function couldHaveMarkup(format: Format) {
+  return MARKUP_FORMATS.has(format);
+}
+
+function couldHaveScript(format: Format) {
+  return SCRIPT_FORMATS.has(format);
+}
 
 function checkDanger(format: Format, text?: string | null): string[] | readonly string[] {
   const reasons: string[] = [];
   const isAllowed = userAllowed.current;
 
   if (isAllowed || !text) {
-    return ALLOWED;
-  }
-
-  if (!SCRIPTABLE_FORMATS.has(format)) {
     return ALLOWED;
   }
 
@@ -46,43 +62,59 @@ function checkDanger(format: Format, text?: string | null): string[] | readonly 
     );
   }
 
-  const matches = text.matchAll(/window|globalThis|iframe|open|location/g);
+  if (couldHaveMarkup(format)) {
+    const matches = text.matchAll(/iframe/g);
 
-  if (matches) {
-    for (const match of matches) {
-      if (match.length === 0) continue;
-
-      if (match.includes('open')) {
-        reasons.push(
-          `Detected a call to 'open', and don't know if this is window.open or something safer`
-        );
-      }
-
-      if (match.includes('window')) {
-        if (text.includes('window.open(')) {
-          reasons.push(`Detected a call to window.open()`);
-        }
-
-        if (text.includes('window.parent.open(')) {
-          reasons.push(`Detected a call to window.parent.open()`);
+    if (matches) {
+      for (const match of matches) {
+        if (match.includes('iframe')) {
+          if (text.includes('<iframe')) {
+            reasons.push(`Detected iframe usage, ensure the specified 'src' is safe.`);
+          }
         }
       }
+    }
+  }
 
-      if (match.includes('location')) {
-        if (text.match(/location\.href ?=/)) {
-          reasons.push(`Detected assignment to location.href`);
+  if (couldHaveScript(format)) {
+    const matches = text.matchAll(/window|globalThis|iframe|open|location/g);
+
+    if (matches) {
+      for (const match of matches) {
+        if (match.length === 0) continue;
+
+        if (match.includes('open')) {
+          reasons.push(
+            `Detected a call to 'open', and don't know if this is window.open or something safer`
+          );
         }
-      }
 
-      if (match.includes('globalThis')) {
-        if (text.includes('globalThis.open(')) {
-          reasons.push(`Detected a call to globalThis.open()`);
+        if (match.includes('window')) {
+          if (text.includes('window.open(')) {
+            reasons.push(`Detected a call to window.open()`);
+          }
+
+          if (text.includes('window.parent.open(')) {
+            reasons.push(`Detected a call to window.parent.open()`);
+          }
         }
-      }
 
-      if (match.includes('iframe')) {
-        if (text.includes('iframe')) {
-          reasons.push('Detected iframe usage.');
+        if (match.includes('location')) {
+          if (text.match(/location\.href ?=/)) {
+            reasons.push(`Detected assignment to location.href`);
+          }
+        }
+
+        if (match.includes('globalThis')) {
+          if (text.includes('globalThis.open(')) {
+            reasons.push(`Detected a call to globalThis.open()`);
+          }
+        }
+
+        if (match.includes('iframe')) {
+          if (text.includes('iframe')) {
+            reasons.push('Detected iframe usage.');
+          }
         }
       }
     }
