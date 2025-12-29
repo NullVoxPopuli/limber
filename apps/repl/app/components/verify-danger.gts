@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
@@ -13,13 +14,14 @@ const userAllowed = cell(false);
 const allowCodeExecution = () => (userAllowed.current = true);
 
 const emberjs = 'emberjs.com';
+const ALLOWED = Object.freeze([]);
 
-function checkDanger(text?: string | null): { isAllowed: boolean; reasons: string[] } {
+function checkDanger(text?: string | null): string[] | readonly string[] {
   const reasons: string[] = [];
   const isAllowed = userAllowed.current;
 
   if (isAllowed || !text) {
-    return { isAllowed, reasons };
+    return ALLOWED;
   }
 
   if (origin.includes(emberjs)) {
@@ -29,7 +31,7 @@ function checkDanger(text?: string | null): { isAllowed: boolean; reasons: strin
        * ember.js guards what it ships in iframes very closely.
        */
       if (window.parent.location.origin.includes(emberjs)) {
-        return { isAllowed: true, reasons };
+        return ALLOWED;
       }
     }
 
@@ -80,41 +82,53 @@ function checkDanger(text?: string | null): { isAllowed: boolean; reasons: strin
     }
   }
 
-  return { isAllowed, reasons };
+  return reasons;
 }
 
 export class VerifyDanger extends Component<{ Blocks: { default: [] } }> {
   @service declare editor: EditorService;
 
+  @cached
+  get dangerReasons() {
+    return checkDanger(this.editor.text);
+  }
+
+  get isAllowed() {
+    return this.dangerReasons.length === 0;
+  }
+
   <template>
-    {{#let (checkDanger this.editor.text) as |x|}}
-      {{#if x.isAllowed}}
-        {{yield}}
-      {{else}}
+    {{#if this.isAllowed}}
+      {{yield}}
+    {{else}}
 
-        <div class="prose p-8 relative grid max-w-full" style="justify-items: center">
-          <p>Would you like to run the code?</p>
-          <Button {{on "click" allowCodeExecution}}>
-            <span style="color: black;">Yes, trust and run this code</span>
-          </Button>
-          <div>
-            <hr />
+      <div class="prose p-8 relative grid max-w-full" style="justify-items: center">
+        <p>Would you like to run the code?</p>
+        <Button {{on "click" allowCodeExecution}}>
+          <span style="color: black;">Yes, trust and run this code</span>
+        </Button>
+        <div>
+          <hr />
 
-            <p>
-              if you don't want to run the code, you may either edit the code until you're happy
-              with it, or close this tab.
-            </p>
-            <p>
-              Reasons why we're asking:
-              <ul>
-                {{#each x.reasons as |reason|}}
-                  <li>{{reason}}</li>
-                {{/each}}
-              </ul>
-            </p>
-          </div>
+          <p>
+            if you don't want to run the code, you may either edit the code until you're happy with
+            it, or close this tab.
+          </p>
+          <p>
+            Reasons why we're asking:
+            <ul>
+              {{#each this.dangerReasons as |reason|}}
+                <li>{{reason}}</li>
+              {{/each}}
+            </ul>
+          </p>
+          <p>
+            For your safety, this decision will not persist across page-rolads.
+            <br />
+            (and so you can "navigate back" and edit the code if you need to)
+          </p>
         </div>
-      {{/if}}
-    {{/let}}
+      </div>
+    {{/if}}
   </template>
 }
