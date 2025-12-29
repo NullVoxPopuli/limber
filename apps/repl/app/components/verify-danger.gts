@@ -8,6 +8,8 @@ import { cell } from 'ember-resources';
 
 import { Button } from '@nullvoxpopuli/limber-shared';
 
+import { type Format, SCRIPTABLE_FORMATS } from '../languages.gts';
+
 import type EditorService from '#services/editor.ts';
 
 const userAllowed = cell(false);
@@ -16,11 +18,15 @@ const allowCodeExecution = () => (userAllowed.current = true);
 const emberjs = 'emberjs.com';
 const ALLOWED = Object.freeze([]);
 
-function checkDanger(text?: string | null): string[] | readonly string[] {
+function checkDanger(format: Format, text?: string | null): string[] | readonly string[] {
   const reasons: string[] = [];
   const isAllowed = userAllowed.current;
 
   if (isAllowed || !text) {
+    return ALLOWED;
+  }
+
+  if (!SCRIPTABLE_FORMATS.has(format)) {
     return ALLOWED;
   }
 
@@ -90,7 +96,7 @@ export class VerifyDanger extends Component<{ Blocks: { default: [] } }> {
 
   @cached
   get dangerReasons() {
-    return checkDanger(this.editor.text);
+    return checkDanger(this.editor.format, this.editor.text);
   }
 
   get isAllowed() {

@@ -148,6 +148,19 @@ export const ALLOWED_FLAVORS = {
 
 export type Format = (typeof ALLOWED_FORMATS)[number];
 
+export const SCRIPTABLE_FORMATS = new Set([
+  'gjs',
+  'js',
+  'ts',
+  'gts',
+  'vue',
+  'svelte',
+  'jsx',
+  'jsx|react',
+  'md',
+  'gmd',
+]);
+
 function key(format: string, flavor: undefined | string) {
   const lang = flavor ? `${format}|${flavor}` : format;
 
