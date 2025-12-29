@@ -47,7 +47,7 @@ module('Editor > Format', function (hooks) {
     await page.editor.load();
 
     assert.strictEqual(page.editor.format, 'gjs');
-    assert.true(page.editor.hasText('hi'), 'has passed text as well');
+    assert.true(page.editor.hasText('<template>hi</template>'), 'has passed text as well');
   });
 
   test('after selecting text, it loads again when visiting /', async function (assert) {
@@ -55,7 +55,7 @@ module('Editor > Format', function (hooks) {
     await page.editor.load();
 
     assert.strictEqual(page.editor.format, 'gjs');
-    assert.true(page.editor.hasText('hi'), 'has passed text as well');
+    assert.true(page.editor.hasText('<template>hi</template>'), 'has passed text as well');
 
     // there is no /application route
     await page.expectRedirectToContent(`application`);
