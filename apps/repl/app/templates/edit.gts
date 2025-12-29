@@ -4,6 +4,7 @@ import { service } from '@ember/service';
 import { notInIframe } from 'ember-primitives/iframe';
 
 import Output from '#components/output.gts';
+import { VerifyDanger } from '#components/verify-danger.gts';
 
 import { ExternalLink as Link } from '@nullvoxpopuli/limber-shared';
 
@@ -50,7 +51,9 @@ class OpenOutput extends Component {
 
       <:output>
         <div class="h-full w-full">
-          <Output />
+          <VerifyDanger>
+            <Output />
+          </VerifyDanger>
           <OpenOutput />
         </div>
       </:output>
