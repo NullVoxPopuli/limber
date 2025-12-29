@@ -111,19 +111,7 @@ export class FileURIComponent {
    * Used so we no-op when qps match
    */
   get #currentQPs(): Record<string, unknown> {
-    const proper = this.router.currentRoute?.queryParams;
-
-    if (proper) return proper;
-
-    // if (typeof this.router.location === 'object') {
-    //   if (typeof this.router.location.path === 'string') {
-    //     const probablyPrivate = new URLSearchParams(this.router.location.path.split('?'));
-    //
-    //     console.log({ probablyPrivate });
-    //   }
-    // }
-
-    return {} as Record<string, unknown>;
+    return this.router.currentRoute?.queryParams ?? ({} as Record<string, unknown>);
   }
 
   get #text() {
