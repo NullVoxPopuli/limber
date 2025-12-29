@@ -1,4 +1,3 @@
-import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 
 import { setupApplicationCompilerTest } from '#tests/helpers.ts';
