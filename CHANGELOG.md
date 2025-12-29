@@ -1,5 +1,16 @@
 # Changelog
 
+## Release (2025-12-29)
+
+* ember-repl 7.2.1 (patch)
+
+#### :bug: Bug Fix
+* `ember-repl`
+  * [#2026](https://github.com/NullVoxPopuli/limber/pull/2026) Add appEmberSatisfies to runtime @embroider/macros implementation ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2025-12-26)
 
 * ember-repl 7.2.0 (minor)
