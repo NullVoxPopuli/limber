@@ -167,7 +167,7 @@ class CodeMirror extends Modifier<Signature> {
     element.innerHTML = '';
     element.setAttribute('data-format', formatFromURL);
 
-    const { view, setText, setFormat } = await compiler.createEditor(element, {
+    const { view, setText, setFormat, format } = await compiler.createEditor(element, {
       text: value,
       format: formatFromURL,
       handleUpdate: updateText,
@@ -192,6 +192,11 @@ class CodeMirror extends Modifier<Signature> {
       this.#previousFormat = formatQP;
       waitForPromise(setText(text, formatQP));
     };
+
+    /**
+     * Store the format function on the service so buttons can use it
+     */
+    this.editor.formatCode = format;
 
     const scrollable = document.querySelector('.cm-scroller');
 

@@ -50,6 +50,7 @@ export class Compiler {
     view: EditorView;
     setText: (text: string, format: string) => Promise<void>;
     setFormat: (format: string) => Promise<void>;
+    format: () => Promise<void>;
   }>;
 
   /**

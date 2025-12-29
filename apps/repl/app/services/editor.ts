@@ -54,12 +54,20 @@ export default class EditorService extends Service {
    *
    */
   #editorSwapText?: (text: string, format: FormatQP) => void;
+  #formatCode?: (format: FormatQP) => Promise<void>;
 
   get setCodemirrorState() {
     return this.#editorSwapText;
   }
   set setCodemirrorState(value) {
     this.#editorSwapText = value;
+  }
+
+  get formatCode() {
+    return this.#formatCode;
+  }
+  set formatCode(value) {
+    this.#formatCode = value;
   }
 
   update = (text: string, format: FormatQP) => {
