@@ -2,7 +2,7 @@ import { assert } from '@ember/debug';
 import { currentURL, settled, visit } from '@ember/test-helpers';
 
 import { PageObject } from 'fractal-page-object';
-import { decompressFromEncodedURIComponent } from 'lz-string';
+import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 
 import { s } from './-helpers';
 import { DemoSelect } from './demo-select';
@@ -15,6 +15,12 @@ export class Page extends PageObject {
   out = s('output', OutputArea);
   editor = s('editor-panel', Editor);
   demo = s('demo-select', DemoSelect);
+
+  visitEdit(format: string, text: string) {
+    const compressed = compressToEncodedURIComponent(text);
+
+    return visit(`/edit?format=${format}&c=${compressed}`);
+  }
 
   selectDemo(text: string) {
     return this.demo.select(text);

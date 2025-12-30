@@ -84,19 +84,42 @@ export async function shortenUrl(url: string) {
 export class FileURIComponent {
   @service declare router: RouterService;
 
-  #initialFile = fileFromParams();
+  #currentURL = () => {
+    // On initial load,
+    // we may not have a currentURL, because the first transition has yet to complete
+    // NOTE: this omits the origin. We add the origin later so we can use `new URL(..)`
+    let base = this.router.currentURL;
 
-  @tracked _text = this.#initialFile.text;
+    if (macroCondition(isTesting())) {
+      base ??= (this.router as any) /* private API? */?.location?.path;
+    } else {
+      base ??= window.location.toString();
+    }
+
+    if (base && !base.includes(window.origin)) {
+      return window.origin + base;
+    }
+
+    return base ?? window.location.toString();
+  };
+
+  #initialFile: ReturnType<typeof fileFromParams> | undefined;
+
+  @tracked _text: undefined | null | string;
 
   /**
    * Used so we no-op when qps match
    */
-  get #currentQPs() {
+  get #currentQPs(): Record<string, unknown> {
     return this.router.currentRoute?.queryParams ?? ({} as Record<string, unknown>);
   }
 
   get #text() {
-    return this._text;
+    if (!this.#initialFile) {
+      this.#initialFile = fileFromParams(this.#currentURL().split('?')[1] ?? location.search);
+    }
+
+    return this._text ?? this.#initialFile.text;
   }
   set #text(value) {
     this._text = value;
@@ -202,25 +225,6 @@ export class FileURIComponent {
   flush = async () => {
     await Promise.resolve();
     this.#setURL();
-  };
-
-  #currentURL = () => {
-    // On initial load,
-    // we may not have a currentURL, because the first transition has yet to complete
-    // NOTE: this omits the origin. We add the origin later so we can use `new URL(..)`
-    let base = this.router.currentURL;
-
-    if (macroCondition(isTesting())) {
-      base ??= (this.router as any) /* private API? */?.location?.path;
-    } else {
-      base ??= window.location.toString();
-    }
-
-    if (base && !base.includes(window.origin)) {
-      return window.origin + base;
-    }
-
-    return base ?? window.location.toString();
   };
 
   #qps = new URLSearchParams();

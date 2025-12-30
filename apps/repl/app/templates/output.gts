@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 
 import Output from '#components/output.gts';
+import { VerifyDanger } from '#components/verify-danger.gts';
 
 import { ExternalLink as Link } from '@nullvoxpopuli/limber-shared';
 
@@ -23,6 +24,8 @@ class EditThis extends Component {
 }
 
 <template>
-  <Output @shadow={{false}} />
+  <VerifyDanger>
+    <Output @shadow={{false}} />
+  </VerifyDanger>
   <EditThis />
 </template>
