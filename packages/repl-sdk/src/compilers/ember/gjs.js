@@ -45,6 +45,21 @@ const buildDependencies = [
    * Also, @embroider/macros does dead-code-elimination, which is handy.
    */
   // '@embroider/macros/babel',
+  'oxc-parser',
+  'zimmerframe',
+];
+
+const babelRequiredImports = [
+  // Templates
+  '@ember/template-compiler',
+  '@ember/template-compilation',
+
+  // Macros
+  '@embroider/macros',
+  '@glimmer/env',
+  '@ember/application/deprecations',
+  // macros only needed in prod
+  '@ember/debug',
 ];
 
 /**
@@ -59,6 +74,8 @@ export async function compiler(config, api) {
     contentTag,
     { default: DebugMacros },
     // embroiderMacros,
+    oxcParser,
+    zimmerframe,
   ] = await api.tryResolveAll(buildDependencies);
 
   // These libraries are compiled incorrectly for cjs<->ESM compat
@@ -72,7 +89,37 @@ export async function compiler(config, api) {
 
   const babel = 'availablePlugins' in _babel ? _babel : _babel.default;
 
-  // let macros = embroiderMacros.buildMacros();
+  /**
+   * @param {string} code
+   * @param {string} url
+   * @param {string} ext
+   */
+  async function shouldUseBabel(code, url, ext) {
+    const lang = ext === 'gjs' ? 'js' : ext === 'gts' ? 'ts' : ext;
+
+    const estree = await oxcParser.parseSync(url, code, { lang });
+
+    let hasDecorators = false;
+    let hasBabelRequiredImport = false;
+
+    zimmerframe.walk(
+      estree.program,
+      /* state */ {},
+      {
+        Decorator(_node, { stop }) {
+          hasDecorators = true;
+          stop();
+        },
+        ImportDeclaration(node, { stop }) {
+          if (babelMacros.has(node.source.value)) {
+            hasBabelRequiredImport = true;
+            stop();
+          }
+        },
+      }
+    );
+    return hasDecorators || hasBabelRequiredImport;
+  }
 
   /**
    * @param {string} text
@@ -207,11 +254,17 @@ export async function compiler(config, api) {
       });
     },
     handlers: {
-      js: async (text) => {
-        return gjsCompiler.compile(text, {});
+      js: async (text, url) => {
+        if (await shouldUseBabel(text, url, 'js')) {
+          return gjsCompiler.compile(text, {});
+        }
+        return text;
       },
-      mjs: async (text) => {
-        return gjsCompiler.compile(text, {});
+      mjs: async (text, url) => {
+        if (await shouldUseBabel(text, url, 'js')) {
+          return gjsCompiler.compile(text, {});
+        }
+        return text;
       },
     },
   };
