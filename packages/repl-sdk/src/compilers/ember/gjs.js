@@ -66,6 +66,7 @@ const babelRequiredImports = [
  * @type {import('../../types.ts').CompilerConfig['compiler']}
  */
 export async function compiler(config, api) {
+  const babelMacros = new Set(babelRequiredImports);
   const [
     _babel,
     _decoratorTransforms,

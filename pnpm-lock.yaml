@@ -930,9 +930,15 @@ importers:
       ember-resources:
         specifier: ^7.0.7
         version: 7.0.7(66147294c81f5083ed2f65d9a770bc61)
+      oxc-parser:
+        specifier: ^0.102.0
+        version: 0.102.0
       repl-sdk:
         specifier: workspace:*
         version: link:../repl-sdk
+      zimmerframe:
+        specifier: ^1.1.4
+        version: 1.1.4
     devDependencies:
       '@arethetypeswrong/cli':
         specifier: ^0.18.2

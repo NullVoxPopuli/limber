@@ -50,7 +50,9 @@
     "ember-primitives": "^0.48.1",
     "ember-resolver": "^13.1.0",
     "ember-resources": "^7.0.7",
-    "repl-sdk": "workspace:*"
+    "oxc-parser": "^0.102.0",
+    "repl-sdk": "workspace:*",
+    "zimmerframe": "^1.1.4"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
