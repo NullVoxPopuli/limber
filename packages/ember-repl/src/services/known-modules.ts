@@ -129,6 +129,7 @@ const markdownCompilationModules = {
 const generalCompilation = {
   'oxc-parser': () => import('oxc-parser'),
   'oxc-parser/binding-wasm32-wasi': () =>
+    // @ts-expect-error
     import('@oxc-parser/binding-wasm32-wasi'),
   zimmerframe: () => import('zimmerframe'),
 };
