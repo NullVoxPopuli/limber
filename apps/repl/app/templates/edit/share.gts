@@ -29,7 +29,13 @@ const not = (x: unknown) => !x;
 
 export const Share = <template>
   <Modal as |m|>
-    <button data-share-button type="button" {{on "click" m.open}} {{m.focusOnClose}}>
+    <button
+      data-share-button
+      type="button"
+      {{on "click" m.open}}
+      {{m.focusOnClose}}
+      aria-label="Share"
+    >
       <span class="sm:inline-flex hidden">Share</span>
       <FaIcon @icon={{faShareFromSquare}} />
     </button>
