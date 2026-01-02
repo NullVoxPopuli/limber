@@ -44,6 +44,7 @@
     "@ember/test-helpers": "^5.4.1",
     "@ember/test-waiters": "^4.1.0",
     "@embroider/addon-shim": "^1.10.2",
+    "@oxc-parser/binding-wasm32-wasi": "^0.106.0",
     "codemirror": "^6.0.2",
     "content-tag": "^4.0.0",
     "decorator-transforms": "^2.3.0",
