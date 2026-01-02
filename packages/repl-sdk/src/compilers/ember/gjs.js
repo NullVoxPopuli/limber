@@ -119,6 +119,7 @@ export async function compiler(config, api) {
         },
       }
     );
+
     return hasDecorators || hasBabelRequiredImport;
   }
 
@@ -259,12 +260,14 @@ export async function compiler(config, api) {
         if (await shouldUseBabel(text, url, 'js')) {
           return gjsCompiler.compile(text, {});
         }
+
         return text;
       },
       mjs: async (text, url) => {
         if (await shouldUseBabel(text, url, 'js')) {
           return gjsCompiler.compile(text, {});
         }
+
         return text;
       },
     },
