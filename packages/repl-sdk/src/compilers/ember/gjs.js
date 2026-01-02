@@ -45,8 +45,6 @@ const buildDependencies = [
    * Also, @embroider/macros does dead-code-elimination, which is handy.
    */
   // '@embroider/macros/babel',
-  'oxc-parser',
-  'zimmerframe',
 ];
 
 const babelRequiredImports = [
@@ -75,8 +73,6 @@ export async function compiler(config, api) {
     contentTag,
     { default: DebugMacros },
     // embroiderMacros,
-    oxcParser,
-    zimmerframe,
   ] = await api.tryResolveAll(buildDependencies);
 
   // These libraries are compiled incorrectly for cjs<->ESM compat
@@ -91,11 +87,22 @@ export async function compiler(config, api) {
   const babel = 'availablePlugins' in _babel ? _babel : _babel.default;
 
   /**
+   * @type {any}
+   */
+  let shouldUseBabelDeps;
+
+  /**
+   * This is only needed if we end up working with multiple files.
+   * It's more performant to *not* use babel.
+   *
    * @param {string} code
    * @param {string} url
    * @param {string} ext
    */
   async function shouldUseBabel(code, url, ext) {
+    shouldUseBabelDeps ||= await api.tryResolveAll(['oxc-parser', 'zimmerframe']);
+
+    const [oxcParser, zimmerframe] = shouldUseBabelDeps;
     const lang = ext === 'gjs' ? 'js' : ext === 'gts' ? 'ts' : ext;
 
     const estree = await oxcParser.parseSync(url, code, { lang });
@@ -107,10 +114,19 @@ export async function compiler(config, api) {
       estree.program,
       /* state */ {},
       {
-        Decorator(_node, { stop }) {
+        /**
+         * @param {unknown} node
+         * @param {{ stop: () => void }} options
+         */
+        Decorator(node, { stop }) {
           hasDecorators = true;
           stop();
         },
+
+        /**
+         * @param {{ source: { value: string } }} node
+         * @param {{ stop: () => void }} options
+         */
         ImportDeclaration(node, { stop }) {
           if (babelMacros.has(node.source.value)) {
             hasBabelRequiredImport = true;
