@@ -3,6 +3,7 @@
  */
 import { assert, isRecord } from '../../utils.js';
 import { buildCodeFenceMetaUtils } from '../markdown/utils.js';
+import { renderApp } from './render-app-island.js';
 
 let elementId = 0;
 
@@ -96,14 +97,47 @@ export async function compiler(config, api) {
 
       element.setAttribute(attribute, '');
 
-      const { renderComponent } = await compiler.tryResolve('@ember/renderer');
+      // ------------------------------------------------
+      // https://github.com/emberjs/ember.js/issues/21023
+      // ------------------------------------------------
+      //
+      // const { renderComponent } = await compiler.tryResolve('@ember/renderer');
+      //
+      // const result = renderComponent(compiled, {
+      //   into: element,
+      //   owner: userOptions.owner,
+      // });
+      //
+      // const destroy = () => result.destroy();
+      const [application, destroyable, resolver, router, route, testWaiters, runloop] =
+        await compiler.tryResolveAll([
+          '@ember/application',
+          '@ember/destroyable',
+          'ember-resolver',
+          '@ember/routing/router',
+          '@ember/routing/route',
+          '@ember/test-waiters',
+          '@ember/runloop',
+        ]);
 
-      const result = renderComponent(compiled, {
-        into: element,
-        owner: userOptions.owner,
+      // We don't want to await here, because we need to early
+      // return the element so that the app can render in to it.
+      // (Ember will only render in to an element if it's present in the DOM)
+      const destroy = await renderApp({
+        element,
+        selector: `[${attribute}]`,
+        component: compiled,
+        log: compiler.announce,
+        modules: {
+          application,
+          destroyable,
+          resolver,
+          router,
+          route,
+          testWaiters,
+          runloop,
+        },
       });
-
-      const destroy = () => result.destroy();
 
       /**
        * @type {(() => void)[]}
