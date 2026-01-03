@@ -1,5 +1,20 @@
 # Changelog
 
+## Release (2026-01-03)
+
+* ember-repl 7.2.2 (patch)
+* repl-sdk 1.1.1 (patch)
+
+#### :rocket: Enhancement
+* [#2029](https://github.com/NullVoxPopuli/limber/pull/2029) Forbid immediate code execution in specific circumstances ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* `repl-sdk`
+  * [#2033](https://github.com/NullVoxPopuli/limber/pull/2033) Revert usage of renderComponent due to https://github.com/emberjs/ember.js/issues/21023 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2025-12-29)
 
 * ember-repl 7.2.1 (patch)
