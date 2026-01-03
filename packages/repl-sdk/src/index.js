@@ -299,7 +299,7 @@ export class Compiler {
       /**
        * We don't know if this code is completely ready to run in the browser yet, so we might need to run in through the compiler again
        */
-      const file = await this.#postProcess(code, ext);
+      const file = await this.#postProcess(code, url, ext);
       const type = mime.getType(ext);
 
       return new Response(new Blob([file], { type: type ?? 'application/javascript' }));
@@ -328,14 +328,15 @@ export class Compiler {
    * were to have incompatible post-processing handlers.
    *
    * @param {string} text
+   * @param {string} url
    * @param {string} ext
    */
-  async #postProcess(text, ext) {
+  async #postProcess(text, url, ext) {
     let code = text;
 
     for (const compiler of this.#compilers) {
       if (compiler.handlers?.[ext]) {
-        code = await compiler.handlers[ext](code);
+        code = await compiler.handlers[ext](code, url);
       }
     }
 

@@ -77,5 +77,11 @@ export default class ApplicationController extends Controller {
 
     // For dev only. When present, will tell certain components to use localhost
     'local',
+
+    // Tells compilation to wait for user input, rather than running after
+    // debounced typing
+    //
+    // The only valid value is "off", everything else is considered "true"
+    'autocompile',
   ];
 }

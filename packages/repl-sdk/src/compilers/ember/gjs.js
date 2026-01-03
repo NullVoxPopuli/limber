@@ -47,10 +47,24 @@ const buildDependencies = [
   // '@embroider/macros/babel',
 ];
 
+const babelRequiredImports = [
+  // Templates
+  '@ember/template-compiler',
+  '@ember/template-compilation',
+
+  // Macros
+  '@embroider/macros',
+  '@glimmer/env',
+  '@ember/application/deprecations',
+  // macros only needed in prod
+  '@ember/debug',
+];
+
 /**
  * @type {import('../../types.ts').CompilerConfig['compiler']}
  */
 export async function compiler(config, api) {
+  const babelMacros = new Set(babelRequiredImports);
   const [
     _babel,
     _decoratorTransforms,
@@ -72,7 +86,58 @@ export async function compiler(config, api) {
 
   const babel = 'availablePlugins' in _babel ? _babel : _babel.default;
 
-  // let macros = embroiderMacros.buildMacros();
+  /**
+   * @type {any}
+   */
+  let shouldUseBabelDeps;
+
+  /**
+   * This is only needed if we end up working with multiple files.
+   * It's more performant to *not* use babel.
+   *
+   * @param {string} code
+   * @param {string} url
+   * @param {string} ext
+   */
+  async function shouldUseBabel(code, url, ext) {
+    shouldUseBabelDeps ||= await api.tryResolveAll(['oxc-parser', 'zimmerframe']);
+
+    const [oxcParser, zimmerframe] = shouldUseBabelDeps;
+    const lang = ext === 'gjs' ? 'js' : ext === 'gts' ? 'ts' : ext;
+
+    const estree = await oxcParser.parseSync(url, code, { lang });
+
+    let hasDecorators = false;
+    let hasBabelRequiredImport = false;
+
+    zimmerframe.walk(
+      estree.program,
+      /* state */ {},
+      {
+        /**
+         * @param {unknown} node
+         * @param {{ stop: () => void }} options
+         */
+        Decorator(node, { stop }) {
+          hasDecorators = true;
+          stop();
+        },
+
+        /**
+         * @param {{ source: { value: string } }} node
+         * @param {{ stop: () => void }} options
+         */
+        ImportDeclaration(node, { stop }) {
+          if (babelMacros.has(node.source.value)) {
+            hasBabelRequiredImport = true;
+            stop();
+          }
+        },
+      }
+    );
+
+    return hasDecorators || hasBabelRequiredImport;
+  }
 
   /**
    * @param {string} text
@@ -207,11 +272,19 @@ export async function compiler(config, api) {
       });
     },
     handlers: {
-      js: async (text) => {
-        return gjsCompiler.compile(text, {});
+      js: async (text, url) => {
+        if (await shouldUseBabel(text, url, 'js')) {
+          return gjsCompiler.compile(text, {});
+        }
+
+        return text;
       },
-      mjs: async (text) => {
-        return gjsCompiler.compile(text, {});
+      mjs: async (text, url) => {
+        if (await shouldUseBabel(text, url, 'js')) {
+          return gjsCompiler.compile(text, {});
+        }
+
+        return text;
       },
     },
   };

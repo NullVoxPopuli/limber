@@ -187,6 +187,34 @@ export default defineConfig((env) => {
     build: {
       rolldownOptions: {
         treeshake: true,
+        advancedChunks: {
+          groups: [
+            {
+              test: /oxc-parser/,
+              name: 'oxc',
+            },
+            {
+              test: /zimmerframe/,
+              name: 'zimmerframe',
+            },
+            {
+              test: /ember-source/,
+              name: 'ember-source',
+            },
+            {
+              test: /ember/,
+              name: 'ember-libraries',
+            },
+            {
+              test: /(remark|unified|rehype|vfile|ast)/,
+              name: 'markdown-html-libraries',
+            },
+            {
+              test: /node_modules/,
+              name: 'libraries',
+            },
+          ],
+        },
       },
     },
     css: {

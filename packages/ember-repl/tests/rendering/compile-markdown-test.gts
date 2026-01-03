@@ -114,7 +114,7 @@ module('Rendering | compile()', function (hooks) {
 
                 parent.children[index] = {
                   type: 'html',
-                   
+
                   // @ts-ignore
                   value: `<p>${node.value}</p>`,
                 };
@@ -144,21 +144,24 @@ module('Rendering | compile()', function (hooks) {
           });
         });
 
-        module('with the plugin (configured for just this render)', function () {
-          // https://github.com/typed-ember/glint/issues/617
-          test('no pre renders', async function (assert) {
-            let component: ComponentLike | undefined;
+        module(
+          'with the plugin (configured for just this render)',
+          function () {
+            // https://github.com/typed-ember/glint/issues/617
+            test('no pre renders', async function (assert) {
+              let component: ComponentLike | undefined;
 
-            await makeComponent(this, (comp) => (component = comp), {
-              remarkPlugins: [removePre],
+              await makeComponent(this, (comp) => (component = comp), {
+                remarkPlugins: [removePre],
+              });
+              debugAssert(`[BUG] component`, component);
+
+              await render(component);
+              // await this.pauseTest();
+              assert.dom('pre').doesNotExist();
             });
-            debugAssert(`[BUG] component`, component);
-
-            await render(component);
-            // await this.pauseTest();
-            assert.dom('pre').doesNotExist();
-          });
-        });
+          }
+        );
       });
     });
   });
@@ -187,7 +190,7 @@ module('Rendering | compile()', function (hooks) {
         onCompileStart: () => {
           /* not used */
         },
-         
+
         // @ts-ignore
         scope: {
           LocalComponent,
@@ -231,7 +234,7 @@ module('Rendering | compile()', function (hooks) {
         onCompileStart: () => {
           /* not used */
         },
-         
+
         // @ts-ignore
         scope: {
           LocalComponent,
