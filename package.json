@@ -47,7 +47,7 @@
     "overrides": {
       "reactiveweb": "1.9.1",
       "@babel/standalone": "file:./babel-standalone.tgz",
-      "decorator-transforms": "2.3.0",
+      "decorator-transforms": "2.3.1",
       "array-includes": "npm:@nolyfill/array-includes@^1",
       "array.prototype.findlastindex": "npm:@nolyfill/array.prototype.findlastindex@^1",
       "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@^1",
