@@ -61,7 +61,7 @@
     "@babel/preset-typescript": "^7.28.5",
     "@ember/library-tsconfig": "^2.0.0",
     "@ember/test-waiters": "^4.1.0",
-    "@embroider/addon-dev": "^7.0.0",
+    "@embroider/addon-dev": "^8.0.0",
     "@glimmer/component": "^2.0.0",
     "@glint/ember-tsc": "^1.0.8",
     "@glint/template": "^1.6.1",
