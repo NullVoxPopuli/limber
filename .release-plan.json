@@ -2,13 +2,13 @@
   "solution": {
     "ember-repl": {
       "impact": "patch",
-      "oldVersion": "7.2.1",
-      "newVersion": "7.2.2",
+      "oldVersion": "7.2.2",
+      "newVersion": "7.2.3",
       "tagName": "latest",
       "constraints": [
         {
           "impact": "patch",
-          "reason": "Has dependency `workspace:*` on repl-sdk"
+          "reason": "Appears in changelog section :bug: Bug Fix"
         }
       ],
       "pkgJSONPath": "./packages/ember-repl/package.json"
@@ -17,17 +17,7 @@
       "oldVersion": "4.0.2"
     },
     "repl-sdk": {
-      "impact": "patch",
-      "oldVersion": "1.1.0",
-      "newVersion": "1.1.1",
-      "tagName": "latest",
-      "constraints": [
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
-        }
-      ],
-      "pkgJSONPath": "./packages/repl-sdk/package.json"
+      "oldVersion": "1.1.1"
     },
     "codemirror-lang-glimdown": {
       "oldVersion": "2.0.1"
@@ -51,5 +41,5 @@
       "oldVersion": "2.0.1"
     }
   },
-  "description": "## Release (2026-01-03)\n\n* ember-repl 7.2.2 (patch)\n* repl-sdk 1.1.1 (patch)\n\n#### :rocket: Enhancement\n* [#2029](https://github.com/NullVoxPopuli/limber/pull/2029) Forbid immediate code execution in specific circumstances ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :bug: Bug Fix\n* `repl-sdk`\n  * [#2033](https://github.com/NullVoxPopuli/limber/pull/2033) Revert usage of renderComponent due to https://github.com/emberjs/ember.js/issues/21023 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2026-01-05)\n\n* ember-repl 7.2.3 (patch)\n\n#### :bug: Bug Fix\n* `ember-repl`\n  * [#2037](https://github.com/NullVoxPopuli/limber/pull/2037) Glimmer validator is private ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }

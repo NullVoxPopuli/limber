@@ -1,5 +1,16 @@
 # Changelog
 
+## Release (2026-01-05)
+
+* ember-repl 7.2.3 (patch)
+
+#### :bug: Bug Fix
+* `ember-repl`
+  * [#2037](https://github.com/NullVoxPopuli/limber/pull/2037) Glimmer validator is private ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2026-01-03)
 
 * ember-repl 7.2.2 (patch)
