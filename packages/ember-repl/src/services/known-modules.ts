@@ -32,6 +32,8 @@ const frameworkModules = {
   '@ember/test': () => import('@ember/test'),
   '@ember/utils': () => import('@ember/utils'),
   '@ember/version': () => import('@ember/version'),
+  // @ts-expect-error @glimmer/validator is private
+  '@glimmer/validator': () => import('@glimmer/validator'),
   '@glimmer/component': () => import('@glimmer/component'),
   '@glimmer/tracking': () => import('@glimmer/tracking'),
   '@glimmer/tracking/primitives/cache': () =>
