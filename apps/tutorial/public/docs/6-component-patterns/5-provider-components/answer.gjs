@@ -1,5 +1,22 @@
-<template>
-  This tutorial chapter needs to be written!
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
 
-  It could be written by you!, if you want &lt;3
-</template>
+export default class Counter extends Component {
+  @tracked count = 0;
+
+  increment = () => this.count++;
+  decrement = () => this.count--;
+
+  <template>
+    {{yield this.count this.increment this.decrement}}
+
+    <hr>
+
+    <Counter as |count increment decrement|>
+      <p>Count: {{count}}</p>
+      <button {{on 'click' increment}}>+</button>
+      <button {{on 'click' decrement}}>-</button>
+    </Counter>
+  </template>
+}

@@ -1,5 +1,13 @@
-<template>
-  This tutorial chapter needs to be written!
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 
-  It could be written by you!, if you want &lt;3
-</template>
+export default class Counter extends Component {
+  @tracked count = 0;
+
+  increment = () => this.count++;
+  decrement = () => this.count--;
+
+  <template>
+    {{yield this.count this.increment this.decrement}}
+  </template>
+}
