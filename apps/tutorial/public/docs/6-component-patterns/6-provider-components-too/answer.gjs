@@ -3,7 +3,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 
-export default class Counter extends Component {
+class Counter extends Component {
   @tracked count = 0;
 
   increment = () => this.count++;
@@ -15,13 +15,13 @@ export default class Counter extends Component {
       increment=this.increment
       decrement=this.decrement
     )}}
-
-    <hr>
-
-    <Counter as |counter|>
-      <p>Count: {{counter.count}}</p>
-      <button {{on 'click' counter.increment}}>+</button>
-      <button {{on 'click' counter.decrement}}>-</button>
-    </Counter>
   </template>
 }
+
+<template>
+  <Counter as |counter|>
+    <p>Count: {{counter.count}}</p>
+    <button {{on 'click' counter.increment}}>+</button>
+    <button {{on 'click' counter.decrement}}>-</button>
+  </Counter>
+</template>

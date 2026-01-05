@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
 
 const findTarget = (selector) => document.querySelector(selector);
 
@@ -13,7 +14,7 @@ export default class Demo extends Component {
       Portal Target (empty initially)
     </div>
 
-    <button>Toggle Portal</button>
+    <button {{on 'click' this.toggle}}>Toggle Portal</button>
 
     {{! TODO: Add conditional and in-element helper to portal content to #portal-target }}
     <div style="background: #eee; padding: 1rem;">

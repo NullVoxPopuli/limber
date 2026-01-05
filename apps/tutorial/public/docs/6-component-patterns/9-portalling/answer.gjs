@@ -10,23 +10,22 @@ export default class Demo extends Component {
   toggle = () => this.showPortal = !this.showPortal;
 
   <template>
-    <div id="portal-target" style="border: 2px solid blue; padding: 1rem; margin-bottom: 1rem;">
+    <div id="portal-target" style="border: 2px solid blue; padding: 1rem; margin-bottom: 1rem; min-height: 50px;">
       Portal Target
-      {{#if this.showPortal}}
-        {{#in-element (findTarget '#portal-target')}}
-          <div style="background: #eee; padding: 1rem;">
-            ✓ This content is portalled to the target!
-          </div>
-        {{/in-element}}
-      {{/if}}
     </div>
 
     <button {{on 'click' this.toggle}}>Toggle Portal</button>
 
-    {{#unless this.showPortal}}
+    {{#if this.showPortal}}
+      {{#in-element (findTarget '#portal-target')}}
+        <div style="background: #eee; padding: 1rem;">
+          ✓ This content is portalled to the target!
+        </div>
+      {{/in-element}}
+    {{else}}
       <div style="background: #eee; padding: 1rem; margin-top: 1rem;">
         Content is currently in normal position
       </div>
-    {{/unless}}
+    {{/if}}
   </template>
 }
