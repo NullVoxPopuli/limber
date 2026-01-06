@@ -164,7 +164,7 @@ export interface Compiler {
    * ```
    */
   handlers?: {
-    [fileExtension: string]: (text: string) => Promise<CompileResult>;
+    [fileExtension: string]: (text: string, url: string) => Promise<CompileResult>;
   };
 }
 

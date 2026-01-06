@@ -128,11 +128,20 @@ const markdownCompilationModules = {
   // 'unist-util-visit': () => import('unist-util-visit'),
 };
 
+const generalCompilation = {
+  'oxc-parser': () => import('oxc-parser'),
+  'oxc-parser/binding-wasm32-wasi': () =>
+    // @ts-expect-error
+    import('@oxc-parser/binding-wasm32-wasi'),
+  zimmerframe: () => import('zimmerframe'),
+};
+
 /**
  * If any real packages are defined here, they would fallback to fetching from NPM
  * instead of loading from this pre-made bundle.
  */
 export const modules = (extraModules: ModuleMap): ModuleMap => ({
+  ...generalCompilation,
   ...coreLibraries,
   ...frameworkModules,
   ...extraModules,
