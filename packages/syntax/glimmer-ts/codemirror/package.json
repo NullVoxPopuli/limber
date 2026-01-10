@@ -19,7 +19,7 @@
   "devDependencies": {
     "@babel/core": "^7.28.5",
     "@codemirror/buildhelper": "^1.0.2",
-    "@codemirror/view": "^6.38.0",
+    "@codemirror/view": "^6.39.9",
     "@glimdown/lezer-infra": "workspace:*",
     "@lezer/common": "^1.2.3",
     "@lezer/generator": "^1.7.2",
@@ -40,7 +40,7 @@
     "@codemirror/language": "^6.11.2",
     "@lezer/highlight": "^1.2.1",
     "@lezer/javascript": "^1.4.21",
-    "@lezer/lr": "^1.4.2",
+    "@lezer/lr": "^1.4.7",
     "codemirror-lang-glimmer": "workspace:*"
   },
   "scripts": {

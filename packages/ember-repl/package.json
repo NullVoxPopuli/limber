@@ -46,7 +46,7 @@
     "@embroider/addon-shim": "^1.10.2",
     "codemirror": "^6.0.2",
     "content-tag": "^4.0.0",
-    "decorator-transforms": "2.3.1",
+    "decorator-transforms": "2.3.0",
     "ember-primitives": "^0.51.0",
     "ember-resolver": "^13.1.0",
     "ember-resources": "^7.0.7",

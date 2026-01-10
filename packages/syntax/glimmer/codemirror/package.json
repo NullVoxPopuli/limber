@@ -34,17 +34,17 @@
     "typescript": "5.9.3"
   },
   "dependencies": {
-    "@codemirror/autocomplete": "6.18.6",
+    "@codemirror/autocomplete": "6.20.0",
     "@codemirror/lang-css": "^6.3.1",
     "@codemirror/lang-html": "^6.4.9",
     "@codemirror/lang-javascript": "^6.2.4",
-    "@codemirror/state": "^6.5.2",
-    "@codemirror/view": "^6.38.0",
+    "@codemirror/state": "^6.5.3",
+    "@codemirror/view": "^6.39.9",
     "@glimdown/lezer-glimmer-expression": "workspace:*",
     "@lezer/highlight": "^1.2.1",
     "@lezer/html": "^1.3.10",
     "@lezer/javascript": "^1.4.21",
-    "@lezer/lr": "^1.4.2",
+    "@lezer/lr": "^1.4.7",
     "lezer-glimmer": "workspace:*"
   },
   "scripts": {
