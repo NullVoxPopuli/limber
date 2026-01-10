@@ -19,9 +19,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",
-    "@babel/standalone": "file:./babel-standalone.tgz",
-    "@glint/ember-tsc": "^1.0.8",
-    "@glint/tsserver-plugin": "^2.0.8",
+    "@babel/standalone": "file:babel-standalone.tgz",
+    "@glint/ember-tsc": "^1.0.9",
+    "@glint/tsserver-plugin": "^2.0.9",
     "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "concurrently": "^9.2.1",
     "dev-tools": "workspace:*",
@@ -30,8 +30,8 @@
     "prettier": "^3.7.4",
     "prettier-plugin-ember-template-tag": "2.1.2",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "release-plan": "^0.17.2",
-    "turbo": "^2.6.3"
+    "release-plan": "^0.17.4",
+    "turbo": "^2.7.3"
   },
   "packageManager": "pnpm@10.25.0",
   "engines": {
