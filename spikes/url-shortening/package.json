@@ -7,7 +7,7 @@
     "@algorithm.ts/base64": "3.1.1",
     "@algorithm.ts/huffman": "3.1.1",
     "filesize": "^10.1.6",
-    "globby": "^16.1.0",
+    "globby": "^14.1.0",
     "jsoncrush": "^1.1.8",
     "lz-string": "^1.5.0",
     "tinybench": "^2.9.0"
@@ -18,7 +18,7 @@
     "prettier": "^3.7.4",
     "prettier-plugin-ember-template-tag": "2.1.2",
     "typescript": "5.9.3",
-    "vitest": "^4.0.16"
+    "vitest": "^3.2.4"
   },
   "scripts": {
     "lint": "pnpm -w exec lint",
