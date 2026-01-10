@@ -98,14 +98,14 @@ interface Signature {
     /**
      * If set to true, the preview code shown before the editor loads will not have highlighting enabled. This option has no affect when the editor is forced to eagerly load.
      */
-    nohighlight?: boolean;
+    nohighlight?: 'false' | 'true' | '0' | '1';
 
     /**
      * Sets whether or not the output area should be rendered within a shadow-dom. The default is to render the output in a shadow-dom (true).
      *
      * Changing this can be helpful if importing a library only knows how to mutate the document's head (for styles or otherwise)
      */
-    shadowdom?: boolean;
+    shadowdom?: 'false' | 'true' | '0' | '1';
   };
 }
 

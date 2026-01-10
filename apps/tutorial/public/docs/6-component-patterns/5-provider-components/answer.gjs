@@ -2,21 +2,19 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 
-class Counter extends Component {
-  @tracked count = 0;
+class ToggleProvider extends Component {
+  @tracked isEnabled = false;
 
-  increment = () => this.count++;
-  decrement = () => this.count--;
+  toggle = () => this.isEnabled = !this.isEnabled;
 
   <template>
-    {{yield this.count this.increment this.decrement}}
+    {{yield this.isEnabled this.toggle}}
   </template>
 }
 
 <template>
-  <Counter as |count increment decrement|>
-    <p>Count: {{count}}</p>
-    <button {{on 'click' increment}}>+</button>
-    <button {{on 'click' decrement}}>-</button>
-  </Counter>
+  <ToggleProvider as |isEnabled toggle|>
+    <p>isEnabled: {{isEnabled}}</p>
+    <button {{on 'click' toggle}}>toggle</button>
+  </ToggleProvider>
 </template>

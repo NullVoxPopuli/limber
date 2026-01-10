@@ -10,7 +10,7 @@ export default class Demo extends Component {
   toggle = () => this.showPortal = !this.showPortal;
 
   <template>
-    <div id="portal-target" style="border: 2px solid blue; padding: 1rem; margin-bottom: 1rem; min-height: 50px;">
+    <div id="portal-target" style="border: 2px solid blue; padding: 1rem; margin-bottom: 1rem;">
       Portal Target
     </div>
 

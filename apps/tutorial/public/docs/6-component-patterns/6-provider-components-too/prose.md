@@ -5,16 +5,19 @@ Instead of yielding multiple values separately:
 {{yield this.count this.increment this.decrement}}
 ```
 
-We can yield a structured object using the `{{hash}}` helper:
+We can yield a structured object using the [`Object` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/Object):
+
 ```hbs
-{{yield (hash
-  count=this.count
-  increment=this.increment
-  decrement=this.decrement
-)}}
+{{yield 
+  (Object
+    count=this.count
+    increment=this.increment
+    decrement=this.decrement
+  )
+}}
 ```
 
-This makes the consumer code more readable:
+This can often make the consumer code more readable:
 
 ```hbs
 <Counter as |counter|>
@@ -33,7 +36,6 @@ This makes the consumer code more readable:
 You can even combine this with contextual components:
 
 ```gjs
-import { hash } from '@ember/helper';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
@@ -41,16 +43,18 @@ const Display = <template>
   Count: {{@count}}
 </template>;
 
-export default class Counter extends Component {
+class Counter extends Component {
   @tracked count = 0;
   increment = () => this.count++;
 
   <template>
-    {{yield (hash
-      count=this.count
-      increment=this.increment
-      Display=Display
-    )}}
+    {{yield 
+      (Object
+        count=this.count
+        increment=this.increment
+        Display=Display
+      )
+    }}
   </template>
 }
 ```

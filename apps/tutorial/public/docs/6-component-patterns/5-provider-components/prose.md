@@ -5,13 +5,13 @@ This pattern is useful for:
 - Encapsulating complex logic in one place
 - Creating reusable behaviors
 
-A simple example of a provider component:
+An example of a provider component:
 
 ```gjs
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
-export default class Counter extends Component {
+class Counter extends Component {
   @tracked count = 0;
 
   increment = () => this.count++;
@@ -39,19 +39,3 @@ The provider component manages the state, while the consumer decides how to disp
   In the editor, try creating a <code>ToggleProvider</code> component that yields a boolean state and a toggle function.
 </p>
 
-It might look something like:
-```gjs
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { on } from '@ember/modifier';
-
-export default class ToggleProvider extends Component {
-  @tracked isOn = false;
-
-  toggle = () => this.isOn = !this.isOn;
-
-  <template>
-    {{yield this.isOn this.toggle}}
-  </template>
-}
-```
