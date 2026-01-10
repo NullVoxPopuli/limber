@@ -21,7 +21,7 @@
   "devDependencies": {
     "@babel/core": "^7.28.5",
     "@glimdown/lezer-infra": "workspace:*",
-    "@lezer/generator": "^1.7.2",
+    "@lezer/generator": "^1.8.0",
     "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "eslint": "^9.39.1",
@@ -30,8 +30,8 @@
     "typescript": "5.9.3"
   },
   "dependencies": {
-    "@lezer/highlight": "^1.2.1",
-    "@lezer/lr": "^1.4.2"
+    "@lezer/highlight": "^1.2.3",
+    "@lezer/lr": "^1.4.7"
   },
   "scripts": {
     "build": "lezer-generator src/glimmer-expression.grammar -o src/parser && rollup -c",
