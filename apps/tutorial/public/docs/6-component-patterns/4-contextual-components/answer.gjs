@@ -1,5 +1,3 @@
-import { hash } from '@ember/helper';
-
 const AcceptButton = <template>
   <button>Accept</button>
 </template>;
@@ -10,20 +8,13 @@ const DeclineButton = <template>
 
 const CustomButton = <template>
   <button>
-    <span>
-      {{yield to="default"}}
-    </span>
-    {{#if (has-block "right")}}
-      <span>
-        {{yield to="right"}}
-      </span>
-    {{/if}}
+    {{yield}}
   </button>
 </template>
 
 
 const ButtonGroup = <template>
-  {{yield (hash
+  {{yield (Object
     Accept=AcceptButton
     Decline=DeclineButton
     Custom=CustomButton
@@ -34,5 +25,8 @@ const ButtonGroup = <template>
   <ButtonGroup as |b|>
     <b.Accept />
     <b.Decline @text="to accept" />
+    <c.Custom>
+      text here
+    </c.Custom>
   </ButtonGroup>
 </template>

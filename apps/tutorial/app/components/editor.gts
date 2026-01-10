@@ -37,6 +37,7 @@ export const Editor: TOC<{
             @format="gjs"
             @editorLoad="force"
             @title="workbook-area"
+            @shadowdom="false"
             @nohighlight={{true}}
             ...attributes
           />

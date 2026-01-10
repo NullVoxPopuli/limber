@@ -11,7 +11,7 @@ import type { Connection } from 'penpal';
 interface ParentToChildData {
   code: string;
   format: string;
-  shadowdom: undefined | boolean;
+  shadowdom: undefined | boolean | string;
 }
 
 /**

@@ -196,7 +196,7 @@ const EXAMPLES = {
         is not passed, this value will be generated for you. Helps with screen readers.
       </Option>
 
-      <Option @name="@shadowdom" @type="boolean" @live={{true}}>
+      <Option @name="@shadowdom" @type="qpBoolean" @live={{true}}>
         Sets whether or not the output area should be rendered within a shadow-dom. The default is
         to render the output in a shadow-dom (true).
         <br />
@@ -205,7 +205,7 @@ const EXAMPLES = {
         head (for styles or otherwise)
       </Option>
 
-      <Option @name="@nohighlight" @type="boolean">
+      <Option @name="@nohighlight" @type="qpBoolean">
         If set to true, the preview code shown before the editor loads will not have highlighting
         enabled. This option has no affect when the editor is forced to eagerly load.
 
