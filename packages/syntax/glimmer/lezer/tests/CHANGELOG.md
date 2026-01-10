@@ -1,3 +1,0 @@
-# @glimdown/glimmer-tests
-
-## null
