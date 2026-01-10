@@ -9,6 +9,7 @@
   "scripts": {
     "build": "turbo build --filter=limber^... --filter=tutorial^... --concurrency $(nproc --all)",
     "dev": "node ./dev/index.js",
+    "update:codemirror": "pnpm update --latest --recursive '@codemirror/*' '@lezer/*'",
     "lint": "turbo _:lint --concurrency $(nproc --all)",
     "lint:fix": "turbo _:lint:fix --concurrency $(nproc --all)",
     "prepare": "pnpm build",

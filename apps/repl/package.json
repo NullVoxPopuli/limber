@@ -142,12 +142,12 @@
     "extends": "../../package.json"
   },
   "dependencies": {
-    "@codemirror/language": "^6.11.2",
+    "@codemirror/language": "^6.12.1",
     "@ember/test-waiters": "^4.1.0",
     "@embroider/macros": "1.19.6",
     "@embroider/router": "3.0.6",
     "@glimmer/component": "^2.0.0",
-    "@lezer/highlight": "^1.2.1",
+    "@lezer/highlight": "^1.2.3",
     "@nullvoxpopuli/horizon-theme": "workspace:*",
     "@nullvoxpopuli/limber-shared": "workspace:*",
     "@nullvoxpopuli/limber-styles": "workspace:*",

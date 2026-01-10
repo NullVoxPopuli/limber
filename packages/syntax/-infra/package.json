@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@codemirror/language": "^6.11.2",
+    "@codemirror/language": "^6.12.1",
     "@codemirror/view": "^6.39.9",
-    "@lezer/generator": "^1.7.2",
-    "@lezer/highlight": "^1.2.1",
+    "@lezer/generator": "^1.8.0",
+    "@lezer/highlight": "^1.2.3",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "rollup": "^4.53.3"
   },

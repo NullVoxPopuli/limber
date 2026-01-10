@@ -86,7 +86,7 @@ importers:
   apps/repl:
     dependencies:
       '@codemirror/language':
-        specifier: ^6.11.2
+        specifier: ^6.12.1
         version: 6.12.1
       '@ember/test-waiters':
         specifier: ^4.1.0
@@ -101,7 +101,7 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       '@lezer/highlight':
-        specifier: ^1.2.1
+        specifier: ^1.2.3
         version: 1.2.3
       '@nullvoxpopuli/horizon-theme':
         specifier: workspace:*
@@ -117,7 +117,7 @@ importers:
         version: 3.20.0
       '@xstate/inspect':
         specifier: ^0.8.0
-        version: 0.8.0(de15395f4f1c7c34a287dd140e34e1d0)
+        version: 0.8.0(d8b6f83bca51955c273b1920a9bd2d43)
       browserslist:
         specifier: ^4.28.1
         version: 4.28.1
@@ -1254,7 +1254,7 @@ importers:
         specifier: 6.10.1
         version: 6.10.1
       '@codemirror/lang-html':
-        specifier: ^6.4.9
+        specifier: ^6.4.11
         version: 6.4.11
       '@codemirror/lang-javascript':
         specifier: 6.2.4
@@ -1269,13 +1269,13 @@ importers:
         specifier: ^6.1.2
         version: 6.1.2
       '@codemirror/language':
-        specifier: ^6.11.2
+        specifier: ^6.12.1
         version: 6.12.1
       '@codemirror/language-data':
-        specifier: ^6.5.1
+        specifier: ^6.5.2
         version: 6.5.2
       '@codemirror/lint':
-        specifier: ^6.8.4
+        specifier: ^6.9.2
         version: 6.9.2
       '@codemirror/search':
         specifier: 6.5.11
@@ -1287,13 +1287,13 @@ importers:
         specifier: 6.39.9
         version: 6.39.9
       '@lezer/common':
-        specifier: ^1.2.3
+        specifier: ^1.5.0
         version: 1.5.0
       '@lezer/highlight':
-        specifier: ^1.2.1
+        specifier: ^1.2.3
         version: 1.2.3
       '@lezer/html':
-        specifier: ^1.3.10
+        specifier: ^1.3.13
         version: 1.3.13
       '@lezer/markdown':
         specifier: ^1.6.3
@@ -1511,16 +1511,16 @@ importers:
   packages/syntax/-infra:
     dependencies:
       '@codemirror/language':
-        specifier: ^6.11.2
+        specifier: ^6.12.1
         version: 6.12.1
       '@codemirror/view':
         specifier: ^6.39.9
         version: 6.39.9
       '@lezer/generator':
-        specifier: ^1.7.2
+        specifier: ^1.8.0
         version: 1.8.0
       '@lezer/highlight':
-        specifier: ^1.2.1
+        specifier: ^1.2.3
         version: 1.2.3
       '@rollup/plugin-node-resolve':
         specifier: ^16.0.3
@@ -1557,7 +1557,7 @@ importers:
         specifier: ^6.5.3
         version: 6.5.3
       '@lezer/common':
-        specifier: ^1.2.3
+        specifier: ^1.5.0
         version: 1.5.0
     devDependencies:
       '@babel/core':
@@ -1579,7 +1579,7 @@ importers:
   packages/syntax/glimdown/codemirror:
     dependencies:
       '@codemirror/lang-html':
-        specifier: ^6.4.9
+        specifier: ^6.4.11
         version: 6.4.11
       '@codemirror/lang-javascript':
         specifier: ^6.2.4
@@ -1594,19 +1594,19 @@ importers:
         specifier: ^6.1.2
         version: 6.1.2
       '@codemirror/language-data':
-        specifier: ^6.5.1
+        specifier: ^6.5.2
         version: 6.5.2
       '@lezer/common':
-        specifier: ^1.2.3
+        specifier: ^1.5.0
         version: 1.5.0
       '@lezer/highlight':
-        specifier: ^1.2.1
+        specifier: ^1.2.3
         version: 1.2.3
       '@lezer/html':
-        specifier: ^1.3.10
+        specifier: ^1.3.13
         version: 1.3.13
       '@lezer/javascript':
-        specifier: ^1.4.21
+        specifier: ^1.5.4
         version: 1.5.4
       '@lezer/lr':
         specifier: ^1.4.7
@@ -1634,7 +1634,7 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       '@codemirror/language':
-        specifier: ^6.11.2
+        specifier: ^6.12.1
         version: 6.12.1
       '@codemirror/state':
         specifier: ^6.5.3
@@ -1643,7 +1643,7 @@ importers:
         specifier: ^6.39.9
         version: 6.39.9
       '@lezer/generator':
-        specifier: ^1.7.2
+        specifier: ^1.8.0
         version: 1.8.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
@@ -1679,7 +1679,7 @@ importers:
         specifier: ^7.28.5
         version: 7.28.5
       '@codemirror/language':
-        specifier: ^6.11.2
+        specifier: ^6.12.1
         version: 6.12.1
       '@codemirror/state':
         specifier: ^6.5.3
@@ -1730,7 +1730,7 @@ importers:
   packages/syntax/glimdown/lezer:
     dependencies:
       '@lezer/highlight':
-        specifier: ^1.2.1
+        specifier: ^1.2.3
         version: 1.2.3
       '@lezer/lr':
         specifier: ^1.4.7
@@ -1743,7 +1743,7 @@ importers:
         specifier: workspace:*
         version: link:../../-infra
       '@lezer/generator':
-        specifier: ^1.7.2
+        specifier: ^1.8.0
         version: 1.8.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
@@ -1773,19 +1773,19 @@ importers:
         specifier: ^6.3.1
         version: 6.3.1
       '@codemirror/lang-html':
-        specifier: ^6.4.9
+        specifier: ^6.4.11
         version: 6.4.11
       '@codemirror/lang-javascript':
         specifier: ^6.2.4
         version: 6.2.4
       '@codemirror/language':
-        specifier: ^6.11.2
+        specifier: ^6.12.1
         version: 6.12.1
       '@lezer/highlight':
-        specifier: ^1.2.1
+        specifier: ^1.2.3
         version: 1.2.3
       '@lezer/javascript':
-        specifier: ^1.4.21
+        specifier: ^1.5.4
         version: 1.5.4
       '@lezer/lr':
         specifier: ^1.4.7
@@ -1807,10 +1807,10 @@ importers:
         specifier: workspace:*
         version: link:../../-infra
       '@lezer/common':
-        specifier: ^1.2.3
+        specifier: ^1.5.0
         version: 1.5.0
       '@lezer/generator':
-        specifier: ^1.7.2
+        specifier: ^1.8.0
         version: 1.8.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
@@ -1846,7 +1846,7 @@ importers:
         specifier: ^7.28.5
         version: 7.28.5
       '@codemirror/language':
-        specifier: ^6.11.2
+        specifier: ^6.12.1
         version: 6.12.1
       '@codemirror/state':
         specifier: ^6.5.3
@@ -1879,7 +1879,7 @@ importers:
   packages/syntax/glimmer-s-expression/lezer:
     dependencies:
       '@lezer/highlight':
-        specifier: ^1.2.1
+        specifier: ^1.2.3
         version: 1.2.3
       '@lezer/lr':
         specifier: ^1.4.7
@@ -1892,7 +1892,7 @@ importers:
         specifier: workspace:*
         version: link:../../-infra
       '@lezer/generator':
-        specifier: ^1.7.2
+        specifier: ^1.8.0
         version: 1.8.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
@@ -1919,19 +1919,19 @@ importers:
         specifier: ^6.3.1
         version: 6.3.1
       '@codemirror/lang-html':
-        specifier: ^6.4.9
+        specifier: ^6.4.11
         version: 6.4.11
       '@codemirror/lang-javascript':
         specifier: ^6.2.4
         version: 6.2.4
       '@codemirror/language':
-        specifier: ^6.11.2
+        specifier: ^6.12.1
         version: 6.12.1
       '@lezer/highlight':
-        specifier: ^1.2.1
+        specifier: ^1.2.3
         version: 1.2.3
       '@lezer/javascript':
-        specifier: ^1.4.21
+        specifier: ^1.5.4
         version: 1.5.4
       '@lezer/lr':
         specifier: ^1.4.7
@@ -1953,10 +1953,10 @@ importers:
         specifier: workspace:*
         version: link:../../-infra
       '@lezer/common':
-        specifier: ^1.2.3
+        specifier: ^1.5.0
         version: 1.5.0
       '@lezer/generator':
-        specifier: ^1.7.2
+        specifier: ^1.8.0
         version: 1.8.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
@@ -1992,7 +1992,7 @@ importers:
         specifier: ^7.28.5
         version: 7.28.5
       '@codemirror/language':
-        specifier: ^6.11.2
+        specifier: ^6.12.1
         version: 6.12.1
       '@codemirror/state':
         specifier: ^6.5.3
@@ -2031,7 +2031,7 @@ importers:
         specifier: ^6.3.1
         version: 6.3.1
       '@codemirror/lang-html':
-        specifier: ^6.4.9
+        specifier: ^6.4.11
         version: 6.4.11
       '@codemirror/lang-javascript':
         specifier: ^6.2.4
@@ -2046,13 +2046,13 @@ importers:
         specifier: workspace:*
         version: link:../../glimmer-s-expression/lezer
       '@lezer/highlight':
-        specifier: ^1.2.1
+        specifier: ^1.2.3
         version: 1.2.3
       '@lezer/html':
-        specifier: ^1.3.10
+        specifier: ^1.3.13
         version: 1.3.13
       '@lezer/javascript':
-        specifier: ^1.4.21
+        specifier: ^1.5.4
         version: 1.5.4
       '@lezer/lr':
         specifier: ^1.4.7
@@ -2071,13 +2071,13 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       '@codemirror/language':
-        specifier: ^6.11.2
+        specifier: ^6.12.1
         version: 6.12.1
       '@lezer/common':
-        specifier: ^1.2.3
+        specifier: ^1.5.0
         version: 1.5.0
       '@lezer/generator':
-        specifier: ^1.7.2
+        specifier: ^1.8.0
         version: 1.8.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
@@ -2113,7 +2113,7 @@ importers:
         specifier: ^7.28.5
         version: 7.28.5
       '@codemirror/language':
-        specifier: ^6.11.2
+        specifier: ^6.12.1
         version: 6.12.1
       '@codemirror/state':
         specifier: ^6.5.3
@@ -2149,16 +2149,16 @@ importers:
         specifier: workspace:*
         version: link:../../glimmer-s-expression/lezer
       '@lezer/common':
-        specifier: ^1.2.3
+        specifier: ^1.5.0
         version: 1.5.0
       '@lezer/highlight':
-        specifier: ^1.2.1
+        specifier: ^1.2.3
         version: 1.2.3
       '@lezer/html':
-        specifier: ^1.3.10
+        specifier: ^1.3.13
         version: 1.3.13
       '@lezer/javascript':
-        specifier: ^1.4.21
+        specifier: ^1.5.4
         version: 1.5.4
       '@lezer/lr':
         specifier: ^1.4.7
@@ -2171,10 +2171,10 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       '@codemirror/language':
-        specifier: ^6.11.2
+        specifier: ^6.12.1
         version: 6.12.1
       '@lezer/generator':
-        specifier: ^1.7.2
+        specifier: ^1.8.0
         version: 1.8.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
@@ -3634,8 +3634,8 @@ packages:
   '@lezer/common@1.5.0':
     resolution: {integrity: sha512-PNGcolp9hr4PJdXR4ix7XtixDrClScvtSCYW3rQG106oVMOOI+jFb+0+J3mbeL/53g1Zd6s0kJzaw6Ri68GmAA==}
 
-  '@lezer/cpp@1.1.4':
-    resolution: {integrity: sha512-aYSdZyUueeTgnfXQntiGUqKNW5WujlAsIbbHzkfJDneSZoyjPg8ObmWG3bzDPVYMC/Kf4l43WJLCunPnYFfQ0g==}
+  '@lezer/cpp@1.1.5':
+    resolution: {integrity: sha512-DIhSXmYtJKLehrjzDFN+2cPt547ySQ41nA8yqcDf/GxMc+YM736xqltFkvADL2M0VebU5I+3+4ks2Vv+Kyq3Aw==}
 
   '@lezer/css@1.3.0':
     resolution: {integrity: sha512-pBL7hup88KbI7hXnZV3PQsn43DHy6TWyzuyk2AO9UyoXcDltvIdqWKE1dLL/45JVZ+YZkHe1WVHqO6wugZZWcw==}
@@ -11733,6 +11733,18 @@ packages:
       utf-8-validate:
         optional: true
 
+  ws@8.19.0:
+    resolution: {integrity: sha512-blAT2mjOEIi0ZzruJfIhb3nps74PRWTCz1IjglWEEpQl5XS/UNama6u2/rjFkDDouqr4L67ry+1aGIALViWjDg==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
   xml-name-validator@5.0.0:
     resolution: {integrity: sha512-EvGK8EJ3DhaHfbRlETOWAS5pO9MZITeauHKJyb8wyajUfQUenkIg2MvLDTZ4T/TgIcm3HU0TFBgWWboAZ30UHg==}
     engines: {node: '>=18'}
@@ -12723,7 +12735,7 @@ snapshots:
   '@codemirror/lang-cpp@6.0.3':
     dependencies:
       '@codemirror/language': 6.12.1
-      '@lezer/cpp': 1.1.4
+      '@lezer/cpp': 1.1.5
 
   '@codemirror/lang-css@6.3.1':
     dependencies:
@@ -12865,7 +12877,7 @@ snapshots:
       '@codemirror/language': 6.12.1
       '@lezer/common': 1.5.0
       '@lezer/highlight': 1.2.3
-      '@lezer/lr': 1.4.5
+      '@lezer/lr': 1.4.7
 
   '@codemirror/lang-wast@6.0.2':
     dependencies:
@@ -12890,7 +12902,7 @@ snapshots:
       '@codemirror/state': 6.5.3
       '@lezer/common': 1.5.0
       '@lezer/highlight': 1.2.3
-      '@lezer/lr': 1.4.5
+      '@lezer/lr': 1.4.7
       '@lezer/yaml': 1.0.3
 
   '@codemirror/language-data@6.5.2':
@@ -12921,11 +12933,11 @@ snapshots:
 
   '@codemirror/language@6.12.1':
     dependencies:
-      '@codemirror/state': 6.5.2
+      '@codemirror/state': 6.5.3
       '@codemirror/view': 6.39.9
       '@lezer/common': 1.5.0
       '@lezer/highlight': 1.2.3
-      '@lezer/lr': 1.4.5
+      '@lezer/lr': 1.4.7
       style-mod: 4.1.3
 
   '@codemirror/legacy-modes@6.5.2':
@@ -13866,7 +13878,7 @@ snapshots:
 
   '@lezer/common@1.5.0': {}
 
-  '@lezer/cpp@1.1.4':
+  '@lezer/cpp@1.1.5':
     dependencies:
       '@lezer/common': 1.5.0
       '@lezer/highlight': 1.2.3
@@ -13881,7 +13893,7 @@ snapshots:
   '@lezer/generator@1.8.0':
     dependencies:
       '@lezer/common': 1.5.0
-      '@lezer/lr': 1.4.5
+      '@lezer/lr': 1.4.7
 
   '@lezer/go@1.0.1':
     dependencies:
@@ -13897,7 +13909,7 @@ snapshots:
     dependencies:
       '@lezer/common': 1.5.0
       '@lezer/highlight': 1.2.3
-      '@lezer/lr': 1.4.5
+      '@lezer/lr': 1.4.7
 
   '@lezer/java@1.1.3':
     dependencies:
@@ -13964,7 +13976,7 @@ snapshots:
     dependencies:
       '@lezer/common': 1.5.0
       '@lezer/highlight': 1.2.3
-      '@lezer/lr': 1.4.5
+      '@lezer/lr': 1.4.7
 
   '@lint-todo/utils@13.1.1':
     dependencies:
@@ -15574,10 +15586,10 @@ snapshots:
 
   '@xmldom/xmldom@0.8.11': {}
 
-  '@xstate/inspect@0.8.0(de15395f4f1c7c34a287dd140e34e1d0)':
+  '@xstate/inspect@0.8.0(d8b6f83bca51955c273b1920a9bd2d43)':
     dependencies:
       fast-safe-stringify: 2.1.1
-      ws: 8.18.3
+      ws: 8.19.0
       xstate: 5.25.0
     optionalDependencies:
       '@types/ws': 8.18.1
@@ -22085,7 +22097,7 @@ snapshots:
       '@bazel/runfiles': 6.5.0
       jszip: 3.10.1
       tmp: 0.2.5
-      ws: 8.18.3
+      ws: 8.19.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -23757,6 +23769,8 @@ snapshots:
   ws@7.5.10: {}
 
   ws@8.18.3: {}
+
+  ws@8.19.0: {}
 
   xml-name-validator@5.0.0: {}
 
