@@ -1,5 +1,45 @@
 # Changelog
 
+## Release (2026-01-11)
+
+* ember-repl 7.3.0 (minor)
+* limber-ui 4.1.0 (minor)
+* repl-sdk 1.1.2 (patch)
+* codemirror-lang-glimdown 2.0.2 (patch)
+* @glimdown/lezer 2.0.2 (patch)
+* codemirror-lang-glimmer-js 2.0.2 (patch)
+* @glimdown/lezer-glimmer-expression 2.0.2 (patch)
+* codemirror-lang-glimmer-ts 2.0.2 (patch)
+* codemirror-lang-glimmer 2.0.2 (patch)
+* lezer-glimmer 2.0.2 (patch)
+
+#### :rocket: Enhancement
+* `ember-repl`, `limber-ui`
+  * [#2045](https://github.com/NullVoxPopuli/limber/pull/2045) Upgrade decorator-transforms, Update kolay ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* `limber-ui`
+  * [#2041](https://github.com/NullVoxPopuli/limber/pull/2041) Fix `<REPL>` component's boolean handling, for embedding, and complete 4 more tutorial chapters ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `ember-repl`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`
+  * [#2039](https://github.com/NullVoxPopuli/limber/pull/2039) Remove outdated changelogs -- all changes are tracked in one changelog at the monorepo root ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :memo: Documentation
+* `limber-ui`
+  * [#2041](https://github.com/NullVoxPopuli/limber/pull/2041) Fix `<REPL>` component's boolean handling, for embedding, and complete 4 more tutorial chapters ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :house: Internal
+* `ember-repl`, `limber-ui`
+  * [#2045](https://github.com/NullVoxPopuli/limber/pull/2045) Upgrade decorator-transforms, Update kolay ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `ember-repl`, `repl-sdk`, `codemirror-lang-glimdown`, `codemirror-lang-glimmer-js`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`
+  * [#2044](https://github.com/NullVoxPopuli/limber/pull/2044) Update vite deps ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `ember-repl`, `limber-ui`, `repl-sdk`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`
+  * [#2043](https://github.com/NullVoxPopuli/limber/pull/2043) Update some deps ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `ember-repl`, `limber-ui`, `repl-sdk`
+  * [#2042](https://github.com/NullVoxPopuli/limber/pull/2042) Update some deps ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2026-01-05)
 
 * ember-repl 7.2.3 (patch)
