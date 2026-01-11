@@ -1,16 +1,20 @@
 import { cached, tracked } from '@glimmer/tracking';
 import Service, { service } from '@ember/service';
 
+import { docsManager } from 'kolay';
+
 import type Selected from './selected';
 import type RouterService from '@ember/routing/router-service';
-import type { DocsService as KolayDocsService } from 'kolay';
 
 export default class DocsService extends Service {
   @service declare router: RouterService;
   @service declare selected: Selected;
-  @service('kolay/docs') declare docs: KolayDocsService;
 
   @tracked isViewingProse = true;
+
+  get docs() {
+    return docsManager(this);
+  }
 
   @cached
   get tutorials() {
