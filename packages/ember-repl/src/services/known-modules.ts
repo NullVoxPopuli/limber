@@ -66,6 +66,9 @@ const emberCompilationModules = {
   'content-tag': () => import('content-tag'),
   'decorator-transforms': () => import('decorator-transforms'),
   'decorator-transforms/runtime': () => import('decorator-transforms/runtime'),
+  'decorator-transforms/runtime-esm': () =>
+    import('decorator-transforms/runtime-esm'),
+  'decorator-transforms/globals': () => import('decorator-transforms/globals'),
   'babel-plugin-ember-template-compilation': () =>
     import('babel-plugin-ember-template-compilation'),
   // Dependencies of the above
