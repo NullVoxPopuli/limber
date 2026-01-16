@@ -146,6 +146,13 @@ Cross-Browser testing provided by <a href='http://browserstack.com' target='_bla
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/billybonks">
+                    <img src="https://avatars.githubusercontent.com/u/1640136?v=4" width="100;" alt="billybonks"/>
+                    <br />
+                    <sub><b>Sebastien Stettler</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/therealchiko">
                     <img src="https://avatars.githubusercontent.com/u/1927685?v=4" width="100;" alt="therealchiko"/>
                     <br />
