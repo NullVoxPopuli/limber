@@ -1,4 +1,4 @@
-As seen previously, `on` was used to listen for `click` events on a button.
+As seen previously, `on` was used to listen for `input` events on an input.
 
 The `on` modifier can be thought of as an alias for [`addEventListener`][mdn-addEventListener], so anything it can do, `on` can do.
 
