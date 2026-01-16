@@ -1,5 +1,22 @@
 # Changelog
 
+## Release (2026-01-16)
+
+* ember-repl 7.3.1 (patch)
+
+#### :bug: Bug Fix
+* `ember-repl`
+  * [#2051](https://github.com/NullVoxPopuli/limber/pull/2051) Add more exports for decorator-transforms ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :memo: Documentation
+* [#2049](https://github.com/NullVoxPopuli/limber/pull/2049) docs(contributor): contributors readme action update ([@github-actions[bot]](https://github.com/apps/github-actions))
+* [#2046](https://github.com/NullVoxPopuli/limber/pull/2046) fix: dom event correctly references first example ([@billybonks](https://github.com/billybonks))
+
+#### Committers: 3
+- GitHub Actions [Bot] ([@github-actions](https://github.com/apps/github-actions))
+- Sebastien Stettler ([@billybonks](https://github.com/billybonks))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2026-01-11)
 
 * ember-repl 7.3.0 (minor)
