@@ -74,7 +74,7 @@
     "concurrently": "^9.2.1",
     "ember-async-data": "2.0.1",
     "ember-modifier": "^4.2.0",
-    "ember-primitives": "^0.51.0",
+    "ember-primitives": "^0.53.0",
     "ember-resources": "^7.0.7",
     "ember-source": "^6.10.0",
     "ember-template-lint": "^7.9.3",
