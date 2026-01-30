@@ -47,7 +47,7 @@ export const Prose: TOC<{ Element: HTMLDivElement }> = <template>
     >
       <:content>
         <div data-prose class="prose p-4">
-          {{#if docs.selected.hasProse}}
+          {{#if docs.selected.prose}}
             <docs.selected.prose />
           {{else}}
             <NotFound />

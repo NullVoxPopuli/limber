@@ -24,8 +24,8 @@
   "devDependencies": {
     "@babel/core": "^7.28.5",
     "@babel/standalone": "file:babel-standalone.tgz",
-    "@glint/ember-tsc": "^1.0.9",
-    "@glint/tsserver-plugin": "^2.0.9",
+    "@glint/ember-tsc": "^1.1.0",
+    "@glint/tsserver-plugin": "^2.1.0",
     "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "concurrently": "^9.2.1",
     "dev-tools": "workspace:*",
@@ -49,6 +49,7 @@
     "_repl-sdk": "workspace:*",
     "_ember-repl": "workspace:*",
     "overrides": {
+      "@glint/template": "1.7.4",
       "reactiveweb": "1.9.1",
       "@babel/standalone": "file:./babel-standalone.tgz",
       "array-includes": "npm:@nolyfill/array-includes@^1",
