@@ -49,7 +49,7 @@
     "@ember/library-tsconfig": "^2.0.0",
     "@embroider/addon-dev": "^8.1.0",
     "@glint/ember-tsc": "^1.1.0",
-    "@glint/template": "^1.7.4",
+    "@glint/template": "1.7.4",
     "@glint/tsserver-plugin": "^2.1.0",
     "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "@rollup/plugin-babel": "^6.1.0",
