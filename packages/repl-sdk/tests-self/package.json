@@ -19,6 +19,7 @@
     "@types/common-tags": "^1.8.4",
     "@types/mdast": "^4.0.4",
     "@vitest/browser": "^3.2.4",
+    "@vitest/browser-webdriverio": "^4.0.18",
     "@vitest/ui": "3.2.4",
     "@vue/repl": "^4.6.1",
     "mdast": "^3.0.0",

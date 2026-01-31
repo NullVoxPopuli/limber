@@ -1412,7 +1412,7 @@ importers:
         version: 4.5.4(c1128149ce4d4a02865fb32c2c02130b)
       vitest:
         specifier: ^4.0.18
-        version: 4.0.18(1a8c0108f66d12027e3fcb20bc837cfd)
+        version: 4.0.18(bf808afe464152ae4b520c551ba5a33f)
 
   packages/repl-sdk/tests-self:
     dependencies:
@@ -1447,6 +1447,9 @@ importers:
       '@vitest/browser':
         specifier: ^3.2.4
         version: 3.2.4(0f78285e4d0f7251cfe3a6433a95d02f)
+      '@vitest/browser-webdriverio':
+        specifier: ^4.0.18
+        version: 4.0.18(c46db0012a0ff19620d46cec3f90ec13)
       '@vitest/ui':
         specifier: 3.2.4
         version: 3.2.4(vitest@3.2.4)
@@ -5038,6 +5041,12 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@vitest/browser-webdriverio@4.0.18':
+    resolution: {integrity: sha512-dKn4kBq6gFk+wT5DMjPTvivXptz9MaN7CONoP+bA0bZxWofNsZtf9R4oPwQakuB95WBQ3j5kZ/9SXvB9i+XYQw==}
+    peerDependencies:
+      vitest: 4.0.18
+      webdriverio: '*'
+
   '@vitest/browser@3.2.4':
     resolution: {integrity: sha512-tJxiPrWmzH8a+w9nLKlQMzAKX/7VjFs50MWgcAj7p9XQ7AQ9/35fByFYptgPELyLw+0aixTnC4pUWV+APcZ/kw==}
     peerDependencies:
@@ -5052,6 +5061,11 @@ packages:
         optional: true
       webdriverio:
         optional: true
+
+  '@vitest/browser@4.0.18':
+    resolution: {integrity: sha512-gVQqh7paBz3gC+ZdcCmNSWJMk70IUjDeVqi+5m5vYpEHsIwRgw3Y545jljtajhkekIpIp5Gg8oK7bctgY0E2Ng==}
+    peerDependencies:
+      vitest: 4.0.18
 
   '@vitest/expect@3.2.4':
     resolution: {integrity: sha512-Io0yyORnB6sikFlt8QW5K7slY4OjqNX9jmJQ02QDda8lyM6B5oNgVWoSoKPac8/kgnCUzuHQKrSLtu/uOqqrig==}
@@ -9515,6 +9529,10 @@ packages:
     resolution: {integrity: sha512-TfySrs/5nm8fQJDcBDuUng3VOUKsd7S+zqvbOTiGXHfxX4wK31ard+hoNuvkicM/2YFzlpDgABOevKSsB4G/FA==}
     engines: {node: '>= 6'}
 
+  pixelmatch@7.1.0:
+    resolution: {integrity: sha512-1wrVzJ2STrpmONHKBy228LM1b84msXDUoAzVEl0R8Mz4Ce6EPr+IVtxm8+yvrqLYMHswREkjYFaMxnyGnaY3Ng==}
+    hasBin: true
+
   pkg-dir@3.0.0:
     resolution: {integrity: sha512-/E57AYkoeQ25qkxMj5PBOVgF8Kiu/h7cYS30Z5+R7WaiCCBfLq58ZI/dSeaEKb9WVJV5n/03QwrN3IeWIFllvw==}
     engines: {node: '>=6'}
@@ -9545,6 +9563,10 @@ packages:
     resolution: {integrity: sha512-2SVA0sbPktiIY/MCOPX8e86ehA/e+tDNq+e5Y8qjKYti2Z/JG7xnronT/TXTIkKbYGWlCbuucZ6dziEgkoEjQQ==}
     engines: {node: '>=18'}
     hasBin: true
+
+  pngjs@7.0.0:
+    resolution: {integrity: sha512-LKWqWJRhstyYo9pGvgor/ivk2w94eSjE3RGVuzLGlr3NmD8bf7RcYGze1mNdEHRP6TRP6rMuDHk5t44hnTRyow==}
+    engines: {node: '>=14.19.0'}
 
   points-on-curve@0.2.0:
     resolution: {integrity: sha512-0mYKnYYe9ZcqMCWhUjItv/oHjvgEsfKvnUTg8sAtnHr3GVy7rGkXCb6d5cSyqrWqL4k81b9CPg3urd+T7aop3A==}
@@ -15122,6 +15144,29 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
     optional: true
 
+  '@vitest/browser-webdriverio@4.0.18(a8c8bccbaa4ce1e902ce96064838675d)':
+    dependencies:
+      '@vitest/browser': 4.0.18(961e82ee0059a79a6957f9924a595445)
+      vitest: 4.0.18(bf808afe464152ae4b520c551ba5a33f)
+      webdriverio: 9.23.2
+    transitivePeerDependencies:
+      - bufferutil
+      - msw
+      - utf-8-validate
+      - vite
+    optional: true
+
+  '@vitest/browser-webdriverio@4.0.18(c46db0012a0ff19620d46cec3f90ec13)':
+    dependencies:
+      '@vitest/browser': 4.0.18(9da77698062cf86c83ed2e550790ff7b)
+      vitest: 3.2.4(43fc60b72221c23537f26de37a473286)
+      webdriverio: 9.23.2
+    transitivePeerDependencies:
+      - bufferutil
+      - msw
+      - utf-8-validate
+      - vite
+
   '@vitest/browser@3.2.4(0f78285e4d0f7251cfe3a6433a95d02f)':
     dependencies:
       '@testing-library/dom': 10.4.1
@@ -15136,6 +15181,41 @@ snapshots:
     optionalDependencies:
       playwright: 1.58.0
       webdriverio: 9.23.2
+    transitivePeerDependencies:
+      - bufferutil
+      - msw
+      - utf-8-validate
+      - vite
+
+  '@vitest/browser@4.0.18(961e82ee0059a79a6957f9924a595445)':
+    dependencies:
+      '@vitest/mocker': 4.0.18(e6b63113a1a5fac17417c17fd166712e)
+      '@vitest/utils': 4.0.18
+      magic-string: 0.30.21
+      pixelmatch: 7.1.0
+      pngjs: 7.0.0
+      sirv: 3.0.2
+      tinyrainbow: 3.0.3
+      vitest: 4.0.18(bf808afe464152ae4b520c551ba5a33f)
+      ws: 8.19.0
+    transitivePeerDependencies:
+      - bufferutil
+      - msw
+      - utf-8-validate
+      - vite
+    optional: true
+
+  '@vitest/browser@4.0.18(9da77698062cf86c83ed2e550790ff7b)':
+    dependencies:
+      '@vitest/mocker': 4.0.18(e6b63113a1a5fac17417c17fd166712e)
+      '@vitest/utils': 4.0.18
+      magic-string: 0.30.21
+      pixelmatch: 7.1.0
+      pngjs: 7.0.0
+      sirv: 3.0.2
+      tinyrainbow: 3.0.3
+      vitest: 3.2.4(43fc60b72221c23537f26de37a473286)
+      ws: 8.19.0
     transitivePeerDependencies:
       - bufferutil
       - msw
@@ -20697,6 +20777,10 @@ snapshots:
 
   pirates@4.0.7: {}
 
+  pixelmatch@7.1.0:
+    dependencies:
+      pngjs: 7.0.0
+
   pkg-dir@3.0.0:
     dependencies:
       find-up: 3.0.0
@@ -20730,6 +20814,8 @@ snapshots:
       playwright-core: 1.58.0
     optionalDependencies:
       fsevents: 2.3.2
+
+  pngjs@7.0.0: {}
 
   points-on-curve@0.2.0: {}
 
@@ -22887,7 +22973,7 @@ snapshots:
       - tsx
       - yaml
 
-  vitest@4.0.18(1a8c0108f66d12027e3fcb20bc837cfd):
+  vitest@4.0.18(bf808afe464152ae4b520c551ba5a33f):
     dependencies:
       '@vitest/expect': 4.0.18
       '@vitest/mocker': 4.0.18(e6b63113a1a5fac17417c17fd166712e)
@@ -22911,6 +22997,7 @@ snapshots:
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 24.10.9
+      '@vitest/browser-webdriverio': 4.0.18(a8c8bccbaa4ce1e902ce96064838675d)
       jsdom: 26.1.0
     transitivePeerDependencies:
       - jiti
