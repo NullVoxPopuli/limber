@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitest/config';
+import { webdriverio } from '@vitest/browser-webdriverio';
 
 export default defineConfig({
   test: {
@@ -7,7 +8,7 @@ export default defineConfig({
       provider: 'v8',
     },
     browser: {
-      provider: 'webdriverio',
+      provider: webdriverio(),
       // provider: 'playwright',
       enabled: true,
       instances: [
