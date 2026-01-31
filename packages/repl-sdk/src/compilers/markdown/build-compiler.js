@@ -1,7 +1,9 @@
 /**
  * @typedef {import('unified').Plugin} UPlugin
  */
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeRaw from 'rehype-raw';
+import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
 import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
@@ -10,7 +12,6 @@ import { unified } from 'unified';
 import { visit } from 'unist-util-visit';
 
 import { GLIMDOWN_PREVIEW, GLIMDOWN_RENDER } from './const.js';
-import { headingId } from './heading-id.js';
 import { liveCodeExtraction } from './live-code-extraction.js';
 import { sanitizeForGlimmer } from './sanitize-for-glimmer.js';
 
@@ -20,7 +21,7 @@ import { sanitizeForGlimmer } from './sanitize-for-glimmer.js';
  * @returns {import('unified').Processor<import('hast').Root>}
  */
 export function buildCompiler(options) {
-  let compiler = unified().use(remarkParse).use(remarkGfm, { singleTilde: true }).use(headingId);
+  let compiler = unified().use(remarkParse).use(remarkGfm, { singleTilde: true });
 
   /**
    * If this were "use"d after `remarkRehype`,
@@ -65,7 +66,10 @@ export function buildCompiler(options) {
   // However, it also changes all the nodes, so we need another pass
   // to make sure our Glimmer-aware nodes are in tact
   // @ts-ignore - unified processor types are complex and change as plugins are added
-  compiler = compiler.use(remarkRehype, { allowDangerousHtml: true });
+  compiler = compiler
+    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings);
 
   // Convert invocables to raw format, so Glimmer can invoke them
   // @ts-ignore - unified processor types are complex and change as plugins are added
