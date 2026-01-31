@@ -19,7 +19,7 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "dependencies": {
-    "@codemirror/state": "^6.5.3",
+    "@codemirror/state": "^6.5.4",
     "@lezer/common": "^1.5.0"
   },
   "volta": {

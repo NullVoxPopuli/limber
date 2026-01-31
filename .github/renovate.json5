@@ -5,7 +5,7 @@
   "packageRules": [
     {
       // ensure maximum compatibility, when possible
-      "matchPaths": ["packages/"],
+      "matchPaths": ["packages/**"],
       "matchDepTypes": ["dependencies", "peerDependencies", "engines"],
       "enabled": false
     },
