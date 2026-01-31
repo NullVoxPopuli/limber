@@ -13,9 +13,9 @@
   "devDependencies": {
     "@babel/core": "^7.28.5",
     "@codemirror/language": "^6.12.1",
-    "@codemirror/state": "^6.5.3",
+    "@codemirror/state": "^6.5.4",
     "@codemirror/theme-one-dark": "^6.1.3",
-    "@codemirror/view": "^6.39.9",
+    "@codemirror/view": "^6.39.12",
     "@glimdown/codemirror-dev-preview": "workspace:*",
     "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "eslint": "^9.39.1",

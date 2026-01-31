@@ -5,7 +5,7 @@
   "packageRules": [
     {
       // ensure maximum compatibility, when possible
-      "matchPaths": ["packages/ember-repl/addon"],
+      "matchPaths": ["packages/**"],
       "matchDepTypes": ["dependencies", "peerDependencies", "engines"],
       "enabled": false
     },
