@@ -131,6 +131,20 @@ describe('options', () => {
       expect(result.codeBlocks).to.deep.equal([]);
     });
 
+    it('allows one-line-component invocation', async () => {
+      const result = await parseMarkdown(`<APIDocs @package="ember-primitives" @name="Avatar" />`, {
+        ...defaults,
+        rehypePlugins: [[rehypeShiki, { theme: 'github-dark' }]],
+      });
+
+      expect(result).toMatchInlineSnapshot(`
+        {
+          "codeBlocks": [],
+          "text": "<p><APIDocs @package="ember-primitives" @name="Avatar" /></p>",
+        }
+      `);
+    });
+
     it('retains {{ }} escaping', async () => {
       const result = await parseMarkdown(
         stripIndent`
