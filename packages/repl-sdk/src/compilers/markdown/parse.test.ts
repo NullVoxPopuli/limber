@@ -145,6 +145,26 @@ describe('options', () => {
       `);
     });
 
+    it('allows multi-line-component invocation', async () => {
+      const result = await parseMarkdown(
+        [`<APIDocs`, `@package="ember-primitives"`, `@name="Avatar"`, `/>`].join('\n'),
+        {
+          ...defaults,
+          rehypePlugins: [[rehypeShiki, { theme: 'github-dark' }]],
+        }
+      );
+
+      expect(result).toMatchInlineSnapshot(`
+        {
+          "codeBlocks": [],
+          "text": "<p><APIDocs
+        @package="ember-primitives"
+        @name="Avatar"
+        /></p>",
+        }
+      `);
+    });
+
     it('retains {{ }} escaping', async () => {
       const result = await parseMarkdown(
         stripIndent`
