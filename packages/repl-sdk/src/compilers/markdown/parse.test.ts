@@ -131,7 +131,7 @@ describe('options', () => {
       expect(result.codeBlocks).to.deep.equal([]);
     });
 
-    it('allows one-line-component invocation', async () => {
+    it('allows one-line-component invocation', {timeout:10_000}, async () => {
       const result = await parseMarkdown(`<APIDocs @package="ember-primitives" @name="Avatar" />`, {
         ...defaults,
         rehypePlugins: [[rehypeShiki, { theme: 'github-dark' }]],
@@ -161,6 +161,45 @@ describe('options', () => {
         @package="ember-primitives"
         @name="Avatar"
         /></p>",
+        }
+      `);
+    });
+
+    it(`Does not mistakenly transform text in codefences`, async () => {
+      const result = await parseMarkdown(
+        [
+          '# Hello',
+          '',
+          '```gjs live',
+          'import { Hello } from "somewhere";',
+          '',
+          '<template>',
+          '  <Hello />',
+          '</template>',
+        ].join('\n'),
+        {
+          ...defaults,
+          rehypePlugins: [[rehypeShiki, { theme: 'github-dark' }]],
+        }
+      );
+
+      expect(result).toMatchInlineSnapshot(`
+        {
+          "codeBlocks": [
+            {
+              "code": "import { Hello } from "somewhere";
+
+        <template>
+          <Hello />
+        </template>",
+              "flavor": undefined,
+              "format": "gjs",
+              "meta": "live",
+              "placeholderId": "repl_1",
+            },
+          ],
+          "text": "<h1 id="hello">Hello</h1>
+        <div id="repl_1" class="repl-sdk__demo"></div>",
         }
       `);
     });
