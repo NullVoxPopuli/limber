@@ -1,3 +1,5 @@
 {
-  "name": "@embroider/addon-shim"
+  "name": "@embroider/addon-shim",
+  "version": "0.0.0-no-compat",
+  "private": true
 }
