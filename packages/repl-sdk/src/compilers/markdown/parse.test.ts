@@ -131,7 +131,7 @@ describe('options', () => {
       expect(result.codeBlocks).to.deep.equal([]);
     });
 
-    it('allows one-line-component invocation', {timeout:10_000}, async () => {
+    it('allows one-line-component invocation', { timeout: 10_000 }, async () => {
       const result = await parseMarkdown(`<APIDocs @package="ember-primitives" @name="Avatar" />`, {
         ...defaults,
         rehypePlugins: [[rehypeShiki, { theme: 'github-dark' }]],
