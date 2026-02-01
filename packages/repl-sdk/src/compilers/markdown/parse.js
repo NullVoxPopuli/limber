@@ -25,6 +25,7 @@ export async function parseMarkdown(input, options) {
     if (content.includes('@')) {
       return `<${content}>`;
     }
+
     return match;
   });
 

@@ -59,6 +59,7 @@ export function buildCompiler(options) {
       if (paragraph.children) {
         for (let i = 0; i < paragraph.children.length; i++) {
           const child = paragraph.children[i];
+
           if (
             child.type === 'html' &&
             typeof child.value === 'string' &&
@@ -119,8 +120,10 @@ export function buildCompiler(options) {
 
       // Check for PascalCase elements FIRST before checking for code elements
       const tagName = /** @type {string | undefined} */ (nodeObj.tagName);
+
       if (tagName && /^[A-Z]/.test(tagName)) {
         nodeObj.type = 'glimmer_raw';
+
         return 'skip';
       }
 
@@ -140,9 +143,10 @@ export function buildCompiler(options) {
         const nodeData = /** @type {Record<string, unknown> | undefined} */ (
           typeof node === 'object' && node !== null && 'data' in node ? node.data : undefined
         );
-        
+
         if (nodeData?.isPascalCaseComponent) {
           nodeObj.type = 'glimmer_raw';
+
           return 'skip';
         }
 
@@ -153,6 +157,7 @@ export function buildCompiler(options) {
           nodeObj.value.match(/<[A-Z][a-zA-Z0-9]*(\s|>|@)/)
         ) {
           nodeObj.type = 'glimmer_raw';
+
           return 'skip';
         }
 
