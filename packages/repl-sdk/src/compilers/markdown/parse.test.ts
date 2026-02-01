@@ -1,8 +1,9 @@
 import rehypeShiki from '@shikijs/rehype';
 import { stripIndent } from 'common-tags';
 import { visit } from 'unist-util-visit';
-import { describe, expect as errorExpect, it } from 'vitest';
+import { beforeEach, describe, expect as errorExpect, it } from 'vitest';
 
+import { resetIdCounter } from '../../utils.js';
 import { parseMarkdown } from './parse.js';
 import { buildCodeFenceMetaUtils } from './utils.js';
 
@@ -40,6 +41,174 @@ const defaults = {
   }),
   ALLOWED_FORMATS,
 };
+
+beforeEach(() => {
+  resetIdCounter();
+});
+
+describe('default features', () => {
+  it('allows one-line-component invocation', { timeout: 10_000 }, async () => {
+    const result = await parseMarkdown(`<APIDocs @package="ember-primitives" @name="Avatar" />`, {
+      ...defaults,
+      rehypePlugins: [[rehypeShiki, { theme: 'github-dark' }]],
+    });
+
+    expect(result.codeBlocks).toMatchInlineSnapshot(`[]`);
+    expect(result.text).toMatchInlineSnapshot(
+      `"<p><APIDocs @package="ember-primitives" @name="Avatar" /></p>"`
+    );
+  });
+
+  it('allows multi-line-component invocation', async () => {
+    const result = await parseMarkdown(
+      [`<APIDocs`, `@package="ember-primitives"`, `@name="Avatar"`, `/>`].join('\n'),
+      {
+        ...defaults,
+        rehypePlugins: [[rehypeShiki, { theme: 'github-dark' }]],
+      }
+    );
+
+    expect(result.codeBlocks).toMatchInlineSnapshot(`[]`);
+    expect(result.text).toMatchInlineSnapshot(`
+      "<p><APIDocs
+      @package="ember-primitives"
+      @name="Avatar"
+      /></p>"
+    `);
+  });
+
+  it('allows components inside code blocks', async () => {
+    const result = await parseMarkdown(
+      [
+        '# Hello',
+        '',
+        '<code>',
+        '  <Shadowed @includeStyles={{true}}>',
+        '     the shadow realm',
+        '  </Shadowed>',
+        '</code>',
+      ].join('\n'),
+      {
+        ...defaults,
+      }
+    );
+
+    expect(result.codeBlocks).toMatchInlineSnapshot(`[]`);
+    expect(result.text).toMatchInlineSnapshot(`
+        "<h1 id="hello">Hello</h1>
+        <code>
+          <Shadowed @includeStyles={{true}}>
+             the shadow realm
+          </Shadowed>
+        </code>"
+      `);
+  });
+
+  describe('does not', () => {
+    it(`mistakenly transform text in codefences (previewed text is transformed though)`, async () => {
+      const result = await parseMarkdown(
+        [
+          '# Hello',
+          '',
+          '```gjs live preview',
+          "import { Shadowed, PortalTargets } from 'ember-primitives';",
+          '',
+          '<template>',
+          '  <Shadowed @includeStyles={{true}}>',
+          '     the shadow realm',
+          '  </Shadowed>',
+          '</template>',
+        ].join('\n'),
+        {
+          ...defaults,
+        }
+      );
+
+      expect(result.codeBlocks).toMatchInlineSnapshot(`
+        [
+          {
+            "code": "import { Shadowed, PortalTargets } from 'ember-primitives';
+
+        <template>
+          <Shadowed @includeStyles={{true}}>
+             the shadow realm
+          </Shadowed>
+        </template>",
+            "flavor": undefined,
+            "format": "gjs",
+            "meta": "live preview",
+            "placeholderId": "repl_1",
+          },
+        ]
+      `);
+      expect(result.text).toMatchInlineSnapshot(`
+        "<h1 id="hello">Hello</h1>
+        <div id="repl_1" class="repl-sdk__demo"></div>
+        <div class="repl-sdk__snippet" data-repl-output><pre><code class="language-gjs">import { Shadowed, PortalTargets } from 'ember-primitives';
+
+        &#x3C;template>
+          &#x3C;Shadowed @includeStyles=\\{{true}}>
+             the shadow realm
+          &#x3C;/Shadowed>
+        &#x3C;/template>
+        </code></pre></div>"
+      `);
+    });
+
+    it(`mistakenly transform text in codefences`, async () => {
+      const result = await parseMarkdown(
+        [
+          '# Hello',
+          '',
+          '```gjs live',
+          'import { Hello } from "somewhere";',
+          '',
+          '<template>',
+          '  <Hello />',
+          '</template>',
+        ].join('\n'),
+        {
+          ...defaults,
+          rehypePlugins: [[rehypeShiki, { theme: 'github-dark' }]],
+        }
+      );
+
+      expect(result.codeBlocks).toMatchInlineSnapshot(`
+        [
+          {
+            "code": "import { Hello } from "somewhere";
+
+        <template>
+          <Hello />
+        </template>",
+            "flavor": undefined,
+            "format": "gjs",
+            "meta": "live",
+            "placeholderId": "repl_1",
+          },
+        ]
+      `);
+      expect(result.text).toMatchInlineSnapshot(`
+        "<h1 id="hello">Hello</h1>
+        <div id="repl_1" class="repl-sdk__demo"></div>"
+      `);
+    });
+
+    it('mistakenly transform a component text in backticks', async () => {
+      const result = await parseMarkdown('## `<Hello @foo="two" />`', {
+        ...defaults,
+        rehypePlugins: [[rehypeShiki, { theme: 'github-dark' }]],
+      });
+
+      expect(result).toMatchInlineSnapshot(`
+        {
+          "codeBlocks": [],
+          "text": "<h2 id="hello-foo-two"><code><Hello @foo="two" /></code></h2>",
+        }
+      `);
+    });
+  });
+});
 
 describe('options', () => {
   describe('remarkPlugins', () => {
@@ -233,7 +402,7 @@ describe('options', () => {
 
         expect(result.text).toMatchInlineSnapshot(`
           "<h1 id="title">Title</h1>
-          <div id="repl_2" class="repl-sdk__demo"></div>"
+          <div id="repl_1" class="repl-sdk__demo"></div>"
         `);
 
         assertCodeBlocks(result.codeBlocks, [
@@ -311,7 +480,7 @@ describe('options', () => {
 
         expect(result.text).toMatchInlineSnapshot(`
           "<h1 id="title">Title</h1>
-          <div id="repl_3" class="repl-sdk__demo"></div>
+          <div id="repl_1" class="repl-sdk__demo"></div>
           <Demo />"
         `);
 
@@ -340,7 +509,7 @@ describe('options', () => {
 
         expect(result.text).toMatchInlineSnapshot(`
           "<p>hi</p>
-          <div id="repl_4" class="repl-sdk__demo"></div>
+          <div id="repl_1" class="repl-sdk__demo"></div>
           <div class="repl-sdk__snippet" data-repl-output><pre><code class="language-gjs">import Component from '@glimmer/component';
           import { on } from '@ember/modifier';
 
