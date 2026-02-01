@@ -49,6 +49,7 @@
     "_repl-sdk": "workspace:*",
     "_ember-repl": "workspace:*",
     "overrides": {
+      "@embroider/addon-shim": "workspace:*",
       "@glint/template": "1.7.4",
       "reactiveweb": "1.9.1",
       "@babel/standalone": "file:./babel-standalone.tgz",
