@@ -127,7 +127,7 @@ module('Rendered Snippets / Demos', function (hooks) {
 
   module('Build your own REPL', function () {
     test('it renders', async function (assert) {
-      const text = await getFromLabel('Styleguide Demo');
+      const text = await getFromLabel('Build your own REPL');
       const { Component, error } = await compile(this, text, { assert });
 
       assert.ok(Component, 'component rendered');
@@ -136,7 +136,7 @@ module('Rendered Snippets / Demos', function (hooks) {
       await render(<template><Component /></template>);
       assert.verifySteps(['start compile', 'compiled']);
 
-      assert.dom('h2').exists({ count: 4 });
+      assert.dom('[data-repl-output]').exists({ count: 3 }, 'whole doc, live fence, nested');
     });
   });
 
