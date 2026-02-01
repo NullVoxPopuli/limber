@@ -40,6 +40,38 @@ export function buildCompiler(options) {
     });
   }
 
+  // Mark raw HTML components (PascalCase) before remarkRehype processes them
+  // @ts-ignore - unified processor types are complex and change as plugins are added
+  compiler = compiler.use(() => (tree) => {
+    visit(tree, 'html', function (node) {
+      // Check if this html node is a PascalCase component
+      if (typeof node.value === 'string' && node.value.match(/^<[A-Z][a-zA-Z0-9]/)) {
+        // Add a marker to the node's data that remarkRehype will preserve
+        // remark-rehype with allowDangerousHtml will turn this into a text node,
+        // and the data should be preserved
+        if (!node.data) node.data = {};
+        node.data.isPascalCaseComponent = true;
+      }
+    });
+
+    // After markinghtml nodes, also visit paragraphs to mark their children
+    visit(tree, 'paragraph', (paragraph) => {
+      if (paragraph.children) {
+        for (let i = 0; i < paragraph.children.length; i++) {
+          const child = paragraph.children[i];
+          if (
+            child.type === 'html' &&
+            typeof child.value === 'string' &&
+            child.value.match(/^<[A-Z][a-zA-Z0-9]/)
+          ) {
+            if (!child.data) child.data = {};
+            child.data.isPascalCaseComponent = true;
+          }
+        }
+      }
+    });
+  });
+
   // TODO: we only want to do this when we have pre > code.
   //       code can exist inline.
   // @ts-ignore - unified processor types are complex and change as plugins are added
@@ -65,6 +97,10 @@ export function buildCompiler(options) {
   // However, it also changes all the nodes, so we need another pass
   // to make sure our Glimmer-aware nodes are in tact
   // @ts-ignore - unified processor types are complex and change as plugins are added
+  // remark rehype is needed to convert markdown to HTML
+  // However, it also changes all the nodes, so we need another pass
+  // to make sure our Glimmer-aware nodes are in tact
+  // @ts-ignore - unified processor types are complex and change as plugins are added
   compiler = compiler.use(remarkRehype, { allowDangerousHtml: true });
 
   // Convert invocables to raw format, so Glimmer can invoke them
@@ -81,6 +117,13 @@ export function buildCompiler(options) {
         return 'skip';
       }
 
+      // Check for PascalCase elements FIRST before checking for code elements
+      const tagName = /** @type {string | undefined} */ (nodeObj.tagName);
+      if (tagName && /^[A-Z]/.test(tagName)) {
+        nodeObj.type = 'glimmer_raw';
+        return 'skip';
+      }
+
       if (nodeObj.type === 'element' || ('tagName' in nodeObj && nodeObj.tagName === 'code')) {
         if (properties?.[/** @type {string} */ (/** @type {unknown} */ (GLIMDOWN_RENDER))]) {
           nodeObj.type = 'glimmer_raw';
@@ -91,19 +134,30 @@ export function buildCompiler(options) {
         return 'skip';
       }
 
-      if (nodeObj.type === 'text' || nodeObj.type === 'raw') {
-        // definitively not the better way, but this is supposed to detect "glimmer" nodes
-        if (
-          'value' in nodeObj &&
-          typeof nodeObj.value === 'string' &&
-          nodeObj.value.match(/<\/?[_A-Z:0-9].*>/g)
-        ) {
+      // Check for nodes with values (text, raw, html, etc.)
+      if ('value' in nodeObj && typeof nodeObj.value === 'string') {
+        // Check if this raw node was marked as a PascalCase component in remark phase
+        const nodeData = /** @type {Record<string, unknown> | undefined} */ (
+          typeof node === 'object' && node !== null && 'data' in node ? node.data : undefined
+        );
+        
+        if (nodeData?.isPascalCaseComponent) {
           nodeObj.type = 'glimmer_raw';
+          return 'skip';
         }
 
-        nodeObj.type = 'glimmer_raw';
+        // Match raw PascalCase components in text that haven't been escaped yet
+        // Pattern: <PascalCaseName followed by whitespace, > or @
+        if (
+          (nodeObj.type === 'text' || nodeObj.type === 'raw' || nodeObj.type === 'html') &&
+          nodeObj.value.match(/<[A-Z][a-zA-Z0-9]*(\s|>|@)/)
+        ) {
+          nodeObj.type = 'glimmer_raw';
+          return 'skip';
+        }
 
-        return 'skip';
+        // Let normal nodes be processed for escaping
+        return;
       }
 
       return;
