@@ -19,15 +19,27 @@ export async function parseMarkdown(input, options) {
   let templateOnly = processed.toString();
 
   // Unescape PascalCase components that had only the opening < HTML-entity escaped
-  // Pattern: &#x3C;ComponentName ... / > (only < is escaped as &#x3C;)
-  templateOnly = templateOnly.replace(/&#x3C;([A-Z][a-zA-Z0-9]*\s[^<]*?)>/g, (match, content) => {
-    // Only unescape if it contains @ (attribute) indicating a component
-    if (content.includes('@')) {
-      return `<${content}>`;
-    }
+  // BUT only outside of <pre><code> blocks where escaping should be preserved
+  // (inline <code> tags should have components unescaped)
+  // Split by <pre><code>...</code></pre> to exclude only code blocks
+  const parts = templateOnly.split(/(<pre[^>]*>.*?<\/pre>)/is);
 
-    return match;
-  });
+  for (let i = 0; i < parts.length; i++) {
+    // Only process parts that are NOT pre blocks (odd indices are pre blocks)
+    if (i % 2 === 0) {
+      // Pattern: &#x3C;ComponentName ... / > (only < is escaped as &#x3C;)
+      parts[i] = parts[i].replace(/&#x3C;([A-Z][a-zA-Z0-9]*\s[^<]*?)>/g, (match, content) => {
+        // Only unescape if it contains @ (attribute) indicating a component
+        if (content.includes('@')) {
+          return `<${content}>`;
+        }
+
+        return match;
+      });
+    }
+  }
+
+  templateOnly = parts.join('');
 
   return { text: templateOnly, codeBlocks: liveCode };
 }

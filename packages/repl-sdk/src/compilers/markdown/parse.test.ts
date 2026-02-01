@@ -54,7 +54,9 @@ describe('default features', () => {
     });
 
     expect(result.codeBlocks).toMatchInlineSnapshot(`[]`);
-    expect(result.text).toMatchInlineSnapshot(`"<p><APIDocs @package="ember-primitives" @name="Avatar" /></p>"`);
+    expect(result.text).toMatchInlineSnapshot(
+      `"<p><APIDocs @package="ember-primitives" @name="Avatar" /></p>"`
+    );
   });
 
   it('allows multi-line-component invocation', async () => {
@@ -73,6 +75,33 @@ describe('default features', () => {
       @name="Avatar"
       /></p>"
     `);
+  });
+
+  it('allows components inside code blocks', async () => {
+    const result = await parseMarkdown(
+      [
+        '# Hello',
+        '',
+        '<code>',
+        '  <Shadowed @includeStyles={{true}}>',
+        '     the shadow realm',
+        '  </Shadowed>',
+        '</code>',
+      ].join('\n'),
+      {
+        ...defaults,
+      }
+    );
+
+    expect(result.codeBlocks).toMatchInlineSnapshot(`[]`);
+    expect(result.text).toMatchInlineSnapshot(`
+        "<h1 id="hello">Hello</h1>
+        <code>
+          <Shadowed @includeStyles={{true}}>
+             the shadow realm
+          </Shadowed>
+        </code>"
+      `);
   });
 
   describe('does not', () => {
@@ -118,7 +147,7 @@ describe('default features', () => {
         <div class="repl-sdk__snippet" data-repl-output><pre><code class="language-gjs">import { Shadowed, PortalTargets } from 'ember-primitives';
 
         &#x3C;template>
-          &#3C;Shadowed @includeStyles=\\{{true}}>
+          &#x3C;Shadowed @includeStyles=\\{{true}}>
              the shadow realm
           &#x3C;/Shadowed>
         &#x3C;/template>
