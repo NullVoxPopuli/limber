@@ -18,6 +18,7 @@ packages:
   - "./packages/app-support/*"
   - "./packages/app-support/*/addon"
   - "./packages/app-support/*/test-app"
+  - "./packages/no-compat/*"
   - "./packages/no-compat/*/*"
   ####################################
   #
