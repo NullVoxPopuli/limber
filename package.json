@@ -49,6 +49,13 @@
     "_repl-sdk": "workspace:*",
     "_ember-repl": "workspace:*",
     "overrides": {
+      "ember-tracked-storage-polyfill": "workspace:*",
+      "ember-cli-htmlbars": "workspace:*",
+      "broccoli-funnel": "workspace:*",
+      "broccoli-file-creator": "workspace:*",
+      "broccoli-merge-trees": "workspace:*",
+      "broccoli-persistent-filter": "workspace:*",
+      "broccoli-plugin": "workspace:*",
       "@embroider/addon-shim": "workspace:*",
       "ember-cli-babel": "workspace:*",
       "@glint/template": "1.7.4",
