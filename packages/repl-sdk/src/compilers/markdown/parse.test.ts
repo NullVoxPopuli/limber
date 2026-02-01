@@ -1,8 +1,9 @@
 import rehypeShiki from '@shikijs/rehype';
 import { stripIndent } from 'common-tags';
 import { visit } from 'unist-util-visit';
-import { describe, expect as errorExpect, it } from 'vitest';
+import { beforeEach, describe, expect as errorExpect, it } from 'vitest';
 
+import { resetIdCounter } from '../../utils.js';
 import { parseMarkdown } from './parse.js';
 import { buildCodeFenceMetaUtils } from './utils.js';
 
@@ -40,6 +41,10 @@ const defaults = {
   }),
   ALLOWED_FORMATS,
 };
+
+beforeEach(() => {
+  resetIdCounter();
+});
 
 describe('options', () => {
   describe('remarkPlugins', () => {
@@ -306,7 +311,7 @@ describe('options', () => {
 
         expect(result.text).toMatchInlineSnapshot(`
           "<h1 id="title">Title</h1>
-          <div id="repl_2" class="repl-sdk__demo"></div>"
+          <div id="repl_1" class="repl-sdk__demo"></div>"
         `);
 
         assertCodeBlocks(result.codeBlocks, [
@@ -384,7 +389,7 @@ describe('options', () => {
 
         expect(result.text).toMatchInlineSnapshot(`
           "<h1 id="title">Title</h1>
-          <div id="repl_3" class="repl-sdk__demo"></div>
+          <div id="repl_1" class="repl-sdk__demo"></div>
           <Demo />"
         `);
 
@@ -413,7 +418,7 @@ describe('options', () => {
 
         expect(result.text).toMatchInlineSnapshot(`
           "<p>hi</p>
-          <div id="repl_4" class="repl-sdk__demo"></div>
+          <div id="repl_1" class="repl-sdk__demo"></div>
           <div class="repl-sdk__snippet" data-repl-output><pre><code class="language-gjs">import Component from '@glimmer/component';
           import { on } from '@ember/modifier';
 
