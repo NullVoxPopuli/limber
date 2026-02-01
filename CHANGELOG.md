@@ -1,5 +1,33 @@
 # Changelog
 
+## Release (2026-02-01)
+
+* ember-repl 7.3.2 (patch)
+* limber-ui 4.1.1 (patch)
+* repl-sdk 1.2.0 (minor)
+* codemirror-lang-glimdown 2.0.3 (patch)
+* @glimdown/lezer 2.0.3 (patch)
+* codemirror-lang-glimmer-js 2.0.3 (patch)
+* @glimdown/lezer-glimmer-expression 2.0.3 (patch)
+* codemirror-lang-glimmer-ts 2.0.3 (patch)
+* codemirror-lang-glimmer 2.0.3 (patch)
+* lezer-glimmer 2.0.3 (patch)
+
+#### :rocket: Enhancement
+* `repl-sdk`
+  * [#2058](https://github.com/NullVoxPopuli/limber/pull/2058) Support component invocation in gmd ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* `repl-sdk`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`, `lezer-glimmer`
+  * [#2057](https://github.com/NullVoxPopuli/limber/pull/2057) Widen deps ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :house: Internal
+* `ember-repl`, `limber-ui`
+  * [#2054](https://github.com/NullVoxPopuli/limber/pull/2054) Update glint ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2026-01-16)
 
 * ember-repl 7.3.1 (patch)
