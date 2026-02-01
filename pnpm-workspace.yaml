@@ -1,36 +1,38 @@
 packages:
-  - './dev'
+  - "./dev"
   ####################################
   #
-  # Apps 
+  # Apps
   #
   ####################################
-  - './apps/*'
+  - "./apps/*"
   ####################################
   #
-  # Libraries, Addons, Test Apps 
+  # Libraries, Addons, Test Apps
   #
   ####################################
-  - './packages/*'
-  - './packages/*/addon'
-  - './packages/*/test-app'
-  - './packages/repl-sdk/tests-self'
-  - './packages/app-support/*'
-  - './packages/app-support/*/addon'
-  - './packages/app-support/*/test-app'
+  - "./packages/*"
+  - "./packages/*/addon"
+  - "./packages/*/test-app"
+  - "./packages/repl-sdk/tests-self"
+  - "./packages/app-support/*"
+  - "./packages/app-support/*/addon"
+  - "./packages/app-support/*/test-app"
+  - "./packages/no-compat/*"
+  - "./packages/no-compat/*/*"
   ####################################
   #
-  # Codemirror + Lezer 
+  # Codemirror + Lezer
   #
   ####################################
-  - './packages/syntax/*'
-  # packages/syntax / { syntax name } / { codemirror, lezer } 
-  - './packages/syntax/*/*'
-  - './packages/syntax/*/*/dev'
-  - './packages/syntax/*/*/tests'
+  - "./packages/syntax/*"
+  # packages/syntax / { syntax name } / { codemirror, lezer }
+  - "./packages/syntax/*/*"
+  - "./packages/syntax/*/*/dev"
+  - "./packages/syntax/*/*/tests"
   ####################################
   #
   # Experiments
   #
   ####################################
-  - './spikes/**'
+  - "./spikes/**"
