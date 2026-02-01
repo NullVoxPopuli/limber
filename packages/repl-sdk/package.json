@@ -6,6 +6,10 @@
     ".": {
       "types": "./src/index.d.ts",
       "default": "./src/index.js"
+    },
+    "./markdown/parse": {
+      "types": "./src/compilers/markdown/parser.d.ts",
+      "default": "./src/compilers/markdown/parser.js"
     }
   },
   "ember-addon": {
