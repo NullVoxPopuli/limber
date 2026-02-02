@@ -1,5 +1,5 @@
-import { describe, test, expect } from 'vitest';
 import { parseMarkdown } from 'repl-sdk/markdown/parse';
+import { describe, expect, test } from 'vitest';
 
 describe('markdown/parse', () => {
   test('it works', async () => {

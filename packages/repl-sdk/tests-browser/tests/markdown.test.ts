@@ -1,7 +1,7 @@
 import { stripIndent } from 'common-tags';
 import { Compiler } from 'repl-sdk';
 import { visit } from 'unist-util-visit';
-import { beforeEach,describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, test } from 'vitest';
 
 import { allKnownModules, markdownModules, vueModules } from './setup.ts';
 
