@@ -7,7 +7,7 @@ describe('markdown/parse', () => {
         
     });
 
-    expect(result.text).toMatchInlineSnapshot();
-    expect(result.codeBlocks).toMatchInlineSnapshot();
+    expect(result.text).toMatchInlineSnapshot(`"<h1 id="hello">hello</h1>"`);
+    expect(result.codeBlocks).toMatchInlineSnapshot(`[]`);
   });
 });
