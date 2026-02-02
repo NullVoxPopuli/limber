@@ -1,7 +1,7 @@
 
 {
   "extends": "@tsconfig/ember/tsconfig.json",
-  "include": ["src/**/*", "unpublished-development-types/**/*"],
+  "include": ["src/**/*", "unpublished-development-types/**/*", "tests-node"],
   "compilerOptions": {
     "checkJs": true,
     "allowJs": true,

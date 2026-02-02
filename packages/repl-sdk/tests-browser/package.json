@@ -1,5 +1,5 @@
 {
-  "name": "@nullvoxpopuli/repl-sdk-tests-self",
+  "name": "@nullvoxpopuli/repl-sdk-tests-browser",
   "private": true,
   "type": "module",
   "scripts": {

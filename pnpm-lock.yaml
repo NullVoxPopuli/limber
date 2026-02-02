@@ -1414,7 +1414,7 @@ importers:
         specifier: ^4.0.18
         version: 4.0.18(2fb7231524fd0d81c778dfaea2cacb2a)
 
-  packages/repl-sdk/tests-self:
+  packages/repl-sdk/tests-browser:
     dependencies:
       common-tags:
         specifier: ^1.8.2
@@ -1446,13 +1446,13 @@ importers:
         version: 4.0.4
       '@vitest/browser':
         specifier: ^3.2.4
-        version: 3.2.4(d1c5bd0c5a022d498b00054572fe84f7)
+        version: 3.2.4(e36075cbdbf857d4d5f621cf7675353a)
       '@vitest/browser-playwright':
         specifier: ^4.0.18
-        version: 4.0.18(f5125ff1c24563d1e4397553d8dab1dc)
+        version: 4.0.18(17fcbfb56c739f66af16f6d1f2d0ba6b)
       '@vitest/browser-webdriverio':
         specifier: ^4.0.18
-        version: 4.0.18(a8c8bccbaa4ce1e902ce96064838675d)
+        version: 4.0.18(4489d74c59459072e2c435dc84e2bd49)
       '@vitest/ui':
         specifier: 3.2.4
         version: 3.2.4(vitest@4.0.18)
@@ -1467,7 +1467,7 @@ importers:
         version: 11.12.2
       playwright:
         specifier: ^1.54.0
-        version: 1.58.0
+        version: 1.58.1
       react:
         specifier: ^19.1.0
         version: 19.2.4
@@ -1512,7 +1512,7 @@ importers:
         version: 3.5.27(typescript@5.9.3)
       webdriverio:
         specifier: ^9.17.0
-        version: 9.23.2
+        version: 9.23.3
 
   packages/syntax/-infra:
     dependencies:
@@ -5183,27 +5183,27 @@ packages:
   '@vue/shared@3.5.27':
     resolution: {integrity: sha512-dXr/3CgqXsJkZ0n9F3I4elY8wM9jMJpP3pvRG52r6m0tu/MsAFIe6JpXVGeNMd/D9F4hQynWT8Rfuj0bdm9kFQ==}
 
-  '@wdio/config@9.23.2':
-    resolution: {integrity: sha512-19Z+AIQ1NUpr6ncTumjSthm6A7c3DbaGTp+VCdcyN+vHYOK4WsWIomSk+uSbFosYFQVGRjCaHaeGSnC8GNPGYQ==}
+  '@wdio/config@9.23.3':
+    resolution: {integrity: sha512-tQCT1R6R3hdib7Qb+82Dxgn/sB+CiR8+GS4zyJh5vU0dzLGeYsCo2B5W89VLItvRjveTmsmh8NOQGV2KH0FHTQ==}
     engines: {node: '>=18.20.0'}
 
   '@wdio/logger@9.18.0':
     resolution: {integrity: sha512-HdzDrRs+ywAqbXGKqe1i/bLtCv47plz4TvsHFH3j729OooT5VH38ctFn5aLXgECmiAKDkmH/A6kOq2Zh5DIxww==}
     engines: {node: '>=18.20.0'}
 
-  '@wdio/protocols@9.23.2':
-    resolution: {integrity: sha512-pmCYOYI2N89QCC8IaiHwaWyP0mR8T1iKkEGpoTq2XVihp7VK/lfPvieyeZT5/e28MadYLJsDQ603pbu5J1NRDg==}
+  '@wdio/protocols@9.23.3':
+    resolution: {integrity: sha512-QfA3Gfl9/3QRX1FnH7x2+uZrgpkwYcksgk1bxGLzl/E0Qefp3BkhgHAfSB1+iKsiYIw9iFOLVx+x+zh0F4BSeg==}
 
   '@wdio/repl@9.16.2':
     resolution: {integrity: sha512-FLTF0VL6+o5BSTCO7yLSXocm3kUnu31zYwzdsz4n9s5YWt83sCtzGZlZpt7TaTzb3jVUfxuHNQDTb8UMkCu0lQ==}
     engines: {node: '>=18.20.0'}
 
-  '@wdio/types@9.23.2':
-    resolution: {integrity: sha512-ryfrERGsNp+aCcrTE1rFU6cbmDj8GHZ04R9k52KNt2u1a6bv3Eh5A/cUA0hXuMdEUfsc8ePLYdwQyOLFydZ0ig==}
+  '@wdio/types@9.23.3':
+    resolution: {integrity: sha512-Ufjh06DAD7cGTMORUkq5MTZLw1nAgBSr2y8OyiNNuAfPGCwHEU3EwEfhG/y0V7S7xT5pBxliqWi7AjRrCgGcIA==}
     engines: {node: '>=18.20.0'}
 
-  '@wdio/utils@9.23.2':
-    resolution: {integrity: sha512-+QfgXUWeA940AXT5l5UlrBKoHBk9GLSQE3BA+7ra1zWuFvv6SHG6M2mwplcPlOlymJMqXy8e7ZgLEoLkXuvC1Q==}
+  '@wdio/utils@9.23.3':
+    resolution: {integrity: sha512-LO/cTpOcb3r49psjmWTxjFduHUMHDOhVfSzL1gfBCS5cGv6h3hAWOYw/94OrxLn1SIOgZu/hyLwf3SWeZB529g==}
     engines: {node: '>=18.20.0'}
 
   '@wessberg/stringutil@1.0.19':
@@ -9538,13 +9538,13 @@ packages:
     resolution: {integrity: sha512-nDywThFk1i4BQK4twPQ6TA4RT8bDY96yeuCVBWL3ePARCiEKDRSrNGbFIgUJpLp+XeIR65v8ra7WuJOFUBtkMA==}
     engines: {node: '>=8'}
 
-  playwright-core@1.58.0:
-    resolution: {integrity: sha512-aaoB1RWrdNi3//rOeKuMiS65UCcgOVljU46At6eFcOFPFHWtd2weHRRow6z/n+Lec0Lvu0k9ZPKJSjPugikirw==}
+  playwright-core@1.58.1:
+    resolution: {integrity: sha512-bcWzOaTxcW+VOOGBCQgnaKToLJ65d6AqfLVKEWvexyS3AS6rbXl+xdpYRMGSRBClPvyj44njOWoxjNdL/H9UNg==}
     engines: {node: '>=18'}
     hasBin: true
 
-  playwright@1.58.0:
-    resolution: {integrity: sha512-2SVA0sbPktiIY/MCOPX8e86ehA/e+tDNq+e5Y8qjKYti2Z/JG7xnronT/TXTIkKbYGWlCbuucZ6dziEgkoEjQQ==}
+  playwright@1.58.1:
+    resolution: {integrity: sha512-+2uTZHxSCcxjvGc5C891LrS1/NlxglGxzrC4seZiVjcYVQfUa87wBL6rTDqzGjuoWNjnBzRqKmF6zRYGMvQUaQ==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -11010,8 +11010,8 @@ packages:
     resolution: {integrity: sha512-VfQPToRA5FZs/qJxLIinmU59u0r7LXqoJkCzinq3ckNJp3vKEh7jTWN589YQ5+aoAC/TGRLyJLCPKcLQbM8r9g==}
     engines: {node: '>=18.17'}
 
-  undici@7.19.2:
-    resolution: {integrity: sha512-4VQSpGEGsWzk0VYxyB/wVX/Q7qf9t5znLRgs0dzszr9w9Fej/8RVNQ+S20vdXSAyra/bJ7ZQfGv6ZMj7UEbzSg==}
+  undici@7.20.0:
+    resolution: {integrity: sha512-MJZrkjyd7DeC+uPZh+5/YaMDxFiiEEaDgbUSVMXayofAkDWF1088CDo+2RPg7B1BuS1qf1vgNE7xqwPxE0DuSQ==}
     engines: {node: '>=20.18.1'}
 
   unicode-canonical-property-names-ecmascript@2.0.1:
@@ -11465,12 +11465,12 @@ packages:
   web-namespaces@2.0.1:
     resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==}
 
-  webdriver@9.23.2:
-    resolution: {integrity: sha512-HZy3eydZbmex0pbyLwHaDsAyZ+S+V4XQTdGK/nAOi4uPa74U6yT9vXqtb+3B+5/LDM7L8kTD6Z3b1y4gB4pmTw==}
+  webdriver@9.23.3:
+    resolution: {integrity: sha512-8FdXOhzkxqDI6F1dyIsQONhKLDZ9HPSEwNBnH3bD1cHnj/6nVvyYrUtDPo/+J324BuwOa1IVTH3m8mb3B2hTlA==}
     engines: {node: '>=18.20.0'}
 
-  webdriverio@9.23.2:
-    resolution: {integrity: sha512-VjfTw1bRJdBrzjoCu7BGThxn1JK2V7mAGvxibaBrCNIayPPQjLhVDNJPOVEiR7txM6zmOUWxhkCDxHjhMYirfQ==}
+  webdriverio@9.23.3:
+    resolution: {integrity: sha512-1dhMsBx/GLHJsDLhg/xuEQ48JZPrbldz7qdFT+MXQZADj9CJ4bJywWtVBME648MmVMfgDvLc5g2ThGIOupSLvQ==}
     engines: {node: '>=18.20.0'}
     peerDependencies:
       puppeteer-core: '>=22.x || <=24.x'
@@ -15078,11 +15078,11 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
     optional: true
 
-  '@vitest/browser-playwright@4.0.18(f5125ff1c24563d1e4397553d8dab1dc)':
+  '@vitest/browser-playwright@4.0.18(17fcbfb56c739f66af16f6d1f2d0ba6b)':
     dependencies:
       '@vitest/browser': 4.0.18(961e82ee0059a79a6957f9924a595445)
       '@vitest/mocker': 4.0.18(e6b63113a1a5fac17417c17fd166712e)
-      playwright: 1.58.0
+      playwright: 1.58.1
       tinyrainbow: 3.0.3
       vitest: 4.0.18(2fb7231524fd0d81c778dfaea2cacb2a)
     transitivePeerDependencies:
@@ -15091,18 +15091,18 @@ snapshots:
       - utf-8-validate
       - vite
 
-  '@vitest/browser-webdriverio@4.0.18(a8c8bccbaa4ce1e902ce96064838675d)':
+  '@vitest/browser-webdriverio@4.0.18(4489d74c59459072e2c435dc84e2bd49)':
     dependencies:
       '@vitest/browser': 4.0.18(961e82ee0059a79a6957f9924a595445)
       vitest: 4.0.18(2fb7231524fd0d81c778dfaea2cacb2a)
-      webdriverio: 9.23.2
+      webdriverio: 9.23.3
     transitivePeerDependencies:
       - bufferutil
       - msw
       - utf-8-validate
       - vite
 
-  '@vitest/browser@3.2.4(0f78285e4d0f7251cfe3a6433a95d02f)':
+  '@vitest/browser@3.2.4(2156ec455d4c7d13aea6becd2e0c4891)':
     dependencies:
       '@testing-library/dom': 10.4.1
       '@testing-library/user-event': 14.6.1(@testing-library/dom@10.4.1)
@@ -15114,8 +15114,8 @@ snapshots:
       vitest: 3.2.4(43fc60b72221c23537f26de37a473286)
       ws: 8.19.0
     optionalDependencies:
-      playwright: 1.58.0
-      webdriverio: 9.23.2
+      playwright: 1.58.1
+      webdriverio: 9.23.3
     transitivePeerDependencies:
       - bufferutil
       - msw
@@ -15123,7 +15123,7 @@ snapshots:
       - vite
     optional: true
 
-  '@vitest/browser@3.2.4(d1c5bd0c5a022d498b00054572fe84f7)':
+  '@vitest/browser@3.2.4(e36075cbdbf857d4d5f621cf7675353a)':
     dependencies:
       '@testing-library/dom': 10.4.1
       '@testing-library/user-event': 14.6.1(@testing-library/dom@10.4.1)
@@ -15135,8 +15135,8 @@ snapshots:
       vitest: 4.0.18(2fb7231524fd0d81c778dfaea2cacb2a)
       ws: 8.19.0
     optionalDependencies:
-      playwright: 1.58.0
-      webdriverio: 9.23.2
+      playwright: 1.58.1
+      webdriverio: 9.23.3
     transitivePeerDependencies:
       - bufferutil
       - msw
@@ -15387,14 +15387,15 @@ snapshots:
 
   '@vue/shared@3.5.27': {}
 
-  '@wdio/config@9.23.2':
+  '@wdio/config@9.23.3':
     dependencies:
       '@wdio/logger': 9.18.0
-      '@wdio/types': 9.23.2
-      '@wdio/utils': 9.23.2
+      '@wdio/types': 9.23.3
+      '@wdio/utils': 9.23.3
       deepmerge-ts: 7.1.5
       glob: 10.5.0
       import-meta-resolve: 4.2.0
+      jiti: 2.6.1
     transitivePeerDependencies:
       - bare-abort-controller
       - bare-buffer
@@ -15409,21 +15410,21 @@ snapshots:
       safe-regex2: 5.0.0
       strip-ansi: 7.1.2
 
-  '@wdio/protocols@9.23.2': {}
+  '@wdio/protocols@9.23.3': {}
 
   '@wdio/repl@9.16.2':
     dependencies:
       '@types/node': 20.19.30
 
-  '@wdio/types@9.23.2':
+  '@wdio/types@9.23.3':
     dependencies:
       '@types/node': 20.19.30
 
-  '@wdio/utils@9.23.2':
+  '@wdio/utils@9.23.3':
     dependencies:
       '@puppeteer/browsers': 2.11.2
       '@wdio/logger': 9.18.0
-      '@wdio/types': 9.23.2
+      '@wdio/types': 9.23.3
       decamelize: 6.0.1
       deepmerge-ts: 7.1.5
       edgedriver: 6.3.0
@@ -16379,7 +16380,7 @@ snapshots:
       parse5: 7.3.0
       parse5-htmlparser2-tree-adapter: 7.1.0
       parse5-parser-stream: 7.1.2
-      undici: 7.19.2
+      undici: 7.20.0
       whatwg-mimetype: 4.0.0
 
   chevrotain-allstar@0.3.1(chevrotain@11.0.3):
@@ -20757,11 +20758,11 @@ snapshots:
     dependencies:
       find-up: 3.0.0
 
-  playwright-core@1.58.0: {}
+  playwright-core@1.58.1: {}
 
-  playwright@1.58.0:
+  playwright@1.58.1:
     dependencies:
-      playwright-core: 1.58.0
+      playwright-core: 1.58.1
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -22580,7 +22581,7 @@ snapshots:
 
   undici@6.23.0: {}
 
-  undici@7.19.2: {}
+  undici@7.20.0: {}
 
   unicode-canonical-property-names-ecmascript@2.0.1: {}
 
@@ -22895,7 +22896,7 @@ snapshots:
     optionalDependencies:
       '@types/debug': 4.1.12
       '@types/node': 24.10.9
-      '@vitest/browser': 3.2.4(0f78285e4d0f7251cfe3a6433a95d02f)
+      '@vitest/browser': 3.2.4(2156ec455d4c7d13aea6becd2e0c4891)
       '@vitest/ui': 3.2.4(vitest@3.2.4)
       jsdom: 26.1.0
     transitivePeerDependencies:
@@ -22936,8 +22937,8 @@ snapshots:
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 24.10.9
-      '@vitest/browser-playwright': 4.0.18(f5125ff1c24563d1e4397553d8dab1dc)
-      '@vitest/browser-webdriverio': 4.0.18(a8c8bccbaa4ce1e902ce96064838675d)
+      '@vitest/browser-playwright': 4.0.18(17fcbfb56c739f66af16f6d1f2d0ba6b)
+      '@vitest/browser-webdriverio': 4.0.18(4489d74c59459072e2c435dc84e2bd49)
       '@vitest/ui': 3.2.4(vitest@4.0.18)
       jsdom: 26.1.0
     transitivePeerDependencies:
@@ -23075,15 +23076,15 @@ snapshots:
 
   web-namespaces@2.0.1: {}
 
-  webdriver@9.23.2:
+  webdriver@9.23.3:
     dependencies:
       '@types/node': 20.19.30
       '@types/ws': 8.18.1
-      '@wdio/config': 9.23.2
+      '@wdio/config': 9.23.3
       '@wdio/logger': 9.18.0
-      '@wdio/protocols': 9.23.2
-      '@wdio/types': 9.23.2
-      '@wdio/utils': 9.23.2
+      '@wdio/protocols': 9.23.3
+      '@wdio/types': 9.23.3
+      '@wdio/utils': 9.23.3
       deepmerge-ts: 7.1.5
       https-proxy-agent: 7.0.6
       undici: 6.23.0
@@ -23096,16 +23097,16 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  webdriverio@9.23.2:
+  webdriverio@9.23.3:
     dependencies:
       '@types/node': 20.19.30
       '@types/sinonjs__fake-timers': 8.1.5
-      '@wdio/config': 9.23.2
+      '@wdio/config': 9.23.3
       '@wdio/logger': 9.18.0
-      '@wdio/protocols': 9.23.2
+      '@wdio/protocols': 9.23.3
       '@wdio/repl': 9.16.2
-      '@wdio/types': 9.23.2
-      '@wdio/utils': 9.23.2
+      '@wdio/types': 9.23.3
+      '@wdio/utils': 9.23.3
       archiver: 7.0.1
       aria-query: 5.3.2
       cheerio: 1.2.0
@@ -23122,7 +23123,7 @@ snapshots:
       rgb2hex: 0.2.5
       serialize-error: 12.0.0
       urlpattern-polyfill: 10.1.0
-      webdriver: 9.23.2
+      webdriver: 9.23.3
     transitivePeerDependencies:
       - bare-abort-controller
       - bare-buffer

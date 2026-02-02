@@ -1,5 +1,5 @@
-import { defineConfig } from 'vitest/config';
 import { webdriverio } from '@vitest/browser-webdriverio';
+import { defineConfig } from 'vitest/config';
 // import { playwright } from '@vitest/browser-playwright';
 
 export default defineConfig({
