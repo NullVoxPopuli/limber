@@ -2,6 +2,18 @@
 
 ## Release (2026-02-02)
 
+* ember-repl 7.3.4 (patch)
+* repl-sdk 1.4.0 (minor)
+
+#### :rocket: Enhancement
+* `repl-sdk`
+  * [#2065](https://github.com/NullVoxPopuli/limber/pull/2065) Expose buildCompiler ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
+## Release (2026-02-02)
+
 * ember-repl 7.3.3 (patch)
 * repl-sdk 1.3.0 (minor)
 
