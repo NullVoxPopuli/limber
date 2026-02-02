@@ -14,7 +14,7 @@ packages:
   - './packages/*'
   - './packages/*/addon'
   - './packages/*/test-app'
-  - './packages/repl-sdk/tests-self'
+  - './packages/repl-sdk/tests-browser'
   - './packages/app-support/*'
   - './packages/app-support/*/addon'
   - './packages/app-support/*/test-app'

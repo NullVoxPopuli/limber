@@ -1,10 +1,12 @@
-import type { Root } from 'mdast';
-import { Compiler } from 'repl-sdk';
 import { stripIndent } from 'common-tags';
-import { describe, expect, test, beforeEach } from 'vitest';
-import { allKnownModules, markdownModules, vueModules } from './setup.ts';
-import type { Plugin } from 'unified';
+import { Compiler } from 'repl-sdk';
 import { visit } from 'unist-util-visit';
+import { beforeEach,describe, expect, test } from 'vitest';
+
+import { allKnownModules, markdownModules, vueModules } from './setup.ts';
+
+import type { Root } from 'mdast';
+import type { Plugin } from 'unified';
 
 function escapeFence(code: string) {
   return code.replace(/`/g, '\\`');
@@ -258,6 +260,7 @@ graph TD;
                 `,
               };
             }
+
             return child;
           });
         };

@@ -1,5 +1,6 @@
 import { Compiler } from 'repl-sdk';
 import { describe, expect, test } from 'vitest';
+
 import { vueModules } from './setup.ts';
 
 describe('vue', () => {
