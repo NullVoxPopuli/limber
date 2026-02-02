@@ -16,6 +16,7 @@ export interface PublicOptions {
   };
   remarkPlugins?: unknown[];
   rehypePlugins?: unknown[];
+  compiler?: { process: (text: string) => Promise<{ data: { liveCode: Array<string> } }> };
 }
 
 export type InternalOptions = PublicOptions & LiveCodeExtractionOptions;

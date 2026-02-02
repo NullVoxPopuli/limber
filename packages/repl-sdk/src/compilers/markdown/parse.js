@@ -14,13 +14,15 @@
 
 import { buildCompiler } from './build-compiler.js';
 
+export { buildCompiler } from './build-compiler.js';
+
 /**
  * @param {string} input
  * @param {import('./types').InternalOptions} options
  * @returns {Promise<ParseResult>}
  */
 export async function parseMarkdown(input, options) {
-  const markdownCompiler = buildCompiler(options);
+  const markdownCompiler = options?.compiler ?? buildCompiler(options);
   const processed = await markdownCompiler.process(input);
   const liveCode = /** @type {CodeBlock[]} */ (processed.data.liveCode || []);
   // @ts-ignore - processed is typed as unknown due to unified processor complexity
