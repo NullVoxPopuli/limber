@@ -122,8 +122,8 @@ importers:
         specifier: ^3.3.1
         version: 3.3.1
       ember-container-query:
-        specifier: 6.1.5
-        version: 6.1.5(d13c7235bafdcff16808d6d16e570fab)
+        specifier: 6.1.6
+        version: 6.1.6(d13c7235bafdcff16808d6d16e570fab)
       ember-deep-tracked:
         specifier: ^2.0.1
         version: 2.0.1(@glint/template@1.7.4)
@@ -6851,8 +6851,8 @@ packages:
     resolution: {integrity: sha512-BtkjulweiXo9c3yVWrtexw2dTmBrvavD/xixNC6TKOBdrixUwU+6nuOO9dufDWsMxoid7MvtmDpzc9+mE8PdaA==}
     engines: {node: 10.* || >= 12.*}
 
-  ember-container-query@6.1.5:
-    resolution: {integrity: sha512-FS/XmvG5WfZ0YTVSM38uZB0jM/7/0mJuy1KbW2sfOy/XId56zAr6h3sNXJMxZ+L/rYT8/ul4Df+H3vKbw0XdGw==}
+  ember-container-query@6.1.6:
+    resolution: {integrity: sha512-4kAxHNqBpQj5Vs91eFlonViTT8st6rX27Z2ld4EuxfU1No9vcRZJUNuxHBL2klMyxlZuI3iSrlHqDE+P722WHQ==}
     engines: {node: 20.* || >= 22}
 
   ember-deep-tracked@2.0.1:
@@ -17312,13 +17312,13 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-container-query@6.1.5(d13c7235bafdcff16808d6d16e570fab):
+  ember-container-query@6.1.6(d13c7235bafdcff16808d6d16e570fab):
     dependencies:
       '@embroider/addon-shim': 1.10.2
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-element-helper: 0.8.8
       ember-modifier: 4.2.2(@babel/core@7.29.0)
-      ember-primitives: 0.48.2(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
+      ember-primitives: 0.53.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
     transitivePeerDependencies:
       - '@babel/core'
       - '@ember/test-helpers'
