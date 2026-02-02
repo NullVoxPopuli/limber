@@ -1,5 +1,17 @@
 # Changelog
 
+## Release (2026-02-02)
+
+* ember-repl 7.3.3 (patch)
+* repl-sdk 1.3.0 (minor)
+
+#### :rocket: Enhancement
+* `repl-sdk`
+  * [#2060](https://github.com/NullVoxPopuli/limber/pull/2060) expose the markdown compiler ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2026-02-01)
 
 * ember-repl 7.3.2 (patch)
