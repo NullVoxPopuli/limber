@@ -5,10 +5,7 @@
  */
 const { buildMacros } = require('@embroider/macros/babel');
 
-const {
-  babelCompatSupport,
-  templateCompatSupport,
-} = require('@embroider/compat/babel');
+const { babelCompatSupport, templateCompatSupport } = require('@embroider/compat/babel');
 
 const macros = buildMacros();
 
@@ -28,9 +25,7 @@ module.exports = {
     [
       'babel-plugin-ember-template-compilation',
       {
-        transforms: [
-          ...(isCompat ? templateCompatSupport() : macros.templateMacros),
-        ],
+        transforms: [...(isCompat ? templateCompatSupport() : macros.templateMacros)],
       },
     ],
     [
