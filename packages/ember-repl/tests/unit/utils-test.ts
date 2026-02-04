@@ -12,8 +12,7 @@ module('nameFor()', function () {
     const length = randomInRange(0, 10000);
 
     let result = '';
-    const characters =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;
 
     for (let i = 0; i < length; i++) {
@@ -36,10 +35,7 @@ module('invocationOf()', function (hooks) {
   setupTest(hooks);
 
   test('it works', function (assert) {
-    assert.throws(
-      () => invocationOf(''),
-      /You must pass a name to invocationOf. Received: ``/
-    );
+    assert.throws(() => invocationOf(''), /You must pass a name to invocationOf. Received: ``/);
     assert.strictEqual(invocationOf('a'), '<A />');
     assert.strictEqual(invocationOf('a-1'), '<A1 />');
     assert.strictEqual(invocationOf('ab-1'), '<Ab1 />');
