@@ -14,11 +14,9 @@
   "license": "MIT",
   "author": "NullVoxPopuli",
   "files": [
-    "addon-main.cjs",
     "declarations",
     "dist",
-    "src",
-    "config"
+    "src"
   ],
   "scripts": {
     ":vite": "vite --config ./config/vite.config.mjs",
@@ -43,7 +41,6 @@
   "dependencies": {
     "@ember/test-helpers": "^5.4.1",
     "@ember/test-waiters": "^4.1.0",
-    "@embroider/addon-shim": "^1.10.2",
     "codemirror": "^6.0.2",
     "content-tag": "^4.0.0",
     "decorator-transforms": "2.3.1",
@@ -129,8 +126,7 @@
   },
   "ember-addon": {
     "version": 2,
-    "type": "addon",
-    "main": "config/addon-main.cjs"
+    "type": "addon"
   },
   "imports": {
     "#src/*": "./src/*",
@@ -144,8 +140,7 @@
     "./test-support": {
       "types": "./declarations/test-support.d.ts",
       "default": "./dist/test-support.js"
-    },
-    "./addon-main.js": "./config/addon-main.cjs"
+    }
   },
   "typesVersions": {
     "*": {
