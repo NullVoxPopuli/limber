@@ -18,7 +18,7 @@
     "prettier": "^3.7.4",
     "prettier-plugin-ember-template-tag": "2.1.2",
     "typescript": "5.9.3",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.0"
   },
   "scripts": {
     "lint": "pnpm -w exec lint",
