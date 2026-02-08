@@ -82,7 +82,7 @@
     "@types/unist": "^3.0.3",
     "babel-import-util": "^3.0.1",
     "babel-plugin-debug-macros": "^2.0.0",
-    "babel-plugin-ember-template-compilation": "^3.0.1",
+    "babel-plugin-ember-template-compilation": "^4.0.0",
     "change-case": "^5.4.4",
     "common-tags": "^1.8.2",
     "concurrently": "^9.2.1",
