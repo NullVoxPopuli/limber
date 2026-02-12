@@ -1,5 +1,17 @@
 # Changelog
 
+## Release (2026-02-12)
+
+* ember-repl 7.3.5 (patch)
+* repl-sdk 1.4.1 (patch)
+
+#### :bug: Bug Fix
+* `repl-sdk`
+  * [#2071](https://github.com/NullVoxPopuli/limber/pull/2071) Fix closing components elements used in markdown ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2026-02-02)
 
 * ember-repl 7.3.4 (patch)
