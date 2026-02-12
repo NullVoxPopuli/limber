@@ -104,6 +104,33 @@ describe('default features', () => {
       `);
   });
 
+  it('allows components to wrap markdown content', async () => {
+    const result = await parseMarkdown(
+      [
+        `# Title`,
+        '',
+        'Text',
+        '',
+        '<Callout>',
+        '',
+        'Info [text](https://url.url)',
+        '',
+        '</Callout>',
+        '',
+      ].join('\n'),
+      { ...defaults }
+    );
+
+    expect(result.codeBlocks).toMatchInlineSnapshot(`[]`);
+    expect(result.text).toMatchInlineSnapshot(`
+      "<h1 id="title">Title</h1>
+      <p>Text</p>
+      <Callout>
+      <p>Info <a href="https://url.url">text</a></p>
+      </Callout>"
+    `);
+  });
+
   describe('does not', () => {
     it(`mistakenly transform text in codefences (previewed text is transformed though)`, async () => {
       const result = await parseMarkdown(

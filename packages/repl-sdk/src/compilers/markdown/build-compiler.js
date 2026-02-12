@@ -44,8 +44,8 @@ export function buildCompiler(options) {
   // @ts-ignore - unified processor types are complex and change as plugins are added
   compiler = compiler.use(() => (tree) => {
     visit(tree, 'html', function (node) {
-      // Check if this html node is a PascalCase component
-      if (typeof node.value === 'string' && node.value.match(/^<[A-Z][a-zA-Z0-9]/)) {
+      // Check if this html node is a PascalCase component (opening or closing tag)
+      if (typeof node.value === 'string' && node.value.match(/^<\/?[A-Z][a-zA-Z0-9]/)) {
         // Add a marker to the node's data that remarkRehype will preserve
         // remark-rehype with allowDangerousHtml will turn this into a text node,
         // and the data should be preserved
@@ -63,7 +63,7 @@ export function buildCompiler(options) {
           if (
             child.type === 'html' &&
             typeof child.value === 'string' &&
-            child.value.match(/^<[A-Z][a-zA-Z0-9]/)
+            child.value.match(/^<\/?[A-Z][a-zA-Z0-9]/)
           ) {
             if (!child.data) child.data = {};
             child.data.isPascalCaseComponent = true;
@@ -154,7 +154,7 @@ export function buildCompiler(options) {
         // Pattern: <PascalCaseName followed by whitespace, > or @
         if (
           (nodeObj.type === 'text' || nodeObj.type === 'raw' || nodeObj.type === 'html') &&
-          nodeObj.value.match(/<[A-Z][a-zA-Z0-9]*(\s|>|@)/)
+          nodeObj.value.match(/<\/?[A-Z][a-zA-Z0-9]*(\s|>|@)/)
         ) {
           nodeObj.type = 'glimmer_raw';
 
