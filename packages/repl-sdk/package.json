@@ -12,6 +12,11 @@
       "default": "./src/compilers/markdown/parse.js"
     }
   },
+  "repository": {
+    "type": "https",
+    "url": "https://github.com/NullVoxPopuli/limber.git",
+    "directory": "packages/repl-sdk"
+  },
   "ember-addon": {
     "version": 2,
     "type": "addon"
