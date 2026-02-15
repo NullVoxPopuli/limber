@@ -132,10 +132,10 @@ importers:
         version: 1.1.1(286154de80d553ebec2302f29d2d1652)
       ember-modifier:
         specifier: ^4.2.0
-        version: 4.2.2(@babel/core@7.29.0)
+        version: 4.3.0(@babel/core@7.29.0)
       ember-primitives:
         specifier: ^0.53.0
-        version: 0.53.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
+        version: 0.53.0(44ff51b544bac203c070a6d091f048d3)
       ember-repl:
         specifier: workspace:*
         version: link:../../packages/ember-repl
@@ -457,13 +457,13 @@ importers:
         version: 2.0.1(882cf82caec78f226fcbd647b89f3bbe)
       ember-modifier:
         specifier: ^4.2.0
-        version: 4.2.2(@babel/core@7.29.0)
+        version: 4.3.0(@babel/core@7.29.0)
       ember-primitives:
         specifier: ^0.53.0
-        version: 0.53.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
+        version: 0.53.0(44ff51b544bac203c070a6d091f048d3)
       ember-repl:
         specifier: latest
-        version: 7.3.5(e9515a53281cdb161fa7066b1d942d24)
+        version: 7.3.5(a1ab410abf72bd8d9493891ee6305124)
       ember-resources:
         specifier: ^7.0.7
         version: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
@@ -787,10 +787,10 @@ importers:
         version: 2.0.1(882cf82caec78f226fcbd647b89f3bbe)
       ember-modifier:
         specifier: ^4.2.0
-        version: 4.2.2(@babel/core@7.29.0)
+        version: 4.3.0(@babel/core@7.29.0)
       ember-primitives:
         specifier: ^0.51.0
-        version: 0.51.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
+        version: 0.51.0(44ff51b544bac203c070a6d091f048d3)
       ember-resources:
         specifier: ^7.0.7
         version: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
@@ -911,7 +911,7 @@ importers:
         version: 2.3.1(@babel/core@7.29.0)
       ember-primitives:
         specifier: ^0.51.0
-        version: 0.51.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
+        version: 0.51.0(44ff51b544bac203c070a6d091f048d3)
       ember-resolver:
         specifier: ^13.1.0
         version: 13.1.1
@@ -1143,7 +1143,7 @@ importers:
         version: 2.3.1(@babel/core@7.29.0)
       ember-modifier:
         specifier: ^4.2.2
-        version: 4.2.2(@babel/core@7.29.0)
+        version: 4.3.0(@babel/core@7.29.0)
       penpal:
         specifier: ^6.2.2
         version: 6.2.2
@@ -1201,7 +1201,7 @@ importers:
         version: 2.0.1(882cf82caec78f226fcbd647b89f3bbe)
       ember-primitives:
         specifier: ^0.51.0
-        version: 0.51.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
+        version: 0.51.0(44ff51b544bac203c070a6d091f048d3)
       ember-resources:
         specifier: ^7.0.7
         version: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
@@ -6849,8 +6849,8 @@ packages:
     peerDependencies:
       ember-source: '>= 5'
 
-  ember-modifier@4.2.2:
-    resolution: {integrity: sha512-pPYBAGyczX0hedGWQFQOEiL9s45KS9efKxJxUQkMLjQyh+1Uef1mcmAGsdw2KmvNupITkE/nXxmVO1kZ9tt3ag==}
+  ember-modifier@4.3.0:
+    resolution: {integrity: sha512-O0rirSLQbGg0VJ/NqoQ4uN1bh2iAekZC/Ykma+FkjCM2ofrO38u+d8n3+AK6uVWeMJmogGX2KL+Is5fofoInJg==}
 
   ember-modify-based-class-resource@1.1.2:
     resolution: {integrity: sha512-eruTLd+aMzrXaLDInQSYv3zTcG5+0Ttn69W31JtOp6nSR3T22ET3q+6zZjCVNxmlDufSAu6lSFd9EAtKaazCdA==}
@@ -17205,8 +17205,8 @@ snapshots:
       '@embroider/addon-shim': 1.10.2
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-element-helper: 0.8.8
-      ember-modifier: 4.2.2(@babel/core@7.29.0)
-      ember-primitives: 0.53.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
+      ember-modifier: 4.3.0(@babel/core@7.29.0)
+      ember-primitives: 0.53.0(44ff51b544bac203c070a6d091f048d3)
     transitivePeerDependencies:
       - '@babel/core'
       - '@ember/test-helpers'
@@ -17277,12 +17277,10 @@ snapshots:
     dependencies:
       ember-source: 6.12.0-alpha.4(@glimmer/component@2.0.0)(rsvp@4.8.5)
 
-  ember-modifier@4.2.2(@babel/core@7.29.0):
+  ember-modifier@4.3.0(@babel/core@7.29.0):
     dependencies:
       '@embroider/addon-shim': 1.10.2
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
-      ember-cli-normalize-entity-name: 1.0.0
-      ember-cli-string-utils: 1.1.0
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -17306,7 +17304,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-primitives@0.48.2(c4ffba7a9c87490d0f7ff5d5f6df5cb0):
+  ember-primitives@0.48.2(44ff51b544bac203c070a6d091f048d3):
     dependencies:
       '@babel/runtime': 7.28.6
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.4)
@@ -17316,7 +17314,7 @@ snapshots:
       '@glimmer/component': 2.0.0
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-element-helper: 0.8.8
-      ember-modifier: 4.2.2(@babel/core@7.29.0)
+      ember-modifier: 4.3.0(@babel/core@7.29.0)
       ember-resources: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
       form-data-utils: 0.6.0
       reactiveweb: 1.9.1(c6268fff421912c44d52c9127b59a734)
@@ -17332,7 +17330,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-primitives@0.51.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0):
+  ember-primitives@0.51.0(44ff51b544bac203c070a6d091f048d3):
     dependencies:
       '@babel/runtime': 7.28.6
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.4)
@@ -17342,7 +17340,7 @@ snapshots:
       '@glimmer/component': 2.0.0
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-element-helper: 0.8.8
-      ember-modifier: 4.2.2(@babel/core@7.29.0)
+      ember-modifier: 4.3.0(@babel/core@7.29.0)
       ember-resources: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
       form-data-utils: 0.6.0
       reactiveweb: 1.9.1(c6268fff421912c44d52c9127b59a734)
@@ -17358,7 +17356,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-primitives@0.53.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0):
+  ember-primitives@0.53.0(44ff51b544bac203c070a6d091f048d3):
     dependencies:
       '@babel/runtime': 7.28.6
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.4)
@@ -17368,7 +17366,7 @@ snapshots:
       '@glimmer/component': 2.0.0
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-element-helper: 0.8.8
-      ember-modifier: 4.2.2(@babel/core@7.29.0)
+      ember-modifier: 4.3.0(@babel/core@7.29.0)
       ember-resources: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
       form-data-utils: 0.6.0
       reactiveweb: 1.9.1(c6268fff421912c44d52c9127b59a734)
@@ -17395,7 +17393,7 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  ember-repl@7.3.5(e9515a53281cdb161fa7066b1d942d24):
+  ember-repl@7.3.5(a1ab410abf72bd8d9493891ee6305124):
     dependencies:
       '@ember/test-helpers': 5.4.1(882cf82caec78f226fcbd647b89f3bbe)
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.4)
@@ -17403,7 +17401,7 @@ snapshots:
       codemirror: 6.0.2
       content-tag: 4.1.0
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
-      ember-primitives: 0.51.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
+      ember-primitives: 0.51.0(44ff51b544bac203c070a6d091f048d3)
       ember-resolver: 13.1.1
       ember-resources: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
       repl-sdk: 1.4.1(93d4969b5698d0d4464d33ccc0660007)
@@ -19253,9 +19251,9 @@ snapshots:
       '@glint/template': 1.7.4
       common-tags: 1.8.2
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
-      ember-modifier: 4.2.2(@babel/core@7.29.0)
-      ember-primitives: 0.48.2(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
-      ember-repl: 7.3.5(e9515a53281cdb161fa7066b1d942d24)
+      ember-modifier: 4.3.0(@babel/core@7.29.0)
+      ember-primitives: 0.48.2(44ff51b544bac203c070a6d091f048d3)
+      ember-repl: 7.3.5(a1ab410abf72bd8d9493891ee6305124)
       ember-resources: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
       globby: 16.1.0
       json5: 2.2.3
@@ -20281,8 +20279,8 @@ snapshots:
       '@glimmer/component': 2.0.0
       '@glint/template': 1.7.4
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
-      ember-modifier: 4.2.2(@babel/core@7.29.0)
-      ember-primitives: 0.51.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
+      ember-modifier: 4.3.0(@babel/core@7.29.0)
+      ember-primitives: 0.51.0(44ff51b544bac203c070a6d091f048d3)
       ember-resources: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
     transitivePeerDependencies:
       - '@babel/core'
