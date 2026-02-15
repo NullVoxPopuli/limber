@@ -1,5 +1,4 @@
-// import { makeOwner } from './owner.js';
-import { renderApp } from './render-app-island.js';
+import { makeOwner } from './owner.js';
 
 let elementId = 0;
 
@@ -168,43 +167,12 @@ export async function compiler(config, api) {
 
       element.setAttribute(attribute, '');
 
-      // ------------------------------------------------
-      // https://github.com/emberjs/ember.js/issues/21023
-      // ------------------------------------------------
-      //
-      // const { renderComponent } = await compiler.tryResolve('@ember/renderer');
-      //
-      // const owner = makeOwner(config.owner);
-      // const result = renderComponent(compiled, { into: element, owner });
-      //
-      // return () => result.destroy();
+      const { renderComponent } = await compiler.tryResolve('@ember/renderer');
 
-      const [application, destroyable, resolver, router, route, testWaiters, runloop] =
-        await compiler.tryResolveAll([
-          '@ember/application',
-          '@ember/destroyable',
-          'ember-resolver',
-          '@ember/routing/router',
-          '@ember/routing/route',
-          '@ember/test-waiters',
-          '@ember/runloop',
-        ]);
+      const owner = makeOwner(config.owner);
+      const result = renderComponent(compiled, { into: element, owner });
 
-      return renderApp({
-        element,
-        selector: `[${attribute}]`,
-        component: compiled,
-        log: compiler.announce,
-        modules: {
-          application,
-          destroyable,
-          resolver,
-          router,
-          route,
-          testWaiters,
-          runloop,
-        },
-      });
+      return () => result.destroy();
     },
     handlers: {
       js: async (text) => {
