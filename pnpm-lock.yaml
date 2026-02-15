@@ -6,9 +6,8 @@ settings:
   peersSuffixMaxLength: 40
 
 overrides:
-  '@glint/template': 1.7.4
-  reactiveweb: 1.9.1
   '@babel/standalone': file:./babel-standalone.tgz
+  '@glint/template': 1.7.4
   array-includes: npm:@nolyfill/array-includes@^1
   array.prototype.findlastindex: npm:@nolyfill/array.prototype.findlastindex@^1
   array.prototype.flat: npm:@nolyfill/array.prototype.flat@^1
@@ -21,6 +20,7 @@ overrides:
   object.fromentries: npm:@nolyfill/object.fromentries@^1
   object.groupby: npm:@nolyfill/object.groupby@^1
   object.values: npm:@nolyfill/object.values@^1
+  reactiveweb: 1.9.1
   side-channel: npm:@nolyfill/side-channel@^1
   string.prototype.matchall: npm:@nolyfill/string.prototype.matchall@^1
   string.prototype.trimend: npm:@nolyfill/string.prototype.trimend@^1
@@ -29,9 +29,6 @@ patchedDependencies:
   browserslist-generator:
     hash: 8012b033c48b9eeeb2a450dd39dcc4fd9632dda6b3697bfddcd5371ab1866ebe
     path: patches/browserslist-generator.patch
-  ember-source:
-    hash: ce25d468f4e598d7dacd16a6d27af9254ff94a9194ae612aec34111a65476b80
-    path: patches/ember-source.patch
 
 importers:
 
@@ -132,7 +129,7 @@ importers:
         version: 0.8.8
       ember-focus-trap:
         specifier: ^1.1.1
-        version: 1.1.1(0aad39e55e7467cfd4518bf71114f84c)
+        version: 1.1.1(286154de80d553ebec2302f29d2d1652)
       ember-modifier:
         specifier: ^4.2.0
         version: 4.2.2(@babel/core@7.29.0)
@@ -346,7 +343,7 @@ importers:
         version: 2.0.1(882cf82caec78f226fcbd647b89f3bbe)
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(0aad39e55e7467cfd4518bf71114f84c)
+        version: 3.0.1(286154de80d553ebec2302f29d2d1652)
       ember-page-title:
         specifier: ^9.0.3
         version: 9.0.3
@@ -355,7 +352,7 @@ importers:
         version: 9.0.4(a967adbef921ddf866dd2ef3bacfd07c)
       ember-source:
         specifier: 6.12.0-alpha.4
-        version: 6.12.0-alpha.4(patch_hash=ce25d468f4e598d7dacd16a6d27af9254ff94a9194ae612aec34111a65476b80)(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        version: 6.12.0-alpha.4(@glimmer/component@2.0.0)(rsvp@4.8.5)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -584,7 +581,7 @@ importers:
         version: 9.2.1
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(0aad39e55e7467cfd4518bf71114f84c)
+        version: 3.0.1(286154de80d553ebec2302f29d2d1652)
       ember-modify-based-class-resource:
         specifier: ^1.1.1
         version: 1.1.2(f90c614a2914d5867e78d9108f869e02)
@@ -599,7 +596,7 @@ importers:
         version: 13.1.1
       ember-source:
         specifier: 6.12.0-alpha.4
-        version: 6.12.0-alpha.4(patch_hash=ce25d468f4e598d7dacd16a6d27af9254ff94a9194ae612aec34111a65476b80)(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        version: 6.12.0-alpha.4(@glimmer/component@2.0.0)(rsvp@4.8.5)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -799,7 +796,7 @@ importers:
         version: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
       ember-source:
         specifier: 6.12.0-alpha.4
-        version: 6.12.0-alpha.4(patch_hash=ce25d468f4e598d7dacd16a6d27af9254ff94a9194ae612aec34111a65476b80)(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        version: 6.12.0-alpha.4(@glimmer/component@2.0.0)(rsvp@4.8.5)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -1026,7 +1023,7 @@ importers:
         version: 9.0.4(a967adbef921ddf866dd2ef3bacfd07c)
       ember-source:
         specifier: 6.12.0-alpha.4
-        version: 6.12.0-alpha.4(patch_hash=ce25d468f4e598d7dacd16a6d27af9254ff94a9194ae612aec34111a65476b80)(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        version: 6.12.0-alpha.4(@glimmer/component@2.0.0)(rsvp@4.8.5)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.6.1)
@@ -1210,7 +1207,7 @@ importers:
         version: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
       ember-source:
         specifier: 6.12.0-alpha.4
-        version: 6.12.0-alpha.4(patch_hash=ce25d468f4e598d7dacd16a6d27af9254ff94a9194ae612aec34111a65476b80)(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        version: 6.12.0-alpha.4(@glimmer/component@2.0.0)(rsvp@4.8.5)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -17243,17 +17240,17 @@ snapshots:
       - supports-color
       - typescript
 
-  ember-focus-trap@1.1.1(0aad39e55e7467cfd4518bf71114f84c):
+  ember-focus-trap@1.1.1(286154de80d553ebec2302f29d2d1652):
     dependencies:
       '@embroider/addon-shim': 1.10.2
-      ember-source: 6.12.0-alpha.4(patch_hash=ce25d468f4e598d7dacd16a6d27af9254ff94a9194ae612aec34111a65476b80)(@glimmer/component@2.0.0)(rsvp@4.8.5)
+      ember-source: 6.12.0-alpha.4(@glimmer/component@2.0.0)(rsvp@4.8.5)
       focus-trap: 6.9.4
     transitivePeerDependencies:
       - supports-color
 
-  ember-load-initializers@3.0.1(0aad39e55e7467cfd4518bf71114f84c):
+  ember-load-initializers@3.0.1(286154de80d553ebec2302f29d2d1652):
     dependencies:
-      ember-source: 6.12.0-alpha.4(patch_hash=ce25d468f4e598d7dacd16a6d27af9254ff94a9194ae612aec34111a65476b80)(@glimmer/component@2.0.0)(rsvp@4.8.5)
+      ember-source: 6.12.0-alpha.4(@glimmer/component@2.0.0)(rsvp@4.8.5)
 
   ember-modifier@4.2.2(@babel/core@7.29.0):
     dependencies:
@@ -17425,7 +17422,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-source@6.12.0-alpha.4(patch_hash=ce25d468f4e598d7dacd16a6d27af9254ff94a9194ae612aec34111a65476b80)(@glimmer/component@2.0.0)(rsvp@4.8.5):
+  ember-source@6.12.0-alpha.4(@glimmer/component@2.0.0)(rsvp@4.8.5):
     dependencies:
       '@babel/core': 7.29.0
       '@ember/edition-utils': 1.2.0
