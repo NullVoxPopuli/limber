@@ -168,7 +168,6 @@ This runs three processes concurrently:
 
 - **Node**: >=24.12.0 required (enforced via engines field)
 - **pnpm**: v10.25.0+ required
-- **Volta**: Automatically pins Node & pnpm versions for consistency
 
 ### pnpm Configuration
 
