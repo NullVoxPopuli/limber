@@ -114,7 +114,8 @@
       "string.prototype.trimend": "npm:@nolyfill/string.prototype.trimend@^1"
     },
     "patchedDependencies": {
-      "browserslist-generator": "patches/browserslist-generator.patch"
+      "browserslist-generator": "patches/browserslist-generator.patch",
+      "fix-bad-declaration-output@1.1.5": "patches/fix-bad-declaration-output@1.1.5.patch"
     },
     "_ember-repl": "workspace:*",
     "_repl-sdk": "workspace:*"

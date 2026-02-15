@@ -1,0 +1,13 @@
+diff --git a/src/fixes/typescript.js b/src/fixes/typescript.js
+index 8b4c24c72b586257ec71654cf5aa47d0027faf40..beec901f9d4d59f5371113fad2cea1a75be43878 100644
+--- a/src/fixes/typescript.js
++++ b/src/fixes/typescript.js
+@@ -3,7 +3,7 @@
+  *
+  * https://github.com/facebook/jscodeshift/blob/e877ed287dcb3ef3ee8b20c53ec8b477ab564438/parser/ts.js
+  */
+-import babylon from '@babel/parser';
++import * as babylon from '@babel/parser';
+ import jscodeshift from 'jscodeshift';
+ 
+ function customTSParser() {
