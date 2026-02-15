@@ -22,7 +22,7 @@
     "update:vite": "pnpm update --latest --recursive '@vitejs/*' 'vite' '@rollup/*' '@rolldown/*' '@oxc-project/*'"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.5",
+    "@babel/core": "^8.0.0-rc.2",
     "@babel/standalone": "file:babel-standalone.tgz",
     "@glint/ember-tsc": "^1.1.0",
     "@glint/tsserver-plugin": "^2.1.0",
@@ -63,6 +63,7 @@
       "source-map-url": "^0.3.0"
     },
     "overrides": {
+      "@babel/*": "^8.0.0-rc",
       "@babel/standalone": "file:./babel-standalone.tgz",
       "@glint/template": "1.7.4",
       "array-includes": "npm:@nolyfill/array-includes@^1",
