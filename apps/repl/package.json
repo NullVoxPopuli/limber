@@ -155,7 +155,7 @@
     "@xstate/inspect": "^0.8.0",
     "browserslist": "^4.28.1",
     "dompurify": "^3.3.1",
-    "ember-container-query": "6.1.6",
+    "ember-container-query": "6.1.7",
     "ember-deep-tracked": "^2.0.1",
     "ember-element-helper": "^0.8.7",
     "ember-focus-trap": "^1.1.1",
