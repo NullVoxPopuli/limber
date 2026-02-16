@@ -23,12 +23,13 @@ export const mermaidModules = {
 };
 
 export const svelteModules = {
-  // Too many modules to load in the browser, takes too long to load them all
-  // svelte: () => import('svelte'),
+  // Svelte compiler is large but needed to avoid CDN fetches in tests
+  svelte: () => import('svelte'),
+  'svelte/compiler': () => import('svelte/compiler'),
 };
 
 export const vueModules = {
-  // vue: () => import('vue'),
+  vue: () => import('vue'),
   '@vue/repl': () => import('@vue/repl'),
   process: () => import('process'),
 };
