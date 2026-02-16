@@ -17,7 +17,11 @@ interface Options {
   onCompileStart?: () => Promise<unknown> | unknown;
 }
 
-export function compile(service: CompilerService, text: Input, options: Options): CompileState {
+export function compile(
+  service: CompilerService,
+  text: Input,
+  options: Options
+): CompileState {
   const data = { format: options.format };
 
   if (!text) {
