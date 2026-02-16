@@ -50,15 +50,10 @@ const emberCompilationModules = {
   '@ember/template-compiler/runtime': () =>
     import('@ember/template-compiler/runtime'),
   '@ember/template-compiler': () => import('@ember/template-compiler/runtime'),
-  'ember-source/dist/ember-template-compiler': () =>
+  'ember-source/ember-template-compiler/index.js': () =>
     import(
       // @ts-ignore
-      'ember-source/dist/ember-template-compiler.js'
-    ),
-  'ember-source/dist/ember-template-compiler.js': () =>
-    import(
-      // @ts-ignore
-      'ember-source/dist/ember-template-compiler.js'
+      'ember-source/ember-template-compiler/index.js'
     ),
   // Direct Dependencies
   '@babel/standalone': () => import('@babel/standalone'),
