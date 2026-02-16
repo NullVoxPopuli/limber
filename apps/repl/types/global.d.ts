@@ -13,20 +13,8 @@ type LazyTrackedArgs = {
   named?: Record<string, unknown>;
 };
 
-// provided by vendor/ember/ember-template-compiler.js (somehow)
-
-declare module '@glimmer/env';
-
-declare module '@ember/helper';
-declare module '@ember/modifier';
 declare module '@sentry/ember';
-declare module 'babel-plugin-htmlbars-inline-precompile';
 declare module '@babel/plugin-proposal-decorators';
-declare module '@glimmerx/babel-preset';
-declare module '@ember/template-compilation';
-declare module '@ember/template-factory';
-declare module 'ember-source/dist/ember-template-compiler';
-declare module '@glimmer/babel-preset';
 declare module 'split-grid';
 declare module 'unist-util-flatmap';
 

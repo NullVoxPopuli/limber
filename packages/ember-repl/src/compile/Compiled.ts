@@ -12,7 +12,10 @@ export function Compiled(
   format?: Format,
   flavor?: string
 ): CompileState;
-export function Compiled(markdownText: Input | (() => Input), format: () => Format): CompileState;
+export function Compiled(
+  markdownText: Input | (() => Input),
+  format: () => Format
+): CompileState;
 export function Compiled(
   markdownText: Input | (() => Input),
   format: () => Format,
@@ -29,9 +32,14 @@ export function Compiled(
   maybeFlavor?: string | (() => string)
 ): CompileState {
   return resource(({ owner }) => {
-    const input = typeof markdownText === 'function' ? markdownText() : markdownText;
-    const format = typeof maybeFormat === 'function' ? maybeFormat() : maybeFormat || 'glimdown';
-    const flavor = typeof maybeFlavor === 'function' ? maybeFlavor() : maybeFlavor;
+    const input =
+      typeof markdownText === 'function' ? markdownText() : markdownText;
+    const format =
+      typeof maybeFormat === 'function'
+        ? maybeFormat()
+        : maybeFormat || 'glimdown';
+    const flavor =
+      typeof maybeFlavor === 'function' ? maybeFlavor() : maybeFlavor;
 
     const compiler = getCompiler(owner);
 

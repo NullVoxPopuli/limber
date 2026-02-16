@@ -19,6 +19,6 @@ export default class StatusService extends Service {
 
   @tracked showError = true;
 
-  hideError = () => (this.showError = false);
-  newError = () => (this.showError = true);
+  hideError = () => void (this.showError = false);
+  newError = () => void (this.showError = true);
 }

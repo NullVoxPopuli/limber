@@ -26,7 +26,7 @@ const buildDependencies = [
    * because the underlying format / bytecodes / etc is private,
    * and can change between versions of ember-source.
    */
-  'ember-source/dist/ember-template-compiler.js',
+  'ember-source/ember-template-compiler/index.js',
   /**
    * Converts gjs/gts to standard js/ts
    */
