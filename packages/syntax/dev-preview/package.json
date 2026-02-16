@@ -8,7 +8,7 @@
   "devDependencies": {
     "@babel/core": "^7.28.5",
     "@nullvoxpopuli/eslint-configs": "^5.4.0",
-    "eslint": "^9.39.1",
+    "eslint": "^10.0.0",
     "prettier": "^3.7.4",
     "typescript": "5.9.3"
   },
