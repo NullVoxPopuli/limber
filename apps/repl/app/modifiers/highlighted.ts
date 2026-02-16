@@ -1,6 +1,6 @@
-import { DEBUG } from '@glimmer/env';
 import { warn } from '@ember/debug';
 import { guidFor } from '@ember/object/internals';
+import { isDevelopingApp } from '@embroider/macros';
 
 import { modifier } from 'ember-modifier';
 
@@ -31,7 +31,7 @@ export default modifier<Signature>((element: Element, [code]) => {
       return;
     }
 
-    if (DEBUG) {
+    if (isDevelopingApp()) {
       warn(`Cannot highlight code with undefined/null code`, Boolean(code), {
         id: 'limber.modifiers.highlighted',
       });

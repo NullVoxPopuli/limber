@@ -1,4 +1,4 @@
-import { DEBUG } from '@glimmer/env';
+import { isDevelopingApp } from '@embroider/macros';
 
 import { inIframe } from 'ember-primitives/iframe';
 import { getService } from 'ember-statechart-component';
@@ -225,7 +225,7 @@ export const LayoutState = setup({
 }).createMachine({
   id: 'editor-layout',
   initial: 'noContainer',
-  description: DEBUG
+  description: isDevelopingApp()
     ? 'Controls the overall layout of the app, based on orientation, ' +
       'device type, container resize, and manual rotation. Additionally, ' +
       'when the editor itself is resized, this machine controls the persisting ' +
@@ -256,7 +256,7 @@ export const LayoutState = setup({
   },
   on: {
     CONTAINER_FOUND: {
-      description: DEBUG ? `The editor has been rendered.` : '',
+      description: isDevelopingApp() ? `The editor has been rendered.` : '',
       target: '.hasContainer',
       actions: assign({
         /**
@@ -270,12 +270,12 @@ export const LayoutState = setup({
       }),
     },
     CONTAINER_REMOVED: {
-      description: DEBUG ? `The editor has been removed from the DOM.` : '',
+      description: isDevelopingApp() ? `The editor has been removed from the DOM.` : '',
       target: '.noContainer',
       actions: assign({ container: () => undefined }),
     },
     ORIENTATION: {
-      description: DEBUG ? `Determine initial orientation for initial layout.` : '',
+      description: isDevelopingApp() ? `Determine initial orientation for initial layout.` : '',
       guard: canChangeOrientation,
       actions: assign({
         actualOrientation: ({ event }) => (event.isVertical ? VERTICAL : HORIZONTAL),
@@ -285,7 +285,9 @@ export const LayoutState = setup({
   states: {
     hasContainer: {
       initial: 'default',
-      description: DEBUG ? `When we have a div to observe, begin watching for events.` : '',
+      description: isDevelopingApp()
+        ? `When we have a div to observe, begin watching for events.`
+        : '',
       entry: [
         assign({
           actualOrientation: detectAspectRatio,
@@ -296,7 +298,7 @@ export const LayoutState = setup({
       states: {
         default: {
           entry: ['observe'],
-          description: DEBUG
+          description: isDevelopingApp()
             ? `Setup resize observer for the container. ` +
               `This 'default' state is where the editor exists most of the time, ` +
               `neither minimized nor maximized.`
@@ -309,7 +311,7 @@ export const LayoutState = setup({
           },
           states: {
             unknownSplit: {
-              description: DEBUG
+              description: isDevelopingApp()
                 ? `If the device orientation has been determined, ` +
                   `we can immediately transition to the appropriate orientation-state, ` +
                   `else we listen for an orientation update.`
@@ -348,7 +350,7 @@ export const LayoutState = setup({
               },
             },
             horizontallySplit: {
-              description: DEBUG
+              description: isDevelopingApp()
                 ? `By default, the view is horizontally split when the orientation is more vertical. ` +
                   `The vertical orientation displays the editor above and the rendered output below.`
                 : '',
@@ -382,7 +384,7 @@ export const LayoutState = setup({
                   },
                 ],
                 ROTATE: {
-                  description: DEBUG ? `User manually changed the split direction` : '',
+                  description: isDevelopingApp() ? `User manually changed the split direction` : '',
                   target: 'verticallySplit',
                   actions: assign({ manualOrientation: (_, __) => HORIZONTAL }),
                 },
@@ -397,7 +399,7 @@ export const LayoutState = setup({
               },
             },
             verticallySplit: {
-              description: DEBUG
+              description: isDevelopingApp()
                 ? `By default, the view is vertically split when the orientation is more horizontal. ` +
                   `The horizontal orientation displays the editor to the left and the rendered output to the right.`
                 : '',
@@ -418,7 +420,7 @@ export const LayoutState = setup({
                 },
                 ORIENTATION: [
                   {
-                    description: DEBUG
+                    description: isDevelopingApp()
                       ? 'Viewport orientation changed to be more vertical. But on touch devices, we ignore this.'
                       : '',
                     guard: ({ event, context }) =>
@@ -432,7 +434,7 @@ export const LayoutState = setup({
                   },
                 ],
                 ROTATE: {
-                  description: DEBUG ? `User manually changed the split direction` : '',
+                  description: isDevelopingApp() ? `User manually changed the split direction` : '',
                   target: 'horizontallySplit',
                   actions: assign({ manualOrientation: (_, __) => VERTICAL }),
                 },
@@ -449,7 +451,7 @@ export const LayoutState = setup({
           },
         },
         maximized: {
-          description: DEBUG
+          description: isDevelopingApp()
             ? `The editor is maximized, filling the whole screen, and the output is entirely hidden.`
             : '',
           entry: ['maximizeEditor'],
@@ -460,7 +462,7 @@ export const LayoutState = setup({
           },
         },
         minimized: {
-          description: DEBUG
+          description: isDevelopingApp()
             ? `The editor is minimized, showing only the buttons to unminimize, and maximize. The output fills nearly the entire screen.`
             : '',
           entry: 'minimizeEditor',
@@ -473,7 +475,7 @@ export const LayoutState = setup({
     },
     noContainer: {
       /* nothing can happen, nothing to resize */
-      description: DEBUG
+      description: isDevelopingApp()
         ? `It's possible for the statechart to start rendering before we have a div to observe. ` +
           `When that div is rendered, it'll send an event that will transition us out of this state. ` +
           `Without that div, this statechart may not do anything.`
