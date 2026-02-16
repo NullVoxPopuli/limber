@@ -32,6 +32,7 @@ const frameworkModules = {
   '@ember/test': () => import('@ember/test'),
   '@ember/utils': () => import('@ember/utils'),
   '@ember/version': () => import('@ember/version'),
+  // @ts-ignore
   '@glimmer/validator': () => import('@glimmer/validator'),
   '@glimmer/component': () => import('@glimmer/component'),
   '@glimmer/tracking': () => import('@glimmer/tracking'),
