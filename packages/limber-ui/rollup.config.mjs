@@ -36,24 +36,14 @@ export default defineConfig({
           stdio: 'inherit',
         });
 
-        try {
-          await fixBadDeclarationOutput('declarations/**/*.d.ts', [
-            'TypeScript#56571',
-            'Glint#628',
-          ]);
+        await fixBadDeclarationOutput('declarations/**/*.d.ts', [
+          'TypeScript#56571',
+          'Glint#628',
+        ]);
 
-          console.log(
-            '⚠️ Dangerously (but neededly) fixed bad declaration output from typescript'
-          );
-        } catch (error) {
-          console.warn(
-            '⚠️ Failed to fix declaration output (Babel 8 compatibility issue):',
-            error.message
-          );
-          console.warn(
-            '   Declarations are still usable, but may have some TypeScript/Glint quirks'
-          );
-        }
+        console.log(
+          '⚠️ Dangerously (but neededly) fixed bad declaration output from typescript'
+        );
       },
     },
   ],
