@@ -68,6 +68,9 @@ patchedDependencies:
   decorator-transforms@2.3.1:
     hash: 8eab46d3cfe65e0c42e77adb2d2405cce64f8f12256d541c437649e993f6b68f
     path: patches/decorator-transforms@2.3.1.patch
+  ember-eslint@0.6.1:
+    hash: f73d740f8effe4053701c9527fa97763217bca7407b0eda1eee3a7cb19118eab
+    path: patches/ember-eslint@0.6.1.patch
   fix-bad-declaration-output@1.1.5:
     hash: 6b05766cfd1bf69471c932d0710b4a6bd8e8f59698784da5173ba973cbb3789c
     path: patches/fix-bad-declaration-output@1.1.5.patch
@@ -13810,7 +13813,7 @@ snapshots:
       '@eslint/js': 9.39.2
       '@typescript-eslint/parser': 8.54.0(b1cbe766652296b79becebe56b05ba7c)
       cosmiconfig: 9.0.0(typescript@5.9.3)
-      ember-eslint: 0.6.1(63e614a9c6a39a9f0fadb89470c83258)
+      ember-eslint: 0.6.1(patch_hash=f73d740f8effe4053701c9527fa97763217bca7407b0eda1eee3a7cb19118eab)(63e614a9c6a39a9f0fadb89470c83258)
       eslint: 9.39.2(jiti@2.6.1)
       eslint-import-resolver-typescript: 4.4.4(dc699ced992fcedfde63643dc55ed36e)
       eslint-plugin-decorator-position: 6.0.0(cda73f536c20b10de8f104a08ee3f822)
@@ -17234,7 +17237,7 @@ snapshots:
       - eslint
       - typescript
 
-  ember-eslint@0.6.1(63e614a9c6a39a9f0fadb89470c83258):
+  ember-eslint@0.6.1(patch_hash=f73d740f8effe4053701c9527fa97763217bca7407b0eda1eee3a7cb19118eab)(63e614a9c6a39a9f0fadb89470c83258):
     dependencies:
       '@babel/eslint-parser': 8.0.0-rc.2(b2da9f1c30c9c290cd46ff983859862f)
       '@eslint/js': 9.39.2

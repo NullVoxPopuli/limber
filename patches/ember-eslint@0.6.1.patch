@@ -1,0 +1,13 @@
+diff --git a/src/official.js b/src/official.js
+index a72cd88a85e030ba720458c19c2c9d3923633c2e..b21e1e6d82c759cb94371453fbea4649c6ddcceb 100644
+--- a/src/official.js
++++ b/src/official.js
+@@ -10,7 +10,7 @@ import qunit from 'eslint-plugin-qunit';
+ import n from 'eslint-plugin-n';
+ import { hasTypescript, hasTypeModule } from './utils.js';
+ 
+-import babelParser from '@babel/eslint-parser/experimental-worker';
++import babelParser from '@babel/eslint-parser';
+ 
+ /**
+  * @param {string} root the directory of the eslint config file. can be import.meta.dirname
