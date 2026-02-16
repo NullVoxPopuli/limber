@@ -46,8 +46,13 @@ export default defineConfig({
             '⚠️ Dangerously (but neededly) fixed bad declaration output from typescript'
           );
         } catch (error) {
-          console.warn('⚠️ Failed to fix declaration output (Babel 8 compatibility issue):', error.message);
-          console.warn('   Declarations are still usable, but may have some TypeScript/Glint quirks');
+          console.warn(
+            '⚠️ Failed to fix declaration output (Babel 8 compatibility issue):',
+            error.message
+          );
+          console.warn(
+            '   Declarations are still usable, but may have some TypeScript/Glint quirks'
+          );
         }
       },
     },

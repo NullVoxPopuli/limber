@@ -11,3 +11,16 @@ index a72cd88a85e030ba720458c19c2c9d3923633c2e..b21e1e6d82c759cb94371453fbea4649
  
  /**
   * @param {string} root the directory of the eslint config file. can be import.meta.dirname
+diff --git a/src/parser-options.js b/src/parser-options.js
+index 465d64e046bd653e13aa6785e7ed0d157b1e10f9..5d9663c3ab21cdf5cb6283740f4c403facc82b1e 100644
+--- a/src/parser-options.js
++++ b/src/parser-options.js
+@@ -17,7 +17,7 @@ export function esm(root) {
+             plugins: [
+               [
+                 '@babel/plugin-proposal-decorators',
+-                { decoratorsBeforeExport: true },
++                { version: '2023-11' },
+               ],
+             ],
+           },

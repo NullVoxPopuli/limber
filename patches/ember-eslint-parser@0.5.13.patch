@@ -1,0 +1,11 @@
+diff --git a/src/parser/gjs-gts-parser.js b/src/parser/gjs-gts-parser.js
+index cdc16e24eaeefda4763443d69f9d38155a5f63e5..b9b662aa947088d53e7c9376bc95262a0701fc3d 100644
+--- a/src/parser/gjs-gts-parser.js
++++ b/src/parser/gjs-gts-parser.js
+@@ -1,5 +1,5 @@
+ const tsconfigUtils = require('@typescript-eslint/tsconfig-utils');
+-const babelParser = require('@babel/eslint-parser/experimental-worker');
++const babelParser = require('@babel/eslint-parser');
+ const { registerParsedFile } = require('../preprocessor/noop');
+ const {
+   patchTs,
