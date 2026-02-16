@@ -75,8 +75,11 @@ patchedDependencies:
     hash: 9b020662209da6d283f2c766b32e2e7f22d1aaddfe03c8ddc11fd5667d783b42
     path: patches/ember-eslint@0.6.1.patch
   fix-bad-declaration-output@1.1.5:
-    hash: 6b05766cfd1bf69471c932d0710b4a6bd8e8f59698784da5173ba973cbb3789c
+    hash: 6bcae968b1356d48ba507957ba3e408391925eff217e626d07d65f69ff47a060
     path: patches/fix-bad-declaration-output@1.1.5.patch
+  jscodeshift@0.15.2:
+    hash: ec7d0da6a0796660905a98c13456845a9c712cdba496d7fd7fac0cb1f632c43e
+    path: patches/jscodeshift@0.15.2.patch
 
 importers:
 
@@ -856,7 +859,7 @@ importers:
         version: 9.6.1
       fix-bad-declaration-output:
         specifier: ^1.1.5
-        version: 1.1.5(patch_hash=6b05766cfd1bf69471c932d0710b4a6bd8e8f59698784da5173ba973cbb3789c)(239b1c4bf57ec16f7bd60afb391ead5e)
+        version: 1.1.5(patch_hash=6bcae968b1356d48ba507957ba3e408391925eff217e626d07d65f69ff47a060)(239b1c4bf57ec16f7bd60afb391ead5e)
       prettier:
         specifier: ^3.7.4
         version: 3.8.1
@@ -1264,7 +1267,7 @@ importers:
         version: 9.6.1
       fix-bad-declaration-output:
         specifier: ^1.1.5
-        version: 1.1.5(patch_hash=6b05766cfd1bf69471c932d0710b4a6bd8e8f59698784da5173ba973cbb3789c)(239b1c4bf57ec16f7bd60afb391ead5e)
+        version: 1.1.5(patch_hash=6bcae968b1356d48ba507957ba3e408391925eff217e626d07d65f69ff47a060)(239b1c4bf57ec16f7bd60afb391ead5e)
       prettier:
         specifier: ^3.7.4
         version: 3.8.1
@@ -18282,12 +18285,12 @@ snapshots:
       lodash.flatten: 3.0.2
       minimatch: 3.1.2
 
-  fix-bad-declaration-output@1.1.5(patch_hash=6b05766cfd1bf69471c932d0710b4a6bd8e8f59698784da5173ba973cbb3789c)(239b1c4bf57ec16f7bd60afb391ead5e):
+  fix-bad-declaration-output@1.1.5(patch_hash=6bcae968b1356d48ba507957ba3e408391925eff217e626d07d65f69ff47a060)(239b1c4bf57ec16f7bd60afb391ead5e):
     dependencies:
       '@babel/parser': 8.0.0-rc.2
       fs-extra: 11.3.3
       globby: 14.1.0
-      jscodeshift: 0.15.2(239b1c4bf57ec16f7bd60afb391ead5e)
+      jscodeshift: 0.15.2(patch_hash=ec7d0da6a0796660905a98c13456845a9c712cdba496d7fd7fac0cb1f632c43e)(239b1c4bf57ec16f7bd60afb391ead5e)
     transitivePeerDependencies:
       - '@babel/preset-env'
 
@@ -19164,7 +19167,7 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
-  jscodeshift@0.15.2(239b1c4bf57ec16f7bd60afb391ead5e):
+  jscodeshift@0.15.2(patch_hash=ec7d0da6a0796660905a98c13456845a9c712cdba496d7fd7fac0cb1f632c43e)(239b1c4bf57ec16f7bd60afb391ead5e):
     dependencies:
       '@babel/core': 8.0.0-rc.2(@babel/preset-typescript@8.0.0-rc.2)
       '@babel/parser': 8.0.0-rc.2

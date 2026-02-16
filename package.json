@@ -122,7 +122,8 @@
       "decorator-transforms@2.3.1": "patches/decorator-transforms@2.3.1.patch",
       "@embroider/macros@1.19.6": "patches/@embroider__macros@1.19.6.patch",
       "ember-eslint@0.6.1": "patches/ember-eslint@0.6.1.patch",
-      "ember-eslint-parser@0.5.13": "patches/ember-eslint-parser@0.5.13.patch"
+      "ember-eslint-parser@0.5.13": "patches/ember-eslint-parser@0.5.13.patch",
+      "jscodeshift@0.15.2": "patches/jscodeshift@0.15.2.patch"
     },
     "_ember-repl": "workspace:*",
     "_repl-sdk": "workspace:*"

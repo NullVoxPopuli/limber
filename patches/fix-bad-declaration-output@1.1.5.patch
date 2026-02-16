@@ -1,5 +1,5 @@
 diff --git a/src/fixes/typescript.js b/src/fixes/typescript.js
-index 8b4c24c72b586257ec71654cf5aa47d0027faf40..beec901f9d4d59f5371113fad2cea1a75be43878 100644
+index 8b4c24c72b586257ec71654cf5aa47d0027faf40..973e2300c0f55ce0b8b247bd2287e29f32b882f3 100644
 --- a/src/fixes/typescript.js
 +++ b/src/fixes/typescript.js
 @@ -3,7 +3,7 @@
@@ -11,3 +11,33 @@ index 8b4c24c72b586257ec71654cf5aa47d0027faf40..beec901f9d4d59f5371113fad2cea1a7
  import jscodeshift from 'jscodeshift';
  
  function customTSParser() {
+@@ -19,29 +19,13 @@ function customTSParser() {
+     startLine: 1,
+     tokens: true,
+     plugins: [
+-      'asyncGenerators',
+       'decoratorAutoAccessors',
+-      'bigInt',
+-      'classPrivateMethods',
+-      'classPrivateProperties',
+-      'classProperties',
+       'decorators-legacy',
+       'doExpressions',
+-      'dynamicImport',
+       'exportDefaultFrom',
+-      // @ts-ignore -- doesn't exist? why does jscodeshift have it?
+-      'exportExtensions',
+-      'exportNamespaceFrom',
+       'functionBind',
+       'functionSent',
+       'importAttributes',
+-      'importMeta',
+-      'nullishCoalescingOperator',
+-      'numericSeparator',
+-      'objectRestSpread',
+-      'optionalCatchBinding',
+-      'optionalChaining',
+-      ['pipelineOperator', { proposal: 'minimal' }],
+       'throwExpressions',
+       /**
+        * Without dts: true, we don't properly parse all types of declaration files
