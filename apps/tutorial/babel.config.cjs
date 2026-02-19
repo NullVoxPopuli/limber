@@ -35,8 +35,6 @@ module.exports = {
       '@babel/plugin-transform-runtime',
       {
         absoluteRuntime: __dirname,
-        useESModules: true,
-        regenerator: false,
       },
     ],
     ...macros.babelMacros,
