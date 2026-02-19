@@ -38,5 +38,17 @@ export function makeOwner(owner) {
 
       return owner.hasRegistration(name);
     },
+
+    /**
+     * @param {string} name
+     */
+    factoryFor(name) {
+      if (typeof owner !== 'object') return;
+      if (!owner) return;
+      if (!('factoryFor' in owner)) return;
+      if (typeof owner.factoryFor !== 'function') return;
+
+      return owner.factoryFor(name);
+    },
   };
 }
