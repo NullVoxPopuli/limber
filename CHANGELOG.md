@@ -1,5 +1,17 @@
 # Changelog
 
+## Release (2026-02-19)
+
+* ember-repl 8.0.1 (patch)
+* repl-sdk 1.5.1 (patch)
+
+#### :bug: Bug Fix
+* `repl-sdk`
+  * [#2084](https://github.com/NullVoxPopuli/limber/pull/2084) Add hasRegistration and factoryFor to owner-proxy ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2026-02-17)
 
 * ember-repl 8.0.0 (major)
