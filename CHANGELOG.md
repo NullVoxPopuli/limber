@@ -1,5 +1,30 @@
 # Changelog
 
+## Release (2026-02-17)
+
+* ember-repl 8.0.0 (major)
+* limber-ui 4.2.0 (minor)
+* repl-sdk 1.5.0 (minor)
+
+#### :boom: Breaking Change
+* `ember-repl`
+  * [#2067](https://github.com/NullVoxPopuli/limber/pull/2067) Remove @embroider/addon-shim from ember-repl (ember-repl is now vite-only) ([@Copilot](https://github.com/apps/copilot-swe-agent))
+
+#### :rocket: Enhancement
+* `ember-repl`, `limber-ui`, `repl-sdk`
+  * [#2073](https://github.com/NullVoxPopuli/limber/pull/2073) Revert renderApp workaround (back to renderComponent) -- now requires at least ember-source 6.12.0-alpha.4 ([@Copilot](https://github.com/apps/copilot-swe-agent))
+
+#### :bug: Bug Fix
+* `ember-repl`, `repl-sdk`
+  * [#2083](https://github.com/NullVoxPopuli/limber/pull/2083) Resolve ember-template-compiler deprecation ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :house: Internal
+* [#2075](https://github.com/NullVoxPopuli/limber/pull/2075) ✨ Set up Copilot instructions ([@Copilot](https://github.com/apps/copilot-swe-agent))
+
+#### Committers: 2
+- Copilot [Bot] ([@copilot-swe-agent](https://github.com/apps/copilot-swe-agent))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2026-02-12)
 
 * ember-repl 7.3.5 (patch)
