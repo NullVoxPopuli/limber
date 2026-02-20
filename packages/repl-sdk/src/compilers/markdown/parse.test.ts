@@ -230,7 +230,7 @@ describe('default features', () => {
       expect(result).toMatchInlineSnapshot(`
         {
           "codeBlocks": [],
-          "text": "<h2 id="hello-foo-two"><code><Hello @foo="two" /></code></h2>",
+          "text": "<h2 id="hello-foo-two"><code>&#x3C;Hello @foo="two" /></code></h2>",
         }
       `);
     });
