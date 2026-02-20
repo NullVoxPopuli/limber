@@ -65,12 +65,15 @@ function unescapeComponentsOutsideCode(html) {
     // Only touch content outside <pre>
     if (i % 2 === 0) {
       // Split by <code>…</code> so we skip inline code too
-      const codeParts = parts[i].split(/(<code[^>]*>[\s\S]*?<\/code>)/gi);
+      const part = parts[i] ?? '';
+      const codeParts = part.split(/(<code[^>]*>[\s\S]*?<\/code>)/gi);
 
       for (let j = 0; j < codeParts.length; j++) {
+        const segment = codeParts[j];
+
         // Even indices are outside <code> – unescape PascalCase there
-        if (j % 2 === 0) {
-          codeParts[j] = codeParts[j]
+        if (j % 2 === 0 && segment) {
+          codeParts[j] = segment
             .replace(/&#x3C;([A-Z][a-zA-Z0-9]*\s[^<]*?)>/g, (_m, content) =>
               content.includes('@') ? `<${content}>` : _m
             )

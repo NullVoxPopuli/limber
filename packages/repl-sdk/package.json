@@ -22,13 +22,14 @@
     "type": "addon"
   },
   "scripts": {
-    "lint:fix": "pnpm -w exec lint fix",
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\" --prefixColors auto",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" --prefixColors auto && pnpm run format",
     "example": "cd example && vite",
     "lint:package": "pnpm publint",
     "lint:js": "pnpm -w exec lint js",
     "lint:types": "tsc --noEmit",
     "lint:js:fix": "pnpm -w exec lint js:fix",
-    "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
+    "format": "pnpm -w exec lint prettier:fix",
     "lint:prettier": "pnpm -w exec lint prettier",
     "test:node": "vitest"
   },
