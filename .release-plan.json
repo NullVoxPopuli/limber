@@ -2,8 +2,8 @@
   "solution": {
     "ember-repl": {
       "impact": "patch",
-      "oldVersion": "8.0.0",
-      "newVersion": "8.0.1",
+      "oldVersion": "8.0.1",
+      "newVersion": "8.0.2",
       "tagName": "latest",
       "constraints": [
         {
@@ -18,8 +18,8 @@
     },
     "repl-sdk": {
       "impact": "patch",
-      "oldVersion": "1.5.0",
-      "newVersion": "1.5.1",
+      "oldVersion": "1.5.1",
+      "newVersion": "1.5.2",
       "tagName": "latest",
       "constraints": [
         {
@@ -51,5 +51,5 @@
       "oldVersion": "2.0.3"
     }
   },
-  "description": "## Release (2026-02-19)\n\n* ember-repl 8.0.1 (patch)\n* repl-sdk 1.5.1 (patch)\n\n#### :bug: Bug Fix\n* `repl-sdk`\n  * [#2084](https://github.com/NullVoxPopuli/limber/pull/2084) Add hasRegistration and factoryFor to owner-proxy ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2026-02-20)\n\n* ember-repl 8.0.2 (patch)\n* repl-sdk 1.5.2 (patch)\n\n#### :bug: Bug Fix\n* `repl-sdk`\n  * [#2086](https://github.com/NullVoxPopuli/limber/pull/2086) Fix component escaping from markdown ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }

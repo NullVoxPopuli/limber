@@ -1,5 +1,17 @@
 # Changelog
 
+## Release (2026-02-20)
+
+* ember-repl 8.0.2 (patch)
+* repl-sdk 1.5.2 (patch)
+
+#### :bug: Bug Fix
+* `repl-sdk`
+  * [#2086](https://github.com/NullVoxPopuli/limber/pull/2086) Fix component escaping from markdown ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2026-02-19)
 
 * ember-repl 8.0.1 (patch)
