@@ -1,8 +1,7 @@
 'use strict';
 
-const DEFAULT_BROWSER = 'Chrome';
-
 if (typeof module !== 'undefined') {
+  const DEFAULT_BROWSER = 'Chrome';
   const CI_BROWSER = process.env.CI_BROWSER || DEFAULT_BROWSER;
 
   module.exports = {
