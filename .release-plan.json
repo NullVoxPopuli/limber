@@ -2,10 +2,14 @@
   "solution": {
     "ember-repl": {
       "impact": "patch",
-      "oldVersion": "8.0.1",
-      "newVersion": "8.0.2",
+      "oldVersion": "8.0.2",
+      "newVersion": "8.0.3",
       "tagName": "latest",
       "constraints": [
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :house: Internal"
+        },
         {
           "impact": "patch",
           "reason": "Has dependency `workspace:*` on repl-sdk"
@@ -18,13 +22,13 @@
     },
     "repl-sdk": {
       "impact": "patch",
-      "oldVersion": "1.5.1",
-      "newVersion": "1.5.2",
+      "oldVersion": "1.5.2",
+      "newVersion": "1.5.3",
       "tagName": "latest",
       "constraints": [
         {
           "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
+          "reason": "Appears in changelog section :house: Internal"
         }
       ],
       "pkgJSONPath": "./packages/repl-sdk/package.json"
@@ -51,5 +55,5 @@
       "oldVersion": "2.0.3"
     }
   },
-  "description": "## Release (2026-02-20)\n\n* ember-repl 8.0.2 (patch)\n* repl-sdk 1.5.2 (patch)\n\n#### :bug: Bug Fix\n* `repl-sdk`\n  * [#2086](https://github.com/NullVoxPopuli/limber/pull/2086) Fix component escaping from markdown ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2026-02-23)\n\n* ember-repl 8.0.3 (patch)\n* repl-sdk 1.5.3 (patch)\n\n#### :house: Internal\n* `ember-repl`, `repl-sdk`\n  * [#2090](https://github.com/NullVoxPopuli/limber/pull/2090) Get ember-repl tests running in CI for both chrome and firefox ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }

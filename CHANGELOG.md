@@ -1,5 +1,17 @@
 # Changelog
 
+## Release (2026-02-23)
+
+* ember-repl 8.0.3 (patch)
+* repl-sdk 1.5.3 (patch)
+
+#### :house: Internal
+* `ember-repl`, `repl-sdk`
+  * [#2090](https://github.com/NullVoxPopuli/limber/pull/2090) Get ember-repl tests running in CI for both chrome and firefox ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2026-02-20)
 
 * ember-repl 8.0.2 (patch)
