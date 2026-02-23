@@ -172,6 +172,8 @@ export async function compiler(config, api) {
       const owner = makeOwner(config.owner);
       const result = renderComponent(compiled, { into: element, owner });
 
+      compiler.announce('info', 'Ember Island Rendered');
+
       return () => result.destroy();
     },
     handlers: {

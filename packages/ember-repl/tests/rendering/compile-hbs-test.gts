@@ -52,10 +52,6 @@ module('compileHBS()', function (hooks) {
         type: 'info',
       },
       {
-        message: 'Booting Ember Island',
-        type: 'info',
-      },
-      {
         message: 'Ember Island Rendered',
         type: 'info',
       },

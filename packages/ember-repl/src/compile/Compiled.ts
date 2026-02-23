@@ -1,3 +1,5 @@
+import { assert } from '@ember/debug';
+
 import { resource, resourceFactory } from 'ember-resources';
 
 import { getCompiler } from '../services/compiler.ts';
@@ -40,6 +42,16 @@ export function Compiled(
         : maybeFormat || 'glimdown';
     const flavor =
       typeof maybeFlavor === 'function' ? maybeFlavor() : maybeFlavor;
+
+    console.log({ input, format, flavor, maybeFormat, maybeFlavor });
+    assert(
+      `second parameter to Compiled must be a format or function that returns a format`,
+      typeof format === 'string'
+    );
+    assert(
+      `third parameter to Compiled must be a format-flavor (such as "react" for jsx-formats), or undefined`,
+      flavor === undefined || typeof flavor === 'string'
+    );
 
     const compiler = getCompiler(owner);
 

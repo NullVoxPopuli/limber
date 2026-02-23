@@ -4,9 +4,10 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import { stripIndent } from 'common-tags';
-import { Compiled } from 'ember-repl';
 
-import { setupCompiler } from 'ember-repl/test-support';
+import { Compiled } from '#src/index.ts';
+
+import { setupCompiler } from '#src/test-support.ts';
 
 module('Rendering | Compiled()', function (hooks) {
   setupRenderingTest(hooks);
@@ -19,7 +20,7 @@ module('Rendering | Compiled()', function (hooks) {
 
     void render(
       <template>
-        {{#let (Compiled doc) as |state|}}
+        {{#let (Compiled doc "md") as |state|}}
           <div id="ready">{{state.isReady}}</div>
           <div id="error">{{if
               state.error
