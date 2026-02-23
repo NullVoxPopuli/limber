@@ -36,8 +36,8 @@
     "start": "pnpm :vite dev",
     "test:ci": "pnpm :testem ci",
     "test:ember": "pnpm build:test && pnpm test:ci",
-    "test:chrome": "CI_BROWSER=Chrome pnpm test:ci",
-    "test:firefox": "CI_BROWSER=Firefox pnpm test:ci",
+    "test:chrome": "CI_BROWSER=Chrome pnpm :testem ci",
+    "test:firefox": "CI_BROWSER=Firefox pnpm :testem ci",
     "prepack": "pnpm :rollup"
   },
   "dependencies": {
