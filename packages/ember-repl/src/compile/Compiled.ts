@@ -40,17 +40,14 @@ export function Compiled(
       typeof maybeFormat === 'function'
         ? maybeFormat()
         : maybeFormat || 'glimdown';
-    const flavor =
+    let flavor =
       typeof maybeFlavor === 'function' ? maybeFlavor() : maybeFlavor;
 
-    console.log({ input, format, flavor, maybeFormat, maybeFlavor });
+    flavor = typeof flavor === 'string' ? flavor : undefined;
+
     assert(
       `second parameter to Compiled must be a format or function that returns a format`,
       typeof format === 'string'
-    );
-    assert(
-      `third parameter to Compiled must be a format-flavor (such as "react" for jsx-formats), or undefined`,
-      flavor === undefined || typeof flavor === 'string'
     );
 
     const compiler = getCompiler(owner);
