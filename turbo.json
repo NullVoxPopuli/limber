@@ -58,7 +58,7 @@
       "dependsOn": ["build"]
     },
     "build:prod": { "outputs": ["dist/**"], "dependsOn": ["^build"] },
-    "build:test": { "outputs": ["dist/**"], "dependsOn": ["^build"] },
+    "build:test": { "outputs": ["dist/**", "dist-tests/**"], "dependsOn": ["^build"] },
     "build": {
       "outputs": ["dist/**", "declarations/**"],
       "dependsOn": ["^build"]
