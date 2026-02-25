@@ -514,7 +514,7 @@ importers:
         version: 0.53.0(a5089f9e23bfd8a79a3c38e1c30c57b1)
       ember-repl:
         specifier: latest
-        version: 7.3.5(59c596d510b95bf8e8d78bc20e717c03)
+        version: 8.0.1(59c596d510b95bf8e8d78bc20e717c03)
       ember-resources:
         specifier: ^7.0.7
         version: 7.0.7(d48d537776f67018961c7bbb39d96d52)
@@ -6990,6 +6990,14 @@ packages:
       '@glint/template':
         optional: true
 
+  ember-repl@8.0.1:
+    resolution: {integrity: sha512-QCitc/Qg5nuhzFWVTyzDvXBI457Oi1qeYw47YceReZ7MraS5lvB/3POK1nk4LuSpzvzoJM4fKa+3+FFTe7EZqg==}
+    peerDependencies:
+      '@glint/template': 1.7.4
+    peerDependenciesMeta:
+      '@glint/template':
+        optional: true
+
   ember-resolver@13.1.1:
     resolution: {integrity: sha512-rA4RDuTm/F9AzYX2+g7EY3QWU48kyF9+Ck8IE8VQipnlwv2Q42kdRWiw7hfeQbRxx6XoSZCak6nzAG9ePd/+Ug==}
     engines: {node: 14.* || 16.* || >= 18}
@@ -7284,8 +7292,8 @@ packages:
     resolution: {integrity: sha512-sNXOfKCn74rt8RICKMvJS7XKV/Xk9kA7DyJr8mJik3S7Cwgy3qlkkmyS2uQB3jiJg6VNdZd/pDBJu0nvG2NlTg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  eslint-scope@9.1.0:
-    resolution: {integrity: sha512-CkWE42hOJsNj9FJRaoMX9waUFYhqY4jmyLFdAdzZr6VaCg3ynLYx4WnOdkaIifGfH4gsUcBTn4OZbHXkpLD0FQ==}
+  eslint-scope@9.1.1:
+    resolution: {integrity: sha512-GaUN0sWim5qc8KVErfPBWmc31LEsOkrUJbvJZV+xuL3u2phMUK4HIvXlWAakfC8W4nzlK+chPEAkYOYb5ZScIw==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
   eslint-utils@3.0.0:
@@ -7306,8 +7314,8 @@ packages:
     resolution: {integrity: sha512-Uhdk5sfqcee/9H/rCOJikYz67o0a2Tw2hGRPOG2Y1R2dg7brRe1uG0yaNQDHu+TO/uQPF/5eCapvYSmHUjt7JQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  eslint-visitor-keys@5.0.0:
-    resolution: {integrity: sha512-A0XeIi7CXU7nPlfHS9loMYEKxUaONu/hTEzHTGba9Huu94Cq1hPivf+DE5erJozZOky0LfvXAyrV/tcswpLI0Q==}
+  eslint-visitor-keys@5.0.1:
+    resolution: {integrity: sha512-tD40eHxA35h0PEIZNeIjkHoDR4YjjJp34biM0mDvplBe//mB+IHCqHDGV7pxF+7MklTvighcCPPZC7ynWyjdTA==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
   eslint@9.39.2:
@@ -10003,6 +10011,9 @@ packages:
   repl-sdk@1.4.1:
     resolution: {integrity: sha512-kn1SVldzeYnb2r21e0p1HU90QktOoP/SPe1qlTTVOs08yeSdkCO85Fet35psfcivxcgL+od3QtM8IhSE2D6Thg==}
 
+  repl-sdk@1.5.1:
+    resolution: {integrity: sha512-r+wU6mI48W/U4/0AAkEwCJgjDt4sIZrbgVy0Hp4H0EunSys41GjUxg4S1h/vZWRa6dsYndESRUMQLFjogozP4Q==}
+
   request-light@0.7.0:
     resolution: {integrity: sha512-lMbBMrDoxgsyO+yB3sDcrDuX85yYt7sS8BfQd11jtbW/z5ZWgLZRcEGLsLoYw7I0WSUGQBs8CC8ScIxkTX1+6Q==}
 
@@ -11803,8 +11814,8 @@ snapshots:
     dependencies:
       '@babel/core': 8.0.0-rc.2(@babel/preset-typescript@8.0.0-rc.2)
       eslint: 9.39.2(jiti@2.6.1)
-      eslint-scope: 9.1.0
-      eslint-visitor-keys: 5.0.0
+      eslint-scope: 9.1.1
+      eslint-visitor-keys: 5.0.1
       semver: 7.7.3
 
   '@babel/generator@8.0.0-rc.2':
@@ -17484,6 +17495,32 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  ember-repl@8.0.1(59c596d510b95bf8e8d78bc20e717c03):
+    dependencies:
+      '@ember/test-helpers': 5.4.1(ca18013ebdd601926aa7a3986a4c2ca4)
+      '@ember/test-waiters': 4.1.1(cda232dc910552ec7c02ec1db8ab783a)
+      codemirror: 6.0.2
+      content-tag: 4.1.0
+      decorator-transforms: 2.3.1(patch_hash=8eab46d3cfe65e0c42e77adb2d2405cce64f8f12256d541c437649e993f6b68f)(@babel/core@8.0.0-rc.2)
+      ember-primitives: 0.51.0(a5089f9e23bfd8a79a3c38e1c30c57b1)
+      ember-resolver: 13.1.1(@babel/preset-typescript@8.0.0-rc.2)
+      ember-resources: 7.0.7(d48d537776f67018961c7bbb39d96d52)
+      repl-sdk: 1.5.1(93d4969b5698d0d4464d33ccc0660007)
+    optionalDependencies:
+      '@glint/template': 1.7.4
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@babel/preset-typescript'
+      - '@codemirror/lang-css'
+      - '@glimmer/component'
+      - '@lezer/javascript'
+      - '@lezer/lr'
+      - bufferutil
+      - ember-modifier
+      - encoding
+      - supports-color
+      - utf-8-validate
+
   ember-resolver@13.1.1(@babel/preset-typescript@8.0.0-rc.2):
     dependencies:
       ember-cli-babel: 7.26.11(@babel/preset-typescript@8.0.0-rc.2)
@@ -17872,7 +17909,7 @@ snapshots:
       esrecurse: 4.3.0
       estraverse: 5.3.0
 
-  eslint-scope@9.1.0:
+  eslint-scope@9.1.1:
     dependencies:
       '@types/esrecurse': 4.3.1
       '@types/estree': 1.0.8
@@ -17890,7 +17927,7 @@ snapshots:
 
   eslint-visitor-keys@4.2.1: {}
 
-  eslint-visitor-keys@5.0.0: {}
+  eslint-visitor-keys@5.0.1: {}
 
   eslint@9.39.2(jiti@2.6.1):
     dependencies:
@@ -21159,6 +21196,61 @@ snapshots:
   repeat-string@1.6.1: {}
 
   repl-sdk@1.4.1(93d4969b5698d0d4464d33ccc0660007):
+    dependencies:
+      '@codemirror/autocomplete': 6.20.0
+      '@codemirror/commands': 6.10.1
+      '@codemirror/lang-html': 6.4.11
+      '@codemirror/lang-javascript': 6.2.4
+      '@codemirror/lang-markdown': 6.5.0
+      '@codemirror/lang-vue': 0.1.3
+      '@codemirror/lang-yaml': 6.1.2
+      '@codemirror/language': 6.12.1
+      '@codemirror/language-data': 6.5.2
+      '@codemirror/lint': 6.9.3
+      '@codemirror/search': 6.6.0
+      '@codemirror/state': 6.5.4
+      '@codemirror/view': 6.39.12
+      '@lezer/common': 1.5.0
+      '@lezer/highlight': 1.2.3
+      '@lezer/html': 1.3.13
+      '@lezer/markdown': 1.6.3
+      '@replit/codemirror-lang-svelte': 6.0.0(9467715ca32889163bd7161ba7fdb3d1)
+      '@shikijs/rehype': 3.22.0
+      change-case: 5.4.4
+      codemirror: 6.0.2
+      codemirror-lang-glimdown: 2.0.3(ec1f15af7e31282ca33da9719a65df5a)
+      codemirror-lang-glimmer: 2.0.3(@lezer/common@1.5.0)
+      codemirror-lang-glimmer-js: 2.0.3(a82e47558070302726807efd21dd0cda)
+      codemirror-lang-mermaid: 0.5.0
+      codemirror-languageserver: 1.18.1(encoding@0.1.13)
+      comlink: 4.4.2
+      es-module-shims: 2.8.0
+      mdast: 3.0.0
+      mime: 4.1.0
+      package-name-regex: 5.0.0
+      rehype-autolink-headings: 7.1.0
+      rehype-raw: 7.0.0
+      rehype-slug: 6.0.0
+      rehype-stringify: 10.0.1
+      remark-gfm: 4.0.1
+      remark-parse: 11.0.0
+      remark-rehype: 11.1.2
+      resolve.exports: 2.0.3
+      resolve.imports: 2.0.3
+      tarparser: 0.0.5
+      unified: 11.0.5
+      unist-util-visit: 5.1.0
+      vfile: 6.0.3
+    transitivePeerDependencies:
+      - '@codemirror/lang-css'
+      - '@lezer/javascript'
+      - '@lezer/lr'
+      - bufferutil
+      - encoding
+      - supports-color
+      - utf-8-validate
+
+  repl-sdk@1.5.1(93d4969b5698d0d4464d33ccc0660007):
     dependencies:
       '@codemirror/autocomplete': 6.20.0
       '@codemirror/commands': 6.10.1
