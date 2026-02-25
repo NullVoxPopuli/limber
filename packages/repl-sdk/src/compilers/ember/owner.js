@@ -26,5 +26,29 @@ export function makeOwner(owner) {
 
       return owner.resolveRegistration(name);
     },
+
+    /**
+     * @param {string} name
+     */
+    hasRegistration(name) {
+      if (typeof owner !== 'object') return;
+      if (!owner) return;
+      if (!('hasRegistration' in owner)) return;
+      if (typeof owner.hasRegistration !== 'function') return;
+
+      return owner.hasRegistration(name);
+    },
+
+    /**
+     * @param {string} name
+     */
+    factoryFor(name) {
+      if (typeof owner !== 'object') return;
+      if (!owner) return;
+      if (!('factoryFor' in owner)) return;
+      if (typeof owner.factoryFor !== 'function') return;
+
+      return owner.factoryFor(name);
+    },
   };
 }

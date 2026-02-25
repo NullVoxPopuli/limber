@@ -1437,6 +1437,9 @@ importers:
       common-tags:
         specifier: ^1.8.2
         version: 1.8.2
+      decorator-transforms:
+        specifier: 2.3.1
+        version: 2.3.1(patch_hash=8eab46d3cfe65e0c42e77adb2d2405cce64f8f12256d541c437649e993f6b68f)(@babel/core@8.0.0-rc.2)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.6.1)

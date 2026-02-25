@@ -1,6 +1,6 @@
 {
   "name": "ember-repl",
-  "version": "7.3.5",
+  "version": "8.0.2",
   "type": "module",
   "description": "Library for enabling REPL and Playground creation with Ember/Glimmer",
   "keywords": [
@@ -23,7 +23,7 @@
     ":testem": "testem --file ./config/testem.cjs",
     ":rollup": "rollup --config ./config/rollup.config.mjs",
     "build": "pnpm :rollup",
-    "build:tests": "pnpm :vite build --mode=development --out-dir dist-tests",
+    "build:test": "pnpm :vite build --mode=development --out-dir dist-tests",
     "format": "prettier . --cache --write",
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\" --prefixColors auto",
     "lint:package": "pnpm publint",
@@ -35,7 +35,9 @@
     "lint:types": "ember-tsc --noEmit",
     "start": "pnpm :vite dev",
     "test:ci": "pnpm :testem ci",
-    "test:ember": "pnpm build:tests && pnpm test:ci",
+    "test:ember": "pnpm build:test && pnpm test:ci",
+    "test:chrome": "CI_BROWSER=Chrome pnpm :testem ci",
+    "test:firefox": "CI_BROWSER=Firefox pnpm :testem ci",
     "prepack": "pnpm :rollup"
   },
   "dependencies": {

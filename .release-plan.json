@@ -2,8 +2,8 @@
   "solution": {
     "ember-repl": {
       "impact": "patch",
-      "oldVersion": "7.3.4",
-      "newVersion": "7.3.5",
+      "oldVersion": "8.0.1",
+      "newVersion": "8.0.2",
       "tagName": "latest",
       "constraints": [
         {
@@ -14,12 +14,12 @@
       "pkgJSONPath": "./packages/ember-repl/package.json"
     },
     "limber-ui": {
-      "oldVersion": "4.1.1"
+      "oldVersion": "4.2.0"
     },
     "repl-sdk": {
       "impact": "patch",
-      "oldVersion": "1.4.0",
-      "newVersion": "1.4.1",
+      "oldVersion": "1.5.1",
+      "newVersion": "1.5.2",
       "tagName": "latest",
       "constraints": [
         {
@@ -51,5 +51,5 @@
       "oldVersion": "2.0.3"
     }
   },
-  "description": "## Release (2026-02-12)\n\n* ember-repl 7.3.5 (patch)\n* repl-sdk 1.4.1 (patch)\n\n#### :bug: Bug Fix\n* `repl-sdk`\n  * [#2071](https://github.com/NullVoxPopuli/limber/pull/2071) Fix closing components elements used in markdown ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2026-02-20)\n\n* ember-repl 8.0.2 (patch)\n* repl-sdk 1.5.2 (patch)\n\n#### :bug: Bug Fix\n* `repl-sdk`\n  * [#2086](https://github.com/NullVoxPopuli/limber/pull/2086) Fix component escaping from markdown ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }
