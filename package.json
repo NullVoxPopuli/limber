@@ -22,7 +22,7 @@
     "update:vite": "pnpm update --latest --recursive '@vitejs/*' 'vite' '@rollup/*' '@rolldown/*' '@oxc-project/*'"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.5",
+    "@babel/core": "^8.0.0-rc.2",
     "@babel/standalone": "file:babel-standalone.tgz",
     "@glint/ember-tsc": "^1.1.0",
     "@glint/tsserver-plugin": "^2.1.0",
@@ -48,6 +48,7 @@
   "pnpm": {
     "peerDependencyRules": {
       "allowAny": [
+        "@babel/core",
         "@glimmer/component",
         "ember-modifier",
         "typescript",
@@ -63,7 +64,40 @@
       "source-map-url": "^0.3.0"
     },
     "overrides": {
+      "@babel/code-frame": "8.0.0-rc.2",
+      "@babel/compat-data": "8.0.0-rc.2",
+      "@babel/core": "8.0.0-rc.2",
+      "@babel/eslint-parser": "8.0.0-rc.2",
+      "@babel/generator": "8.0.0-rc.2",
+      "@babel/helper-compilation-targets": "8.0.0-rc.2",
+      "@babel/helper-create-class-features-plugin": "8.0.0-rc.2",
+      "@babel/helper-create-regexp-features-plugin": "8.0.0-rc.2",
+      "@babel/helper-module-imports": "8.0.0-rc.2",
+      "@babel/helper-module-transforms": "8.0.0-rc.2",
+      "@babel/helper-plugin-utils": "8.0.0-rc.2",
+      "@babel/helper-remap-async-to-generator": "8.0.0-rc.2",
+      "@babel/helper-replace-supers": "8.0.0-rc.2",
+      "@babel/helper-string-parser": "8.0.0-rc.2",
+      "@babel/helper-validator-identifier": "8.0.0-rc.2",
+      "@babel/helper-validator-option": "8.0.0-rc.2",
+      "@babel/helpers": "8.0.0-rc.2",
+      "@babel/parser": "8.0.0-rc.2",
+      "@babel/plugin-proposal-decorators": "8.0.0-rc.2",
+      "@babel/plugin-syntax-decorators": "8.0.0-rc.2",
+      "@babel/plugin-syntax-flow": "8.0.0-rc.2",
+      "@babel/plugin-syntax-jsx": "8.0.0-rc.2",
+      "@babel/plugin-syntax-typescript": "8.0.0-rc.2",
+      "@babel/plugin-transform-runtime": "8.0.0-rc.2",
+      "@babel/plugin-transform-typescript": "8.0.0-rc.2",
+      "@babel/preset-typescript": "8.0.0-rc.2",
+      "@babel/runtime": "8.0.0-rc.2",
       "@babel/standalone": "file:./babel-standalone.tgz",
+      "@babel/template": "8.0.0-rc.2",
+      "@babel/traverse": "8.0.0-rc.2",
+      "@babel/types": "8.0.0-rc.2",
+      "decorator-transforms>@babel/core": "8.0.0-rc.2",
+      "decorator-transforms>@babel/helper-plugin-utils": "8.0.0-rc.2",
+      "decorator-transforms>@babel/plugin-syntax-decorators": "8.0.0-rc.2",
       "@glint/template": "1.7.4",
       "array-includes": "npm:@nolyfill/array-includes@^1",
       "array.prototype.findlastindex": "npm:@nolyfill/array.prototype.findlastindex@^1",
@@ -83,7 +117,13 @@
       "string.prototype.trimend": "npm:@nolyfill/string.prototype.trimend@^1"
     },
     "patchedDependencies": {
-      "browserslist-generator": "patches/browserslist-generator.patch"
+      "browserslist-generator": "patches/browserslist-generator.patch",
+      "fix-bad-declaration-output@1.1.5": "patches/fix-bad-declaration-output@1.1.5.patch",
+      "decorator-transforms@2.3.1": "patches/decorator-transforms@2.3.1.patch",
+      "@embroider/macros@1.19.6": "patches/@embroider__macros@1.19.6.patch",
+      "ember-eslint@0.6.1": "patches/ember-eslint@0.6.1.patch",
+      "ember-eslint-parser@0.5.13": "patches/ember-eslint-parser@0.5.13.patch",
+      "jscodeshift@0.15.2": "patches/jscodeshift@0.15.2.patch"
     },
     "_ember-repl": "workspace:*",
     "_repl-sdk": "workspace:*"

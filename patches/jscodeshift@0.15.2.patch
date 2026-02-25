@@ -1,0 +1,63 @@
+diff --git a/parser/babylon.js b/parser/babylon.js
+index d83900c2ee82c113c4cbc0685a44a7c0e9b0694c..aca5f8159eab7d1e1b9e54e55985bc248917f856 100755
+--- a/parser/babylon.js
++++ b/parser/babylon.js
+@@ -21,26 +21,11 @@ const defaultOptions = {
+     'flowComments',
+     'jsx',
+ 
+-    'asyncGenerators',
+-    'bigInt',
+-    'classProperties',
+-    'classPrivateProperties',
+-    'classPrivateMethods',
+-    ['decorators', {decoratorsBeforeExport: false}],
++    ['decorators', {version: '2023-11'}],
+     'doExpressions',
+-    'dynamicImport',
+     'exportDefaultFrom',
+-    'exportNamespaceFrom',
+     'functionBind',
+     'functionSent',
+-    'importMeta',
+-    'logicalAssignment',
+-    'nullishCoalescingOperator',
+-    'numericSeparator',
+-    'objectRestSpread',
+-    'optionalCatchBinding',
+-    'optionalChaining',
+-    ['pipelineOperator', {proposal: 'minimal'}],
+     'throwExpressions',
+   ],
+ };
+diff --git a/parser/tsOptions.js b/parser/tsOptions.js
+index 05e249a969051601c6fbed9fc739a4bacf59c6fc..4625fac6dd141341b208f2e1dc331e64677a6ec7 100755
+--- a/parser/tsOptions.js
++++ b/parser/tsOptions.js
+@@ -18,26 +18,11 @@ module.exports = {
+   startLine: 1,
+   tokens: true,
+   plugins: [
+-    'asyncGenerators',
+-    'bigInt',
+-    'classPrivateMethods',
+-    'classPrivateProperties',
+-    'classProperties',
+     'decorators-legacy',
+     'doExpressions',
+-    'dynamicImport',
+     'exportDefaultFrom',
+-    'exportExtensions',
+-    'exportNamespaceFrom',
+     'functionBind',
+     'functionSent',
+-    'importMeta',
+-    'nullishCoalescingOperator',
+-    'numericSeparator',
+-    'objectRestSpread',
+-    'optionalCatchBinding',
+-    'optionalChaining',
+-    ['pipelineOperator', { proposal: 'minimal' }],
+     'throwExpressions',
+     'typescript'
+   ],
