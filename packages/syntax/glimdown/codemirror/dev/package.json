@@ -18,7 +18,7 @@
     "@codemirror/view": "^6.39.12",
     "@glimdown/codemirror-dev-preview": "workspace:*",
     "@nullvoxpopuli/eslint-configs": "^5.4.0",
-    "eslint": "^9.39.1",
+    "eslint": "^10.0.0",
     "prettier": "^3.7.4",
     "typescript": "5.9.3",
     "vite": "^7.3.1"
