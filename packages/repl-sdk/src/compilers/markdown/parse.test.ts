@@ -105,10 +105,9 @@ describe('default features', () => {
   });
 
   it('allows component with block params (as |...|) invocation', async () => {
-    const result = await parseMarkdown(
-      [`<Tabs as |Tab|>`, ``, `info`, ``, `</Tabs>`].join('\n'),
-      { ...defaults }
-    );
+    const result = await parseMarkdown([`<Tabs as |Tab|>`, ``, `info`, ``, `</Tabs>`].join('\n'), {
+      ...defaults,
+    });
 
     expect(result.codeBlocks).toMatchInlineSnapshot(`[]`);
     expect(result.text).toMatchInlineSnapshot(`
