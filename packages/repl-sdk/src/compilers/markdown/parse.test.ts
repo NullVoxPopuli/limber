@@ -111,7 +111,7 @@ describe('default features', () => {
 
     expect(result.codeBlocks).toMatchInlineSnapshot(`[]`);
     expect(result.text).toMatchInlineSnapshot(`
-      "<p><Tabs as |Tab|></p>
+      "<Tabs as |Tab|>
       <p>info</p>
       </Tabs>"
     `);
