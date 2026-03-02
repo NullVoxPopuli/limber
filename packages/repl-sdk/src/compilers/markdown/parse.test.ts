@@ -117,6 +117,44 @@ describe('default features', () => {
     `);
   });
 
+  it('allows component with block params and nested components on consecutive lines', async () => {
+    const result = await parseMarkdown(
+      [
+        `# Authoring example`,
+        ``,
+        `some text`,
+        ``,
+        `<Tabs as |Tab|>`,
+        `<Tab @title="First">`,
+        ``,
+        `First tab content`,
+        ``,
+        `</Tab>`,
+        `<Tab @title="Second">`,
+        ``,
+        `Second tab content`,
+        ``,
+        `</Tab>`,
+        `</Tabs>`,
+      ].join('\n'),
+      { ...defaults }
+    );
+
+    expect(result.codeBlocks).toMatchInlineSnapshot(`[]`);
+    expect(result.text).toMatchInlineSnapshot(`
+      "<h1 id="authoring-example">Authoring example</h1>
+      <p>some text</p>
+      <Tabs as |Tab|>
+      <Tab @title="First">
+      <p>First tab content</p>
+      </Tab>
+      <Tab @title="Second">
+      <p>Second tab content</p>
+      </Tab>
+      </Tabs>"
+    `);
+  });
+
   it('allows components to wrap markdown content', async () => {
     const result = await parseMarkdown(
       [
