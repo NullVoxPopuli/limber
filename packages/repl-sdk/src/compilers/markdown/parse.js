@@ -75,7 +75,7 @@ function unescapeComponentsOutsideCode(html) {
         if (j % 2 === 0 && segment) {
           codeParts[j] = segment
             .replace(/&#x3C;([A-Z][a-zA-Z0-9]*\s[^<]*?)>/g, (_m, content) =>
-              content.includes('@') ? `<${content}>` : _m
+              content.includes('@') || content.includes('as |') ? `<${content}>` : _m
             )
             .replace(/&#x3C;\/([A-Z][a-zA-Z0-9]*)>/g, '</$1>');
         }
