@@ -1,0 +1,13 @@
+diff --git a/src/babel/evaluate-json.js b/src/babel/evaluate-json.js
+index 4aa477318b25f06584107644244c39d7f3ff8f37..1bf8dbcf5ad070638e95b45418aea4f3408ac9b8 100644
+--- a/src/babel/evaluate-json.js
++++ b/src/babel/evaluate-json.js
+@@ -422,7 +422,7 @@ function buildLiterals(value, babelContext) {
+     if (typeof value === 'undefined') {
+         return babelContext.types.identifier('undefined');
+     }
+-    let statement = babelContext.parse(`a(${JSON.stringify(value)})`, { configFile: false });
++    let statement = babelContext.parseSync(`a(${JSON.stringify(value)})`, { configFile: false });
+     let expression = statement.program.body[0].expression;
+     return expression.arguments[0];
+ }

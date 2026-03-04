@@ -1,0 +1,14 @@
+diff --git a/dist/index.js b/dist/index.js
+index 49c63901ca060907c61d35a3e0b645069acda2d3..427a002f639251f3bfc3336dc53cbd8b5de0f6b1 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -303,7 +303,8 @@ Object.defineProperty(lib$1, "__esModule", {
+ var default_1 = lib$1.default = void 0;
+ var _helperPluginUtils = lib;
+ default_1 = lib$1.default = (0, _helperPluginUtils.declare)((api, options) => {
+-  api.assertVersion(7);
++  // Comment out version check for Babel 8 compatibility
++  // api.assertVersion(7);
+   let {
+     version
+   } = options;
