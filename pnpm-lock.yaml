@@ -129,7 +129,7 @@ importers:
         version: 0.8.8
       ember-focus-trap:
         specifier: ^1.1.1
-        version: 1.1.1(3ea4ab33049020cd68cd84d0e5fa2bbc)
+        version: 1.1.1(c27820aece66c21d444559171301f06d)
       ember-modifier:
         specifier: ^4.2.0
         version: 4.2.2(@babel/core@7.29.0)
@@ -343,7 +343,7 @@ importers:
         version: 2.0.1(882cf82caec78f226fcbd647b89f3bbe)
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(3ea4ab33049020cd68cd84d0e5fa2bbc)
+        version: 3.0.1(c27820aece66c21d444559171301f06d)
       ember-page-title:
         specifier: ^9.0.3
         version: 9.0.3
@@ -351,8 +351,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(a967adbef921ddf866dd2ef3bacfd07c)
       ember-source:
-        specifier: 6.12.0-beta.2
-        version: 6.12.0-beta.2(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        specifier: 6.12.0-alpha.6
+        version: 6.12.0-alpha.6(@glimmer/component@2.0.0)(rsvp@4.8.5)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -581,7 +581,7 @@ importers:
         version: 9.2.1
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(3ea4ab33049020cd68cd84d0e5fa2bbc)
+        version: 3.0.1(c27820aece66c21d444559171301f06d)
       ember-modify-based-class-resource:
         specifier: ^1.1.1
         version: 1.1.2(f90c614a2914d5867e78d9108f869e02)
@@ -595,8 +595,8 @@ importers:
         specifier: ^13.1.0
         version: 13.1.1
       ember-source:
-        specifier: 6.12.0-beta.2
-        version: 6.12.0-beta.2(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        specifier: 6.12.0-alpha.6
+        version: 6.12.0-alpha.6(@glimmer/component@2.0.0)(rsvp@4.8.5)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -795,8 +795,8 @@ importers:
         specifier: ^7.0.7
         version: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
       ember-source:
-        specifier: 6.12.0-beta.2
-        version: 6.12.0-beta.2(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        specifier: 6.12.0-alpha.6
+        version: 6.12.0-alpha.6(@glimmer/component@2.0.0)(rsvp@4.8.5)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -1019,8 +1019,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(a967adbef921ddf866dd2ef3bacfd07c)
       ember-source:
-        specifier: 6.12.0-beta.2
-        version: 6.12.0-beta.2(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        specifier: 6.12.0-alpha.6
+        version: 6.12.0-alpha.6(@glimmer/component@2.0.0)(rsvp@4.8.5)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.6.1)
@@ -1203,8 +1203,8 @@ importers:
         specifier: ^7.0.7
         version: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
       ember-source:
-        specifier: 6.12.0-beta.2
-        version: 6.12.0-beta.2(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        specifier: 6.12.0-alpha.6
+        version: 6.12.0-alpha.6(@glimmer/component@2.0.0)(rsvp@4.8.5)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -6786,9 +6786,6 @@ packages:
     resolution: {integrity: sha512-Uj6R+3TtBV5RZoJY14oZn/sNPnc+UgmC8nb5rI4P3fR/gYoyTFIZSXiIM7zl++IpMoIrocxOrgt+mhonKphgGg==}
     engines: {node: 10.* || >= 12.*}
 
-  ember-cli-is-package-missing@1.0.0:
-    resolution: {integrity: sha512-9hEoZj6Au5onlSDdcoBqYEPT8ehlYntZPxH8pBKV0GO7LNel88otSAQsCfXvbi2eKE+MaSeLG/gNaCI5UdWm9g==}
-
   ember-cli-normalize-entity-name@1.0.0:
     resolution: {integrity: sha512-rF4P1rW2P1gVX1ynZYPmuIf7TnAFDiJmIUFI1Xz16VYykUAyiOCme0Y22LeZq8rTzwBMiwBwoE3RO4GYWehXZA==}
 
@@ -6957,8 +6954,8 @@ packages:
     resolution: {integrity: sha512-89oVHVJwmLDvGvAUWgS87KpBoRhy3aZ6U0Ql6HOmU4TrPkyaa8pM0W81wj9cIwjYprcQtN9EwzZMHnq46+oUyw==}
     engines: {node: 8.* || 10.* || >= 12}
 
-  ember-source@6.12.0-beta.2:
-    resolution: {integrity: sha512-bI7e6lijKLeqtZAUlI5NRk2EQ6Xss3u+EI0Z0/+2pdV9wLN89pn9Ex5wow1Qw9GmtGc3Uj/SFpQRiExn01KHjw==}
+  ember-source@6.12.0-alpha.6:
+    resolution: {integrity: sha512-lCf216sX8yjSDANc+qHEqL3jcuTa9elNiculzJZW08V29c3Wu+k0soC+wJAP6NDZEZiy/RzjkEC54X3+SPpoKQ==}
     engines: {node: '>= 20.19'}
     peerDependencies:
       '@glimmer/component': '>= 1.1.2'
@@ -17168,8 +17165,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-cli-is-package-missing@1.0.0: {}
-
   ember-cli-normalize-entity-name@1.0.0:
     dependencies:
       silent-error: 1.1.1
@@ -17279,17 +17274,17 @@ snapshots:
       - supports-color
       - typescript
 
-  ember-focus-trap@1.1.1(3ea4ab33049020cd68cd84d0e5fa2bbc):
+  ember-focus-trap@1.1.1(c27820aece66c21d444559171301f06d):
     dependencies:
       '@embroider/addon-shim': 1.10.2
-      ember-source: 6.12.0-beta.2(@glimmer/component@2.0.0)(rsvp@4.8.5)
+      ember-source: 6.12.0-alpha.6(@glimmer/component@2.0.0)(rsvp@4.8.5)
       focus-trap: 6.9.4
     transitivePeerDependencies:
       - supports-color
 
-  ember-load-initializers@3.0.1(3ea4ab33049020cd68cd84d0e5fa2bbc):
+  ember-load-initializers@3.0.1(c27820aece66c21d444559171301f06d):
     dependencies:
-      ember-source: 6.12.0-beta.2(@glimmer/component@2.0.0)(rsvp@4.8.5)
+      ember-source: 6.12.0-alpha.6(@glimmer/component@2.0.0)(rsvp@4.8.5)
 
   ember-modifier@4.2.2(@babel/core@7.29.0):
     dependencies:
@@ -17546,10 +17541,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-source@6.12.0-beta.2(@glimmer/component@2.0.0)(rsvp@4.8.5):
+  ember-source@6.12.0-alpha.6(@glimmer/component@2.0.0)(rsvp@4.8.5):
     dependencies:
       '@babel/core': 7.29.0
-      '@ember/edition-utils': 1.2.0
       '@embroider/addon-shim': 1.10.2
       '@glimmer/component': 2.0.0
       '@simple-dom/interface': 1.4.0
@@ -17560,12 +17554,10 @@ snapshots:
       chalk: 4.1.2
       ember-cli-babel: 8.2.0(@babel/core@7.29.0)
       ember-cli-get-component-path-option: 1.0.0
-      ember-cli-is-package-missing: 1.0.0
       ember-cli-normalize-entity-name: 1.0.0
       ember-cli-path-utils: 1.0.0
       ember-cli-string-utils: 1.1.0
       ember-cli-typescript-blueprint-polyfill: 0.1.0
-      ember-cli-version-checker: 5.1.2
       ember-router-generator: 2.0.0
       inflection: 2.0.1
       route-recognizer: 0.3.4
