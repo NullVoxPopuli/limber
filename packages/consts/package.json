@@ -19,7 +19,7 @@
     "@babel/core": "^7.28.5",
     "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "concurrently": "^9.2.1",
-    "eslint": "^9.39.1",
+    "eslint": "^10.0.0",
     "prettier": "^3.7.4",
     "prettier-plugin-ember-template-tag": "2.1.2",
     "typescript": "5.9.3"
