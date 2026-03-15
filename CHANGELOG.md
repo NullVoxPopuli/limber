@@ -1,5 +1,21 @@
 # Changelog
 
+## Release (2026-03-15)
+
+* ember-repl 8.0.3 (patch)
+* limber-ui 4.2.1 (patch)
+* repl-sdk 1.5.3 (patch)
+
+#### :house: Internal
+* `ember-repl`, `limber-ui`
+  * [#2096](https://github.com/NullVoxPopuli/limber/pull/2096) Upgrade ember-source to 6.12.0-alpha.6 ([@Copilot](https://github.com/apps/copilot-swe-agent))
+* `ember-repl`, `repl-sdk`
+  * [#2090](https://github.com/NullVoxPopuli/limber/pull/2090) Get ember-repl tests running in CI for both chrome and firefox ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 2
+- Copilot [Bot] ([@copilot-swe-agent](https://github.com/apps/copilot-swe-agent))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2026-02-20)
 
 * ember-repl 8.0.2 (patch)
