@@ -19,7 +19,7 @@
     "@lezer/generator": "^1.8.0",
     "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
-    "eslint": "^9.39.1",
+    "eslint": "^10.0.0",
     "mocha": "^11.6.0",
     "prettier": "^3.7.4",
     "rollup": "^4.53.3",
