@@ -9,7 +9,7 @@ import { isAllowedFormat } from '#app/languages.gts';
 import { getHighlighter } from '@nullvoxpopuli/limber-shared';
 
 interface Signature {
-  Element: HTMLPreElement;
+  Element: HTMLElement;
   Args: {
     Positional: [string | null];
   };
