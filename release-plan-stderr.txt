@@ -1,0 +1,7 @@
+# Unlabeled Changes
+
+* `ember-repl`, `limber-ui`
+  * [#2097](https://github.com/NullVoxPopuli/limber/pull/2097) Upgrade glint ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+
+*Cannot plan release until the above changes are labeled*.
