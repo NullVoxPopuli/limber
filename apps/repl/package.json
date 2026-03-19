@@ -84,7 +84,7 @@
     "ember-load-initializers": "^3.0.1",
     "ember-page-title": "^9.0.3",
     "ember-qunit": "^9.0.4",
-    "ember-source": "file:ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+98702592.tgz",
+    "ember-source": "file:ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+81a79921.tgz",
     "ember-template-lint": "^7.9.3",
     "eslint": "^9.39.1",
     "execa": "^9.6.1",

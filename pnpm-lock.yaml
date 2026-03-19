@@ -6,7 +6,7 @@ settings:
   peersSuffixMaxLength: 40
 
 overrides:
-  ember-source: file:./apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+98702592.tgz
+  ember-source: file:./apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+81a79921.tgz
   '@babel/standalone': file:./babel-standalone.tgz
   '@glint/template': 1.7.4
   array-includes: npm:@nolyfill/array-includes@^1
@@ -130,7 +130,7 @@ importers:
         version: 0.8.8
       ember-focus-trap:
         specifier: ^1.1.1
-        version: 1.1.1(b398a8a9336197b6c3f20240dba5d513)
+        version: 1.1.1(9970228f385d4bd61eddbeb6d620241d)
       ember-modifier:
         specifier: ^4.2.0
         version: 4.3.0(@babel/core@7.29.0)
@@ -344,7 +344,7 @@ importers:
         version: 2.0.1(882cf82caec78f226fcbd647b89f3bbe)
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(b398a8a9336197b6c3f20240dba5d513)
+        version: 3.0.1(9970228f385d4bd61eddbeb6d620241d)
       ember-page-title:
         specifier: ^9.0.3
         version: 9.0.3
@@ -352,8 +352,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(a967adbef921ddf866dd2ef3bacfd07c)
       ember-source:
-        specifier: file:ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+98702592.tgz
-        version: file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+98702592.tgz(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        specifier: file:ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+81a79921.tgz
+        version: file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+81a79921.tgz(@glimmer/component@2.0.0)(rsvp@4.8.5)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -582,7 +582,7 @@ importers:
         version: 9.2.1
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(b398a8a9336197b6c3f20240dba5d513)
+        version: 3.0.1(9970228f385d4bd61eddbeb6d620241d)
       ember-modify-based-class-resource:
         specifier: ^1.1.1
         version: 1.1.2(f90c614a2914d5867e78d9108f869e02)
@@ -596,8 +596,8 @@ importers:
         specifier: ^13.1.0
         version: 13.1.1
       ember-source:
-        specifier: file:../repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+98702592.tgz
-        version: file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+98702592.tgz(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        specifier: file:../repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+81a79921.tgz
+        version: file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+81a79921.tgz(@glimmer/component@2.0.0)(rsvp@4.8.5)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -720,8 +720,8 @@ importers:
         specifier: 2.3.1
         version: 2.3.1(@babel/core@7.29.0)
       ember-source:
-        specifier: file:../../../apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+98702592.tgz
-        version: file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+98702592.tgz(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        specifier: file:../../../apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+81a79921.tgz
+        version: file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+81a79921.tgz(@glimmer/component@2.0.0)(rsvp@4.8.5)
       penpal:
         specifier: ^6.2.2
         version: 6.2.2
@@ -1020,8 +1020,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(a967adbef921ddf866dd2ef3bacfd07c)
       ember-source:
-        specifier: file:../../apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+98702592.tgz
-        version: file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+98702592.tgz(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        specifier: file:../../apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+81a79921.tgz
+        version: file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+81a79921.tgz(@glimmer/component@2.0.0)(rsvp@4.8.5)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.6.1)
@@ -1204,8 +1204,8 @@ importers:
         specifier: ^7.0.7
         version: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
       ember-source:
-        specifier: file:../../apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+98702592.tgz
-        version: file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+98702592.tgz(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        specifier: file:../../apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+81a79921.tgz
+        version: file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+81a79921.tgz(@glimmer/component@2.0.0)(rsvp@4.8.5)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -6953,8 +6953,8 @@ packages:
     resolution: {integrity: sha512-89oVHVJwmLDvGvAUWgS87KpBoRhy3aZ6U0Ql6HOmU4TrPkyaa8pM0W81wj9cIwjYprcQtN9EwzZMHnq46+oUyw==}
     engines: {node: 8.* || 10.* || >= 12}
 
-  ember-source@file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+98702592.tgz:
-    resolution: {integrity: sha512-7D+jyd3Vadf2OWSr8WvHg4L58xmdmShRQY4Gj+3NwS0m/QMmKe0jKVFMwxuBEggxkG5EtokE5DRLMVsSyANLvQ==, tarball: file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+98702592.tgz}
+  ember-source@file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+81a79921.tgz:
+    resolution: {integrity: sha512-IsqMax524sw08Kq30WGzdn8glgg17QXL3nch+Bc/1HZ6yB/d64YShrEYmUAb9daq+XphQOJPbWr1DyAiNxhBCA==, tarball: file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+81a79921.tgz}
     version: 6.12.0-alpha.1.copilot-quest-proper-shadowdom-support
     engines: {node: '>= 20.19'}
     peerDependencies:
@@ -17274,17 +17274,17 @@ snapshots:
       - supports-color
       - typescript
 
-  ember-focus-trap@1.1.1(b398a8a9336197b6c3f20240dba5d513):
+  ember-focus-trap@1.1.1(9970228f385d4bd61eddbeb6d620241d):
     dependencies:
       '@embroider/addon-shim': 1.10.2
-      ember-source: file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+98702592.tgz(@glimmer/component@2.0.0)(rsvp@4.8.5)
+      ember-source: file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+81a79921.tgz(@glimmer/component@2.0.0)(rsvp@4.8.5)
       focus-trap: 6.9.4
     transitivePeerDependencies:
       - supports-color
 
-  ember-load-initializers@3.0.1(b398a8a9336197b6c3f20240dba5d513):
+  ember-load-initializers@3.0.1(9970228f385d4bd61eddbeb6d620241d):
     dependencies:
-      ember-source: file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+98702592.tgz(@glimmer/component@2.0.0)(rsvp@4.8.5)
+      ember-source: file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+81a79921.tgz(@glimmer/component@2.0.0)(rsvp@4.8.5)
 
   ember-modifier@4.3.0(@babel/core@7.29.0):
     dependencies:
@@ -17479,7 +17479,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-source@file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+98702592.tgz(@glimmer/component@2.0.0)(rsvp@4.8.5):
+  ember-source@file:apps/repl/ember-source-6.12.0-alpha.1.copilot-quest-proper-shadowdom-support+81a79921.tgz(@glimmer/component@2.0.0)(rsvp@4.8.5):
     dependencies:
       '@babel/core': 7.29.0
       '@embroider/addon-shim': 1.10.2
