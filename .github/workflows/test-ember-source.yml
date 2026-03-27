@@ -131,7 +131,7 @@ jobs:
 
       - name: Build ember-source for publishing
         working-directory: /tmp/ember.js
-        run: node ./bin/build-for-publishing.mjs
+        run: node ./bin/build-for-publishing.js
 
       - name: Find tarball
         id: tarball
