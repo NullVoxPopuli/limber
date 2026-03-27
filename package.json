@@ -80,7 +80,8 @@
       "reactiveweb": "1.9.1",
       "side-channel": "npm:@nolyfill/side-channel@^1",
       "string.prototype.matchall": "npm:@nolyfill/string.prototype.matchall@^1",
-      "string.prototype.trimend": "npm:@nolyfill/string.prototype.trimend@^1"
+      "string.prototype.trimend": "npm:@nolyfill/string.prototype.trimend@^1",
+      "ember-source": "file:./apps/repl/ember-source-6.12.0-alpha.1.implement-element-helper+5d7bc453.tgz"
     },
     "patchedDependencies": {
       "browserslist-generator": "patches/browserslist-generator.patch"
