@@ -270,7 +270,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_TOKEN_EMBER_SOURCE_TESTING_PR }}
           commit-message: "Add ember-source tarball from ${{ needs.resolve.outputs.branch }}"
           branch: ${{ steps.pr-info.outputs.branch-name }}
           title: ${{ steps.pr-info.outputs.title }}
