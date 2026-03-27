@@ -1,0 +1,220 @@
+name: Test Ember Source
+
+on:
+  workflow_dispatch:
+    inputs:
+      ember-reference:
+        description: >
+          A PR URL (e.g. https://github.com/emberjs/ember.js/pull/12345)
+          or a branch name (e.g. main, my-feature-branch) on the emberjs/ember.js repo.
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  NODE_OPTIONS: "--max-old-space-size=4096"
+
+jobs:
+  build-and-pr:
+    name: Build ember-source and open PR
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Set up node and pnpm based on limber's configuration.
+      # pnpm/action-setup reads packageManager from limber's package.json.
+      # This pnpm version is also used to build ember.js (compatible for install + build).
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Resolve branch name
+        id: resolve
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const input = `${{ github.event.inputs.ember-reference }}`.trim();
+
+            // Check if input is a PR URL
+            const prMatch = input.match(/github\.com\/([^/]+)\/([^/]+)\/pull\/(\d+)/);
+
+            let branch, remote, owner, repo;
+
+            if (prMatch) {
+              owner = prMatch[1];
+              repo = prMatch[2];
+              const prNumber = parseInt(prMatch[3], 10);
+
+              console.log(`Detected PR URL: ${owner}/${repo}#${prNumber}`);
+
+              const { data: pr } = await github.rest.pulls.get({
+                owner,
+                repo,
+                pull_number: prNumber,
+              });
+
+              branch = pr.head.ref;
+              const headOwner = pr.head.repo.owner.login;
+              const headRepo = pr.head.repo.name;
+
+              // If the PR is from a fork, we need the fork's remote
+              if (headOwner !== owner) {
+                remote = `https://github.com/${headOwner}/${headRepo}.git`;
+              } else {
+                remote = `https://github.com/${owner}/${repo}.git`;
+              }
+
+              console.log(`PR title: ${pr.title}`);
+              console.log(`Branch: ${branch}`);
+              console.log(`Remote: ${remote}`);
+
+              core.setOutput('pr-title', pr.title);
+              core.setOutput('pr-number', prNumber);
+              core.setOutput('pr-owner', owner);
+              core.setOutput('pr-repo', repo);
+            } else {
+              // Input is a branch name
+              branch = input;
+              remote = 'https://github.com/emberjs/ember.js.git';
+              console.log(`Using branch name directly: ${branch}`);
+
+              core.setOutput('pr-title', '');
+              core.setOutput('pr-number', '');
+              core.setOutput('pr-owner', 'emberjs');
+              core.setOutput('pr-repo', 'ember.js');
+            }
+
+            core.setOutput('branch', branch);
+            core.setOutput('remote', remote);
+
+      - name: Clone ember.js
+        env:
+          EMBER_BRANCH: ${{ steps.resolve.outputs.branch }}
+          EMBER_REMOTE: ${{ steps.resolve.outputs.remote }}
+        run: |
+          # Validate branch name contains only safe characters
+          if [[ ! "$EMBER_BRANCH" =~ ^[a-zA-Z0-9._/@-]+$ ]]; then
+            echo "::error::Invalid branch name: $EMBER_BRANCH"
+            exit 1
+          fi
+
+          git clone --depth=1 --branch "$EMBER_BRANCH" "$EMBER_REMOTE" /tmp/ember.js || {
+            # If shallow clone with branch fails (e.g. fork branch), do a full clone
+            git clone "$EMBER_REMOTE" /tmp/ember.js
+            cd /tmp/ember.js
+            git checkout "$EMBER_BRANCH"
+          }
+
+      - name: Install ember.js dependencies
+        working-directory: /tmp/ember.js
+        run: pnpm install
+
+      - name: Build ember-source for publishing
+        working-directory: /tmp/ember.js
+        run: node ./bin/build-for-publishing.mjs
+
+      - name: Find and copy tarball
+        id: tarball
+        run: |
+          # Find the generated tgz file
+          tarball=$(find /tmp/ember.js -maxdepth 3 -name 'ember-source-*.tgz' -print -quit)
+
+          if [ -z "$tarball" ]; then
+            echo "::error::No ember-source tarball found after build"
+            exit 1
+          fi
+
+          echo "Found tarball: $tarball"
+          tarball_name=$(basename "$tarball")
+          echo "Tarball name: $tarball_name"
+
+          # Copy to limber repo
+          cp "$tarball" ./apps/repl/"$tarball_name"
+
+          echo "tarball-name=$tarball_name" >> "$GITHUB_OUTPUT"
+
+      - name: Configure pnpm override and ember-source reference
+        uses: actions/github-script@v7
+        env:
+          TARBALL_NAME: ${{ steps.tarball.outputs.tarball-name }}
+        with:
+          script: |
+            const fs = require('fs');
+            const tarballName = process.env.TARBALL_NAME;
+
+            // Update root package.json — add pnpm override
+            const rootPkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            if (!rootPkg.pnpm) rootPkg.pnpm = {};
+            if (!rootPkg.pnpm.overrides) rootPkg.pnpm.overrides = {};
+            rootPkg.pnpm.overrides['ember-source'] = `file:./apps/repl/${tarballName}`;
+            fs.writeFileSync('package.json', JSON.stringify(rootPkg, null, 2) + '\n');
+            console.log('Updated root package.json with ember-source override');
+
+            // Update apps/repl/package.json — point ember-source to tarball
+            const replPkg = JSON.parse(fs.readFileSync('apps/repl/package.json', 'utf8'));
+            if (!replPkg.devDependencies) replPkg.devDependencies = {};
+            replPkg.devDependencies['ember-source'] = `file:${tarballName}`;
+            fs.writeFileSync('apps/repl/package.json', JSON.stringify(replPkg, null, 2) + '\n');
+            console.log('Updated apps/repl/package.json ember-source reference');
+
+      - name: Update lockfile
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Determine PR branch name and title
+        id: pr-info
+        run: |
+          ember_branch="${{ steps.resolve.outputs.branch }}"
+          pr_number="${{ steps.resolve.outputs.pr-number }}"
+          pr_owner="${{ steps.resolve.outputs.pr-owner }}"
+          pr_repo="${{ steps.resolve.outputs.pr-repo }}"
+
+          # Create a safe branch name
+          safe_branch=$(echo "$ember_branch" | tr '/' '-' | tr -cd '[:alnum:]-')
+          branch_name="test-ember-source/${safe_branch}"
+
+          if [ -n "$pr_number" ]; then
+            title="Test out: https://github.com/${pr_owner}/${pr_repo}/pull/${pr_number}"
+            body="Testing out
+          - https://github.com/${pr_owner}/${pr_repo}/pull/${pr_number}
+
+          Built from branch \`${ember_branch}\` via the test-ember-source workflow."
+          else
+            title="Test ember-source from branch: ${ember_branch}"
+            body="Testing ember-source built from branch \`${ember_branch}\` on \`${pr_owner}/${pr_repo}\`.
+
+          Built via the test-ember-source workflow."
+          fi
+
+          echo "branch-name=$branch_name" >> "$GITHUB_OUTPUT"
+
+          # Use EOF delimiter for multiline values
+          {
+            echo "title<<TITLE_EOF"
+            echo "$title"
+            echo "TITLE_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+          {
+            echo "body<<BODY_EOF"
+            echo "$body"
+            echo "BODY_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Add ember-source tarball from ${{ steps.resolve.outputs.branch }}"
+          branch: ${{ steps.pr-info.outputs.branch-name }}
+          title: ${{ steps.pr-info.outputs.title }}
+          body: ${{ steps.pr-info.outputs.body }}
+          delete-branch: true
