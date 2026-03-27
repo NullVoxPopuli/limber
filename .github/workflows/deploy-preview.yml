@@ -171,6 +171,8 @@ jobs:
           #   renovate/uuid becomes renovate-uuid
           subdomain="${branch//\//-}"
           subdomain=$(echo $subdomain | cut -c -28)
+          # Strip trailing hyphens (can occur when truncation lands on a hyphen)
+          subdomain="${subdomain%-}"
           echo "subdomain=$subdomain" >> $GITHUB_OUTPUT
 
   PostComment:
