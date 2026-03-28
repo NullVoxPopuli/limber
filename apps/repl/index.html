@@ -34,6 +34,7 @@
         resolve: (...args) => args.join("/"),
       };
     </script>
+    <!-- VITE_EMBER_SSR_HEAD -->
   </head>
   <body class="syntax-dark syntax-bright">
     <div id="initial-loader">
@@ -95,6 +96,8 @@
         window.self.document.body.classList.remove("overflow-hidden");
       }
     </script>
+
+    <!-- VITE_EMBER_SSR_BODY -->
 
     <link rel="stylesheet" href="./app/styles/app.css" />
 
