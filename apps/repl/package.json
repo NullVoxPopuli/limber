@@ -113,7 +113,7 @@
     "vite": "8.0.0-beta.7",
     "happy-dom": "^17.4.4",
     "vite-bundle-analyzer": "^1.3.1",
-    "vite-ember-ssr": "link:/home/nvp/Development/OpenSource/vite-ember-ssr/packages/vite-ember-ssr",
+    "vite-ember-ssr": "0.1.0-alpha.0",
     "vite-plugin-circular-dependency": "^0.5.0",
     "vite-plugin-mkcert": "^1.17.9",
     "zimmerframe": "^1.1.4"

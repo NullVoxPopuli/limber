@@ -105,7 +105,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { assembleHTML, renderEmberApp } from 'vite-ember-ssr/server';
+import { render } from 'vite-ember-ssr/server';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -133,16 +133,15 @@ async function main() {
 
   for (const route of DOCS_ROUTES) {
     try {
-      const rendered = await renderEmberApp({
+      const { html, error } = await render({
         url: route,
+        template: indexHtml,
         createApp: createSsrApp,
       });
 
-      if (rendered.error) {
-        throw rendered.error;
+      if (error) {
+        throw error;
       }
-
-      const html = assembleHTML(indexHtml, rendered);
 
       // Write to the route's directory as index.html for clean URLs
       const outputDir = path.join(clientDir, route);
