@@ -1,10 +1,5 @@
-import { cleanupSSRContent } from 'vite-ember-ssr/client';
-
 import environment from '#config';
 
 import Application from './app.ts';
-
-// Remove pre-rendered SSR content before Ember boots (no-op if not SSG'd)
-cleanupSSRContent();
 
 Application.create(environment.APP);

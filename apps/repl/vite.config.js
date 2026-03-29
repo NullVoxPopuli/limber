@@ -139,91 +139,6 @@ function maybeBabel(options = {}) {
   };
 }
 
-/**
- * Vite 8 / Rolldown compatibility shim for vite-ember-ssr's SSG plugin.
- * Fixes: (1) Rolldown outputs .js not .mjs, (2) browser globals needed
- * before SSR module import. Register BEFORE emberSsg() in plugins array.
- */
-function ssrCompat() {
-  let config;
-
-  return {
-    name: 'ssr-compat',
-    configResolved(c) {
-      config = c;
-    },
-    async closeBundle() {
-      // Child SSR build: copy .js → .mjs so the plugin can find it
-      if (process.env.__VITE_EMBER_SSG_CHILD__ === '1') {
-        const { copyFile, readdir } = await import('node:fs/promises');
-        const { join, isAbsolute } = await import('node:path');
-        const outDir = isAbsolute(config.build.outDir)
-          ? config.build.outDir
-          : join(config.root, config.build.outDir);
-
-        for (const f of await readdir(outDir).catch(() => [])) {
-          if (f.endsWith('.js'))
-            await copyFile(join(outDir, f), join(outDir, f.replace(/\.js$/, '.mjs'))).catch(
-              () => {}
-            );
-        }
-
-        return;
-      }
-
-      // Parent build: install HappyDOM globals before SSR bundle is imported
-      // (many Ember packages access window/document at module scope)
-      if (!config.build.ssr && !globalThis.__SSR_GLOBALS_INSTALLED__) {
-        globalThis.__SSR_GLOBALS_INSTALLED__ = true;
-
-        const { Window } = await import('happy-dom');
-        const w = new Window({ url: 'http://localhost' });
-
-        for (const [k, v] of Object.entries({
-          window: w,
-          document: w.document,
-          self: w,
-          navigator: w.navigator,
-          location: w.location,
-          history: w.history,
-          localStorage: w.localStorage,
-          sessionStorage: w.sessionStorage,
-          HTMLElement: w.HTMLElement,
-          Element: w.Element,
-          Node: w.Node,
-          Event: w.Event,
-          CustomEvent: w.CustomEvent,
-          InputEvent: w.InputEvent,
-          KeyboardEvent: w.KeyboardEvent,
-          MouseEvent: w.MouseEvent,
-          FocusEvent: w.FocusEvent,
-          MutationObserver: w.MutationObserver,
-          IntersectionObserver: w.IntersectionObserver,
-          ResizeObserver: w.ResizeObserver,
-          CSSStyleSheet: w.CSSStyleSheet,
-          MediaQueryList: w.MediaQueryList,
-          requestAnimationFrame: (cb) => setTimeout(cb, 0),
-          cancelAnimationFrame: clearTimeout,
-        })) {
-          try {
-            globalThis[k] = v;
-          } catch {
-            try {
-              Object.defineProperty(globalThis, k, {
-                value: v,
-                writable: true,
-                configurable: true,
-              });
-            } catch {
-              /* non-configurable */
-            }
-          }
-        }
-      }
-    },
-  };
-}
-
 function rolldownTemplateTag() {
   const plugin = templateTag();
 
@@ -367,9 +282,42 @@ export default defineConfig((env) => {
         rolldownEmberConfig(),
       ],
       maybeBabel({ env }),
-      ssrCompat(),
-      // Wrap to prevent double execution (Vite 8 calls closeBundle per environment)
-      // and strip the app shell from pre-rendered pages.
+      // Polyfill browser globals that vite-ember-ssr's BROWSER_GLOBALS
+      // list doesn't include yet. These are accessed at module scope
+      // by Ember ecosystem packages when the SSR bundle is imported.
+      {
+        name: 'ssr-globals-polyfill',
+        async closeBundle() {
+          // eslint-disable-next-line n/no-unsupported-features/node-builtins
+          if (globalThis.localStorage) return;
+
+          const { Window } = await import('happy-dom');
+          const w = new Window({ url: 'http://localhost' });
+
+          for (const k of [
+            'localStorage',
+            'sessionStorage',
+            'InputEvent',
+            'KeyboardEvent',
+            'MouseEvent',
+            'FocusEvent',
+            'PointerEvent',
+            'IntersectionObserver',
+            'ResizeObserver',
+            'CSSStyleSheet',
+            'MediaQueryList',
+          ]) {
+            try {
+              globalThis[k] = w[k];
+            } catch {
+              /* non-configurable */
+            }
+          }
+        },
+      },
+      // Wrap emberSsg to prevent double execution (Vite 8 calls
+      // closeBundle per environment) and strip the app shell from
+      // pre-rendered pages.
       (() => {
         let ran = false;
         const routes = [
@@ -383,7 +331,6 @@ export default defineConfig((env) => {
         const ssg = emberSsg({
           routes,
           ssrEntry: 'app/app-ssr.ts',
-          shoebox: false,
           additionalNoExternal: [/./],
         });
         const orig = ssg.closeBundle;
