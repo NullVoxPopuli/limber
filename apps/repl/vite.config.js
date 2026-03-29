@@ -139,77 +139,6 @@ function maybeBabel(options = {}) {
   };
 }
 
-const SSG_ROUTES = [
-  'docs',
-  'docs/editor',
-  'docs/embedding',
-  'docs/ember-repl',
-  'docs/repl-sdk',
-  'docs/related',
-];
-
-/**
- * Returns the SSG-related plugins:
- *  1. A globals polyfill (localStorage, InputEvent, etc. missing from
- *     vite-ember-ssr's BROWSER_GLOBALS list)
- *  2. The emberSsg plugin (with rehydrate mode so Ember reuses the
- *     SSR DOM instead of replacing it — no FOUC)
- */
-function ssgPlugins() {
-  let ran = false;
-
-  const ssg = emberSsg({
-    routes: SSG_ROUTES,
-    ssrEntry: 'app/app-ssr.ts',
-    shoebox: false,
-    rehydrate: true,
-    additionalNoExternal: [/./],
-  });
-  const origCloseBundle = ssg.closeBundle;
-
-  ssg.closeBundle = async function (...a) {
-    // Vite 8 calls closeBundle per environment — only run once
-    if (ran) return;
-    ran = true;
-    await origCloseBundle.apply(this, a);
-  };
-
-  return [
-    // Polyfill browser globals not yet in vite-ember-ssr's BROWSER_GLOBALS
-    {
-      name: 'ssg-globals-polyfill',
-      async closeBundle() {
-        // eslint-disable-next-line n/no-unsupported-features/node-builtins
-        if (globalThis.localStorage) return;
-
-        const { Window } = await import('happy-dom');
-        const w = new Window({ url: 'http://localhost' });
-
-        for (const k of [
-          'localStorage',
-          'sessionStorage',
-          'InputEvent',
-          'KeyboardEvent',
-          'MouseEvent',
-          'FocusEvent',
-          'PointerEvent',
-          'IntersectionObserver',
-          'ResizeObserver',
-          'CSSStyleSheet',
-          'MediaQueryList',
-        ]) {
-          try {
-            globalThis[k] = w[k];
-          } catch {
-            /* non-configurable */
-          }
-        }
-      },
-    },
-    ssg,
-  ];
-}
-
 function rolldownTemplateTag() {
   const plugin = templateTag();
 
@@ -353,7 +282,19 @@ export default defineConfig((env) => {
         rolldownEmberConfig(),
       ],
       maybeBabel({ env }),
-      ssgPlugins(),
+      emberSsg({
+        routes: [
+          'docs',
+          'docs/editor',
+          'docs/embedding',
+          'docs/ember-repl',
+          'docs/repl-sdk',
+          'docs/related',
+        ],
+        ssrEntry: 'app/app-ssr.ts',
+        rehydrate: true,
+        additionalNoExternal: [/./],
+      }),
     ].flat(),
   };
 });
