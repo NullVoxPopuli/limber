@@ -338,9 +338,29 @@ export default defineConfig((env) => {
             try {
               await copyFile(indexPath, backupPath);
 
-              const html = await readFile(indexPath, 'utf-8');
+              let html = await readFile(indexPath, 'utf-8');
 
-              await writeFile(indexPath, html.replace(APP_SHELL_RE, ''), 'utf-8');
+              html = html.replace(APP_SHELL_RE, '');
+
+              // Move CSS <link> tags before the SSR head marker so the
+              // browser starts loading stylesheets immediately, instead
+              // of after hundreds of lines of SSR-injected <head> content.
+              const cssLinks = [];
+
+              html = html.replace(/<link rel="stylesheet"[^>]*>/g, (m) => {
+                cssLinks.push(m);
+
+                return '';
+              });
+
+              if (cssLinks.length) {
+                html = html.replace(
+                  '<!-- VITE_EMBER_SSR_HEAD -->',
+                  cssLinks.join('\n    ') + '\n    <!-- VITE_EMBER_SSR_HEAD -->'
+                );
+              }
+
+              await writeFile(indexPath, html, 'utf-8');
             } catch {
               /* dist/index.html may not exist */
             }
