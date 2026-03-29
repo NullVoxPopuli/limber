@@ -162,6 +162,7 @@ function ssgPlugins() {
   const ssg = emberSsg({
     routes: SSG_ROUTES,
     ssrEntry: 'app/app-ssr.ts',
+    shoebox: false,
     additionalNoExternal: [/./],
   });
   const origCloseBundle = ssg.closeBundle;
