@@ -152,9 +152,8 @@ const SSG_ROUTES = [
  * Returns the SSG-related plugins:
  *  1. A globals polyfill (localStorage, InputEvent, etc. missing from
  *     vite-ember-ssr's BROWSER_GLOBALS list)
- *  2. The emberSsg plugin, wrapped to run once and post-process the
- *     generated HTML (remove app shell, add CSS links, swap SSR
- *     boundaries for a CSS-hideable wrapper)
+ *  2. The emberSsg plugin (with rehydrate mode so Ember reuses the
+ *     SSR DOM instead of replacing it — no FOUC)
  */
 function ssgPlugins() {
   let ran = false;
@@ -163,6 +162,7 @@ function ssgPlugins() {
     routes: SSG_ROUTES,
     ssrEntry: 'app/app-ssr.ts',
     shoebox: false,
+    rehydrate: true,
     additionalNoExternal: [/./],
   });
   const origCloseBundle = ssg.closeBundle;
@@ -171,12 +171,7 @@ function ssgPlugins() {
     // Vite 8 calls closeBundle per environment — only run once
     if (ran) return;
     ran = true;
-
-    try {
-      await origCloseBundle.apply(this, a);
-    } finally {
-      await postProcessSsgPages();
-    }
+    await origCloseBundle.apply(this, a);
   };
 
   return [
@@ -213,47 +208,6 @@ function ssgPlugins() {
     },
     ssg,
   ];
-}
-
-/**
- * Post-processes SSG'd HTML files:
- *  - Removes the app shell (#initial-loader + iframe script)
- *  - Moves CSS <link> tags before SSR head content
- *  - Replaces SSR boundary markers with a <div id="ssr-content"> wrapper
- *    and adds CSS to hide it once Ember boots (.ember-application),
- *    avoiding the FOUC that cleanupSSRContent causes
- */
-async function postProcessSsgPages() {
-  const { readFile, writeFile } = await import('node:fs/promises');
-  const { join } = await import('node:path');
-  const distDir = join(process.cwd(), 'dist');
-
-  const APP_SHELL_RE =
-    /<div id="initial-loader">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<\/div>\s*<script>[\s\S]*?<\/script>/;
-
-  for (const route of SSG_ROUTES) {
-    const file = join(distDir, route, 'index.html');
-
-    try {
-      let html = await readFile(file, 'utf-8');
-
-      // 1. Remove the app shell
-      html = html.replace(APP_SHELL_RE, '');
-
-      // 2. Replace SSR boundary markers with a wrapper div + CSS rule
-      //    so Ember hides the SSR content via CSS when it boots,
-      //    instead of cleanupSSRContent which causes a blank flash.
-      html = html.replace(
-        '<script type="x/boundary" id="ssr-body-start"></script>',
-        '<style>.ember-application #ssr-content{display:none}</style>\n    <div id="ssr-content">'
-      );
-      html = html.replace('<script type="x/boundary" id="ssr-body-end"></script>', '</div>');
-
-      await writeFile(file, html, 'utf-8');
-    } catch {
-      // file may not exist if route failed to render
-    }
-  }
 }
 
 function rolldownTemplateTag() {
