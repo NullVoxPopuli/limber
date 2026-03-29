@@ -282,11 +282,10 @@ export default defineConfig((env) => {
         rolldownEmberConfig(),
       ],
       maybeBabel({ env }),
-      // Polyfill browser globals that vite-ember-ssr's BROWSER_GLOBALS
-      // list doesn't include yet. These are accessed at module scope
-      // by Ember ecosystem packages when the SSR bundle is imported.
+      // Polyfill browser globals not yet in vite-ember-ssr's
+      // BROWSER_GLOBALS list (accessed at module scope by Ember packages).
       {
-        name: 'ssr-globals-polyfill',
+        name: 'ssg-globals-polyfill',
         async closeBundle() {
           // eslint-disable-next-line n/no-unsupported-features/node-builtins
           if (globalThis.localStorage) return;
@@ -315,56 +314,72 @@ export default defineConfig((env) => {
           }
         },
       },
-      // Wrap emberSsg to prevent double execution (Vite 8 calls
-      // closeBundle per environment) and strip the app shell from
-      // pre-rendered pages.
+      // Strip the app shell from dist/index.html before emberSsg
+      // reads it as the SSG template, then restore it after so the
+      // SPA fallback still has the loading skeleton.
+      // Guard with `ran` — Vite 8 calls closeBundle per environment.
       (() => {
         let ran = false;
-        const routes = [
-          'docs',
-          'docs/editor',
-          'docs/embedding',
-          'docs/ember-repl',
-          'docs/repl-sdk',
-          'docs/related',
-        ];
+        const APP_SHELL_RE =
+          /<div id="initial-loader">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<\/div>\s*<script>[\s\S]*?<\/script>/;
+
+        return {
+          name: 'ssg-strip-app-shell',
+          async closeBundle() {
+            if (ran || process.env.__VITE_EMBER_SSG_CHILD__) return;
+            ran = true;
+
+            const { readFile, writeFile, copyFile } = await import('node:fs/promises');
+            const { join } = await import('node:path');
+            const distDir = join(process.cwd(), 'dist');
+            const indexPath = join(distDir, 'index.html');
+            const backupPath = join(distDir, '_index_with_shell.html');
+
+            try {
+              await copyFile(indexPath, backupPath);
+
+              const html = await readFile(indexPath, 'utf-8');
+
+              await writeFile(indexPath, html.replace(APP_SHELL_RE, ''), 'utf-8');
+            } catch {
+              /* dist/index.html may not exist */
+            }
+          },
+        };
+      })(),
+      (() => {
+        let ran = false;
         const ssg = emberSsg({
-          routes,
+          routes: [
+            'docs',
+            'docs/editor',
+            'docs/embedding',
+            'docs/ember-repl',
+            'docs/repl-sdk',
+            'docs/related',
+          ],
           ssrEntry: 'app/app-ssr.ts',
           additionalNoExternal: [/./],
         });
         const orig = ssg.closeBundle;
-        let resolvedConfig;
-        const origConfigResolved = ssg.configResolved;
-
-        ssg.configResolved = function (c) {
-          resolvedConfig = c;
-
-          return origConfigResolved?.call(this, c);
-        };
 
         ssg.closeBundle = async function (...a) {
           if (ran) return;
           ran = true;
-          await orig.apply(this, a);
 
-          // Strip the app shell from pre-rendered pages — the SSG content
-          // replaces it, so the "Loading / Limber" skeleton is unnecessary.
-          const { readFile, writeFile } = await import('node:fs/promises');
-          const { join } = await import('node:path');
-          const outDir = join(resolvedConfig.root, resolvedConfig.build.outDir);
-          const appShellRe =
-            /<div id="initial-loader">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<\/div>\s*<script>[\s\S]*?<\/script>/;
-
-          for (const route of routes) {
-            const file = join(outDir, route, 'index.html');
+          try {
+            await orig.apply(this, a);
+          } finally {
+            // Always restore original index.html (with app shell) for SPA routes
+            const { copyFile, rm } = await import('node:fs/promises');
+            const { join } = await import('node:path');
+            const distDir = join(process.cwd(), 'dist');
 
             try {
-              const html = await readFile(file, 'utf-8');
-
-              await writeFile(file, html.replace(appShellRe, ''), 'utf-8');
+              await copyFile(join(distDir, '_index_with_shell.html'), join(distDir, 'index.html'));
+              await rm(join(distDir, '_index_with_shell.html'));
             } catch {
-              // file may not exist if route failed to render
+              /* backup may not exist */
             }
           }
         };
