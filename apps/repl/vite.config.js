@@ -139,6 +139,154 @@ function maybeBabel(options = {}) {
   };
 }
 
+const SSG_ROUTES = [
+  'docs',
+  'docs/editor',
+  'docs/embedding',
+  'docs/ember-repl',
+  'docs/repl-sdk',
+  'docs/related',
+];
+
+/**
+ * Returns the SSG-related plugins:
+ *  1. A globals polyfill (localStorage, InputEvent, etc. missing from
+ *     vite-ember-ssr's BROWSER_GLOBALS list)
+ *  2. The emberSsg plugin, wrapped to run once and post-process the
+ *     generated HTML (remove app shell, add CSS links, swap SSR
+ *     boundaries for a CSS-hideable wrapper)
+ */
+function ssgPlugins() {
+  let ran = false;
+
+  const ssg = emberSsg({
+    routes: SSG_ROUTES,
+    ssrEntry: 'app/app-ssr.ts',
+    additionalNoExternal: [/./],
+  });
+  const origCloseBundle = ssg.closeBundle;
+
+  ssg.closeBundle = async function (...a) {
+    // Vite 8 calls closeBundle per environment — only run once
+    if (ran) return;
+    ran = true;
+
+    try {
+      await origCloseBundle.apply(this, a);
+    } finally {
+      await postProcessSsgPages();
+    }
+  };
+
+  return [
+    // Polyfill browser globals not yet in vite-ember-ssr's BROWSER_GLOBALS
+    {
+      name: 'ssg-globals-polyfill',
+      async closeBundle() {
+        // eslint-disable-next-line n/no-unsupported-features/node-builtins
+        if (globalThis.localStorage) return;
+
+        const { Window } = await import('happy-dom');
+        const w = new Window({ url: 'http://localhost' });
+
+        for (const k of [
+          'localStorage',
+          'sessionStorage',
+          'InputEvent',
+          'KeyboardEvent',
+          'MouseEvent',
+          'FocusEvent',
+          'PointerEvent',
+          'IntersectionObserver',
+          'ResizeObserver',
+          'CSSStyleSheet',
+          'MediaQueryList',
+        ]) {
+          try {
+            globalThis[k] = w[k];
+          } catch {
+            /* non-configurable */
+          }
+        }
+      },
+    },
+    ssg,
+  ];
+}
+
+/**
+ * Post-processes SSG'd HTML files:
+ *  - Removes the app shell (#initial-loader + iframe script)
+ *  - Moves CSS <link> tags before SSR head content
+ *  - Replaces SSR boundary markers with a <div id="ssr-content"> wrapper
+ *    and adds CSS to hide it once Ember boots (.ember-application),
+ *    avoiding the FOUC that cleanupSSRContent causes
+ */
+async function postProcessSsgPages() {
+  const { readFile, writeFile, readdir } = await import('node:fs/promises');
+  const { join } = await import('node:path');
+  const distDir = join(process.cwd(), 'dist');
+
+  const APP_SHELL_RE =
+    /<div id="initial-loader">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<\/div>\s*<script>[\s\S]*?<\/script>/;
+
+  for (const route of SSG_ROUTES) {
+    const file = join(distDir, route, 'index.html');
+
+    try {
+      let html = await readFile(file, 'utf-8');
+
+      // 1. Remove the app shell
+      html = html.replace(APP_SHELL_RE, '');
+
+      // 2. Move CSS <link> tags before the SSR head content so the
+      //    browser starts fetching them immediately
+      const cssLinks = [];
+
+      html = html.replace(/<link rel="stylesheet"[^>]*>/g, (m) => {
+        cssLinks.push(m);
+
+        return '';
+      });
+
+      // Also pull in JS-loaded CSS (docs, tabs, etc.)
+      const assetFiles = await readdir(join(distDir, 'assets')).catch(() => []);
+      const linkedHrefs = new Set(cssLinks.map((l) => l.match(/href="([^"]+)"/)?.[1]));
+
+      for (const f of assetFiles) {
+        if (!f.endsWith('.css') || f.startsWith('tests-') || f.startsWith('output-')) continue;
+
+        const href = `/assets/${f}`;
+
+        if (!linkedHrefs.has(href)) {
+          cssLinks.push(`<link rel="stylesheet" crossorigin href="${href}">`);
+        }
+      }
+
+      if (cssLinks.length) {
+        // Insert right after <head> opening + charset meta
+        html = html.replace(
+          '<meta charset="utf-8" />',
+          '<meta charset="utf-8" />\n    ' + cssLinks.join('\n    ')
+        );
+      }
+
+      // 3. Replace SSR boundary markers with a wrapper div + CSS rule
+      //    so Ember hides the SSR content via CSS when it boots,
+      //    instead of cleanupSSRContent which causes a blank flash.
+      html = html.replace(
+        '<script type="x/boundary" id="ssr-body-start"></script>',
+        '<style>.ember-application #ssr-content{display:none}</style>\n    <div id="ssr-content">'
+      );
+      html = html.replace('<script type="x/boundary" id="ssr-body-end"></script>', '</div>');
+
+      await writeFile(file, html, 'utf-8');
+    } catch {
+      // file may not exist if route failed to render
+    }
+  }
+}
+
 function rolldownTemplateTag() {
   const plugin = templateTag();
 
@@ -282,150 +430,7 @@ export default defineConfig((env) => {
         rolldownEmberConfig(),
       ],
       maybeBabel({ env }),
-      // Polyfill browser globals not yet in vite-ember-ssr's
-      // BROWSER_GLOBALS list (accessed at module scope by Ember packages).
-      {
-        name: 'ssg-globals-polyfill',
-        async closeBundle() {
-          // eslint-disable-next-line n/no-unsupported-features/node-builtins
-          if (globalThis.localStorage) return;
-
-          const { Window } = await import('happy-dom');
-          const w = new Window({ url: 'http://localhost' });
-
-          for (const k of [
-            'localStorage',
-            'sessionStorage',
-            'InputEvent',
-            'KeyboardEvent',
-            'MouseEvent',
-            'FocusEvent',
-            'PointerEvent',
-            'IntersectionObserver',
-            'ResizeObserver',
-            'CSSStyleSheet',
-            'MediaQueryList',
-          ]) {
-            try {
-              globalThis[k] = w[k];
-            } catch {
-              /* non-configurable */
-            }
-          }
-        },
-      },
-      // Strip the app shell from dist/index.html before emberSsg
-      // reads it as the SSG template, then restore it after so the
-      // SPA fallback still has the loading skeleton.
-      // Guard with `ran` — Vite 8 calls closeBundle per environment.
-      (() => {
-        let ran = false;
-        const APP_SHELL_RE =
-          /<div id="initial-loader">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<\/div>\s*<script>[\s\S]*?<\/script>/;
-
-        return {
-          name: 'ssg-strip-app-shell',
-          async closeBundle() {
-            if (ran || process.env.__VITE_EMBER_SSG_CHILD__) return;
-            ran = true;
-
-            const { readFile, writeFile, copyFile } = await import('node:fs/promises');
-            const { join } = await import('node:path');
-            const distDir = join(process.cwd(), 'dist');
-            const indexPath = join(distDir, 'index.html');
-            const backupPath = join(distDir, '_index_with_shell.html');
-
-            try {
-              await copyFile(indexPath, backupPath);
-
-              let html = await readFile(indexPath, 'utf-8');
-
-              html = html.replace(APP_SHELL_RE, '');
-
-              // Move CSS <link> tags before the SSR head marker so the
-              // browser starts loading stylesheets immediately, instead
-              // of after hundreds of lines of SSR-injected <head> content.
-              // Also inject any JS-loaded CSS (like the docs route chunk)
-              // so it's available before JS evaluates.
-              const cssLinks = [];
-
-              html = html.replace(/<link rel="stylesheet"[^>]*>/g, (m) => {
-                cssLinks.push(m);
-
-                return '';
-              });
-
-              // Find CSS files in dist/assets/ that aren't already linked
-              // (they're loaded by JS chunks — causes FOUC on SSG pages).
-              const { readdir } = await import('node:fs/promises');
-              const linkedHrefs = new Set(cssLinks.map((l) => l.match(/href="([^"]+)"/)?.[1]));
-              const assetFiles = await readdir(join(distDir, 'assets')).catch(() => []);
-
-              for (const f of assetFiles) {
-                if (!f.endsWith('.css')) continue;
-                // Skip test/output CSS — not needed for docs pages
-                if (f.startsWith('tests-') || f.startsWith('output-')) continue;
-
-                const href = `/assets/${f}`;
-
-                if (!linkedHrefs.has(href)) {
-                  cssLinks.push(`<link rel="stylesheet" crossorigin href="${href}">`);
-                }
-              }
-
-              if (cssLinks.length) {
-                html = html.replace(
-                  '<!-- VITE_EMBER_SSR_HEAD -->',
-                  cssLinks.join('\n    ') + '\n    <!-- VITE_EMBER_SSR_HEAD -->'
-                );
-              }
-
-              await writeFile(indexPath, html, 'utf-8');
-            } catch {
-              /* dist/index.html may not exist */
-            }
-          },
-        };
-      })(),
-      (() => {
-        let ran = false;
-        const ssg = emberSsg({
-          routes: [
-            'docs',
-            'docs/editor',
-            'docs/embedding',
-            'docs/ember-repl',
-            'docs/repl-sdk',
-            'docs/related',
-          ],
-          ssrEntry: 'app/app-ssr.ts',
-          additionalNoExternal: [/./],
-        });
-        const orig = ssg.closeBundle;
-
-        ssg.closeBundle = async function (...a) {
-          if (ran) return;
-          ran = true;
-
-          try {
-            await orig.apply(this, a);
-          } finally {
-            // Always restore original index.html (with app shell) for SPA routes
-            const { copyFile, rm } = await import('node:fs/promises');
-            const { join } = await import('node:path');
-            const distDir = join(process.cwd(), 'dist');
-
-            try {
-              await copyFile(join(distDir, '_index_with_shell.html'), join(distDir, 'index.html'));
-              await rm(join(distDir, '_index_with_shell.html'));
-            } catch {
-              /* backup may not exist */
-            }
-          }
-        };
-
-        return ssg;
-      })(),
+      ssgPlugins(),
     ].flat(),
   };
 });
