@@ -223,7 +223,7 @@ function ssgPlugins() {
  *    avoiding the FOUC that cleanupSSRContent causes
  */
 async function postProcessSsgPages() {
-  const { readFile, writeFile, readdir } = await import('node:fs/promises');
+  const { readFile, writeFile } = await import('node:fs/promises');
   const { join } = await import('node:path');
   const distDir = join(process.cwd(), 'dist');
 
@@ -239,39 +239,7 @@ async function postProcessSsgPages() {
       // 1. Remove the app shell
       html = html.replace(APP_SHELL_RE, '');
 
-      // 2. Move CSS <link> tags before the SSR head content so the
-      //    browser starts fetching them immediately
-      const cssLinks = [];
-
-      html = html.replace(/<link rel="stylesheet"[^>]*>/g, (m) => {
-        cssLinks.push(m);
-
-        return '';
-      });
-
-      // Also pull in JS-loaded CSS (docs, tabs, etc.)
-      const assetFiles = await readdir(join(distDir, 'assets')).catch(() => []);
-      const linkedHrefs = new Set(cssLinks.map((l) => l.match(/href="([^"]+)"/)?.[1]));
-
-      for (const f of assetFiles) {
-        if (!f.endsWith('.css') || f.startsWith('tests-') || f.startsWith('output-')) continue;
-
-        const href = `/assets/${f}`;
-
-        if (!linkedHrefs.has(href)) {
-          cssLinks.push(`<link rel="stylesheet" crossorigin href="${href}">`);
-        }
-      }
-
-      if (cssLinks.length) {
-        // Insert right after <head> opening + charset meta
-        html = html.replace(
-          '<meta charset="utf-8" />',
-          '<meta charset="utf-8" />\n    ' + cssLinks.join('\n    ')
-        );
-      }
-
-      // 3. Replace SSR boundary markers with a wrapper div + CSS rule
+      // 2. Replace SSR boundary markers with a wrapper div + CSS rule
       //    so Ember hides the SSR content via CSS when it boots,
       //    instead of cleanupSSRContent which causes a blank flash.
       html = html.replace(
