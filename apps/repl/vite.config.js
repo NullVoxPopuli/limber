@@ -8,6 +8,7 @@ import { defineConfig } from 'vite';
 import { analyzer } from 'vite-bundle-analyzer';
 import circleDependency from 'vite-plugin-circular-dependency';
 import mkcert from 'vite-plugin-mkcert';
+import { emberSsg } from 'vite-ember-ssr/vite-plugin';
 import { walk } from 'zimmerframe';
 
 const require = createRequire(import.meta.url);
@@ -138,6 +139,107 @@ function maybeBabel(options = {}) {
   };
 }
 
+/**
+ * Compatibility shim for vite-ember-ssr's SSG plugin on Vite 8 / Rolldown.
+ *
+ * Fixes two issues:
+ * 1. Rolldown outputs .js (not .mjs) — copies the file so the plugin finds it.
+ * 2. The plugin imports the SSR bundle without browser globals — installs
+ *    HappyDOM globals on globalThis before the import happens.
+ *
+ * Must be registered BEFORE emberSsg() in the plugins array so its
+ * closeBundle hook runs first.
+ */
+function ssrCompat() {
+  let config;
+
+  return {
+    name: 'ssr-compat',
+    config() {},
+    configResolved(c) {
+      config = c;
+    },
+    async closeBundle() {
+      // Only act during the child SSR build
+      if (process.env.__VITE_EMBER_SSG_CHILD__ === '1') {
+        const { copyFile, readdir } = await import('node:fs/promises');
+        const { join, isAbsolute } = await import('node:path');
+
+        const outDir = isAbsolute(config.build.outDir)
+          ? config.build.outDir
+          : join(config.root, config.build.outDir);
+
+        try {
+          const files = await readdir(outDir);
+
+          for (const file of files) {
+            if (file.endsWith('.js') && !file.endsWith('.mjs')) {
+              await copyFile(join(outDir, file), join(outDir, file.replace(/\.js$/, '.mjs')));
+            }
+          }
+        } catch {
+          // ignore
+        }
+
+        return;
+      }
+
+      // During the parent build's closeBundle (runs before emberSsg's),
+      // set up HappyDOM browser globals so the SSR bundle can be imported.
+      // Many Ember ecosystem packages access `window` at module scope.
+      // Guard: only set up globals once (Vite 8 may call closeBundle
+      // multiple times for different build environments).
+      if (!config.build.ssr && !process.env.__VITE_EMBER_SSG_CHILD__ && !globalThis.__SSR_GLOBALS_INSTALLED__) {
+        globalThis.__SSR_GLOBALS_INSTALLED__ = true;
+        const { Window } = await import('happy-dom');
+        const w = new Window({ url: 'http://localhost' });
+
+        // Install browser globals using simple assignment.
+        // Object.defineProperty + mass enumeration of HappyDOM
+        // properties breaks bare identifier resolution for some
+        // globals (like localStorage) due to V8/Node.js quirks
+        // with the global object's prototype chain.
+        const entries = [
+          ['window', w], ['document', w.document], ['self', w],
+          ['navigator', w.navigator], ['location', w.location], ['history', w.history],
+          ['localStorage', w.localStorage], ['sessionStorage', w.sessionStorage],
+          ['HTMLElement', w.HTMLElement], ['Element', w.Element],
+          ['Node', w.Node], ['Text', w.Text], ['Comment', w.Comment],
+          ['DocumentFragment', w.DocumentFragment], ['DOMParser', w.DOMParser],
+          ['Event', w.Event], ['CustomEvent', w.CustomEvent],
+          ['InputEvent', w.InputEvent], ['KeyboardEvent', w.KeyboardEvent],
+          ['MouseEvent', w.MouseEvent], ['FocusEvent', w.FocusEvent],
+          ['MutationObserver', w.MutationObserver],
+          ['IntersectionObserver', w.IntersectionObserver],
+          ['ResizeObserver', w.ResizeObserver],
+          ['CSSStyleSheet', w.CSSStyleSheet], ['MediaQueryList', w.MediaQueryList],
+          ['Blob', w.Blob], ['File', w.File], ['FileReader', w.FileReader],
+          ['FormData', w.FormData], ['DOMRect', w.DOMRect],
+          ['Range', w.Range], ['SVGElement', w.SVGElement],
+          ['requestAnimationFrame', (cb) => setTimeout(cb, 0)],
+          ['cancelAnimationFrame', clearTimeout],
+        ];
+
+        for (const [name, value] of entries) {
+          try {
+            globalThis[name] = value;
+          } catch {
+            try {
+              Object.defineProperty(globalThis, name, {
+                value,
+                writable: true,
+                configurable: true,
+              });
+            } catch {
+              // ignore
+            }
+          }
+        }
+      }
+    },
+  };
+}
+
 function rolldownTemplateTag() {
   const plugin = templateTag();
 
@@ -189,9 +291,9 @@ export default defineConfig((env) => {
         treeshake: true,
       },
     },
-    css: {
-      postcss: './config/postcss.config.mjs',
-    },
+    css: process.env.__VITE_EMBER_SSG_CHILD__
+      ? { postcss: { plugins: [] } }
+      : { postcss: './config/postcss.config.mjs' },
     optimizeDeps: {
       exclude: [
         // type-only dependencies
@@ -281,6 +383,43 @@ export default defineConfig((env) => {
         rolldownEmberConfig(),
       ],
       maybeBabel({ env }),
+      ssrCompat(),
+      // Wrap emberSsg to prevent double execution in Vite 8
+      // (which calls closeBundle once per build environment).
+      (() => {
+        let ran = false;
+        const ssg = emberSsg({
+          routes: [
+            'docs',
+            'docs/editor',
+            'docs/embedding',
+            'docs/ember-repl',
+            'docs/repl-sdk',
+            'docs/related',
+          ],
+          ssrEntry: 'app/app-ssr.ts',
+          additionalNoExternal: [/./],
+        });
+        const origCloseBundle = ssg.closeBundle;
+
+        ssg.closeBundle = async function (...args) {
+          if (ran) return;
+          ran = true;
+
+          try {
+            return await origCloseBundle.apply(this, args);
+          } catch (err) {
+            // The child SSR build may produce CSS errors from PostCSS
+            // (missing @tailwindcss/typography). These don't affect
+            // the SSG output since CSS isn't needed for SSR rendering.
+            if (String(err).includes('vite:css')) return;
+
+            throw err;
+          }
+        };
+
+        return ssg;
+      })(),
     ].flat(),
   };
 });
