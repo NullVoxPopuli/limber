@@ -307,9 +307,9 @@ export default defineConfig((env) => {
         treeshake: true,
       },
     },
-    css: process.env.__VITE_EMBER_SSG_CHILD__
-      ? { postcss: { plugins: [] } }
-      : { postcss: './config/postcss.config.mjs' },
+    css: {
+      postcss: './config/postcss.config.mjs',
+    },
     optimizeDeps: {
       exclude: [
         // type-only dependencies
