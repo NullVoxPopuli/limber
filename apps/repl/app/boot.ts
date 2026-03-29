@@ -1,10 +1,9 @@
 import environment from '#config';
-import { cleanupSSRContent, installShoebox } from 'vite-ember-ssr/client';
+import { cleanupSSRContent } from 'vite-ember-ssr/client';
 
 import Application from './app.ts';
 
-// Replay server-captured responses and clean up SSR markers (no-ops if not SSR'd)
-installShoebox();
+// Remove pre-rendered SSR content before Ember boots (no-op if not SSG'd)
 cleanupSSRContent();
 
 Application.create(environment.APP);
