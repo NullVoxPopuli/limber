@@ -339,21 +339,49 @@ export default defineConfig((env) => {
       maybeBabel({ env }),
       ssrCompat(),
       // Wrap to prevent double execution (Vite 8 calls closeBundle per environment)
+      // and strip the app shell from pre-rendered pages.
       (() => {
         let ran = false;
+        const routes = ['docs', 'docs/editor', 'docs/embedding', 'docs/ember-repl', 'docs/repl-sdk', 'docs/related'];
         const ssg = emberSsg({
-          routes: ['docs', 'docs/editor', 'docs/embedding', 'docs/ember-repl', 'docs/repl-sdk', 'docs/related'],
+          routes,
           ssrEntry: 'app/app-ssr.ts',
           shoebox: false,
           additionalNoExternal: [/./],
         });
         const orig = ssg.closeBundle;
+        let resolvedConfig;
+        const origConfigResolved = ssg.configResolved;
+
+        ssg.configResolved = function (c) {
+          resolvedConfig = c;
+
+          return origConfigResolved?.call(this, c);
+        };
 
         ssg.closeBundle = async function (...a) {
           if (ran) return;
           ran = true;
+          await orig.apply(this, a);
 
-          return orig.apply(this, a);
+          // Strip the app shell from pre-rendered pages — the SSG content
+          // replaces it, so the "Loading / Limber" skeleton is unnecessary.
+          const { readFile, writeFile } = await import('node:fs/promises');
+          const { join } = await import('node:path');
+          const outDir = join(resolvedConfig.root, resolvedConfig.build.outDir);
+          const appShellRe = /<div id="initial-loader">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<\/div>\s*<script>[\s\S]*?<\/script>/;
+
+          for (const route of routes) {
+            const file = join(outDir, route, 'index.html');
+
+            try {
+              const html = await readFile(file, 'utf-8');
+
+              await writeFile(file, html.replace(appShellRe, ''), 'utf-8');
+            } catch {
+              // file may not exist if route failed to render
+            }
+          }
         };
 
         return ssg;
