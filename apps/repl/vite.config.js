@@ -345,6 +345,8 @@ export default defineConfig((env) => {
               // Move CSS <link> tags before the SSR head marker so the
               // browser starts loading stylesheets immediately, instead
               // of after hundreds of lines of SSR-injected <head> content.
+              // Also inject any JS-loaded CSS (like the docs route chunk)
+              // so it's available before JS evaluates.
               const cssLinks = [];
 
               html = html.replace(/<link rel="stylesheet"[^>]*>/g, (m) => {
@@ -352,6 +354,24 @@ export default defineConfig((env) => {
 
                 return '';
               });
+
+              // Find CSS files in dist/assets/ that aren't already linked
+              // (they're loaded by JS chunks — causes FOUC on SSG pages).
+              const { readdir } = await import('node:fs/promises');
+              const linkedHrefs = new Set(cssLinks.map((l) => l.match(/href="([^"]+)"/)?.[1]));
+              const assetFiles = await readdir(join(distDir, 'assets')).catch(() => []);
+
+              for (const f of assetFiles) {
+                if (!f.endsWith('.css')) continue;
+                // Skip test/output CSS — not needed for docs pages
+                if (f.startsWith('tests-') || f.startsWith('output-')) continue;
+
+                const href = `/assets/${f}`;
+
+                if (!linkedHrefs.has(href)) {
+                  cssLinks.push(`<link rel="stylesheet" crossorigin href="${href}">`);
+                }
+              }
 
               if (cssLinks.length) {
                 html = html.replace(
