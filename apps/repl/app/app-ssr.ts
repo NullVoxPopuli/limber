@@ -1,9 +1,10 @@
 import Route from '@ember/routing/route';
 import Router from '@ember/routing/router';
+
+import PageTitleService from 'ember-page-title/services/page-title';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore - no types
 import Application from 'ember-strict-application-resolver';
-import PageTitleService from 'ember-page-title/services/page-title';
 
 /**
  * Minimal router for SSR — same route map as the main app
@@ -45,10 +46,10 @@ export default class SsrApp extends Application {
 }
 
 export function createSsrApp() {
-  Object.assign(globalThis, {
-    process: globalThis.process ?? { env: {} },
-    Buffer: globalThis.Buffer ?? {},
-  });
+  const g = globalThis as Record<string, unknown>;
+
+  g.process ??= { env: {} };
+  g.Buffer ??= {};
 
   return SsrApp.create({ autoboot: false });
 }

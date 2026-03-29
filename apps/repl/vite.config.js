@@ -6,9 +6,9 @@ import { parse as oxcParse } from 'oxc-parser';
 import icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vite';
 import { analyzer } from 'vite-bundle-analyzer';
+import { emberSsg } from 'vite-ember-ssr/vite-plugin';
 import circleDependency from 'vite-plugin-circular-dependency';
 import mkcert from 'vite-plugin-mkcert';
-import { emberSsg } from 'vite-ember-ssr/vite-plugin';
 import { walk } from 'zimmerframe';
 
 const require = createRequire(import.meta.url);
@@ -157,10 +157,15 @@ function ssrCompat() {
       if (process.env.__VITE_EMBER_SSG_CHILD__ === '1') {
         const { copyFile, readdir } = await import('node:fs/promises');
         const { join, isAbsolute } = await import('node:path');
-        const outDir = isAbsolute(config.build.outDir) ? config.build.outDir : join(config.root, config.build.outDir);
+        const outDir = isAbsolute(config.build.outDir)
+          ? config.build.outDir
+          : join(config.root, config.build.outDir);
 
         for (const f of await readdir(outDir).catch(() => [])) {
-          if (f.endsWith('.js')) await copyFile(join(outDir, f), join(outDir, f.replace(/\.js$/, '.mjs'))).catch(() => {});
+          if (f.endsWith('.js'))
+            await copyFile(join(outDir, f), join(outDir, f.replace(/\.js$/, '.mjs'))).catch(
+              () => {}
+            );
         }
 
         return;
@@ -170,23 +175,48 @@ function ssrCompat() {
       // (many Ember packages access window/document at module scope)
       if (!config.build.ssr && !globalThis.__SSR_GLOBALS_INSTALLED__) {
         globalThis.__SSR_GLOBALS_INSTALLED__ = true;
+
         const { Window } = await import('happy-dom');
         const w = new Window({ url: 'http://localhost' });
 
         for (const [k, v] of Object.entries({
-          window: w, document: w.document, self: w,
-          navigator: w.navigator, location: w.location, history: w.history,
-          localStorage: w.localStorage, sessionStorage: w.sessionStorage,
-          HTMLElement: w.HTMLElement, Element: w.Element, Node: w.Node,
-          Event: w.Event, CustomEvent: w.CustomEvent, InputEvent: w.InputEvent,
-          KeyboardEvent: w.KeyboardEvent, MouseEvent: w.MouseEvent,
-          FocusEvent: w.FocusEvent, MutationObserver: w.MutationObserver,
-          IntersectionObserver: w.IntersectionObserver, ResizeObserver: w.ResizeObserver,
-          CSSStyleSheet: w.CSSStyleSheet, MediaQueryList: w.MediaQueryList,
-          requestAnimationFrame: (cb) => setTimeout(cb, 0), cancelAnimationFrame: clearTimeout,
+          window: w,
+          document: w.document,
+          self: w,
+          navigator: w.navigator,
+          location: w.location,
+          history: w.history,
+          localStorage: w.localStorage,
+          sessionStorage: w.sessionStorage,
+          HTMLElement: w.HTMLElement,
+          Element: w.Element,
+          Node: w.Node,
+          Event: w.Event,
+          CustomEvent: w.CustomEvent,
+          InputEvent: w.InputEvent,
+          KeyboardEvent: w.KeyboardEvent,
+          MouseEvent: w.MouseEvent,
+          FocusEvent: w.FocusEvent,
+          MutationObserver: w.MutationObserver,
+          IntersectionObserver: w.IntersectionObserver,
+          ResizeObserver: w.ResizeObserver,
+          CSSStyleSheet: w.CSSStyleSheet,
+          MediaQueryList: w.MediaQueryList,
+          requestAnimationFrame: (cb) => setTimeout(cb, 0),
+          cancelAnimationFrame: clearTimeout,
         })) {
-          try { globalThis[k] = v; } catch {
-            try { Object.defineProperty(globalThis, k, { value: v, writable: true, configurable: true }); } catch {}
+          try {
+            globalThis[k] = v;
+          } catch {
+            try {
+              Object.defineProperty(globalThis, k, {
+                value: v,
+                writable: true,
+                configurable: true,
+              });
+            } catch {
+              /* non-configurable */
+            }
           }
         }
       }
@@ -342,7 +372,14 @@ export default defineConfig((env) => {
       // and strip the app shell from pre-rendered pages.
       (() => {
         let ran = false;
-        const routes = ['docs', 'docs/editor', 'docs/embedding', 'docs/ember-repl', 'docs/repl-sdk', 'docs/related'];
+        const routes = [
+          'docs',
+          'docs/editor',
+          'docs/embedding',
+          'docs/ember-repl',
+          'docs/repl-sdk',
+          'docs/related',
+        ];
         const ssg = emberSsg({
           routes,
           ssrEntry: 'app/app-ssr.ts',
@@ -369,7 +406,8 @@ export default defineConfig((env) => {
           const { readFile, writeFile } = await import('node:fs/promises');
           const { join } = await import('node:path');
           const outDir = join(resolvedConfig.root, resolvedConfig.build.outDir);
-          const appShellRe = /<div id="initial-loader">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<\/div>\s*<script>[\s\S]*?<\/script>/;
+          const appShellRe =
+            /<div id="initial-loader">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<\/div>\s*<script>[\s\S]*?<\/script>/;
 
           for (const route of routes) {
             const file = join(outDir, route, 'index.html');

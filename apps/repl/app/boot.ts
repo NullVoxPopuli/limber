@@ -1,5 +1,6 @@
-import environment from '#config';
 import { cleanupSSRContent } from 'vite-ember-ssr/client';
+
+import environment from '#config';
 
 import Application from './app.ts';
 
