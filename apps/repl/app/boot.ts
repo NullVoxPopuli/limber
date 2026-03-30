@@ -1,9 +1,15 @@
+import { shouldRehydrate } from 'vite-ember-ssr/client';
+
 import environment from '#config';
 
 import Application from './app.ts';
 
-const app = Application.create({ ...environment.APP, autoboot: false });
+if (shouldRehydrate()) {
+  const app = Application.create({ ...environment.APP, autoboot: false });
 
-app.visit(window.location.pathname + window.location.search, {
-  _renderMode: 'rehydrate',
-});
+  app.visit(window.location.pathname + window.location.search, {
+    _renderMode: 'rehydrate',
+  });
+} else {
+  Application.create(environment.APP);
+}
