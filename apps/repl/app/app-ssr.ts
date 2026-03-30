@@ -45,13 +45,11 @@ export default class SsrApp extends Application {
   };
 }
 
-export async function createSsrApp() {
+export function createSsrApp() {
   const g = globalThis as Record<string, unknown>;
 
   g.process ??= { env: {} };
   g.Buffer ??= {};
-
-  await import('nvp.ui');
 
   return SsrApp.create({ autoboot: false });
 }
