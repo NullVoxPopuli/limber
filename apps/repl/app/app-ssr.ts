@@ -1,8 +1,6 @@
 import Route from '@ember/routing/route';
 
 import PageTitleService from 'ember-page-title/services/page-title';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore - no types
 import Application from 'ember-strict-application-resolver';
 
 import Router from './router.ts';
