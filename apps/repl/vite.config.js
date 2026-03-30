@@ -293,8 +293,10 @@ export default defineConfig((env) => {
         ],
         ssrEntry: 'app/app-ssr.ts',
         rehydrate: true,
-        additionalNoExternal: [/./],
       }),
     ].flat(),
+    ssr: {
+      noExternal: [/./],
+    },
   };
 });
