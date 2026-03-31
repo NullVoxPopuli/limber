@@ -1,7 +1,8 @@
-import Application from 'ember-strict-application-resolver';
-import { modifier } from 'ember-modifier';
 import { LinkTo } from '@ember/routing';
 import EmberRouter from '@ember/routing/router';
+
+import { modifier } from 'ember-modifier';
+import Application from 'ember-strict-application-resolver';
 
 class Router extends EmberRouter {
   location = 'none';
