@@ -110,6 +110,7 @@ export const ALL = [
   { format: 'gmd', label: 'Welcome', snippet: DEFAULT_SNIPPET },
   { format: 'md', label: 'All Frameworks in Markdown', path: '/samples/all.md' },
   { format: 'gjs', label: 'Ember GJS', path: '/samples/gjs-demo.gjs' },
+  { format: 'gjs', label: 'Ember GJS (w/ routing)', path: '/samples/nested-ember-routing-demo.gjs' },
   { format: 'svelte', label: 'Svelte', path: '/samples/svelte-demo.svelte' },
   { format: 'js', label: 'Vanilla JS', path: '/samples/js-demo.js' },
   // Yaml
