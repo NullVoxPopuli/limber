@@ -19,7 +19,7 @@ export class DemoSelect extends PageObject {
     const option = options.find((option) => {
       assert(`option's element has been removed`, option && option instanceof HTMLButtonElement);
 
-      return new RegExp(`\\b${text}\\b`).test(option.innerHTML);
+      return option.innerHTML.includes(text);
     });
 
     assert(
