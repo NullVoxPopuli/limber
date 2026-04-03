@@ -15,7 +15,7 @@ import { NavLink, Topics } from './topics.gts';
         <ExternalLink href={{issueURL}}>creating an issue</ExternalLink>
       </p>
 
-      <p>
+      <div>
         Topics:
 
         <nav class="vertical-nav">
@@ -23,7 +23,7 @@ import { NavLink, Topics } from './topics.gts';
           <span></span>
           <NavLink href="/docs/related">related projects</NavLink>
         </nav>
-      </p>
+      </div>
     </main>
   </div>
 </template>
