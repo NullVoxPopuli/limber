@@ -6,6 +6,7 @@ import { parse as oxcParse } from 'oxc-parser';
 import icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vite';
 import { analyzer } from 'vite-bundle-analyzer';
+import { emberSsg } from 'vite-ember-ssr/vite-plugin';
 import circleDependency from 'vite-plugin-circular-dependency';
 import mkcert from 'vite-plugin-mkcert';
 import { walk } from 'zimmerframe';
@@ -281,6 +282,21 @@ export default defineConfig((env) => {
         rolldownEmberConfig(),
       ],
       maybeBabel({ env }),
+      emberSsg({
+        routes: [
+          'docs',
+          'docs/editor',
+          'docs/embedding',
+          'docs/ember-repl',
+          'docs/repl-sdk',
+          'docs/related',
+        ],
+        ssrEntry: 'app/app-ssr.ts',
+        rehydrate: true,
+      }),
     ].flat(),
+    ssr: {
+      noExternal: [/./],
+    },
   };
 });

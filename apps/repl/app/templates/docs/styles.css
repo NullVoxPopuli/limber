@@ -329,3 +329,8 @@ a.code-link {
 .nvp__tabs__tabpanel :first-child pre {
   margin: 0;
 }
+
+/* Hide the app shell on SSG pages — pre-rendered content replaces it */
+body:has(.docs-nav) #initial-loader {
+  display: none;
+}

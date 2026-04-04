@@ -34,6 +34,8 @@
         resolve: (...args) => args.join("/"),
       };
     </script>
+    <link rel="stylesheet" href="./app/styles/app.css" />
+    <!-- VITE_EMBER_SSR_HEAD -->
   </head>
   <body class="syntax-dark syntax-bright">
     <div id="initial-loader">
@@ -96,7 +98,7 @@
       }
     </script>
 
-    <link rel="stylesheet" href="./app/styles/app.css" />
+    <!-- VITE_EMBER_SSR_BODY -->
 
     <script type="module" src="./app/boot.ts"></script>
   </body>
