@@ -295,8 +295,5 @@ export default defineConfig((env) => {
         rehydrate: true,
       }),
     ].flat(),
-    ssr: {
-      noExternal: [/./],
-    },
   };
 });
