@@ -148,7 +148,7 @@
     "@ember/test-waiters": "^4.1.0",
     "@embroider/macros": "1.19.7",
     "@embroider/router": "3.0.6",
-    "@glimmer/component": "^2.0.0",
+    "@glimmer/component": "^2.1.1",
     "@lezer/highlight": "^1.2.3",
     "@nullvoxpopuli/horizon-theme": "workspace:*",
     "@nullvoxpopuli/limber-shared": "workspace:*",
