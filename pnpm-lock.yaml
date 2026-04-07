@@ -92,8 +92,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(cba0046a26b561959f42e5d17077ebdf)
       '@glimmer/component':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.1.1
+        version: 2.1.1
       '@lezer/highlight':
         specifier: ^1.2.3
         version: 1.2.3
@@ -120,7 +120,7 @@ importers:
         version: 3.3.1
       ember-container-query:
         specifier: 6.1.7
-        version: 6.1.7(d13c7235bafdcff16808d6d16e570fab)
+        version: 6.1.7(462117089f14f874a2cd0de246e8f9f5)
       ember-deep-tracked:
         specifier: ^2.0.1
         version: 2.0.1(@glint/template@1.7.4)
@@ -129,22 +129,22 @@ importers:
         version: 0.8.8
       ember-focus-trap:
         specifier: ^1.1.1
-        version: 1.1.1(c27820aece66c21d444559171301f06d)
+        version: 1.1.1(0dd2fa28812a841d0b92e5fd06a48488)
       ember-modifier:
         specifier: ^4.2.0
         version: 4.2.2(@babel/core@7.29.0)
       ember-primitives:
         specifier: ^0.53.0
-        version: 0.53.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
+        version: 0.53.0(a5946cbbd31c190d64da0ef480ebf75b)
       ember-repl:
         specifier: workspace:*
         version: link:../../packages/ember-repl
       ember-resources:
         specifier: ^7.0.7
-        version: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
+        version: 7.0.7(965c0d76ede0ebc026c55e9dbbdc8990)
       ember-statechart-component:
         specifier: 7.1.0
-        version: 7.1.0(a2ad788df3a5d8cc54e96323604ca203)
+        version: 7.1.0(27e1b9da81439494798062ce5afacf46)
       ember-strict-application-resolver:
         specifier: ^0.1.1
         version: 0.1.1(@babel/core@7.29.0)
@@ -168,7 +168,7 @@ importers:
         version: 6.2.2
       reactiveweb:
         specifier: 1.9.1
-        version: 1.9.1(c6268fff421912c44d52c9127b59a734)
+        version: 1.9.1(6201fd5459100b2a89726ac6938ac464)
       rehype-raw:
         specifier: ^7.0.0
         version: 7.0.0
@@ -241,7 +241,7 @@ importers:
         version: 1.5.0(ec7e29092408ba72494d19cf36fa7b54)
       '@fortawesome/ember-fontawesome':
         specifier: ^3.0.0
-        version: 3.1.0(c8c9dcd129b1e728b8ae06dadb20750d)
+        version: 3.1.0(2746a47bdb7dc3f01758d10f4a47feed)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.7.2
         version: 6.7.2
@@ -346,7 +346,7 @@ importers:
         version: 2.0.1(882cf82caec78f226fcbd647b89f3bbe)
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(c27820aece66c21d444559171301f06d)
+        version: 3.0.1(0dd2fa28812a841d0b92e5fd06a48488)
       ember-page-title:
         specifier: ^9.0.3
         version: 9.0.3
@@ -355,7 +355,7 @@ importers:
         version: 9.0.4(a967adbef921ddf866dd2ef3bacfd07c)
       ember-source:
         specifier: 6.12.0-alpha.6
-        version: 6.12.0-alpha.6(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        version: 6.12.0-alpha.6(@glimmer/component@2.1.1)(rsvp@4.8.5)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -447,8 +447,8 @@ importers:
   apps/tutorial:
     dependencies:
       '@glimmer/component':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.1.1
+        version: 2.1.1
       '@nullvoxpopuli/limber-shared':
         specifier: workspace:*
         version: link:../../packages/app-support/shared
@@ -466,13 +466,13 @@ importers:
         version: 4.2.2(@babel/core@7.29.0)
       ember-primitives:
         specifier: ^0.53.0
-        version: 0.53.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
+        version: 0.53.0(a5946cbbd31c190d64da0ef480ebf75b)
       ember-repl:
         specifier: latest
-        version: 8.0.2(e9515a53281cdb161fa7066b1d942d24)
+        version: 8.0.2(d577eea0def7d781250c6c795616629c)
       ember-resources:
         specifier: ^7.0.7
-        version: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
+        version: 7.0.7(965c0d76ede0ebc026c55e9dbbdc8990)
       kolay:
         specifier: ^4.1.0
         version: 4.1.0(1675b95ea0449979f96de872e781167e)
@@ -481,7 +481,7 @@ importers:
         version: link:../../packages/limber-ui
       reactiveweb:
         specifier: 1.9.1
-        version: 1.9.1(c6268fff421912c44d52c9127b59a734)
+        version: 1.9.1(6201fd5459100b2a89726ac6938ac464)
       rehype-raw:
         specifier: ^7.0.0
         version: 7.0.0
@@ -536,7 +536,7 @@ importers:
         version: 1.5.0(f3dc5d92d0941875414c824c19dfd148)
       '@fortawesome/ember-fontawesome':
         specifier: ^3.0.0
-        version: 3.1.0(c8c9dcd129b1e728b8ae06dadb20750d)
+        version: 3.1.0(2746a47bdb7dc3f01758d10f4a47feed)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.7.2
         version: 6.7.2
@@ -587,10 +587,10 @@ importers:
         version: 9.2.1
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(c27820aece66c21d444559171301f06d)
+        version: 3.0.1(0dd2fa28812a841d0b92e5fd06a48488)
       ember-modify-based-class-resource:
         specifier: ^1.1.1
-        version: 1.1.2(f90c614a2914d5867e78d9108f869e02)
+        version: 1.1.2(14d9b38c9774c84a1fff67a29b7cd495)
       ember-page-title:
         specifier: ^9.0.3
         version: 9.0.3
@@ -602,7 +602,7 @@ importers:
         version: 13.1.1
       ember-source:
         specifier: 6.12.0-alpha.6
-        version: 6.12.0-alpha.6(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        version: 6.12.0-alpha.6(@glimmer/component@2.1.1)(rsvp@4.8.5)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -708,7 +708,7 @@ importers:
         version: 1.19.6(@glint/template@1.7.4)
       '@fortawesome/ember-fontawesome':
         specifier: ^3.0.0
-        version: 3.1.0(c8c9dcd129b1e728b8ae06dadb20750d)
+        version: 3.1.0(2746a47bdb7dc3f01758d10f4a47feed)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.7.2
         version: 6.7.2
@@ -729,7 +729,7 @@ importers:
         version: 6.2.2
       reactiveweb:
         specifier: 1.9.1
-        version: 1.9.1(c6268fff421912c44d52c9127b59a734)
+        version: 1.9.1(6201fd5459100b2a89726ac6938ac464)
     devDependencies:
       '@babel/core':
         specifier: ^7.28.5
@@ -759,8 +759,8 @@ importers:
         specifier: ^7.0.0
         version: 7.1.6(@glint/template@1.7.4)(rollup@4.57.1)
       '@glimmer/component':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.1.1
+        version: 2.1.1
       '@glint/ember-tsc':
         specifier: ^1.3.0
         version: 1.3.0(typescript@5.9.3)
@@ -796,13 +796,13 @@ importers:
         version: 4.2.2(@babel/core@7.29.0)
       ember-primitives:
         specifier: ^0.51.0
-        version: 0.51.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
+        version: 0.51.0(a5946cbbd31c190d64da0ef480ebf75b)
       ember-resources:
         specifier: ^7.0.7
-        version: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
+        version: 7.0.7(965c0d76ede0ebc026c55e9dbbdc8990)
       ember-source:
         specifier: 6.12.0-alpha.6
-        version: 6.12.0-alpha.6(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        version: 6.12.0-alpha.6(@glimmer/component@2.1.1)(rsvp@4.8.5)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -914,13 +914,13 @@ importers:
         version: 2.3.1(@babel/core@7.29.0)
       ember-primitives:
         specifier: ^0.51.0
-        version: 0.51.0(44ff51b544bac203c070a6d091f048d3)
+        version: 0.51.0(a2cfc6336121d40afaaa52d13d44ca5e)
       ember-resolver:
         specifier: ^13.1.0
         version: 13.1.1
       ember-resources:
         specifier: ^7.0.7
-        version: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
+        version: 7.0.7(965c0d76ede0ebc026c55e9dbbdc8990)
       repl-sdk:
         specifier: workspace:*
         version: link:../repl-sdk
@@ -968,8 +968,8 @@ importers:
         specifier: ^9.39.1
         version: 9.39.2
       '@glimmer/component':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.1.1
+        version: 2.1.1
       '@glint/ember-tsc':
         specifier: ^1.3.0
         version: 1.3.0(typescript@5.9.3)
@@ -1026,7 +1026,7 @@ importers:
         version: 9.0.4(a967adbef921ddf866dd2ef3bacfd07c)
       ember-source:
         specifier: 6.12.0-alpha.6
-        version: 6.12.0-alpha.6(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        version: 6.12.0-alpha.6(@glimmer/component@2.1.1)(rsvp@4.8.5)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.6.1)
@@ -1139,8 +1139,8 @@ importers:
         specifier: 1.10.2
         version: 1.10.2
       '@glimmer/component':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.1.1
+        version: 2.1.1
       decorator-transforms:
         specifier: 2.3.1
         version: 2.3.1(@babel/core@7.29.0)
@@ -1152,7 +1152,7 @@ importers:
         version: 6.2.2
       reactiveweb:
         specifier: 1.9.1
-        version: 1.9.1(c6268fff421912c44d52c9127b59a734)
+        version: 1.9.1(6201fd5459100b2a89726ac6938ac464)
     devDependencies:
       '@babel/core':
         specifier: ^7.28.5
@@ -1204,13 +1204,13 @@ importers:
         version: 2.0.1(882cf82caec78f226fcbd647b89f3bbe)
       ember-primitives:
         specifier: ^0.51.0
-        version: 0.51.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
+        version: 0.51.0(a5946cbbd31c190d64da0ef480ebf75b)
       ember-resources:
         specifier: ^7.0.7
-        version: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
+        version: 7.0.7(965c0d76ede0ebc026c55e9dbbdc8990)
       ember-source:
         specifier: 6.12.0-alpha.6
-        version: 6.12.0-alpha.6(@glimmer/component@2.0.0)(rsvp@4.8.5)
+        version: 6.12.0-alpha.6(@glimmer/component@2.1.1)(rsvp@4.8.5)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -3441,8 +3441,8 @@ packages:
   '@glimdown/lezer-glimmer-expression@2.0.3':
     resolution: {integrity: sha512-E7yiSfaL4qkbW+zfbVMGZ9G81MCzst0R02wPK5u2Vt1wWxrpo+mZkCA2fFJuKwvjdcPFt4X04KSRmBQdnL/qVw==}
 
-  '@glimmer/component@2.0.0':
-    resolution: {integrity: sha512-eATSzBOUm0MZ9+YfJx7Y5p3gbwnaeMzLSSsCDn1ihDtUOIm5YYEV0ee0G7tXt/uKxowt8tXYn/EMbI9OlRF0CA==}
+  '@glimmer/component@2.1.1':
+    resolution: {integrity: sha512-zFZFaMbWy+9WOcDg/kCgrkGgqkLT39EE4FgyFD0MIkQO5coQsrRZyLsiBu1tbchyM+8hT8jAv+EQVUd8u+MdSQ==}
     engines: {node: '>= 18'}
 
   '@glimmer/env@0.1.7':
@@ -13369,12 +13369,12 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
-  '@fortawesome/ember-fontawesome@3.1.0(c8c9dcd129b1e728b8ae06dadb20750d)':
+  '@fortawesome/ember-fontawesome@3.1.0(2746a47bdb7dc3f01758d10f4a47feed)':
     dependencies:
       '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.19.7(@glint/template@1.7.4)
       '@fortawesome/fontawesome-svg-core': 6.7.2
-      '@glimmer/component': 2.0.0
+      '@glimmer/component': 2.1.1
     transitivePeerDependencies:
       - '@glint/template'
       - supports-color
@@ -13412,7 +13412,7 @@ snapshots:
       '@lezer/highlight': 1.2.3
       '@lezer/lr': 1.4.8
 
-  '@glimmer/component@2.0.0':
+  '@glimmer/component@2.1.1':
     dependencies:
       '@embroider/addon-shim': 1.10.2
       '@glimmer/env': 0.1.7
@@ -17263,13 +17263,13 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-container-query@6.1.7(d13c7235bafdcff16808d6d16e570fab):
+  ember-container-query@6.1.7(462117089f14f874a2cd0de246e8f9f5):
     dependencies:
       '@embroider/addon-shim': 1.10.2
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-element-helper: 0.8.8
       ember-modifier: 4.3.0(@babel/core@7.29.0)
-      ember-primitives: 0.53.0(44ff51b544bac203c070a6d091f048d3)
+      ember-primitives: 0.53.0(a2cfc6336121d40afaaa52d13d44ca5e)
     transitivePeerDependencies:
       - '@babel/core'
       - '@ember/test-helpers'
@@ -17328,17 +17328,17 @@ snapshots:
       - supports-color
       - typescript
 
-  ember-focus-trap@1.1.1(c27820aece66c21d444559171301f06d):
+  ember-focus-trap@1.1.1(0dd2fa28812a841d0b92e5fd06a48488):
     dependencies:
       '@embroider/addon-shim': 1.10.2
-      ember-source: 6.12.0-alpha.6(@glimmer/component@2.0.0)(rsvp@4.8.5)
+      ember-source: 6.12.0-alpha.6(@glimmer/component@2.1.1)(rsvp@4.8.5)
       focus-trap: 6.9.4
     transitivePeerDependencies:
       - supports-color
 
-  ember-load-initializers@3.0.1(c27820aece66c21d444559171301f06d):
+  ember-load-initializers@3.0.1(0dd2fa28812a841d0b92e5fd06a48488):
     dependencies:
-      ember-source: 6.12.0-alpha.6(@glimmer/component@2.0.0)(rsvp@4.8.5)
+      ember-source: 6.12.0-alpha.6(@glimmer/component@2.1.1)(rsvp@4.8.5)
 
   ember-modifier@4.2.2(@babel/core@7.29.0):
     dependencies:
@@ -17358,14 +17358,14 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-modify-based-class-resource@1.1.2(f90c614a2914d5867e78d9108f869e02):
+  ember-modify-based-class-resource@1.1.2(14d9b38c9774c84a1fff67a29b7cd495):
     dependencies:
       '@babel/runtime': 7.28.6
       '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.19.7(@glint/template@1.7.4)
-      ember-resources: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
+      ember-resources: 7.0.7(965c0d76ede0ebc026c55e9dbbdc8990)
     optionalDependencies:
-      '@glimmer/component': 2.0.0
+      '@glimmer/component': 2.1.1
     transitivePeerDependencies:
       - '@glint/template'
       - supports-color
@@ -17377,20 +17377,20 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-primitives@0.48.2(c4ffba7a9c87490d0f7ff5d5f6df5cb0):
+  ember-primitives@0.48.2(a5946cbbd31c190d64da0ef480ebf75b):
     dependencies:
       '@babel/runtime': 7.28.6
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.4)
       '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.19.7(@glint/template@1.7.4)
       '@floating-ui/dom': 1.7.5
-      '@glimmer/component': 2.0.0
+      '@glimmer/component': 2.1.1
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-element-helper: 0.8.8
       ember-modifier: 4.2.2(@babel/core@7.29.0)
-      ember-resources: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
+      ember-resources: 7.0.7(965c0d76ede0ebc026c55e9dbbdc8990)
       form-data-utils: 0.6.0
-      reactiveweb: 1.9.1(c6268fff421912c44d52c9127b59a734)
+      reactiveweb: 1.9.1(6201fd5459100b2a89726ac6938ac464)
       should-handle-link: 1.3.0
       tabster: 8.7.0
       tracked-built-ins: 4.1.0(@babel/core@7.29.0)
@@ -17403,20 +17403,20 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-primitives@0.51.0(44ff51b544bac203c070a6d091f048d3):
+  ember-primitives@0.51.0(a2cfc6336121d40afaaa52d13d44ca5e):
     dependencies:
       '@babel/runtime': 7.28.6
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.4)
       '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.19.7(@glint/template@1.7.4)
       '@floating-ui/dom': 1.7.5
-      '@glimmer/component': 2.0.0
+      '@glimmer/component': 2.1.1
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-element-helper: 0.8.8
       ember-modifier: 4.3.0(@babel/core@7.29.0)
-      ember-resources: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
+      ember-resources: 7.0.7(965c0d76ede0ebc026c55e9dbbdc8990)
       form-data-utils: 0.6.0
-      reactiveweb: 1.9.1(c6268fff421912c44d52c9127b59a734)
+      reactiveweb: 1.9.1(6201fd5459100b2a89726ac6938ac464)
       should-handle-link: 1.3.0
       tabster: 8.7.0
       tracked-built-ins: 4.1.0(@babel/core@7.29.0)
@@ -17429,20 +17429,20 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-primitives@0.51.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0):
+  ember-primitives@0.51.0(a5946cbbd31c190d64da0ef480ebf75b):
     dependencies:
       '@babel/runtime': 7.28.6
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.4)
       '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.19.7(@glint/template@1.7.4)
       '@floating-ui/dom': 1.7.5
-      '@glimmer/component': 2.0.0
+      '@glimmer/component': 2.1.1
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-element-helper: 0.8.8
       ember-modifier: 4.2.2(@babel/core@7.29.0)
-      ember-resources: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
+      ember-resources: 7.0.7(965c0d76ede0ebc026c55e9dbbdc8990)
       form-data-utils: 0.6.0
-      reactiveweb: 1.9.1(c6268fff421912c44d52c9127b59a734)
+      reactiveweb: 1.9.1(6201fd5459100b2a89726ac6938ac464)
       should-handle-link: 1.3.0
       tabster: 8.7.0
       tracked-built-ins: 4.1.0(@babel/core@7.29.0)
@@ -17455,20 +17455,20 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-primitives@0.53.0(44ff51b544bac203c070a6d091f048d3):
+  ember-primitives@0.53.0(a2cfc6336121d40afaaa52d13d44ca5e):
     dependencies:
       '@babel/runtime': 7.28.6
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.4)
       '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.19.7(@glint/template@1.7.4)
       '@floating-ui/dom': 1.7.5
-      '@glimmer/component': 2.0.0
+      '@glimmer/component': 2.1.1
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-element-helper: 0.8.8
       ember-modifier: 4.3.0(@babel/core@7.29.0)
-      ember-resources: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
+      ember-resources: 7.0.7(965c0d76ede0ebc026c55e9dbbdc8990)
       form-data-utils: 0.6.0
-      reactiveweb: 1.9.1(c6268fff421912c44d52c9127b59a734)
+      reactiveweb: 1.9.1(6201fd5459100b2a89726ac6938ac464)
       should-handle-link: 1.3.0
       tabster: 8.7.0
       tracked-built-ins: 4.1.0(@babel/core@7.29.0)
@@ -17481,20 +17481,20 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-primitives@0.53.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0):
+  ember-primitives@0.53.0(a5946cbbd31c190d64da0ef480ebf75b):
     dependencies:
       '@babel/runtime': 7.28.6
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.4)
       '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.19.7(@glint/template@1.7.4)
       '@floating-ui/dom': 1.7.5
-      '@glimmer/component': 2.0.0
+      '@glimmer/component': 2.1.1
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-element-helper: 0.8.8
       ember-modifier: 4.2.2(@babel/core@7.29.0)
-      ember-resources: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
+      ember-resources: 7.0.7(965c0d76ede0ebc026c55e9dbbdc8990)
       form-data-utils: 0.6.0
-      reactiveweb: 1.9.1(c6268fff421912c44d52c9127b59a734)
+      reactiveweb: 1.9.1(6201fd5459100b2a89726ac6938ac464)
       should-handle-link: 1.3.0
       tabster: 8.7.0
       tracked-built-ins: 4.1.0(@babel/core@7.29.0)
@@ -17518,7 +17518,7 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  ember-repl@7.3.5(e9515a53281cdb161fa7066b1d942d24):
+  ember-repl@7.3.5(d577eea0def7d781250c6c795616629c):
     dependencies:
       '@ember/test-helpers': 5.4.1(882cf82caec78f226fcbd647b89f3bbe)
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.4)
@@ -17526,9 +17526,9 @@ snapshots:
       codemirror: 6.0.2
       content-tag: 4.1.0
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
-      ember-primitives: 0.51.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
+      ember-primitives: 0.51.0(a5946cbbd31c190d64da0ef480ebf75b)
       ember-resolver: 13.1.1
-      ember-resources: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
+      ember-resources: 7.0.7(965c0d76ede0ebc026c55e9dbbdc8990)
       repl-sdk: 1.4.1(93d4969b5698d0d4464d33ccc0660007)
     optionalDependencies:
       '@glint/template': 1.7.4
@@ -17544,16 +17544,16 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  ember-repl@8.0.2(e9515a53281cdb161fa7066b1d942d24):
+  ember-repl@8.0.2(d577eea0def7d781250c6c795616629c):
     dependencies:
       '@ember/test-helpers': 5.4.1(882cf82caec78f226fcbd647b89f3bbe)
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.4)
       codemirror: 6.0.2
       content-tag: 4.1.0
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
-      ember-primitives: 0.51.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
+      ember-primitives: 0.51.0(a5946cbbd31c190d64da0ef480ebf75b)
       ember-resolver: 13.1.1
-      ember-resources: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
+      ember-resources: 7.0.7(965c0d76ede0ebc026c55e9dbbdc8990)
       repl-sdk: 1.5.2(93d4969b5698d0d4464d33ccc0660007)
     optionalDependencies:
       '@glint/template': 1.7.4
@@ -17575,13 +17575,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-resources@7.0.7(15212e00d9578a07d2b7b36a34f82e1b):
+  ember-resources@7.0.7(965c0d76ede0ebc026c55e9dbbdc8990):
     dependencies:
       '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.19.7(@glint/template@1.7.4)
       '@glint/template': 1.7.4
     optionalDependencies:
-      '@glimmer/component': 2.0.0
+      '@glimmer/component': 2.1.1
     transitivePeerDependencies:
       - supports-color
 
@@ -17595,11 +17595,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-source@6.12.0-alpha.6(@glimmer/component@2.0.0)(rsvp@4.8.5):
+  ember-source@6.12.0-alpha.6(@glimmer/component@2.1.1)(rsvp@4.8.5):
     dependencies:
       '@babel/core': 7.29.0
       '@embroider/addon-shim': 1.10.2
-      '@glimmer/component': 2.0.0
+      '@glimmer/component': 2.1.1
       '@simple-dom/interface': 1.4.0
       backburner.js: 2.8.0
       broccoli-file-creator: 2.1.1
@@ -17623,11 +17623,11 @@ snapshots:
       - rsvp
       - supports-color
 
-  ember-statechart-component@7.1.0(a2ad788df3a5d8cc54e96323604ca203):
+  ember-statechart-component@7.1.0(27e1b9da81439494798062ce5afacf46):
     dependencies:
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.4)
       '@embroider/addon-shim': 1.10.2
-      '@glimmer/component': 2.0.0
+      '@glimmer/component': 2.1.1
       '@glint/template': 1.7.4
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       xstate: 5.25.0
@@ -19406,18 +19406,18 @@ snapshots:
     dependencies:
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.4)
       '@embroider/addon-shim': 1.10.2
-      '@glimmer/component': 2.0.0
+      '@glimmer/component': 2.1.1
       '@glint/template': 1.7.4
       common-tags: 1.8.2
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-modifier: 4.2.2(@babel/core@7.29.0)
-      ember-primitives: 0.48.2(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
-      ember-repl: 7.3.5(e9515a53281cdb161fa7066b1d942d24)
-      ember-resources: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
+      ember-primitives: 0.48.2(a5946cbbd31c190d64da0ef480ebf75b)
+      ember-repl: 7.3.5(d577eea0def7d781250c6c795616629c)
+      ember-resources: 7.0.7(965c0d76ede0ebc026c55e9dbbdc8990)
       globby: 16.1.0
       json5: 2.2.3
       package-up: 5.0.0
-      reactiveweb: 1.9.1(c6268fff421912c44d52c9127b59a734)
+      reactiveweb: 1.9.1(6201fd5459100b2a89726ac6938ac464)
       send: 1.2.1
       tracked-built-ins: 4.1.0(@babel/core@7.29.0)
       typedoc: 0.28.15(typescript@5.9.3)
@@ -20435,12 +20435,12 @@ snapshots:
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.4)
       '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.19.6(@glint/template@1.7.4)
-      '@glimmer/component': 2.0.0
+      '@glimmer/component': 2.1.1
       '@glint/template': 1.7.4
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-modifier: 4.2.2(@babel/core@7.29.0)
-      ember-primitives: 0.51.0(c4ffba7a9c87490d0f7ff5d5f6df5cb0)
-      ember-resources: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
+      ember-primitives: 0.51.0(a5946cbbd31c190d64da0ef480ebf75b)
+      ember-resources: 7.0.7(965c0d76ede0ebc026c55e9dbbdc8990)
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -21017,13 +21017,13 @@ snapshots:
 
   react@19.2.4: {}
 
-  reactiveweb@1.9.1(c6268fff421912c44d52c9127b59a734):
+  reactiveweb@1.9.1(6201fd5459100b2a89726ac6938ac464):
     dependencies:
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.4)
       '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.19.7(@glint/template@1.7.4)
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
-      ember-resources: 7.0.7(15212e00d9578a07d2b7b36a34f82e1b)
+      ember-resources: 7.0.7(965c0d76ede0ebc026c55e9dbbdc8990)
     transitivePeerDependencies:
       - '@babel/core'
       - '@glimmer/component'
