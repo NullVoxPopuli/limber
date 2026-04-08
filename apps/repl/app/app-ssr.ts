@@ -43,7 +43,13 @@ export function createSsrApp() {
           state = getSettledState();
           console.log(state);
           await new Promise((r) => setTimeout(r, 5000));
-        } while (state.hasPendingTimers || state.hasPendingWaiters || state.hasPendingRequests || state.hasRunLoop || state.pendingRequestCount > 0);
+        } while (
+          state.hasPendingTimers ||
+          state.hasPendingWaiters ||
+          state.hasPendingRequests ||
+          state.hasRunLoop ||
+          state.pendingRequestCount > 0
+        );
       })();
 
       await settled();
