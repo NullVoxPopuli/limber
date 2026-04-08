@@ -1,5 +1,5 @@
 import Route from '@ember/routing/route';
-import { settled } from '@ember/test-helpers';
+import { getSettledState, settled } from '@ember/test-helpers';
 
 import PageTitleService from 'ember-page-title/services/page-title';
 import Application from 'ember-strict-application-resolver';
@@ -35,6 +35,13 @@ export function createSsrApp() {
   Object.assign(app, {
     visit: async (...args: Parameters<typeof originalVisit>) => {
       const instance = await originalVisit(...args);
+
+      (async () => {
+        while (true) {
+          console.log(getSettledState());
+          await new Promise((r) => setTimeout(r, 5000));
+        }
+      })();
 
       await settled();
 
