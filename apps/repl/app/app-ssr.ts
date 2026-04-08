@@ -41,7 +41,7 @@ export function createSsrApp() {
 
         do {
           state = getSettledState();
-          console.log(state);
+          console.debug(state);
           await new Promise((r) => setTimeout(r, 5000));
         } while (
           state.hasPendingTimers ||
