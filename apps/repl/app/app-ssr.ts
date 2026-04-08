@@ -36,23 +36,26 @@ export function createSsrApp() {
     visit: async (...args: Parameters<typeof originalVisit>) => {
       const instance = await originalVisit(...args);
 
-      (async () => {
-        let state;
+      const timeout = 30_000;
+      const start = Date.now();
+      const poll = setInterval(() => {
+        const state = getSettledState();
+        const elapsed = Date.now() - start;
 
-        do {
-          state = getSettledState();
-          console.debug(state);
-          await new Promise((r) => setTimeout(r, 5000));
-        } while (
-          state.hasPendingTimers ||
-          state.hasPendingWaiters ||
-          state.hasPendingRequests ||
-          state.hasRunLoop ||
-          state.pendingRequestCount > 0
+        process.stderr.write(
+          `[settled-debug] ${elapsed}ms: ${JSON.stringify(state)}\n`,
         );
-      })();
+
+        if (elapsed > timeout) {
+          clearInterval(poll);
+          process.stderr.write(
+            `[settled-debug] Giving up after ${timeout}ms. Final state: ${JSON.stringify(state)}\n`,
+          );
+        }
+      }, 2000);
 
       await settled();
+      clearInterval(poll);
 
       return instance;
     },
