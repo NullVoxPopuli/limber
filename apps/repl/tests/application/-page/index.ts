@@ -2,7 +2,9 @@ import { assert } from '@ember/debug';
 import { currentURL, settled, visit } from '@ember/test-helpers';
 
 import { PageObject } from 'fractal-page-object';
-import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
+import LZString from 'lz-string';
+
+const { compressToEncodedURIComponent, decompressFromEncodedURIComponent } = LZString;
 
 import { s } from './-helpers';
 import { DemoSelect } from './demo-select';

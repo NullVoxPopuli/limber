@@ -5,7 +5,9 @@ import { service } from '@ember/service';
 import { buildWaiter } from '@ember/test-waiters';
 import { isTesting, macroCondition } from '@embroider/macros';
 
-import { compressToEncodedURIComponent } from 'lz-string';
+import LZString from 'lz-string';
+
+const { compressToEncodedURIComponent } = LZString;
 
 import {
   flavorFrom,
