@@ -45,17 +45,13 @@ export function createSsrApp() {
 
         const waiterState = getPendingWaiterState();
 
-        process.stderr.write(
-          `[settled-debug] ${elapsed}ms: ${JSON.stringify(state)}\n`,
-        );
-        process.stderr.write(
-          `[settled-debug] waiters: ${JSON.stringify(waiterState, null, 2)}\n`,
-        );
+        process.stderr.write(`[settled-debug] ${elapsed}ms: ${JSON.stringify(state)}\n`);
+        process.stderr.write(`[settled-debug] waiters: ${JSON.stringify(waiterState, null, 2)}\n`);
 
         if (elapsed > timeout) {
           clearInterval(poll);
           process.stderr.write(
-            `[settled-debug] Giving up after ${timeout}ms. Final state: ${JSON.stringify(state)}\n`,
+            `[settled-debug] Giving up after ${timeout}ms. Final state: ${JSON.stringify(state)}\n`
           );
         }
       }, 2000);
