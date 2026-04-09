@@ -1,0 +1,16 @@
+# Unlabeled Changes
+
+* `limber-ui`
+  * [#2115](https://github.com/NullVoxPopuli/limber/pull/2115) Use import.meta.env.SSR for SSR detection in HostMessaging ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2113](https://github.com/NullVoxPopuli/limber/pull/2113) Upgrade vite-ember-ssr to 0.1.0-alpha.13 ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `ember-repl`, `limber-ui`
+  * [#2111](https://github.com/NullVoxPopuli/limber/pull/2111) Upgrade to @glimmer/component 2.1.1 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#2097](https://github.com/NullVoxPopuli/limber/pull/2097) Upgrade glint ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* Other
+  * [#2106](https://github.com/NullVoxPopuli/limber/pull/2106) Add SSG for docs pages using vite-ember-ssr ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2104](https://github.com/NullVoxPopuli/limber/pull/2104) Strip trailing hyphens from deploy preview subdomain ([@Copilot](https://github.com/apps/copilot-swe-agent))
+  * [#2102](https://github.com/NullVoxPopuli/limber/pull/2102) Update GitHub Actions from Node.js 20 to Node.js 24 to fix deprecation warnings ([@Copilot](https://github.com/apps/copilot-swe-agent))
+  * [#2100](https://github.com/NullVoxPopuli/limber/pull/2100) Add workflow_dispatch workflow to test ember-source branches/PRs ([@Copilot](https://github.com/apps/copilot-swe-agent))
+
+
+*Cannot plan release until the above changes are labeled*.
