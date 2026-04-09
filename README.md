@@ -65,10 +65,10 @@ Cross-Browser testing provided by <a href='http://browserstack.com' target='_bla
                 </a>
             </td>
             <td align="center">
-                <a href="https://github.com/MehulKChaudhari">
-                    <img src="https://avatars.githubusercontent.com/u/55375534?v=4" width="100;" alt="MehulKChaudhari"/>
+                <a href="https://github.com/johnpatrickanders">
+                    <img src="https://avatars.githubusercontent.com/u/66134557?v=4" width="100;" alt="johnpatrickanders"/>
                     <br />
-                    <sub><b>Mehul Kiran Chaudhari</b></sub>
+                    <sub><b>John Anders</b></sub>
                 </a>
             </td>
             <td align="center">
@@ -79,19 +79,19 @@ Cross-Browser testing provided by <a href='http://browserstack.com' target='_bla
                 </a>
             </td>
             <td align="center">
-                <a href="https://github.com/johnpatrickanders">
-                    <img src="https://avatars.githubusercontent.com/u/66134557?v=4" width="100;" alt="johnpatrickanders"/>
+                <a href="https://github.com/MehulKChaudhari">
+                    <img src="https://avatars.githubusercontent.com/u/55375534?v=4" width="100;" alt="MehulKChaudhari"/>
                     <br />
-                    <sub><b>John Anders</b></sub>
+                    <sub><b>Mehul Kiran Chaudhari</b></sub>
                 </a>
             </td>
 		</tr>
 		<tr>
             <td align="center">
-                <a href="https://github.com/jaredgalanis">
-                    <img src="https://avatars.githubusercontent.com/u/6305935?v=4" width="100;" alt="jaredgalanis"/>
+                <a href="https://github.com/ynotdraw">
+                    <img src="https://avatars.githubusercontent.com/u/8069555?v=4" width="100;" alt="ynotdraw"/>
                     <br />
-                    <sub><b>Jared Galanis</b></sub>
+                    <sub><b>Tony Ward</b></sub>
                 </a>
             </td>
             <td align="center">
@@ -102,10 +102,17 @@ Cross-Browser testing provided by <a href='http://browserstack.com' target='_bla
                 </a>
             </td>
             <td align="center">
-                <a href="https://github.com/ynotdraw">
-                    <img src="https://avatars.githubusercontent.com/u/8069555?v=4" width="100;" alt="ynotdraw"/>
+                <a href="https://github.com/jaredgalanis">
+                    <img src="https://avatars.githubusercontent.com/u/6305935?v=4" width="100;" alt="jaredgalanis"/>
                     <br />
-                    <sub><b>Tony Ward</b></sub>
+                    <sub><b>Jared Galanis</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/NullVoxPopuli-ai-agent">
+                    <img src="https://avatars.githubusercontent.com/u/268630448?v=4" width="100;" alt="NullVoxPopuli-ai-agent"/>
+                    <br />
+                    <sub><b>@NullVoxPopuli's reduced-access machine account for AI usage</b></sub>
                 </a>
             </td>
             <td align="center">
@@ -122,6 +129,8 @@ Cross-Browser testing provided by <a href='http://browserstack.com' target='_bla
                     <sub><b>Dayo Olutayo</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/neojp">
                     <img src="https://avatars.githubusercontent.com/u/127994?v=4" width="100;" alt="neojp"/>
@@ -129,8 +138,6 @@ Cross-Browser testing provided by <a href='http://browserstack.com' target='_bla
                     <sub><b>Joan P.</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/bartocc">
                     <img src="https://avatars.githubusercontent.com/u/47953?v=4" width="100;" alt="bartocc"/>
