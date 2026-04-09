@@ -9,8 +9,8 @@ import type { ModifierLike } from '@glint/template';
 import type { Connection } from 'penpal';
 
 function isSSR(): boolean {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   // @ts-expect-error process is a Node.js global, not available in browser types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   return typeof process !== 'undefined' && !!process.versions?.node;
 }
 
