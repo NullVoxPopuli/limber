@@ -8,12 +8,6 @@ import { connectToChild } from 'penpal';
 import type { ModifierLike } from '@glint/template';
 import type { Connection } from 'penpal';
 
-function isSSR(): boolean {
-  // @ts-expect-error process is a Node.js global, not available in browser types
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  return typeof process !== 'undefined' && !!process.versions?.node;
-}
-
 interface ParentToChildData {
   code: string;
   format: string;
@@ -36,7 +30,7 @@ function PostMessage(
     // In SSR (happy-dom), contentWindow exists but can't do real messaging.
     // Skip to avoid triggering @waitFor-decorated queuePayload, whose
     // connection.promise never resolves and blocks settled() indefinitely.
-    if (!element.contentWindow || isSSR()) return;
+    if (!element.contentWindow || import.meta.env?.SSR) return;
 
     handleUpdate(data);
   });
@@ -46,7 +40,7 @@ function HandleMessage(
   createConnection: (element: HTMLIFrameElement) => () => void
 ): ModifierLike<{ Element: HTMLIFrameElement }> {
   return modifier((element: HTMLIFrameElement) => {
-    if (isSSR()) return;
+    if (import.meta.env?.SSR) return;
 
     return createConnection(element);
   });
