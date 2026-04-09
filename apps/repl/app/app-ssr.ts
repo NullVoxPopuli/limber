@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { getSettledState, settled } from '@ember/test-helpers';
+import { getPendingWaiterState } from '@ember/test-waiters';
 
 import PageTitleService from 'ember-page-title/services/page-title';
 import Application from 'ember-strict-application-resolver';
@@ -42,8 +43,13 @@ export function createSsrApp() {
         const state = getSettledState();
         const elapsed = Date.now() - start;
 
+        const waiterState = getPendingWaiterState();
+
         process.stderr.write(
           `[settled-debug] ${elapsed}ms: ${JSON.stringify(state)}\n`,
+        );
+        process.stderr.write(
+          `[settled-debug] waiters: ${JSON.stringify(waiterState, null, 2)}\n`,
         );
 
         if (elapsed > timeout) {
