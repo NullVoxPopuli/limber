@@ -1,4 +1,5 @@
 import Route from '@ember/routing/route';
+import { settled } from '@ember/test-helpers';
 
 import PageTitleService from 'ember-page-title/services/page-title';
 import Application from 'ember-strict-application-resolver';
@@ -27,5 +28,19 @@ export function createSsrApp() {
   g.process ??= { env: {} };
   g.Buffer ??= {};
 
-  return SsrApp.create({ autoboot: false });
+  const app = SsrApp.create({ autoboot: false });
+
+  const originalVisit = app.visit.bind(app);
+
+  Object.assign(app, {
+    visit: async (...args: Parameters<typeof originalVisit>) => {
+      const instance = await originalVisit(...args);
+
+      await settled();
+
+      return instance;
+    },
+  });
+
+  return app;
 }

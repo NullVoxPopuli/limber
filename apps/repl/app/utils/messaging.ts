@@ -1,4 +1,6 @@
-import { decompressFromEncodedURIComponent } from 'lz-string';
+import LZString from 'lz-string';
+
+const { decompressFromEncodedURIComponent } = LZString;
 
 import { type Format, formatFrom } from '#app/languages.gts';
 
