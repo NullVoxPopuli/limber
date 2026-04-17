@@ -1,3 +1,5 @@
+import { tracked } from '@glimmer/tracking';
+import { hash } from '@ember/helper';
 import { renderSettled } from '@ember/renderer';
 import { render, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
@@ -48,5 +50,65 @@ module('Rendering | Compiled()', function (hooks) {
     assert.dom('#ready').hasText('true');
     assert.dom('#error').hasNoText();
     assert.dom('#component').hasText('hello there');
+  });
+
+  test('forwards args to a compiled gjs component', async function (assert) {
+    const doc = stripIndent`
+      <template>
+        <output>hello {{@name}}</output>
+      </template>
+    `;
+
+    const args = { name: 'world' };
+
+    void render(
+      <template>
+        {{#let (Compiled doc "gjs" undefined (hash args=args)) as |state|}}
+          {{#if state.component}}
+            <state.component />
+          {{/if}}
+        {{/let}}
+      </template>
+    );
+
+    await settled();
+    assert.dom('output').hasText('hello world');
+  });
+
+  test('reactive args propagate without recompilation', async function (assert) {
+    const doc = stripIndent`
+      <template>
+        <output>hello {{@name}}</output>
+      </template>
+    `;
+
+    class State {
+      @tracked name = 'world';
+    }
+
+    // A stable args reference whose values read from tracked state.
+    const state = new State();
+    const args = {
+      get name() {
+        return state.name;
+      },
+    };
+
+    void render(
+      <template>
+        {{#let (Compiled doc "gjs" undefined (hash args=args)) as |compiled|}}
+          {{#if compiled.component}}
+            <compiled.component />
+          {{/if}}
+        {{/let}}
+      </template>
+    );
+
+    await settled();
+    assert.dom('output').hasText('hello world');
+
+    state.name = 'friend';
+    await settled();
+    assert.dom('output').hasText('hello friend');
   });
 });

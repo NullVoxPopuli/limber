@@ -170,7 +170,16 @@ export async function compiler(config, api) {
       const { renderComponent } = await compiler.tryResolve('@ember/renderer');
 
       const owner = makeOwner(config.owner);
-      const result = renderComponent(compiled, { into: element, owner });
+      const args = /** @type {Record<string, unknown> | undefined} */ (
+        extra && typeof extra === 'object' && 'args' in extra
+          ? /** @type {Record<string, unknown>} */ (extra).args
+          : undefined
+      );
+      const result = renderComponent(compiled, {
+        into: element,
+        owner,
+        ...(args ? { args } : {}),
+      });
 
       compiler.announce('info', 'Ember Island Rendered');
 
