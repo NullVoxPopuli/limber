@@ -141,6 +141,8 @@ function maybeBabel(options = {}) {
 
 function rolldownTemplateTag() {
   const plugin = templateTag();
+  const handler =
+    typeof plugin.transform === 'function' ? plugin.transform : plugin.transform.handler;
 
   return {
     ...plugin,
@@ -148,7 +150,7 @@ function rolldownTemplateTag() {
       filter: {
         id: [/\.gjs/, /\.gts/],
       },
-      handler: plugin.transform,
+      handler,
     },
   };
 }
