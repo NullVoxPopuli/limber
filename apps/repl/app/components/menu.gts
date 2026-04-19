@@ -1,14 +1,18 @@
 import { hash } from '@ember/helper';
 
-// @ts-expect-error - they still don't have types
-import { focusTrap } from 'ember-focus-trap';
+import { focusTrap as _focusTrap } from 'ember-focus-trap';
 import { Key } from 'ember-primitives/components/keys';
 import { Menu as HeadlessMenu } from 'ember-primitives/components/menu';
 import { FloatingUI } from 'ember-primitives/floating-ui';
 
 import type { TOC } from '@ember/component/template-only';
-import type { ComponentLike, WithBoundArgs } from '@glint/template';
+import type { ComponentLike, ModifierLike, WithBoundArgs } from '@glint/template';
 import type { ItemSignature, Signature as MenuSignature } from 'ember-primitives/components/menu';
+
+const focusTrap = _focusTrap as unknown as ModifierLike<{
+  Args: { Named: { isActive?: boolean; focusTrapOptions?: Record<string, unknown> } };
+  Element: HTMLElement;
+}>;
 
 type MenuType = MenuSignature['Blocks']['default'][0];
 

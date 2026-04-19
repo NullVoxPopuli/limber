@@ -8,8 +8,7 @@ import { service } from '@ember/service';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faShareFromSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
-// @ts-expect-error womp types
-import { focusTrap } from 'ember-focus-trap';
+import { focusTrap as _focusTrap } from 'ember-focus-trap';
 import { Modal } from 'ember-primitives/components/dialog';
 import { KeyCombo } from 'ember-primitives/components/keys';
 import { cell } from 'ember-resources';
@@ -22,6 +21,12 @@ import { FlatButton } from '@nullvoxpopuli/limber-shared';
 
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
+import type { ModifierLike } from '@glint/template';
+
+const focusTrap = _focusTrap as unknown as ModifierLike<{
+  Args: { Named: { isActive?: boolean } };
+  Element: HTMLElement;
+}>;
 
 const isShowing = cell(false);
 
