@@ -76,7 +76,7 @@ async function runTheCompiler({
   if (options.format === 'glimdown') {
     result = await service.compile('gmd', text, options as any);
   } else if (options.format === 'gjs') {
-    result = await service.compileGJS(text, options as any);
+    result = await service.compileGJS(text, { args: options.args });
   } else if (options.format === 'hbs') {
     result = await service.compileHBS(text, options as any);
   } else {
