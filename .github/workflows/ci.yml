@@ -70,7 +70,7 @@ jobs:
     - run: ls -la ./apps/repl/dist
     - run: ls -la ./apps/tutorial/dist
     # Used for faster deploy so we don't need to checkout the repo
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7
       with:
         name: deploy-prep-dist
         if-no-files-found: error
@@ -178,7 +178,7 @@ jobs:
       limberUrl: ${{ steps.limber.outputs.url }}
       tutorialUrl: ${{ steps.tutorial.outputs.url }}
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         name: deploy-prep-dist
       - name: Publish ${{ matrix.app.name }}
         working-directory: ./deploy-prep-dist/${{ matrix.app.path }}
