@@ -383,9 +383,13 @@ export default class CompilerService {
    * The returned component can be invoked explicitly in the consuming project.
    *
    * @param {string} code the code to be compiled
+   * @param {object} [options] additional render options (e.g. `args`)
    */
-  compileGJS(code: string): Promise<CompileResult> {
-    return this.compile('gjs', code);
+  compileGJS(
+    code: string,
+    options?: Record<string, unknown>
+  ): Promise<CompileResult> {
+    return this.compile('gjs', code, options);
   }
 
   /**

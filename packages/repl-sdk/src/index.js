@@ -345,7 +345,7 @@ export class Compiler {
   /**
    * @param {string} format
    * @param {string} text
-   * @param {{ fileName?: string, flavor?: string, [key: string]: unknown }} [ options ]
+   * @param {{ fileName?: string, flavor?: string, args?: Record<string, unknown>, [key: string]: unknown }} [ options ]
    * @returns {Promise<{ element: HTMLElement, destroy: () => void }>}
    */
   async compile(format, text, options = {}) {
@@ -411,6 +411,7 @@ export class Compiler {
       return this.#render(compiler, value, {
         ...extras,
         compiled: value,
+        ...(opts.args ? { args: opts.args } : {}),
       });
     }
 
@@ -421,7 +422,10 @@ export class Compiler {
 
     this.#log('[compile] preparing to render', defaultExport, extras);
 
-    return this.#render(compiler, defaultExport, extras);
+    return this.#render(compiler, defaultExport, {
+      ...extras,
+      ...(opts.args ? { args: opts.args } : {}),
+    });
   }
 
   #compilerCache = new WeakMap();

@@ -12,6 +12,15 @@ interface Options {
   flavor?: string;
   remarkPlugins?: unknown[];
   rehypePlugins?: unknown[];
+  /**
+   * Arguments forwarded to the compiled component.
+   *
+   * Keys present on this object at compile time become reactive `@arg`
+   * references in the rendered component. Update the values on this object
+   * (e.g. via `@tracked` or `TrackedObject`) to propagate changes into the
+   * rendered component without recompiling.
+   */
+  args?: Record<string, unknown>;
   onSuccess?: (component: ComponentLike) => Promise<unknown> | unknown;
   onError?: (error: string) => Promise<unknown> | unknown;
   onCompileStart?: () => Promise<unknown> | unknown;
@@ -67,7 +76,10 @@ async function runTheCompiler({
   if (options.format === 'glimdown') {
     result = await service.compile('gmd', text, options as any);
   } else if (options.format === 'gjs') {
-    result = await service.compileGJS(text);
+    result = await service.compileGJS(
+      text,
+      options as unknown as Record<string, unknown>
+    );
   } else if (options.format === 'hbs') {
     result = await service.compileHBS(text, options as any);
   } else {

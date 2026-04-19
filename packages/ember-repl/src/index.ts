@@ -5,5 +5,6 @@ export { getCompiler } from './services/compiler.ts';
 export { setup as setupCompiler } from './setup.ts';
 
 // Public Types
+export type { CompiledOptions } from './compile/Compiled.ts';
 export type { CompileState } from './compile/state.ts';
 export type { Format, ModuleMap, ScopeMap } from './compile/types.ts';

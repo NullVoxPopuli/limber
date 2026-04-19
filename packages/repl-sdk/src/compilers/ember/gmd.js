@@ -98,9 +98,16 @@ export async function compiler(config, api) {
 
       const { renderComponent } = await compiler.tryResolve('@ember/renderer');
 
+      const args = /** @type {Record<string, unknown> | undefined} */ (
+        extra && typeof extra === 'object' && 'args' in extra
+          ? /** @type {Record<string, unknown>} */ (extra).args
+          : undefined
+      );
+
       const result = renderComponent(compiled, {
         into: element,
         owner: userOptions.owner,
+        ...(args ? { args } : {}),
       });
 
       const destroy = () => result.destroy();
