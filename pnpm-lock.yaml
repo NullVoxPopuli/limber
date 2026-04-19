@@ -121,8 +121,8 @@ importers:
         specifier: ^3.3.1
         version: 3.3.1
       ember-container-query:
-        specifier: 6.1.7
-        version: 6.1.7(2c26261863032df0213d31036afe3676)
+        specifier: 7.0.2
+        version: 7.0.2(2c26261863032df0213d31036afe3676)
       ember-deep-tracked:
         specifier: ^2.0.1
         version: 2.0.1(@glint/template@1.7.7)
@@ -6786,9 +6786,9 @@ packages:
     resolution: {integrity: sha512-BtkjulweiXo9c3yVWrtexw2dTmBrvavD/xixNC6TKOBdrixUwU+6nuOO9dufDWsMxoid7MvtmDpzc9+mE8PdaA==}
     engines: {node: 10.* || >= 12.*}
 
-  ember-container-query@6.1.7:
-    resolution: {integrity: sha512-HAQxC0HZ5UoJqcBNeX6N3i+C9nwhDJdnPyqXBzkwTZoRAhm/vPuNx885J3OyXN/HMtYltlR87sQCCNVG5XJtmA==}
-    engines: {node: 20.* || >= 22}
+  ember-container-query@7.0.2:
+    resolution: {integrity: sha512-8I6F5T/afo87IsRPKe9tJiSRLQjbDL75qXHgaYkI6/+7sbPnR0W2fSqB1r06hZHyVQYcKnwvSbgzPiaDgKxFvg==}
+    engines: {node: 22.* || >= 24}
 
   ember-deep-tracked@2.0.1:
     resolution: {integrity: sha512-qSuVZTptZakISlJEOnc9r/37mjqs3JTDJW55g6+ahKtbbrjLJJQnbfCPpzcTcITxge9DL/QD5qZM1UL5vtK66A==}
@@ -6872,6 +6872,22 @@ packages:
 
   ember-primitives@0.53.0:
     resolution: {integrity: sha512-rS0NLZT5R0JOLKa3zh23ZFZ5GNTN9hlNnxY7lm9y0n52uCj9gGpwmdFlNf8FlH7LESB6cv4WK+TYDP3omEOo6Q==}
+    hasBin: true
+    peerDependencies:
+      '@ember/test-helpers': '>= 3.2.0'
+      '@ember/test-waiters': '>= 3.0.2'
+      '@glimmer/component': ^2.0.0
+      '@glint/template': 1.7.7
+      ember-modifier: '>= 4.1.0'
+      ember-resources: '>= 6.1.0'
+    peerDependenciesMeta:
+      '@ember/test-helpers':
+        optional: true
+      '@glint/template':
+        optional: true
+
+  ember-primitives@0.55.2:
+    resolution: {integrity: sha512-uk9PX+fSaqnWeqg33kg5NOzzaj4w07oFEexkLNvs3HpT8OyuADG0oGMgXKeholndGZedobNE/CVEGLMJzdkO2w==}
     hasBin: true
     peerDependencies:
       '@ember/test-helpers': '>= 3.2.0'
@@ -11247,6 +11263,9 @@ packages:
 
   which-heading-do-i-need@0.2.5:
     resolution: {integrity: sha512-ZKsO8olVAzt/VdslpRWIsL78eaMXJsNYqNX9GE9O5MN1YViS8eXxhatyeMJl89nFidH3GdedyHq3r+zJ6CSyZg==}
+
+  which-heading-do-i-need@0.2.7:
+    resolution: {integrity: sha512-YWMZUOoxOgq/SEcd0bnDjgTFrJQ8quz31RZ9IRxeyjWYsakrT3F3iOKoEhValp4WZ8Ybt0DqpIrwtL0fEwMe4A==}
 
   which@1.3.1:
     resolution: {integrity: sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==}
@@ -16861,13 +16880,13 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-container-query@6.1.7(2c26261863032df0213d31036afe3676):
+  ember-container-query@7.0.2(2c26261863032df0213d31036afe3676):
     dependencies:
       '@embroider/addon-shim': 1.10.2
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-element-helper: 0.8.8
       ember-modifier: 4.3.0(@babel/core@7.29.0)
-      ember-primitives: 0.53.0(f377d5b55f0eee32ac67978459e68e40)
+      ember-primitives: 0.55.2(f377d5b55f0eee32ac67978459e68e40)
     transitivePeerDependencies:
       - '@babel/core'
       - '@ember/test-helpers'
@@ -17080,12 +17099,11 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-primitives@0.53.0(f377d5b55f0eee32ac67978459e68e40):
+  ember-primitives@0.55.2(f377d5b55f0eee32ac67978459e68e40):
     dependencies:
-      '@babel/runtime': 7.28.6
+      '@babel/runtime': 7.29.2
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.7)
       '@embroider/addon-shim': 1.10.2
-      '@embroider/macros': 1.20.2(@glint/template@1.7.7)
       '@floating-ui/dom': 1.7.5
       '@glimmer/component': 2.1.1
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
@@ -17098,7 +17116,7 @@ snapshots:
       tabster: 8.7.0
       tracked-built-ins: 4.1.0(@babel/core@7.29.0)
       tracked-toolbox: 2.2.0(@babel/core@7.29.0)
-      which-heading-do-i-need: 0.2.5
+      which-heading-do-i-need: 0.2.7
     optionalDependencies:
       '@ember/test-helpers': 5.4.1(c8332dc3f90c0e60eb130a3a85f980b9)
       '@glint/template': 1.7.7
@@ -22467,6 +22485,8 @@ snapshots:
   which-heading-do-i-need@0.2.4: {}
 
   which-heading-do-i-need@0.2.5: {}
+
+  which-heading-do-i-need@0.2.7: {}
 
   which@1.3.1:
     dependencies:
