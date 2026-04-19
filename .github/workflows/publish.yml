@@ -29,7 +29,6 @@ jobs:
       - uses: wyvox/action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - run: npm install -g npm@latest # ensure that the globally installed npm is new enough to support OIDC
       - run: pnpm install --frozen-lockfile
       - run: pnpm turbo build
       - name: Publish to NPM
