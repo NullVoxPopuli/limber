@@ -1,6 +1,5 @@
 import { hash } from '@ember/helper';
 
-// @ts-expect-error - they still don't have types
 import { focusTrap } from 'ember-focus-trap';
 import { Key } from 'ember-primitives/components/keys';
 import { Menu as HeadlessMenu } from 'ember-primitives/components/menu';

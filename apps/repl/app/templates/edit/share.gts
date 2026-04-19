@@ -8,7 +8,6 @@ import { service } from '@ember/service';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faShareFromSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
-// @ts-expect-error womp types
 import { focusTrap } from 'ember-focus-trap';
 import { Modal } from 'ember-primitives/components/dialog';
 import { KeyCombo } from 'ember-primitives/components/keys';
