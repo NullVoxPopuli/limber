@@ -37,7 +37,7 @@ jobs:
     timeout-minutes: 10
 
     steps:
-    - uses: wyvox/action@v1
+    - uses: wyvox/action@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - run:  echo ${{ github.event.number }} > ./pr-number.txt
@@ -50,7 +50,7 @@ jobs:
     needs: [install_dependencies]
 
     steps:
-    - uses: wyvox/action@v1
+    - uses: wyvox/action@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - run: pnpm turbo build:test
@@ -62,7 +62,7 @@ jobs:
     needs: [install_dependencies]
 
     steps:
-    - uses: wyvox/action@v1
+    - uses: wyvox/action@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - run:  echo ${{ github.event.number }} > ./pr-number.txt
@@ -90,7 +90,7 @@ jobs:
     needs: [install_dependencies]
 
     steps:
-      - uses: wyvox/action@v1
+      - uses: wyvox/action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - run: pnpm build
@@ -113,7 +113,7 @@ jobs:
     needs: [build_tests]
 
     steps:
-      - uses: wyvox/action@v1
+      - uses: wyvox/action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Environment Info
