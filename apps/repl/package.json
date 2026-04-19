@@ -85,7 +85,7 @@
     "ember-load-initializers": "^3.0.1",
     "ember-page-title": "^9.0.3",
     "ember-qunit": "^9.0.4",
-    "ember-source": "7.1.0-alpha.2",
+    "ember-source": "file:ember-source-7.1.0-alpha.1.fix-this-binding-on-modifier+317aa5f4.tgz",
     "ember-template-lint": "^7.9.3",
     "eslint": "^9.39.1",
     "execa": "^9.6.1",
