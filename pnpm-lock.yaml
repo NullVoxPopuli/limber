@@ -2245,8 +2245,8 @@ importers:
         specifier: 3.1.1
         version: 3.1.1
       filesize:
-        specifier: ^10.1.6
-        version: 10.1.6
+        specifier: ^11.0.0
+        version: 11.0.15
       globby:
         specifier: ^14.1.0
         version: 14.1.0
@@ -7457,6 +7457,10 @@ packages:
   filesize@10.1.6:
     resolution: {integrity: sha512-sJslQKU2uM33qH5nqewAwVB2QgR6w1aMNsYUp3aN5rMRyXEwJGmZvaWzeJFNTOXWlHQyBFCWrdj3fV/fsTOX8w==}
     engines: {node: '>= 10.4.0'}
+
+  filesize@11.0.15:
+    resolution: {integrity: sha512-30TpbYxQxCpi4XdVjkwXYQ37CzZltV38+P7MYroQ+4NK/Dmx9mxixFNrolzcmEIBsjT/uowC9T7kiy2+C12r1A==}
+    engines: {node: '>= 10.8.0'}
 
   fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
@@ -18157,6 +18161,8 @@ snapshots:
       flat-cache: 4.0.1
 
   filesize@10.1.6: {}
+
+  filesize@11.0.15: {}
 
   fill-range@7.1.1:
     dependencies:
