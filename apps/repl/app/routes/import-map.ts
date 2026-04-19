@@ -14,9 +14,6 @@ export const importMap = {
   'ember-primitives/components/menu': () => import('ember-primitives/components/menu'),
   'tracked-built-ins': () => import('tracked-built-ins'),
   'ember-repl': () => import('ember-repl'),
-  // Library does not provide types :(
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
   'ember-focus-trap': () => import('ember-focus-trap'),
   'ember-element-helper': () => import('ember-element-helper'),
   // Library does not provide types :(
@@ -167,8 +164,6 @@ defineWithWarning(() => import('reactiveweb/remote-data'), {
 });
 defineWithWarning(
   async () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
     const module = await import('ember-focus-trap');
 
     return {
