@@ -79,6 +79,7 @@
       "object.values": "npm:@nolyfill/object.values@^1",
       "reactiveweb": "1.9.1",
       "@codemirror/view": "6.39.12",
+      "ember-repl": "^8.0.0",
       "side-channel": "npm:@nolyfill/side-channel@^1",
       "string.prototype.matchall": "npm:@nolyfill/string.prototype.matchall@^1",
       "string.prototype.trimend": "npm:@nolyfill/string.prototype.trimend@^1"

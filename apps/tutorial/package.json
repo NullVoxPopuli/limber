@@ -45,7 +45,7 @@
     "ember-primitives": "^0.53.0",
     "ember-repl": "latest",
     "ember-resources": "^7.0.7",
-    "kolay": "^5.2.0",
+    "kolay": "^4.1.0",
     "limber-ui": "workspace:*",
     "reactiveweb": "1.9.1",
     "rehype-raw": "^7.0.0",
