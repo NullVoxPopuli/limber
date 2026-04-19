@@ -387,9 +387,9 @@ export default class CompilerService {
    */
   compileGJS(
     code: string,
-    options?: { args?: Record<string, unknown> }
+    options?: Record<string, unknown>
   ): Promise<CompileResult> {
-    return this.compile('gjs', code, options as Record<string, unknown> | undefined);
+    return this.compile('gjs', code, options);
   }
 
   /**
