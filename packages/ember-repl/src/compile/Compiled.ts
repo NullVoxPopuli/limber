@@ -9,6 +9,8 @@ import type { CompileState } from './state.ts';
 import type { Format, Input } from './types.ts';
 
 export interface CompiledOptions {
+  format?: Format;
+  flavor?: string;
   /**
    * Arguments forwarded to the compiled component.
    *
@@ -26,6 +28,10 @@ export interface CompiledOptions {
 export function Compiled(markdownText: Input | (() => Input)): CompileState;
 export function Compiled(
   markdownText: Input | (() => Input),
+  options: CompiledOptions
+): CompileState;
+export function Compiled(
+  markdownText: Input | (() => Input),
   format?: Format,
   flavor?: string
 ): CompileState;
@@ -38,40 +44,48 @@ export function Compiled(
   format: () => Format,
   flavor: () => string
 ): CompileState;
-export function Compiled(
-  markdownText: Input | (() => Input),
-  format?: Format | (() => Format),
-  flavor?: string | (() => string),
-  options?: CompiledOptions
-): CompileState;
 
 /**
  * By default, this compiles to `glimdown`. A Markdown format which
  * extracts `live` tagged code snippets and compiles them to components.
  *
- * The optional fourth argument may specify `args` to forward to the
- * compiled component — see `CompiledOptions`.
+ * Pass a `CompiledOptions` bag as the second argument to specify
+ * `format`, `flavor`, and `args` forwarded to the rendered component.
  */
 export function Compiled(
   markdownText: Input | (() => Input),
-  maybeFormat?: Format | (() => Format),
-  maybeFlavor?: string | (() => string),
-  maybeOptions?: CompiledOptions
+  maybeFormatOrOptions?: Format | (() => Format) | CompiledOptions,
+  maybeFlavor?: string | (() => string)
 ): CompileState {
   return resource(({ owner }) => {
     const input =
       typeof markdownText === 'function' ? markdownText() : markdownText;
-    const format =
-      typeof maybeFormat === 'function'
-        ? maybeFormat()
-        : maybeFormat || 'glimdown';
-    let flavor =
-      typeof maybeFlavor === 'function' ? maybeFlavor() : maybeFlavor;
 
-    flavor = typeof flavor === 'string' ? flavor : undefined;
+    let format: Format | undefined;
+    let flavor: string | undefined;
+    let args: Record<string, unknown> | undefined;
+
+    if (typeof maybeFormatOrOptions === 'function') {
+      format = maybeFormatOrOptions();
+    } else if (typeof maybeFormatOrOptions === 'string') {
+      format = maybeFormatOrOptions;
+    } else if (maybeFormatOrOptions) {
+      format = maybeFormatOrOptions.format;
+      flavor = maybeFormatOrOptions.flavor;
+      args = maybeFormatOrOptions.args;
+    }
+
+    format ??= 'glimdown';
+
+    if (flavor === undefined) {
+      const positional =
+        typeof maybeFlavor === 'function' ? maybeFlavor() : maybeFlavor;
+
+      flavor = typeof positional === 'string' ? positional : undefined;
+    }
 
     assert(
-      `second parameter to Compiled must be a format or function that returns a format`,
+      `second parameter to Compiled must be a format, an options bag, or a function that returns a format`,
       typeof format === 'string'
     );
 
@@ -80,7 +94,7 @@ export function Compiled(
     return compile(compiler, input, {
       format,
       flavor,
-      args: maybeOptions?.args,
+      args,
     });
   });
 }

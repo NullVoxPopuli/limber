@@ -1,5 +1,4 @@
 import { tracked } from '@glimmer/tracking';
-import { hash } from '@ember/helper';
 import { renderSettled } from '@ember/renderer';
 import { render, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
@@ -59,11 +58,11 @@ module('Rendering | Compiled()', function (hooks) {
       </template>
     `;
 
-    const args = { name: 'world' };
+    const options = { format: 'gjs' as const, args: { name: 'world' } };
 
     void render(
       <template>
-        {{#let (Compiled doc "gjs" undefined (hash args=args)) as |state|}}
+        {{#let (Compiled doc options) as |state|}}
           {{#if state.component}}
             <state.component />
           {{/if}}
@@ -88,15 +87,18 @@ module('Rendering | Compiled()', function (hooks) {
 
     // A stable args reference whose values read from tracked state.
     const state = new State();
-    const args = {
-      get name() {
-        return state.name;
+    const options = {
+      format: 'gjs' as const,
+      args: {
+        get name() {
+          return state.name;
+        },
       },
     };
 
     void render(
       <template>
-        {{#let (Compiled doc "gjs" undefined (hash args=args)) as |compiled|}}
+        {{#let (Compiled doc options) as |compiled|}}
           {{#if compiled.component}}
             <compiled.component />
           {{/if}}
