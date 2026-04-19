@@ -21,6 +21,7 @@ overrides:
   object.groupby: npm:@nolyfill/object.groupby@^1
   object.values: npm:@nolyfill/object.values@^1
   reactiveweb: 1.9.1
+  '@codemirror/view': 6.39.12
   side-channel: npm:@nolyfill/side-channel@^1
   string.prototype.matchall: npm:@nolyfill/string.prototype.matchall@^1
   string.prototype.trimend: npm:@nolyfill/string.prototype.trimend@^1
@@ -1281,8 +1282,8 @@ importers:
         specifier: ^6.5.4
         version: 6.6.0
       '@codemirror/view':
-        specifier: ^6.39.12
-        version: 6.41.1
+        specifier: 6.39.12
+        version: 6.39.12
       '@lezer/common':
         specifier: ^1.5.0
         version: 1.5.2
@@ -1297,7 +1298,7 @@ importers:
         version: 1.6.3
       '@replit/codemirror-lang-svelte':
         specifier: ^6.0.0
-        version: 6.0.0(fb8328f6dea022d6e6cf53049f535533)
+        version: 6.0.0(ee8bbdd0311ec6279ae06aedb7afd6ff)
       '@shikijs/rehype':
         specifier: ^3.22.0
         version: 3.23.0
@@ -1321,7 +1322,7 @@ importers:
         version: 0.5.0
       codemirror-languageserver:
         specifier: ^1.12.1
-        version: 1.22.0(42721bbde4e40168d6fecb1aa186ab5f)
+        version: 1.22.0(f5d9d0b48eb1e5043b164b4c75a8fbc1)
       comlink:
         specifier: ^4.4.2
         version: 4.4.2
@@ -1526,8 +1527,8 @@ importers:
         specifier: ^6.12.1
         version: 6.12.3
       '@codemirror/view':
-        specifier: ^6.39.12
-        version: 6.41.1
+        specifier: 6.39.12
+        version: 6.39.12
       '@lezer/generator':
         specifier: ^1.8.0
         version: 1.8.0
@@ -1628,7 +1629,7 @@ importers:
         version: 1.6.3
       '@replit/codemirror-lang-svelte':
         specifier: ^6.0.0
-        version: 6.0.0(fb8328f6dea022d6e6cf53049f535533)
+        version: 6.0.0(ee8bbdd0311ec6279ae06aedb7afd6ff)
       codemirror-lang-glimmer:
         specifier: workspace:*
         version: link:../../glimmer/codemirror
@@ -1652,8 +1653,8 @@ importers:
         specifier: ^6.5.4
         version: 6.6.0
       '@codemirror/view':
-        specifier: ^6.39.12
-        version: 6.41.1
+        specifier: 6.39.12
+        version: 6.39.12
       '@lezer/generator':
         specifier: ^1.8.0
         version: 1.8.0
@@ -1700,8 +1701,8 @@ importers:
         specifier: ^6.1.3
         version: 6.1.3
       '@codemirror/view':
-        specifier: ^6.39.12
-        version: 6.41.1
+        specifier: 6.39.12
+        version: 6.39.12
       '@glimdown/codemirror-dev-preview':
         specifier: workspace:*
         version: link:../../../dev-preview
@@ -1813,8 +1814,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       '@codemirror/view':
-        specifier: ^6.39.12
-        version: 6.41.1
+        specifier: 6.39.12
+        version: 6.39.12
       '@glimdown/lezer-infra':
         specifier: workspace:*
         version: link:../../-infra
@@ -1867,8 +1868,8 @@ importers:
         specifier: ^6.1.3
         version: 6.1.3
       '@codemirror/view':
-        specifier: ^6.39.12
-        version: 6.41.1
+        specifier: 6.39.12
+        version: 6.39.12
       '@glimdown/codemirror-dev-preview':
         specifier: workspace:*
         version: link:../../../dev-preview
@@ -1959,8 +1960,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       '@codemirror/view':
-        specifier: ^6.39.12
-        version: 6.41.1
+        specifier: 6.39.12
+        version: 6.39.12
       '@glimdown/lezer-infra':
         specifier: workspace:*
         version: link:../../-infra
@@ -2013,8 +2014,8 @@ importers:
         specifier: ^6.1.3
         version: 6.1.3
       '@codemirror/view':
-        specifier: ^6.39.12
-        version: 6.41.1
+        specifier: 6.39.12
+        version: 6.39.12
       '@glimdown/codemirror-dev-preview':
         specifier: workspace:*
         version: link:../../../dev-preview
@@ -2052,8 +2053,8 @@ importers:
         specifier: ^6.5.4
         version: 6.6.0
       '@codemirror/view':
-        specifier: ^6.39.12
-        version: 6.41.1
+        specifier: 6.39.12
+        version: 6.39.12
       '@glimdown/lezer-glimmer-expression':
         specifier: workspace:*
         version: link:../../glimmer-s-expression/lezer
@@ -2134,8 +2135,8 @@ importers:
         specifier: ^6.1.3
         version: 6.1.3
       '@codemirror/view':
-        specifier: ^6.39.12
-        version: 6.41.1
+        specifier: 6.39.12
+        version: 6.39.12
       '@glimdown/codemirror-dev-preview':
         specifier: workspace:*
         version: link:../../../dev-preview
@@ -3060,9 +3061,6 @@ packages:
 
   '@codemirror/view@6.39.12':
     resolution: {integrity: sha512-f+/VsHVn/kOA9lltk/GFzuYwVVAKmOnNjxbrhkk3tPHntFqjWeI2TbIXx006YkBkqC10wZ4NsnWXCQiFPeAISQ==}
-
-  '@codemirror/view@6.41.1':
-    resolution: {integrity: sha512-ToDnWKbBnke+ZLrP6vgTTDScGi5H37YYuZGniQaBzxMVdtCxMrslsmtnOvbPZk4RX9bvkQqnWR/WS/35tJA0qg==}
 
   '@colors/colors@1.5.0':
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
@@ -4147,7 +4145,7 @@ packages:
       '@codemirror/lang-javascript': ^6.1.1
       '@codemirror/language': ^6.0.0
       '@codemirror/state': ^6.0.0
-      '@codemirror/view': ^6.0.0
+      '@codemirror/view': 6.39.12
       '@lezer/common': ^1.0.0
       '@lezer/highlight': ^1.0.0
       '@lezer/javascript': ^1.2.0
@@ -5965,12 +5963,12 @@ packages:
     resolution: {integrity: sha512-06txsPLMT3cA0EfonYPPHSl3Gz/mjMqRCkF3DXvuhNdZwmbEm+Fv24ak2ZFGYSe5OzoYdnTqTbLoUrTNT+jbRA==}
     peerDependencies:
       '@codemirror/state': ^6.3.3
-      '@codemirror/view': ^6.22.3
+      '@codemirror/view': 6.39.12
 
   codemirror-lang-glimmer-js@2.0.3:
     resolution: {integrity: sha512-q+GGu/+0nGAovYm8oHZV4o7vKMEXKoachdv7yaoihby+2abBSkHMMELQSyHiM+VJCpBTOleeeVbCSxZLPkpGHg==}
     peerDependencies:
-      '@codemirror/view': ^6.22.3
+      '@codemirror/view': 6.39.12
 
   codemirror-lang-glimmer@2.0.3:
     resolution: {integrity: sha512-6qmOv4GiNHkVZx41PPGE0xy0Tl+xCHRVM+VRw7ZvjcPLPd99Dg+aXD5ll0MxI29JpqxoyfszwXxhJ7/kxlnfTQ==}
@@ -5986,7 +5984,7 @@ packages:
       '@codemirror/autocomplete': ^6.18.6
       '@codemirror/lint': ^6.8.5
       '@codemirror/state': ^6.5.2
-      '@codemirror/view': ^6.38.1
+      '@codemirror/view': 6.39.12
 
   codemirror@6.0.2:
     resolution: {integrity: sha512-VhydHotNW5w1UGK0Qj96BwSk/Zqbp9WbnyK2W/eVMv4QyF41INRGpjUhFJY7/uDNuudSc33a/PKr4iDqRduvHw==}
@@ -12493,13 +12491,6 @@ snapshots:
       style-mod: 4.1.3
       w3c-keyname: 2.2.8
 
-  '@codemirror/view@6.41.1':
-    dependencies:
-      '@codemirror/state': 6.6.0
-      crelt: 1.0.6
-      style-mod: 4.1.3
-      w3c-keyname: 2.2.8
-
   '@colors/colors@1.5.0':
     optional: true
 
@@ -13805,7 +13796,7 @@ snapshots:
       '@lezer/javascript': 1.5.4
       '@lezer/lr': 1.4.10
 
-  '@replit/codemirror-lang-svelte@6.0.0(fb8328f6dea022d6e6cf53049f535533)':
+  '@replit/codemirror-lang-svelte@6.0.0(ee8bbdd0311ec6279ae06aedb7afd6ff)':
     dependencies:
       '@codemirror/autocomplete': 6.20.1
       '@codemirror/lang-css': 6.3.1
@@ -13813,7 +13804,7 @@ snapshots:
       '@codemirror/lang-javascript': 6.2.5
       '@codemirror/language': 6.12.3
       '@codemirror/state': 6.6.0
-      '@codemirror/view': 6.41.1
+      '@codemirror/view': 6.39.12
       '@lezer/common': 1.5.2
       '@lezer/highlight': 1.2.3
       '@lezer/javascript': 1.5.4
@@ -16044,12 +16035,12 @@ snapshots:
       marked: 16.4.2
       vscode-languageserver-protocol: 3.17.5
 
-  codemirror-languageserver@1.22.0(42721bbde4e40168d6fecb1aa186ab5f):
+  codemirror-languageserver@1.22.0(f5d9d0b48eb1e5043b164b4c75a8fbc1):
     dependencies:
       '@codemirror/autocomplete': 6.20.1
       '@codemirror/lint': 6.9.5
       '@codemirror/state': 6.6.0
-      '@codemirror/view': 6.41.1
+      '@codemirror/view': 6.39.12
       marked: 16.4.2
       vscode-languageserver-protocol: 3.17.5
 
