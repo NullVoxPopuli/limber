@@ -76,7 +76,7 @@ jobs:
         uses: felixmosh/turborepo-gh-artifacts@v4
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: wyvox/action-setup-pnpm@v3
+      - uses: wyvox/action-setup-pnpm@v4
       - run: pnpm turbo build:prod 
       - uses: actions/upload-artifact@v4
         with:
