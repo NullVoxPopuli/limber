@@ -1,55 +1,141 @@
 {
   "solution": {
     "ember-repl": {
-      "impact": "patch",
-      "oldVersion": "8.0.1",
-      "newVersion": "8.0.2",
+      "impact": "minor",
+      "oldVersion": "8.0.2",
+      "newVersion": "8.1.0",
       "tagName": "latest",
       "constraints": [
         {
+          "impact": "minor",
+          "reason": "Appears in changelog section :rocket: Enhancement"
+        },
+        {
           "impact": "patch",
           "reason": "Has dependency `workspace:*` on repl-sdk"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :house: Internal"
         }
       ],
       "pkgJSONPath": "./packages/ember-repl/package.json"
     },
     "limber-ui": {
-      "oldVersion": "4.2.0"
-    },
-    "repl-sdk": {
       "impact": "patch",
-      "oldVersion": "1.5.1",
-      "newVersion": "1.5.2",
+      "oldVersion": "4.2.0",
+      "newVersion": "4.2.1",
       "tagName": "latest",
       "constraints": [
         {
           "impact": "patch",
           "reason": "Appears in changelog section :bug: Bug Fix"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :memo: Documentation"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :house: Internal"
+        }
+      ],
+      "pkgJSONPath": "./packages/limber-ui/package.json"
+    },
+    "repl-sdk": {
+      "impact": "minor",
+      "oldVersion": "1.5.2",
+      "newVersion": "1.6.0",
+      "tagName": "latest",
+      "constraints": [
+        {
+          "impact": "minor",
+          "reason": "Appears in changelog section :rocket: Enhancement"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :house: Internal"
         }
       ],
       "pkgJSONPath": "./packages/repl-sdk/package.json"
     },
     "codemirror-lang-glimdown": {
-      "oldVersion": "2.0.3"
+      "impact": "patch",
+      "oldVersion": "2.0.3",
+      "newVersion": "2.0.4",
+      "tagName": "latest",
+      "constraints": [
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :house: Internal"
+        },
+        {
+          "impact": "patch",
+          "reason": "Has dependency `workspace:*` on codemirror-lang-glimmer-js"
+        },
+        {
+          "impact": "patch",
+          "reason": "Has dependency `workspace:*` on codemirror-lang-glimmer"
+        }
+      ],
+      "pkgJSONPath": "./packages/syntax/glimdown/codemirror/package.json"
     },
     "@glimdown/lezer": {
       "oldVersion": "2.0.3"
     },
     "codemirror-lang-glimmer-js": {
-      "oldVersion": "2.0.3"
+      "impact": "patch",
+      "oldVersion": "2.0.3",
+      "newVersion": "2.0.4",
+      "tagName": "latest",
+      "constraints": [
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :house: Internal"
+        },
+        {
+          "impact": "patch",
+          "reason": "Has dependency `workspace:*` on codemirror-lang-glimmer"
+        }
+      ],
+      "pkgJSONPath": "./packages/syntax/glimmer-js/codemirror/package.json"
     },
     "@glimdown/lezer-glimmer-expression": {
       "oldVersion": "2.0.3"
     },
     "codemirror-lang-glimmer-ts": {
-      "oldVersion": "2.0.3"
+      "impact": "patch",
+      "oldVersion": "2.0.3",
+      "newVersion": "2.0.4",
+      "tagName": "latest",
+      "constraints": [
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :house: Internal"
+        },
+        {
+          "impact": "patch",
+          "reason": "Has dependency `workspace:*` on codemirror-lang-glimmer"
+        }
+      ],
+      "pkgJSONPath": "./packages/syntax/glimmer-ts/codemirror/package.json"
     },
     "codemirror-lang-glimmer": {
-      "oldVersion": "2.0.3"
+      "impact": "patch",
+      "oldVersion": "2.0.3",
+      "newVersion": "2.0.4",
+      "tagName": "latest",
+      "constraints": [
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :house: Internal"
+        }
+      ],
+      "pkgJSONPath": "./packages/syntax/glimmer/codemirror/package.json"
     },
     "lezer-glimmer": {
       "oldVersion": "2.0.3"
     }
   },
-  "description": "## Release (2026-02-20)\n\n* ember-repl 8.0.2 (patch)\n* repl-sdk 1.5.2 (patch)\n\n#### :bug: Bug Fix\n* `repl-sdk`\n  * [#2086](https://github.com/NullVoxPopuli/limber/pull/2086) Fix component escaping from markdown ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2026-04-19)\n\n* ember-repl 8.1.0 (minor)\n* limber-ui 4.2.1 (patch)\n* repl-sdk 1.6.0 (minor)\n* codemirror-lang-glimdown 2.0.4 (patch)\n* codemirror-lang-glimmer-js 2.0.4 (patch)\n* codemirror-lang-glimmer-ts 2.0.4 (patch)\n* codemirror-lang-glimmer 2.0.4 (patch)\n\n#### :rocket: Enhancement\n* `ember-repl`, `repl-sdk`\n  * [#2117](https://github.com/NullVoxPopuli/limber/pull/2117) Restore args forwarding to the rendered component in ember-repl ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))\n\n#### :bug: Bug Fix\n* `limber-ui`\n  * [#2115](https://github.com/NullVoxPopuli/limber/pull/2115) Use import.meta.env.SSR for SSR detection in HostMessaging ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))\n\n#### :memo: Documentation\n* Other\n  * [#2108](https://github.com/NullVoxPopuli/limber/pull/2108) docs(contributor): contributors readme action update ([@github-actions[bot]](https://github.com/apps/github-actions))\n  * [#2116](https://github.com/NullVoxPopuli/limber/pull/2116) docs(contributor): contributors readme action update ([@github-actions[bot]](https://github.com/apps/github-actions))\n  * [#2106](https://github.com/NullVoxPopuli/limber/pull/2106) Add SSG for docs pages using vite-ember-ssr ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))\n  * [#2107](https://github.com/NullVoxPopuli/limber/pull/2107) Add nested Ember routing demo application ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n* `limber-ui`\n  * [#2113](https://github.com/NullVoxPopuli/limber/pull/2113) Upgrade vite-ember-ssr to 0.1.0-alpha.13 ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))\n\n#### :house: Internal\n* `ember-repl`, `limber-ui`, `repl-sdk`, `codemirror-lang-glimdown`, `codemirror-lang-glimmer-js`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`\n  * [#2119](https://github.com/NullVoxPopuli/limber/pull/2119) Ember 7.1 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n* Other\n  * [#2121](https://github.com/NullVoxPopuli/limber/pull/2121) Update release-plan ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#2104](https://github.com/NullVoxPopuli/limber/pull/2104) Strip trailing hyphens from deploy preview subdomain ([@Copilot](https://github.com/apps/copilot-swe-agent))\n  * [#2102](https://github.com/NullVoxPopuli/limber/pull/2102) Update GitHub Actions from Node.js 20 to Node.js 24 to fix deprecation warnings ([@Copilot](https://github.com/apps/copilot-swe-agent))\n  * [#2100](https://github.com/NullVoxPopuli/limber/pull/2100) Add workflow_dispatch workflow to test ember-source branches/PRs ([@Copilot](https://github.com/apps/copilot-swe-agent))\n* `ember-repl`, `limber-ui`\n  * [#2111](https://github.com/NullVoxPopuli/limber/pull/2111) Upgrade to @glimmer/component 2.1.1 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#2097](https://github.com/NullVoxPopuli/limber/pull/2097) Upgrade glint ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#2096](https://github.com/NullVoxPopuli/limber/pull/2096) Upgrade ember-source to 6.12.0-alpha.6 ([@Copilot](https://github.com/apps/copilot-swe-agent))\n* `ember-repl`, `repl-sdk`\n  * [#2090](https://github.com/NullVoxPopuli/limber/pull/2090) Get ember-repl tests running in CI for both chrome and firefox ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 4\n- @NullVoxPopuli's reduced-access machine account for AI usage ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))\n- Copilot [Bot] ([@copilot-swe-agent](https://github.com/apps/copilot-swe-agent))\n- GitHub Actions [Bot] ([@github-actions](https://github.com/apps/github-actions))\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }

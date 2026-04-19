@@ -1,5 +1,53 @@
 # Changelog
 
+## Release (2026-04-19)
+
+* ember-repl 8.1.0 (minor)
+* limber-ui 4.2.1 (patch)
+* repl-sdk 1.6.0 (minor)
+* codemirror-lang-glimdown 2.0.4 (patch)
+* codemirror-lang-glimmer-js 2.0.4 (patch)
+* codemirror-lang-glimmer-ts 2.0.4 (patch)
+* codemirror-lang-glimmer 2.0.4 (patch)
+
+#### :rocket: Enhancement
+* `ember-repl`, `repl-sdk`
+  * [#2117](https://github.com/NullVoxPopuli/limber/pull/2117) Restore args forwarding to the rendered component in ember-repl ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+
+#### :bug: Bug Fix
+* `limber-ui`
+  * [#2115](https://github.com/NullVoxPopuli/limber/pull/2115) Use import.meta.env.SSR for SSR detection in HostMessaging ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+
+#### :memo: Documentation
+* Other
+  * [#2108](https://github.com/NullVoxPopuli/limber/pull/2108) docs(contributor): contributors readme action update ([@github-actions[bot]](https://github.com/apps/github-actions))
+  * [#2116](https://github.com/NullVoxPopuli/limber/pull/2116) docs(contributor): contributors readme action update ([@github-actions[bot]](https://github.com/apps/github-actions))
+  * [#2106](https://github.com/NullVoxPopuli/limber/pull/2106) Add SSG for docs pages using vite-ember-ssr ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2107](https://github.com/NullVoxPopuli/limber/pull/2107) Add nested Ember routing demo application ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `limber-ui`
+  * [#2113](https://github.com/NullVoxPopuli/limber/pull/2113) Upgrade vite-ember-ssr to 0.1.0-alpha.13 ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+
+#### :house: Internal
+* `ember-repl`, `limber-ui`, `repl-sdk`, `codemirror-lang-glimdown`, `codemirror-lang-glimmer-js`, `codemirror-lang-glimmer-ts`, `codemirror-lang-glimmer`
+  * [#2119](https://github.com/NullVoxPopuli/limber/pull/2119) Ember 7.1 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* Other
+  * [#2121](https://github.com/NullVoxPopuli/limber/pull/2121) Update release-plan ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#2104](https://github.com/NullVoxPopuli/limber/pull/2104) Strip trailing hyphens from deploy preview subdomain ([@Copilot](https://github.com/apps/copilot-swe-agent))
+  * [#2102](https://github.com/NullVoxPopuli/limber/pull/2102) Update GitHub Actions from Node.js 20 to Node.js 24 to fix deprecation warnings ([@Copilot](https://github.com/apps/copilot-swe-agent))
+  * [#2100](https://github.com/NullVoxPopuli/limber/pull/2100) Add workflow_dispatch workflow to test ember-source branches/PRs ([@Copilot](https://github.com/apps/copilot-swe-agent))
+* `ember-repl`, `limber-ui`
+  * [#2111](https://github.com/NullVoxPopuli/limber/pull/2111) Upgrade to @glimmer/component 2.1.1 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#2097](https://github.com/NullVoxPopuli/limber/pull/2097) Upgrade glint ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#2096](https://github.com/NullVoxPopuli/limber/pull/2096) Upgrade ember-source to 6.12.0-alpha.6 ([@Copilot](https://github.com/apps/copilot-swe-agent))
+* `ember-repl`, `repl-sdk`
+  * [#2090](https://github.com/NullVoxPopuli/limber/pull/2090) Get ember-repl tests running in CI for both chrome and firefox ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 4
+- @NullVoxPopuli's reduced-access machine account for AI usage ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+- Copilot [Bot] ([@copilot-swe-agent](https://github.com/apps/copilot-swe-agent))
+- GitHub Actions [Bot] ([@github-actions](https://github.com/apps/github-actions))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2026-02-20)
 
 * ember-repl 8.0.2 (patch)
