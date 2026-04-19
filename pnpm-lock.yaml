@@ -129,8 +129,8 @@ importers:
         specifier: ^0.8.7
         version: 0.8.8
       ember-focus-trap:
-        specifier: ^1.1.1
-        version: 1.2.0(@babel/core@7.29.0)
+        specifier: ^2.0.0
+        version: 2.0.0(@babel/core@7.29.0)
       ember-modifier:
         specifier: ^4.2.0
         version: 4.3.0(@babel/core@7.29.0)
@@ -6797,8 +6797,9 @@ packages:
   ember-eslint@0.6.1:
     resolution: {integrity: sha512-9yxPYMntGEqv+8vG7nNTyDHvFIoR+6/Wc0ugkemYEOE+4V3ZTq3O6ktYWxv+OkrqvXjYQprPO3v4g+wPVcQd8w==}
 
-  ember-focus-trap@1.2.0:
-    resolution: {integrity: sha512-+/AkXjWF9Qtv6a3tSZQvzFTF+vSoSNuWVemN8kbp4d3MmHWnbXzv5brd9wmAFFlp4yYRr2be7bVhNVxzJMLEhw==}
+  ember-focus-trap@2.0.0:
+    resolution: {integrity: sha512-zGPvt934h08gxdemIZz29XRn4cdwn51UxlodKtDkiahGrEpiSQ6qH8nvXGwDhQvZsf8zGumnXqcmDYYA5oFomQ==}
+    engines: {node: '>= 22.*', pnpm: '>= 10'}
 
   ember-load-initializers@3.0.1:
     resolution: {integrity: sha512-qV3vxJKw5+7TVDdtdLPy8PhVsh58MlK8jwzqh5xeOwJPNP7o0+BlhvwoIlLYTPzGaHdfjEIFCgVSyMRGd74E1g==}
@@ -7471,8 +7472,8 @@ packages:
     resolution: {integrity: sha512-poYRskeIXiHsE19Fb9sRE/CV7PYOq21j3lS5vKr27ujFBvSAhmCbbilAonJ0/u0Uai+Xgyq30/twHQeQc2Ngiw==}
     engines: {node: '>=0.4.0'}
 
-  focus-trap@7.8.0:
-    resolution: {integrity: sha512-/yNdlIkpWbM0ptxno3ONTuf+2g318kh2ez3KSeZN5dZ8YC6AAmgeWz+GasYYiBJPFaYcSAPeu4GfhUaChzIJXA==}
+  focus-trap@8.0.1:
+    resolution: {integrity: sha512-9ptSG6z51YQOstI/oN4XuVGP/03u2nh0g//qz7L6zX0i6PZiPnkcf3GenXq7N2hZnASXaMxTPpbKwdI+PFvxlw==}
 
   follow-redirects@1.16.0:
     resolution: {integrity: sha512-y5rN/uOsadFT/JfYwhxRS5R7Qce+g3zG97+JrtFZlC9klX/W5hD7iiLzScI4nZqUS7DNUdhPgw4xI8W2LuXlUw==}
@@ -16835,11 +16836,11 @@ snapshots:
       - supports-color
       - typescript
 
-  ember-focus-trap@1.2.0(@babel/core@7.29.0):
+  ember-focus-trap@2.0.0(@babel/core@7.29.0):
     dependencies:
       '@embroider/addon-shim': 1.10.2
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
-      focus-trap: 7.8.0
+      focus-trap: 8.0.1
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -17744,7 +17745,7 @@ snapshots:
 
   flow-parser@0.309.0: {}
 
-  focus-trap@7.8.0:
+  focus-trap@8.0.1:
     dependencies:
       tabbable: 6.4.0
 
