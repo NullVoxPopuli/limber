@@ -8,7 +8,6 @@ More details as well as a tutorial
 import { on } from '@ember/modifier';
 
 import { focusTrap } from 'ember-focus-trap';
-import { PortalTargets } from 'ember-primitives/components/portal-targets';
 import { Menu } from 'ember-primitives/components/menu';
 
 const options = {
@@ -33,7 +32,6 @@ const options = {
       </div>
     </Menu>
   </div>
-  <PortalTargets />
 
   <style>
    .items {
