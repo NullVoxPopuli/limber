@@ -1,4 +1,3 @@
-import { PortalTargets } from 'ember-primitives/components/portal-targets';
 import { Shadowed } from 'ember-primitives/components/shadowed';
 import { castToBoolean, qp } from 'ember-primitives/qp';
 import { Seconds } from 'reactiveweb/interval';
@@ -45,8 +44,6 @@ export const Output: TOC<{
       </div>
 
       <div class={{if (isGJS context.format) "glimdown-render"}}>
-        <PortalTargets />
-
         {{#if context.component}}
           {{clearError context.component}}
 

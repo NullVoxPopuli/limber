@@ -46,11 +46,10 @@ app.
 
 ```gjs live preview
 import Header from 'limber/components/header';
-import { Shadowed, PortalTargets } from 'ember-primitives';
+import { Shadowed } from 'ember-primitives';
 
 <template>
   <Shadowed @includeStyles={{true}}>
-    <PortalTargets />
     <Header />
   </Shadowed>
 </template>
@@ -63,11 +62,10 @@ customization of the trigger content and the the list.
 
 ```gjs live preview
 import Menu from 'limber/components/menu';
-import { Shadowed, PortalTargets } from 'ember-primitives';
+import { Shadowed } from 'ember-primitives';
 
 <template>
   <Shadowed @includeStyles={{true}}>
-    <PortalTargets />
     <Menu>
       <:trigger as |t|>
         <t.Default>
