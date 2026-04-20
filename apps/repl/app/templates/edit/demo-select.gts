@@ -29,7 +29,7 @@ export class DemoSelect extends Component {
   }
 
   <template>
-    <Menu @inline={{true}}>
+    <Menu>
       <:trigger as |t|>
         <t.Default data-test-demo-select as |menu|>
           <span class="gap-2 grid grid-flow-col items-center whitespace-nowrap">

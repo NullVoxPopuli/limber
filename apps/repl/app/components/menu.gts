@@ -72,9 +72,7 @@ const PlainTrigger: TOC<{
 
 const Menu: TOC<{
   Element: HTMLDivElement;
-  Args: {
-    inline?: boolean;
-  };
+  Args: {};
   Blocks: {
     trigger: [
       {
@@ -88,8 +86,6 @@ const Menu: TOC<{
   };
 }> = <template>
   <HeadlessMenu
-    {{! focusTrap doesn't work unless inline is set }}
-    @inline={{true}}
     @placement="bottom"
     @offsetOptions={{8}}
     @shiftOptions={{hash padding=8}}
