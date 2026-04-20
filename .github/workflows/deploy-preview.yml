@@ -146,6 +146,8 @@ jobs:
     steps:
       - uses: actions/download-artifact@v8
         name: deploy-prep-dist
+      - name: Debug artifact structure
+        run: find ./deploy-prep-dist -maxdepth 5 | head -40
       - name: Preview ${{ matrix.app.name }}
         working-directory: ./deploy-prep-dist/${{ matrix.app.path }}
         run: |
