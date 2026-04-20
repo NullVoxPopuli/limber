@@ -72,7 +72,6 @@ const PlainTrigger: TOC<{
 
 const Menu: TOC<{
   Element: HTMLDivElement;
-  Args: {};
   Blocks: {
     trigger: [
       {
