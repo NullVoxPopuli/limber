@@ -144,9 +144,10 @@ jobs:
         - { path: "./tutorial/dist", cloudflareName: "limber-glimmer-tutorial", name: "tutorial" }
         - { path: "./repl/dist", cloudflareName: "limber-glimdown", name: "limber" }
     steps:
-      - uses: actions/download-artifact@v8
-        name: deploy-prep-dist
+      - name: Download build artifact
+        uses: actions/download-artifact@v8
         with:
+          name: deploy-prep-dist
           path: ./deploy-prep-dist
       - name: Preview ${{ matrix.app.name }}
         working-directory: ./deploy-prep-dist/${{ matrix.app.path }}
