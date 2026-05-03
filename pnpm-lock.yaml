@@ -121,8 +121,8 @@ importers:
         specifier: ^3.3.1
         version: 3.4.0
       ember-container-query:
-        specifier: 7.0.2
-        version: 7.0.2(2c26261863032df0213d31036afe3676)
+        specifier: 7.0.3
+        version: 7.0.3(2c26261863032df0213d31036afe3676)
       ember-deep-tracked:
         specifier: ^2.0.1
         version: 2.0.1(@glint/template@1.7.7)
@@ -6617,6 +6617,9 @@ packages:
   decorator-transforms@2.3.1:
     resolution: {integrity: sha512-PDOk74Zqqy0946Lx4ckXxbgG6uhPScOICtrxL/pXmfznxchqNee0TaJISClGJQe6FeT8ohGqsOgdjfahm4FwEw==}
 
+  decorator-transforms@2.3.2:
+    resolution: {integrity: sha512-XcErcjlmCzG5ODgYjt6ZTXwd6S8fPKln/sJmw15ZXkWG2JpoQNwszis+AwF6XSGlOoG7g8MCEO97g+Yw3fk5OQ==}
+
   deep-eql@5.0.2:
     resolution: {integrity: sha512-h5k/5U50IJJFpzfL6nO9jaaumfjO/f2NjK/oYB2Djzm4p9L+3T9qWpZqZ2hAbLPuuYq9wrU08WQyBTL5GbPk5Q==}
     engines: {node: '>=6'}
@@ -6813,8 +6816,8 @@ packages:
     resolution: {integrity: sha512-BtkjulweiXo9c3yVWrtexw2dTmBrvavD/xixNC6TKOBdrixUwU+6nuOO9dufDWsMxoid7MvtmDpzc9+mE8PdaA==}
     engines: {node: 10.* || >= 12.*}
 
-  ember-container-query@7.0.2:
-    resolution: {integrity: sha512-8I6F5T/afo87IsRPKe9tJiSRLQjbDL75qXHgaYkI6/+7sbPnR0W2fSqB1r06hZHyVQYcKnwvSbgzPiaDgKxFvg==}
+  ember-container-query@7.0.3:
+    resolution: {integrity: sha512-3l4oRZR/68kxeMJcqM4s10SLJfffcvdVLPZR/gCnXQNLZdtAIhOrS13KXR3XavzQ+j+QFhJd5JLswtYzOH0C3w==}
     engines: {node: 22.* || >= 24}
 
   ember-deep-tracked@2.0.1:
@@ -6895,8 +6898,8 @@ packages:
       '@glint/template':
         optional: true
 
-  ember-primitives@0.55.2:
-    resolution: {integrity: sha512-uk9PX+fSaqnWeqg33kg5NOzzaj4w07oFEexkLNvs3HpT8OyuADG0oGMgXKeholndGZedobNE/CVEGLMJzdkO2w==}
+  ember-primitives@0.56.0:
+    resolution: {integrity: sha512-oiAJOMWBdSaNn17hCORkDjs17C331yOo+1HkXyb1BpZmZ+1utQKialyZLSioHujR+kdvNePv/JBcYtda2gByPQ==}
     hasBin: true
     peerDependencies:
       '@ember/test-helpers': '>= 3.2.0'
@@ -6911,8 +6914,8 @@ packages:
       '@glint/template':
         optional: true
 
-  ember-primitives@0.56.0:
-    resolution: {integrity: sha512-oiAJOMWBdSaNn17hCORkDjs17C331yOo+1HkXyb1BpZmZ+1utQKialyZLSioHujR+kdvNePv/JBcYtda2gByPQ==}
+  ember-primitives@0.57.0:
+    resolution: {integrity: sha512-bZIQLhTHEBI7/v/5GA8k3MqrR89Vo0AE1IXXuGMEW9Xy8AK3Ia8zwyd7Scezn1AwLJmtQbucjp1Xc/eP2vwlQw==}
     hasBin: true
     peerDependencies:
       '@ember/test-helpers': '>= 3.2.0'
@@ -10622,6 +10625,9 @@ packages:
   tracked-toolbox@2.2.0:
     resolution: {integrity: sha512-YknotXj74U0nCqBk9nh1Uv1IWTnVOgt8sXIecNkyEq4oFOU70niQUlozO4E3kMKx7ae/rNlOtoF+1ALcHYzCrQ==}
 
+  tracked-toolbox@3.0.0:
+    resolution: {integrity: sha512-9Q5SH+0jevfB07oL2bsjxIDv0jQ2A6IgminkvnMMzGLc2EqCFm/yKuqNeUFvN3n+TOAQk+PZcePtIaxIo/1now==}
+
   tree-kill@1.2.2:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
     hasBin: true
@@ -10944,6 +10950,7 @@ packages:
 
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   validate-npm-package-license@3.0.4:
@@ -16663,6 +16670,13 @@ snapshots:
     transitivePeerDependencies:
       - '@babel/core'
 
+  decorator-transforms@2.3.2(@babel/core@7.29.0):
+    dependencies:
+      '@babel/plugin-syntax-decorators': 7.28.6(@babel/core@7.29.0)
+      babel-import-util: 3.0.1
+    transitivePeerDependencies:
+      - '@babel/core'
+
   deep-eql@5.0.2: {}
 
   deep-extend@0.6.0: {}
@@ -16950,13 +16964,13 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-container-query@7.0.2(2c26261863032df0213d31036afe3676):
+  ember-container-query@7.0.3(2c26261863032df0213d31036afe3676):
     dependencies:
       '@embroider/addon-shim': 1.10.2
-      decorator-transforms: 2.3.1(@babel/core@7.29.0)
+      decorator-transforms: 2.3.2(@babel/core@7.29.0)
       ember-element-helper: 0.8.8
       ember-modifier: 4.3.0(@babel/core@7.29.0)
-      ember-primitives: 0.55.2(f377d5b55f0eee32ac67978459e68e40)
+      ember-primitives: 0.57.0(f377d5b55f0eee32ac67978459e68e40)
     transitivePeerDependencies:
       - '@babel/core'
       - '@ember/test-helpers'
@@ -17107,7 +17121,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-primitives@0.55.2(f377d5b55f0eee32ac67978459e68e40):
+  ember-primitives@0.56.0(f377d5b55f0eee32ac67978459e68e40):
     dependencies:
       '@babel/runtime': 7.29.2
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.7)
@@ -17132,7 +17146,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-primitives@0.56.0(f377d5b55f0eee32ac67978459e68e40):
+  ember-primitives@0.57.0(f377d5b55f0eee32ac67978459e68e40):
     dependencies:
       '@babel/runtime': 7.29.2
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.7)
@@ -17148,7 +17162,7 @@ snapshots:
       should-handle-link: 1.3.0
       tabster: 8.7.0
       tracked-built-ins: 4.1.2(@babel/core@7.29.0)
-      tracked-toolbox: 2.2.0(@babel/core@7.29.0)
+      tracked-toolbox: 3.0.0(@babel/core@7.29.0)
       which-heading-do-i-need: 0.2.7
     optionalDependencies:
       '@ember/test-helpers': 5.4.1(c8332dc3f90c0e60eb130a3a85f980b9)
@@ -21805,6 +21819,14 @@ snapshots:
       '@embroider/addon-shim': 1.10.2
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-cache-primitive-polyfill: 1.0.1(@babel/core@7.29.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
+
+  tracked-toolbox@3.0.0(@babel/core@7.29.0):
+    dependencies:
+      '@embroider/addon-shim': 1.10.2
+      decorator-transforms: 2.3.1(@babel/core@7.29.0)
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
