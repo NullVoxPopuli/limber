@@ -420,7 +420,7 @@ export class Compiler {
       return { source: compiled };
     }
 
-    if (compiled && typeof /** @type {{source?: unknown}} */ (compiled).source === 'string') {
+    if (compiled && typeof (/** @type {{source?: unknown}} */ (compiled).source) === 'string') {
       return /** @type {{source: string}} */ (compiled);
     }
 
