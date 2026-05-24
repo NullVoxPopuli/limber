@@ -15,8 +15,29 @@ export class Compiler {
     options?: {
       flavor?: string;
       fileName?: string;
+      /**
+       * When true, returns `{ source: string }` instead of evaluating and
+       * rendering. Most callers should use {@link Compiler.compileToSource}
+       * instead.
+       */
+      renderToString?: boolean;
+      [key: string]: unknown;
     }
-  ): Promise<{ element: HTMLElement; destroy: () => void }>;
+  ): Promise<{ element: HTMLElement; destroy: () => void } | { source: string }>;
+
+  /**
+   * Build-time variant of {@link Compiler.compile}: returns the compiled JS
+   * module source as a string instead of evaluating and rendering.
+   *
+   * Intended for SSG / pre-rendering pipelines that want to hand the
+   * compiled output to their own bundler rather than evaluate it in the
+   * browser at boot.
+   */
+  compileToSource(
+    format: string,
+    text: string,
+    options?: Record<string, unknown>
+  ): Promise<{ source: string }>;
 
   optionsFor(format: string, flavor?: string): Omit<CompilerConfig, 'compiler'>;
 

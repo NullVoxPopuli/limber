@@ -370,6 +370,22 @@ export class Compiler {
   }
 
   /**
+   * Build-time variant of {@link Compiler.compile}: returns the compiled JS
+   * module source as a string instead of evaluating and rendering. Equivalent
+   * to `compile(format, text, { ...options, renderToString: true })`.
+   *
+   * @param {string} format
+   * @param {string} text
+   * @param {Record<string, unknown>} [options]
+   * @returns {Promise<{ source: string }>}
+   */
+  async compileToSource(format, text, options = {}) {
+    return /** @type {{ source: string }} */ (
+      await this.compile(format, text, { ...options, renderToString: true })
+    );
+  }
+
+  /**
    * Build-time variant of `#compile`: returns the compiled JavaScript source
    * as a string rather than loading it via a blob URL and rendering.
    *
@@ -725,14 +741,9 @@ export class Compiler {
      * string instead of rendering. Exposed on the public API so compilers
      * (e.g. `gmd`) can recursively ask other compilers to renderToString.
      *
-     * @param {string} format
-     * @param {string} text
-     * @param {Record<string, unknown>} [options]
+     * @param {Parameters<Compiler['compileToSource']>} args
      */
-    compileToSource: (format, text, options = {}) =>
-      /** @type {Promise<{ source: string }>} */ (
-        this.compile(format, text, { ...options, renderToString: true })
-      ),
+    compileToSource: (...args) => this.compileToSource(...args),
     /**
      * @param {Parameters<Compiler['optionsFor']>} args
      */
