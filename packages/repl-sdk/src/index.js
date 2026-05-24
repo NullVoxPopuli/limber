@@ -345,13 +345,17 @@ export class Compiler {
   /**
    * @param {string} format
    * @param {string} text
-   * @param {{ fileName?: string, flavor?: string, args?: Record<string, unknown>, [key: string]: unknown }} [ options ]
-   * @returns {Promise<{ element: HTMLElement, destroy: () => void }>}
+   * @param {{ fileName?: string, flavor?: string, args?: Record<string, unknown>, renderToString?: boolean, [key: string]: unknown }} [ options ]
+   * @returns {Promise<{ element: HTMLElement, destroy: () => void } | { source: string }>}
    */
   async compile(format, text, options = {}) {
     this.#announce('info', `Compiling ${format}`);
 
     try {
+      if (options.renderToString) {
+        return await this.#compileToSource(format, text, options);
+      }
+
       return await this.#compile(format, text, options);
     } catch (e) {
       // for on.log usage
@@ -363,6 +367,52 @@ export class Compiler {
       this.#error(e);
       throw e;
     }
+  }
+
+  /**
+   * Build-time variant of `#compile`: returns the compiled JavaScript source
+   * as a string rather than loading it via a blob URL and rendering.
+   *
+   * Useful for SSG / pre-rendering pipelines that want to take the compiled
+   * output of a live demo (or a `gmd` document containing live demos) and
+   * hand it to their own bundler instead of evaluating it in the browser.
+   *
+   * Each compiler is asked to `compile(text, { renderToString: true, ... })`
+   * — it's the compiler's responsibility to honor the flag and return a
+   * source string (`string` or `{ source: string }`). The `gmd` compiler
+   * recursively threads `renderToString` through its per-format dispatch and
+   * inlines every demo into one self-contained module.
+   *
+   * @param {string} format
+   * @param {string} text
+   * @param {Record<string, unknown>} options
+   * @returns {Promise<{ source: string }>}
+   */
+  async #compileToSource(format, text, options) {
+    /** @type {Record<string, unknown>} */
+    const opts = { ...options, renderToString: true };
+
+    opts.fileName ||= `dynamic.${format}`;
+
+    const compiler = await this.#getCompiler(
+      format,
+      /** @type {string | undefined} */ (opts.flavor)
+    );
+    const compiled = await compiler.compile(text, opts);
+
+    if (typeof compiled === 'string') {
+      return { source: compiled };
+    }
+
+    if (compiled && typeof /** @type {{source?: unknown}} */ (compiled).source === 'string') {
+      return /** @type {{source: string}} */ (compiled);
+    }
+
+    throw new Error(
+      `Compiler for format '${format}' was asked to renderToString but returned ` +
+        `${typeof compiled === 'object' ? Object.keys(/** @type {object} */ (compiled)).join(', ') : typeof compiled} ` +
+        `instead of a source string.`
+    );
   }
 
   /**
@@ -670,6 +720,19 @@ export class Compiler {
      * @param {Parameters<Compiler['compile']>} args
      */
     compile: (...args) => this.compile(...args),
+    /**
+     * Build-time variant of `compile` — returns the compiled JS source as a
+     * string instead of rendering. Exposed on the public API so compilers
+     * (e.g. `gmd`) can recursively ask other compilers to renderToString.
+     *
+     * @param {string} format
+     * @param {string} text
+     * @param {Record<string, unknown>} [options]
+     */
+    compileToSource: (format, text, options = {}) =>
+      /** @type {Promise<{ source: string }>} */ (
+        this.compile(format, text, { ...options, renderToString: true })
+      ),
     /**
      * @param {Parameters<Compiler['optionsFor']>} args
      */
