@@ -426,6 +426,39 @@ export default class CompilerService {
   ): Promise<CompileResult> {
     return this.compile('md', source, options);
   }
+
+  /**
+   * @public
+   *
+   * Build-time variant of {@link CompilerService.compile}: returns the
+   * compiled JS module source as a string instead of an evaluated component.
+   *
+   * Intended for SSG / pre-rendering pipelines that want to take the output
+   * of a live demo (or a `gmd` document containing many demos) and hand it
+   * to their own bundler, rather than evaluating it in the browser at boot.
+   *
+   * The returned string is a `.gjs`-shaped ES module — top-level imports
+   * plus an `export default` — that the consuming app's content-tag + babel
+   * pipeline can precompile to wire format.
+   */
+  @waitFor
+  async compileToSource(
+    ext: string,
+    text: string,
+    options?: Record<string, unknown>
+  ): Promise<{ source: string }> {
+    this.messages = [];
+
+    await Promise.resolve();
+
+    const opts = { ...(options ?? {}) };
+
+    if (ext === 'hbs') {
+      opts.flavor = 'ember';
+    }
+
+    return this.compiler.compileToSource(ext, text, opts);
+  }
 }
 
 function getGlobal() {
