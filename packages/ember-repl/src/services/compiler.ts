@@ -363,10 +363,7 @@ export default class CompilerService {
         options.flavor = 'ember';
       }
 
-      const result = (await this.#compile(ext, text, options)) as {
-        element: HTMLElement;
-        destroy: () => void;
-      };
+      const result = await this.#compile(ext, text, options);
 
       component = rendersElement(result);
     } catch (e) {

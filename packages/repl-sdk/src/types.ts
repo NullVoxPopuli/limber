@@ -39,14 +39,9 @@ export interface PublicMethods {
     options?: {
       flavor?: string;
       fileName?: string;
-      /**
-       * When true, return `{ source: string }` instead of evaluating + rendering.
-       * Most callers should use {@link PublicMethods.compileToSource} instead.
-       */
-      renderToString?: boolean;
       [key: string]: unknown;
     }
-  ) => Promise<{ element: HTMLElement; destroy: () => void } | { source: string }>;
+  ) => Promise<{ element: HTMLElement; destroy: () => void }>;
 
   /**
    * Build-time variant of {@link PublicMethods.compile}: returns the compiled
