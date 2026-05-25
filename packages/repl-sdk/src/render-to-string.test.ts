@@ -189,19 +189,19 @@ describe('buildGmdModule', () => {
     expect(out).toMatch(/export default _component;/);
   });
 
-  test('runtime form: imports runtime template-compiler and threads live scope', () => {
+  test('runtime form: imports runtime template-compiler and threads scope via a virtual module specifier', () => {
     const out = buildGmdModule({
       prose: `<h1>Hello</h1>`,
       demos: [],
       templateModule: '@ember/template-compiler/runtime',
       scope: {
-        expression: `globalThis[Symbol.for('repl-sdk:gmd-scope:42')]`,
+        specifier: 'repl-sdk:gmd-scope:42',
         keys: ['array', 'concat'],
       },
     });
 
     expect(out).toContain(`import { template } from '@ember/template-compiler/runtime';`);
-    expect(out).toContain(`const __scope__ = globalThis[Symbol.for('repl-sdk:gmd-scope:42')];`);
+    expect(out).toContain(`import * as __scope__ from 'repl-sdk:gmd-scope:42';`);
     expect(out).toContain(`const { array, concat } = __scope__;`);
     // Live scope keys spread into the template scope
     expect(out).toMatch(/scope: \(\) => \(\{ array, concat \}\)/);
@@ -248,7 +248,7 @@ describe('buildGmdModule', () => {
       demos: [{ name: 'Demo1', placeholderId: 'a', source: make(1) }],
       templateModule: '@ember/template-compiler/runtime',
       scope: {
-        expression: `globalThis[Symbol.for('repl-sdk:gmd-scope:7')]`,
+        specifier: 'repl-sdk:gmd-scope:7',
         keys: ['on'],
       },
     });

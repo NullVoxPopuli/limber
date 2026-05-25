@@ -225,28 +225,26 @@ function indent(text) {
  *     evaluated at runtime, or `'@ember/template-compiler'` when a build-
  *     time babel plugin is expected to precompile the `template(...)` call.
  *
- *   - `scope`: a string expression (e.g.
- *     `globalThis[Symbol.for('repl-sdk:gmd-scope:42')]`) that, at module
- *     evaluation time, returns the live runtime scope object. The keys
- *     listed in `scopeKeys` are destructured from that expression and
- *     spread into the prose template's `scope: () => ({...})` call,
- *     letting helpers like `array`, `concat`, etc. cross the source
- *     boundary without needing dedicated imports. Pass `null` (the default)
- *     to skip scope-via-global entirely — used for renderToString, where
- *     there is no live scope.
+ *   - `scope`: a virtual ES module specifier that the emitted module will
+ *     `import * as __scope__ from '<specifier>'`, and the list of keys to
+ *     destructure off that namespace. The runtime path registers the live
+ *     scope object behind such a specifier via `api.provide`; the
+ *     renderToString path passes `null` because there is no live scope to
+ *     bridge.
  *
  * The placeholders in `prose` are replaced with `<name />` Glimmer
  * invocations wrapped in a div that preserves the original placeholder's
  * `class` attribute (e.g. `repl-sdk__demo`) so existing CSS still applies.
  *
  * This is a pure function — the caller is responsible for driving the
- * sub-compiles and stashing the scope object if it uses `scope`/`scopeKeys`.
+ * sub-compiles and (for the runtime path) for registering the scope value
+ * behind `scope.specifier` before this output is evaluated.
  *
  * @param {object} args
  * @param {string} args.prose
  * @param {Array<{ name: string, placeholderId: string, source: string }>} args.demos
  * @param {string} [args.templateModule]
- * @param {{ expression: string, keys: string[] } | null} [args.scope]
+ * @param {{ specifier: string, keys: string[] } | null} [args.scope]
  * @returns {string}
  */
 export function buildGmdModule({
@@ -257,6 +255,11 @@ export function buildGmdModule({
 }) {
   /** @type {string[][]} */
   const importGroups = [[`import { template } from '${templateModule}';`]];
+
+  if (scope && scope.keys.length) {
+    importGroups.push([`import * as __scope__ from '${scope.specifier}';`]);
+  }
+
   /** @type {string[]} */
   const bodyDecls = [];
   /** @type {string[]} */
@@ -280,7 +283,6 @@ export function buildGmdModule({
   const preludeLines = [];
 
   if (scope && scope.keys.length) {
-    preludeLines.push(`const __scope__ = ${scope.expression};`);
     preludeLines.push(`const { ${scope.keys.join(', ')} } = __scope__;`);
   }
 

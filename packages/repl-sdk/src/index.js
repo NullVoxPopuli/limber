@@ -759,6 +759,39 @@ export class Compiler {
      * @param {Parameters<Compiler['compileToSource']>} args
      */
     compileToSource: (...args) => this.compileToSource(...args),
+
+    /**
+     * Register a JS value to be resolvable as an ES module under a virtual
+     * import specifier. Returns a cleanup function that unregisters it.
+     *
+     * Compilers use this when their emitted source needs to reach back to a
+     * runtime value that can't be serialized into a module string —
+     * typically a live scope object. The emitted source can then
+     * `import * as scope from '${specifier}'` and rely on the compiler's
+     * resolver to fetch the value, instead of every compiler hand-rolling
+     * its own `globalThis` namespace.
+     *
+     * Under the hood this layers on the same `manual:` resolver +
+     * `cache.resolves` machinery the Compiler already uses for caller-
+     * supplied `options.resolve` entries.
+     *
+     * @param {string} specifier
+     * @param {unknown} value
+     * @returns {() => void}
+     */
+    provide: (specifier, value) => {
+      this.#options.resolve ??= {};
+      this.#options.resolve[specifier] = value;
+      cache.resolves[specifier] = value;
+
+      return () => {
+        if (this.#options.resolve) {
+          delete this.#options.resolve[specifier];
+        }
+
+        delete cache.resolves[specifier];
+      };
+    },
     /**
      * @param {Parameters<Compiler['optionsFor']>} args
      */
