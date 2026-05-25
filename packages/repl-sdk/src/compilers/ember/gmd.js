@@ -10,16 +10,16 @@ let elementId = 0;
 let scopeNonce = 0;
 
 /**
- * Slot on `globalThis` where gmd's runtime path stashes the live scope object
- * so the emitted ES module can read it back at evaluation time. String-keyed
- * (rather than Symbol-keyed) so TypeScript accepts the indexed access on
- * `globalThis` without a cast — `globalThis[string]` is well-typed as
- * `unknown`.
+ * Virtual ES module specifier under which gmd's runtime path registers the
+ * live scope object via `api.provide`. The emitted module then imports its
+ * scope from this specifier — Compiler's existing `manual:` resolver takes
+ * care of handing the registered value back, so individual compilers don't
+ * need to know how the bridge is implemented.
  *
  * @param {number} id
  */
-function scopeKey(id) {
-  return `__replSdk__gmdScope__${id}`;
+function scopeSpecifier(id) {
+  return `repl-sdk:gmd-scope:${id}`;
 }
 
 /**
@@ -86,10 +86,11 @@ export async function compiler(config, api) {
      *
      *   - How runtime scope crosses the source boundary. The build-time
      *     form can't reference a live JS object, so renderToString gets
-     *     an empty scope. The runtime form stashes the live scope object
-     *     on `globalThis[Symbol.for('repl-sdk:gmd-scope:N')]` and emits a
-     *     module that reads it back and destructures its keys into the
-     *     template's `scope: () => ({...})` call.
+     *     an empty scope. The runtime form registers the live scope object
+     *     behind a virtual ES module specifier via `api.provide` and emits
+     *     a module that `import * as __scope__ from '<specifier>'`. The
+     *     Compiler's existing `manual:` resolver handles the bridge, so
+     *     gmd never touches `globalThis` directly.
      */
     compile: async (text, options) => {
       const compileOptions = filterOptions(options);
@@ -141,25 +142,20 @@ export async function compiler(config, api) {
         return { source };
       }
 
-      const id = ++scopeNonce;
-      const key = scopeKey(id);
-
-      // `Reflect.set` writes the dynamic key onto `globalThis` without
-      // needing a cast — `typeof globalThis` doesn't have a string index
-      // signature, but `Reflect.set` accepts any `PropertyKey`.
-      Reflect.set(globalThis, key, scope);
+      const specifier = scopeSpecifier(++scopeNonce);
+      const unregisterScope = api.provide(specifier, scope);
 
       const source = buildGmdModule({
         prose: result.text,
         demos,
         templateModule: '@ember/template-compiler/runtime',
         scope: {
-          expression: `globalThis['${key}']`,
+          specifier,
           keys: Object.keys(scope),
         },
       });
 
-      return { compiled: source, ...result, scope, __replSdkScopeNonce: id };
+      return { compiled: source, ...result, scope, __replSdkUnregisterScope: unregisterScope };
     },
     render: async (element, compiled, extra, compiler) => {
       /**
@@ -195,16 +191,16 @@ export async function compiler(config, api) {
       return () => {
         result.destroy();
 
-        // Release the stashed scope so it's eligible for GC. The nonce was
-        // attached to `extra` by `compile()` so we know exactly which slot
-        // to clear.
+        // Release the registered scope so it's eligible for GC. `compile()`
+        // attached the unregister callback to `extra` so we know which
+        // entry to clear.
         if (
           extra &&
           typeof extra === 'object' &&
-          '__replSdkScopeNonce' in extra &&
-          typeof extra.__replSdkScopeNonce === 'number'
+          '__replSdkUnregisterScope' in extra &&
+          typeof extra.__replSdkUnregisterScope === 'function'
         ) {
-          Reflect.deleteProperty(globalThis, scopeKey(extra.__replSdkScopeNonce));
+          extra.__replSdkUnregisterScope();
         }
       };
     },

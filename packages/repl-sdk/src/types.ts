@@ -58,6 +58,20 @@ export interface PublicMethods {
     options?: Record<string, unknown>
   ) => Promise<{ source: string }>;
 
+  /**
+   * Register a JS value behind a virtual ES module specifier and return a
+   * cleanup function that unregisters it.
+   *
+   * Compilers reach for this when their emitted source has to talk to a
+   * runtime value that can't be serialized into the source itself — e.g.
+   * gmd's live `scope` object. The emitted module can then
+   * `import * as foo from '<specifier>'` and the Compiler's existing
+   * `manual:` resolver hands the value back.
+   *
+   * @returns A function that unregisters the entry.
+   */
+  provide: (specifier: string, value: unknown) => () => void;
+
   optionsFor: (
     format: string,
     flavor?: string
