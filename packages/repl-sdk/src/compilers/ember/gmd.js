@@ -2,10 +2,21 @@
  * @typedef {import('unified').Plugin} Plugin
  */
 import { buildGmdModule } from '../../render-to-string.js';
-import { assert, isRecord } from '../../utils.js';
+import { isRecord } from '../../utils.js';
 import { buildCodeFenceMetaUtils } from '../markdown/utils.js';
 
 let elementId = 0;
+let scopeNonce = 0;
+
+/**
+ * Symbol-keyed slot on `globalThis` where gmd's runtime path stashes the live
+ * scope object so the emitted ES module can read it back at evaluation time.
+ *
+ * @param {number} id
+ */
+function scopeKey(id) {
+  return Symbol.for(`repl-sdk:gmd-scope:${id}`);
+}
 
 /**
  * @param {unknown} [ options ]
@@ -56,6 +67,26 @@ export async function compiler(config, api) {
    * @type {import('../../types.ts').Compiler}
    */
   const gmdCompiler = {
+    /**
+     * The runtime and renderToString paths share most of their work — both
+     * parse the markdown, recursively compile every live demo to a JS
+     * source string, then call `buildGmdModule` to inline those demos into
+     * a single `.gjs`-shaped module.
+     *
+     * The only forks are:
+     *
+     *   - Which `@ember/template-compiler` to import. Runtime form uses
+     *     `/runtime` (the parse-and-compile-at-execution-time variant);
+     *     renderToString uses the build-time form so the host app's babel
+     *     pipeline can precompile the `template()` call to wire format.
+     *
+     *   - How runtime scope crosses the source boundary. The build-time
+     *     form can't reference a live JS object, so renderToString gets
+     *     an empty scope. The runtime form stashes the live scope object
+     *     on `globalThis[Symbol.for('repl-sdk:gmd-scope:N')]` and emits a
+     *     module that reads it back and destructures its keys into the
+     *     template's `scope: () => ({...})` call.
+     */
     compile: async (text, options) => {
       const compileOptions = filterOptions(options);
       const result = await parseMarkdown(text, {
@@ -69,26 +100,62 @@ export async function compiler(config, api) {
         getFlavorFromMeta,
       });
 
-      if (isRecord(options) && options.renderToString) {
-        return compileToSource(result, options);
+      /** @type {Array<{ name: string, placeholderId: string, source: string }>} */
+      const demos = [];
+
+      let nth = 0;
+
+      for (const info of /** @type {Array<Record<string, unknown>>} */ (result.codeBlocks)) {
+        const format = /** @type {string} */ (info.format);
+        const flavor = /** @type {string | undefined} */ (info.flavor);
+        const code = /** @type {string} */ (info.code);
+        const placeholderId = /** @type {string} */ (info.placeholderId);
+
+        if (!api.canCompile(format, flavor).result) continue;
+
+        nth++;
+
+        const sub = await api.compileToSource(format, code, {
+          ...(options ?? {}),
+          flavor,
+        });
+
+        demos.push({ name: `Demo${nth}`, placeholderId, source: sub.source });
       }
 
-      const { template } = await api.tryResolve('@ember/template-compiler/runtime');
-
+      const renderToString = isRecord(options) && options.renderToString === true;
       const scope = {
-        ...filterOptions(userOptions).scope,
-        ...filterOptions(options).scope,
+        ...userOptions.scope,
+        ...compileOptions.scope,
       };
 
-      const component = template(result.text, {
-        scope: () => ({
-          ...scope,
-          // TODO: compile all the components from "result" and add them to scope here
-          //       would this be better than the markdown style multiple islands
-        }),
+      if (renderToString) {
+        const source = buildGmdModule({
+          prose: result.text,
+          demos,
+          templateModule: '@ember/template-compiler',
+          scope: null,
+        });
+
+        return { source };
+      }
+
+      const id = ++scopeNonce;
+      const key = scopeKey(id);
+
+      /** @type {Record<symbol, unknown>} */ (globalThis)[key] = scope;
+
+      const source = buildGmdModule({
+        prose: result.text,
+        demos,
+        templateModule: '@ember/template-compiler/runtime',
+        scope: {
+          expression: `globalThis[Symbol.for('repl-sdk:gmd-scope:${id}')]`,
+          keys: Object.keys(scope),
+        },
       });
 
-      return { compiled: component, ...result, scope };
+      return { compiled: source, ...result, scope, __replSdkScopeNonce: id };
     },
     render: async (element, compiled, extra, compiler) => {
       /**
@@ -115,131 +182,22 @@ export async function compiler(config, api) {
         ...(args ? { args } : {}),
       });
 
-      const destroy = () => result.destroy();
-
-      /**
-       * @type {(() => void)[]}
-       */
-      const destroyables = [];
-
-      await Promise.all(
-        /** @type {unknown[]} */ (extra.codeBlocks).map(async (/** @type {unknown} */ info) => {
-          /** @type {Record<string, unknown>} */
-          const infoObj = /** @type {Record<string, unknown>} */ (info);
-
-          if (
-            !api.canCompile(
-              /** @type {string} */ (infoObj.format),
-              /** @type {string} */ (infoObj.flavor)
-            )
-          ) {
-            return;
-          }
-
-          const flavor = /** @type {string} */ (infoObj.flavor);
-          const hasScope =
-            flavor === 'ember' || infoObj.format === 'gjs' || infoObj.format === 'hbs';
-          const subRender = /** @type {{ element: HTMLElement, destroy: () => void }} */ (
-            await compiler.compile(
-              /** @type {string} */ (infoObj.format),
-              /** @type {string} */ (infoObj.code),
-              {
-                ...compiler.optionsFor(/** @type {string} */ (infoObj.format), flavor),
-                flavor: flavor,
-                // @ts-ignore
-                ...(hasScope
-                  ? {
-                      scope: extra.scope,
-                    }
-                  : {}),
-              }
-            )
-          );
-
-          const selector = `#${/** @type {string} */ (infoObj.placeholderId)}`;
-          const target = element.querySelector(selector);
-
-          assert(
-            `Could not find placeholder / target element (using selector: \`${selector}\`). ` +
-              `Could not render ${/** @type {string} */ (infoObj.format)} block.`,
-            target
-          );
-
-          destroyables.push(subRender.destroy);
-          target.appendChild(subRender.element);
-        })
-      );
-
       return () => {
-        for (const subDestroy of destroyables) {
-          subDestroy();
-        }
+        result.destroy();
 
-        destroy();
+        // Release the stashed scope so it's eligible for GC. The nonce is
+        // shape-typed on `extra` so we know exactly which slot to clear.
+        const nonce =
+          extra && typeof extra === 'object' && '__replSdkScopeNonce' in extra
+            ? /** @type {number} */ (extra.__replSdkScopeNonce)
+            : undefined;
+
+        if (typeof nonce === 'number') {
+          delete /** @type {Record<symbol, unknown>} */ (globalThis)[scopeKey(nonce)];
+        }
       };
     },
   };
 
   return gmdCompiler;
-
-  /**
-   * Build-time path: turn a parsed markdown result into a single ES module
-   * string that the host app's compiler can take to SSG-renderable output.
-   *
-   * Strategy:
-   *
-   *   1. For every live code block, recursively call the sub-compiler in
-   *      `renderToString: true` mode to get its babel-compiled module string.
-   *   2. Split each demo module into `{ imports, body }` and wrap the body in
-   *      `const Demo<N> = (() => { ...; return _component; })();`.
-   *   3. Replace the `<div id="placeholderId">…</div>` HTML placeholder for
-   *      each demo with a `<Demo<N> />` Glimmer component invocation.
-   *   4. Emit one module that imports `template` from
-   *      `@ember/template-compiler` (build-time), declares all the inlined
-   *      demo consts, and `export default`s a `template(prose, { scope })`
-   *      call referencing them.
-   *
-   * The output is *not* itself precompiled — it's a `.gjs`-shaped JS module
-   * that the host app's content-tag + babel pipeline will precompile to wire
-   * format, the same way it would for any other live `.gjs` file.
-   *
-   * @param {{ text: string, codeBlocks: Array<Record<string, unknown>> }} result
-   * @param {Record<string, unknown>} options
-   * @returns {Promise<{ source: string }>}
-   */
-  async function compileToSource(result, options) {
-    /** @type {Array<{ name: string, placeholderId: string, source: string }>} */
-    const demos = [];
-
-    let nth = 0;
-
-    for (const info of result.codeBlocks) {
-      const format = /** @type {string} */ (info.format);
-      const flavor = /** @type {string | undefined} */ (info.flavor);
-      const code = /** @type {string} */ (info.code);
-      const placeholderId = /** @type {string} */ (info.placeholderId);
-
-      if (!api.canCompile(format, flavor).result) {
-        continue;
-      }
-
-      nth++;
-
-      const demoName = `Demo${nth}`;
-      const subOptions = {
-        ...(options ?? {}),
-        flavor,
-        renderToString: true,
-      };
-
-      // `api` exposes `compileToSource` so a compiler can recursively ask for
-      // the build-time form of another compiler — gmd needs this to inline
-      // each live code block into the single emitted module.
-      const subResult = await api.compileToSource(format, code, subOptions);
-
-      demos.push({ name: demoName, placeholderId, source: subResult.source });
-    }
-
-    return { source: buildGmdModule({ prose: result.text, demos }) };
-  }
 }
