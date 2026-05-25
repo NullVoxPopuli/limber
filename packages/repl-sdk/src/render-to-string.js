@@ -213,31 +213,50 @@ function indent(text) {
 }
 
 /**
- * Inline one or more compiled sub-modules into the surrounding gmd prose.
+ * Inline one or more compiled sub-modules into the surrounding gmd prose,
+ * producing one self-contained ES module string.
  *
- * Given the markdown body (with `<div id="placeholderId"></div>` holes from
- * `liveCodeExtraction`) and a list of `{ name, placeholderId, source }`
- * entries (one per live demo), produce a single `.gjs`-shaped module:
+ * The same function is used by both the *runtime* compile path (the module
+ * gets blob-eval'd and rendered) and the *renderToString* path (the module
+ * gets handed back to the caller's bundler). The only differences are:
  *
- *   - All top-level demo imports merged + deduped at the top
- *   - Plus `import { template } from '@ember/template-compiler';`
- *   - Each demo body wrapped in `const <name> = (() => { …; return X; })();`
- *   - A trailing `template(prose, { scope: () => ({ …names… }) })` call
+ *   - `templateModule`: which `template` to import. Use
+ *     `'@ember/template-compiler/runtime'` when this module will be
+ *     evaluated at runtime, or `'@ember/template-compiler'` when a build-
+ *     time babel plugin is expected to precompile the `template(...)` call.
+ *
+ *   - `scope`: a string expression (e.g.
+ *     `globalThis[Symbol.for('repl-sdk:gmd-scope:42')]`) that, at module
+ *     evaluation time, returns the live runtime scope object. The keys
+ *     listed in `scopeKeys` are destructured from that expression and
+ *     spread into the prose template's `scope: () => ({...})` call,
+ *     letting helpers like `array`, `concat`, etc. cross the source
+ *     boundary without needing dedicated imports. Pass `null` (the default)
+ *     to skip scope-via-global entirely — used for renderToString, where
+ *     there is no live scope.
  *
  * The placeholders in `prose` are replaced with `<name />` Glimmer
- * invocations referencing each inlined demo.
+ * invocations wrapped in a div that preserves the original placeholder's
+ * `class` attribute (e.g. `repl-sdk__demo`) so existing CSS still applies.
  *
- * This is a pure function — the caller (e.g. `gmd.js`) is responsible for
- * driving the sub-compiles.
+ * This is a pure function — the caller is responsible for driving the
+ * sub-compiles and stashing the scope object if it uses `scope`/`scopeKeys`.
  *
  * @param {object} args
  * @param {string} args.prose
  * @param {Array<{ name: string, placeholderId: string, source: string }>} args.demos
+ * @param {string} [args.templateModule]
+ * @param {{ expression: string, keys: string[] } | null} [args.scope]
  * @returns {string}
  */
-export function buildGmdModule({ prose, demos }) {
+export function buildGmdModule({
+  prose,
+  demos,
+  templateModule = '@ember/template-compiler',
+  scope = null,
+}) {
   /** @type {string[][]} */
-  const importGroups = [[`import { template } from '@ember/template-compiler';`]];
+  const importGroups = [[`import { template } from '${templateModule}';`]];
   /** @type {string[]} */
   const bodyDecls = [];
   /** @type {string[]} */
@@ -256,10 +275,21 @@ export function buildGmdModule({ prose, demos }) {
   }
 
   const mergedImports = mergeImports(importGroups).join('\n');
-  const scopeBody = scopeIdents.length ? `{ ${scopeIdents.join(', ')} }` : `{}`;
+
+  /** @type {string[]} */
+  const preludeLines = [];
+
+  if (scope && scope.keys.length) {
+    preludeLines.push(`const __scope__ = ${scope.expression};`);
+    preludeLines.push(`const { ${scope.keys.join(', ')} } = __scope__;`);
+  }
+
+  const allScopeIdents = scope && scope.keys.length ? [...scope.keys, ...scopeIdents] : scopeIdents;
+  const scopeBody = allScopeIdents.length ? `{ ${allScopeIdents.join(', ')} }` : `{}`;
 
   return (
     `${mergedImports}\n\n` +
+    (preludeLines.length ? preludeLines.join('\n') + '\n\n' : '') +
     (bodyDecls.length ? bodyDecls.join('\n\n') + '\n\n' : '') +
     `const _component = template(${JSON.stringify(rewrittenProse)}, {\n` +
     `  scope: () => (${scopeBody}),\n` +
@@ -269,19 +299,25 @@ export function buildGmdModule({ prose, demos }) {
 }
 
 /**
- * Replace the single `<div id="${id}" …></div>` placeholder emitted by
- * `liveCodeExtraction` with a Glimmer component invocation `<${name} />`.
- *
- * The placeholder element has no inner text and may carry arbitrary class
- * attributes; we only need to match it by id.
+ * Replace the single `<div id="${id}" class="…"></div>` placeholder emitted
+ * by `liveCodeExtraction` with a Glimmer component invocation. The wrapping
+ * div is preserved (sans `id`) so the `repl-sdk__demo` (or
+ * caller-supplied) class still styles the demo container.
  *
  * @param {string} html
  * @param {string} id
  * @param {string} name
  */
 export function replacePlaceholder(html, id, name) {
-  const escaped = id.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
-  const pattern = new RegExp(`<div\\s+id="${escaped}"[^>]*>\\s*</div>`, 'g');
+  const escapedId = id.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+  const pattern = new RegExp(
+    `<div\\s+id="${escapedId}"(\\s+class="([^"]*)")?[^>]*>\\s*</div>`,
+    'g'
+  );
 
-  return html.replace(pattern, `<${name} />`);
+  return html.replace(pattern, (_match, _attr, classes) => {
+    const classAttr = classes !== undefined ? ` class="${classes}"` : '';
+
+    return `<div${classAttr}><${name} /></div>`;
+  });
 }

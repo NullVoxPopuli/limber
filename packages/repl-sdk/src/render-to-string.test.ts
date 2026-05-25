@@ -123,18 +123,18 @@ describe('wrapAsConst', () => {
 });
 
 describe('replacePlaceholder', () => {
-  test('replaces div by id with a component invocation', () => {
-    const html = `<p>before</p><div id="repl_1" class="demo"></div><p>after</p>`;
+  test('preserves the placeholder div + class, wraps a component invocation', () => {
+    const html = `<p>before</p><div id="repl_1" class="repl-sdk__demo"></div><p>after</p>`;
     const out = replacePlaceholder(html, 'repl_1', 'Demo1');
 
-    expect(out).toBe(`<p>before</p><Demo1 /><p>after</p>`);
+    expect(out).toBe(`<p>before</p><div class="repl-sdk__demo"><Demo1 /></div><p>after</p>`);
   });
 
   test('escapes regex metacharacters in the id', () => {
     const html = `<div id="a.b.c" class=""></div>`;
     const out = replacePlaceholder(html, 'a.b.c', 'Demo1');
 
-    expect(out).toBe(`<Demo1 />`);
+    expect(out).toBe(`<div class=""><Demo1 /></div>`);
   });
 
   test('does not touch divs with different ids', () => {
@@ -144,10 +144,17 @@ describe('replacePlaceholder', () => {
     expect(out).toContain(`<div id="other">`);
     expect(out).toContain(`<Demo1 />`);
   });
+
+  test('omits class attribute when the placeholder had none', () => {
+    const html = `<div id="x"></div>`;
+    const out = replacePlaceholder(html, 'x', 'Demo1');
+
+    expect(out).toBe(`<div><Demo1 /></div>`);
+  });
 });
 
 describe('buildGmdModule', () => {
-  test('inlines one demo end-to-end', () => {
+  test('build-time form: inlines one demo with build-time template-compiler', () => {
     const demoSource = [
       `import Component from '@glimmer/component';`,
       `import { template } from '@ember/template-compiler';`,
@@ -163,21 +170,41 @@ describe('buildGmdModule', () => {
       demos: [{ name: 'Demo1', placeholderId: 'repl_1', source: demoSource }],
     });
 
-    // Imports are hoisted + deduped — @ember/template-compiler appears once
-    const importMatches = out.match(/import \{ template \} from '@ember\/template-compiler';/g);
-
-    expect(importMatches?.length).toBe(1);
+    // build-time `template` is the default
+    expect(out).toContain(`import { template } from '@ember/template-compiler';`);
+    // Demo's own template-compiler import is deduped against the prose's
+    expect(out.match(/import \{ template \} from '@ember\/template-compiler';/g)?.length).toBe(1);
     expect(out).toContain(`import Component from '@glimmer/component';`);
 
-    // The demo body is wrapped in a named IIFE
+    // Demo body wrapped in a named IIFE and referenced from prose. The
+    // prose lives inside a `template(JSON.stringify(...))` call, so double-
+    // quotes in the rewritten div are JSON-escaped.
     expect(out).toMatch(/const Demo1 = \(\(\) => \{[\s\S]*\}\)\(\);/);
-    // …and references it from the prose
-    expect(out).toContain(`<Demo1 />`);
+    expect(out).toContain(`<div class=\\"demo\\"><Demo1 /></div>`);
     expect(out).not.toContain(`<div id="repl_1"`);
+    expect(out).not.toContain(`<div id=\\"repl_1\\"`);
 
-    // The trailing template() call passes Demo1 into scope
+    // Scope contains only Demo1
     expect(out).toMatch(/scope: \(\) => \(\{ Demo1 \}\)/);
     expect(out).toMatch(/export default _component;/);
+  });
+
+  test('runtime form: imports runtime template-compiler and threads live scope', () => {
+    const out = buildGmdModule({
+      prose: `<h1>Hello</h1>`,
+      demos: [],
+      templateModule: '@ember/template-compiler/runtime',
+      scope: {
+        expression: `globalThis[Symbol.for('repl-sdk:gmd-scope:42')]`,
+        keys: ['array', 'concat'],
+      },
+    });
+
+    expect(out).toContain(`import { template } from '@ember/template-compiler/runtime';`);
+    expect(out).toContain(`const __scope__ = globalThis[Symbol.for('repl-sdk:gmd-scope:42')];`);
+    expect(out).toContain(`const { array, concat } = __scope__;`);
+    // Live scope keys spread into the template scope
+    expect(out).toMatch(/scope: \(\) => \(\{ array, concat \}\)/);
   });
 
   test('handles zero demos', () => {
@@ -188,11 +215,10 @@ describe('buildGmdModule', () => {
 
     expect(out).toContain(`import { template } from '@ember/template-compiler';`);
     expect(out).toMatch(/scope: \(\) => \(\{\}\)/);
-    // No IIFE wrappers when there are no demos
     expect(out).not.toMatch(/const Demo\d+ = /);
   });
 
-  test('emits multiple demos in declaration order', () => {
+  test('emits multiple demos in declaration order, merging shared imports', () => {
     const make = (n: number) =>
       [
         `import Component from '@glimmer/component';`,
@@ -210,7 +236,23 @@ describe('buildGmdModule', () => {
 
     expect(out.indexOf('const Demo1 ')).toBeLessThan(out.indexOf('const Demo2 '));
     expect(out).toMatch(/scope: \(\) => \(\{ Demo1, Demo2 \}\)/);
-    // Common import only appears once across both demos
     expect(out.match(/import Component from '@glimmer\/component';/g)?.length).toBe(1);
+  });
+
+  test('runtime + demos: live-scope keys come before demo names in scope', () => {
+    const make = (n: number) =>
+      [`const _component = ${n};`, `export default _component;`].join('\n');
+
+    const out = buildGmdModule({
+      prose: `<div id="a"></div>`,
+      demos: [{ name: 'Demo1', placeholderId: 'a', source: make(1) }],
+      templateModule: '@ember/template-compiler/runtime',
+      scope: {
+        expression: `globalThis[Symbol.for('repl-sdk:gmd-scope:7')]`,
+        keys: ['on'],
+      },
+    });
+
+    expect(out).toMatch(/scope: \(\) => \(\{ on, Demo1 \}\)/);
   });
 });
