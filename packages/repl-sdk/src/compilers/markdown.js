@@ -89,15 +89,13 @@ export const md = {
             }
 
             const flavor = /** @type {string} */ (infoObj.flavor);
-            const subRender = /** @type {{ element: HTMLElement, destroy: () => void }} */ (
-              await compiler.compile(
-                /** @type {string} */ (infoObj.format),
-                /** @type {string} */ (infoObj.code),
-                {
-                  ...compiler.optionsFor(/** @type {string} */ (infoObj.format), flavor),
-                  flavor: flavor,
-                }
-              )
+            const subRender = await compiler.compile(
+              /** @type {string} */ (infoObj.format),
+              /** @type {string} */ (infoObj.code),
+              {
+                ...compiler.optionsFor(/** @type {string} */ (infoObj.format), flavor),
+                flavor: flavor,
+              }
             );
 
             const selector = `#${/** @type {string} */ (infoObj.placeholderId)}`;

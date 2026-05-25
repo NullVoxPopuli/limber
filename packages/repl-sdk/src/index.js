@@ -345,34 +345,19 @@ export class Compiler {
   /**
    * @param {string} format
    * @param {string} text
-   * @param {{ fileName?: string, flavor?: string, args?: Record<string, unknown>, renderToString?: boolean, [key: string]: unknown }} [ options ]
-   * @returns {Promise<{ element: HTMLElement, destroy: () => void } | { source: string }>}
+   * @param {{ fileName?: string, flavor?: string, args?: Record<string, unknown>, [key: string]: unknown }} [ options ]
+   * @returns {Promise<{ element: HTMLElement, destroy: () => void }>}
    */
   async compile(format, text, options = {}) {
-    this.#announce('info', `Compiling ${format}`);
-
-    try {
-      if (options.renderToString) {
-        return await this.#compileToSource(format, text, options);
-      }
-
-      return await this.#compile(format, text, options);
-    } catch (e) {
-      // for on.log usage
-      const message = e instanceof Error ? e.message : e;
-
-      this.#announce('error', String(message));
-
-      // Don't hide errors!
-      this.#error(e);
-      throw e;
-    }
+    return this.#runCompile(this.#compile, format, text, options);
   }
 
   /**
    * Build-time variant of {@link Compiler.compile}: returns the compiled JS
-   * module source as a string instead of evaluating and rendering. Equivalent
-   * to `compile(format, text, { ...options, renderToString: true })`.
+   * module source as a string instead of evaluating and rendering. Each
+   * configured compiler sees `renderToString: true` on its options and is
+   * expected to emit a source string (`string` or `{ source: string, … }`)
+   * rather than a runtime component.
    *
    * @param {string} format
    * @param {string} text
@@ -380,9 +365,34 @@ export class Compiler {
    * @returns {Promise<{ source: string }>}
    */
   async compileToSource(format, text, options = {}) {
-    return /** @type {{ source: string }} */ (
-      await this.compile(format, text, { ...options, renderToString: true })
-    );
+    return this.#runCompile(this.#compileToSource, format, text, options);
+  }
+
+  /**
+   * Shared wrapper for `compile` / `compileToSource`: announces lifecycle
+   * messages and forwards any thrown error through `on.log` before letting
+   * it propagate. Both public entry points share this so the user-visible
+   * logging is identical whether they're rendering or just getting source.
+   *
+   * @template T
+   * @param {(format: string, text: string, options: Record<string, unknown>) => Promise<T>} impl
+   * @param {string} format
+   * @param {string} text
+   * @param {Record<string, unknown>} options
+   * @returns {Promise<T>}
+   */
+  async #runCompile(impl, format, text, options) {
+    this.#announce('info', `Compiling ${format}`);
+
+    try {
+      return await impl.call(this, format, text, options);
+    } catch (e) {
+      const message = e instanceof Error ? e.message : e;
+
+      this.#announce('error', String(message));
+      this.#error(e);
+      throw e;
+    }
   }
 
   /**
@@ -405,29 +415,34 @@ export class Compiler {
    * @returns {Promise<{ source: string }>}
    */
   async #compileToSource(format, text, options) {
-    /** @type {Record<string, unknown>} */
-    const opts = { ...options, renderToString: true };
+    const flavor = typeof options.flavor === 'string' ? options.flavor : undefined;
+    const fileName = typeof options.fileName === 'string' ? options.fileName : `dynamic.${format}`;
+    const opts = { ...options, fileName, renderToString: true };
 
-    opts.fileName ||= `dynamic.${format}`;
-
-    const compiler = await this.#getCompiler(
-      format,
-      /** @type {string | undefined} */ (opts.flavor)
-    );
+    const compiler = await this.#getCompiler(format, flavor);
     const compiled = await compiler.compile(text, opts);
 
     if (typeof compiled === 'string') {
       return { source: compiled };
     }
 
-    if (compiled && typeof (/** @type {{source?: unknown}} */ (compiled).source) === 'string') {
-      return /** @type {{source: string}} */ (compiled);
+    if (
+      compiled !== null &&
+      typeof compiled === 'object' &&
+      'source' in compiled &&
+      typeof compiled.source === 'string'
+    ) {
+      return { source: compiled.source };
     }
+
+    const shape =
+      compiled !== null && typeof compiled === 'object'
+        ? Object.keys(compiled).join(', ')
+        : typeof compiled;
 
     throw new Error(
       `Compiler for format '${format}' was asked to renderToString but returned ` +
-        `${typeof compiled === 'object' ? Object.keys(/** @type {object} */ (compiled)).join(', ') : typeof compiled} ` +
-        `instead of a source string.`
+        `${shape} instead of a source string.`
     );
   }
 

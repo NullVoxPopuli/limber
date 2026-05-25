@@ -15,15 +15,9 @@ export class Compiler {
     options?: {
       flavor?: string;
       fileName?: string;
-      /**
-       * When true, returns `{ source: string }` instead of evaluating and
-       * rendering. Most callers should use {@link Compiler.compileToSource}
-       * instead.
-       */
-      renderToString?: boolean;
       [key: string]: unknown;
     }
-  ): Promise<{ element: HTMLElement; destroy: () => void } | { source: string }>;
+  ): Promise<{ element: HTMLElement; destroy: () => void }>;
 
   /**
    * Build-time variant of {@link Compiler.compile}: returns the compiled JS

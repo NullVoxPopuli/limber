@@ -9,13 +9,16 @@ let elementId = 0;
 let scopeNonce = 0;
 
 /**
- * Symbol-keyed slot on `globalThis` where gmd's runtime path stashes the live
- * scope object so the emitted ES module can read it back at evaluation time.
+ * Slot on `globalThis` where gmd's runtime path stashes the live scope object
+ * so the emitted ES module can read it back at evaluation time. String-keyed
+ * (rather than Symbol-keyed) so TypeScript accepts the indexed access on
+ * `globalThis` without a cast — `globalThis[string]` is well-typed as
+ * `unknown`.
  *
  * @param {number} id
  */
 function scopeKey(id) {
-  return Symbol.for(`repl-sdk:gmd-scope:${id}`);
+  return `__replSdk__gmdScope__${id}`;
 }
 
 /**
@@ -105,11 +108,8 @@ export async function compiler(config, api) {
 
       let nth = 0;
 
-      for (const info of /** @type {Array<Record<string, unknown>>} */ (result.codeBlocks)) {
-        const format = /** @type {string} */ (info.format);
-        const flavor = /** @type {string | undefined} */ (info.flavor);
-        const code = /** @type {string} */ (info.code);
-        const placeholderId = /** @type {string} */ (info.placeholderId);
+      for (const info of result.codeBlocks) {
+        const { format, flavor, code, placeholderId } = info;
 
         if (!api.canCompile(format, flavor).result) continue;
 
@@ -143,14 +143,17 @@ export async function compiler(config, api) {
       const id = ++scopeNonce;
       const key = scopeKey(id);
 
-      /** @type {Record<symbol, unknown>} */ (globalThis)[key] = scope;
+      // `Reflect.set` writes the dynamic key onto `globalThis` without
+      // needing a cast — `typeof globalThis` doesn't have a string index
+      // signature, but `Reflect.set` accepts any `PropertyKey`.
+      Reflect.set(globalThis, key, scope);
 
       const source = buildGmdModule({
         prose: result.text,
         demos,
         templateModule: '@ember/template-compiler/runtime',
         scope: {
-          expression: `globalThis[Symbol.for('repl-sdk:gmd-scope:${id}')]`,
+          expression: `globalThis['${key}']`,
           keys: Object.keys(scope),
         },
       });
@@ -185,15 +188,16 @@ export async function compiler(config, api) {
       return () => {
         result.destroy();
 
-        // Release the stashed scope so it's eligible for GC. The nonce is
-        // shape-typed on `extra` so we know exactly which slot to clear.
-        const nonce =
-          extra && typeof extra === 'object' && '__replSdkScopeNonce' in extra
-            ? /** @type {number} */ (extra.__replSdkScopeNonce)
-            : undefined;
-
-        if (typeof nonce === 'number') {
-          delete /** @type {Record<symbol, unknown>} */ (globalThis)[scopeKey(nonce)];
+        // Release the stashed scope so it's eligible for GC. The nonce was
+        // attached to `extra` by `compile()` so we know exactly which slot
+        // to clear.
+        if (
+          extra &&
+          typeof extra === 'object' &&
+          '__replSdkScopeNonce' in extra &&
+          typeof extra.__replSdkScopeNonce === 'number'
+        ) {
+          Reflect.deleteProperty(globalThis, scopeKey(extra.__replSdkScopeNonce));
         }
       };
     },
