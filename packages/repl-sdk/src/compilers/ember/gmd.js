@@ -2,24 +2,10 @@
  * @typedef {import('unified').Plugin} Plugin
  */
 import { buildGmdModule } from '../../render-to-string.js';
-import { isRecord } from '../../utils.js';
+import { assert, isRecord } from '../../utils.js';
 import { buildCodeFenceMetaUtils } from '../markdown/utils.js';
 
 let elementId = 0;
-let scopeNonce = 0;
-
-/**
- * Virtual ES module specifier under which gmd's runtime path registers the
- * live scope object via `api.provide`. The emitted module then imports its
- * scope from this specifier — Compiler's existing `manual:` resolver takes
- * care of handing the registered value back, so individual compilers don't
- * need to know how the bridge is implemented.
- *
- * @param {number} id
- */
-function scopeSpecifier(id) {
-  return `repl-sdk:gmd-scope:${id}`;
-}
 
 /**
  * @param {unknown} [ options ]
@@ -91,7 +77,7 @@ export async function compiler(config, api) {
      *     Compiler's existing `manual:` resolver handles the bridge, so
      *     gmd never touches `globalThis` directly.
      */
-    compile: async (text, options) => {
+    compile: async (text, options, compileApi) => {
       const compileOptions = filterOptions(options);
       const result = await parseMarkdown(text, {
         remarkPlugins: [...userOptions.remarkPlugins, ...compileOptions.remarkPlugins],
@@ -141,8 +127,17 @@ export async function compiler(config, api) {
         return { source };
       }
 
-      const specifier = scopeSpecifier(++scopeNonce);
-      const unregisterScope = api.provide(specifier, scope);
+      // `compileApi.provideScope` registers the live scope behind a
+      // Compiler-generated specifier and tracks it as part of this
+      // compile's lifecycle. The Compiler releases it when destroy fires;
+      // gmd doesn't need to track an unregister callback.
+      assert(
+        `gmd needs the per-compile API (3rd argument to compile) to provide its scope. ` +
+          `It looks like the Compiler did not pass one.`,
+        compileApi
+      );
+
+      const { specifier } = compileApi.provideScope(scope);
 
       const source = buildGmdModule({
         prose: result.text,
@@ -154,7 +149,7 @@ export async function compiler(config, api) {
         },
       });
 
-      return { compiled: source, ...result, scope, __replSdkUnregisterScope: unregisterScope };
+      return { compiled: source, ...result, scope };
     },
     render: async (element, compiled, extra, compiler) => {
       /**
@@ -181,21 +176,7 @@ export async function compiler(config, api) {
         ...(args ? { args } : {}),
       });
 
-      return () => {
-        result.destroy();
-
-        // Release the registered scope so it's eligible for GC. `compile()`
-        // attached the unregister callback to `extra` so we know which
-        // entry to clear.
-        if (
-          extra &&
-          typeof extra === 'object' &&
-          '__replSdkUnregisterScope' in extra &&
-          typeof extra.__replSdkUnregisterScope === 'function'
-        ) {
-          extra.__replSdkUnregisterScope();
-        }
-      };
+      return () => result.destroy();
     },
   };
 
