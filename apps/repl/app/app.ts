@@ -19,7 +19,7 @@ import Router from './router.ts';
 // But they aren't used.... so.. that's fun.
 Object.assign(window, {
   process: { env: {} },
-  Buffer: {},
+  Buffer: { isBuffer: (x: unknown) => typeof x !== 'string' },
 });
 
 export default class App extends Application {
