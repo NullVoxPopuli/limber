@@ -1,8 +1,8 @@
+import Application from '@ember/application';
 import Route from '@ember/routing/route';
 import { settled } from '@ember/test-helpers';
 
 import PageTitleService from 'ember-page-title/services/page-title';
-import Application from 'ember-strict-application-resolver';
 
 import Router from './router.ts';
 

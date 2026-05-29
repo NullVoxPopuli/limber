@@ -1,13 +1,11 @@
 import 'ember-statechart-component';
 import './icons.ts';
 
+import Application from '@ember/application';
 import setupInspector from '@embroider/legacy-inspector-support/ember-source-4.12';
 import { isDevelopingApp, macroCondition } from '@embroider/macros';
 
 import PageTitleService from 'ember-page-title/services/page-title';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore - no types
-import Application from 'ember-strict-application-resolver';
 
 import '@nullvoxpopuli/limber-shared/theme.css';
 

@@ -147,9 +147,6 @@ importers:
       ember-statechart-component:
         specifier: 7.1.0
         version: 7.1.0(fa5fea218477f7f554b97019bbf2d346)
-      ember-strict-application-resolver:
-        specifier: ^0.1.1
-        version: 0.1.1(@babel/core@7.29.0)
       html-to-image:
         specifier: ^1.11.13
         version: 1.11.13
@@ -6928,9 +6925,6 @@ packages:
       '@glimmer/component': ^1.1.2
       '@glint/template': 1.7.7
       xstate: ^5.18.0
-
-  ember-strict-application-resolver@0.1.1:
-    resolution: {integrity: sha512-/49JZ2Yk2ggicAGIoFNWcz05llhe2i+/2dpH5Pv1KlwZOBKkqMMJpTKEB4IMg+FjKBiE0r2yxuZzo9Oly9vc1A==}
 
   ember-template-lint@7.9.3:
     resolution: {integrity: sha512-iqC4rv/oVlXViGuf7hlOA/bC550ZqacZKAc8WvQV0ueeCtIYPkYYK+Tc7FwpM8qGx3jiwu/ZsTuNfPInI5pL7Q==}
@@ -17113,14 +17107,6 @@ snapshots:
       '@glint/template': 1.7.7
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       xstate: 5.30.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - supports-color
-
-  ember-strict-application-resolver@0.1.1(@babel/core@7.29.0):
-    dependencies:
-      '@embroider/addon-shim': 1.10.2
-      decorator-transforms: 2.3.1(@babel/core@7.29.0)
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
