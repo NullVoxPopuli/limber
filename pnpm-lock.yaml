@@ -26,6 +26,7 @@ overrides:
   side-channel: npm:@nolyfill/side-channel@^1
   string.prototype.matchall: npm:@nolyfill/string.prototype.matchall@^1
   string.prototype.trimend: npm:@nolyfill/string.prototype.trimend@^1
+  ember-source: file:./apps/repl/ember-source-7.2.0-alpha.1.nvp-fix-21042+e4593a90.tgz
 
 patchedDependencies:
   browserslist-generator:
@@ -140,7 +141,7 @@ importers:
         version: 0.56.0(ac764d62c04770a6a53e7a06b1d97f8f)
       ember-repl:
         specifier: ^8.0.0
-        version: 8.0.2(97a2ca31a8e4cf9a385bac208eb0c5f1)
+        version: 8.0.2(b124149995ac6fe1e0820550d6115f50)
       ember-resources:
         specifier: ^7.0.7
         version: 7.0.7(2935cfb77147881c8250be8c1bb7d0d1)
@@ -345,7 +346,7 @@ importers:
         version: 2.0.1(c8332dc3f90c0e60eb130a3a85f980b9)
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(9d6fd79a0f02bf47371e2bb3574b0f20)
+        version: 3.0.1(e4d1d56984aa6321aa0a24eeb6abe1fa)
       ember-page-title:
         specifier: ^9.0.3
         version: 9.0.3
@@ -353,8 +354,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(ccac685a9f0303164367b88029c1ee61)
       ember-source:
-        specifier: 7.2.0-alpha.3
-        version: 7.2.0-alpha.3(@glimmer/component@2.1.1)
+        specifier: file:ember-source-7.2.0-alpha.1.nvp-fix-21042+e4593a90.tgz
+        version: file:apps/repl/ember-source-7.2.0-alpha.1.nvp-fix-21042+e4593a90.tgz(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -468,13 +469,13 @@ importers:
         version: 0.56.0(ac764d62c04770a6a53e7a06b1d97f8f)
       ember-repl:
         specifier: ^8.0.0
-        version: 8.0.2(97a2ca31a8e4cf9a385bac208eb0c5f1)
+        version: 8.0.2(b124149995ac6fe1e0820550d6115f50)
       ember-resources:
         specifier: ^7.0.7
         version: 7.0.7(2935cfb77147881c8250be8c1bb7d0d1)
       kolay:
         specifier: ^4.1.0
-        version: 4.1.0(b186acb6a5fb3b0afbb6a8a87202195b)
+        version: 4.1.0(fa7c1468bc2f019a795d602a5d25aaf6)
       limber-ui:
         specifier: workspace:*
         version: link:../../packages/limber-ui
@@ -586,7 +587,7 @@ importers:
         version: 9.2.1
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(9d6fd79a0f02bf47371e2bb3574b0f20)
+        version: 3.0.1(e4d1d56984aa6321aa0a24eeb6abe1fa)
       ember-modify-based-class-resource:
         specifier: ^1.1.1
         version: 1.1.2(e3118ff71bc86957591c6020967112d7)
@@ -600,8 +601,8 @@ importers:
         specifier: ^13.1.0
         version: 13.1.1
       ember-source:
-        specifier: 7.2.0-alpha.3
-        version: 7.2.0-alpha.3(@glimmer/component@2.1.1)
+        specifier: file:../repl/ember-source-7.2.0-alpha.1.nvp-fix-21042+e4593a90.tgz
+        version: file:apps/repl/ember-source-7.2.0-alpha.1.nvp-fix-21042+e4593a90.tgz(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -723,6 +724,9 @@ importers:
       decorator-transforms:
         specifier: 2.3.1
         version: 2.3.1(@babel/core@7.29.0)
+      ember-source:
+        specifier: file:../../../apps/repl/ember-source-7.2.0-alpha.1.nvp-fix-21042+e4593a90.tgz
+        version: file:apps/repl/ember-source-7.2.0-alpha.1.nvp-fix-21042+e4593a90.tgz(@glimmer/component@2.1.1)
       penpal:
         specifier: ^6.2.2
         version: 6.2.2
@@ -799,9 +803,6 @@ importers:
       ember-resources:
         specifier: ^7.0.7
         version: 7.0.7(2935cfb77147881c8250be8c1bb7d0d1)
-      ember-source:
-        specifier: 7.2.0-alpha.3
-        version: 7.2.0-alpha.3(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -1024,8 +1025,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(ccac685a9f0303164367b88029c1ee61)
       ember-source:
-        specifier: 7.2.0-alpha.3
-        version: 7.2.0-alpha.3(@glimmer/component@2.1.1)
+        specifier: file:../../apps/repl/ember-source-7.2.0-alpha.1.nvp-fix-21042+e4593a90.tgz
+        version: file:apps/repl/ember-source-7.2.0-alpha.1.nvp-fix-21042+e4593a90.tgz(@glimmer/component@2.1.1)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.6.1)
@@ -1208,8 +1209,8 @@ importers:
         specifier: ^7.0.7
         version: 7.0.7(2935cfb77147881c8250be8c1bb7d0d1)
       ember-source:
-        specifier: 7.2.0-alpha.3
-        version: 7.2.0-alpha.3(@glimmer/component@2.1.1)
+        specifier: file:../../apps/repl/ember-source-7.2.0-alpha.1.nvp-fix-21042+e4593a90.tgz
+        version: file:apps/repl/ember-source-7.2.0-alpha.1.nvp-fix-21042+e4593a90.tgz(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -6913,8 +6914,9 @@ packages:
     resolution: {integrity: sha512-89oVHVJwmLDvGvAUWgS87KpBoRhy3aZ6U0Ql6HOmU4TrPkyaa8pM0W81wj9cIwjYprcQtN9EwzZMHnq46+oUyw==}
     engines: {node: 8.* || 10.* || >= 12}
 
-  ember-source@7.2.0-alpha.3:
-    resolution: {integrity: sha512-HHUSR+9SorNxUN8ymFD0JfYrNbyC0WGOf1S7XXfdN7q6K399zcr3RAToRtehtmIyvHBYkl+gcMf+bdi5uq+T3Q==}
+  ember-source@file:apps/repl/ember-source-7.2.0-alpha.1.nvp-fix-21042+e4593a90.tgz:
+    resolution: {integrity: sha512-TIY7NU7cfyiqhg0UFDhXwUTW9sBDyniKSHtzC0lQLgI1zZr4FSgyo+yRmqTd3x4abEw6FETNpYUnnH2xQUW+nw==, tarball: file:apps/repl/ember-source-7.2.0-alpha.1.nvp-fix-21042+e4593a90.tgz}
+    version: 7.2.0-alpha.1.nvp-fix-21042
     engines: {node: '>= 20.19'}
     peerDependencies:
       '@glimmer/component': '>= 1.1.2'
@@ -16877,9 +16879,9 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-load-initializers@3.0.1(9d6fd79a0f02bf47371e2bb3574b0f20):
+  ember-load-initializers@3.0.1(e4d1d56984aa6321aa0a24eeb6abe1fa):
     dependencies:
-      ember-source: 7.2.0-alpha.3(@glimmer/component@2.1.1)
+      ember-source: file:apps/repl/ember-source-7.2.0-alpha.1.nvp-fix-21042+e4593a90.tgz(@glimmer/component@2.1.1)
 
   ember-modifier@4.3.0(@babel/core@7.29.0):
     dependencies:
@@ -17023,7 +17025,7 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  ember-repl@8.0.2(97a2ca31a8e4cf9a385bac208eb0c5f1):
+  ember-repl@8.0.2(b124149995ac6fe1e0820550d6115f50):
     dependencies:
       '@ember/test-helpers': 5.4.1(c8332dc3f90c0e60eb130a3a85f980b9)
       '@ember/test-waiters': 4.1.1(c8332dc3f90c0e60eb130a3a85f980b9)
@@ -17033,7 +17035,7 @@ snapshots:
       ember-primitives: 0.51.0(ac764d62c04770a6a53e7a06b1d97f8f)
       ember-resolver: 13.1.1
       ember-resources: 7.0.7(2935cfb77147881c8250be8c1bb7d0d1)
-      repl-sdk: 1.5.2(93d4969b5698d0d4464d33ccc0660007)
+      repl-sdk: 1.5.2(6f4bb085e066dcd1e8cba157a733f3a5)
     optionalDependencies:
       '@glint/template': 1.7.7
     transitivePeerDependencies:
@@ -17075,7 +17077,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-source@7.2.0-alpha.3(@glimmer/component@2.1.1):
+  ember-source@file:apps/repl/ember-source-7.2.0-alpha.1.nvp-fix-21042+e4593a90.tgz(@glimmer/component@2.1.1):
     dependencies:
       '@babel/core': 7.29.0
       '@embroider/addon-shim': 1.10.2
@@ -18732,7 +18734,7 @@ snapshots:
 
   kind-of@6.0.3: {}
 
-  kolay@4.1.0(b186acb6a5fb3b0afbb6a8a87202195b):
+  kolay@4.1.0(fa7c1468bc2f019a795d602a5d25aaf6):
     dependencies:
       '@ember/test-waiters': 4.1.1(c8332dc3f90c0e60eb130a3a85f980b9)
       '@embroider/addon-shim': 1.10.2
@@ -18742,7 +18744,7 @@ snapshots:
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-modifier: 4.3.0(@babel/core@7.29.0)
       ember-primitives: 0.48.2(ac764d62c04770a6a53e7a06b1d97f8f)
-      ember-repl: 8.0.2(97a2ca31a8e4cf9a385bac208eb0c5f1)
+      ember-repl: 8.0.2(b124149995ac6fe1e0820550d6115f50)
       ember-resources: 7.0.7(2935cfb77147881c8250be8c1bb7d0d1)
       globby: 16.1.0
       json5: 2.2.3
@@ -20471,7 +20473,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  repl-sdk@1.5.2(93d4969b5698d0d4464d33ccc0660007):
+  repl-sdk@1.5.2(6f4bb085e066dcd1e8cba157a733f3a5):
     dependencies:
       '@codemirror/autocomplete': 6.20.0
       '@codemirror/commands': 6.10.1
