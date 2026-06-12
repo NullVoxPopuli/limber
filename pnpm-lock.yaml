@@ -26,6 +26,7 @@ overrides:
   side-channel: npm:@nolyfill/side-channel@^1
   string.prototype.matchall: npm:@nolyfill/string.prototype.matchall@^1
   string.prototype.trimend: npm:@nolyfill/string.prototype.trimend@^1
+  ember-source: file:./apps/repl/ember-source-7.2.0-alpha.1.nvp-svg-anchor-url-sanitize+aab900f6.tgz
 
 patchedDependencies:
   browserslist-generator:
@@ -345,7 +346,7 @@ importers:
         version: 2.0.1(c8332dc3f90c0e60eb130a3a85f980b9)
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(9d6fd79a0f02bf47371e2bb3574b0f20)
+        version: 3.0.1(c2347681fc03eac0c7a94d17b69e926d)
       ember-page-title:
         specifier: ^9.0.3
         version: 9.0.3
@@ -353,8 +354,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(ccac685a9f0303164367b88029c1ee61)
       ember-source:
-        specifier: 7.2.0-alpha.3
-        version: 7.2.0-alpha.3(@glimmer/component@2.1.1)
+        specifier: file:ember-source-7.2.0-alpha.1.nvp-svg-anchor-url-sanitize+aab900f6.tgz
+        version: file:apps/repl/ember-source-7.2.0-alpha.1.nvp-svg-anchor-url-sanitize+aab900f6.tgz(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -586,7 +587,7 @@ importers:
         version: 9.2.1
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(9d6fd79a0f02bf47371e2bb3574b0f20)
+        version: 3.0.1(c2347681fc03eac0c7a94d17b69e926d)
       ember-modify-based-class-resource:
         specifier: ^1.1.1
         version: 1.1.2(e3118ff71bc86957591c6020967112d7)
@@ -600,8 +601,8 @@ importers:
         specifier: ^13.1.0
         version: 13.1.1
       ember-source:
-        specifier: 7.2.0-alpha.3
-        version: 7.2.0-alpha.3(@glimmer/component@2.1.1)
+        specifier: file:../repl/ember-source-7.2.0-alpha.1.nvp-svg-anchor-url-sanitize+aab900f6.tgz
+        version: file:apps/repl/ember-source-7.2.0-alpha.1.nvp-svg-anchor-url-sanitize+aab900f6.tgz(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -723,6 +724,9 @@ importers:
       decorator-transforms:
         specifier: 2.3.1
         version: 2.3.1(@babel/core@7.29.0)
+      ember-source:
+        specifier: file:../../../apps/repl/ember-source-7.2.0-alpha.1.nvp-svg-anchor-url-sanitize+aab900f6.tgz
+        version: file:apps/repl/ember-source-7.2.0-alpha.1.nvp-svg-anchor-url-sanitize+aab900f6.tgz(@glimmer/component@2.1.1)
       penpal:
         specifier: ^6.2.2
         version: 6.2.2
@@ -799,9 +803,6 @@ importers:
       ember-resources:
         specifier: ^7.0.7
         version: 7.0.7(2935cfb77147881c8250be8c1bb7d0d1)
-      ember-source:
-        specifier: 7.2.0-alpha.3
-        version: 7.2.0-alpha.3(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -1024,8 +1025,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(ccac685a9f0303164367b88029c1ee61)
       ember-source:
-        specifier: 7.2.0-alpha.3
-        version: 7.2.0-alpha.3(@glimmer/component@2.1.1)
+        specifier: file:../../apps/repl/ember-source-7.2.0-alpha.1.nvp-svg-anchor-url-sanitize+aab900f6.tgz
+        version: file:apps/repl/ember-source-7.2.0-alpha.1.nvp-svg-anchor-url-sanitize+aab900f6.tgz(@glimmer/component@2.1.1)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.6.1)
@@ -1208,8 +1209,8 @@ importers:
         specifier: ^7.0.7
         version: 7.0.7(2935cfb77147881c8250be8c1bb7d0d1)
       ember-source:
-        specifier: 7.2.0-alpha.3
-        version: 7.2.0-alpha.3(@glimmer/component@2.1.1)
+        specifier: file:../../apps/repl/ember-source-7.2.0-alpha.1.nvp-svg-anchor-url-sanitize+aab900f6.tgz
+        version: file:apps/repl/ember-source-7.2.0-alpha.1.nvp-svg-anchor-url-sanitize+aab900f6.tgz(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -6913,8 +6914,9 @@ packages:
     resolution: {integrity: sha512-89oVHVJwmLDvGvAUWgS87KpBoRhy3aZ6U0Ql6HOmU4TrPkyaa8pM0W81wj9cIwjYprcQtN9EwzZMHnq46+oUyw==}
     engines: {node: 8.* || 10.* || >= 12}
 
-  ember-source@7.2.0-alpha.3:
-    resolution: {integrity: sha512-HHUSR+9SorNxUN8ymFD0JfYrNbyC0WGOf1S7XXfdN7q6K399zcr3RAToRtehtmIyvHBYkl+gcMf+bdi5uq+T3Q==}
+  ember-source@file:apps/repl/ember-source-7.2.0-alpha.1.nvp-svg-anchor-url-sanitize+aab900f6.tgz:
+    resolution: {integrity: sha512-aMngnYBHGDJxLfPMkv20jiTfL90CIAVngDoDTxxjlcRThOe+u6m3k4LUTyJLeKTmLUgz4UMU/fnzJ29NgHKE1g==, tarball: file:apps/repl/ember-source-7.2.0-alpha.1.nvp-svg-anchor-url-sanitize+aab900f6.tgz}
+    version: 7.2.0-alpha.1.nvp-svg-anchor-url-sanitize
     engines: {node: '>= 20.19'}
     peerDependencies:
       '@glimmer/component': '>= 1.1.2'
@@ -16877,9 +16879,9 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-load-initializers@3.0.1(9d6fd79a0f02bf47371e2bb3574b0f20):
+  ember-load-initializers@3.0.1(c2347681fc03eac0c7a94d17b69e926d):
     dependencies:
-      ember-source: 7.2.0-alpha.3(@glimmer/component@2.1.1)
+      ember-source: file:apps/repl/ember-source-7.2.0-alpha.1.nvp-svg-anchor-url-sanitize+aab900f6.tgz(@glimmer/component@2.1.1)
 
   ember-modifier@4.3.0(@babel/core@7.29.0):
     dependencies:
@@ -17075,7 +17077,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-source@7.2.0-alpha.3(@glimmer/component@2.1.1):
+  ember-source@file:apps/repl/ember-source-7.2.0-alpha.1.nvp-svg-anchor-url-sanitize+aab900f6.tgz(@glimmer/component@2.1.1):
     dependencies:
       '@babel/core': 7.29.0
       '@embroider/addon-shim': 1.10.2

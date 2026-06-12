@@ -82,7 +82,8 @@
       "ember-repl": "^8.0.0",
       "side-channel": "npm:@nolyfill/side-channel@^1",
       "string.prototype.matchall": "npm:@nolyfill/string.prototype.matchall@^1",
-      "string.prototype.trimend": "npm:@nolyfill/string.prototype.trimend@^1"
+      "string.prototype.trimend": "npm:@nolyfill/string.prototype.trimend@^1",
+      "ember-source": "file:./apps/repl/ember-source-7.2.0-alpha.1.nvp-svg-anchor-url-sanitize+aab900f6.tgz"
     },
     "patchedDependencies": {
       "browserslist-generator": "patches/browserslist-generator.patch"
