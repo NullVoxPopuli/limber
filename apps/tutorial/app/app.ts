@@ -10,7 +10,7 @@ import '@nullvoxpopuli/limber-shared/theme.css';
 const modules: Record<string, unknown> = {};
 
 for (const [key, mod] of Object.entries(compatModules)) {
-  modules[key.replace('tutarial/', './')] = mod;
+  modules[key.replace('tutorial/', './')] = mod;
 }
 
 export default class App extends Application {
