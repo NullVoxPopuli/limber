@@ -1,8 +1,5 @@
 import Application from '@ember/application';
 
-import Resolver from 'ember-resolver';
-
-import config from './config.ts';
 import Router from './router';
 // I don't want to make this TS
 // @ts-expect-error
@@ -18,12 +15,9 @@ Object.assign(window, {
   // Buffer: {},
 });
 
-const name = config.modulePrefix;
-
 export default class App extends Application {
-  modulePrefix = config.modulePrefix;
-  Resolver = Resolver.withModules({
-    [`${name}/router`]: Router,
-    [`${name}/templates/application`]: EntryTemplate,
-  });
+  modules = {
+    './router': Router,
+    './templates/application': EntryTemplate,
+  };
 }
