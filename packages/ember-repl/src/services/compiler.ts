@@ -1,6 +1,4 @@
 /* eslint-disable getter-return */
-
-// @ts-ignore
 import { tracked } from '@glimmer/tracking';
 import { setComponentTemplate } from '@ember/component';
 import templateOnly from '@ember/component/template-only';
@@ -12,6 +10,7 @@ import { getOwner } from '@ember/owner';
 import { precompileTemplate } from '@ember/template-compilation';
 import { waitFor } from '@ember/test-waiters';
 
+import Shadowed from 'ember-primitives/components/shadowed';
 import { createStore } from 'ember-primitives/store';
 import { resource } from 'ember-resources';
 import { Compiler } from 'repl-sdk';
@@ -254,8 +253,10 @@ export default class CompilerService {
           ...(options.gmd ?? {}),
           scope: {
             ...standardScope,
+            Shadowed,
             ...(options.gmd?.scope ?? {}),
           },
+          ShadowComponent: 'Shadowed',
           remarkPlugins: [
             function defaultHbsToEmber() {
               return function transformer(tree: any) {
