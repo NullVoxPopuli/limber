@@ -26,6 +26,7 @@ overrides:
   side-channel: npm:@nolyfill/side-channel@^1
   string.prototype.matchall: npm:@nolyfill/string.prototype.matchall@^1
   string.prototype.trimend: npm:@nolyfill/string.prototype.trimend@^1
+  ember-source: file:./apps/repl/ember-source-7.2.0-alpha.1.sanitize-url-attr-case+d8420f72.tgz
 
 patchedDependencies:
   browserslist-generator:
@@ -44,10 +45,10 @@ importers:
         version: file:babel-standalone.tgz
       '@glint/ember-tsc':
         specifier: ^1.8.1
-        version: 1.8.1(2985626eef02fd4d004486c6eee9c6a6)
+        version: 1.8.1(f69e87130724f65ebf6eff266ff4876f)
       '@glint/tsserver-plugin':
         specifier: ^2.5.7
-        version: 2.5.7(33403301ddfaa3eee79de8b194253321)
+        version: 2.5.7(26a0fcdf3d04cee624554c79d30a5c65)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
         version: 5.5.0(753b90aa58c0521fb787daa9416104f1)
@@ -255,13 +256,13 @@ importers:
         version: 6.7.2
       '@glint/ember-tsc':
         specifier: ^1.8.1
-        version: 1.8.1(2985626eef02fd4d004486c6eee9c6a6)
+        version: 1.8.1(f69e87130724f65ebf6eff266ff4876f)
       '@glint/template':
         specifier: 1.7.7
         version: 1.7.7
       '@glint/tsserver-plugin':
         specifier: ^2.5.7
-        version: 2.5.7(33403301ddfaa3eee79de8b194253321)
+        version: 2.5.7(26a0fcdf3d04cee624554c79d30a5c65)
       '@iconify-json/devicon':
         specifier: ^1.2.52
         version: 1.2.57
@@ -345,7 +346,7 @@ importers:
         version: 2.0.1(c8332dc3f90c0e60eb130a3a85f980b9)
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(33403301ddfaa3eee79de8b194253321)
+        version: 3.0.1(26a0fcdf3d04cee624554c79d30a5c65)
       ember-page-title:
         specifier: ^9.0.3
         version: 9.0.3
@@ -353,8 +354,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(ccac685a9f0303164367b88029c1ee61)
       ember-source:
-        specifier: 7.2.0-beta.1
-        version: 7.2.0-beta.1(@glimmer/component@2.1.1)
+        specifier: file:ember-source-7.2.0-alpha.1.sanitize-url-attr-case+d8420f72.tgz
+        version: file:apps/repl/ember-source-7.2.0-alpha.1.sanitize-url-attr-case+d8420f72.tgz(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -550,13 +551,13 @@ importers:
         version: 6.7.2
       '@glint/ember-tsc':
         specifier: ^1.8.1
-        version: 1.8.1(2985626eef02fd4d004486c6eee9c6a6)
+        version: 1.8.1(f69e87130724f65ebf6eff266ff4876f)
       '@glint/template':
         specifier: 1.7.7
         version: 1.7.7
       '@glint/tsserver-plugin':
         specifier: ^2.5.7
-        version: 2.5.7(33403301ddfaa3eee79de8b194253321)
+        version: 2.5.7(26a0fcdf3d04cee624554c79d30a5c65)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
         version: 5.5.0(753b90aa58c0521fb787daa9416104f1)
@@ -586,7 +587,7 @@ importers:
         version: 9.2.1
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(33403301ddfaa3eee79de8b194253321)
+        version: 3.0.1(26a0fcdf3d04cee624554c79d30a5c65)
       ember-modify-based-class-resource:
         specifier: ^1.1.1
         version: 1.1.2(e3118ff71bc86957591c6020967112d7)
@@ -597,8 +598,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(ccac685a9f0303164367b88029c1ee61)
       ember-source:
-        specifier: 7.2.0-beta.1
-        version: 7.2.0-beta.1(@glimmer/component@2.1.1)
+        specifier: file:../repl/ember-source-7.2.0-alpha.1.sanitize-url-attr-case+d8420f72.tgz
+        version: file:apps/repl/ember-source-7.2.0-alpha.1.sanitize-url-attr-case+d8420f72.tgz(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -720,6 +721,9 @@ importers:
       decorator-transforms:
         specifier: 2.3.1
         version: 2.3.1(@babel/core@7.29.0)
+      ember-source:
+        specifier: file:../../../apps/repl/ember-source-7.2.0-alpha.1.sanitize-url-attr-case+d8420f72.tgz
+        version: file:apps/repl/ember-source-7.2.0-alpha.1.sanitize-url-attr-case+d8420f72.tgz(@glimmer/component@2.1.1)
       penpal:
         specifier: ^6.2.2
         version: 6.2.2
@@ -759,13 +763,13 @@ importers:
         version: 2.1.1
       '@glint/ember-tsc':
         specifier: ^1.8.1
-        version: 1.8.1(2985626eef02fd4d004486c6eee9c6a6)
+        version: 1.8.1(f69e87130724f65ebf6eff266ff4876f)
       '@glint/template':
         specifier: 1.7.7
         version: 1.7.7
       '@glint/tsserver-plugin':
         specifier: ^2.5.7
-        version: 2.5.7(33403301ddfaa3eee79de8b194253321)
+        version: 2.5.7(26a0fcdf3d04cee624554c79d30a5c65)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
         version: 5.5.0(753b90aa58c0521fb787daa9416104f1)
@@ -796,9 +800,6 @@ importers:
       ember-resources:
         specifier: ^7.0.7
         version: 7.0.7(2935cfb77147881c8250be8c1bb7d0d1)
-      ember-source:
-        specifier: 7.2.0-beta.1
-        version: 7.2.0-beta.1(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -968,13 +969,13 @@ importers:
         version: 2.1.1
       '@glint/ember-tsc':
         specifier: ^1.8.1
-        version: 1.8.1(2985626eef02fd4d004486c6eee9c6a6)
+        version: 1.8.1(f69e87130724f65ebf6eff266ff4876f)
       '@glint/template':
         specifier: 1.7.7
         version: 1.7.7
       '@glint/tsserver-plugin':
         specifier: ^2.5.7
-        version: 2.5.7(33403301ddfaa3eee79de8b194253321)
+        version: 2.5.7(26a0fcdf3d04cee624554c79d30a5c65)
       '@rollup/plugin-babel':
         specifier: ^6.1.0
         version: 6.1.0(2feedaebee37a40334972cdc05053654)
@@ -1021,8 +1022,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(ccac685a9f0303164367b88029c1ee61)
       ember-source:
-        specifier: 7.2.0-beta.1
-        version: 7.2.0-beta.1(@glimmer/component@2.1.1)
+        specifier: file:../../apps/repl/ember-source-7.2.0-alpha.1.sanitize-url-attr-case+d8420f72.tgz
+        version: file:apps/repl/ember-source-7.2.0-alpha.1.sanitize-url-attr-case+d8420f72.tgz(@glimmer/component@2.1.1)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.6.1)
@@ -1176,13 +1177,13 @@ importers:
         version: 8.2.0(@glint/template@1.7.7)(rollup@4.57.1)
       '@glint/ember-tsc':
         specifier: ^1.8.1
-        version: 1.8.1(2985626eef02fd4d004486c6eee9c6a6)
+        version: 1.8.1(f69e87130724f65ebf6eff266ff4876f)
       '@glint/template':
         specifier: 1.7.7
         version: 1.7.7
       '@glint/tsserver-plugin':
         specifier: ^2.5.7
-        version: 2.5.7(33403301ddfaa3eee79de8b194253321)
+        version: 2.5.7(26a0fcdf3d04cee624554c79d30a5c65)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
         version: 5.5.0(753b90aa58c0521fb787daa9416104f1)
@@ -1205,8 +1206,8 @@ importers:
         specifier: ^7.0.7
         version: 7.0.7(2935cfb77147881c8250be8c1bb7d0d1)
       ember-source:
-        specifier: 7.2.0-beta.1
-        version: 7.2.0-beta.1(@glimmer/component@2.1.1)
+        specifier: file:../../apps/repl/ember-source-7.2.0-alpha.1.sanitize-url-attr-case+d8420f72.tgz
+        version: file:apps/repl/ember-source-7.2.0-alpha.1.sanitize-url-attr-case+d8420f72.tgz(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -6917,8 +6918,9 @@ packages:
     resolution: {integrity: sha512-89oVHVJwmLDvGvAUWgS87KpBoRhy3aZ6U0Ql6HOmU4TrPkyaa8pM0W81wj9cIwjYprcQtN9EwzZMHnq46+oUyw==}
     engines: {node: 8.* || 10.* || >= 12}
 
-  ember-source@7.2.0-beta.1:
-    resolution: {integrity: sha512-WtFN4K4h7ahNjfTK1vNOE7USfiP1kuv8fL8zn/mKvxjIpLodQ80HryFLsSeAPBB4rUMHLrrSW5kMRwe4jWL19w==}
+  ember-source@file:apps/repl/ember-source-7.2.0-alpha.1.sanitize-url-attr-case+d8420f72.tgz:
+    resolution: {integrity: sha512-T1KdSuXx/qhRhklrxKsGfiWvr5aOoeAdEJpO3grRM8x4g3ECexVRHv8VOzZILUpljQI8VmUVEeQnQLQOftiSSA==, tarball: file:apps/repl/ember-source-7.2.0-alpha.1.sanitize-url-attr-case+d8420f72.tgz}
+    version: 7.2.0-alpha.1.sanitize-url-attr-case
     engines: {node: '>= 20.19'}
     peerDependencies:
       '@glimmer/component': '>= 1.1.2'
@@ -13125,7 +13127,7 @@ snapshots:
     dependencies:
       '@glimmer/interfaces': 0.94.6
 
-  '@glint/ember-tsc@1.8.1(2985626eef02fd4d004486c6eee9c6a6)':
+  '@glint/ember-tsc@1.8.1(f69e87130724f65ebf6eff266ff4876f)':
     dependencies:
       '@glimmer/syntax': 0.95.0
       '@glint/template': 1.7.7
@@ -13145,15 +13147,15 @@ snapshots:
       vscode-languageserver-textdocument: 1.0.12
       vscode-uri: 3.1.0
     optionalDependencies:
-      ember-source: 7.2.0-beta.1(@glimmer/component@2.1.1)
+      ember-source: file:apps/repl/ember-source-7.2.0-alpha.1.sanitize-url-attr-case+d8420f72.tgz(@glimmer/component@2.1.1)
     transitivePeerDependencies:
       - supports-color
 
   '@glint/template@1.7.7': {}
 
-  '@glint/tsserver-plugin@2.5.7(33403301ddfaa3eee79de8b194253321)':
+  '@glint/tsserver-plugin@2.5.7(26a0fcdf3d04cee624554c79d30a5c65)':
     dependencies:
-      '@glint/ember-tsc': 1.8.1(2985626eef02fd4d004486c6eee9c6a6)
+      '@glint/ember-tsc': 1.8.1(f69e87130724f65ebf6eff266ff4876f)
       '@volar/language-core': 2.4.28
       '@volar/typescript': 2.4.28
       jiti: 2.6.1
@@ -16886,9 +16888,9 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-load-initializers@3.0.1(33403301ddfaa3eee79de8b194253321):
+  ember-load-initializers@3.0.1(26a0fcdf3d04cee624554c79d30a5c65):
     dependencies:
-      ember-source: 7.2.0-beta.1(@glimmer/component@2.1.1)
+      ember-source: file:apps/repl/ember-source-7.2.0-alpha.1.sanitize-url-attr-case+d8420f72.tgz(@glimmer/component@2.1.1)
 
   ember-modifier@4.3.0(@babel/core@7.29.0):
     dependencies:
@@ -17084,7 +17086,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-source@7.2.0-beta.1(@glimmer/component@2.1.1):
+  ember-source@file:apps/repl/ember-source-7.2.0-alpha.1.sanitize-url-attr-case+d8420f72.tgz(@glimmer/component@2.1.1):
     dependencies:
       '@babel/core': 7.29.0
       '@embroider/addon-shim': 1.10.2
