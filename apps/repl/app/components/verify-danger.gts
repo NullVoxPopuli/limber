@@ -1,18 +1,17 @@
 import Component from '@glimmer/component';
-import { cached } from '@glimmer/tracking';
+import { cached,tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
 import { inIframe } from 'ember-primitives/iframe';
-import { cell } from 'ember-resources';
 
 import { Button } from '@nullvoxpopuli/limber-shared';
 
 import type { Format } from '../languages.gts';
 import type EditorService from '#services/editor.ts';
 
-const userAllowed = cell(false);
-const allowCodeExecution = () => (userAllowed.current = true);
+const userAllowed = tracked(false);
+const allowCodeExecution = () => (userAllowed.value = true);
 
 const emberjs = 'emberjs.com';
 const ALLOWED = Object.freeze([]);
@@ -40,7 +39,7 @@ function couldHaveScript(format: Format) {
 
 function checkDanger(format: Format, text?: string | null): string[] | readonly string[] {
   const reasons: string[] = [];
-  const isAllowed = userAllowed.current;
+  const isAllowed = userAllowed.value;
 
   if (isAllowed || !text) {
     return ALLOWED;

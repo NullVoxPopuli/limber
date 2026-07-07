@@ -1,7 +1,7 @@
+import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 
 import { Compiled } from 'ember-repl';
-import { cell } from 'ember-resources';
 
 function handleChange(fun) {
   return (event) => {
@@ -9,13 +9,13 @@ function handleChange(fun) {
   };
 }
 
-const gjs = cell(`
+const gjs = tracked(`
 <template>
   hello there!
 </template>
 `);
 
-const md = cell(`
+const md = tracked(`
 # Title
 
 **emphasis** text
@@ -26,9 +26,9 @@ const GJSDemo = <template>
     <textarea
       {{on "change" (handleChange gjs.set)}}
       style="height: 100px; width: 300px;"
-    >{{gjs.current}}</textarea>
+    >{{gjs.value}}</textarea>
 
-    {{#let (Compiled gjs.current "gjs") as |compiled|}}
+    {{#let (Compiled gjs.value "gjs") as |compiled|}}
       <pre>{{JSON.stringify compiled}}</pre>
       {{compiled.error}}
       {{#if compiled.component}}
@@ -43,9 +43,9 @@ const MarkdownDemo = <template>
     <textarea
       {{on "change" (handleChange md.set)}}
       style="height: 100px; width: 300px;"
-    >{{md.current}}</textarea>
+    >{{md.value}}</textarea>
 
-    {{#let (Compiled md.current) as |compiled|}}
+    {{#let (Compiled md.value) as |compiled|}}
       <pre>{{JSON.stringify compiled}}</pre>
       {{compiled.error}}
       {{#if compiled.component}}

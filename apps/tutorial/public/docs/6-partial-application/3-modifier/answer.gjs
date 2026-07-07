@@ -1,12 +1,11 @@
-import { on } from '@ember/modifier';
-import { cell } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
 
-let count = cell(0);
-let handler = (event) => count.current++;
+let count = tracked(0);
+let handler = (event) => count.value++;
 
 <template>
   {{#let (modifier on 'click' handler) as |preWired|}}
     <button type="button" {{preWired}}>click me</button>
-    <br>Clicked {{count.current}} times
+    <br>Clicked {{count.value}} times
   {{/let}}
 </template>

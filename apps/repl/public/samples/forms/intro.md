@@ -12,15 +12,15 @@ Using the native API, [FormData][1], we can gather the user inputs when the user
 
 ```gjs live
 import { on } from '@ember/modifier';
-import { cell } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
 
-const state = cell();
+const state = tracked(null);
 
 const handleInput = (event) => {
   let formData = new FormData(event.currentTarget);
   let data = Object.fromEntries(formData.entries());
 
-  state.current = JSON.stringify(data, null, 2);
+  state.value = JSON.stringify(data, null, 2);
 };
 
 const handleSubmit = ( event) => {
@@ -49,7 +49,7 @@ const handleSubmit = ( event) => {
   <br><br>
 
   FormData:
-  <pre>{{state.current}}</pre>
+  <pre>{{state.value}}</pre>
 
   <style>
     input { border: 1px solid; }

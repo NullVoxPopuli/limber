@@ -1,13 +1,13 @@
 import { on } from '@ember/modifier';
-import { cell } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
 
-let state = cell();
+let state = tracked();
 
 function handleInput(event) {
   let formData = new FormData(event.currentTarget);
   let data = Object.fromEntries(formData.entries());
 
-  state.current = JSON.stringify(data, null, 2);
+  state.value = JSON.stringify(data, null, 2);
 }
 
 function handleSubmit(event) {
@@ -32,7 +32,7 @@ function handleSubmit(event) {
   <br><br>
 
   FormData:
-  <pre>{{state.current}}</pre>
+  <pre>{{state.value}}</pre>
 
   <style>
     #demo {
