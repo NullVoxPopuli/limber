@@ -1,14 +1,14 @@
 Synchronizing state outside of the framework can be common, depending on your application-specific needs.
 
-You've already learned how functions are automatically invoked when they access `@tracked` data (whether directly in a `cell`, or abstracted with the `@tracked` decorator).
+You've already learned how functions are automatically invoked when they access `@tracked` data (whether directly in a tracked value, or abstracted with the `@tracked` decorator).
 
 So this knowledge can be used to create an auto-tracking side-effect, and we can re-implement the built-in [`{{log}}`][docs-log] helper.
 
 ```gjs
-const title = cell("hello");
+const title = tracked("hello");
 
 function logInput(...args) {
-    console.log(title.current, ...args);
+    console.log(title.value, ...args);
 }
 
 <template>

@@ -1,7 +1,7 @@
 import { on } from '@ember/modifier';
-import { cell } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
 
-let state = cell();
+let state = tracked('');
 
 let initialData = {
   numberField: 10
@@ -22,7 +22,7 @@ function handleInput(event) {
   let data = Object.fromEntries(formData.entries());
   let parsed = parse(data);
 
-  state.current = JSON.stringify({ ...parsed, type: typeof parsed.numberField }, null, 2);
+  state.value = JSON.stringify({ ...parsed, type: typeof parsed.numberField }, null, 2);
 }
 
 function handleSubmit(event) {
@@ -47,7 +47,7 @@ function handleSubmit(event) {
   <br><br>
 
   FormData:
-  <pre>{{state.current}}</pre>
+  <pre>{{state.value}}</pre>
 
   <style>
     #demo {

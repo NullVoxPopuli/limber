@@ -1,12 +1,13 @@
-import { resource, cell } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
+import { resource } from 'ember-resources';
 
 const Clock = resource(({ on }) => {
-  let time = cell(new Date());
-  let interval = setInterval(() => time.current = new Date(), 1000);
+  let time = tracked(new Date());
+  let interval = setInterval(() => time.value = new Date(), 1000);
 
   on.cleanup(() => clearInterval(interval));
 
-  return time;
+  return () => time.value;
 });
 
 <template>

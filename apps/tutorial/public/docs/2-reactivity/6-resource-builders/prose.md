@@ -3,7 +3,8 @@ Combining the concepts of reactive functions and resources allow us to build con
 Taking the `Clock` example, we can use a resource builder to allow us to configure how we want the time displayed.
 
 ```gjs
-import { resource, cell, resourceFactory } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
+import { resource, resourceFactory } from 'ember-resources';
 
 function Clock(locale = 'en-US') {
   let formatter = new Intl.DateTimeFormat(locale, {
@@ -11,12 +12,12 @@ function Clock(locale = 'en-US') {
   });
 
   return resource(({ on }) => {
-    let time = cell(new Date());
-    let interval = setInterval(() => time.current = new Date(), 1000);
+    let time = tracked(new Date());
+    let interval = setInterval(() => time.value = new Date(), 1000);
 
     on.cleanup(() => clearInterval(interval));
 
-    return () => formatter.format(time.current);
+    return () => formatter.format(time.value);
   });
 }
 

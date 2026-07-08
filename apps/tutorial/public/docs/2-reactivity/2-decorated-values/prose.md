@@ -3,17 +3,17 @@ As one might imagine, having to access and manipulating a property can get cumbe
 If using classes, you could see a pattern develop to try to achieve "native-like" read and write access to properties:
 
 ```js
-import { cell } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
 
 class Demo {
-  _value = cell();
+  _value = tracked(undefined);
 
   get theProperty() {
-    return this._value.current;
+    return this._value.value;
   }
 
   set theProperty(nextValue) {
-    return (this._value.current = nextValue);
+    return (this._value.value = nextValue);
   }
 }
 ```

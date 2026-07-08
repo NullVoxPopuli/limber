@@ -33,15 +33,14 @@ export default class Demo extends Component {
 ```gjs live
 import { on } from '@ember/modifier';
 import { tracked } from '@glimmer/tracking';
-import { cell } from 'ember-resources';
 
-let state = cell();
+let state = tracked('');
 
 const handleInput = (event) => {
   let formData = new FormData(event.currentTarget);
   let data = Object.fromEntries(formData.entries());
 
-  state.current = JSON.stringify(data, null, 2);
+  state.value = JSON.stringify(data, null, 2);
 };
 
 const handleSubmit = ( event) => {
@@ -66,7 +65,7 @@ const handleSubmit = ( event) => {
   <br><br>
 
   FormData:
-  <pre>{{state.current}}</pre>
+  <pre>{{state.value}}</pre>
 
 </template>
 ```

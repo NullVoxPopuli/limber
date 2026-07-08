@@ -1,10 +1,10 @@
 import { on } from '@ember/modifier';
-import { cell } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
 
-let clicks = cell(0);
+let clicks = tracked(0);
 
 function handleClick(mouseEvent) {
-  clicks.current++;
+  clicks.value++;
 }
 
 <template>
@@ -12,5 +12,5 @@ function handleClick(mouseEvent) {
     Click me!
   </button>
 
-  Clicked: {{clicks.current}}
+  Clicked: {{clicks.value}}
 </template>

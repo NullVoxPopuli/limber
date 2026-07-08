@@ -1,8 +1,8 @@
 import { on } from '@ember/modifier';
-import { cell } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
 
-const myName = cell('there');
-const handleInput = (event) => myName.current = event.target.value;
+const myName = tracked('there');
+const handleInput = (event) => myName.value = event.target.value;
 
 const NameInput = <template>
   <label>
@@ -23,5 +23,5 @@ const Greeting = <template>
 <template>
   <NameInput /><br>
 
-  <Greeting @name={{myName.current}} />
+  <Greeting @name={{myName.value}} />
 </template>

@@ -5,11 +5,11 @@ Resources can maintain encapsulated state and provide a reactive single value.
 ```gjs live
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { resource, cell } from 'ember-resources';
+import { resource } from 'ember-resources';
 
 const Clock = resource(({ on }) => {
-  let time = cell(new Date());
-  let interval = setInterval(() => time.current = new Date(), 1000);
+  let time = tracked(new Date());
+  let interval = setInterval(() => time.value = new Date(), 1000);
 
   on.cleanup(() => clearInterval(interval));
 
@@ -20,7 +20,7 @@ const Clock = resource(({ on }) => {
     hour12: true,
   });
 
-  return () => formatter.format(time.current);
+  return () => formatter.format(time.value);
 });
 
 <template>

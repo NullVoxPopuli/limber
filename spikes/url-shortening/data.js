@@ -31,7 +31,7 @@ Resources can maintain encapsulated state and provide a reactive single value.
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
-import { resource, resourceFactory, cell } from 'ember-resources';
+import { resource, resourceFactory } from 'ember-resources';
 import { TrackedArray } from 'tracked-built-ins';
 
 const dateFormat = new Intl.DateTimeFormat('default', {});
@@ -68,8 +68,8 @@ const Clock = resourceFactory((locale) => {
 
   return resource(({ on }) => {
     log('(re)invoking resource');
-    let time = cell(new Date());
-    let interval = setInterval(() => time.current = new Date(), 1000);
+    let time = tracked(new Date());
+    let interval = setInterval(() => time.value = new Date(), 1000);
 
     on.cleanup(() => {
       log('Cleaning up');
@@ -86,7 +86,7 @@ const Clock = resourceFactory((locale) => {
 
     return () => {
       log('Calculating value');
-      return formatter.format(time.current);
+      return formatter.format(time.value);
     }
   });
 });

@@ -1,7 +1,7 @@
-import { cell } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
 
-const greeting = cell('Hello World');
+const greeting = tracked('Hello World');
 
 <template>
-  {{greeting.current}}
+  {{greeting.value}}
 </template>
