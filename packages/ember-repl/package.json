@@ -48,7 +48,7 @@
     "decorator-transforms": "2.3.1",
     "ember-primitives": "^0.56.0",
     "ember-resolver": "^13.1.0",
-    "ember-resources": "^7.0.7",
+    "ember-resources": "^7.1.0",
     "repl-sdk": "workspace:*"
   },
   "devDependencies": {
@@ -86,7 +86,7 @@
     "common-tags": "^1.8.2",
     "concurrently": "^9.2.1",
     "ember-qunit": "^9.0.4",
-    "ember-source": "7.2.0-beta.1",
+    "ember-source": "7.3.0-alpha.2",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-ember": "^12.7.5",

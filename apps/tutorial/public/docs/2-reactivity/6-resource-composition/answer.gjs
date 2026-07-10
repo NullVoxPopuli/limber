@@ -1,9 +1,10 @@
-import { resource, cell, resourceFactory } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
+import { resource, resourceFactory } from 'ember-resources';
 
 function Time(ms) {
   return resource(({ on }) => {
-    let time = cell(Date.now());
-    let interval = setInterval(() => time.current = Date.now(), ms);
+    let time = tracked(Date.now());
+    let interval = setInterval(() => time.value = Date.now(), ms);
 
     on.cleanup(() => clearInterval(interval));
 

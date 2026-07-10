@@ -1,4 +1,4 @@
-import { cell } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 
 let dark = '#222';
@@ -19,11 +19,15 @@ const Demo = <template>
   </div>
 </template>;
 
-let isDark = cell(true);
+let isDark = tracked(true);
+
+function toggleMode() {
+  isDark.value = !isDark.value;
+}
 
 <template>
   <Demo @background={{dark}} />
 
   <br>
-  <button type="button" {{on 'click' isDark.toggle}}>Toggle Mode</button><br>
+  <button type="button" {{on 'click' toggleMode}}>Toggle Mode</button><br>
 </template>;

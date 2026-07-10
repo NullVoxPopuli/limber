@@ -1,12 +1,12 @@
-import { cell } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
 
-const greeting = cell("Hello there!");
+const greeting = tracked("Hello there!");
 
 // Change the value after 3 seconds
 setTimeout(() => {
-  greeting.current = "General Kenobi!";
+  greeting.value = "General Kenobi!";
 }, 3000);
 
 <template>
-  Greeting: {{greeting.current}}
+  Greeting: {{greeting.value}}
 </template>

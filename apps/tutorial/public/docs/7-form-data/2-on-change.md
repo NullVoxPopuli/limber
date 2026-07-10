@@ -4,20 +4,18 @@ _This demo adapted for [this tweet](https://twitter.com/greg_johnston/status/160
 
 ```gjs live
 import { on } from '@ember/modifier';
-// Ember doesn't have a starbeam adapter yet
-// import { Cell } from "@starbeam/universal";
-import { cell } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
 
 let initial;
-const state = cell(initial);
+const state = tracked(initial);
 const pretty = (data) => JSON.stringify(data, null, 2);
 
 const log = () => {
   // Only log if the data actually change
   // (instead of on focusout)
-  let next = pretty(state.current);
+  let next = pretty(state.value);
   if (initial !== next) {
-    console.log(state.current);
+    console.log(state.value);
     initial = next;
   }
 }
@@ -26,7 +24,7 @@ const handleInput = (event) => {
   let formData = new FormData(event.currentTarget);
   let data = Object.fromEntries(formData.entries());
 
-  state.current = data;
+  state.value = data;
 };
 
 const handleSubmit = ( event) => {

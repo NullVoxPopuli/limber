@@ -9,7 +9,6 @@ import { faShareFromSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { focusTrap } from 'ember-focus-trap';
 import { Modal } from 'ember-primitives/components/dialog';
 import { KeyCombo } from 'ember-primitives/components/keys';
-import { cell } from 'ember-resources';
 
 import { SaveBanner, SHOW_TIME } from '#components/save.gts';
 
@@ -20,7 +19,7 @@ import { FlatButton } from '@nullvoxpopuli/limber-shared';
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
 
-const isShowing = cell(false);
+const isShowing = tracked(false);
 
 export const Share = <template>
   <Modal as |m|>
@@ -30,7 +29,7 @@ export const Share = <template>
     </button>
 
     <m.Dialog class="preem" inert={{not m.isOpen}} {{focusTrap isActive=m.isOpen}}>
-      <SaveBanner @isShowing={{isShowing.current}} />
+      <SaveBanner @isShowing={{isShowing.value}} />
 
       {{#if m.isOpen}}
         <div class="modal-facade">

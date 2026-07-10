@@ -6,8 +6,8 @@ But now let's say we also want to make a Stopwatch, but we only want to manage `
 ```js
 function Time(ms) {
   return resource(({ on }) => {
-    let time = cell(Date.now());
-    let interval = setInterval(() => time.current = Date.now(), ms);
+    let time = tracked(Date.now());
+    let interval = setInterval(() => time.value = Date.now(), ms);
   
     on.cleanup(() => clearInterval(interval));
   

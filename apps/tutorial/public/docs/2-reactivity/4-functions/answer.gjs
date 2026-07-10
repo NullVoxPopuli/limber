@@ -1,13 +1,13 @@
-import { cell } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
 
-const greeting = cell("Hello there!");
+const greeting = tracked("Hello there!");
 const shout = (text) => text.toUpperCase();
 
 // Change the value after 3 seconds
 setTimeout(() => {
-  greeting.current = "General Kenobi!";
+  greeting.value = "General Kenobi!";
 }, 3000);
 
 <template>
-  Greeting: {{ (shout greeting.current) }}
+  Greeting: {{ (shout greeting.value) }}
 </template>

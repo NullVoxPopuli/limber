@@ -1,7 +1,7 @@
 import { on } from '@ember/modifier';
-import { cell } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
 
-let count = cell(0);
+let count = tracked(0);
 
 let SomeComponent = <template>
   <button type="button">
@@ -10,11 +10,11 @@ let SomeComponent = <template>
 </template>;
 
 function handleClick() {
-  count.current++;
+  count.value++;
 }
 
 <template>
   <SomeComponent />
 
-  Clicked {{count.current}} times
+  Clicked {{count.value}} times
 </template>

@@ -1,11 +1,11 @@
 import { on } from '@ember/modifier';
-import { cell } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
 // shadow-dom componentt used to get a reset on styling
 // this is showcased more prominently in the "Styleguide" demo
 import { Shadowed } from 'ember-primitives';
 
 // State that manages the "selected" component
-const selected = cell();
+const selected = tracked(null);
 
 // Here are the components used in the MAP.
 // these could be imported from other files (co-located, template-only, etc)
@@ -29,7 +29,7 @@ const handleInput = (event) => {
 let formData = new FormData(event.currentTarget);
 let data = Object.fromEntries(formData.entries());
 
-selected.current = data.component;
+selected.value = data.component;
 }
 const handleSubmit = ( event) => {
 event.preventDefault();
@@ -48,7 +48,7 @@ handleInput(event);
     </form>
 
     <br>
-    {{#let (componentFor selected.current) as |Selected|}}
+    {{#let (componentFor selected.value) as |Selected|}}
       <Selected />
     {{/let}}
 

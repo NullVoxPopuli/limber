@@ -1,7 +1,7 @@
 import { on } from '@ember/modifier';
-import { cell } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
 
-let count = cell(0);
+let count = tracked(0);
 
 function handleInnerClick(clickEvent) {
 }
@@ -13,11 +13,11 @@ let Inner = <template>
 </template>;
 
 function handleCustom(event) {
-  count.current++;
+  count.value++;
 }
 
 <template>
   <Inner {{on 'my-custom-event' handleCustom}} />
 
-  Clicked {{count.current}} times
+  Clicked {{count.value}} times
 </template>

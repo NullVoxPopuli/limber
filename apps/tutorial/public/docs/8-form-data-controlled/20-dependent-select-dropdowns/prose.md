@@ -12,7 +12,7 @@ should occur automatically based on changes in option selected`.
 Use the `RemoteData` utility to manage the asynchronous data fetching. This will allow you to handle loading states and response values effectively. 
 
   ```hbs
-    {{#let (RemoteData (urlForDataSource selectedAPI.current)) as |request|}}
+    {{#let (RemoteData (urlForDataSource selectedAPI.value)) as |request|}}
     {{/let}}
   ```
 
@@ -25,11 +25,11 @@ After fetching the data, you need to update the second dropdown with the results
    ```
 
    ```hbs
-   {{#let (RemoteData (urlForDataSource selectedAPI.current)) as |request|}}
+   {{#let (RemoteData (urlForDataSource selectedAPI.value)) as |request|}}
       {{#if request.value}}
         <Select 
           @options={{names request.value.results}} 
-          @onChange={{(fn setSelected selectedAPI.current)}} 
+          @onChange={{(fn setSelected selectedAPI.value)}} 
         />
     {{/if}}
    {{/let}}

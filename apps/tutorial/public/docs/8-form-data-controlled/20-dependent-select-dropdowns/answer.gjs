@@ -2,14 +2,14 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import { cell } from 'ember-resources';
+import { tracked } from '@glimmer/tracking';
 import { TrackedObject } from 'tracked-built-ins';
 import { RemoteData } from 'reactiveweb/remote-data';
 
 const DATA_SOURCES = ['people', 'planets'];
-// A cell is @tracked data that can be used anywhere -- makes for smaller demos
+// tracked() is @tracked data that can be used anywhere -- makes for smaller demos
 // This could be `@tracked selectedAPI = DATA_SOURCES[0];` in a component class
-const selectedAPI = cell(DATA_SOURCES[0]);
+const selectedAPI = tracked(DATA_SOURCES[0]);
 const selectedStuff = new TrackedObject();
 
 /////////// Select
@@ -36,7 +36,7 @@ const Select = <template>
 ////////////// Demo
 
 function data() {
-  return JSON.stringify({ selectedAPI: selectedAPI.current, selectedStuff }, null, 3);
+  return JSON.stringify({ selectedAPI: selectedAPI.value, selectedStuff }, null, 3);
 }
 
 function urlForDataSource(selectedData) {
@@ -59,17 +59,17 @@ function names(options) {
     <Select
       @options={{DATA_SOURCES}}
       @onChange={{selectedAPI.set}}
-      @selected={{selectedAPI.current}}
+      @selected={{selectedAPI.value}}
     />
   </label>
 
   <label>
-    Select {{selectedAPI.current}}
+    Select {{selectedAPI.value}}
 
     {{!
       it's important to model async behavior, and this util makes that a bit easier.
       Docs here: https://ember-resources.pages.dev/funcs/util_remote_data.RemoteData }}
-    {{#let (RemoteData (urlForDataSource selectedAPI.current)) as |request|}}
+    {{#let (RemoteData (urlForDataSource selectedAPI.value)) as |request|}}
       {{#if request.isLoading}}
         Loading...
       {{/if}}
@@ -77,7 +77,7 @@ function names(options) {
       {{#if request.value}}
          <Select
            @options={{names request.value.results}}
-           @onChange={{fn setSelected selectedAPI.current}}
+           @onChange={{fn setSelected selectedAPI.value}}
          />
       {{/if}}
     {{/let}}

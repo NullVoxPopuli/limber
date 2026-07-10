@@ -111,19 +111,19 @@ If you're an existing ember/glimmer user and are not yet using `<template>`, the
   For more information on "using anything as values", see [these docs](https://guides.emberjs.com/release/in-depth-topics/rendering-values/)
 
 
-## Why does the tutorial use `cell`?, I'm not using that in my projects.
+## Why does the tutorial use `tracked()` as a function?, I'm not using that in my projects.
 
-Not to worry!, `@tracked` is not going away. `cell`s are a fundamental primitive of reactivity as no reactive state can exist without them.  
+Not to worry!, `@tracked` is not going away. Tracked values are a fundamental primitive of reactivity as no reactive state can exist without them.  
 
 Whether the reactive system be [Signals][Signals], [Runes][Runes], or [`@tracked`][tracked], all systems rely on **the access or setting of properties on an object**. 
 
-`cell`s came about as a means to take the behavior of `@tracked` and use it _anywhere_. In fact, `@tracked` could even be thought of as abstracting away a `cell` where the **access or setting of properties** occurs on the `this` object. 
+Calling `tracked()` as a function takes the behavior of `@tracked` and lets you use it _anywhere_. In fact, `@tracked` could even be thought of as abstracting away a tracked value where the **access or setting of properties** occurs on the `this` object. 
 
 Once the tutorial gets to class-components, those will be the primary form of examples going forward, as Ember has solved class ergonomics in JavaScript, and the experience using classes is quite good.
 However, because there are a number of more foundational concepts to cover, this tutorial does not _start_ with classes, so that the focus of each chapter can be the foundational concepts, rather than also learning class syntax.
 
 **Make Note**, it is typically bad practice to store state at the _module-level_ in production applications. (but doing things proper can be a distraction from teaching concepts).  
-**For Library Authors** (and folks authoring library code in apps), the API of a `cell` should not be exposed to your users (as both input and output) as it is an implementation detail.
+**For Library Authors** (and folks authoring library code in apps), the API of a tracked value should not be exposed to your users (as both input and output) as it is an implementation detail.
 
 [Signals]: https://www.solidjs.com/tutorial/introduction_signals
 [Runes]: https://svelte.dev/blog/runes 
