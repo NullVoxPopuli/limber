@@ -1,4 +1,4 @@
-import { tracked } from '@glimmer/tracking';
+import { cell } from 'ember-resources';
 
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
@@ -40,7 +40,7 @@ export const importMap = {
   'limber/helpers/state':
     async () =>
     (...args: unknown[]) => {
-      const c = tracked(args[0]);
+      const c = cell(...args);
 
       return {
         ...c,
@@ -48,9 +48,9 @@ export const importMap = {
         // I don't want to type this, and the type wouldn't be used by anything
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
-        increment: () => c.value++,
+        increment: () => c.current++,
         get value() {
-          return c.value;
+          return c.current;
         },
       };
     },
