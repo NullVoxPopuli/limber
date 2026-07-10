@@ -7,7 +7,7 @@ const Clock = resource(({ on }) => {
 
   on.cleanup(() => clearInterval(interval));
 
-  return () => time.value;
+  return time;
 });
 
 <template>

@@ -48,7 +48,7 @@
     "decorator-transforms": "2.3.1",
     "ember-primitives": "^0.56.0",
     "ember-resolver": "^13.1.0",
-    "ember-resources": "^7.0.7",
+    "ember-resources": "^7.1.0",
     "repl-sdk": "workspace:*"
   },
   "devDependencies": {

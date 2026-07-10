@@ -11,7 +11,7 @@ function Time(ms) {
   
     on.cleanup(() => clearInterval(interval));
   
-    return () => time.value;
+    return time;
   })
 }
 resourceFactory(Time); // declare intent to use in a template
