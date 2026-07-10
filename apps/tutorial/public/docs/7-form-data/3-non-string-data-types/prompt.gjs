@@ -1,7 +1,7 @@
 import { on } from '@ember/modifier';
 import { tracked } from '@glimmer/tracking';
 
-let state = tracked();
+let state = tracked(null);
 
 let initialData = {
   numberField: 10

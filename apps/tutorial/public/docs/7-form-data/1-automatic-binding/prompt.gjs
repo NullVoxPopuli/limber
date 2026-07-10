@@ -1,6 +1,6 @@
 import { tracked } from '@glimmer/tracking';
 
-let state = tracked();
+let state = tracked(null);
 
 function handleInput(event) {
   let formData = new FormData(event.currentTarget);
