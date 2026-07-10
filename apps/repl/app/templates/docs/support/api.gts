@@ -1,6 +1,4 @@
 import Component from '@glimmer/component';
-import { fn } from '@ember/helper';
-import { on } from '@ember/modifier';
 import { trackedObject } from '@ember/reactive/collections';
 
 import { Form } from 'ember-primitives/components/form';
@@ -164,7 +162,6 @@ export class Example extends Component<{
                   name="lines"
                   required
                   value={{@lines}}
-                  {{on "input" (fn this.update "lines")}}
                 />
               </label>
             {{/if}}
@@ -176,7 +173,6 @@ export class Example extends Component<{
                   required
                   name="editor"
                   value={{@editor}}
-                  {{on "input" (fn this.update "editor")}}
                 />
               </label>
             {{/if}}

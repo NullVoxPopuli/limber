@@ -1,11 +1,9 @@
 import Component from '@glimmer/component';
-import { fn } from '@ember/helper';
-import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
 import { type ItemSignature, ToggleGroup } from 'ember-primitives/components/toggle-group';
 
-import { usage } from '#app/languages.gts';
+import { formatQPFrom, usage } from '#app/languages.gts';
 
 import { defaultSnippetForFormat } from 'limber/snippets';
 import { getStoredDocumentForFormat } from 'limber/utils/editor-text';
@@ -84,10 +82,11 @@ class Option extends Component<{
    * Because most of the formats are not cross-compatible with each other,
    * we'll want to also swap the document
    */
-  switch = (value: FormatQP): void => {
-    const stored = getStoredDocumentForFormat(value);
+  switch = (value: string): void => {
+    const qp = formatQPFrom(value);
+    const stored = getStoredDocumentForFormat(qp);
 
-    this.editor.fileURIComponent.set(stored ?? defaultSnippetForFormat(value), value);
+    this.editor.fileURIComponent.set(stored ?? defaultSnippetForFormat(value), qp);
   };
 
   get format(): FormatQP {
