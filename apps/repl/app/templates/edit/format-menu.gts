@@ -1,7 +1,5 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { fn } from '@ember/helper';
-import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
@@ -28,6 +26,7 @@ const IconItem: TOC<{
   };
 }> = <template>
   {{#let (infoFor @format) as |info|}}
+    {{! @glint-expect-error I got too strict with the types here, or need to get stricter with format/flavor }}
     <@item {{on "click" (fn @onClick @format)}} class="menu-item">
       <info.icon />
       {{info.name}}

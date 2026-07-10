@@ -1,6 +1,4 @@
 import Component from '@glimmer/component';
-import { fn } from '@ember/helper';
-import { on } from '@ember/modifier';
 import { trackedObject } from '@ember/reactive/collections';
 
 import { Form } from 'ember-primitives/components/form';
@@ -159,25 +157,14 @@ export class Example extends Component<{
             {{#if this.isLines}}
               <label>
                 <span><code>@lines</code></span>
-                <input
-                  type="number"
-                  name="lines"
-                  required
-                  value={{@lines}}
-                  {{on "input" (fn this.update "lines")}}
-                />
+                <input type="number" name="lines" required value={{@lines}} />
               </label>
             {{/if}}
 
             {{#if this.isEditor}}
               <label>
                 <span><code>@editor</code></span>
-                <input
-                  required
-                  name="editor"
-                  value={{@editor}}
-                  {{on "input" (fn this.update "editor")}}
-                />
+                <input required name="editor" value={{@editor}} />
               </label>
             {{/if}}
           </div>

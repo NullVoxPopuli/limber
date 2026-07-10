@@ -2,8 +2,6 @@ import './share.css';
 
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { array, fn } from '@ember/helper';
-import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
@@ -23,8 +21,6 @@ import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
 
 const isShowing = cell(false);
-
-const not = (x: unknown) => !x;
 
 export const Share = <template>
   <Modal as |m|>
@@ -70,7 +66,7 @@ class ShareModal extends Component<{ onCancel: () => void }> {
           {{/unless}}
         </div>
         <Tip>
-          <KeyCombo @keys={{array "Ctrl" "S"}} @mac={{array "Command" "S"}} />
+          <KeyCombo @keys={{Array "Ctrl" "S"}} @mac={{Array "Command" "S"}} />
           will copy a shortened URL to your clipboard.</Tip>
       </main>
 
@@ -145,7 +141,9 @@ class ShareModal extends Component<{ onCancel: () => void }> {
   };
 }
 
-async function writeToClipboard(text: string) {
+async function writeToClipboard(text: string | undefined) {
+  if (!text) return;
+
   isShowing.set(true);
   await navigator.clipboard.writeText(text);
   await new Promise((resolve) => setTimeout(resolve, SHOW_TIME));
