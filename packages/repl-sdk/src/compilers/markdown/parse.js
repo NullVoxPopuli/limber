@@ -75,9 +75,19 @@ function unescapeComponentsOutsideCode(html) {
         if (j % 2 === 0 && segment) {
           codeParts[j] = segment
             .replace(/&#x3C;([A-Z][a-zA-Z0-9]*\s[^<]*?)>/g, (_m, content) =>
-              content.includes('@') ? `<${content}>` : _m
+              content.includes('@') || content.includes('as |') ? `<${content}>` : _m
             )
-            .replace(/&#x3C;\/([A-Z][a-zA-Z0-9]*)>/g, '</$1>');
+            .replace(/&#x3C;\/([A-Z][a-zA-Z0-9]*)>/g, '</$1>')
+            // When a block-param component tag (<Foo as |x|>) appears in
+            // inline markdown, the parser wraps it (and any sibling tags on
+            // consecutive lines) in <p>...</p>. Strip those spurious paragraph
+            // wrappers so Glimmer can parse the template without a
+            // tag-nesting mismatch.  Use a tempered greedy token that stops at
+            // </p> so we don't accidentally merge adjacent paragraphs.
+            .replace(
+              /<p>((?:(?!<\/p>)[\s\S])*<[A-Z][^>]*as \|[^>]*>(?:(?!<\/p>)[\s\S])*)<\/p>/g,
+              '$1'
+            );
         }
       }
 
