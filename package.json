@@ -78,7 +78,7 @@
       "object.groupby": "npm:@nolyfill/object.groupby@^1",
       "object.values": "npm:@nolyfill/object.values@^1",
       "reactiveweb": "1.9.1",
-      "@codemirror/view": "6.39.12",
+      "@codemirror/view": "6.43.6",
       "ember-repl": "^8.0.0",
       "side-channel": "npm:@nolyfill/side-channel@^1",
       "string.prototype.matchall": "npm:@nolyfill/string.prototype.matchall@^1",
