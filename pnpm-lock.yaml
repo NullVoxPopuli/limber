@@ -196,8 +196,8 @@ importers:
         specifier: ^4.0.0
         version: 4.1.2(@babel/core@7.29.0)
       tracked-toolbox:
-        specifier: ^2.2.0
-        version: 2.2.0(@babel/core@7.29.0)
+        specifier: ^3.0.0
+        version: 3.0.0(@babel/core@7.29.0)
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -21623,7 +21623,7 @@ snapshots:
   tracked-toolbox@2.2.0(@babel/core@7.29.0):
     dependencies:
       '@embroider/addon-shim': 1.10.2
-      decorator-transforms: 2.3.1(@babel/core@7.29.0)
+      decorator-transforms: 2.4.0(@babel/core@7.29.0)
       ember-cache-primitive-polyfill: 1.0.1(@babel/core@7.29.0)
     transitivePeerDependencies:
       - '@babel/core'
