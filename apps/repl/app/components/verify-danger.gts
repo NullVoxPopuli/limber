@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
 import { inIframe } from 'ember-primitives/iframe';

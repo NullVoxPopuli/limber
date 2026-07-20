@@ -1,5 +1,3 @@
-import { hash } from '@ember/helper';
-
 import { focusTrap } from 'ember-focus-trap';
 import { Key } from 'ember-primitives/components/keys';
 import { Menu as HeadlessMenu } from 'ember-primitives/components/menu';
@@ -107,13 +105,13 @@ const Menu: TOC<{
           <div
             class="border"
             style="
-          position: absolute;
-          background: white;
-          width: 8px;
-          height: 8px;
-          transform: rotate(45deg);
-          z-index: 0;
-        "
+        position: absolute;
+        background: white;
+        width: 8px;
+        height: 8px;
+        transform: rotate(45deg);
+        z-index: 0;
+      "
             {{menu.arrow}}
           ></div>
 

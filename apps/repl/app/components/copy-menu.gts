@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { on } from '@ember/modifier';
 
 import { copyToClipboard, getSnippetElement } from './copy-utils.ts';
 import Menu from './menu.gts';
