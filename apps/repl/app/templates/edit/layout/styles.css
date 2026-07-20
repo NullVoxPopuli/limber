@@ -1,3 +1,13 @@
+.limber__layout {
+  /**
+   * Above the panels' positioned content (e.g. the editor's controls),
+   * so the handle stays visible and grabbable along the shared edge.
+   */
+  & .ember-primitives__resizable__handle {
+    z-index: 1;
+  }
+}
+
 /**
  * Minimize / maximize are CSS overrides on top of <Resizable>'s
  * inline flex sizing (hence the !important) -- the split sizes are
