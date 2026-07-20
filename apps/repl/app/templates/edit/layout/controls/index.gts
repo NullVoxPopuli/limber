@@ -42,7 +42,11 @@ export const Controls: TOC<{
     {{#let (service "editor") as |editor|}}
       <div
         data-is-minimized="{{@isMinimized}}"
-        style={{htmlSafe (concat "right: " editor.scrollbarWidth "px;")}}
+        {{! the offset keeps the buttons clear of the editor's scrollbar
+            (0 on overlay-scrollbar systems); a minimized editor has no
+            scrollbar to clear, and the offset would clip the buttons
+            out of the 38px bar }}
+        style={{htmlSafe (concat "right: " (if @isMinimized 0 editor.scrollbarWidth) "px;")}}
         class="right-0 top-0 absolute z-[1]
           {{if @splitHorizontally 'flex flex-row-reverse' 'grid'}}
           {{if @isMinimized 'bg-ember-black h-full content-start'}}
