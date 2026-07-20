@@ -83,8 +83,14 @@ export const Layout: TOC<{
           <Panel
             @size={{initialEditorPercent (qp "editor") horizontallySplit}}
             data-test-editor-panel
+            {{! while minimized, the editor is a 38px sliver: scrolling it is
+                meaningless, and a rendered (non-overlay) scrollbar would
+                occupy a third of the bar }}
             class="relative grid min-h-[38px] min-w-[38px] overflow-hidden
-              {{if (state.matches 'hasContainer.minimized') '!flex-[0_0_38px]'}}
+              {{if
+                (state.matches 'hasContainer.minimized')
+                '!flex-[0_0_38px] [&_.cm-scroller]:!overflow-hidden'
+              }}
               {{if (state.matches 'hasContainer.maximized') '!flex-[1_1_100%]'}}"
           >
             <Save />
