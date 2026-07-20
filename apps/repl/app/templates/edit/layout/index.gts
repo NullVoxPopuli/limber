@@ -1,5 +1,4 @@
 import { assert } from '@ember/debug';
-import { fn } from '@ember/helper';
 
 import { modifier } from 'ember-modifier';
 
@@ -72,10 +71,10 @@ export const Layout: TOC<{
     {{#let (containerDirection state) as |horizontallySplit|}}
       <Orientation as |isVertical|>
         {{! Normally we don't do effects in app code,
-            because we can derive all state.
+          because we can derive all state.
 
-            But XState is an *evented* system, so we have to send events.
-        }}
+          But XState is an *evented* system, so we have to send events.
+      }}
         {{effect (fn state.send (updateOrientation isVertical))}}
 
         <div
@@ -98,10 +97,10 @@ export const Layout: TOC<{
           </EditorContainer>
 
           {{!
-            Unfortunately, even if we were to use native container queries,
-            we wouldn't be able to conditionally render stuff as
-            native container queries are CSS only.
-          }}
+          Unfortunately, even if we were to use native container queries,
+          we wouldn't be able to conditionally render stuff as
+          native container queries are CSS only.
+        }}
           {{#if (isResizable state)}}
             <ResizeHandle @direction={{resizeDirection horizontallySplit}} />
           {{/if}}

@@ -1,5 +1,4 @@
-import { concat, fn } from '@ember/helper';
-import { on } from '@ember/modifier';
+import { concat } from '@ember/helper';
 import { htmlSafe } from '@ember/template';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';

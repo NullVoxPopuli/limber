@@ -1,5 +1,3 @@
-import { hash } from '@ember/helper';
-
 import { aspectRatio, ContainerQuery } from 'ember-container-query';
 
 import constrainVertically from 'limber/modifiers/constrain-vertically';
