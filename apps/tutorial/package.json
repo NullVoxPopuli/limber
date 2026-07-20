@@ -42,7 +42,7 @@
     "decorator-transforms": "2.4.0",
     "ember-async-data": "2.0.1",
     "ember-modifier": "^4.2.0",
-    "ember-primitives": "^0.56.0",
+    "ember-primitives": "^0.61.1",
     "ember-repl": "latest",
     "ember-resources": "^7.1.0",
     "kolay": "^4.1.0",

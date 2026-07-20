@@ -4,29 +4,28 @@ import { inIframe } from 'ember-primitives/iframe';
 import { getService } from 'ember-statechart-component';
 import { assign, setup } from 'xstate';
 
+interface EditorRequest {
+  /**
+   * should the editor start fullscreen
+   */
+  max: boolean;
+  /**
+   * should the editor start minimized
+   */
+  min: boolean;
+  /**
+   * should the editor start with a horizontal split, and what percentage of the screen space should it take?
+   */
+  hSplit: false | number;
+  /**
+   * should the editor start with a vertical split, and what percentage of the screen space should it take?
+   */
+  vSplit: false | number;
+}
+
 interface Context {
-  handle?: HTMLElement;
   container?: HTMLElement;
-  maximize?: () => void;
-  minimize?: () => void;
-  editorRequest?: {
-    /**
-     * should the editor start fullscreen
-     */
-    max: boolean;
-    /**
-     * should the editor start minimized
-     */
-    min: boolean;
-    /**
-     * should the editor start with a horizontal split, and what percontage of the screen space should it take?
-     */
-    hSplit: false | number;
-    /**
-     * should the editor start with a vertical split, and what percontage of the screen space should it take?
-     */
-    vSplit: false | number;
-  };
+  editorRequest?: EditorRequest;
   /**
    * Should only be true if we receive an hSplit or vSplit state
    */
@@ -39,11 +38,6 @@ interface Context {
    * The actual orientation of the content window
    */
   actualOrientation?: Direction;
-  /**
-   * This is kept track of so we can unobserve when we no longer are rendering this state machine.
-   * Also will influence the orientation.
-   */
-  observer?: ResizeObserver;
 }
 
 interface Data {
@@ -102,11 +96,36 @@ function hasVerticalOrientation(x: Data) {
 function resolvedOrientation({ context }: Data): Direction {
   if (context.manualOrientation) return context.manualOrientation;
 
-  return context.actualOrientation || VERTICAL;
+  /**
+   * Before the machine measures (CONTAINER_FOUND), fall back to the same
+   * aspect-ratio heuristic it will use -- the split direction on first
+   * render decides which persisted size <ResizablePanel @size> reads.
+   */
+  return context.actualOrientation || detectAspectRatio();
 }
 
 function hasManualOrientation({ context }: Data): boolean {
   return context.manualOrientation !== undefined;
+}
+
+function requestedMaximized({ context }: Data): boolean {
+  return Boolean(context.editorRequest?.max);
+}
+
+function requestedMinimized({ context }: Data): boolean {
+  return Boolean(context.editorRequest?.min);
+}
+
+/**
+ * min/max requests are one-shot: once honored, returning to the
+ * default split must not bounce right back.
+ */
+function consumeMinMaxRequest({ context }: Data): EditorRequest | undefined {
+  const request = context.editorRequest;
+
+  if (!request) return undefined;
+
+  return { max: false, min: false, hSplit: request.hSplit, vSplit: request.vSplit };
 }
 
 function hasVerticalSplitRequest(editorQP: unknown): number | false {
@@ -139,7 +158,7 @@ function isOrientationPrevented({ context }: Data) {
   return Boolean(request.vSplit || request.hSplit);
 }
 
-function getEditorRequest({ context }: Data) {
+function getEditorRequest({ context }: Data): EditorRequest {
   const router = getService(context, 'router');
   const editor = router.currentRoute?.queryParams.editor;
 
@@ -154,13 +173,6 @@ function getEditorRequest({ context }: Data) {
   };
 }
 
-interface ContainerFoundData {
-  container: HTMLElement;
-  observer: ResizeObserver;
-  maximize: () => void;
-  minimize: () => void;
-}
-
 const VERTICAL = 'vertical';
 const HORIZONTAL = 'horizontal';
 
@@ -168,90 +180,23 @@ type Direction = typeof VERTICAL | typeof HORIZONTAL;
 
 export const LayoutState = setup({
   guards: {},
-  actions: {
-    maximizeEditor: ({ context }) => maximizeEditor({ context }),
-    minimizeEditor: ({ context }) => minimizeEditor({ context }),
-    clearHeight: ({ context }) => context.container && clearHeight(context.container),
-    clearWidth: ({ context }) => context.container && clearWidth(context.container),
-
-    restoreVerticalSplitSize: ({ context }: Data) => {
-      if (!context.container) return;
-
-      const override = context.editorRequest?.vSplit
-        ? `${context.editorRequest.vSplit}%`
-        : undefined;
-
-      restoreWidth(context.container, override);
-    },
-    restoreHorizontalSplitSize: ({ context }: Data) => {
-      if (!context.container) return;
-
-      const override = context.editorRequest?.hSplit
-        ? `${context.editorRequest.hSplit}%`
-        : undefined;
-
-      restoreHeight(context.container, override);
-    },
-
-    observe: ({ context }) => {
-      const { observer, container } = context;
-
-      if (!container || !observer) return;
-
-      observer.observe(container);
-    },
-    unobserve: ({ context }) => {
-      const { observer, container } = context;
-
-      if (!container || !observer) return;
-
-      observer.unobserve(container);
-    },
-    persistVerticalSplitSize: ({ context }) => {
-      if (!context.container) return;
-
-      const rect = context.container.getBoundingClientRect();
-
-      setSize(WHEN_VERTICALLY_SPLIT, `${rect.width}px`);
-    },
-    persistHorizontalSplitSize: ({ context }) => {
-      if (!context.container) return;
-
-      const rect = context.container.getBoundingClientRect();
-
-      setSize(WHEN_HORIZONTALLY_SPLIT, `${rect.height}px`);
-    },
-  },
+  actions: {},
 }).createMachine({
   id: 'editor-layout',
   initial: 'noContainer',
   description: isDevelopingApp()
     ? 'Controls the overall layout of the app, based on orientation, ' +
-      'device type, container resize, and manual rotation. Additionally, ' +
-      'when the editor itself is resized, this machine controls the persisting ' +
-      'and restoring of the editor size in both dimensions, depending on the current ' +
-      'orientation (either default or manually overridden)'
+      'device type, and manual rotation. The sizes of the panes themselves ' +
+      'are managed by <Resizable> (from ember-primitives).'
     : '',
   schema: {
-    context: {} as {
-      container?: HTMLElement;
-      handle?: HTMLElement;
-      panes?: [HTMLElement, HTMLElement];
-      observer?: ResizeObserver;
-      maximize?: () => void;
-      minimize?: () => void;
-      orientationChangePrevented?: boolean;
-      manualOrientation?: Direction;
-      actualOrientation?: Direction;
-    },
+    context: {} as Context,
     events: {} as
-      | ({ type: 'CONTAINER_FOUND' } & ContainerFoundData)
+      | { type: 'CONTAINER_FOUND'; container: HTMLElement }
       | { type: 'CONTAINER_REMOVED' }
       | { type: 'MAXIMIZE' }
       | { type: 'MINIMIZE' }
-      | { type: 'RESIZE' }
       | { type: 'ROTATE' }
-      | { type: 'WINDOW_RESIZE' }
       | { type: 'ORIENTATION'; isVertical: boolean },
   },
   on: {
@@ -259,14 +204,7 @@ export const LayoutState = setup({
       description: isDevelopingApp() ? `The editor has been rendered.` : '',
       target: '.hasContainer',
       actions: assign({
-        /**
-         * This state machine isn't a generic thing and we always know the structure of our DOM
-         */
-        handle: ({ event }) => event.container.nextElementSibling as HTMLElement,
         container: ({ event }) => event.container,
-        observer: ({ event }) => event.observer,
-        maximize: ({ event }) => event.maximize,
-        minimize: ({ event }) => event.minimize,
       }),
     },
     CONTAINER_REMOVED: {
@@ -286,7 +224,7 @@ export const LayoutState = setup({
     hasContainer: {
       initial: 'default',
       description: isDevelopingApp()
-        ? `When we have a div to observe, begin watching for events.`
+        ? `The editor is rendered; track orientation and minimize / maximize.`
         : '',
       entry: [
         assign({
@@ -297,13 +235,10 @@ export const LayoutState = setup({
       ],
       states: {
         default: {
-          entry: ['observe'],
           description: isDevelopingApp()
-            ? `Setup resize observer for the container. ` +
-              `This 'default' state is where the editor exists most of the time, ` +
+            ? `This 'default' state is where the editor exists most of the time, ` +
               `neither minimized nor maximized.`
             : '',
-          exit: ['unobserve'],
           initial: 'unknownSplit',
           on: {
             MAXIMIZE: 'maximized',
@@ -321,6 +256,14 @@ export const LayoutState = setup({
               // (and this is why we can't use the native Device API
               //   because we have window and iframes to worry about)
               always: [
+                {
+                  guard: requestedMaximized,
+                  target: '#editor-layout.hasContainer.maximized',
+                },
+                {
+                  guard: requestedMinimized,
+                  target: '#editor-layout.hasContainer.minimized',
+                },
                 { guard: isVerticalSplit, target: 'verticallySplit' },
                 { guard: isHorizontalSplit, target: 'horizontallySplit' },
               ],
@@ -355,20 +298,11 @@ export const LayoutState = setup({
                   `The vertical orientation displays the editor above and the rendered output below.`
                 : '',
               entry: [
-                'restoreHorizontalSplitSize',
                 assign({
                   editorRequest: undefined,
                 }),
               ],
               on: {
-                MINIMIZE: {
-                  actions: 'persistHorizontalSplitSize',
-                  target: '#editor-layout.hasContainer.minimized',
-                },
-                MAXIMIZE: {
-                  actions: 'persistHorizontalSplitSize',
-                  target: '#editor-layout.hasContainer.maximized',
-                },
                 ORIENTATION: [
                   {
                     description:
@@ -388,14 +322,6 @@ export const LayoutState = setup({
                   target: 'verticallySplit',
                   actions: assign({ manualOrientation: (_, __) => HORIZONTAL }),
                 },
-                RESIZE: [
-                  {
-                    description: 'if we retain the same orientation, persist the editor height',
-                    guard: isHorizontalSplit,
-                    target: 'horizontallySplit',
-                    actions: ['persistHorizontalSplitSize'],
-                  },
-                ],
               },
             },
             verticallySplit: {
@@ -404,20 +330,11 @@ export const LayoutState = setup({
                   `The horizontal orientation displays the editor to the left and the rendered output to the right.`
                 : '',
               entry: [
-                'restoreVerticalSplitSize',
                 assign({
                   editorRequest: undefined,
                 }),
               ],
               on: {
-                MINIMIZE: {
-                  actions: 'persistVerticalSplitSize',
-                  target: '#editor-layout.hasContainer.minimized',
-                },
-                MAXIMIZE: {
-                  actions: 'persistVerticalSplitSize',
-                  target: '#editor-layout.hasContainer.maximized',
-                },
                 ORIENTATION: [
                   {
                     description: isDevelopingApp()
@@ -438,14 +355,6 @@ export const LayoutState = setup({
                   target: 'horizontallySplit',
                   actions: assign({ manualOrientation: (_, __) => VERTICAL }),
                 },
-                RESIZE: [
-                  {
-                    description: 'if we retain the same orientation, persist the editor width',
-                    guard: isVerticalSplit,
-                    target: 'verticallySplit',
-                    actions: ['persistVerticalSplitSize'],
-                  },
-                ],
               },
             },
           },
@@ -454,18 +363,17 @@ export const LayoutState = setup({
           description: isDevelopingApp()
             ? `The editor is maximized, filling the whole screen, and the output is entirely hidden.`
             : '',
-          entry: ['maximizeEditor'],
+          entry: [assign({ editorRequest: consumeMinMaxRequest })],
           on: {
             MAXIMIZE: 'default',
             MINIMIZE: 'minimized',
-            WINDOW_RESIZE: 'maximized',
           },
         },
         minimized: {
           description: isDevelopingApp()
             ? `The editor is minimized, showing only the buttons to unminimize, and maximize. The output fills nearly the entire screen.`
             : '',
-          entry: 'minimizeEditor',
+          entry: [assign({ editorRequest: consumeMinMaxRequest })],
           on: {
             MAXIMIZE: 'maximized',
             MINIMIZE: 'default',
@@ -484,54 +392,19 @@ export const LayoutState = setup({
   },
 });
 
-const minimizeEditor = ({ context }: Data) => {
-  const { container } = context;
+const RUNTIME_FOR_IFRAME: SplitSizeData = {};
 
-  if (!container) return;
+const WHEN_VERTICALLY_SPLIT = 'WHEN_VERTICALLY_SPLIT';
+const WHEN_HORIZONTALLY_SPLIT = 'WHEN_HORIZONTALLY_SPLIT';
+const STORAGE_NAME = 'limber:editorSize';
 
-  if (isVerticalSplit({ context })) {
-    container.style.width = '38px';
-    container.style.maxWidth = '';
-    clearHeight(container);
-  } else {
-    container.style.height = '38px';
-    container.style.maxHeight = '';
-    clearWidth(container);
-  }
-};
-const maximizeEditor = ({ context }: Data) => {
-  const { container } = context;
+type SplitName = typeof WHEN_HORIZONTALLY_SPLIT | typeof WHEN_VERTICALLY_SPLIT;
 
-  if (!container) return;
-
-  container.style.width = '100%';
-  container.style.height = '100%';
-  container.style.maxHeight = '';
-  container.style.maxWidth = '';
-};
-
-const clearHeight = (element: HTMLElement) => (element.style.height = '');
-const clearWidth = (element: HTMLElement) => (element.style.width = '');
-const restoreWidth = (element: HTMLElement, overrideWidth?: string) => {
-  const size = overrideWidth ?? getSize(WHEN_VERTICALLY_SPLIT) ?? '';
-
-  element.style.width = size;
-  element.style.maxHeight = '';
-  element.style.height = '100%';
-  element.style.maxWidth = 'calc(100vw - 72px)';
-};
-const restoreHeight = (element: HTMLElement, overrideHeight?: string) => {
-  const offset = document.querySelector('main > header')?.getBoundingClientRect().height || 0;
-
-  const size = overrideHeight ?? getSize(WHEN_HORIZONTALLY_SPLIT) ?? '';
-
-  element.style.height = size;
-  element.style.maxWidth = '';
-  element.style.width = '100%';
-  element.style.maxHeight = `calc(100vh - 72px - ${offset}px)`;
-};
-
-const RUNTIME_FOR_IFRAME: Record<string, string> = {};
+/**
+ * Editor size as a percent of the pane-group.
+ * (this storage previously held pixel-strings; those are ignored)
+ */
+type SplitSizeData = Partial<Record<SplitName, number>>;
 
 function getData(): SplitSizeData {
   if (inIframe()) {
@@ -549,62 +422,48 @@ function getData(): SplitSizeData {
   }
 }
 
-const WHEN_VERTICALLY_SPLIT = 'WHEN_VERTICALLY_SPLIT';
-const WHEN_HORIZONTALLY_SPLIT = 'WHEN_HORIZONTALLY_SPLIT';
-const STORAGE_NAME = 'limber:editorSize';
-
-type SplitName = typeof WHEN_HORIZONTALLY_SPLIT | typeof WHEN_VERTICALLY_SPLIT;
-type SplitSizeData = Partial<Record<SplitName, `${number}px`>>;
-
-function getSize(name: SplitName) {
-  return getData()[name] as string;
+function splitName(horizontallySplit: boolean): SplitName {
+  return horizontallySplit ? WHEN_HORIZONTALLY_SPLIT : WHEN_VERTICALLY_SPLIT;
 }
 
-function setSize(name: SplitName, value: `${number}px`) {
+/**
+ * For <Resizable @onLayoutChange> -- remembers the editor's share
+ * (per split direction) so it can be restored on the next visit.
+ */
+export function persistEditorPercent(horizontallySplit: boolean, sizes: number[]): void {
+  const percent = sizes[0];
+
+  if (percent === undefined) return;
+
   if (inIframe()) {
-    RUNTIME_FOR_IFRAME[name] = value;
+    RUNTIME_FOR_IFRAME[splitName(horizontallySplit)] = percent;
 
     return;
   }
 
   const data = getData();
 
-  data[name] = value;
+  data[splitName(horizontallySplit)] = percent;
 
   localStorage.setItem(STORAGE_NAME, JSON.stringify(data));
 }
 
 /**
- * We need to do all this debouncing because the other statemachine events are firing
- * after the resize observer
- *
- * and nextAnimationFrame doesn't have a way to delay.
- * Since this is specifically used with the resize observer below,
- * we can let it be quite a bit delayed to improve perf.
+ * The editor's initial share for <ResizablePanel @size>:
+ * an explicit ?editor=NNv / ?editor=NNh request wins, then the
+ * persisted size, else unset (the panels share space equally).
  */
-const delay = 200;
-let timeout: ReturnType<typeof setTimeout>;
-const debounced = (fn: (...args: unknown[]) => void) => {
-  const forNextFrame = nextAvailableFrame.bind(null, fn);
+export function initialEditorPercent(
+  editorQP: unknown,
+  horizontallySplit: boolean
+): number | undefined {
+  const requested = horizontallySplit
+    ? hasHorizontalSplitRequset(editorQP)
+    : hasVerticalSplitRequest(editorQP);
 
-  if (timeout) clearTimeout(timeout);
-  timeout = setTimeout(forNextFrame, delay);
-};
+  if (requested !== false) return requested;
 
-let frame: number | null;
-const nextAvailableFrame = (fn: (...args: unknown[]) => void) => {
-  if (frame) cancelAnimationFrame(frame);
-  frame = requestAnimationFrame(fn);
-};
+  const persisted = getData()[splitName(horizontallySplit)];
 
-/**
- * This resizeObserver is used for tracking manual resize
- * of the editor and persisting it to local storage
- */
-export const setupResizeObserver = (callback: () => unknown) => {
-  const observer = new ResizeObserver(() => {
-    debounced(callback);
-  });
-
-  return observer;
-};
+  return typeof persisted === 'number' ? persisted : undefined;
+}

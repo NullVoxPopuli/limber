@@ -1,38 +1,34 @@
 import { assert } from '@ember/debug';
 
 import { modifier } from 'ember-modifier';
+import { Resizable, ResizableHandle as Handle, ResizablePanel as Panel } from 'ember-primitives';
+import { qp } from 'ember-primitives/qp';
 
 import Save from '#components/save.gts';
 
-import { EditorContainer, OutputContainer } from './containers.gts';
 import { Controls } from './controls/index.gts';
 import { Orientation } from './orientation.gts';
-import { ResizeHandle } from './resize-handle.gts';
-import { isHorizontalSplit, LayoutState, setupResizeObserver } from './state.ts';
+import {
+  initialEditorPercent,
+  isHorizontalSplit,
+  LayoutState,
+  persistEditorPercent,
+} from './state.ts';
+import { Status } from './status.gts';
 
 import type { TOC } from '@ember/component/template-only';
 import type { ReactiveActorFrom } from 'ember-statechart-component';
 
 type ReactiveActor = ReactiveActorFrom<typeof LayoutState>;
 
-const setupState = modifier((element: Element, [send]: [(event: string) => void]) => {
+const setupState = modifier((element: Element, [send]: [(event: unknown) => void]) => {
   assert(`Element is not resizable`, element instanceof HTMLElement);
 
-  const observer = setupResizeObserver(() => send('RESIZE'));
-
-  // @ts-expect-error need to fix the type of this for ember-statechart-component
-  send({
-    type: 'CONTAINER_FOUND',
-    container: element,
-    observer,
-    maximize: () => send('MAXIMIZE'),
-    minimize: () => send('MINIMIZE'),
-  });
+  send({ type: 'CONTAINER_FOUND', container: element });
 
   return () => send('CONTAINER_REMOVED');
 });
 
-const resizeDirection = (horzSplit: boolean) => (horzSplit ? 'vertical' : 'horizontal');
 const toBoolean = (x: unknown) => Boolean(x);
 const effect = (fn: (...args: unknown[]) => void) => {
   fn();
@@ -71,18 +67,26 @@ export const Layout: TOC<{
     {{#let (containerDirection state) as |horizontallySplit|}}
       <Orientation as |isVertical|>
         {{! Normally we don't do effects in app code,
-          because we can derive all state.
+            because we can derive all state.
 
-          But XState is an *evented* system, so we have to send events.
-      }}
+            But XState is an *evented* system, so we have to send events.
+        }}
         {{effect (fn state.send (updateOrientation isVertical))}}
 
-        <div
-          {{! row = left to right, col = top to bottom }}
-          class="{{if horizontallySplit 'flex-col' 'flex-row'}} flex overflow-hidden"
+        {{! horizontallySplit stacks the panes (editor above output),
+            which for <Resizable> is the "vertical" orientation (resizing along the y axis) }}
+        <Resizable
+          @orientation={{if horizontallySplit "vertical" "horizontal"}}
+          @onLayoutChange={{fn persistEditorPercent horizontallySplit}}
+          {{setupState state.send}}
         >
-
-          <EditorContainer @splitHorizontally={{horizontallySplit}} {{setupState state.send}}>
+          <Panel
+            @size={{initialEditorPercent (qp "editor") horizontallySplit}}
+            data-test-editor-panel
+            class="relative grid min-h-[38px] min-w-[38px] overflow-hidden
+              {{if (state.matches 'hasContainer.minimized') '!flex-[0_0_38px]'}}
+              {{if (state.matches 'hasContainer.maximized') '!flex-[1_1_100%]'}}"
+          >
             <Save />
             <Controls
               @isMinimized={{state.matches "hasContainer.minimized"}}
@@ -94,23 +98,32 @@ export const Layout: TOC<{
 
             {{yield to="editor"}}
 
-          </EditorContainer>
+          </Panel>
 
-          {{!
-          Unfortunately, even if we were to use native container queries,
-          we wouldn't be able to conditionally render stuff as
-          native container queries are CSS only.
-        }}
           {{#if (isResizable state)}}
-            <ResizeHandle @direction={{resizeDirection horizontallySplit}} />
+            <Handle
+              aria-label="Resize the editor"
+              class="bg-horizon-lavender leading-4 text-white shadow flex items-end justify-end focus:ring-4 focus:outline-none focus-visible:outline-none"
+              {{! template-lint-disable no-inline-styles }}
+              style="text-shadow: 1px 1px 1px black"
+            >
+              {{if horizontallySplit "⬍" "⬌"}}
+            </Handle>
           {{/if}}
 
-          <OutputContainer>
+          <Panel
+            class="drop-shadow-inner relative grid overflow-hidden
+              {{if (state.matches 'hasContainer.maximized') '!flex-[0_1_0px]'}}"
+          >
+            <div class="bg-white relative flex overflow-auto" data-test-output>
 
-            {{yield to="output"}}
+              {{yield to="output"}}
 
-          </OutputContainer>
-        </div>
+            </div>
+
+            <Status />
+          </Panel>
+        </Resizable>
       </Orientation>
     {{/let}}
   </LayoutState>
