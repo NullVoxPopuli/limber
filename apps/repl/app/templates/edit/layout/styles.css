@@ -1,0 +1,38 @@
+/**
+ * Minimize / maximize are CSS overrides on top of <Resizable>'s
+ * inline flex sizing (hence the !important) -- the split sizes are
+ * untouched underneath, so returning to the split view restores them.
+ */
+.limber__layout[data-editor-state='minimized'] {
+  & .limber__editor-panel {
+    flex: 0 0 38px !important;
+  }
+
+  /**
+   * A 38px sliver has nothing meaningful to scroll, and a rendered
+   * (non-overlay) scrollbar would occupy a third of the bar.
+   */
+  & .limber__editor-panel .cm-scroller {
+    overflow: hidden !important;
+  }
+
+  /**
+   * The controls normally sit left of the editor's scrollbar
+   * (right: {scrollbarWidth}px, inline); minimized there is no
+   * scrollbar to clear, and the offset would clip the buttons
+   * out of the bar.
+   */
+  & [data-is-minimized='true'] {
+    right: 0 !important;
+  }
+}
+
+.limber__layout[data-editor-state='maximized'] {
+  & .limber__editor-panel {
+    flex: 1 1 100% !important;
+  }
+
+  & .limber__output-panel {
+    flex: 0 1 0px !important;
+  }
+}

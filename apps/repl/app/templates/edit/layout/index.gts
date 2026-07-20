@@ -1,3 +1,5 @@
+import './styles.css';
+
 import { assert } from '@ember/debug';
 
 import { modifier } from 'ember-modifier';
@@ -34,8 +36,19 @@ const effect = (fn: (...args: unknown[]) => void) => {
   fn();
 };
 
+/**
+ * 'split' | 'minimized' | 'maximized' -- drives the CSS overrides
+ * in ./styles.css (via data-editor-state).
+ */
+const editorScreenState = (state: ReactiveActor) => {
+  if (state.matches('hasContainer.minimized')) return 'minimized';
+  if (state.matches('hasContainer.maximized')) return 'maximized';
+
+  return 'split';
+};
+
 const isResizable = (state: ReactiveActor) => {
-  return !(state.matches('hasContainer.minimized') || state.matches('hasContainer.maximized'));
+  return editorScreenState(state) === 'split';
 };
 
 /**
@@ -78,20 +91,14 @@ export const Layout: TOC<{
         <Resizable
           @orientation={{if horizontallySplit "vertical" "horizontal"}}
           @onLayoutChange={{fn persistEditorPercent horizontallySplit}}
+          class="limber__layout"
+          data-editor-state={{editorScreenState state}}
           {{setupState state.send}}
         >
           <Panel
             @size={{initialEditorPercent (qp "editor") horizontallySplit}}
             data-test-editor-panel
-            {{! while minimized, the editor is a 38px sliver: scrolling it is
-                meaningless, and a rendered (non-overlay) scrollbar would
-                occupy a third of the bar }}
-            class="relative grid min-h-[38px] min-w-[38px] overflow-hidden
-              {{if
-                (state.matches 'hasContainer.minimized')
-                '!flex-[0_0_38px] [&_.cm-scroller]:!overflow-hidden'
-              }}
-              {{if (state.matches 'hasContainer.maximized') '!flex-[1_1_100%]'}}"
+            class="limber__editor-panel relative grid min-h-[38px] min-w-[38px] overflow-hidden"
           >
             <Save />
             <Controls
@@ -117,10 +124,7 @@ export const Layout: TOC<{
             </Handle>
           {{/if}}
 
-          <Panel
-            class="drop-shadow-inner relative grid overflow-hidden
-              {{if (state.matches 'hasContainer.maximized') '!flex-[0_1_0px]'}}"
-          >
+          <Panel class="limber__output-panel drop-shadow-inner relative grid overflow-hidden">
             <div class="bg-white relative flex overflow-auto" data-test-output>
 
               {{yield to="output"}}
