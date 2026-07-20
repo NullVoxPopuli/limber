@@ -49,7 +49,8 @@ on:
       - requested
 
 concurrency:
-  group: deploy-preview-${{ github.event.workflow_run.pull_requests[0].number }}
+  # pull_requests[] is empty for fork PRs; fall back to the head SHA
+  group: deploy-preview-${{ github.event.workflow_run.pull_requests[0].number || github.event.workflow_run.head_sha || github.event.inputs.prNumber || github.ref }}
   cancel-in-progress: true
 
 env:
@@ -70,8 +71,12 @@ jobs:
           # Defaults to ${{ github.repository }}, but that doesn't work for forks
           # This should also make it obvious why this is in a separate workflow
           # and in a job that doesn't have access to our secrets.
-          repository: ${{ github.event.workflow_run.head_repository.full_name }}
-          ref: ${{ github.event.workflow_run.head_branch }}
+          #
+          # (workflow_run.head_repository / head_branch are EMPTY for fork PRs,
+          #  which made checkout silently fall back to the base repo's main --
+          #  determinePR resolves the real repo + branch via the API instead)
+          repository: ${{ needs.determinePR.outputs.repo }}
+          ref: ${{ needs.determinePR.outputs.branch }}
       - name: TurboRepo local server
         uses: felixmosh/turborepo-gh-artifacts@v4
         with:
@@ -96,37 +101,37 @@ jobs:
     # this job gates the others -- if the workflow_run request did not come from a PR,
     # exit as early as possible
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.event == 'pull_request' || github.event.inputs.prNumber 
+    if: github.event.workflow_run.event == 'pull_request' || github.event.inputs.prNumber
     outputs:
-      number: ${{ steps.pr.outputs.result || steps.number.outputs.pr-number || github.event.inputs.prNumber }}
+      number: ${{ steps.pr-info.outputs.number }}
+      branch: ${{ steps.pr-info.outputs.branch }}
+      repo: ${{ steps.pr-info.outputs.repo }}
     steps:
-      # - run: echo '${{ toJSON(github.event) }}'
-      #   name: "debug workflow_run event"
-      - run: echo "${{ github.event.number }}"
-        name: 'debug github.event.number'
-        # When PR comes from a fork, 
-        # github.event.workflow_run.pull_requests is empty
-      - run: echo "${{ github.event.workflow_run.pull_requests[0].number }}"
-        id: number
-      # https://github.com/orgs/community/discussions/25220#discussioncomment-8697399
-      - name: Find associated pull request
-        # if: "!${{ steps.number.output.pr-number }}"
-        id: pr
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
-        with:
-          script: |
-            const response = await github.rest.search.issuesAndPullRequests({
-              q: 'repo:${{ github.repository }} is:pr sha:${{ github.event.workflow_run.head_sha }}',
-              per_page: 1,
-            })
-            const items = response.data.items
-            if (items.length < 1) {
-              console.error('No PRs found')
-              return
-            }
-            const pullRequestNumber = items[0].number
-            console.info("Pull request number is", pullRequestNumber)
-            return pullRequestNumber
+      - id: pr-info
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -n "${{ github.event.inputs.prNumber }}" ]; then
+            PR_NUM="${{ github.event.inputs.prNumber }}"
+          else
+            # When the PR comes from a fork,
+            # github.event.workflow_run.pull_requests is empty
+            # (as are head_branch / head_repository), so look it up by SHA
+            PR_NUM="${{ github.event.workflow_run.pull_requests[0].number }}"
+            if [ -z "$PR_NUM" ]; then
+              HEAD_SHA="${{ github.event.workflow_run.head_sha }}"
+              PR_NUM=$(gh pr list --repo "${{ github.repository }}" --json number,headRefOid \
+                --jq ".[] | select(.headRefOid == \"$HEAD_SHA\") | .number")
+            fi
+          fi
+
+          PR_JSON=$(gh pr view "$PR_NUM" --repo "${{ github.repository }}" --json headRefName,headRepository,headRepositoryOwner)
+          BRANCH=$(echo "$PR_JSON" | jq -r '.headRefName')
+          REPO=$(echo "$PR_JSON" | jq -r '.headRepositoryOwner.login + "/" + .headRepository.name')
+
+          echo "number=$PR_NUM" >> "$GITHUB_OUTPUT"
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+          echo "repo=${REPO:-${{ github.repository }}}" >> "$GITHUB_OUTPUT"
 
   # We can know the URL ahead of time:
   # https://<SHA>.limber-glimmer-tutorial.pages.dev
@@ -135,7 +140,7 @@ jobs:
     name: "Deploy: Preview ${{ matrix.app.name }}"
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    needs: [Build]
+    needs: [Build, determinePR]
     permissions:
       contents: read
     strategy: 
@@ -154,7 +159,7 @@ jobs:
         run: |
           npx wrangler pages deploy ./ \
             --project-name=${{ matrix.app.cloudflareName }} \
-            --branch=${{ github.event.workflow_run.head_branch }} \
+            --branch=${{ needs.determinePR.outputs.branch }} \
             --commit-hash=${{ github.event.workflow_run.head_sha }}
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -169,7 +174,7 @@ jobs:
     steps:
       - id: reformat
         run: |
-          branch="${{ github.event.workflow_run.head_branch }}"
+          branch="${{ needs.determinePR.outputs.branch }}"
           # Remove any / in the branch name
           #   renovate/uuid becomes renovate-uuid
           subdomain="${branch//\//-}"
