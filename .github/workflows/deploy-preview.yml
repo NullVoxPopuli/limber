@@ -84,11 +84,17 @@ jobs:
           BRANCH=$(echo "$PR_JSON" | jq -r '.headRefName')
           SHA="${HEAD_SHA:-$(echo "$PR_JSON" | jq -r '.headRefOid')}"
 
-          # workflow_dispatch has no triggering run, so find the newest
-          # successful CI run for the PR's head commit
+          # On the workflow_run trigger, RUN_ID *is* the CI run that triggered
+          # us -- unambiguously this PR's run, even with other PRs building at
+          # the same time. workflow_dispatch has no triggering run, so match the
+          # CI run by this PR's exact head commit. A head SHA belongs to exactly
+          # one PR, and --event pull_request avoids matching a post-merge push
+          # run on the same commit; among re-runs of that identical commit we
+          # take the most recent.
           if [ -z "$RUN_ID" ]; then
-            RUN_ID=$(gh run list --repo "$REPOSITORY" --workflow ci.yml --commit "$SHA" \
-              --status success --json databaseId --jq '.[0].databaseId')
+            RUN_ID=$(gh run list --repo "$REPOSITORY" --workflow ci.yml \
+              --commit "$SHA" --event pull_request --status success \
+              --json databaseId,createdAt --jq 'sort_by(.createdAt) | last | .databaseId')
           fi
           if [ -z "$RUN_ID" ]; then
             echo "::error::No successful CI run (which uploads deploy-prep-dist) found for $SHA"
