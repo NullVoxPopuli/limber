@@ -40,7 +40,6 @@ jobs:
     - uses: wyvox/action@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - run:  echo ${{ github.event.number }} > ./pr-number.txt
     - run: pnpm turbo build --force
 
   build_tests:
@@ -65,7 +64,6 @@ jobs:
     - uses: wyvox/action@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - run:  echo ${{ github.event.number }} > ./pr-number.txt
     - run: pnpm turbo build:prod
     - run: ls -la ./apps/repl/dist
     - run: ls -la ./apps/tutorial/dist
@@ -174,19 +172,21 @@ jobs:
     permissions:
       contents: read
       deployments: write
-    outputs:
-      limberUrl: ${{ steps.limber.outputs.url }}
-      tutorialUrl: ${{ steps.tutorial.outputs.url }}
     steps:
       - uses: actions/download-artifact@v8
         name: deploy-prep-dist
       - name: Publish ${{ matrix.app.name }}
         working-directory: ./deploy-prep-dist/${{ matrix.app.path }}
+        # This job only runs on push to main; github.event.workflow_run is empty
+        # here (ci.yml has no workflow_run trigger), so use the push ref/sha.
         run: |
           npx wrangler pages deploy ./ \
-            --project-name=${{ matrix.app.cloudflareName }} \
-            --branch=${{ github.event.workflow_run.head_branch }} \
-            --commit-hash=${{ github.event.workflow_run.head_sha }}
+            --project-name="$PROJECT_NAME" \
+            --branch="$BRANCH" \
+            --commit-hash="$HEAD_SHA"
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PROJECT_NAME: ${{ matrix.app.cloudflareName }}
+          BRANCH: ${{ github.ref_name }}
+          HEAD_SHA: ${{ github.sha }}

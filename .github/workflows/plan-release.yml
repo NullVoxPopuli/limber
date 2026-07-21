@@ -5,6 +5,9 @@ on:
     branches:
       - main
       - master
+  # zizmor: ignore[dangerous-triggers] intentional: no PR code runs here --
+  # every job checks out `ref: main` (release-plan actions), so the fork PR
+  # only supplies the label that gates the run. See the securitylab link below.
   pull_request_target: # This workflow has permissions on the repo, do NOT run code from PRs in this workflow. See https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
     types:
       - labeled
@@ -13,6 +16,9 @@ on:
 concurrency:
   group: plan-release # only the latest one of these should ever be running
   cancel-in-progress: true
+
+# No token by default; the one job that needs write access requests it.
+permissions: {}
 
 jobs:
   should-run-release-plan-prepare:

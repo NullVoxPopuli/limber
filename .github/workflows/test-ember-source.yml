@@ -35,9 +35,14 @@ jobs:
       - name: Resolve branch name
         id: resolve
         uses: actions/github-script@v9
+        # Read the input from env, not string-interpolated into the script:
+        # a backtick or ${...} in the value would otherwise break out of the
+        # template literal and run as JS.
+        env:
+          EMBER_REFERENCE: ${{ github.event.inputs.ember-reference }}
         with:
           script: |
-            const input = `${{ github.event.inputs.ember-reference }}`.trim();
+            const input = process.env.EMBER_REFERENCE.trim();
 
             // Check if input is a PR URL
             const prMatch = input.match(/github\.com\/([^/]+)\/([^/]+)\/pull\/(\d+)/);
@@ -169,6 +174,10 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v6
+        with:
+          # create-pull-request pushes with its own token; don't leave the
+          # workflow GITHUB_TOKEN in .git/config.
+          persist-credentials: false
 
       - uses: pnpm/action-setup@v6
         with:
