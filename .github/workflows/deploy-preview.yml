@@ -135,7 +135,7 @@ jobs:
         - { path: "./repl/dist", cloudflareName: "limber-glimdown", name: "limber" }
     steps:
       - name: Download build artifact from the CI run
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: deploy-prep-dist
           path: ./deploy-prep-dist
@@ -164,7 +164,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: marocchino/sticky-pull-request-comment@v3
+      - uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
         with:
           header: preview-urls
           number: ${{ needs.determinePR.outputs.number }}

@@ -26,7 +26,7 @@ jobs:
       attestations: write
 
     steps:
-      - uses: wyvox/action@v2
+      - uses: wyvox/action@d463e4fd48f0863f09cadf66203c1780b694620c # v2.0.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - run: pnpm install --frozen-lockfile

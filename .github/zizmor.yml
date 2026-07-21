@@ -2,10 +2,9 @@
 rules:
   unpinned-uses:
     config:
-      # Require every `uses:` to name at least a tag/branch ref (catches a bare
-      # `@main` or missing ref). We do NOT require full commit-hash pins yet:
-      # the repo pins to tags throughout, and moving to hash pins is a larger,
-      # dependabot-maintained change best done on its own. Tightening the
-      # third-party entries to `hash-pin` here later is the recommended next step.
+      # Every `uses:` must be pinned to a full commit SHA. Tags are mutable --
+      # a hash pin is the only reference an attacker who compromises an action's
+      # repo can't move. Renovate bumps these SHAs (and the `# vX.Y.Z` comment)
+      # automatically, so pinning doesn't freeze us on stale versions.
       policies:
-        "*": ref-pin
+        "*": hash-pin
