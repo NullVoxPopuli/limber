@@ -1,40 +1,21 @@
-# Because C.I. jobs could expose secrets to malicious pull requsets,
-# GitHub prevents (by default) exposing action secrets to pull requests
-# from forks.
+# Fork PRs can't be trusted with secrets, so preview deploys are split
+# across two workflows:
 #
-# This is great, however, the jobs that use the secrets are still useful on 
-# pull requests.
+#   1. CI (pull_request) -- runs the fork's code with NO access to secrets,
+#      builds the apps, and uploads the `deploy-prep-dist` artifact.
+#   2. This workflow (workflow_run) -- has the secrets, but never checks out
+#      or executes anything from the PR. It only downloads that artifact
+#      (static, browser-only files), deploys it to Cloudflare, and comments.
 #
-# To run a _trusted_ workflow, we can trigger it from an event from an _untrusted_
-# workflow. This keeps the secrets out of reach from the fork, but still allows
-# us to keep the utility of pull request preview deploys, browserstack running, etc.
-# Normally, this _trusted_ behavior is offloaded by Cloudflare, Netlify, Vercel, etc
-# -- their own workers are trusted and can push comments / updates to pull requests.
+# The PR number / branch / sha are resolved from the GitHub API rather than
+# from the artifact, because a malicious PR controls the artifact's contents.
+# The branch name is still attacker-chosen, so it only ever flows through
+# env vars (quoted), never inlined into scripts.
 #
-# We don't want to use their slower (and sometimes paid) hardware.
-# When we use our own workflows, we can re-use the cache built from the PR 
-# (or elsewhere).
-#
-# To be *most* secure, you'd need to build all the artifacts in the PR,
-# then upload them to then be downloaded in the trusted workflows.
-# Trusted workflows should not run any scripts from a PR, as malicious
-# submitters may tweak the build scripts.
-# Since all build artifacts are for the web browser, and not executed in 
-# node-space, we can be reasonably confident that downloading and testing/deploying 
-# those artifacts does not compromise our secrets.
-#
-#
-# More information here: 
+# More information:
 #   https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
-#
-# Things that would make this easier:
-#   Readablity: https://github.com/actions/download-artifact/issues/172
-#   Security: 
-#    - if there was a way to avoid pnpm install *entirely*
 name: Deploy Preview
 
-# read-write repo token
-# access to secrets
 on:
   workflow_dispatch:
     inputs:
@@ -45,8 +26,7 @@ on:
   workflow_run:
     workflows: ["CI"]
     types:
-      # as early as possible
-      - requested
+      - completed
 
 concurrency:
   # pull_requests[] is empty for fork PRs; fall back to the head SHA
@@ -56,67 +36,20 @@ concurrency:
 # This workflow has secrets but handles fork-controlled data; jobs request what they need.
 permissions: {}
 
-env:
-  TURBO_API: http://127.0.0.1:9080
-  TURBO_TOKEN: this-is-not-a-secret
-  TURBO_TEAM: myself
-
-
-jobs: 
-  # This is the only job that needs access to the source code
-  Build:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [determinePR]
-    permissions:
-      contents: read
-      # turborepo-gh-artifacts reads/writes this run's artifacts for the turbo cache
-      actions: write
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          # Defaults to ${{ github.repository }}, but that doesn't work for forks
-          # This should also make it obvious why this is in a separate workflow
-          # and in a job that doesn't have access to our secrets.
-          #
-          # (workflow_run.head_repository / head_branch are EMPTY for fork PRs,
-          #  which made checkout silently fall back to the base repo's main --
-          #  determinePR resolves the real repo + branch via the API instead)
-          repository: ${{ needs.determinePR.outputs.repo }}
-          ref: ${{ needs.determinePR.outputs.branch }}
-          # the fork's build scripts must not find the GITHUB_TOKEN in .git/config
-          persist-credentials: false
-      - name: TurboRepo local server
-        uses: felixmosh/turborepo-gh-artifacts@v4
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: wyvox/action-setup-pnpm@v4
-      - run: pnpm turbo build:prod 
-      - uses: actions/upload-artifact@v7
-        with:
-          name: deploy-prep-dist
-          if-no-files-found: error
-          path: | 
-            ./apps/**/dist/**/*
-            !node_modules/
-            !./**/node_modules/
-
-#################################################################            
-# For the rest:
-# Does not checkout code, has access to secrets
-#################################################################            
-
+jobs:
   determinePR:
-    # this job gates the others -- if the workflow_run request did not come from a PR,
-    # exit as early as possible
+    # this job gates the others -- only deploy previews for successful PR builds
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.event == 'pull_request' || github.event.inputs.prNumber
+    if: (github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success') || github.event.inputs.prNumber
     permissions:
       pull-requests: read
+      # to find the CI run that has the artifact (workflow_dispatch path)
+      actions: read
     outputs:
       number: ${{ steps.pr-info.outputs.number }}
       branch: ${{ steps.pr-info.outputs.branch }}
-      repo: ${{ steps.pr-info.outputs.repo }}
+      sha: ${{ steps.pr-info.outputs.sha }}
+      run-id: ${{ steps.pr-info.outputs.run-id }}
       subdomain: ${{ steps.pr-info.outputs.subdomain }}
     steps:
       - id: pr-info
@@ -126,6 +59,7 @@ jobs:
           INPUT_PR_NUM: ${{ github.event.inputs.prNumber }}
           EVENT_PR_NUM: ${{ github.event.workflow_run.pull_requests[0].number }}
           HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
           REPOSITORY: ${{ github.repository }}
         run: |
           if [ -n "$INPUT_PR_NUM" ]; then
@@ -146,9 +80,20 @@ jobs:
             exit 1
           fi
 
-          PR_JSON=$(gh pr view "$PR_NUM" --repo "$REPOSITORY" --json headRefName,headRepository,headRepositoryOwner)
+          PR_JSON=$(gh pr view "$PR_NUM" --repo "$REPOSITORY" --json headRefName,headRefOid)
           BRANCH=$(echo "$PR_JSON" | jq -r '.headRefName')
-          REPO=$(echo "$PR_JSON" | jq -r '.headRepositoryOwner.login + "/" + .headRepository.name')
+          SHA="${HEAD_SHA:-$(echo "$PR_JSON" | jq -r '.headRefOid')}"
+
+          # workflow_dispatch has no triggering run, so find the newest
+          # successful CI run for the PR's head commit
+          if [ -z "$RUN_ID" ]; then
+            RUN_ID=$(gh run list --repo "$REPOSITORY" --workflow ci.yml --commit "$SHA" \
+              --status success --json databaseId --jq '.[0].databaseId')
+          fi
+          if [ -z "$RUN_ID" ]; then
+            echo "::error::No successful CI run (which uploads deploy-prep-dist) found for $SHA"
+            exit 1
+          fi
 
           # Cloudflare's branch-alias subdomain: lowercase [a-z0-9-], max 28 chars,
           # e.g. renovate/uuid becomes renovate-uuid.
@@ -159,7 +104,8 @@ jobs:
 
           echo "number=$PR_NUM" >> "$GITHUB_OUTPUT"
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
-          echo "repo=${REPO:-$REPOSITORY}" >> "$GITHUB_OUTPUT"
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo "run-id=$RUN_ID" >> "$GITHUB_OUTPUT"
           echo "subdomain=$SUBDOMAIN" >> "$GITHUB_OUTPUT"
 
   # We can know the URL ahead of time:
@@ -169,20 +115,23 @@ jobs:
     name: "Deploy: Preview ${{ matrix.app.name }}"
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    needs: [Build, determinePR]
+    needs: [determinePR]
     permissions:
-      contents: read
-    strategy: 
+      # to download the CI run's artifact
+      actions: read
+    strategy:
       matrix:
-        app: 
+        app:
         - { path: "./tutorial/dist", cloudflareName: "limber-glimmer-tutorial", name: "tutorial" }
         - { path: "./repl/dist", cloudflareName: "limber-glimdown", name: "limber" }
     steps:
-      - name: Download build artifact
+      - name: Download build artifact from the CI run
         uses: actions/download-artifact@v8
         with:
           name: deploy-prep-dist
           path: ./deploy-prep-dist
+          run-id: ${{ needs.determinePR.outputs.run-id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Preview ${{ matrix.app.name }}
         working-directory: ./deploy-prep-dist/${{ matrix.app.path }}
         # BRANCH is fork-controlled and this step holds the Cloudflare secrets:
@@ -197,7 +146,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           PROJECT_NAME: ${{ matrix.app.cloudflareName }}
           BRANCH: ${{ needs.determinePR.outputs.branch }}
-          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          HEAD_SHA: ${{ needs.determinePR.outputs.sha }}
 
   PostComment:
     name: Post Preview URL as comment to PR
@@ -208,15 +157,14 @@ jobs:
     steps:
       - uses: marocchino/sticky-pull-request-comment@v3
         with:
-          header: preview-urls 
+          header: preview-urls
           number: ${{ needs.determinePR.outputs.number }}
           message: |+
-            | Project   | Preview URL[^note] | Manage | 
+            | Project   | Preview URL[^note] | Manage |
             | -------   | ------------------ | ------ |
-            | Limber    | https://${{ needs.determinePR.outputs.subdomain }}.limber-glimdown.pages.dev   | [on Cloudflare](https://dash.cloudflare.com/c67910a047e1510fec6d0d0cf442934c/pages/view/limber-glimdown) | 
+            | Limber    | https://${{ needs.determinePR.outputs.subdomain }}.limber-glimdown.pages.dev   | [on Cloudflare](https://dash.cloudflare.com/c67910a047e1510fec6d0d0cf442934c/pages/view/limber-glimdown) |
             | Tutorial  | https://${{ needs.determinePR.outputs.subdomain }}.limber-glimmer-tutorial.pages.dev | [on Cloudflare](https://dash.cloudflare.com/c67910a047e1510fec6d0d0cf442934c/pages/view/limber-glimmer-tutorial)
 
-            [Logs](https://github.com/NullVoxPopuli/limber/actions/runs/${{ github.run_id }}) 
+            [Logs](https://github.com/NullVoxPopuli/limber/actions/runs/${{ github.run_id }})
 
             [^note]: if these branch preview links are not working, please check the logs for the commit-based preview link. There is a character limit of 28 for the branch subdomain, as well as some other heuristics, [described here](https://community.cloudflare.com/t/algorithm-to-generate-a-preview-dns-subdomain-from-a-branch-name/477633?u=walshymvp) for the sake of implementation ease in deploy-preview.yml, that algo has been omitted.  The URLs are logged in the wrangler output, but it's hard to get outputs from a matrix job.
-
