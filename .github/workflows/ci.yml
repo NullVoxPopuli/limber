@@ -177,11 +177,16 @@ jobs:
         name: deploy-prep-dist
       - name: Publish ${{ matrix.app.name }}
         working-directory: ./deploy-prep-dist/${{ matrix.app.path }}
+        # This job only runs on push to main; github.event.workflow_run is empty
+        # here (ci.yml has no workflow_run trigger), so use the push ref/sha.
         run: |
           npx wrangler pages deploy ./ \
-            --project-name=${{ matrix.app.cloudflareName }} \
-            --branch=${{ github.event.workflow_run.head_branch }} \
-            --commit-hash=${{ github.event.workflow_run.head_sha }}
+            --project-name="$PROJECT_NAME" \
+            --branch="$BRANCH" \
+            --commit-hash="$HEAD_SHA"
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PROJECT_NAME: ${{ matrix.app.cloudflareName }}
+          BRANCH: ${{ github.ref_name }}
+          HEAD_SHA: ${{ github.sha }}

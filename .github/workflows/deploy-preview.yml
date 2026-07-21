@@ -23,6 +23,9 @@ on:
         required: true
         description: Which PR to create a preview for
 
+  # zizmor: ignore[dangerous-triggers] intentional: this workflow never checks
+  # out or runs PR code -- it only downloads CI's static build artifact and
+  # deploys it. That is the whole reason for the workflow_run split (see header).
   workflow_run:
     workflows: ["CI"]
     types:
