@@ -37,7 +37,7 @@ jobs:
     timeout-minutes: 10
 
     steps:
-    - uses: wyvox/action@v2
+    - uses: wyvox/action@d463e4fd48f0863f09cadf66203c1780b694620c # v2.0.0
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - run: pnpm turbo build --force
@@ -49,7 +49,7 @@ jobs:
     needs: [install_dependencies]
 
     steps:
-    - uses: wyvox/action@v2
+    - uses: wyvox/action@d463e4fd48f0863f09cadf66203c1780b694620c # v2.0.0
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - run: pnpm turbo build:test
@@ -61,14 +61,14 @@ jobs:
     needs: [install_dependencies]
 
     steps:
-    - uses: wyvox/action@v2
+    - uses: wyvox/action@d463e4fd48f0863f09cadf66203c1780b694620c # v2.0.0
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - run: pnpm turbo build:prod
     - run: ls -la ./apps/repl/dist
     - run: ls -la ./apps/tutorial/dist
     # Used for faster deploy so we don't need to checkout the repo
-    - uses: actions/upload-artifact@v7
+    - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: deploy-prep-dist
         if-no-files-found: error
@@ -88,7 +88,7 @@ jobs:
     needs: [install_dependencies]
 
     steps:
-      - uses: wyvox/action@v2
+      - uses: wyvox/action@d463e4fd48f0863f09cadf66203c1780b694620c # v2.0.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - run: pnpm build
@@ -111,7 +111,7 @@ jobs:
     needs: [build_tests]
 
     steps:
-      - uses: wyvox/action@v2
+      - uses: wyvox/action@d463e4fd48f0863f09cadf66203c1780b694620c # v2.0.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Environment Info
@@ -173,7 +173,7 @@ jobs:
       contents: read
       deployments: write
     steps:
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         name: deploy-prep-dist
       - name: Publish ${{ matrix.app.name }}
         working-directory: ./deploy-prep-dist/${{ matrix.app.path }}
