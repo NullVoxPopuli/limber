@@ -1,3 +1,12 @@
+export const qunit = `
+import { module, test } from 'qunit';
+
+module('Suite name', function () {
+  test('test name', function (assert) {
+    assert.strictEqual(2, 2, '2 === 2');
+  });
+}); 
+`;
 export const mermaid = `
 graph TD;
   A-->B;
