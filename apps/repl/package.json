@@ -181,7 +181,7 @@
     "svelte": "^5.35.5",
     "tabster": "8.7.0",
     "tracked-built-ins": "^4.0.0",
-    "tracked-toolbox": "^2.2.0",
+    "tracked-toolbox": "^3.0.0",
     "unified": "^11.0.5",
     "unist-util-flatmap": "^1.0.0",
     "unist-util-visit": "^5.0.0",
