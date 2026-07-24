@@ -1,6 +1,7 @@
 /**
  * @typedef {import('unified').Plugin} Plugin
  */
+import { buildGmdModule } from '../../render-to-string.js';
 import { assert, isRecord } from '../../utils.js';
 import { buildCodeFenceMetaUtils } from '../markdown/utils.js';
 
@@ -55,7 +56,28 @@ export async function compiler(config, api) {
    * @type {import('../../types.ts').Compiler}
    */
   const gmdCompiler = {
-    compile: async (text, options) => {
+    /**
+     * The runtime and renderToString paths share most of their work — both
+     * parse the markdown, recursively compile every live demo to a JS
+     * source string, then call `buildGmdModule` to inline those demos into
+     * a single `.gjs`-shaped module.
+     *
+     * The only forks are:
+     *
+     *   - Which `@ember/template-compiler` to import. Runtime form uses
+     *     `/runtime` (the parse-and-compile-at-execution-time variant);
+     *     renderToString uses the build-time form so the host app's babel
+     *     pipeline can precompile the `template()` call to wire format.
+     *
+     *   - How runtime scope crosses the source boundary. The build-time
+     *     form can't reference a live JS object, so renderToString gets
+     *     an empty scope. The runtime form registers the live scope object
+     *     behind a virtual ES module specifier via `api.provide` and emits
+     *     a module that `import * as __scope__ from '<specifier>'`. The
+     *     Compiler's existing `manual:` resolver handles the bridge, so
+     *     gmd never touches `globalThis` directly.
+     */
+    compile: async (text, options, compileApi) => {
       const compileOptions = filterOptions(options);
       const result = await parseMarkdown(text, {
         remarkPlugins: [...userOptions.remarkPlugins, ...compileOptions.remarkPlugins],
@@ -68,22 +90,66 @@ export async function compiler(config, api) {
         getFlavorFromMeta,
       });
 
-      const { template } = await api.tryResolve('@ember/template-compiler/runtime');
+      /** @type {Array<{ name: string, placeholderId: string, source: string }>} */
+      const demos = [];
 
+      let nth = 0;
+
+      for (const info of result.codeBlocks) {
+        const { format, flavor, code, placeholderId } = info;
+
+        if (!api.canCompile(format, flavor).result) continue;
+
+        nth++;
+
+        const sub = await api.compileToSource(format, code, {
+          ...(options ?? {}),
+          flavor,
+        });
+
+        demos.push({ name: `Demo${nth}`, placeholderId, source: sub.source });
+      }
+
+      const renderToString = isRecord(options) && options.renderToString === true;
       const scope = {
-        ...filterOptions(userOptions).scope,
-        ...filterOptions(options).scope,
+        ...userOptions.scope,
+        ...compileOptions.scope,
       };
 
-      const component = template(result.text, {
-        scope: () => ({
-          ...scope,
-          // TODO: compile all the components from "result" and add them to scope here
-          //       would this be better than the markdown style multiple islands
-        }),
+      if (renderToString) {
+        const source = buildGmdModule({
+          prose: result.text,
+          demos,
+          templateModule: '@ember/template-compiler',
+          scope: null,
+        });
+
+        return { source };
+      }
+
+      // `compileApi.provideScope` registers the live scope behind a
+      // Compiler-generated specifier and tracks it as part of this
+      // compile's lifecycle. The Compiler releases it when destroy fires;
+      // gmd doesn't need to track an unregister callback.
+      assert(
+        `gmd needs the per-compile API (3rd argument to compile) to provide its scope. ` +
+          `It looks like the Compiler did not pass one.`,
+        compileApi
+      );
+
+      const { specifier } = compileApi.provideScope(scope);
+
+      const source = buildGmdModule({
+        prose: result.text,
+        demos,
+        templateModule: '@ember/template-compiler/runtime',
+        scope: {
+          specifier,
+          keys: Object.keys(scope),
+        },
       });
 
-      return { compiled: component, ...result, scope };
+      return { compiled: source, ...result, scope };
     },
     render: async (element, compiled, extra, compiler) => {
       /**
@@ -110,66 +176,7 @@ export async function compiler(config, api) {
         ...(args ? { args } : {}),
       });
 
-      const destroy = () => result.destroy();
-
-      /**
-       * @type {(() => void)[]}
-       */
-      const destroyables = [];
-
-      await Promise.all(
-        /** @type {unknown[]} */ (extra.codeBlocks).map(async (/** @type {unknown} */ info) => {
-          /** @type {Record<string, unknown>} */
-          const infoObj = /** @type {Record<string, unknown>} */ (info);
-
-          if (
-            !api.canCompile(
-              /** @type {string} */ (infoObj.format),
-              /** @type {string} */ (infoObj.flavor)
-            )
-          ) {
-            return;
-          }
-
-          const flavor = /** @type {string} */ (infoObj.flavor);
-          const hasScope =
-            flavor === 'ember' || infoObj.format === 'gjs' || infoObj.format === 'hbs';
-          const subRender = await compiler.compile(
-            /** @type {string} */ (infoObj.format),
-            /** @type {string} */ (infoObj.code),
-            {
-              ...compiler.optionsFor(/** @type {string} */ (infoObj.format), flavor),
-              flavor: flavor,
-              // @ts-ignore
-              ...(hasScope
-                ? {
-                    scope: extra.scope,
-                  }
-                : {}),
-            }
-          );
-
-          const selector = `#${/** @type {string} */ (infoObj.placeholderId)}`;
-          const target = element.querySelector(selector);
-
-          assert(
-            `Could not find placeholder / target element (using selector: \`${selector}\`). ` +
-              `Could not render ${/** @type {string} */ (infoObj.format)} block.`,
-            target
-          );
-
-          destroyables.push(subRender.destroy);
-          target.appendChild(subRender.element);
-        })
-      );
-
-      return () => {
-        for (const subDestroy of destroyables) {
-          subDestroy();
-        }
-
-        destroy();
-      };
+      return () => result.destroy();
     },
   };
 
