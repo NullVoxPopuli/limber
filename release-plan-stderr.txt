@@ -1,0 +1,16 @@
+# Unlabeled Changes
+
+* Other
+  * [#2190](https://github.com/NullVoxPopuli/limber/pull/2190) Pin all workflow actions to commit SHAs ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2167](https://github.com/NullVoxPopuli/limber/pull/2167) Use strict resolver ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#2147](https://github.com/NullVoxPopuli/limber/pull/2147) fix: add explicit path to download-artifact step to restore deploy-prep-dist subdir ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2146](https://github.com/NullVoxPopuli/limber/pull/2146) fix: restore apps/ prefix in Deploy Preview matrix paths ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2145](https://github.com/NullVoxPopuli/limber/pull/2145) Fix deploy matrix paths after artifact actions upgrade to v7/v8 ([@Copilot](https://github.com/apps/copilot-swe-agent))
+  * [#2144](https://github.com/NullVoxPopuli/limber/pull/2144) Restore apps/ prefix in deploy workflow matrix paths ([@Copilot](https://github.com/apps/copilot-swe-agent))
+  * [#2143](https://github.com/NullVoxPopuli/limber/pull/2143) Revert incorrect apps/ prefix in deploy workflow matrix paths ([@Copilot](https://github.com/apps/copilot-swe-agent))
+  * [#2142](https://github.com/NullVoxPopuli/limber/pull/2142) Fix deploy workflow matrix paths to include apps/ prefix ([@Copilot](https://github.com/apps/copilot-swe-agent))
+* `ember-repl`, `limber-ui`
+  * [#2166](https://github.com/NullVoxPopuli/limber/pull/2166) upgrade ember-source to 7.2 alpha 3 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+
+*Cannot plan release until the above changes are labeled*.
