@@ -39,3 +39,36 @@ export function prefix_tgz(url) {
 export function isRecord(x) {
   return typeof x === 'object' && x !== null && !Array.isArray(x);
 }
+
+/**
+ * Builds the most useful human-readable message from a thrown error.
+ *
+ * SWC (via content-tag) throws Errors whose `message` is only
+ * "Parse Error at <file>:<line>:<column>" — the explanation of what's
+ * wrong and the code-frame live on a non-standard `source_code` property
+ * (and `stack` is nothing but wasm frames).
+ *
+ * @param {unknown} error
+ * @returns {string}
+ */
+export function errorMessage(error) {
+  if (!isRecord(error)) {
+    return String(error);
+  }
+
+  const parts = [];
+
+  if ('message' in error && error.message) {
+    parts.push(String(error.message));
+  }
+
+  if ('source_code' in error && error.source_code) {
+    parts.push(String(error.source_code));
+  }
+
+  if (parts.length === 0) {
+    return String(error);
+  }
+
+  return parts.join('\n\n');
+}

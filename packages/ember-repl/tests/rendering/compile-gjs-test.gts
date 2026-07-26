@@ -1,5 +1,11 @@
 import { assert as debugAssert } from '@ember/debug';
-import { click, render, settled, setupOnerror } from '@ember/test-helpers';
+import {
+  click,
+  render,
+  settled,
+  setupOnerror,
+  waitUntil,
+} from '@ember/test-helpers';
 import QUnit, { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -17,6 +23,10 @@ import type { ComponentLike } from '@glint/template';
 function unexpectedErrorHandler(error: unknown) {
   console.error(error);
   QUnit.assert.notOk(`CHECK CONSOLE: did not expect error: ${String(error)}`);
+}
+
+function errorMessagesIn(compiler: ReturnType<typeof getCompiler>) {
+  return compiler.messages.filter((message) => message.type === 'error');
 }
 
 module('Rendering | compile()', function (hooks) {
@@ -61,6 +71,77 @@ module('Rendering | compile()', function (hooks) {
       await render(component);
 
       assert.dom('button').hasText('Click');
+    });
+
+    test('parse errors are not swallowed', async function (assert) {
+      const compiler = getCompiler(this);
+
+      /**
+       * The `= ;` is a syntax error, which content-tag (SWC) reports
+       * with a bare "Parse Error at <file>:<line>:<column>" message —
+       * the explanation and code frame are on the error's `source_code` property.
+       */
+      const snippet = stripIndent`
+        const isBroken = ;
+
+        <template>{{isBroken}}</template>
+      `;
+
+      /**
+       * Mirroring how apps use compile(): nobody awaits state.promise,
+       * so its rejection also fires the browser's unhandledrejection event,
+       * whose announcement is the *last* error message -- the one the UI's
+       * error bubble ends up showing.
+       *
+       * QUnit fails tests on unhandled rejections; that unhandled rejection
+       * is the point of this test, so silence QUnit's handler for its duration.
+       */
+      const onUncaughtException = QUnit.onUncaughtException;
+
+      QUnit.onUncaughtException = () => {};
+
+      try {
+        let reported: string | undefined;
+
+        const state = compile(compiler, snippet, {
+          format: 'gjs',
+          onError: (error) => (reported = error),
+        });
+
+        await waitUntil(() => state.error, { timeout: 10_000 });
+
+        // Wait for the unhandledrejection announcement
+        // (the compile() announcement is first, this one is second)
+        await waitUntil(() => errorMessagesIn(compiler).length >= 2, {
+          timeout: 10_000,
+        });
+
+        assert.ok(state.error, 'the compile state has an error');
+
+        for (const [name, message] of [
+          ['state.reason', state.reason],
+          ['onError', reported],
+          [
+            'the UI error bubble (via compiler.lastError)',
+            compiler.lastError?.message,
+          ],
+        ] as const) {
+          assert.true(
+            message?.includes('Parse Error at'),
+            `${name} says where the parse error is`
+          );
+          assert.true(
+            message?.includes('Expression expected'),
+            `${name} explains what the parse error is`
+          );
+          assert.true(
+            message?.includes('const isBroken = ;'),
+            `${name} includes the code frame`
+          );
+        }
+      } finally {
+        QUnit.onUncaughtException = onUncaughtException;
+      }
     });
 
     test('it works', async function (assert) {

@@ -1,5 +1,7 @@
 import { tracked } from '@glimmer/tracking';
 
+import { errorMessage } from 'repl-sdk';
+
 import type { ComponentLike } from '@glint/template';
 
 export const RESOLVE = Symbol('CompileState::resolve');
@@ -42,7 +44,7 @@ export class CompileState implements State {
   }
 
   get reason() {
-    return this.error?.message;
+    return this.error ? errorMessage(this.error) : undefined;
   }
 
   get isWaiting() {
