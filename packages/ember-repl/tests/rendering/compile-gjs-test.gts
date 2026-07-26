@@ -63,6 +63,56 @@ module('Rendering | compile()', function (hooks) {
       assert.dom('button').hasText('Click');
     });
 
+    test('parse errors are not swallowed', async function (assert) {
+      const compiler = getCompiler(this);
+
+      /**
+       * The `= ;` is a syntax error, which content-tag (SWC) reports
+       * with a bare "Parse Error at <file>:<line>:<column>" message —
+       * the explanation and code frame are on the error's `source_code` property.
+       */
+      const snippet = stripIndent`
+        const isBroken = ;
+
+        <template>{{isBroken}}</template>
+      `;
+
+      let reported: string | undefined;
+
+      const state = compile(compiler, snippet, {
+        format: 'gjs',
+        onError: (error) => (reported = error),
+      });
+
+      await state.promise.catch(() => {
+        /* the rejection is the point of this test */
+      });
+
+      assert.ok(state.error, 'the compile state has an error');
+
+      for (const [name, message] of [
+        ['state.reason', state.reason],
+        ['onError', reported],
+        [
+          'the UI error bubble (via compiler.lastError)',
+          compiler.lastError?.message,
+        ],
+      ] as const) {
+        assert.true(
+          message?.includes('Parse Error at'),
+          `${name} says where the parse error is`
+        );
+        assert.true(
+          message?.includes('Expression expected'),
+          `${name} explains what the parse error is`
+        );
+        assert.true(
+          message?.includes('const isBroken = ;'),
+          `${name} includes the code frame`
+        );
+      }
+    });
+
     test('it works', async function (assert) {
       const compile = async () => {
         const template = `

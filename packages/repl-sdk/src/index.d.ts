@@ -3,6 +3,13 @@ import type { EditorView } from 'codemirror';
 
 export type { ErrorMessage, InfoMessage, Message, Options } from './types.ts';
 
+/**
+ * Builds the most useful human-readable message from a thrown error,
+ * including the explanation and code-frame from SWC / content-tag
+ * parse errors (which hide those on a non-standard `source_code` property).
+ */
+export function errorMessage(error: unknown): string;
+
 export const defaultFormats: keyof Options['formats'];
 export const defaults: Options;
 

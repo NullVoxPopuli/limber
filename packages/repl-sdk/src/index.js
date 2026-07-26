@@ -10,9 +10,11 @@ import { compilers } from './compilers.js';
 import { STABLE_REFERENCE } from './es-module-shim.js';
 import { getTarRequestId } from './request.js';
 import { getFromTarball } from './tar.js';
-import { assert, nextId, prefix_tgz, tgzPrefix, unzippedPrefix } from './utils.js';
+import { assert, errorMessage, nextId, prefix_tgz, tgzPrefix, unzippedPrefix } from './utils.js';
 
 assert(`There is no document. repl-sdk is meant to be ran in a browser`, globalThis.document);
+
+export { errorMessage } from './utils.js';
 
 export const defaultFormats = Object.keys(compilers);
 
@@ -98,7 +100,7 @@ export class Compiler {
 
     if (handled) return;
 
-    this.#announce('error', e.reason);
+    this.#announce('error', errorMessage(e.reason));
   };
 
   /**
@@ -355,9 +357,7 @@ export class Compiler {
       return await this.#compile(format, text, options);
     } catch (e) {
       // for on.log usage
-      const message = e instanceof Error ? e.message : e;
-
-      this.#announce('error', String(message));
+      this.#announce('error', errorMessage(e));
 
       // Don't hide errors!
       this.#error(e);
