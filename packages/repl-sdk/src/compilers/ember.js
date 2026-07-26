@@ -2,6 +2,8 @@
  * @typedef {import('../types.ts').CompilerConfig} CompilerConfig
  */
 
+import { errorMessage } from '../utils.js';
+
 /**
  * Other `@ember` (and `@glimmer`) packages are bundled in ember-source,
  * and typecilaly use a build plugin to resolve from `@ember/*` imports.
@@ -91,7 +93,7 @@ function resolve(id) {
 function onUnhandled(e, handle) {
   if (!e.reason?.message) return;
 
-  let reason = e.reason.message;
+  let reason = errorMessage(e.reason);
 
   if (reason.includes('Stack trace for the update:')) {
     reason += ' (see console)';
