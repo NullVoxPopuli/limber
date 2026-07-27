@@ -472,7 +472,7 @@ importers:
         version: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
       kolay:
         specifier: github:universal-ember/kolay#dist
-        version: https://codeload.github.com/universal-ember/kolay/tar.gz/954694ac6eac09a27d22b71762f83ecad7080345(0d7798950681c8d6f11c89df9fde55ef)
+        version: https://codeload.github.com/universal-ember/kolay/tar.gz/757d6a0ec85ebe6244c1e8c53a15f3840392536f(0d7798950681c8d6f11c89df9fde55ef)
       limber-ui:
         specifier: workspace:*
         version: link:../../packages/limber-ui
@@ -8274,8 +8274,8 @@ packages:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
     engines: {node: '>=0.10.0'}
 
-  kolay@https://codeload.github.com/universal-ember/kolay/tar.gz/954694ac6eac09a27d22b71762f83ecad7080345:
-    resolution: {gitHosted: true, integrity: sha512-beQHoybQQfO3dbLEc91g+RYoS+1tPhG1QXpElI049GPEeLXVVLf8HWAAD8yHYVbiHoFZPMsn3jiRcqjITd8TwA==, tarball: https://codeload.github.com/universal-ember/kolay/tar.gz/954694ac6eac09a27d22b71762f83ecad7080345}
+  kolay@https://codeload.github.com/universal-ember/kolay/tar.gz/757d6a0ec85ebe6244c1e8c53a15f3840392536f:
+    resolution: {gitHosted: true, integrity: sha512-jMfOl5d8NP0Crjdd7EU/Mn5NCSre99nh87SX56Ze3N9xC2Pj5UTHbDBLH+fRJGdRcUGo5U/kDp6vDJ59eaRnuw==, tarball: https://codeload.github.com/universal-ember/kolay/tar.gz/757d6a0ec85ebe6244c1e8c53a15f3840392536f}
     version: 5.4.0
     engines: {node: '>= 18'}
 
@@ -18832,7 +18832,7 @@ snapshots:
 
   kind-of@6.0.3: {}
 
-  kolay@https://codeload.github.com/universal-ember/kolay/tar.gz/954694ac6eac09a27d22b71762f83ecad7080345(0d7798950681c8d6f11c89df9fde55ef):
+  kolay@https://codeload.github.com/universal-ember/kolay/tar.gz/757d6a0ec85ebe6244c1e8c53a15f3840392536f(0d7798950681c8d6f11c89df9fde55ef):
     dependencies:
       '@ember/test-waiters': 4.1.2
       '@embroider/addon-shim': 1.10.2
