@@ -11,5 +11,6 @@ export default class Router extends EmberRouter {
 }
 
 Router.map(function () {
-  addRoutes(this);
+  // scoped mount: the 'docs' group serves from the root URL space
+  addRoutes(this, 'docs');
 });

@@ -4,14 +4,39 @@ import type { Collection, Page } from 'kolay';
 
 export const not = (x: unknown) => !x;
 
+/**
+ * The manifest's page paths live under the 'docs' group
+ * (e.g. /docs/1-introduction/1-basics/prose.md), but the app's URLs are
+ * the lesson directories at the root (e.g. /1-introduction/1-basics) —
+ * the group is mounted at the root via addRoutes(this, 'docs').
+ */
+export function lessonPath(item: Page | Collection): string {
+  return item.appRelativePath
+    .replace(/^\/docs/, '')
+    .replace(/\/prose\.md$/, '');
+}
+
+/**
+ * keyed-each-blocks is only shown in dev builds.
+ * Pending: https://github.com/emberjs/ember.js/issues/20419
+ */
+const isProdOnlyHidden = (path: string) =>
+  import.meta.env.PROD && path.includes('keyed-each-blocks');
+
 export function isHidden(page: Page | Collection) {
+  // Only lesson directories (via their prose.md) are tutorial entries.
+  // Stray .md files next to the lesson directories have no prompt/answer
+  // and never had manifest entries before the kolay rework.
+  if (!isCollection(page) && !page.path.endsWith('/prose.md')) return true;
+
   if (location.href.includes('showHidden')) return false;
 
-  if (isCollection(page)) {
-    return page.path.startsWith('x-');
-  }
+  const path = isCollection(page) ? page.path : lessonPath(page);
 
-  return page.path.startsWith('/x-');
+  return (
+    path.split('/').some((segment) => segment.startsWith('x-')) ||
+    isProdOnlyHidden(path)
+  );
 }
 
 export function isNotHidden(page: Page | Collection) {
@@ -30,9 +55,9 @@ export function nextPage(
     }
 
     if (found) {
-      preload(tutorial.path);
+      preload(lessonPath(tutorial));
 
-      return unprose(tutorial.path);
+      return lessonPath(tutorial);
     }
 
     if (current?.path && current.path === tutorial.path) {
@@ -43,27 +68,19 @@ export function nextPage(
   return;
 }
 
-function unprose(prosePath: string | undefined) {
-  if (!prosePath) return;
-
-  return prosePath.replace(/\/prose.md$/, '');
-}
-
 /**
  * To help reduce load time between chapters, we'll load
  * the next and previous documents for each page
  */
-async function preload(prosePath?: string) {
-  if (!prosePath) return;
+async function preload(path?: string) {
+  if (!path) return;
 
   await Promise.resolve();
 
-  const path = unprose(prosePath);
-
   await Promise.all([
-    fetch(`/docs/${path}/prose.md`),
-    fetch(`/docs/${path}/prompt.gjs`),
-    fetch(`/docs/${path}/answer.gjs`),
+    fetch(`/docs${path}/prose.md`),
+    fetch(`/docs${path}/prompt.gjs`),
+    fetch(`/docs${path}/answer.gjs`),
   ]);
 }
 

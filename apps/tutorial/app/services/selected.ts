@@ -5,7 +5,7 @@ import { Compiled as MarkdownToHTML } from 'kolay';
 import { keepLatest } from 'reactiveweb/keep-latest';
 import { link } from 'reactiveweb/link';
 import { RemoteData } from 'reactiveweb/remote-data';
-import { nextPage } from 'tutorial/utils';
+import { lessonPath, nextPage } from 'tutorial/utils';
 
 import type DocsService from './docs';
 import type RouterService from '@ember/routing/router-service';
@@ -117,8 +117,8 @@ export default class Selected extends Service {
   }
 
   #findByPath = (path: string) => {
-    const prosePath = `${path}/prose.md`;
-
-    return this.docs.tutorials.find((tutorial) => tutorial.path === prosePath);
+    return this.docs.tutorials.find(
+      (tutorial) => lessonPath(tutorial) === path
+    );
   };
 }
