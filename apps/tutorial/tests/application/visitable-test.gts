@@ -18,7 +18,9 @@ import { tmpData } from './tmp';
 
 import type { Manifest } from 'kolay';
 
-const manifest = tmpData as Manifest;
+// tmpData is a snapshot of the pre-rework manifest shape; the test only
+// uses it to enumerate lesson URLs, which are unchanged.
+const manifest = tmpData as unknown as Manifest;
 
 module('every tutorial chapter', function (hooks) {
   setupApplicationTest(hooks);

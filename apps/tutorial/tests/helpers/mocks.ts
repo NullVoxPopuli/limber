@@ -24,11 +24,14 @@ function makeDocsTree(treeData: [string, string[]][]) {
 
       const page = {
         path: tutorialPath,
+        // as in the real manifest: the 'docs' group prefixes appRelativePath
+        appRelativePath: `/docs/${groupPath}/${tutorialPath}`,
         name: tutorialName,
         cleanedName: tutorialName.replace(/-/g, ' '),
         pages: [
           {
             path: prosePath,
+            appRelativePath: `/docs${prosePath}`,
             name: 'prose',
             groupName: tutorialName.replace(/-/g, ' '),
             cleanedName: 'prose',
@@ -42,6 +45,7 @@ function makeDocsTree(treeData: [string, string[]][]) {
 
     const group = {
       path: groupPath,
+      appRelativePath: `/docs/${groupPath}`,
       name: groupName,
       cleanedName: groupName.replace(/-/g, ' '),
       pages: groupPages,

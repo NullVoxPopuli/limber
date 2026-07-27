@@ -15,7 +15,6 @@ export default class ApplicationRoute extends Route {
     const highlighter = await createShiki();
 
     const manifest = await setupKolay(this, {
-      resolve: {},
       rehypePlugins: [
         [
           rehypeShikiFromHighlighter,

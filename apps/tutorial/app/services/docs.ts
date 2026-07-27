@@ -2,6 +2,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import Service, { service } from '@ember/service';
 
 import { docsManager } from 'kolay';
+import { lessonPath } from 'tutorial/utils';
 
 import type Selected from './selected';
 import type RouterService from '@ember/routing/router-service';
@@ -25,6 +26,12 @@ export default class DocsService extends Service {
     return this.docs.tree ?? {};
   }
 
+  get firstLesson(): string | undefined {
+    const first = this.tutorials[0];
+
+    return first ? lessonPath(first) : undefined;
+  }
+
   get showAnswer() {
     return this.router.currentRoute?.queryParams?.['showAnswer'] === '1';
   }
@@ -40,11 +47,11 @@ export default class DocsService extends Service {
   };
 
   get currentPath(): string | undefined {
-    if (!this.router.currentURL) return this.tutorials[0]?.path;
+    if (!this.router.currentURL) return this.firstLesson;
 
     const [path] = this.router.currentURL.split('?');
 
-    return path && path !== '/' ? path : this.tutorials[0]?.path;
+    return path && path !== '/' ? path : this.firstLesson;
   }
 
   toggleProse = () => {

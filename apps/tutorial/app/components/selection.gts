@@ -6,7 +6,7 @@ import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { isCollection } from 'kolay';
-import { isNotHidden, titleize } from 'tutorial/utils';
+import { isNotHidden, lessonPath, titleize } from 'tutorial/utils';
 
 import type RouterService from '@ember/routing/router-service';
 import type DocsService from 'tutorial/services/docs';
@@ -32,10 +32,8 @@ export class Selection extends Component {
     this.router.transitionTo(event.target.value);
   };
 
-  isSelected = (group: { path: string }, tutorial: { path: string }) => {
-    const fullPath = `/${group.path}/${tutorial.path}`;
-
-    return this.docs.currentPath === fullPath;
+  isSelected = (tutorial: Parameters<typeof lessonPath>[0]) => {
+    return this.docs.currentPath === lessonPath(tutorial);
   };
 
   <template>
@@ -71,8 +69,8 @@ export class Selection extends Component {
                   {{#if (isNotHidden tutorial)}}
 
                     <option
-                      value="/{{group.path}}/{{tutorial.path}}"
-                      selected={{this.isSelected group tutorial}}
+                      value={{lessonPath tutorial}}
+                      selected={{this.isSelected tutorial}}
                     >
                       {{titleize tutorial.name}}
                     </option>
