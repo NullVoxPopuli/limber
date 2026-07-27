@@ -8,7 +8,7 @@ const frameworkModules = {
   '@ember/component/helper': () => import('@ember/component/helper'),
   '@ember/component/template-only': () =>
     import('@ember/component/template-only'),
-  '@ember/controller': () => import('@ember/controller),
+  '@ember/controller': () => import('@ember/controller'),
   '@ember/debug': () => import('@ember/debug'),
   '@ember/destroyable': () => import('@ember/destroyable'),
   '@ember/helper': () => import('@ember/helper'),
