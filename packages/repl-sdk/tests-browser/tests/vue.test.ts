@@ -11,7 +11,7 @@ describe('vue', () => {
       },
     });
     // Vue comes from esm.sh
-    const { element } = await compiler.compile(
+    const { element, destroy } = await compiler.compile(
       'vue',
       `
       <style scoped>
@@ -40,5 +40,9 @@ describe('vue', () => {
     expect(h1?.textContent).toContain('Hello World');
     expect(window.getComputedStyle(h1).color).toBe('rgb(255, 0, 0)');
     expect(element.textContent).toContain('Hello World');
+
+    // destroy unmounts the vue app, so the demo can be garbage-collected
+    destroy();
+    expect(element.querySelector('h1')).toBeNull();
   });
 });

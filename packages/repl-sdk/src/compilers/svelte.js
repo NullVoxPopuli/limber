@@ -99,17 +99,20 @@ export const svelte = {
 
         element.appendChild(div);
 
-        requestAnimationFrame(() => {
-          // @ts-ignore
-          svelte.mount(component, {
-            target: element,
-            props: {
-              /* no props */
-            },
-          });
+        await new Promise((resolve) => requestAnimationFrame(resolve));
 
-          api.announce('info', 'Done');
+        // @ts-ignore
+        const instance = svelte.mount(component, {
+          target: element,
+          props: {
+            /* no props */
+          },
         });
+
+        api.announce('info', 'Done');
+
+        // The return value is this render's destroy handle (see Compiler#render).
+        return () => svelte.unmount(instance);
       },
     };
   },

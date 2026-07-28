@@ -50,8 +50,13 @@ export const vue = {
         element.appendChild(div);
         element.appendChild(style);
 
-        createApp(component).mount(div);
+        const app = createApp(component);
+
+        app.mount(div);
         compiler.announce('info', 'Done');
+
+        // The return value is this render's destroy handle (see Compiler#render).
+        return () => app.unmount();
       },
     };
   },
