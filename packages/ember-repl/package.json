@@ -49,7 +49,7 @@
     "ember-primitives": "^0.61.1",
     "ember-resolver": "^13.1.0",
     "ember-resources": "^7.1.0",
-    "repl-sdk": "workspace:*"
+    "repl-sdk": "workspace:^"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",

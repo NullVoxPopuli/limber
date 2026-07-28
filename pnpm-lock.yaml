@@ -916,7 +916,7 @@ importers:
         specifier: ^7.1.0
         version: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
       repl-sdk:
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../repl-sdk
     devDependencies:
       '@arethetypeswrong/cli':
