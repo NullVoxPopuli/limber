@@ -12,7 +12,7 @@ describe('jsx', () => {
         },
       });
       // React comes from esm.sh
-      const { element } = await compiler.compile(
+      const { element, destroy } = await compiler.compile(
         'jsx',
         `
         import React from 'react';
@@ -28,6 +28,10 @@ describe('jsx', () => {
 
       expect(element.querySelector('h1')?.textContent).toContain('Hello World');
       expect(element.textContent).toContain('Hello World');
+
+      // destroy unmounts the react root, so the demo can be garbage-collected
+      destroy();
+      expect(element.querySelector('h1')).toBeNull();
     });
   });
 });

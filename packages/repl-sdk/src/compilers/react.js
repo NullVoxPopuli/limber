@@ -53,6 +53,15 @@ export const jsx = {
 
         // Wait for react-dom to render
         await new Promise((resolve) => requestAnimationFrame(resolve));
+
+        // The return value is this render's destroy handle (see Compiler#render).
+        // Without unmounting, every rendered demo leaves a live FiberRootNode
+        // pinning its container element -- and through DOM parent/child links,
+        // the entire (detached) tree the demo was rendered into. In dev,
+        // react-refresh additionally roots every FiberRootNode globally
+        // (helpersByRoot), so nothing about an abandoned render is ever
+        // garbage-collected.
+        return () => root.unmount();
       },
     };
   },
