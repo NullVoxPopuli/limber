@@ -2,6 +2,17 @@
 
 ## Release (2026-07-28)
 
+* ember-repl 8.2.1 (patch)
+
+#### :bug: Bug Fix
+* `ember-repl`
+  * [#2203](https://github.com/NullVoxPopuli/limber/pull/2203) ember-repl: publish a caret range for repl-sdk ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
+## Release (2026-07-28)
+
 * ember-repl 8.2.0 (minor)
 * limber-ui 4.2.2 (patch)
 * repl-sdk 1.6.1 (patch)
