@@ -1,5 +1,61 @@
 # Changelog
 
+## Release (2026-07-28)
+
+* ember-repl 8.2.0 (minor)
+* limber-ui 4.2.2 (patch)
+* repl-sdk 1.6.1 (patch)
+
+#### :rocket: Enhancement
+* `ember-repl`
+  * [#2173](https://github.com/NullVoxPopuli/limber/pull/2173) Add @ember/object/compat to known-modules ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* `repl-sdk`
+  * [#2202](https://github.com/NullVoxPopuli/limber/pull/2202) repl-sdk: compile jsx demos with the production JSX runtime ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#2201](https://github.com/NullVoxPopuli/limber/pull/2201) repl-sdk: unmount react/vue/svelte demos on destroy; compile jsx with the production runtime ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `ember-repl`, `repl-sdk`
+  * [#2195](https://github.com/NullVoxPopuli/limber/pull/2195) Bubble content-tag (SWC) parse error details up to the UI's error bubble ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+
+#### :memo: Documentation
+* Other
+  * [#2200](https://github.com/NullVoxPopuli/limber/pull/2200) Tutorial: preview the unreleased kolay (docs() plugin rework) ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2192](https://github.com/NullVoxPopuli/limber/pull/2192) Upgrade xstate to 5.32.5; drop unused @xstate/inspect ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2185](https://github.com/NullVoxPopuli/limber/pull/2185) Raise the resize handle above the panels' positioned content ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2180](https://github.com/NullVoxPopuli/limber/pull/2180) Remove on/hash/fn imports ([@tcjr](https://github.com/tcjr))
+* `ember-repl`
+  * [#2199](https://github.com/NullVoxPopuli/limber/pull/2199) Fix import statement for @ember/controller ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `ember-repl`, `limber-ui`
+  * [#2179](https://github.com/NullVoxPopuli/limber/pull/2179) Use ember-primitives' <Resizable> for the REPL editor/output panes ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2176](https://github.com/NullVoxPopuli/limber/pull/2176) Update ember-source, use `tracked()` ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :house: Internal
+* Other
+  * [#2193](https://github.com/NullVoxPopuli/limber/pull/2193) docs(contributor): contributors readme action update ([@github-actions[bot]](https://github.com/apps/github-actions))
+  * [#2190](https://github.com/NullVoxPopuli/limber/pull/2190) Pin all workflow actions to commit SHAs ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2188](https://github.com/NullVoxPopuli/limber/pull/2188) Add zizmor workflow security linter ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2182](https://github.com/NullVoxPopuli/limber/pull/2182) Deploy Preview: support fork PRs ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2167](https://github.com/NullVoxPopuli/limber/pull/2167) Use strict resolver ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#2152](https://github.com/NullVoxPopuli/limber/pull/2152) Fix deploy preview ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#2147](https://github.com/NullVoxPopuli/limber/pull/2147) fix: add explicit path to download-artifact step to restore deploy-prep-dist subdir ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2146](https://github.com/NullVoxPopuli/limber/pull/2146) fix: restore apps/ prefix in Deploy Preview matrix paths ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2145](https://github.com/NullVoxPopuli/limber/pull/2145) Fix deploy matrix paths after artifact actions upgrade to v7/v8 ([@Copilot](https://github.com/apps/copilot-swe-agent))
+  * [#2144](https://github.com/NullVoxPopuli/limber/pull/2144) Restore apps/ prefix in deploy workflow matrix paths ([@Copilot](https://github.com/apps/copilot-swe-agent))
+  * [#2143](https://github.com/NullVoxPopuli/limber/pull/2143) Revert incorrect apps/ prefix in deploy workflow matrix paths ([@Copilot](https://github.com/apps/copilot-swe-agent))
+  * [#2142](https://github.com/NullVoxPopuli/limber/pull/2142) Fix deploy workflow matrix paths to include apps/ prefix ([@Copilot](https://github.com/apps/copilot-swe-agent))
+* `ember-repl`, `limber-ui`
+  * [#2177](https://github.com/NullVoxPopuli/limber/pull/2177) Upgrade glint ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#2172](https://github.com/NullVoxPopuli/limber/pull/2172) Update deps ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#2166](https://github.com/NullVoxPopuli/limber/pull/2166) upgrade ember-source to 7.2 alpha 3 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#2148](https://github.com/NullVoxPopuli/limber/pull/2148) Upgrade to ember-primitives 0.56.0 (Popover API) ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+
+#### Committers: 5
+- @NullVoxPopuli's reduced-access machine account for AI usage ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+- Copilot [Bot] ([@copilot-swe-agent](https://github.com/apps/copilot-swe-agent))
+- GitHub Actions [Bot] ([@github-actions](https://github.com/apps/github-actions))
+- Tom Carter ([@tcjr](https://github.com/tcjr))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2026-04-19)
 
 * ember-repl 8.1.0 (minor)
