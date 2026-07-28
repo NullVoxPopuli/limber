@@ -18,6 +18,8 @@ export const jsx = {
         return `https://esm.sh/react@19.2.3/es2022/react.development.mjs`;
       case 'react/jsx-dev-runtime':
         return `https://esm.sh/react@19.2.3/es2022/jsx-dev-runtime.development.mjs`;
+      case 'react/jsx-runtime':
+        return `https://esm.sh/react@19.2.3/es2022/jsx-runtime.mjs`;
       case 'react-dom/client':
         return `https://esm.sh/react-dom@19.2.3/es2022/client.development.mjs`;
       case '@babel/standalone':
@@ -37,6 +39,18 @@ export const jsx = {
             [
               babel.availablePresets.react,
               {
+                /**
+                 * The production automatic runtime (jsx/jsxs from
+                 * 'react/jsx-runtime') works under both dev- and
+                 * production-built hosts.
+                 *
+                 * The default (development) transform emits jsxDEV from
+                 * 'react/jsx-dev-runtime', which a production build of react
+                 * deliberately exports as undefined — every compiled demo
+                 * then throws "_jsxDEV is not a function" at evaluation.
+                 */
+                runtime: 'automatic',
+                development: false,
                 // useBuiltIns: true,
               },
             ],
