@@ -897,6 +897,9 @@ importers:
       '@ember/test-waiters':
         specifier: ^4.1.0
         version: 4.1.2
+      '@embroider/addon-shim':
+        specifier: 1.10.2
+        version: 1.10.2
       codemirror:
         specifier: ^6.0.2
         version: 6.0.2
@@ -12687,10 +12690,10 @@ snapshots:
 
   '@embroider/addon-shim@1.10.2':
     dependencies:
-      '@embroider/shared-internals': 3.0.2
+      '@embroider/shared-internals': 3.1.1
       broccoli-funnel: 3.0.8
       common-ancestor-path: 1.0.1
-      semver: 7.8.1
+      semver: 7.8.5
     transitivePeerDependencies:
       - supports-color
 
@@ -15826,7 +15829,7 @@ snapshots:
       caniuse-lite: 1.0.30001788
       isbot: 3.8.0
       object-path: 0.11.8
-      semver: 7.8.1
+      semver: 7.8.5
       ua-parser-js: 1.0.41
 
   browserslist-to-esbuild@2.1.1(browserslist@4.28.2):
@@ -17009,7 +17012,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.29.2
       '@ember/test-waiters': 4.1.2
-      '@embroider/addon-shim': 1.10.3
+      '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.20.5(c8332dc3f90c0e60eb130a3a85f980b9)
       '@floating-ui/dom': 1.7.5
       '@glimmer/component': 2.1.1
@@ -21723,7 +21726,7 @@ snapshots:
 
   tracked-toolbox@2.2.0(@babel/core@7.29.0):
     dependencies:
-      '@embroider/addon-shim': 1.10.3
+      '@embroider/addon-shim': 1.10.2
       decorator-transforms: 2.4.0(@babel/core@7.29.0)
       ember-cache-primitive-polyfill: 1.0.1(@babel/core@7.29.0)
     transitivePeerDependencies:
