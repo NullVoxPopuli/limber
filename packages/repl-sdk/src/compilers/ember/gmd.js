@@ -12,7 +12,7 @@ let elementId = 0;
  *   scope: Record<string, unknown>,
  *   remarkPlugins: Plugin[],
  *   rehypePlugins: Plugin[],
- *   ShadowComponent: string | undefined,
+ *   ShadowComponent: string | boolean | undefined,
  *   CopyComponent: string | undefined
  *   owner?: unknown | undefined
  *   }}
@@ -33,9 +33,37 @@ export function filterOptions(options) {
     scope: /** @type {Record<string, unknown>}*/ (options?.scope || {}),
     remarkPlugins: /** @type {Plugin[]}*/ (options?.remarkPlugins || []),
     rehypePlugins: /** @type {Plugin[]}*/ (options?.rehypePlugins || []),
-    ShadowComponent: /** @type {string}*/ (options?.ShadowComponent),
+    // Historically this was a component *name* to be resolved and used to
+    // wrap each live demo's invocation before it was ever rendered. Now that
+    // live demos are compiled+rendered independently and grafted into a
+    // placeholder element (see the `render` loop below), there's no longer a
+    // component-invocation step to wrap - so any truthy value (boolean or
+    // the legacy string) just turns on native shadow-DOM wrapping instead.
+    ShadowComponent: /** @type {string | boolean}*/ (options?.ShadowComponent),
     CopyComponent: /** @type {string}*/ (options?.CopyComponent),
   };
+}
+
+/**
+ * Mirrors ember-primitives' `<Shadowed includeStyles>` component: attaches
+ * an open shadow root to `target` and re-imports every stylesheet `<link>`
+ * currently in the document so the shadow-rendered demo still picks up the
+ * app's styles despite being style-isolated from it.
+ *
+ * @param {Element} target
+ * @returns {ShadowRoot}
+ */
+function attachStyledShadowRoot(target) {
+  const shadowRoot = target.attachShadow({ mode: 'open' });
+  const style = document.createElement('style');
+
+  style.textContent = [...document.querySelectorAll('link[rel="stylesheet"]')]
+    .map((link) => `@import "${/** @type {HTMLLinkElement} */ (link).href}";`)
+    .join('\n');
+
+  shadowRoot.appendChild(style);
+
+  return shadowRoot;
 }
 
 /**
@@ -159,7 +187,17 @@ export async function compiler(config, api) {
           );
 
           destroyables.push(subRender.destroy);
-          target.appendChild(subRender.element);
+
+          const meta = /** @type {string | undefined} */ (infoObj.meta);
+          const optedOut = Boolean(meta && meta.includes('no-shadow'));
+
+          if (userOptions.ShadowComponent && !optedOut) {
+            const shadowRoot = attachStyledShadowRoot(target);
+
+            shadowRoot.appendChild(subRender.element);
+          } else {
+            target.appendChild(subRender.element);
+          }
         })
       );
 
