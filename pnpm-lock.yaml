@@ -119,8 +119,8 @@ importers:
         specifier: ^3.3.1
         version: 3.4.11
       ember-container-query:
-        specifier: 7.0.3
-        version: 7.0.3(f2f785662ff079824ff60d8b08670db9)
+        specifier: 7.1.1
+        version: 7.1.1(f2f785662ff079824ff60d8b08670db9)
       ember-deep-tracked:
         specifier: ^2.0.1
         version: 2.0.1(c8332dc3f90c0e60eb130a3a85f980b9)
@@ -466,13 +466,13 @@ importers:
         version: 0.61.1(a64917a33376b7be2998bd4d1c9f349f)
       ember-repl:
         specifier: latest
-        version: 8.1.0(97a2ca31a8e4cf9a385bac208eb0c5f1)
+        version: 8.2.1(97a2ca31a8e4cf9a385bac208eb0c5f1)
       ember-resources:
         specifier: ^7.1.0
         version: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
       kolay:
         specifier: github:universal-ember/kolay#dist
-        version: https://codeload.github.com/universal-ember/kolay/tar.gz/757d6a0ec85ebe6244c1e8c53a15f3840392536f(0d7798950681c8d6f11c89df9fde55ef)
+        version: https://codeload.github.com/universal-ember/kolay/tar.gz/f6fd7d039d3b7698efdeb661074b7bb57e7f487f(0d7798950681c8d6f11c89df9fde55ef)
       limber-ui:
         specifier: workspace:*
         version: link:../../packages/limber-ui
@@ -6780,8 +6780,8 @@ packages:
     resolution: {integrity: sha512-BtkjulweiXo9c3yVWrtexw2dTmBrvavD/xixNC6TKOBdrixUwU+6nuOO9dufDWsMxoid7MvtmDpzc9+mE8PdaA==}
     engines: {node: 10.* || >= 12.*}
 
-  ember-container-query@7.0.3:
-    resolution: {integrity: sha512-3l4oRZR/68kxeMJcqM4s10SLJfffcvdVLPZR/gCnXQNLZdtAIhOrS13KXR3XavzQ+j+QFhJd5JLswtYzOH0C3w==}
+  ember-container-query@7.1.1:
+    resolution: {integrity: sha512-bZhdfAj6AotiK2t0aGojoBTHkNDjtKus7e0R/drMWfC/2wf8Qs/uL8G0Gq8XtTmE/gH5mMxaj7Pls0U0gN9mQw==}
     engines: {node: 22.* || >= 24}
 
   ember-deep-tracked@2.0.1:
@@ -6846,22 +6846,6 @@ packages:
       '@glint/template':
         optional: true
 
-  ember-primitives@0.57.0:
-    resolution: {integrity: sha512-bZIQLhTHEBI7/v/5GA8k3MqrR89Vo0AE1IXXuGMEW9Xy8AK3Ia8zwyd7Scezn1AwLJmtQbucjp1Xc/eP2vwlQw==}
-    hasBin: true
-    peerDependencies:
-      '@ember/test-helpers': '>= 3.2.0'
-      '@ember/test-waiters': '>= 3.0.2'
-      '@glimmer/component': ^2.0.0
-      '@glint/template': 1.7.7
-      ember-modifier: '>= 4.1.0'
-      ember-resources: '>= 6.1.0'
-    peerDependenciesMeta:
-      '@ember/test-helpers':
-        optional: true
-      '@glint/template':
-        optional: true
-
   ember-primitives@0.60.1:
     resolution: {integrity: sha512-OLUSUM4eqGVaxWGnq3oV1FIBE8JyYUTDTXYWDHd8OHdiFbU10CUJ4A7k6FbpCfBXO7k0Ce+aualiyuIpY28mmg==}
     hasBin: true
@@ -6900,8 +6884,8 @@ packages:
       '@ember/test-helpers': '>=3.0.3'
       qunit: ^2.13.0
 
-  ember-repl@8.1.0:
-    resolution: {integrity: sha512-XO3ryrvnik72AZrhRcGjlAJe6IjI9Vi7EaZghW8y/a1oSdiP2SL/j1DP/e5zOfDvTOxvAcPwHJVWOKH2KTyrCw==}
+  ember-repl@8.2.1:
+    resolution: {integrity: sha512-Ljki+9swoDzOBV141UBEATguICNChsvgXoTFAp1JHyEoeOOPSebXGHLf/NYNRxM4i7/3N9jb8r1WMkhd5zhm7Q==}
     peerDependencies:
       '@glint/template': 1.7.7
     peerDependenciesMeta:
@@ -8274,8 +8258,8 @@ packages:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
     engines: {node: '>=0.10.0'}
 
-  kolay@https://codeload.github.com/universal-ember/kolay/tar.gz/757d6a0ec85ebe6244c1e8c53a15f3840392536f:
-    resolution: {gitHosted: true, integrity: sha512-jMfOl5d8NP0Crjdd7EU/Mn5NCSre99nh87SX56Ze3N9xC2Pj5UTHbDBLH+fRJGdRcUGo5U/kDp6vDJ59eaRnuw==, tarball: https://codeload.github.com/universal-ember/kolay/tar.gz/757d6a0ec85ebe6244c1e8c53a15f3840392536f}
+  kolay@https://codeload.github.com/universal-ember/kolay/tar.gz/f6fd7d039d3b7698efdeb661074b7bb57e7f487f:
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/universal-ember/kolay/tar.gz/f6fd7d039d3b7698efdeb661074b7bb57e7f487f}
     version: 5.4.0
     engines: {node: '>= 18'}
 
@@ -9742,6 +9726,9 @@ packages:
 
   repl-sdk@1.6.0:
     resolution: {integrity: sha512-zgf2dJy/Vnei15WZ9keI/YR/g1LRwk6AKD6F96oEQiHQdnqpQEWH1CS6Ua0iA89Iyo1SGM/Qmufp67rNvNGKnQ==}
+
+  repl-sdk@1.6.1:
+    resolution: {integrity: sha512-U+5GC+RgBDtYiw3Gs/ElICEQtjG25mMbpEFydmHWgG5iDgIzwvg21DIduYTCDh9IfrNVCykHW2oMRk5NLgO6Gg==}
 
   request-light@0.7.0:
     resolution: {integrity: sha512-lMbBMrDoxgsyO+yB3sDcrDuX85yYt7sS8BfQd11jtbW/z5ZWgLZRcEGLsLoYw7I0WSUGQBs8CC8ScIxkTX1+6Q==}
@@ -11264,9 +11251,6 @@ packages:
 
   which-heading-do-i-need@0.2.4:
     resolution: {integrity: sha512-OS4TyybQkx3HOWqPgw6Xx3ss8U/2U35enMquCbTooT2qEl0bvNFHicwk8V3bhWh3E+WD27NlCNPaXmUXYuafqg==}
-
-  which-heading-do-i-need@0.2.7:
-    resolution: {integrity: sha512-YWMZUOoxOgq/SEcd0bnDjgTFrJQ8quz31RZ9IRxeyjWYsakrT3F3iOKoEhValp4WZ8Ybt0DqpIrwtL0fEwMe4A==}
 
   which-heading-do-i-need@0.4.1:
     resolution: {integrity: sha512-NUwKC7rjs6hFqdr6Yu+4Hd9muQEL5XW3QvV8hj/uHSBo8o9FRsWOqArgWcL4IIvUDpS+KCoaRW/8+jHhNL8itQ==}
@@ -12907,7 +12891,7 @@ snapshots:
       minimatch: 3.1.2
       pkg-entry-points: 1.1.1
       resolve-package-path: 4.0.3
-      semver: 7.8.1
+      semver: 7.8.5
       typescript-memoize: 1.1.1
     transitivePeerDependencies:
       - supports-color
@@ -13608,7 +13592,7 @@ snapshots:
   '@npmcli/fs@1.1.1':
     dependencies:
       '@gar/promisify': 1.1.3
-      semver: 7.8.1
+      semver: 7.8.5
 
   '@npmcli/git@6.0.3':
     dependencies:
@@ -13618,7 +13602,7 @@ snapshots:
       npm-pick-manifest: 10.0.0
       proc-log: 5.0.0
       promise-retry: 2.0.1
-      semver: 7.8.1
+      semver: 7.8.5
       which: 5.0.0
 
   '@npmcli/move-file@1.1.2':
@@ -16882,7 +16866,7 @@ snapshots:
   ember-cli-version-checker@5.1.2:
     dependencies:
       resolve-package-path: 3.1.0
-      semver: 7.8.1
+      semver: 7.8.5
       silent-error: 1.1.1
     transitivePeerDependencies:
       - supports-color
@@ -16898,13 +16882,13 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-container-query@7.0.3(f2f785662ff079824ff60d8b08670db9):
+  ember-container-query@7.1.1(f2f785662ff079824ff60d8b08670db9):
     dependencies:
-      '@embroider/addon-shim': 1.10.2
-      decorator-transforms: 2.3.2(@babel/core@7.29.0)
+      '@embroider/addon-shim': 1.10.3
+      decorator-transforms: 2.4.0(@babel/core@7.29.0)
       ember-element-helper: 0.8.8
       ember-modifier: 4.3.0(@babel/core@7.29.0)
-      ember-primitives: 0.57.0(a64917a33376b7be2998bd4d1c9f349f)
+      ember-primitives: 0.60.1(a64917a33376b7be2998bd4d1c9f349f)
     transitivePeerDependencies:
       - '@babel/core'
       - '@ember/test-helpers'
@@ -17009,7 +16993,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.29.2
       '@ember/test-waiters': 4.1.2
-      '@embroider/addon-shim': 1.10.3
+      '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.20.5(c8332dc3f90c0e60eb130a3a85f980b9)
       '@floating-ui/dom': 1.7.5
       '@glimmer/component': 2.1.1
@@ -17024,31 +17008,6 @@ snapshots:
       tracked-built-ins: 4.1.2(@babel/core@7.29.0)
       tracked-toolbox: 2.2.0(@babel/core@7.29.0)
       which-heading-do-i-need: 0.2.4
-    optionalDependencies:
-      '@ember/test-helpers': 5.4.1(c8332dc3f90c0e60eb130a3a85f980b9)
-      '@glint/template': 1.7.7
-    transitivePeerDependencies:
-      - '@babel/core'
-      - supports-color
-
-  ember-primitives@0.57.0(a64917a33376b7be2998bd4d1c9f349f):
-    dependencies:
-      '@babel/runtime': 7.29.2
-      '@ember/test-waiters': 4.1.2
-      '@embroider/addon-shim': 1.10.2
-      '@floating-ui/dom': 1.7.5
-      '@glimmer/component': 2.1.1
-      decorator-transforms: 2.3.1(@babel/core@7.29.0)
-      ember-element-helper: 0.8.8
-      ember-modifier: 4.3.0(@babel/core@7.29.0)
-      ember-resources: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
-      form-data-utils: 0.6.0
-      reactiveweb: 1.9.1(9f91e21669edde5a0835948ba5900801)
-      should-handle-link: 1.3.0
-      tabster: 8.7.0
-      tracked-built-ins: 4.1.2(@babel/core@7.29.0)
-      tracked-toolbox: 3.0.0(@babel/core@7.29.0)
-      which-heading-do-i-need: 0.2.7
     optionalDependencies:
       '@ember/test-helpers': 5.4.1(c8332dc3f90c0e60eb130a3a85f980b9)
       '@glint/template': 1.7.7
@@ -17118,17 +17077,17 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  ember-repl@8.1.0(97a2ca31a8e4cf9a385bac208eb0c5f1):
+  ember-repl@8.2.1(97a2ca31a8e4cf9a385bac208eb0c5f1):
     dependencies:
       '@ember/test-helpers': 5.4.1(c8332dc3f90c0e60eb130a3a85f980b9)
       '@ember/test-waiters': 4.1.2
       codemirror: 6.0.2
       content-tag: 4.2.0
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
-      ember-primitives: 0.51.0(a64917a33376b7be2998bd4d1c9f349f)
+      ember-primitives: 0.61.1(a64917a33376b7be2998bd4d1c9f349f)
       ember-resolver: 13.1.1
       ember-resources: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
-      repl-sdk: 1.6.0(93d4969b5698d0d4464d33ccc0660007)
+      repl-sdk: 1.6.1(93d4969b5698d0d4464d33ccc0660007)
     optionalDependencies:
       '@glint/template': 1.7.7
     transitivePeerDependencies:
@@ -17356,7 +17315,7 @@ snapshots:
   eslint-compat-utils@0.5.1(eslint@9.39.2(jiti@2.6.1)):
     dependencies:
       eslint: 9.39.2(jiti@2.6.1)
-      semver: 7.8.1
+      semver: 7.8.5
 
   eslint-config-prettier@10.1.8(eslint@9.39.2(jiti@2.6.1)):
     dependencies:
@@ -18832,7 +18791,7 @@ snapshots:
 
   kind-of@6.0.3: {}
 
-  kolay@https://codeload.github.com/universal-ember/kolay/tar.gz/757d6a0ec85ebe6244c1e8c53a15f3840392536f(0d7798950681c8d6f11c89df9fde55ef):
+  kolay@https://codeload.github.com/universal-ember/kolay/tar.gz/f6fd7d039d3b7698efdeb661074b7bb57e7f487f(0d7798950681c8d6f11c89df9fde55ef):
     dependencies:
       '@ember/test-waiters': 4.1.2
       '@embroider/addon-shim': 1.10.2
@@ -18844,7 +18803,7 @@ snapshots:
       decorator-transforms: 2.4.0(@babel/core@7.29.0)
       ember-modifier: 4.3.0(@babel/core@7.29.0)
       ember-primitives: 0.60.1(a64917a33376b7be2998bd4d1c9f349f)
-      ember-repl: 8.1.0(97a2ca31a8e4cf9a385bac208eb0c5f1)
+      ember-repl: 8.2.1(97a2ca31a8e4cf9a385bac208eb0c5f1)
       ember-resources: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
       globby: 16.2.2
       json5: 2.2.3
@@ -18856,6 +18815,7 @@ snapshots:
       remark-parse: 11.0.0
       remark-rehype: 11.1.2
       repl-sdk: 1.6.0(93d4969b5698d0d4464d33ccc0660007)
+      resolve.exports: 2.0.3
       send: 1.2.1
       tracked-built-ins: 4.1.2(@babel/core@7.29.0)
       typedoc: 0.28.16(typescript@5.9.3)
@@ -19759,7 +19719,7 @@ snapshots:
 
   npm-install-checks@7.1.2:
     dependencies:
-      semver: 7.8.1
+      semver: 7.8.5
 
   npm-normalize-package-bin@4.0.0: {}
 
@@ -19767,7 +19727,7 @@ snapshots:
     dependencies:
       hosted-git-info: 8.1.0
       proc-log: 5.0.0
-      semver: 7.8.1
+      semver: 7.8.5
       validate-npm-package-name: 6.0.2
 
   npm-pick-manifest@10.0.0:
@@ -19775,7 +19735,7 @@ snapshots:
       npm-install-checks: 7.1.2
       npm-normalize-package-bin: 4.0.0
       npm-package-arg: 12.0.2
-      semver: 7.8.1
+      semver: 7.8.5
 
   npm-run-path@4.0.1:
     dependencies:
@@ -19993,7 +19953,7 @@ snapshots:
       ky: 1.14.3
       registry-auth-token: 5.1.1
       registry-url: 6.0.1
-      semver: 7.8.1
+      semver: 7.8.5
 
   package-manager-detector@1.6.0: {}
 
@@ -20590,6 +20550,61 @@ snapshots:
       - supports-color
 
   repl-sdk@1.6.0(93d4969b5698d0d4464d33ccc0660007):
+    dependencies:
+      '@codemirror/autocomplete': 6.20.0
+      '@codemirror/commands': 6.10.1
+      '@codemirror/lang-html': 6.4.11
+      '@codemirror/lang-javascript': 6.2.4
+      '@codemirror/lang-markdown': 6.5.0
+      '@codemirror/lang-vue': 0.1.3
+      '@codemirror/lang-yaml': 6.1.2
+      '@codemirror/language': 6.12.1
+      '@codemirror/language-data': 6.5.2
+      '@codemirror/lint': 6.9.3
+      '@codemirror/search': 6.6.0
+      '@codemirror/state': 6.5.4
+      '@codemirror/view': 6.39.12
+      '@lezer/common': 1.5.0
+      '@lezer/highlight': 1.2.3
+      '@lezer/html': 1.3.13
+      '@lezer/markdown': 1.6.3
+      '@replit/codemirror-lang-svelte': 6.0.0(9467715ca32889163bd7161ba7fdb3d1)
+      '@shikijs/rehype': 3.23.0
+      change-case: 5.4.4
+      codemirror: 6.0.2
+      codemirror-lang-glimdown: 2.0.4(ec1f15af7e31282ca33da9719a65df5a)
+      codemirror-lang-glimmer: 2.0.4(@lezer/common@1.5.0)
+      codemirror-lang-glimmer-js: 2.0.4(a82e47558070302726807efd21dd0cda)
+      codemirror-lang-mermaid: 0.5.0
+      codemirror-languageserver: 1.18.1(encoding@0.1.13)
+      comlink: 4.4.2
+      es-module-shims: 2.8.0
+      mdast: 3.0.0
+      mime: 4.1.0
+      package-name-regex: 5.0.0
+      rehype-autolink-headings: 7.1.0
+      rehype-raw: 7.0.0
+      rehype-slug: 6.0.0
+      rehype-stringify: 10.0.1
+      remark-gfm: 4.0.1
+      remark-parse: 11.0.0
+      remark-rehype: 11.1.2
+      resolve.exports: 2.0.3
+      resolve.imports: 2.0.3
+      tarparser: 0.0.5
+      unified: 11.0.5
+      unist-util-visit: 5.1.0
+      vfile: 6.0.3
+    transitivePeerDependencies:
+      - '@codemirror/lang-css'
+      - '@lezer/javascript'
+      - '@lezer/lr'
+      - bufferutil
+      - encoding
+      - supports-color
+      - utf-8-validate
+
+  repl-sdk@1.6.1(93d4969b5698d0d4464d33ccc0660007):
     dependencies:
       '@codemirror/autocomplete': 6.20.0
       '@codemirror/commands': 6.10.1
@@ -21723,7 +21738,7 @@ snapshots:
 
   tracked-toolbox@2.2.0(@babel/core@7.29.0):
     dependencies:
-      '@embroider/addon-shim': 1.10.3
+      '@embroider/addon-shim': 1.10.2
       decorator-transforms: 2.4.0(@babel/core@7.29.0)
       ember-cache-primitive-polyfill: 1.0.1(@babel/core@7.29.0)
     transitivePeerDependencies:
@@ -21856,7 +21871,7 @@ snapshots:
 
   typescript-auto-import-cache@0.3.6:
     dependencies:
-      semver: 7.8.1
+      semver: 7.8.5
 
   typescript-eslint@8.54.0(b1cbe766652296b79becebe56b05ba7c):
     dependencies:
@@ -22472,8 +22487,6 @@ snapshots:
       webidl-conversions: 3.0.1
 
   which-heading-do-i-need@0.2.4: {}
-
-  which-heading-do-i-need@0.2.7: {}
 
   which-heading-do-i-need@0.4.1: {}
 
