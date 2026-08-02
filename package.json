@@ -32,8 +32,8 @@
     "ember-template-lint": "^7.9.3",
     "eslint": "^9.39.1",
     "prettier": "^3.7.4",
-    "prettier-plugin-ember-template-tag": "2.1.2",
-    "prettier-plugin-tailwindcss": "^0.7.2",
+    "prettier-plugin-ember-template-tag": "2.1.7",
+    "prettier-plugin-tailwindcss": "^0.8.0",
     "release-plan": "^0.18.0",
     "turbo": "^2.7.3"
   },
