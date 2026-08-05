@@ -2,8 +2,8 @@
   "solution": {
     "ember-repl": {
       "impact": "patch",
-      "oldVersion": "8.2.0",
-      "newVersion": "8.2.1",
+      "oldVersion": "8.2.1",
+      "newVersion": "8.2.2",
       "tagName": "latest",
       "constraints": [
         {
@@ -17,7 +17,17 @@
       "oldVersion": "4.2.2"
     },
     "repl-sdk": {
-      "oldVersion": "1.6.1"
+      "impact": "patch",
+      "oldVersion": "1.6.1",
+      "newVersion": "1.6.2",
+      "tagName": "latest",
+      "constraints": [
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :bug: Bug Fix"
+        }
+      ],
+      "pkgJSONPath": "./packages/repl-sdk/package.json"
     },
     "codemirror-lang-glimdown": {
       "oldVersion": "2.0.4"
@@ -41,5 +51,5 @@
       "oldVersion": "2.0.3"
     }
   },
-  "description": "## Release (2026-07-28)\n\n* ember-repl 8.2.1 (patch)\n\n#### :bug: Bug Fix\n* `ember-repl`\n  * [#2203](https://github.com/NullVoxPopuli/limber/pull/2203) ember-repl: publish a caret range for repl-sdk ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2026-08-05)\n\n* ember-repl 8.2.2 (patch)\n* repl-sdk 1.6.2 (patch)\n\n#### :bug: Bug Fix\n* `ember-repl`, `repl-sdk`\n  * [#2208](https://github.com/NullVoxPopuli/limber/pull/2208) fix(repl-sdk): give each gmd island its own owner, like gjs/hbs already do ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))\n\n#### Committers: 1\n- @NullVoxPopuli's reduced-access machine account for AI usage ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))\n"
 }
