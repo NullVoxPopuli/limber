@@ -3,6 +3,7 @@
  */
 import { assert, isRecord } from '../../utils.js';
 import { buildCodeFenceMetaUtils } from '../markdown/utils.js';
+import { makeOwner } from './owner.js';
 
 let elementId = 0;
 
@@ -104,9 +105,15 @@ export async function compiler(config, api) {
           : undefined
       );
 
+      // A fresh owner per render, like gjs/hbs do: template instances (and
+      // their compiled handles) are cached per owner, but each renderComponent
+      // call has its own program artifacts — sharing one owner across islands
+      // would make glimmer reuse a compiled handle from another island's
+      // program, blowing up with "Cannot read properties of null (reading
+      // 'syscall')" the second time a singleton scope component is invoked.
       const result = renderComponent(compiled, {
         into: element,
-        owner: userOptions.owner,
+        owner: makeOwner(userOptions.owner),
         ...(args ? { args } : {}),
       });
 
