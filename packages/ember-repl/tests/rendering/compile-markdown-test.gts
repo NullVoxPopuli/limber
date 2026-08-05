@@ -206,6 +206,55 @@ module('Rendering | compile()', function (hooks) {
       assert.dom().hasText(text);
     });
 
+    test('a singleton scope component renders in more than one document', async function (assert) {
+      // Each document renders as its own island with its own program
+      // artifacts, but a component's template (and its compiled handle) is
+      // cached per owner — so the islands must not share an owner, or the
+      // second document dies with
+      // "Cannot read properties of null (reading 'syscall')".
+      const LocalComponent = <template>a singleton component</template>;
+
+      setupOnerror((e) => {
+        console.error(e);
+        assert.notOk('This should not error');
+      });
+
+      const compiler = getCompiler(this);
+
+      for (const heading of ['first', 'second']) {
+        const snippet = stripIndent`
+          # ${heading}
+
+          <LocalComponent />
+        `;
+
+        let component: ComponentLike | undefined;
+
+        const state = compile(compiler, snippet, {
+          format: 'glimdown',
+          onSuccess: (comp) => (component = comp),
+          onError: unexpectedErrorHandler,
+          onCompileStart: () => {
+            /* not used */
+          },
+
+          // @ts-ignore
+          scope: {
+            LocalComponent,
+          },
+        });
+
+        await state.promise;
+
+        debugAssert(`[BUG]`, component);
+
+        await render(component);
+
+        assert.dom('h1').hasText(heading);
+        assert.dom().containsText('a singleton component');
+      }
+    });
+
     test('adding to top-level scope applies to rendered "hbs" codefences', async function (assert) {
       const text = `This is a local component added to scope`;
       const LocalComponent = <template>{{text}}</template>;
