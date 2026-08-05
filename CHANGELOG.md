@@ -1,5 +1,17 @@
 # Changelog
 
+## Release (2026-08-05)
+
+* ember-repl 8.2.2 (patch)
+* repl-sdk 1.6.2 (patch)
+
+#### :bug: Bug Fix
+* `ember-repl`, `repl-sdk`
+  * [#2208](https://github.com/NullVoxPopuli/limber/pull/2208) fix(repl-sdk): give each gmd island its own owner, like gjs/hbs already do ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+
+#### Committers: 1
+- @NullVoxPopuli's reduced-access machine account for AI usage ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+
 ## Release (2026-07-28)
 
 * ember-repl 8.2.1 (patch)
