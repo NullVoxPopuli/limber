@@ -27,7 +27,7 @@ overrides:
   side-channel: npm:@nolyfill/side-channel@^1
   string.prototype.matchall: npm:@nolyfill/string.prototype.matchall@^1
   string.prototype.trimend: npm:@nolyfill/string.prototype.trimend@^1
-  ember-source: file:./apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+5916d3e8.tgz
+  ember-source: file:./apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+70775070.tgz
 
 patchedDependencies:
   browserslist-generator:
@@ -46,10 +46,10 @@ importers:
         version: file:babel-standalone.tgz
       '@glint/ember-tsc':
         specifier: ^1.8.12
-        version: 1.8.12(56498aac2615025be0792d3e62dab36a)
+        version: 1.8.12(7f8fccea55834996478d94284f2eeb97)
       '@glint/tsserver-plugin':
         specifier: ^2.5.18
-        version: 2.5.18(0c2fedad292c907078a5f5861152bbf0)
+        version: 2.5.18(ddc131aeb4faa65f3ab1ade6a19ccc7c)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
         version: 5.5.0(753b90aa58c0521fb787daa9416104f1)
@@ -254,13 +254,13 @@ importers:
         version: 6.7.2
       '@glint/ember-tsc':
         specifier: ^1.8.12
-        version: 1.8.12(56498aac2615025be0792d3e62dab36a)
+        version: 1.8.12(7f8fccea55834996478d94284f2eeb97)
       '@glint/template':
         specifier: 1.7.7
         version: 1.7.7
       '@glint/tsserver-plugin':
         specifier: ^2.5.18
-        version: 2.5.18(0c2fedad292c907078a5f5861152bbf0)
+        version: 2.5.18(ddc131aeb4faa65f3ab1ade6a19ccc7c)
       '@iconify-json/devicon':
         specifier: ^1.2.52
         version: 1.2.57
@@ -344,7 +344,7 @@ importers:
         version: 2.0.1(@babel/core@7.29.0)
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(0c2fedad292c907078a5f5861152bbf0)
+        version: 3.0.1(ddc131aeb4faa65f3ab1ade6a19ccc7c)
       ember-page-title:
         specifier: ^9.0.3
         version: 9.0.3
@@ -352,8 +352,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(ccac685a9f0303164367b88029c1ee61)
       ember-source:
-        specifier: file:ember-source-7.3.0-alpha.1.all-optimizations+5916d3e8.tgz
-        version: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+5916d3e8.tgz(@glimmer/component@2.1.1)
+        specifier: file:ember-source-7.3.0-alpha.1.all-optimizations+70775070.tgz
+        version: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+70775070.tgz(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -549,13 +549,13 @@ importers:
         version: 6.7.2
       '@glint/ember-tsc':
         specifier: ^1.8.12
-        version: 1.8.12(56498aac2615025be0792d3e62dab36a)
+        version: 1.8.12(7f8fccea55834996478d94284f2eeb97)
       '@glint/template':
         specifier: 1.7.7
         version: 1.7.7
       '@glint/tsserver-plugin':
         specifier: ^2.5.18
-        version: 2.5.18(0c2fedad292c907078a5f5861152bbf0)
+        version: 2.5.18(ddc131aeb4faa65f3ab1ade6a19ccc7c)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
         version: 5.5.0(753b90aa58c0521fb787daa9416104f1)
@@ -585,7 +585,7 @@ importers:
         version: 9.2.1
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(0c2fedad292c907078a5f5861152bbf0)
+        version: 3.0.1(ddc131aeb4faa65f3ab1ade6a19ccc7c)
       ember-modify-based-class-resource:
         specifier: ^1.1.1
         version: 1.1.2(ae1eff630ec2fe49294f7459a294aeb5)
@@ -596,8 +596,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(ccac685a9f0303164367b88029c1ee61)
       ember-source:
-        specifier: file:../repl/ember-source-7.3.0-alpha.1.all-optimizations+5916d3e8.tgz
-        version: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+5916d3e8.tgz(@glimmer/component@2.1.1)
+        specifier: file:../repl/ember-source-7.3.0-alpha.1.all-optimizations+70775070.tgz
+        version: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+70775070.tgz(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -720,8 +720,8 @@ importers:
         specifier: 2.3.1
         version: 2.3.1(@babel/core@7.29.0)
       ember-source:
-        specifier: file:../../../apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+5916d3e8.tgz
-        version: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+5916d3e8.tgz(@glimmer/component@2.1.1)
+        specifier: file:../../../apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+70775070.tgz
+        version: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+70775070.tgz(@glimmer/component@2.1.1)
       penpal:
         specifier: ^6.2.2
         version: 6.2.2
@@ -761,13 +761,13 @@ importers:
         version: 2.1.1
       '@glint/ember-tsc':
         specifier: ^1.8.12
-        version: 1.8.12(56498aac2615025be0792d3e62dab36a)
+        version: 1.8.12(7f8fccea55834996478d94284f2eeb97)
       '@glint/template':
         specifier: 1.7.7
         version: 1.7.7
       '@glint/tsserver-plugin':
         specifier: ^2.5.18
-        version: 2.5.18(0c2fedad292c907078a5f5861152bbf0)
+        version: 2.5.18(ddc131aeb4faa65f3ab1ade6a19ccc7c)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
         version: 5.5.0(753b90aa58c0521fb787daa9416104f1)
@@ -967,13 +967,13 @@ importers:
         version: 2.1.1
       '@glint/ember-tsc':
         specifier: ^1.8.12
-        version: 1.8.12(56498aac2615025be0792d3e62dab36a)
+        version: 1.8.12(7f8fccea55834996478d94284f2eeb97)
       '@glint/template':
         specifier: 1.7.7
         version: 1.7.7
       '@glint/tsserver-plugin':
         specifier: ^2.5.18
-        version: 2.5.18(0c2fedad292c907078a5f5861152bbf0)
+        version: 2.5.18(ddc131aeb4faa65f3ab1ade6a19ccc7c)
       '@rollup/plugin-babel':
         specifier: ^6.1.0
         version: 6.1.0(2feedaebee37a40334972cdc05053654)
@@ -1020,8 +1020,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(ccac685a9f0303164367b88029c1ee61)
       ember-source:
-        specifier: file:../../apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+5916d3e8.tgz
-        version: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+5916d3e8.tgz(@glimmer/component@2.1.1)
+        specifier: file:../../apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+70775070.tgz
+        version: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+70775070.tgz(@glimmer/component@2.1.1)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.6.1)
@@ -1175,13 +1175,13 @@ importers:
         version: 8.2.0(@glint/template@1.7.7)(rollup@4.57.1)
       '@glint/ember-tsc':
         specifier: ^1.8.12
-        version: 1.8.12(56498aac2615025be0792d3e62dab36a)
+        version: 1.8.12(7f8fccea55834996478d94284f2eeb97)
       '@glint/template':
         specifier: 1.7.7
         version: 1.7.7
       '@glint/tsserver-plugin':
         specifier: ^2.5.18
-        version: 2.5.18(0c2fedad292c907078a5f5861152bbf0)
+        version: 2.5.18(ddc131aeb4faa65f3ab1ade6a19ccc7c)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
         version: 5.5.0(753b90aa58c0521fb787daa9416104f1)
@@ -1204,8 +1204,8 @@ importers:
         specifier: ^7.1.0
         version: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
       ember-source:
-        specifier: file:../../apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+5916d3e8.tgz
-        version: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+5916d3e8.tgz(@glimmer/component@2.1.1)
+        specifier: file:../../apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+70775070.tgz
+        version: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+70775070.tgz(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -6928,8 +6928,8 @@ packages:
     resolution: {integrity: sha512-89oVHVJwmLDvGvAUWgS87KpBoRhy3aZ6U0Ql6HOmU4TrPkyaa8pM0W81wj9cIwjYprcQtN9EwzZMHnq46+oUyw==}
     engines: {node: 8.* || 10.* || >= 12}
 
-  ember-source@file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+5916d3e8.tgz:
-    resolution: {integrity: sha512-v6Ee19KUHEm+BheM+qY+eFDuZ0823N83kMIJxPNYGlUyceNvksaJEjRu3nv7lA1ST6ispOBJr2eTSGT/wYWrBw==, tarball: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+5916d3e8.tgz}
+  ember-source@file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+70775070.tgz:
+    resolution: {integrity: sha512-jZTThbNwkhThNsVjPLDCmsAdz1bI4Hgd2r8faGHdGGHYaD+ws++LU3bDykEJWhweWOBz1psEcwE5hS6FHi3rGg==, tarball: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+70775070.tgz}
     version: 7.3.0-alpha.1.all-optimizations
     engines: {node: '>= 20.19'}
     peerDependencies:
@@ -13215,7 +13215,7 @@ snapshots:
     dependencies:
       '@glimmer/interfaces': 0.94.6
 
-  '@glint/ember-tsc@1.8.12(56498aac2615025be0792d3e62dab36a)':
+  '@glint/ember-tsc@1.8.12(7f8fccea55834996478d94284f2eeb97)':
     dependencies:
       '@glimmer/syntax': 0.95.0
       '@glint/template': 1.7.7
@@ -13235,15 +13235,15 @@ snapshots:
       vscode-languageserver-textdocument: 1.0.12
       vscode-uri: 3.1.0
     optionalDependencies:
-      ember-source: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+5916d3e8.tgz(@glimmer/component@2.1.1)
+      ember-source: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+70775070.tgz(@glimmer/component@2.1.1)
     transitivePeerDependencies:
       - supports-color
 
   '@glint/template@1.7.7': {}
 
-  '@glint/tsserver-plugin@2.5.18(0c2fedad292c907078a5f5861152bbf0)':
+  '@glint/tsserver-plugin@2.5.18(ddc131aeb4faa65f3ab1ade6a19ccc7c)':
     dependencies:
-      '@glint/ember-tsc': 1.8.12(56498aac2615025be0792d3e62dab36a)
+      '@glint/ember-tsc': 1.8.12(7f8fccea55834996478d94284f2eeb97)
       '@volar/language-core': 2.4.28
       '@volar/typescript': 2.4.28
       jiti: 2.6.1
@@ -16970,9 +16970,9 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-load-initializers@3.0.1(0c2fedad292c907078a5f5861152bbf0):
+  ember-load-initializers@3.0.1(ddc131aeb4faa65f3ab1ade6a19ccc7c):
     dependencies:
-      ember-source: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+5916d3e8.tgz(@glimmer/component@2.1.1)
+      ember-source: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+70775070.tgz(@glimmer/component@2.1.1)
 
   ember-modifier@4.3.0(@babel/core@7.29.0):
     dependencies:
@@ -17165,7 +17165,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-source@file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+5916d3e8.tgz(@glimmer/component@2.1.1):
+  ember-source@file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+70775070.tgz(@glimmer/component@2.1.1):
     dependencies:
       '@babel/core': 7.29.0
       '@embroider/addon-shim': 1.10.2
