@@ -1,0 +1,20 @@
+diff --git a/dist/index.js b/dist/index.js
+index 6f1b3ebc90b6e359554e890c89e313cf7943be8f..a8c61a735388155100a25b386408db37d73d0a8d 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -4,7 +4,6 @@ import { setAdapter } from 'ember-testing/lib/test/adapter';
+ import Adapter from './adapter.js';
+ export { nonTestDoneCallback } from './adapter.js';
+ import './qunit-configuration.js';
+-import { _backburner } from '@ember/runloop';
+ import { getTestMetadata, setupContext, teardownContext, setupRenderingContext, setupApplicationContext, validateErrorHandler, resetOnerror } from '@ember/test-helpers';
+ import * as QUnit from 'qunit';
+ import { installTestNotIsolatedHook } from './test-isolation-validation.js';
+@@ -141,7 +140,6 @@ function setupResetOnerror() {
+ }
+ function setupTestIsolationValidation(delay) {
+   waitForSettled = false;
+-  _backburner.DEBUG = true;
+   QUnit.on('testStart', () => installTestNotIsolatedHook(delay));
+ }
+ 
