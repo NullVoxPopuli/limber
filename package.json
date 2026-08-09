@@ -84,10 +84,12 @@
       "side-channel": "npm:@nolyfill/side-channel@^1",
       "string.prototype.matchall": "npm:@nolyfill/string.prototype.matchall@^1",
       "string.prototype.trimend": "npm:@nolyfill/string.prototype.trimend@^1",
-      "ember-source": "file:./apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+70775070.tgz"
+      "ember-source": "file:./apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+60f0fc94.tgz"
     },
     "patchedDependencies": {
-      "browserslist-generator": "patches/browserslist-generator.patch"
+      "browserslist-generator": "patches/browserslist-generator.patch",
+      "ember-qunit@9.0.4": "patches/ember-qunit@9.0.4.patch",
+      "@ember/test-helpers@5.4.1": "patches/@ember__test-helpers@5.4.1.patch"
     },
     "_ember-repl": "workspace:*",
     "_repl-sdk": "workspace:*"
