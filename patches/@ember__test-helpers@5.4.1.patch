@@ -26,13 +26,13 @@ index 45733a399fc957c2b01109ce9fb37172dfd7d721..ae723167fdbd88e189c47edb9d9a0a3c
  
  /**
 diff --git a/dist/setup-context-BSrEM03X.js b/dist/setup-context-BSrEM03X.js
-index 0f688234691707c6ee3a1b0326efdd0edb1ea5cb..2a97d25f25ff8c28c099ab6190f679922059c798 100644
+index 0f688234691707c6ee3a1b0326efdd0edb1ea5cb..49336e208d8193ddfb751427cb5fbd177581fbe7 100644
 --- a/dist/setup-context-BSrEM03X.js
 +++ b/dist/setup-context-BSrEM03X.js
 @@ -1,4 +1,5 @@
 -import { _backburner, run } from '@ember/runloop';
 +import { run } from '@ember/runloop';
-+import { isRenderPending as _emberIsRenderPending } from '@ember/renderer';
++import { isRenderPending as _emberIsRenderPending, renderSettled as _emberRenderSettled } from '@ember/renderer';
  import { set, setProperties, get, getProperties } from '@ember/object';
  import { setOwner } from '@ember/application';
  import buildOwner from './build-owner.js';
@@ -55,7 +55,37 @@ index 0f688234691707c6ee3a1b0326efdd0edb1ea5cb..2a97d25f25ff8c28c099ab6190f67992
    return {
      hasPendingTimers,
      hasRunLoop,
-@@ -777,7 +778,6 @@ function setupContext(base, options = {}) {
+@@ -390,10 +391,25 @@ function isSettled() {
+   @public
+   @returns {Promise<void>} resolves when settled
+ */
+-function settled() {
+-  return waitUntil(isSettled, {
+-    timeout: Infinity
+-  }).then(() => {});
++async function settled() {
++  // The render half of settledness is event-driven: renderSettled()
++  // resolves at the end of a scheduler flush that left every renderer
++  // valid. Only the poll-only conditions (test waiters, pending
++  // requests, transitions) need re-checking in a loop.
++  //
++  // Quiet must be confirmed FROM A MACROTASK: task sources that are
++  // already queued (worker messages, zero-delay timers) may re-register
++  // waiters or dirty state, and an observation made in microtask
++  // context would win the race against them and settle early. waitUntil
++  // imposed this boundary implicitly by scheduling every check with
++  // setTimeout.
++  while (true) {
++    await _emberRenderSettled();
++    await new Promise(resolve => setTimeout(resolve, 0));
++    if (isSettled()) {
++      return;
++    }
++  }
+ }
+ 
+ const cachedOnerror = new Map();
+@@ -777,7 +793,6 @@ function setupContext(base, options = {}) {
    setContext(context);
    const testMetadata = getTestMetadata(context);
    testMetadata.setupTypes.push('setupContext');
