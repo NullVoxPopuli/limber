@@ -26,17 +26,42 @@ index 45733a399fc957c2b01109ce9fb37172dfd7d721..ae723167fdbd88e189c47edb9d9a0a3c
  
  /**
 diff --git a/dist/setup-context-BSrEM03X.js b/dist/setup-context-BSrEM03X.js
-index 0f688234691707c6ee3a1b0326efdd0edb1ea5cb..49336e208d8193ddfb751427cb5fbd177581fbe7 100644
+index 0f688234691707c6ee3a1b0326efdd0edb1ea5cb..108b20843dd62b6f2f4bc1b3d94abcb9882b58ca 100644
 --- a/dist/setup-context-BSrEM03X.js
 +++ b/dist/setup-context-BSrEM03X.js
 @@ -1,4 +1,5 @@
 -import { _backburner, run } from '@ember/runloop';
 +import { run } from '@ember/runloop';
-+import { isRenderPending as _emberIsRenderPending, renderSettled as _emberRenderSettled } from '@ember/renderer';
++import { _onRenderSettledChange as _emberOnRenderSettledChange, renderSettled as _emberRenderSettled } from '@ember/renderer';
  import { set, setProperties, get, getProperties } from '@ember/object';
  import { setOwner } from '@ember/application';
  import buildOwner from './build-owner.js';
-@@ -330,15 +331,15 @@ function _setupAJAXHooks() {
+@@ -16,7 +17,23 @@ import { getDeprecationsForContext, getDeprecationsDuringCallbackForContext } fr
+ import { getWarningsForContext, getWarningsDuringCallbackForContext } from './-internal/warnings.js';
+ import hasEmberVersion from './has-ember-version.js';
+ import { runHooks } from './helper-hooks.js';
+-import { hasPendingWaiters } from '@ember/test-waiters';
++import { buildWaiter, hasPendingWaiters } from '@ember/test-waiters';
++
++// Rendering reports its pending/complete edges; bridging them into a
++// test waiter folds rendering into the same settledness protocol as
++// every other async source, so isSettled needs no render clause and a
++// stuck render is named in test-waiter debug output.
++const _emberRenderWaiter = buildWaiter('@ember/test-helpers:render');
++let _emberRenderWaiterToken = null;
++_emberOnRenderSettledChange((pending) => {
++  if (pending) {
++    _emberRenderWaiterToken ??= _emberRenderWaiter.beginAsync();
++  } else if (_emberRenderWaiterToken !== null) {
++    const token = _emberRenderWaiterToken;
++    _emberRenderWaiterToken = null;
++    _emberRenderWaiter.endAsync(token);
++  }
++});
+ import { TestDebugInfo } from './-internal/debug-info.js';
+ 
+ const CAN_USE_ROUTER_EVENTS = hasEmberVersion(3, 6);
+@@ -330,15 +347,16 @@ function _setupAJAXHooks() {
    @returns {Object} object with properties for each of the metrics used to determine settledness
  */
  function getSettledState() {
@@ -51,11 +76,12 @@ index 0f688234691707c6ee3a1b0326efdd0edb1ea5cb..49336e208d8193ddfb751427cb5fbd17
    // TODO: Ideally we'd have a function in Ember itself that can synchronously identify whether
    // or not there are any pending render operations, but this will have to suffice for now
 -  const isRenderPending = !!hasRunLoop;
-+  const isRenderPending = _emberIsRenderPending();
++  // counted via the render waiter above; a second clause would double-count
++  const isRenderPending = false;
    return {
      hasPendingTimers,
      hasRunLoop,
-@@ -390,10 +391,25 @@ function isSettled() {
+@@ -390,10 +408,25 @@ function isSettled() {
    @public
    @returns {Promise<void>} resolves when settled
  */
@@ -85,7 +111,7 @@ index 0f688234691707c6ee3a1b0326efdd0edb1ea5cb..49336e208d8193ddfb751427cb5fbd17
  }
  
  const cachedOnerror = new Map();
-@@ -777,7 +793,6 @@ function setupContext(base, options = {}) {
+@@ -777,7 +810,6 @@ function setupContext(base, options = {}) {
    setContext(context);
    const testMetadata = getTestMetadata(context);
    testMetadata.setupTypes.push('setupContext');
