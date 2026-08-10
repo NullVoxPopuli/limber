@@ -26,7 +26,7 @@ index 45733a399fc957c2b01109ce9fb37172dfd7d721..ae723167fdbd88e189c47edb9d9a0a3c
  
  /**
 diff --git a/dist/setup-context-BSrEM03X.js b/dist/setup-context-BSrEM03X.js
-index 0f688234691707c6ee3a1b0326efdd0edb1ea5cb..108b20843dd62b6f2f4bc1b3d94abcb9882b58ca 100644
+index 0f688234691707c6ee3a1b0326efdd0edb1ea5cb..f406633b247c60925088b14db67ce6e87f0a93ae 100644
 --- a/dist/setup-context-BSrEM03X.js
 +++ b/dist/setup-context-BSrEM03X.js
 @@ -1,4 +1,5 @@
@@ -41,7 +41,7 @@ index 0f688234691707c6ee3a1b0326efdd0edb1ea5cb..108b20843dd62b6f2f4bc1b3d94abcb9
  import hasEmberVersion from './has-ember-version.js';
  import { runHooks } from './helper-hooks.js';
 -import { hasPendingWaiters } from '@ember/test-waiters';
-+import { buildWaiter, hasPendingWaiters } from '@ember/test-waiters';
++import { buildWaiter, hasPendingWaiters, waitersSettled } from '@ember/test-waiters';
 +
 +// Rendering reports its pending/complete edges; bridging them into a
 +// test waiter folds rendering into the same settledness protocol as
@@ -81,7 +81,7 @@ index 0f688234691707c6ee3a1b0326efdd0edb1ea5cb..108b20843dd62b6f2f4bc1b3d94abcb9
    return {
      hasPendingTimers,
      hasRunLoop,
-@@ -390,10 +408,25 @@ function isSettled() {
+@@ -390,10 +408,31 @@ function isSettled() {
    @public
    @returns {Promise<void>} resolves when settled
  */
@@ -90,19 +90,25 @@ index 0f688234691707c6ee3a1b0326efdd0edb1ea5cb..108b20843dd62b6f2f4bc1b3d94abcb9
 -    timeout: Infinity
 -  }).then(() => {});
 +async function settled() {
-+  // The render half of settledness is event-driven: renderSettled()
-+  // resolves at the end of a scheduler flush that left every renderer
-+  // valid. Only the poll-only conditions (test waiters, pending
-+  // requests, transitions) need re-checking in a loop.
++  // Settledness is awaited, not polled: rendering resolves
++  // renderSettled() when it completes, waiters resolve waitersSettled()
++  // on the endAsync that empties the last one. The fallback tick covers
++  // only sources that cannot announce completion (pull-only Waiter
++  // implementations, legacy waiters, request counters).
 +  //
-+  // Quiet must be confirmed FROM A MACROTASK: task sources that are
-+  // already queued (worker messages, zero-delay timers) may re-register
-+  // waiters or dirty state, and an observation made in microtask
-+  // context would win the race against them and settle early. waitUntil
-+  // imposed this boundary implicitly by scheduling every check with
-+  // setTimeout.
-+  while (true) {
-+    await _emberRenderSettled();
++  // Quiet is confirmed FROM A MACROTASK: already-queued task sources
++  // (worker messages, zero-delay timers) may register waiters or dirty
++  // state, and a microtask-context observation would win the race
++  // against them and settle early. And the loop re-checks, because
++  // finishing pending work can start more of it.
++  for (;;) {
++    // 50ms, not 10: the fallback has to LOSE to a frame-paced render
++    // tick, or it decides the race and costs an extra pass (measured
++    // 30 of 117 iterations at 10ms; 1 of 92 at 50ms).
++    await Promise.race([
++      Promise.all([_emberRenderSettled(), waitersSettled()]),
++      new Promise(resolve => setTimeout(resolve, 50)),
++    ]);
 +    await new Promise(resolve => setTimeout(resolve, 0));
 +    if (isSettled()) {
 +      return;
@@ -111,7 +117,7 @@ index 0f688234691707c6ee3a1b0326efdd0edb1ea5cb..108b20843dd62b6f2f4bc1b3d94abcb9
  }
  
  const cachedOnerror = new Map();
-@@ -777,7 +810,6 @@ function setupContext(base, options = {}) {
+@@ -777,7 +816,6 @@ function setupContext(base, options = {}) {
    setContext(context);
    const testMetadata = getTestMetadata(context);
    testMetadata.setupTypes.push('setupContext');

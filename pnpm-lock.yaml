@@ -31,8 +31,11 @@ overrides:
 
 patchedDependencies:
   '@ember/test-helpers@5.4.1':
-    hash: 665988c63e85a45fc99c20f57e1ec7967c7798856c55cb31488a591b95354d8d
+    hash: e4ff950eefc53e708a1aeeb1f0f67aec8b065883be0664fde94148a81d045447
     path: patches/@ember__test-helpers@5.4.1.patch
+  '@ember/test-waiters@4.1.2':
+    hash: 5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80
+    path: patches/@ember__test-waiters@4.1.2.patch
   browserslist-generator:
     hash: 8012b033c48b9eeeb2a450dd39dcc4fd9632dda6b3697bfddcd5371ab1866ebe
     path: patches/browserslist-generator.patch
@@ -94,7 +97,7 @@ importers:
         version: 6.12.1
       '@ember/test-waiters':
         specifier: ^4.1.0
-        version: 4.1.2
+        version: 4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)
       '@embroider/macros':
         specifier: 1.20.5
         version: 1.20.5(c8332dc3f90c0e60eb130a3a85f980b9)
@@ -127,7 +130,7 @@ importers:
         version: 3.4.11
       ember-container-query:
         specifier: 7.0.3
-        version: 7.0.3(17a87a5a41ff436636043df7c58cd42a)
+        version: 7.0.3(d75ea1c9c281f1aec62ab8e2e700945d)
       ember-deep-tracked:
         specifier: ^2.0.1
         version: 2.0.1(c8332dc3f90c0e60eb130a3a85f980b9)
@@ -142,7 +145,7 @@ importers:
         version: 4.3.0(@babel/core@7.29.0)
       ember-primitives:
         specifier: ^0.61.1
-        version: 0.61.1(778494c0fb8143692fad2ed052c86180)
+        version: 0.61.1(d2c450c95eb265615b052d4f9953f11c)
       ember-repl:
         specifier: workspace:*
         version: link:../../packages/ember-repl
@@ -172,7 +175,7 @@ importers:
         version: 6.2.2
       reactiveweb:
         specifier: 1.9.1
-        version: 1.9.1(9f91e21669edde5a0835948ba5900801)
+        version: 1.9.1(16210293c6bdc0ae6447cbf7e34d5177)
       rehype-raw:
         specifier: ^7.0.0
         version: 7.0.0
@@ -233,7 +236,7 @@ importers:
         version: 4.0.1
       '@ember/test-helpers':
         specifier: ^5.4.1
-        version: 5.4.1(patch_hash=665988c63e85a45fc99c20f57e1ec7967c7798856c55cb31488a591b95354d8d)(c8332dc3f90c0e60eb130a3a85f980b9)
+        version: 5.4.1(patch_hash=e4ff950eefc53e708a1aeeb1f0f67aec8b065883be0664fde94148a81d045447)(c8332dc3f90c0e60eb130a3a85f980b9)
       '@embroider/core':
         specifier: ^4.4.7
         version: 4.4.7(@glint/template@1.7.7)
@@ -356,7 +359,7 @@ importers:
         version: 9.0.3
       ember-qunit:
         specifier: ^9.0.4
-        version: 9.0.4(patch_hash=4d888706485d8ade1a05704bae1cd9a30bce8c25d852c5cbba89eff29fbc4150)(d17f27572fcc2e7bec4fe2c9351f1a88)
+        version: 9.0.4(patch_hash=4d888706485d8ade1a05704bae1cd9a30bce8c25d852c5cbba89eff29fbc4150)(3df9c9f2b04b001a92a53c35a9c19c7a)
       ember-source:
         specifier: file:ember-source-7.3.0-alpha.1.all-optimizations+c09efdc8.tgz
         version: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+c09efdc8.tgz(@glimmer/component@2.1.1)
@@ -470,7 +473,7 @@ importers:
         version: 4.3.0(@babel/core@7.29.0)
       ember-primitives:
         specifier: ^0.61.1
-        version: 0.61.1(778494c0fb8143692fad2ed052c86180)
+        version: 0.61.1(d2c450c95eb265615b052d4f9953f11c)
       ember-repl:
         specifier: latest
         version: 8.1.0(97a2ca31a8e4cf9a385bac208eb0c5f1)
@@ -479,13 +482,13 @@ importers:
         version: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
       kolay:
         specifier: github:universal-ember/kolay#dist
-        version: https://codeload.github.com/universal-ember/kolay/tar.gz/757d6a0ec85ebe6244c1e8c53a15f3840392536f(30c9dd6a1f85bd8a31d07ed130b97526)
+        version: https://codeload.github.com/universal-ember/kolay/tar.gz/757d6a0ec85ebe6244c1e8c53a15f3840392536f(de0b580eccfda27e0f70b9aeef93835c)
       limber-ui:
         specifier: workspace:*
         version: link:../../packages/limber-ui
       reactiveweb:
         specifier: 1.9.1
-        version: 1.9.1(9f91e21669edde5a0835948ba5900801)
+        version: 1.9.1(16210293c6bdc0ae6447cbf7e34d5177)
       rehype-raw:
         specifier: ^7.0.0
         version: 7.0.0
@@ -519,10 +522,10 @@ importers:
         version: 4.0.1
       '@ember/test-helpers':
         specifier: ^5.4.1
-        version: 5.4.1(patch_hash=665988c63e85a45fc99c20f57e1ec7967c7798856c55cb31488a591b95354d8d)(c8332dc3f90c0e60eb130a3a85f980b9)
+        version: 5.4.1(patch_hash=e4ff950eefc53e708a1aeeb1f0f67aec8b065883be0664fde94148a81d045447)(c8332dc3f90c0e60eb130a3a85f980b9)
       '@ember/test-waiters':
         specifier: ^4.1.0
-        version: 4.1.2
+        version: 4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)
       '@embroider/compat':
         specifier: 4.1.17
         version: 4.1.17(aeb5d9f8bdcfb5e866a2a41764179e3d)
@@ -600,7 +603,7 @@ importers:
         version: 9.0.3
       ember-qunit:
         specifier: ^9.0.4
-        version: 9.0.4(patch_hash=4d888706485d8ade1a05704bae1cd9a30bce8c25d852c5cbba89eff29fbc4150)(d17f27572fcc2e7bec4fe2c9351f1a88)
+        version: 9.0.4(patch_hash=4d888706485d8ade1a05704bae1cd9a30bce8c25d852c5cbba89eff29fbc4150)(3df9c9f2b04b001a92a53c35a9c19c7a)
       ember-source:
         specifier: file:../repl/ember-source-7.3.0-alpha.1.all-optimizations+c09efdc8.tgz
         version: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+c09efdc8.tgz(@glimmer/component@2.1.1)
@@ -733,7 +736,7 @@ importers:
         version: 6.2.2
       reactiveweb:
         specifier: 1.9.1
-        version: 1.9.1(9f91e21669edde5a0835948ba5900801)
+        version: 1.9.1(16210293c6bdc0ae6447cbf7e34d5177)
     devDependencies:
       '@babel/core':
         specifier: ^7.28.5
@@ -758,7 +761,7 @@ importers:
         version: 2.0.0
       '@ember/test-waiters':
         specifier: ^4.1.0
-        version: 4.1.2
+        version: 4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)
       '@embroider/addon-dev':
         specifier: ^7.0.0
         version: 7.1.6(@glint/template@1.7.7)(rollup@4.57.1)
@@ -800,7 +803,7 @@ importers:
         version: 4.3.0(@babel/core@7.29.0)
       ember-primitives:
         specifier: ^0.61.1
-        version: 0.61.1(778494c0fb8143692fad2ed052c86180)
+        version: 0.61.1(d2c450c95eb265615b052d4f9953f11c)
       ember-resources:
         specifier: ^7.1.0
         version: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
@@ -900,10 +903,10 @@ importers:
     dependencies:
       '@ember/test-helpers':
         specifier: ^5.4.1
-        version: 5.4.1(patch_hash=665988c63e85a45fc99c20f57e1ec7967c7798856c55cb31488a591b95354d8d)(c8332dc3f90c0e60eb130a3a85f980b9)
+        version: 5.4.1(patch_hash=e4ff950eefc53e708a1aeeb1f0f67aec8b065883be0664fde94148a81d045447)(c8332dc3f90c0e60eb130a3a85f980b9)
       '@ember/test-waiters':
         specifier: ^4.1.0
-        version: 4.1.2
+        version: 4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)
       codemirror:
         specifier: ^6.0.2
         version: 6.0.2
@@ -915,7 +918,7 @@ importers:
         version: 2.3.1(@babel/core@7.29.0)
       ember-primitives:
         specifier: ^0.61.1
-        version: 0.61.1(778494c0fb8143692fad2ed052c86180)
+        version: 0.61.1(d2c450c95eb265615b052d4f9953f11c)
       ember-resolver:
         specifier: ^13.1.0
         version: 13.1.1
@@ -1024,7 +1027,7 @@ importers:
         version: 9.2.1
       ember-qunit:
         specifier: ^9.0.4
-        version: 9.0.4(patch_hash=4d888706485d8ade1a05704bae1cd9a30bce8c25d852c5cbba89eff29fbc4150)(d17f27572fcc2e7bec4fe2c9351f1a88)
+        version: 9.0.4(patch_hash=4d888706485d8ade1a05704bae1cd9a30bce8c25d852c5cbba89eff29fbc4150)(3df9c9f2b04b001a92a53c35a9c19c7a)
       ember-source:
         specifier: file:../../apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+c09efdc8.tgz
         version: file:apps/repl/ember-source-7.3.0-alpha.1.all-optimizations+c09efdc8.tgz(@glimmer/component@2.1.1)
@@ -1135,7 +1138,7 @@ importers:
     dependencies:
       '@ember/test-waiters':
         specifier: ^4.1.1
-        version: 4.1.2
+        version: 4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)
       '@embroider/addon-shim':
         specifier: 1.10.2
         version: 1.10.2
@@ -1153,7 +1156,7 @@ importers:
         version: 6.2.2
       reactiveweb:
         specifier: 1.9.1
-        version: 1.9.1(9f91e21669edde5a0835948ba5900801)
+        version: 1.9.1(16210293c6bdc0ae6447cbf7e34d5177)
     devDependencies:
       '@babel/core':
         specifier: ^7.28.5
@@ -1205,7 +1208,7 @@ importers:
         version: 2.0.1(@babel/core@7.29.0)
       ember-primitives:
         specifier: ^0.61.1
-        version: 0.61.1(778494c0fb8143692fad2ed052c86180)
+        version: 0.61.1(d2c450c95eb265615b052d4f9953f11c)
       ember-resources:
         specifier: ^7.1.0
         version: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
@@ -12631,9 +12634,9 @@ snapshots:
 
   '@ember/string@4.0.1': {}
 
-  '@ember/test-helpers@5.4.1(patch_hash=665988c63e85a45fc99c20f57e1ec7967c7798856c55cb31488a591b95354d8d)(c8332dc3f90c0e60eb130a3a85f980b9)':
+  '@ember/test-helpers@5.4.1(patch_hash=e4ff950eefc53e708a1aeeb1f0f67aec8b065883be0664fde94148a81d045447)(c8332dc3f90c0e60eb130a3a85f980b9)':
     dependencies:
-      '@ember/test-waiters': 4.1.2
+      '@ember/test-waiters': 4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)
       '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.20.5(c8332dc3f90c0e60eb130a3a85f980b9)
       '@simple-dom/interface': 1.4.0
@@ -12644,7 +12647,7 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  '@ember/test-waiters@4.1.2':
+  '@ember/test-waiters@4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)':
     dependencies:
       '@embroider/addon-shim': 1.10.3
     transitivePeerDependencies:
@@ -12893,7 +12896,7 @@ snapshots:
 
   '@embroider/router@3.0.6(2ca070a1fc2985560171c71fbce2dafe)':
     dependencies:
-      '@ember/test-waiters': 4.1.2
+      '@ember/test-waiters': 4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)
       '@embroider/addon-shim': 1.10.2
     optionalDependencies:
       '@embroider/core': 4.4.7(@glint/template@1.7.7)
@@ -16747,7 +16750,7 @@ snapshots:
 
   ember-async-data@2.0.1(@babel/core@7.29.0):
     dependencies:
-      '@ember/test-waiters': 4.1.2
+      '@ember/test-waiters': 4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)
       '@embroider/addon-shim': 1.10.2
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
     transitivePeerDependencies:
@@ -16901,13 +16904,13 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-container-query@7.0.3(17a87a5a41ff436636043df7c58cd42a):
+  ember-container-query@7.0.3(d75ea1c9c281f1aec62ab8e2e700945d):
     dependencies:
       '@embroider/addon-shim': 1.10.2
       decorator-transforms: 2.3.2(@babel/core@7.29.0)
       ember-element-helper: 0.8.8
       ember-modifier: 4.3.0(@babel/core@7.29.0)
-      ember-primitives: 0.57.0(778494c0fb8143692fad2ed052c86180)
+      ember-primitives: 0.57.0(d2c450c95eb265615b052d4f9953f11c)
     transitivePeerDependencies:
       - '@babel/core'
       - '@ember/test-helpers'
@@ -17008,10 +17011,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-primitives@0.51.0(778494c0fb8143692fad2ed052c86180):
+  ember-primitives@0.51.0(d2c450c95eb265615b052d4f9953f11c):
     dependencies:
       '@babel/runtime': 7.29.2
-      '@ember/test-waiters': 4.1.2
+      '@ember/test-waiters': 4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)
       '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.20.5(c8332dc3f90c0e60eb130a3a85f980b9)
       '@floating-ui/dom': 1.7.5
@@ -17021,23 +17024,23 @@ snapshots:
       ember-modifier: 4.3.0(@babel/core@7.29.0)
       ember-resources: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
       form-data-utils: 0.6.0
-      reactiveweb: 1.9.1(9f91e21669edde5a0835948ba5900801)
+      reactiveweb: 1.9.1(16210293c6bdc0ae6447cbf7e34d5177)
       should-handle-link: 1.3.0
       tabster: 8.7.0
       tracked-built-ins: 4.1.2(@babel/core@7.29.0)
       tracked-toolbox: 2.2.0(@babel/core@7.29.0)
       which-heading-do-i-need: 0.2.4
     optionalDependencies:
-      '@ember/test-helpers': 5.4.1(patch_hash=665988c63e85a45fc99c20f57e1ec7967c7798856c55cb31488a591b95354d8d)(c8332dc3f90c0e60eb130a3a85f980b9)
+      '@ember/test-helpers': 5.4.1(patch_hash=e4ff950eefc53e708a1aeeb1f0f67aec8b065883be0664fde94148a81d045447)(c8332dc3f90c0e60eb130a3a85f980b9)
       '@glint/template': 1.7.7
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
 
-  ember-primitives@0.57.0(778494c0fb8143692fad2ed052c86180):
+  ember-primitives@0.57.0(d2c450c95eb265615b052d4f9953f11c):
     dependencies:
       '@babel/runtime': 7.29.2
-      '@ember/test-waiters': 4.1.2
+      '@ember/test-waiters': 4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)
       '@embroider/addon-shim': 1.10.2
       '@floating-ui/dom': 1.7.5
       '@glimmer/component': 2.1.1
@@ -17046,23 +17049,23 @@ snapshots:
       ember-modifier: 4.3.0(@babel/core@7.29.0)
       ember-resources: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
       form-data-utils: 0.6.0
-      reactiveweb: 1.9.1(9f91e21669edde5a0835948ba5900801)
+      reactiveweb: 1.9.1(16210293c6bdc0ae6447cbf7e34d5177)
       should-handle-link: 1.3.0
       tabster: 8.7.0
       tracked-built-ins: 4.1.2(@babel/core@7.29.0)
       tracked-toolbox: 3.0.0(@babel/core@7.29.0)
       which-heading-do-i-need: 0.2.7
     optionalDependencies:
-      '@ember/test-helpers': 5.4.1(patch_hash=665988c63e85a45fc99c20f57e1ec7967c7798856c55cb31488a591b95354d8d)(c8332dc3f90c0e60eb130a3a85f980b9)
+      '@ember/test-helpers': 5.4.1(patch_hash=e4ff950eefc53e708a1aeeb1f0f67aec8b065883be0664fde94148a81d045447)(c8332dc3f90c0e60eb130a3a85f980b9)
       '@glint/template': 1.7.7
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
 
-  ember-primitives@0.60.1(778494c0fb8143692fad2ed052c86180):
+  ember-primitives@0.60.1(d2c450c95eb265615b052d4f9953f11c):
     dependencies:
       '@babel/runtime': 7.29.2
-      '@ember/test-waiters': 4.1.2
+      '@ember/test-waiters': 4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)
       '@embroider/addon-shim': 1.10.2
       '@floating-ui/dom': 1.7.5
       '@glimmer/component': 2.1.1
@@ -17071,23 +17074,23 @@ snapshots:
       ember-modifier: 4.3.0(@babel/core@7.29.0)
       ember-resources: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
       form-data-utils: 0.6.0
-      reactiveweb: 1.9.1(9f91e21669edde5a0835948ba5900801)
+      reactiveweb: 1.9.1(16210293c6bdc0ae6447cbf7e34d5177)
       should-handle-link: 1.3.0
       tabster: 8.7.0
       tracked-built-ins: 4.1.2(@babel/core@7.29.0)
       tracked-toolbox: 3.0.0(@babel/core@7.29.0)
       which-heading-do-i-need: 0.4.1
     optionalDependencies:
-      '@ember/test-helpers': 5.4.1(patch_hash=665988c63e85a45fc99c20f57e1ec7967c7798856c55cb31488a591b95354d8d)(c8332dc3f90c0e60eb130a3a85f980b9)
+      '@ember/test-helpers': 5.4.1(patch_hash=e4ff950eefc53e708a1aeeb1f0f67aec8b065883be0664fde94148a81d045447)(c8332dc3f90c0e60eb130a3a85f980b9)
       '@glint/template': 1.7.7
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
 
-  ember-primitives@0.61.1(778494c0fb8143692fad2ed052c86180):
+  ember-primitives@0.61.1(d2c450c95eb265615b052d4f9953f11c):
     dependencies:
       '@babel/runtime': 7.29.2
-      '@ember/test-waiters': 4.1.2
+      '@ember/test-waiters': 4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)
       '@embroider/addon-shim': 1.10.2
       '@floating-ui/dom': 1.7.5
       '@glimmer/component': 2.1.1
@@ -17096,22 +17099,22 @@ snapshots:
       ember-modifier: 4.3.0(@babel/core@7.29.0)
       ember-resources: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
       form-data-utils: 0.6.0
-      reactiveweb: 1.9.1(9f91e21669edde5a0835948ba5900801)
+      reactiveweb: 1.9.1(16210293c6bdc0ae6447cbf7e34d5177)
       should-handle-link: 1.3.0
       tabster: 8.7.0
       tracked-built-ins: 4.1.2(@babel/core@7.29.0)
       tracked-toolbox: 3.0.0(@babel/core@7.29.0)
       which-heading-do-i-need: 0.4.1
     optionalDependencies:
-      '@ember/test-helpers': 5.4.1(patch_hash=665988c63e85a45fc99c20f57e1ec7967c7798856c55cb31488a591b95354d8d)(c8332dc3f90c0e60eb130a3a85f980b9)
+      '@ember/test-helpers': 5.4.1(patch_hash=e4ff950eefc53e708a1aeeb1f0f67aec8b065883be0664fde94148a81d045447)(c8332dc3f90c0e60eb130a3a85f980b9)
       '@glint/template': 1.7.7
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
 
-  ember-qunit@9.0.4(patch_hash=4d888706485d8ade1a05704bae1cd9a30bce8c25d852c5cbba89eff29fbc4150)(d17f27572fcc2e7bec4fe2c9351f1a88):
+  ember-qunit@9.0.4(patch_hash=4d888706485d8ade1a05704bae1cd9a30bce8c25d852c5cbba89eff29fbc4150)(3df9c9f2b04b001a92a53c35a9c19c7a):
     dependencies:
-      '@ember/test-helpers': 5.4.1(patch_hash=665988c63e85a45fc99c20f57e1ec7967c7798856c55cb31488a591b95354d8d)(c8332dc3f90c0e60eb130a3a85f980b9)
+      '@ember/test-helpers': 5.4.1(patch_hash=e4ff950eefc53e708a1aeeb1f0f67aec8b065883be0664fde94148a81d045447)(c8332dc3f90c0e60eb130a3a85f980b9)
       '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.20.5(c8332dc3f90c0e60eb130a3a85f980b9)
       qunit: 2.25.0
@@ -17123,12 +17126,12 @@ snapshots:
 
   ember-repl@8.1.0(97a2ca31a8e4cf9a385bac208eb0c5f1):
     dependencies:
-      '@ember/test-helpers': 5.4.1(patch_hash=665988c63e85a45fc99c20f57e1ec7967c7798856c55cb31488a591b95354d8d)(c8332dc3f90c0e60eb130a3a85f980b9)
-      '@ember/test-waiters': 4.1.2
+      '@ember/test-helpers': 5.4.1(patch_hash=e4ff950eefc53e708a1aeeb1f0f67aec8b065883be0664fde94148a81d045447)(c8332dc3f90c0e60eb130a3a85f980b9)
+      '@ember/test-waiters': 4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)
       codemirror: 6.0.2
       content-tag: 4.2.0
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
-      ember-primitives: 0.51.0(778494c0fb8143692fad2ed052c86180)
+      ember-primitives: 0.51.0(d2c450c95eb265615b052d4f9953f11c)
       ember-resolver: 13.1.1
       ember-resources: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
       repl-sdk: 1.6.0(93d4969b5698d0d4464d33ccc0660007)
@@ -17195,7 +17198,7 @@ snapshots:
 
   ember-statechart-component@7.1.0(037258e6c3e5475c885d8b51dfc92022):
     dependencies:
-      '@ember/test-waiters': 4.1.2
+      '@ember/test-waiters': 4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)
       '@embroider/addon-shim': 1.10.2
       '@glimmer/component': 2.1.1
       '@glint/template': 1.7.7
@@ -18833,9 +18836,9 @@ snapshots:
 
   kind-of@6.0.3: {}
 
-  kolay@https://codeload.github.com/universal-ember/kolay/tar.gz/757d6a0ec85ebe6244c1e8c53a15f3840392536f(30c9dd6a1f85bd8a31d07ed130b97526):
+  kolay@https://codeload.github.com/universal-ember/kolay/tar.gz/757d6a0ec85ebe6244c1e8c53a15f3840392536f(de0b580eccfda27e0f70b9aeef93835c):
     dependencies:
-      '@ember/test-waiters': 4.1.2
+      '@ember/test-waiters': 4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)
       '@embroider/addon-shim': 1.10.2
       '@glimmer/component': 2.1.1
       '@glint/template': 1.7.7
@@ -18844,13 +18847,13 @@ snapshots:
       content-tag: 4.2.0
       decorator-transforms: 2.4.0(@babel/core@7.29.0)
       ember-modifier: 4.3.0(@babel/core@7.29.0)
-      ember-primitives: 0.60.1(778494c0fb8143692fad2ed052c86180)
+      ember-primitives: 0.60.1(d2c450c95eb265615b052d4f9953f11c)
       ember-repl: 8.1.0(97a2ca31a8e4cf9a385bac208eb0c5f1)
       ember-resources: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
       globby: 16.2.2
       json5: 2.2.3
       package-up: 5.0.0
-      reactiveweb: 1.9.1(9f91e21669edde5a0835948ba5900801)
+      reactiveweb: 1.9.1(16210293c6bdc0ae6447cbf7e34d5177)
       rehype-raw: 7.0.0
       rehype-stringify: 10.0.1
       remark-gfm: 4.0.1
@@ -19793,15 +19796,15 @@ snapshots:
 
   nvp.ui@0.5.3(@babel/core@7.29.0):
     dependencies:
-      '@ember/test-helpers': 5.4.1(patch_hash=665988c63e85a45fc99c20f57e1ec7967c7798856c55cb31488a591b95354d8d)(c8332dc3f90c0e60eb130a3a85f980b9)
-      '@ember/test-waiters': 4.1.2
+      '@ember/test-helpers': 5.4.1(patch_hash=e4ff950eefc53e708a1aeeb1f0f67aec8b065883be0664fde94148a81d045447)(c8332dc3f90c0e60eb130a3a85f980b9)
+      '@ember/test-waiters': 4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)
       '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.19.6(@glint/template@1.7.7)
       '@glimmer/component': 2.1.1
       '@glint/template': 1.7.7
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-modifier: 4.3.0(@babel/core@7.29.0)
-      ember-primitives: 0.51.0(778494c0fb8143692fad2ed052c86180)
+      ember-primitives: 0.51.0(d2c450c95eb265615b052d4f9953f11c)
       ember-resources: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
     transitivePeerDependencies:
       - '@babel/core'
@@ -20365,9 +20368,9 @@ snapshots:
 
   react@19.2.4: {}
 
-  reactiveweb@1.9.1(9f91e21669edde5a0835948ba5900801):
+  reactiveweb@1.9.1(16210293c6bdc0ae6447cbf7e34d5177):
     dependencies:
-      '@ember/test-waiters': 4.1.2
+      '@ember/test-waiters': 4.1.2(patch_hash=5c46f324e08f42d15b01ed429b33cd7a531d77aa19aab38da3b793b20d94ff80)
       '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.20.5(c8332dc3f90c0e60eb130a3a85f980b9)
       decorator-transforms: 2.3.1(@babel/core@7.29.0)

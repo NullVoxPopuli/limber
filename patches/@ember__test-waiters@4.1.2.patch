@@ -1,0 +1,59 @@
+diff --git a/dist/index.js b/dist/index.js
+index a661111916b73fd2e7d7c8b3574737ebd35ee098..6f848f558c462063f3e7d88387ddbfaad55de1b1 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -105,6 +105,17 @@ function hasPendingWaiters() {
+   return state.pending > 0;
+ }
+ 
++// Compose waiter completion from the operations' own promises.
++const NEVER = new Promise(() => {});
++function waitersSettled() {
++  const settled = [];
++  for (const waiter of getWaiters()) {
++    if (typeof waiter.settled === 'function') settled.push(waiter.settled());
++    else if (!waiter.waitUntil()) return NEVER;
++  }
++  return Promise.all(settled).then(() => {});
++}
++
+ const WAITER_NAME_PATTERN = /^[^:]*:?.*/;
+ let WAITER_NAMES = macroCondition(isDevelopingApp()) ? new Set() : undefined;
+ function _resetWaiterNames() {
+@@ -138,6 +149,9 @@ class TestWaiterImpl {
+       },
+       label
+     });
++    let resolve;
++    const promise = new Promise(r => (resolve = r));
++    (this.pendingOperations ??= new Map()).set(token, { promise, resolve });
+     return token;
+   }
+   endAsync(token) {
+@@ -151,10 +165,19 @@ class TestWaiterImpl {
+     // Mark when a waiter operation has completed so we can distinguish
+     // whether endAsync is being called before a prior beginAsync call above.
+     this._getCompletedOperations(token).set(token, true);
++    const operation = this.pendingOperations?.get(token);
++    if (operation !== undefined) {
++      this.pendingOperations.delete(token);
++      operation.resolve();
++    }
+   }
+   waitUntil() {
+     return this.items.size === 0;
+   }
++  settled() {
++    const operations = [...(this.pendingOperations?.values() ?? [])].map(o => o.promise);
++    return Promise.all(operations).then(() => {});
++  }
+   debugInfo() {
+     const result = [];
+     this.items.forEach(value => {
+@@ -445,5 +468,5 @@ async function waitForFetch(fetchPromise) {
+   });
+ }
+ 
+-export { _reset, _resetWaiterNames, buildWaiter, getPendingWaiterState, getWaiters, hasPendingWaiters, register, unregister, waitFor, waitForFetch, waitForPromise };
++export { _reset, _resetWaiterNames, buildWaiter, getPendingWaiterState, getWaiters, hasPendingWaiters, register, unregister, waitFor, waitForFetch, waitForPromise, waitersSettled };
+ //# sourceMappingURL=index.js.map

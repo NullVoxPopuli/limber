@@ -89,7 +89,8 @@
     "patchedDependencies": {
       "browserslist-generator": "patches/browserslist-generator.patch",
       "ember-qunit@9.0.4": "patches/ember-qunit@9.0.4.patch",
-      "@ember/test-helpers@5.4.1": "patches/@ember__test-helpers@5.4.1.patch"
+      "@ember/test-helpers@5.4.1": "patches/@ember__test-helpers@5.4.1.patch",
+      "@ember/test-waiters@4.1.2": "patches/@ember__test-waiters@4.1.2.patch"
     },
     "_ember-repl": "workspace:*",
     "_repl-sdk": "workspace:*"
