@@ -1,0 +1,66 @@
+diff --git a/dist/index.js b/dist/index.js
+index a661111916b73fd2e7d7c8b3574737ebd35ee098..9a10991584651a89c2c594eaf58348a715beb55d 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -105,6 +105,26 @@ function hasPendingWaiters() {
+   return state.pending > 0;
+ }
+ 
++// A promise carrying its own resolver, so pending collections hold
++// nothing but promises.
++function _resolvablePromise() {
++  let resolve;
++  const promise = new Promise(r => (resolve = r));
++  promise.resolve = resolve;
++  return promise;
++}
++
++// Compose waiter completion from the operations' own promises.
++const NEVER = new Promise(() => {});
++function waitersSettled() {
++  const settled = [];
++  for (const waiter of getWaiters()) {
++    if (typeof waiter.settled === 'function') settled.push(waiter.settled());
++    else if (!waiter.waitUntil()) return NEVER;
++  }
++  return Promise.all(settled);
++}
++
+ const WAITER_NAME_PATTERN = /^[^:]*:?.*/;
+ let WAITER_NAMES = macroCondition(isDevelopingApp()) ? new Set() : undefined;
+ function _resetWaiterNames() {
+@@ -138,6 +158,7 @@ class TestWaiterImpl {
+       },
+       label
+     });
++    (this.pendingPromises ??= new Map()).set(token, _resolvablePromise());
+     return token;
+   }
+   endAsync(token) {
+@@ -151,10 +172,19 @@ class TestWaiterImpl {
+     // Mark when a waiter operation has completed so we can distinguish
+     // whether endAsync is being called before a prior beginAsync call above.
+     this._getCompletedOperations(token).set(token, true);
++    const pending = this.pendingPromises?.get(token);
++    if (pending !== undefined) {
++      this.pendingPromises.delete(token);
++      pending.resolve();
++    }
+   }
+   waitUntil() {
+     return this.items.size === 0;
+   }
++  settled() {
++    if (this.pendingPromises === undefined) return Promise.resolve();
++    return Promise.all(this.pendingPromises.values());
++  }
+   debugInfo() {
+     const result = [];
+     this.items.forEach(value => {
+@@ -445,5 +475,5 @@ async function waitForFetch(fetchPromise) {
+   });
+ }
+ 
+-export { _reset, _resetWaiterNames, buildWaiter, getPendingWaiterState, getWaiters, hasPendingWaiters, register, unregister, waitFor, waitForFetch, waitForPromise };
++export { _reset, _resetWaiterNames, buildWaiter, getPendingWaiterState, getWaiters, hasPendingWaiters, register, unregister, waitFor, waitForFetch, waitForPromise, waitersSettled };
+ //# sourceMappingURL=index.js.map
