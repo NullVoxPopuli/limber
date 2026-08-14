@@ -38,7 +38,7 @@ function extractText(children) {
  * @param {string} value
  */
 function formatDefaultId(value) {
-  return kebabCase(value.replaceAll(/\\s+/g, ' ').trim());
+  return kebabCase(value.replaceAll(/\s+/g, ' ').trim());
 }
 
 /**
