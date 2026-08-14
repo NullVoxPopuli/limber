@@ -237,6 +237,24 @@ describe('default features', () => {
   });
 });
 
+describe('heading ids', () => {
+  it('collapses runs of whitespace in the heading text', async () => {
+    const result = await parseMarkdown(`##   Hello    World  `, { ...defaults });
+
+    // Only the id is normalized; the rendered text keeps the author's spacing.
+    expect(result.text).toContain('id="hello-world"');
+  });
+
+  it('treats a literal \\s in a heading as text, not as whitespace', async () => {
+    // The regex in formatDefaultId used to be /\\s+/g -- a literal backslash
+    // followed by `s`, rather than whitespace -- so `\s` here was replaced with
+    // a space and the `s` vanished from the id.
+    const result = await parseMarkdown(`## a \\s b`, { ...defaults });
+
+    expect(result.text).toContain('id="a-s-b"');
+  });
+});
+
 describe('options', () => {
   describe('remarkPlugins', () => {
     it('works', async () => {
