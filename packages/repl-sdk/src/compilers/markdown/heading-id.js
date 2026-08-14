@@ -5,14 +5,6 @@ import { visit } from 'unist-util-visit';
  * @param {import('mdast').PhrasingContent[]} children
  * @return {string}
  */
-function getDefaultId(children) {
-  return formatDefaultId(extractText(children));
-}
-
-/**
- * @param {import('mdast').PhrasingContent[]} children
- * @return {string}
- */
 function extractText(children) {
   return children
     .map(
@@ -35,6 +27,18 @@ function extractText(children) {
 }
 
 /**
+ * `extractText` joins a heading's children with a space, on top of whatever
+ * spacing the text nodes already carry, so `## Hello *there*` extracts as
+ * `'Hello  there'`. Collapse that before slugging: `kebabCase` happens not to
+ * care, but a slugger that maps space to `-` would emit `hello--there`.
+ *
+ * @param {string} value
+ */
+function normalizeText(value) {
+  return value.replaceAll(/\s+/g, ' ').trim();
+}
+
+/**
  * @param {string} value
  */
 function formatDefaultId(value) {
@@ -52,7 +56,29 @@ function setNodeId(node, id) {
   /** @type {any} */ (node.data).id = node.data.hProperties.id = id;
 }
 
-export function headingId(options = { defaults: false }) {
+/**
+ * Assign an `id` to every heading, so anchors can link to sections.
+ *
+ * By default the id is the heading's text in kebab-case. Pass `slug` to
+ * generate it some other way -- for example, matching what GitHub produces for
+ * the same markdown, so an in-page `#anchor` resolves both in a rendered site
+ * and in the `.md` file on GitHub:
+ *
+ * ```js
+ * import GithubSlugger from 'github-slugger';
+ *
+ * const slugger = new GithubSlugger();
+ *
+ * headingId({ slug: (text) => slugger.slug(text) });
+ * ```
+ *
+ * A heading with an explicit `{#custom-id}` suffix is left alone either way.
+ *
+ * @param {{ slug?: (text: string) => string }} [options]
+ */
+export function headingId(options) {
+  const slug = typeof options?.slug === 'function' ? options.slug : formatDefaultId;
+
   /**
    * @param {import('mdast').Root} node
    */
@@ -69,7 +95,7 @@ export function headingId(options = { defaults: false }) {
         }
       }
 
-      setNodeId(node, getDefaultId(node.children));
+      setNodeId(node, slug(normalizeText(extractText(node.children))));
     });
   };
 }

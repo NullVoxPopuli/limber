@@ -238,6 +238,60 @@ describe('default features', () => {
 });
 
 describe('options', () => {
+  describe('headingId', () => {
+    it('defaults to kebab-case', async () => {
+      const result = await parseMarkdown(`## setupMirage`, { ...defaults });
+
+      expect(result.text).toBe('<h2 id="setup-mirage">setupMirage</h2>');
+    });
+
+    it('uses a custom slug function when given', async () => {
+      const result = await parseMarkdown(`## setupMirage`, {
+        ...defaults,
+        headingId: { slug: (text: string) => text.toLowerCase() },
+      });
+
+      expect(result.text).toBe('<h2 id="setupmirage">setupMirage</h2>');
+    });
+
+    it('passes the heading text, not the node', async () => {
+      const seen: string[] = [];
+
+      await parseMarkdown(`## Hello *there*`, {
+        ...defaults,
+        headingId: {
+          slug: (text: string) => {
+            seen.push(text);
+
+            return 'x';
+          },
+        },
+      });
+
+      expect(seen).to.deep.equal(['Hello there']);
+    });
+
+    it('collapses the whitespace joining introduces, so space-to-dash sluggers behave', async () => {
+      // `## Hello *there*` extracts as 'Hello  there' before normalizing; a
+      // slugger that maps runs of space to '-' would otherwise emit 'hello--there'.
+      const result = await parseMarkdown(`## Hello *there*`, {
+        ...defaults,
+        headingId: { slug: (text: string) => text.toLowerCase().replaceAll(' ', '-') },
+      });
+
+      expect(result.text).toContain('id="hello-there"');
+    });
+
+    it('leaves an explicit {#custom-id} heading alone', async () => {
+      const result = await parseMarkdown(`## Title {#custom}`, {
+        ...defaults,
+        headingId: { slug: () => 'should-not-be-used' },
+      });
+
+      expect(result.text).not.toContain('should-not-be-used');
+    });
+  });
+
   describe('remarkPlugins', () => {
     it('works', async () => {
       const result = await parseMarkdown(`# Title`, {
