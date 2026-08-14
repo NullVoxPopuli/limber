@@ -245,6 +245,55 @@ describe('options', () => {
       expect(result.text).toBe('<h2 id="setup-mirage">setupMirage</h2>');
     });
 
+    it("slug: 'gfm' matches the anchor GitHub generates", async () => {
+      const result = await parseMarkdown(`## setupMirage`, {
+        ...defaults,
+        headingId: { slug: 'gfm' },
+      });
+
+      expect(result.text).toBe('<h2 id="setupmirage">setupMirage</h2>');
+    });
+
+    it("slug: 'gfm' de-duplicates repeated headings within a document", async () => {
+      const result = await parseMarkdown(`## Usage\n\n## Usage\n\n## Usage`, {
+        ...defaults,
+        headingId: { slug: 'gfm' },
+      });
+
+      expect(result.text).toContain('id="usage"');
+      expect(result.text).toContain('id="usage-1"');
+      expect(result.text).toContain('id="usage-2"');
+    });
+
+    it("slug: 'gfm' restarts numbering for each document", async () => {
+      const options = { ...defaults, headingId: { slug: 'gfm' as const } };
+
+      await parseMarkdown(`## Usage`, options);
+
+      const second = await parseMarkdown(`## Usage`, options);
+
+      expect(second.text).toBe('<h2 id="usage">Usage</h2>');
+    });
+
+    it("slug: 'kebab' is the default and can be named explicitly", async () => {
+      const result = await parseMarkdown(`## setupMirage`, {
+        ...defaults,
+        headingId: { slug: 'kebab' },
+      });
+
+      expect(result.text).toBe('<h2 id="setup-mirage">setupMirage</h2>');
+    });
+
+    it('throws on an unknown named slugger', async () => {
+      await errorExpect(
+        parseMarkdown(`## Title`, {
+          ...defaults,
+          // @ts-expect-error -- deliberately invalid
+          headingId: { slug: 'nope' },
+        })
+      ).rejects.toThrow(/Unknown headingId.slug/);
+    });
+
     it('uses a custom slug function when given', async () => {
       const result = await parseMarkdown(`## setupMirage`, {
         ...defaults,
