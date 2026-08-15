@@ -63,9 +63,11 @@ export function headingId(options = { defaults: false }) {
       if (lastChild && lastChild.type === 'text') {
         const string = lastChild.value.replace(/ +$/, '');
         const matched = string.match(/ {#([^]+?)}$/);
+        const suffix = matched?.[0];
+        const customId = matched?.[1];
 
-        if (matched) {
-          const remaining = string.slice(0, -matched[0].length);
+        if (suffix && customId) {
+          const remaining = string.slice(0, -suffix.length);
 
           if (remaining) {
             lastChild.value = remaining;
@@ -73,7 +75,7 @@ export function headingId(options = { defaults: false }) {
             node.children.pop();
           }
 
-          setNodeId(node, matched[1]);
+          setNodeId(node, customId);
 
           return;
         }
