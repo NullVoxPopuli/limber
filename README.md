@@ -65,6 +65,13 @@ Cross-Browser testing provided by <a href='http://browserstack.com' target='_bla
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/gitKrystan">
+                    <img src="https://avatars.githubusercontent.com/u/14152574?v=4" width="100;" alt="gitKrystan"/>
+                    <br />
+                    <sub><b>Krystan HuffMenne</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/MichalBryxi">
                     <img src="https://avatars.githubusercontent.com/u/847473?v=4" width="100;" alt="MichalBryxi"/>
                     <br />
@@ -78,20 +85,13 @@ Cross-Browser testing provided by <a href='http://browserstack.com' target='_bla
                     <sub><b>John Anders</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/mrloop">
                     <img src="https://avatars.githubusercontent.com/u/12345?v=4" width="100;" alt="mrloop"/>
                     <br />
                     <sub><b>Ewan McDougall</b></sub>
-                </a>
-            </td>
-		</tr>
-		<tr>
-            <td align="center">
-                <a href="https://github.com/tcjr">
-                    <img src="https://avatars.githubusercontent.com/u/142243?v=4" width="100;" alt="tcjr"/>
-                    <br />
-                    <sub><b>Tom Carter</b></sub>
                 </a>
             </td>
             <td align="center">
@@ -102,17 +102,17 @@ Cross-Browser testing provided by <a href='http://browserstack.com' target='_bla
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/tcjr">
+                    <img src="https://avatars.githubusercontent.com/u/142243?v=4" width="100;" alt="tcjr"/>
+                    <br />
+                    <sub><b>Tom Carter</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/ynotdraw">
                     <img src="https://avatars.githubusercontent.com/u/8069555?v=4" width="100;" alt="ynotdraw"/>
                     <br />
                     <sub><b>Tony Ward</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/gitKrystan">
-                    <img src="https://avatars.githubusercontent.com/u/14152574?v=4" width="100;" alt="gitKrystan"/>
-                    <br />
-                    <sub><b>Krystan HuffMenne</b></sub>
                 </a>
             </td>
             <td align="center">
