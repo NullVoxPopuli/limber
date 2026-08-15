@@ -20,10 +20,7 @@ import { sanitizeForGlimmer } from './sanitize-for-glimmer.js';
  * @returns {import('unified').Processor<import('hast').Root>}
  */
 export function buildCompiler(options) {
-  let compiler = unified()
-    .use(remarkParse)
-    .use(remarkGfm, { singleTilde: true })
-    .use(headingId);
+  let compiler = unified().use(remarkParse).use(remarkGfm, { singleTilde: true }).use(headingId);
 
   /**
    * If this were "use"d after `remarkRehype`,
