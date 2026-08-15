@@ -230,28 +230,64 @@ describe('default features', () => {
       expect(result).toMatchInlineSnapshot(`
         {
           "codeBlocks": [],
-          "text": "<h2 id="hello-foo-two"><code>&#x3C;Hello @foo="two" /></code></h2>",
+          "text": "<h2 id="hello-footwo-"><code>&#x3C;Hello @foo="two" /></code></h2>",
         }
       `);
     });
   });
 });
 
-describe('heading ids', () => {
-  it('collapses runs of whitespace in the heading text', async () => {
-    const result = await parseMarkdown(`##   Hello    World  `, { ...defaults });
-
-    // Only the id is normalized; the rendered text keeps the author's spacing.
-    expect(result.text).toContain('id="hello-world"');
-  });
-
+describe('headingId', () => {
   it('treats a literal \\s in a heading as text, not as whitespace', async () => {
-    // The regex in formatDefaultId used to be /\\s+/g -- a literal backslash
-    // followed by `s`, rather than whitespace -- so `\s` here was replaced with
-    // a space and the `s` vanished from the id.
     const result = await parseMarkdown(`## a \\s b`, { ...defaults });
 
     expect(result.text).toContain('id="a-s-b"');
+  });
+
+  it('matches the anchor GitHub generates', async () => {
+    const result = await parseMarkdown(`## setupMirage`, { ...defaults });
+
+    expect(result.text).toBe('<h2 id="setupmirage">setupMirage</h2>');
+  });
+
+  it('keeps a colon out of the id, the way GitHub does', async () => {
+    const result = await parseMarkdown(`## V2 JSON:API`, { ...defaults });
+
+    expect(result.text).toBe('<h2 id="v2-jsonapi">V2 JSON:API</h2>');
+  });
+
+  it('de-duplicates repeated headings within a document', async () => {
+    const result = await parseMarkdown(`## Usage\n\n## Usage\n\n## Usage`, { ...defaults });
+
+    expect(result.text).toContain('id="usage"');
+    expect(result.text).toContain('id="usage-1"');
+    expect(result.text).toContain('id="usage-2"');
+  });
+
+  it('restarts numbering for each document', async () => {
+    await parseMarkdown(`## Usage`, { ...defaults });
+
+    const second = await parseMarkdown(`## Usage`, { ...defaults });
+
+    expect(second.text).toBe('<h2 id="usage">Usage</h2>');
+  });
+
+  it("inserts nothing between a heading's children", async () => {
+    const result = await parseMarkdown(`## Hello *there*`, { ...defaults });
+
+    expect(result.text).toContain('id="hello-there"');
+  });
+
+  it('keeps whitespace-only text nodes between formatted children', async () => {
+    const result = await parseMarkdown(`## *a* *b*`, { ...defaults });
+
+    expect(result.text).toContain('id="a-b"');
+  });
+
+  it('keeps whitespace the author actually wrote, like GitHub does', async () => {
+    const result = await parseMarkdown(`##   Hello    World  `, { ...defaults });
+
+    expect(result.text).toContain('id="hello----world"');
   });
 
   it('uses a {#custom-id} suffix as the id and strips it from the text', async () => {

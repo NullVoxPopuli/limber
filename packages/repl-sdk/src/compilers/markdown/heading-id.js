@@ -1,45 +1,6 @@
-import { kebabCase } from 'change-case';
+import GithubSlugger from 'github-slugger';
+import { toString } from 'mdast-util-to-string';
 import { visit } from 'unist-util-visit';
-
-/**
- * @param {import('mdast').PhrasingContent[]} children
- * @return {string}
- */
-function getDefaultId(children) {
-  return formatDefaultId(extractText(children));
-}
-
-/**
- * @param {import('mdast').PhrasingContent[]} children
- * @return {string}
- */
-function extractText(children) {
-  return children
-    .map(
-      /**
-       * @param {any} child
-       */
-      (child) => {
-        const isEmpty = !child.value?.trim();
-
-        if (!isEmpty) {
-          return child.value;
-        } else if (child.children && child.children.length > 0) {
-          return extractText(child.children);
-        } else {
-          return '';
-        }
-      }
-    )
-    .join(' ');
-}
-
-/**
- * @param {string} value
- */
-function formatDefaultId(value) {
-  return kebabCase(value.replaceAll(/\s+/g, ' ').trim());
-}
 
 /**
  * @param {import('mdast').Heading} node
@@ -52,11 +13,13 @@ function setNodeId(node, id) {
   /** @type {any} */ (node.data).id = node.data.hProperties.id = id;
 }
 
-export function headingId(options = { defaults: false }) {
+export function headingId() {
   /**
    * @param {import('mdast').Root} node
    */
   return function (node) {
+    const slugger = new GithubSlugger();
+
     visit(node, 'heading', (node) => {
       const lastChild = node.children[node.children.length - 1];
 
@@ -81,7 +44,7 @@ export function headingId(options = { defaults: false }) {
         }
       }
 
-      setNodeId(node, getDefaultId(node.children));
+      setNodeId(node, slugger.slug(toString(node)));
     });
   };
 }

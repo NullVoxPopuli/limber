@@ -13,3 +13,34 @@ Features:
 ## Usage 
 
 
+### Heading ids
+
+Every markdown heading gets an `id`, so in-page anchors can link to sections.
+
+Ids match what GitHub generates for the same markdown, via
+[`github-slugger`][github-slugger]:
+
+```
+### `setupMirage`   ->  #setupmirage
+### V2 JSON:API     ->  #v2-jsonapi
+```
+
+A `.md` file is typically read in two places — a rendered site, and the repo on
+GitHub — and an in-page `#anchor` only resolves in both if the two agree on how
+the id is derived.
+
+Like GitHub, repeated headings within a document are de-duplicated (`#usage`,
+`#usage-1`, `#usage-2`), and the numbering restarts for each document.
+Whitespace the author wrote is preserved rather than collapsed, also matching
+GitHub: `##   Hello    World` becomes `#hello----world`.
+
+A heading with an explicit `{#custom-id}` suffix keeps that id instead.
+
+> [!NOTE]
+> Heading anchors are not part of the [GFM spec][gfm-spec], which covers
+> autolink literals, footnotes, strikethrough, tables and tasklists. GitHub
+> generates them in its rendering layer — `github-slugger` is that behavior,
+> extracted.
+
+[github-slugger]: https://github.com/Flet/github-slugger
+[gfm-spec]: https://github.github.com/gfm/

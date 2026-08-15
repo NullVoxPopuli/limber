@@ -1295,9 +1295,6 @@ importers:
       '@shikijs/rehype':
         specifier: ^3.22.0
         version: 3.23.0
-      change-case:
-        specifier: ^5.4.4
-        version: 5.4.4
       codemirror:
         specifier: ^6.0.2
         version: 6.0.2
@@ -1322,9 +1319,15 @@ importers:
       es-module-shims:
         specifier: ^2.8.0
         version: 2.8.0
+      github-slugger:
+        specifier: ^2.0.0
+        version: 2.0.0
       mdast:
         specifier: ^3.0.0
         version: 3.0.0
+      mdast-util-to-string:
+        specifier: ^4.0.0
+        version: 4.0.0
       mime:
         specifier: ^4.0.7
         version: 4.1.0
