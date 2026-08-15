@@ -1,38 +1,6 @@
 import GithubSlugger from 'github-slugger';
+import { toString } from 'mdast-util-to-string';
 import { visit } from 'unist-util-visit';
-
-/**
- * A heading's text, as `github-slugger` should see it: the children's text
- * concatenated, with nothing inserted between them. Joining with a space would
- * add one that the markdown never had -- `## Hello *there*` becomes
- * `'Hello  there'` and slugs as `hello--there` rather than `hello-there`.
- *
- * Whitespace the author actually wrote is left alone, since GitHub keeps it too:
- * `##   Hello    World` slugs as `hello----world` there and here.
- *
- * @param {import('mdast').PhrasingContent[]} children
- * @return {string}
- */
-function extractText(children) {
-  return children
-    .map(
-      /**
-       * @param {any} child
-       */
-      (child) => {
-        const isEmpty = !child.value?.trim();
-
-        if (!isEmpty) {
-          return child.value;
-        } else if (child.children && child.children.length > 0) {
-          return extractText(child.children);
-        } else {
-          return '';
-        }
-      }
-    )
-    .join('');
-}
 
 /**
  * @param {import('mdast').Heading} node
@@ -81,7 +49,9 @@ export function headingId() {
         }
       }
 
-      setNodeId(node, slugger.slug(extractText(node.children)));
+      // github-slugger must see the text exactly as GitHub renders it,
+      // including whitespace-only nodes: `## *a* *b*` is `a b`, not `ab`.
+      setNodeId(node, slugger.slug(toString(node)));
     });
   };
 }

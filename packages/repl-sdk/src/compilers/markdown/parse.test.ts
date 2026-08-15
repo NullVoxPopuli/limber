@@ -287,6 +287,14 @@ describe('options', () => {
       expect(result.text).toContain('id="hello-there"');
     });
 
+    it('keeps whitespace-only text nodes between formatted children', async () => {
+      // The space between the emphases is its own text node. Dropping it
+      // would slug `ab`; GitHub slugs `a-b`.
+      const result = await parseMarkdown(`## *a* *b*`, { ...defaults });
+
+      expect(result.text).toContain('id="a-b"');
+    });
+
     it('keeps whitespace the author actually wrote, like GitHub does', async () => {
       // github-slugger does not collapse runs; rehype-slug gives
       // id="hello----world" for this input, so matching it means not collapsing.
