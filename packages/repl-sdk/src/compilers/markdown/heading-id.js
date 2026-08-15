@@ -65,6 +65,16 @@ export function headingId(options = { defaults: false }) {
         const matched = string.match(/ {#([^]+?)}$/);
 
         if (matched) {
+          const remaining = string.slice(0, -matched[0].length);
+
+          if (remaining) {
+            lastChild.value = remaining;
+          } else {
+            node.children.pop();
+          }
+
+          setNodeId(node, matched[1]);
+
           return;
         }
       }
