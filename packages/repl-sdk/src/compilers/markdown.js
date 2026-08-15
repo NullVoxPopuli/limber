@@ -6,7 +6,7 @@ import { buildCodeFenceMetaUtils } from './markdown/utils.js';
 
 /**
  * @param {unknown} [ options ]
- * @returns {{ remarkPlugins: Plugin[], rehypePlugins: Plugin[], headingId?: import('./markdown/types.ts').HeadingIdOptions }}
+ * @returns {{ remarkPlugins: Plugin[], rehypePlugins: Plugin[] }}
  */
 export function filterOptions(options) {
   if (!isRecord(options)) {
@@ -16,9 +16,6 @@ export function filterOptions(options) {
   return {
     remarkPlugins: /** @type {Plugin[]}*/ (options?.remarkPlugins || []),
     rehypePlugins: /** @type {Plugin[]}*/ (options?.rehypePlugins || []),
-    headingId: /** @type {import('./markdown/types.ts').HeadingIdOptions | undefined}*/ (
-      options?.headingId
-    ),
   };
 }
 
@@ -58,8 +55,6 @@ export const md = {
         const result = await parseMarkdown(text, {
           remarkPlugins: [...userOptions.remarkPlugins, ...compileOptions.remarkPlugins],
           rehypePlugins: [...userOptions.rehypePlugins, ...compileOptions.rehypePlugins],
-          // A per-compile `headingId` wins over the one configured for the compiler.
-          headingId: compileOptions.headingId ?? userOptions.headingId,
           isLive,
           isPreview,
           isBelow,

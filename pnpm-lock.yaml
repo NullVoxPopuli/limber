@@ -466,13 +466,13 @@ importers:
         version: 0.61.1(a64917a33376b7be2998bd4d1c9f349f)
       ember-repl:
         specifier: latest
-        version: 8.2.2(b124149995ac6fe1e0820550d6115f50)
+        version: 8.2.2(97a2ca31a8e4cf9a385bac208eb0c5f1)
       ember-resources:
         specifier: ^7.1.0
         version: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
       kolay:
         specifier: github:universal-ember/kolay#dist
-        version: https://codeload.github.com/universal-ember/kolay/tar.gz/2485d3f44037017d35c4c4a059a75a512f736edd(4303bcd233b82c5146db71a8b074d6a0)
+        version: https://codeload.github.com/universal-ember/kolay/tar.gz/2485d3f44037017d35c4c4a059a75a512f736edd(57fc87d098bbfe8820010d56435c776e)
       limber-ui:
         specifier: workspace:*
         version: link:../../packages/limber-ui
@@ -1295,9 +1295,6 @@ importers:
       '@shikijs/rehype':
         specifier: ^3.22.0
         version: 3.23.0
-      change-case:
-        specifier: ^5.4.4
-        version: 5.4.4
       codemirror:
         specifier: ^6.0.2
         version: 6.0.2
@@ -8262,7 +8259,7 @@ packages:
     engines: {node: '>=0.10.0'}
 
   kolay@https://codeload.github.com/universal-ember/kolay/tar.gz/2485d3f44037017d35c4c4a059a75a512f736edd:
-    resolution: {gitHosted: true, integrity: sha512-TaaA5fa1DH1zuHRQTUbtPgu6jxqZE1Bxgi+rHJGYlAva3TdIkV9hj1HW1o3QfzJs+daS1PU82tqk3B49tpfTIA==, tarball: https://codeload.github.com/universal-ember/kolay/tar.gz/2485d3f44037017d35c4c4a059a75a512f736edd}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/universal-ember/kolay/tar.gz/2485d3f44037017d35c4c4a059a75a512f736edd}
     version: 5.4.0
     engines: {node: '>= 18'}
 
@@ -17085,7 +17082,7 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  ember-repl@8.2.2(b124149995ac6fe1e0820550d6115f50):
+  ember-repl@8.2.2(97a2ca31a8e4cf9a385bac208eb0c5f1):
     dependencies:
       '@ember/test-helpers': 5.4.1(c8332dc3f90c0e60eb130a3a85f980b9)
       '@ember/test-waiters': 4.1.2
@@ -17095,7 +17092,7 @@ snapshots:
       ember-primitives: 0.61.1(a64917a33376b7be2998bd4d1c9f349f)
       ember-resolver: 13.1.1
       ember-resources: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
-      repl-sdk: 1.6.2(6f4bb085e066dcd1e8cba157a733f3a5)
+      repl-sdk: 1.6.2(93d4969b5698d0d4464d33ccc0660007)
     optionalDependencies:
       '@glint/template': 1.7.7
     transitivePeerDependencies:
@@ -18799,7 +18796,7 @@ snapshots:
 
   kind-of@6.0.3: {}
 
-  kolay@https://codeload.github.com/universal-ember/kolay/tar.gz/2485d3f44037017d35c4c4a059a75a512f736edd(4303bcd233b82c5146db71a8b074d6a0):
+  kolay@https://codeload.github.com/universal-ember/kolay/tar.gz/2485d3f44037017d35c4c4a059a75a512f736edd(57fc87d098bbfe8820010d56435c776e):
     dependencies:
       '@ember/test-waiters': 4.1.2
       '@embroider/addon-shim': 1.10.3
@@ -18811,7 +18808,7 @@ snapshots:
       decorator-transforms: 2.4.0(@babel/core@7.29.0)
       ember-modifier: 4.3.0(@babel/core@7.29.0)
       ember-primitives: 0.61.1(a64917a33376b7be2998bd4d1c9f349f)
-      ember-repl: 8.2.2(b124149995ac6fe1e0820550d6115f50)
+      ember-repl: 8.2.2(97a2ca31a8e4cf9a385bac208eb0c5f1)
       ember-resources: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
       globby: 16.2.3
       json5: 2.2.3
@@ -18823,7 +18820,7 @@ snapshots:
       remark-gfm: 4.0.1
       remark-parse: 11.0.0
       remark-rehype: 11.1.2
-      repl-sdk: 1.6.2(6f4bb085e066dcd1e8cba157a733f3a5)
+      repl-sdk: 1.6.2(93d4969b5698d0d4464d33ccc0660007)
       resolve.exports: 2.0.3
       send: 1.2.1
       tracked-built-ins: 4.1.2(@babel/core@7.29.0)
@@ -20558,7 +20555,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  repl-sdk@1.6.2(6f4bb085e066dcd1e8cba157a733f3a5):
+  repl-sdk@1.6.2(93d4969b5698d0d4464d33ccc0660007):
     dependencies:
       '@codemirror/autocomplete': 6.20.0
       '@codemirror/commands': 6.10.1

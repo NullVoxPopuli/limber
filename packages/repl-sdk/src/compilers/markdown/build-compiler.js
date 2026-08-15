@@ -23,7 +23,7 @@ export function buildCompiler(options) {
   let compiler = unified()
     .use(remarkParse)
     .use(remarkGfm, { singleTilde: true })
-    .use(headingId, options.headingId);
+    .use(headingId);
 
   /**
    * If this were "use"d after `remarkRehype`,

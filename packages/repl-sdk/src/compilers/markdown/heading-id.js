@@ -1,4 +1,3 @@
-import { kebabCase } from 'change-case';
 import GithubSlugger from 'github-slugger';
 import { visit } from 'unist-util-visit';
 
@@ -30,20 +29,13 @@ function extractText(children) {
 /**
  * `extractText` joins a heading's children with a space, on top of whatever
  * spacing the text nodes already carry, so `## Hello *there*` extracts as
- * `'Hello  there'`. Collapse that before slugging: `kebabCase` happens not to
- * care, but a slugger that maps space to `-` would emit `hello--there`.
+ * `'Hello  there'`. Collapse that before slugging, or the gap survives into the
+ * id: `hello--there` rather than `hello-there`.
  *
  * @param {string} value
  */
 function normalizeText(value) {
   return value.replaceAll(/\s+/g, ' ').trim();
-}
-
-/**
- * @param {string} value
- */
-function formatDefaultId(value) {
-  return kebabCase(value.replaceAll(/\s+/g, ' ').trim());
 }
 
 /**
@@ -58,72 +50,28 @@ function setNodeId(node, id) {
 }
 
 /**
- * Slug strategies that can be named instead of passed as a function.
- *
- * `gfm` matches the anchors GitHub generates for the same markdown, via
- * `github-slugger`. A fresh slugger is created per document so its
- * duplicate-heading counter (`usage`, `usage-1`) restarts each time, the way it
- * does on GitHub -- sharing one across documents would leak counts between them.
- */
-const NAMED_SLUGGERS = {
-  gfm: () => {
-    const slugger = new GithubSlugger();
-
-    return (/** @type {string} */ text) => slugger.slug(text);
-  },
-  kebab: () => formatDefaultId,
-};
-
-/**
- * @param {import('./types').HeadingIdOptions['slug']} slug
- * @returns {(text: string) => string}
- */
-function resolveSlugger(slug) {
-  if (typeof slug === 'function') return slug;
-
-  const named = slug ? NAMED_SLUGGERS[slug] : undefined;
-
-  if (slug && !named) {
-    throw new Error(
-      `Unknown headingId.slug: ${JSON.stringify(slug)}. ` +
-        `Expected a function or one of: ${Object.keys(NAMED_SLUGGERS).join(', ')}.`
-    );
-  }
-
-  return (named ?? NAMED_SLUGGERS.kebab)();
-}
-
-/**
  * Assign an `id` to every heading, so anchors can link to sections.
  *
- * The id defaults to the heading's text in kebab-case (`'kebab'`). Pass
- * `slug: 'gfm'` to generate the anchors GitHub generates for the same markdown
- * instead -- which matters when the same `.md` is read both in a rendered site
- * and on GitHub, since an in-page `#anchor` has to resolve in both:
+ * Ids match what GitHub generates for the same markdown, via `github-slugger`.
+ * That matters because a `.md` file is typically read in two places -- a
+ * rendered site, and the repo on GitHub -- and an in-page `#anchor` only
+ * resolves in both if the two agree on how the id is derived:
  *
- * ```js
- * headingId({ slug: 'gfm' });
- * //   ### `setupMirage`  ->  #setupmirage   (kebab gives #setup-mirage)
- * ```
+ *     ### `setupMirage`   ->  #setupmirage
+ *     ### V2 JSON:API     ->  #v2-jsonapi
  *
- * A function is also accepted, for anything neither mode covers:
- *
- * ```js
- * headingId({ slug: (text) => text.toUpperCase() });
- * ```
- *
- * A heading with an explicit `{#custom-id}` suffix is left alone in every mode.
- *
- * @param {import('./types').HeadingIdOptions} [options]
+ * A heading with an explicit `{#custom-id}` suffix is left alone.
  */
-export function headingId(options) {
+export function headingId() {
   /**
    * @param {import('mdast').Root} node
    */
   return function (node) {
-    // Per document, not per plugin: a named slugger carries dedupe state, and a
-    // compiler can be reused across documents.
-    const slug = resolveSlugger(options?.slug);
+    // Per document, not per plugin: the slugger carries the duplicate-heading
+    // counter (`usage`, `usage-1`), and a compiler can be reused across
+    // documents. Building it here restarts numbering per document, which is
+    // also what GitHub does.
+    const slugger = new GithubSlugger();
 
     visit(node, 'heading', (node) => {
       const lastChild = node.children[node.children.length - 1];
@@ -137,7 +85,7 @@ export function headingId(options) {
         }
       }
 
-      setNodeId(node, slug(normalizeText(extractText(node.children))));
+      setNodeId(node, slugger.slug(normalizeText(extractText(node.children))));
     });
   };
 }

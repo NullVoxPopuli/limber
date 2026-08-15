@@ -86,7 +86,6 @@
     "@lezer/markdown": "^1.6.3",
     "@replit/codemirror-lang-svelte": "^6.0.0",
     "@shikijs/rehype": "^3.22.0",
-    "change-case": "^5.4.4",
     "codemirror": "^6.0.2",
     "codemirror-lang-glimdown": "workspace:^",
     "codemirror-lang-glimmer": "workspace:^",
