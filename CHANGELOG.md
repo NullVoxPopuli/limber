@@ -1,5 +1,29 @@
 # Changelog
 
+## Release (2026-08-15)
+
+* ember-repl 8.2.3 (patch)
+* repl-sdk 2.0.0 (major)
+
+#### :boom: Breaking Change
+* `repl-sdk`
+  * [#2216](https://github.com/NullVoxPopuli/limber/pull/2216) feat(repl-sdk)!: generate heading ids GitHub's way ([@gitKrystan](https://github.com/gitKrystan))
+
+#### :bug: Bug Fix
+* `repl-sdk`
+  * [#2216](https://github.com/NullVoxPopuli/limber/pull/2216) feat(repl-sdk)!: generate heading ids GitHub's way ([@gitKrystan](https://github.com/gitKrystan))
+  * [#2219](https://github.com/NullVoxPopuli/limber/pull/2219) fix(repl-sdk): make {#custom-id} heading suffix actually set the id ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2215](https://github.com/NullVoxPopuli/limber/pull/2215) fix(repl-sdk): correct the whitespace escape in formatDefaultId ([@gitKrystan](https://github.com/gitKrystan))
+
+#### :memo: Documentation
+* [#2220](https://github.com/NullVoxPopuli/limber/pull/2220) docs(contributor): contributors readme action update ([@github-actions[bot]](https://github.com/apps/github-actions))
+* [#2217](https://github.com/NullVoxPopuli/limber/pull/2217) docs(contributor): contributors readme action update ([@github-actions[bot]](https://github.com/apps/github-actions))
+
+#### Committers: 3
+- @NullVoxPopuli's reduced-access machine account for AI usage ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+- GitHub Actions [Bot] ([@github-actions](https://github.com/apps/github-actions))
+- Krystan HuffMenne ([@gitKrystan](https://github.com/gitKrystan))
+
 ## Release (2026-08-05)
 
 * ember-repl 8.2.2 (patch)
