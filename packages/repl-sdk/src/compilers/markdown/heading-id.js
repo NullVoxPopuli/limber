@@ -43,7 +43,7 @@ function normalizeText(value) {
  * @param {string} value
  */
 function formatDefaultId(value) {
-  return kebabCase(value.replaceAll(/\\s+/g, ' ').trim());
+  return kebabCase(value.replaceAll(/\s+/g, ' ').trim());
 }
 
 /**
