@@ -238,13 +238,6 @@ describe('default features', () => {
 });
 
 describe('heading ids', () => {
-  it('collapses runs of whitespace in the heading text', async () => {
-    const result = await parseMarkdown(`##   Hello    World  `, { ...defaults });
-
-    // Only the id is normalized; the rendered text keeps the author's spacing.
-    expect(result.text).toContain('id="hello-world"');
-  });
-
   it('treats a literal \\s in a heading as text, not as whitespace', async () => {
     // The regex in formatDefaultId used to be /\\s+/g -- a literal backslash
     // followed by `s`, rather than whitespace -- so `\s` here was replaced with
@@ -285,12 +278,21 @@ describe('options', () => {
       expect(second.text).toBe('<h2 id="usage">Usage</h2>');
     });
 
-    it('collapses the whitespace that joining children introduces', async () => {
-      // `## Hello *there*` extracts as 'Hello  there'; without normalizing, the
-      // gap survives into the id as `hello--there`.
+    it("inserts nothing between a heading's children", async () => {
+      // Verified against rehype-slug, which is the github-slugger reference:
+      // `## Hello *there*` -> id="hello-there". Joining the children with a
+      // space instead would add one the markdown never had -> `hello--there`.
       const result = await parseMarkdown(`## Hello *there*`, { ...defaults });
 
       expect(result.text).toContain('id="hello-there"');
+    });
+
+    it('keeps whitespace the author actually wrote, like GitHub does', async () => {
+      // github-slugger does not collapse runs; rehype-slug gives
+      // id="hello----world" for this input, so matching it means not collapsing.
+      const result = await parseMarkdown(`##   Hello    World  `, { ...defaults });
+
+      expect(result.text).toContain('id="hello----world"');
     });
 
     it('leaves an explicit {#custom-id} heading alone', async () => {

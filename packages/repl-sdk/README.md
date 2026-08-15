@@ -31,6 +31,8 @@ the id is derived.
 
 Like GitHub, repeated headings within a document are de-duplicated (`#usage`,
 `#usage-1`, `#usage-2`), and the numbering restarts for each document.
+Whitespace the author wrote is preserved rather than collapsed, also matching
+GitHub: `##   Hello    World` becomes `#hello----world`.
 
 A heading with an explicit `{#custom-id}` suffix keeps that id instead.
 
