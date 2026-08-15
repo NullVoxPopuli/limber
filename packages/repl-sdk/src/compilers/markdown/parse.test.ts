@@ -290,10 +290,18 @@ describe('headingId', () => {
     expect(result.text).toContain('id="hello----world"');
   });
 
-  it('leaves an explicit {#custom-id} heading alone', async () => {
-    const result = await parseMarkdown(`## Title {#custom}`, { ...defaults });
+  it('uses a {#custom-id} suffix as the id and strips it from the text', async () => {
+    const result = await parseMarkdown(`## A very long heading {#short-id}`, { ...defaults });
 
-    expect(result.text).not.toContain('id="title"');
+    expect(result.text).toBe('<h2 id="short-id">A very long heading</h2>');
+  });
+
+  it('supports {#custom-id} on a heading ending in formatting', async () => {
+    const result = await parseMarkdown(`## Use \`parseMarkdown\` here {#parse}`, {
+      ...defaults,
+    });
+
+    expect(result.text).toBe('<h2 id="parse">Use <code>parseMarkdown</code> here</h2>');
   });
 });
 
