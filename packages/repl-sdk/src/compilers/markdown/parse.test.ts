@@ -253,6 +253,20 @@ describe('heading ids', () => {
 
     expect(result.text).toContain('id="a-s-b"');
   });
+
+  it('uses a {#custom-id} suffix as the id and strips it from the text', async () => {
+    const result = await parseMarkdown(`## A very long heading {#short-id}`, { ...defaults });
+
+    expect(result.text).toBe('<h2 id="short-id">A very long heading</h2>');
+  });
+
+  it('supports {#custom-id} on a heading ending in formatting', async () => {
+    const result = await parseMarkdown(`## Use \`parseMarkdown\` here {#parse}`, {
+      ...defaults,
+    });
+
+    expect(result.text).toBe('<h2 id="parse">Use <code>parseMarkdown</code> here</h2>');
+  });
 });
 
 describe('options', () => {
