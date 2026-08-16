@@ -58,27 +58,19 @@ export async function compiler(config, api) {
    */
   const gmdCompiler = {
     /**
-     * The runtime and renderToString paths share most of their work — both
-     * parse the markdown, recursively compile every live demo to a JS
-     * source string, then call `buildGmdModule` to inline those demos into
-     * a single `.gjs`-shaped module.
+     * Two shapes come out of here.
      *
-     * The only forks are:
+     * The runtime form returns a live component for the prose alone. Each
+     * live codefence stays a separate island that `render` compiles and
+     * mounts into its placeholder, so demos keep their own module, their own
+     * owner, and the caller's `scope` object by reference.
      *
-     *   - Which `@ember/template-compiler` to import. Runtime form uses
-     *     `/runtime` (the parse-and-compile-at-execution-time variant);
-     *     renderToString uses the build-time form so the host app's babel
-     *     pipeline can precompile the `template()` call to wire format.
-     *
-     *   - How runtime scope crosses the source boundary. The build-time
-     *     form can't reference a live JS object, so renderToString gets
-     *     an empty scope. The runtime form registers the live scope object
-     *     behind a virtual ES module specifier via `api.provide` and emits
-     *     a module that `import * as __scope__ from '<specifier>'`. The
-     *     Compiler's existing `manual:` resolver handles the bridge, so
-     *     gmd never touches `globalThis` directly.
+     * The renderToString form has no runtime to lean on: it has to hand back
+     * one self-contained module, so every demo is compiled to source and
+     * inlined. A live `scope` object cannot survive that trip, so build-time
+     * demos see an empty scope.
      */
-    compile: async (text, options, compileApi) => {
+    compile: async (text, options) => {
       const compileOptions = filterOptions(options);
       const result = await parseMarkdown(text, {
         remarkPlugins: [...userOptions.remarkPlugins, ...compileOptions.remarkPlugins],
@@ -91,77 +83,45 @@ export async function compiler(config, api) {
         getFlavorFromMeta,
       });
 
-      const renderToString = isRecord(options) && options.renderToString === true;
       const scope = {
         ...userOptions.scope,
         ...compileOptions.scope,
       };
 
-      /** @type {Array<{ name: string, placeholderId: string, source: string }>} */
-      const demos = [];
+      if (isRecord(options) && options.renderToString === true) {
+        /** @type {Array<{ name: string, placeholderId: string, source: string }>} */
+        const demos = [];
 
-      let nth = 0;
+        let nth = 0;
 
-      for (const info of result.codeBlocks) {
-        const { format, flavor, code, placeholderId } = info;
+        for (const info of result.codeBlocks) {
+          const { format, flavor, code, placeholderId } = info;
 
-        if (!api.canCompile(format, flavor).result) continue;
+          if (!api.canCompile(format, flavor).result) continue;
 
-        nth++;
+          nth++;
 
-        // On the runtime path each demo is inlined into this module, so it can
-        // read the live scope off the same `__scope__` namespace the prose
-        // uses. Handing the sub-compiler the same template module also keeps
-        // `mergeImports` from emitting two conflicting `template` bindings.
-        const sub = await api.compileToSource(format, code, {
-          ...(options ?? {}),
-          flavor,
-          ...(renderToString
-            ? {}
-            : {
-                inlineTemplateModule: '@ember/template-compiler/runtime',
-                inlineScopeKeys: Object.keys(scope),
-                inlineScopeNamespace: '__scope__',
-              }),
-        });
+          const sub = await api.compileToSource(format, code, {
+            ...(options ?? {}),
+            flavor,
+          });
 
-        demos.push({ name: `Demo${nth}`, placeholderId, source: sub.source });
+          demos.push({ name: `Demo${nth}`, placeholderId, source: sub.source });
+        }
+
+        const _babel = await api.tryResolve('@babel/standalone');
+        const babel = 'packages' in _babel ? _babel : _babel.default;
+
+        return { source: buildGmdModule({ babel, prose: result.text, demos }) };
       }
 
-      if (renderToString) {
-        const source = buildGmdModule({
-          prose: result.text,
-          demos,
-          templateModule: '@ember/template-compiler',
-          scope: null,
-        });
+      const { template } = await api.tryResolve('@ember/template-compiler/runtime');
 
-        return { source };
-      }
-
-      // `compileApi.provideScope` registers the live scope behind a
-      // Compiler-generated specifier and tracks it as part of this
-      // compile's lifecycle. The Compiler releases it when destroy fires;
-      // gmd doesn't need to track an unregister callback.
-      assert(
-        `gmd needs the per-compile API (3rd argument to compile) to provide its scope. ` +
-          `It looks like the Compiler did not pass one.`,
-        compileApi
-      );
-
-      const { specifier } = compileApi.provideScope(scope);
-
-      const source = buildGmdModule({
-        prose: result.text,
-        demos,
-        templateModule: '@ember/template-compiler/runtime',
-        scope: {
-          specifier,
-          keys: Object.keys(scope),
-        },
+      const component = template(result.text, {
+        scope: () => ({ ...scope }),
       });
 
-      return { compiled: source, ...result, scope };
+      return { compiled: component, ...result, scope };
     },
     render: async (element, compiled, extra, compiler) => {
       /**
@@ -194,7 +154,54 @@ export async function compiler(config, api) {
         ...(args ? { args } : {}),
       });
 
-      return () => result.destroy();
+      const destroy = () => result.destroy();
+
+      /**
+       * @type {(() => void)[]}
+       */
+      const destroyables = [];
+
+      await Promise.all(
+        /** @type {unknown[]} */ (extra.codeBlocks).map(async (/** @type {unknown} */ info) => {
+          /** @type {Record<string, unknown>} */
+          const infoObj = /** @type {Record<string, unknown>} */ (info);
+
+          const format = /** @type {string} */ (infoObj.format);
+          const flavor = /** @type {string} */ (infoObj.flavor);
+
+          if (!api.canCompile(format, flavor).result) {
+            return;
+          }
+
+          const hasScope = flavor === 'ember' || format === 'gjs' || format === 'hbs';
+          const subRender = await compiler.compile(format, /** @type {string} */ (infoObj.code), {
+            ...compiler.optionsFor(format, flavor),
+            flavor: flavor,
+            // @ts-ignore
+            ...(hasScope ? { scope: extra.scope } : {}),
+          });
+
+          const selector = `#${/** @type {string} */ (infoObj.placeholderId)}`;
+          const target = element.querySelector(selector);
+
+          assert(
+            `Could not find placeholder / target element (using selector: \`${selector}\`). ` +
+              `Could not render ${format} block.`,
+            target
+          );
+
+          destroyables.push(subRender.destroy);
+          target.appendChild(subRender.element);
+        })
+      );
+
+      return () => {
+        for (const subDestroy of destroyables) {
+          subDestroy();
+        }
+
+        destroy();
+      };
     },
   };
 

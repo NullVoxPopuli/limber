@@ -31,26 +31,12 @@ export async function compiler(config, api) {
         // build-time template-compiler. The host app's content-tag/babel
         // pipeline will precompile the `template(...)` call to wire format.
         //
-        // A runtime `scope` object can't be serialized into source, so the
-        // standalone form emits an empty scope. When gmd inlines this module
-        // into a parent that imports a live scope namespace, it passes that
-        // namespace and the keys on it, and reading through it here is what
-        // keeps a live codefence working with top-level scope.
-        const templateModule =
-          typeof options.inlineTemplateModule === 'string'
-            ? options.inlineTemplateModule
-            : '@ember/template-compiler';
-        const scopeKeys = Array.isArray(options.inlineScopeKeys) ? options.inlineScopeKeys : [];
-        const namespace =
-          typeof options.inlineScopeNamespace === 'string' ? options.inlineScopeNamespace : null;
-        const scopeBody =
-          namespace && scopeKeys.length
-            ? `{ ${scopeKeys.map((key) => `${key}: ${namespace}.${key}`).join(', ')} }`
-            : `{}`;
-
+        // A runtime `scope` object cannot be serialized into source, so the
+        // emitted module declares an empty scope. Identifiers the hbs body
+        // references have to be in scope at the consumer instead.
         const source =
-          `import { template } from '${templateModule}';\n` +
-          `const _component = template(${JSON.stringify(text)}, { scope: () => (${scopeBody}) });\n` +
+          `import { template } from '@ember/template-compiler';\n` +
+          `const _component = template(${JSON.stringify(text)}, { scope: () => ({}) });\n` +
           `export default _component;\n`;
 
         return source;

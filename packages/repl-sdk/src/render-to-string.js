@@ -1,466 +1,67 @@
 /**
- * Shared helpers for the build-time `renderToString` code path.
+ * Assembly for the build-time `renderToString` output.
  *
- * The job of these helpers is purely lexical — given the JS source emitted by
- * a sub-compiler (e.g. gjs/hbs), split it into top-level imports + body so
- * the caller (e.g. `gmd`) can merge many such modules into one self-contained
- * module string that the host app's own bundler will then process.
+ * `renderToString` has to hand back a single self-contained module, so every
+ * live demo in a gmd document is compiled to source and inlined next to the
+ * prose. Demos are independent modules that know nothing about each other, so
+ * merging them means resolving import collisions and top-level name
+ * collisions — work that needs real scope information, not text matching.
  *
- * Nothing here parses JS into an AST — the input is expected to be the
- * deterministic output of babel + content-tag, where imports are top-level
- * and the module ends with a single `export default <expr>;`.
+ * Babel is already loaded and running in this path (the gjs compiler
+ * transforms every demo through it), so the merge runs through babel too.
+ */
+
+const PARSER_PLUGINS = ['importAttributes'];
+
+/**
+ * @typedef {object} Demo
+ * @property {string} name - Identifier the prose invokes, e.g. `Demo1`
+ * @property {string} placeholderId - id of the div this demo replaces
+ * @property {string} source - The demo's compiled JS module source
  */
 
 /**
- * @typedef {object} ModuleParts
- * @property {string[]} imports - Top-level import statements (each ending in `;`)
- * @property {string} body - Remaining module body with imports removed and
- *   `export default <expr>;` rewritten to `return <expr>;`
- */
-
-/**
- * Split a JS module source into its top-level import statements and the rest
- * of its body, rewriting any trailing `export default <expr>;` to a `return`
- * so the body is suitable for IIFE-wrapping.
- *
- * Multi-line imports (`import {\n  a,\n  b\n} from 'x';`) are supported by
- * brace-balanced continuation across lines.
- *
- * @param {string} source
- * @returns {ModuleParts}
- */
-export function splitModule(source) {
-  const lines = source.split('\n');
-  const topLevel = topLevelMask(source);
-  /** @type {string[]} */
-  const imports = [];
-  /** @type {string[]} */
-  const bodyLines = [];
-
-  let i = 0;
-  let offset = 0;
-
-  while (i < lines.length) {
-    const line = /** @type {string} */ (lines[i]);
-    const lineStart = offset;
-
-    offset += line.length + 1;
-
-    // A demo that quotes Ember code (the "build your own REPL" sample assigns
-    // a whole component to a template literal) has `import …` at column 0
-    // inside that literal. Hoisting those lines out silently strips the
-    // quoted module's own imports, so gate on real top-level position.
-    if (!isImportStart(line) || !isTopLevelAt(topLevel, lineStart + indentOf(line))) {
-      bodyLines.push(line);
-      i++;
-      continue;
-    }
-
-    let chunk = line;
-    let depth = braceDelta(line);
-    let parenDepth = parenDelta(line);
-
-    while (
-      i + 1 < lines.length &&
-      (depth > 0 || parenDepth > 0 || !chunk.trimEnd().endsWith(';'))
-    ) {
-      i++;
-
-      const next = /** @type {string} */ (lines[i]);
-
-      offset += next.length + 1;
-      chunk += '\n' + next;
-      depth += braceDelta(next);
-      parenDepth += parenDelta(next);
-    }
-
-    imports.push(chunk);
-    i++;
-  }
-
-  const body = rewriteDefaultExport(bodyLines.join('\n'));
-
-  return { imports, body };
-}
-
-/**
- * @param {string} line
- */
-function isImportStart(line) {
-  return /^\s*import(\s|\s*['"`{*])/.test(line);
-}
-
-/**
- * Count `{` − `}` in a line, ignoring chars inside strings or line comments.
- * Good enough for the small set of characters babel emits inside an import
- * statement (no template literals, no regex literals).
- *
- * @param {string} line
- */
-function braceDelta(line) {
-  return countCharsOutsideStrings(line, '{', '}');
-}
-
-/**
- * @param {string} line
- */
-function parenDelta(line) {
-  return countCharsOutsideStrings(line, '(', ')');
-}
-
-/**
- * @param {string} line
- * @param {string} open
- * @param {string} close
- */
-function countCharsOutsideStrings(line, open, close) {
-  let depth = 0;
-  /** @type {string | null} */
-  let stringChar = null;
-
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i];
-
-    if (stringChar) {
-      if (ch === '\\') {
-        i++;
-        continue;
-      }
-
-      if (ch === stringChar) {
-        stringChar = null;
-      }
-
-      continue;
-    }
-
-    if (ch === '"' || ch === "'" || ch === '`') {
-      stringChar = ch;
-      continue;
-    }
-
-    if (ch === '/' && line[i + 1] === '/') break;
-
-    if (ch === open) depth++;
-    else if (ch === close) depth--;
-  }
-
-  return depth;
-}
-
-/**
- * Rewrite the final `export default <expr>;` to `return <expr>;` so the
- * caller can wrap the body in an IIFE.
- *
- * If there is no `export default`, the body is returned unchanged.
- *
- * @param {string} body
- * @returns {string}
- */
-function rewriteDefaultExport(body) {
-  const found = findTopLevelExportDefault(body);
-
-  if (!found) {
-    return body;
-  }
-
-  const before = body.slice(0, found.index);
-  const after = body.slice(found.index + found.length);
-
-  return `${before}return ${after}`;
-}
-
-/**
- * Locate the module's own `export default`, skipping any that appear inside
- * strings, template literals, or comments.
- *
- * A line-anchored regex is not enough: a demo that shows Ember code as a
- * string (the "build your own REPL" sample assigns a whole component to a
- * template literal) has `export default` at column 0 *inside* that literal.
- * Rewriting there corrupts the string and leaves the real export in place,
- * so the IIFE wrapper dies with "Unexpected token 'export'".
- *
- * @param {string} body
- * @returns {{ index: number, length: number } | null}
- */
-function findTopLevelExportDefault(body) {
-  const topLevel = topLevelMask(body);
-  const pattern = /export\s+default\s+/g;
-
-  /** @type {RegExpExecArray | null} */
-  let match;
-
-  while ((match = pattern.exec(body)) !== null) {
-    if (isTopLevelAt(topLevel, match.index) && !isWordChar(body[match.index - 1])) {
-      return { index: match.index, length: match[0].length };
-    }
-  }
-
-  return null;
-}
-
-/**
- * Mark every offset in `source` that sits in top-level module code — outside
- * any string, template literal, or comment, and at brace depth zero.
- *
- * Everything that rewrites a module by position depends on this: both the
- * import hoist and the `export default` rewrite would otherwise fire on text
- * that merely looks like code because a demo quoted it.
- *
- * @param {string} source
- * @returns {Uint8Array}
- */
-function topLevelMask(source) {
-  const mask = new Uint8Array(source.length);
-  /** @type {Array<{ type: 'code' | 'sq' | 'dq' | 'tpl', depth: number }>} */
-  const stack = [{ type: 'code', depth: 0 }];
-  let i = 0;
-
-  while (i < source.length) {
-    const top = /** @type {{ type: string, depth: number }} */ (stack[stack.length - 1]);
-    const ch = source[i];
-
-    if (top.type === 'sq' || top.type === 'dq') {
-      if (ch === '\\') {
-        i += 2;
-        continue;
-      }
-
-      if ((top.type === 'sq' && ch === "'") || (top.type === 'dq' && ch === '"')) {
-        stack.pop();
-      }
-
-      i++;
-      continue;
-    }
-
-    if (top.type === 'tpl') {
-      if (ch === '\\') {
-        i += 2;
-        continue;
-      }
-
-      if (ch === '`') {
-        stack.pop();
-        i++;
-        continue;
-      }
-
-      // `${` opens a nested code context that can itself contain strings
-      if (ch === '$' && source[i + 1] === '{') {
-        stack.push({ type: 'code', depth: 0 });
-        i += 2;
-        continue;
-      }
-
-      i++;
-      continue;
-    }
-
-    if (ch === '/' && source[i + 1] === '/') {
-      const newline = source.indexOf('\n', i);
-
-      i = newline === -1 ? source.length : newline;
-      continue;
-    }
-
-    if (ch === '/' && source[i + 1] === '*') {
-      const end = source.indexOf('*/', i + 2);
-
-      i = end === -1 ? source.length : end + 2;
-      continue;
-    }
-
-    if (ch === "'" || ch === '"' || ch === '`') {
-      stack.push({ type: ch === "'" ? 'sq' : ch === '"' ? 'dq' : 'tpl', depth: 0 });
-      i++;
-      continue;
-    }
-
-    if (ch === '{') {
-      top.depth++;
-      i++;
-      continue;
-    }
-
-    if (ch === '}') {
-      // depth 0 inside a nested context means this `}` closes a `${`
-      if (top.depth === 0 && stack.length > 1) {
-        stack.pop();
-      } else {
-        top.depth--;
-      }
-
-      i++;
-      continue;
-    }
-
-    if (stack.length === 1 && top.depth === 0) {
-      mask[i] = 1;
-    }
-
-    i++;
-  }
-
-  return mask;
-}
-
-/**
- * @param {Uint8Array} mask
- * @param {number} index
- */
-function isTopLevelAt(mask, index) {
-  return mask[index] === 1;
-}
-
-/**
- * Offset of the first non-whitespace character on a line.
- *
- * @param {string} line
- */
-function indentOf(line) {
-  const match = /\S/.exec(line);
-
-  return match ? match.index : 0;
-}
-
-/**
- * @param {string | undefined} ch
- */
-function isWordChar(ch) {
-  return ch !== undefined && /[\w$]/.test(ch);
-}
-
-/**
- * Deduplicate a list of import statements by their exact textual content
- * (after trimming trailing whitespace). This is intentionally conservative —
- * we'd rather emit two equivalent-but-different imports than collapse two
- * imports that bind different things.
- *
- * @param {string[][]} groups
- * @returns {string[]}
- */
-export function mergeImports(groups) {
-  const seen = new Set();
-  /** @type {string[]} */
-  const out = [];
-
-  for (const group of groups) {
-    for (const imp of group) {
-      const key = imp.trim();
-
-      if (seen.has(key)) continue;
-
-      seen.add(key);
-      out.push(imp);
-    }
-  }
-
-  return out;
-}
-
-/**
- * Wrap a module body in an IIFE that returns the (rewritten) default export.
- *
- * @param {string} body
- * @param {string} name
- */
-export function wrapAsConst(body, name) {
-  return `const ${name} = (() => {\n${indent(body)}\n})();`;
-}
-
-/**
- * @param {string} text
- */
-function indent(text) {
-  return text
-    .split('\n')
-    .map((line) => (line.length ? `  ${line}` : line))
-    .join('\n');
-}
-
-/**
- * Inline one or more compiled sub-modules into the surrounding gmd prose,
+ * Inline one or more compiled demo modules into the surrounding gmd prose,
  * producing one self-contained ES module string.
  *
- * The same function is used by both the *runtime* compile path (the module
- * gets blob-eval'd and rendered) and the *renderToString* path (the module
- * gets handed back to the caller's bundler). The only differences are:
+ * The emitted module imports `template` from `@ember/template-compiler` (the
+ * build-time form), so the consuming app's babel pipeline precompiles the
+ * `template(...)` call to wire format.
  *
- *   - `templateModule`: which `template` to import. Use
- *     `'@ember/template-compiler/runtime'` when this module will be
- *     evaluated at runtime, or `'@ember/template-compiler'` when a build-
- *     time babel plugin is expected to precompile the `template(...)` call.
- *
- *   - `scope`: a virtual ES module specifier that the emitted module will
- *     `import * as __scope__ from '<specifier>'`, and the list of keys to
- *     destructure off that namespace. The runtime path registers the live
- *     scope object behind such a specifier via `api.provide`; the
- *     renderToString path passes `null` because there is no live scope to
- *     bridge.
- *
- * The placeholders in `prose` are replaced with `<name />` Glimmer
- * invocations wrapped in a div that preserves the original placeholder's
- * `class` attribute (e.g. `repl-sdk__demo`) so existing CSS still applies.
- *
- * This is a pure function — the caller is responsible for driving the
- * sub-compiles and (for the runtime path) for registering the scope value
- * behind `scope.specifier` before this output is evaluated.
+ * There is no live scope: a runtime object cannot be written into source, so
+ * demos see only what the emitted module itself imports.
  *
  * @param {object} args
- * @param {string} args.prose
- * @param {Array<{ name: string, placeholderId: string, source: string }>} args.demos
- * @param {string} [args.templateModule]
- * @param {{ specifier: string, keys: string[] } | null} [args.scope]
+ * @param {any} args.babel - `@babel/standalone`
+ * @param {string} args.prose - Markdown rendered to HTML, with demo placeholders
+ * @param {Demo[]} [args.demos]
  * @returns {string}
  */
-export function buildGmdModule({
-  prose,
-  demos,
-  templateModule = '@ember/template-compiler',
-  scope = null,
-}) {
-  /** @type {string[][]} */
-  const importGroups = [[`import { template } from '${templateModule}';`]];
-
-  if (scope && scope.keys.length) {
-    importGroups.push([`import * as __scope__ from '${scope.specifier}';`]);
-  }
+export function buildGmdModule({ babel, prose, demos = [] }) {
+  const imports = new ImportRegistry();
+  const templateLocal = imports.use('@ember/template-compiler', 'named', 'template', 'template');
 
   /** @type {string[]} */
-  const bodyDecls = [];
+  const declarations = [];
   /** @type {string[]} */
-  const scopeIdents = [];
+  const demoNames = [];
 
   let rewrittenProse = prose;
 
-  for (const demo of demos) {
-    const { imports, body } = splitModule(demo.source);
+  demos.forEach((demo, index) => {
+    const body = inlineDemo({ babel, source: demo.source, index, imports });
 
-    importGroups.push(imports);
-    bodyDecls.push(wrapAsConst(body, demo.name));
-    scopeIdents.push(demo.name);
-
+    declarations.push(`const ${demo.name} = (() => {\n${indent(body)}\n})();`);
+    demoNames.push(demo.name);
     rewrittenProse = replacePlaceholder(rewrittenProse, demo.placeholderId, demo.name);
-  }
+  });
 
-  const mergedImports = mergeImports(importGroups).join('\n');
-
-  // Scope keys stay behind `__scope__.` rather than being destructured into
-  // module scope. Demo imports are hoisted into this same module, and the
-  // default scope keys (`on`, `fn`, `get`, `hash`, `array`, `concat`) are
-  // exactly the names a demo is most likely to import from `@ember/modifier`
-  // or `@ember/helper` — destructuring makes that pair a duplicate
-  // declaration and the whole module dies with a SyntaxError.
-  const scopeEntries =
-    scope && scope.keys.length ? scope.keys.map((key) => `${key}: __scope__.${key}`) : [];
-  const allScopeEntries = [...scopeEntries, ...scopeIdents];
-  const scopeBody = allScopeEntries.length ? `{ ${allScopeEntries.join(', ')} }` : `{}`;
+  const scopeBody = demoNames.length ? `{ ${demoNames.join(', ')} }` : `{}`;
 
   return (
-    `${mergedImports}\n\n` +
-    (bodyDecls.length ? bodyDecls.join('\n\n') + '\n\n' : '') +
-    `const _component = template(${JSON.stringify(rewrittenProse)}, {\n` +
+    `${imports.toSource()}\n\n` +
+    (declarations.length ? declarations.join('\n\n') + '\n\n' : '') +
+    `const _component = ${templateLocal}(${JSON.stringify(rewrittenProse)}, {\n` +
     `  scope: () => (${scopeBody}),\n` +
     `});\n` +
     `export default _component;\n`
@@ -468,10 +69,263 @@ export function buildGmdModule({
 }
 
 /**
- * Replace the single `<div id="${id}" class="…"></div>` placeholder emitted
- * by `liveCodeExtraction` with a Glimmer component invocation. The wrapping
- * div is preserved (sans `id`) so the `repl-sdk__demo` (or
- * caller-supplied) class still styles the demo container.
+ * Strip a demo module down to a body suitable for IIFE-wrapping:
+ *
+ * - every top-level binding is renamed to a per-demo prefix, so two demos (or
+ *   a demo and the prose module) can declare the same name
+ * - imports are lifted into the shared registry, and their local references
+ *   rewritten to whatever local the registry assigned
+ * - `export default X` becomes a `const` the wrapper returns; other exports
+ *   lose their `export` keyword and stay as plain declarations
+ *
+ * @param {object} args
+ * @param {any} args.babel
+ * @param {string} args.source
+ * @param {number} args.index
+ * @param {ImportRegistry} args.imports
+ * @returns {string}
+ */
+function inlineDemo({ babel, source, index, imports }) {
+  const t = babel.packages.types;
+  const resultName = `_demo${index}_default`;
+
+  let hasDefault = false;
+
+  const plugin = () => ({
+    visitor: {
+      /** @param {any} path */
+      Program(path) {
+        // Imports first, while their bindings still exist: each specifier is
+        // pointed at whatever local the shared registry assigned, so two demos
+        // importing the same thing end up on one declaration.
+        for (const statement of path.get('body')) {
+          if (!statement.isImportDeclaration()) continue;
+
+          const from = statement.node.source.value;
+
+          for (const specifier of statement.node.specifiers) {
+            const local = specifier.local.name;
+            /** @type {string} */
+            let shared;
+
+            if (t.isImportDefaultSpecifier(specifier)) {
+              shared = imports.use(from, 'default', null, local);
+            } else if (t.isImportNamespaceSpecifier(specifier)) {
+              shared = imports.use(from, 'namespace', null, local);
+            } else {
+              const imported = specifier.imported;
+              const name = t.isIdentifier(imported) ? imported.name : imported.value;
+
+              shared = imports.use(from, 'named', name, name);
+            }
+
+            path.scope.rename(local, shared);
+          }
+
+          statement.remove();
+        }
+
+        // Whatever the demo declares for itself gets a per-demo prefix, so two
+        // demos can each define `value` (or `Greeting`) without colliding once
+        // both bodies live in the same module. Crawl first: the import
+        // bindings are gone now, and those names must stay as the registry
+        // assigned them.
+        path.scope.crawl();
+
+        for (const name of Object.keys(path.scope.bindings)) {
+          path.scope.rename(name, `_demo${index}_${name}`);
+        }
+
+        for (const statement of path.get('body')) {
+          if (statement.isExportDefaultDeclaration()) {
+            hasDefault = true;
+
+            const declaration = statement.node.declaration;
+            const expression =
+              t.isFunctionDeclaration(declaration) || t.isClassDeclaration(declaration)
+                ? t.toExpression(declaration)
+                : declaration;
+
+            statement.replaceWith(
+              t.variableDeclaration('const', [
+                t.variableDeclarator(t.identifier(resultName), expression),
+              ])
+            );
+            continue;
+          }
+
+          if (statement.isExportNamedDeclaration()) {
+            if (statement.node.declaration) {
+              statement.replaceWith(statement.node.declaration);
+            } else {
+              statement.remove();
+            }
+
+            continue;
+          }
+
+          if (statement.isExportAllDeclaration()) {
+            statement.remove();
+          }
+        }
+      },
+    },
+  });
+
+  const result = babel.transform(source, {
+    plugins: [plugin],
+    sourceType: 'module',
+    configFile: false,
+    babelrc: false,
+    compact: false,
+    parserOpts: { plugins: PARSER_PLUGINS },
+  });
+
+  const code = result?.code ?? '';
+
+  return hasDefault ? `${code}\n\nreturn ${resultName};` : code;
+}
+
+/**
+ * @typedef {object} ImportEntry
+ * @property {string} from
+ * @property {'default' | 'namespace' | 'named'} kind
+ * @property {string | null} imported
+ * @property {string} local
+ */
+
+/**
+ * Collects every import the merged module needs, collapsing repeats.
+ *
+ * Two demos importing the same binding from the same module share one local.
+ * The same name from *different* modules is suffixed rather than merged.
+ */
+class ImportRegistry {
+  /** @type {Map<string, string>} */
+  #byKey = new Map();
+
+  /** @type {Set<string>} */
+  #taken = new Set();
+
+  /** @type {ImportEntry[]} */
+  #entries = [];
+
+  /**
+   * @param {string} from
+   * @param {'default' | 'namespace' | 'named'} kind
+   * @param {string | null} imported
+   * @param {string} [preferred] - name the source module used, kept when free
+   * @returns {string} the local identifier to reference this import by
+   */
+  use(from, kind, imported, preferred) {
+    const key = JSON.stringify([from, kind, imported]);
+    const existing = this.#byKey.get(key);
+
+    if (existing) return existing;
+
+    const local = this.#claim(preferred ? toIdentifier(preferred) : preferredName(from, kind));
+
+    this.#byKey.set(key, local);
+    this.#entries.push({ from, kind, imported, local });
+
+    return local;
+  }
+
+  /**
+   * @param {string} preferred
+   */
+  #claim(preferred) {
+    if (!this.#taken.has(preferred)) {
+      this.#taken.add(preferred);
+
+      return preferred;
+    }
+
+    let n = 1;
+
+    while (this.#taken.has(`${preferred}$${n}`)) n++;
+
+    const local = `${preferred}$${n}`;
+
+    this.#taken.add(local);
+
+    return local;
+  }
+
+  /**
+   * @returns {string}
+   */
+  toSource() {
+    /** @type {Map<string, ImportEntry[]>} */
+    const bySource = new Map();
+
+    for (const entry of this.#entries) {
+      const group = bySource.get(entry.from) ?? [];
+
+      group.push(entry);
+      bySource.set(entry.from, group);
+    }
+
+    /** @type {string[]} */
+    const lines = [];
+
+    for (const [from, group] of bySource) {
+      const namespaces = group.filter((e) => e.kind === 'namespace');
+      const defaults = group.filter((e) => e.kind === 'default');
+      const named = group.filter((e) => e.kind === 'named');
+
+      // A namespace import cannot share a declaration with named imports
+      for (const entry of namespaces) {
+        lines.push(`import * as ${entry.local} from '${from}';`);
+      }
+
+      const clauses = [];
+
+      if (defaults[0]) clauses.push(defaults[0].local);
+
+      if (named.length) {
+        const specifiers = named.map((e) =>
+          e.imported === e.local ? e.local : `${e.imported} as ${e.local}`
+        );
+
+        clauses.push(`{ ${specifiers.join(', ')} }`);
+      }
+
+      if (clauses.length) {
+        lines.push(`import ${clauses.join(', ')} from '${from}';`);
+      }
+    }
+
+    return lines.join('\n');
+  }
+}
+
+/**
+ * @param {string} from
+ * @param {string} kind
+ */
+function preferredName(from, kind) {
+  const base = toIdentifier(from.split('/').filter(Boolean).pop() ?? 'mod');
+
+  return kind === 'namespace' ? `${base}Ns` : base;
+}
+
+/**
+ * @param {string} value
+ */
+function toIdentifier(value) {
+  const cleaned = value.replace(/[^\w$]/g, '_').replace(/^(\d)/, '_$1');
+
+  return cleaned || '_mod';
+}
+
+/**
+ * Replace the `<div id="${id}" class="…"></div>` placeholder emitted by
+ * `liveCodeExtraction` with a Glimmer component invocation.
+ *
+ * The placeholder div is preserved (sans `id`) so `repl-sdk__demo` styling
+ * still applies, and the inner `data-repl-output` div matches the DOM the
+ * runtime path produces, so callers can find demos the same way in both.
  *
  * @param {string} html
  * @param {string} id
@@ -487,10 +341,16 @@ export function replacePlaceholder(html, id, name) {
   return html.replace(pattern, (_match, _attr, classes) => {
     const classAttr = classes !== undefined ? ` class="${classes}"` : '';
 
-    // The inner `data-repl-output` div keeps the DOM shape a separately
-    // rendered island used to produce: callers (and tests) count these to
-    // find rendered demos, and inlining the demo must not change what they
-    // see.
     return `<div${classAttr}><div data-repl-output><${name} /></div></div>`;
   });
+}
+
+/**
+ * @param {string} text
+ */
+function indent(text) {
+  return text
+    .split('\n')
+    .map((line) => (line.trim() ? `  ${line}` : line))
+    .join('\n');
 }

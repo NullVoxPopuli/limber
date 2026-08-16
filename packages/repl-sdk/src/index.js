@@ -22,18 +22,6 @@ export const defaults = {
   formats: compilers,
 };
 
-/**
- * Namespaces the virtual specifiers `api.provideScope` hands back.
- *
- * Module-scoped, not per-Compiler: the es-module-shim's registry is global to
- * the page and caches each specifier's exports the first time it is fetched.
- * A per-instance counter restarts at 1 for every new Compiler, so a second
- * Compiler would hand out a specifier whose module was already cached against
- * an earlier compile's scope keys, and every key added since would resolve to
- * undefined.
- */
-let scopeCounter = 0;
-
 export class Compiler {
   /** @type {Options} */
   #options;
@@ -49,54 +37,6 @@ export class Compiler {
     STABLE_REFERENCE.fetch = this.#fetch;
 
     window.addEventListener('unhandledrejection', this.#handleUnhandledRejection);
-  }
-
-  /**
-   * Build a per-compile API: the same shape as the shared `PublicMethods`
-   * but with an extra `provideScope(value)` method whose registrations are
-   * tracked by `registry`. After the compile (and any render it triggers)
-   * finishes, the Compiler calls `dispose()` to release everything in
-   * `registry` — so individual compilers never have to remember to clean
-   * up the values they expose through `provideScope`.
-   *
-   * @returns {{
-   *   api: import('./types.ts').CompileAPI,
-   *   dispose: () => void,
-   * }}
-   */
-  #createCompileScope() {
-    /** @type {Set<string>} */
-    const registry = new Set();
-
-    const provideScope = (/** @type {unknown} */ value) => {
-      const specifier = `repl-sdk:scope:${++scopeCounter}`;
-
-      this.#options.resolve ??= {};
-      this.#options.resolve[specifier] = value;
-      cache.resolves[specifier] = value;
-      registry.add(specifier);
-
-      return { specifier };
-    };
-
-    const dispose = () => {
-      for (const specifier of registry) {
-        if (this.#options.resolve) {
-          delete this.#options.resolve[specifier];
-        }
-
-        delete cache.resolves[specifier];
-      }
-
-      registry.clear();
-    };
-
-    const api = /** @type {import('./types.ts').CompileAPI} */ ({
-      ...this.#nestedPublicAPI,
-      provideScope,
-    });
-
-    return { api, dispose };
   }
 
   /**
@@ -483,44 +423,30 @@ export class Compiler {
     const opts = { ...options, fileName, renderToString: true };
 
     const compiler = await this.#getCompiler(format, flavor);
-    const { api, dispose } = this.#createCompileScope();
+    const compiled = await compiler.compile(text, opts);
 
-    try {
-      const compiled = await compiler.compile(text, opts, api);
-
-      if (typeof compiled === 'string') {
-        return { source: compiled };
-      }
-
-      if (
-        compiled !== null &&
-        typeof compiled === 'object' &&
-        'source' in compiled &&
-        typeof compiled.source === 'string'
-      ) {
-        return { source: compiled.source };
-      }
-
-      const shape =
-        compiled !== null && typeof compiled === 'object'
-          ? Object.keys(compiled).join(', ')
-          : typeof compiled;
-
-      throw new Error(
-        `Compiler for format '${format}' was asked to renderToString but returned ` +
-          `${shape} instead of a source string.`
-      );
-    } finally {
-      // renderToString never renders, so anything `provideScope` registered
-      // during this compile has no rendered-element lifecycle to attach to.
-      // Release it immediately — the emitted source string was constructed
-      // with the scope inlined as a virtual specifier reference, but the
-      // *value* behind that specifier is only meaningful while this compile
-      // is in flight (e.g. for gmd's nested renderToString sub-compiles to
-      // share helpers with their parent). The caller's bundler resolves the
-      // specifier statically at build time; runtime lookup is never used.
-      dispose();
+    if (typeof compiled === 'string') {
+      return { source: compiled };
     }
+
+    if (
+      compiled !== null &&
+      typeof compiled === 'object' &&
+      'source' in compiled &&
+      typeof compiled.source === 'string'
+    ) {
+      return { source: compiled.source };
+    }
+
+    const shape =
+      compiled !== null && typeof compiled === 'object'
+        ? Object.keys(compiled).join(', ')
+        : typeof compiled;
+
+    throw new Error(
+      `Compiler for format '${format}' was asked to renderToString but returned ` +
+        `${shape} instead of a source string.`
+    );
   }
 
   /**
@@ -542,16 +468,7 @@ export class Compiler {
     this.#log('[compile] compiling');
 
     const compiler = await this.#getCompiler(format, opts.flavor);
-    const { api, dispose } = this.#createCompileScope();
-
-    let compiled;
-
-    try {
-      compiled = await compiler.compile(text, opts, api);
-    } catch (e) {
-      dispose();
-      throw e;
-    }
+    const compiled = await compiler.compile(text, opts);
 
     let compiledText = 'export default "failed to compile"';
     let extras = { compiled: '' };
@@ -575,43 +492,24 @@ export class Compiler {
         extras = compiled;
       }
 
-      return this.#render(
-        compiler,
-        value,
-        {
-          ...extras,
-          compiled: value,
-          ...(opts.args ? { args: opts.args } : {}),
-        },
-        api,
-        dispose
-      );
+      return this.#render(compiler, value, {
+        ...extras,
+        compiled: value,
+        ...(opts.args ? { args: opts.args } : {}),
+      });
     }
 
-    let defaultExport;
+    const asBlobUrl = textToBlobUrl(compiledText);
 
-    try {
-      const asBlobUrl = textToBlobUrl(compiledText);
-
-      // @ts-ignore
-      ({ default: defaultExport } = await shimmedImport(/* @vite-ignore */ asBlobUrl));
-    } catch (e) {
-      dispose();
-      throw e;
-    }
+    // @ts-ignore
+    const { default: defaultExport } = await shimmedImport(/* @vite-ignore */ asBlobUrl);
 
     this.#log('[compile] preparing to render', defaultExport, extras);
 
-    return this.#render(
-      compiler,
-      defaultExport,
-      {
-        ...extras,
-        ...(opts.args ? { args: opts.args } : {}),
-      },
-      api,
-      dispose
-    );
+    return this.#render(compiler, defaultExport, {
+      ...extras,
+      ...(opts.args ? { args: opts.args } : {}),
+    });
   }
 
   #compilerCache = new WeakMap();
@@ -697,42 +595,28 @@ export class Compiler {
    * @param {import('./types.ts').Compiler} compiler
    * @param {string} whatToRender
    * @param {{ compiled: string } & Record<string, unknown>} extras
-   * @param {import('./types.ts').CompileAPI} api
-   * @param {() => void} dispose
    * @returns {Promise<{ element: HTMLElement, destroy: () => void }>}
    */
-  async #render(compiler, whatToRender, extras, api, dispose) {
+  async #render(compiler, whatToRender, extras) {
     this.#announce('info', 'Rendering');
 
     const div = this.#createDiv();
 
-    try {
-      assert(`Cannot render falsey values. Did compilation succeed?`, whatToRender);
+    assert(`Cannot render falsey values. Did compilation succeed?`, whatToRender);
 
-      const destroy = await compiler.render(div, whatToRender, extras, api);
+    const destroy = await compiler.render(div, whatToRender, extras, this.#nestedPublicAPI);
 
-      // Wait for render
-      await new Promise((resolve) => requestAnimationFrame(resolve));
+    // Wait for render
+    await new Promise((resolve) => requestAnimationFrame(resolve));
 
-      return {
-        element: div,
-        // The caller's `destroy` releases everything this compile pinned —
-        // first the compiler's own teardown (DOM detach, framework
-        // destructors, …), then any scopes the compiler exposed via
-        // `api.provideScope`. Individual compilers don't (and shouldn't)
-        // know about the scope lifecycle; the Compiler owns it.
-        destroy: () => {
-          try {
-            if (destroy) destroy();
-          } finally {
-            dispose();
-          }
-        },
-      };
-    } catch (e) {
-      dispose();
-      throw e;
-    }
+    return {
+      element: div,
+      destroy: () => {
+        if (destroy) {
+          return destroy();
+        }
+      },
+    };
   }
 
   /**

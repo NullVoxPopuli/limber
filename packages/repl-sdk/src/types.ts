@@ -100,48 +100,14 @@ type CompileResult =
    */
   | { source: string; [option: string]: unknown };
 
-/**
- * Per-compile API: everything in {@link PublicMethods}, plus the
- * {@link CompileAPI.provideScope | provideScope} method whose registrations
- * are scoped to the compile call (and any render it triggers).
- *
- * The Compiler hands a fresh `CompileAPI` to every `compile()` / `render()`
- * invocation and disposes the registry it tracks after the compile's
- * destroy fires — individual compilers never have to remember to release
- * what they registered.
- */
-export interface CompileAPI extends PublicMethods {
-  /**
-   * Register a JS value behind a Compiler-generated virtual ES module
-   * specifier, and return that specifier. The emitted source for this
-   * compile can then `import * as foo from '<specifier>'` and the
-   * Compiler's existing `manual:` resolver hands the value back.
-   *
-   * The registration is bound to this compile's lifecycle: when the
-   * compile's `destroy()` is called (or the compile throws before
-   * reaching a render), the Compiler releases the entry automatically.
-   * Compilers do not — and should not — track an unregister callback.
-   */
-  provideScope: (value: unknown) => { specifier: string };
-}
-
 export interface Compiler {
   /**
    * Convert a string from "fileExtension" to standard JavaScript.
    * This will be loaded as a module and then passed to the render method.
    *
    * You may return either just a string, or an object with a `compiled` property that is a string -- any additional properties will be passde through to the render function -- which may be useful if there is accompanying CSS.
-   *
-   * The third `api` argument is a per-compile API: same surface as the
-   * factory-time `PublicMethods`, plus `provideScope(value)` whose
-   * registrations are auto-released by the Compiler when the compile's
-   * destroy fires. Existing implementations may ignore it.
    */
-  compile: (
-    text: string,
-    options: Record<string, unknown>,
-    api?: CompileAPI
-  ) => Promise<CompileResult>;
+  compile: (text: string, options: Record<string, unknown>) => Promise<CompileResult>;
 
   /**
    * For the root of a node rendered for this compiler,
@@ -174,7 +140,7 @@ export interface Compiler {
     element: HTMLElement,
     defaultExport: unknown,
     extras: { compiled: string } & Record<string, unknown>,
-    compiler: CompileAPI
+    compiler: PublicMethods
   ) => Promise<void | (() => void)>;
 
   /**

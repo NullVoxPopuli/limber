@@ -1,159 +1,14 @@
+import babel from '@babel/standalone';
 import { describe, expect, test } from 'vitest';
 
-import {
-  buildGmdModule,
-  mergeImports,
-  replacePlaceholder,
-  splitModule,
-  wrapAsConst,
-} from './render-to-string.js';
+import { buildGmdModule, replacePlaceholder } from './render-to-string.js';
 
-describe('splitModule', () => {
-  test('separates single-line imports from body', () => {
-    const source = [
-      `import X from 'x';`,
-      `import { y } from 'y';`,
-      ``,
-      `const _component = makeIt();`,
-      `export default _component;`,
-    ].join('\n');
-
-    const { imports, body } = splitModule(source);
-
-    expect(imports).toEqual([`import X from 'x';`, `import { y } from 'y';`]);
-    expect(body).toContain('const _component = makeIt();');
-    expect(body).toContain('return _component;');
-    expect(body).not.toContain('export default');
-  });
-
-  test('handles multi-line braced imports', () => {
-    const source = [
-      `import {`,
-      `  a,`,
-      `  b,`,
-      `} from 'x';`,
-      ``,
-      `const _component = a;`,
-      `export default _component;`,
-    ].join('\n');
-
-    const { imports, body } = splitModule(source);
-
-    expect(imports).toHaveLength(1);
-    expect(imports[0]).toContain('a,');
-    expect(imports[0]).toContain('b,');
-    expect(body).toContain('return _component;');
-  });
-
-  test('handles side-effect imports with no specifiers', () => {
-    const source = [`import 'side-effect';`, `const k = 1;`, `export default k;`].join('\n');
-
-    const { imports, body } = splitModule(source);
-
-    expect(imports).toEqual([`import 'side-effect';`]);
-    expect(body).toContain('return k;');
-  });
-
-  test('handles import with attributes', () => {
-    const source = [
-      `import data from './x.json' with { type: 'json' };`,
-      `export default data;`,
-    ].join('\n');
-
-    const { imports } = splitModule(source);
-
-    expect(imports).toHaveLength(1);
-    expect(imports[0]).toContain('with');
-  });
-
-  test('rewrites only the last export default', () => {
-    const source = [
-      `import X from 'x';`,
-      `// a comment that mentions export default`,
-      `const v = 1;`,
-      `export default v;`,
-    ].join('\n');
-
-    const { body } = splitModule(source);
-
-    expect(body).toContain('return v;');
-    expect(body).not.toContain('return v;\n');
-    // The comment should still be present (not rewritten)
-    expect(body).toContain('export default');
-    // ...but the original statement is gone — only the comment retains the phrase
-    expect(body.match(/return\s+v/g)?.length ?? 0).toBeGreaterThan(0);
-  });
-
-  test('leaves body unchanged when there is no default export', () => {
-    const source = [`import X from 'x';`, `const v = 1;`].join('\n');
-
-    const { body } = splitModule(source);
-
-    expect(body).not.toContain('return');
-    expect(body).toContain('const v = 1;');
-  });
-
-  test('does not hoist import lines out of a template literal', () => {
-    const source = [
-      `import Component from '@glimmer/component';`,
-      'const SAMPLE = `import Component from "@glimmer/component";',
-      `import { tracked } from "@glimmer/tracking";`,
-      '`;',
-      `const _component = SAMPLE;`,
-      `export default _component;`,
-    ].join('\n');
-
-    const { imports, body } = splitModule(source);
-
-    expect(imports).toEqual([`import Component from '@glimmer/component';`]);
-    // The quoted module keeps its own imports
-    expect(body).toContain(`import { tracked } from "@glimmer/tracking";`);
-  });
-
-  test('does not rewrite an export default inside a template literal', () => {
-    const source = [
-      'const SAMPLE = `',
-      `export default class Hello {}`,
-      '`;',
-      `const _component = SAMPLE;`,
-      `export default _component;`,
-    ].join('\n');
-
-    const { body } = splitModule(source);
-
-    expect(body).toContain(`export default class Hello {}`);
-    expect(body).toContain(`return _component;`);
-    expect(body).not.toContain(`return class Hello {}`);
-  });
-});
-
-describe('mergeImports', () => {
-  test('deduplicates exact-match imports', () => {
-    const merged = mergeImports([
-      [`import X from 'x';`, `import { y } from 'y';`],
-      [`import X from 'x';`, `import Z from 'z';`],
-    ]);
-
-    expect(merged).toEqual([`import X from 'x';`, `import { y } from 'y';`, `import Z from 'z';`]);
-  });
-
-  test('does not collapse different specifiers from the same module', () => {
-    const merged = mergeImports([[`import { a } from 'x';`], [`import { b } from 'x';`]]);
-
-    expect(merged).toHaveLength(2);
-  });
-});
-
-describe('wrapAsConst', () => {
-  test('wraps body in an IIFE-returning const', () => {
-    const out = wrapAsConst(`const v = 1;\nreturn v;`, 'Demo1');
-
-    expect(out).toMatch(/^const Demo1 = \(\(\) => \{/);
-    expect(out).toMatch(/\}\)\(\);$/);
-    expect(out).toContain('const v = 1;');
-    expect(out).toContain('return v;');
-  });
-});
+function build(
+  prose: string,
+  demos: Array<{ name: string; placeholderId: string; source: string }>
+) {
+  return buildGmdModule({ babel, prose, demos });
+}
 
 describe('replacePlaceholder', () => {
   test('preserves the placeholder div + class, wraps a component invocation', () => {
@@ -189,108 +44,114 @@ describe('replacePlaceholder', () => {
 });
 
 describe('buildGmdModule', () => {
-  test('build-time form: inlines one demo with build-time template-compiler', () => {
-    const demoSource = [
-      `import Component from '@glimmer/component';`,
-      `import { template } from '@ember/template-compiler';`,
-      `class _Greeting extends Component {`,
-      `  name = 'world';`,
-      `}`,
-      `const _component = template('Hi', { scope: () => ({}) }, _Greeting);`,
-      `export default _component;`,
-    ].join('\n');
-
-    const out = buildGmdModule({
-      prose: `<h1>Hello</h1><div id="repl_1" class="demo"></div>`,
-      demos: [{ name: 'Demo1', placeholderId: 'repl_1', source: demoSource }],
-    });
-
-    // build-time `template` is the default
-    expect(out).toContain(`import { template } from '@ember/template-compiler';`);
-    // Demo's own template-compiler import is deduped against the prose's
-    expect(out.match(/import \{ template \} from '@ember\/template-compiler';/g)?.length).toBe(1);
-    expect(out).toContain(`import Component from '@glimmer/component';`);
-
-    // Demo body wrapped in a named IIFE and referenced from prose. The
-    // prose lives inside a `template(JSON.stringify(...))` call, so double-
-    // quotes in the rewritten div are JSON-escaped.
-    expect(out).toMatch(/const Demo1 = \(\(\) => \{[\s\S]*\}\)\(\);/);
-    expect(out).toContain(`<div class=\\"demo\\"><div data-repl-output><Demo1 /></div></div>`);
-    expect(out).not.toContain(`<div id="repl_1"`);
-    expect(out).not.toContain(`<div id=\\"repl_1\\"`);
-
-    // Scope contains only Demo1
-    expect(out).toMatch(/scope: \(\) => \(\{ Demo1 \}\)/);
-    expect(out).toMatch(/export default _component;/);
-  });
-
-  test('runtime form: imports runtime template-compiler and threads scope via a virtual module specifier', () => {
-    const out = buildGmdModule({
-      prose: `<h1>Hello</h1>`,
-      demos: [],
-      templateModule: '@ember/template-compiler/runtime',
-      scope: {
-        specifier: 'repl-sdk:gmd-scope:42',
-        keys: ['array', 'concat'],
-      },
-    });
-
-    expect(out).toContain(`import { template } from '@ember/template-compiler/runtime';`);
-    expect(out).toContain(`import * as __scope__ from 'repl-sdk:gmd-scope:42';`);
-    // Read through the namespace rather than destructuring: demo imports land
-    // in this same module and would collide with names like `on` or `fn`.
-    expect(out).not.toContain(`const { array, concat } = __scope__;`);
-    expect(out).toMatch(
-      /scope: \(\) => \(\{ array: __scope__\.array, concat: __scope__\.concat \}\)/
-    );
-  });
-
-  test('handles zero demos', () => {
-    const out = buildGmdModule({
-      prose: `<h1>Hello</h1>`,
-      demos: [],
-    });
+  test('emits a build-time template import and an empty scope with no demos', () => {
+    const out = build(`<h1>Hello</h1>`, []);
 
     expect(out).toContain(`import { template } from '@ember/template-compiler';`);
     expect(out).toMatch(/scope: \(\) => \(\{\}\)/);
     expect(out).not.toMatch(/const Demo\d+ = /);
+    expect(out).toContain(`export default _component;`);
   });
 
-  test('emits multiple demos in declaration order, merging shared imports', () => {
-    const make = (n: number) =>
-      [
-        `import Component from '@glimmer/component';`,
-        `const _component = ${n};`,
-        `export default _component;`,
-      ].join('\n');
+  test('inlines a demo, hoists its imports, and references it from the prose', () => {
+    const source = [
+      `import Component from '@glimmer/component';`,
+      `class Greeting extends Component {}`,
+      `export default Greeting;`,
+    ].join('\n');
 
-    const out = buildGmdModule({
-      prose: `<div id="a"></div><div id="b"></div>`,
-      demos: [
-        { name: 'Demo1', placeholderId: 'a', source: make(1) },
-        { name: 'Demo2', placeholderId: 'b', source: make(2) },
-      ],
-    });
+    const out = build(`<h1>Hello</h1><div id="repl_1" class="demo"></div>`, [
+      { name: 'Demo1', placeholderId: 'repl_1', source },
+    ]);
 
-    expect(out.indexOf('const Demo1 ')).toBeLessThan(out.indexOf('const Demo2 '));
+    // the demo's import keeps its original local name
+    expect(out).toContain(`import Component from '@glimmer/component';`);
+    expect(out).toMatch(/const Demo1 = \(\(\) => \{[\s\S]*\}\)\(\);/);
+    expect(out).toContain(`<div class=\\"demo\\"><div data-repl-output><Demo1 /></div></div>`);
+    expect(out).not.toContain(`<div id=\\"repl_1\\"`);
+    expect(out).toMatch(/scope: \(\) => \(\{ Demo1 \}\)/);
+  });
+
+  test('two demos declaring the same top-level name do not collide', () => {
+    const make = (body: string) => [`const value = ${body};`, `export default value;`].join('\n');
+
+    const out = build(`<div id="a"></div><div id="b"></div>`, [
+      { name: 'Demo1', placeholderId: 'a', source: make('1') },
+      { name: 'Demo2', placeholderId: 'b', source: make('2') },
+    ]);
+
     expect(out).toMatch(/scope: \(\) => \(\{ Demo1, Demo2 \}\)/);
-    expect(out.match(/import Component from '@glimmer\/component';/g)?.length).toBe(1);
+    expect(out.indexOf('const Demo1 ')).toBeLessThan(out.indexOf('const Demo2 '));
+    // both demos still produce their own value
+    expect(out).toContain('1');
+    expect(out).toContain('2');
   });
 
-  test('runtime + demos: live-scope keys come before demo names in scope', () => {
-    const make = (n: number) =>
-      [`const _component = ${n};`, `export default _component;`].join('\n');
-
-    const out = buildGmdModule({
-      prose: `<div id="a"></div>`,
-      demos: [{ name: 'Demo1', placeholderId: 'a', source: make(1) }],
-      templateModule: '@ember/template-compiler/runtime',
-      scope: {
-        specifier: 'repl-sdk:gmd-scope:7',
-        keys: ['on'],
+  test('a demo import that collides with another module keeps both bindings', () => {
+    const out = build(`<div id="a"></div><div id="b"></div>`, [
+      {
+        name: 'Demo1',
+        placeholderId: 'a',
+        source: [`import { on } from '@ember/modifier';`, `export default on;`].join('\n'),
       },
-    });
+      {
+        name: 'Demo2',
+        placeholderId: 'b',
+        source: [`import { on } from 'somewhere-else';`, `export default on;`].join('\n'),
+      },
+    ]);
 
-    expect(out).toMatch(/scope: \(\) => \(\{ on: __scope__\.on, Demo1 \}\)/);
+    expect(out).toContain(`from '@ember/modifier';`);
+    expect(out).toContain(`from 'somewhere-else';`);
+    // the second `on` is renamed rather than merged into the first
+    expect(out).toMatch(/on as on\$1|on\$1/);
+  });
+
+  test('the same binding imported by two demos is emitted once', () => {
+    const source = [`import { on } from '@ember/modifier';`, `export default on;`].join('\n');
+
+    const out = build(`<div id="a"></div><div id="b"></div>`, [
+      { name: 'Demo1', placeholderId: 'a', source },
+      { name: 'Demo2', placeholderId: 'b', source },
+    ]);
+
+    expect(out.match(/from '@ember\/modifier';/g)?.length).toBe(1);
+  });
+
+  test('a demo that quotes module syntax in a template literal is left intact', () => {
+    const source = [
+      `import Component from '@glimmer/component';`,
+      'const SAMPLE = `import { tracked } from "@glimmer/tracking";',
+      ``,
+      `export default class Hello extends Component {}`,
+      '`;',
+      `export default SAMPLE;`,
+    ].join('\n');
+
+    const out = build(`<div id="a"></div>`, [{ name: 'Demo1', placeholderId: 'a', source }]);
+
+    // The quoted module keeps its own import and its own export default
+    expect(out).toContain(`import { tracked } from "@glimmer/tracking";`);
+    expect(out).toContain(`export default class Hello extends Component {}`);
+    // ...and only the demo's real import was hoisted, alongside `template`
+    expect(out.match(/^import /gm)?.length).toBe(2);
+  });
+
+  test('a demo without a default export still produces a binding', () => {
+    const out = build(`<div id="a"></div>`, [
+      { name: 'Demo1', placeholderId: 'a', source: `const unused = 1;` },
+    ]);
+
+    expect(out).toMatch(/const Demo1 = \(\(\) => \{/);
+    expect(out).not.toContain('return _demo0_default;');
+  });
+
+  test('named exports in a demo lose the export keyword but keep the declaration', () => {
+    const source = [`export const helper = 1;`, `export default helper;`].join('\n');
+
+    const out = build(`<div id="a"></div>`, [{ name: 'Demo1', placeholderId: 'a', source }]);
+
+    expect(out).not.toMatch(/^\s*export const/m);
+    expect(out).toMatch(/const _demo0_helper = 1;/);
   });
 });
