@@ -31,17 +31,26 @@
  */
 export function splitModule(source) {
   const lines = source.split('\n');
+  const topLevel = topLevelMask(source);
   /** @type {string[]} */
   const imports = [];
   /** @type {string[]} */
   const bodyLines = [];
 
   let i = 0;
+  let offset = 0;
 
   while (i < lines.length) {
     const line = /** @type {string} */ (lines[i]);
+    const lineStart = offset;
 
-    if (!isImportStart(line)) {
+    offset += line.length + 1;
+
+    // A demo that quotes Ember code (the "build your own REPL" sample assigns
+    // a whole component to a template literal) has `import …` at column 0
+    // inside that literal. Hoisting those lines out silently strips the
+    // quoted module's own imports, so gate on real top-level position.
+    if (!isImportStart(line) || !isTopLevelAt(topLevel, lineStart + indentOf(line))) {
       bodyLines.push(line);
       i++;
       continue;
@@ -59,6 +68,7 @@ export function splitModule(source) {
 
       const next = /** @type {string} */ (lines[i]);
 
+      offset += next.length + 1;
       chunk += '\n' + next;
       depth += braceDelta(next);
       parenDepth += parenDelta(next);
@@ -148,20 +158,177 @@ function countCharsOutsideStrings(line, open, close) {
  * @returns {string}
  */
 function rewriteDefaultExport(body) {
-  // Anchor with `/m` so we only match `export default` at the start of a
-  // statement line — never inside line comments, strings, or expressions.
-  // Babel never emits multiple top-level `export default`s, so first-match
-  // semantics are fine.
-  const match = body.match(/^\s*export\s+default\s+/m);
+  const found = findTopLevelExportDefault(body);
 
-  if (!match || match.index === undefined) {
+  if (!found) {
     return body;
   }
 
-  const before = body.slice(0, match.index);
-  const after = body.slice(match.index + match[0].length);
+  const before = body.slice(0, found.index);
+  const after = body.slice(found.index + found.length);
 
   return `${before}return ${after}`;
+}
+
+/**
+ * Locate the module's own `export default`, skipping any that appear inside
+ * strings, template literals, or comments.
+ *
+ * A line-anchored regex is not enough: a demo that shows Ember code as a
+ * string (the "build your own REPL" sample assigns a whole component to a
+ * template literal) has `export default` at column 0 *inside* that literal.
+ * Rewriting there corrupts the string and leaves the real export in place,
+ * so the IIFE wrapper dies with "Unexpected token 'export'".
+ *
+ * @param {string} body
+ * @returns {{ index: number, length: number } | null}
+ */
+function findTopLevelExportDefault(body) {
+  const topLevel = topLevelMask(body);
+  const pattern = /export\s+default\s+/g;
+
+  /** @type {RegExpExecArray | null} */
+  let match;
+
+  while ((match = pattern.exec(body)) !== null) {
+    if (isTopLevelAt(topLevel, match.index) && !isWordChar(body[match.index - 1])) {
+      return { index: match.index, length: match[0].length };
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Mark every offset in `source` that sits in top-level module code — outside
+ * any string, template literal, or comment, and at brace depth zero.
+ *
+ * Everything that rewrites a module by position depends on this: both the
+ * import hoist and the `export default` rewrite would otherwise fire on text
+ * that merely looks like code because a demo quoted it.
+ *
+ * @param {string} source
+ * @returns {Uint8Array}
+ */
+function topLevelMask(source) {
+  const mask = new Uint8Array(source.length);
+  /** @type {Array<{ type: 'code' | 'sq' | 'dq' | 'tpl', depth: number }>} */
+  const stack = [{ type: 'code', depth: 0 }];
+  let i = 0;
+
+  while (i < source.length) {
+    const top = /** @type {{ type: string, depth: number }} */ (stack[stack.length - 1]);
+    const ch = source[i];
+
+    if (top.type === 'sq' || top.type === 'dq') {
+      if (ch === '\\') {
+        i += 2;
+        continue;
+      }
+
+      if ((top.type === 'sq' && ch === "'") || (top.type === 'dq' && ch === '"')) {
+        stack.pop();
+      }
+
+      i++;
+      continue;
+    }
+
+    if (top.type === 'tpl') {
+      if (ch === '\\') {
+        i += 2;
+        continue;
+      }
+
+      if (ch === '`') {
+        stack.pop();
+        i++;
+        continue;
+      }
+
+      // `${` opens a nested code context that can itself contain strings
+      if (ch === '$' && source[i + 1] === '{') {
+        stack.push({ type: 'code', depth: 0 });
+        i += 2;
+        continue;
+      }
+
+      i++;
+      continue;
+    }
+
+    if (ch === '/' && source[i + 1] === '/') {
+      const newline = source.indexOf('\n', i);
+
+      i = newline === -1 ? source.length : newline;
+      continue;
+    }
+
+    if (ch === '/' && source[i + 1] === '*') {
+      const end = source.indexOf('*/', i + 2);
+
+      i = end === -1 ? source.length : end + 2;
+      continue;
+    }
+
+    if (ch === "'" || ch === '"' || ch === '`') {
+      stack.push({ type: ch === "'" ? 'sq' : ch === '"' ? 'dq' : 'tpl', depth: 0 });
+      i++;
+      continue;
+    }
+
+    if (ch === '{') {
+      top.depth++;
+      i++;
+      continue;
+    }
+
+    if (ch === '}') {
+      // depth 0 inside a nested context means this `}` closes a `${`
+      if (top.depth === 0 && stack.length > 1) {
+        stack.pop();
+      } else {
+        top.depth--;
+      }
+
+      i++;
+      continue;
+    }
+
+    if (stack.length === 1 && top.depth === 0) {
+      mask[i] = 1;
+    }
+
+    i++;
+  }
+
+  return mask;
+}
+
+/**
+ * @param {Uint8Array} mask
+ * @param {number} index
+ */
+function isTopLevelAt(mask, index) {
+  return mask[index] === 1;
+}
+
+/**
+ * Offset of the first non-whitespace character on a line.
+ *
+ * @param {string} line
+ */
+function indentOf(line) {
+  const match = /\S/.exec(line);
+
+  return match ? match.index : 0;
+}
+
+/**
+ * @param {string | undefined} ch
+ */
+function isWordChar(ch) {
+  return ch !== undefined && /[\w$]/.test(ch);
 }
 
 /**
@@ -279,19 +446,19 @@ export function buildGmdModule({
 
   const mergedImports = mergeImports(importGroups).join('\n');
 
-  /** @type {string[]} */
-  const preludeLines = [];
-
-  if (scope && scope.keys.length) {
-    preludeLines.push(`const { ${scope.keys.join(', ')} } = __scope__;`);
-  }
-
-  const allScopeIdents = scope && scope.keys.length ? [...scope.keys, ...scopeIdents] : scopeIdents;
-  const scopeBody = allScopeIdents.length ? `{ ${allScopeIdents.join(', ')} }` : `{}`;
+  // Scope keys stay behind `__scope__.` rather than being destructured into
+  // module scope. Demo imports are hoisted into this same module, and the
+  // default scope keys (`on`, `fn`, `get`, `hash`, `array`, `concat`) are
+  // exactly the names a demo is most likely to import from `@ember/modifier`
+  // or `@ember/helper` — destructuring makes that pair a duplicate
+  // declaration and the whole module dies with a SyntaxError.
+  const scopeEntries =
+    scope && scope.keys.length ? scope.keys.map((key) => `${key}: __scope__.${key}`) : [];
+  const allScopeEntries = [...scopeEntries, ...scopeIdents];
+  const scopeBody = allScopeEntries.length ? `{ ${allScopeEntries.join(', ')} }` : `{}`;
 
   return (
     `${mergedImports}\n\n` +
-    (preludeLines.length ? preludeLines.join('\n') + '\n\n' : '') +
     (bodyDecls.length ? bodyDecls.join('\n\n') + '\n\n' : '') +
     `const _component = template(${JSON.stringify(rewrittenProse)}, {\n` +
     `  scope: () => (${scopeBody}),\n` +
@@ -320,6 +487,10 @@ export function replacePlaceholder(html, id, name) {
   return html.replace(pattern, (_match, _attr, classes) => {
     const classAttr = classes !== undefined ? ` class="${classes}"` : '';
 
-    return `<div${classAttr}><${name} /></div>`;
+    // The inner `data-repl-output` div keeps the DOM shape a separately
+    // rendered island used to produce: callers (and tests) count these to
+    // find rendered demos, and inlining the demo must not change what they
+    // see.
+    return `<div${classAttr}><div data-repl-output><${name} /></div></div>`;
   });
 }

@@ -91,6 +91,12 @@ export async function compiler(config, api) {
         getFlavorFromMeta,
       });
 
+      const renderToString = isRecord(options) && options.renderToString === true;
+      const scope = {
+        ...userOptions.scope,
+        ...compileOptions.scope,
+      };
+
       /** @type {Array<{ name: string, placeholderId: string, source: string }>} */
       const demos = [];
 
@@ -103,19 +109,24 @@ export async function compiler(config, api) {
 
         nth++;
 
+        // On the runtime path each demo is inlined into this module, so it can
+        // read the live scope off the same `__scope__` namespace the prose
+        // uses. Handing the sub-compiler the same template module also keeps
+        // `mergeImports` from emitting two conflicting `template` bindings.
         const sub = await api.compileToSource(format, code, {
           ...(options ?? {}),
           flavor,
+          ...(renderToString
+            ? {}
+            : {
+                inlineTemplateModule: '@ember/template-compiler/runtime',
+                inlineScopeKeys: Object.keys(scope),
+                inlineScopeNamespace: '__scope__',
+              }),
         });
 
         demos.push({ name: `Demo${nth}`, placeholderId, source: sub.source });
       }
-
-      const renderToString = isRecord(options) && options.renderToString === true;
-      const scope = {
-        ...userOptions.scope,
-        ...compileOptions.scope,
-      };
 
       if (renderToString) {
         const source = buildGmdModule({

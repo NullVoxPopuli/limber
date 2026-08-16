@@ -92,6 +92,39 @@ describe('splitModule', () => {
     expect(body).not.toContain('return');
     expect(body).toContain('const v = 1;');
   });
+
+  test('does not hoist import lines out of a template literal', () => {
+    const source = [
+      `import Component from '@glimmer/component';`,
+      'const SAMPLE = `import Component from "@glimmer/component";',
+      `import { tracked } from "@glimmer/tracking";`,
+      '`;',
+      `const _component = SAMPLE;`,
+      `export default _component;`,
+    ].join('\n');
+
+    const { imports, body } = splitModule(source);
+
+    expect(imports).toEqual([`import Component from '@glimmer/component';`]);
+    // The quoted module keeps its own imports
+    expect(body).toContain(`import { tracked } from "@glimmer/tracking";`);
+  });
+
+  test('does not rewrite an export default inside a template literal', () => {
+    const source = [
+      'const SAMPLE = `',
+      `export default class Hello {}`,
+      '`;',
+      `const _component = SAMPLE;`,
+      `export default _component;`,
+    ].join('\n');
+
+    const { body } = splitModule(source);
+
+    expect(body).toContain(`export default class Hello {}`);
+    expect(body).toContain(`return _component;`);
+    expect(body).not.toContain(`return class Hello {}`);
+  });
 });
 
 describe('mergeImports', () => {
@@ -127,14 +160,16 @@ describe('replacePlaceholder', () => {
     const html = `<p>before</p><div id="repl_1" class="repl-sdk__demo"></div><p>after</p>`;
     const out = replacePlaceholder(html, 'repl_1', 'Demo1');
 
-    expect(out).toBe(`<p>before</p><div class="repl-sdk__demo"><Demo1 /></div><p>after</p>`);
+    expect(out).toBe(
+      `<p>before</p><div class="repl-sdk__demo"><div data-repl-output><Demo1 /></div></div><p>after</p>`
+    );
   });
 
   test('escapes regex metacharacters in the id', () => {
     const html = `<div id="a.b.c" class=""></div>`;
     const out = replacePlaceholder(html, 'a.b.c', 'Demo1');
 
-    expect(out).toBe(`<div class=""><Demo1 /></div>`);
+    expect(out).toBe(`<div class=""><div data-repl-output><Demo1 /></div></div>`);
   });
 
   test('does not touch divs with different ids', () => {
@@ -149,7 +184,7 @@ describe('replacePlaceholder', () => {
     const html = `<div id="x"></div>`;
     const out = replacePlaceholder(html, 'x', 'Demo1');
 
-    expect(out).toBe(`<div><Demo1 /></div>`);
+    expect(out).toBe(`<div><div data-repl-output><Demo1 /></div></div>`);
   });
 });
 
@@ -180,7 +215,7 @@ describe('buildGmdModule', () => {
     // prose lives inside a `template(JSON.stringify(...))` call, so double-
     // quotes in the rewritten div are JSON-escaped.
     expect(out).toMatch(/const Demo1 = \(\(\) => \{[\s\S]*\}\)\(\);/);
-    expect(out).toContain(`<div class=\\"demo\\"><Demo1 /></div>`);
+    expect(out).toContain(`<div class=\\"demo\\"><div data-repl-output><Demo1 /></div></div>`);
     expect(out).not.toContain(`<div id="repl_1"`);
     expect(out).not.toContain(`<div id=\\"repl_1\\"`);
 
@@ -202,9 +237,12 @@ describe('buildGmdModule', () => {
 
     expect(out).toContain(`import { template } from '@ember/template-compiler/runtime';`);
     expect(out).toContain(`import * as __scope__ from 'repl-sdk:gmd-scope:42';`);
-    expect(out).toContain(`const { array, concat } = __scope__;`);
-    // Live scope keys spread into the template scope
-    expect(out).toMatch(/scope: \(\) => \(\{ array, concat \}\)/);
+    // Read through the namespace rather than destructuring: demo imports land
+    // in this same module and would collide with names like `on` or `fn`.
+    expect(out).not.toContain(`const { array, concat } = __scope__;`);
+    expect(out).toMatch(
+      /scope: \(\) => \(\{ array: __scope__\.array, concat: __scope__\.concat \}\)/
+    );
   });
 
   test('handles zero demos', () => {
@@ -253,6 +291,6 @@ describe('buildGmdModule', () => {
       },
     });
 
-    expect(out).toMatch(/scope: \(\) => \(\{ on, Demo1 \}\)/);
+    expect(out).toMatch(/scope: \(\) => \(\{ on: __scope__\.on, Demo1 \}\)/);
   });
 });

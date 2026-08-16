@@ -22,17 +22,21 @@ export const defaults = {
   formats: compilers,
 };
 
+/**
+ * Namespaces the virtual specifiers `api.provideScope` hands back.
+ *
+ * Module-scoped, not per-Compiler: the es-module-shim's registry is global to
+ * the page and caches each specifier's exports the first time it is fetched.
+ * A per-instance counter restarts at 1 for every new Compiler, so a second
+ * Compiler would hand out a specifier whose module was already cached against
+ * an earlier compile's scope keys, and every key added since would resolve to
+ * undefined.
+ */
+let scopeCounter = 0;
+
 export class Compiler {
   /** @type {Options} */
   #options;
-
-  /**
-   * Monotonic counter that namespaces the virtual specifiers
-   * `api.provideScope` hands back. Lives on the Compiler so concurrent
-   * compiles (or repeated compiles of the same source) never collide on
-   * the same `cache.resolves` entry.
-   */
-  #scopeCounter = 0;
 
   /**
    * Options may be passed to the compiler to add to its behavior.
@@ -65,7 +69,7 @@ export class Compiler {
     const registry = new Set();
 
     const provideScope = (/** @type {unknown} */ value) => {
-      const specifier = `repl-sdk:scope:${++this.#scopeCounter}`;
+      const specifier = `repl-sdk:scope:${++scopeCounter}`;
 
       this.#options.resolve ??= {};
       this.#options.resolve[specifier] = value;
@@ -588,6 +592,7 @@ export class Compiler {
 
     try {
       const asBlobUrl = textToBlobUrl(compiledText);
+
       // @ts-ignore
       ({ default: defaultExport } = await shimmedImport(/* @vite-ignore */ asBlobUrl));
     } catch (e) {
