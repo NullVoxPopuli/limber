@@ -2,21 +2,14 @@ import { exports as resolveExports } from 'resolve.exports';
 import { resolve as resolveImports } from 'resolve.imports';
 
 /**
- * @typedef {import('./request.js').Request} Request
- *
- * What `resolve` actually reads. The module fs builds these directly, without
- * a Request: `from` only exists for the parent-chain walk that opaque request
- * URLs made necessary.
- *
  * @typedef {object} ResolveRequest
  * @property {string} name
  * @property {string} version
  * @property {string} to
  * @property {string} key
  * @property {string} original
- * @property {ResolveRequest | undefined} [from]
  */
-import { assert, fakeDomain } from './utils.js';
+import { assert } from './utils.js';
 
 /**
  * If a package wanted, they could provide a special export condition
@@ -31,34 +24,6 @@ const CONDITIONS = ['repl', 'module', 'browser', 'import', 'default', 'developme
  * @type {Map<string, import('./types.ts').RequestAnswer>} specifier => filePath in the tgz
  */
 const resolveCache = new Map();
-
-const AT = '___AT___';
-const fakeProtocol = 'repl://';
-
-/**
- *
- * @param {*} start packageName or packageName with file
- * @param {*} target file to resolve within the packageName
- * @returns
- */
-export function resolvePath(start, target) {
-  /**
-   * How to make the whole package name look like one segment for URL
-   */
-  const base = start.replace(/^@([^/]+)\/([^/]+)/, `${AT}$1___$2`);
-
-  const url = new URL(target, fakeProtocol + fakeDomain + base);
-
-  /**
-   * href omits the protocol
-   * (which is what we want)
-   */
-  return url.href
-    .replace(fakeProtocol + fakeDomain, '')
-    .replace(AT, '@')
-    .replace('___', '/')
-    .replace(/^\//, './');
-}
 
 /**
  * @param {import('./types.ts').UntarredPackage} untarred
@@ -75,7 +40,6 @@ export function resolve(untarred, request) {
   }
 
   answer ||= fromImports(untarred, request, answer);
-  answer ||= fromInternalImport(untarred, request, answer);
   answer ||= fromExportsString(untarred, request, answer);
   answer ||= fromExports(untarred, request, answer);
   answer ||= fromModule(untarred, request, answer);
@@ -89,42 +53,6 @@ export function resolve(untarred, request) {
   }
 
   return answer;
-}
-
-/**
- * These are likely all private imports
- *
- * @param {import('./types.ts').UntarredPackage} untarred
- * @param {ResolveRequest} request
- * @param {undefined | import('./types.ts').RequestAnswer} answer
- * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
- */
-export function fromInternalImport(untarred, request, answer) {
-  if (answer) return answer;
-
-  if (!request.from) return answer;
-
-  const fromSpecifier = request.from;
-  const answerFrom = resolve(untarred, fromSpecifier);
-
-  if (!answerFrom) {
-    printError(untarred, fromSpecifier, answer);
-
-    return;
-  }
-
-  const inTarFile = resolvePath(
-    fromSpecifier.name + '/' + answerFrom.inTarFile,
-    request.to
-  ).replace(new RegExp(`^${fromSpecifier.name}/`), '');
-  const result = checkFile(untarred, inTarFile);
-
-  if (result) {
-    return createAnswer(result, request, 'internalImport');
-  }
-
-  // Internal imports should always exist, unless a package is just broken.
-  printError(untarred, request, answer);
 }
 
 /**
