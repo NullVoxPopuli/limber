@@ -10,6 +10,10 @@
     "./markdown/parse": {
       "types": "./src/compilers/markdown/parse.d.ts",
       "default": "./src/compilers/markdown/parse.js"
+    },
+    "./project": {
+      "types": "./src/project/index.d.ts",
+      "default": "./src/project/index.js"
     }
   },
   "repository": {
@@ -95,6 +99,7 @@
     "comlink": "^4.4.2",
     "es-module-shims": "^2.8.0",
     "github-slugger": "^2.0.0",
+    "lz-string": "^1.5.0",
     "mdast": "^3.0.0",
     "mdast-util-to-string": "^4.0.0",
     "mime": "^4.0.7",
