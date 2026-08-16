@@ -51,7 +51,7 @@ let scopes: Record<string, Record<string, string>>;
 let vfs: VFS;
 let installer: Installer;
 
-async function fakeGetTar(name: string, range: string): Promise<UntarredPackage> {
+function fakeGetTar(name: string, range: string): Promise<UntarredPackage> {
   const published = PUBLISHED[name] ?? [];
   const version =
     range === 'latest'
@@ -66,13 +66,29 @@ async function fakeGetTar(name: string, range: string): Promise<UntarredPackage>
 
   downloads.push(`${name}@${version}`);
 
-  return {
+  return Promise.resolve({
     manifest,
     contents: {
       'index.js': { text: `export const who = '${name}@${version}';` },
       'package.json': { text: JSON.stringify(manifest) },
     },
-  } as unknown as UntarredPackage;
+  } as unknown as UntarredPackage);
+}
+
+function published(name: string) {
+  const versions = PUBLISHED[name];
+
+  if (!versions) throw new Error(`no versions for ${name}`);
+
+  return versions;
+}
+
+function scopeFor(url: string) {
+  const scope = scopes[url];
+
+  if (!scope) throw new Error(`no scope registered for ${url}`);
+
+  return scope;
 }
 
 beforeEach(() => {
@@ -90,9 +106,9 @@ beforeEach(() => {
 
 describe('semver', () => {
   it('picks the highest match', () => {
-    expect(maxSatisfying(PUBLISHED.shared!, '^1.2.0')).toBe('1.9.0');
-    expect(maxSatisfying(PUBLISHED.shared!, '~1.2.0')).toBe('1.2.0');
-    expect(maxSatisfying(PUBLISHED.shared!, '^2.0.0')).toBe('2.0.0');
+    expect(maxSatisfying(published('shared'), '^1.2.0')).toBe('1.9.0');
+    expect(maxSatisfying(published('shared'), '~1.2.0')).toBe('1.2.0');
+    expect(maxSatisfying(published('shared'), '^2.0.0')).toBe('2.0.0');
   });
 
   it('ignores prereleases unless the range asks', () => {
@@ -125,13 +141,13 @@ describe('dependency scopes', () => {
   it('maps the subpath prefix too, so deep imports keep the version', async () => {
     await installer.install('app');
 
-    expect(scopes['file:///npm/app@1.0.0/']!['left/']).toBe('file:///npm/left@%5E1.0.0/');
+    expect(scopeFor('file:///npm/app@1.0.0/')['left/']).toBe('file:///npm/left@%5E1.0.0/');
   });
 
   it('never scopes a peerDependency', async () => {
     await installer.resolveUrl('file:///npm/left@%5E1.0.0');
 
-    const scope = scopes['file:///npm/left@1.0.0/']!;
+    const scope = scopeFor('file:///npm/left@1.0.0/');
 
     expect(scope.shared).toBeTruthy();
     /**
