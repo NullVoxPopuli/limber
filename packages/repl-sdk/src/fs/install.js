@@ -1,5 +1,6 @@
 import { resolve } from '../resolve.js';
 import { parseSpecifier } from '../specifier.js';
+import { satisfiesRange } from './semver.js';
 import { NPM_PREFIX, npmUrl } from './url.js';
 
 /**
@@ -32,12 +33,22 @@ export class Installer {
   /** @type {Map<string, Promise<string>>} */
   #resolving = new Map();
 
+  /** @type {Set<string>} scopes already registered */
+  #scoped = new Set();
+
+  /** @type {Map<string, import('../types.ts').UntarredPackage>} name@version */
+  #packages = new Map();
+
+  /** @type {(map: { imports?: Record<string, string>, scopes?: Record<string, Record<string, string>> }) => void} */
+  #addImportMap;
+
   /**
-   * @param {{ vfs: VFS, getTar: GetTar }} options
+   * @param {{ vfs: VFS, getTar: GetTar, addImportMap?: (map: any) => void }} options
    */
-  constructor({ vfs, getTar }) {
+  constructor({ vfs, getTar, addImportMap }) {
     this.#vfs = vfs;
     this.#getTar = getTar;
+    this.#addImportMap = addImportMap ?? defaultAddImportMap;
   }
 
   /**
@@ -53,6 +64,8 @@ export class Installer {
     this.#imports = {};
     this.#unpacked.clear();
     this.#resolving.clear();
+    this.#scoped.clear();
+    this.#packages.clear();
   }
 
   /**
@@ -120,10 +133,12 @@ export class Installer {
    * @returns {Promise<string>}
    */
   async #resolveIn(name, version, to) {
-    const untarred = await this.#getTar(name, version);
+    const range = decodeURIComponent(version);
+    const untarred = this.#reuse(name, range) ?? (await this.#download(name, range));
     const installed = untarred.manifest.version;
 
     this.#unpack(name, installed, untarred);
+    this.#scopeDependencies(name, installed, untarred.manifest);
 
     const answer = resolve(untarred, requestFor(name, installed, to));
 
@@ -132,6 +147,87 @@ export class Installer {
     }
 
     return npmUrl(name, installed, answer.inTarFile);
+  }
+
+  /**
+   * A copy we already have that satisfies the range, rather than a second one.
+   *
+   * More aggressive than pnpm, which keys a copy on the resolved version and
+   * would happily keep both `~1.2.0` at 1.2.9 and `^1.2.0` at 1.9.0. In a
+   * browser two copies of a package is not just wasted bytes: anything that
+   * relies on being a singleton, which in Ember's case is most of
+   * `@glimmer/*`, breaks in ways that are miserable to debug.
+   *
+   * @param {string} name
+   * @param {string} range
+   * @returns {undefined | import('../types.ts').UntarredPackage}
+   */
+  #reuse(name, range) {
+    for (const [key, pkg] of this.#packages) {
+      if (!key.startsWith(`${name}@`)) continue;
+      if (satisfiesRange(pkg.manifest.version, range)) return pkg;
+    }
+
+    return undefined;
+  }
+
+  /**
+   * @param {string} name
+   * @param {string} range
+   * @returns {Promise<import('../types.ts').UntarredPackage>}
+   */
+  async #download(name, range) {
+    const untarred = await this.#getTar(name, range);
+
+    this.#packages.set(`${name}@${untarred.manifest.version}`, untarred);
+
+    return untarred;
+  }
+
+  /**
+   * A package's dependency versions come from its own package.json, so two
+   * packages can want different versions of the same thing and both get what
+   * they asked for.
+   *
+   * Import map scopes are the web's version of node_modules nesting: instead
+   * of a directory the resolver walks up from, a URL prefix that says "for
+   * modules under here, this name means this". Registering the scope while
+   * the package is being fetched is early enough, because the loader has not
+   * looked at its imports yet.
+   *
+   * @param {string} name
+   * @param {string} version
+   * @param {import('../types.ts').UntarredPackage['manifest']} manifest
+   */
+  #scopeDependencies(name, version, manifest) {
+    const scope = `${NPM_PREFIX}${name}@${version}/`;
+
+    if (this.#scoped.has(scope)) return;
+
+    this.#scoped.add(scope);
+
+    const dependencies = /** @type {Record<string, string> | undefined} */ (
+      /** @type {unknown} */ (manifest.dependencies)
+    );
+
+    if (!dependencies) return;
+
+    /** @type {Record<string, string>} */
+    const imports = {};
+
+    for (const [dependency, range] of Object.entries(dependencies)) {
+      const target = `${NPM_PREFIX}${dependency}@${encodeURIComponent(range)}`;
+
+      imports[dependency] = target;
+      /**
+       * So `dep/some/file.js` from inside this package gets the same version.
+       */
+      imports[`${dependency}/`] = `${target}/`;
+    }
+
+    if (Object.keys(imports).length === 0) return;
+
+    this.#addImportMap({ scopes: { [scope]: imports } });
   }
 
   /**
@@ -150,6 +246,19 @@ export class Installer {
 
     this.#unpacked.add(key);
   }
+}
+
+/**
+ * es-module-shims installs `importShim` on the global once it loads, which is
+ * after this module is evaluated.
+ *
+ * @param {any} map
+ */
+function defaultAddImportMap(map) {
+  /** @type {any} */
+  const shim = globalThis /** @type {any} */.importShim;
+
+  shim?.addImportMap?.(map);
 }
 
 /**

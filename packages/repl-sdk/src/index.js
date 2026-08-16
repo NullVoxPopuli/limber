@@ -203,9 +203,26 @@ export class Compiler {
       return specifierUrl(polyfill);
     }
 
+    /**
+     * The import map is where per-importer versions live. Installing a package
+     * registers a scope saying what its dependency names mean, so a bare
+     * specifier from inside that package lands on the version its own
+     * package.json asked for. Unmapped specifiers throw, which just means
+     * nobody has claimed this name for this importer.
+     */
+    const scoped = tryDefaultResolve(resolve, id, parentUrl);
+
+    if (scoped) {
+      this.#log(`[resolve] ${id} resolved through the import map to ${scoped}`);
+
+      return scoped;
+    }
+
     this.#log(`[resolve] ${id} not found, deferring to npmjs.com's provided tarball`);
 
-    return specifierUrl(vanilla);
+    const pinned = this.#options.versions?.[vanilla];
+
+    return specifierUrl(pinned ? `${vanilla}@${encodeURIComponent(pinned)}` : vanilla);
   };
   /**
    * The es-module-shims source hook, which supersedes the fetch hook
@@ -787,6 +804,20 @@ function shimmedImport(...args) {
 
   // @ts-ignore
   return globalThis.importShim(/* @vite-ignore */ ...args);
+}
+
+/**
+ * @param {(id: string, parentUrl: string) => string} resolve
+ * @param {string} id
+ * @param {string} parentUrl
+ * @returns {string | undefined}
+ */
+function tryDefaultResolve(resolve, id, parentUrl) {
+  try {
+    return resolve(id, parentUrl) || undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 /**
