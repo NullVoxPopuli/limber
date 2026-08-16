@@ -109,8 +109,15 @@ export async function compiler(config, api) {
           demos.push({ name: `Demo${nth}`, placeholderId, source: sub.source });
         }
 
-        const _babel = await api.tryResolve('@babel/standalone');
-        const babel = 'packages' in _babel ? _babel : _babel.default;
+        // Merging demo modules is the only thing here that needs an AST, so a
+        // document with no live demos never asks the host for babel.
+        let babel;
+
+        if (demos.length) {
+          const resolved = await api.tryResolve('@babel/standalone');
+
+          babel = 'packages' in resolved ? resolved : resolved.default;
+        }
 
         return { source: buildGmdModule({ babel, prose: result.text, demos }) };
       }

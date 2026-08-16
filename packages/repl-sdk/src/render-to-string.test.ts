@@ -44,6 +44,22 @@ describe('replacePlaceholder', () => {
 });
 
 describe('buildGmdModule', () => {
+  test('needs no babel when the document has no live demos', () => {
+    const out = buildGmdModule({ prose: `<h1>Hello</h1>`, demos: [] });
+
+    expect(out).toContain(`import { template } from '@ember/template-compiler';`);
+    expect(out).toMatch(/scope: \(\) => \(\{\}\)/);
+  });
+
+  test('reports a missing babel rather than failing deep in the merge', () => {
+    expect(() =>
+      buildGmdModule({
+        prose: `<div id="a"></div>`,
+        demos: [{ name: 'Demo1', placeholderId: 'a', source: `export default 1;` }],
+      })
+    ).toThrow(/@babel\/standalone/);
+  });
+
   test('emits a build-time template import and an empty scope with no demos', () => {
     const out = build(`<h1>Hello</h1>`, []);
 

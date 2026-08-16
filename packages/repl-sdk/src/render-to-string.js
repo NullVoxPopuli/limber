@@ -11,6 +11,8 @@
  * transforms every demo through it), so the merge runs through babel too.
  */
 
+import { assert } from './utils.js';
+
 const PARSER_PLUGINS = ['importAttributes'];
 
 /**
@@ -32,12 +34,18 @@ const PARSER_PLUGINS = ['importAttributes'];
  * demos see only what the emitted module itself imports.
  *
  * @param {object} args
- * @param {any} args.babel - `@babel/standalone`
+ * @param {any} [args.babel] - `@babel/standalone`, required only to inline demos
  * @param {string} args.prose - Markdown rendered to HTML, with demo placeholders
  * @param {Demo[]} [args.demos]
  * @returns {string}
  */
 export function buildGmdModule({ babel, prose, demos = [] }) {
+  assert(
+    `Inlining ${demos.length} live demo(s) needs '@babel/standalone'. ` +
+      `Provide it through the compiler's resolve config, the way ember-repl does.`,
+    babel || !demos.length
+  );
+
   const imports = new ImportRegistry();
   const templateLocal = imports.use('@ember/template-compiler', 'named', 'template', 'template');
 
