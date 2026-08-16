@@ -10,6 +10,10 @@
     "./markdown/parse": {
       "types": "./src/compilers/markdown/parse.d.ts",
       "default": "./src/compilers/markdown/parse.js"
+    },
+    "./fs": {
+      "types": "./src/fs/index.d.ts",
+      "default": "./src/fs/index.js"
     }
   },
   "repository": {
