@@ -50,7 +50,7 @@ export default class Save extends Component {
     this.isShowing = true;
 
     try {
-      await this.editor.fileURIComponent.toClipboard();
+      await this.editor.toClipboard();
       await new Promise((resolve) => setTimeout(resolve, SHOW_TIME));
     } finally {
       this.isShowing = false;

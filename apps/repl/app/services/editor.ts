@@ -3,7 +3,7 @@ import Service, { service } from '@ember/service';
 
 import { link } from 'reactiveweb/link';
 
-import { FileURIComponent } from 'limber/utils/editor-text';
+import { ProjectState } from 'limber/utils/editor-text';
 
 import type { DemoEntry } from '../snippets';
 import type RouterService from '@ember/routing/router-service';
@@ -14,33 +14,55 @@ export default class EditorService extends Service {
 
   @tracked scrollbarWidth = 0;
 
-  #fileURIComponent: FileURIComponent | undefined;
-  get fileURIComponent() {
-    if (this.#fileURIComponent) return this.#fileURIComponent;
+  #state: ProjectState | undefined;
+  get state() {
+    if (this.#state) return this.#state;
     // eslint-disable-next-line ember/no-side-effects
-    this.#fileURIComponent = new FileURIComponent();
-    link(this.#fileURIComponent, this);
+    this.#state = new ProjectState();
+    link(this.#state, this);
 
-    return this.#fileURIComponent;
+    return this.#state;
   }
 
-  updateText = (text: string) => {
-    if (text !== this.text) {
-      this.fileURIComponent.queue(text);
-    }
-  };
+  get project() {
+    return this.state.project;
+  }
 
   get text() {
-    return this.fileURIComponent.decoded;
+    return this.state.text;
   }
 
   get format(): FormatQP {
-    return this.fileURIComponent.format;
+    return this.state.format;
   }
 
   get nohighlight() {
     return (this.router.currentRoute?.queryParams ?? {}).nohighlight;
   }
+
+  updateText = (text: string) => {
+    if (text !== this.text) {
+      this.state.queue(text);
+    }
+  };
+
+  flush = () => this.state.flush();
+
+  toClipboard = () => this.state.toClipboard();
+
+  /**
+   * Change how the current text is interpreted, without replacing it.
+   */
+  forceFormat = (format: FormatQP) => {
+    this.state.forceFormat(format);
+  };
+
+  /**
+   * Swap the document without going through the editor.
+   */
+  replace = (text: string, format: FormatQP, extraQPs?: Record<string, string>) => {
+    this.state.set(text, format, extraQPs);
+  };
 
   /**
    * This function is set by a modifier,
@@ -63,30 +85,22 @@ export default class EditorService extends Service {
   }
 
   update = (text: string, format: FormatQP) => {
-    // Update ourselves
-    this.fileURIComponent.set(text, format);
+    this.state.set(text, format);
 
-    // Update the editor
     this.setCodemirrorState?.(text, format === 'hbs' ? 'hbs|ember' : format);
-
-    // this.fileURIComponent.flush();
   };
 
   updateFormat = (format: FormatQP) => {
-    // Update ourselves
-    this.fileURIComponent.set(this.text ?? '', format);
+    this.state.set(this.text ?? '', format);
 
-    // Update the editor
     this.setCodemirrorState?.(this.text ?? '', format === 'hbs' ? 'hbs|ember' : format);
   };
 
   updateDemo = (text: string, demo: DemoEntry) => {
     const format = demo.format;
 
-    // Update ourselves
-    this.fileURIComponent.set(text, format, demo && 'qps' in demo ? demo.qps : {});
+    this.state.set(text, format, demo && 'qps' in demo ? demo.qps : {});
 
-    // Update the editor
     this.setCodemirrorState?.(text, format === 'hbs' ? 'hbs|ember' : format);
   };
 }

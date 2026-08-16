@@ -40,7 +40,7 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
 
   switch = (format: FormatQP): void => {
     usage.track(format);
-    this.editor.fileURIComponent.format = format;
+    this.editor.forceFormat(format);
   };
 
   isSelected = (format: Format) => {

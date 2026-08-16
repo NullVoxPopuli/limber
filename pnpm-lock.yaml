@@ -181,6 +181,9 @@ importers:
       remark-rehype:
         specifier: ^11.1.2
         version: 11.1.2
+      repl-sdk:
+        specifier: workspace:*
+        version: link:../../packages/repl-sdk
       stringify-object:
         specifier: ^5.0.0
         version: 5.0.0
