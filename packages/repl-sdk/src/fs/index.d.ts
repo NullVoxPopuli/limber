@@ -8,12 +8,23 @@ export interface VirtualFile {
 }
 
 export const NPM_PREFIX: string;
+export const VIRTUAL_PREFIX: string;
 
 export function npmUrl(name: string, version: string, path?: string): string;
 export function parseNpmUrl(
   url: string
 ): undefined | { name: string; version: string; path: string };
+export function specifierUrl(specifier: string): string;
+export function virtualUrl(kind: 'manual' | 'configured', name: string): string;
+export function parseVirtualUrl(url: string): undefined | { kind: string; name: string };
 export function typeFor(path: string): SourceType;
+
+/**
+ * Source for a module that is already a live JS object. Export names are
+ * emitted as string literals, because they are not required to be identifiers
+ * and real packages use that.
+ */
+export function virtualModuleSource(name: string, value: object, globalKey: string): string;
 
 export class VFS {
   /**
@@ -55,4 +66,20 @@ export class Installer {
   install(
     specifier: string
   ): Promise<{ specifier: string; url: string; name: string; version: string }>;
+
+  /**
+   * Turn the provisional URL a synchronous resolve produced into the URL of a
+   * file that now exists, downloading the package if needed.
+   */
+  resolveUrl(url: string): Promise<string | undefined>;
+
+  clear(): void;
 }
+
+/**
+ * One fs per page, not one per Compiler: es-module-shims keys its module
+ * registry by URL globally.
+ */
+export const vfs: VFS;
+export const installer: Installer;
+export function clearFs(): void;

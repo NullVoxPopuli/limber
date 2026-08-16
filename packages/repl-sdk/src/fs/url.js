@@ -11,6 +11,51 @@
 export const NPM_PREFIX = 'file:///npm/';
 
 /**
+ * Modules that aren't files anywhere: a live object the host handed us, or a
+ * loader a compiler config supplied.
+ */
+export const VIRTUAL_PREFIX = 'file:///virtual/';
+
+/**
+ * What a synchronous `resolve` can say about a bare specifier before anything
+ * has been downloaded: which package, at which range, at which subpath.
+ *
+ * The source hook turns this into a real file URL, and es-module-shims uses
+ * the URL the source hook returns as the base for that module's own relative
+ * imports, so nothing else has to know this URL was ever provisional.
+ *
+ * @param {string} specifier
+ * @returns {string}
+ */
+export function specifierUrl(specifier) {
+  return `${NPM_PREFIX}${specifier}`;
+}
+
+/**
+ * @param {'manual' | 'configured'} kind
+ * @param {string} name
+ * @returns {string}
+ */
+export function virtualUrl(kind, name) {
+  return `${VIRTUAL_PREFIX}${kind}/${name}`;
+}
+
+/**
+ * @param {string} url
+ * @returns {undefined | { kind: string, name: string }}
+ */
+export function parseVirtualUrl(url) {
+  if (!url.startsWith(VIRTUAL_PREFIX)) return;
+
+  const rest = url.slice(VIRTUAL_PREFIX.length);
+  const slash = rest.indexOf('/');
+
+  if (slash < 0) return;
+
+  return { kind: rest.slice(0, slash), name: rest.slice(slash + 1) };
+}
+
+/**
  * `@scope/name@version/rest` or `name@version/rest`
  */
 const NPM_URL = /^(@[^/]+\/[^/@]+|[^/@][^/]*)@([^/]+)(?:\/(.*))?$/;

@@ -3,6 +3,18 @@ import { resolve as resolveImports } from 'resolve.imports';
 
 /**
  * @typedef {import('./request.js').Request} Request
+ *
+ * What `resolve` actually reads. The module fs builds these directly, without
+ * a Request: `from` only exists for the parent-chain walk that opaque request
+ * URLs made necessary.
+ *
+ * @typedef {object} ResolveRequest
+ * @property {string} name
+ * @property {string} version
+ * @property {string} to
+ * @property {string} key
+ * @property {string} original
+ * @property {ResolveRequest | undefined} [from]
  */
 import { assert, fakeDomain } from './utils.js';
 
@@ -50,7 +62,7 @@ export function resolvePath(start, target) {
 
 /**
  * @param {import('./types.ts').UntarredPackage} untarred
- * @param {Request} request
+ * @param {ResolveRequest} request
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
  */
 export function resolve(untarred, request) {
@@ -83,7 +95,7 @@ export function resolve(untarred, request) {
  * These are likely all private imports
  *
  * @param {import('./types.ts').UntarredPackage} untarred
- * @param {Request} request
+ * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
  */
@@ -117,7 +129,7 @@ export function fromInternalImport(untarred, request, answer) {
 
 /**
  * @param {import('./types.ts').UntarredPackage} untarred
- * @param {Request} request
+ * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
  */
@@ -141,7 +153,7 @@ function fromExports(untarred, request, answer) {
 
 /**
  * @param {import('./types.ts').UntarredPackage} untarred
- * @param {Request} request
+ * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
  */
@@ -164,7 +176,7 @@ export function fromImports(untarred, request, answer) {
 
 /**
  * @param {import('./types.ts').UntarredPackage} untarred
- * @param {Request} request
+ * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
  */
@@ -178,7 +190,7 @@ function fromExportsString(untarred, request, answer) {
 
 /**
  * @param {import('./types.ts').UntarredPackage} untarred
- * @param {Request} request
+ * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
  */
@@ -191,7 +203,7 @@ function fromModule(untarred, request, answer) {
 
 /**
  * @param {import('./types.ts').UntarredPackage} untarred
- * @param {Request} request
+ * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
  */
@@ -204,7 +216,7 @@ function fromBrowser(untarred, request, answer) {
 
 /**
  * @param {import('./types.ts').UntarredPackage} untarred
- * @param {Request} request
+ * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
  */
@@ -217,7 +229,7 @@ function fromMain(untarred, request, answer) {
 
 /**
  * @param {import('./types.ts').UntarredPackage} untarred
- * @param {Request} request
+ * @param {ResolveRequest} request
  * @param {string} entryName
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
  */
@@ -237,7 +249,7 @@ function checkLegacyEntry(untarred, request, entryName) {
 
 /**
  * @param {import('./types.ts').UntarredPackage} untarred
- * @param {Request} request
+ * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
  */
@@ -258,7 +270,7 @@ function fromIndex(untarred, request, answer) {
 
 /**
  * @param {import('./types.ts').UntarredPackage} untarred
- * @param {Request} request
+ * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
  */
@@ -311,7 +323,7 @@ function hasExports(untarred) {
 
 /**
  * @param {string} forFile
- * @param {Request} request
+ * @param {ResolveRequest} request
  * @param {string} fromMethod
  */
 function createAnswer(forFile, request, fromMethod) {
@@ -331,7 +343,7 @@ function createAnswer(forFile, request, fromMethod) {
 
 /**
  * @param {import('./types.ts').UntarredPackage} untarred
- * @param {Request} request
+ * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @throws {Error}
  */
