@@ -6,6 +6,7 @@
 import { cache, secretKey } from './cache.js';
 import { compilers } from './compilers.js';
 import { STABLE_REFERENCE } from './es-module-shim.js';
+import { PROJECT_PREFIX, releaseEntry, writeEntry } from './fs/entry.js';
 import { clearFs, installer, vfs } from './fs/store.js';
 import { NPM_PREFIX, parseVirtualUrl, specifierUrl, typeFor, virtualUrl } from './fs/url.js';
 import { virtualModuleSource } from './fs/virtual.js';
@@ -238,6 +239,16 @@ export class Compiler {
       return { url, type: 'js', source };
     }
 
+    if (path.startsWith(PROJECT_PREFIX)) {
+      const file = vfs.read(path);
+
+      assert(`${path} is not in the fs`, file);
+
+      this.#log('[source] project', path);
+
+      return { url, type: file.type, source: file.source };
+    }
+
     if (path.startsWith(NPM_PREFIX)) {
       this.#log('[source] npm', path);
 
@@ -389,10 +400,16 @@ export class Compiler {
       });
     }
 
-    const asBlobUrl = textToBlobUrl(compiledText);
+    const entryUrl = writeEntry(vfs, opts.fileName, compiledText);
 
-    // @ts-ignore
-    const { default: defaultExport } = await shimmedImport(/* @vite-ignore */ asBlobUrl);
+    let defaultExport;
+
+    try {
+      // @ts-ignore
+      ({ default: defaultExport } = await shimmedImport(/* @vite-ignore */ entryUrl));
+    } finally {
+      releaseEntry(vfs, entryUrl);
+    }
 
     this.#log('[compile] preparing to render', defaultExport, extras);
 
@@ -755,17 +772,6 @@ export class Compiler {
   announceError(message) {
     this.#announce('error', message);
   }
-}
-
-/**
- * @param {string} text
- */
-function textToBlobUrl(text) {
-  const blob = new Blob([text], { type: 'text/javascript' });
-
-  const blobUrl = URL.createObjectURL(blob);
-
-  return blobUrl;
 }
 
 /**

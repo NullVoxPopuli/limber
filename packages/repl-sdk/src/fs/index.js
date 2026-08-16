@@ -1,3 +1,4 @@
+export { PROJECT_PREFIX, releaseEntry, writeEntry } from './entry.js';
 export { Installer } from './install.js';
 export { clearTarCache, getTar } from './npm-tar.js';
 export { clearFs, installer, vfs } from './store.js';

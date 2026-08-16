@@ -47,6 +47,14 @@ export class VFS {
    * @param {string} url
    * @returns {boolean}
    */
+  delete(url) {
+    return this.#files.delete(url);
+  }
+
+  /**
+   * @param {string} url
+   * @returns {boolean}
+   */
   has(url) {
     return this.#files.has(url);
   }
