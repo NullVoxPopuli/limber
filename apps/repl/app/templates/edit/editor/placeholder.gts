@@ -19,7 +19,7 @@ function wantsHighlighting(qpNoHighlight: string | undefined) {
 }
 
 export const Placeholder: TOC<{
-  Element: HTMLPreElement;
+  Element: HTMLDivElement;
 }> = <template>
   {{#let (service "editor") as |context|}}
     {{#if (wantsOnClick (qp "editorLoad"))}}
