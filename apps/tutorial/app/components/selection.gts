@@ -5,7 +5,7 @@ import { service } from '@ember/service';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { isCollection } from 'kolay';
+import { isPageTree } from 'kolay';
 import { isNotHidden, lessonPath, titleize } from 'tutorial/utils';
 
 import type RouterService from '@ember/routing/router-service';
@@ -64,7 +64,7 @@ export class Selection extends Component {
 
             <optgroup label={{titleize group.name}}>
 
-              {{#if (isCollection group)}}
+              {{#if (isPageTree group)}}
                 {{#each group.pages as |tutorial|}}
                   {{#if (isNotHidden tutorial)}}
 

@@ -1,6 +1,6 @@
-import { isCollection } from 'kolay';
+import { isPageTree } from 'kolay';
 
-import type { Collection, Page } from 'kolay';
+import type { Page, PageTree } from 'kolay';
 
 export const not = (x: unknown) => !x;
 
@@ -10,7 +10,7 @@ export const not = (x: unknown) => !x;
  * the lesson directories at the root (e.g. /1-introduction/1-basics) —
  * the group is mounted at the root via addRoutes(this, 'docs').
  */
-export function lessonPath(item: Page | Collection): string {
+export function lessonPath(item: Page | PageTree): string {
   return item.appRelativePath
     .replace(/^\/docs/, '')
     .replace(/\/prose\.md$/, '');
@@ -23,15 +23,15 @@ export function lessonPath(item: Page | Collection): string {
 const isProdOnlyHidden = (path: string) =>
   import.meta.env.PROD && path.includes('keyed-each-blocks');
 
-export function isHidden(page: Page | Collection) {
+export function isHidden(page: Page | PageTree) {
   // Only lesson directories (via their prose.md) are tutorial entries.
   // Stray .md files next to the lesson directories have no prompt/answer
   // and never had manifest entries before the kolay rework.
-  if (!isCollection(page) && !page.path.endsWith('/prose.md')) return true;
+  if (!isPageTree(page) && !page.path.endsWith('/prose.md')) return true;
 
   if (location.href.includes('showHidden')) return false;
 
-  const path = isCollection(page) ? page.path : lessonPath(page);
+  const path = isPageTree(page) ? page.path : lessonPath(page);
 
   return (
     path.split('/').some((segment) => segment.startsWith('x-')) ||
@@ -39,7 +39,7 @@ export function isHidden(page: Page | Collection) {
   );
 }
 
-export function isNotHidden(page: Page | Collection) {
+export function isNotHidden(page: Page | PageTree) {
   return !isHidden(page);
 }
 

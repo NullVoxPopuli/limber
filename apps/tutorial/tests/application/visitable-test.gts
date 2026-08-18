@@ -3,7 +3,7 @@ import { click, currentURL, find, visit, waitUntil } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
-import { isCollection } from 'kolay';
+import { isPageTree } from 'kolay';
 
 // We can't use this until we switch to Vite and tests can remain real modules.
 // (so that the import gets all the way to the browser)
@@ -27,7 +27,7 @@ module('every tutorial chapter', function (hooks) {
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   for (const section of manifest.groups[0]!.tree.pages) {
-    if (!isCollection(section)) continue;
+    if (!isPageTree(section)) continue;
 
     for (const chapter of section.pages) {
       const name = chapter.path.replace(/\/prose\.md$/, '');
