@@ -2,7 +2,7 @@ import LZString from 'lz-string';
 import { describe, expect, it } from 'vitest';
 
 import { Project } from './project.js';
-import { fits, readProject, serializedLength, writeProject } from './url.js';
+import { readProject, writeProject } from './url.js';
 
 const { compressToEncodedURIComponent, decompressFromEncodedURIComponent } = LZString;
 
@@ -139,28 +139,5 @@ describe('serialize', () => {
 
   it('writes nothing for an empty project', () => {
     expect(writeProject(Project.empty).toString()).toBe('');
-  });
-});
-
-describe('budget', () => {
-  it('measures the serialized length', () => {
-    const small = Project.single('a', { format: 'gjs' });
-
-    expect(serializedLength(small)).toBe(writeProject(small).toString().length);
-    expect(fits(small)).toBe(true);
-  });
-
-  it('reports when a project is too big for the URL', () => {
-    /**
-     * Distinct lines, because lz-string would flatten a repeated character
-     * down to something that fits.
-     */
-    const text = Array.from({ length: 4000 }, (_, i) => `const value${i} = ${i * 7919};`).join(
-      '\n'
-    );
-    const big = Project.single(text, { format: 'gjs' });
-
-    expect(fits(big)).toBe(false);
-    expect(fits(big, { budget: Infinity })).toBe(true);
   });
 });

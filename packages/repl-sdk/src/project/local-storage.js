@@ -16,14 +16,6 @@ export const LEGACY_FORMAT_KEY = 'format';
 export const LEGACY_DOCUMENT_KEY = 'document';
 
 /**
- * @param {Storage | undefined} [storage]
- * @returns {Storage | undefined}
- */
-function resolveStorage(storage) {
-  return storage ?? globalThis.localStorage;
-}
-
-/**
  * @param {string} format
  * @returns {string}
  */
@@ -32,17 +24,16 @@ function keyFor(format) {
 }
 
 /**
- * @param {Storage} storage
  * @param {string} format
  * @returns {Project | null}
  */
-function readLegacy(storage, format) {
-  const text = storage.getItem(`${format}-doc`);
+function readLegacy(format) {
+  const text = localStorage.getItem(`${format}-doc`);
 
   if (text) return Project.single(text, { format });
 
-  const legacyFormat = storage.getItem(LEGACY_FORMAT_KEY);
-  const legacyDoc = storage.getItem(LEGACY_DOCUMENT_KEY);
+  const legacyFormat = localStorage.getItem(LEGACY_FORMAT_KEY);
+  const legacyDoc = localStorage.getItem(LEGACY_DOCUMENT_KEY);
 
   if (legacyFormat && legacyDoc) {
     return Project.single(legacyDoc, { format: legacyFormat });
@@ -54,22 +45,17 @@ function readLegacy(storage, format) {
 /**
  * The format the user was last editing in.
  *
- * @param {{ storage?: Storage }} [options]
  * @returns {string | null}
  */
-export function storedFormat({ storage } = {}) {
-  const store = resolveStorage(storage);
-
-  if (!store) return null;
-
-  const active = store.getItem(ACTIVE_KEY);
+export function storedFormat() {
+  const active = localStorage.getItem(ACTIVE_KEY);
 
   if (active) return active;
 
   /**
    * The legacy writer stored the whole key here, not the format.
    */
-  const legacy = store.getItem(LEGACY_ACTIVE_KEY);
+  const legacy = localStorage.getItem(LEGACY_ACTIVE_KEY);
 
   return legacy?.replace(/-doc$/, '') ?? null;
 }
@@ -78,19 +64,15 @@ export function storedFormat({ storage } = {}) {
  * Documents are stored per format, so switching format doesn't lose what
  * you were working on in the previous one.
  *
- * @param {{ storage?: Storage, format?: string | undefined }} [options]
+ * @param {{ format?: string | undefined }} [options]
  * @returns {Project | null}
  */
-export function readStoredProject({ storage, format } = {}) {
-  const store = resolveStorage(storage);
-
-  if (!store) return null;
-
-  const target = format ?? storedFormat({ storage: store });
+export function readStoredProject({ format } = {}) {
+  const target = format ?? storedFormat();
 
   if (!target) return null;
 
-  const raw = store.getItem(keyFor(target));
+  const raw = localStorage.getItem(keyFor(target));
 
   if (raw) {
     try {
@@ -102,24 +84,20 @@ export function readStoredProject({ storage, format } = {}) {
     }
   }
 
-  return readLegacy(store, target);
+  return readLegacy(target);
 }
 
 /**
  * @param {Project} project
- * @param {{ storage?: Storage }} [options]
  * @returns {void}
  */
-export function writeStoredProject(project, { storage } = {}) {
-  const store = resolveStorage(storage);
-
-  if (!store) return;
+export function writeStoredProject(project) {
   if (project.isEmpty) return;
 
   const format = project.format;
 
   if (!format) return;
 
-  store.setItem(ACTIVE_KEY, format);
-  store.setItem(keyFor(format), JSON.stringify(project.toJSON()));
+  localStorage.setItem(ACTIVE_KEY, format);
+  localStorage.setItem(keyFor(format), JSON.stringify(project.toJSON()));
 }

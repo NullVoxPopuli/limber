@@ -27,11 +27,6 @@ export const FORMAT_PARAM = 'format';
 export const OWNED_PARAMS = [TEXT_PARAM, LEGACY_TEXT_PARAM, FORMAT_PARAM];
 
 /**
- * Browsers and CDNs disagree on the real limit. This is the conservative one.
- */
-export const DEFAULT_LENGTH_BUDGET = 2000;
-
-/**
  * @param {URLSearchParams | string | Record<string, string> | undefined} input
  * @returns {URLSearchParams}
  */
@@ -136,23 +131,4 @@ export function writeProject(project, { into } = {}) {
   params.set(TEXT_PARAM, compressToEncodedURIComponent(JSON.stringify(files)));
 
   return params;
-}
-
-/**
- * How many characters of query string this project costs.
- *
- * @param {Project} project
- * @returns {number}
- */
-export function serializedLength(project) {
-  return writeProject(project).toString().length;
-}
-
-/**
- * @param {Project} project
- * @param {{ budget?: number }} [options]
- * @returns {boolean}
- */
-export function fits(project, { budget = DEFAULT_LENGTH_BUDGET } = {}) {
-  return serializedLength(project) <= budget;
 }

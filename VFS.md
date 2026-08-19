@@ -120,8 +120,9 @@ no subscription, no effects.
 2. `localStorage` adapter, and delete the storage side effect inside `#pushUpdate`. Done.
 3. Boot from an ordered adapter list, and drop the `transition.abort()` dance in `routes/edit.ts`.
    Partly done, see below.
-4. Multi-file serialization plus a length budget, falling back to localStorage past the budget (#947).
-   The serialization and the budget exist and are tested; nothing writes more than one file yet.
+4. Multi-file serialization (#947). It exists and is tested; nothing writes more than one file yet.
+   No length budget: the browser already errors on a URL that is too long, and guessing a limit
+   here would only be wrong in both directions.
 5. Wire the project FS into the sdk resolver so relative imports work (#946).
 
 ## What landed, and what it cost
@@ -129,7 +130,7 @@ no subscription, no effects.
 New in `packages/repl-sdk/src/project/`, 55 node tests:
 
 - `repl-sdk/project`: `Project` and `File`, immutable, no Ember, no reactivity library
-- `repl-sdk/project/url`: `readProject`, `writeProject`, `serializedLength`, `fits`
+- `repl-sdk/project/url`: `readProject`, `writeProject`
 - `repl-sdk/project/local-storage`: `readStoredProject`, `writeStoredProject`, `storedFormat`
 
 `apps/repl` changes: `FileURIComponent` became `ProjectState`, `routes/edit.ts` only computes a URL
