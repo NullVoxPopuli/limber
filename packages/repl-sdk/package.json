@@ -12,8 +12,20 @@
       "default": "./src/compilers/markdown/parse.js"
     },
     "./fs": {
-      "types": "./src/fs/index.d.ts",
-      "default": "./src/fs/index.js"
+      "types": "./src/fs/vfs.d.ts",
+      "default": "./src/fs/vfs.js"
+    },
+    "./fs/install": {
+      "types": "./src/fs/install.d.ts",
+      "default": "./src/fs/install.js"
+    },
+    "./fs/npm": {
+      "types": "./src/fs/npm-tar.d.ts",
+      "default": "./src/fs/npm-tar.js"
+    },
+    "./fs/url": {
+      "types": "./src/fs/url.d.ts",
+      "default": "./src/fs/url.js"
     }
   },
   "repository": {

@@ -1,4 +1,7 @@
-import { createSourceHook, getTar, Installer, npmUrl, VFS } from 'repl-sdk/fs';
+import { createSourceHook, VFS } from 'repl-sdk/fs';
+import { Installer } from 'repl-sdk/fs/install';
+import { getTar } from 'repl-sdk/fs/npm';
+import { npmUrl } from 'repl-sdk/fs/url';
 import { beforeAll, describe, expect, test } from 'vitest';
 
 /**
