@@ -46,7 +46,7 @@ Adapter   { load(): Project | null, save(project): void }
 
 Adapters, in priority order at boot:
 
-- `url` (existing `?c=` / `?t=` / `?format=`, plus a new multi-file param)
+- `url` (existing `?c=` / `?t=` / `?format=`)
 - `localStorage` (already half-implemented as `getStoredDocument`)
 - `fetch` (the existing `?file=` branch in `routes/edit.ts`)
 - `gist` (later, [#947](https://github.com/NullVoxPopuli/limber/issues/947))
@@ -72,7 +72,9 @@ byte-identically to today. That means:
 - `?format=glimdown` and `?format=gdm` keep aliasing to `gmd`.
 - `?file=<url>`, `?editorLoad=`, `?forceEditor`, `?shadowdom=`, `?nohighlight=`, `?editor=` are
   untouched. They are view options, not document state.
-- Multi-file gets a new param and never appears for single-file projects.
+- More than one file reuses `c`, as a `{ path: contents }` object, and omits `format`. Every URL
+  in the wild has a format, so its absence is what distinguishes the two and a document that
+  happens to be valid JSON is never read as a project.
 
 `apps/repl/tests/application/-page/index.ts` already encodes most of this contract in
 `expectRedirectToContent`. That page object is the regression net for the whole refactor.
@@ -101,8 +103,9 @@ Same shape, different backing.
 
 ## Where it lives
 
-`packages/repl-sdk`, exported from `repl-sdk/project`. The sdk owns the `Project` concept and the
-app becomes a view over it. Multi-file imports then work through the existing resolve/fetch prefix
+`packages/repl-sdk`, exported from `repl-sdk/project`, `repl-sdk/project/url` and
+`repl-sdk/project/local-storage`. One module per export, no barrel. The sdk owns the `Project`
+concept and the app becomes a view over it. Multi-file imports then work through the existing resolve/fetch prefix
 dispatch with no bridge, and the URL conventions (`c`, `t`, `format`) live in one place instead of
 being re-implemented by `limber-ui`'s string concatenation.
 
@@ -118,16 +121,16 @@ no subscription, no effects.
 3. Boot from an ordered adapter list, and drop the `transition.abort()` dance in `routes/edit.ts`.
    Partly done, see below.
 4. Multi-file serialization plus a length budget, falling back to localStorage past the budget (#947).
-   The serialization and the budget exist and are tested; nothing writes them yet.
+   The serialization and the budget exist and are tested; nothing writes more than one file yet.
 5. Wire the project FS into the sdk resolver so relative imports work (#946).
 
 ## What landed, and what it cost
 
-New in `packages/repl-sdk/src/project/`, exported as `repl-sdk/project`, 54 node tests:
+New in `packages/repl-sdk/src/project/`, 55 node tests:
 
-- `Project` and `File`, immutable, no Ember, no reactivity library
-- `urlAdapter` with `parse`, `serialize`, `serializedLength`, `fits`
-- `localStorageAdapter` with `parse`, `serialize`, `activeFormat`
+- `repl-sdk/project`: `Project` and `File`, immutable, no Ember, no reactivity library
+- `repl-sdk/project/url`: `readProject`, `writeProject`, `serializedLength`, `fits`
+- `repl-sdk/project/local-storage`: `readStoredProject`, `writeStoredProject`, `storedFormat`
 
 `apps/repl` changes: `FileURIComponent` became `ProjectState`, `routes/edit.ts` only computes a URL
 and redirects, and the four call sites that reached through `editor.fileURIComponent` now go through

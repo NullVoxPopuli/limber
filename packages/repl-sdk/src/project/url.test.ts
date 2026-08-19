@@ -1,8 +1,8 @@
 import LZString from 'lz-string';
 import { describe, expect, it } from 'vitest';
 
-import { Project } from '../project.js';
-import { fits, parse, serialize, serializedLength } from './url.js';
+import { Project } from './project.js';
+import { fits, readProject, serializedLength, writeProject } from './url.js';
 
 const { compressToEncodedURIComponent, decompressFromEncodedURIComponent } = LZString;
 
@@ -10,7 +10,7 @@ const SNIPPET = `<template>hello</template>`;
 
 describe('parse', () => {
   it('reads the compressed param', () => {
-    const project = parse(`format=gjs&c=${compressToEncodedURIComponent(SNIPPET)}`);
+    const project = readProject(`format=gjs&c=${compressToEncodedURIComponent(SNIPPET)}`);
 
     expect(project?.format).toBe('gjs');
     expect(project?.entry?.text).toBe(SNIPPET);
@@ -23,7 +23,7 @@ describe('parse', () => {
     params.set('format', 'gmd');
     params.set('t', SNIPPET);
 
-    expect(parse(params)?.entry?.text).toBe(SNIPPET);
+    expect(readProject(params)?.entry?.text).toBe(SNIPPET);
   });
 
   it('prefers c over t', () => {
@@ -32,59 +32,69 @@ describe('parse', () => {
     params.set('c', compressToEncodedURIComponent('from c'));
     params.set('t', 'from t');
 
-    expect(parse(params)?.entry?.text).toBe('from c');
+    expect(readProject(params)?.entry?.text).toBe('from c');
   });
 
   it('passes an unknown format through instead of defaulting', () => {
     const params = new URLSearchParams({ format: 'glimdown', t: SNIPPET });
 
-    expect(parse(params)?.format).toBe('glimdown');
+    expect(readProject(params)?.format).toBe('glimdown');
   });
 
   it('keeps the flavor on a flavored format', () => {
     const params = new URLSearchParams({ format: 'hbs|ember', t: SNIPPET });
-    const project = parse(params);
+    const project = readProject(params);
 
     expect(project?.format).toBe('hbs|ember');
     expect(project?.entryPath).toBe('index.hbs');
   });
 
   it('returns null when there is no document', () => {
-    expect(parse('format=gjs')).toBe(null);
-    expect(parse('')).toBe(null);
-    expect(parse(undefined)).toBe(null);
+    expect(readProject('format=gjs')).toBe(null);
+    expect(readProject('')).toBe(null);
+    expect(readProject(undefined)).toBe(null);
   });
 
-  it('reads a multi-file project', () => {
+  it('reads a project out of the same param', () => {
     const project = Project.from({
       files: { 'index.gjs': 'a', 'nested/other.gjs': 'b' },
     });
 
-    expect(parse(serialize(project))?.equals(project)).toBe(true);
+    expect(readProject(writeProject(project))?.equals(project)).toBe(true);
   });
 
-  it('falls back to the single-file params when p is corrupt', () => {
+  it('does not mistake a JSON document for a project', () => {
+    const json = '{ "not": "a project", "just": "a document" }';
     const params = new URLSearchParams({
-      p: 'not-valid-lz',
-      format: 'gjs',
-      t: SNIPPET,
+      format: 'md',
+      c: compressToEncodedURIComponent(json),
     });
 
-    expect(parse(params)?.entry?.text).toBe(SNIPPET);
+    const project = readProject(params);
+
+    expect(project?.isSingleFile).toBe(true);
+    expect(project?.entry?.text).toBe(json);
+  });
+
+  it('is not fooled by an object whose values are not file contents', () => {
+    const params = new URLSearchParams({
+      c: compressToEncodedURIComponent('{"count": 3}'),
+    });
+
+    expect(readProject(params)?.isSingleFile).toBe(true);
   });
 });
 
 describe('serialize', () => {
   it('writes the same shape the app writes today', () => {
-    const params = serialize(Project.single(SNIPPET, { format: 'gjs' }));
+    const params = writeProject(Project.single(SNIPPET, { format: 'gjs' }));
 
     expect(params.get('format')).toBe('gjs');
     expect(decompressFromEncodedURIComponent(params.get('c') as string)).toBe(SNIPPET);
-    expect(params.get('p')).toBe(null);
   });
 
   it('never writes the legacy t param', () => {
-    const params = serialize(Project.single(SNIPPET, { format: 'gjs' }), {
+    const params = writeProject(Project.single(SNIPPET, { format: 'gjs' }), {
       into: new URLSearchParams({ t: 'stale' }),
     });
 
@@ -92,7 +102,7 @@ describe('serialize', () => {
   });
 
   it('preserves params it does not own', () => {
-    const params = serialize(Project.single(SNIPPET, { format: 'gjs' }), {
+    const params = writeProject(Project.single(SNIPPET, { format: 'gjs' }), {
       into: new URLSearchParams({
         shadowdom: 'false',
         editorLoad: 'force',
@@ -106,23 +116,29 @@ describe('serialize', () => {
     expect(params.get('format')).toBe('gjs');
   });
 
-  it('uses p for more than one file, and drops the single-file params', () => {
+  it('writes more than one file as an object, with no format', () => {
     const project = Project.from({ files: { 'index.gjs': 'a', 'other.gjs': 'b' } });
-    const params = serialize(project, { into: new URLSearchParams({ c: 'stale' }) });
+    const params = writeProject(project, { into: new URLSearchParams({ format: 'stale' }) });
 
-    expect(params.get('p')).toBeTruthy();
-    expect(params.get('c')).toBe(null);
+    expect(JSON.parse(decompressFromEncodedURIComponent(params.get('c') as string))).toEqual({
+      'index.gjs': 'a',
+      'other.gjs': 'b',
+    });
+    /**
+     * The file names say what each one is, so a single format would be a lie.
+     * Its absence is also how reading tells a project from a document.
+     */
     expect(params.get('format')).toBe(null);
   });
 
   it('round trips single-file projects', () => {
     const project = Project.single(SNIPPET, { format: 'hbs|ember' });
 
-    expect(parse(serialize(project))?.equals(project)).toBe(true);
+    expect(readProject(writeProject(project))?.equals(project)).toBe(true);
   });
 
   it('writes nothing for an empty project', () => {
-    expect(serialize(Project.empty).toString()).toBe('');
+    expect(writeProject(Project.empty).toString()).toBe('');
   });
 });
 
@@ -130,7 +146,7 @@ describe('budget', () => {
   it('measures the serialized length', () => {
     const small = Project.single('a', { format: 'gjs' });
 
-    expect(serializedLength(small)).toBe(serialize(small).toString().length);
+    expect(serializedLength(small)).toBe(writeProject(small).toString().length);
     expect(fits(small)).toBe(true);
   });
 

@@ -4,7 +4,7 @@ import { File } from './file.js';
 import { basename, dirname, extname, normalize } from './path.js';
 import { extFor, Project } from './project.js';
 
-import type { ProjectJSON } from './index.d.ts';
+import type { ProjectJSON } from './project.d.ts';
 
 describe('path', () => {
   it.each([

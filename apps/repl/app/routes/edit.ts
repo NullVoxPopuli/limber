@@ -1,7 +1,9 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
-import { localStorageAdapter, Project, urlAdapter } from 'repl-sdk/project';
+import { Project } from 'repl-sdk/project';
+import { readStoredProject } from 'repl-sdk/project/local-storage';
+import { OWNED_PARAMS, writeProject } from 'repl-sdk/project/url';
 
 import { formatQPFrom } from '#app/languages.gts';
 
@@ -44,7 +46,7 @@ export default class EditRoute extends Route {
   async beforeModel(transition: Transition) {
     const qps = (transition.to?.queryParams ?? {}) as Record<string, string | undefined>;
 
-    const hasCode = Boolean(qps.t || qps.c || qps.p);
+    const hasCode = Boolean(qps.t || qps.c);
     const hasFormat = qps.format !== undefined;
     const hasFileReference = Boolean(qps.file);
 
@@ -79,7 +81,7 @@ export default class EditRoute extends Route {
      * Default starting doc is user-configurable.
      * (whatever they did last)
      */
-    const stored = localStorageAdapter.parse();
+    const stored = readStoredProject();
 
     if (stored) {
       console.info(`Found a document in localStorage. Using that.`);
@@ -100,7 +102,7 @@ export default class EditRoute extends Route {
     project: Project,
     qps: Record<string, string | undefined>
   ) {
-    const params = urlAdapter.serialize(project, { into: viewParamsFrom(qps) });
+    const params = writeProject(project, { into: viewParamsFrom(qps) });
 
     transition.abort();
     await Promise.resolve();
@@ -118,7 +120,7 @@ function viewParamsFrom(qps: Record<string, string | undefined>) {
 
   for (const [key, value] of Object.entries(qps)) {
     if (value === undefined || value === null) continue;
-    if (urlAdapter.OWNED_PARAMS.includes(key)) continue;
+    if (OWNED_PARAMS.includes(key)) continue;
 
     params.set(key, String(value));
   }

@@ -1,11 +1,16 @@
 import LZString from 'lz-string';
 
-import { Project } from '../project.js';
+import { Project } from './project.js';
 
 const { compressToEncodedURIComponent, decompressFromEncodedURIComponent } = LZString;
 
 /**
- * Compressed single-document text.
+ * The document, lz-compressed.
+ *
+ * One file when `format` says how to read it, otherwise a `{ path: contents }`
+ * object. Every URL in the wild has a format, so anything without one is new
+ * enough to be a project, and a document that happens to be valid JSON is
+ * never mistaken for one.
  */
 export const TEXT_PARAM = 'c';
 
@@ -19,12 +24,7 @@ export const LEGACY_TEXT_PARAM = 't';
  */
 export const FORMAT_PARAM = 'format';
 
-/**
- * Compressed JSON for projects of more than one file.
- */
-export const PROJECT_PARAM = 'p';
-
-export const OWNED_PARAMS = [TEXT_PARAM, LEGACY_TEXT_PARAM, FORMAT_PARAM, PROJECT_PARAM];
+export const OWNED_PARAMS = [TEXT_PARAM, LEGACY_TEXT_PARAM, FORMAT_PARAM];
 
 /**
  * Browsers and CDNs disagree on the real limit. This is the conservative one.
@@ -43,34 +43,43 @@ function toParams(input) {
 }
 
 /**
+ * @param {string} text
+ * @returns {Record<string, string> | undefined}
+ */
+function asFileMap(text) {
+  if (!text.startsWith('{')) return undefined;
+
+  /** @type {unknown} */
+  let parsed;
+
+  try {
+    parsed = JSON.parse(text);
+  } catch {
+    return undefined;
+  }
+
+  if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) return undefined;
+
+  const entries = Object.entries(parsed);
+
+  if (entries.length === 0) return undefined;
+  if (entries.some(([, contents]) => typeof contents !== 'string')) return undefined;
+
+  return /** @type {Record<string, string>} */ (parsed);
+}
+
+/**
  * Read a Project out of query params. Returns null when the params describe no
- * document at all, so callers can fall through to the next adapter.
+ * document at all, so callers can fall through to the next place to look.
  *
- * Note that an unknown or missing `format` is passed through untouched -- picking
- * a default is the app's policy, not this module's.
+ * An unknown or missing `format` is passed through untouched. Picking a default
+ * is the app's policy, not this module's.
  *
  * @param {URLSearchParams | string | Record<string, string> | undefined} input
  * @returns {Project | null}
  */
-export function parse(input) {
+export function readProject(input) {
   const params = toParams(input);
-  const packed = params.get(PROJECT_PARAM);
-
-  if (packed) {
-    const json = decompressFromEncodedURIComponent(packed);
-
-    if (json) {
-      try {
-        return Project.fromJSON(JSON.parse(json));
-      } catch {
-        /**
-         * A corrupt `p` is a link someone truncated. Fall through to the
-         * single-file params rather than blowing up the whole boot.
-         */
-      }
-    }
-  }
-
   const format = params.get(FORMAT_PARAM) ?? undefined;
   const compressed = params.get(TEXT_PARAM);
 
@@ -78,15 +87,17 @@ export function parse(input) {
     const text = decompressFromEncodedURIComponent(compressed);
 
     if (text !== null) {
+      const files = format ? undefined : asFileMap(text);
+
+      if (files) return Project.from({ files });
+
       return Project.single(text, { format });
     }
   }
 
   const legacy = params.get(LEGACY_TEXT_PARAM);
 
-  if (legacy) {
-    return Project.single(legacy, { format });
-  }
+  if (legacy) return Project.single(legacy, { format });
 
   return null;
 }
@@ -98,7 +109,7 @@ export function parse(input) {
  * @param {{ into?: URLSearchParams | string | Record<string, string> | undefined }} [options]
  * @returns {URLSearchParams}
  */
-export function serialize(project, { into } = {}) {
+export function writeProject(project, { into } = {}) {
   const params = new URLSearchParams(toParams(into));
 
   for (const param of OWNED_PARAMS) {
@@ -108,16 +119,21 @@ export function serialize(project, { into } = {}) {
   if (project.isEmpty) return params;
 
   if (project.isSingleFile) {
-    const entry = project.entry;
     const format = project.format;
 
     if (format) params.set(FORMAT_PARAM, format);
-    params.set(TEXT_PARAM, compressToEncodedURIComponent(entry?.text ?? ''));
+    params.set(TEXT_PARAM, compressToEncodedURIComponent(project.entry?.text ?? ''));
 
     return params;
   }
 
-  params.set(PROJECT_PARAM, compressToEncodedURIComponent(JSON.stringify(project.toJSON())));
+  /**
+   * No format, because the file names carry that now, and its absence is what
+   * says this is more than one file.
+   */
+  const files = Object.fromEntries(project.files.map((file) => [file.path, file.text]));
+
+  params.set(TEXT_PARAM, compressToEncodedURIComponent(JSON.stringify(files)));
 
   return params;
 }
@@ -129,7 +145,7 @@ export function serialize(project, { into } = {}) {
  * @returns {number}
  */
 export function serializedLength(project) {
-  return serialize(project).toString().length;
+  return writeProject(project).toString().length;
 }
 
 /**

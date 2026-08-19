@@ -12,8 +12,16 @@
       "default": "./src/compilers/markdown/parse.js"
     },
     "./project": {
-      "types": "./src/project/index.d.ts",
-      "default": "./src/project/index.js"
+      "types": "./src/project/project.d.ts",
+      "default": "./src/project/project.js"
+    },
+    "./project/url": {
+      "types": "./src/project/url.d.ts",
+      "default": "./src/project/url.js"
+    },
+    "./project/local-storage": {
+      "types": "./src/project/local-storage.d.ts",
+      "default": "./src/project/local-storage.js"
     }
   },
   "repository": {

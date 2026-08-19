@@ -4,7 +4,9 @@ import { service } from '@ember/service';
 import { buildWaiter } from '@ember/test-waiters';
 import { isTesting, macroCondition } from '@embroider/macros';
 
-import { localStorageAdapter, Project, urlAdapter } from 'repl-sdk/project';
+import { Project } from 'repl-sdk/project';
+import { readStoredProject, writeStoredProject } from 'repl-sdk/project/local-storage';
+import { readProject, writeProject } from 'repl-sdk/project/url';
 
 import { flavorFrom, formatFrom, type FormatQP } from '#app/languages.gts';
 
@@ -42,7 +44,7 @@ export async function shortenUrl(url: string) {
  * The document the user last worked on in a given format, if there is one.
  */
 export function getStoredDocumentForFormat(format: FormatQP) {
-  return localStorageAdapter.parse({ format })?.entry?.text ?? null;
+  return readStoredProject({ format })?.entry?.text ?? null;
 }
 
 /**
@@ -73,7 +75,7 @@ export class ProjectState {
    * still booting.
    */
   get project(): Project {
-    return this._committed ?? urlAdapter.parse(this.#params) ?? Project.empty;
+    return this._committed ?? readProject(this.#params) ?? Project.empty;
   }
 
   get text(): string | null {
@@ -198,12 +200,12 @@ export class ProjectState {
       ? pending.project
       : pending.project.withFormat(this.format);
 
-    localStorageAdapter.serialize(project);
+    writeStoredProject(project);
 
     this._committed = project;
 
     const current = new URL(currentURL(this.router));
-    const next = urlAdapter.serialize(project, { into: current.searchParams });
+    const next = writeProject(project, { into: current.searchParams });
 
     for (const [key, value] of Object.entries(extraQPs)) {
       next.set(key, value);

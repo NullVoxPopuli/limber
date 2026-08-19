@@ -1,4 +1,4 @@
-import { Project } from '../project.js';
+import { Project } from './project.js';
 
 export const ACTIVE_KEY = 'repl:active';
 export const PROJECT_PREFIX = 'repl:project:';
@@ -57,7 +57,7 @@ function readLegacy(storage, format) {
  * @param {{ storage?: Storage }} [options]
  * @returns {string | null}
  */
-export function activeFormat({ storage } = {}) {
+export function storedFormat({ storage } = {}) {
   const store = resolveStorage(storage);
 
   if (!store) return null;
@@ -81,12 +81,12 @@ export function activeFormat({ storage } = {}) {
  * @param {{ storage?: Storage, format?: string | undefined }} [options]
  * @returns {Project | null}
  */
-export function parse({ storage, format } = {}) {
+export function readStoredProject({ storage, format } = {}) {
   const store = resolveStorage(storage);
 
   if (!store) return null;
 
-  const target = format ?? activeFormat({ storage: store });
+  const target = format ?? storedFormat({ storage: store });
 
   if (!target) return null;
 
@@ -110,7 +110,7 @@ export function parse({ storage, format } = {}) {
  * @param {{ storage?: Storage }} [options]
  * @returns {void}
  */
-export function serialize(project, { storage } = {}) {
+export function writeStoredProject(project, { storage } = {}) {
   const store = resolveStorage(storage);
 
   if (!store) return;
