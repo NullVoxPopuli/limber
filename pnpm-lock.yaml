@@ -27,6 +27,7 @@ overrides:
   side-channel: npm:@nolyfill/side-channel@^1
   string.prototype.matchall: npm:@nolyfill/string.prototype.matchall@^1
   string.prototype.trimend: npm:@nolyfill/string.prototype.trimend@^1
+  ember-source: file:./apps/repl/ember-source-7.4.0-alpha.1.nvp-in-element-document-fragment+e449a97d.tgz
 
 patchedDependencies:
   browserslist-generator:
@@ -45,10 +46,10 @@ importers:
         version: file:babel-standalone.tgz
       '@glint/ember-tsc':
         specifier: ^1.10.0
-        version: 1.10.0(0ae9f768e0413d4bca4ed5e16703e469)
+        version: 1.10.0(262d7f79c32182bb738cff0b3047852c)
       '@glint/tsserver-plugin':
         specifier: ^2.7.0
-        version: 2.7.0(09cf8328134731e8502d723d5524cb61)
+        version: 2.7.0(0e85fffda17c701dffeaa1fc486f558f)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
         version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
@@ -253,13 +254,13 @@ importers:
         version: 6.7.2
       '@glint/ember-tsc':
         specifier: ^1.10.0
-        version: 1.10.0(0ae9f768e0413d4bca4ed5e16703e469)
+        version: 1.10.0(262d7f79c32182bb738cff0b3047852c)
       '@glint/template':
         specifier: 1.7.7
         version: 1.7.7
       '@glint/tsserver-plugin':
         specifier: ^2.7.0
-        version: 2.7.0(09cf8328134731e8502d723d5524cb61)
+        version: 2.7.0(0e85fffda17c701dffeaa1fc486f558f)
       '@iconify-json/devicon':
         specifier: ^1.2.52
         version: 1.2.57
@@ -343,7 +344,7 @@ importers:
         version: 2.0.1(@babel/core@7.29.0)
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(09cf8328134731e8502d723d5524cb61)
+        version: 3.0.1(0e85fffda17c701dffeaa1fc486f558f)
       ember-page-title:
         specifier: ^9.0.3
         version: 9.0.3
@@ -351,8 +352,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(ccac685a9f0303164367b88029c1ee61)
       ember-source:
-        specifier: 7.3.0-alpha.2
-        version: 7.3.0-alpha.2(@glimmer/component@2.1.1)
+        specifier: file:ember-source-7.4.0-alpha.1.nvp-in-element-document-fragment+e449a97d.tgz
+        version: file:apps/repl/ember-source-7.4.0-alpha.1.nvp-in-element-document-fragment+e449a97d.tgz(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -548,13 +549,13 @@ importers:
         version: 6.7.2
       '@glint/ember-tsc':
         specifier: ^1.10.0
-        version: 1.10.0(0ae9f768e0413d4bca4ed5e16703e469)
+        version: 1.10.0(262d7f79c32182bb738cff0b3047852c)
       '@glint/template':
         specifier: 1.7.7
         version: 1.7.7
       '@glint/tsserver-plugin':
         specifier: ^2.7.0
-        version: 2.7.0(09cf8328134731e8502d723d5524cb61)
+        version: 2.7.0(0e85fffda17c701dffeaa1fc486f558f)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
         version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
@@ -584,7 +585,7 @@ importers:
         version: 9.2.1
       ember-load-initializers:
         specifier: ^3.0.1
-        version: 3.0.1(09cf8328134731e8502d723d5524cb61)
+        version: 3.0.1(0e85fffda17c701dffeaa1fc486f558f)
       ember-modify-based-class-resource:
         specifier: ^1.1.1
         version: 1.1.2(ae1eff630ec2fe49294f7459a294aeb5)
@@ -595,8 +596,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(ccac685a9f0303164367b88029c1ee61)
       ember-source:
-        specifier: 7.3.0-alpha.2
-        version: 7.3.0-alpha.2(@glimmer/component@2.1.1)
+        specifier: file:../repl/ember-source-7.4.0-alpha.1.nvp-in-element-document-fragment+e449a97d.tgz
+        version: file:apps/repl/ember-source-7.4.0-alpha.1.nvp-in-element-document-fragment+e449a97d.tgz(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -718,6 +719,9 @@ importers:
       decorator-transforms:
         specifier: 2.3.1
         version: 2.3.1(@babel/core@7.29.0)
+      ember-source:
+        specifier: file:../../../apps/repl/ember-source-7.4.0-alpha.1.nvp-in-element-document-fragment+e449a97d.tgz
+        version: file:apps/repl/ember-source-7.4.0-alpha.1.nvp-in-element-document-fragment+e449a97d.tgz(@glimmer/component@2.1.1)
       penpal:
         specifier: ^6.2.2
         version: 6.2.2
@@ -757,13 +761,13 @@ importers:
         version: 2.1.1
       '@glint/ember-tsc':
         specifier: ^1.10.0
-        version: 1.10.0(0ae9f768e0413d4bca4ed5e16703e469)
+        version: 1.10.0(262d7f79c32182bb738cff0b3047852c)
       '@glint/template':
         specifier: 1.7.7
         version: 1.7.7
       '@glint/tsserver-plugin':
         specifier: ^2.7.0
-        version: 2.7.0(09cf8328134731e8502d723d5524cb61)
+        version: 2.7.0(0e85fffda17c701dffeaa1fc486f558f)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
         version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
@@ -794,9 +798,6 @@ importers:
       ember-resources:
         specifier: ^7.1.0
         version: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
-      ember-source:
-        specifier: 7.3.0-alpha.2
-        version: 7.3.0-alpha.2(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -966,13 +967,13 @@ importers:
         version: 2.1.1
       '@glint/ember-tsc':
         specifier: ^1.10.0
-        version: 1.10.0(0ae9f768e0413d4bca4ed5e16703e469)
+        version: 1.10.0(262d7f79c32182bb738cff0b3047852c)
       '@glint/template':
         specifier: 1.7.7
         version: 1.7.7
       '@glint/tsserver-plugin':
         specifier: ^2.7.0
-        version: 2.7.0(09cf8328134731e8502d723d5524cb61)
+        version: 2.7.0(0e85fffda17c701dffeaa1fc486f558f)
       '@rollup/plugin-babel':
         specifier: ^6.1.0
         version: 6.1.0(2feedaebee37a40334972cdc05053654)
@@ -1019,8 +1020,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(ccac685a9f0303164367b88029c1ee61)
       ember-source:
-        specifier: 7.3.0-alpha.2
-        version: 7.3.0-alpha.2(@glimmer/component@2.1.1)
+        specifier: file:../../apps/repl/ember-source-7.4.0-alpha.1.nvp-in-element-document-fragment+e449a97d.tgz
+        version: file:apps/repl/ember-source-7.4.0-alpha.1.nvp-in-element-document-fragment+e449a97d.tgz(@glimmer/component@2.1.1)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
@@ -1174,13 +1175,13 @@ importers:
         version: 8.2.0(@glint/template@1.7.7)(rollup@4.57.1)
       '@glint/ember-tsc':
         specifier: ^1.10.0
-        version: 1.10.0(0ae9f768e0413d4bca4ed5e16703e469)
+        version: 1.10.0(262d7f79c32182bb738cff0b3047852c)
       '@glint/template':
         specifier: 1.7.7
         version: 1.7.7
       '@glint/tsserver-plugin':
         specifier: ^2.7.0
-        version: 2.7.0(09cf8328134731e8502d723d5524cb61)
+        version: 2.7.0(0e85fffda17c701dffeaa1fc486f558f)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
         version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
@@ -1203,8 +1204,8 @@ importers:
         specifier: ^7.1.0
         version: 7.1.0(5417512ae382abcafe5679ee7b1ac481)
       ember-source:
-        specifier: 7.3.0-alpha.2
-        version: 7.3.0-alpha.2(@glimmer/component@2.1.1)
+        specifier: file:../../apps/repl/ember-source-7.4.0-alpha.1.nvp-in-element-document-fragment+e449a97d.tgz
+        version: file:apps/repl/ember-source-7.4.0-alpha.1.nvp-in-element-document-fragment+e449a97d.tgz(@glimmer/component@2.1.1)
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -6904,8 +6905,9 @@ packages:
     resolution: {integrity: sha512-89oVHVJwmLDvGvAUWgS87KpBoRhy3aZ6U0Ql6HOmU4TrPkyaa8pM0W81wj9cIwjYprcQtN9EwzZMHnq46+oUyw==}
     engines: {node: 8.* || 10.* || >= 12}
 
-  ember-source@7.3.0-alpha.2:
-    resolution: {integrity: sha512-D4l66RyIfUJ7XsLGc4B92wqERo+QrinqlbsHpsbosjJg8Q9db7q+TuDwu+40QSNetpUGUx+xxD5WuBsft/+V7g==}
+  ember-source@file:apps/repl/ember-source-7.4.0-alpha.1.nvp-in-element-document-fragment+e449a97d.tgz:
+    resolution: {integrity: sha512-8PLwqBB2Q04HgSVasHHxQiY5GQ8vyTr1HT3ltSanLHO8bw0OErkvf/YFhgFYNl7m0KogWf4ajxfyqWyeZCM6FQ==, tarball: file:apps/repl/ember-source-7.4.0-alpha.1.nvp-in-element-document-fragment+e449a97d.tgz}
+    version: 7.4.0-alpha.1.nvp-in-element-document-fragment
     engines: {node: '>= 20.19'}
     peerDependencies:
       '@glimmer/component': '>= 1.1.2'
@@ -8252,7 +8254,7 @@ packages:
     engines: {node: '>=0.10.0'}
 
   kolay@https://codeload.github.com/universal-ember/kolay/tar.gz/85af138408a81c687230c170615b187281509e8d:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/universal-ember/kolay/tar.gz/85af138408a81c687230c170615b187281509e8d}
+    resolution: {gitHosted: true, integrity: sha512-Z9wjQMjcHIym3v3lF3WxreM7ZO9DNMJ9wZHzGN6w9Fk5Mb2kGcmkIhrV5wYZiLsMqofjpZOua+O8xC3SiDYkzw==, tarball: https://codeload.github.com/universal-ember/kolay/tar.gz/85af138408a81c687230c170615b187281509e8d}
     version: 5.4.0
     engines: {node: '>= 18'}
 
@@ -13178,7 +13180,7 @@ snapshots:
     dependencies:
       '@glimmer/interfaces': 0.94.6
 
-  '@glint/ember-tsc@1.10.0(0ae9f768e0413d4bca4ed5e16703e469)':
+  '@glint/ember-tsc@1.10.0(262d7f79c32182bb738cff0b3047852c)':
     dependencies:
       '@glimmer/syntax': 0.95.0
       '@glint/template': 1.7.7
@@ -13198,15 +13200,15 @@ snapshots:
       vscode-languageserver-textdocument: 1.0.12
       vscode-uri: 3.1.0
     optionalDependencies:
-      ember-source: 7.3.0-alpha.2(@glimmer/component@2.1.1)
+      ember-source: file:apps/repl/ember-source-7.4.0-alpha.1.nvp-in-element-document-fragment+e449a97d.tgz(@glimmer/component@2.1.1)
     transitivePeerDependencies:
       - supports-color
 
   '@glint/template@1.7.7': {}
 
-  '@glint/tsserver-plugin@2.7.0(09cf8328134731e8502d723d5524cb61)':
+  '@glint/tsserver-plugin@2.7.0(0e85fffda17c701dffeaa1fc486f558f)':
     dependencies:
-      '@glint/ember-tsc': 1.10.0(0ae9f768e0413d4bca4ed5e16703e469)
+      '@glint/ember-tsc': 1.10.0(262d7f79c32182bb738cff0b3047852c)
       '@volar/language-core': 2.4.28
       '@volar/typescript': 2.4.28
       jiti: 2.7.0
@@ -16934,9 +16936,9 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-load-initializers@3.0.1(09cf8328134731e8502d723d5524cb61):
+  ember-load-initializers@3.0.1(0e85fffda17c701dffeaa1fc486f558f):
     dependencies:
-      ember-source: 7.3.0-alpha.2(@glimmer/component@2.1.1)
+      ember-source: file:apps/repl/ember-source-7.4.0-alpha.1.nvp-in-element-document-fragment+e449a97d.tgz(@glimmer/component@2.1.1)
 
   ember-modifier@4.3.0(@babel/core@7.29.0):
     dependencies:
@@ -17104,7 +17106,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-source@7.3.0-alpha.2(@glimmer/component@2.1.1):
+  ember-source@file:apps/repl/ember-source-7.4.0-alpha.1.nvp-in-element-document-fragment+e449a97d.tgz(@glimmer/component@2.1.1):
     dependencies:
       '@babel/core': 7.29.0
       '@embroider/addon-shim': 1.10.2
@@ -17113,7 +17115,6 @@ snapshots:
       backburner.js: 2.8.0
       broccoli-file-creator: 2.1.1
       chalk: 4.1.2
-      ember-cli-babel: 8.3.1(@babel/core@7.29.0)
       ember-cli-get-component-path-option: 1.0.0
       ember-cli-normalize-entity-name: 1.0.0
       ember-cli-path-utils: 1.0.0
