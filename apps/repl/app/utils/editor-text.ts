@@ -1,28 +1,19 @@
 import { tracked } from '@glimmer/tracking';
-import { assert } from '@ember/debug';
 import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyable';
 import { service } from '@ember/service';
 import { buildWaiter } from '@ember/test-waiters';
 import { isTesting, macroCondition } from '@embroider/macros';
 
-import LZString from 'lz-string';
+import { Project } from 'repl-sdk/project';
+import { readStoredProject, writeStoredProject } from 'repl-sdk/project/local-storage';
+import { readProject, writeProject } from 'repl-sdk/project/url';
 
-const { compressToEncodedURIComponent } = LZString;
-
-import {
-  flavorFrom,
-  formatFrom,
-  type FormatQP,
-  formatQPFrom,
-  isAllowedFormat,
-} from '#app/languages.gts';
-
-import { fileFromParams } from 'limber/utils/messaging';
+import { flavorFrom, formatFrom, type FormatQP } from '#app/languages.gts';
 
 import type RouterService from '@ember/routing/router-service';
 
 const DEBOUNCE_MS = 250;
-const queueWaiter = buildWaiter('FileURIComponent::queue');
+const commitWaiter = buildWaiter('ProjectState::commit');
 
 export async function shortenUrl(url: string) {
   const response = await fetch(`https://api.nvp.gg/v1/links`, {
@@ -50,124 +41,88 @@ export async function shortenUrl(url: string) {
 }
 
 /**
- * Manages the URL state, representing the editor text.
- * Editor text may be newer than the URL state.
- *
- * Text + Format = File. The URL represents a file.
- *
- * --------------------------------------------------------------
- *
- * NOTE: that the URL (and this service) *never* sets the editor content.
- *       Editor content flows unidirectionally to the URL.
- *
- *       The only time the URL is read is on page load.
- *
- * Query Params:
- *  - t: Original URI-encoded text // original implementation
- *  - c: Compressed URI-encoded text // new implementation
- *
- * Flow:
- *  - on load:
- *    - read URL: determine if plain text or encoded (via query param)
- *      - if plain text,
- *        - write to Editor
- *      - if encoded,
- *        - decode
- *        - write to Editor
- *
- *  - on editor update:
- *    - write to URL (debounced and encoded)
- *
- *  - on ctrl+s
- *    - write URL to clipboard
- *
- * We do this here instead if a route, because the routing system can't be trusted :(
+ * The document the user last worked on in a given format, if there is one.
  */
-export class FileURIComponent {
+export function getStoredDocumentForFormat(format: FormatQP) {
+  return readStoredProject({ format })?.entry?.text ?? null;
+}
+
+/**
+ * The Project is the source of truth. The URL is one of the ways it is stored.
+ *
+ * Reads happen through the adapters at boot, and again any time nothing has
+ * been committed yet. Writes are debounced, because committing is what
+ * triggers a recompile.
+ *
+ * NOTE: this never sets the editor content. Editor content flows one way into
+ *       here, and `services/editor` pushes it back into CodeMirror when
+ *       something other than typing changes the document.
+ */
+export class ProjectState {
   @service declare router: RouterService;
 
-  #currentURL = () => {
-    // On initial load,
-    // we may not have a currentURL, because the first transition has yet to complete
-    // NOTE: this omits the origin. We add the origin later so we can use `new URL(..)`
-    let base = this.router.currentURL;
+  @tracked private _committed: Project | undefined;
 
-    if (macroCondition(isTesting())) {
-      base ??= (this.router as any) /* private API? */?.location?.path;
-    } else {
-      base ??= window.location.toString();
-    }
+  #pending: { project: Project; extraQPs: Record<string, string> } | undefined;
+  #tokens: unknown[] = [];
 
-    if (base && !base.includes(window.origin)) {
-      return window.origin + base;
-    }
-
-    return base ?? window.location.toString();
-  };
-
-  #initialFile: ReturnType<typeof fileFromParams> | undefined;
-
-  @tracked _text: undefined | null | string;
+  constructor() {
+    registerDestructor(this, () => this.#cleanup());
+  }
 
   /**
-   * Used so we no-op when qps match
+   * Committed state, falling back to whatever the URL says while the app is
+   * still booting.
    */
-  get #currentQPs(): Record<string, unknown> {
-    return this.router.currentRoute?.queryParams ?? ({} as Record<string, unknown>);
+  get project(): Project {
+    return this._committed ?? readProject(this.#params) ?? Project.empty;
   }
 
-  get #text() {
-    if (!this.#initialFile) {
-      this.#initialFile = fileFromParams(this.#currentURL().split('?')[1] ?? location.search);
-    }
-
-    return this._text ?? this.#initialFile.text;
-  }
-  set #text(value) {
-    this._text = value;
+  get text(): string | null {
+    return this.project.entry?.text ?? null;
   }
 
   get format(): FormatQP {
-    const location = this.#currentURL();
-
-    const search = location.split('?')[1];
-    const queryParams = new URLSearchParams(search);
-
-    const format = queryParams.get('format');
-
-    if (isAllowedFormat(format)) {
-      return format as FormatQP;
-    }
-
-    if (format === 'glimdown' || format === 'gdm') {
-      return 'gmd';
-    }
-
-    return 'gmd';
-  }
-  set format(value: string) {
-    this.#updateFormatQP(value);
-    this.#pushUpdate();
+    return formatFrom(this.project.format || this.#params.get('format'));
   }
 
   get flavor() {
-    const location = this.#currentURL();
-
-    const search = location.split('?')[1];
-    const queryParams = new URLSearchParams(search);
-
-    return flavorFrom(this.format, queryParams.get('flavor'));
+    return flavorFrom(this.format, this.#params.get('flavor'));
   }
 
-  constructor() {
-    registerDestructor(this, () => {
-      this.#cleanup();
-    });
-  }
+  /**
+   * Called on every keystroke.
+   *
+   * Builds on whatever is staged rather than on what is committed. Swapping
+   * the document makes CodeMirror report the new text back to us, and that
+   * arrives before the swap has been committed.
+   */
+  queue = (text: string) => {
+    const base = this.#staged;
 
-  get decoded() {
-    return this.#text;
-  }
+    this.#stage(base.withEntryText(text, { format: base.format || this.format }));
+  };
+
+  /**
+   * Replace the whole document. `extraQPs` are view options a demo wants
+   * along with its code, such as turning off the shadow dom.
+   */
+  set = (text: string, format: FormatQP, extraQPs?: undefined | Record<string, string>) => {
+    this.#stage(Project.single(text, { format }), extraQPs);
+  };
+
+  /**
+   * Keep the text, change how it is interpreted. Also the path for old URLs
+   * that never said what format they were in.
+   */
+  forceFormat = (format: FormatQP) => {
+    this.#stage(this.#staged.withFormat(format));
+  };
+
+  flush = async () => {
+    await Promise.resolve();
+    this.#commit();
+  };
 
   /**
    * When the user presses control+s or command+s,
@@ -176,7 +131,7 @@ export class FileURIComponent {
    *   - display a message to the user that the URL is now in their clipboard
    */
   toClipboard = async () => {
-    this.flush();
+    await this.flush();
 
     let url = location.origin + this.router.currentURL;
 
@@ -192,254 +147,128 @@ export class FileURIComponent {
     await navigator.clipboard.writeText(url);
   };
 
-  /**
-   * Called during normal typing.
-   */
-  set = (rawText: string, format: FormatQP, extraQPs?: undefined | Record<string, string>) => {
-    this.#updateFormatQP(format);
-    this.#updateTextQP(rawText);
-
-    if (extraQPs) {
-      for (const [k, v] of Object.entries(extraQPs)) {
-        this.#qps.set(k, v);
-      }
-    }
-
-    this.#pushUpdate();
-  };
+  get #params() {
+    return new URL(currentURL(this.router)).searchParams;
+  }
 
   /**
-   * Force the format - handy when supporting
-   * old legacy URLs that are out in the wild.
-   * Today, both format and text are required whenever
-   * talking about what should be rendered / placed in the editor.
+   * The newest document, committed or not.
    */
-  forceFormat = (format: FormatQP) => {
-    this.#updateFormatQP(format);
-    this.#pushUpdate();
+  get #staged() {
+    return this.#pending?.project ?? this.project;
+  }
+
+  #stage = (project: Project, extraQPs?: undefined | Record<string, string>) => {
+    this.#pending = {
+      project,
+      extraQPs: { ...this.#pending?.extraQPs, ...extraQPs },
+    };
+
+    this.#tokens.push(commitWaiter.beginAsync());
+    this.#schedule();
   };
 
-  queue = (rawText: string) => {
-    this.#updateTextQP(rawText);
-    this.#pushUpdate();
-  };
-
-  flush = async () => {
-    await Promise.resolve();
-    this.#setURL();
-  };
-
-  #qps = new URLSearchParams();
-  #tokens: unknown[] = [];
-
-  #cleanup = () => {
-    this.#qps = new URLSearchParams();
-    this.#tokens.forEach((token) => {
-      queueWaiter.endAsync(token);
-    });
-  };
-
-  /**
-   * The raw text.
-   * For efficiency, we don't compress it until we are about to write to the URL
-   */
-  #updateTextQP = (rawText: string | undefined) => {
-    this.#tokens.push(queueWaiter.beginAsync());
-    this.#qps ||= new URLSearchParams();
-
-    if (!rawText) {
-      this.#qps.delete('rawText');
-
-      return;
-    }
-
-    this.#qps.set('rawText', rawText);
-    this.#qps.delete('t');
-    this.#qps.delete('c');
-  };
-
-  #updateFormatQP = (format: string) => {
-    this.#tokens.push(queueWaiter.beginAsync());
-    this.#qps ||= new URLSearchParams();
-
-    if (format) {
-      this.#qps.set('format', formatQPFrom(format));
-    }
-  };
-
-  #pushUpdate = () => {
-    const rawText = this.#qps.get('rawText');
-
-    if (rawText) {
-      const format = this.#qps.get('format') ?? this.format;
-      const formatQP = formatFrom(format);
-
-      setStoredDocument(formatQP, rawText);
-    }
-
-    this.#pushUpdateToURL();
-  };
-
-  #pushUpdateToURL = makeDebounced(() => {
+  #schedule = makeDebounced(() => {
     if (isDestroyed(this) || isDestroying(this)) {
       this.#cleanup();
 
       return;
     }
 
-    this.#setURL();
+    this.#commit();
   });
 
-  #setURL = () => {
-    this.#pushUpdateToURL.clear();
+  #commit = () => {
+    this.#schedule.clear();
 
-    const current = this.#currentURL();
-    let { pathname: base, searchParams: activeQPs } = new URL(current);
+    const pending = this.#pending;
 
-    if (base === '/' || base.startsWith('/docs')) {
-      base = '/edit/';
-    }
+    this.#pending = undefined;
 
-    /**
-     * At some point this added qps
-     * we don't want them though, so we'll strip them
-     */
-
-    const rawText = this.#qps.get('rawText');
-    let encoded = '';
-
-    if (rawText) {
-      encoded = compressToEncodedURIComponent(rawText);
-      this.#qps.delete('rawText');
-    }
-
-    const qps = new URLSearchParams(this.#qps);
-
-    if (encoded) {
-      qps.set('c', encoded);
-    }
-
-    if (qps.size === 0) {
+    if (!pending || pending.project.isEmpty) {
       this.#cleanup();
-      console.debug(`No query params, not redirecting`);
 
       return;
     }
 
-    if (!qps.has('format')) {
-      qps.set('format', this.format);
-    }
-
-    if (!qps.has('c') && this.#text) {
-      const encoded = compressToEncodedURIComponent(this.#text);
-
-      qps.set('c', encoded);
-    }
-
-    // If either of these throw, we have something to debug.
-    // Correct path execution should not result in these throwing
-    assert(`Cannot update URL without required QP:format`, qps.get('format'));
-    assert(`Cannot update URL without required QP:c (compressed text)`, qps.get('c'));
+    const { extraQPs } = pending;
 
     /**
-     * We convert to an object here because URLSearchParams returns `null`
-     * when a param is missing, and we want to compare undefined when a value is missing
+     * Every URL we write names its format, even when the incoming one didn't.
      */
-    const q = Object.fromEntries(qps);
+    const project = pending.project.format
+      ? pending.project
+      : pending.project.withFormat(this.format);
 
-    if (
-      q.c === this.#currentQPs.c &&
-      q.t === this.#currentQPs.t &&
-      q.format === this.#currentQPs.format &&
-      q.shadowdom === this.#currentQPs.shadowdom
-    ) {
+    writeStoredProject(project);
+
+    this._committed = project;
+
+    const current = new URL(currentURL(this.router));
+    const next = writeProject(project, { into: current.searchParams });
+
+    for (const [key, value] of Object.entries(extraQPs)) {
+      next.set(key, value);
+    }
+
+    if (isSameQuery(next, current.searchParams)) {
       this.#cleanup();
-      console.debug(`All query params that affect the render output are the same`);
 
       return;
     }
 
-    // These are all required to be in `qps`
-    activeQPs.delete('c');
-    activeQPs.delete('t');
-    activeQPs.delete('format');
-
-    const nextQPs = mergeQPs(activeQPs, qps);
-
-    const next = `${base}?${nextQPs}`;
-
-    this.router.replaceWith(next);
-    if (rawText) this.#text = rawText;
-
+    this.router.replaceWith(`${editPathFrom(current.pathname)}?${next}`);
     this.#cleanup();
   };
-}
 
-function getKey(formatQP: FormatQP) {
-  return `${formatQP}-doc`;
-}
-
-function decomposeKey(key: string): {
-  format: string;
-  flavor: string | undefined;
-} {
-  const notation = key.replace(/-doc$/, '');
-
-  const parts = notation.split('|');
-
-  assert(`Missing format`, parts[0]);
-
-  return {
-    format: parts[0],
-    flavor: parts[1],
+  #cleanup = () => {
+    this.#tokens.forEach((token) => commitWaiter.endAsync(token));
+    this.#tokens = [];
   };
-}
-
-export function setStoredDocument(formatQP: FormatQP, text: string) {
-  const key = getKey(formatQP);
-
-  localStorage.setItem('active-format', key);
-  localStorage.setItem(key, text);
-}
-
-export function getStoredDocumentForFormat(formatQP: FormatQP) {
-  const key = getKey(formatQP);
-
-  return localStorage.getItem(key);
 }
 
 /**
- * We store the document per format, as well as which format
- * was last active.
- *
- * This enables us to have different documents load while changing formats
- * without fear of losing what we were working on.
- *
- * Default starting doc is
- * user-configurable.
- * (whatever they did last)
- *
+ * The REPL renders the same document at a few paths, and only `/edit` can
+ * carry one in its URL.
  */
-export function getStoredDocument() {
-  const active = localStorage.getItem('active-format');
+function editPathFrom(pathname: string) {
+  if (pathname === '/' || pathname.startsWith('/docs')) return '/edit/';
 
-  if (active) {
-    const key = `${active}-doc`;
-    const activeDoc = localStorage.getItem(key);
+  return pathname;
+}
 
-    if (activeDoc) {
-      const decomposed = decomposeKey(key);
+/**
+ * On initial load there is no currentURL yet, because the first transition
+ * has not completed. The router also omits the origin, and `new URL` needs one.
+ */
+function currentURL(router: RouterService) {
+  let base: string | null | undefined = router.currentURL;
 
-      return { format: decomposed.format, flavor: decomposed.flavor, doc: activeDoc };
-    }
+  if (macroCondition(isTesting())) {
+    /**
+     * Private API, but there is no public way to read the URL before the
+     * first transition resolves.
+     */
+    base ??= (router as unknown as { location?: { path?: string } }).location?.path;
   }
 
-  // fallback to the prior implemenntation so we don't break
-  // existing users.
-  const format = localStorage.getItem('format');
-  const doc = localStorage.getItem('document');
+  base ??= window.location.toString();
 
-  return { format, doc };
+  if (!base.includes(window.origin)) {
+    return window.origin + base;
+  }
+
+  return base;
+}
+
+function isSameQuery(a: URLSearchParams, b: URLSearchParams) {
+  if (a.size !== b.size) return false;
+
+  for (const [key, value] of a) {
+    if (b.get(key) !== value) return false;
+  }
+
+  return true;
 }
 
 /**
@@ -459,10 +288,4 @@ function makeDebounced(fu: () => void) {
   runner.clear = () => clearTimeout(timeout);
 
   return runner;
-}
-
-function mergeQPs(...qps: URLSearchParams[]) {
-  const result = Object.assign({}, ...qps.map((qp) => Object.fromEntries(qp)));
-
-  return new URLSearchParams(result);
 }

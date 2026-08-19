@@ -177,6 +177,7 @@
     "remark-html": "16.0.1",
     "remark-parse": "11.0.0",
     "remark-rehype": "^11.1.2",
+    "repl-sdk": "workspace:*",
     "stringify-object": "^5.0.0",
     "svelte": "^5.35.5",
     "tabster": "8.7.0",

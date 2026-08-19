@@ -1,10 +1,13 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
+import { Project } from 'repl-sdk/project';
+import { readStoredProject } from 'repl-sdk/project/local-storage';
+import { OWNED_PARAMS, writeProject } from 'repl-sdk/project/url';
+
 import { formatQPFrom } from '#app/languages.gts';
 
 import { DEFAULT_SNIPPET } from 'limber/snippets';
-import { getStoredDocument } from 'limber/utils/editor-text';
 
 import type RouterService from '@ember/routing/router-service';
 import type Transition from '@ember/routing/transition';
@@ -32,69 +35,95 @@ export default class EditRoute extends Route {
   @service declare editor: EditorService;
 
   /**
-   * My preferred way to deal with qps would be to redirect old params
-   * to the correct / new params. *but*, the router system is ... not good.
+   * This route's only job is making the URL name a document. Everything
+   * downstream reads the document back out of the URL, so the redirect is the
+   * whole correction -- no writing state behind the transition's back.
    *
-   * It's on the chopping block / re-do block post-polaris.
+   * The transition still has to be aborted first. Calling replaceWith from
+   * inside beforeModel of the transition being replaced crashes the router in
+   * finalizeQueryParamChange, because /edit declares no query params.
    */
   async beforeModel(transition: Transition) {
-    const qps = transition.to?.queryParams ?? {};
+    const qps = (transition.to?.queryParams ?? {}) as Record<string, string | undefined>;
 
     const hasCode = Boolean(qps.t || qps.c);
     const hasFormat = qps.format !== undefined;
     const hasFileReference = Boolean(qps.file);
 
-    if (hasFileReference && hasFormat) {
-      const format = formatQPFrom(qps.format as string);
-
+    /**
+     * `file` is an instruction to go fetch a document, not a document. Once
+     * it has been followed the URL carries the code, so drop it -- otherwise
+     * every reload refetches and throws away whatever was typed since.
+     */
+    if (hasFileReference && hasFormat && !hasCode) {
       const response = await fetch(qps.file as string);
       const text = await response.text();
 
-      this.editor.fileURIComponent.set(text, format);
-      await this.editor.fileURIComponent.flush();
-
-      return;
-    }
-
-    if (!hasCode) {
-      /**
-       * Default starting doc is
-       * user-configurable.
-       * (whatever they did last)
-       */
-      const { format, doc } = getStoredDocument();
-
-      if (format && doc) {
-        console.info(`Found format and document in localStorage. Using those.`);
-        transition.abort();
-        this.editor.fileURIComponent.set(doc, formatQPFrom(format));
-        await this.editor.fileURIComponent.flush();
-
-        return;
-      }
-
-      console.warn(
-        'URL contained no document information in the SearchParams. ' +
-          'Assuming glimdown and using the default sample snippet.'
+      return this.#redirect(
+        transition,
+        Project.single(text, { format: formatQPFrom(qps.format) }),
+        {
+          ...qps,
+          file: undefined,
+        }
       );
-
-      transition.abort();
-      this.editor.fileURIComponent.set(DEFAULT_SNIPPET, 'gmd');
-      await this.editor.fileURIComponent.flush();
-
-      return;
     }
 
-    if (!hasFormat) {
+    if (hasCode) {
+      if (hasFormat) return;
+
       console.warn('URL contained no format SearchParam. Assuming glimdown');
 
-      transition.abort();
-      this.editor.fileURIComponent.forceFormat('gmd');
-      await this.editor.fileURIComponent.flush();
+      return this.#redirect(transition, this.editor.project.withFormat('gmd'), qps);
     }
 
-    // By the time execution gets here, we'll either:
-    // - already have the required queryParams, and everything is skipped
-    // - be transitioning to an URL with the queryParams
+    /**
+     * Default starting doc is user-configurable.
+     * (whatever they did last)
+     */
+    const stored = readStoredProject();
+
+    if (stored) {
+      console.info(`Found a document in localStorage. Using that.`);
+
+      return this.#redirect(transition, stored, qps);
+    }
+
+    console.warn(
+      'URL contained no document information in the SearchParams. ' +
+        'Assuming glimdown and using the default sample snippet.'
+    );
+
+    return this.#redirect(transition, Project.single(DEFAULT_SNIPPET, { format: 'gmd' }), qps);
   }
+
+  async #redirect(
+    transition: Transition,
+    project: Project,
+    qps: Record<string, string | undefined>
+  ) {
+    const params = writeProject(project, { into: viewParamsFrom(qps) });
+
+    transition.abort();
+    await Promise.resolve();
+
+    return this.router.replaceWith(`/edit?${params}`);
+  }
+}
+
+/**
+ * Everything in the URL that isn't the document -- shadowdom, editorLoad, and
+ * friends -- rides along through the redirect.
+ */
+function viewParamsFrom(qps: Record<string, string | undefined>) {
+  const params = new URLSearchParams();
+
+  for (const [key, value] of Object.entries(qps)) {
+    if (value === undefined || value === null) continue;
+    if (OWNED_PARAMS.includes(key)) continue;
+
+    params.set(key, String(value));
+  }
+
+  return params;
 }

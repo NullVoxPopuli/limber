@@ -181,6 +181,9 @@ importers:
       remark-rehype:
         specifier: ^11.1.2
         version: 11.1.2
+      repl-sdk:
+        specifier: workspace:*
+        version: link:../../packages/repl-sdk
       stringify-object:
         specifier: ^5.0.0
         version: 5.0.0
@@ -1322,6 +1325,9 @@ importers:
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
+      lz-string:
+        specifier: ^1.5.0
+        version: 1.5.0
       mdast:
         specifier: ^3.0.0
         version: 3.0.0

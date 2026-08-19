@@ -33,5 +33,10 @@ export function setupDelay(hooks: NestedHooks, delay = 1_000) {
 export function setupApplicationCompilerTest(hooks: NestedHooks) {
   setupApplicationTest(hooks);
   clearCache(hooks);
+  /**
+   * The REPL restores your last document from localStorage, so a test that
+   * saves one would decide what the next test boots with.
+   */
+  clearLocalStorage(hooks);
   setupDelay(hooks);
 }

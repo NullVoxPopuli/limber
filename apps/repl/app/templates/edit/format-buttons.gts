@@ -86,7 +86,7 @@ class Option extends Component<{
     const qp = formatQPFrom(value);
     const stored = getStoredDocumentForFormat(qp);
 
-    this.editor.fileURIComponent.set(stored ?? defaultSnippetForFormat(value), qp);
+    this.editor.replace(stored ?? defaultSnippetForFormat(value), qp);
   };
 
   get format(): FormatQP {
