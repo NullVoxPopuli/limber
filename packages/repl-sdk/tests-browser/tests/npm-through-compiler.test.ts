@@ -1,5 +1,5 @@
 import { Compiler } from 'repl-sdk';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 
 /**
  * End to end through the real Compiler: a compiled snippet imports a package
@@ -24,6 +24,13 @@ function passthrough() {
     },
   });
 }
+
+/**
+ * The fs is one per page and es-module-shims keeps modules by URL, so a
+ * package is read from the fs the first time any test imports it and never
+ * again. Watch from the start.
+ */
+const read = vi.spyOn(passthrough().fs.files, 'read');
 
 describe('npm through the Compiler', () => {
   test('installs a package and runs code that imports it', async () => {
@@ -65,9 +72,9 @@ describe('npm through the Compiler', () => {
      * The relative import inside the package was served from the path it
      * actually lives at, which is the thing the request-id scheme could not do.
      */
-    expect(compiler.fs.files.reads.some((url) => url.endsWith('/url-alphabet/index.js'))).toBe(
-      true
-    );
+    const reads = read.mock.calls.map(([url]) => url);
+
+    expect(reads.some((url) => url.endsWith('/url-alphabet/index.js'))).toBe(true);
   });
 
   test('a subpath export resolves through the exports map', async () => {

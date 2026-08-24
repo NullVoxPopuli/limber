@@ -53,7 +53,6 @@ Only one `Compiler` runs per window. Its `fs` getter shows everything a demo ran
 compiler.fs.files.list()                          // every URL in the module fs
 compiler.fs.files.list('file:///npm/nanoid@6.0.1/') // one package
 compiler.fs.files.read(url).source
-compiler.fs.files.reads                           // URLs served to the module loader, in order
 compiler.fs.imports                               // specifier -> URL, as an import map
 ```
 

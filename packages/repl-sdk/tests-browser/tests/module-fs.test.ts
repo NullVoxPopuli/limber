@@ -2,7 +2,7 @@ import { createSourceHook, VFS } from 'repl-sdk/fs';
 import { Installer } from 'repl-sdk/fs/install';
 import { getTar } from 'repl-sdk/fs/npm';
 import { npmUrl, parseNpmUrl } from 'repl-sdk/fs/url';
-import { beforeAll, describe, expect, test } from 'vitest';
+import { beforeAll, describe, expect, test, vi } from 'vitest';
 
 /**
  * Spike: install a package from npm into a virtual fs and import it with no
@@ -20,6 +20,13 @@ import { beforeAll, describe, expect, test } from 'vitest';
 
 const vfs = new VFS();
 const installer = new Installer({ vfs, getTar });
+
+/**
+ * es-module-shims gives no way to see which URLs the loader asked for, so watch
+ * the fs it reads from.
+ */
+const read = vi.spyOn(vfs, 'read');
+const reads = () => read.mock.calls.map(([url]) => url);
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 let importShim: any;
@@ -69,13 +76,13 @@ describe('module fs', () => {
      * chain, no ?from=, no Request tree: the parent URL already carried the
      * path, so the default resolver did it.
      */
-    expect(vfs.reads).toContain(npmUrl('nanoid', version, 'url-alphabet/index.js'));
+    expect(reads()).toContain(npmUrl('nanoid', version, 'url-alphabet/index.js'));
   });
 
   test('nothing was served under an opaque id', () => {
-    expect(vfs.reads.length).toBeGreaterThan(1);
+    expect(reads().length).toBeGreaterThan(1);
 
-    for (const url of vfs.reads) {
+    for (const url of reads()) {
       expect(url).not.toContain('repl-request-');
       expect(parseNpmUrl(url)).toMatchObject({ name: 'nanoid', version });
     }

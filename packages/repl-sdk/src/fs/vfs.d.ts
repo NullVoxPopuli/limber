@@ -6,10 +6,6 @@ export interface VirtualFile {
 }
 
 export class VFS {
-  /**
-   * URLs the source hook has served, in order.
-   */
-  reads: string[];
   readonly size: number;
 
   write(url: string, source: string, type?: SourceType): void;

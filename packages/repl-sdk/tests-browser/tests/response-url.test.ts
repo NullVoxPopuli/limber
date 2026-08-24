@@ -2,7 +2,7 @@ import { createSourceHook, VFS } from 'repl-sdk/fs';
 import { Installer } from 'repl-sdk/fs/install';
 import { getTar } from 'repl-sdk/fs/npm';
 import { npmUrl } from 'repl-sdk/fs/url';
-import { beforeAll, describe, expect, test } from 'vitest';
+import { beforeAll, describe, expect, test, vi } from 'vitest';
 
 /**
  * Does the `url` a source hook returns become the base for that module's own
@@ -18,6 +18,9 @@ import { beforeAll, describe, expect, test } from 'vitest';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const vfs = new VFS();
 const installer = new Installer({ vfs, getTar });
+
+const read = vi.spyOn(vfs, 'read');
+const reads = () => read.mock.calls.map(([url]) => url);
 
 /**
  * What `resolve` can produce synchronously: the package, at no particular file.
@@ -69,7 +72,7 @@ describe('response url', () => {
      * If the requested url won, it resolved against .../nanoid@latest/ and
      * the import would have failed before we got here.
      */
-    expect(vfs.reads).toContain(npmUrl('nanoid', version, 'url-alphabet/index.js'));
-    expect(vfs.reads).not.toContain('file:///npm/nanoid@latest/url-alphabet/index.js');
+    expect(reads()).toContain(npmUrl('nanoid', version, 'url-alphabet/index.js'));
+    expect(reads()).not.toContain('file:///npm/nanoid@latest/url-alphabet/index.js');
   });
 });

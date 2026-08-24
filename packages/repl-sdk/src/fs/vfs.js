@@ -15,14 +15,6 @@ export class VFS {
   #files = new Map();
 
   /**
-   * URLs the source hook has served, in order. The spike asserts against this
-   * to show relative imports arrive as real paths.
-   *
-   * @type {string[]}
-   */
-  reads = [];
-
-  /**
    * @param {string} url
    * @param {string} source
    * @param {'js' | 'css' | 'json' | 'ts'} [type]
@@ -36,11 +28,7 @@ export class VFS {
    * @returns {undefined | VirtualFile}
    */
   read(url) {
-    const file = this.#files.get(url);
-
-    if (file) this.reads.push(url);
-
-    return file;
+    return this.#files.get(url);
   }
 
   /**
@@ -73,7 +61,6 @@ export class VFS {
 
   clear() {
     this.#files.clear();
-    this.reads = [];
   }
 }
 
