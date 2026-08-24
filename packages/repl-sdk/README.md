@@ -44,3 +44,23 @@ A heading with an explicit `{#custom-id}` suffix keeps that id instead.
 
 [github-slugger]: https://github.com/Flet/github-slugger
 [gfm-spec]: https://github.github.com/gfm/
+
+## Debugging
+
+Only one `Compiler` runs per window. Its `fs` getter shows everything a demo ran against:
+
+```js
+compiler.fs.files.list()                          // every URL in the module fs
+compiler.fs.files.list('file:///npm/nanoid@6.0.1/') // one package
+compiler.fs.files.read(url).source
+compiler.fs.files.reads                           // URLs served to the module loader, in order
+compiler.fs.imports                               // specifier -> URL, as an import map
+```
+
+Where to find `compiler` in the devtools console:
+
+- `ember-repl` stores its service at `REPL.compiler`, so the SDK instance is `REPL.compiler.compiler`.
+- Otherwise, use the instance your app created.
+
+The SDK's own caches live at `globalThis[Symbol.for('__repl-sdk__compiler__')]`:
+`resolves` (module path to module value), `tarballs`, and `promiseCache`.
