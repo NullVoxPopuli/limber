@@ -87,6 +87,6 @@ describe('the compiled snippet has a URL', () => {
       await compiler.compile('custom', `export default 'rev-${i}';`);
     }
 
-    expect(compiler.fs.files.list('file:///project/')).toEqual([]);
+    expect(compiler.fs.list('file:///project/')).toEqual([]);
   });
 });

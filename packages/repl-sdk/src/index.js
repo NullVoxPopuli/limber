@@ -61,12 +61,11 @@ export class Compiler {
   }
 
   /**
-   * Every file downloaded so far, keyed by URL, plus an import map of where
-   * each installed specifier landed. Resolution reads neither; they are here
-   * so a REPL can show what a demo actually ran against.
+   * Every file downloaded so far, keyed by URL. Resolution does not read it;
+   * it is here so a REPL can show what a demo actually ran against.
    */
   get fs() {
-    return { files: vfs, imports: installer.imports };
+    return vfs;
   }
 
   /**

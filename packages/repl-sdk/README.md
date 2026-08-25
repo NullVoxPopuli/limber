@@ -50,10 +50,9 @@ A heading with an explicit `{#custom-id}` suffix keeps that id instead.
 Only one `Compiler` runs per window. Its `fs` getter shows everything a demo ran against:
 
 ```js
-compiler.fs.files.list()                          // every URL in the module fs
-compiler.fs.files.list('file:///npm/nanoid@6.0.1/') // one package
-compiler.fs.files.read(url).source
-compiler.fs.imports                               // specifier -> URL, as an import map
+compiler.fs.list()                            // every URL in the module fs
+compiler.fs.list('file:///npm/nanoid@6.0.1/') // one package
+compiler.fs.read(url).source
 ```
 
 Where to find `compiler` in the devtools console:

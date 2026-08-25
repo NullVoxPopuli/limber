@@ -30,7 +30,7 @@ function passthrough() {
  * package is read from the fs the first time any test imports it and never
  * again. Watch from the start.
  */
-const read = vi.spyOn(passthrough().fs.files, 'read');
+const read = vi.spyOn(passthrough().fs, 'read');
 
 describe('npm through the Compiler', () => {
   test('installs a package and runs code that imports it', async () => {
@@ -60,7 +60,7 @@ describe('npm through the Compiler', () => {
       `
     );
 
-    const urls = compiler.fs.files.list('file:///npm/nanoid@');
+    const urls = compiler.fs.list('file:///npm/nanoid@');
 
     expect(urls.length).toBeGreaterThan(3);
 
