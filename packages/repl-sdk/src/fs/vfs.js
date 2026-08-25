@@ -52,7 +52,7 @@ export class VFS {
    * @returns {string[]}
    */
   list(prefix = '') {
-    return [...this.#files.keys()].filter((url) => url.startsWith(prefix));
+    return Array.from(this.#files.keys()).filter((url) => url.startsWith(prefix));
   }
 
   get size() {
