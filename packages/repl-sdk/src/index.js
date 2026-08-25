@@ -3,14 +3,35 @@
  * @typedef {import('./types.ts').CompilerConfig} CompilerConfig
  */
 
-import mime from 'mime/lite';
-
 import { cache, secretKey } from './cache.js';
 import { compilers } from './compilers.js';
 import { STABLE_REFERENCE } from './es-module-shim.js';
-import { getTarRequestId } from './request.js';
-import { getFromTarball } from './tar.js';
-import { assert, errorMessage, nextId, prefix_tgz, tgzPrefix, unzippedPrefix } from './utils.js';
+import { PROJECT_PREFIX, releaseEntry, writeEntry } from './fs/entry.js';
+import { clearFs, installer, vfs } from './fs/store.js';
+import {
+  extensionOf,
+  NPM_PREFIX,
+  parseVirtualUrl,
+  specifierUrl,
+  typeFor,
+  virtualUrl,
+} from './fs/url.js';
+import { virtualModuleSource } from './fs/virtual.js';
+import { assert, errorMessage, nextId } from './utils.js';
+
+/**
+ * node builtins that have a browser-shaped package on npm.
+ */
+const NODE_POLYFILLS = {
+  'node:buffer': 'buffer',
+  'node:crypto': 'crypto-browserify',
+  'node:events': 'events',
+  'node:fs': 'browserify-fs',
+  'node:path': 'path-browser',
+  'node:process': 'process',
+  'node:stream': 'stream-browserify',
+  'node:util': 'util-browser',
+};
 
 assert(`There is no document. repl-sdk is meant to be ran in a browser`, globalThis.document);
 
@@ -34,9 +55,17 @@ export class Compiler {
     this.#options = Object.assign({}, defaults, options);
 
     STABLE_REFERENCE.resolve = this.#resolve;
-    STABLE_REFERENCE.fetch = this.#fetch;
+    STABLE_REFERENCE.source = this.#source;
 
     window.addEventListener('unhandledrejection', this.#handleUnhandledRejection);
+  }
+
+  /**
+   * Every file downloaded so far, keyed by URL. Resolution does not read it;
+   * it is here so a REPL can show what a demo actually ran against.
+   */
+  get fs() {
+    return vfs;
   }
 
   /**
@@ -104,14 +133,14 @@ export class Compiler {
   };
 
   /**
+   * Synchronous, and it stays synchronous by never trying to know anything it
+   * would have to download to find out. A bare specifier becomes a URL that
+   * names the package; the source hook turns that into the URL of a real file.
+   *
    * Order of preference
    * 1. manually resolved (from the caller)
    * 2. specified in the compiler config (to use CDN)
-   * 3. download tarball from npm
-   *    or resolve from already downloaded tarball
-   *
-   * NOTE: when we return a new URL, we want to collapse the parentURI
-   *       so that we don't get compound query params in nested requests.
+   * 3. npm
    *
    * @param {string} id
    * @param {string} parentUrl
@@ -131,7 +160,7 @@ export class Compiler {
     if (this.#options.resolve?.[vanilla]) {
       this.#log(`[resolve] ${vanilla} found in manually specified resolver`);
 
-      return `manual:${vanilla}`;
+      return virtualUrl('manual', vanilla);
     }
 
     for (const compilerResolve of this.#compilerResolvers) {
@@ -141,188 +170,167 @@ export class Compiler {
         this.#log(`[resolve] ${vanilla} found in compiler config at ${result}.`);
 
         if (typeof result === 'function') {
-          return `configured:${vanilla}`;
+          return virtualUrl('configured', vanilla);
         }
 
         return result;
       }
     }
 
-    if (parentUrl.startsWith(tgzPrefix) && (id.startsWith('.') || id.startsWith('#'))) {
-      const answer = getTarRequestId({ to: id, from: parentUrl });
+    /**
+     * Subpath imports are private to the package that declares them, so the
+     * package has to travel with the specifier. `#` starts a URL fragment,
+     * hence the encoding.
+     */
+    if (id.startsWith('#') && parentUrl.startsWith(NPM_PREFIX)) {
+      const pkg = parentUrl.slice(NPM_PREFIX.length).split('/')[0];
 
-      return answer;
+      return `${NPM_PREFIX}${pkg}/${encodeURIComponent(id)}`;
     }
 
-    if (id.startsWith('https://')) return resolve(id, parentUrl);
-    if (id.startsWith('blob:')) return resolve(id, parentUrl);
-    if (id.startsWith('.')) return resolve(id, parentUrl);
-    if (parentUrl.startsWith('https://') && parentUrl !== location.href)
-      return resolve(id, parentUrl);
-    if (parentUrl.startsWith('https://') && parentUrl.startsWith('/'))
-      return resolve(id, parentUrl);
+    /**
+     * The parent URL already says where it lives, so this is URL math and the
+     * default resolver can do it. This is the case that used to need a request
+     * id and a `?from=` parent chain.
+     */
+    if (id.startsWith('.') || id.startsWith('/')) return resolve(id, parentUrl);
+    if (id.startsWith('https://') || id.startsWith('blob:')) return resolve(id, parentUrl);
+    if (id.startsWith('file:')) return resolve(id, parentUrl);
 
-    if (id.startsWith('node:')) {
+    if (parentUrl.startsWith('https://') && parentUrl !== location.href) {
+      return resolve(id, parentUrl);
+    }
+
+    const polyfill = NODE_POLYFILLS[/** @type {keyof typeof NODE_POLYFILLS} */ (id)];
+
+    if (polyfill) {
       this.#log(`Is known node module: ${id}. Grabbing polyfill`);
 
-      if (id === 'node:process') return prefix_tgz(`process`);
-      if (id === 'node:buffer') return prefix_tgz(`buffer`);
-      if (id === 'node:events') return prefix_tgz(`events`);
-      if (id === 'node:path') return prefix_tgz(`path-browser`);
-      if (id === 'node:util') return prefix_tgz(`util-browser`);
-      if (id === 'node:crypto') return prefix_tgz(`crypto-browserify`);
-      if (id === 'node:stream') return prefix_tgz(`stream-browserify`);
-      if (id === 'node:fs') return prefix_tgz(`browserify-fs`);
+      return specifierUrl(polyfill);
+    }
+
+    /**
+     * The import map is where per-importer versions live. Installing a package
+     * registers a scope saying what its dependency names mean, so a bare
+     * specifier from inside that package lands on the version its own
+     * package.json asked for. Unmapped specifiers throw, which just means
+     * nobody has claimed this name for this importer.
+     */
+    const scoped = tryDefaultResolve(resolve, id, parentUrl);
+
+    if (scoped) {
+      this.#log(`[resolve] ${id} resolved through the import map to ${scoped}`);
+
+      return scoped;
     }
 
     this.#log(`[resolve] ${id} not found, deferring to npmjs.com's provided tarball`);
 
-    return getTarRequestId({ to: id, from: parentUrl });
+    const pinned = this.#options.versions?.[vanilla];
+
+    return specifierUrl(pinned ? `${vanilla}@${encodeURIComponent(pinned)}` : vanilla);
   };
   /**
+   * The es-module-shims source hook, which supersedes the fetch hook
+   * (es-module-shims marks `fetch` deprecated in favor of this one).
+   *
+   * This is where the async work lives. `resolve` handed us a URL that only
+   * names a package; this installs it, and returns the URL of the file that
+   * actually holds the code. es-module-shims uses the returned URL as the base
+   * for that module's own relative imports, which is what lets the whole
+   * request-id and parent-chain layer go away.
+   *
    * @param {string} url
-   * @param {RequestInit} options
-   * @returns {Promise<Response>}
+   * @param {RequestInit} fetchOpts
+   * @param {string} parent
+   * @param {(url: string, fetchOpts: RequestInit, parent: string) => Promise<any>} defaultSourceHook
    */
-  #fetch = async (url, options) => {
-    const mimeType = mime.getType(url) ?? 'application/javascript';
+  #source = async (url, fetchOpts, parent, defaultSourceHook) => {
+    /**
+     * Hot reloading appends ?v={n}. The registry keeps it, the fs doesn't.
+     */
+    const path = url.replace(/\?v=\d+$/, '');
+    const virtual = parseVirtualUrl(path);
 
-    this.#log(`[fetch] attempting to fetch: ${url}. Assuming ${mimeType}`);
+    if (virtual) {
+      this.#log('[source] virtual module', path);
 
-    if (url.startsWith('manual:')) {
-      const name = url.replace(/^manual:/, '');
+      const source = await this.#virtualModuleSource(virtual.kind, virtual.name);
 
-      this.#log('[fetch] resolved url in manually specified resolver', url);
+      this.#announce('info', `Loaded ${virtual.name}`);
 
+      return { url, type: 'js', source };
+    }
+
+    if (path.startsWith(PROJECT_PREFIX)) {
+      const file = vfs.read(path);
+
+      assert(`${path} is not in the fs`, file);
+
+      this.#log('[source] project', path);
+
+      return { url, type: file.type, source: file.source };
+    }
+
+    if (path.startsWith(NPM_PREFIX)) {
+      this.#log('[source] npm', path);
+
+      const real = await installer.resolveUrl(path);
+
+      assert(`Could not resolve ${path}`, real);
+
+      const file = vfs.read(real);
+
+      assert(`${real} resolved but is not in the fs`, file);
+
+      const source = await this.#postProcess(file.source, extensionOf(real));
+
+      this.#announce('info', `Loaded ${real}`);
+
+      return { url: real, type: typeFor(real), source };
+    }
+
+    this.#log('[source] passing through', path);
+
+    return defaultSourceHook(url, fetchOpts, parent);
+  };
+
+  /**
+   * Both kinds of virtual module are a live JS object that has to be handed to
+   * the module system as source.
+   *
+   * @param {string} kind
+   * @param {string} name
+   * @returns {Promise<string>}
+   */
+  async #virtualModuleSource(kind, name) {
+    if (kind === 'manual') {
       const result = await this.#resolveManually(name);
 
       assert(`Failed to resolve ${name}`, result);
 
-      const blobContent =
-        `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
-        `\n\n` +
-        `if (!mod) { throw new Error('Could not resolve \`${name}\`. Does the module exist? ( checked ${url} )') }` +
-        `\n\n` +
-        /**
-         * This is semi-trying to polyfill modules
-         * that aren't proper ESM. very annoying.
-         */
-        `${Object.keys(result)
-          .map((exportName) => {
-            if (exportName === 'default') {
-              return `export default mod.default ?? mod;`;
-            }
-
-            return `export const ${exportName} = mod.${exportName};`;
-          })
-          .join('\n')}
-            `;
-
-      const blob = new Blob(Array.from(blobContent), { type: mimeType });
-
-      this.#log(
-        `[fetch] returning blob mapping to manually resolved import for ${name}`
-        // blobContent
-      );
-
-      this.#announce('info', `Loaded ${name}`);
-
-      return new Response(blob);
+      return virtualModuleSource(name, result, secretKey);
     }
 
-    if (url.startsWith('configured:')) {
-      const name = url.replace(/^configured:/, '');
+    /**
+     * Unlike the manual resolver, these are just functions per id, they
+     * represent a way to get a module.
+     */
+    let result;
 
-      this.#log(
-        '[fetch] resolved url in a preconfigured (in the compiler config) specified resolver',
-        url
-      );
+    for (const compilerResolve of this.#compilerResolvers) {
+      const fn = compilerResolve(name);
 
-      let result;
-
-      /**
-       * Unlike the manual resolver, these are just functions per
-       * id, they represent a way to get a module
-       */
-      for (const compilerResolve of this.#compilerResolvers) {
-        const fn = compilerResolve(name);
-
-        if (fn) {
-          this.#log(`[fetch] ${name} found in compiler config at ${result}.`);
-
-          result = await fn();
-        }
+      if (fn) {
+        result = await fn();
       }
-
-      assert(`Failed to resolve ${name}`, result);
-      cache.resolves[name] = result;
-
-      const blobContent =
-        `const mod = window[Symbol.for('${secretKey}')].resolves?.['${name}'];\n` +
-        `\n\n` +
-        `if (!mod) { throw new Error('Could not resolve \`${name}\`. Does the module exist? ( checked ${url} )') }` +
-        `\n\n` +
-        /**
-         * This is semi-trying to polyfill modules
-         * that aren't proper ESM. very annoying.
-         */
-        `${Object.keys(result)
-          .map((exportName) => {
-            if (exportName === 'default') {
-              return `export default mod.default ?? mod;`;
-            }
-
-            return `export const ${exportName} = mod.${exportName};`;
-          })
-          .join('\n')}
-            `;
-
-      const blob = new Blob(Array.from(blobContent), { type: mimeType });
-
-      this.#log(
-        `[fetch] returning blob mapping to configured resolved import for ${name}`
-        // blobContent
-      );
-
-      this.#announce('info', `Loaded ${name}`);
-
-      return new Response(blob);
     }
 
-    if (url.startsWith(unzippedPrefix)) {
-      this.#log('[fetch] resolved url via tgz resolver', url, options);
+    assert(`Failed to resolve ${name}`, result);
+    cache.resolves[name] = result;
 
-      const tarInfo = await getFromTarball(url);
-
-      assert(`Could not find file for ${url}`, tarInfo);
-
-      const { code, ext } = tarInfo;
-
-      /**
-       * We don't know if this code is completely ready to run in the browser yet, so we might need to run in through the compiler again
-       */
-      const file = await this.#postProcess(code, ext);
-      const type = mime.getType(ext);
-
-      return new Response(new Blob([file], { type: type ?? 'application/javascript' }));
-    }
-
-    if (url.startsWith('https://')) {
-      return fetch(url, options);
-    }
-
-    this.#log('[fetch] fetching url', url, options);
-
-    const response = await fetch(url, options);
-
-    if (!response.ok) return response;
-
-    const source = await response.text();
-
-    this.#announce('info', `Loaded ${url}`);
-
-    return new Response(new Blob([source], { type: 'application/javascript' }));
-  };
+    return virtualModuleSource(name, result, secretKey);
+  }
 
   /**
    * NOTE: this does not resolve compilers that are not loaded yet.
@@ -415,10 +423,16 @@ export class Compiler {
       });
     }
 
-    const asBlobUrl = textToBlobUrl(compiledText);
+    const entryUrl = writeEntry(vfs, opts.fileName, compiledText);
 
-    // @ts-ignore
-    const { default: defaultExport } = await shimmedImport(/* @vite-ignore */ asBlobUrl);
+    let defaultExport;
+
+    try {
+      // @ts-ignore
+      ({ default: defaultExport } = await shimmedImport(/* @vite-ignore */ entryUrl));
+    } finally {
+      releaseEntry(vfs, entryUrl);
+    }
 
     this.#log('[compile] preparing to render', defaultExport, extras);
 
@@ -551,6 +565,7 @@ export class Compiler {
 
   static clearCache() {
     cache.clear();
+    clearFs();
   }
 
   /**
@@ -783,17 +798,6 @@ export class Compiler {
 }
 
 /**
- * @param {string} text
- */
-function textToBlobUrl(text) {
-  const blob = new Blob([text], { type: 'text/javascript' });
-
-  const blobUrl = URL.createObjectURL(blob);
-
-  return blobUrl;
-}
-
-/**
  * This should have happened at the beginning of the compile function.
  * If this error is ever thrown, something goofy has happened, and it would be very unexpected.
 
@@ -806,6 +810,20 @@ function shimmedImport(...args) {
 
   // @ts-ignore
   return globalThis.importShim(/* @vite-ignore */ ...args);
+}
+
+/**
+ * @param {(id: string, parentUrl: string) => string} resolve
+ * @param {string} id
+ * @param {string} parentUrl
+ * @returns {string | undefined}
+ */
+function tryDefaultResolve(resolve, id, parentUrl) {
+  try {
+    return resolve(id, parentUrl) || undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 /**

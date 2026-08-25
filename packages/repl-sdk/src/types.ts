@@ -309,8 +309,23 @@ export interface UntarredPackage {
   manifest: {
     name: string;
     version: string;
-    exports?: ManifestExports;
+    /**
+     * `"exports": "./index.js"` is valid, which is why resolve.js has
+     * fromExportsString.
+     */
+    exports?: ManifestExports | string;
     imports?: Record<string, ManifestImports>;
+    /**
+     * Where a package's dependency versions come from. Each becomes an import
+     * map scope, so two packages can depend on different versions of the same
+     * thing.
+     */
+    dependencies?: Record<string, string>;
+    optionalDependencies?: Record<string, string>;
+    /**
+     * Never scoped. See Installer#scopeDependencies.
+     */
+    peerDependencies?: Record<string, string>;
     main?: string;
     module?: string;
     browser?: string;

@@ -1,11 +1,15 @@
 import { expect as errorExpect, it } from 'vitest';
 
-import { Request } from './request.js';
 import { resolve } from './resolve.js';
 
+import type { ResolveRequest } from './resolve.js';
 import type { UntarredPackage } from './types.js';
 
 const expect = errorExpect.soft;
+
+function request(name: string, to = '.'): ResolveRequest {
+  return { name, version: '1.0.0', to, original: name, key: `${name}@1.0.0/${to}` };
+}
 
 it('resolves the entrypoint (rehype-raw)', () => {
   const untarred = {
@@ -16,8 +20,8 @@ it('resolves the entrypoint (rehype-raw)', () => {
       exports: './index.js',
     },
   };
-  const request = Request.fromSpecifier('rehype-raw');
-  const answer = resolve(untarred as unknown as UntarredPackage, request);
+
+  const answer = resolve(untarred as unknown as UntarredPackage, request('rehype-raw'));
 
   expect(answer?.inTarFile).toBe('index.js');
 });

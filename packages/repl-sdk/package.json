@@ -10,6 +10,22 @@
     "./markdown/parse": {
       "types": "./src/compilers/markdown/parse.d.ts",
       "default": "./src/compilers/markdown/parse.js"
+    },
+    "./fs": {
+      "types": "./src/fs/vfs.d.ts",
+      "default": "./src/fs/vfs.js"
+    },
+    "./fs/install": {
+      "types": "./src/fs/install.d.ts",
+      "default": "./src/fs/install.js"
+    },
+    "./fs/npm": {
+      "types": "./src/fs/npm-tar.d.ts",
+      "default": "./src/fs/npm-tar.js"
+    },
+    "./fs/url": {
+      "types": "./src/fs/url.d.ts",
+      "default": "./src/fs/url.js"
     }
   },
   "repository": {
@@ -93,6 +109,7 @@
     "codemirror-lang-mermaid": "^0.5.0",
     "codemirror-languageserver": "^1.12.1",
     "comlink": "^4.4.2",
+    "compare-versions": "^6.1.1",
     "es-module-shims": "^2.8.0",
     "github-slugger": "^2.0.0",
     "mdast": "^3.0.0",

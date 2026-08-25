@@ -11,7 +11,7 @@
 /**
  * @type {{
  *   resolve: (id: string, parentUrl: string, parentResolve: (id: string, parentUrl: string) => string) => string
- *   fetch: (id: string, options: RequestInit) => Promise<Response>
+ *   source: (url: string, fetchOpts: RequestInit, parent: string, defaultSourceHook: (url: string, fetchOpts: RequestInit, parent: string) => Promise<any>) => Promise<any>
  * }}
  */
 export const STABLE_REFERENCE = {
@@ -20,16 +20,15 @@ export const STABLE_REFERENCE = {
       `'resolve' not implemented in STABLE_REFERENCE. Has the Compiler been set up correctly?`
     );
   },
-  fetch: async () => {
+  source: async () => {
     throw new Error(
-      `'fetch' not implemented in STABLE_REFERENCE. Has the Compiler been set up correctly?`
+      `'source' not implemented in STABLE_REFERENCE. Has the Compiler been set up correctly?`
     );
   },
 };
 
 globalThis.esmsInitOptions = {
   shimMode: true,
-  // skip: [`https://esm.sh`, 'https://jspm.dev/', 'https://cdn.jsdelivr.net/'],
   revokeBlobURLs: true, // default false
   mapOverrides: true, // default false
 
@@ -40,14 +39,18 @@ globalThis.esmsInitOptions = {
    * @returns {string}
    */
   resolve: (id, parentUrl, resolve) => STABLE_REFERENCE.resolve(id, parentUrl, resolve),
-  // NOTE: may need source hook
-  //       https://github.com/guybedford/es-module-shims?tab=readme-ov-file#source-hook
-  //
 
   /**
+   * Supersedes the `fetch` hook, which es-module-shims deprecated in favor of
+   * this one. The important difference for us is that the url this returns
+   * becomes the base for the module's own relative imports, so a synchronous
+   * resolve can answer with a URL that only names a package.
+   *
    * @param {string} url
-   * @param {RequestInit} options
-   * @returns {Promise<Response>}
+   * @param {RequestInit} fetchOpts
+   * @param {string} parent
+   * @param {(url: string, fetchOpts: RequestInit, parent: string) => Promise<any>} defaultSourceHook
    */
-  fetch: (url, options) => STABLE_REFERENCE.fetch(url, options),
+  source: (url, fetchOpts, parent, defaultSourceHook) =>
+    STABLE_REFERENCE.source(url, fetchOpts, parent, defaultSourceHook),
 };

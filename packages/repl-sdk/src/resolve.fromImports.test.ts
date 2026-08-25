@@ -1,8 +1,8 @@
 import { expect as errorExpect, it } from 'vitest';
 
-import { idForRequest, Request } from './request.js';
 import { fromImports } from './resolve.js';
 
+import type { ResolveRequest } from './resolve.js';
 import type { UntarredPackage } from './types.js';
 
 const expect = errorExpect.soft;
@@ -27,8 +27,20 @@ it('resolves subpath imports', () => {
       },
     },
   };
-  const from = idForRequest({ to: 'content-tag' });
-  const request = Request.of({ to: '#compiler', from });
+
+  /**
+   * A subpath import used to need the importing module threaded in as a
+   * parent Request. The package the import belongs to is all that ever
+   * mattered, and a URL carries that.
+   */
+  const request: ResolveRequest = {
+    name: 'content-tag',
+    version: '1.0.0',
+    to: '#compiler',
+    original: 'content-tag#compiler',
+    key: 'content-tag@1.0.0/#compiler',
+  };
+
   const answer = fromImports(untarred as unknown as UntarredPackage, request, undefined);
 
   expect(answer?.inTarFile).toBe('pkg/compiler.js');

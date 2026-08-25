@@ -21,17 +21,6 @@ export function resetIdCounter() {
   i = 0;
 }
 
-export const fakeDomain = 'repl.sdk';
-export const tgzPrefix = 'file:///tgz.repl.sdk/';
-export const unzippedPrefix = 'file:///tgz.repl.sdk/unzipped';
-
-/**
- * @param {string} url
- */
-export function prefix_tgz(url) {
-  return `${tgzPrefix}${url}`;
-}
-
 /**
  * @param {unknown} x
  * @returns {x is Record<string, unknown>}

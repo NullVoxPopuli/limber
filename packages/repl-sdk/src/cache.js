@@ -3,20 +3,10 @@ import { assert } from './utils.js';
 export const secretKey = '__repl-sdk__compiler__';
 
 /**
- * @typedef {object} ResolveIdValue
- * @property {string} name
- * @property {string} version
- * @property {import('./types.ts').RequestAnswer} path
- *
- * @typedef {import('./request.js').Request} Request
- *
  * @typedef {typeof globalThis & { [secret]?: {
- *   requestCache?: Map<string, Request>,
- *   resolveId?: Map<string, ResolveIdValue>,
  *   tarballs?: Map<string, import('./types.ts').UntarredPackage>,
  *   resolves?: { [modulePath: string]: unknown },
  *   promiseCache?: Map<string, Promise<unknown>>,
- *   fileCache?: Map<string, { code: string, ext: string }>
  *   caches?: Caches
  * } }} ExtendedWindow
  */
@@ -61,28 +51,6 @@ class Caches {
   }
 
   /**
-   * Cache of request resolutions
-   *
-   * @type {Map<string, ResolveIdValue>}
-   */
-  get resolveId() {
-    this.#root.resolveId ||= new Map();
-
-    return this.#root.resolveId;
-  }
-
-  /**
-   * Cache of request Key to file content string
-   *
-   * @type {Map<string, { code: string, ext: string }>}
-   */
-  get fileCache() {
-    this.#root.fileCache ||= new Map();
-
-    return this.#root.fileCache;
-  }
-
-  /**
    * For any key, store a promise for resolving later
    *
    * @type {Map<string, Promise<unknown>>}
@@ -109,12 +77,6 @@ class Caches {
     this.promiseCache.set(key, promise);
 
     return promise;
-  }
-
-  get requestCache() {
-    this.#root.requestCache ||= new Map();
-
-    return this.#root.requestCache;
   }
 
   get #root() {
