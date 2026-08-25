@@ -8,7 +8,14 @@ import { compilers } from './compilers.js';
 import { STABLE_REFERENCE } from './es-module-shim.js';
 import { PROJECT_PREFIX, releaseEntry, writeEntry } from './fs/entry.js';
 import { clearFs, installer, vfs } from './fs/store.js';
-import { NPM_PREFIX, parseVirtualUrl, specifierUrl, typeFor, virtualUrl } from './fs/url.js';
+import {
+  extensionOf,
+  NPM_PREFIX,
+  parseVirtualUrl,
+  specifierUrl,
+  typeFor,
+  virtualUrl,
+} from './fs/url.js';
 import { virtualModuleSource } from './fs/virtual.js';
 import { assert, errorMessage, nextId } from './utils.js';
 
@@ -818,14 +825,6 @@ function tryDefaultResolve(resolve, id, parentUrl) {
   } catch {
     return undefined;
   }
-}
-
-/**
- * @param {string} url
- * @returns {string}
- */
-function extensionOf(url) {
-  return url.split('/').pop()?.split('.').pop() ?? '';
 }
 
 /**

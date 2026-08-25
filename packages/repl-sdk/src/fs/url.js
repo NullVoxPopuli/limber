@@ -97,14 +97,36 @@ const TYPES = {
 };
 
 /**
+ * The extension of the file a URL names, ignoring its query and hash.
+ * Empty when there is none, or when the input is not a URL.
+ *
+ * @param {string} url
+ * @returns {string}
+ */
+export function extensionOf(url) {
+  let pathname;
+
+  try {
+    pathname = new URL(url).pathname;
+  } catch {
+    return '';
+  }
+
+  const file = pathname.slice(pathname.lastIndexOf('/') + 1);
+  const dot = file.lastIndexOf('.');
+
+  return dot > 0 ? file.slice(dot + 1) : '';
+}
+
+/**
  * The `type` the source hook has to report. Everything that isn't css, json or
  * ts is js as far as the loader is concerned.
  *
- * @param {string} path
+ * @param {string} url
  * @returns {'js' | 'css' | 'json' | 'ts'}
  */
-export function typeFor(path) {
-  const ext = path.split('.').pop() ?? '';
+export function typeFor(url) {
+  const ext = extensionOf(url);
 
   return /** @type {'js' | 'css' | 'json' | 'ts'} */ (
     TYPES[/** @type {keyof typeof TYPES} */ (ext)] ?? 'js'

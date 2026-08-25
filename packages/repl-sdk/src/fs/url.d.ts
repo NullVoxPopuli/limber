@@ -15,4 +15,5 @@ export function parseNpmUrl(
 export function specifierUrl(specifier: string): string;
 export function virtualUrl(kind: 'manual' | 'configured', name: string): string;
 export function parseVirtualUrl(url: string): undefined | { kind: string; name: string };
-export function typeFor(path: string): SourceType;
+export function extensionOf(url: string): string;
+export function typeFor(url: string): SourceType;
