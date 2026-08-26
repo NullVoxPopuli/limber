@@ -27,7 +27,7 @@
     "eslint": "^9.39.1",
     "prettier": "^3.7.4",
     "rollup": "^4.53.3",
-    "typescript": "5.9.3"
+    "typescript": "catalog:ts5"
   },
   "dependencies": {
     "@lezer/highlight": "^1.2.3",

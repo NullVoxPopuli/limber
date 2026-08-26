@@ -64,7 +64,7 @@
     "prettier": "^3.7.4",
     "prettier-plugin-ember-template-tag": "2.1.2",
     "rollup": "^4.53.3",
-    "typescript": "npm:typescript@7.1.0-dev.20260825.1",
+    "typescript": "catalog:typescript",
     "vite": "^8.0.8"
   },
   "publishConfig": {

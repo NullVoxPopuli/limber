@@ -21,7 +21,7 @@
     "eslint": "^9.39.1",
     "mocha": "^11.6.0",
     "prettier": "^3.7.4",
-    "typescript": "5.9.3"
+    "typescript": "catalog:ts5"
   },
   "scripts": {
     "lint:fix": "pnpm -w exec lint fix",

@@ -35,7 +35,7 @@
     "prettier-plugin-tailwindcss": "^0.7.2",
     "release-plan": "^0.18.0",
     "turbo": "^2.7.3",
-    "typescript": "npm:typescript@7.1.0-dev.20260825.1"
+    "typescript": "catalog:typescript"
   },
   "packageManager": "pnpm@10.33.4",
   "engines": {

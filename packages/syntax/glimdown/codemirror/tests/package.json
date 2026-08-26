@@ -11,7 +11,7 @@
     "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "eslint": "^9.39.1",
     "prettier": "^3.7.4",
-    "typescript": "5.9.3"
+    "typescript": "catalog:ts5"
   },
   "scripts": {
     "lint": "pnpm -w exec lint",
