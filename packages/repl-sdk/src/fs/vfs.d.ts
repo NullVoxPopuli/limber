@@ -5,11 +5,14 @@ export interface VirtualFile {
   source: string;
 }
 
+import type { Pack } from './opfs-store.js';
+
 export class VFS {
   readonly size: number;
 
   write(url: string, source: string, type?: SourceType): void;
-  read(url: string): undefined | VirtualFile;
+  mount(name: string, version: string, pack: Pack): void;
+  read(url: string): Promise<undefined | VirtualFile>;
   delete(url: string): boolean;
   has(url: string): boolean;
   list(prefix?: string): string[];

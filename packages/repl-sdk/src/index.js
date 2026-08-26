@@ -264,7 +264,7 @@ export class Compiler {
     }
 
     if (path.startsWith(PROJECT_PREFIX)) {
-      const file = vfs.read(path);
+      const file = await vfs.read(path);
 
       assert(`${path} is not in the fs`, file);
 
@@ -280,7 +280,7 @@ export class Compiler {
 
       assert(`Could not resolve ${path}`, real);
 
-      const file = vfs.read(real);
+      const file = await vfs.read(real);
 
       assert(`${real} resolved but is not in the fs`, file);
 

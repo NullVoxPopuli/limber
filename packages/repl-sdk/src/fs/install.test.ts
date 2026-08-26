@@ -68,6 +68,7 @@ function fakeGetTar(name: string, range: string): Promise<UntarredPackage> {
 
   return Promise.resolve({
     manifest,
+    files: ['index.js', 'package.json'],
     contents: {
       'index.js': { text: `export const who = '${name}@${version}';` },
       'package.json': { text: JSON.stringify(manifest) },

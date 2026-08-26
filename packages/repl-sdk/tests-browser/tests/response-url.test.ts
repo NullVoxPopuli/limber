@@ -47,7 +47,7 @@ beforeAll(async () => {
       }
 
       const installed = await installer.install('nanoid');
-      const file = vfs.read(installed.url);
+      const file = await vfs.read(installed.url);
 
       return { url: installed.url, type: file?.type, source: file?.source };
     },

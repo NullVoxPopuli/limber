@@ -9,11 +9,7 @@ const expect = errorExpect.soft;
 
 it('resolves subpath imports', () => {
   const untarred = {
-    contents: {
-      'pkg/standalone.js': 'entry file',
-      'pkg/compiler.js': 'target file',
-      'pkg/compiler/example.js': 'target file',
-    },
+    files: ['pkg/standalone.js', 'pkg/compiler.js', 'pkg/compiler/example.js'],
     manifest: {
       exports: {
         '.': {

@@ -1,5 +1,7 @@
 import { resolve } from '../resolve.js';
 import { parseSpecifier } from '../specifier.js';
+import { assert } from '../utils.js';
+import { openPack } from './opfs-store.js';
 import { satisfiesRange } from './semver.js';
 import { NPM_PREFIX, npmUrl } from './url.js';
 
@@ -137,7 +139,7 @@ export class Installer {
     const untarred = this.#reuse(name, range) ?? (await this.#download(name, range));
     const installed = untarred.manifest.version;
 
-    this.#unpack(name, installed, untarred);
+    await this.#unpack(name, installed, untarred);
     this.#scopeDependencies(name, installed, untarred.manifest);
 
     const answer = resolve(untarred, requestFor(name, installed, to));
@@ -235,13 +237,21 @@ export class Installer {
    * @param {string} version
    * @param {import('../types.ts').UntarredPackage} untarred
    */
-  #unpack(name, version, untarred) {
+  async #unpack(name, version, untarred) {
     const key = `${name}@${version}`;
 
     if (this.#unpacked.has(key)) return;
 
-    for (const [path, file] of Object.entries(untarred.contents)) {
-      this.#vfs.write(npmUrl(name, version, path), file.text);
+    if (untarred.contents) {
+      for (const [path, file] of Object.entries(untarred.contents)) {
+        this.#vfs.write(npmUrl(name, version, path), file.text);
+      }
+    } else {
+      const pack = await openPack(name, version);
+
+      assert(`${key} was stored but cannot be opened`, pack);
+
+      this.#vfs.mount(name, version, pack);
     }
 
     this.#unpacked.add(key);
