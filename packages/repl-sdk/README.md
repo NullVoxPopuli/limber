@@ -62,3 +62,14 @@ Where to find `compiler` in the devtools console:
 
 The SDK's own caches live at `globalThis[Symbol.for('__repl-sdk__compiler__')]`:
 `resolves` (module path to module value), `tarballs`, and `promiseCache`.
+
+### Stored packages
+
+Downloaded packages are kept in the browser's origin private file system, so
+a reload does not download them again. Exact versions never expire. A tag such
+as `latest` or a range is looked up again after five minutes, the same limit
+the registry uses.
+
+```js
+await Compiler.clearStoredPackages();
+```

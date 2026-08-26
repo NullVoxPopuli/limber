@@ -2,9 +2,11 @@ import { expose } from 'comlink';
 import { parseTar } from 'tarparser';
 
 import { cache } from './cache.js';
-import { getNPMInfo, getTarUrl } from './npm.js';
+import { clearStore, readIndex, readTarball, writeIndex, writeTarball } from './fs/opfs-store.js';
+import { getNPMInfo, indexAnswers, pruneIndex, resolveVersion } from './npm.js';
+import { assert } from './utils.js';
 
-const obj = { getTar };
+const obj = { getTar, clearStore };
 
 expose(obj);
 
@@ -21,16 +23,13 @@ async function getTar(name, requestedVersion) {
   }
 
   const contents = await cache.cachedPromise(`getTar:${key}`, async () => {
-    const json = await getNPMInfo(name, requestedVersion);
-    const tgzUrl = await getTarUrl(json, requestedVersion);
+    const index = await getIndex(name, requestedVersion);
+    const version = resolveVersion(index, requestedVersion);
+    const tarball = index.versions[version]?.dist.tarball;
 
-    const response = await fetch(tgzUrl, {
-      headers: {
-        ACCEPT: 'application/octet-stream',
-      },
-    });
+    assert(`No tarball for ${name}@${version}`, tarball);
 
-    return await untar(await response.arrayBuffer());
+    return await untar(await getBytes(name, version, tarball));
   });
 
   const manifest = JSON.parse(contents['package.json'].text);
@@ -40,6 +39,53 @@ async function getTar(name, requestedVersion) {
   cache.tarballs.set(key, info);
 
   return info;
+}
+
+/**
+ * The stored index answers when it can. Exact versions always can; a tag or a
+ * range only while the index is younger than the registry's own max-age.
+ *
+ * @param {string} name
+ * @param {string} requestedVersion
+ * @returns {Promise<import('./fs/opfs-store.js').PackageIndex>}
+ */
+async function getIndex(name, requestedVersion) {
+  const now = Date.now();
+  const stored = await readIndex(name);
+
+  if (stored && indexAnswers(stored, requestedVersion, now)) {
+    return stored;
+  }
+
+  const index = pruneIndex(await getNPMInfo(name, requestedVersion), now);
+
+  void writeIndex(name, index);
+
+  return index;
+}
+
+/**
+ * @param {string} name
+ * @param {string} version
+ * @param {string} url
+ * @returns {Promise<ArrayBuffer>}
+ */
+async function getBytes(name, version, url) {
+  const stored = await readTarball(name, version);
+
+  if (stored) return stored;
+
+  const response = await fetch(url, {
+    headers: {
+      ACCEPT: 'application/octet-stream',
+    },
+  });
+
+  const bytes = await response.arrayBuffer();
+
+  void writeTarball(name, version, bytes);
+
+  return bytes;
 }
 
 /**
