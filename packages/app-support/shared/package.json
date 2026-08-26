@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "build": "rollup --config",
-    "lint:types": "tsc --noEmit --runExternalCode",
+    "lint:types": "node node_modules/typescript-7/bin/tsc --noEmit --runExternalCode",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "rollup --config --watch",
     "lint": "pnpm -w exec lint",
@@ -84,7 +84,8 @@
     "rollup": "^4.53.3",
     "rollup-plugin-copy": "^3.5.0",
     "shiki": "^3.20.0",
-    "typescript": "catalog:typescript"
+    "typescript": "catalog:ts5",
+    "typescript-7": "catalog:ts7"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"

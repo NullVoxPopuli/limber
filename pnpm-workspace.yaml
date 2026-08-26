@@ -56,11 +56,20 @@ allowedDeprecatedVersions:
 # API that typescript@7 no longer ships. Catalogs pin our own packages without
 # touching dependency resolution.
 #
-#   catalog:typescript -> typescript 7, for packages using ember-content-mapper
-#   catalog:ts5        -> typescript 5, for plain-TS packages and codemirror/lezer
+# TypeScript 7 is installed under the `typescript-7` alias rather than as
+# `typescript`, so a package can type-check with 7 while the tools that still
+# need the JS compiler API resolve a `typescript` they understand.
+# typescript-eslint is the reason: it reads `ts.Extension` at import time, and
+# typescript@7's entrypoint exports only `version` and `versionMajorMinor`, so
+# ESLint crashes on startup wherever it resolves typescript@7. Support is
+# blocked on TypeScript shipping a stable API; see
+# https://github.com/typescript-eslint/typescript-eslint/issues/10940
+#
+#   catalog:ts7 -> typescript 7 under an alias, for `tsc --runExternalCode`
+#   catalog:ts5 -> typescript 5, the `typescript` that eslint and build tooling resolve
 catalogs:
-  typescript:
-    typescript: 7.1.0-dev.20260825.1
+  ts7:
+    typescript-7: "npm:typescript@7.1.0-dev.20260825.1"
   ts5:
     typescript: 5.9.3
 

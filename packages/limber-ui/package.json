@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "build": "rollup --config",
-    "lint:types": "tsc --noEmit --runExternalCode",
+    "lint:types": "node node_modules/typescript-7/bin/tsc --noEmit --runExternalCode",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "rollup --config --watch",
     "lint": "pnpm -w exec lint",
@@ -64,7 +64,8 @@
     "prettier": "^3.7.4",
     "prettier-plugin-ember-template-tag": "2.1.2",
     "rollup": "^4.53.3",
-    "typescript": "catalog:typescript",
+    "typescript": "catalog:ts5",
+    "typescript-7": "catalog:ts7",
     "vite": "^8.0.8"
   },
   "publishConfig": {
