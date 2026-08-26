@@ -832,9 +832,6 @@ importers:
       typescript:
         specifier: catalog:typescript
         version: 7.1.0-dev.20260825.1
-      typescript-7:
-        specifier: npm:typescript@7.1.0-dev.20260825.1
-        version: typescript@7.1.0-dev.20260825.1
 
   packages/app-support/styles:
     dependencies:
