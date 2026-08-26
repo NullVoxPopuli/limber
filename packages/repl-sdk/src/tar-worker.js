@@ -1,9 +1,8 @@
 import { expose } from 'comlink';
 import { parseTar } from 'tarparser';
 
-import { cache } from './cache.js';
 import { clearStore, readIndex, readTarball, writeIndex, writeTarball } from './fs/opfs-store.js';
-import { getNPMInfo, indexAnswers, pruneIndex, resolveVersion } from './npm.js';
+import { fetchPackument, indexAnswers, pruneIndex, resolveVersion } from './npm.js';
 import { assert } from './utils.js';
 
 const obj = { getTar, clearStore };
@@ -15,30 +14,20 @@ expose(obj);
  * @param {string} requestedVersion version or tag to fetch the package at
  */
 async function getTar(name, requestedVersion) {
-  const key = `${name}@${requestedVersion}`;
-  const untarred = cache.tarballs.get(key);
+  const index = await getIndex(name, requestedVersion);
+  const version = resolveVersion(index, requestedVersion);
+  const tarball = index.versions[version]?.dist.tarball;
 
-  if (untarred) {
-    return untarred;
-  }
+  assert(`No tarball for ${name}@${version}`, tarball);
 
-  const contents = await cache.cachedPromise(`getTar:${key}`, async () => {
-    const index = await getIndex(name, requestedVersion);
-    const version = resolveVersion(index, requestedVersion);
-    const tarball = index.versions[version]?.dist.tarball;
+  const contents = await untar(await getBytes(name, version, tarball));
+  const packageJson = contents['package.json'];
 
-    assert(`No tarball for ${name}@${version}`, tarball);
+  assert(`${name}@${version} has no package.json`, packageJson);
 
-    return await untar(await getBytes(name, version, tarball));
-  });
+  const manifest = JSON.parse(packageJson.text);
 
-  const manifest = JSON.parse(contents['package.json'].text);
-
-  const info = /** @type {import('./types.ts').UntarredPackage}*/ ({ manifest, contents });
-
-  cache.tarballs.set(key, info);
-
-  return info;
+  return /** @type {import('./types.ts').UntarredPackage}*/ ({ manifest, contents });
 }
 
 /**
@@ -57,7 +46,7 @@ async function getIndex(name, requestedVersion) {
     return stored;
   }
 
-  const index = pruneIndex(await getNPMInfo(name, requestedVersion), now);
+  const index = pruneIndex(await fetchPackument(name), now);
 
   void writeIndex(name, index);
 

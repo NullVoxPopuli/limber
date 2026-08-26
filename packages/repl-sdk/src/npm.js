@@ -1,6 +1,5 @@
 import packageNameRegex from 'package-name-regex';
 
-import { cache } from './cache.js';
 import { maxSatisfying } from './fs/semver.js';
 import { assert } from './utils.js';
 
@@ -53,44 +52,25 @@ export function pruneIndex(packument, now) {
 }
 
 /**
- * @type {Map<string, unknown>} namp@version => manifest
- */
-const npmInfoCache = new Map();
-
-/**
+ * The registry document for a package. Not cached here: the worker keeps a
+ * pruned copy on disk with the registry's own expiry.
+ *
  * @param {string} name
- * @param {string} version
  */
-export async function getNPMInfo(name, version) {
-  const key = `${name}@${version}`;
-
+export async function fetchPackument(name) {
   assert(`Must pass valid npm-compatible package name`, packageNameRegex.test(name));
 
-  const existing = npmInfoCache.get(key);
-
-  if (existing) {
-    return existing;
-  }
-
-  return cache.cachedPromise(`getNPMInfo:${key}`, async () => {
-    assert(`Cannot get data from NPM without specifying the name of the package`, name);
-    assert(`Version is required. It may be 'latest'`, version);
-
-    const response = await fetch(`https://registry.npmjs.org/${name}`, {
-      headers: {
-        /**
-         * The abbreviated document: no readmes or changelogs, still every
-         * version with its tarball url.
-         */
-        accept: 'application/vnd.npm.install-v1+json',
-      },
-    });
-    const json = await response.json();
-
-    npmInfoCache.set(key, json);
-
-    return json;
+  const response = await fetch(`https://registry.npmjs.org/${name}`, {
+    headers: {
+      /**
+       * The abbreviated document: no readmes or changelogs, still every
+       * version with its tarball url.
+       */
+      accept: 'application/vnd.npm.install-v1+json',
+    },
   });
+
+  return response.json();
 }
 
 /**
@@ -119,14 +99,4 @@ export function resolveVersion(npmInfo, requestedVersion) {
   assert(`No published version of ${json.name} matches ${requestedVersion}`, match);
 
   return match;
-}
-
-/**
- * @param {any} npmInfo
- * @param {string} requestedVersion
- */
-export async function getTarUrl(npmInfo, requestedVersion) {
-  const version = resolveVersion(npmInfo, requestedVersion);
-
-  return npmInfo.versions[version].dist.tarball;
 }
