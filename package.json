@@ -25,7 +25,6 @@
     "@babel/core": "^7.28.5",
     "@babel/standalone": "file:babel-standalone.tgz",
     "@glint/ember-tsc": "^1.11.0",
-    "@glint/tsserver-plugin": "^2.7.3",
     "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "concurrently": "^9.2.1",
     "dev-tools": "workspace:*",
@@ -35,7 +34,8 @@
     "prettier-plugin-ember-template-tag": "2.1.2",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "release-plan": "^0.18.0",
-    "turbo": "^2.7.3"
+    "turbo": "^2.7.3",
+    "typescript": "catalog:ts5"
   },
   "packageManager": "pnpm@10.33.4",
   "engines": {
@@ -44,51 +44,5 @@
   "volta": {
     "node": "24.14.1",
     "pnpm": "10.33.4"
-  },
-  "pnpm": {
-    "peerDependencyRules": {
-      "allowAny": [
-        "@glimmer/component",
-        "ember-modifier",
-        "typescript",
-        "ember-source"
-      ],
-      "ignoreMissing": [
-        "rollup",
-        "rsvp"
-      ]
-    },
-    "allowedDeprecatedVersions": {
-      "core-js": "^2.0.0",
-      "source-map-url": "^0.3.0"
-    },
-    "overrides": {
-      "@babel/standalone": "file:./babel-standalone.tgz",
-      "@glint/template": "1.8.0",
-      "array-includes": "npm:@nolyfill/array-includes@^1",
-      "array.prototype.findlastindex": "npm:@nolyfill/array.prototype.findlastindex@^1",
-      "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@^1",
-      "array.prototype.flatmap": "npm:@nolyfill/array.prototype.flatmap@^1",
-      "assert": "npm:@nolyfill/assert@^1",
-      "hasown": "npm:@nolyfill/hasown@^1",
-      "is-core-module": "npm:@nolyfill/is-core-module@^1",
-      "isarray": "npm:@nolyfill/isarray@^1",
-      "json-stable-stringify": "npm:@nolyfill/json-stable-stringify@^1",
-      "object.fromentries": "npm:@nolyfill/object.fromentries@^1",
-      "object.groupby": "npm:@nolyfill/object.groupby@^1",
-      "object.values": "npm:@nolyfill/object.values@^1",
-      "reactiveweb": "1.9.1",
-      "@codemirror/view": "6.39.12",
-      "kolay": "github:universal-ember/kolay#dist",
-      "kolay>ember-repl": "^8.0.0",
-      "side-channel": "npm:@nolyfill/side-channel@^1",
-      "string.prototype.matchall": "npm:@nolyfill/string.prototype.matchall@^1",
-      "string.prototype.trimend": "npm:@nolyfill/string.prototype.trimend@^1"
-    },
-    "patchedDependencies": {
-      "browserslist-generator": "patches/browserslist-generator.patch"
-    },
-    "_ember-repl": "workspace:*",
-    "_repl-sdk": "workspace:*"
   }
 }

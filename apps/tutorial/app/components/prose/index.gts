@@ -2,8 +2,8 @@ import { modifier } from 'ember-modifier';
 import { service } from 'ember-primitives/helpers/service';
 import { StickyFooter } from 'ember-primitives/layout/sticky-footer';
 
-import { FooterContent } from './footer';
-import { NotFound } from './prose-not-found';
+import { FooterContent } from './footer.gts';
+import { NotFound } from './prose-not-found.gts';
 
 import type { TOC } from '@ember/component/template-only';
 

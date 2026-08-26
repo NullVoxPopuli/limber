@@ -7,9 +7,9 @@
   "extends": "@ember/library-tsconfig",
   "include": ["../src", "../unpublished-development-types"],
   "compilerOptions": {
-    "baseUrl": "../",
     "allowJs": true,
     "declarationDir": "../declarations",
+    "rootDir": "../src",
     "types": ["ember-source/types"]
   }
 }

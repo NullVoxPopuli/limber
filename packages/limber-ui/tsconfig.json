@@ -7,5 +7,6 @@
     "declarationDir": "declarations",
     "rootDir": "./src",
     "types": ["ember-source/types", "vite/client"]
-  }
+  },
+  "contentMappers": [{ "package": "ember-content-mapper", "extensions": [".gts", ".gjs"] }]
 }

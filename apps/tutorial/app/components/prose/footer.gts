@@ -4,8 +4,8 @@ import { service } from 'ember-primitives/helpers/service';
 
 import { ExternalLink, Link } from '@nullvoxpopuli/limber-shared';
 
-import { ShowMe } from './show-me';
-import { UnShowMe } from './un-show-me';
+import { ShowMe } from './show-me.gts';
+import { UnShowMe } from './un-show-me.gts';
 
 const editPath = (path: string | undefined) =>
   `https://github.com/NullVoxPopuli/limber/tree/main/apps/tutorial/public/docs${path}`;

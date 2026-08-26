@@ -22,7 +22,7 @@
     "@codemirror/buildhelper": "^1.0.2",
     "@codemirror/language": "^6.12.1",
     "@codemirror/state": "^6.5.4",
-    "@codemirror/view": "^6.39.12",
+    "@codemirror/view": "6.39.12",
     "@lezer/generator": "^1.8.0",
     "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "@tsconfig/ember": "^3.0.9",
@@ -32,7 +32,7 @@
     "prettier": "^3.7.4",
     "rollup": "^4.53.3",
     "rollup-plugin-ts": "^3.4.5",
-    "typescript": "5.9.3"
+    "typescript": "catalog:ts5"
   },
   "dependencies": {
     "@codemirror/lang-html": "^6.4.11",
@@ -67,6 +67,6 @@
   },
   "peerDependencies": {
     "@codemirror/state": "^6.3.3",
-    "@codemirror/view": "^6.22.3"
+    "@codemirror/view": "6.39.12"
   }
 }

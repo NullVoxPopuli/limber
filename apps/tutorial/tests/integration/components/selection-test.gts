@@ -1,7 +1,7 @@
 import { render, select } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 
-import { Selection } from 'tutorial/components/selection';
+import { Selection } from 'tutorial/components/selection.gts';
 import { setupRenderingTest } from 'tutorial/tests/helpers';
 
 import { MockDocsService, MockRouterService } from '../../helpers/mocks';

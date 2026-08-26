@@ -2,9 +2,8 @@
 import { Addon } from '@embroider/addon-dev/rollup';
 
 import { babel } from '@rollup/plugin-babel';
-import { execaCommand } from 'execa';
-import { fixBadDeclarationOutput } from 'fix-bad-declaration-output';
 import { defineConfig } from 'rollup';
+import copy from 'rollup-plugin-copy';
 
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 
@@ -26,28 +25,14 @@ export default defineConfig({
     }),
     addon.gjs(),
     addon.keepAssets(['**/*.css']),
+    // keepAssets in addon-dev 8+ only emits assets reachable from an import,
+    // and theme.css is a standalone export. Copy at writeBundle, after
+    // addon.clean() has removed everything outside the bundle at generateBundle.
+    copy({
+      targets: [{ src: 'src/theme.css', dest: 'dist' }],
+      hook: 'writeBundle',
+    }),
+    addon.declarations('declarations', 'tsc --runExternalCode'),
     addon.clean(),
-
-    {
-      name: 'build declarations',
-      closeBundle: async () => {
-        /**
-         * Generate the types (these include /// <reference types="ember-source/types"
-         * but our consumers may not be using those, or have a new enough ember-source that provides them.
-         */
-        await execaCommand(`pnpm ember-tsc --declaration`, {
-          stdio: 'inherit',
-        });
-
-        await fixBadDeclarationOutput('declarations/**/*.d.ts', [
-          'TypeScript#56571',
-          'Glint#628',
-        ]);
-
-        console.log(
-          '⚠️ Dangerously (but neededly) fixed bad declaration output from typescript'
-        );
-      },
-    },
   ],
 });

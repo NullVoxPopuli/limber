@@ -5,7 +5,7 @@ import { not } from 'tutorial/utils';
 
 import { Link } from '@nullvoxpopuli/limber-shared';
 
-import { Selection } from './selection';
+import { Selection } from './selection.gts';
 
 export const Nav = <template>
   <nav class="gap-2 p-2 shadow grid grid-cols-[min-content_1fr_min-content]">
