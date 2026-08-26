@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "build": "rollup --config",
-    "lint:types": "node node_modules/typescript-7/bin/tsc --noEmit --runExternalCode",
+    "lint:types": "tsc --noEmit --runExternalCode",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "rollup --config --watch",
     "lint": "pnpm -w exec lint",
@@ -61,14 +61,10 @@
     "ember-source": "7.3.0-alpha.2",
     "ember-template-lint": "^7.9.3",
     "eslint": "^9.39.1",
-    "execa": "^9.6.1",
-    "fix-bad-declaration-output": "^1.1.5",
     "prettier": "^3.7.4",
     "prettier-plugin-ember-template-tag": "2.1.2",
     "rollup": "^4.53.3",
-    "rollup-plugin-copy": "^3.5.0",
-    "typescript": "5.9.3",
-    "typescript-7": "npm:typescript@7.1.0-dev.20260825.1",
+    "typescript": "npm:typescript@7.1.0-dev.20260825.1",
     "vite": "^8.0.8"
   },
   "publishConfig": {

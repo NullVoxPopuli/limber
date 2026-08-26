@@ -1,36 +1,78 @@
 packages:
-  - './dev'
+  - "./dev"
   ####################################
   #
-  # Apps 
+  # Apps
   #
   ####################################
-  - './apps/*'
+  - "./apps/*"
   ####################################
   #
-  # Libraries, Addons, Test Apps 
+  # Libraries, Addons, Test Apps
   #
   ####################################
-  - './packages/*'
-  - './packages/*/addon'
-  - './packages/*/test-app'
-  - './packages/repl-sdk/tests-browser'
-  - './packages/app-support/*'
-  - './packages/app-support/*/addon'
-  - './packages/app-support/*/test-app'
+  - "./packages/*"
+  - "./packages/*/addon"
+  - "./packages/*/test-app"
+  - "./packages/repl-sdk/tests-browser"
+  - "./packages/app-support/*"
+  - "./packages/app-support/*/addon"
+  - "./packages/app-support/*/test-app"
   ####################################
   #
-  # Codemirror + Lezer 
+  # Codemirror + Lezer
   #
   ####################################
-  - './packages/syntax/*'
-  # packages/syntax / { syntax name } / { codemirror, lezer } 
-  - './packages/syntax/*/*'
-  - './packages/syntax/*/*/dev'
-  - './packages/syntax/*/*/tests'
+  - "./packages/syntax/*"
+  # packages/syntax / { syntax name } / { codemirror, lezer }
+  - "./packages/syntax/*/*"
+  - "./packages/syntax/*/*/dev"
+  - "./packages/syntax/*/*/tests"
   ####################################
   #
   # Experiments
   #
   ####################################
-  - './spikes/**'
+  - "./spikes/**"
+
+peerDependencyRules:
+  allowAny:
+    - "@glimmer/component"
+    - "ember-modifier"
+    - "typescript"
+    - "ember-source"
+
+  ignoreMissing:
+    - rollup
+    - rsvp
+
+allowedDeprecatedVersions:
+  "core-js": "^2.0.0"
+  "source-map-url": "^0.3.0"
+
+patchedDependencies:
+  "browserslist-generator": "patches/browserslist-generator.patch"
+
+overrides:
+  "@babel/standalone": "file:./babel-standalone.tgz"
+  "@glint/template": "1.8.0"
+  "array-includes": "npm:@nolyfill/array-includes@^1"
+  "array.prototype.findlastindex": "npm:@nolyfill/array.prototype.findlastindex@^1"
+  "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@^1"
+  "array.prototype.flatmap": "npm:@nolyfill/array.prototype.flatmap@^1"
+  "assert": "npm:@nolyfill/assert@^1"
+  "hasown": "npm:@nolyfill/hasown@^1"
+  "is-core-module": "npm:@nolyfill/is-core-module@^1"
+  "isarray": "npm:@nolyfill/isarray@^1"
+  "json-stable-stringify": "npm:@nolyfill/json-stable-stringify@^1"
+  "object.fromentries": "npm:@nolyfill/object.fromentries@^1"
+  "object.groupby": "npm:@nolyfill/object.groupby@^1"
+  "object.values": "npm:@nolyfill/object.values@^1"
+  "reactiveweb": "1.9.1"
+  "@codemirror/view": "6.39.12"
+  "kolay": "github:universal-ember/kolay#dist"
+  "kolay>ember-repl": "^8.0.0"
+  "side-channel": "npm:@nolyfill/side-channel@^1"
+  "string.prototype.matchall": "npm:@nolyfill/string.prototype.matchall@^1"
+  "string.prototype.trimend": "npm:@nolyfill/string.prototype.trimend@^1"
+  "typescript": "npm:typescript@7.1.0-dev.20260825.1"
