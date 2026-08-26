@@ -13,9 +13,7 @@ function request(name: string, to = '.'): ResolveRequest {
 
 it('resolves the entrypoint (rehype-raw)', () => {
   const untarred = {
-    contents: {
-      'index.js': 'entry file',
-    },
+    files: ['index.js'],
     manifest: {
       exports: './index.js',
     },

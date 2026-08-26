@@ -5,8 +5,18 @@ export interface PackageIndex {
   versions: { [version: string]: { dist: { tarball: string } } };
 }
 
-export function readTarball(name: string, version: string): Promise<ArrayBuffer | undefined>;
-export function writeTarball(name: string, version: string, bytes: ArrayBuffer): Promise<void>;
+export type PackFiles = { [path: string]: [offset: number, length: number] };
+export interface Pack {
+  files: PackFiles;
+  blob: Blob;
+}
+
+export function writePack(
+  name: string,
+  version: string,
+  entries: { path: string; data: Uint8Array<ArrayBuffer> }[]
+): Promise<PackFiles | undefined>;
+export function openPack(name: string, version: string): Promise<Pack | undefined>;
 export function readIndex(name: string): Promise<PackageIndex | undefined>;
 export function writeIndex(name: string, index: PackageIndex): Promise<void>;
 export function clearStore(): Promise<void>;

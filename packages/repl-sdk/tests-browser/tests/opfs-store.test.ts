@@ -1,26 +1,29 @@
-import {
-  clearStore,
-  readIndex,
-  readTarball,
-  writeIndex,
-  writeTarball,
-} from 'repl-sdk/fs/opfs-store';
+import { clearStore, openPack, readIndex, writeIndex, writePack } from 'repl-sdk/fs/opfs-store';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 
 beforeAll(clearStore);
 afterAll(clearStore);
 
+const bytes = (text: string) => new TextEncoder().encode(text);
+
 describe('opfs store', () => {
-  test('a tarball round-trips', async () => {
-    const bytes = new TextEncoder().encode('not really a tarball').buffer;
+  test('a pack round-trips, one slice per file', async () => {
+    expect(await openPack('@scope/pkg', '1.2.3')).toBeUndefined();
 
-    expect(await readTarball('@scope/pkg', '1.2.3')).toBeUndefined();
+    const files = await writePack('@scope/pkg', '1.2.3', [
+      { path: 'index.js', data: bytes('export const a = 1;') },
+      { path: 'lib/b.js', data: bytes('export const b = 2;') },
+    ]);
 
-    await writeTarball('@scope/pkg', '1.2.3', bytes);
+    expect(files).toEqual({ 'index.js': [0, 19], 'lib/b.js': [19, 19] });
 
-    const read = await readTarball('@scope/pkg', '1.2.3');
+    const pack = await openPack('@scope/pkg', '1.2.3');
 
-    expect(read && new TextDecoder().decode(read)).toBe('not really a tarball');
+    expect(pack?.files).toEqual(files);
+
+    const [offset, length] = pack!.files['lib/b.js']!;
+
+    expect(await pack!.blob.slice(offset, offset + length).text()).toBe('export const b = 2;');
   });
 
   test('an index round-trips', async () => {
@@ -41,7 +44,7 @@ describe('opfs store', () => {
   test('clear forgets everything', async () => {
     await clearStore();
 
-    expect(await readTarball('@scope/pkg', '1.2.3')).toBeUndefined();
+    expect(await openPack('@scope/pkg', '1.2.3')).toBeUndefined();
     expect(await readIndex('@scope/pkg')).toBeUndefined();
   });
 });

@@ -52,7 +52,7 @@ Only one `Compiler` runs per window. Its `fs` getter shows everything a demo ran
 ```js
 compiler.fs.list()                            // every URL in the module fs
 compiler.fs.list('file:///npm/nanoid@6.0.1/') // one package
-compiler.fs.read(url).source
+(await compiler.fs.read(url)).source
 ```
 
 Where to find `compiler` in the devtools console:
@@ -65,8 +65,9 @@ The SDK's own caches live at `globalThis[Symbol.for('__repl-sdk__compiler__')]`:
 
 ### Stored packages
 
-Downloaded packages are kept in the browser's origin private file system, so
-a reload does not download them again. Exact versions never expire. A tag such
+Downloaded packages are kept in the browser's origin private file system, one
+blob per package, so a reload does not download or unpack them again. A page
+only reads the files it imports. Exact versions never expire. A tag such
 as `latest` or a range is looked up again after five minutes, the same limit
 the registry uses.
 

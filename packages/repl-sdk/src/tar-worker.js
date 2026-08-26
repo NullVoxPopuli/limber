@@ -1,7 +1,7 @@
 import { expose } from 'comlink';
 import { parseTar } from 'tarparser';
 
-import { clearStore, readIndex, readTarball, writeIndex, writeTarball } from './fs/opfs-store.js';
+import { clearStore, openPack, readIndex, writeIndex, writePack } from './fs/opfs-store.js';
 import { fetchPackument, indexAnswers, pruneIndex, resolveVersion } from './npm.js';
 import { assert } from './utils.js';
 
@@ -10,8 +10,14 @@ const obj = { getTar, clearStore };
 expose(obj);
 
 /**
+ * The manifest and file list of a package, stored on disk on the way.
+ *
+ * File bodies only travel back when the store could not take them, which
+ * is how a browser without OPFS still works.
+ *
  * @param {string} name of the package
  * @param {string} requestedVersion version or tag to fetch the package at
+ * @returns {Promise<import('./types.ts').UntarredPackage>}
  */
 async function getTar(name, requestedVersion) {
   const index = await getIndex(name, requestedVersion);
@@ -20,14 +26,55 @@ async function getTar(name, requestedVersion) {
 
   assert(`No tarball for ${name}@${version}`, tarball);
 
-  const contents = await untar(await getBytes(name, version, tarball));
-  const packageJson = contents['package.json'];
+  const stored = await openPack(name, version);
+
+  if (stored) {
+    const manifest = await readFromPack(stored, 'package.json');
+
+    assert(`${name}@${version} is stored without a package.json`, manifest);
+
+    return { manifest: JSON.parse(manifest), files: Object.keys(stored.files) };
+  }
+
+  const response = await fetch(tarball, {
+    headers: {
+      ACCEPT: 'application/octet-stream',
+    },
+  });
+
+  const entries = await untar(await response.arrayBuffer());
+  const packageJson = entries.find((entry) => entry.path === 'package.json');
 
   assert(`${name}@${version} has no package.json`, packageJson);
 
-  const manifest = JSON.parse(packageJson.text);
+  const manifest = JSON.parse(new TextDecoder().decode(packageJson.data));
+  const files = entries.map((entry) => entry.path);
+  const written = await writePack(name, version, entries);
 
-  return /** @type {import('./types.ts').UntarredPackage}*/ ({ manifest, contents });
+  if (written) return { manifest, files };
+
+  /** @type {{ [path: string]: { text: string } }} */
+  const contents = {};
+
+  for (const { path, data } of entries) {
+    contents[path] = { text: new TextDecoder().decode(data) };
+  }
+
+  return { manifest, files, contents };
+}
+
+/**
+ * @param {import('./fs/opfs-store.js').Pack} pack
+ * @param {string} path
+ */
+async function readFromPack(pack, path) {
+  const range = pack.files[path];
+
+  if (!range) return;
+
+  const [offset, length] = range;
+
+  return pack.blob.slice(offset, offset + length).text();
 }
 
 /**
@@ -54,43 +101,22 @@ async function getIndex(name, requestedVersion) {
 }
 
 /**
- * @param {string} name
- * @param {string} version
- * @param {string} url
- * @returns {Promise<ArrayBuffer>}
- */
-async function getBytes(name, version, url) {
-  const stored = await readTarball(name, version);
-
-  if (stored) return stored;
-
-  const response = await fetch(url, {
-    headers: {
-      ACCEPT: 'application/octet-stream',
-    },
-  });
-
-  const bytes = await response.arrayBuffer();
-
-  void writeTarball(name, version, bytes);
-
-  return bytes;
-}
-
-/**
  * @param {ArrayBuffer} arrayBuffer
+ * @returns {Promise<{ path: string, data: Uint8Array<ArrayBuffer> }[]>}
  */
 async function untar(arrayBuffer) {
-  /**
-   * @type {{ [name: string]: import('tarparser').FileDescription }}
-   */
-  const contents = {};
+  /** @type {{ path: string, data: Uint8Array<ArrayBuffer> }[]} */
+  const entries = [];
 
   for (const file of await parseTar(arrayBuffer)) {
     if (file.type === 'file') {
-      contents[file.name.slice(8)] = file; // remove `package/` prefix
+      // remove `package/` prefix
+      entries.push({
+        path: file.name.slice(8),
+        data: /** @type {Uint8Array<ArrayBuffer>} */ (file.data),
+      });
     }
   }
 
-  return contents;
+  return entries;
 }

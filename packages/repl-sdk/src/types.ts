@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { FileDescription } from 'tarparser';
 
 export interface RequestAnswer {
   inTarFile: string;
@@ -330,8 +329,16 @@ export interface UntarredPackage {
     module?: string;
     browser?: string;
   };
-  contents: {
-    [path: string]: FileDescription;
+  /**
+   * Every path in the tarball, for entry resolution.
+   */
+  files: string[];
+  /**
+   * File bodies, only when the store could not keep them (no OPFS). The
+   * Installer writes these into memory instead of mounting a pack.
+   */
+  contents?: {
+    [path: string]: { text: string };
   };
 }
 

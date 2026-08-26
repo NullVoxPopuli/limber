@@ -186,7 +186,7 @@ function fromIndex(untarred, request, answer) {
   if (hasExports(untarred)) return answer;
 
   if (request.to === '.') {
-    if (untarred.contents['index.js']) {
+    if (untarred.files.includes('index.js')) {
       return {
         inTarFile: 'index.js',
         ext: 'js',
@@ -225,11 +225,11 @@ function checkFile(untarred, filePath) {
     const path = prefix + filePath;
     const dotless = prefix + filePath.replace(/^\.\//, '');
 
-    if (untarred.contents[path]) {
+    if (untarred.files.includes(path)) {
       return path;
     }
 
-    if (untarred.contents[dotless]) {
+    if (untarred.files.includes(dotless)) {
       return dotless;
     }
   }
@@ -279,7 +279,7 @@ export function printError(untarred, request, answer) {
   const { name, exports, main, module, browser } = untarred.manifest;
 
   console.group(`${name} file info`);
-  console.info(`${name} has these files: `, Object.keys(untarred.contents));
+  console.info(`${name} has these files: `, untarred.files);
   console.info(`We searched for '${request.original}'`);
   console.info(`from: `, { exports, main, module, browser });
   console.info(`And found: `, answer);

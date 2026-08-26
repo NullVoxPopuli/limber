@@ -1,18 +1,25 @@
-import { typeFor } from './url.js';
+import { npmUrl, parseNpmUrl, typeFor } from './url.js';
 
 /**
  * @typedef {{ type: 'js' | 'css' | 'json' | 'ts', source: string }} VirtualFile
+ * @typedef {import('./opfs-store.js').Pack} Pack
  */
 
 /**
  * Files keyed by URL, which is the shape es-module-shims' source hook wants.
  *
- * In-memory for now. OPFS belongs behind this same interface once tarballs
- * should survive a reload, and nothing above here has to know.
+ * Two kinds of file live here. Project files and compiled entries are written
+ * as strings. Installed packages are mounted as a pack: one blob per package
+ * in the origin private file system, with a table of offsets, read a slice at
+ * a time. Reading is the only operation that has to know the difference,
+ * which is why it is the only async one.
  */
 export class VFS {
   /** @type {Map<string, VirtualFile>} */
   #files = new Map();
+
+  /** @type {Map<string, Pack>} url prefix => pack */
+  #packs = new Map();
 
   /**
    * @param {string} url
@@ -24,11 +31,38 @@ export class VFS {
   }
 
   /**
-   * @param {string} url
-   * @returns {undefined | VirtualFile}
+   * Make a stored package's files readable at their npm urls.
+   *
+   * @param {string} name
+   * @param {string} version
+   * @param {Pack} pack
    */
-  read(url) {
-    return this.#files.get(url);
+  mount(name, version, pack) {
+    this.#packs.set(npmUrl(name, version, ''), pack);
+  }
+
+  /**
+   * @param {string} url
+   * @returns {Promise<undefined | VirtualFile>}
+   */
+  async read(url) {
+    const inline = this.#files.get(url);
+
+    if (inline) return inline;
+
+    const located = this.#locate(url);
+
+    if (!located) return;
+
+    const [pack, path] = located;
+    const range = pack.files[path];
+
+    if (!range) return;
+
+    const [offset, length] = range;
+    const source = await pack.blob.slice(offset, offset + length).text();
+
+    return { type: typeFor(url), source };
   }
 
   /**
@@ -44,7 +78,11 @@ export class VFS {
    * @returns {boolean}
    */
   has(url) {
-    return this.#files.has(url);
+    if (this.#files.has(url)) return true;
+
+    const located = this.#locate(url);
+
+    return Boolean(located && located[1] in located[0].files);
   }
 
   /**
@@ -52,15 +90,46 @@ export class VFS {
    * @returns {string[]}
    */
   list(prefix = '') {
-    return Array.from(this.#files.keys()).filter((url) => url.startsWith(prefix));
+    const urls = Array.from(this.#files.keys());
+
+    for (const [base, pack] of this.#packs) {
+      for (const path of Object.keys(pack.files)) {
+        urls.push(base + path);
+      }
+    }
+
+    return urls.filter((url) => url.startsWith(prefix));
   }
 
   get size() {
-    return this.#files.size;
+    let size = this.#files.size;
+
+    for (const pack of this.#packs.values()) {
+      size += Object.keys(pack.files).length;
+    }
+
+    return size;
   }
 
   clear() {
     this.#files.clear();
+    this.#packs.clear();
+  }
+
+  /**
+   * @param {string} url
+   * @returns {undefined | [Pack, string]}
+   */
+  #locate(url) {
+    const parsed = parseNpmUrl(url);
+
+    if (!parsed) return;
+
+    const pack = this.#packs.get(npmUrl(parsed.name, parsed.version, ''));
+
+    if (!pack) return;
+
+    return [pack, parsed.path];
   }
 }
 
@@ -93,7 +162,7 @@ export function createSourceHook(vfs, onMiss) {
       await onMiss(path);
     }
 
-    const file = vfs.read(path);
+    const file = await vfs.read(path);
 
     if (file) return { url, type: file.type, source: file.source };
 

@@ -4,8 +4,15 @@
  *
  * Two kinds of file live under one directory:
  *
- *   repl-sdk/tarballs/<name>/<version>.tgz   the bytes npm served, immutable
- *   repl-sdk/index/<name>.json               dist-tags and versions, small
+ *   repl-sdk/packages/<name>/<version>/pack.bin    every file, concatenated
+ *   repl-sdk/packages/<name>/<version>/files.json  path => [offset, length]
+ *   repl-sdk/index/<name>.json                     dist-tags and versions
+ *
+ * One blob per package rather than one file per file: a file handle costs a
+ * round trip to the browser process, and a package like ember-source has over
+ * a thousand files. Measured in a worker, writing them one by one took ten
+ * seconds; writing the pack takes thirty milliseconds, and the main thread
+ * reads a file out of it with a Blob slice in under a millisecond.
  *
  * Every method is a no-op that resolves to `undefined` when OPFS is missing,
  * so callers fall through to the network without checking.
@@ -20,6 +27,9 @@ const ROOT = 'repl-sdk';
  *   'dist-tags': { [tag: string]: string },
  *   versions: { [version: string]: { dist: { tarball: string } } },
  * }} PackageIndex
+ *
+ * @typedef {{ [path: string]: [offset: number, length: number] }} PackFiles
+ * @typedef {{ files: PackFiles, blob: Blob }} Pack
  */
 
 /**
@@ -96,11 +106,12 @@ async function readFile(dirSegments, fileName) {
  * @param {string[]} dirSegments
  * @param {string} fileName
  * @param {ArrayBuffer | Uint8Array<ArrayBuffer>} bytes
+ * @returns {Promise<boolean>}
  */
 async function writeFile(dirSegments, fileName, bytes) {
   const dir = await directory(dirSegments, { create: true });
 
-  if (!dir) return;
+  if (!dir) return false;
 
   try {
     const handle = await dir.getFileHandle(fileName, { create: true });
@@ -124,15 +135,17 @@ async function writeFile(dirSegments, fileName, bytes) {
         access.close();
       }
 
-      return;
+      return true;
     }
 
     const writable = await handle.createWritable();
 
     await writable.write(bytes);
     await writable.close();
+
+    return true;
   } catch {
-    return;
+    return false;
   }
 }
 
@@ -148,19 +161,74 @@ function nameSegments(name) {
 /**
  * @param {string} name
  * @param {string} version an exact, published version
- * @returns {Promise<ArrayBuffer | undefined>}
  */
-export function readTarball(name, version) {
-  return readFile(['tarballs', ...nameSegments(name)], `${version}.tgz`);
+function packDir(name, version) {
+  return ['packages', ...nameSegments(name), version];
+}
+
+/**
+ * Store a package's files as one blob plus a table of where each one is.
+ *
+ * `files.json` is written last, so a pack with no table is a pack that was
+ * never finished and reads as absent.
+ *
+ * @param {string} name
+ * @param {string} version an exact, published version
+ * @param {{ path: string, data: Uint8Array<ArrayBuffer> }[]} entries
+ * @returns {Promise<PackFiles | undefined>} the table, or undefined when nothing was stored
+ */
+export async function writePack(name, version, entries) {
+  const dir = await directory(packDir(name, version), { create: true });
+
+  if (!dir) return;
+
+  /** @type {PackFiles} */
+  const files = {};
+  let total = 0;
+
+  for (const { path, data } of entries) {
+    files[path] = [total, data.byteLength];
+    total += data.byteLength;
+  }
+
+  const blob = new Uint8Array(total);
+  let offset = 0;
+
+  for (const { data } of entries) {
+    blob.set(data, offset);
+    offset += data.byteLength;
+  }
+
+  const wrote = await writeFile(packDir(name, version), 'pack.bin', blob);
+
+  if (!wrote) return;
+
+  const table = new TextEncoder().encode(JSON.stringify(files));
+
+  if (!(await writeFile(packDir(name, version), 'files.json', table))) return;
+
+  return files;
 }
 
 /**
  * @param {string} name
  * @param {string} version an exact, published version
- * @param {ArrayBuffer} bytes
+ * @returns {Promise<Pack | undefined>}
  */
-export function writeTarball(name, version, bytes) {
-  return writeFile(['tarballs', ...nameSegments(name)], `${version}.tgz`, bytes);
+export async function openPack(name, version) {
+  const dir = await directory(packDir(name, version), { create: false });
+
+  if (!dir) return;
+
+  try {
+    const table = await (await dir.getFileHandle('files.json')).getFile();
+    const files = JSON.parse(await table.text());
+    const blob = await (await dir.getFileHandle('pack.bin')).getFile();
+
+    return { files, blob };
+  } catch {
+    return;
+  }
 }
 
 /**
