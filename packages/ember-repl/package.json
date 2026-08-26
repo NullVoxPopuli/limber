@@ -45,7 +45,7 @@
     "@ember/test-waiters": "^4.1.0",
     "codemirror": "^6.0.2",
     "content-tag": "^4.0.0",
-    "decorator-transforms": "2.3.1",
+    "decorator-transforms": "2.4.0",
     "ember-primitives": "^0.61.1",
     "ember-resolver": "^13.1.0",
     "ember-resources": "^7.1.0",
@@ -61,11 +61,11 @@
     "@ember/app-tsconfig": "^2.0.0",
     "@ember/library-tsconfig": "^2.0.0",
     "@ember/test-helpers": "^5.2.1",
-    "@embroider/addon-dev": "^8.1.0",
-    "@embroider/compat": "^4.1.17",
-    "@embroider/core": "^4.4.7",
-    "@embroider/macros": "^1.20.2",
-    "@embroider/vite": "^1.7.2",
+    "@embroider/addon-dev": "^8.3.1",
+    "@embroider/compat": "^4.1.22",
+    "@embroider/core": "^4.6.3",
+    "@embroider/macros": "^1.20.6",
+    "@embroider/vite": "^1.7.10",
     "@eslint/js": "^9.39.1",
     "@glimmer/component": "^2.1.1",
     "@glint/ember-tsc": "^1.11.0",
@@ -86,7 +86,7 @@
     "concurrently": "^9.2.1",
     "ember-content-mapper": "^0.2.0",
     "ember-qunit": "^9.0.4",
-    "ember-source": "7.3.0-alpha.2",
+    "ember-source": "7.4.0-alpha.1",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-ember": "^12.7.5",
@@ -116,7 +116,7 @@
     "vite-plugin-mkcert": "^1.17.9"
   },
   "peerDependencies": {
-    "@glint/template": "^1.8.0"
+    "@glint/template": "1.8.0"
   },
   "peerDependenciesMeta": {
     "@glint/template": {

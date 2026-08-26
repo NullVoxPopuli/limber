@@ -20,7 +20,7 @@
   "devDependencies": {
     "@babel/core": "^7.28.5",
     "@codemirror/buildhelper": "^1.0.2",
-    "@codemirror/view": "^6.39.12",
+    "@codemirror/view": "6.39.12",
     "@glimdown/lezer-infra": "workspace:*",
     "@lezer/common": "^1.5.0",
     "@lezer/generator": "^1.8.0",
@@ -58,6 +58,6 @@
     "extends": "../../../../package.json"
   },
   "peerDependencies": {
-    "@codemirror/view": "^6.22.3"
+    "@codemirror/view": "6.39.12"
   }
 }
