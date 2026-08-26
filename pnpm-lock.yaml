@@ -856,7 +856,7 @@ importers:
         version: 7.29.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(56d12e5930f3ffbbbf4187f804cda182)
+        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
       autoprefixer:
         specifier: ^10.4.22
         version: 10.4.23(postcss@8.5.9)
@@ -878,6 +878,9 @@ importers:
       tailwindcss:
         specifier: ^3.0.0
         version: 3.4.19(yaml@2.9.0)
+      typescript:
+        specifier: catalog:ts5
+        version: 5.9.3
 
   packages/consts:
     devDependencies:

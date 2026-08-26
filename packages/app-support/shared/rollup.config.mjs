@@ -3,6 +3,7 @@ import { Addon } from '@embroider/addon-dev/rollup';
 
 import { babel } from '@rollup/plugin-babel';
 import { defineConfig } from 'rollup';
+import copy from 'rollup-plugin-copy';
 
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 
@@ -24,6 +25,13 @@ export default defineConfig({
     }),
     addon.gjs(),
     addon.keepAssets(['**/*.css']),
+    // keepAssets in addon-dev 8+ only emits assets reachable from an import,
+    // and theme.css is a standalone export. Copy at writeBundle, after
+    // addon.clean() has removed everything outside the bundle at generateBundle.
+    copy({
+      targets: [{ src: 'src/theme.css', dest: 'dist' }],
+      hook: 'writeBundle',
+    }),
     addon.declarations('declarations', 'tsc --runExternalCode'),
     addon.clean(),
   ],
