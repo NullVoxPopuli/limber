@@ -32,7 +32,7 @@
     "lint:format": "prettier . --cache --check",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
-    "lint:types": "ember-tsc --noEmit",
+    "lint:types": "node node_modules/typescript-7/bin/tsc --noEmit --runExternalCode",
     "start": "pnpm :vite dev",
     "test:ci": "pnpm :testem ci",
     "test:ember": "pnpm build:test && pnpm test:ci",
@@ -70,7 +70,6 @@
     "@glimmer/component": "^2.1.1",
     "@glint/ember-tsc": "^1.11.0",
     "@glint/template": "1.8.0",
-    "@glint/tsserver-plugin": "^2.7.3",
     "@rollup/plugin-babel": "^6.1.0",
     "@rollup/plugin-commonjs": "^29.0.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
@@ -85,6 +84,7 @@
     "change-case": "^5.4.4",
     "common-tags": "^1.8.2",
     "concurrently": "^9.2.1",
+    "ember-content-mapper": "^0.1.0",
     "ember-qunit": "^9.0.4",
     "ember-source": "7.3.0-alpha.2",
     "eslint": "^9.39.1",
@@ -107,6 +107,7 @@
     "rollup-plugin-node-polyfills": "^0.2.1",
     "testem": "^3.20.0",
     "typescript": "~5.9.3",
+    "typescript-7": "npm:typescript@7.1.0-dev.20260825.1",
     "typescript-eslint": "^8.52.0",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0",
@@ -115,7 +116,7 @@
     "vite-plugin-mkcert": "^1.17.9"
   },
   "peerDependencies": {
-    "@glint/template": "1.7.4"
+    "@glint/template": "^1.8.0"
   },
   "peerDependenciesMeta": {
     "@glint/template": {

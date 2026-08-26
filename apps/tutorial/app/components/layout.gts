@@ -1,10 +1,10 @@
 import { service } from 'ember-primitives/helpers/service';
 
-import { Editor } from './editor';
-import { Footer } from './footer';
-import { Nav } from './nav';
-import { Prose } from './prose/index';
-import { SmallScreenToggle } from './small-toggle';
+import { Editor } from './editor.gts';
+import { Footer } from './footer.gts';
+import { Nav } from './nav.gts';
+import { Prose } from './prose/index.gts';
+import { SmallScreenToggle } from './small-toggle.gts';
 
 function removeAppShell() {
   document.querySelector('#initial-loader')?.remove();

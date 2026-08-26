@@ -13,5 +13,6 @@
     },
     "types": ["vite/client", "ember-source/types", "@embroider/core/virtual", "@glint/ember-tsc/types"]
   },
-  "include": ["app/**/*", "tests/**/*", "types/**/*"]
+  "include": ["app/**/*", "tests/**/*", "types/**/*"],
+  "contentMappers": [{ "package": "ember-content-mapper", "extensions": [".gts", ".gjs"] }]
 }

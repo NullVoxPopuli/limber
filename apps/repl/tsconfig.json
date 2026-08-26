@@ -18,16 +18,16 @@
     "noEmit": true,
     "declaration": false,
     "declarationMap": false,
-    "baseUrl": ".",
     "rootDir": "./",
     "experimentalDecorators": true,
     "paths": {
-      "limber/tests/*": ["tests/*"],
-      "limber/*": ["app/*"],
-      "*": ["types/*"]
+      "limber/tests/*": ["./tests/*"],
+      "limber/*": ["./app/*"],
+      "*": ["./types/*"]
     },
     "types": ["vite/client","@embroider/core/virtual", "@glint/ember-tsc/types"
     ]
   },
-  "include": ["app/**/*", "tests/**/*", "types/**/*"]
+  "include": ["app/**/*", "tests/**/*", "types/**/*"],
+  "contentMappers": [{ "package": "ember-content-mapper", "extensions": [".gts", ".gjs"] }]
 }

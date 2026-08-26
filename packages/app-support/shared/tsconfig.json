@@ -10,5 +10,6 @@
     "declarationDir": "declarations",
     "rootDir": "./src",
     "types": ["ember-source/types"]
-  }
+  },
+  "contentMappers": [{ "package": "ember-content-mapper", "extensions": [".gts", ".gjs"] }]
 }

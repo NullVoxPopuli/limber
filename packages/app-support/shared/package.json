@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "build": "rollup --config",
-    "lint:types": "ember-tsc --noEmit",
+    "lint:types": "node node_modules/typescript-7/bin/tsc --noEmit --runExternalCode",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "rollup --config --watch",
     "lint": "pnpm -w exec lint",
@@ -65,7 +65,6 @@
     "@glimmer/component": "^2.1.1",
     "@glint/ember-tsc": "^1.11.0",
     "@glint/template": "1.8.0",
-    "@glint/tsserver-plugin": "^2.7.3",
     "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "@rollup/plugin-babel": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
@@ -73,6 +72,7 @@
     "babel-plugin-ember-template-compilation": "^4.0.0",
     "concurrently": "^9.2.1",
     "ember-async-data": "2.0.1",
+    "ember-content-mapper": "^0.1.0",
     "ember-modifier": "^4.2.0",
     "ember-primitives": "^0.61.1",
     "ember-resources": "^7.1.0",
@@ -86,7 +86,8 @@
     "rollup": "^4.53.3",
     "rollup-plugin-copy": "^3.5.0",
     "shiki": "^3.20.0",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "typescript-7": "npm:typescript@7.1.0-dev.20260825.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"

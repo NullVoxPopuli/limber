@@ -1,8 +1,6 @@
 import Application from '@ember/application';
 
 import Router from './router';
-// I don't want to make this TS
-// @ts-expect-error
 import EntryTemplate from './templates/application.gjs';
 
 // @babel/traverse (from babel-plugin-ember-template-imports)
