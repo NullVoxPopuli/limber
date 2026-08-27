@@ -218,13 +218,21 @@ jobs:
             const fs = require('fs');
             const tarballName = process.env.TARBALL_NAME;
 
-            // Update root package.json — add pnpm override
-            const rootPkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-            if (!rootPkg.pnpm) rootPkg.pnpm = {};
-            if (!rootPkg.pnpm.overrides) rootPkg.pnpm.overrides = {};
-            rootPkg.pnpm.overrides['ember-source'] = `file:./apps/repl/${tarballName}`;
-            fs.writeFileSync('package.json', JSON.stringify(rootPkg, null, 2) + '\n');
-            console.log('Updated root package.json with ember-source override');
+            // Update pnpm-workspace.yaml — add pnpm override
+            const workspacePath = 'pnpm-workspace.yaml';
+            const overrideEntry = `  ember-source: "file:./apps/repl/${tarballName}"`;
+            let workspace = fs.readFileSync(workspacePath, 'utf8');
+
+            if (/^  ember-source: .*$/m.test(workspace)) {
+              workspace = workspace.replace(/^  ember-source: .*$/m, overrideEntry);
+            } else if (/^overrides:\n/m.test(workspace)) {
+              workspace = workspace.replace(/^overrides:\n/m, `overrides:\n${overrideEntry}\n`);
+            } else {
+              workspace = `${workspace.trimEnd()}\n\noverrides:\n${overrideEntry}\n`;
+            }
+
+            fs.writeFileSync(workspacePath, workspace);
+            console.log('Updated pnpm-workspace.yaml with ember-source override');
 
             // Update apps/repl/package.json — point ember-source to tarball
             const replPkg = JSON.parse(fs.readFileSync('apps/repl/package.json', 'utf8'));
