@@ -1391,6 +1391,9 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
     devDependencies:
+      '@babel/standalone':
+        specifier: file:../../babel-standalone.tgz
+        version: file:babel-standalone.tgz
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
         version: 5.5.0(ee03a5b6b242febe65420465ae6828df)

@@ -39,8 +39,24 @@ export interface PublicMethods {
     options?: {
       flavor?: string;
       fileName?: string;
+      [key: string]: unknown;
     }
   ) => Promise<{ element: HTMLElement; destroy: () => void }>;
+
+  /**
+   * Build-time variant of {@link PublicMethods.compile}: returns the compiled
+   * source as a string rather than evaluating it and rendering to a DOM
+   * element.
+   *
+   * Useful for SSG / pre-rendering pipelines that want to take a live demo's
+   * compiled output and hand it to their own bundler instead of executing it
+   * in the browser.
+   */
+  compileToSource: (
+    format: string,
+    text: string,
+    options?: Record<string, unknown>
+  ) => Promise<{ source: string }>;
 
   optionsFor: (
     format: string,
@@ -76,7 +92,13 @@ type CompileResult =
   | {
       compiled: string;
       [option: string]: unknown;
-    };
+    }
+  /**
+   * Variant returned by compilers when invoked with `renderToString: true` —
+   * the build-time form, where no rendering happens and the caller receives
+   * the compiled JS module source as a string instead of a rendered element.
+   */
+  | { source: string; [option: string]: unknown };
 
 export interface Compiler {
   /**
