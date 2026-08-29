@@ -1,40 +1,76 @@
 import packageNameRegex from 'package-name-regex';
 
-import { cache } from './cache.js';
 import { maxSatisfying } from './fs/semver.js';
 import { assert } from './utils.js';
 
 /**
- * @type {Map<string, unknown>} namp@version => manifest
+ * How long the registry lets a package document be cached (its
+ * `cache-control: max-age=300`). Tags and ranges older than this are
+ * looked up again; exact versions never change.
  */
-const npmInfoCache = new Map();
+export const INDEX_MAX_AGE = 5 * 60 * 1000;
 
 /**
- * @param {string} name
- * @param {string} version
+ * Whether a request can be answered by an index of this age.
+ *
+ * An exact, published version is immutable, so any index that lists it will
+ * do. A tag or a range can move when something new is published.
+ *
+ * @param {import('./fs/opfs-store.js').PackageIndex} index
+ * @param {string} requestedVersion
+ * @param {number} now
  */
-export async function getNPMInfo(name, version) {
-  const key = `${name}@${version}`;
+export function indexAnswers(index, requestedVersion, now) {
+  if (requestedVersion in index.versions) return true;
 
-  assert(`Must pass valid npm-compatible package name`, packageNameRegex.test(name));
+  return now - index.fetchedAt < INDEX_MAX_AGE;
+}
 
-  const existing = npmInfoCache.get(key);
+/**
+ * The parts of a registry document that picking a tarball needs. The full
+ * document for a package with a long history is megabytes of changelogs and
+ * per-version manifests.
+ *
+ * @param {any} packument
+ * @param {number} now
+ * @returns {import('./fs/opfs-store.js').PackageIndex}
+ */
+export function pruneIndex(packument, now) {
+  /** @type {import('./fs/opfs-store.js').PackageIndex['versions']} */
+  const versions = {};
 
-  if (existing) {
-    return existing;
+  for (const [version, entry] of Object.entries(packument.versions ?? {})) {
+    versions[version] = { dist: { tarball: /** @type {any} */ (entry).dist.tarball } };
   }
 
-  return cache.cachedPromise(`getNPMInfo:${key}`, async () => {
-    assert(`Cannot get data from NPM without specifying the name of the package`, name);
-    assert(`Version is required. It may be 'latest'`, version);
+  return {
+    name: packument.name,
+    fetchedAt: now,
+    'dist-tags': packument['dist-tags'] ?? {},
+    versions,
+  };
+}
 
-    const response = await fetch(`https://registry.npmjs.org/${name}`);
-    const json = await response.json();
+/**
+ * The registry document for a package. Not cached here: the worker keeps a
+ * pruned copy on disk with the registry's own expiry.
+ *
+ * @param {string} name
+ */
+export async function fetchPackument(name) {
+  assert(`Must pass valid npm-compatible package name`, packageNameRegex.test(name));
 
-    npmInfoCache.set(key, json);
-
-    return json;
+  const response = await fetch(`https://registry.npmjs.org/${name}`, {
+    headers: {
+      /**
+       * The abbreviated document: no readmes or changelogs, still every
+       * version with its tarball url.
+       */
+      accept: 'application/vnd.npm.install-v1+json',
+    },
   });
+
+  return response.json();
 }
 
 /**
@@ -63,14 +99,4 @@ export function resolveVersion(npmInfo, requestedVersion) {
   assert(`No published version of ${json.name} matches ${requestedVersion}`, match);
 
   return match;
-}
-
-/**
- * @param {any} npmInfo
- * @param {string} requestedVersion
- */
-export async function getTarUrl(npmInfo, requestedVersion) {
-  const version = resolveVersion(npmInfo, requestedVersion);
-
-  return npmInfo.versions[version].dist.tarball;
 }

@@ -1,10 +1,11 @@
 import { expose } from 'comlink';
 import { parseTar } from 'tarparser';
 
-import { cache } from './cache.js';
-import { getNPMInfo, getTarUrl } from './npm.js';
+import { clearStore, readIndex, readTarball, writeIndex, writeTarball } from './fs/opfs-store.js';
+import { fetchPackument, indexAnswers, pruneIndex, resolveVersion } from './npm.js';
+import { assert } from './utils.js';
 
-const obj = { getTar };
+const obj = { getTar, clearStore };
 
 expose(obj);
 
@@ -13,33 +14,67 @@ expose(obj);
  * @param {string} requestedVersion version or tag to fetch the package at
  */
 async function getTar(name, requestedVersion) {
-  const key = `${name}@${requestedVersion}`;
-  const untarred = cache.tarballs.get(key);
+  const index = await getIndex(name, requestedVersion);
+  const version = resolveVersion(index, requestedVersion);
+  const tarball = index.versions[version]?.dist.tarball;
 
-  if (untarred) {
-    return untarred;
+  assert(`No tarball for ${name}@${version}`, tarball);
+
+  const contents = await untar(await getBytes(name, version, tarball));
+  const packageJson = contents['package.json'];
+
+  assert(`${name}@${version} has no package.json`, packageJson);
+
+  const manifest = JSON.parse(packageJson.text);
+
+  return /** @type {import('./types.ts').UntarredPackage}*/ ({ manifest, contents });
+}
+
+/**
+ * The stored index answers when it can. Exact versions always can; a tag or a
+ * range only while the index is younger than the registry's own max-age.
+ *
+ * @param {string} name
+ * @param {string} requestedVersion
+ * @returns {Promise<import('./fs/opfs-store.js').PackageIndex>}
+ */
+async function getIndex(name, requestedVersion) {
+  const now = Date.now();
+  const stored = await readIndex(name);
+
+  if (stored && indexAnswers(stored, requestedVersion, now)) {
+    return stored;
   }
 
-  const contents = await cache.cachedPromise(`getTar:${key}`, async () => {
-    const json = await getNPMInfo(name, requestedVersion);
-    const tgzUrl = await getTarUrl(json, requestedVersion);
+  const index = pruneIndex(await fetchPackument(name), now);
 
-    const response = await fetch(tgzUrl, {
-      headers: {
-        ACCEPT: 'application/octet-stream',
-      },
-    });
+  void writeIndex(name, index);
 
-    return await untar(await response.arrayBuffer());
+  return index;
+}
+
+/**
+ * @param {string} name
+ * @param {string} version
+ * @param {string} url
+ * @returns {Promise<ArrayBuffer>}
+ */
+async function getBytes(name, version, url) {
+  const stored = await readTarball(name, version);
+
+  if (stored) return stored;
+
+  const response = await fetch(url, {
+    headers: {
+      ACCEPT: 'application/octet-stream',
+    },
   });
 
-  const manifest = JSON.parse(contents['package.json'].text);
+  const bytes = await response.arrayBuffer();
 
-  const info = /** @type {import('./types.ts').UntarredPackage}*/ ({ manifest, contents });
+  void writeTarball(name, version, bytes);
 
-  cache.tarballs.set(key, info);
-
-  return info;
+  return bytes;
 }
 
 /**

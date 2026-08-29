@@ -4,7 +4,6 @@ export const secretKey = '__repl-sdk__compiler__';
 
 /**
  * @typedef {typeof globalThis & { [secret]?: {
- *   tarballs?: Map<string, import('./types.ts').UntarredPackage>,
  *   resolves?: { [modulePath: string]: unknown },
  *   promiseCache?: Map<string, Promise<unknown>>,
  *   caches?: Caches
@@ -37,17 +36,6 @@ class Caches {
     this.#root.resolves ||= {};
 
     return this.#root.resolves;
-  }
-
-  /**
-   * Cache of untarred tarballs
-   *
-   * @type {Map<string, import('./types.ts').UntarredPackage>}
-   */
-  get tarballs() {
-    this.#root.tarballs ||= new Map();
-
-    return this.#root.tarballs;
   }
 
   /**
