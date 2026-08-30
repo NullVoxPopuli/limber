@@ -22,7 +22,7 @@
     "@codemirror/buildhelper": "^1.0.2",
     "@codemirror/language": "^6.12.1",
     "@codemirror/state": "^6.5.4",
-    "@codemirror/view": "6.39.12",
+    "@codemirror/view": "6.43.9",
     "@lezer/generator": "^1.8.0",
     "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "@tsconfig/ember": "^3.0.9",
