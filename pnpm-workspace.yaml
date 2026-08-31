@@ -77,6 +77,7 @@ patchedDependencies:
   "browserslist-generator": "patches/browserslist-generator.patch"
 
 overrides:
+  ember-source: "file:./apps/repl/ember-source-7.4.0-alpha.1.nvp-implement-context+f8a37473.tgz"
   "@babel/standalone": "file:./babel-standalone.tgz"
   "@glint/template": "1.8.0"
   "array-includes": "npm:@nolyfill/array-includes@^1"
