@@ -1,0 +1,12 @@
+# Unlabeled Changes
+
+* Other
+  * [#2237](https://github.com/NullVoxPopuli/limber/pull/2237) [WIP] Fix failing GitHub Actions job for ember-source tarball ([@Copilot](https://github.com/apps/copilot-swe-agent))
+* `repl-sdk`
+  * [#2222](https://github.com/NullVoxPopuli/limber/pull/2222) Resolve through a module fs: no request ids, versions from package.json ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2226](https://github.com/NullVoxPopuli/limber/pull/2226) Fix browser tests: bump mermaid to drop langium ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `ember-repl`, `limber-ui`, `repl-sdk`
+  * [#2225](https://github.com/NullVoxPopuli/limber/pull/2225) Upgrade Glint ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+
+*Cannot plan release until the above changes are labeled*.
