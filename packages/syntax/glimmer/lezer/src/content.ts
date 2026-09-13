@@ -1,14 +1,7 @@
+import { parser as expressionParser } from '@glimdown/lezer-glimmer-expression';
 import { parseMixed } from '@lezer/common';
-import { parser as javascriptParser } from '@lezer/javascript';
 
-// import { parser as glimmerExpressionParser } from '@glimdown/lezer-glimmer-expression';
-import {
-  LongExpression,
-  ScriptText,
-  ShortExpression,
-  StyleText,
-  TextareaText,
-} from './syntax.grammar.terms';
+import { LongExpression, ScriptText, StyleText, TextareaText } from './syntax.grammar.terms';
 
 import type { Input, Parser, SyntaxNode, SyntaxNodeRef } from '@lezer/common';
 
@@ -47,9 +40,6 @@ function maybeNest(node: SyntaxNodeRef, input: Input, tags: NestingConfig[]) {
   return null;
 }
 
-// const expressionParser = glimmerExpressionParser;
-const expressionParser = javascriptParser.configure({ top: 'SingleExpression' });
-
 interface Attrs {
   [attr: string]: string;
 }
@@ -84,7 +74,6 @@ export function configureNesting(tags: NestingConfig[]) {
     let id = node.type.id;
 
     if (id === LongExpression) return { parser: expressionParser };
-    if (id === ShortExpression) return { parser: expressionParser };
     if (id === ScriptText) return maybeNest(node, input, script);
     if (id === StyleText) return maybeNest(node, input, style);
     if (id === TextareaText) return maybeNest(node, input, textarea);

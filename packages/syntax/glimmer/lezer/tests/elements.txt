@@ -1,0 +1,293 @@
+# Element with attributes
+
+<div id="a" class='b' hidden data-x=1></div>
+
+==>
+
+Document(
+  Element(
+    OpenTag(
+      StartTag,
+      TagName,
+      Attribute(
+        AttributeName,
+        Is,
+        AttributeValue(
+          DoubleQuote,
+          AttributeValueContent,
+          DoubleQuote
+        )
+      ),
+      Attribute(
+        AttributeName,
+        Is,
+        AttributeValue(
+          SingleQuote,
+          AttributeValueContent,
+          SingleQuote
+        )
+      ),
+      Attribute(
+        AttributeName
+      ),
+      Attribute(
+        AttributeName,
+        Is,
+        UnquotedAttributeValue
+      ),
+      EndTag
+    ),
+    CloseTag(
+      StartCloseTag,
+      TagName,
+      EndTag
+    )
+  )
+)
+
+# Element modifier
+
+<button {{on "click" this.increment}}>+</button>
+
+==>
+
+Document(
+  Element(
+    OpenTag(
+      StartTag,
+      TagName,
+      ElementModifier(
+        "{{",
+        LongExpression,
+        "}}"
+      ),
+      EndTag
+    ),
+    Text,
+    CloseTag(
+      StartCloseTag,
+      TagName,
+      EndTag
+    )
+  )
+)
+
+# Multiple modifiers and attributes
+
+<div class="a {{if @b "c"}}" {{first}} {{second 1 x=true}} ...attributes></div>
+
+==>
+
+Document(
+  Element(
+    OpenTag(
+      StartTag,
+      TagName,
+      Attribute(
+        AttributeName,
+        Is,
+        AttributeValue(
+          DoubleQuote,
+          AttributeValueContent(
+            Interpolation(
+              "{{",
+              LongExpression,
+              "}}"
+            )
+          ),
+          DoubleQuote
+        )
+      ),
+      ElementModifier(
+        "{{",
+        LongExpression,
+        "}}"
+      ),
+      ElementModifier(
+        "{{",
+        LongExpression,
+        "}}"
+      ),
+      Splattributes(
+        "..."
+      ),
+      EndTag
+    ),
+    CloseTag(
+      StartCloseTag,
+      TagName,
+      EndTag
+    )
+  )
+)
+
+# Component with block params
+
+<Widget @items={{this.items}} as |item index|>{{item}} {{index}}</Widget>
+
+==>
+
+Document(
+  Element(
+    OpenTag(
+      StartTag,
+      ComponentName,
+      Attribute(
+        AttributeName,
+        Is,
+        AttributeValue(
+          Interpolation(
+            "{{",
+            LongExpression,
+            "}}"
+          )
+        )
+      ),
+      BlockParams(
+        as,
+        "|",
+        BlockParam(
+          AttributeName
+        ),
+        BlockParam(
+          AttributeName
+        ),
+        "|"
+      ),
+      EndTag
+    ),
+    Interpolation(
+      "{{",
+      LongExpression,
+      "}}"
+    ),
+    Text,
+    Interpolation(
+      "{{",
+      LongExpression,
+      "}}"
+    ),
+    CloseTag(
+      StartCloseTag,
+      ComponentName,
+      EndTag
+    )
+  )
+)
+
+# Attribute named as
+
+<div as="x"></div>
+
+==>
+
+Document(
+  Element(
+    OpenTag(
+      StartTag,
+      TagName,
+      Attribute(
+        as,
+        Is,
+        AttributeValue(
+          DoubleQuote,
+          AttributeValueContent,
+          DoubleQuote
+        )
+      ),
+      EndTag
+    ),
+    CloseTag(
+      StartCloseTag,
+      TagName,
+      EndTag
+    )
+  )
+)
+
+# Named block
+
+<Card><:header>Title</:header></Card>
+
+==>
+
+Document(
+  Element(
+    OpenTag(
+      StartTag,
+      ComponentName,
+      EndTag
+    ),
+    Element(
+      OpenTag(
+        StartTag,
+        NamedBlock,
+        EndTag
+      ),
+      Text,
+      CloseTag(
+        StartCloseTag,
+        NamedBlock,
+        EndTag
+      )
+    ),
+    CloseTag(
+      StartCloseTag,
+      ComponentName,
+      EndTag
+    )
+  )
+)
+
+# Self closing component
+
+<Widget @a={{1}} />
+
+==>
+
+Document(
+  Element(
+    SelfClosingTag(
+      StartTag,
+      ComponentName,
+      Attribute(
+        AttributeName,
+        Is,
+        AttributeValue(
+          Interpolation(
+            "{{",
+            LongExpression,
+            "}}"
+          )
+        )
+      ),
+      SelfClosingEndTag
+    )
+  )
+)
+
+# Colon in attribute name
+
+<use xlink:href="#icon" />
+
+==>
+
+Document(
+  Element(
+    SelfClosingTag(
+      StartTag,
+      TagName,
+      Attribute(
+        AttributeName,
+        Is,
+        AttributeValue(
+          DoubleQuote,
+          AttributeValueContent,
+          DoubleQuote
+        )
+      ),
+      SelfClosingEndTag
+    )
+  )
+)
+

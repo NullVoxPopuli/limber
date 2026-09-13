@@ -37,7 +37,7 @@ export const HorizonSyntaxTheme = HighlightStyle.define([
 
   // ??
   { tag: [t.color, t.constant(t.name), t.standard(t.name)], color: syntax.apricot },
-  { tag: [t.atom, t.bool, t.special(t.variableName)], color: syntax.lavender },
+  { tag: [t.atom, t.bool, t.null, t.special(t.variableName)], color: syntax.lavender },
   { tag: t.invalid, color: syntax.cranberry },
 ]);
 

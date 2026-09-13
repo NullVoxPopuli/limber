@@ -1,116 +1,30 @@
-# Long
+# Html comment
 
-{{!-- text here --}}
-
-==>
-
-Glimmer(
-  BlockComment(
-    LongComment(
-      StartLongComment,
-      Text,
-      EndLongComment
-    )
-  )
-)
-
-
-# Short
-
-{{! text here }}
+<!-- hi -->
 
 ==>
 
-Glimmer(
-  BlockComment(
-    ShortComment(
-      StartShortComment,
-      Text,
-      EndStache
-    )
-  )
+Document(
+  Comment
 )
 
+# Moustache comment
 
-
-# Long multiline
-
-{{!--
-  line 1
-  line 2
-
-weird indent
-
-  line 4
-
---}}
+{{! hi }}
 
 ==>
 
-Glimmer(
-  BlockComment(
-    LongComment(
-      StartLongComment,
-      Text,
-      EndLongComment
-    )
-  )
+Document(
+  MoustacheComment
 )
 
-# Short multiline
+# Long moustache comment
 
-{{!
-  line 1
-  line 2
-
-weird indent
-
-  line 4
-
-}}
+{{!-- {{hi}} --}}
 
 ==>
 
-Glimmer(
-  BlockComment(
-    ShortComment(
-      StartShortComment,
-      Text,
-      EndStache
-    )
-  )
+Document(
+  LongMoustacheComment
 )
 
-
-# Long - empty
-
-{{!-- --}}
-
-==>
-
-Glimmer(
-  BlockComment(
-    LongComment(
-      StartLongComment,
-      Text,
-      EndLongComment
-    )
-  )
-)
-
-
-# Short - empty
-
-{{! }}
-
-==>
-
-Glimmer(
-  BlockComment(
-    ShortComment(
-      StartShortComment,
-      Text,
-      EndStache
-    )
-  )
-)

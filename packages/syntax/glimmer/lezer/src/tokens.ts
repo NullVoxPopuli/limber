@@ -5,7 +5,6 @@ import {
   LongExpression as longExprToken,
   longMoustacheCommentContent as longMoustacheCmtToken,
   moustacheCommentContent as moustacheCmtToken,
-  ShortExpression as shortExprToken,
 } from './syntax.grammar.terms';
 
 import type { InputStream } from '@lezer/lr';
@@ -21,10 +20,8 @@ const squareOpen = 91;
 const squareClose = 93;
 const curlyOpen = 123;
 const curlyClose = 125;
-const comma = 44;
 const colon = 58;
 const hash = 35;
-const at = 64;
 const slash = 47;
 const greaterThan = 62;
 const dash = 45;
@@ -34,8 +31,15 @@ const backslash = 92;
 const newline = 10;
 const asterisk = 42;
 const tick = 96;
+const tilde = 126;
 
-const prefixes = [colon, hash, at, slash];
+/**
+ * Characters that begin a block ("{{#if", "{{/if", "{{:else").
+ * Blocks are parsed by the grammar, not as an expression.
+ */
+const blockPrefixes = [colon, hash, slash];
+
+const elseWord = [101, 108, 115, 101];
 
 function scanTo(type: number, end: string) {
   return new ExternalTokenizer((input) => {
@@ -88,7 +92,19 @@ export const commentContent = new ExternalTokenizer((input) => {
   }
 });
 
-// TODO: string handler does not handle interpolation
+/**
+ * "{{else}}" and "{{else if x}}" are block syntax, so the grammar
+ * must see the "else" keyword instead of an expression.
+ */
+function startsWithElse(input: InputStream) {
+  for (let i = 0; i < elseWord.length; i++) {
+    if (input.peek(i) !== elseWord[i]) return false;
+  }
+
+  const next = input.peek(elseWord.length);
+
+  return next < 0 || next === curlyClose || next === tilde || space.includes(next);
+}
 
 function createStringHandler(input: InputStream) {
   let inString = false;
@@ -201,7 +217,11 @@ function createCommentHandler(input: InputStream) {
 
 // closes on a delimiter that probably isn't in the expression
 export const longExpression = new ExternalTokenizer((input) => {
-  if (prefixes.includes(input.next)) {
+  if (blockPrefixes.includes(input.next)) {
+    return;
+  }
+
+  if (startsWithElse(input)) {
     return;
   }
 
@@ -262,85 +282,6 @@ export const longExpression = new ExternalTokenizer((input) => {
       case curlyClose:  popIfMatch("{");
 
  break
-    }
-
-    input.advance();
-  }
-});
-
-// same as long expression but will close on either a space or comma
-// that is reasonably not inside of the expression
-export const shortExpression = new ExternalTokenizer((input) => {
-  if (prefixes.includes(input.peek(0))) {
-    return;
-  }
-
-  const commentHandler = createCommentHandler(input);
-  const stringHandler = createStringHandler(input);
-
-  let stack: ('(' | '{' | '[')[] = [];
-
-  const popIfMatch = (match: '(' | '{' | '[') => {
-    const idx = stack.lastIndexOf(match);
-
-    if (idx !== -1) {
-      while (stack.length > idx) {
-        stack.pop();
-      }
-    }
-  };
-
-  for (let pos = 0; ; pos++) {
-    // end of input
-    if (input.next < 0) {
-      if (pos > 0) input.acceptToken(shortExprToken);
-
-      break;
-    }
-
-    if (commentHandler() || stringHandler()) {
-      input.advance();
-      continue;
-    }
-
-    if (
-      stack.length === 0 &&
-      (input.next === curlyClose ||
-        input.next === parenClose ||
-        input.next === squareClose ||
-        input.next === comma)
-    ) {
-      input.acceptToken(shortExprToken);
-
-      break;
-    }
-
-    // prettier-ignore
-    switch (input.next) {
-      case parenOpen:   stack.push("(");
-
- break
-      case parenClose:  popIfMatch("(");
-
- break
-      case squareOpen:  stack.push("[");
-
- break
-      case squareClose: popIfMatch("[");
-
- break
-      case curlyOpen:   stack.push("{");
-
- break
-      case curlyClose:  popIfMatch("{");
-
- break
-    }
-
-    if (pos !== 0 && stack.length === 0 && space.includes(input.next)) {
-      input.acceptToken(shortExprToken);
-
-      break;
     }
 
     input.advance();

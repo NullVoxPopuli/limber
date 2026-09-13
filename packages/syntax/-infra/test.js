@@ -5,8 +5,21 @@ import * as path from 'path';
 
 const cwd = process.cwd();
 
+const distFiles = ['./dist/index.es.js', './dist/index.js'];
+const caseDirs = ['test', 'tests'];
+
+function firstExisting(candidates) {
+  return candidates.find((candidate) => fs.existsSync(path.join(cwd, candidate)));
+}
+
+async function loadParser() {
+  const module = await import(path.join(cwd, firstExisting(distFiles)));
+
+  return module.parser || module.glimmerParser;
+}
+
 async function runTests() {
-  const caseDir = path.join(cwd, 'test');
+  const caseDir = path.join(cwd, firstExisting(caseDirs));
 
   for (const file of fs.readdirSync(caseDir)) {
     if (!/\.txt$/.test(file)) continue;
@@ -17,9 +30,7 @@ async function runTests() {
       let parser;
 
       before(async () => {
-        const module = await import(path.join(cwd, './dist/index.es.js'));
-
-        parser = module.parser;
+        parser = await loadParser();
       });
 
       const testFile = fs.readFileSync(path.join(caseDir, file), 'utf8');

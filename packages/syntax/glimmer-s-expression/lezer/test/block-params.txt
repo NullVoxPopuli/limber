@@ -1,0 +1,93 @@
+# Single block param
+
+@items as |item|
+
+==>
+
+Expression(
+  PathExpression(
+    Argument
+  ),
+  BlockParams(
+    as,
+    "|",
+    BlockParam,
+    "|"
+  )
+)
+
+# Multiple block params
+
+@items as |item index|
+
+==>
+
+Expression(
+  PathExpression(
+    Argument
+  ),
+  BlockParams(
+    as,
+    "|",
+    BlockParam,
+    BlockParam,
+    "|"
+  )
+)
+
+# Block params after named params
+
+@items key="id" as |item|
+
+==>
+
+Expression(
+  Invocation(
+    Callee(
+      PathExpression(
+        Argument
+      )
+    ),
+    HashPair(
+      HashKey,
+      Is,
+      StringLiteral
+    )
+  ),
+  BlockParams(
+    as,
+    "|",
+    BlockParam,
+    "|"
+  )
+)
+
+# Block params after sub-expression
+
+(hash a=1) as |h|
+
+==>
+
+Expression(
+  SubExpression(
+    "(",
+    Invocation(
+      Callee(
+        hash
+      ),
+      HashPair(
+        HashKey,
+        Is,
+        NumberLiteral
+      )
+    ),
+    ")"
+  ),
+  BlockParams(
+    as,
+    "|",
+    BlockParam,
+    "|"
+  )
+)
+

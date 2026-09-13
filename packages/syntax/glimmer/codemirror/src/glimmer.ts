@@ -5,8 +5,6 @@ import { javascript } from '@codemirror/lang-javascript';
 import { LanguageSupport, LRLanguage, syntaxTree } from '@codemirror/language';
 import { EditorState } from '@codemirror/state';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
 import { parser as glimmerExpressionParser } from '@glimdown/lezer-glimmer-expression';
 
 import { autoCloseTags } from './auto-close';

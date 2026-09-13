@@ -1,0 +1,84 @@
+# Argument
+
+{{@arg}}
+
+==>
+
+Document(
+  Interpolation(
+    "{{",
+    LongExpression,
+    "}}"
+  )
+)
+
+# This path
+
+{{this.foo.bar}}
+
+==>
+
+Document(
+  Interpolation(
+    "{{",
+    LongExpression,
+    "}}"
+  )
+)
+
+# Helper with params
+
+{{format "a" b=1}}
+
+==>
+
+Document(
+  Interpolation(
+    "{{",
+    LongExpression,
+    "}}"
+  )
+)
+
+# Yield
+
+{{yield}}
+
+==>
+
+Document(
+  Interpolation(
+    "{{",
+    LongExpression,
+    "}}"
+  )
+)
+
+# Raw html
+
+{{{this.html}}}
+
+==>
+
+Document(
+  RawHTMLBlock(
+    "{{{",
+    LongExpression,
+    "}}}"
+  )
+)
+
+# Whitespace control
+
+{{~this.foo~}}
+
+==>
+
+Document(
+  Interpolation(
+    "{{",
+    LongExpression,
+    "}}"
+  )
+)
+

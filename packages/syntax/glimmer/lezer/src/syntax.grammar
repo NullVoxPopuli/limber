@@ -67,19 +67,6 @@ LongMoustacheComment { longMoustacheCommentStart longMoustacheCommentContent* lo
 MoustacheComment { moustacheCommentStart moustacheCommentContent* moustacheCommentEnd }
 
 @skip { space } {
-  CallExpression { "(" ~Function SExpression? (identifier Is SExpression)? ")"  }
-
-  SExpression { 
-      CallExpression
-      // | identifier
-      // | Is 
-      // | Pipe
-      | Argument
-      //| String
-      // | keywords
-  }
-
-
   OpenTag[closedBy=CloseTag] {
     StartTag elementName attr* EndTag
   }
@@ -126,43 +113,38 @@ MoustacheComment { moustacheCommentStart moustacheCommentContent* moustacheComme
   }
 
   attr {
-    DirectlyInterpolatedAttribute |
-    Directive |
+    ElementModifier |
+    BlockParams |
     StyleAttribute |
     Attribute |
-    Splattributes 
-
+    Splattributes
   }
 
-  DirectlyInterpolatedAttribute {
-    "{{" (DirectlyInterpolatedAttributeValue { identifier })? "}}"
+  ElementModifier {
+    "{{" LongExpression "}}"
+  }
+
+  BlockParams {
+    as "|" BlockParam* "|"
   }
 
   Splattributes {
     "..." "attributes"
   }
 
-  Directive {
-    directiveStart
-    ("|" Modifier)*
-    (Is (AttributeValue | UnquotedAttributeValue))?
-  }
-
   StyleAttribute {
     StyleAttributeName (Is (AttributeValue | UnquotedAttributeValue))?
   }
 
-
   Attribute {
-    AttributeName
-    ("|" Modifier)*
+    (AttributeName | as)
     (Is (AttributeValue | UnquotedAttributeValue))?
   }
 
   LetBlockOpen[group=BlockOpen,closedBy=LetBlockClose] {
     "{{" pfx<"#"> blk<"let"> LongExpression "}}"
   }
-  
+
   LetBlockClose[group=BlockClose,openedBy=LetBlockOpen] {
     "{{" pfx<"/"> blk<"let"> "}}"
   }
@@ -170,15 +152,15 @@ MoustacheComment { moustacheCommentStart moustacheCommentContent* moustacheComme
   InElementBlockOpen[group=BlockOpen,closedBy=InElementBlockClose] {
     "{{" pfx<"#"> blk<"in-element"> LongExpression "}}"
   }
-  
+
   InElementBlockClose[group=BlockClose,openedBy=InElementBlockOpen] {
     "{{" pfx<"/"> blk<"in-element"> "}}"
   }
-  
+
   IfBlockOpen[group=BlockOpen,closedBy=IfBlockClose] {
     "{{" pfx<"#"> blk<"if"> LongExpression "}}"
   }
-  
+
   IfBlockClose[group=BlockClose,openedBy=IfBlockOpen] {
     "{{" pfx<"/"> blk<"if"> "}}"
   }
@@ -186,43 +168,27 @@ MoustacheComment { moustacheCommentStart moustacheCommentContent* moustacheComme
   UnlessBlockOpen[group=BlockOpen,closedBy=UnlessBlockClose] {
     "{{" pfx<"#"> blk<"unless"> LongExpression "}}"
   }
-  
+
   UnlessBlockClose[group=BlockClose,openedBy=UnlessBlockOpen] {
     "{{" pfx<"/"> blk<"unless"> "}}"
   }
-  
+
   ElseBlock[group=BlockInline] {
     "{{" pfx<":">? blk<"else"> (kw<"if"> LongExpression)? "}}"
   }
 
   EachBlockOpen[group=BlockOpen,closedBy=EachBlockClose] {
-    "{{" pfx<"#"> blk<"each">
-    ShortExpression
-    kw<"as">
-    ShortExpression
-    (
-      ("(" LongExpression ")") |
-      ("," Variable? ("(" LongExpression ")")?)
-    )?
-    "}}"
+    "{{" pfx<"#"> blk<"each"> LongExpression "}}"
   }
-  
+
   EachBlockClose[group=BlockClose,openedBy=EachBlockOpen] {
     "{{" pfx<"/"> blk<"each"> "}}"
   }
 
   EachInBlockOpen[group=BlockOpen,closedBy=EachInBlockClose] {
-    "{{" pfx<"#"> blk<"each-in">
-    ShortExpression
-    kw<"as">
-    ShortExpression
-    (
-      ("(" LongExpression ")") |
-      ("," Variable? ("(" LongExpression ")")?)
-    )?
-    "}}"
+    "{{" pfx<"#"> blk<"each-in"> LongExpression "}}"
   }
-  
+
   EachInBlockClose[group=BlockClose,openedBy=EachInBlockOpen] {
     "{{" pfx<"/"> blk<"each-in"> "}}"
   }
@@ -238,7 +204,7 @@ MoustacheComment { moustacheCommentStart moustacheCommentContent* moustacheComme
     UnknownBlockContent?
     "}}"
   }
-  
+
   Interpolation {
     "{{" LongExpression "}}"
   }
@@ -250,26 +216,9 @@ elementName {
   ComponentName
 }
 
-dr<name, term> {
-  dir[@name=Directive{name}] {
-    dirName[@name=DirectiveName] { @extend<AttributeName, term> }
-    ":"
-    DirectiveTarget
-  }
-}
+BlockParam { AttributeName }
 
-directiveStart {
-  dr<"On", "on"> |
-  dr<"Bind", "bind"> |
-  dr<"Let", "let"> |
-  dr<"Class", "class"> |
-  dr<"Style", "style"> |
-  dr<"Use", "use"> |
-  dr<"Transition", "transition"> |
-  dr<"In", "in"> |
-  dr<"Out", "out"> |
-  dr<"Animate", "animate">
-}
+as { @specialize[@name=as]<AttributeName, "as"> }
 
 AttributeValue {
   Interpolation |
@@ -336,10 +285,6 @@ attributeValueContentEntity {
   LongExpression
 }
 
-@external tokens shortExpression from "./tokens.js" {
-  ShortExpression
-}
-
 kw<term> { @specialize[@name={term}]<identifier, term> }
 
 pfx<type> { @extend[@name=BlockPrefix]<BlockPrefix, type> }
@@ -349,25 +294,19 @@ blk<type> { @specialize[@name=BlockType]<BlockType, type> }
 @tokens {
   "\""[@name=DoubleQuote, openedBy="\"", closedBy="\""]
   "\'"[@name=SingleQuote, openedBy="\'", closedBy="\'"]
-  
-  "{"[closedBy="}"]
-  "}"[openedBy="{"]
+
   "{{"[closedBy="}}"]
   "}}"[openedBy="{{"]
-  "("[closedBy="("]
-  ")"[openedBy=")"]
-  "["[closedBy="]"]
-  "]"[openedBy="["]
-  
-  "," "|" "..."
-  
+  "{{{"[closedBy="}}}"]
+  "}}}"[openedBy="{{{"]
+
+  "|" "..."
+
   space { (" " | "\t" | "\r" | "\n")+ }
-  
+
   identifierChar { @asciiLetter | $[_$\u{a1}-\u{10ffff}] }
-  word { identifierChar (identifierChar | @digit)* }
+  word { identifierChar (identifierChar | @digit | "-")* }
   identifier { word }
-  
-  Variable { identifierChar (identifierChar | @digit | ".")* }
 
   BlockPrefix { "#" | "/" | ":" }
   BlockType { identifier }
@@ -413,16 +352,12 @@ blk<type> { @specialize[@name=BlockType]<BlockType, type> }
   TagName { tagNameStart nameChar* }
 
   NamedBlock { ":" tagNameStart nameChar* }
-  Argument { "@" identifier }
-  Function { ~identifier }
   ComponentName { componentNameStart nameChar* }
 
-  attributeChar { ![.\u0000-\u0020\u007F-\u009F"'>/=|:{\uFDD0-\uFDEF\uFFFE\uFFFF] }
+  attributeChar { ![.\u0000-\u0020\u007F-\u009F"'>/=|{\uFDD0-\uFDEF\uFFFE\uFFFF] }
 
   AttributeName { attributeChar+ }
   StyleAttributeName { "--" attributeChar+ }
-  Modifier { attributeChar+ }
-  DirectiveTarget { attributeChar+ }
 
   @precedence { StyleAttributeName AttributeName }
 
@@ -451,8 +386,8 @@ blk<type> { @specialize[@name=BlockType]<BlockType, type> }
 
   DoctypeDecl { "<!" ("doctype" | "DOCTYPE") ![>]* ">" }
 
-  @precedence { longMoustacheCommentStart, moustacheCommentStart } 
+  @precedence { longMoustacheCommentStart, moustacheCommentStart }
   @precedence { commentStart, ProcessingInst, DoctypeDecl }
 }
 
-@external propSource svelteHighlighting from "./highlight"
+@external propSource glimmerHighlighting from "./highlight"
