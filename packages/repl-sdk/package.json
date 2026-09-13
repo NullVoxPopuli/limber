@@ -23,6 +23,10 @@
       "types": "./src/fs/npm-tar.d.ts",
       "default": "./src/fs/npm-tar.js"
     },
+    "./fs/opfs-store": {
+      "types": "./src/fs/opfs-store.d.ts",
+      "default": "./src/fs/opfs-store.js"
+    },
     "./fs/url": {
       "types": "./src/fs/url.d.ts",
       "default": "./src/fs/url.js"

@@ -1,6 +1,6 @@
 import { wrap } from 'comlink';
 
-/** @type {undefined | { getTar: (name: string, version: string) => Promise<import('../types.ts').UntarredPackage> }} */
+/** @type {undefined | { getTar: (name: string, version: string) => Promise<import('../types.ts').UntarredPackage>, clearStore: () => Promise<void> }} */
 let com;
 
 /**
@@ -48,4 +48,12 @@ export function getTar(name, version) {
 
 export function clearTarCache() {
   inFlight.clear();
+}
+
+/**
+ * Forget every package stored on disk. The next import downloads again.
+ */
+export async function clearStoredTarballs() {
+  inFlight.clear();
+  await worker().clearStore();
 }

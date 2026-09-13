@@ -7,6 +7,7 @@ import { cache, secretKey } from './cache.js';
 import { compilers } from './compilers.js';
 import { STABLE_REFERENCE } from './es-module-shim.js';
 import { PROJECT_PREFIX, releaseEntry, writeEntry } from './fs/entry.js';
+import { clearStoredTarballs } from './fs/npm-tar.js';
 import { clearFs, installer, vfs } from './fs/store.js';
 import {
   extensionOf,
@@ -566,6 +567,13 @@ export class Compiler {
   static clearCache() {
     cache.clear();
     clearFs();
+  }
+
+  /**
+   * Downloaded packages are kept on disk across reloads. This forgets them.
+   */
+  static clearStoredPackages() {
+    return clearStoredTarballs();
   }
 
   /**
