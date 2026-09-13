@@ -1,0 +1,236 @@
+# If else
+
+{{#if a}}yes{{else}}no{{/if}}
+
+==>
+
+Document(
+  IfBlock(
+    IfBlockOpen(
+      "{{",
+      BlockPrefix,
+      BlockType,
+      LongExpression,
+      "}}"
+    ),
+    Text,
+    ElseBlock(
+      "{{",
+      BlockType,
+      "}}"
+    ),
+    Text,
+    IfBlockClose(
+      "{{",
+      BlockPrefix,
+      BlockType,
+      "}}"
+    )
+  )
+)
+
+# Else if chain
+
+{{#if a}}1{{else if b}}2{{else}}3{{/if}}
+
+==>
+
+Document(
+  IfBlock(
+    IfBlockOpen(
+      "{{",
+      BlockPrefix,
+      BlockType,
+      LongExpression,
+      "}}"
+    ),
+    Text,
+    ElseBlock(
+      "{{",
+      BlockType,
+      if,
+      LongExpression,
+      "}}"
+    ),
+    Text,
+    ElseBlock(
+      "{{",
+      BlockType,
+      "}}"
+    ),
+    Text,
+    IfBlockClose(
+      "{{",
+      BlockPrefix,
+      BlockType,
+      "}}"
+    )
+  )
+)
+
+# Unless
+
+{{#unless a}}hidden{{/unless}}
+
+==>
+
+Document(
+  UnlessBlock(
+    UnlessBlockOpen(
+      "{{",
+      BlockPrefix,
+      BlockType,
+      LongExpression,
+      "}}"
+    ),
+    Text,
+    UnlessBlockClose(
+      "{{",
+      BlockPrefix,
+      BlockType,
+      "}}"
+    )
+  )
+)
+
+# Each with block params
+
+{{#each @items key="id" as |item index|}}{{item}}{{else}}empty{{/each}}
+
+==>
+
+Document(
+  EachBlock(
+    EachBlockOpen(
+      "{{",
+      BlockPrefix,
+      BlockType,
+      LongExpression,
+      "}}"
+    ),
+    Interpolation(
+      "{{",
+      LongExpression,
+      "}}"
+    ),
+    ElseBlock(
+      "{{",
+      BlockType,
+      "}}"
+    ),
+    Text,
+    EachBlockClose(
+      "{{",
+      BlockPrefix,
+      BlockType,
+      "}}"
+    )
+  )
+)
+
+# Each in
+
+{{#each-in @obj as |key value|}}{{key}}{{/each-in}}
+
+==>
+
+Document(
+  EachInBlock(
+    EachInBlockOpen(
+      "{{",
+      BlockPrefix,
+      BlockType,
+      LongExpression,
+      "}}"
+    ),
+    Interpolation(
+      "{{",
+      LongExpression,
+      "}}"
+    ),
+    EachInBlockClose(
+      "{{",
+      BlockPrefix,
+      BlockType,
+      "}}"
+    )
+  )
+)
+
+# Let
+
+{{#let (hash a=1) as |h|}}{{h.a}}{{/let}}
+
+==>
+
+Document(
+  LetBlock(
+    LetBlockOpen(
+      "{{",
+      BlockPrefix,
+      BlockType,
+      LongExpression,
+      "}}"
+    ),
+    Interpolation(
+      "{{",
+      LongExpression,
+      "}}"
+    ),
+    LetBlockClose(
+      "{{",
+      BlockPrefix,
+      BlockType,
+      "}}"
+    )
+  )
+)
+
+# In element
+
+{{#in-element this.target}}x{{/in-element}}
+
+==>
+
+Document(
+  InElementBlock(
+    InElementBlockOpen(
+      "{{",
+      BlockPrefix,
+      BlockType,
+      LongExpression,
+      "}}"
+    ),
+    Text,
+    InElementBlockClose(
+      "{{",
+      BlockPrefix,
+      BlockType,
+      "}}"
+    )
+  )
+)
+
+# Unknown block
+
+{{#custom a}}x{{/custom}}
+
+==>
+
+Document(
+  UnknownBlock(
+    "{{",
+    BlockPrefix,
+    BlockType,
+    UnknownBlockContent,
+    "}}"
+  ),
+  Text,
+  UnknownBlock(
+    "{{",
+    BlockPrefix,
+    BlockType,
+    "}}"
+  )
+)
+

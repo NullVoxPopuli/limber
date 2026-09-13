@@ -1,0 +1,301 @@
+# Positional params
+
+format "a" 1 this.b @c
+
+==>
+
+Expression(
+  Invocation(
+    Callee(
+      PathExpression(
+        PathHead
+      )
+    ),
+    Param(
+      StringLiteral
+    ),
+    Param(
+      NumberLiteral
+    ),
+    Param(
+      PathExpression(
+        this,
+        ".",
+        PropertyName
+      )
+    ),
+    Param(
+      PathExpression(
+        Argument
+      )
+    )
+  )
+)
+
+# Named params
+
+format key=value other="x"
+
+==>
+
+Expression(
+  Invocation(
+    Callee(
+      PathExpression(
+        PathHead
+      )
+    ),
+    HashPair(
+      HashKey,
+      Is,
+      PathExpression(
+        PathHead
+      )
+    ),
+    HashPair(
+      HashKey,
+      Is,
+      StringLiteral
+    )
+  )
+)
+
+# Positional and named params
+
+format a b=c
+
+==>
+
+Expression(
+  Invocation(
+    Callee(
+      PathExpression(
+        PathHead
+      )
+    ),
+    Param(
+      PathExpression(
+        PathHead
+      )
+    ),
+    HashPair(
+      HashKey,
+      Is,
+      PathExpression(
+        PathHead
+      )
+    )
+  )
+)
+
+# Keyword callee
+
+on "click" this.increment
+
+==>
+
+Expression(
+  Invocation(
+    Callee(
+      on
+    ),
+    Param(
+      StringLiteral
+    ),
+    Param(
+      PathExpression(
+        this,
+        ".",
+        PropertyName
+      )
+    )
+  )
+)
+
+# Comparison keyword
+
+eq a "b"
+
+==>
+
+Expression(
+  Invocation(
+    Callee(
+      eq
+    ),
+    Param(
+      PathExpression(
+        PathHead
+      )
+    ),
+    Param(
+      StringLiteral
+    )
+  )
+)
+
+# Keyword as hash key
+
+component "x" on=this.handler
+
+==>
+
+Expression(
+  Invocation(
+    Callee(
+      component
+    ),
+    Param(
+      StringLiteral
+    ),
+    HashPair(
+      HashKey(
+        on
+      ),
+      Is,
+      PathExpression(
+        this,
+        ".",
+        PropertyName
+      )
+    )
+  )
+)
+
+# Keyword as property name
+
+this.if
+
+==>
+
+Expression(
+  PathExpression(
+    this,
+    ".",
+    PropertyName(
+      if
+    )
+  )
+)
+
+# Sub-expression
+
+if (eq a b) "yes" "no"
+
+==>
+
+Expression(
+  Invocation(
+    Callee(
+      if
+    ),
+    Param(
+      SubExpression(
+        "(",
+        Invocation(
+          Callee(
+            eq
+          ),
+          Param(
+            PathExpression(
+              PathHead
+            )
+          ),
+          Param(
+            PathExpression(
+              PathHead
+            )
+          )
+        ),
+        ")"
+      )
+    ),
+    Param(
+      StringLiteral
+    ),
+    Param(
+      StringLiteral
+    )
+  )
+)
+
+# Nested sub-expressions
+
+fn this.pick (hash a=(array 1 2))
+
+==>
+
+Expression(
+  Invocation(
+    Callee(
+      fn
+    ),
+    Param(
+      PathExpression(
+        this,
+        ".",
+        PropertyName
+      )
+    ),
+    Param(
+      SubExpression(
+        "(",
+        Invocation(
+          Callee(
+            hash
+          ),
+          HashPair(
+            HashKey,
+            Is,
+            SubExpression(
+              "(",
+              Invocation(
+                Callee(
+                  array
+                ),
+                Param(
+                  NumberLiteral
+                ),
+                Param(
+                  NumberLiteral
+                )
+              ),
+              ")"
+            )
+          )
+        ),
+        ")"
+      )
+    )
+  )
+)
+
+# Keyword without params
+
+yield
+
+==>
+
+Expression(
+  yield
+)
+
+# Keyword with named params
+
+yield to="inverse"
+
+==>
+
+Expression(
+  Invocation(
+    Callee(
+      yield
+    ),
+    HashPair(
+      HashKey,
+      Is,
+      StringLiteral
+    )
+  )
+)
+

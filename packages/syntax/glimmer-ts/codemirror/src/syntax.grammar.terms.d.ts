@@ -1,3 +1,6 @@
-export const templateTagContent = 8,
-  Document = 1,
-  GlimmerTemplateTag = 2;
+export const JsContent = 1,
+  templateTagContent = 9,
+  Document = 2,
+  GlimmerTemplateTag = 3,
+  templateTagStart = 4,
+  templateTagEnd = 5;

@@ -26,6 +26,7 @@
     "codemirror": "^6.0.2",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.1",
+    "mocha": "^11.6.0",
     "prettier": "^3.7.4",
     "rollup": "^4.53.3",
     "rollup-plugin-ts": "^3.4.5",
@@ -35,13 +36,12 @@
     "@glimdown/lezer-glimmer-expression": "workspace:*",
     "@lezer/common": "^1.5.0",
     "@lezer/highlight": "^1.2.3",
-    "@lezer/html": "^1.3.13",
-    "@lezer/javascript": "^1.5.4",
     "@lezer/lr": "^1.4.8"
   },
   "scripts": {
     "dev": "node ./dev/watch.cjs src/index.ts",
     "build": "cm-buildhelper src/index.ts",
+    "test:node": "mocha ../../-infra/test.js",
     "lint": "pnpm -w exec lint",
     "lint:types": "tsc --noEmit",
     "lint:fix": "pnpm -w exec lint fix",

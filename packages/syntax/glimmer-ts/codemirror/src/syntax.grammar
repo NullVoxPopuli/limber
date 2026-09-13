@@ -1,8 +1,10 @@
-@top Document { GlimmerTemplateTag* } 
+@top Document { (JsContent | GlimmerTemplateTag)* }
 
 GlimmerTemplateTag {
   templateTagStart templateTagContent* templateTagEnd
 }
+
+@external tokens jsContent from "./tokens.js" { JsContent }
 
 @external tokens templateTagContent from "./tokens.js" { templateTagContent }
 

@@ -1,0 +1,82 @@
+# Bare identifier
+
+item
+
+==>
+
+Expression(
+  PathExpression(
+    PathHead
+  )
+)
+
+# Dashed identifier
+
+my-value
+
+==>
+
+Expression(
+  PathExpression(
+    PathHead
+  )
+)
+
+# This path
+
+this.foo.bar
+
+==>
+
+Expression(
+  PathExpression(
+    this,
+    ".",
+    PropertyName,
+    ".",
+    PropertyName
+  )
+)
+
+# Argument
+
+@arg
+
+==>
+
+Expression(
+  PathExpression(
+    Argument
+  )
+)
+
+# Argument path
+
+@items.length
+
+==>
+
+Expression(
+  PathExpression(
+    Argument,
+    ".",
+    PropertyName
+  )
+)
+
+# Whitespace control
+
+~ this.foo ~
+
+==>
+
+Expression(
+  "~",
+  PathExpression(
+    this,
+    ".",
+    PropertyName
+  ),
+  "~"
+)
+

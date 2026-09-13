@@ -1,0 +1,84 @@
+# Double quoted string
+
+"hello there"
+
+==>
+
+Expression(
+  StringLiteral
+)
+
+# Single quoted string
+
+'it\'s'
+
+==>
+
+Expression(
+  StringLiteral
+)
+
+# Integer
+
+42
+
+==>
+
+Expression(
+  NumberLiteral
+)
+
+# Negative decimal
+
+-1.5
+
+==>
+
+Expression(
+  NumberLiteral
+)
+
+# Booleans
+
+foo true false
+
+==>
+
+Expression(
+  Invocation(
+    Callee(
+      PathExpression(
+        PathHead
+      )
+    ),
+    Param(
+      BooleanLiteral
+    ),
+    Param(
+      BooleanLiteral
+    )
+  )
+)
+
+# Null and undefined
+
+foo null undefined
+
+==>
+
+Expression(
+  Invocation(
+    Callee(
+      PathExpression(
+        PathHead
+      )
+    ),
+    Param(
+      NullLiteral
+    ),
+    Param(
+      UndefinedLiteral
+    )
+  )
+)
+

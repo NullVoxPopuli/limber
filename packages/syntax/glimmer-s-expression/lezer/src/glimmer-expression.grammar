@@ -1,111 +1,83 @@
-@top Expression { SExpression* }
+// The body of a mustache: everything between "{{" and "}}",
+// or between "(" and ")" for a sub-expression.
 
-@skip { space } {
+@top Expression { "~"? body? "~"? }
 
-  CallExpression { "(" ~Function SExpression? (identifier Is SExpression)? ")"  }
+body { content BlockParams? }
 
-  SExpression { 
-      CallExpression
-      | identifier
-      | Is 
-      | Pipe
-      | Argument
-      | String
-      | keywords
-      //| MemberExpression
-  }
+content { Invocation | expression | keyword }
+
+@skip { space }
+
+Invocation { Callee (Param | HashPair)+ }
+
+Callee { expression | keyword }
+
+Param { expression }
+
+HashPair { HashKey Is expression }
+
+BlockParams { kw<"as"> "|" BlockParam* "|" }
+
+SubExpression { "(" content? ")" }
+
+PathExpression { (kw<"this"> | Argument | PathHead) ("." PropertyName)* }
+
+HashKey { identifier | keyword | kw<"this"> }
+
+BlockParam { identifier }
+
+PathHead { identifier }
+
+PropertyName { identifier | keyword | kw<"this"> }
+
+expression {
+  PathExpression |
+  SubExpression |
+  StringLiteral |
+  NumberLiteral |
+  booleanLiteral |
+  nullLiteral |
+  undefinedLiteral
 }
 
-MemberExpression {
-  expressionNoComma (("." | "?.") (PropertyName))
-}
+booleanLiteral { @specialize[@name=BooleanLiteral]<identifier, "true" | "false"> }
+nullLiteral { @specialize[@name=NullLiteral]<identifier, "null"> }
+undefinedLiteral { @specialize[@name=UndefinedLiteral]<identifier, "undefined"> }
 
-Argument { "@" identifier }
-Function { ~identifier }
-
-expressionNoComma {
-  Number |
-  String |
-  identifier |
-  boolean |
-  kw<"this"> |
-  kw<"null"> |
-  MemberExpression
-}
-
-PropertyName { word }
-
-String {
-  "\"" attributeValueContentDouble? "\"" |
-  "\'" attributeValueContentSingle? "\'"
-}
-
-boolean { @specialize[@name=BooleanLiteral]<identifier, "true" | "false"> }
-
-attributeValueContentDouble[@name=AttributeValueContent] {
-  (attributeValueContentCharDouble)+
-}
-
-attributeValueContentSingle[@name=AttributeValueContent] {
-  (attributeValueContentCharSingle)+
-}
-
-keywords {
-  kw<"this">
-  | kw<"as">
-  | kw<"if"> | kw<"unless">
-  | kw<"else">
-  | kw<"let">
-  | kw<"and"> | kw<"or"> | kw<"not">
-  | kw<"eq"> | kw<"neq"> | kw<"not-eq">
-  | kw<"gt"> | kw<"gte">
-  | kw<"lt"> | kw<"lte">
-  | kw<"array">
-  | kw<"concat">
-  | kw<"hash">
-  | kw<"each"> | kw<"each-in">
-  | kw<"on">
-  | kw<"modifier"> | kw<"component"> | kw<"helper">
-  | kw<"in-element">
-  | kw<"debugger">
-  | kw<"yield"> | kw<"outlet">
+keyword {
+  kw<"if"> | kw<"unless"> | kw<"each"> | kw<"each-in"> | kw<"let"> | kw<"in-element"> |
+  kw<"yield"> | kw<"outlet"> | kw<"debugger"> |
+  kw<"on"> | kw<"fn"> | kw<"hash"> | kw<"array"> | kw<"concat"> | kw<"get"> | kw<"log"> |
+  kw<"component"> | kw<"helper"> | kw<"modifier"> |
+  kw<"has-block"> | kw<"has-block-params"> | kw<"unique-id"> |
+  kw<"eq"> | kw<"neq"> | kw<"not-eq"> | kw<"not"> | kw<"and"> | kw<"or"> |
+  kw<"gt"> | kw<"gte"> | kw<"lt"> | kw<"lte">
 }
 
 kw<term> { @specialize[@name={term}]<identifier, term> }
 
 @tokens {
-  Text { ![{] Text? | "{" (@eof | ![%{] Text?) }
-  space { @whitespace+ }
-  whitespace { (std.whitespace | ",")+ }
+  space { $[ \t\r\n]+ }
 
-  
-  "{{"[closedBy="}}"]
-  "}}"[openedBy="{{"]
-  "("[closedBy="("]
-  ")"[openedBy=")"]
-  Is { "=" }
-  Pipe { "|" }
+  identifierStart { @asciiLetter | "_" | "$" | $[\u{a1}-\u{10ffff}] }
+  identifierChar { identifierStart | @digit | "-" }
+  identifier { identifierStart identifierChar* }
 
-  identifierChar { @asciiLetter }
-  word { identifierChar (identifierChar | @digit)* }
-  identifier { word }
+  Argument { "@" identifier }
 
-  attributeValueContentCharDouble { !["&{] }
-  attributeValueContentCharSingle { !['&{] }
+  NumberLiteral { "-"? @digit+ ("." @digit+)? }
 
-  @precedence { attributeValueContentCharDouble whitespace }
-  @precedence { attributeValueContentCharSingle whitespace }
-
-  Number {
-    (@digit ("_" | @digit)* ("." ("_" | @digit)*)? | "." @digit ("_" | @digit)*)
-      (("e" | "E") ("+" | "-")? ("_" | @digit)+)? |
-    @digit ("_" | @digit)* "n" |
-    "0b" $[01_]+ "n"? |
-    "0o" $[0-7_]+ "n"?
+  StringLiteral {
+    "\"" (!["\\] | "\\" _)* "\"" |
+    "'" (!['\\] | "\\" _)* "'"
   }
 
-  @precedence { Number "." }
+  Is { "=" }
 
+  "("[closedBy=")"]
+  ")"[openedBy="("]
+  "|" "." "~"
 }
 
 @external propSource expressionHighlighting from "./highlight"

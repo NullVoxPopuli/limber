@@ -1,25 +1,29 @@
 import { styleTags, tags as t } from '@lezer/highlight';
 
 export const expressionHighlighting = styleTags({
-  'AtKeyword import charset namespace keyframes media supports': t.definitionKeyword,
-  NumberLiteral: t.number,
-  KeywordQuery: t.keyword,
-  VariableName: t.variableName,
-  '( )': t.paren,
-  '[ ]': t.squareBracket,
-  '{ }': t.brace,
-
-  // TODO
+  'Callee/PathExpression/PathHead': t.function(t.variableName),
+  PathHead: t.variableName,
+  PropertyName: t.propertyName,
+  this: t.self,
   Argument: t.propertyName,
 
-  yield: t.operatorKeyword,
-  outlet: t.operatorKeyword,
+  HashKey: t.attributeName,
+  Is: t.definitionOperator,
 
-  component: t.function(t.definitionKeyword),
-  modifier: t.function(t.definitionKeyword),
-  helper: t.function(t.definitionKeyword),
-  hash: t.function(t.definitionKeyword),
-  array: t.function(t.definitionKeyword),
-  on: t.function(t.definitionKeyword),
-  concat: t.function(t.operatorKeyword),
+  StringLiteral: t.string,
+  NumberLiteral: t.number,
+  BooleanLiteral: t.bool,
+  'NullLiteral UndefinedLiteral': t.null,
+
+  as: t.definitionKeyword,
+  BlockParam: t.definition(t.variableName),
+
+  '( )': t.paren,
+  '| ~': t.punctuation,
+  '.': t.derefOperator,
+
+  'if unless each each-in let in-element yield outlet debugger': t.controlKeyword,
+  'on fn hash array concat get log component helper modifier has-block has-block-params unique-id':
+    t.keyword,
+  'eq neq not-eq not and or gt gte lt lte': t.operatorKeyword,
 });
