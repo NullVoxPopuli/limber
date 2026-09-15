@@ -51,7 +51,7 @@ The dropdown menu above can be used for navigation if needed.
 Each tutorial chapter includes a 'Show me' button that can be used if you encounter difficulties.
 However, manually typing in the editor for each example is a more effective way to learn and enhance your skills -- but also there is no shame in asking for help!
 
-On smaller screens, there is a button in the bottom right of the screen so that slides the tutorial text out of the way so that the editor can be interacted with.
+On smaller screens, a button in the bottom right slides the tutorial text out of the way so you can use the editor.
 
 <p class="call-to-play">
   Callouts like these will be present in tutorials to guide focus, and be clear about what you're expected to do in a particular exercise.

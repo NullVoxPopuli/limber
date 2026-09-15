@@ -71,8 +71,9 @@ function resolve(id) {
 }
 
 /**
-    Example:
-     
+    Example (verbatim from ember-source):
+
+    nollm-ignore-next-line
     Uncaught (in promise) Error: Assertion Failed: You attempted to update `count` on `Demo`, but it had already been used previously in the same computation.  Attempting to update a value after using it in a computation can cause logical errors, infinite revalidation bugs, and performance issues, and is not supported.
 
     `count` was first used:

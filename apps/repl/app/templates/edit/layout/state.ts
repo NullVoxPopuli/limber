@@ -251,7 +251,7 @@ export const LayoutState = setup({
                   `we can immediately transition to the appropriate orientation-state, ` +
                   `else we listen for an orientation update.`
                 : '',
-              // the always events will only suceed if we've previously
+              // the always events will only succeed once we've already
               // resolved the device / window / iframe orientation
               // (and this is why we can't use the native Device API
               //   because we have window and iframes to worry about)
@@ -402,7 +402,7 @@ type SplitName = typeof WHEN_HORIZONTALLY_SPLIT | typeof WHEN_VERTICALLY_SPLIT;
 
 /**
  * Editor size as a percent of the pane-group.
- * (this storage previously held pixel-strings; those are ignored)
+ * (pixel-strings left over from older builds are ignored)
  */
 type SplitSizeData = Partial<Record<SplitName, number>>;
 

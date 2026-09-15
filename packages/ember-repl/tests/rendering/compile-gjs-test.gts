@@ -78,8 +78,8 @@ module('Rendering | compile()', function (hooks) {
 
       /**
        * The `= ;` is a syntax error, which content-tag (SWC) reports
-       * with a bare "Parse Error at <file>:<line>:<column>" message —
-       * the explanation and code frame are on the error's `source_code` property.
+       * with a bare "Parse Error at <file>:<line>:<column>" message.
+       * The explanation and code frame are on the error's `source_code` property.
        */
       const snippet = stripIndent`
         const isBroken = ;

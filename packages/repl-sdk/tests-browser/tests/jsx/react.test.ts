@@ -45,7 +45,7 @@ describe('jsx', () => {
            * dev-only JSX factory is deliberately undefined. Compiling demos
            * with babel's development JSX transform emits calls to it, so
            * every demo would throw "_jsxDEV is not a function" against such
-           * a host (dev-built hosts hide this — they ship a real jsxDEV).
+           * a host (dev-built hosts hide this, since they ship a real jsxDEV).
            */
           'react/jsx-dev-runtime': () => Promise.resolve({ jsxDEV: undefined }),
         },

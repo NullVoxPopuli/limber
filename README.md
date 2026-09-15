@@ -37,8 +37,7 @@ If there are any security concerns, please email security [at] nullvoxpopuli.com
 Cross-Browser testing provided by <a href='http://browserstack.com' target='_blank'><img src='https://d2ogrdw2mh0rsl.cloudfront.net/production/images/static/header/header-logo.svg'></a>
 
 
-## Contributors
-
+## Contributors <!-- nollm-ignore-next-line -->
 <!-- readme: contributors -start -->
 <table>
 	<tbody>

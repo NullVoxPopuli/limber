@@ -12,7 +12,7 @@ function handleUnhandled(reason: unknown) {
 
 /**
  * In apps, nothing awaits the compile state's promise, so compile errors
- * also arrive via unhandledrejection — and this handler's announcement is
+ * also arrive via unhandledrejection, and this handler's announcement is
  * the last one, i.e. the one the UI's error bubble shows.
  */
 describe('gjs onUnhandled', () => {

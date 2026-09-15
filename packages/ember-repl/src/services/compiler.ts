@@ -329,7 +329,7 @@ export default class CompilerService {
      * Protect from accidental backtracking-render assertions
      * (infinite loop protection)
      *
-     * This function doesn't ready any tracked data, so we don't need to
+     * Nothing here reads tracked data, so we don't need to
      * worry about invalidation or anything.
      */
     await Promise.resolve();

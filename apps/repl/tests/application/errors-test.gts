@@ -10,7 +10,7 @@ module('Errors', function (hooks) {
     //     real mistake I made during debugging.
     await visit('/docs/embedding&local');
 
-    // Previously, this would infinite loop
+    // Guards against a router infinite loop that looked like this:
     //
     // preparing to transition from '' to 'error'
     // Transition #90468: detected abort.

@@ -9,7 +9,7 @@ Adapted from [Salesforce's CoC][salesforce-coc]. PRs welcome for changes, clarif
 ## About the Code of Conduct
 
 Equality is a core value at Glimdown. We believe a diverse and inclusive
-community fosters innovation and creativity, and are committed to building a
+community drives innovation and creativity, and are committed to building a
 culture where everyone feels included.
 
 Glimdown open-source projects are committed to providing a friendly, safe, and
