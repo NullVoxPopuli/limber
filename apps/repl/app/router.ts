@@ -4,6 +4,8 @@ import { properLinks } from 'ember-primitives/proper-links';
 
 import config from '#config';
 
+import { lazyRouteBundles } from './custom-layout.ts';
+
 @properLinks
 export default class Router extends EmbroiderRouter {
   location = config.locationType;
@@ -13,34 +15,9 @@ export default class Router extends EmbroiderRouter {
 /**
  * See: https://github.com/embroider-build/embroider/issues/2521
  */
-function bundle(name: string, loader: () => Promise<{ default: unknown }>[]) {
-  return {
-    names: [name],
-    load: async () => {
-      const [template, route, controller] = await Promise.all(loader());
-      const slashName = name.replaceAll('.', '/');
-      const results: Record<string, unknown> = {};
-
-      if (template) results[`./templates/${slashName}`] = template.default;
-      if (route) results[`./routes/${slashName}`] = route.default;
-      if (controller) results[`./controllers/${slashName}`] = controller.default;
-
-      return {
-        default: results,
-      };
-    },
-  };
-}
-
-(window as any)._embroiderRouteBundles_ = [
-  bundle('docs', () => [import('./templates/docs.gts')]),
-  bundle('docs.index', () => [import('./templates/docs/index.gts')]),
-  bundle('docs.repl-sdk', () => [import('./templates/docs/repl-sdk.gts')]),
-  bundle('docs.ember-repl', () => [import('./templates/docs/ember-repl.gts')]),
-  bundle('docs.embedding', () => [import('./templates/docs/embedding.gts')]),
-  bundle('docs.editor', () => [import('./templates/docs/editor.gts')]),
-  bundle('docs.related', () => [import('./templates/docs/related.gts')]),
-];
+(window as any)._embroiderRouteBundles_ = lazyRouteBundles(
+  import.meta.glob('./routes/docs/**/+{route,template,controller}.{ts,gts}')
+);
 
 Router.map(function () {
   /**
