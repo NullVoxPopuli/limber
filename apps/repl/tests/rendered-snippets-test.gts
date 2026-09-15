@@ -4,7 +4,7 @@ import { setupRenderingTest } from 'ember-qunit';
 
 import { compile as compileAnything, getCompiler } from 'ember-repl';
 
-import { importMap } from 'limber/routes/import-map';
+import { importMap } from 'limber/routes/application/import-map';
 import { getFromLabel } from 'limber/snippets';
 
 import { setupCompiler } from 'ember-repl/test-support';

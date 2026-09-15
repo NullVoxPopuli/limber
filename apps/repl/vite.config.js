@@ -7,6 +7,8 @@ import mkcert from 'vite-plugin-mkcert';
 
 import { ember } from '@nullvoxpopuli/ember-vite';
 
+import { routeCssManifest } from './config/route-css-manifest.js';
+
 export default defineConfig({
   build: {
     rolldownOptions: {
@@ -97,6 +99,7 @@ export default defineConfig({
         configFile: './babel.config.mjs',
       },
     }),
+    routeCssManifest(),
     emberSsg({
       routes: [
         'docs',

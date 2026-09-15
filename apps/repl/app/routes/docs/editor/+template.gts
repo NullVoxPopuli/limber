@@ -1,6 +1,7 @@
+import highlighted from 'limber/modifiers/highlighted';
+
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
-import highlighted from '../../modifiers/highlighted';
 import {
   CodeBlock,
   example,
@@ -10,7 +11,7 @@ import {
   issueURL,
   sample,
   TryIt,
-} from './support/code.gts';
+} from '../support/code.gts';
 
 const IssueLink = <template>
   <ExternalLink href={{issueURL}}>
