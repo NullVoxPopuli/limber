@@ -191,10 +191,9 @@ export const mainView = new EditorView({
     extensions: [
       basicSetup,
       glimmer(),
-      // We can't use HTML as the hosting language
-      // (to overlay Glimmer on top of)
-      // Because in Glimmer, we can have spaces within double curlies,
-      // and in the HTML parser, this ends up escaping the attribute valuse, and other things
+      // We can't use HTML as the hosting language to overlay Glimmer on top of.
+      // In Glimmer, we can have spaces within double curlies, and the HTML
+      // parser then escapes the attribute values, among other things.
       // htmlLanguage,
       oneDark,
       EditorView.lineWrapping,

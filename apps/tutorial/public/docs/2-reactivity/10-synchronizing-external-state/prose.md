@@ -18,7 +18,7 @@ function logInput(...args) {
 
 Most importantly, there are some things we should keep in mind when calling functions:
 - We don't want to `return` a value, else that value will render - this includes marking the function as `async`, which inherently returns a `Promise`
-- `@tracked` data may not be mutated / set in these functions because setting `@tracked` data causes other parts of the UI to re-render, and because functions auto-track, they would detect the change to that tracked-data, and then re-run, setting the data again, causing an infinite rendering loop.
+- `@tracked` data may not be mutated / set in these functions. Setting `@tracked` data causes other parts of the UI to re-render, and functions auto-track. The function would detect the change to that tracked-data, re-run, and set the data again, causing an infinite rendering loop.
 - Functions may often serve a similar purpose to getters as used in class-components: for deriving data.
 
 [docs-log]: https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/log?anchor=log

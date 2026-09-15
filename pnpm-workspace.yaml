@@ -57,8 +57,8 @@ allowedDeprecatedVersions:
 # touching dependency resolution.
 #
 # TypeScript 7 is installed under the `typescript-7` alias rather than as
-# `typescript`, so a package can type-check with 7 while the tools that still
-# need the JS compiler API resolve a `typescript` they understand.
+# `typescript`. A package can then type-check with 7, while the tools that
+# still need the JS compiler API resolve a `typescript` they understand.
 # typescript-eslint is the reason: it reads `ts.Extension` at import time, and
 # typescript@7's entrypoint exports only `version` and `versionMajorMinor`, so
 # ESLint crashes on startup wherever it resolves typescript@7. Support is

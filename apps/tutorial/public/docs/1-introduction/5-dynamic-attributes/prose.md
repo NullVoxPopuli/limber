@@ -7,8 +7,8 @@ Let's create an image with dynamic `src` and `alt` attributes.
 ```
 
 In a real dev environment, you'll be required to specify an `alt` description.
-Without the `alt` description, users with slow or unstable internet connections,
-may not be able to download the image -- users who rely on screen readers won't be able to view the image either.  
+Without the `alt` description, users with slow or unstable internet connections
+may not be able to download the image. Users who rely on screen readers won't be able to view the image either.  
 Defining the `alt` description solves these problems.
 More information about this requirement is described on [the linter docs][gh-etl-alt].
 

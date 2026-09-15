@@ -5,8 +5,8 @@
 import { errorMessage } from '../utils.js';
 
 /**
- * Other `@ember` (and `@glimmer`) packages are bundled in ember-source,
- * and typecilaly use a build plugin to resolve from `@ember/*` imports.
+ * Other `@ember` and `@glimmer` packages are bundled in ember-source,
+ * and typically use a build plugin to resolve from `@ember/*` imports.
  */
 const externalPackages = [
   '@ember/test-helpers',

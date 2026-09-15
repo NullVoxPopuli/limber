@@ -10,7 +10,7 @@
 
 /**
  * Minimize / maximize are CSS overrides on top of <Resizable>'s
- * inline flex sizing (hence the !important) -- the split sizes are
+ * inline flex sizing, hence the !important. The split sizes are
  * untouched underneath, so returning to the split view restores them.
  */
 .limber__layout[data-editor-state='minimized'] {

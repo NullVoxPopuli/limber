@@ -1,4 +1,4 @@
-By default, when you modify an entry in a list looped over by an `each` block, object-identity equality will be used to optimize the loop. Much like how reactive-values are only reactive via the _reference_ to their value, the content of an `each` loop, per-item, is cached on the reference to the item in the list.
+By default, when you modify an entry in a list looped over by an `each` block, object-identity equality will be used to optimize the loop. Reactive-values are only reactive via the _reference_ to their value. In much the same way, the content of an `each` loop is cached per-item, on the reference to the item in the list.
 
 This behavior can be modified, like if a list of data does not contain stable object references.
 

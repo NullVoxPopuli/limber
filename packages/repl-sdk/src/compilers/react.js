@@ -46,8 +46,8 @@ export const jsx = {
                  *
                  * The default (development) transform emits jsxDEV from
                  * 'react/jsx-dev-runtime', which a production build of react
-                 * deliberately exports as undefined, so every compiled demo
-                 * then throws "_jsxDEV is not a function" at evaluation.
+                 * deliberately exports as undefined. Every compiled demo then
+                 * throws at evaluation when it calls the undefined `_jsxDEV`.
                  */
                 runtime: 'automatic',
                 development: false,

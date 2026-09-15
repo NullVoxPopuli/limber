@@ -14,7 +14,7 @@ import { NPM_PREFIX, npmUrl } from './url.js';
  * Everything async lives here. A synchronous `resolve` only has to name the
  * package, at a subpath, at whatever range was asked for: `file:///npm/nanoid`
  * or `file:///npm/nanoid@6/non-secure`. This turns that into the URL of a file
- * that now exists, and es-module-shims uses the URL the source hook returns as
+ * that now exists. es-module-shims uses the URL the source hook returns as
  * the base for that module's own relative imports, so nothing downstream has
  * to know the first URL was provisional.
  */
@@ -154,7 +154,7 @@ export class Installer {
    *
    * More aggressive than pnpm, which keys a copy on the resolved version and
    * would happily keep both `~1.2.0` at 1.2.9 and `^1.2.0` at 1.9.0. In a
-   * browser two copies of a package is not just wasted bytes: anything that
+   * browser two copies of a package is more than wasted bytes. Anything that
    * relies on being a singleton, which in Ember's case is most of
    * `@glimmer/*`, breaks in ways that are miserable to debug.
    *
@@ -189,8 +189,8 @@ export class Installer {
    * packages can want different versions of the same thing and both get what
    * they asked for.
    *
-   * Import map scopes are the web's version of node_modules nesting: instead
-   * of a directory the resolver walks up from, a URL prefix that says "for
+   * Import map scopes are the web's version of node_modules nesting. Instead
+   * of a directory the resolver walks up from, a URL prefix says "for
    * modules under here, this name means this". Registering the scope while
    * the package is being fetched is early enough, because the loader has not
    * looked at its imports yet.

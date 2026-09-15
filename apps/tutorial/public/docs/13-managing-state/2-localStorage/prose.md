@@ -19,7 +19,7 @@ class Demo extends Component {
 
 This technique uses the native [get][mdn-get] and [set][mdn-set] behaviors of JavaScript, allowing you to (in a way), intercept how `_count` gets read and set. This is similar to how `@tracked` works under the hood with the reactive value primitives.
 
-This tutorial does not (yet) store your in-progress work, so go-ahead and click the "show me" button below, click the button in the output pane a few times, and refresh the page.
+This tutorial does not (yet) store your in-progress work. To see this, click the "show me" button below, click the button in the output pane a few times, and refresh the page.
 
 [mdn-localStorage]: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
 [mdn-get]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get

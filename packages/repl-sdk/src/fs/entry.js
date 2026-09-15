@@ -14,10 +14,10 @@ let revision = 0;
 /**
  * Give the compiled snippet a home.
  *
- * A blob URL would not do here: `import './other.gjs'` from a snippet could
+ * A blob URL would not do here. `import './other.gjs'` from a snippet could
  * never resolve, because a blob parent URL says nothing about where the
- * snippet lives, so there is nothing to resolve a sibling against. It also
- * filled the debug log with opaque URLs.
+ * snippet lives. There is nothing to resolve a sibling against. Blob URLs
+ * also fill the debug log with opaque strings.
  *
  * @param {import('./vfs.js').VFS} vfs
  * @param {string} fileName

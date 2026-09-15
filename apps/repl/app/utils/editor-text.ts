@@ -57,7 +57,7 @@ export async function shortenUrl(url: string) {
  *
  * --------------------------------------------------------------
  *
- * NOTE: that the URL (and this service) *never* sets the editor content.
+ * NOTE: neither the URL nor this service *ever* sets the editor content.
  *       Editor content flows unidirectionally to the URL.
  *
  *       The only time the URL is read is on page load.

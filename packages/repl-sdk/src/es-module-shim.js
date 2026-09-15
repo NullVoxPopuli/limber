@@ -3,16 +3,12 @@
  * it freezes its caches and options passed to it.
  *
  * So... here we are. Making stuff dynamic so we can have es-module-shims
- * deal with the "most recent" intance of the compiler
- * (since the compiler holds state,
- *  and our tests share all globals as they run in the same browser window).
+ * deal with the "most recent" instance of the compiler. The compiler holds
+ * state, and our tests share all globals as they run in the same browser window.
  */
 
 /**
- * @type {{
- *   resolve: (id: string, parentUrl: string, parentResolve: (id: string, parentUrl: string) => string) => string
- *   source: (url: string, fetchOpts: RequestInit, parent: string, defaultSourceHook: (url: string, fetchOpts: RequestInit, parent: string) => Promise<any>) => Promise<any>
- * }}
+ * @type {{ resolve: import('./types.ts').ResolveHook, source: import('./types.ts').SourceHook }}
  */
 export const STABLE_REFERENCE = {
   resolve: () => {
@@ -42,9 +38,9 @@ globalThis.esmsInitOptions = {
 
   /**
    * Supersedes the `fetch` hook, which es-module-shims deprecated in favor of
-   * this one. The important difference for us is that the url this returns
-   * becomes the base for the module's own relative imports, so a synchronous
-   * resolve can answer with a URL that only names a package.
+   * this one. The important difference for us: the url this returns becomes
+   * the base for the module's own relative imports. A synchronous resolve can
+   * therefore answer with a URL that only names a package.
    *
    * @param {string} url
    * @param {RequestInit} fetchOpts

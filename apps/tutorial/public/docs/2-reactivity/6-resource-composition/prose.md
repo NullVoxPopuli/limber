@@ -1,7 +1,7 @@
 Where resources' real power comes in is the composibility of other resources.
 
 In previous chapters, we've built a clock, which updates every second.
-But now let's say we also want to make a Stopwatch, but we only want to manage `setInterval` once, we may want to make a Resource with configurable interval milliseconds, like this:
+But now let's say we also want to make a Stopwatch, while only managing `setInterval` once. We may want to make a Resource with a configurable interval in milliseconds, like this:
 
 ```js
 function Time(ms) {

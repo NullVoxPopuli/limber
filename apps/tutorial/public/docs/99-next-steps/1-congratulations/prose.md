@@ -1,6 +1,6 @@
 You've finished the Glimmer tutorial, and are ready to start building apps.
-You can refer back to individual tutorials at any time as each has a unique URL,
-or continue your learning via [the guides][guides], [the official tutorial][tutorial],
+You can refer back to individual tutorials at any time, as each has a unique URL.
+To continue your learning, see [the guides][guides], [the official tutorial][tutorial],
 the [api reference][reference], and [the blog][blog].
 
 [guides]: https://guides.emberjs.com/release/

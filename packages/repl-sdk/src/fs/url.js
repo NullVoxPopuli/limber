@@ -1,12 +1,12 @@
 /**
  * Every installed file gets a URL that says what it is.
  *
- * This is the whole point of the module fs. Today a resolution returns
- * `file:///tgz.repl.sdk/unzipped/repl-request-3`, which carries no path, so a
- * relative import from inside a package can't be resolved by URL semantics and
- * has to be reconstructed from a parent chain threaded through `?from=` query
- * params. Put the identity in the URL and `new URL(id, parentUrl)` is the whole
- * algorithm.
+ * This is the whole point of the module fs. A URL like
+ * `file:///tgz.repl.sdk/unzipped/repl-request-3` carries no path. A relative
+ * import from inside such a package can't be resolved by URL semantics, and
+ * would have to be reconstructed from a parent chain threaded through `?from=`
+ * query params. Put the identity in the URL and `new URL(id, parentUrl)` is the
+ * whole algorithm.
  */
 export const NPM_PREFIX = 'file:///npm/';
 
@@ -20,7 +20,7 @@ export const VIRTUAL_PREFIX = 'file:///virtual/';
  * What a synchronous `resolve` can say about a bare specifier before anything
  * has been downloaded: which package, at which range, at which subpath.
  *
- * The source hook turns this into a real file URL, and es-module-shims uses
+ * The source hook turns this into a real file URL. es-module-shims uses
  * the URL the source hook returns as the base for that module's own relative
  * imports, so nothing else has to know this URL was ever provisional.
  *

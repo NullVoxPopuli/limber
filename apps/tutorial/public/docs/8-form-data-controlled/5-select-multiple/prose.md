@@ -1,4 +1,4 @@
-Making a select multiple field _controlled_ is nearly the same as making a non-multiple select field controlled -- the main difference is that we now need to deal with array data (manually).
+Making a select multiple field _controlled_ is nearly the same as making a non-multiple select field controlled. The main difference is that we now need to deal with array data (manually).
 
 Our value now represents an array of known options, rather than a single value, so our `isSelected` function must be updated:
 ```gjs

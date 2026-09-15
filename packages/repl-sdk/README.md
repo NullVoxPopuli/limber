@@ -25,8 +25,8 @@ Ids match what GitHub generates for the same markdown, via
 ### V2 JSON:API     ->  #v2-jsonapi
 ```
 
-A `.md` file is typically read in two places — a rendered site, and the repo on
-GitHub — and an in-page `#anchor` only resolves in both if the two agree on how
+A `.md` file is typically read in two places: a rendered site, and the repo on
+GitHub. An in-page `#anchor` only resolves in both if the two agree on how
 the id is derived.
 
 Like GitHub, repeated headings within a document are de-duplicated (`#usage`,

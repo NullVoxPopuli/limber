@@ -83,7 +83,7 @@ export interface Compiler {
    * Convert a string from "fileExtension" to standard JavaScript.
    * This will be loaded as a module and then passed to the render method.
    *
-   * You may return either just a string, or an object with a `compiled` property that is a string -- any additional properties will be passde through to the render function -- which may be useful if there is accompanying CSS.
+   * You may return either just a string, or an object with a `compiled` property that is a string. Any additional properties will be passed through to the render function, which may be useful if there is accompanying CSS.
    */
   compile: (text: string, options: Record<string, unknown>) => Promise<CompileResult>;
 
@@ -124,16 +124,16 @@ export interface Compiler {
   /**
    * Sometimes libraries do not publish browser-compatible modules,
    * and require additional transpilation.
-   * Usually this happens by the consuming application's build process -- but in this REPL,
-   * we are kind of not exactly a consuming application, but still need to handle the further
+   * Usually this happens in the consuming application's build process. This REPL
+   * is not exactly a consuming application, but still needs to handle those
    * build concerns.
    *
    * For example, `import.meta.env.DEV` is not a platform native thing that and requires
    * a build plugin. Vite has one built in, but all other tools need to manually specify
    * what to do with `import.meta.env.DEV`.
    *
-   * Another example, some component frameworks may use templates, which can only be compiled
-   * by the host application, as the details of how a template is compiled are private API,
+   * Another example: some component frameworks use templates, which can only be compiled
+   * by the host application. The details of how a template is compiled are private API,
    * and can vary in minor releases of the template compiler.
    *
    * This should be a map of file extensions to async functions that must return either the
@@ -352,3 +352,33 @@ export interface ErrorMessage {
 }
 
 export type Message = InfoMessage | ErrorMessage;
+
+/**
+ * The `resolve` hook es-module-shims calls for every specifier.
+ */
+export type ResolveHook = (
+  id: string,
+  parentUrl: string,
+  parentResolve: (id: string, parentUrl: string) => string
+) => string;
+
+/**
+ * The `source` hook es-module-shims calls to load a resolved URL.
+ */
+export type SourceHook = (
+  url: string,
+  fetchOpts: RequestInit,
+  parent: string,
+  defaultSourceHook: (url: string, fetchOpts: RequestInit, parent: string) => Promise<any>
+) => Promise<any>;
+
+export interface LiveCodeExtractionOptions {
+  demo: { classList: string[] };
+  code: { classList: string[] };
+  isLive: (meta: string, lang: string) => boolean;
+  ALLOWED_FORMATS: string[];
+  isPreview: (meta: string) => boolean;
+  isBelow: (meta: string) => boolean;
+  needsLive: (lang: string) => boolean;
+  getFlavorFromMeta: (meta: string, lang: string) => string | undefined;
+}

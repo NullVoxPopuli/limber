@@ -1,4 +1,4 @@
-Just like the controlled input, the _controlled select_ is roughly the same approach (conceptually), but we because we now have a list of options where only one can be active at a time, the way in which we set the "selected option" as well as how we handle the events will be very different.
+Conceptually, the _controlled select_ takes roughly the same approach as the controlled input. But now we have a list of options where only one can be active at a time. That changes how we set the "selected option", and how we handle the events.
 
 Instead of setting value on a single input, we'll set `selected` to be the result of a function call on _each option_:
 ```gjs

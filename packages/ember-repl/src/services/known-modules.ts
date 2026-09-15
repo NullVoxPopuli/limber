@@ -85,9 +85,8 @@ const emberCompilationModules = {
     // encourage choosing your own adventure without a buildless recommended path.
     // The use of nested configs (specifically env) is also problematic for
     // "falling back to false" as what all other macros-using libraries use.
-    //   (many of us have seen "Cannot access DEBUG on undefined" in build errors)
-    // Even with this config, I have not successfully been able to use warp-drive
-    // in any of my REPL-based projects.
+    // Missing that config makes the build read DEBUG off undefined.
+    // Even so, I have not managed to use warp-drive in any of my REPL-based projects.
     //
     // (Its also perfectly fine for warp-drive to decide they don't care about the same things I do)
     getGlobalConfig: () => ({
@@ -118,14 +117,9 @@ const emberCompilationModules = {
 };
 
 const markdownCompilationModules = {
-  // Provided directly in repl-sdk, but could be overridden
-  // 'rehype-raw': () => import('rehype-raw'),
-  // 'rehype-stringify': () => import('rehype-stringify'),
-  // 'remark-gfm': () => import('remark-gfm'),
-  // 'remark-parse': () => import('remark-parse'),
-  // 'remark-rehype': () => import('remark-rehype'),
-  // unified: () => import('unified'),
-  // 'unist-util-visit': () => import('unist-util-visit'),
+  // rehype-raw, rehype-stringify, remark-gfm, remark-parse, remark-rehype,
+  // unified, and unist-util-visit are provided directly by repl-sdk.
+  // They could be overridden here.
 };
 
 /**

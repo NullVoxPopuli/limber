@@ -98,9 +98,9 @@ const standardScope = {
   // The default available scope for gjs:
   //
   // We don't use gjs transpilation here, because hbs transpilation
-  // doesn't need to go through the babel infra, so it's faster this way,
-  // even though it's more "verbose" and could get out of sync from the
-  // implementations / source-of-truth.
+  // doesn't need to go through the babel infra, so it's faster this way.
+  // The cost is that it's more "verbose" and could get out of sync from
+  // the implementations / source-of-truth.
   //
   // https://github.com/emberjs/babel-plugin-ember-template-compilation/blob/main/src/scope-locals.ts#L16
   //
@@ -196,13 +196,13 @@ export default class CompilerService {
 
   /**
    * @param {ModuleMap} [ extraModules ]: map of import paths to modules.
-   *  These modules are useful if you need to document a library or a any design system or a styleguide or
-   *  if there are additional modules that could be imported in the passed `code`.
+   *  These modules are useful if you need to document a library, a design system, or a styleguide.
+   *  They also cover any additional modules that could be imported in the passed `code`.
    * @param {object} [options] optional compiler options for each format/flavor
    *
-   *  Later on, imports that are not present by default (ember/glimmer) or that
-   *  are not provided by extraModules will be searched on npm to see if a package
-   *  needs to be downloaded before running the `code` / invoking the component
+   *  Later on, imports that are not present by default (ember/glimmer) and
+   *  are not provided by extraModules will be searched on npm. A matching package
+   *  is downloaded before running the `code` / invoking the component.
    */
   setup = (extraModules: ModuleMap = {}, options: CompilerOptions = {}) => {
     const localModules = modules(extraModules);

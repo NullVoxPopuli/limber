@@ -4,7 +4,7 @@ rules:
     config:
       # Every `uses:` must be pinned to a full commit SHA. Tags are mutable --
       # a hash pin is the only reference an attacker who compromises an action's
-      # repo can't move. Renovate bumps these SHAs (and the `# vX.Y.Z` comment)
+      # repo can't move. Renovate bumps these SHAs and the `# vX.Y.Z` comment
       # automatically, so pinning doesn't freeze us on stale versions.
       policies:
         "*": hash-pin

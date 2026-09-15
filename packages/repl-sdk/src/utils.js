@@ -34,8 +34,8 @@ export function isRecord(x) {
  *
  * SWC (via content-tag) throws Errors whose `message` is only
  * "Parse Error at <file>:<line>:<column>". The explanation of what's
- * wrong and the code-frame live on a non-standard `source_code` property
- * (and `stack` is nothing but wasm frames).
+ * wrong and the code-frame live on a non-standard `source_code` property,
+ * while `stack` is nothing but wasm frames.
  *
  * @param {unknown} error
  * @returns {string}

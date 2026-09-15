@@ -57,7 +57,7 @@ class Demo extends Component {
 }
 ```
 
-Unlike the other controlled inputs we've covered so far, we dan't expect to do anything with the updated `@value` once it's passed back in to our `contenteditable` component. `contenteditable` has its own state, and if we were to retain an fully _controlled_ `@value`, we would then need to manage the cursor position within the contenteditable element, and that is a lot of code. 
+Unlike the other controlled inputs we've covered so far, we don't expect to do anything with the updated `@value` once it's passed back in to our `contenteditable` component. `contenteditable` has its own state. If we were to retain a fully _controlled_ `@value`, we would also need to manage the cursor position within the contenteditable element, and that is a lot of code. 
 
 <p class="call-to-play">
   Change the contenteditable within the <code>ControlledInput</code> component 

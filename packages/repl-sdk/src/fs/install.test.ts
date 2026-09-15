@@ -152,7 +152,7 @@ describe('dependency scopes', () => {
     expect(scope.shared).toBeTruthy();
     /**
      * Absent on purpose. A name a scope does not claim falls through to the
-     * enclosing scope and then the top-level imports, which is how a peer ends
+     * enclosing scope and then the top-level imports. That is how a peer ends
      * up on whatever copy its dependent already has.
      */
     expect(scope.host).toBeUndefined();

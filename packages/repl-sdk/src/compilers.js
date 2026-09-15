@@ -14,8 +14,8 @@ export const compilers = {
     /**
      * ember has historically used a subset of HBS, and then built its own features on top of.
      *
-     * It is not "handlebars", but does share a lot of similarities.
-     * (and these continue in ember's new gjs and gts formats)
+     * It is not "handlebars", but does share a lot of similarities,
+     * and these continue in ember's new gjs and gts formats.
      *
      */
     ember: ember.hbs,

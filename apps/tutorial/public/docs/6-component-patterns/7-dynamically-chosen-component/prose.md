@@ -28,7 +28,7 @@ So in order to dynamically select between these components, we need some logic -
 </fieldset>
 ```
 
-This boilerplate, provided for you, will allow us to choose an option (based on the `value` attribute's value) from the Form and give us an opportunity to interpret that FormData into a component to render. 
+This boilerplate, provided for you, lets us choose an option from the Form based on the `value` attribute. It also gives us an opportunity to interpret that FormData into a component to render. 
 
 As you can see from the implemented form-handling functions, the value of the `component` field is stored on `this.selected`. We can use `this.selected`, which will be a string, to map to one of our defined components.
 

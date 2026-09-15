@@ -20,7 +20,7 @@ and
 </Modal>
 ```
 
-The `:footer` block is optionally present, and we may expect that when it is omitted, that the component we're using, `Modal` in this case, doesn't include any of the padding or styling associated with the footer of the `Modal`.
+The `:footer` block is optional. When it is omitted, we may expect the component we're using, `Modal` in this case, to leave out the padding and styling associated with its footer.
 
 To implement this, there is a built-in feature of the templating language, the [`(has-block)`][docs-has-block] helper.
 

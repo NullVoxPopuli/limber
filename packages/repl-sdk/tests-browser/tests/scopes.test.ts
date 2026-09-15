@@ -7,8 +7,8 @@ import { beforeAll, describe, expect, test } from 'vitest';
  * This decides how per-importer versions work. Import map scopes are the web's
  * node_modules nesting, and mho builds them the same way: crawl package.json,
  * map each dependency name to where that dependency actually lives. But the
- * crawl here happens lazily, inside the source hook, so the scope for package
- * A has to be added while A is being fetched and still apply to A's own
+ * crawl here happens lazily, inside the source hook. So the scope for package
+ * A has to be added while A is being fetched, and still apply to A's own
  * imports.
  *
  * If it does, no pre-crawl is needed for versions either.

@@ -7,22 +7,7 @@ import { GLIMDOWN_PREVIEW, GLIMDOWN_RENDER } from './const.js';
  * Swaps live codeblocks with placeholders that the compiler can then
  * use to insert compiled-from-other-sources' code into those placeholders.
  *
- * @type {import('unified').Plugin<[
- *   {
- *     demo: {
- *       classList: string[]
- *     },
- *     code: {
- *       classList: string[]
- *     },
- *     isLive: (meta: string, lang: string) => boolean,
- *     ALLOWED_FORMATS: string[],
- *     isPreview: (meta: string) => boolean,
- *     isBelow: (meta: string) => boolean,
- *     needsLive: (lang: string) => boolean
- *     getFlavorFromMeta: (meta: string, lang: string) => string | undefined
- *   },
- * ], import('mdast').Root>}
+ * @type {import('unified').Plugin<[import('../../types.ts').LiveCodeExtractionOptions], import('mdast').Root>}
  */
 export function liveCodeExtraction(options) {
   const { code, demo, isLive, ALLOWED_FORMATS, isPreview, isBelow, needsLive, getFlavorFromMeta } =

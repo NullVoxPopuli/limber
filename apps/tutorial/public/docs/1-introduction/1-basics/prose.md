@@ -36,7 +36,7 @@ Ember is "A framework for ambitious web developers", and builds on top of Glimme
 
 ### Limber
 
-Limber is a [REPL][wiki-repl] that aims at providing an easy way to share code examples, samples, and reproductions for both the GlimmerJS (`.gjs`) file format as well as interactive documentation authoring via mixing in GlimmerJS on top of markdown.
+Limber is a [REPL][wiki-repl] that aims to make sharing code examples, samples, and reproductions easy. It supports the GlimmerJS (`.gjs`) file format, and interactive documentation authoring by mixing GlimmerJS into markdown.
 
 ## How to use this tutorial
 
@@ -49,7 +49,7 @@ so it is recommended to progress sequentially from the beginning to the end.
 The dropdown menu above can be used for navigation if needed.
 
 Each tutorial chapter includes a 'Show me' button that can be used if you encounter difficulties.
-However, manually typing in the editor for each example is a more effective way to learn and enhance your skills -- but also there is no shame in asking for help!
+However, manually typing each example in the editor is a more effective way to learn. There is also no shame in asking for help!
 
 On smaller screens, a button in the bottom right slides the tutorial text out of the way so you can use the editor.
 
@@ -77,7 +77,7 @@ A component may include 1 or more of these primitives and is "invoked" with angl
 
 ## What if I'm not using `<template>` syntax in my projects yet?
 
-If you're an existing ember/glimmer user and are not yet using `<template>`, there is a transformation you can do to adapt the examples in this tutorial to the pre-`<template>` times by using the following guidelines:
+If you're an existing ember/glimmer user and are not yet using `<template>`, you can still adapt the examples in this tutorial. Use the following guidelines to translate them to the pre-`<template>` formats:
 
 - For any lone `<template>`, this is a template-only component.
 - For any `<template>` within a `class`, this would be equivalent to a js + hbs component (two-file, colocated, or class component).
@@ -119,11 +119,11 @@ Whether the reactive system be [Signals][Signals], [Runes][Runes], or [`@tracked
 
 Calling `tracked()` as a function takes the behavior of `@tracked` and lets you use it _anywhere_. In fact, `@tracked` could even be thought of as abstracting away a tracked value where the **access or setting of properties** occurs on the `this` object. 
 
-Once the tutorial gets to class-components, those will be the primary form of examples going forward, as Ember has solved class ergonomics in JavaScript, and the experience using classes is quite good.
-However, because there are a number of more foundational concepts to cover, this tutorial does not _start_ with classes, so that the focus of each chapter can be the foundational concepts, rather than also learning class syntax.
+Once the tutorial gets to class-components, those will be the primary form of examples going forward. Ember has solved class ergonomics in JavaScript, and the experience using classes is quite good.
+However, there are a number of more foundational concepts to cover first, so this tutorial does not _start_ with classes. Each chapter can then focus on one concept, not class syntax.
 
-**Make Note**, it is typically bad practice to store state at the _module-level_ in production applications. (but doing things proper can be a distraction from teaching concepts).  
-**For Library Authors** (and folks authoring library code in apps), the API of a tracked value should not be exposed to your users (as both input and output) as it is an implementation detail.
+**Make Note**, it is typically bad practice to store state at the _module-level_ in production applications. Doing things properly here would be a distraction from teaching concepts.  
+**For Library Authors**, including folks authoring library code in apps: the API of a tracked value is an implementation detail. Do not expose it to your users, as either input or output.
 
 [Signals]: https://www.solidjs.com/tutorial/introduction_signals
 [Runes]: https://svelte.dev/blog/runes 

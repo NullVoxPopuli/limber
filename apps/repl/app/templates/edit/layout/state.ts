@@ -252,9 +252,9 @@ export const LayoutState = setup({
                   `else we listen for an orientation update.`
                 : '',
               // the always events will only succeed once we've already
-              // resolved the device / window / iframe orientation
-              // (and this is why we can't use the native Device API
-              //   because we have window and iframes to worry about)
+              // resolved the device / window / iframe orientation.
+              // This is also why we can't use the native Device API:
+              // we have both the window and iframes to worry about.
               always: [
                 {
                   guard: requestedMaximized,

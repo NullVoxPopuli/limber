@@ -105,12 +105,12 @@ export async function compiler(config, api) {
           : undefined
       );
 
-      // A fresh owner per render, like gjs/hbs do: template instances (and
-      // their compiled handles) are cached per owner, but each renderComponent
+      // A fresh owner per render, like gjs/hbs do. Template instances and
+      // their compiled handles are cached per owner, but each renderComponent
       // call has its own program artifacts. Sharing one owner across islands
       // would make glimmer reuse a compiled handle from another island's
-      // program, blowing up with "Cannot read properties of null (reading
-      // 'syscall')" the second time a singleton scope component is invoked.
+      // program. The second time a singleton scope component is invoked,
+      // glimmer then throws a TypeError dereferencing null in its syscall lookup.
       const result = renderComponent(compiled, {
         into: element,
         owner: makeOwner(userOptions.owner),

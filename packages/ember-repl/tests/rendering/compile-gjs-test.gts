@@ -89,9 +89,9 @@ module('Rendering | compile()', function (hooks) {
 
       /**
        * Mirroring how apps use compile(): nobody awaits state.promise,
-       * so its rejection also fires the browser's unhandledrejection event,
-       * whose announcement is the *last* error message -- the one the UI's
-       * error bubble ends up showing.
+       * so its rejection also fires the browser's unhandledrejection event.
+       * That event's announcement is the *last* error message, and the one
+       * the UI's error bubble ends up showing.
        *
        * QUnit fails tests on unhandled rejections; that unhandled rejection
        * is the point of this test, so silence QUnit's handler for its duration.

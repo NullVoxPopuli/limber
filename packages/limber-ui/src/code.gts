@@ -82,7 +82,7 @@ interface Signature {
     // storage?: Storage;
 
     /**
-     * Editor size and/or split. For example passing `min` will minimize the editor, and passing `max` will maximize the editor. Also, the percent of the vertical or horizontal direction can be specified as well. For example, passing `60v` will cause a vertical split where the editor takes up 60% of the available space and `30h` will cause a horizontal split where the editor takes up 30% of the available space.
+     * Editor size and/or split. For example passing `min` will minimize the editor, and passing `max` will maximize the editor. Also, the percent of the vertical or horizontal direction can be specified as well. For example, passing `60v` will cause a vertical split where the editor takes up 60% of the available space. Passing `30h` will cause a horizontal split where the editor takes up 30% of the available space.
      */
     editor?: string;
     /**
@@ -210,8 +210,8 @@ export default class Code extends Component<Signature> {
 
   /**
    * This uses iframe postMessage to efficiently update state within the
-   * iframe's app so that we don't have to reload the whole app if we want to change the
-   * URL / code.
+   * iframe's app. That way we don't have to reload the whole app when the
+   * URL / code changes.
    */
   <template>
     {{#if this.load}}

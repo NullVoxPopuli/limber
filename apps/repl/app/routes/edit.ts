@@ -14,10 +14,10 @@ import type EditorService from 'limber/services/editor';
  * When embedding Limber, we want to force fully qualified
  * files either in the URL, or via iframe-message (postMessage)
  *
- * Trying to handle the scenario where the embedder isn't ready
- * to send us the document yet *and* still try to have a default
- * fallback causes Limber to do more work than needed, and can
- * cause content flashes.
+ * Handling an embedder that isn't ready to send us the document
+ * yet, *and* showing a default fallback in the meantime, makes
+ * Limber do more work than needed. It can also cause content
+ * flashes.
  *
  * For example:
  * 1. Host page loads

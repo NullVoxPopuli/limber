@@ -4,7 +4,7 @@
 
 Vanilla JavaScript has everything we need to handle form data, de-sync it from our source data and collect all user input upon submission.
 
-Other abstractions, such as the "changeset" concept contain a lot of this functionality and have additional utilities such as rollback, snapshots, forking, etc, but that is a topic for another demo.
+Other abstractions, such as the "changeset" concept, contain a lot of this functionality. They also add utilities such as rollback, snapshots, and forking, but that is a topic for another demo.
 
 In the form below, we create a Vanilla™ [HTML form][2], and only add "Ember" code for handling the form submission and field inputs. By default, form submissions will cause a page reload, so in a single-page-app, we need to prevent that default behavior.
 

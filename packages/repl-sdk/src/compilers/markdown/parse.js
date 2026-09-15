@@ -44,7 +44,7 @@ export async function parseMarkdown(input, options) {
   // 2. The pipeline may HTML-escape `<` for PascalCase component invocations
   //    that appear in regular markdown (outside code/backticks). Undo that so
   //    Glimmer can still invoke them.  We only unescape outside <code> elements
-  //    (and outside <pre> blocks) to preserve escaping in code.
+  //    and <pre> blocks, to preserve escaping in code.
   templateOnly = unescapeComponentsOutsideCode(templateOnly);
 
   return { text: templateOnly, codeBlocks: liveCode };

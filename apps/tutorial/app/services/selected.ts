@@ -36,8 +36,8 @@ class DocFile {
   /*********************************************************************
    * This is a pattern to help reduce flashes of content during
    * the intermediate states of the above request fetchers.
-   * When a new request starts, we'll hold on the old value for as long as
-   * we can, and only swap out the old data when the new data is done loading.
+   * When a new request starts, we hold on to the old value for as long as
+   * we can. The old data is only swapped out once the new data is done loading.
    *
    ********************************************************************/
 

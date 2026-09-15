@@ -93,14 +93,9 @@ export function buildCompiler(options) {
     getFlavorFromMeta: options.getFlavorFromMeta,
   });
 
-  // .use(() => (tree) => visit(tree, (node) => console.log('i', node)))
-  // remark rehype is needed to convert markdown to HTML
+  // remark-rehype is needed to convert markdown to HTML.
   // However, it also changes all the nodes, so we need another pass
-  // to make sure our Glimmer-aware nodes are in tact
-  // @ts-ignore - unified processor types are complex and change as plugins are added
-  // remark rehype is needed to convert markdown to HTML
-  // However, it also changes all the nodes, so we need another pass
-  // to make sure our Glimmer-aware nodes are in tact
+  // to make sure our Glimmer-aware nodes are intact.
   // @ts-ignore - unified processor types are complex and change as plugins are added
   compiler = compiler.use(remarkRehype, { allowDangerousHtml: true });
 

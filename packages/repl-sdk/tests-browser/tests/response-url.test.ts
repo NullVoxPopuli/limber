@@ -10,9 +10,9 @@ import { beforeAll, describe, expect, test, vi } from 'vitest';
  *
  * This decides whether resolution needs a pre-install crawl at all. If the
  * returned url wins, `resolve` can answer synchronously with a URL that only
- * names the package, and the async install can happen inside `source`, which
- * is allowed to be async. If the requested url wins, every package has to be
- * installed before anything resolves.
+ * names the package. The async install then happens inside `source`. If the
+ * requested url wins, every package has to be installed before anything
+ * resolves.
  */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
