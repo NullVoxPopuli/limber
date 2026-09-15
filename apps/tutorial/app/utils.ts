@@ -7,8 +7,8 @@ export const not = (x: unknown) => !x;
 /**
  * The manifest's page paths live under the 'docs' group
  * (e.g. /docs/1-introduction/1-basics/prose.md), but the app's URLs are
- * the lesson directories at the root (e.g. /1-introduction/1-basics) —
- * the group is mounted at the root via addRoutes(this, 'docs').
+ * the lesson directories at the root (e.g. /1-introduction/1-basics),
+ * because the group is mounted at the root via addRoutes(this, 'docs').
  */
 export function lessonPath(item: Page | PageTree): string {
   return item.appRelativePath

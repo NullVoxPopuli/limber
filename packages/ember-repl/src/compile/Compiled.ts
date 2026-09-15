@@ -19,7 +19,7 @@ export interface CompiledOptions {
    * `@tracked` state). Property updates propagate to the rendered
    * component without triggering a recompile.
    *
-   * Keys must be present when compilation happens — additional keys
+   * Keys must be present when compilation happens. Additional keys
    * added later will not become reactive.
    */
   args?: Record<string, unknown>;

@@ -4,7 +4,7 @@ import { copyToClipboard, getSnippetElement } from './copy-utils.ts';
 import Menu from './menu.gts';
 
 /**
- * This component is injected via the markdown rendering
+ * Injected via the markdown rendering, not invoked from a template.
  */
 export default class CopyMenu extends Component {
   copyAsText = (event: Event) => {

@@ -54,12 +54,12 @@ interface Signature {
     format?: AllowedFormat;
 
     /**
-     * Sets the height of the iframe via specifying the number of lines of code to show.
+     * Height of the iframe, specified as the number of lines of code to show.
      */
     lines?: number;
 
     /**
-     * Sets the `title` attribute on the iframe. If `@title` is not passed, this value will be generated for you. Helps with screen readers.
+     * The `title` attribute on the iframe. If `@title` is not passed, this value will be generated for you. Helps with screen readers.
      */
     title?: string;
 
@@ -82,7 +82,7 @@ interface Signature {
     // storage?: Storage;
 
     /**
-     * Set the editor size and/or split. For example passing `min` will minimize the editor, and passing `max` will maximize the editor. Also, the percent of the vertical or horizontal direction can be specified as well. For example, passing `60v` will cause a vertical split where the editor takes up 60% of the available space and `30h` will cause a horizontal split where the editor takes up 30% of the available space.
+     * Editor size and/or split. For example passing `min` will minimize the editor, and passing `max` will maximize the editor. Also, the percent of the vertical or horizontal direction can be specified as well. For example, passing `60v` will cause a vertical split where the editor takes up 60% of the available space and `30h` will cause a horizontal split where the editor takes up 30% of the available space.
      */
     editor?: string;
     /**

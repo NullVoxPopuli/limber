@@ -33,7 +33,7 @@ export function isRecord(x) {
  * Builds the most useful human-readable message from a thrown error.
  *
  * SWC (via content-tag) throws Errors whose `message` is only
- * "Parse Error at <file>:<line>:<column>" — the explanation of what's
+ * "Parse Error at <file>:<line>:<column>". The explanation of what's
  * wrong and the code-frame live on a non-standard `source_code` property
  * (and `stack` is nothing but wasm frames).
  *

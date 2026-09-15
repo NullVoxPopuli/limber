@@ -88,9 +88,9 @@ jobs:
           SHA="${HEAD_SHA:-$(echo "$PR_JSON" | jq -r '.headRefOid')}"
 
           # On the workflow_run trigger, RUN_ID *is* the CI run that triggered
-          # us -- unambiguously this PR's run, even with other PRs building at
+          # us -- unambiguously the pull request's own run, even with other PRs building at
           # the same time. workflow_dispatch has no triggering run, so match the
-          # CI run by this PR's exact head commit. A head SHA belongs to exactly
+          # CI run by the pull request's exact head commit. A head SHA belongs to exactly
           # one PR, and --event pull_request avoids matching a post-merge push
           # run on the same commit; among re-runs of that identical commit we
           # take the most recent.

@@ -9,9 +9,8 @@ export function getSnippetElement(event: Event) {
   const ancestry = event.composedPath();
 
   /**
-   * This component has intimate knowledge
-   * of how we build markdown previews in
-   * markdown-to-ember.ts
+   * Relies on intimate knowledge of how we build
+   * markdown previews in markdown-to-ember.ts
    *
    * We can't select the pre tag directly, otherwise html-to-image
    * loses the padding, border-radius, shadow

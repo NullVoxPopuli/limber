@@ -3,7 +3,6 @@ import { module, skip } from 'qunit';
 
 import { setupApplicationCompilerTest } from '#tests/helpers.ts';
 
-// import { stripIndent } from 'common-tags';
 import { DEFAULT_SNIPPET, getFromLabel } from 'limber/snippets';
 
 import { Page } from './-page';
@@ -102,27 +101,8 @@ module('Scenarios', function (hooks) {
 
     module('input is valid', function () {
       skip('format: glimdown', async function (assert) {
-        // const code = stripIndent`
-        //   import Component from '@glimmer/component';
-        //   import { tracked } from '@glimmer/tracking';
-        //   import { on } from '@ember/modifier';
-
-        //   export default class HelloWorld extends Component {
-        //     @tracked count = 0;
-
-        //     increment = () => this.count += 1;
-
-        //     <template>
-        //       <p>You have clicked the button {{this.count}} times.</p>
-
-        //       <button {{on "click" this.increment}}>Click</button>
-        //     </template>
-        //   }
-        // `;
-
         await visit('/edit');
         await page.editor.load();
-        // await page.editor.setText(code);
 
         const demoText = await getFromLabel('With inline Javascript');
 

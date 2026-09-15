@@ -44,7 +44,7 @@ export function buildCompiler(options) {
   // @ts-ignore - unified processor types are complex and change as plugins are added
   compiler = compiler.use(() => (tree) => {
     visit(tree, 'html', function (node) {
-      // Check if this html node is a PascalCase component (opening or closing tag)
+      // A PascalCase tag (opening or closing) is a component, not plain html
       if (typeof node.value === 'string' && node.value.match(/^<\/?[A-Z][a-zA-Z0-9]/)) {
         // Add a marker to the node's data that remarkRehype will preserve
         // remark-rehype with allowDangerousHtml will turn this into a text node,
@@ -139,7 +139,7 @@ export function buildCompiler(options) {
 
       // Check for nodes with values (text, raw, html, etc.)
       if ('value' in nodeObj && typeof nodeObj.value === 'string') {
-        // Check if this raw node was marked as a PascalCase component in remark phase
+        // Raw nodes marked as PascalCase components in the remark phase must survive as glimmer syntax
         const nodeData = /** @type {Record<string, unknown> | undefined} */ (
           typeof node === 'object' && node !== null && 'data' in node ? node.data : undefined
         );

@@ -209,7 +209,7 @@ module('Rendering | compile()', function (hooks) {
     test('a singleton scope component renders in more than one document', async function (assert) {
       // Each document renders as its own island with its own program
       // artifacts, but a component's template (and its compiled handle) is
-      // cached per owner — so the islands must not share an owner, or the
+      // cached per owner, so the islands must not share an owner, or the
       // second document dies with
       // "Cannot read properties of null (reading 'syscall')".
       const LocalComponent = <template>a singleton component</template>;

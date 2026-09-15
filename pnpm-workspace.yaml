@@ -53,7 +53,7 @@ allowedDeprecatedVersions:
 # TypeScript versions are managed here rather than with an `overrides` entry.
 # A blanket override also rewrote the `typescript` that build tooling resolves
 # (@marijn/buildtool, rollup-plugin-ts), and those tools need the JS compiler
-# API that typescript@7 no longer ships. Catalogs pin our own packages without
+# API that typescript@7 does not ship. Catalogs pin our own packages without
 # touching dependency resolution.
 #
 # TypeScript 7 is installed under the `typescript-7` alias rather than as

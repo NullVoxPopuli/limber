@@ -161,7 +161,7 @@ jobs:
 
   #################################################################
   # Job 2: Download the tarball and open a PR.
-  # This job does NOT execute any untrusted code — it only
+  # This job does NOT execute any untrusted code. It only
   # consumes the tarball artifact produced by the build job.
   #################################################################
   open-pr:

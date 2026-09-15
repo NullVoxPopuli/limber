@@ -43,7 +43,7 @@ export default class EditorService extends Service {
   }
 
   /**
-   * This function is set by a modifier,
+   * Set by a modifier,
    * which means the timing of its existence is dependent on
    * render speed, how busy the browser is, etc.
    *

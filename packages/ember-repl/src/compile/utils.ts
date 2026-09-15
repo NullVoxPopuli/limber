@@ -14,7 +14,7 @@ const DEFAULT_PREFIX = 'ember-repl';
 /**
  * For any given code block, a reasonably stable name can be
  * generated.
- * This can help with cacheing previously compiled components,
+ * This can help with caching already-compiled components,
  * and generally allowing a consumer to derive "known references" to user-input
  */
 export function nameFor(code: string, prefix = DEFAULT_PREFIX) {
