@@ -12,13 +12,7 @@ import { link } from 'reactiveweb/link';
 import type Owner from '@ember/owner';
 
 type AllowedFormat =
-  | 'gjs'
-  | 'gts'
-  | 'hbs'
-  | 'gmd'
-  | 'vue'
-  | 'svelte'
-  | 'mermaid';
+  'gjs' | 'gts' | 'hbs' | 'gmd' | 'vue' | 'svelte' | 'mermaid';
 // type Storage = 'local' | 'url';
 
 import { HostMessaging } from './frame-messaging.ts';

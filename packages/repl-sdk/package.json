@@ -75,7 +75,7 @@
     "common-tags": "^1.8.2",
     "decorator-transforms": "2.4.0",
     "eslint": "^9.39.1",
-    "prettier": "^3.7.4",
+    "prettier": "^3.9.6",
     "publint": "^0.3.16",
     "typescript": "catalog:ts5",
     "vite": "^8.0.8",

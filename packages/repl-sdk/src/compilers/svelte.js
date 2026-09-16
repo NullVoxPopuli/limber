@@ -104,9 +104,7 @@ export const svelte = {
         // @ts-ignore
         const instance = svelte.mount(component, {
           target: element,
-          props: {
-            /* no props */
-          },
+          props: {/* no props */},
         });
 
         api.announce('info', 'Done');

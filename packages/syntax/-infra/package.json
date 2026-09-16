@@ -20,7 +20,7 @@
     "@types/mocha": "^10.0.10",
     "eslint": "^9.39.1",
     "mocha": "^11.6.0",
-    "prettier": "^3.7.4",
+    "prettier": "^3.9.6",
     "typescript": "catalog:ts5"
   },
   "scripts": {

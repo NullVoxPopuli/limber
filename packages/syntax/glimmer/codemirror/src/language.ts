@@ -112,7 +112,7 @@ export const glimmerPlain = LRLanguage.define({
           let endElt: SyntaxNode | null = null;
           let close: SyntaxNode | null;
 
-          for (let cur = context.node; ; ) {
+          for (let cur = context.node; ;) {
             let last = cur.lastChild;
 
             if (!last || last.name != 'Element' || last.to != cur.to) break;
