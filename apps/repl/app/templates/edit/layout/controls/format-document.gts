@@ -8,9 +8,8 @@ import { getCompiler } from 'ember-repl';
 import { getPromiseState } from 'reactiveweb/get-promise-state';
 import { errorMessage } from 'repl-sdk';
 
-import { canFormat, formatDocument } from 'limber/utils/formatting';
-
 import { Button } from './button.gts';
+import { canFormat, formatDocument } from './formatting.ts';
 
 import type EditorService from 'limber/services/editor';
 
