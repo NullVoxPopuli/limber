@@ -5,11 +5,6 @@ import type { Diagnostic } from '@codemirror/lint';
 import type { Transport } from '@codemirror/lsp-client';
 import type { Extension } from '@codemirror/state';
 
-/**
- * Set by the ts7 vite plugin from the workspace package's version.
- */
-declare const __TSC_WASM_VERSION__: string;
-
 const PROJECT_URI = 'file:///project';
 
 /**
@@ -26,16 +21,11 @@ export function hasTypeScript(format: string): boolean {
 export type OnStatus = (message: string) => void;
 
 /**
- * The wasm is 11 MB over the wire, so it comes from esm.sh
- * rather than from the app's own assets.
- *
- * Tests and local development can point at another copy through
- * `globalThis.TSC_WASM_URL`.
+ * The vite plugin writes TypeScript next to the app in parts.
+ * The worker reads this manifest and joins them.
  */
 function wasmUrl(): string {
-  const override = (globalThis as { TSC_WASM_URL?: string }).TSC_WASM_URL;
-
-  return override ?? `https://esm.sh/@nullvoxpopuli/tsc-wasm@${__TSC_WASM_VERSION__}/dist/tsc.wasm`;
+  return `${import.meta.env.BASE_URL}ts7/tsc.wasm.json`;
 }
 
 function typesUrl(): string {

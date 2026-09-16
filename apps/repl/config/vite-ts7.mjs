@@ -1,6 +1,6 @@
 // Vite support for the TypeScript 7 worker in the editor.
 //
-// Two files land next to the app, at fixed names:
+// Three things land next to the app, at fixed names:
 //
 // - `ts7-worker.js`: the worker, built as its own bundle. Vite's worker
 //   support runs the app's close hooks for the worker bundle too, which
@@ -8,6 +8,10 @@
 // - `ts7-types.json`: the type declarations the worker's virtual project
 //   needs, collected from node_modules so that they match the app's
 //   dependencies.
+// - `ts7/tsc.wasm.json` and its parts: TypeScript itself, from
+//   @nullvoxpopuli/tsc-wasm. Cloudflare Pages caps one asset at 25 MiB,
+//   and the module is about 48 MB, so it ships in parts that the worker
+//   joins.
 //
 // The content mapper and Glint's transform are Node code. Inside the worker,
 // two Node built-ins get browser stand-ins, and two wasm-backed dependencies
@@ -33,6 +37,9 @@ const typescriptDir = resolve(appRoot, 'app/templates/edit/editor/typescript');
 
 const WORKER_FILE = 'ts7-worker.js';
 const TYPES_FILE = 'ts7-types.json';
+const WASM_DIR = 'ts7';
+const WASM_MANIFEST = 'tsc.wasm.json';
+const WASM_PART_BYTES = 20 * 1024 * 1024;
 const PROJECT = '/project';
 
 function manifest(dir) {
@@ -157,21 +164,51 @@ async function buildWorker(outDir, mode) {
   });
 }
 
+function wasmSource() {
+  const dir = packageDir('@nullvoxpopuli/tsc-wasm');
+  const file = join(dir, 'dist/tsc.wasm');
+
+  if (!existsSync(file)) {
+    throw new Error(
+      `${file} is missing. Run \`pnpm --filter @nullvoxpopuli/tsc-wasm build:wasm\` first.`
+    );
+  }
+
+  return { file, version: manifest(dir).version };
+}
+
+/**
+ * Splits the module into parts and describes them in a manifest.
+ * Returns the manifest.
+ */
+function writeWasmParts(outDir) {
+  const { file, version } = wasmSource();
+  const bytes = readFileSync(file);
+  const dir = join(outDir, WASM_DIR);
+  const parts = [];
+
+  mkdirSync(dir, { recursive: true });
+
+  for (let offset = 0; offset < bytes.byteLength; offset += WASM_PART_BYTES) {
+    const name = `tsc.wasm.${parts.length}`;
+
+    writeFileSync(join(dir, name), bytes.subarray(offset, offset + WASM_PART_BYTES));
+    parts.push(name);
+  }
+
+  const description = { version, size: bytes.byteLength, parts };
+
+  writeFileSync(join(dir, WASM_MANIFEST), JSON.stringify(description));
+
+  return description;
+}
+
 export function ts7() {
   let config;
   let outDir;
 
   return {
     name: 'ts7',
-    config() {
-      return {
-        define: {
-          __TSC_WASM_VERSION__: JSON.stringify(
-            manifest(packageDir('@nullvoxpopuli/tsc-wasm')).version
-          ),
-        },
-      };
-    },
     configResolved(resolved) {
       config = resolved;
       outDir = resolve(resolved.root, resolved.build.outDir);
@@ -183,6 +220,22 @@ export function ts7() {
       server.middlewares.use(`/${TYPES_FILE}`, (_request, response) => {
         response.setHeader('content-type', 'application/json');
         response.end(types());
+      });
+
+      let wasmParts;
+
+      server.middlewares.use(`/${WASM_DIR}/`, (request, response, next) => {
+        wasmParts ??= writeWasmParts(devDir);
+
+        const name = request.url.slice(1);
+
+        if (name !== WASM_MANIFEST && !wasmParts.parts.includes(name)) return next();
+
+        response.setHeader(
+          'content-type',
+          name === WASM_MANIFEST ? 'application/json' : 'application/wasm'
+        );
+        response.end(readFileSync(join(devDir, WASM_DIR, name)));
       });
 
       server.middlewares.use(`/${WORKER_FILE}`, async (_request, response) => {
@@ -199,6 +252,7 @@ export function ts7() {
       if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
 
       writeFileSync(join(outDir, TYPES_FILE), types());
+      writeWasmParts(outDir);
       await buildWorker(outDir, config.mode);
     },
   };

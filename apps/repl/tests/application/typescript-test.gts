@@ -6,8 +6,8 @@ import { setupApplicationCompilerTest } from '#tests/helpers.ts';
 import { Page } from './-page';
 
 /**
- * The language server is TypeScript compiled to wasm, downloaded from esm.sh on
- * the first gts document. Diagnostics arrive a moment after the document syncs.
+ * The language server is TypeScript compiled to wasm, loaded on the first gts
+ * document. Diagnostics arrive a moment after the document syncs.
  */
 const DIAGNOSTIC = '.cm-lintRange-error';
 const LOAD_TIMEOUT = 90_000;

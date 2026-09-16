@@ -211,6 +211,41 @@ async function loadTypes(typesUrl) {
   mapper.configure(versions);
 }
 
+/**
+ * The module ships in parts, because the host caps one asset at 25 MiB.
+ * The manifest lists them; they download in parallel and join here.
+ */
+async function loadWasm(manifestUrl) {
+  const response = await fetch(manifestUrl);
+
+  if (!response.ok) {
+    throw new Error(`Could not load TypeScript: ${response.status} ${manifestUrl}`);
+  }
+
+  const { parts, size } = await response.json();
+  const base = new URL(manifestUrl, location.href);
+  const buffers = await Promise.all(
+    parts.map(async (part) => {
+      const partResponse = await fetch(new URL(part, base));
+
+      if (!partResponse.ok) {
+        throw new Error(`Could not load TypeScript: ${partResponse.status} ${part}`);
+      }
+
+      return new Uint8Array(await partResponse.arrayBuffer());
+    })
+  );
+  const bytes = new Uint8Array(size);
+  let offset = 0;
+
+  for (const buffer of buffers) {
+    bytes.set(buffer, offset);
+    offset += buffer.byteLength;
+  }
+
+  return WebAssembly.compile(bytes);
+}
+
 async function start({ wasmUrl, typesUrl }) {
   postMessage({ type: 'status', text: 'Loading type declarations' });
   memfs.writeFile(`${PROJECT}/tsconfig.json`, JSON.stringify(TSCONFIG));
@@ -224,7 +259,7 @@ async function start({ wasmUrl, typesUrl }) {
   go.env = { HOME: '/' };
   go.exit = (code) => postMessage({ type: 'exit', code });
 
-  const { instance } = await WebAssembly.instantiateStreaming(fetch(wasmUrl), go.importObject);
+  const instance = await WebAssembly.instantiate(await loadWasm(wasmUrl), go.importObject);
 
   postMessage({ type: 'started' });
 
