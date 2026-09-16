@@ -1,7 +1,6 @@
 /* eslint-disable getter-return */
 
 // @ts-ignore
-import { tracked } from '@glimmer/tracking';
 import { setComponentTemplate } from '@ember/component';
 import templateOnly from '@ember/component/template-only';
 import { assert } from '@ember/debug';
@@ -9,6 +8,7 @@ import { registerDestructor } from '@ember/destroyable';
 import { array, concat, fn, get, hash } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { getOwner } from '@ember/owner';
+import { trackedArray } from '@ember/reactive/collections';
 import { precompileTemplate } from '@ember/template-compilation';
 import { waitFor } from '@ember/test-waiters';
 
@@ -175,7 +175,7 @@ export default class CompilerService {
     });
   }
 
-  @tracked messages: Message[] = [];
+  readonly messages = trackedArray<Message>();
 
   get lastInfo(): InfoMessage | undefined {
     const m = this.messages;
@@ -241,9 +241,6 @@ export default class CompilerService {
       on: {
         log: (type: Message['type'], message: string) => {
           this.messages.push({ type, message });
-          // Waiting on better array primitive
-          // eslint-disable-next-line no-self-assign
-          this.messages = this.messages;
         },
       },
       options: {
@@ -341,7 +338,7 @@ export default class CompilerService {
      */
     await Promise.resolve();
 
-    this.messages = [];
+    this.messages.length = 0;
 
     return this.compiler.compile(ext, text, options ?? {});
   }
