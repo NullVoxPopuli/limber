@@ -16,10 +16,11 @@ class SsrApplicationRoute extends Route {}
 export default class SsrApp extends Application {
   modules = {
     './router': Router,
-    ...customLayout({
-      ...import.meta.glob('./routes/{application,error-404}/+template.gts', { eager: true }),
-      ...import.meta.glob('./routes/docs/**/+template.gts', { eager: true }),
-    }),
+    ...customLayout(
+      import.meta.glob('./routes/{application,error-404}/+template.gts', { eager: true })
+    ),
+    ...import.meta.glob('./templates/docs.gts', { eager: true }),
+    ...import.meta.glob('./templates/docs/**/*.gts', { eager: true }),
     './routes/application': { default: SsrApplicationRoute },
     './services/page-title': PageTitleService,
   };

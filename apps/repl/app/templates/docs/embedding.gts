@@ -3,8 +3,8 @@ import { REPL } from 'limber-ui';
 
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
-import { Example, Live, Option, Refresh } from '../support/api.gts';
-import { H2 } from '../support/code.gts';
+import { Example, Live, Option, Refresh } from './support/api.gts';
+import { H2 } from './support/code.gts';
 
 const hello = `<template>
   hello world

@@ -1,11 +1,10 @@
 import { Tabs } from 'nvp.ui/tabs';
 
-import highlighted from 'limber/modifiers/highlighted';
-
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
-import { H2, H3, H4 } from '../support/code.gts';
-import { formats } from './formats.gts';
+import highlighted from '../../modifiers/highlighted';
+import { formats } from './repl-sdk/formats.gts';
+import { H2, H3, H4 } from './support/code.gts';
 
 const samples = {
   compile: {
