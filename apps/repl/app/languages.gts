@@ -24,7 +24,7 @@ export type FormatQP = keyof typeof languages;
  *
  * { lang-key: lang-info }
  *
- * The compiler stettings for all these are configured in routes/application.ts
+ * The compiler stettings for all these are configured in routes/application/+route.ts
  */
 const languages = {
   js: {

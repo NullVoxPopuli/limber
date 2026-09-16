@@ -8,10 +8,10 @@ import { VerifyDanger } from '#components/verify-danger.gts';
 
 import { ExternalLink as Link } from '@nullvoxpopuli/limber-shared';
 
-import { Editor } from './edit/editor/index.gts';
-import Guest from './edit/guest.gts';
-import Header from './edit/header.gts';
-import Layout from './edit/layout/index.gts';
+import { Editor } from './editor/index.gts';
+import Guest from './guest.gts';
+import Header from './header.gts';
+import Layout from './layout/index.gts';
 
 import type RouterService from '@ember/routing/router-service';
 

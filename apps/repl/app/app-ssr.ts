@@ -4,6 +4,7 @@ import { settled } from '@ember/test-helpers';
 
 import PageTitleService from 'ember-page-title/services/page-title';
 
+import { customLayout } from './custom-layout.ts';
 import Router from './router.ts';
 
 /**
@@ -15,9 +16,12 @@ class SsrApplicationRoute extends Route {}
 export default class SsrApp extends Application {
   modules = {
     './router': Router,
-    './routes/application': { default: SsrApplicationRoute },
-    ...import.meta.glob('./templates/{application,error-404,docs}.gts', { eager: true }),
+    ...customLayout(
+      import.meta.glob('./routes/{application,error-404}/+template.gts', { eager: true })
+    ),
+    ...import.meta.glob('./templates/docs.gts', { eager: true }),
     ...import.meta.glob('./templates/docs/**/*.gts', { eager: true }),
+    './routes/application': { default: SsrApplicationRoute },
     './services/page-title': PageTitleService,
   };
 }

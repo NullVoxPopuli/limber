@@ -127,7 +127,7 @@
     "#tests/*": "./tests/*",
     "#components/*": "./app/components/*",
     "#services/*": "./app/services/*",
-    "#edit/*": "./app/templates/edit/*"
+    "#edit/*": "./app/routes/edit/*"
   },
   "exports": {
     "./tests/*": "./tests/*",

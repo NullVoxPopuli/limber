@@ -9,6 +9,7 @@ import PageTitleService from 'ember-page-title/services/page-title';
 
 import '@nullvoxpopuli/limber-shared/theme.css';
 
+import { customLayout } from './custom-layout.ts';
 import Router from './router.ts';
 
 // @babel/traverse (from babel-plugin-ember-template-imports)
@@ -24,16 +25,13 @@ export default class App extends Application {
   inspector = setupInspector(this);
   modules = {
     './router': Router,
-    ...import.meta.glob('./routes/{edit,index,application,error-404}.ts', { eager: true }),
-    ...import.meta.glob('./services/{editor,status}.ts', { eager: true }),
-    ...import.meta.glob('./controllers/*.ts', { eager: true }),
-    ...import.meta.glob('./templates/{application,edit,output,error-404}.gts', {
-      eager: true,
-    }),
-
-    // /////////////////
-    // To keep
-    // /////////////////
+    ...customLayout(
+      import.meta.glob(
+        './routes/{application,edit,index,error-404,output}/+{route,template,controller}.{ts,gts}',
+        { eager: true }
+      )
+    ),
+    ...import.meta.glob('./services/*.ts', { eager: true }),
     './services/page-title': PageTitleService,
   };
 }

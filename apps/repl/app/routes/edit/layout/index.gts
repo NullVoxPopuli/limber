@@ -6,8 +6,7 @@ import { modifier } from 'ember-modifier';
 import { Resizable, ResizableHandle as Handle, ResizablePanel as Panel } from 'ember-primitives';
 import { qp } from 'ember-primitives/qp';
 
-import Save from '#components/save.gts';
-
+import Save from '../save.gts';
 import { Controls } from './controls/index.gts';
 import { Orientation } from './orientation.gts';
 import {

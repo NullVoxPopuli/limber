@@ -1,6 +1,6 @@
 import { aspectRatio, ContainerQuery } from 'ember-container-query';
 
-import constrainVertically from 'limber/modifiers/constrain-vertically';
+import constrainVertically from './constrain-vertically.ts';
 
 import type { TOC } from '@ember/component/template-only';
 
