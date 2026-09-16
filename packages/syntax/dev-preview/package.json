@@ -9,7 +9,7 @@
     "@babel/core": "^7.28.5",
     "@nullvoxpopuli/eslint-configs": "^5.4.0",
     "eslint": "^9.39.1",
-    "prettier": "^3.7.4",
+    "prettier": "^3.9.6",
     "typescript": "catalog:ts5"
   },
   "scripts": {

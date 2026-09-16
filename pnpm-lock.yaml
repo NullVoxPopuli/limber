@@ -59,7 +59,7 @@ importers:
         version: 1.11.0(3fa0481db89aaed2f211bc8818b55de5)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       concurrently:
         specifier: ^9.2.1
         version: 9.2.1
@@ -73,14 +73,14 @@ importers:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       prettier-plugin-ember-template-tag:
-        specifier: 2.1.2
-        version: 2.1.2(prettier@3.8.1)
+        specifier: 2.1.8
+        version: 2.1.8(prettier@3.9.6)
       prettier-plugin-tailwindcss:
         specifier: ^0.7.2
-        version: 0.7.2(prettier@3.8.1)
+        version: 0.7.2(prettier@3.9.6)
       release-plan:
         specifier: ^0.18.0
         version: 0.18.0
@@ -285,7 +285,7 @@ importers:
         version: 1.1.0(6f8ce8ad9787f5e43077cbfd685282dc)
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       '@tailwindcss/typography':
         specifier: ^0.5.19
         version: 0.5.19(tailwindcss@3.4.19(yaml@2.9.0))
@@ -386,11 +386,11 @@ importers:
         specifier: ^16.1.1
         version: 16.1.1(postcss@8.5.9)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       prettier-plugin-ember-template-tag:
-        specifier: 2.1.2
-        version: 2.1.2(prettier@3.8.1)
+        specifier: 2.1.8
+        version: 2.1.8(prettier@3.9.6)
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -556,7 +556,7 @@ importers:
         version: 1.8.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       '@nullvoxpopuli/limber-styles':
         specifier: workspace:^
         version: link:../../packages/app-support/styles
@@ -621,11 +621,11 @@ importers:
         specifier: ^16.1.1
         version: 16.1.1(postcss@8.5.9)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       prettier-plugin-ember-template-tag:
-        specifier: 2.1.2
-        version: 2.1.2(prettier@3.8.1)
+        specifier: 2.1.8
+        version: 2.1.8(prettier@3.9.6)
       qunit:
         specifier: ^2.25.0
         version: 2.25.0
@@ -674,7 +674,7 @@ importers:
         version: 7.29.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       '@types/node':
         specifier: ^24.0.12
         version: 24.10.9
@@ -685,11 +685,11 @@ importers:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       prettier-plugin-ember-template-tag:
-        specifier: 2.1.2
-        version: 2.1.2(prettier@3.8.1)
+        specifier: 2.1.8
+        version: 2.1.8(prettier@3.9.6)
       typescript:
         specifier: catalog:ts5
         version: 5.9.3
@@ -768,7 +768,7 @@ importers:
         version: 1.8.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       '@rollup/plugin-babel':
         specifier: ^6.1.0
         version: 6.1.0(2feedaebee37a40334972cdc05053654)
@@ -809,11 +809,11 @@ importers:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       prettier-plugin-ember-template-tag:
-        specifier: 2.1.2
-        version: 2.1.2(prettier@3.8.1)
+        specifier: 2.1.8
+        version: 2.1.8(prettier@3.9.6)
       rollup:
         specifier: ^4.53.3
         version: 4.57.1
@@ -844,7 +844,7 @@ importers:
         version: 7.29.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       autoprefixer:
         specifier: ^10.4.22
         version: 10.4.23(postcss@8.5.9)
@@ -858,11 +858,11 @@ importers:
         specifier: ^8.5.6
         version: 8.5.9
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       prettier-plugin-ember-template-tag:
-        specifier: 2.1.2
-        version: 2.1.2(prettier@3.8.1)
+        specifier: 2.1.8
+        version: 2.1.8(prettier@3.9.6)
       tailwindcss:
         specifier: ^3.0.0
         version: 3.4.19(yaml@2.9.0)
@@ -877,7 +877,7 @@ importers:
         version: 7.29.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       concurrently:
         specifier: ^9.2.1
         version: 9.2.1
@@ -885,11 +885,11 @@ importers:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       prettier-plugin-ember-template-tag:
-        specifier: 2.1.2
-        version: 2.1.2(prettier@3.8.1)
+        specifier: 2.1.8
+        version: 2.1.8(prettier@3.9.6)
       typescript:
         specifier: catalog:ts5
         version: 5.9.3
@@ -1045,11 +1045,11 @@ importers:
         specifier: ^17.0.0
         version: 17.2.0
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       prettier-plugin-ember-template-tag:
-        specifier: ^2.1.2
-        version: 2.1.2(prettier@3.8.1)
+        specifier: 2.1.8
+        version: 2.1.8(prettier@3.9.6)
       publint:
         specifier: ^0.3.16
         version: 0.3.17
@@ -1115,7 +1115,7 @@ importers:
         version: 7.29.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       concurrently:
         specifier: ^9.2.1
         version: 9.2.1
@@ -1123,11 +1123,11 @@ importers:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       prettier-plugin-ember-template-tag:
-        specifier: 2.1.2
-        version: 2.1.2(prettier@3.8.1)
+        specifier: 2.1.8
+        version: 2.1.8(prettier@3.9.6)
       typescript:
         specifier: catalog:ts5
         version: 5.9.3
@@ -1188,7 +1188,7 @@ importers:
         version: 1.8.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       '@rollup/plugin-babel':
         specifier: ^6.1.0
         version: 6.1.0(2feedaebee37a40334972cdc05053654)
@@ -1220,11 +1220,11 @@ importers:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       prettier-plugin-ember-template-tag:
-        specifier: 2.1.2
-        version: 2.1.2(prettier@3.8.1)
+        specifier: 2.1.8
+        version: 2.1.8(prettier@3.9.6)
       rollup:
         specifier: ^4.53.3
         version: 4.57.1
@@ -1381,7 +1381,7 @@ importers:
     devDependencies:
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       '@tsconfig/ember':
         specifier: ^3.0.7
         version: 3.0.12
@@ -1404,8 +1404,8 @@ importers:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       publint:
         specifier: ^0.3.16
         version: 0.3.17
@@ -1439,7 +1439,7 @@ importers:
         version: file:babel-standalone.tgz
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(56d12e5930f3ffbbbf4187f804cda182)
+        version: 5.5.0(4e56f93ee725d96f8030232e9e92acea)
       '@testing-library/dom':
         specifier: ^10.4.1
         version: 10.4.1
@@ -1548,7 +1548,7 @@ importers:
         version: 7.29.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       '@types/mocha':
         specifier: ^10.0.10
         version: 10.0.10
@@ -1559,8 +1559,8 @@ importers:
         specifier: ^11.6.0
         version: 11.7.5
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       typescript:
         specifier: catalog:ts5
         version: 5.9.3
@@ -1579,13 +1579,13 @@ importers:
         version: 7.29.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       typescript:
         specifier: catalog:ts5
         version: 5.9.3
@@ -1661,7 +1661,7 @@ importers:
         version: 1.8.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       '@tsconfig/ember':
         specifier: ^3.0.9
         version: 3.0.12
@@ -1675,8 +1675,8 @@ importers:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       rollup:
         specifier: ^4.53.3
         version: 4.57.1
@@ -1709,13 +1709,13 @@ importers:
         version: link:../../../dev-preview
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       typescript:
         specifier: catalog:ts5
         version: 5.9.3
@@ -1730,13 +1730,13 @@ importers:
         version: 7.29.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       typescript:
         specifier: catalog:ts5
         version: 5.9.3
@@ -1761,7 +1761,7 @@ importers:
         version: 1.8.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       '@rollup/plugin-node-resolve':
         specifier: ^16.0.3
         version: 16.0.3(rollup@4.57.1)
@@ -1772,8 +1772,8 @@ importers:
         specifier: ^11.6.0
         version: 11.7.5
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       rollup:
         specifier: ^4.53.3
         version: 4.57.1
@@ -1828,7 +1828,7 @@ importers:
         version: 1.8.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       '@tsconfig/ember':
         specifier: ^3.0.9
         version: 3.0.12
@@ -1842,8 +1842,8 @@ importers:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       rollup:
         specifier: ^4.53.3
         version: 4.57.1
@@ -1876,13 +1876,13 @@ importers:
         version: link:../../../dev-preview
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       typescript:
         specifier: catalog:ts5
         version: 5.9.3
@@ -1910,7 +1910,7 @@ importers:
         version: 1.8.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       '@rollup/plugin-node-resolve':
         specifier: ^16.0.3
         version: 16.0.3(rollup@4.57.1)
@@ -1921,8 +1921,8 @@ importers:
         specifier: ^11.6.0
         version: 11.7.5
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       rollup:
         specifier: ^4.53.3
         version: 4.57.1
@@ -1977,7 +1977,7 @@ importers:
         version: 1.8.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       '@tsconfig/ember':
         specifier: ^3.0.9
         version: 3.0.12
@@ -1991,8 +1991,8 @@ importers:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       rollup:
         specifier: ^4.53.3
         version: 4.57.1
@@ -2025,13 +2025,13 @@ importers:
         version: link:../../../dev-preview
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       typescript:
         specifier: catalog:ts5
         version: 5.9.3
@@ -2098,7 +2098,7 @@ importers:
         version: 1.8.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       '@tsconfig/ember':
         specifier: ^3.0.9
         version: 3.0.12
@@ -2112,8 +2112,8 @@ importers:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       rollup:
         specifier: ^4.53.3
         version: 4.57.1
@@ -2146,13 +2146,13 @@ importers:
         version: link:../../../dev-preview
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       typescript:
         specifier: catalog:ts5
         version: 5.9.3
@@ -2189,7 +2189,7 @@ importers:
         version: 1.8.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       '@tsconfig/ember':
         specifier: ^3.0.9
         version: 3.0.12
@@ -2206,8 +2206,8 @@ importers:
         specifier: ^11.6.0
         version: 11.7.5
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       rollup:
         specifier: ^4.53.3
         version: 4.57.1
@@ -2225,13 +2225,13 @@ importers:
         version: 7.29.0
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       typescript:
         specifier: catalog:ts5
         version: 5.9.3
@@ -2262,16 +2262,16 @@ importers:
     devDependencies:
       '@nullvoxpopuli/eslint-configs':
         specifier: ^5.4.0
-        version: 5.5.0(ee03a5b6b242febe65420465ae6828df)
+        version: 5.5.0(7339e8a212def6b1d18078583cdc0598)
       eslint:
         specifier: ^9.39.1
         version: 9.39.2(jiti@2.7.0)
       prettier:
-        specifier: ^3.7.4
-        version: 3.8.1
+        specifier: ^3.9.6
+        version: 3.9.6
       prettier-plugin-ember-template-tag:
-        specifier: 2.1.2
-        version: 2.1.2(prettier@3.8.1)
+        specifier: 2.1.8
+        version: 2.1.8(prettier@3.9.6)
       typescript:
         specifier: catalog:ts5
         version: 5.9.3
@@ -9252,8 +9252,8 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  prettier-plugin-ember-template-tag@2.1.2:
-    resolution: {integrity: sha512-SZqbv8qfqJ7AnAaNhyeHOzsq1kvlkHdVrCAZDVBjUeWuW8xF2AK7LfKRkn9MPEUsbEO7BSkLsjkb5++eoWjtGw==}
+  prettier-plugin-ember-template-tag@2.1.8:
+    resolution: {integrity: sha512-ioLdBFoZ11kuiuFF9/bGwHgzjiU3vQVOF1rQhcuEqGc1jmKBH+G3i3BL2yHGum2Z2IQOE/7MPstYo5iAU0Uhlw==}
     engines: {node: 18.* || >= 20}
     peerDependencies:
       prettier: '>= 3.0.0'
@@ -9318,8 +9318,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  prettier@3.8.1:
-    resolution: {integrity: sha512-UOnG6LftzbdaHZcKoPFtOcCKztrQ57WkHDeRD9t/PTQtmT0NHSeWWepj6pS0z/N7+08BHFDQVUrfmfMRcZwbMg==}
+  prettier@3.9.6:
+    resolution: {integrity: sha512-OpN0zzVdiaiAhxpuuj5efpIS4sY9j7bY6uR5mnj5yPzGkdkjNKSJeUThPb60Jw29QuAZgA4o+/iB49kFiaBX6g==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -11491,7 +11491,7 @@ snapshots:
       '@babel/core': 7.29.0
       '@babel/helper-annotate-as-pure': 7.29.7
       '@babel/helper-wrap-function': 7.29.7
-      '@babel/traverse': 7.29.7
+      '@babel/traverse': 7.29.8
     transitivePeerDependencies:
       - supports-color
 
@@ -11523,7 +11523,7 @@ snapshots:
   '@babel/helper-wrap-function@7.29.7':
     dependencies:
       '@babel/template': 7.29.7
-      '@babel/traverse': 7.29.7
+      '@babel/traverse': 7.29.8
       '@babel/types': 7.29.7
     transitivePeerDependencies:
       - supports-color
@@ -11545,7 +11545,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.29.7
-      '@babel/traverse': 7.29.7
+      '@babel/traverse': 7.29.8
     transitivePeerDependencies:
       - supports-color
 
@@ -11580,7 +11580,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.29.7
-      '@babel/traverse': 7.29.7
+      '@babel/traverse': 7.29.8
     transitivePeerDependencies:
       - supports-color
 
@@ -11679,7 +11679,7 @@ snapshots:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.29.7
       '@babel/helper-remap-async-to-generator': 7.29.7(@babel/core@7.29.0)
-      '@babel/traverse': 7.29.7
+      '@babel/traverse': 7.29.8
     transitivePeerDependencies:
       - supports-color
 
@@ -11726,7 +11726,7 @@ snapshots:
       '@babel/helper-globals': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
       '@babel/helper-replace-supers': 7.29.7(@babel/core@7.29.0)
-      '@babel/traverse': 7.29.7
+      '@babel/traverse': 7.29.8
     transitivePeerDependencies:
       - supports-color
 
@@ -11740,7 +11740,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.29.7
-      '@babel/traverse': 7.29.7
+      '@babel/traverse': 7.29.8
     transitivePeerDependencies:
       - supports-color
 
@@ -11797,7 +11797,7 @@ snapshots:
       '@babel/core': 7.29.0
       '@babel/helper-compilation-targets': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
-      '@babel/traverse': 7.29.7
+      '@babel/traverse': 7.29.8
     transitivePeerDependencies:
       - supports-color
 
@@ -11843,7 +11843,7 @@ snapshots:
       '@babel/helper-module-transforms': 7.29.7(@babel/core@7.29.0)
       '@babel/helper-plugin-utils': 7.29.7
       '@babel/helper-validator-identifier': 7.29.7
-      '@babel/traverse': 7.29.7
+      '@babel/traverse': 7.29.8
     transitivePeerDependencies:
       - supports-color
 
@@ -11883,7 +11883,7 @@ snapshots:
       '@babel/helper-plugin-utils': 7.29.7
       '@babel/plugin-transform-destructuring': 7.29.7(@babel/core@7.29.0)
       '@babel/plugin-transform-parameters': 7.29.7(@babel/core@7.29.0)
-      '@babel/traverse': 7.29.7
+      '@babel/traverse': 7.29.8
     transitivePeerDependencies:
       - supports-color
 
@@ -13453,7 +13453,7 @@ snapshots:
       - utf-8-validate
       - vite
 
-  '@nullvoxpopuli/eslint-configs@5.5.0(56d12e5930f3ffbbbf4187f804cda182)':
+  '@nullvoxpopuli/eslint-configs@5.5.0(4e56f93ee725d96f8030232e9e92acea)':
     dependencies:
       '@babel/core': 7.29.0
       '@eslint/js': 9.39.2
@@ -13468,18 +13468,18 @@ snapshots:
       eslint-plugin-n: 17.23.2(d1e445c5ced0d5f1412b7a6f02eed45d)
       eslint-plugin-simple-import-sort: 12.1.1(eslint@9.39.2(jiti@2.7.0))
       globals: 16.5.0
-      prettier-plugin-ember-template-tag: 2.1.2(prettier@3.8.1)
+      prettier-plugin-ember-template-tag: 2.1.8(prettier@3.9.6)
     optionalDependencies:
       '@babel/eslint-parser': 7.28.6(1f14f2c7a84c222ee770ecf6f8eb368d)
       '@babel/plugin-proposal-decorators': 7.29.7(@babel/core@7.29.0)
-      prettier: 3.8.1
+      prettier: 3.9.6
     transitivePeerDependencies:
       - eslint-import-resolver-webpack
       - eslint-plugin-import-x
       - supports-color
       - typescript
 
-  '@nullvoxpopuli/eslint-configs@5.5.0(ee03a5b6b242febe65420465ae6828df)':
+  '@nullvoxpopuli/eslint-configs@5.5.0(7339e8a212def6b1d18078583cdc0598)':
     dependencies:
       '@babel/core': 7.29.0
       '@eslint/js': 9.39.2
@@ -13494,11 +13494,11 @@ snapshots:
       eslint-plugin-n: 17.23.2(a22af7cc2a9b4f923a2a857083e694fc)
       eslint-plugin-simple-import-sort: 12.1.1(eslint@9.39.2(jiti@2.7.0))
       globals: 16.5.0
-      prettier-plugin-ember-template-tag: 2.1.2(prettier@3.8.1)
+      prettier-plugin-ember-template-tag: 2.1.8(prettier@3.9.6)
     optionalDependencies:
       '@babel/eslint-parser': 7.28.6(1f14f2c7a84c222ee770ecf6f8eb368d)
       '@babel/plugin-proposal-decorators': 7.29.7(@babel/core@7.29.0)
-      prettier: 3.8.1
+      prettier: 3.9.6
     transitivePeerDependencies:
       - eslint-import-resolver-webpack
       - eslint-plugin-import-x
@@ -20095,21 +20095,21 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-ember-template-tag@2.1.2(prettier@3.8.1):
+  prettier-plugin-ember-template-tag@2.1.8(prettier@3.9.6):
     dependencies:
-      '@babel/core': 7.29.0
+      '@babel/traverse': 7.29.8
       content-tag: 4.2.0
-      prettier: 3.8.1
+      prettier: 3.9.6
     transitivePeerDependencies:
       - supports-color
 
-  prettier-plugin-tailwindcss@0.7.2(prettier@3.8.1):
+  prettier-plugin-tailwindcss@0.7.2(prettier@3.9.6):
     dependencies:
-      prettier: 3.8.1
+      prettier: 3.9.6
 
   prettier@2.8.8: {}
 
-  prettier@3.8.1: {}
+  prettier@3.9.6: {}
 
   pretty-format@27.5.1:
     dependencies:

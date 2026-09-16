@@ -210,10 +210,7 @@ export interface CompilerConfig {
   resolve?: (
     id: string
   ) =>
-    | string
-    | (() => Record<string, unknown>)
-    | (() => Promise<Record<string, unknown>>)
-    | undefined;
+    string | (() => Record<string, unknown>) | (() => Promise<Record<string, unknown>>) | undefined;
 
   /**
    * This optional method provides the opportunity to reformat messages that would be displayed to the REPL.
