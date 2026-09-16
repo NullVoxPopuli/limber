@@ -54,7 +54,7 @@ module('Rendered Snippets / Demos', function (hooks) {
       assert.verifySteps(['start compile', 'compiled']);
 
       assert.dom('li').exists({ count: 3 });
-      assert.dom('a').exists({ count: 17 });
+      assert.dom('a').exists({ count: 18 });
     });
   });
 

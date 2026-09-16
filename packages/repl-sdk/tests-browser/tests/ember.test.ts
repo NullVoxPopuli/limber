@@ -61,4 +61,34 @@ describe('ember', () => {
       expect(window.getComputedStyle(h1).color).toBe('rgb(255, 0, 0)');
     });
   });
+
+  describe('gts', () => {
+    test.skip('types are stripped', async () => {
+      const compiler = new Compiler();
+      const { element } = await compiler.compile(
+        'gts',
+        `
+          import Component from '@glimmer/component';
+
+          interface Signature {
+            Args: { name?: string };
+          }
+
+          export default class Demo extends Component<Signature> {
+            get name(): string {
+              return this.args.name ?? 'world';
+            }
+
+            <template>
+              <h1>Hello {{this.name}}!</h1>
+            </template>
+          }
+        `
+      );
+
+      const h1 = element.querySelector('h1');
+
+      expect(h1?.textContent).toContain('Hello world!');
+    });
+  });
 });

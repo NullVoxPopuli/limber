@@ -1,5 +1,6 @@
 import * as gjs from './formats/gjs.gts';
 import * as gmd from './formats/gmd.gts';
+import * as gts from './formats/gts.gts';
 import * as hbs from './formats/hbs.gts';
 import * as hbsEmber from './formats/hbs-ember.gts';
 import * as js from './formats/js.gts';
@@ -24,6 +25,7 @@ export const formats = [
   // One per line
   gjs,
   gmd,
+  gts,
   hbs,
   hbsEmber,
   js,

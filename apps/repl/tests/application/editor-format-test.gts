@@ -63,6 +63,14 @@ module('Editor > Format', function (hooks) {
     assert.dom().containsText('ope!');
   });
 
+  test('can start with gts text', async function (assert) {
+    await visit(`/edit?format=gts&t=${defaultText}`);
+    await page.editor.load();
+
+    assert.strictEqual(page.editor.format, 'gts');
+    assert.true(page.editor.hasText('<template>hi</template>'), 'has passed text as well');
+  });
+
   test('can start with glimdown, and change to gjs', async function (assert) {
     await page.expectRedirectToContent(`/edit`, {
       format: 'gmd',

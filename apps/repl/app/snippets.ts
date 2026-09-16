@@ -13,6 +13,19 @@ const who = 'world';
   </a>
 </template>
 `;
+export const DEFAULT_GTS = `// Welcome!
+
+const who: string = 'world';
+
+<template>
+  Hello, {{who}}!
+
+  for a tutorial on this format, check out
+  <a href="https://tutorial.glimdown.com" target="_blank">
+    the interactive tutariol
+  </a>
+</template>
+`;
 export const DEFAULT_HBS = `{{! Welcome! }}
 
 Hello, world!
@@ -38,7 +51,7 @@ This REPL supports the following:
 | [Svelte][svelte-demo] | [svelte.dev][docs-svelte] ↗
 | [Vue][vue-demo] | [vuejs.org][docs-vue] ↗
 | React ([jsx][jsx-react-demo]) | [react.dev][docs-react] ↗
-| Ember ([gjs][gjs-ember-demo], [hbs][hbs-ember-demo]) | [emberjs.com][docs-ember] ↗
+| Ember ([gjs][gjs-ember-demo], [gts][gts-ember-demo], [hbs][hbs-ember-demo]) | [emberjs.com][docs-ember] ↗
 | [Mermaid][mermaid-demo] | [mermaid.js.org][docs-mermaid] ↗
 | [Markdown][md-demo] with live islands | [@ GitHub][docs-markdown] ↗
 | [Glimdown][gmd-demo] (this doc) |
@@ -51,6 +64,7 @@ This REPL supports the following:
 [vue-demo]: /?format=vue&file=/samples/vue-demo.vue
 [jsx-react-demo]: /?format=jsx|react&file=/samples/jsx-react-demo.jsx&shadowdom=false
 [gjs-ember-demo]: /?format=gjs&file=/samples/gjs-demo.gjs
+[gts-ember-demo]: /?format=gts&file=/samples/gts-demo.gts
 [hbs-ember-demo]: /?format=hbs|ember&file=/samples/hbs-demo.hbs
 [mermaid-demo]: /?format=mermaid&file=/samples/mermaid-demo.mermaid
 [md-demo]: /?format=md&file=/samples/all.md
@@ -115,6 +129,7 @@ export const ALL = [
     label: 'Ember GJS (w/ routing)',
     path: '/samples/nested-ember-routing-demo.gjs',
   },
+  { format: 'gts', label: 'Ember GTS', path: '/samples/gts-demo.gts' },
   { format: 'svelte', label: 'Svelte', path: '/samples/svelte-demo.svelte' },
   { format: 'js', label: 'Vanilla JS', path: '/samples/js-demo.js' },
   // Yaml
@@ -182,6 +197,10 @@ export async function getFromLabel(label: string): Promise<string> {
 export function defaultSnippetForFormat(format: string) {
   if (format === 'gjs') {
     return DEFAULT_GJS;
+  }
+
+  if (format === 'gts') {
+    return DEFAULT_GTS;
   }
 
   if (format === 'hbs') {

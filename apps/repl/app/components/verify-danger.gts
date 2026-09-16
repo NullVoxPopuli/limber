@@ -17,6 +17,7 @@ const ALLOWED = Object.freeze([]);
 const MARKUP_FORMATS = new Set([
   'js',
   'gjs',
+  'gts',
   'vue',
   'jsx',
   'jsx|react',
@@ -26,7 +27,7 @@ const MARKUP_FORMATS = new Set([
   'hbs',
   'hbs|ember',
 ]);
-const SCRIPT_FORMATS = new Set(['js', 'gjs', 'vue', 'jsx', 'jsx|react', 'svelte']);
+const SCRIPT_FORMATS = new Set(['js', 'gjs', 'gts', 'vue', 'jsx', 'jsx|react', 'svelte']);
 
 function couldHaveMarkup(format: Format) {
   return MARKUP_FORMATS.has(format);

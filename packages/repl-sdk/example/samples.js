@@ -66,6 +66,28 @@ const greeting = 'hello there';
 </template>
 `.trim();
 
+export const gts = ` 
+import Component from '@glimmer/component';
+
+interface Signature {
+  Args: { greeting?: string };
+}
+
+export default class Demo extends Component<Signature> {
+  get greeting(): string {
+    return this.args.greeting ?? 'hello there';
+  }
+
+  <template>
+    <h1>{{this.greeting}}</h1>
+
+    <style>
+      h1 { color: orange; }
+    </style>
+  </template>
+}
+`.trim();
+
 export const md = `
 # Markdown 
 

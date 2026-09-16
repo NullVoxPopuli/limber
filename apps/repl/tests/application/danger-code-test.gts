@@ -26,6 +26,14 @@ module('Danger Protection', function (hooks) {
     assert.dom('[data-test-output]').containsText('Would you like to run the code?');
   });
 
+  test('blocks danger in gts', async function (assert) {
+    const badText = makeDanger(`open(whatever as string)`);
+
+    await page.visitEdit('gts', badText);
+
+    assert.dom('[data-test-output]').containsText('Would you like to run the code?');
+  });
+
   test('blocks use of location.href=', async function (assert) {
     const badText = makeDanger(`location.href='uwutm8'`);
 

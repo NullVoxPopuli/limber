@@ -47,12 +47,11 @@ export const compilers = {
    */
   gjs: ember.gjs,
   /**
-   * TODO:
    * Glimmer-flavored TypeScript
    *
    * https://emberjs.com
    */
-  // gts: ember.gts,
+  gts: ember.gts,
 
   /**
    * Just vanilla JS.

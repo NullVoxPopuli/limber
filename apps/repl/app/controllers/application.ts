@@ -57,6 +57,7 @@ export default class ApplicationController extends Controller {
     // Supported
     //  - glimdown (default)
     //  - gjs
+    //  - gts
     //  - hbs
     //  - svelte
     //  - jsx|react

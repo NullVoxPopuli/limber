@@ -125,6 +125,26 @@ export const gjs = {
 /**
  * @type {CompilerConfig}
  */
+export const gts = {
+  resolve,
+  onUnhandled,
+  codemirror: {
+    lang: async () => {
+      const { gts } = await import('codemirror-lang-glimmer-js');
+
+      return gts();
+    },
+  },
+  compiler: async (config, api) => {
+    const gjs = await import('./ember/gjs.js');
+
+    return gjs.compiler(config, api, { typescript: true });
+  },
+};
+
+/**
+ * @type {CompilerConfig}
+ */
 export const hbs = {
   resolve,
   onUnhandled,

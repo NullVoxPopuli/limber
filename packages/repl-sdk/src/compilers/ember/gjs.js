@@ -47,9 +47,22 @@ const buildDependencies = [
 ];
 
 /**
- * @type {import('../../types.ts').CompilerConfig['compiler']}
+ * @typedef {import('../../types.ts').CompilerConfig['compiler']} CompilerFactory
  */
-export async function compiler(config, api) {
+
+/**
+ * gjs and gts share one pipeline.
+ * gts adds the babel typescript plugin, which only strips types.
+ *
+ * @param {Parameters<CompilerFactory>[0]} config
+ * @param {Parameters<CompilerFactory>[1]} api
+ * @param {{ typescript?: boolean }} [flags]
+ */
+export async function compiler(config, api, flags = {}) {
+  const typescript = flags.typescript ?? false;
+  const ext = typescript ? 'ts' : 'js';
+  const filename = `dynamic-repl.${ext}`;
+
   const [
     _babel,
     _decoratorTransforms,
@@ -74,12 +87,29 @@ export async function compiler(config, api) {
   // let macros = embroiderMacros.buildMacros();
 
   /**
+   * Types must be gone before the template plugin runs.
+   *
+   * onlyRemoveTypeImports keeps value imports that are only used in templates.
+   * allowDeclareFields matches how ember apps configure typescript.
+   *
+   * @type {unknown[]}
+   */
+  const typePlugins = typescript
+    ? [
+        [
+          babel.availablePlugins['transform-typescript'],
+          { allowDeclareFields: true, onlyRemoveTypeImports: true },
+        ],
+      ]
+    : [];
+
+  /**
    * @param {string} text
    */
   async function transform(text) {
     return babel.transformAsync(text, {
-      filename: `dynamic-repl.js`,
-      plugins: [
+      filename,
+      plugins: typePlugins.concat([
         [
           emberTemplateCompilation,
           {
@@ -137,7 +167,7 @@ export async function compiler(config, api) {
           },
           '@ember/application/deprecations stripping',
         ],
-      ],
+      ]),
       presets: [],
     });
   }
@@ -149,7 +179,9 @@ export async function compiler(config, api) {
    */
   const gjsCompiler = {
     compile: async (text, options) => {
-      const { code: preprocessed } = preprocessor.process(text, { filename: 'dynamic-repl.js' });
+      const { code: preprocessed } = preprocessor.process(text, {
+        filename: `dynamic-repl.g${ext}`,
+      });
       const transformed = await transform(preprocessed);
 
       const code = transformed.code;
@@ -186,10 +218,10 @@ export async function compiler(config, api) {
       return () => result.destroy();
     },
     handlers: {
-      js: async (text) => {
+      [ext]: async (text) => {
         return gjsCompiler.compile(text, {});
       },
-      mjs: async (text) => {
+      [`m${ext}`]: async (text) => {
         return gjsCompiler.compile(text, {});
       },
     },
