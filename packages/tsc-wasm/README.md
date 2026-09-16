@@ -31,11 +31,12 @@ LSP base protocol framing.
 ## Build
 
 ```sh
-pnpm build:wasm
+pnpm build
 ```
 
 The script fetches the pinned commit named in `package.json` under `config`, builds it with Go, and
-writes `dist/tsc.wasm`. The commit lives on a fork of microsoft/TypeScript until the `js/wasm` spawn
+writes `dist/tsc.wasm`. It needs git and Go on PATH; Go downloads the toolchain version the
+module asks for. The commit lives on a fork of microsoft/TypeScript until the `js/wasm` spawn
 bridge is upstream.
 
 ## License

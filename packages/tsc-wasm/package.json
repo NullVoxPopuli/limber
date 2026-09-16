@@ -24,7 +24,7 @@
     "typescriptCommit": "efca9394a541467ef679185c770aaa487519b793"
   },
   "scripts": {
-    "build:wasm": "node build.mjs",
+    "build": "node build.mjs",
     "lint": "pnpm -w exec lint",
     "lint:fix": "pnpm -w exec lint fix",
     "lint:js": "pnpm -w exec lint js",
