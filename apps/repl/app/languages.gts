@@ -9,6 +9,7 @@ import { default as FileEmber } from '~icons/vscode-icons/file-type-ember?raw';
 import { default as FileGlimmer } from '~icons/vscode-icons/file-type-glimmer?raw';
 import { default as FileMarkdown } from '~icons/vscode-icons/file-type-markdown?raw';
 import { default as FileMermaid } from '~icons/vscode-icons/file-type-mermaid?raw';
+import { default as FileTypeScript } from '~icons/vscode-icons/file-type-typescript-official?raw';
 
 import type { ComponentLike } from '@glint/template';
 
@@ -39,6 +40,16 @@ const languages = {
     ext: 'gjs',
     icon: <template>
       <span>{{{FileGlimmer}}}</span>
+    </template>,
+  },
+  gts: {
+    name: 'Glimmer TS',
+    ext: 'gts',
+    icon: <template>
+      <span style="position: relative;">
+        <span>{{{FileGlimmer}}}</span>
+        <span style="position: absolute; top: 0.3rem; left: 0.4rem;">{{{FileTypeScript}}}</span>
+      </span>
     </template>,
   },
   // an alias

@@ -57,6 +57,7 @@ const Overview = <template>
         <ul>
           <li><a href="#supported-markdown">Markdown</a></li>
           <li><a href="#supported-ember-gjs">Ember GJS</a></li>
+          <li><a href="#supported-ember-gts">Ember GTS</a></li>
           <li><a href="#supported-mermaid">Mermaid</a></li>
           <li><a href="#supported-svelte">Svelte</a></li>
           <li><a href="#supported-vanilla-js">Vanilla JS</a></li>
@@ -224,6 +225,18 @@ const Overview = <template>
         <li>multiple components defined in one file</li>
         <li>test code is ergonomically just as good as app code</li>
       </ul>
+    </article>
+
+    <article>
+      <header aria-label="Supported: Ember GTS">
+        <H3 @id="supported-ember-gts" @text="Ember GTS" />
+        <TryIt href="/edit?format=gts&file=/samples/gts-demo.gts" />
+      </header>
+
+      <code>.gts</code>
+      is the TypeScript variant of
+      <code>.gjs</code>. The REPL strips the types before it runs the code. It does not type check,
+      so a type error still renders.
     </article>
 
     <article>

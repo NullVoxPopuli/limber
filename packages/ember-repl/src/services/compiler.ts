@@ -75,6 +75,9 @@ interface CompilerOptions {
   gjs?: {
     owner?: unknown;
   };
+  gts?: {
+    owner?: unknown;
+  };
   gmd?: {
     scope?: Record<string, unknown>;
     remarkPlugins?: unknown[];
@@ -248,6 +251,10 @@ export default class CompilerService {
         gjs: {
           owner,
           ...(options.gjs ?? {}),
+        },
+        gts: {
+          owner,
+          ...(options.gts ?? {}),
         },
         gmd: {
           owner,

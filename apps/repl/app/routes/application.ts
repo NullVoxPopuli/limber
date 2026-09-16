@@ -55,6 +55,9 @@ export default class ApplicationRoute extends Route {
         gjs: {
           owner,
         },
+        gts: {
+          owner,
+        },
         gmd: {
           scope: {
             CopyMenu,

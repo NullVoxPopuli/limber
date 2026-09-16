@@ -140,7 +140,10 @@ export async function compiler(config, api) {
 
           const flavor = /** @type {string} */ (infoObj.flavor);
           const hasScope =
-            flavor === 'ember' || infoObj.format === 'gjs' || infoObj.format === 'hbs';
+            flavor === 'ember' ||
+            infoObj.format === 'gjs' ||
+            infoObj.format === 'gts' ||
+            infoObj.format === 'hbs';
           const subRender = await compiler.compile(
             /** @type {string} */ (infoObj.format),
             /** @type {string} */ (infoObj.code),

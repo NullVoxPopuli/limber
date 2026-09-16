@@ -9,7 +9,7 @@ import resetsCSS from './output-reset.css?url';
 
 import type { TOC } from '@ember/component/template-only';
 
-const isGJS = (format: string | undefined) => format === 'gjs';
+const isGlimmerModule = (format: string | undefined) => format === 'gjs' || format === 'gts';
 
 function wantsShadow(arg: boolean | undefined, qp: string | undefined) {
   if (qp !== undefined) {
@@ -43,7 +43,7 @@ export const Output: TOC<{
         {{/if}}
       </div>
 
-      <div class={{if (isGJS context.format) "glimdown-render"}}>
+      <div class={{if (isGlimmerModule context.format) "glimdown-render"}}>
         {{#if context.component}}
           {{clearError context.component}}
 

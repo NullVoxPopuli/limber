@@ -8,6 +8,7 @@ export type Format =
   | 'vue'
   | 'svelte'
   | 'gjs'
+  | 'gts'
   | 'hbs'
   | 'mermaid'
   | 'react';
