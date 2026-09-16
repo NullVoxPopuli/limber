@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { waitForPromise } from '@ember/test-waiters';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faSpinner, faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons';
 import { getCompiler } from 'ember-repl';
+import { getPromiseState } from 'reactiveweb/get-promise-state';
 import { errorMessage } from 'repl-sdk';
 
 import { canFormat, formatDocument } from 'limber/utils/formatting';
@@ -17,34 +17,32 @@ import type EditorService from 'limber/services/editor';
 export class FormatDocument extends Component {
   @service declare editor: EditorService;
 
-  @tracked isFormatting = false;
+  /**
+   * The most recent formatting run.
+   * getPromiseState derives the loading state from it.
+   */
+  @tracked request: Promise<void> | undefined;
 
   get canFormat() {
     return canFormat(this.editor.format);
   }
 
-  format = () => waitForPromise(this.#format());
+  get isFormatting() {
+    return this.request ? getPromiseState(this.request).isLoading : false;
+  }
 
-  #format = async () => {
+  format = () => {
     if (this.isFormatting) return;
 
     const { format, text } = this.editor;
 
     if (!text) return;
 
-    this.isFormatting = true;
-
-    try {
-      const formatted = await formatDocument(format, text);
-
+    this.request = formatDocument(format, text).then((formatted) => {
       if (formatted !== text) {
         this.editor.update(formatted, format);
       }
-    } catch (error) {
-      this.#report(error);
-    } finally {
-      this.isFormatting = false;
-    }
+    }, this.#report);
   };
 
   /**
