@@ -1,7 +1,21 @@
 export type SourceType = 'js' | 'css' | 'json' | 'ts';
 
-export const NPM_PREFIX: string;
+/**
+ * `file:///node_modules/`. A file's URL path is its path in storage.
+ */
+export const NODE_MODULES_PREFIX: string;
+
+/**
+ * `file:///src/`, where the compiled snippet lives.
+ */
+export const SRC_PREFIX: string;
 export const VIRTUAL_PREFIX: string;
+
+/**
+ * The path in storage a URL names, without the query.
+ */
+export function pathOf(url: string): string;
+export function urlFor(path: string): string;
 
 export function npmUrl(name: string, version: string, path?: string): string;
 export function parseNpmUrl(

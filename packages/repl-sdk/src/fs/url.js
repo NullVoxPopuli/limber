@@ -1,20 +1,39 @@
 /**
- * Every installed file gets a URL that says what it is.
+ * Every file has a URL that says what it is, and the URL's path is the file's
+ * path in storage. `new URL(id, parentUrl)` is the whole resolution algorithm
+ * for relative imports, and a reader of the storage finds the same paths.
  *
- * This is the whole point of the module fs. Today a resolution returns
- * `file:///tgz.repl.sdk/unzipped/repl-request-3`, which carries no path, so a
- * relative import from inside a package can't be resolved by URL semantics and
- * has to be reconstructed from a parent chain threaded through `?from=` query
- * params. Put the identity in the URL and `new URL(id, parentUrl)` is the whole
- * algorithm.
+ *   file:///node_modules/nanoid@6.0.1/index.js  →  /node_modules/nanoid@6.0.1/index.js
+ *   file:///src/index.gjs                       →  /src/index.gjs
  */
-export const NPM_PREFIX = 'file:///npm/';
+export const NODE_MODULES_PREFIX = 'file:///node_modules/';
+
+/**
+ * Where the compiled snippet lives.
+ */
+export const SRC_PREFIX = 'file:///src/';
 
 /**
  * Modules that aren't files anywhere: a live object the host handed us, or a
  * loader a compiler config supplied.
  */
 export const VIRTUAL_PREFIX = 'file:///virtual/';
+
+/**
+ * @param {string} url
+ * @returns {string} the path in storage, without the query
+ */
+export function pathOf(url) {
+  return new URL(url).pathname;
+}
+
+/**
+ * @param {string} path an absolute path in storage
+ * @returns {string}
+ */
+export function urlFor(path) {
+  return `file://${path}`;
+}
 
 /**
  * What a synchronous `resolve` can say about a bare specifier before anything
@@ -28,7 +47,7 @@ export const VIRTUAL_PREFIX = 'file:///virtual/';
  * @returns {string}
  */
 export function specifierUrl(specifier) {
-  return `${NPM_PREFIX}${specifier}`;
+  return `${NODE_MODULES_PREFIX}${specifier}`;
 }
 
 /**
@@ -69,7 +88,7 @@ const NPM_URL = /^(@[^/]+\/[^/@]+|[^/@][^/]*)@([^/]+)(?:\/(.*))?$/;
 export function npmUrl(name, version, path = '') {
   const cleaned = path.replace(/^\.\//, '').replace(/^\//, '');
 
-  return `${NPM_PREFIX}${name}@${version}/${cleaned}`;
+  return `${NODE_MODULES_PREFIX}${name}@${version}/${cleaned}`;
 }
 
 /**
@@ -77,9 +96,9 @@ export function npmUrl(name, version, path = '') {
  * @returns {undefined | { name: string, version: string, path: string }}
  */
 export function parseNpmUrl(url) {
-  if (!url.startsWith(NPM_PREFIX)) return;
+  if (!url.startsWith(NODE_MODULES_PREFIX)) return;
 
-  const match = NPM_URL.exec(url.slice(NPM_PREFIX.length));
+  const match = NPM_URL.exec(url.slice(NODE_MODULES_PREFIX.length));
 
   if (!match) return;
 

@@ -1,52 +1,60 @@
-export const PROJECT_PREFIX = 'file:///project/';
+import { SRC_PREFIX } from './url.js';
 
 /**
  * Monotonic for the life of the page, deliberately.
  *
  * es-module-shims keys its module registry by URL and there is no way to
- * evict from it, so reusing a URL hands back the module that URL already
- * evaluated to. That is the one thing blob URLs were providing here, and
- * clearing it along with the rest of the caches is how a REPL ends up
- * rendering the previous demo.
+ * evict from it, so importing the same URL hands back the module that URL
+ * already evaluated to. The file keeps its name; the query is what makes each
+ * compile a new module.
  */
 let revision = 0;
 
 /**
- * Give the compiled snippet a home.
+ * Text waiting to be imported, by its revisioned URL.
  *
- * It used to be a blob URL, which is why the debug log was full of them and
- * why `import './other.gjs'` from a snippet could never work: the parent URL
- * said nothing about where the snippet lived, so there was nothing to resolve
- * a sibling against.
+ * Two compiles of the same file can be in flight, one per keystroke, and the
+ * file on disk can only hold one of them. The loader gets the text it was
+ * promised from here; the file is what the last compile wrote.
  *
- * @param {import('./vfs.js').VFS} vfs
+ * @type {Map<string, string>}
+ */
+const pending = new Map();
+
+/**
+ * Give the compiled snippet a home: `/src/index.<ext>`.
+ *
+ * It used to be a blob URL, which is why `import './other.gjs'` from a
+ * snippet could never work: the parent URL said nothing about where the
+ * snippet lived, so there was nothing to resolve a sibling against.
+ *
+ * @param {Pick<import('./worker.js').FsWorker, 'write'>} worker
  * @param {string} fileName
  * @param {string} source
- * @returns {string}
+ * @returns {Promise<string>} the URL to import
  */
-export function writeEntry(vfs, fileName, source) {
+export async function writeEntry(worker, fileName, source) {
   revision += 1;
 
-  const url = `${PROJECT_PREFIX}${revision}/${fileName}`;
+  const url = `${SRC_PREFIX}${fileName}?v=${revision}`;
 
-  /**
-   * Always js: whatever the format was, a compiler has already turned it into
-   * a module. A `.ts` fileName would otherwise ask for a transform that has
-   * already happened.
-   */
-  vfs.write(url, source, 'js');
+  pending.set(url, source);
+  await worker.write(`/src/${fileName}`, source);
 
   return url;
 }
 
 /**
- * Drop the source once the module exists, which is what `revokeBlobURLs` did
- * for the blob this replaces. Nothing reads a module's source after it has
- * been instantiated.
+ * The text a revisioned URL was written with, once. Later imports of the same
+ * URL never reach the source hook, because the loader keeps the module.
  *
- * @param {import('./vfs.js').VFS} vfs
  * @param {string} url
+ * @returns {undefined | string}
  */
-export function releaseEntry(vfs, url) {
-  vfs.delete(url);
+export function takeEntry(url) {
+  const source = pending.get(url);
+
+  pending.delete(url);
+
+  return source;
 }

@@ -1,7 +1,6 @@
-import { createSourceHook, VFS } from 'repl-sdk/fs';
-import { Installer } from 'repl-sdk/fs/install';
-import { getTar } from 'repl-sdk/fs/npm';
-import { npmUrl } from 'repl-sdk/fs/url';
+import { createSourceHook, installer, storage } from 'repl-sdk/fs';
+import { npmUrl, pathOf } from 'repl-sdk/fs/url';
+import { fsWorker } from 'repl-sdk/fs/worker';
 import { beforeAll, describe, expect, test, vi } from 'vitest';
 
 /**
@@ -16,16 +15,13 @@ import { beforeAll, describe, expect, test, vi } from 'vitest';
  */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const vfs = new VFS();
-const installer = new Installer({ vfs, getTar });
-
-const read = vi.spyOn(vfs, 'read');
-const reads = () => read.mock.calls.map(([url]) => url);
+const read = vi.spyOn(storage, 'read');
+const reads = () => read.mock.calls.map(([path]) => path);
 
 /**
  * What `resolve` can produce synchronously: the package, at no particular file.
  */
-const PENDING = 'file:///npm/nanoid@latest/';
+const PENDING = 'file:///node_modules/nanoid@latest/';
 
 let importShim: any;
 let version: string;
@@ -43,13 +39,13 @@ beforeAll(async () => {
 
     async source(url: string, fetchOpts: RequestInit, parent: string, defaultSourceHook: any) {
       if (url !== PENDING) {
-        return createSourceHook(vfs)(url, fetchOpts, parent, defaultSourceHook);
+        return createSourceHook(storage, installer)(url, fetchOpts, parent, defaultSourceHook);
       }
 
       const installed = await installer.install('nanoid');
-      const file = vfs.read(installed.url);
+      const text = await storage.read(pathOf(installed.url));
 
-      return { url: installed.url, type: file?.type, source: file?.source };
+      return { url: installed.url, type: 'js', source: text };
     },
   };
 
@@ -57,7 +53,7 @@ beforeAll(async () => {
 
   importShim = (globalThis as any).importShim;
 
-  version = (await getTar('nanoid', 'latest')).manifest.version;
+  version = (await fsWorker().install('nanoid', 'latest')).manifest.version;
 });
 
 describe('response url', () => {
@@ -72,7 +68,7 @@ describe('response url', () => {
      * If the requested url won, it resolved against .../nanoid@latest/ and
      * the import would have failed before we got here.
      */
-    expect(reads()).toContain(npmUrl('nanoid', version, 'url-alphabet/index.js'));
-    expect(reads()).not.toContain('file:///npm/nanoid@latest/url-alphabet/index.js');
+    expect(reads()).toContain(pathOf(npmUrl('nanoid', version, 'url-alphabet/index.js')));
+    expect(reads()).not.toContain('/node_modules/nanoid@latest/url-alphabet/index.js');
   });
 });

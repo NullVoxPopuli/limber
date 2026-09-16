@@ -1,7 +1,5 @@
-import { createSourceHook, VFS } from 'repl-sdk/fs';
-import { Installer } from 'repl-sdk/fs/install';
-import { getTar } from 'repl-sdk/fs/npm';
-import { npmUrl, parseNpmUrl } from 'repl-sdk/fs/url';
+import { createSourceHook, installer, storage } from 'repl-sdk/fs';
+import { npmUrl, parseNpmUrl, pathOf } from 'repl-sdk/fs/url';
 import { beforeAll, describe, expect, test, vi } from 'vitest';
 
 /**
@@ -18,15 +16,12 @@ import { beforeAll, describe, expect, test, vi } from 'vitest';
  *   - no dependencies
  */
 
-const vfs = new VFS();
-const installer = new Installer({ vfs, getTar });
-
 /**
  * es-module-shims gives no way to see which URLs the loader asked for, so watch
  * the fs it reads from.
  */
-const read = vi.spyOn(vfs, 'read');
-const reads = () => read.mock.calls.map(([url]) => url);
+const read = vi.spyOn(storage, 'read');
+const reads = () => read.mock.calls.map(([path]) => `file://${path}`);
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 let importShim: any;
@@ -36,7 +31,7 @@ beforeAll(async () => {
   (globalThis as any).esmsInitOptions = {
     shimMode: true,
     mapOverrides: true,
-    source: createSourceHook(vfs),
+    source: createSourceHook(storage, installer),
   };
 
   await import('es-module-shims');
@@ -51,10 +46,12 @@ beforeAll(async () => {
 });
 
 describe('module fs', () => {
-  test('unpacks the tarball to URLs that say what they are', () => {
-    expect(vfs.has(npmUrl('nanoid', version, 'index.browser.js'))).toBe(true);
-    expect(vfs.has(npmUrl('nanoid', version, 'url-alphabet/index.js'))).toBe(true);
-    expect(vfs.has(npmUrl('nanoid', version, 'package.json'))).toBe(true);
+  test('unpacks the tarball to paths that say what they are', async () => {
+    expect(await storage.exists(pathOf(npmUrl('nanoid', version, 'index.browser.js')))).toBe(true);
+    expect(await storage.exists(pathOf(npmUrl('nanoid', version, 'url-alphabet/index.js')))).toBe(
+      true
+    );
+    expect(await storage.exists(pathOf(npmUrl('nanoid', version, 'package.json')))).toBe(true);
   });
 
   test('entry resolution honors the exports map and its conditions', () => {
@@ -89,11 +86,11 @@ describe('module fs', () => {
   });
 
   test('subpath exports install against the same unpacked tarball', async () => {
-    const before = vfs.size;
+    const before = (await storage.list(`/node_modules/nanoid@${version}`)).length;
     const { url } = await installer.install('nanoid/non-secure');
 
     expect(url).toBe(npmUrl('nanoid', version, 'non-secure/index.js'));
-    expect(vfs.size).toBe(before);
+    expect((await storage.list(`/node_modules/nanoid@${version}`)).length).toBe(before);
 
     importShim.addImportMap({ imports: installer.imports });
 

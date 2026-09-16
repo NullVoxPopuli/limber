@@ -1,34 +1,33 @@
 import { resolve } from '../resolve.js';
 import { parseSpecifier } from '../specifier.js';
-import { satisfiesRange } from './semver.js';
-import { NPM_PREFIX, npmUrl } from './url.js';
+import { maxSatisfying, satisfiesRange } from './semver.js';
+import { NODE_MODULES_PREFIX, npmUrl, parseNpmUrl } from './url.js';
 
 /**
- * @typedef {import('./vfs.js').VFS} VFS
- * @typedef {(name: string, version: string) => Promise<import('../types.ts').UntarredPackage>} GetTar
+ * @typedef {import('../types.ts').InstalledPackage} InstalledPackage
+ * @typedef {Pick<import('./worker.js').FsWorker, 'install' | 'installed'>} Installs
  */
 
 /**
- * Unpacks packages into the fs and reports where their entry points landed.
+ * Puts packages in the file system and reports where their entry points landed.
  *
  * Everything async lives here. A synchronous `resolve` only has to name the
- * package, at a subpath, at whatever range was asked for: `file:///npm/nanoid`
- * or `file:///npm/nanoid@6/non-secure`. This turns that into the URL of a file
- * that now exists, and es-module-shims uses the URL the source hook returns as
- * the base for that module's own relative imports, so nothing downstream has
- * to know the first URL was provisional.
+ * package, at a subpath, at whatever range was asked for:
+ * `file:///node_modules/nanoid` or `file:///node_modules/nanoid@6/non-secure`.
+ * This turns that into the URL of a file that now exists, and es-module-shims
+ * uses the URL the source hook returns as the base for that module's own
+ * relative imports, so nothing downstream has to know the first URL was
+ * provisional.
+ *
+ * The worker does the downloading and unpacking. What comes back is only the
+ * manifest and the list of files, which is all resolution needs.
  */
 export class Installer {
-  /** @type {VFS} */
-  #vfs;
-  /** @type {GetTar} */
-  #getTar;
+  /** @type {Installs} */
+  #worker;
 
   /** @type {Record<string, string>} specifier => url */
   #imports = {};
-
-  /** @type {Set<string>} name@version already unpacked */
-  #unpacked = new Set();
 
   /** @type {Map<string, Promise<string>>} */
   #resolving = new Map();
@@ -36,18 +35,20 @@ export class Installer {
   /** @type {Set<string>} scopes already registered */
   #scoped = new Set();
 
-  /** @type {Map<string, import('../types.ts').UntarredPackage>} name@version */
+  /** @type {Map<string, InstalledPackage>} name@version, resolved this session */
   #packages = new Map();
+
+  /** @type {undefined | Promise<Record<string, string[]>>} what storage had when first asked */
+  #stored;
 
   /** @type {(map: { imports?: Record<string, string>, scopes?: Record<string, Record<string, string>> }) => void} */
   #addImportMap;
 
   /**
-   * @param {{ vfs: VFS, getTar: GetTar, addImportMap?: (map: any) => void }} options
+   * @param {{ worker: Installs, addImportMap?: (map: any) => void }} options
    */
-  constructor({ vfs, getTar, addImportMap }) {
-    this.#vfs = vfs;
-    this.#getTar = getTar;
+  constructor({ worker, addImportMap }) {
+    this.#worker = worker;
     this.#addImportMap = addImportMap ?? defaultAddImportMap;
   }
 
@@ -62,10 +63,10 @@ export class Installer {
 
   clear() {
     this.#imports = {};
-    this.#unpacked.clear();
     this.#resolving.clear();
     this.#scoped.clear();
     this.#packages.clear();
+    this.#stored = undefined;
   }
 
   /**
@@ -74,7 +75,6 @@ export class Installer {
    */
   async install(specifier) {
     const { name, version = 'latest', path } = parseSpecifier(specifier);
-
     const url = await this.#resolveIn(name, version, path);
 
     this.#imports[specifier] = url;
@@ -89,12 +89,12 @@ export class Installer {
    * @returns {Promise<string | undefined>}
    */
   resolveUrl(url) {
-    if (!url.startsWith(NPM_PREFIX)) return Promise.resolve(undefined);
+    if (!url.startsWith(NODE_MODULES_PREFIX)) return Promise.resolve(undefined);
 
     /**
      * Already a real file. Relative imports inside a package land here.
      */
-    if (this.#vfs.has(url)) return Promise.resolve(url);
+    if (this.#isFile(url)) return Promise.resolve(url);
 
     const existing = this.#resolving.get(url);
 
@@ -109,10 +109,24 @@ export class Installer {
 
   /**
    * @param {string} url
+   * @returns {boolean}
+   */
+  #isFile(url) {
+    const parsed = parseNpmUrl(url);
+
+    if (!parsed) return false;
+
+    const pkg = this.#packages.get(`${parsed.name}@${parsed.version}`);
+
+    return Boolean(pkg?.files.has(parsed.path));
+  }
+
+  /**
+   * @param {string} url
    * @returns {Promise<string>}
    */
   async #resolveProvisional(url) {
-    const rest = url.slice(NPM_PREFIX.length);
+    const rest = url.slice(NODE_MODULES_PREFIX.length);
     const subpathImport = readSubpathImport(rest);
 
     if (subpathImport) {
@@ -134,13 +148,12 @@ export class Installer {
    */
   async #resolveIn(name, version, to) {
     const range = decodeURIComponent(version);
-    const untarred = this.#reuse(name, range) ?? (await this.#download(name, range));
-    const installed = untarred.manifest.version;
+    const pkg = this.#reuse(name, range) ?? (await this.#install(name, range));
+    const installed = pkg.manifest.version;
 
-    this.#unpack(name, installed, untarred);
-    this.#scopeDependencies(name, installed, untarred.manifest);
+    this.#scopeDependencies(name, installed, pkg.manifest);
 
-    const answer = resolve(untarred, requestFor(name, installed, to));
+    const answer = resolve(pkg, requestFor(name, installed, to));
 
     if (!answer) {
       throw new Error(`Could not resolve ${to} in ${name}@${installed}`);
@@ -150,7 +163,8 @@ export class Installer {
   }
 
   /**
-   * A copy we already have that satisfies the range, rather than a second one.
+   * A copy this session already resolved that satisfies the range, rather
+   * than a second one.
    *
    * More aggressive than pnpm, which keys a copy on the resolved version and
    * would happily keep both `~1.2.0` at 1.2.9 and `^1.2.0` at 1.9.0. In a
@@ -160,7 +174,7 @@ export class Installer {
    *
    * @param {string} name
    * @param {string} range
-   * @returns {undefined | import('../types.ts').UntarredPackage}
+   * @returns {undefined | InstalledPackage}
    */
   #reuse(name, range) {
     for (const [key, pkg] of this.#packages) {
@@ -172,16 +186,23 @@ export class Installer {
   }
 
   /**
+   * A copy that survived a reload is asked for by its exact version, which
+   * is what lets the worker answer without touching the registry. Anything
+   * else goes to the registry as the range that was asked for.
+   *
    * @param {string} name
    * @param {string} range
-   * @returns {Promise<import('../types.ts').UntarredPackage>}
+   * @returns {Promise<InstalledPackage>}
    */
-  async #download(name, range) {
-    const untarred = await this.#getTar(name, range);
+  async #install(name, range) {
+    this.#stored ??= this.#worker.installed();
 
-    this.#packages.set(`${name}@${untarred.manifest.version}`, untarred);
+    const stored = (await this.#stored)[name] ?? [];
+    const pkg = await this.#worker.install(name, maxSatisfying(stored, range) ?? range);
 
-    return untarred;
+    this.#packages.set(`${name}@${pkg.manifest.version}`, pkg);
+
+    return pkg;
   }
 
   /**
@@ -197,10 +218,10 @@ export class Installer {
    *
    * @param {string} name
    * @param {string} version
-   * @param {import('../types.ts').UntarredPackage['manifest']} manifest
+   * @param {InstalledPackage['manifest']} manifest
    */
   #scopeDependencies(name, version, manifest) {
-    const scope = `${NPM_PREFIX}${name}@${version}/`;
+    const scope = `${NODE_MODULES_PREFIX}${name}@${version}/`;
 
     if (this.#scoped.has(scope)) return;
 
@@ -216,7 +237,7 @@ export class Installer {
     const imports = {};
 
     for (const [dependency, range] of Object.entries(dependencies)) {
-      const target = `${NPM_PREFIX}${dependency}@${encodeURIComponent(range)}`;
+      const target = `${NODE_MODULES_PREFIX}${dependency}@${encodeURIComponent(range)}`;
 
       imports[dependency] = target;
       /**
@@ -228,23 +249,6 @@ export class Installer {
     if (Object.keys(imports).length === 0) return;
 
     this.#addImportMap({ scopes: { [scope]: imports } });
-  }
-
-  /**
-   * @param {string} name
-   * @param {string} version
-   * @param {import('../types.ts').UntarredPackage} untarred
-   */
-  #unpack(name, version, untarred) {
-    const key = `${name}@${version}`;
-
-    if (this.#unpacked.has(key)) return;
-
-    for (const [path, file] of Object.entries(untarred.contents)) {
-      this.#vfs.write(npmUrl(name, version, path), file.text);
-    }
-
-    this.#unpacked.add(key);
   }
 }
 
@@ -266,7 +270,7 @@ function defaultAddImportMap(map) {
  * package's own manifest, so the package has to travel with the specifier.
  * `#` starts a URL fragment, hence the encoding.
  *
- * @param {string} rest everything after `file:///npm/`
+ * @param {string} rest everything after the node_modules prefix
  * @returns {undefined | { name: string, version: string, to: string }}
  */
 function readSubpathImport(rest) {
@@ -278,7 +282,7 @@ function readSubpathImport(rest) {
 
   if (!last.startsWith('#')) return;
 
-  const pkg = parsePackage(`${NPM_PREFIX}${rest.slice(0, slash)}/`);
+  const pkg = parsePackage(`${NODE_MODULES_PREFIX}${rest.slice(0, slash)}/`);
 
   if (!pkg) return;
 
@@ -290,7 +294,7 @@ function readSubpathImport(rest) {
  * @returns {{ name: string, version: string }}
  */
 function parsePackage(url) {
-  const match = /^(@[^/]+\/[^/@]+|[^/@][^/]*)@([^/]+)/.exec(url.slice(NPM_PREFIX.length));
+  const match = /^(@[^/]+\/[^/@]+|[^/@][^/]*)@([^/]+)/.exec(url.slice(NODE_MODULES_PREFIX.length));
 
   return { name: match?.[1] ?? '', version: match?.[2] ?? '' };
 }

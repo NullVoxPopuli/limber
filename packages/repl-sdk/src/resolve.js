@@ -26,7 +26,7 @@ const CONDITIONS = ['repl', 'module', 'browser', 'import', 'default', 'developme
 const resolveCache = new Map();
 
 /**
- * @param {import('./types.ts').UntarredPackage} untarred
+ * @param {import('./types.ts').InstalledPackage} untarred
  * @param {ResolveRequest} request
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
  */
@@ -56,7 +56,7 @@ export function resolve(untarred, request) {
 }
 
 /**
- * @param {import('./types.ts').UntarredPackage} untarred
+ * @param {import('./types.ts').InstalledPackage} untarred
  * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
@@ -80,7 +80,7 @@ function fromExports(untarred, request, answer) {
 }
 
 /**
- * @param {import('./types.ts').UntarredPackage} untarred
+ * @param {import('./types.ts').InstalledPackage} untarred
  * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
@@ -103,7 +103,7 @@ export function fromImports(untarred, request, answer) {
 }
 
 /**
- * @param {import('./types.ts').UntarredPackage} untarred
+ * @param {import('./types.ts').InstalledPackage} untarred
  * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
@@ -117,7 +117,7 @@ function fromExportsString(untarred, request, answer) {
 }
 
 /**
- * @param {import('./types.ts').UntarredPackage} untarred
+ * @param {import('./types.ts').InstalledPackage} untarred
  * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
@@ -130,7 +130,7 @@ function fromModule(untarred, request, answer) {
 }
 
 /**
- * @param {import('./types.ts').UntarredPackage} untarred
+ * @param {import('./types.ts').InstalledPackage} untarred
  * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
@@ -143,7 +143,7 @@ function fromBrowser(untarred, request, answer) {
 }
 
 /**
- * @param {import('./types.ts').UntarredPackage} untarred
+ * @param {import('./types.ts').InstalledPackage} untarred
  * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
@@ -156,7 +156,7 @@ function fromMain(untarred, request, answer) {
 }
 
 /**
- * @param {import('./types.ts').UntarredPackage} untarred
+ * @param {import('./types.ts').InstalledPackage} untarred
  * @param {ResolveRequest} request
  * @param {string} entryName
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
@@ -176,7 +176,7 @@ function checkLegacyEntry(untarred, request, entryName) {
 }
 
 /**
- * @param {import('./types.ts').UntarredPackage} untarred
+ * @param {import('./types.ts').InstalledPackage} untarred
  * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
@@ -186,7 +186,7 @@ function fromIndex(untarred, request, answer) {
   if (hasExports(untarred)) return answer;
 
   if (request.to === '.') {
-    if (untarred.contents['index.js']) {
+    if (untarred.files.has('index.js')) {
       return {
         inTarFile: 'index.js',
         ext: 'js',
@@ -197,7 +197,7 @@ function fromIndex(untarred, request, answer) {
 }
 
 /**
- * @param {import('./types.ts').UntarredPackage} untarred
+ * @param {import('./types.ts').InstalledPackage} untarred
  * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @returns {undefined | import('./types.ts').RequestAnswer} the in-tar path
@@ -214,7 +214,7 @@ function fromFallback(untarred, request, answer) {
 
 /**
  *
- * @param {import('./types.ts').UntarredPackage} untarred
+ * @param {import('./types.ts').InstalledPackage} untarred
  * @param {string | undefined} filePath
  * @returns {string | undefined} the variant
  */
@@ -225,11 +225,11 @@ function checkFile(untarred, filePath) {
     const path = prefix + filePath;
     const dotless = prefix + filePath.replace(/^\.\//, '');
 
-    if (untarred.contents[path]) {
+    if (untarred.files.has(path)) {
       return path;
     }
 
-    if (untarred.contents[dotless]) {
+    if (untarred.files.has(dotless)) {
       return dotless;
     }
   }
@@ -243,7 +243,7 @@ function extName(filePath) {
 }
 
 /**
- * @param {import('./types.ts').UntarredPackage} untarred
+ * @param {import('./types.ts').InstalledPackage} untarred
  */
 function hasExports(untarred) {
   return Boolean(untarred.manifest.exports);
@@ -270,7 +270,7 @@ function createAnswer(forFile, request, fromMethod) {
 }
 
 /**
- * @param {import('./types.ts').UntarredPackage} untarred
+ * @param {import('./types.ts').InstalledPackage} untarred
  * @param {ResolveRequest} request
  * @param {undefined | import('./types.ts').RequestAnswer} answer
  * @throws {Error}
@@ -279,7 +279,7 @@ export function printError(untarred, request, answer) {
   const { name, exports, main, module, browser } = untarred.manifest;
 
   console.group(`${name} file info`);
-  console.info(`${name} has these files: `, Object.keys(untarred.contents));
+  console.info(`${name} has these files: `, Array.from(untarred.files));
   console.info(`We searched for '${request.original}'`);
   console.info(`from: `, { exports, main, module, browser });
   console.info(`And found: `, answer);

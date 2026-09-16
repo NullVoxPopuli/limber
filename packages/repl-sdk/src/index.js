@@ -6,17 +6,20 @@
 import { cache, secretKey } from './cache.js';
 import { compilers } from './compilers.js';
 import { STABLE_REFERENCE } from './es-module-shim.js';
-import { PROJECT_PREFIX, releaseEntry, writeEntry } from './fs/entry.js';
-import { clearFs, installer, vfs } from './fs/store.js';
+import { takeEntry, writeEntry } from './fs/entry.js';
+import { clearFs, installer, storage } from './fs/store.js';
 import {
   extensionOf,
-  NPM_PREFIX,
+  NODE_MODULES_PREFIX,
   parseVirtualUrl,
+  pathOf,
   specifierUrl,
+  SRC_PREFIX,
   typeFor,
   virtualUrl,
 } from './fs/url.js';
 import { virtualModuleSource } from './fs/virtual.js';
+import { fsWorker } from './fs/worker.js';
 import { assert, errorMessage, nextId } from './utils.js';
 
 /**
@@ -61,11 +64,12 @@ export class Compiler {
   }
 
   /**
-   * Every file downloaded so far, keyed by URL. Resolution does not read it;
-   * it is here so a REPL can show what a demo actually ran against.
+   * The file system: installed packages under `/node_modules`, and the
+   * compiled snippet under `/src`. Resolution does not read it; it is here so
+   * a REPL can show what a demo actually ran against.
    */
   get fs() {
-    return vfs;
+    return storage;
   }
 
   /**
@@ -182,10 +186,10 @@ export class Compiler {
      * package has to travel with the specifier. `#` starts a URL fragment,
      * hence the encoding.
      */
-    if (id.startsWith('#') && parentUrl.startsWith(NPM_PREFIX)) {
-      const pkg = parentUrl.slice(NPM_PREFIX.length).split('/')[0];
+    if (id.startsWith('#') && parentUrl.startsWith(NODE_MODULES_PREFIX)) {
+      const pkg = parentUrl.slice(NODE_MODULES_PREFIX.length).split('/')[0];
 
-      return `${NPM_PREFIX}${pkg}/${encodeURIComponent(id)}`;
+      return `${NODE_MODULES_PREFIX}${pkg}/${encodeURIComponent(id)}`;
     }
 
     /**
@@ -262,28 +266,32 @@ export class Compiler {
       return { url, type: 'js', source };
     }
 
-    if (path.startsWith(PROJECT_PREFIX)) {
-      const file = vfs.read(path);
+    if (path.startsWith(SRC_PREFIX)) {
+      const text = takeEntry(url) ?? (await storage.read(pathOf(path)));
 
-      assert(`${path} is not in the fs`, file);
+      assert(`${path} is not in the fs`, text !== undefined);
 
-      this.#log('[source] project', path);
+      this.#log('[source] src', path);
 
-      return { url, type: file.type, source: file.source };
+      /**
+       * Always js: whatever the format was, a compiler has already turned it
+       * into a module.
+       */
+      return { url, type: 'js', source: text };
     }
 
-    if (path.startsWith(NPM_PREFIX)) {
-      this.#log('[source] npm', path);
+    if (path.startsWith(NODE_MODULES_PREFIX)) {
+      this.#log('[source] node_modules', path);
 
       const real = await installer.resolveUrl(path);
 
       assert(`Could not resolve ${path}`, real);
 
-      const file = vfs.read(real);
+      const text = await storage.read(pathOf(real));
 
-      assert(`${real} resolved but is not in the fs`, file);
+      assert(`${real} resolved but is not in the fs`, text !== undefined);
 
-      const source = await this.#postProcess(file.source, extensionOf(real));
+      const source = await this.#postProcess(text, extensionOf(real));
 
       this.#announce('info', `Loaded ${real}`);
 
@@ -387,7 +395,7 @@ export class Compiler {
 
     const opts = { ...options };
 
-    opts.fileName ||= `dynamic.${format}`;
+    opts.fileName ||= `index.${format}`;
 
     this.#log('[compile] compiling');
 
@@ -423,16 +431,10 @@ export class Compiler {
       });
     }
 
-    const entryUrl = writeEntry(vfs, opts.fileName, compiledText);
+    const entryUrl = await writeEntry(fsWorker(), opts.fileName, compiledText);
 
-    let defaultExport;
-
-    try {
-      // @ts-ignore
-      ({ default: defaultExport } = await shimmedImport(/* @vite-ignore */ entryUrl));
-    } finally {
-      releaseEntry(vfs, entryUrl);
-    }
+    // @ts-ignore
+    const { default: defaultExport } = await shimmedImport(/* @vite-ignore */ entryUrl);
 
     this.#log('[compile] preparing to render', defaultExport, extras);
 

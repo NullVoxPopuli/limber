@@ -59,7 +59,7 @@ describe('the compiled snippet has a URL', () => {
     const debug = vi.spyOn(console, 'debug').mockImplementation((...args: unknown[]) => {
       const line = args.map((a) => String(a)).join(' ');
 
-      if (line.includes('[source] project')) seen.push(line.split(' ').pop() as string);
+      if (line.includes('[source] src')) seen.push(line.split(' ').pop() as string);
     });
 
     await passthrough(true).compile('custom', `export default 'placeholder';`);
@@ -67,26 +67,25 @@ describe('the compiled snippet has a URL', () => {
 
     const [entryUrl] = seen;
 
-    expect(entryUrl).toMatch(/^file:\/\/\/project\/\d+\/dynamic\.custom$/);
+    expect(entryUrl).toBe('file:///src/index.custom');
 
     /**
      * This is the mechanism #1892 and #946 need: a relative specifier from the
      * snippet now has something real to resolve against.
      */
-    expect(new URL('./sibling.js', entryUrl).href).toBe(
-      entryUrl!.replace('dynamic.custom', 'sibling.js')
-    );
+    expect(new URL('./sibling.js', entryUrl).href).toBe('file:///src/sibling.js');
 
     expect(compiler).toBeTruthy();
   });
 
-  test('the source is released once the module exists', async () => {
+  test('the entry is one file in src, rewritten on every compile', async () => {
     const compiler = passthrough();
 
     for (let i = 0; i < 6; i++) {
       await compiler.compile('custom', `export default 'rev-${i}';`);
     }
 
-    expect(compiler.fs.list('file:///project/')).toEqual([]);
+    expect(await compiler.fs.list('/src')).toContain('/src/index.custom');
+    expect(await compiler.fs.read('/src/index.custom')).toBe(`export default 'rev-5';`);
   });
 });

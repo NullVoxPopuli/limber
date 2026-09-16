@@ -3,17 +3,13 @@ import { expect as errorExpect, it } from 'vitest';
 import { fromImports } from './resolve.js';
 
 import type { ResolveRequest } from './resolve.js';
-import type { UntarredPackage } from './types.js';
+import type { InstalledPackage } from './types.js';
 
 const expect = errorExpect.soft;
 
 it('resolves subpath imports', () => {
   const untarred = {
-    contents: {
-      'pkg/standalone.js': 'entry file',
-      'pkg/compiler.js': 'target file',
-      'pkg/compiler/example.js': 'target file',
-    },
+    files: new Set(['pkg/standalone.js', 'pkg/compiler.js', 'pkg/compiler/example.js']),
     manifest: {
       exports: {
         '.': {
@@ -41,7 +37,7 @@ it('resolves subpath imports', () => {
     key: 'content-tag@1.0.0/#compiler',
   };
 
-  const answer = fromImports(untarred as unknown as UntarredPackage, request, undefined);
+  const answer = fromImports(untarred as unknown as InstalledPackage, request, undefined);
 
   expect(answer?.inTarFile).toBe('pkg/compiler.js');
 });
