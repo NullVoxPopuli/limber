@@ -7,6 +7,8 @@ import mkcert from 'vite-plugin-mkcert';
 
 import { ember } from '@nullvoxpopuli/ember-vite';
 
+import { ts7 } from './config/vite-ts7.mjs';
+
 /**
  * The REPL runs user code against the Ember of this app,
  * and users need the assertions and error messages of the development build.
@@ -134,6 +136,7 @@ export default defineConfig({
     ],
   },
   plugins: [
+    ts7(),
     analyzer({
       enabled: true,
       fileName: 'bundle.html',
