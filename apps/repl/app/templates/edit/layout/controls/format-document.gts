@@ -57,9 +57,6 @@ export class FormatDocument extends Component {
     console.error(message);
 
     compiler.messages.push({ type: 'error', message });
-    // Waiting on better array primitive
-    // eslint-disable-next-line no-self-assign
-    compiler.messages = compiler.messages;
   };
 
   <template>
