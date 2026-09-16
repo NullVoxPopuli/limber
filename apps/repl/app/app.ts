@@ -15,9 +15,12 @@ import Router from './router.ts';
 // accesses process.....
 // maybe one day we can have a browser-only verison?
 // But they aren't used.... so.. that's fun.
+//
+// There is no Buffer stub on purpose.
+// esm.sh's node shims prefer a global Buffer,
+// and a stub without `from` breaks modules loaded from there.
 Object.assign(window, {
   process: { env: {} },
-  Buffer: { isBuffer: (x: unknown) => typeof x !== 'string' },
 });
 
 export default class App extends Application {

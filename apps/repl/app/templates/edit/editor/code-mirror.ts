@@ -122,7 +122,7 @@ class CodeMirror extends Modifier<Signature> {
   #previousFormat?: string;
   #setFormat?: (format: string) => void;
   #checkFormat = async () => {
-    const format = this.editor.format;
+    const format = this.editor.format === 'hbs' ? 'hbs|ember' : this.editor.format;
 
     if (format === this.#previousFormat) {
       return;

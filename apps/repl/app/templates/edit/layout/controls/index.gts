@@ -18,6 +18,7 @@ import { castToBoolean, qp, withQP } from 'ember-primitives/qp';
 import currentURL from 'limber/helpers/current-url';
 
 import { Button } from './button.gts';
+import { FormatDocument } from './format-document.gts';
 
 import type { TOC } from '@ember/component/template-only';
 
@@ -68,6 +69,7 @@ export const Controls: TOC<{
             <FaIcon @icon={{faWindowMinimize}} @prefix="far" />
           {{/if}}
         </Button>
+        <FormatDocument />
         <Button
           title="Rotate Editor/Output orientation"
           disabled={{or @isMaximized @isMinimized}}
