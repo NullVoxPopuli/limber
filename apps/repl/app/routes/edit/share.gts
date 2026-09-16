@@ -10,11 +10,11 @@ import { focusTrap } from 'ember-focus-trap';
 import { Modal } from 'ember-primitives/components/dialog';
 import { KeyCombo } from 'ember-primitives/components/keys';
 
-import { SaveBanner, SHOW_TIME } from '#components/save.gts';
-
 import { shortenUrl } from 'limber/utils/editor-text';
 
 import { FlatButton } from '@nullvoxpopuli/limber-shared';
+
+import { SaveBanner, SHOW_TIME } from './save.gts';
 
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';

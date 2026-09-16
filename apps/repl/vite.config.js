@@ -7,8 +7,6 @@ import mkcert from 'vite-plugin-mkcert';
 
 import { ember } from '@nullvoxpopuli/ember-vite';
 
-import { routeCssManifest } from './config/route-css-manifest.js';
-
 /**
  * The REPL runs user code against the Ember of this app,
  * and users need the assertions and error messages of the development build.
@@ -210,7 +208,6 @@ export default defineConfig({
         ],
       },
     }),
-    routeCssManifest(),
     emberSsg({
       routes: [
         'docs',

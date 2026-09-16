@@ -1,7 +1,7 @@
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
-import { issueURL } from '../support/code.gts';
-import { NavLink, Topics } from '../topics.gts';
+import { issueURL } from './support/code.gts';
+import { NavLink, Topics } from './topics.gts';
 
 <template>
   <br /><br />

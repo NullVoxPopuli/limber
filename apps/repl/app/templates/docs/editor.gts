@@ -10,7 +10,7 @@ import {
   issueURL,
   sample,
   TryIt,
-} from '../support/code.gts';
+} from './support/code.gts';
 
 const IssueLink = <template>
   <ExternalLink href={{issueURL}}>

@@ -3,8 +3,8 @@ import { Tabs } from 'nvp.ui/tabs';
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 import { highlighted } from '@nullvoxpopuli/limber-shared/highlighting';
 
-import { H2, H3 } from '../support/code.gts';
-import { Type } from '../support/type.gts';
+import { H2, H3 } from './support/code.gts';
+import { Type } from './support/type.gts';
 
 const samples = {
   setup: {
