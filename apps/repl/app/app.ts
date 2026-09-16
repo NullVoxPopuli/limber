@@ -5,6 +5,8 @@ import Application from '@ember/application';
 import setupInspector from '@embroider/legacy-inspector-support/ember-source-4.12';
 import { isDevelopingApp, macroCondition } from '@embroider/macros';
 
+import PageTitleService from 'ember-page-title/services/page-title';
+
 import '@nullvoxpopuli/limber-shared/theme.css';
 
 import { customLayout } from './custom-layout.ts';
@@ -30,6 +32,7 @@ export default class App extends Application {
       )
     ),
     ...import.meta.glob('./services/*.ts', { eager: true }),
+    './services/page-title': PageTitleService,
   };
 }
 
