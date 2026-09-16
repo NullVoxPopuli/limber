@@ -379,27 +379,9 @@ function getKey(formatQP: FormatQP) {
   return `${formatQP}-doc`;
 }
 
-function decomposeKey(key: string): {
-  format: string;
-  flavor: string | undefined;
-} {
-  const notation = key.replace(/-doc$/, '');
-
-  const parts = notation.split('|');
-
-  assert(`Missing format`, parts[0]);
-
-  return {
-    format: parts[0],
-    flavor: parts[1],
-  };
-}
-
 export function setStoredDocument(formatQP: FormatQP, text: string) {
-  const key = getKey(formatQP);
-
-  localStorage.setItem('active-format', key);
-  localStorage.setItem(key, text);
+  localStorage.setItem('active-format', formatQP);
+  localStorage.setItem(getKey(formatQP), text);
 }
 
 export function getStoredDocumentForFormat(formatQP: FormatQP) {
@@ -424,13 +406,12 @@ export function getStoredDocument() {
   const active = localStorage.getItem('active-format');
 
   if (active) {
-    const key = `${active}-doc`;
-    const activeDoc = localStorage.getItem(key);
+    // Earlier versions stored the storage key instead of the format.
+    const format = active.replace(/-doc$/, '');
+    const doc = localStorage.getItem(getKey(format as FormatQP));
 
-    if (activeDoc) {
-      const decomposed = decomposeKey(key);
-
-      return { format: decomposed.format, flavor: decomposed.flavor, doc: activeDoc };
+    if (doc) {
+      return { format, doc };
     }
   }
 
