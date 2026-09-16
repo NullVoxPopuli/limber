@@ -1,0 +1,47 @@
+{
+  "name": "@nullvoxpopuli/tsc-wasm",
+  "version": "0.0.1",
+  "description": "TypeScript 7 compiled to WebAssembly, for running its language server in a browser worker",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NullVoxPopuli/limber.git",
+    "directory": "packages/tsc-wasm"
+  },
+  "license": "Apache-2.0",
+  "type": "module",
+  "files": [
+    "dist",
+    "wasm_exec.js",
+    "README.md"
+  ],
+  "exports": {
+    "./wasm_exec.js": "./wasm_exec.js",
+    "./dist/tsc.wasm": "./dist/tsc.wasm",
+    "./package.json": "./package.json"
+  },
+  "config": {
+    "typescriptRepository": "https://github.com/NullVoxPopuli-ai-agent/TypeScript.git",
+    "typescriptCommit": "efca9394a541467ef679185c770aaa487519b793"
+  },
+  "scripts": {
+    "build:wasm": "node build.mjs",
+    "lint": "pnpm -w exec lint",
+    "lint:fix": "pnpm -w exec lint fix",
+    "lint:js": "pnpm -w exec lint js",
+    "lint:js:fix": "pnpm -w exec lint js:fix",
+    "lint:prettier:fix": "pnpm -w exec lint prettier:fix",
+    "lint:prettier": "pnpm -w exec lint prettier"
+  },
+  "devDependencies": {
+    "@nullvoxpopuli/eslint-configs": "^5.4.0",
+    "eslint": "^9.39.1",
+    "prettier": "^3.9.6",
+    "typescript": "catalog:ts5"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">= 22"
+  }
+}

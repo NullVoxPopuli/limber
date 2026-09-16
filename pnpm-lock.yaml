@@ -2255,6 +2255,21 @@ importers:
         specifier: catalog:ts5
         version: 5.9.3
 
+  packages/tsc-wasm:
+    devDependencies:
+      '@nullvoxpopuli/eslint-configs':
+        specifier: ^5.4.0
+        version: 5.5.0(17004d65e5984e9f1a6ead8576cd1d63)
+      eslint:
+        specifier: ^9.39.1
+        version: 9.39.2(jiti@2.7.0)
+      prettier:
+        specifier: ^3.9.6
+        version: 3.9.6
+      typescript:
+        specifier: catalog:ts5
+        version: 5.9.3
+
   spikes/url-shortening:
     dependencies:
       '@algorithm.ts/base64':
