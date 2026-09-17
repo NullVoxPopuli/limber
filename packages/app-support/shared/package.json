@@ -49,6 +49,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "decorator-transforms": "2.4.0",
+    "oniguruma-parser": "^0.12.2",
     "penpal": "^6.2.2",
     "reactiveweb": "1.9.1"
   },

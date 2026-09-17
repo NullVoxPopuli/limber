@@ -4,8 +4,7 @@
 
 // Engine
 export { createHighlighterCore } from 'shiki/core';
-export { createOnigurumaEngine } from 'shiki/engine/oniguruma';
-export * as wasm from 'shiki/wasm';
+export { createJavaScriptRegexEngine } from 'shiki/engine/javascript';
 
 // Themes
 export * as themeDark from 'shiki/themes/github-dark.mjs';

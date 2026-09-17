@@ -18,8 +18,7 @@ export async function getHighlighter(): Promise<
 
   const {
     createHighlighterCore,
-    createOnigurumaEngine,
-    wasm,
+    createJavaScriptRegexEngine,
     themeDark: dark,
     themeOneDarkPro: oneDarkPro,
     markdown,
@@ -98,7 +97,7 @@ export async function getHighlighter(): Promise<
       gdm: 'markdown',
       json: 'jsonc',
     },
-    engine: createOnigurumaEngine(() => wasm),
+    engine: createJavaScriptRegexEngine(),
   });
 
   const highlighter = await promise;
@@ -111,8 +110,7 @@ export async function getHighlighter(): Promise<
 export async function createShiki() {
   const {
     createHighlighterCore,
-    createOnigurumaEngine,
-    wasm,
+    createJavaScriptRegexEngine,
     themeDark,
     themeOneDarkPro,
     javascript,
@@ -146,7 +144,7 @@ export async function createShiki() {
       jsx,
       mermaid,
     ],
-    engine: createOnigurumaEngine(() => wasm),
+    engine: createJavaScriptRegexEngine(),
   });
 
   return highlighter;
