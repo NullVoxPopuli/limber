@@ -7,6 +7,30 @@ import mkcert from 'vite-plugin-mkcert';
 
 import { ember } from '@nullvoxpopuli/ember-vite';
 
+/**
+ * The REPL runs user code against the Ember of this app,
+ * and users need the assertions and error messages of the development build.
+ * Everything else uses its production export.
+ */
+function emberSourceDevelopment() {
+  return {
+    name: 'ember-source-development',
+    enforce: 'pre',
+    async resolveId(source, importer, options) {
+      if (!source.startsWith('ember-source/')) return;
+
+      const resolved = await this.resolve(source, importer, { ...options, skipSelf: true });
+
+      if (!resolved) return;
+
+      return {
+        ...resolved,
+        id: resolved.id.replace('/ember-source/dist/prod/', '/ember-source/dist/dev/'),
+      };
+    },
+  };
+}
+
 export default defineConfig({
   build: {
     rolldownOptions: {
@@ -86,6 +110,7 @@ export default defineConfig({
       defaultSizes: 'brotli',
     }),
     circleDependency(),
+    emberSourceDevelopment(),
     mkcert({
       savePath: 'node_modules/.vite-plugin-mkcert/',
     }),

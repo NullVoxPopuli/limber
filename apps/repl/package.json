@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "build:test": "NODE_ENV=development vite build --mode development",
-    "build:prod": "NODE_ENV=development vite build",
+    "build:prod": "vite build",
     "lint:types": "node node_modules/typescript-7/bin/tsc --noEmit --runExternalCode",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "vite --port 4201",
