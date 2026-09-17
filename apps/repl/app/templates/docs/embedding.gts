@@ -1,4 +1,5 @@
-import highlighted from 'limber/modifiers/highlighted';
+import highlighted from '#app/utils/highlighting/modifier.ts';
+
 import { REPL } from 'limber-ui';
 
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';

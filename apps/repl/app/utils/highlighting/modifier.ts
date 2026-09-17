@@ -3,7 +3,8 @@ import { guidFor } from '@ember/object/internals';
 import { modifier } from 'ember-modifier';
 
 import { isAllowedFormat } from '#app/languages.gts';
-import { highlightToHtml } from '#app/utils/highlight.ts';
+
+import { highlightToHtml } from './index.ts';
 
 interface Signature {
   Element: HTMLElement;

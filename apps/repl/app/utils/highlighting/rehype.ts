@@ -1,6 +1,6 @@
 import { visit } from 'unist-util-visit';
 
-import { highlightToHast } from './highlight.ts';
+import { highlightToHast } from './index.ts';
 
 import type { Element, ElementContent, Root } from 'hast';
 

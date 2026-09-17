@@ -1,6 +1,6 @@
 import { assert } from '@ember/debug';
 
-import highlighted from 'limber/modifiers/highlighted';
+import highlighted from '#app/utils/highlighting/modifier.ts';
 
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
