@@ -14,6 +14,12 @@ export interface FsWorker {
    */
   installed(): Promise<Record<string, string[]>>;
 
+  /**
+   * Makes `/node_modules/<name>` mean one installed version.
+   */
+  link(name: string, version: string): Promise<void>;
+  links(): Promise<Record<string, string>>;
+
   write(path: string, text: string): Promise<void>;
 }
 

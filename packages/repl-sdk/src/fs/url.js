@@ -3,10 +3,20 @@
  * path in storage. `new URL(id, parentUrl)` is the whole resolution algorithm
  * for relative imports, and a reader of the storage finds the same paths.
  *
- *   file:///node_modules/nanoid@6.0.1/index.js  →  /node_modules/nanoid@6.0.1/index.js
- *   file:///src/index.gjs                       →  /src/index.gjs
+ *   file:///node_modules/.deps/nanoid@6.0.1/index.js  →  /node_modules/.deps/nanoid@6.0.1/index.js
+ *   file:///src/index.gjs                             →  /src/index.gjs
+ *
+ * Packages live under `.deps` by name and version, the way pnpm lays out its
+ * store, so two versions of one package can be loaded at once. A bare
+ * `file:///node_modules/nanoid` names the package at no particular version;
+ * the installer turns it into a `.deps` URL.
  */
 export const NODE_MODULES_PREFIX = 'file:///node_modules/';
+
+/**
+ * Where the installed files are.
+ */
+export const DEPS_PREFIX = `${NODE_MODULES_PREFIX}.deps/`;
 
 /**
  * Where the compiled snippet lives.
@@ -88,17 +98,17 @@ const NPM_URL = /^(@[^/]+\/[^/@]+|[^/@][^/]*)@([^/]+)(?:\/(.*))?$/;
 export function npmUrl(name, version, path = '') {
   const cleaned = path.replace(/^\.\//, '').replace(/^\//, '');
 
-  return `${NODE_MODULES_PREFIX}${name}@${version}/${cleaned}`;
+  return `${DEPS_PREFIX}${name}@${version}/${cleaned}`;
 }
 
 /**
- * @param {string} url
+ * @param {string} url a `.deps` URL
  * @returns {undefined | { name: string, version: string, path: string }}
  */
 export function parseNpmUrl(url) {
-  if (!url.startsWith(NODE_MODULES_PREFIX)) return;
+  if (!url.startsWith(DEPS_PREFIX)) return;
 
-  const match = NPM_URL.exec(url.slice(NODE_MODULES_PREFIX.length));
+  const match = NPM_URL.exec(url.slice(DEPS_PREFIX.length));
 
   if (!match) return;
 

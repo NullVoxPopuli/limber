@@ -5,7 +5,7 @@ import { NODE_MODULES_PREFIX, npmUrl, parseNpmUrl } from './url.js';
 
 /**
  * @typedef {import('../types.ts').InstalledPackage} InstalledPackage
- * @typedef {Pick<import('./worker.js').FsWorker, 'install' | 'installed'>} Installs
+ * @typedef {Pick<import('./worker.js').FsWorker, 'install' | 'installed' | 'link' | 'links'>} Installs
  */
 
 /**
@@ -14,10 +14,14 @@ import { NODE_MODULES_PREFIX, npmUrl, parseNpmUrl } from './url.js';
  * Everything async lives here. A synchronous `resolve` only has to name the
  * package, at a subpath, at whatever range was asked for:
  * `file:///node_modules/nanoid` or `file:///node_modules/nanoid@6/non-secure`.
- * This turns that into the URL of a file that now exists, and es-module-shims
- * uses the URL the source hook returns as the base for that module's own
- * relative imports, so nothing downstream has to know the first URL was
- * provisional.
+ * This turns that into the URL of a file that now exists, under `.deps`, and
+ * es-module-shims uses the URL the source hook returns as the base for that
+ * module's own relative imports, so nothing downstream has to know the first
+ * URL was provisional.
+ *
+ * A package asked for with no version means the linked one, the way
+ * `node_modules/<name>` does. The first version resolved for a name gets the
+ * link, and a reload keeps it.
  *
  * The worker does the downloading and unpacking. What comes back is only the
  * manifest and the list of files, which is all resolution needs.
@@ -40,6 +44,9 @@ export class Installer {
 
   /** @type {undefined | Promise<Record<string, string[]>>} what storage had when first asked */
   #stored;
+
+  /** @type {undefined | Promise<Record<string, string>>} name → linked version, kept current */
+  #links;
 
   /** @type {(map: { imports?: Record<string, string>, scopes?: Record<string, Record<string, string>> }) => void} */
   #addImportMap;
@@ -67,6 +74,7 @@ export class Installer {
     this.#scoped.clear();
     this.#packages.clear();
     this.#stored = undefined;
+    this.#links = undefined;
   }
 
   /**
@@ -76,10 +84,11 @@ export class Installer {
   async install(specifier) {
     const { name, version = 'latest', path } = parseSpecifier(specifier);
     const url = await this.#resolveIn(name, version, path);
+    const installed = /** @type {{ name: string, version: string }} */ (parseNpmUrl(url));
 
     this.#imports[specifier] = url;
 
-    return { specifier, url, ...parsePackage(url) };
+    return { specifier, url, name: installed.name, version: installed.version };
   }
 
   /**
@@ -126,16 +135,22 @@ export class Installer {
    * @returns {Promise<string>}
    */
   async #resolveProvisional(url) {
-    const rest = url.slice(NODE_MODULES_PREFIX.length);
-    const subpathImport = readSubpathImport(rest);
+    /**
+     * A subpath import, `#private/thing`, is resolved against the manifest of
+     * the package it appears in, so it arrives as a `.deps` URL of that
+     * package with the specifier as the path.
+     */
+    const inPackage = parseNpmUrl(url);
 
-    if (subpathImport) {
-      const { name, version, to } = subpathImport;
-
-      return this.#resolveIn(name, version, to);
+    if (inPackage) {
+      return this.#resolveIn(inPackage.name, inPackage.version, decodeURIComponent(inPackage.path));
     }
 
-    const { name, version = 'latest', path } = parseSpecifier(rest);
+    const {
+      name,
+      version = 'latest',
+      path,
+    } = parseSpecifier(url.slice(NODE_MODULES_PREFIX.length));
 
     return this.#resolveIn(name, version, path);
   }
@@ -196,11 +211,19 @@ export class Installer {
    */
   async #install(name, range) {
     this.#stored ??= this.#worker.installed();
+    this.#links ??= this.#worker.links();
 
+    const links = await this.#links;
     const stored = (await this.#stored)[name] ?? [];
-    const pkg = await this.#worker.install(name, maxSatisfying(stored, range) ?? range);
+    const linked = range === 'latest' ? links[name] : undefined;
+    const pkg = await this.#worker.install(name, linked ?? maxSatisfying(stored, range) ?? range);
 
     this.#packages.set(`${name}@${pkg.manifest.version}`, pkg);
+
+    if (!links[name]) {
+      links[name] = pkg.manifest.version;
+      await this.#worker.link(name, pkg.manifest.version);
+    }
 
     return pkg;
   }
@@ -221,7 +244,7 @@ export class Installer {
    * @param {InstalledPackage['manifest']} manifest
    */
   #scopeDependencies(name, version, manifest) {
-    const scope = `${NODE_MODULES_PREFIX}${name}@${version}/`;
+    const scope = npmUrl(name, version);
 
     if (this.#scoped.has(scope)) return;
 
@@ -263,40 +286,6 @@ function defaultAddImportMap(map) {
   const shim = globalThis /** @type {any} */.importShim;
 
   shim?.addImportMap?.(map);
-}
-
-/**
- * Subpath imports (`#private/thing`) are resolved against the importing
- * package's own manifest, so the package has to travel with the specifier.
- * `#` starts a URL fragment, hence the encoding.
- *
- * @param {string} rest everything after the node_modules prefix
- * @returns {undefined | { name: string, version: string, to: string }}
- */
-function readSubpathImport(rest) {
-  const slash = rest.lastIndexOf('/');
-
-  if (slash < 0) return;
-
-  const last = decodeURIComponent(rest.slice(slash + 1));
-
-  if (!last.startsWith('#')) return;
-
-  const pkg = parsePackage(`${NODE_MODULES_PREFIX}${rest.slice(0, slash)}/`);
-
-  if (!pkg) return;
-
-  return { name: pkg.name, version: pkg.version, to: last };
-}
-
-/**
- * @param {string} url
- * @returns {{ name: string, version: string }}
- */
-function parsePackage(url) {
-  const match = /^(@[^/]+\/[^/@]+|[^/@][^/]*)@([^/]+)/.exec(url.slice(NODE_MODULES_PREFIX.length));
-
-  return { name: match?.[1] ?? '', version: match?.[2] ?? '' };
 }
 
 /**

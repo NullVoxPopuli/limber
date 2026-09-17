@@ -1,11 +1,17 @@
 /**
  * The file system: the origin private file system, laid out like a project.
  *
- *   /node_modules/<name>@<version>/...   installed packages, unpacked
- *   /src/index.<ext>                     the compiled snippet
+ *   /node_modules/.deps/<name>@<version>/...   installed packages, unpacked
+ *   /node_modules/<name>/.link                 which version `<name>` means
+ *   /src/index.<ext>                           the compiled snippet
  *
  * Paths are absolute and match the path of the file's URL, so a reader that
  * only knows URLs and a reader that only knows the storage agree.
+ *
+ * The origin private file system has no symlinks, so a link is a directory
+ * with a `.link` file naming the version. Reads under `/node_modules/<name>/`
+ * follow it into `.deps`, which is what lets a reader that does not know
+ * about versions, TypeScript for one, see a normal node_modules.
  *
  * Reads work on the main thread and in workers. Writes prefer sync access
  * handles, which every browser has in workers; `createWritable` is the
@@ -15,8 +21,10 @@
  * the middle of a write leaves the directory half full.
  */
 export const NODE_MODULES = 'node_modules';
+export const DEPS = '.deps';
 
 const COMPLETE_MARKER = '.complete';
+const LINK_MARKER = '.link';
 
 const encoder = new TextEncoder();
 
@@ -34,10 +42,38 @@ const PACKAGE_DIRECTORY = /^(.+)@([^@]+)$/;
 /**
  * @param {string} name
  * @param {string} version
- * @returns {string} the package's directory, relative to node_modules
+ * @returns {string} the package's directory
  */
 export function packageDirectory(name, version) {
-  return `${name}@${version}`;
+  return `/${NODE_MODULES}/${DEPS}/${name}@${version}`;
+}
+
+/**
+ * @param {string} name
+ * @returns {string} the link's directory
+ */
+export function linkDirectory(name) {
+  return `/${NODE_MODULES}/${name}`;
+}
+
+/**
+ * `/node_modules/<name>/<rest>` → the name and the rest, for a path that is
+ * not in `.deps`. Scoped names take two segments.
+ *
+ * @param {string} path
+ * @returns {undefined | { name: string, rest: string }}
+ */
+function throughLink(path) {
+  const segments = segmentsOf(path);
+
+  if (segments[0] !== NODE_MODULES || segments[1] === undefined || segments[1] === DEPS) return;
+
+  const nameLength = segments[1].startsWith('@') ? 2 : 1;
+  const name = segments.slice(1, 1 + nameLength).join('/');
+
+  if (name.split('/').length !== nameLength) return;
+
+  return { name, rest: segments.slice(1 + nameLength).join('/') };
 }
 
 /**
@@ -81,7 +117,7 @@ export class Storage {
    * @returns {Promise<undefined | string>}
    */
   async read(path) {
-    const handle = await this.#file(path, false);
+    const handle = await this.#file(await this.resolve(path), false);
 
     if (!handle) return undefined;
 
@@ -105,7 +141,88 @@ export class Storage {
    * @returns {Promise<boolean>}
    */
   async exists(path) {
-    return Boolean(await this.#file(path, false));
+    return Boolean(await this.#file(await this.resolve(path), false));
+  }
+
+  /**
+   * The real path of a file, following a link under `/node_modules/<name>/`
+   * into `.deps`. Anything else is its own real path.
+   *
+   * @param {string} path
+   * @returns {Promise<string>}
+   */
+  async resolve(path) {
+    const link = throughLink(path);
+
+    if (!link) return path;
+
+    const version = await this.linkOf(link.name);
+
+    if (!version) return path;
+
+    return `${packageDirectory(link.name, version)}${link.rest ? `/${link.rest}` : ''}`;
+  }
+
+  /**
+   * @param {string} name
+   * @returns {Promise<undefined | string>} the version `<name>` links to
+   */
+  async linkOf(name) {
+    const handle = await this.#file(`${linkDirectory(name)}/${LINK_MARKER}`, false);
+
+    if (!handle) return undefined;
+
+    const file = await handle.getFile();
+
+    return (await file.text()).trim() || undefined;
+  }
+
+  /**
+   * Makes `/node_modules/<name>` mean one installed version.
+   *
+   * @param {string} name
+   * @param {string} version
+   */
+  link(name, version) {
+    return this.write(`${linkDirectory(name)}/${LINK_MARKER}`, version);
+  }
+
+  /**
+   * Every link, as name → version.
+   *
+   * @returns {Promise<Record<string, string>>}
+   */
+  async links() {
+    /** @type {Record<string, string>} */
+    const result = {};
+    const nodeModules = await this.#directory([NODE_MODULES], false);
+
+    if (!nodeModules) return result;
+
+    /**
+     * @param {FileSystemDirectoryHandle} dir
+     * @param {string} scope
+     */
+    const collect = async (dir, scope) => {
+      for await (const [entry, handle] of dir.entries()) {
+        if (handle.kind !== 'directory' || entry === DEPS) continue;
+
+        const directory = /** @type {FileSystemDirectoryHandle} */ (handle);
+
+        if (!scope && entry.startsWith('@')) {
+          await collect(directory, `${entry}/`);
+          continue;
+        }
+
+        const version = await this.linkOf(`${scope}${entry}`);
+
+        if (version) result[`${scope}${entry}`] = version;
+      }
+    };
+
+    await collect(nodeModules, '');
+
+    return result;
   }
 
   /**
@@ -135,14 +252,17 @@ export class Storage {
    * @returns {Promise<string[]>}
    */
   async list(path) {
-    const dir = await this.#directory(segmentsOf(path), false);
+    const real = await this.resolve(path);
+    const dir = await this.#directory(segmentsOf(real), false);
 
     if (!dir) return [];
 
     /** @type {string[]} */
     const files = [];
 
-    await walk(dir, `/${segmentsOf(path).join('/')}`, (file) => files.push(file));
+    await walk(dir, `/${segmentsOf(path).join('/')}`, (file) => {
+      if (!isMarker(file)) files.push(file);
+    });
 
     return files;
   }
@@ -163,9 +283,9 @@ export class Storage {
   async installed() {
     /** @type {Record<string, string[]>} */
     const result = {};
-    const nodeModules = await this.#directory([NODE_MODULES], false);
+    const deps = await this.#directory([NODE_MODULES, DEPS], false);
 
-    if (!nodeModules) return result;
+    if (!deps) return result;
 
     /**
      * @param {FileSystemDirectoryHandle} dir
@@ -195,7 +315,7 @@ export class Storage {
       }
     };
 
-    await collect(nodeModules, '');
+    await collect(deps, '');
 
     return result;
   }
@@ -220,7 +340,7 @@ export class Storage {
     const files = new Set();
 
     await walk(dir, '', (file) => {
-      if (file !== COMPLETE_MARKER) files.add(file);
+      if (!isMarker(file)) files.add(file);
     });
 
     return { manifest, files };
@@ -268,10 +388,7 @@ export class Storage {
    * @param {boolean} create
    */
   #packageDirectory(name, version, create) {
-    return this.#directory(
-      segmentsOf(`${NODE_MODULES}/${packageDirectory(name, version)}`),
-      create
-    );
+    return this.#directory(segmentsOf(packageDirectory(name, version)), create);
   }
 
   /**
@@ -318,6 +435,17 @@ export class Storage {
       throw error;
     }
   }
+}
+
+/**
+ * The storage's own bookkeeping, which no reader should see as a file.
+ *
+ * @param {string} path
+ */
+function isMarker(path) {
+  const name = path.slice(path.lastIndexOf('/') + 1);
+
+  return name === COMPLETE_MARKER || name === LINK_MARKER;
 }
 
 /**

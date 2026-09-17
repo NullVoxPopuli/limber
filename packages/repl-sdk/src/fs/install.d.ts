@@ -7,7 +7,7 @@ export type AddImportMap = (map: {
 
 export class Installer {
   constructor(options: {
-    worker: Pick<FsWorker, 'install' | 'installed'>;
+    worker: Pick<FsWorker, 'install' | 'installed' | 'link' | 'links'>;
     addImportMap?: AddImportMap;
   });
 

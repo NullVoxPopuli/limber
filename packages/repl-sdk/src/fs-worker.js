@@ -18,7 +18,7 @@ const inFlight = new Map();
 
 const EXACT_VERSION = /^\d+\.\d+\.\d+/;
 
-const api = { install, installed, write };
+const api = { install, installed, link, links, write };
 
 expose(api);
 
@@ -27,6 +27,18 @@ expose(api);
  */
 function installed() {
   return storage.installed();
+}
+
+/**
+ * @param {string} name
+ * @param {string} version
+ */
+function link(name, version) {
+  return storage.link(name, version);
+}
+
+function links() {
+  return storage.links();
 }
 
 /** @type {Map<string, Promise<void>>} */

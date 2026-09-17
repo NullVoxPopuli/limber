@@ -4,6 +4,8 @@ import { wrap } from 'comlink';
  * @typedef {object} FsWorker
  * @property {(name: string, version: string) => Promise<import('../types.ts').InstalledPackage>} install
  * @property {() => Promise<Record<string, string[]>>} installed
+ * @property {(name: string, version: string) => Promise<void>} link
+ * @property {() => Promise<Record<string, string>>} links
  * @property {(path: string, text: string) => Promise<void>} write
  */
 

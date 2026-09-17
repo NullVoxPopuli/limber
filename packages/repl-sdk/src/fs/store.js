@@ -20,6 +20,8 @@ export const installer = new Installer({
   worker: {
     install: (name, version) => fsWorker().install(name, version),
     installed: () => fsWorker().installed(),
+    link: (name, version) => fsWorker().link(name, version),
+    links: () => fsWorker().links(),
   },
 });
 

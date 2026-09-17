@@ -11,6 +11,8 @@ import { clearFs, installer, storage } from './fs/store.js';
 import {
   extensionOf,
   NODE_MODULES_PREFIX,
+  npmUrl,
+  parseNpmUrl,
   parseVirtualUrl,
   pathOf,
   specifierUrl,
@@ -186,10 +188,10 @@ export class Compiler {
      * package has to travel with the specifier. `#` starts a URL fragment,
      * hence the encoding.
      */
-    if (id.startsWith('#') && parentUrl.startsWith(NODE_MODULES_PREFIX)) {
-      const pkg = parentUrl.slice(NODE_MODULES_PREFIX.length).split('/')[0];
+    const inPackage = id.startsWith('#') ? parseNpmUrl(parentUrl) : undefined;
 
-      return `${NODE_MODULES_PREFIX}${pkg}/${encodeURIComponent(id)}`;
+    if (inPackage) {
+      return npmUrl(inPackage.name, inPackage.version, encodeURIComponent(id));
     }
 
     /**

@@ -6,6 +6,11 @@ export type SourceType = 'js' | 'css' | 'json' | 'ts';
 export const NODE_MODULES_PREFIX: string;
 
 /**
+ * `file:///node_modules/.deps/`, where the installed files are.
+ */
+export const DEPS_PREFIX: string;
+
+/**
  * `file:///src/`, where the compiled snippet lives.
  */
 export const SRC_PREFIX: string;

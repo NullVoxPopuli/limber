@@ -146,7 +146,7 @@ describe('Storage', () => {
         'non-secure/index.js',
         'package.json',
       ]);
-      expect(await storage.read('/node_modules/nanoid@6.0.1/non-secure/index.js')).toBe(
+      expect(await storage.read('/node_modules/.deps/nanoid@6.0.1/non-secure/index.js')).toBe(
         'export const id = 2;'
       );
     });
@@ -158,8 +158,10 @@ describe('Storage', () => {
         'package.json': { text: JSON.stringify(manifest) },
       });
 
-      const nodeModules = await origin.getDirectoryHandle('node_modules');
-      const scope = await nodeModules.getDirectoryHandle('@scope');
+      const deps = await origin
+        .getDirectoryHandle('node_modules')
+        .then((d) => d.getDirectoryHandle('.deps'));
+      const scope = await deps.getDirectoryHandle('@scope');
 
       expect(Array.from(scope.children.keys())).toEqual(['name@1.0.0']);
       expect(await storage.installed()).toEqual({ '@scope/name': ['1.0.0'] });
@@ -167,8 +169,10 @@ describe('Storage', () => {
     });
 
     it('ignores a package without its marker', async () => {
-      const nodeModules = await origin.getDirectoryHandle('node_modules', { create: true });
-      const half = await nodeModules.getDirectoryHandle('broken@1.0.0', { create: true });
+      const deps = await origin
+        .getDirectoryHandle('node_modules', { create: true })
+        .then((d) => d.getDirectoryHandle('.deps', { create: true }));
+      const half = await deps.getDirectoryHandle('broken@1.0.0', { create: true });
       const file = await half.getFileHandle('package.json', { create: true });
 
       file.text = JSON.stringify({ name: 'broken', version: '1.0.0' });
@@ -182,7 +186,7 @@ describe('Storage', () => {
       await storage.writePackage('b', '1.0.0', { 'package.json': { text: '{}' } });
       await storage.write('/src/index.gjs', '');
 
-      await storage.remove('/node_modules/a@1.0.0');
+      await storage.remove('/node_modules/.deps/a@1.0.0');
 
       expect(Object.keys(await storage.installed())).toEqual(['b']);
 
@@ -190,6 +194,54 @@ describe('Storage', () => {
 
       expect(await storage.installed()).toEqual({});
       expect(await storage.exists('/src/index.gjs')).toBe(false);
+    });
+  });
+
+  describe('links', () => {
+    it('reads through a link into .deps', async () => {
+      for (const version of ['1.0.0', '2.0.0']) {
+        await storage.writePackage('pkg', version, {
+          'package.json': { text: JSON.stringify({ name: 'pkg', version }) },
+          'index.js': { text: `export default '${version}';` },
+          'lib/util.js': { text: `export const v = '${version}';` },
+        });
+      }
+
+      await storage.link('pkg', '2.0.0');
+
+      expect(await storage.linkOf('pkg')).toBe('2.0.0');
+      expect(await storage.links()).toEqual({ pkg: '2.0.0' });
+      expect(await storage.resolve('/node_modules/pkg/lib/util.js')).toBe(
+        '/node_modules/.deps/pkg@2.0.0/lib/util.js'
+      );
+      expect(await storage.read('/node_modules/pkg/index.js')).toBe(`export default '2.0.0';`);
+      expect(await storage.exists('/node_modules/pkg/lib/util.js')).toBe(true);
+      expect((await storage.list('/node_modules/pkg')).sort()).toEqual([
+        '/node_modules/pkg/index.js',
+        '/node_modules/pkg/lib/util.js',
+        '/node_modules/pkg/package.json',
+      ]);
+    });
+
+    it('links scoped names', async () => {
+      await storage.writePackage('@scope/name', '1.0.0', {
+        'package.json': { text: '{}' },
+        'index.js': { text: 'scoped' },
+      });
+      await storage.link('@scope/name', '1.0.0');
+
+      expect(await storage.links()).toEqual({ '@scope/name': '1.0.0' });
+      expect(await storage.read('/node_modules/@scope/name/index.js')).toBe('scoped');
+    });
+
+    it('leaves a path alone when there is no link', async () => {
+      expect(await storage.resolve('/node_modules/missing/index.js')).toBe(
+        '/node_modules/missing/index.js'
+      );
+      expect(await storage.read('/node_modules/missing/index.js')).toBeUndefined();
+      expect(await storage.resolve('/node_modules/.deps/pkg@1.0.0/index.js')).toBe(
+        '/node_modules/.deps/pkg@1.0.0/index.js'
+      );
     });
   });
 });

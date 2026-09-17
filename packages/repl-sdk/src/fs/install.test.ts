@@ -48,8 +48,22 @@ const PUBLISHED: Record<string, string[]> = {
 let asked: string[] = [];
 let installs: string[] = [];
 let stored: Record<string, string[]> = {};
+let links: Record<string, string> = {};
 let scopes: Record<string, Record<string, string>>;
 let installer: Installer;
+
+function fakeWorker() {
+  return {
+    install: fakeInstall,
+    installed: () => Promise.resolve(stored),
+    links: () => Promise.resolve({ ...links }),
+    link: (name: string, version: string) => {
+      links[name] = version;
+
+      return Promise.resolve();
+    },
+  };
+}
 
 /**
  * What the worker would answer: the manifest and file list of the version
@@ -95,12 +109,10 @@ beforeEach(() => {
   asked = [];
   installs = [];
   stored = {};
+  links = {};
   scopes = {};
   installer = new Installer({
-    worker: {
-      install: fakeInstall,
-      installed: () => Promise.resolve(stored),
-    },
+    worker: fakeWorker(),
     addImportMap: (map: { scopes?: Record<string, Record<string, string>> }) => {
       Object.assign(scopes, map.scopes);
     },
@@ -132,18 +144,18 @@ describe('install', () => {
 
     expect(result).toEqual({
       specifier: 'app',
-      url: 'file:///node_modules/app@1.0.0/index.js',
+      url: 'file:///node_modules/.deps/app@1.0.0/index.js',
       name: 'app',
       version: '1.0.0',
     });
-    expect(installer.imports).toEqual({ app: 'file:///node_modules/app@1.0.0/index.js' });
+    expect(installer.imports).toEqual({ app: 'file:///node_modules/.deps/app@1.0.0/index.js' });
   });
 
   it('treats a file the package has as already resolved', async () => {
     await installer.install('app');
 
-    expect(await installer.resolveUrl('file:///node_modules/app@1.0.0/index.js')).toBe(
-      'file:///node_modules/app@1.0.0/index.js'
+    expect(await installer.resolveUrl('file:///node_modules/.deps/app@1.0.0/index.js')).toBe(
+      'file:///node_modules/.deps/app@1.0.0/index.js'
     );
     expect(installs).toEqual(['app@1.0.0']);
   });
@@ -158,11 +170,11 @@ describe('dependency scopes', () => {
     await installer.install('app');
     await installer.resolveUrl('file:///node_modules/left@%5E1.0.0');
 
-    expect(scopes['file:///node_modules/app@1.0.0/']).toMatchObject({
+    expect(scopes['file:///node_modules/.deps/app@1.0.0/']).toMatchObject({
       left: 'file:///node_modules/left@%5E1.0.0',
       right: 'file:///node_modules/right@%5E1.0.0',
     });
-    expect(scopes['file:///node_modules/left@1.0.0/']).toMatchObject({
+    expect(scopes['file:///node_modules/.deps/left@1.0.0/']).toMatchObject({
       shared: 'file:///node_modules/shared@%5E1.2.0',
     });
   });
@@ -170,7 +182,7 @@ describe('dependency scopes', () => {
   it('maps the subpath prefix too, so deep imports keep the version', async () => {
     await installer.install('app');
 
-    expect(scopeFor('file:///node_modules/app@1.0.0/')['left/']).toBe(
+    expect(scopeFor('file:///node_modules/.deps/app@1.0.0/')['left/']).toBe(
       'file:///node_modules/left@%5E1.0.0/'
     );
   });
@@ -178,7 +190,7 @@ describe('dependency scopes', () => {
   it('never scopes a peerDependency', async () => {
     await installer.resolveUrl('file:///node_modules/left@%5E1.0.0');
 
-    const scope = scopeFor('file:///node_modules/left@1.0.0/');
+    const scope = scopeFor('file:///node_modules/.deps/left@1.0.0/');
 
     expect(scope.shared).toBeTruthy();
     /**
@@ -195,7 +207,7 @@ describe('reuse', () => {
     const fromLeft = await installer.resolveUrl('file:///node_modules/shared@%5E1.2.0');
     const fromRight = await installer.resolveUrl('file:///node_modules/shared@%5E1.5.0');
 
-    expect(fromLeft).toBe('file:///node_modules/shared@1.9.0/index.js');
+    expect(fromLeft).toBe('file:///node_modules/.deps/shared@1.9.0/index.js');
     expect(fromRight).toBe(fromLeft);
     expect(installs.filter((d) => d.startsWith('shared@'))).toEqual(['shared@1.9.0']);
   });
@@ -208,11 +220,11 @@ describe('reuse', () => {
       'legacy@1.0.0',
       'legacy@2.1.0',
     ]);
-    expect(await installer.resolveUrl('file:///node_modules/legacy@1.0.0/index.js')).toBe(
-      'file:///node_modules/legacy@1.0.0/index.js'
+    expect(await installer.resolveUrl('file:///node_modules/.deps/legacy@1.0.0/index.js')).toBe(
+      'file:///node_modules/.deps/legacy@1.0.0/index.js'
     );
-    expect(await installer.resolveUrl('file:///node_modules/legacy@2.1.0/index.js')).toBe(
-      'file:///node_modules/legacy@2.1.0/index.js'
+    expect(await installer.resolveUrl('file:///node_modules/.deps/legacy@2.1.0/index.js')).toBe(
+      'file:///node_modules/.deps/legacy@2.1.0/index.js'
     );
   });
 });
@@ -241,7 +253,7 @@ describe('what storage already has', () => {
 
     installer = new Installer({
       worker: {
-        install: fakeInstall,
+        ...fakeWorker(),
         installed: () => {
           listed += 1;
 
@@ -256,5 +268,32 @@ describe('what storage already has', () => {
 
     expect(asked).toEqual(['shared@1.9.0', 'legacy@^1.0.0']);
     expect(listed).toBe(1);
+  });
+});
+
+describe('links', () => {
+  it('links the first version a name resolves to', async () => {
+    await installer.resolveUrl('file:///node_modules/legacy@%5E2.0.0');
+    await installer.resolveUrl('file:///node_modules/legacy@%5E1.0.0');
+
+    expect(links).toEqual({ legacy: '2.1.0' });
+  });
+
+  it('means the linked version when no version is asked for', async () => {
+    links = { legacy: '1.0.0' };
+
+    const { version } = await installer.install('legacy');
+
+    expect(version).toBe('1.0.0');
+    expect(asked).toEqual(['legacy@1.0.0']);
+  });
+
+  it('does not let a link answer for an explicit range', async () => {
+    links = { legacy: '1.0.0' };
+
+    const { version } = await installer.install('legacy@^2.0.0');
+
+    expect(version).toBe('2.1.0');
+    expect(links).toEqual({ legacy: '1.0.0' });
   });
 });

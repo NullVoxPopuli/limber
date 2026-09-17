@@ -86,11 +86,11 @@ describe('module fs', () => {
   });
 
   test('subpath exports install against the same unpacked tarball', async () => {
-    const before = (await storage.list(`/node_modules/nanoid@${version}`)).length;
+    const before = (await storage.list(`/node_modules/.deps/nanoid@${version}`)).length;
     const { url } = await installer.install('nanoid/non-secure');
 
     expect(url).toBe(npmUrl('nanoid', version, 'non-secure/index.js'));
-    expect((await storage.list(`/node_modules/nanoid@${version}`)).length).toBe(before);
+    expect((await storage.list(`/node_modules/.deps/nanoid@${version}`)).length).toBe(before);
 
     importShim.addImportMap({ imports: installer.imports });
 

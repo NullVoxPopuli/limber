@@ -7,7 +7,7 @@ import { describe, expect, test, vi } from 'vitest';
  *
  *   resolve  ->  file:///node_modules/nanoid          (synchronous, names the package)
  *   source   ->  download, unpack, resolve the exports map
- *            ->  file:///node_modules/nanoid@6.0.1/index.browser.js
+ *            ->  file:///node_modules/.deps/nanoid@6.0.1/index.browser.js
  *   resolve  ->  ./url-alphabet/index.js against that URL, by URL math alone
  */
 function passthrough() {
@@ -61,7 +61,7 @@ describe('npm through the Compiler', () => {
     );
 
     const paths = await compiler.fs.list('/node_modules');
-    const nanoid = paths.filter((path) => path.startsWith('/node_modules/nanoid@'));
+    const nanoid = paths.filter((path) => path.startsWith('/node_modules/.deps/nanoid@'));
 
     expect(nanoid.length).toBeGreaterThan(3);
 
