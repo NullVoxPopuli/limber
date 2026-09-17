@@ -21,6 +21,11 @@ const externalPackages = [
  * @returns {string | undefined | (() => Record<string, unknown>)}
  */
 function resolve(id) {
+  // Not on npm. A host that does not provide it gets the full build, which has the same API.
+  if (id === '@glimdown/babel-8-lite') {
+    return `https://esm.sh/@babel/standalone@8`;
+  }
+
   if (id === '@ember/template-compiler/runtime') {
     return `https://esm.sh/*ember-source/dist/packages/@ember/template-compiler/runtime.js`;
   }

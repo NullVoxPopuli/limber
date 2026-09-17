@@ -14,7 +14,7 @@ export const reactModules = {
   // @ts-expect-error Does not provide its own types
   'react-dom': () => import('react-dom'),
   // @ts-expect-error Does not provide its own types
-  '@babel/standalone': () => import('@babel/standalone'),
+  '@glimdown/babel-8-lite': () => import('@babel/standalone'),
   process: () => import('process'),
 };
 

@@ -1,0 +1,35 @@
+{
+  "name": "@glimdown/babel-8-lite",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Babel 8 for the browser, with only what the repl-sdk compilers use. ember-repl bundles it.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NullVoxPopuli/limber.git",
+    "directory": "packages/babel-8-lite"
+  },
+  "license": "MIT",
+  "author": "NullVoxPopuli",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "build": "rolldown --config ./rolldown.config.js",
+    "test:node": "node --test \"tests/*.test.js\""
+  },
+  "devDependencies": {
+    "@babel/core": "^8.0.5",
+    "@babel/plugin-transform-typescript": "^8.0.5",
+    "@babel/preset-react": "^8.0.1",
+    "path-browserify": "^1.0.1",
+    "rolldown": "1.0.0-rc.15"
+  }
+}

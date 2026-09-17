@@ -22,12 +22,13 @@ export const jsx = {
         return `https://esm.sh/react@19.2.3/es2022/jsx-runtime.mjs`;
       case 'react-dom/client':
         return `https://esm.sh/react-dom@19.2.3/es2022/client.development.mjs`;
-      case '@babel/standalone':
-        return `https://esm.sh/@babel/standalone`;
+      // Not on npm. A host that does not provide it gets the full build, which has the same API.
+      case '@glimdown/babel-8-lite':
+        return `https://esm.sh/@babel/standalone@8`;
     }
   },
   compiler: async (config, api) => {
-    const [reactDom, babel] = await api.tryResolveAll(['react-dom/client', '@babel/standalone']);
+    const [reactDom, babel] = await api.tryResolveAll(['react-dom/client', '@glimdown/babel-8-lite']);
 
     const { createRoot } = reactDom;
 
