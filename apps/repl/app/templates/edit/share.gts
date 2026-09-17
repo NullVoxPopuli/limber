@@ -23,7 +23,13 @@ const isShowing = tracked(false);
 
 export const Share = <template>
   <Modal as |m|>
-    <button data-share-button type="button" {{on "click" m.open}} {{m.focusOnClose}}>
+    <button
+      data-share-button
+      type="button"
+      aria-label="Share"
+      {{on "click" m.open}}
+      {{m.focusOnClose}}
+    >
       <span class="sm:inline-flex hidden">Share</span>
       <FaIcon @icon={{faShareFromSquare}} />
     </button>
