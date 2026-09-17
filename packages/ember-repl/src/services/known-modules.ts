@@ -59,7 +59,7 @@ const emberCompilationModules = {
       'ember-source/ember-template-compiler/index.js'
     ),
   // Direct Dependencies
-  '@babel/standalone': () => import('@babel/standalone'),
+  '@glimdown/babel-8-lite': () => import('@glimdown/babel-8-lite'),
   'content-tag': () => import('content-tag'),
   'decorator-transforms': () => import('decorator-transforms'),
   'decorator-transforms/runtime': () => import('decorator-transforms/runtime'),

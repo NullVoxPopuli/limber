@@ -178,7 +178,7 @@ This runs three processes concurrently:
 
 ### Known Issues & Workarounds
 
-1. **Babel standalone**: Uses local tarball (`babel-standalone.tgz`) due to customization needs
+1. **Babel**: `packages/babel-8-lite` (`@glimdown/babel-8-lite`, private) bundles `@babel/core` 8 with only the plugins that the compilers use, in the shape of `@babel/standalone`. ember-repl bundles it
 2. **Force rebuilds**: If builds fail, use `--force` flag with Turbo commands
 3. **Template linting**: Runs after build step (depends on compiled output)
 4. **Type checking**: Uses Glint for Ember template type checking - may need full rebuild

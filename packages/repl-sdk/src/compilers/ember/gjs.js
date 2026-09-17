@@ -4,10 +4,11 @@ let elementId = 0;
 
 const buildDependencies = [
   /**
-   * The only version of babel that is easily runnable in the browser
-   * This includes way too much stuff.
+   * Babel with only what this compiler uses, in the shape of `@babel/standalone`.
+   * ember-repl provides it. Other hosts get `@babel/standalone` (see `resolve` in ../ember.js),
+   * which has the same API and way too much stuff.
    */
-  '@babel/standalone',
+  '@glimdown/babel-8-lite',
   /**
    * We will be using this decorator transform
    * instead of the babel one.
