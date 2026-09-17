@@ -5,9 +5,9 @@ import { describe, expect, test, vi } from 'vitest';
  * End to end through the real Compiler: a compiled snippet imports a package
  * that is not in any manual resolver, so the only way it can run is
  *
- *   resolve  ->  file:///npm/nanoid          (synchronous, names the package)
+ *   resolve  ->  file:///node_modules/nanoid          (synchronous, names the package)
  *   source   ->  download, unpack, resolve the exports map
- *            ->  file:///npm/nanoid@6.0.1/index.browser.js
+ *            ->  file:///node_modules/.deps/nanoid@6.0.1/index.browser.js
  *   resolve  ->  ./url-alphabet/index.js against that URL, by URL math alone
  */
 function passthrough() {
@@ -60,12 +60,13 @@ describe('npm through the Compiler', () => {
       `
     );
 
-    const urls = compiler.fs.list('file:///npm/nanoid@');
+    const paths = await compiler.fs.list('/node_modules');
+    const nanoid = paths.filter((path) => path.startsWith('/node_modules/.deps/nanoid@'));
 
-    expect(urls.length).toBeGreaterThan(3);
+    expect(nanoid.length).toBeGreaterThan(3);
 
-    for (const url of urls) {
-      expect(url).not.toContain('repl-request-');
+    for (const path of paths) {
+      expect(path).not.toContain('repl-request-');
     }
 
     /**

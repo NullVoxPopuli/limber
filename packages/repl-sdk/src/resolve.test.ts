@@ -3,7 +3,7 @@ import { expect as errorExpect, it } from 'vitest';
 import { resolve } from './resolve.js';
 
 import type { ResolveRequest } from './resolve.js';
-import type { UntarredPackage } from './types.js';
+import type { InstalledPackage } from './types.js';
 
 const expect = errorExpect.soft;
 
@@ -13,15 +13,13 @@ function request(name: string, to = '.'): ResolveRequest {
 
 it('resolves the entrypoint (rehype-raw)', () => {
   const untarred = {
-    contents: {
-      'index.js': 'entry file',
-    },
+    files: new Set(['index.js']),
     manifest: {
       exports: './index.js',
     },
   };
 
-  const answer = resolve(untarred as unknown as UntarredPackage, request('rehype-raw'));
+  const answer = resolve(untarred as unknown as InstalledPackage, request('rehype-raw'));
 
   expect(answer?.inTarFile).toBe('index.js');
 });

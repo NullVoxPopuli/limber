@@ -1,7 +1,4 @@
-import type { UntarredPackage } from '../types.ts';
-import type { VFS } from './vfs.js';
-
-export type GetTar = (name: string, version: string) => Promise<UntarredPackage>;
+import type { FsWorker } from './worker.js';
 
 export type AddImportMap = (map: {
   imports?: Record<string, string>;
@@ -9,7 +6,10 @@ export type AddImportMap = (map: {
 }) => void;
 
 export class Installer {
-  constructor(options: { vfs: VFS; getTar: GetTar; addImportMap?: AddImportMap });
+  constructor(options: {
+    worker: Pick<FsWorker, 'install' | 'installed' | 'link' | 'links'>;
+    addImportMap?: AddImportMap;
+  });
 
   /**
    * Everything installed so far, as an import map. Not needed for resolution.

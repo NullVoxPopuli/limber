@@ -12,20 +12,24 @@
       "default": "./src/compilers/markdown/parse.js"
     },
     "./fs": {
-      "types": "./src/fs/vfs.d.ts",
-      "default": "./src/fs/vfs.js"
+      "types": "./src/fs/store.d.ts",
+      "default": "./src/fs/store.js"
     },
     "./fs/install": {
       "types": "./src/fs/install.d.ts",
       "default": "./src/fs/install.js"
     },
-    "./fs/npm": {
-      "types": "./src/fs/npm-tar.d.ts",
-      "default": "./src/fs/npm-tar.js"
-    },
     "./fs/url": {
       "types": "./src/fs/url.d.ts",
       "default": "./src/fs/url.js"
+    },
+    "./fs/worker": {
+      "types": "./src/fs/worker.d.ts",
+      "default": "./src/fs/worker.js"
+    },
+    "./fs/storage": {
+      "types": "./src/fs/storage.d.ts",
+      "default": "./src/fs/storage.js"
     }
   },
   "repository": {

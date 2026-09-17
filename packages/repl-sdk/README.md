@@ -45,6 +45,12 @@ A heading with an explicit `{#custom-id}` suffix keeps that id instead.
 [github-slugger]: https://github.com/Flet/github-slugger
 [gfm-spec]: https://github.github.com/gfm/
 
+## Installed packages
+
+Packages a demo imports are downloaded from npm once and unpacked into the browser's origin
+private file system, so a reload does not download them again. Only the unpacked files are
+kept. Browsers without that storage, and Node, work the same but download every time.
+
 ## Debugging
 
 Only one `Compiler` runs per window. Its `fs` getter shows everything a demo ran against:

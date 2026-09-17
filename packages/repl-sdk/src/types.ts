@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { FileDescription } from 'tarparser';
 
 export interface RequestAnswer {
   inTarFile: string;
@@ -299,7 +298,7 @@ interface KnownDefaultOptions {
 
 import type { ImportMap as ManifestImports } from 'resolve.imports';
 
-export interface UntarredPackage {
+export interface InstalledPackage {
   /**
    * the package.json
    */
@@ -327,9 +326,11 @@ export interface UntarredPackage {
     module?: string;
     browser?: string;
   };
-  contents: {
-    [path: string]: FileDescription;
-  };
+  /**
+   * Every file in the package, relative to its root. The files themselves are
+   * in the fs; this is what resolution needs.
+   */
+  files: Set<string>;
 }
 
 type ManifestExport = string | string[] | { [condition: string]: ManifestExport };
