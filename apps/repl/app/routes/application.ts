@@ -1,7 +1,6 @@
 import { getOwner } from '@ember/owner';
 import Route from '@ember/routing/route';
 
-import rehypeShikiFromHighlighter from '@shikijs/rehype/core';
 import Shadowed from 'ember-primitives/components/shadowed';
 import { setupTabster } from 'ember-primitives/tabster';
 import { getCompiler, setupCompiler } from 'ember-repl';
@@ -13,6 +12,7 @@ import { getHighlighter } from '@nullvoxpopuli/limber-shared';
 import { importMap } from './import-map.ts';
 
 import type Owner from '@ember/owner';
+import type rehypeShikiFromHighlighter from '@shikijs/rehype/core';
 
 const map = new WeakSet();
 
@@ -26,7 +26,15 @@ function lazyShiki() {
   let transform: Transform | undefined;
 
   return async (...args: Parameters<Transform>) => {
-    transform ??= rehypeShikiFromHighlighter(await getHighlighter(), { theme: 'github-dark' });
+    if (!transform) {
+      // A static import puts a second copy of the Shiki core in the entry chunk.
+      const [{ default: rehypeShiki }, highlighter] = await Promise.all([
+        import('@shikijs/rehype/core'),
+        getHighlighter(),
+      ]);
+
+      transform = rehypeShiki(highlighter, { theme: 'github-dark' });
+    }
 
     return transform(...args);
   };
