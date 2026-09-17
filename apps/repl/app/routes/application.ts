@@ -1,6 +1,5 @@
 import { getOwner } from '@ember/owner';
 import Route from '@ember/routing/route';
-import { waitForPromise } from '@ember/test-waiters';
 
 import rehypeShikiFromHighlighter from '@shikijs/rehype/core';
 import Shadowed from 'ember-primitives/components/shadowed';
@@ -16,6 +15,22 @@ import { importMap } from './import-map.ts';
 import type Owner from '@ember/owner';
 
 const map = new WeakSet();
+
+/**
+ * Shiki is a large download.
+ * The first render does not need it, so it loads when a document compiles.
+ */
+function lazyShiki() {
+  type Transform = ReturnType<typeof rehypeShikiFromHighlighter>;
+
+  let transform: Transform | undefined;
+
+  return async (...args: Parameters<Transform>) => {
+    transform ??= rehypeShikiFromHighlighter(await getHighlighter(), { theme: 'github-dark' });
+
+    return transform(...args);
+  };
+}
 
 export default class ApplicationRoute extends Route {
   constructor(owner: Owner) {
@@ -41,13 +56,10 @@ export default class ApplicationRoute extends Route {
       owner: getOwner(this),
     };
 
-    this.#promise = waitForPromise(this.#setup());
+    this.#setup();
   }
 
-  #promise: Promise<unknown> | undefined;
-
-  async #setup() {
-    const highlighter = await getHighlighter();
+  #setup() {
     const owner = getOwner(this);
 
     setupCompiler(this, {
@@ -63,26 +75,10 @@ export default class ApplicationRoute extends Route {
             CopyMenu,
             Shadowed,
           },
-          rehypePlugins: [
-            [
-              rehypeShikiFromHighlighter,
-              highlighter,
-              {
-                theme: 'github-dark',
-              },
-            ],
-          ],
+          rehypePlugins: [lazyShiki],
         },
         md: {
-          rehypePlugins: [
-            [
-              rehypeShikiFromHighlighter,
-              highlighter,
-              {
-                theme: 'github-dark',
-              },
-            ],
-          ],
+          rehypePlugins: [lazyShiki],
         },
       },
       /**
@@ -93,8 +89,7 @@ export default class ApplicationRoute extends Route {
     });
   }
 
-  async model() {
-    await this.#promise;
+  model() {
     document.querySelector('#initial-loader')?.remove();
   }
 }
