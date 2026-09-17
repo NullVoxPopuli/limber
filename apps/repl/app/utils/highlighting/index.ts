@@ -1,4 +1,4 @@
-import type { HighlightRequest, HighlightResponse } from './shiki.worker.ts';
+import type { HighlightRequest, HighlightResponse } from './shiki.ts';
 import type { Root } from 'hast';
 
 type Pending = {
@@ -17,6 +17,7 @@ let nextId = 0;
  */
 export function startHighlighter() {
   if (worker) return worker;
+  if (typeof Worker === 'undefined') return;
 
   worker = new Worker(new URL('./shiki.worker.ts', import.meta.url), {
     name: 'shiki',
@@ -41,12 +42,19 @@ export function startHighlighter() {
   return worker;
 }
 
-function request(message: Omit<HighlightRequest, 'id'>) {
+async function request(message: Omit<HighlightRequest, 'id'>) {
+  // The prerender of the docs runs in node, which has no Worker.
+  if (typeof Worker === 'undefined') {
+    const { highlight } = await import('./shiki.ts');
+
+    return highlight({ ...message, id: 0 });
+  }
+
   const id = nextId++;
 
   return new Promise<HighlightResponse['result']>((resolve, reject) => {
     pending.set(id, { resolve, reject });
-    startHighlighter().postMessage({ ...message, id });
+    startHighlighter()?.postMessage({ ...message, id });
   });
 }
 

@@ -18,7 +18,8 @@
   ],
   "scripts": {
     "build:test": "NODE_ENV=development vite build --mode development",
-    "build:prod": "vite build",
+    "build:prod": "vite build && pnpm build:prod:check",
+    "build:prod:check": "ls dist/docs/index.html dist/docs/editor/index.html dist/docs/embedding/index.html dist/docs/ember-repl/index.html dist/docs/repl-sdk/index.html dist/docs/related/index.html > /dev/null",
     "lint:types": "node node_modules/typescript-7/bin/tsc --noEmit --runExternalCode",
     "lint:fix": "pnpm -w exec lint fix",
     "start": "vite --port 4201",
