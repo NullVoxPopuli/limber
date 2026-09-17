@@ -34,6 +34,18 @@
         resolve: (...args) => args.join("/"),
       };
     </script>
+    <!--
+      The editor placeholder uses this font on the first render.
+      Without the preload, the browser finds the font only after it parses the CSS.
+      Keep the URL in sync with the @font-face rule in app/styles/app.css.
+    -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      href="https://fonts.gstatic.com/s/sourcecodepro/v30/HI_diYsKILxRpg3hIP6sJ7fM7PqPMcMnZFqUwX28DMyQtMlrTA.woff2"
+    />
     <link rel="stylesheet" href="./app/styles/app.css" />
     <!-- VITE_EMBER_SSR_HEAD -->
   </head>
@@ -53,7 +65,10 @@
       -->
       <div style="height: 100vh; width: 100vw; display: grid; grid-template-rows: min-content 1fr">
         <!-- header -->
-        <div id="initial-header" style="background: var(--ember-black); height: 45px; width: 100%"></div>
+        <div
+          id="initial-header"
+          style="background: var(--ember-black); height: 45px; width: 100%"
+        ></div>
 
         <!-- everything else -->
         <div

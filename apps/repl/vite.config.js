@@ -7,6 +7,64 @@ import mkcert from 'vite-plugin-mkcert';
 
 import { ember } from '@nullvoxpopuli/ember-vite';
 
+/**
+ * The REPL runs user code against the Ember of this app,
+ * and users need the assertions and error messages of the development build.
+ * Everything else uses its production export.
+ */
+function emberSourceDevelopment() {
+  return {
+    name: 'ember-source-development',
+    enforce: 'pre',
+    async resolveId(source, importer, options) {
+      if (!source.startsWith('ember-source/')) return;
+
+      const resolved = await this.resolve(source, importer, { ...options, skipSelf: true });
+
+      if (!resolved) return;
+
+      return {
+        ...resolved,
+        id: resolved.id.replace('/ember-source/dist/prod/', '/ember-source/dist/dev/'),
+      };
+    },
+  };
+}
+
+/**
+ * Vite does not list workers in the HTML, so the browser finds the Shiki worker
+ * only after the entry JavaScript runs. The preload starts that download with the page.
+ * The worker later gets the file from the HTTP cache.
+ *
+ * Low priority, because the first render does not need Shiki,
+ * and at full priority the download takes bandwidth from the entry chunks.
+ */
+function preloadShikiWorker() {
+  return {
+    name: 'preload-shiki-worker',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, { bundle }) {
+        if (!bundle) return;
+
+        const tags = [];
+
+        for (const fileName of Object.keys(bundle)) {
+          if (!/(^|\/)shiki-[^/]+\.js$/.test(fileName)) continue;
+
+          tags.push({
+            tag: 'link',
+            attrs: { rel: 'modulepreload', fetchpriority: 'low', href: `/${fileName}` },
+            injectTo: 'head',
+          });
+        }
+
+        return tags;
+      },
+    },
+  };
+}
+
 export default defineConfig({
   build: {
     rolldownOptions: {
@@ -33,8 +91,6 @@ export default defineConfig({
     // needed on initial load.
     // So we can boost initial load perf by eagerly optimizing them instead of waiting for the module graph crawl
     include: [
-      // Our Runtime
-      '@shikijs/rehype/core',
       // Framework
       // 'ember-source/@ember/**/*',
       // Theme and Syntax
@@ -86,6 +142,8 @@ export default defineConfig({
       defaultSizes: 'brotli',
     }),
     circleDependency(),
+    emberSourceDevelopment(),
+    preloadShikiWorker(),
     mkcert({
       savePath: 'node_modules/.vite-plugin-mkcert/',
     }),
@@ -95,6 +153,42 @@ export default defineConfig({
     ember({
       babel: {
         configFile: './babel.config.mjs',
+      },
+      production: {
+        // Without groups, rolldown emits one chunk per shared module,
+        // and the entry page preloads more than 100 files.
+        codeSplittingGroups: [
+          // Only dynamic imports reach the editor and markdown libraries.
+          // Without their own groups, they share chunks with modules
+          // that the entry page needs, and the entry page downloads them.
+          // minShareCount keeps each lazy language mode in its own chunk.
+          {
+            name: 'editor',
+            test: /packages\/syntax\/|node_modules\/(@codemirror|@lezer|codemirror|crelt|style-mod|w3c-keyname)/,
+            minShareCount: 2,
+            priority: 20,
+          },
+          {
+            name: 'markdown',
+            test: /node_modules\/(parse5|entities|unified|vfile|property-information|(micromark|mdast|hast|unist|remark|rehype)[^/]*)\//,
+            minShareCount: 2,
+            priority: 20,
+          },
+          {
+            name: 'common',
+            minShareCount: 10,
+            minSize: 10000,
+            maxSize: 1024 * 1024,
+            priority: 9,
+          },
+          {
+            name: 'uncommon',
+            minShareCount: 2,
+            minSize: 10000,
+            maxSize: 1024 * 1024,
+            priority: 5,
+          },
+        ],
       },
     }),
     emberSsg({

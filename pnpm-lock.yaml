@@ -122,9 +122,6 @@ importers:
       '@nullvoxpopuli/limber-styles':
         specifier: workspace:*
         version: link:../../packages/app-support/styles
-      '@shikijs/rehype':
-        specifier: ^3.21.0
-        version: 3.23.0
       browserslist:
         specifier: ^4.28.1
         version: 4.28.2
@@ -197,6 +194,9 @@ importers:
       repl-sdk:
         specifier: workspace:*
         version: link:../../packages/repl-sdk
+      shiki:
+        specifier: ^3.20.0
+        version: 3.23.0
       stringify-object:
         specifier: ^5.0.0
         version: 5.0.0

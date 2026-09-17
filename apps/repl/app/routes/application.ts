@@ -1,15 +1,13 @@
 import { getOwner } from '@ember/owner';
 import Route from '@ember/routing/route';
-import { waitForPromise } from '@ember/test-waiters';
 
-import rehypeShikiFromHighlighter from '@shikijs/rehype/core';
 import Shadowed from 'ember-primitives/components/shadowed';
 import { setupTabster } from 'ember-primitives/tabster';
 import { getCompiler, setupCompiler } from 'ember-repl';
 
+import { startHighlighter } from '#app/utils/highlight.ts';
+import { rehypeShikiWorker } from '#app/utils/rehype-shiki-worker.ts';
 import CopyMenu from '#components/copy-menu.gts';
-
-import { getHighlighter } from '@nullvoxpopuli/limber-shared';
 
 import { importMap } from './import-map.ts';
 
@@ -41,13 +39,11 @@ export default class ApplicationRoute extends Route {
       owner: getOwner(this),
     };
 
-    this.#promise = waitForPromise(this.#setup());
+    startHighlighter();
+    this.#setup();
   }
 
-  #promise: Promise<unknown> | undefined;
-
-  async #setup() {
-    const highlighter = await getHighlighter();
+  #setup() {
     const owner = getOwner(this);
 
     setupCompiler(this, {
@@ -63,26 +59,10 @@ export default class ApplicationRoute extends Route {
             CopyMenu,
             Shadowed,
           },
-          rehypePlugins: [
-            [
-              rehypeShikiFromHighlighter,
-              highlighter,
-              {
-                theme: 'github-dark',
-              },
-            ],
-          ],
+          rehypePlugins: [rehypeShikiWorker],
         },
         md: {
-          rehypePlugins: [
-            [
-              rehypeShikiFromHighlighter,
-              highlighter,
-              {
-                theme: 'github-dark',
-              },
-            ],
-          ],
+          rehypePlugins: [rehypeShikiWorker],
         },
       },
       /**
@@ -93,8 +73,7 @@ export default class ApplicationRoute extends Route {
     });
   }
 
-  async model() {
-    await this.#promise;
+  model() {
     document.querySelector('#initial-loader')?.remove();
   }
 }
