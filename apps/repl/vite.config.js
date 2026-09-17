@@ -50,7 +50,7 @@ function preloadShikiWorker() {
         const tags = [];
 
         for (const fileName of Object.keys(bundle)) {
-          if (!/(^|\/)shiki-[^/]+\.js$/.test(fileName)) continue;
+          if (!/(^|\/)shiki\.worker-[^/]+\.js$/.test(fileName)) continue;
 
           tags.push({
             tag: 'link',

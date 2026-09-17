@@ -1,4 +1,4 @@
-import type { HighlightRequest, HighlightResponse } from '#app/workers/shiki.ts';
+import type { HighlightRequest, HighlightResponse } from './shiki.worker.ts';
 import type { Root } from 'hast';
 
 type Pending = {
@@ -18,7 +18,7 @@ let nextId = 0;
 export function startHighlighter() {
   if (worker) return worker;
 
-  worker = new Worker(new URL('../workers/shiki.ts', import.meta.url), {
+  worker = new Worker(new URL('./shiki.worker.ts', import.meta.url), {
     name: 'shiki',
     type: 'module',
   });

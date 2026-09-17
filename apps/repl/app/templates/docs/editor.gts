@@ -1,6 +1,7 @@
+import { highlighted } from '#hl/modifier.ts';
+
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
-import highlighted from '../../modifiers/highlighted';
 import {
   CodeBlock,
   example,
