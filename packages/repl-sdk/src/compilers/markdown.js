@@ -64,7 +64,11 @@ export const md = {
         });
         const escaped = result.text.replace(/`/g, '\\`');
 
-        return { compiled: `export default \`${escaped}\``, ...result };
+        return {
+          compiled: `export default \`${escaped}\``,
+          ...result,
+          fileName: options?.fileName,
+        };
       },
       render: async (element, compiled, extra, compiler) => {
         element.innerHTML = /** @type {string} */ (compiled);
@@ -74,42 +78,51 @@ export const md = {
          */
         const destroyables = [];
 
+        const hostFileName = /** @type {string | undefined} */ (extra.fileName) ?? 'index.md';
+
         await Promise.all(
-          /** @type {unknown[]} */ (extra.codeBlocks).map(async (/** @type {unknown} */ info) => {
-            /** @type {Record<string, unknown>} */
-            const infoObj = /** @type {Record<string, unknown>} */ (info);
+          /** @type {unknown[]} */ (extra.codeBlocks).map(
+            async (/** @type {unknown} */ info, index) => {
+              /** @type {Record<string, unknown>} */
+              const infoObj = /** @type {Record<string, unknown>} */ (info);
 
-            if (
-              !api.canCompile(
-                /** @type {string} */ (infoObj.format),
-                /** @type {string} */ (infoObj.flavor)
-              )
-            ) {
-              return;
-            }
-
-            const flavor = /** @type {string} */ (infoObj.flavor);
-            const subRender = await compiler.compile(
-              /** @type {string} */ (infoObj.format),
-              /** @type {string} */ (infoObj.code),
-              {
-                ...compiler.optionsFor(/** @type {string} */ (infoObj.format), flavor),
-                flavor: flavor,
+              if (
+                !api.canCompile(
+                  /** @type {string} */ (infoObj.format),
+                  /** @type {string} */ (infoObj.flavor)
+                )
+              ) {
+                return;
               }
-            );
 
-            const selector = `#${/** @type {string} */ (infoObj.placeholderId)}`;
-            const target = element.querySelector(selector);
+              const flavor = /** @type {string} */ (infoObj.flavor);
+              const subRender = await compiler.compile(
+                /** @type {string} */ (infoObj.format),
+                /** @type {string} */ (infoObj.code),
+                {
+                  ...compiler.optionsFor(/** @type {string} */ (infoObj.format), flavor),
+                  flavor: flavor,
+                  fileName: fenceFileName(
+                    hostFileName,
+                    index,
+                    /** @type {string} */ (infoObj.format)
+                  ),
+                }
+              );
 
-            assert(
-              `Could not find placeholder / target element (using selector: \`${selector}\`). ` +
-                `Could not render ${/** @type {string} */ (infoObj.format)} block.`,
-              target
-            );
+              const selector = `#${/** @type {string} */ (infoObj.placeholderId)}`;
+              const target = element.querySelector(selector);
 
-            destroyables.push(subRender.destroy);
-            target.appendChild(subRender.element);
-          })
+              assert(
+                `Could not find placeholder / target element (using selector: \`${selector}\`). ` +
+                  `Could not render ${/** @type {string} */ (infoObj.format)} block.`,
+                target
+              );
+
+              destroyables.push(subRender.destroy);
+              target.appendChild(subRender.element);
+            }
+          )
         );
 
         compiler.announce('info', 'Done');
@@ -123,3 +136,17 @@ export const md = {
     };
   },
 };
+
+/**
+ * Each fence is its own file, named after the document it is in:
+ * the third fence of `index.md` is `index-3.gjs`.
+ *
+ * @param {string} hostFileName
+ * @param {number} index
+ * @param {string} format
+ */
+function fenceFileName(hostFileName, index, format) {
+  const stem = hostFileName.replace(/\.[^.]+$/, '');
+
+  return `${stem}-${index + 1}.${format}`;
+}
