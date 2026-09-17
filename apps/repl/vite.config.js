@@ -31,6 +31,40 @@ function emberSourceDevelopment() {
   };
 }
 
+/**
+ * Vite does not list workers in the HTML, so the browser finds the Shiki worker
+ * only after the entry JavaScript runs. The preload starts that download with the page.
+ * The worker later gets the file from the HTTP cache.
+ *
+ * Low priority, because the first render does not need Shiki,
+ * and at full priority the download takes bandwidth from the entry chunks.
+ */
+function preloadShikiWorker() {
+  return {
+    name: 'preload-shiki-worker',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, { bundle }) {
+        if (!bundle) return;
+
+        const tags = [];
+
+        for (const fileName of Object.keys(bundle)) {
+          if (!/(^|\/)shiki-[^/]+\.js$/.test(fileName)) continue;
+
+          tags.push({
+            tag: 'link',
+            attrs: { rel: 'modulepreload', fetchpriority: 'low', href: `/${fileName}` },
+            injectTo: 'head',
+          });
+        }
+
+        return tags;
+      },
+    },
+  };
+}
+
 export default defineConfig({
   build: {
     rolldownOptions: {
@@ -57,8 +91,6 @@ export default defineConfig({
     // needed on initial load.
     // So we can boost initial load perf by eagerly optimizing them instead of waiting for the module graph crawl
     include: [
-      // Our Runtime
-      '@shikijs/rehype/core',
       // Framework
       // 'ember-source/@ember/**/*',
       // Theme and Syntax
@@ -111,6 +143,7 @@ export default defineConfig({
     }),
     circleDependency(),
     emberSourceDevelopment(),
+    preloadShikiWorker(),
     mkcert({
       savePath: 'node_modules/.vite-plugin-mkcert/',
     }),

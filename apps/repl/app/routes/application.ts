@@ -5,40 +5,15 @@ import Shadowed from 'ember-primitives/components/shadowed';
 import { setupTabster } from 'ember-primitives/tabster';
 import { getCompiler, setupCompiler } from 'ember-repl';
 
+import { startHighlighter } from '#app/utils/highlight.ts';
+import { rehypeShikiWorker } from '#app/utils/rehype-shiki-worker.ts';
 import CopyMenu from '#components/copy-menu.gts';
-
-import { getHighlighter } from '@nullvoxpopuli/limber-shared';
 
 import { importMap } from './import-map.ts';
 
 import type Owner from '@ember/owner';
-import type rehypeShikiFromHighlighter from '@shikijs/rehype/core';
 
 const map = new WeakSet();
-
-/**
- * Shiki is a large download.
- * The first render does not need it, so it loads when a document compiles.
- */
-function lazyShiki() {
-  type Transform = ReturnType<typeof rehypeShikiFromHighlighter>;
-
-  let transform: Transform | undefined;
-
-  return async (...args: Parameters<Transform>) => {
-    if (!transform) {
-      // A static import puts a second copy of the Shiki core in the entry chunk.
-      const [{ default: rehypeShiki }, highlighter] = await Promise.all([
-        import('@shikijs/rehype/core'),
-        getHighlighter(),
-      ]);
-
-      transform = rehypeShiki(highlighter, { theme: 'github-dark' });
-    }
-
-    return transform(...args);
-  };
-}
 
 export default class ApplicationRoute extends Route {
   constructor(owner: Owner) {
@@ -64,6 +39,7 @@ export default class ApplicationRoute extends Route {
       owner: getOwner(this),
     };
 
+    startHighlighter();
     this.#setup();
   }
 
@@ -83,10 +59,10 @@ export default class ApplicationRoute extends Route {
             CopyMenu,
             Shadowed,
           },
-          rehypePlugins: [lazyShiki],
+          rehypePlugins: [rehypeShikiWorker],
         },
         md: {
-          rehypePlugins: [lazyShiki],
+          rehypePlugins: [rehypeShikiWorker],
         },
       },
       /**

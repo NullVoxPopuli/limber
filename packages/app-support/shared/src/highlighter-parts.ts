@@ -20,7 +20,6 @@ export * as html from 'shiki/langs/html.mjs';
 export * as javascript from 'shiki/langs/javascript.mjs';
 export * as jsonc from 'shiki/langs/jsonc.mjs';
 export * as jsx from 'shiki/langs/jsx.mjs';
-export * as markdown from 'shiki/langs/markdown.mjs';
 export * as mermaid from 'shiki/langs/mermaid.mjs';
 export * as svelte from 'shiki/langs/svelte.mjs';
 export * as typescript from 'shiki/langs/typescript.mjs';
