@@ -726,6 +726,9 @@ importers:
       decorator-transforms:
         specifier: 2.4.0
         version: 2.4.0(@babel/core@7.29.0)
+      oniguruma-parser:
+        specifier: ^0.12.2
+        version: 0.12.2
       penpal:
         specifier: ^6.2.2
         version: 6.2.2
