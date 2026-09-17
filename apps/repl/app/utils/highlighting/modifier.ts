@@ -45,6 +45,32 @@ export const highlighted = modifier<Signature>((element: Element, [code]) => {
       return;
     }
 
-    element.innerHTML = html;
+    const painted = element.querySelector('pre');
+
+    if (!painted) {
+      element.innerHTML = html;
+
+      return;
+    }
+
+    /**
+     * The browser reports a text block for Largest Contentful Paint one time only.
+     * A new <pre> is a new block, and when it is larger than the first one
+     * (a late web font changes the size), LCP moves to the time of the highlight.
+     * So the <pre> that already painted stays, and takes the highlighted content.
+     */
+    const template = document.createElement('template');
+
+    template.innerHTML = html;
+
+    const highlightedPre = template.content.querySelector('pre');
+
+    if (!highlightedPre) return;
+
+    for (const { name, value } of highlightedPre.attributes) {
+      painted.setAttribute(name, value);
+    }
+
+    painted.innerHTML = highlightedPre.innerHTML;
   })();
 });
