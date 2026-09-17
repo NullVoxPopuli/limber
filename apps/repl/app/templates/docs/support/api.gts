@@ -3,7 +3,7 @@ import { trackedObject } from '@ember/reactive/collections';
 
 import { Form } from 'ember-primitives/components/form';
 
-import highlighted from '#hl/modifier.ts';
+import { highlighted } from '#hl/modifier.ts';
 
 import { REPL } from 'limber-ui';
 

@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default modifier<Signature>((element: Element, [code]) => {
+export const highlighted = modifier<Signature>((element: Element, [code]) => {
   if (!code) return;
 
   const guid = guidFor(element);
