@@ -79,11 +79,8 @@ pre.shiki {
   box-shadow: inset 0px 1px 1px 1px black;
 }
 
-/* Same padding in both states, so the text does not move when Shiki takes over. */
 .limber__editor-placeholder pre,
 .limber__editor-placeholder pre.shiki {
-  padding: 0;
-  padding-left: 1rem;
   box-shadow: none;
 }
 
