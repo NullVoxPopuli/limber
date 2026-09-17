@@ -1,0 +1,23 @@
+# Limber
+
+> Limber is a playground and REPL that runs in the browser. It compiles and renders Ember (gjs, gts, hbs), Svelte, Vue, React (jsx), Mermaid, and markdown with live code fences. The document lives in the URL, so a link shares the whole program.
+
+The app has no server side. All compilation happens in the browser of the visitor.
+
+## Use
+
+- [Editor](https://limber.glimdown.com/edit): the playground. The `format` query parameter selects the language, and `t` (plain text) or `c` (compressed text) holds the document.
+- [Output only](https://limber.glimdown.com/output): renders a document with no editor, for an iframe.
+
+## Docs
+
+- [Overview](https://limber.glimdown.com/docs)
+- [Editor options](https://limber.glimdown.com/docs/editor): query parameters that control the editor
+- [Embedding](https://limber.glimdown.com/docs/embedding): how to embed the playground in an iframe
+- [ember-repl](https://limber.glimdown.com/docs/ember-repl): the Ember library that compiles and renders documents
+- [repl-sdk](https://limber.glimdown.com/docs/repl-sdk): the framework-agnostic compiler library
+- [Related projects](https://limber.glimdown.com/docs/related)
+
+## Source
+
+- [GitHub repository](https://github.com/NullVoxPopuli/limber)
