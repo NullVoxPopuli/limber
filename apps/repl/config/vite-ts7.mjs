@@ -1,31 +1,25 @@
 // Vite support for the TypeScript 7 worker in the editor.
 //
-// Three things land next to the app, at fixed names:
+// Two things land next to the app, at fixed names:
 //
 // - `ts7-worker.js`: the worker, built as its own bundle. Vite's worker
 //   support runs the app's close hooks for the worker bundle too, which
 //   breaks the SSG plugin, so the worker is built separately.
-// - `ts7-types.json`: the type declarations the worker's virtual project
-//   needs, collected from node_modules so that they match the app's
-//   dependencies.
 // - `ts7/tsc.wasm.json` and its parts: TypeScript itself, from
 //   @nullvoxpopuli/tsc-wasm. Cloudflare Pages caps one asset at 25 MiB,
 //   and the module is about 48 MB, so it ships in parts that the worker
 //   joins.
 //
+// The type declarations the checker reads are npm packages, installed into
+// the REPL's file system at runtime like any other. The app tells the client
+// which versions through a define, so that they match its own.
+//
 // The content mapper and Glint's transform are Node code. Inside the worker,
 // two Node built-ins get browser stand-ins, and two wasm-backed dependencies
 // come from esm.sh instead of the bundle.
 
-import {
-  existsSync,
-  mkdirSync,
-  readdirSync,
-  readFileSync,
-  realpathSync,
-  writeFileSync,
-} from 'node:fs';
-import { dirname, join, relative, resolve } from 'node:path';
+import { existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { build } from 'vite';
@@ -36,11 +30,21 @@ const nodeModules = resolve(appRoot, 'node_modules');
 const typescriptDir = resolve(appRoot, 'app/templates/edit/editor/typescript');
 
 const WORKER_FILE = 'ts7-worker.js';
-const TYPES_FILE = 'ts7-types.json';
 const WASM_DIR = 'ts7';
 const WASM_MANIFEST = 'tsc.wasm.json';
 const WASM_PART_BYTES = 20 * 1024 * 1024;
-const PROJECT = '/project';
+
+/**
+ * What a gts document can import without installing anything, plus the
+ * content mapper and its Glint, which the checker reads too.
+ */
+const TYPE_PACKAGES = [
+  'ember-source',
+  '@glimmer/component',
+  '@glint/template',
+  '@glint/ember-tsc',
+  'ember-content-mapper',
+];
 
 function manifest(dir) {
   return JSON.parse(readFileSync(join(dir, 'package.json'), 'utf8'));
@@ -57,61 +61,14 @@ function emberTscDependencyDir(name) {
   return resolve(packageDir('@glint/ember-tsc'), '../..', name);
 }
 
-/**
- * Every declaration file under `dir`, keyed by its path in the virtual project.
- */
-function collect(name, subdir, files) {
-  const base = packageDir(name);
-  const start = subdir ? join(base, subdir) : base;
+function typePackages() {
+  const versions = {};
 
-  const walk = (dir) => {
-    for (const entry of readdirSync(dir, { withFileTypes: true })) {
-      if (entry.name === 'node_modules') continue;
+  for (const name of TYPE_PACKAGES) {
+    versions[name] = manifest(packageDir(name)).version;
+  }
 
-      const path = join(dir, entry.name);
-
-      if (entry.isDirectory()) {
-        walk(path);
-      } else if (/\.d\.[cm]?ts$/.test(entry.name) || entry.name === 'package.json') {
-        files[`${PROJECT}/node_modules/${name}/${relative(base, path)}`] = readFileSync(
-          path,
-          'utf8'
-        );
-      }
-    }
-  };
-
-  walk(start);
-  files[`${PROJECT}/node_modules/${name}/package.json`] = readFileSync(
-    join(base, 'package.json'),
-    'utf8'
-  );
-}
-
-let cachedTypes;
-
-function types() {
-  if (cachedTypes) return cachedTypes;
-
-  const files = {};
-
-  collect('ember-source', 'types', files);
-  collect('@glint/ember-tsc', 'types', files);
-  collect('@glint/template', undefined, files);
-  collect('@glimmer/component', undefined, files);
-  files[`${PROJECT}/node_modules/ember-content-mapper/package.json`] = JSON.stringify(
-    manifest(packageDir('ember-content-mapper'))
-  );
-
-  const versions = {
-    emberSource: manifest(packageDir('ember-source')).version,
-    emberTsc: manifest(packageDir('@glint/ember-tsc')).version,
-    mapper: manifest(packageDir('ember-content-mapper')).version,
-  };
-
-  cachedTypes = JSON.stringify({ versions, files });
-
-  return cachedTypes;
+  return versions;
 }
 
 function workerShims() {
@@ -209,6 +166,9 @@ export function ts7() {
 
   return {
     name: 'ts7',
+    config() {
+      return { define: { __TS7_PACKAGES__: JSON.stringify(typePackages()) } };
+    },
     configResolved(resolved) {
       config = resolved;
       outDir = resolve(resolved.root, resolved.build.outDir);
@@ -216,11 +176,6 @@ export function ts7() {
     configureServer(server) {
       const devDir = resolve(nodeModules, '.vite/ts7');
       let workerBuilt;
-
-      server.middlewares.use(`/${TYPES_FILE}`, (_request, response) => {
-        response.setHeader('content-type', 'application/json');
-        response.end(types());
-      });
 
       let wasmParts;
 
@@ -251,7 +206,6 @@ export function ts7() {
 
       if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
 
-      writeFileSync(join(outDir, TYPES_FILE), types());
       writeWasmParts(outDir);
       await buildWorker(outDir, config.mode);
     },

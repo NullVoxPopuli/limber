@@ -1,7 +1,7 @@
 // ember-content-mapper's request handlers, wired for the browser.
 //
 // The Node server reads the installed package versions with createRequire.
-// Here the worker passes them in, taken from the type declarations it loaded.
+// Here the worker passes them in, read from the file system.
 
 import { GlintEnvironment } from '@glint/ember-tsc/config/environment';
 import { closeProject } from 'ember-content-mapper/lib/requests/close-project.js';

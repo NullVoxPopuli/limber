@@ -1,21 +1,27 @@
 // Runs TypeScript 7 (compiled to wasm) as a language server.
 //
 // The main thread talks LSP JSON over postMessage.
-// This worker adds the stdio framing, owns the in-memory file system,
-// and hosts the content mapper that the server would normally spawn as a process.
+// This worker adds the stdio framing, serves the REPL's file system to the
+// Go runtime, and hosts the content mapper that the server would normally
+// spawn as a process.
 
-import './memfs.js';
+import { nodeFs } from 'repl-sdk/fs/node-fs';
+import { Storage } from 'repl-sdk/fs/storage';
 
 import '@nullvoxpopuli/tsc-wasm/wasm_exec.js';
 
 import * as mapper from './mapper.js';
 
-const { memfs } = globalThis;
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
-const PROJECT = '/project';
+const storage = new Storage();
 
+/**
+ * The project is the whole file system: packages under `/node_modules`,
+ * the document under `/src`. Only the document is checked.
+ * The rest of `/src` is fences and older revisions.
+ */
 const TSCONFIG = {
   compilerOptions: {
     strict: true,
@@ -29,7 +35,7 @@ const TSCONFIG = {
     allowImportingTsExtensions: true,
   },
   contentMappers: [{ package: 'ember-content-mapper', extensions: ['.gts', '.gjs'] }],
-  include: ['**/*'],
+  files: ['/src/index.gts'],
 };
 
 function concat(a, b) {
@@ -83,6 +89,28 @@ const HOUSEKEEPING = {
   'workspace/configuration': (params) => params.items.map(() => null),
 };
 
+let stdout = new Uint8Array(0);
+let stderr = '';
+
+const node = nodeFs(storage, {
+  onStdout(bytes) {
+    stdout = splitFrames(concat(stdout, bytes), fromServer);
+  },
+  onStderr(bytes) {
+    stderr += decoder.decode(bytes);
+
+    const newline = stderr.lastIndexOf('\n');
+
+    if (newline !== -1) {
+      postMessage({ type: 'log', text: stderr.slice(0, newline) });
+      stderr = stderr.slice(newline + 1);
+    }
+  },
+});
+
+globalThis.fs = node.fs;
+globalThis.process = node.process;
+
 function fromServer(message) {
   const parsed = JSON.parse(message);
   const handler = parsed.id !== undefined && parsed.method && HOUSEKEEPING[parsed.method];
@@ -93,29 +121,10 @@ function fromServer(message) {
     return;
   }
 
-  memfs.pushStdin(
+  node.pushStdin(
     frame(JSON.stringify({ jsonrpc: '2.0', id: parsed.id, result: handler(parsed.params) }))
   );
 }
-
-let stdout = new Uint8Array(0);
-
-memfs.stream.onStdout = (bytes) => {
-  stdout = splitFrames(concat(stdout, bytes), fromServer);
-};
-
-let stderr = '';
-
-memfs.stream.onStderr = (bytes) => {
-  stderr += decoder.decode(bytes);
-
-  const newline = stderr.lastIndexOf('\n');
-
-  if (newline !== -1) {
-    postMessage({ type: 'log', text: stderr.slice(0, newline) });
-    stderr = stderr.slice(newline + 1);
-  }
-};
 
 /**
  * The server asks for the content mapper through this hook (see spawn_js.go in the
@@ -178,37 +187,50 @@ globalThis.tsc = {
 };
 
 /**
- * The server refuses to run content mappers unless the client opts in,
- * and the CodeMirror client has no option for that.
+ * What the client sends, with two things it cannot say itself.
+ *
+ * The server refuses to run content mappers unless the client opts in, and
+ * the CodeMirror client has no option for that.
+ *
+ * The document has to be on disk for the project to list it. The REPL writes
+ * it there on compile, which is later than the server first looks, and can
+ * be a version behind.
  */
-function withInitializationOptions(message) {
+function toServer(message) {
   const parsed = JSON.parse(message);
 
-  if (parsed.method !== 'initialize') return message;
+  if (parsed.method === 'initialize') {
+    parsed.params.initializationOptions = {
+      ...parsed.params.initializationOptions,
+      runExternalCode: true,
+    };
+  }
 
-  parsed.params.initializationOptions = {
-    ...parsed.params.initializationOptions,
-    runExternalCode: true,
-  };
+  if (parsed.method === 'textDocument/didOpen') {
+    const { uri, text } = parsed.params.textDocument;
 
-  return JSON.stringify(parsed);
+    node.overlay(new URL(uri).pathname, text);
+  }
+
+  /**
+   * A compile may have installed what the document imports since the last
+   * look. Forgetting is cheap, and the server decides what to read again.
+   */
+  if (parsed.method === 'textDocument/didChange') node.invalidate();
+
+  node.pushStdin(frame(JSON.stringify(parsed)));
 }
 
-async function loadTypes(typesUrl) {
-  const response = await fetch(typesUrl);
+/**
+ * The content mapper asks Node which versions are installed.
+ * Here, the file system answers.
+ */
+async function versionOf(name) {
+  const manifest = await storage.read(`/node_modules/${name}/package.json`);
 
-  if (!response.ok) {
-    throw new Error(`Could not load the type declarations: ${response.status} ${typesUrl}`);
-  }
+  if (!manifest) throw new Error(`${name} is not installed`);
 
-  const { versions, files } = await response.json();
-
-  for (const [path, content] of Object.entries(files)) {
-    memfs.writeFile(path, content);
-  }
-
-  globalThis.tsc.versions = versions;
-  mapper.configure(versions);
+  return JSON.parse(manifest).version;
 }
 
 /**
@@ -246,12 +268,19 @@ async function loadWasm(manifestUrl) {
   return WebAssembly.compile(bytes);
 }
 
-async function start({ wasmUrl, typesUrl }) {
-  postMessage({ type: 'status', text: 'Loading type declarations' });
-  memfs.writeFile(`${PROJECT}/tsconfig.json`, JSON.stringify(TSCONFIG));
-  await loadTypes(typesUrl);
-
+async function start({ wasmUrl }) {
   postMessage({ type: 'status', text: 'Loading TypeScript' });
+
+  const [module, emberSource, emberTsc, contentMapper] = await Promise.all([
+    loadWasm(wasmUrl),
+    versionOf('ember-source'),
+    versionOf('@glint/ember-tsc'),
+    versionOf('ember-content-mapper'),
+  ]);
+
+  globalThis.tsc.versions = { emberSource, emberTsc, mapper: contentMapper };
+  mapper.configure(globalThis.tsc.versions);
+  node.overlay('/tsconfig.json', JSON.stringify(TSCONFIG));
 
   const go = new globalThis.Go();
 
@@ -259,7 +288,7 @@ async function start({ wasmUrl, typesUrl }) {
   go.env = { HOME: '/' };
   go.exit = (code) => postMessage({ type: 'exit', code });
 
-  const instance = await WebAssembly.instantiate(await loadWasm(wasmUrl), go.importObject);
+  const instance = await WebAssembly.instantiate(module, go.importObject);
 
   postMessage({ type: 'started' });
 
@@ -277,7 +306,7 @@ onmessage = (event) => {
 
       break;
     case 'lsp':
-      memfs.pushStdin(frame(withInitializationOptions(data.message)));
+      toServer(data.message);
 
       break;
   }

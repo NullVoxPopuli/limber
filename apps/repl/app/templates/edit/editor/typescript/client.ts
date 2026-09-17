@@ -1,17 +1,35 @@
 import { linter } from '@codemirror/lint';
 import { languageServerExtensions, LSPClient, LSPPlugin } from '@codemirror/lsp-client';
+import { installer } from 'repl-sdk/fs';
 
 import type { Diagnostic } from '@codemirror/lint';
 import type { Transport } from '@codemirror/lsp-client';
 import type { Extension } from '@codemirror/state';
 
-const PROJECT_URI = 'file:///project';
+/**
+ * The packages the checker reads, at the versions the app itself has.
+ * The vite plugin fills this in from node_modules.
+ */
+declare const __TS7_PACKAGES__: Record<string, string>;
+
+/**
+ * The project root is the REPL's file system, the same one the compiler
+ * writes to and installs into.
+ */
+const ROOT_URI = 'file:///';
+
+/**
+ * The first request waits for the project to load, which reads every
+ * declaration file the document reaches from the file system.
+ */
+const REQUEST_TIMEOUT = 30_000;
 
 /**
  * Formats the type checker understands, and the LSP language id for each.
+ * The file is the one the compiler writes for the format.
  */
 const LANGUAGES: Record<string, { file: string; languageId: string } | undefined> = {
-  gts: { file: 'index.gts', languageId: 'glimmer-ts' },
+  gts: { file: 'src/index.gts', languageId: 'glimmer-ts' },
 };
 
 export function hasTypeScript(format: string): boolean {
@@ -26,10 +44,6 @@ export type OnStatus = (message: string) => void;
  */
 function wasmUrl(): string {
   return `${import.meta.env.BASE_URL}ts7/tsc.wasm.json`;
-}
-
-function typesUrl(): string {
-  return `${import.meta.env.BASE_URL}ts7-types.json`;
 }
 
 type WorkerMessage =
@@ -91,7 +105,7 @@ function startWorker(onStatus: OnStatus): Promise<{ worker: Worker; transport: T
           break;
         case 'ready':
           console.debug('[typescript] worker ready');
-          worker.postMessage({ type: 'start', wasmUrl: wasmUrl(), typesUrl: typesUrl() });
+          worker.postMessage({ type: 'start', wasmUrl: wasmUrl() });
 
           break;
         case 'started':
@@ -113,23 +127,38 @@ function startWorker(onStatus: OnStatus): Promise<{ worker: Worker; transport: T
   });
 }
 
+/**
+ * Puts the type declarations where the checker will look for them,
+ * the same way a snippet's own imports get installed.
+ */
+async function installTypes(onStatus: OnStatus): Promise<void> {
+  onStatus('Installing type declarations');
+
+  await Promise.all(
+    Object.entries(__TS7_PACKAGES__).map(([name, version]) => installer.ensure(name, version))
+  );
+}
+
 let client: Promise<LSPClient> | undefined;
 
 /**
  * One language server per page. The first caller pays for the download.
  */
 export function typeScriptClient(onStatus: OnStatus): Promise<LSPClient> {
-  client ??= startWorker(onStatus).then(async ({ transport }) => {
-    const lsp = new LSPClient({
-      rootUri: PROJECT_URI,
-      extensions: languageServerExtensions(),
-    }).connect(transport);
+  client ??= installTypes(onStatus)
+    .then(() => startWorker(onStatus))
+    .then(async ({ transport }) => {
+      const lsp = new LSPClient({
+        rootUri: ROOT_URI,
+        extensions: languageServerExtensions(),
+        timeout: REQUEST_TIMEOUT,
+      }).connect(transport);
 
-    await lsp.initializing;
-    onStatus('TypeScript ready');
+      await lsp.initializing;
+      onStatus('TypeScript ready');
 
-    return lsp;
-  });
+      return lsp;
+    });
 
   client.catch(() => {
     // Let the next call try again.
@@ -199,5 +228,5 @@ export async function typeScriptExtension(format: string, onStatus: OnStatus): P
 
   const lsp = await typeScriptClient(onStatus);
 
-  return [lsp.plugin(`${PROJECT_URI}/${language.file}`, language.languageId), pullDiagnostics()];
+  return [lsp.plugin(`${ROOT_URI}${language.file}`, language.languageId), pullDiagnostics()];
 }

@@ -1,7 +1,7 @@
 // Stands in for `node:module` inside the TypeScript worker.
 //
 // Glint probes the installed ember-source through createRequire.
-// The worker knows the version from the type declarations it loaded.
+// The worker knows the version from the file system.
 
 export function createRequire() {
   const require = (specifier) => {
@@ -12,7 +12,7 @@ export function createRequire() {
     throw new Error(`Cannot require ${specifier} in the browser`);
   };
 
-  require.resolve = (specifier) => `/project/node_modules/${specifier}`;
+  require.resolve = (specifier) => `/node_modules/${specifier}`;
 
   return require;
 }
