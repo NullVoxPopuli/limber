@@ -94,6 +94,8 @@ overrides:
   "reactiveweb": "1.9.1"
   "rollup-plugin-dts": "^6.5.1"
   "@codemirror/view": "6.39.12"
+  "decorator-transforms": "^2.4.0"
+  "ember-primitives": "^0.62.0"
   "kolay": "github:universal-ember/kolay#dist"
   "kolay>ember-repl": "^8.0.0"
   "side-channel": "npm:@nolyfill/side-channel@^1"
