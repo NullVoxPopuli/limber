@@ -96,6 +96,42 @@ export default defineConfig({
       babel: {
         configFile: './babel.config.mjs',
       },
+      production: {
+        // Without groups, rolldown emits one chunk per shared module,
+        // and the entry page preloads more than 100 files.
+        codeSplittingGroups: [
+          // Only dynamic imports reach the editor and markdown libraries.
+          // Without their own groups, they share chunks with modules
+          // that the entry page needs, and the entry page downloads them.
+          // minShareCount keeps each lazy language mode in its own chunk.
+          {
+            name: 'editor',
+            test: /packages\/syntax\/|node_modules\/(@codemirror|@lezer|codemirror|crelt|style-mod|w3c-keyname)/,
+            minShareCount: 2,
+            priority: 20,
+          },
+          {
+            name: 'markdown',
+            test: /node_modules\/(parse5|entities|unified|vfile|property-information|(micromark|mdast|hast|unist|remark|rehype)[^/]*)\//,
+            minShareCount: 2,
+            priority: 20,
+          },
+          {
+            name: 'common',
+            minShareCount: 10,
+            minSize: 10000,
+            maxSize: 1024 * 1024,
+            priority: 9,
+          },
+          {
+            name: 'uncommon',
+            minShareCount: 2,
+            minSize: 10000,
+            maxSize: 1024 * 1024,
+            priority: 5,
+          },
+        ],
+      },
     }),
     emberSsg({
       routes: [
