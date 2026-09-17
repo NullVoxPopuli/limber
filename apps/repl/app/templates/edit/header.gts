@@ -26,7 +26,6 @@ import { Share } from './share.gts';
           <FaIcon @icon={{faEmber}} @size="3x" class="-mb-3 -mt-2" />
           <span class="sr-only">Ember.JS homepage</span>
         </a>
-        {{! The link is hidden on small screens, and a heading must not be empty. }}
         <span class="sr-only">Limber, a playground and REPL</span>
       </h1>
 
