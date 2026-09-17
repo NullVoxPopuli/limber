@@ -41,6 +41,62 @@
   height: 100%;
 }
 
+/**
+ * The placeholder copies the box model of CodeMirror (gutters, padding, font, wrapping),
+ * so the text does not move when the real editor replaces it.
+ */
+.limber__editor-placeholder {
+  display: flex;
+  /* .limber__editor__pending has a border, and .cm-editor does not */
+  margin: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.limber__editor-placeholder__gutter {
+  display: flex;
+  flex-shrink: 0;
+  visibility: hidden;
+
+  /* .cm-lineNumbers .cm-gutterElement */
+  span:first-child {
+    box-sizing: border-box;
+    min-width: 20px;
+    padding: 0 3px 0 5px;
+  }
+
+  /* .cm-foldGutter .cm-gutterElement */
+  span:last-child {
+    padding: 0 1px;
+  }
+}
+
+.limber__editor-placeholder__code {
+  flex-grow: 1;
+  min-width: 0;
+
+  pre,
+  pre.shiki {
+    /* .cm-content and .cm-line */
+    padding: 4px 2px 4px 6px;
+    border-radius: 0;
+    font-family: 'Source Code Pro', ui-monospace, monospace, sans-serif;
+    font-feature-settings: "liga" 0, "calt" 0;
+    letter-spacing: 0;
+    tab-size: 4;
+    /* .cm-lineWrapping */
+    white-space: break-spaces;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+
+    code {
+      font: inherit;
+    }
+  }
+}
+
 .limber__editor__click-to-edit {
   position: absolute;
   inset: 0;
