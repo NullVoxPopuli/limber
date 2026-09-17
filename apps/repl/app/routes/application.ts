@@ -1,5 +1,6 @@
 import { getOwner } from '@ember/owner';
 import Route from '@ember/routing/route';
+import { waitForPromise } from '@ember/test-waiters';
 
 import Shadowed from 'ember-primitives/components/shadowed';
 import { setupTabster } from 'ember-primitives/tabster';
@@ -20,7 +21,9 @@ export default class ApplicationRoute extends Route {
     super(owner);
 
     if (!map.has(this)) {
-      setupTabster(this);
+      // setupTabster loads tabster with a dynamic import, and then registers a destructor.
+      // Tests must wait for that, or a fast test destroys the app first.
+      waitForPromise(setupTabster(this));
       map.add(this);
     }
 
