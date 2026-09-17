@@ -52,9 +52,6 @@ importers:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.29.0
-      '@babel/standalone':
-        specifier: ^8.0.5
-        version: 8.0.5
       '@glint/ember-tsc':
         specifier: ^1.11.0
         version: 1.11.0(3fa0481db89aaed2f211bc8818b55de5)

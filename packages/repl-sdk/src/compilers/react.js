@@ -28,7 +28,10 @@ export const jsx = {
     }
   },
   compiler: async (config, api) => {
-    const [reactDom, babel] = await api.tryResolveAll(['react-dom/client', '@glimdown/babel-8-lite']);
+    const [reactDom, babel] = await api.tryResolveAll([
+      'react-dom/client',
+      '@glimdown/babel-8-lite',
+    ]);
 
     const { createRoot } = reactDom;
 
