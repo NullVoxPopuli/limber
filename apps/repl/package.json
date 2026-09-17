@@ -127,7 +127,9 @@
     "#tests/*": "./tests/*",
     "#components/*": "./app/components/*",
     "#services/*": "./app/services/*",
-    "#edit/*": "./app/templates/edit/*"
+    "#edit/*": "./app/templates/edit/*",
+    "#hl": "./app/utils/highlighting/index.ts",
+    "#hl/*": "./app/utils/highlighting/*"
   },
   "exports": {
     "./tests/*": "./tests/*",

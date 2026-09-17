@@ -5,9 +5,9 @@ import Shadowed from 'ember-primitives/components/shadowed';
 import { setupTabster } from 'ember-primitives/tabster';
 import { getCompiler, setupCompiler } from 'ember-repl';
 
-import { startHighlighter } from '#app/utils/highlighting/index.ts';
-import { rehypeShikiWorker } from '#app/utils/highlighting/rehype.ts';
 import CopyMenu from '#components/copy-menu.gts';
+import { startHighlighter } from '#hl';
+import { rehypeShikiWorker } from '#hl/rehype.ts';
 
 import { importMap } from './import-map.ts';
 
