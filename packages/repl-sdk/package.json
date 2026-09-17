@@ -30,10 +30,6 @@
     "./fs/storage": {
       "types": "./src/fs/storage.d.ts",
       "default": "./src/fs/storage.js"
-    },
-    "./fs/node-fs": {
-      "types": "./src/fs/node-fs.d.ts",
-      "default": "./src/fs/node-fs.js"
     }
   },
   "repository": {

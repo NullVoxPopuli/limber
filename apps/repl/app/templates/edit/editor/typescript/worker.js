@@ -5,12 +5,12 @@
 // Go runtime, and hosts the content mapper that the server would normally
 // spawn as a process.
 
-import { nodeFs } from 'repl-sdk/fs/node-fs';
 import { Storage } from 'repl-sdk/fs/storage';
 
 import '@nullvoxpopuli/tsc-wasm/wasm_exec.js';
 
 import * as mapper from './mapper.js';
+import { nodeFs } from './node-fs.js';
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();

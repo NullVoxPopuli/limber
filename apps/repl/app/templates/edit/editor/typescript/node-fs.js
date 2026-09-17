@@ -1,10 +1,10 @@
 /**
- * The file system the way Go's wasm runtime wants it.
+ * The REPL's file system the way Go's wasm runtime wants it.
  *
  * Go reads files through `globalThis.fs`, with Node's callback API: open,
  * read at a position through a descriptor, fstat, readdir, and errno codes on
- * failure. This serves that API from the storage, so a Go program in a worker
- * sees the same `/node_modules` and `/src` as everything else, links included.
+ * failure. This serves that API from repl-sdk's storage, so TypeScript sees
+ * the same `/node_modules` and `/src` as the compiler, links included.
  *
  * Reads only. The one writer is the fs worker. Files that exist for the Go
  * program alone, a tsconfig for one, live in the overlay and shadow storage.
@@ -29,7 +29,7 @@ const constants = {
 const encoder = new TextEncoder();
 
 /**
- * @typedef {import('./storage.js').Storage} Storage
+ * @typedef {import('repl-sdk/fs/storage').Storage} Storage
  * @typedef {{ type: 'file' | 'directory', size: number, mtime: number }} Stat
  * @typedef {{ name: string, type: 'file' | 'directory' }} Entry
  * @typedef {(error: null | Error, ...results: any[]) => void} Callback

@@ -1,4 +1,4 @@
-import type { Storage } from './storage.js';
+import type { Storage } from 'repl-sdk/fs/storage';
 
 type Callback = (error: null | Error, ...results: unknown[]) => void;
 
