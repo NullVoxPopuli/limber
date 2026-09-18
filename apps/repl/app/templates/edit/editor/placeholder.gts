@@ -1,7 +1,7 @@
 import { service } from 'ember-primitives/helpers/service';
 import { castToBoolean, qp } from 'ember-primitives/qp';
 
-import { highlighted } from '#hl/modifier.ts';
+import { highlighted } from '@nullvoxpopuli/limber-shared/highlighting';
 
 import type { TOC } from '@ember/component/template-only';
 

@@ -19,7 +19,8 @@ export function startHighlighter() {
   if (worker) return worker;
   if (typeof Worker === 'undefined') return;
 
-  worker = new Worker(new URL('./shiki.worker.ts', import.meta.url), {
+  // This file ships compiled, so the worker is the .js file beside it.
+  worker = new Worker(new URL('./shiki.worker.js', import.meta.url), {
     name: 'shiki',
     type: 'module',
   });
@@ -44,7 +45,8 @@ export function startHighlighter() {
 
 async function request(message: Omit<HighlightRequest, 'id'>) {
   // The prerender of the docs runs in node, which has no Worker.
-  if (typeof Worker === 'undefined') {
+  // This is a build-time constant of vite, so the client build has no second copy of Shiki.
+  if (import.meta.env.SSR) {
     const { highlight } = await import('./shiki.ts');
 
     return highlight({ ...message, id: 0 });
@@ -68,6 +70,13 @@ export async function highlightToHtml(code: string, lang: string) {
 /**
  * Resolves to undefined when Shiki does not have the language.
  */
-export async function highlightToHast(code: string, lang: string, meta?: string) {
+export async function highlightToHast(
+  code: string,
+  lang: string,
+  meta?: string
+) {
   return (await request({ as: 'hast', code, lang, meta })) as Root | undefined;
 }
+
+export { highlighted } from './modifier.ts';
+export { rehypeShikiWorker } from './rehype.ts';

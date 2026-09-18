@@ -15,7 +15,12 @@ const addon = new Addon({
 export default defineConfig({
   output: addon.output(),
   plugins: [
-    addon.publicEntrypoints(['index.js']),
+    // The worker is its own file: highlighting/index.js creates it from a URL.
+    addon.publicEntrypoints([
+      'index.js',
+      'highlighting/index.js',
+      'highlighting/shiki.worker.js',
+    ]),
     addon.dependencies(),
     nodeResolve({ browser: true, modulesOnly: true }),
 

@@ -3,9 +3,9 @@ import { trackedObject } from '@ember/reactive/collections';
 
 import { Form } from 'ember-primitives/components/form';
 
-import { highlighted } from '#hl/modifier.ts';
-
 import { REPL } from 'limber-ui';
+
+import { highlighted } from '@nullvoxpopuli/limber-shared/highlighting';
 
 import type { TOC } from '@ember/component/template-only';
 

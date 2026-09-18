@@ -1,8 +1,7 @@
 import { assert } from '@ember/debug';
 
-import { highlighted } from '#hl/modifier.ts';
-
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
+import { highlighted } from '@nullvoxpopuli/limber-shared/highlighting';
 
 import type { TOC } from '@ember/component/template-only';
 

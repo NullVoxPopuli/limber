@@ -1,8 +1,7 @@
 import { Tabs } from 'nvp.ui/tabs';
 
-import { highlighted } from '#hl/modifier.ts';
-
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
+import { highlighted } from '@nullvoxpopuli/limber-shared/highlighting';
 
 import { H2, H3 } from './support/code.gts';
 import { Type } from './support/type.gts';
