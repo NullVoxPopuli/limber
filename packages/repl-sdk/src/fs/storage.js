@@ -85,6 +85,16 @@ function isNotFound(error) {
 }
 
 /**
+ * Asking for a file by the name of a directory, or the other way round.
+ *
+ * @param {any} error
+ * @returns {boolean}
+ */
+function isWrongKind(error) {
+  return error?.name === 'TypeMismatchError';
+}
+
+/**
  * @param {string} path
  * @returns {string[]}
  */
@@ -98,6 +108,19 @@ export class Storage {
 
   /** @type {undefined | Promise<FileSystemDirectoryHandle>} */
   #root;
+
+  /**
+   * Directories already walked to, by path.
+   *
+   * Every step of a walk is a round trip to the browser process, and a
+   * checker reads hundreds of files under the same few directories. A handle
+   * names a path, not an entry, so one that outlives its directory throws
+   * NotFoundError like a fresh lookup would, and a directory that comes back
+   * under the same name is reachable through it again.
+   *
+   * @type {Map<string, FileSystemDirectoryHandle>}
+   */
+  #directories = new Map();
 
   /**
    * @param {() => Promise<FileSystemDirectoryHandle>} [getDirectory] the origin's root; tests pass a fake
@@ -124,6 +147,68 @@ export class Storage {
     const file = await handle.getFile();
 
     return file.text();
+  }
+
+  /**
+   * @param {string} path
+   * @returns {Promise<undefined | Uint8Array>}
+   */
+  async readBytes(path) {
+    const handle = await this.#file(await this.resolve(path), false);
+
+    if (!handle) return undefined;
+
+    const file = await handle.getFile();
+
+    return new Uint8Array(await file.arrayBuffer());
+  }
+
+  /**
+   * What a path is, following links. Undefined when there is nothing there.
+   *
+   * @param {string} path
+   * @returns {Promise<undefined | { type: 'file' | 'directory', size: number, mtime: number }>}
+   */
+  async stat(path) {
+    const real = await this.resolve(path);
+    const segments = segmentsOf(real);
+
+    if (segments.length === 0) return { type: 'directory', size: 0, mtime: 0 };
+
+    const handle = await this.#file(real, false);
+
+    if (handle) {
+      const file = await handle.getFile();
+
+      return { type: 'file', size: file.size, mtime: file.lastModified };
+    }
+
+    const dir = await this.#directory(segments, false);
+
+    return dir ? { type: 'directory', size: 0, mtime: 0 } : undefined;
+  }
+
+  /**
+   * The names in a directory, following links, without the storage's markers.
+   *
+   * @param {string} path
+   * @returns {Promise<undefined | { name: string, type: 'file' | 'directory' }[]>}
+   */
+  async entries(path) {
+    const dir = await this.#directory(segmentsOf(await this.resolve(path)), false);
+
+    if (!dir) return undefined;
+
+    /** @type {{ name: string, type: 'file' | 'directory' }[]} */
+    const result = [];
+
+    for await (const [name, handle] of dir.entries()) {
+      if (isMarker(name)) continue;
+
+      result.push({ name, type: handle.kind });
+    }
+
+    return result;
   }
 
   /**
@@ -238,6 +323,8 @@ export class Storage {
 
     if (!parent) return;
 
+    this.#directories.clear();
+
     try {
       await parent.removeEntry(last, { recursive: true });
     } catch (error) {
@@ -269,6 +356,8 @@ export class Storage {
 
   async clear() {
     const root = await this.root;
+
+    this.#directories.clear();
 
     for await (const [entry] of root.entries()) {
       await root.removeEntry(entry, { recursive: true });
@@ -398,13 +487,24 @@ export class Storage {
    */
   async #directory(segments, create) {
     let dir = await this.root;
+    let path = '';
 
     try {
       for (const segment of segments) {
+        path = path ? `${path}/${segment}` : segment;
+
+        const known = this.#directories.get(path);
+
+        if (known) {
+          dir = known;
+          continue;
+        }
+
         dir = await dir.getDirectoryHandle(segment, { create });
+        this.#directories.set(path, dir);
       }
     } catch (error) {
-      if (isNotFound(error)) return undefined;
+      if (isNotFound(error) || isWrongKind(error)) return undefined;
 
       throw error;
     }
@@ -430,7 +530,7 @@ export class Storage {
     try {
       return await dir.getFileHandle(fileName, { create });
     } catch (error) {
-      if (isNotFound(error)) return undefined;
+      if (isNotFound(error) || isWrongKind(error)) return undefined;
 
       throw error;
     }

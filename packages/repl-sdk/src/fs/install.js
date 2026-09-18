@@ -92,6 +92,25 @@ export class Installer {
   }
 
   /**
+   * Puts a package in the file system without asking for a file in it.
+   *
+   * For packages that only get read, type declarations for one. The linked
+   * version wins when there is one, so what gets read is what runs.
+   *
+   * @param {string} name
+   * @param {string} version an exact version, for when nothing is linked
+   * @returns {Promise<string>} the version in storage
+   */
+  async ensure(name, version) {
+    this.#links ??= this.#worker.links();
+
+    const range = (await this.#links)[name] ?? version;
+    const pkg = this.#reuse(name, range) ?? (await this.#install(name, range));
+
+    return pkg.manifest.version;
+  }
+
+  /**
    * Turn a provisional URL into the URL of a file that exists.
    *
    * @param {string} url

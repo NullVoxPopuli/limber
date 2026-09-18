@@ -271,6 +271,31 @@ describe('what storage already has', () => {
   });
 });
 
+describe('ensure', () => {
+  it('installs and links the version asked for when nothing is linked', async () => {
+    expect(await installer.ensure('legacy', '2.1.0')).toBe('2.1.0');
+    expect(asked).toEqual(['legacy@2.1.0']);
+    expect(links).toEqual({ legacy: '2.1.0' });
+    expect(installer.imports).toEqual({});
+  });
+
+  it('means the linked version when there is one', async () => {
+    links = { legacy: '1.0.0' };
+
+    expect(await installer.ensure('legacy', '2.1.0')).toBe('1.0.0');
+    expect(asked).toEqual(['legacy@1.0.0']);
+  });
+
+  it('is what an unversioned import resolves to afterwards', async () => {
+    await installer.ensure('legacy', '2.1.0');
+
+    const { version } = await installer.install('legacy');
+
+    expect(version).toBe('2.1.0');
+    expect(asked).not.toContain('legacy@latest');
+  });
+});
+
 describe('links', () => {
   it('links the first version a name resolves to', async () => {
     await installer.resolveUrl('file:///node_modules/legacy@%5E2.0.0');
