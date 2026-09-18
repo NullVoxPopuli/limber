@@ -435,8 +435,8 @@ importers:
         specifier: ^1.3.7
         version: 1.3.7
       vite-ember-ssr:
-        specifier: 0.5.0
-        version: 0.5.0(1772a17673355c6de89229b7565213b1)
+        specifier: 0.6.0
+        version: 0.6.0(1772a17673355c6de89229b7565213b1)
       vite-plugin-circular-dependency:
         specifier: ^0.5.0
         version: 0.5.0(rollup@4.57.1)
@@ -10888,8 +10888,8 @@ packages:
     resolution: {integrity: sha512-dYlW6iM0Gq7+uSEfXytDC+UjruUMgEKhXwQUbw4cJUgHA6FdEhpLgIrL5OZEyabrzVen0mZyfOSESyZ7nGyT8g==}
     hasBin: true
 
-  vite-ember-ssr@0.5.0:
-    resolution: {integrity: sha512-+h2hWX+ZqLYJMQS8AiaZRsZhXh97RTCPpsAk9vb+XgHYF4H6HTJX0BQ978Bfk8ZxdOpMox/IkqN0wbSoCBkSdA==}
+  vite-ember-ssr@0.6.0:
+    resolution: {integrity: sha512-x9Mm5WMAqP2CJUNKvhaZG/0cqEKlzX6yODHOVI9MlH7XwQZ16SM1sOlYijkIPNRMliI0ctvbtFDmr6lH/1jShg==}
     engines: {node: '>=22'}
     peerDependencies:
       vite: ^6.0.0 || ^7.0.0 || ^8.0.0
@@ -22281,7 +22281,7 @@ snapshots:
 
   vite-bundle-analyzer@1.3.7: {}
 
-  vite-ember-ssr@0.5.0(1772a17673355c6de89229b7565213b1):
+  vite-ember-ssr@0.6.0(1772a17673355c6de89229b7565213b1):
     dependencies:
       happy-dom: 20.8.9
       tinypool: 2.1.0
