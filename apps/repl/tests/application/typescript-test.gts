@@ -41,6 +41,27 @@ module('Editor > TypeScript', function (hooks) {
       .exists({ count: 2 }, 'the script error and the template error are marked');
   });
 
+  test('a tracked property is not an error', async function (assert) {
+    const gts = [
+      `import Component from '@glimmer/component';`,
+      `import { tracked } from '@glimmer/tracking';`,
+      ``,
+      `export default class Counter extends Component {`,
+      `  @tracked count = 0;`,
+      ``,
+      `  <template>{{this.count}} {{this.nope}}</template>`,
+      `}`,
+    ].join('\n');
+
+    await page.visitEdit('gts', gts);
+    await page.editor.load();
+    await settled();
+
+    await waitFor(DIAGNOSTIC, { timeout: LOAD_TIMEOUT });
+
+    assert.dom(DIAGNOSTIC).exists({ count: 1 }, 'only the template error is marked');
+  });
+
   test('a js document is left alone', async function (assert) {
     await page.visitEdit(
       'js',

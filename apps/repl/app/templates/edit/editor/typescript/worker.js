@@ -21,6 +21,9 @@ const storage = new Storage();
  * The project is the whole file system: packages under `/node_modules`,
  * the document under `/src`. Only the document is checked.
  * The rest of `/src` is fences and older revisions.
+ *
+ * Ember's decorators are the legacy kind. Without the flag, TypeScript
+ * hands `@tracked` a standard decorator context and reports TS1240.
  */
 const TSCONFIG = {
   compilerOptions: {
@@ -33,6 +36,7 @@ const TSCONFIG = {
     skipLibCheck: true,
     noEmit: true,
     allowImportingTsExtensions: true,
+    experimentalDecorators: true,
   },
   contentMappers: [{ package: 'ember-content-mapper', extensions: ['.gts', '.gjs'] }],
   files: ['/src/index.gts'],
