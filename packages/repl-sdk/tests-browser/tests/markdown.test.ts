@@ -31,6 +31,20 @@ describe('markdown', () => {
     expect(h1?.textContent).toContain('Hello');
   });
 
+  test('shows what a template literal would interpret', async () => {
+    const compiler = new Compiler({ resolve: allKnownModules });
+    const { element } = await compiler.compile(
+      'md',
+      ['Hello `${title}` at C:\\new', '', '```js', 'return `${title} ${lastName}`;', '```'].join(
+        '\n'
+      )
+    );
+
+    expect(element.textContent).toContain('${title}');
+    expect(element.textContent).toContain('C:\\new');
+    expect(element.textContent).toContain('${title} ${lastName}');
+  });
+
   describe('code fences', () => {
     const vue = `
       <style scoped>

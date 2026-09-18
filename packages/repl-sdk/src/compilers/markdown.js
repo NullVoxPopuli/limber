@@ -62,7 +62,11 @@ export const md = {
           ALLOWED_FORMATS: allowedFormats,
           getFlavorFromMeta,
         });
-        const escaped = result.text.replace(/`/g, '\\`');
+        /**
+         * The HTML becomes a template literal, so what a template literal
+         * would interpret has to be escaped: backslashes, backticks, and `${`.
+         */
+        const escaped = result.text.replace(/[\\`]|\$\{/g, (match) => `\\${match}`);
 
         return {
           compiled: `export default \`${escaped}\``,
