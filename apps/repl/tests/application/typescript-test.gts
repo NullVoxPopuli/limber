@@ -156,6 +156,10 @@ module('Editor > TypeScript', function (hooks) {
       `export default class Demo extends Component {`,
       `  /**`,
       `   * How to say hello, like \`\${title} \${lastName}\`.`,
+      `   *`,
+      `   * \`\`\`hbs`,
+      `   * <Demo @name="Ember" />`,
+      `   * \`\`\``,
       `   */`,
       `  get greeting(): string {`,
       `    return 'hi';`,
@@ -178,6 +182,7 @@ module('Editor > TypeScript', function (hooks) {
 
     assert.dom(HOVER_TOOLTIP).includesText('Demo.greeting: string', 'the signature');
     assert.dom(HOVER_TOOLTIP).includesText('${title} ${lastName}', 'the documentation, as written');
+    assert.dom(HOVER_TOOLTIP).includesText('<Demo @name="Ember" />', 'an hbs example renders');
     assert.dom(`${HOVER_TOOLTIP} pre.shiki`).exists('the signature is highlighted');
   });
 

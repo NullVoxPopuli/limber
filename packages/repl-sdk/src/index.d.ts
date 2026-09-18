@@ -22,6 +22,10 @@ export class Compiler {
     options?: {
       flavor?: string;
       fileName?: string;
+      /**
+       * What the compiler for the format accepts, `remarkPlugins` for markdown
+       */
+      [option: string]: unknown;
     }
   ): Promise<{ element: HTMLElement; destroy: () => void }>;
 
