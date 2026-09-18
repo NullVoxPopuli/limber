@@ -7,8 +7,8 @@ import { setupTabster } from 'ember-primitives/tabster';
 import { getCompiler, setupCompiler } from 'ember-repl';
 
 import CopyMenu from '#components/copy-menu.gts';
-import { startHighlighter } from '#hl';
-import { rehypeShikiWorker } from '#hl/rehype.ts';
+
+import { rehypeShikiWorker, startHighlighter } from '@nullvoxpopuli/limber-shared/highlighting';
 
 import { importMap } from './import-map.ts';
 

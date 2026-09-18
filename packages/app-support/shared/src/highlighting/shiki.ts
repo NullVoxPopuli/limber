@@ -47,6 +47,11 @@ export interface HighlightResponse {
   error?: string;
 }
 
+// A grammar module is a list, and shiki ships this one with one entry.
+const markdownGrammar = markdown[0];
+
+if (!markdownGrammar) throw new Error('The markdown grammar of shiki is empty');
+
 const highlighter = createHighlighterCore({
   themes: [
     {
@@ -73,7 +78,7 @@ const highlighter = createHighlighterCore({
     bash,
     {
       // The markdown grammar has embeddedLanguagesLazy, and no embeddedLangs
-      ...markdown[0]!,
+      ...markdownGrammar,
       embeddedLangs: [
         'javascript',
         'css',
@@ -105,9 +110,12 @@ export async function highlight({ as, code, lang, meta }: HighlightRequest) {
   const shiki = await highlighter;
 
   // getLoadedLanguages includes the aliases
-  if (!shiki.getLoadedLanguages().includes(lang) && !isSpecialLang(lang)) return;
+  if (!shiki.getLoadedLanguages().includes(lang) && !isSpecialLang(lang))
+    return;
 
   const options = { lang, theme: THEME, meta: { __raw: meta ?? '' } };
 
-  return as === 'html' ? shiki.codeToHtml(code, options) : shiki.codeToHast(code, options);
+  return as === 'html'
+    ? shiki.codeToHtml(code, options)
+    : shiki.codeToHast(code, options);
 }

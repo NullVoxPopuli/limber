@@ -2,8 +2,6 @@ import { guidFor } from '@ember/object/internals';
 
 import { modifier } from 'ember-modifier';
 
-import { isAllowedFormat } from '#app/languages.gts';
-
 import { highlightToHtml } from './index.ts';
 
 interface Signature {
@@ -20,7 +18,7 @@ export const highlighted = modifier<Signature>((element: Element, [code]) => {
 
   element.setAttribute('id', guid);
 
-  let lang = element.getAttribute('data-format') ?? element.classList[0]!;
+  let lang = element.getAttribute('data-format') ?? element.classList[0] ?? '';
 
   lang = lang.replace('language-', '');
 
@@ -28,15 +26,11 @@ export const highlighted = modifier<Signature>((element: Element, [code]) => {
     lang = 'markdown';
   }
 
-  const isAllowed = isAllowedFormat(lang) || lang === 'bash';
+  lang = lang.split('|')[0] ?? '';
 
-  if (!isAllowed) {
-    return;
-  }
+  if (!lang) return;
 
-  lang = lang.split('|')[0]!;
-
-  (async () => {
+  void (async () => {
     const html = await highlightToHtml(code, lang);
 
     // because the above is async, it's possible that the element

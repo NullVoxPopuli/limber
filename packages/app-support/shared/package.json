@@ -70,6 +70,7 @@
     "@rollup/plugin-babel": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@tsconfig/ember": "^3.0.9",
+    "@types/hast": "^3.0.4",
     "babel-plugin-ember-template-compilation": "^4.0.0",
     "concurrently": "^9.2.1",
     "ember-async-data": "2.0.1",
@@ -86,7 +87,8 @@
     "rollup-plugin-copy": "^3.5.0",
     "shiki": "^3.20.0",
     "typescript": "catalog:ts5",
-    "typescript-7": "catalog:ts7"
+    "typescript-7": "catalog:ts7",
+    "unist-util-visit": "^5.1.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
@@ -111,6 +113,10 @@
     ".": {
       "types": "./declarations/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./highlighting": {
+      "types": "./declarations/highlighting/index.d.ts",
+      "default": "./dist/highlighting/index.js"
     },
     "./*": {
       "types": "./declarations/*.d.ts",

@@ -38,7 +38,6 @@
   "dependencies": {
     "@glimmer/component": "^2.1.1",
     "@nullvoxpopuli/limber-shared": "workspace:*",
-    "@shikijs/rehype": "^3.21.0",
     "decorator-transforms": "2.4.0",
     "ember-async-data": "2.0.1",
     "ember-modifier": "^4.2.0",
@@ -52,7 +51,6 @@
     "rehype-stringify": "^10.0.1",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
-    "shiki": "^1.29.2",
     "unified": "^11.0.5"
   },
   "devDependencies": {

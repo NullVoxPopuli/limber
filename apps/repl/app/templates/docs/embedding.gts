@@ -1,8 +1,7 @@
-import { highlighted } from '#hl/modifier.ts';
-
 import { REPL } from 'limber-ui';
 
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
+import { highlighted } from '@nullvoxpopuli/limber-shared/highlighting';
 
 import { Example, Live, Option, Refresh } from './support/api.gts';
 import { H2 } from './support/code.gts';
