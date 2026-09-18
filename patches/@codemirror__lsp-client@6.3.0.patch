@@ -1,0 +1,342 @@
+diff --git a/dist/index.cjs b/dist/index.cjs
+index 10f8b061f51f3d0ec94f3340b2c8117db10b5f26..7fcec2d52fd4a22d2d32d0bb81a6dc4d92150eb7 100644
+--- a/dist/index.cjs
++++ b/dist/index.cjs
+@@ -3,59 +3,24 @@
+ var view = require('@codemirror/view');
+ var state = require('@codemirror/state');
+ var language = require('@codemirror/language');
+-var marked$1 = require('marked');
+ var highlight = require('@lezer/highlight');
+ var autocomplete = require('@codemirror/autocomplete');
+ var lint = require('@codemirror/lint');
+ 
+-let context = null;
+-function withContext(view, language, f) {
+-    let prev = context;
+-    try {
+-        context = { view, language };
+-        return f();
+-    }
+-    finally {
+-        context = prev;
+-    }
+-}
+-const marked = new marked$1.Marked({
+-    walkTokens(token) {
+-        if (!context || token.type != "code")
+-            return;
+-        let lang = context.language && context.language(token.lang);
+-        if (!lang) {
+-            let viewLang = context.view.state.facet(language.language);
+-            if (viewLang && viewLang.name == token.lang)
+-                lang = viewLang;
+-        }
+-        if (!lang)
+-            return;
+-        let highlighter = { style: tags => language.highlightingFor(context.view.state, tags) };
+-        let result = "";
+-        highlight.highlightCode(token.text, lang.parser.parse(token.text), highlighter, (text, cls) => {
+-            result += cls ? `<span class="${cls}">${escHTML(text)}</span>` : escHTML(text);
+-        }, () => {
+-            result += "<br>";
+-        });
+-        token.escaped = true;
+-        token.text = result;
+-    }
+-});
+ function escHTML(text) {
+     return text.replace(/[\n<&]/g, ch => ch == "\n" ? "<br>" : ch == "<" ? "&lt;" : "&amp;");
+ }
+-function docToHTML(value, defaultKind) {
++async function docToHTML(config, value, defaultKind) {
+     let kind = defaultKind, text = value;
+     if (typeof text != "string") {
+         kind = text.kind;
+         text = text.value;
+     }
+-    if (kind == "plaintext") {
++    if (kind == "plaintext" || !config.renderMarkdown) {
+         return escHTML(text);
+     }
+     else {
+-        return marked.parse(text, { async: false, });
++        return config.renderMarkdown(text);
+     }
+ }
+ 
+@@ -102,8 +67,8 @@ class LSPPlugin {
+     /**
+     Render a doc string from the server to HTML.
+     */
+-    docToHTML(value, defaultKind = "plaintext") {
+-        let html = withContext(this.view, this.client.config.highlightLanguage, () => docToHTML(value, defaultKind));
++    async docToHTML(value, defaultKind = "plaintext") {
++        let html = await docToHTML(this.client.config, value, defaultKind);
+         return this.client.config.sanitizeHTML ? this.client.config.sanitizeHTML(html) : html;
+     }
+     /**
+@@ -1010,10 +975,10 @@ function completionResultRange(cx, result) {
+     let line = cx.state.doc.lineAt(cx.pos);
+     return { from: line.from + range.start.character, to: line.from + range.end.character };
+ }
+-function renderDocInfo(plugin, doc) {
++async function renderDocInfo(plugin, doc) {
+     let elt = document.createElement("div");
+     elt.className = "cm-lsp-documentation cm-lsp-completion-documentation";
+-    elt.innerHTML = plugin.docToHTML(doc);
++    elt.innerHTML = await plugin.docToHTML(doc);
+     return elt;
+ }
+ const kindToType = {
+@@ -1062,30 +1027,31 @@ function lspTooltipSource(view, pos) {
+     const plugin = LSPPlugin.get(view);
+     if (!plugin)
+         return Promise.resolve(null);
+-    return hoverRequest(plugin, pos).then(result => {
++    return hoverRequest(plugin, pos).then(async result => {
+         if (!result)
+             return null;
++        let html = await renderTooltipContent(plugin, result.contents);
+         return {
+             pos: result.range ? fromPosition(view.state.doc, result.range.start) : pos,
+             end: result.range ? fromPosition(view.state.doc, result.range.end) : pos,
+             create() {
+                 let elt = document.createElement("div");
+                 elt.className = "cm-lsp-hover-tooltip cm-lsp-documentation";
+-                elt.innerHTML = renderTooltipContent(plugin, result.contents);
++                elt.innerHTML = html;
+                 return { dom: elt };
+             },
+             above: true
+         };
+     });
+ }
+-function renderTooltipContent(plugin, value) {
++async function renderTooltipContent(plugin, value) {
+     if (Array.isArray(value))
+-        return value.map(m => renderCode(plugin, m)).join("<br>");
++        return (await Promise.all(value.map(m => renderCode(plugin, m)))).join("<br>");
+     if (typeof value == "string" || typeof value == "object" && "language" in value)
+         return renderCode(plugin, value);
+     return plugin.docToHTML(value);
+ }
+-function renderCode(plugin, code) {
++async function renderCode(plugin, code) {
+     if (typeof code == "string")
+         return plugin.docToHTML(code, "markdown");
+     let { language: language$1, value } = code;
+@@ -1421,7 +1387,7 @@ function drawSignatureTooltip(view, data, active) {
+         if (plugin) {
+             let docs = dom.appendChild(document.createElement("div"));
+             docs.className = "cm-lsp-signature-documentation cm-lsp-documentation";
+-            docs.innerHTML = plugin.docToHTML(signature.documentation);
++            plugin.docToHTML(signature.documentation).then(html => { docs.innerHTML = html; });
+         }
+     }
+     return { dom };
+diff --git a/dist/index.d.cts b/dist/index.d.cts
+index 78fc989c507a29b8e9eaff6f7de9b8ec838a0216..8f55ffe50302bc8c0f55319c4aea24ce98115bf0 100644
+--- a/dist/index.d.cts
++++ b/dist/index.d.cts
+@@ -217,11 +217,15 @@ type LSPClientConfig = {
+     */
+     sanitizeHTML?: (html: string) => string;
+     /**
+-    By default, the Markdown renderer will only be able to highlght
+-    code embedded in the Markdown text when its language tag matches
+-    the name of the language used by the editor. You can provide a
+-    function here that returns a CodeMirror language object for a
+-    given language tag to support more languages.
++    Renders the Markdown in documentation from the server to HTML.
++    Without it, Markdown is shown as escaped text. May be
++    asynchronous. Code blocks are the renderer's job too.
++    */
++    renderMarkdown?: (markdown: string) => string | Promise<string>;
++    /**
++    Provides a CodeMirror language for the language tag of a
++    `MarkedString` in hover content, which the client highlights
++    itself. By default, only the editor's own language is used.
+     */
+     highlightLanguage?: (name: string) => Language | null;
+     /**
+@@ -418,7 +422,7 @@ declare class LSPPlugin {
+     /**
+     Render a doc string from the server to HTML.
+     */
+-    docToHTML(value: string | lsp.MarkupContent, defaultKind?: lsp.MarkupKind): string;
++    docToHTML(value: string | lsp.MarkupContent, defaultKind?: lsp.MarkupKind): Promise<string>;
+     /**
+     Convert a CodeMirror document offset into an LSP `{line,
+     character}` object. Defaults to using the view's current
+diff --git a/dist/index.d.ts b/dist/index.d.ts
+index 78fc989c507a29b8e9eaff6f7de9b8ec838a0216..8f55ffe50302bc8c0f55319c4aea24ce98115bf0 100644
+--- a/dist/index.d.ts
++++ b/dist/index.d.ts
+@@ -217,11 +217,15 @@ type LSPClientConfig = {
+     */
+     sanitizeHTML?: (html: string) => string;
+     /**
+-    By default, the Markdown renderer will only be able to highlght
+-    code embedded in the Markdown text when its language tag matches
+-    the name of the language used by the editor. You can provide a
+-    function here that returns a CodeMirror language object for a
+-    given language tag to support more languages.
++    Renders the Markdown in documentation from the server to HTML.
++    Without it, Markdown is shown as escaped text. May be
++    asynchronous. Code blocks are the renderer's job too.
++    */
++    renderMarkdown?: (markdown: string) => string | Promise<string>;
++    /**
++    Provides a CodeMirror language for the language tag of a
++    `MarkedString` in hover content, which the client highlights
++    itself. By default, only the editor's own language is used.
+     */
+     highlightLanguage?: (name: string) => Language | null;
+     /**
+@@ -418,7 +422,7 @@ declare class LSPPlugin {
+     /**
+     Render a doc string from the server to HTML.
+     */
+-    docToHTML(value: string | lsp.MarkupContent, defaultKind?: lsp.MarkupKind): string;
++    docToHTML(value: string | lsp.MarkupContent, defaultKind?: lsp.MarkupKind): Promise<string>;
+     /**
+     Convert a CodeMirror document offset into an LSP `{line,
+     character}` object. Defaults to using the view's current
+diff --git a/dist/index.js b/dist/index.js
+index 37524da19830bfc68ed9a5d53e4ed510149ec730..6a34870a80f6d38f7f7f82deb5ea6493429ec305 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -1,59 +1,24 @@
+ import { ViewPlugin, showDialog, EditorView, hoverTooltip, getDialog, showTooltip, keymap, showPanel } from '@codemirror/view';
+ import { ChangeSet, MapMode, Facet, EditorState, StateField, StateEffect, Prec } from '@codemirror/state';
+ import { language, highlightingFor, getIndentUnit, indentUnit } from '@codemirror/language';
+-import { Marked } from 'marked';
+ import { highlightCode } from '@lezer/highlight';
+ import { autocompletion, snippet, insertCompletionText } from '@codemirror/autocomplete';
+ import { setDiagnostics } from '@codemirror/lint';
+ 
+-let context = null;
+-function withContext(view, language, f) {
+-    let prev = context;
+-    try {
+-        context = { view, language };
+-        return f();
+-    }
+-    finally {
+-        context = prev;
+-    }
+-}
+-const marked = /*@__PURE__*/new Marked({
+-    walkTokens(token) {
+-        if (!context || token.type != "code")
+-            return;
+-        let lang = context.language && context.language(token.lang);
+-        if (!lang) {
+-            let viewLang = context.view.state.facet(language);
+-            if (viewLang && viewLang.name == token.lang)
+-                lang = viewLang;
+-        }
+-        if (!lang)
+-            return;
+-        let highlighter = { style: tags => highlightingFor(context.view.state, tags) };
+-        let result = "";
+-        highlightCode(token.text, lang.parser.parse(token.text), highlighter, (text, cls) => {
+-            result += cls ? `<span class="${cls}">${escHTML(text)}</span>` : escHTML(text);
+-        }, () => {
+-            result += "<br>";
+-        });
+-        token.escaped = true;
+-        token.text = result;
+-    }
+-});
+ function escHTML(text) {
+     return text.replace(/[\n<&]/g, ch => ch == "\n" ? "<br>" : ch == "<" ? "&lt;" : "&amp;");
+ }
+-function docToHTML(value, defaultKind) {
++async function docToHTML(config, value, defaultKind) {
+     let kind = defaultKind, text = value;
+     if (typeof text != "string") {
+         kind = text.kind;
+         text = text.value;
+     }
+-    if (kind == "plaintext") {
++    if (kind == "plaintext" || !config.renderMarkdown) {
+         return escHTML(text);
+     }
+     else {
+-        return marked.parse(text, { async: false, });
++        return config.renderMarkdown(text);
+     }
+ }
+ 
+@@ -100,8 +65,8 @@ class LSPPlugin {
+     /**
+     Render a doc string from the server to HTML.
+     */
+-    docToHTML(value, defaultKind = "plaintext") {
+-        let html = withContext(this.view, this.client.config.highlightLanguage, () => docToHTML(value, defaultKind));
++    async docToHTML(value, defaultKind = "plaintext") {
++        let html = await docToHTML(this.client.config, value, defaultKind);
+         return this.client.config.sanitizeHTML ? this.client.config.sanitizeHTML(html) : html;
+     }
+     /**
+@@ -1008,10 +973,10 @@ function completionResultRange(cx, result) {
+     let line = cx.state.doc.lineAt(cx.pos);
+     return { from: line.from + range.start.character, to: line.from + range.end.character };
+ }
+-function renderDocInfo(plugin, doc) {
++async function renderDocInfo(plugin, doc) {
+     let elt = document.createElement("div");
+     elt.className = "cm-lsp-documentation cm-lsp-completion-documentation";
+-    elt.innerHTML = plugin.docToHTML(doc);
++    elt.innerHTML = await plugin.docToHTML(doc);
+     return elt;
+ }
+ const kindToType = {
+@@ -1060,30 +1025,31 @@ function lspTooltipSource(view, pos) {
+     const plugin = LSPPlugin.get(view);
+     if (!plugin)
+         return Promise.resolve(null);
+-    return hoverRequest(plugin, pos).then(result => {
++    return hoverRequest(plugin, pos).then(async result => {
+         if (!result)
+             return null;
++        let html = await renderTooltipContent(plugin, result.contents);
+         return {
+             pos: result.range ? fromPosition(view.state.doc, result.range.start) : pos,
+             end: result.range ? fromPosition(view.state.doc, result.range.end) : pos,
+             create() {
+                 let elt = document.createElement("div");
+                 elt.className = "cm-lsp-hover-tooltip cm-lsp-documentation";
+-                elt.innerHTML = renderTooltipContent(plugin, result.contents);
++                elt.innerHTML = html;
+                 return { dom: elt };
+             },
+             above: true
+         };
+     });
+ }
+-function renderTooltipContent(plugin, value) {
++async function renderTooltipContent(plugin, value) {
+     if (Array.isArray(value))
+-        return value.map(m => renderCode(plugin, m)).join("<br>");
++        return (await Promise.all(value.map(m => renderCode(plugin, m)))).join("<br>");
+     if (typeof value == "string" || typeof value == "object" && "language" in value)
+         return renderCode(plugin, value);
+     return plugin.docToHTML(value);
+ }
+-function renderCode(plugin, code) {
++async function renderCode(plugin, code) {
+     if (typeof code == "string")
+         return plugin.docToHTML(code, "markdown");
+     let { language: language$1, value } = code;
+@@ -1419,7 +1385,7 @@ function drawSignatureTooltip(view, data, active) {
+         if (plugin) {
+             let docs = dom.appendChild(document.createElement("div"));
+             docs.className = "cm-lsp-signature-documentation cm-lsp-documentation";
+-            docs.innerHTML = plugin.docToHTML(signature.documentation);
++            plugin.docToHTML(signature.documentation).then(html => { docs.innerHTML = html; });
+         }
+     }
+     return { dom };

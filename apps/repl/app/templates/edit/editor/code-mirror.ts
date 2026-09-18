@@ -3,8 +3,16 @@ import { isDestroyed, isDestroying, registerDestructor } from '@ember/destroyabl
 import { service } from '@ember/service';
 import { waitForPromise } from '@ember/test-waiters';
 
+import { Compartment } from '@codemirror/state';
 import Modifier from 'ember-modifier';
 import { getCompiler } from 'ember-repl';
+
+import {
+  hasTypeScript,
+  hoverAgain,
+  loadingExtension,
+  typeScriptExtension,
+} from './typescript/client.ts';
 
 import type RouterService from '@ember/routing/router-service';
 import type EditorService from 'limber/services/editor';
@@ -118,6 +126,13 @@ class CodeMirror extends Modifier<Signature> {
 
   #previousFormat?: string;
   #setFormat?: (format: string) => void;
+
+  /**
+   * Holds the language server plugin while the format has a type checker,
+   * and nothing otherwise.
+   */
+  #typescript = new Compartment();
+  #syncTypeScript?: (format: string) => void;
   #checkFormat = async () => {
     const format = this.editor.format === 'hbs' ? 'hbs|ember' : this.editor.format;
 
@@ -176,15 +191,53 @@ class CodeMirror extends Modifier<Signature> {
       text: value,
       format: formatFromURL,
       handleUpdate: updateText,
-      extensions: [HorizonTheme, syntaxHighlighting(HorizonSyntaxTheme)],
+      extensions: [HorizonTheme, syntaxHighlighting(HorizonSyntaxTheme), this.#typescript.of([])],
     });
 
     if (isDestroyed(this) || isDestroying(this)) return;
+
+    const compilerService = getCompiler(this);
+    const onStatus = (message: string) => {
+      compilerService.messages.push({ type: 'info', message });
+    };
+
+    this.#syncTypeScript = (format: string) => {
+      if (!hasTypeScript(format)) {
+        view.dispatch({ effects: this.#typescript.reconfigure([]) });
+
+        return;
+      }
+
+      view.dispatch({ effects: this.#typescript.reconfigure(loadingExtension()) });
+
+      waitForPromise(
+        typeScriptExtension(format, compilerService.compiler, onStatus).then(
+          (extension) => {
+            if (isDestroyed(this) || isDestroying(this)) return;
+            if (this.#previousFormat !== format) return;
+
+            view.dispatch({ effects: this.#typescript.reconfigure(extension) });
+            hoverAgain(view);
+          },
+          (error) => {
+            compilerService.messages.push({
+              type: 'error',
+              message: String(error?.message ?? error),
+            });
+
+            if (isDestroyed(this) || isDestroying(this)) return;
+
+            view.dispatch({ effects: this.#typescript.reconfigure([]) });
+          }
+        )
+      );
+    };
 
     this.#setFormat = (format: string) => {
       element.setAttribute('data-format', format);
       this.#previousFormat = format;
       waitForPromise(setFormat(format));
+      this.#syncTypeScript?.(format);
     };
 
     /**
@@ -196,7 +249,10 @@ class CodeMirror extends Modifier<Signature> {
 
       this.#previousFormat = formatQP;
       waitForPromise(setText(text, formatQP));
+      this.#syncTypeScript?.(formatQP);
     };
+
+    this.#syncTypeScript(formatFromURL);
 
     const scrollable = document.querySelector('.cm-scroller');
 

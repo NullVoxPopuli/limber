@@ -75,6 +75,7 @@ catalogs:
 
 patchedDependencies:
   "browserslist-generator": "patches/browserslist-generator.patch"
+  "@codemirror/lsp-client@6.3.0": "patches/@codemirror__lsp-client@6.3.0.patch"
 
 overrides:
   "@glint/template": "1.8.0"
