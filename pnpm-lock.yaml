@@ -16,31 +16,34 @@ catalogs:
       version: 7.1.0-dev.20260825.1
 
 overrides:
+  '@codemirror/view': 6.39.12
   '@glint/template': 1.8.0
   array-includes: npm:@nolyfill/array-includes@^1
   array.prototype.findlastindex: npm:@nolyfill/array.prototype.findlastindex@^1
   array.prototype.flat: npm:@nolyfill/array.prototype.flat@^1
   array.prototype.flatmap: npm:@nolyfill/array.prototype.flatmap@^1
   assert: npm:@nolyfill/assert@^1
+  decorator-transforms: ^2.4.0
+  ember-primitives: ^0.62.0
   hasown: npm:@nolyfill/hasown@^1
   is-core-module: npm:@nolyfill/is-core-module@^1
   isarray: npm:@nolyfill/isarray@^1
   json-stable-stringify: npm:@nolyfill/json-stable-stringify@^1
+  kolay: github:universal-ember/kolay#dist
+  kolay>ember-repl: ^8.0.0
   object.fromentries: npm:@nolyfill/object.fromentries@^1
   object.groupby: npm:@nolyfill/object.groupby@^1
   object.values: npm:@nolyfill/object.values@^1
   reactiveweb: 1.9.1
   rollup-plugin-dts: ^6.5.1
-  '@codemirror/view': 6.39.12
-  decorator-transforms: ^2.4.0
-  ember-primitives: ^0.62.0
-  kolay: github:universal-ember/kolay#dist
-  kolay>ember-repl: ^8.0.0
   side-channel: npm:@nolyfill/side-channel@^1
   string.prototype.matchall: npm:@nolyfill/string.prototype.matchall@^1
   string.prototype.trimend: npm:@nolyfill/string.prototype.trimend@^1
 
 patchedDependencies:
+  '@codemirror/lsp-client@6.3.0':
+    hash: 5850c181dd393f3c3bbab3bb7ae38f40a064ef7709a67e83e9b1cac05dbbc434
+    path: patches/@codemirror__lsp-client@6.3.0.patch
   browserslist-generator:
     hash: 8012b033c48b9eeeb2a450dd39dcc4fd9632dda6b3697bfddcd5371ab1866ebe
     path: patches/browserslist-generator.patch
@@ -91,9 +94,6 @@ importers:
 
   apps/repl:
     dependencies:
-      '@codemirror/lang-javascript':
-        specifier: ^6.2.4
-        version: 6.2.4
       '@codemirror/language':
         specifier: ^6.12.1
         version: 6.12.1
@@ -102,7 +102,7 @@ importers:
         version: 6.9.3
       '@codemirror/lsp-client':
         specifier: ^6.2.5
-        version: 6.3.0
+        version: 6.3.0(patch_hash=5850c181dd393f3c3bbab3bb7ae38f40a064ef7709a67e83e9b1cac05dbbc434)
       '@codemirror/state':
         specifier: ^6.5.4
         version: 6.5.4
@@ -12825,7 +12825,7 @@ snapshots:
       '@codemirror/view': 6.39.12
       crelt: 1.0.6
 
-  '@codemirror/lsp-client@6.3.0':
+  '@codemirror/lsp-client@6.3.0(patch_hash=5850c181dd393f3c3bbab3bb7ae38f40a064ef7709a67e83e9b1cac05dbbc434)':
     dependencies:
       '@codemirror/autocomplete': 6.20.0
       '@codemirror/language': 6.12.1

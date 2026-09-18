@@ -1,14 +1,9 @@
-import {
-  javascriptLanguage,
-  jsxLanguage,
-  tsxLanguage,
-  typescriptLanguage,
-} from '@codemirror/lang-javascript';
 import { linter } from '@codemirror/lint';
 import { languageServerExtensions, LSPClient, LSPPlugin } from '@codemirror/lsp-client';
 import { installer } from 'repl-sdk/fs';
 
-import type { Language } from '@codemirror/language';
+import { renderDocumentation } from './documentation.ts';
+
 import type { Diagnostic } from '@codemirror/lint';
 import type { Transport } from '@codemirror/lsp-client';
 import type { Extension } from '@codemirror/state';
@@ -135,20 +130,6 @@ function startWorker(onStatus: OnStatus): Promise<{ worker: Worker; transport: T
 }
 
 /**
- * The languages of the code blocks in hover and completion documentation.
- * TypeScript fences its signatures as `typescript`, which is not the
- * editor's own language, so the client would show them unhighlighted.
- */
-const DOCUMENTATION_LANGUAGES: Record<string, Language | undefined> = {
-  typescript: typescriptLanguage,
-  ts: typescriptLanguage,
-  tsx: tsxLanguage,
-  javascript: javascriptLanguage,
-  js: javascriptLanguage,
-  jsx: jsxLanguage,
-};
-
-/**
  * Puts the type declarations where the checker will look for them,
  * the same way a snippet's own imports get installed.
  */
@@ -173,7 +154,7 @@ export function typeScriptClient(onStatus: OnStatus): Promise<LSPClient> {
         rootUri: ROOT_URI,
         extensions: languageServerExtensions(),
         timeout: REQUEST_TIMEOUT,
-        highlightLanguage: (name) => DOCUMENTATION_LANGUAGES[name] ?? null,
+        renderMarkdown: renderDocumentation,
       }).connect(transport);
 
       await lsp.initializing;
