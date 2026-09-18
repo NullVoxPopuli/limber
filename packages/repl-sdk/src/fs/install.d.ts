@@ -21,6 +21,13 @@ export class Installer {
   ): Promise<{ specifier: string; url: string; name: string; version: string }>;
 
   /**
+   * Puts a package in the file system without asking for a file in it.
+   * The linked version wins when there is one. Resolves to the version in
+   * storage.
+   */
+  ensure(name: string, version: string): Promise<string>;
+
+  /**
    * Turn the provisional URL a synchronous resolve produced into the URL of a
    * file that now exists, downloading the package if needed.
    */

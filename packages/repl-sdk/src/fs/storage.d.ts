@@ -18,6 +18,19 @@ export class Storage {
   readonly root: Promise<FileSystemDirectoryHandle>;
 
   read(path: string): Promise<undefined | string>;
+  readBytes(path: string): Promise<undefined | Uint8Array>;
+
+  /**
+   * What a path is, following links. Undefined when there is nothing there.
+   */
+  stat(
+    path: string
+  ): Promise<undefined | { type: 'file' | 'directory'; size: number; mtime: number }>;
+
+  /**
+   * The names in a directory, following links, without the storage's markers.
+   */
+  entries(path: string): Promise<undefined | { name: string; type: 'file' | 'directory' }[]>;
 
   /**
    * The real path, following a link under `/node_modules/<name>/` into `.deps`.

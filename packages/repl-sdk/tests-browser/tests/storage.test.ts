@@ -1,98 +1,43 @@
-import { beforeEach, describe, expect, it } from 'vitest';
-
-import { Storage } from './storage.js';
+import { Storage } from 'repl-sdk/fs/storage';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 /**
- * Enough of the File System Access API for the storage to run under Node:
- * directories, files, `entries`, `removeEntry`, `getFile`, and `createWritable`.
+ * Against the real origin private file system.
+ *
+ * Each test gets a directory of its own as the root, because other tests in
+ * this suite share the origin and keep what they installed.
  */
-class NotFoundError extends Error {
-  override name = 'NotFoundError';
-}
-
-class FakeFile {
-  kind = 'file' as const;
-  text = '';
-
-  getFile() {
-    const text = this.text;
-
-    return Promise.resolve({ text: () => Promise.resolve(text) });
-  }
-
-  createWritable() {
-    return Promise.resolve({
-      write: (chunk: string) => {
-        this.text = chunk;
-
-        return Promise.resolve();
-      },
-      close: () => Promise.resolve(),
-    });
-  }
-}
-
-class FakeDirectory {
-  kind = 'directory' as const;
-  children = new Map<string, FakeDirectory | FakeFile>();
-
-  getDirectoryHandle(name: string, options?: { create?: boolean }) {
-    let child = this.children.get(name);
-
-    if (!child) {
-      if (!options?.create) return Promise.reject(new NotFoundError(name));
-      child = new FakeDirectory();
-      this.children.set(name, child);
-    }
-
-    if (child.kind !== 'directory') return Promise.reject(new TypeError(`${name} is a file`));
-
-    return Promise.resolve(child);
-  }
-
-  getFileHandle(name: string, options?: { create?: boolean }) {
-    let child = this.children.get(name);
-
-    if (!child) {
-      if (!options?.create) return Promise.reject(new NotFoundError(name));
-      child = new FakeFile();
-      this.children.set(name, child);
-    }
-
-    if (child.kind !== 'file') return Promise.reject(new TypeError(`${name} is a directory`));
-
-    return Promise.resolve(child);
-  }
-
-  removeEntry(name: string) {
-    if (!this.children.delete(name)) return Promise.reject(new NotFoundError(name));
-
-    return Promise.resolve();
-  }
-
-  *entries() {
-    for (const entry of this.children) yield entry;
-  }
-}
-
-export function fakeStorage() {
-  const origin = new FakeDirectory();
-
-  return { origin, storage: new Storage(() => Promise.resolve(origin as never)) };
-}
+let root: FileSystemDirectoryHandle;
+let rootName: string;
+let storage: Storage;
 
 function contentsFor(files: Record<string, string>) {
   return Object.fromEntries(Object.entries(files).map(([path, text]) => [path, { text }]));
 }
 
+async function writeFile(directory: FileSystemDirectoryHandle, name: string, text: string) {
+  const handle = await directory.getFileHandle(name, { create: true });
+  const writable = await handle.createWritable();
+
+  await writable.write(text);
+  await writable.close();
+}
+
+beforeEach(async () => {
+  const origin = await navigator.storage.getDirectory();
+
+  rootName = `storage-test-${crypto.randomUUID()}`;
+  root = await origin.getDirectoryHandle(rootName, { create: true });
+  storage = new Storage(() => Promise.resolve(root));
+});
+
+afterEach(async () => {
+  const origin = await navigator.storage.getDirectory();
+
+  await origin.removeEntry(rootName, { recursive: true });
+});
+
 describe('Storage', () => {
-  let origin: FakeDirectory;
-  let storage: Storage;
-
-  beforeEach(() => {
-    ({ origin, storage } = fakeStorage());
-  });
-
   describe('files', () => {
     it('reads what it wrote', async () => {
       await storage.write('/src/index.gjs', 'export default 1;');
@@ -121,6 +66,13 @@ describe('Storage', () => {
       await storage.remove('/src');
 
       expect(await storage.list('/src')).toEqual([]);
+    });
+
+    it('tells a file from a directory of the same name', async () => {
+      await storage.write('/src/index.gjs', '1');
+
+      expect(await storage.read('/src')).toBeUndefined();
+      expect(await storage.list('/src/index.gjs')).toEqual([]);
     });
   });
 
@@ -158,24 +110,26 @@ describe('Storage', () => {
         'package.json': { text: JSON.stringify(manifest) },
       });
 
-      const deps = await origin
+      const deps = await root
         .getDirectoryHandle('node_modules')
         .then((d) => d.getDirectoryHandle('.deps'));
       const scope = await deps.getDirectoryHandle('@scope');
+      const names = [];
 
-      expect(Array.from(scope.children.keys())).toEqual(['name@1.0.0']);
+      for await (const name of scope.keys()) names.push(name);
+
+      expect(names).toEqual(['name@1.0.0']);
       expect(await storage.installed()).toEqual({ '@scope/name': ['1.0.0'] });
       expect((await storage.readPackage('@scope/name', '1.0.0'))?.manifest).toEqual(manifest);
     });
 
     it('ignores a package without its marker', async () => {
-      const deps = await origin
+      const deps = await root
         .getDirectoryHandle('node_modules', { create: true })
         .then((d) => d.getDirectoryHandle('.deps', { create: true }));
       const half = await deps.getDirectoryHandle('broken@1.0.0', { create: true });
-      const file = await half.getFileHandle('package.json', { create: true });
 
-      file.text = JSON.stringify({ name: 'broken', version: '1.0.0' });
+      await writeFile(half, 'package.json', JSON.stringify({ name: 'broken', version: '1.0.0' }));
 
       expect(await storage.installed()).toEqual({});
       expect(await storage.readPackage('broken', '1.0.0')).toBeUndefined();
@@ -194,6 +148,43 @@ describe('Storage', () => {
 
       expect(await storage.installed()).toEqual({});
       expect(await storage.exists('/src/index.gjs')).toBe(false);
+    });
+
+    it('finds a directory again after it was removed and rewritten', async () => {
+      await storage.writePackage('a', '1.0.0', { 'package.json': { text: '{"v":1}' } });
+      await storage.remove('/node_modules/.deps/a@1.0.0');
+      await storage.writePackage('a', '1.0.0', { 'package.json': { text: '{"v":2}' } });
+
+      expect(await storage.read('/node_modules/.deps/a@1.0.0/package.json')).toBe('{"v":2}');
+    });
+  });
+
+  describe('stat, entries, and bytes', () => {
+    it('describes files and directories', async () => {
+      await storage.write('/src/index.gjs', 'hello');
+
+      expect(await storage.stat('/src/index.gjs')).toMatchObject({ type: 'file', size: 5 });
+      expect(await storage.stat('/src')).toMatchObject({ type: 'directory' });
+      expect(await storage.stat('/')).toMatchObject({ type: 'directory' });
+      expect(await storage.stat('/nope')).toBeUndefined();
+      expect(await storage.readBytes('/src/index.gjs')).toEqual(new TextEncoder().encode('hello'));
+    });
+
+    it('lists a directory without markers, through links', async () => {
+      await storage.writePackage('pkg', '1.0.0', {
+        'package.json': { text: '{}' },
+        'lib/a.js': { text: '' },
+      });
+      await storage.link('pkg', '1.0.0');
+
+      const entries = (await storage.entries('/node_modules/pkg')) ?? [];
+
+      expect(entries.map((entry) => `${entry.type}:${entry.name}`).sort()).toEqual([
+        'directory:lib',
+        'file:package.json',
+      ]);
+      expect(await storage.entries('/node_modules/missing')).toBeUndefined();
+      expect(await storage.stat('/node_modules/pkg/lib/a.js')).toMatchObject({ type: 'file' });
     });
   });
 
