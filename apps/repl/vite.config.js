@@ -162,6 +162,10 @@ export default defineConfig({
           // Without their own groups, they share chunks with modules
           // that the entry page needs, and the entry page downloads them.
           // minShareCount keeps each lazy language mode in its own chunk.
+          // Only dynamic imports reach the editor and markdown libraries.
+          // Without their own groups, they share chunks with modules
+          // that the entry page needs, and the entry page downloads them.
+          // minShareCount keeps each lazy language mode in its own chunk.
           // The in-process Shiki: only the prerender of the docs uses it (node has no Worker).
           {
             name: 'shiki',

@@ -49,7 +49,6 @@
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "decorator-transforms": "2.4.0",
-    "oniguruma-parser": "^0.12.2",
     "penpal": "^6.2.2",
     "reactiveweb": "1.9.1"
   },
@@ -84,7 +83,6 @@
     "prettier-plugin-ember-template-tag": "2.1.8",
     "rollup": "^4.53.3",
     "rollup-plugin-copy": "^3.5.0",
-    "shiki": "^3.20.0",
     "typescript": "catalog:ts5",
     "typescript-7": "catalog:ts7"
   },

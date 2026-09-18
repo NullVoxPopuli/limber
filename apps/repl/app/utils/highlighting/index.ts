@@ -44,7 +44,8 @@ export function startHighlighter() {
 
 async function request(message: Omit<HighlightRequest, 'id'>) {
   // The prerender of the docs runs in node, which has no Worker.
-  if (typeof Worker === 'undefined') {
+  // This is a build-time constant, so the client build has no second copy of Shiki.
+  if (import.meta.env.SSR) {
     const { highlight } = await import('./shiki.ts');
 
     return highlight({ ...message, id: 0 });

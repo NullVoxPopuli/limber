@@ -5,8 +5,7 @@ import rehypeShikiFromHighlighter from '@shikijs/rehype/core';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import { setupKolay } from 'kolay/setup';
-
-import { createShiki } from '@nullvoxpopuli/limber-shared';
+import { createShiki } from 'tutorial/highlighter';
 
 import type { Manifest } from 'kolay';
 
