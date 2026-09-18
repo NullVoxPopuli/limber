@@ -91,6 +91,9 @@ importers:
 
   apps/repl:
     dependencies:
+      '@codemirror/lang-javascript':
+        specifier: ^6.2.4
+        version: 6.2.4
       '@codemirror/language':
         specifier: ^6.12.1
         version: 6.12.1

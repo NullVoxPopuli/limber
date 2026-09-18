@@ -108,6 +108,33 @@ export const HorizonTheme = EditorView.theme(
       border: `1px solid ${ui.border}`,
       backgroundColor: ui.backgroundAlt,
     },
+    /**
+     * Hover, completion, and signature documentation from the language server,
+     * rendered from Markdown. The signature is a code block.
+     */
+    '.cm-tooltip .cm-lsp-documentation': {
+      maxWidth: '40em',
+      padding: '4px 8px',
+      fontSize: '90%',
+      lineHeight: '1.4',
+      '& pre': {
+        margin: '4px 0',
+        padding: '4px 6px',
+        backgroundColor: ui.background,
+        borderRadius: '3px',
+        whiteSpace: 'pre-wrap',
+      },
+      '& pre, & code': {
+        fontFamily: `'Source Code Pro', ui-monospace, monospace, sans-serif`,
+      },
+      '& p': {
+        margin: '4px 0',
+      },
+      '& a': {
+        color: ui.accent,
+        textDecoration: 'underline',
+      },
+    },
     '.cm-tooltip-autocomplete': {
       '& > ul > li[aria-selected]': {
         backgroundColor: ui.shadow,
