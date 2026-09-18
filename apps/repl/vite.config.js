@@ -162,6 +162,12 @@ export default defineConfig({
           // Without their own groups, they share chunks with modules
           // that the entry page needs, and the entry page downloads them.
           // minShareCount keeps each lazy language mode in its own chunk.
+          // The in-process Shiki: only the prerender of the docs uses it (node has no Worker).
+          {
+            name: 'shiki',
+            test: /highlighting\/shiki\.ts$|node_modules\/(shiki|@shikijs\/(core|engine-javascript|langs|themes|vscode-textmate)|oniguruma-[a-z-]+|regex|regex-[a-z-]+)\//,
+            priority: 21,
+          },
           {
             name: 'editor',
             test: /packages\/syntax\/|node_modules\/(@codemirror|@lezer|codemirror|crelt|style-mod|w3c-keyname)/,
