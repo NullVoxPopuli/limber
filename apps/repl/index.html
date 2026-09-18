@@ -50,7 +50,6 @@
     <!-- VITE_EMBER_SSR_HEAD -->
   </head>
   <body class="syntax-dark syntax-bright">
-    <!-- app-shell -->
     <div id="initial-loader">
       <style>
         body,
@@ -113,10 +112,23 @@
         window.self.document.body.classList.remove("overflow-hidden");
       }
     </script>
-    <!-- /app-shell -->
 
     <!-- VITE_EMBER_SSR_BODY -->
 
-    <script type="module" src="./app/boot.ts"></script>
+    <!--
+      Dynamic imports, so that the browser paints the app shell above before it
+      evaluates the app. With static imports it evaluates the whole module graph
+      first when the scripts are already downloaded, and the shell never shows.
+
+      This file is never prerendered (see index.ssg.html), so the app boots from nothing.
+    -->
+    <script type="module">
+      const [{ default: Application }, { default: environment }] = await Promise.all([
+        import("./app/app.ts"),
+        import("./app/config/environment.ts"),
+      ]);
+
+      Application.create(environment.APP);
+    </script>
   </body>
 </html>

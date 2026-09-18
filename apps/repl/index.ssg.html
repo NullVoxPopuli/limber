@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Limber » Playground and REPL</title>
+    <meta
+      name="description"
+      content="Limber is a playground and REPL for various web technologies, such as Svelte, Vue, Mermaid, Ember, React, and more. It also demonstrates how documentation can have live islands of different frameworks rendering all from the same document"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!--
+      The template of the prerendered pages: index.html without the app shell,
+      and with a static entry so that every stylesheet is a blocking link.
+      Keep the head in sync with index.html.
+    -->
+    <!--
+      This the source of truth for the ember brand variables
+        https://emberjs.com/images/brand/Ember-Brand-Guidelines.pdf
+    -->
+    <style type="text/css">
+      :root {
+        --ember-brand: #e04e39;
+        --ember-black: #212121;
+        --ember-burnt-ember: #9b2918;
+        --ember-gray: #817f7f;
+        --ember-blue: #1e719b;
+        --ember-faint-gray: #efebea;
+        --ember-light-blue: #74b0ce;
+        --ember-linen: #fdf7f6;
+        --ember-yellow: #fbc840;
+        --ember-white: #fdfdfd;
+      }
+    </style>
+    <script>
+      globalThis.v8 = {};
+      globalThis.path = {
+        resolve: (...args) => args.join("/"),
+      };
+    </script>
+    <!--
+      The editor placeholder uses this font on the first render.
+      Without the preload, the browser finds the font only after it parses the CSS.
+      Keep the URL in sync with the @font-face rule in app/styles/app.css.
+    -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      href="https://fonts.gstatic.com/s/sourcecodepro/v30/HI_diYsKILxRpg3hIP6sJ7fM7PqPMcMnZFqUwX28DMyQtMlrTA.woff2"
+    />
+    <link rel="stylesheet" href="./app/styles/app.css" />
+    <!-- VITE_EMBER_SSR_HEAD -->
+  </head>
+  <body class="syntax-dark syntax-bright">
+    <!-- VITE_EMBER_SSR_BODY -->
+
+    <!--
+      Static imports, so that vite puts every stylesheet of the app in this file
+      as a blocking link: the prerendered content must not show unstyled.
+
+      Every page from this file is prerendered, so the app rehydrates it.
+    -->
+    <script type="module">
+      import Application from "./app/app.ts";
+      import environment from "./app/config/environment.ts";
+
+      const app = Application.create({ ...environment.APP, autoboot: false });
+
+      app.visit(window.location.pathname + window.location.search, { _renderMode: "rehydrate" });
+    </script>
+  </body>
+</html>

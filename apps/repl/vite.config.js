@@ -69,6 +69,8 @@ export default defineConfig({
   build: {
     rolldownOptions: {
       treeshake: true,
+      // index.ssg.html is the template of the prerendered pages, see emberSsg below.
+      input: { ssg: 'index.ssg.html' },
     },
   },
   css: {
@@ -168,6 +170,15 @@ export default defineConfig({
             test: /highlighting\/shiki\.ts$|node_modules\/(shiki|@shikijs\/(core|engine-javascript|langs|themes|vscode-textmate)|oniguruma-[a-z-]+|regex|regex-[a-z-]+)\//,
             priority: 21,
           },
+          // index.html and index.ssg.html both link app.css, so the module is shared by
+          // two entries. Without a group of its own, the share-count groups merge it into a
+          // chunk with the stylesheets of the whole app, and index.html then links all of
+          // them as blocking, which delays the paint of the app shell.
+          {
+            name: 'app-css',
+            test: /app\/styles\/app\.css/,
+            priority: 30,
+          },
           {
             name: 'editor',
             test: /packages\/syntax\/|node_modules\/(@codemirror|@lezer|codemirror|crelt|style-mod|w3c-keyname)/,
@@ -211,8 +222,8 @@ export default defineConfig({
       // A prerendered page has its content in the HTML, so it does not need the app shell.
       // The shell is 100vh tall and comes first, so with it the content starts below the fold
       // until the app boots and removes the shell.
-      transformHtml: (html) =>
-        html.replace(/\s*<!-- app-shell -->[\s\S]*?<!-- \/app-shell -->/, ''),
+      // The prerendered pages need no app shell, and their stylesheets must block.
+      template: 'index.ssg.html',
     }),
   ],
   ssr: {
