@@ -113,13 +113,33 @@ export const HorizonTheme = EditorView.theme(
      * rendered from Markdown. The signature is a code block.
      */
     '.cm-tooltip .cm-lsp-documentation': {
-      maxWidth: '40em',
-      padding: '4px 8px',
+      maxWidth: '48em',
+      maxHeight: '60vh',
+      overflowY: 'auto',
+      padding: '6px 10px',
       fontSize: '90%',
-      lineHeight: '1.4',
+      lineHeight: '1.5',
+      '& p, & ul, & ol, & pre, & blockquote, & table': {
+        margin: '0.6em 0',
+      },
+      '& h1, & h2, & h3, & h4': {
+        margin: '1em 0 0.4em',
+        fontSize: '1.05em',
+        fontWeight: 'bold',
+      },
+      '& ul': {
+        listStyle: 'disc',
+        paddingLeft: '1.5em',
+      },
+      '& ol': {
+        listStyle: 'decimal',
+        paddingLeft: '1.5em',
+      },
+      '& li': {
+        margin: '0.2em 0',
+      },
       '& pre': {
-        margin: '4px 0',
-        padding: '4px 6px',
+        padding: '6px 8px',
         backgroundColor: ui.background,
         borderRadius: '3px',
         whiteSpace: 'pre-wrap',
@@ -127,13 +147,22 @@ export const HorizonTheme = EditorView.theme(
       '& pre, & code': {
         fontFamily: `'Source Code Pro', ui-monospace, monospace, sans-serif`,
       },
-      '& p': {
-        margin: '4px 0',
+      '& blockquote': {
+        paddingLeft: '0.8em',
+        borderLeft: `3px solid ${ui.border}`,
+      },
+      '& hr': {
+        margin: '0.8em 0',
+        border: 'none',
+        borderTop: `1px solid ${ui.border}`,
       },
       '& a': {
         color: ui.accent,
         textDecoration: 'underline',
       },
+    },
+    '.cm-tooltip .cm-lsp-loading': {
+      fontStyle: 'italic',
     },
     '.cm-tooltip-autocomplete': {
       '& > ul > li[aria-selected]': {

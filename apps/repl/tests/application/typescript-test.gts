@@ -2,6 +2,7 @@ import { assert } from '@ember/debug';
 import { settled, triggerEvent, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 
+import { stopTypeScript } from '#app/templates/edit/editor/typescript/client.ts';
 import { setupApplicationCompilerTest } from '#tests/helpers.ts';
 
 import { Page } from './-page';
@@ -12,6 +13,7 @@ import { Page } from './-page';
  */
 const DIAGNOSTIC = '.cm-lintRange-error';
 const HOVER_TOOLTIP = '.cm-lsp-hover-tooltip';
+const LOADING_TOOLTIP = '.cm-lsp-loading';
 const LOAD_TIMEOUT = 90_000;
 
 /**
@@ -52,6 +54,55 @@ module('Editor > TypeScript', function (hooks) {
   setupApplicationCompilerTest(hooks);
 
   const page = new Page();
+
+  test('a hover before TypeScript is ready says so, and is answered later', async function (assert) {
+    // The language server is one per page, and only the first document waits for it.
+    stopTypeScript();
+
+    const gts = [
+      `import Component from '@glimmer/component';`,
+      ``,
+      `export default class Demo extends Component {`,
+      `  get greeting(): string {`,
+      `    return 'hi';`,
+      `  }`,
+      ``,
+      `  <template>{{this.greeting}}</template>`,
+      `}`,
+    ].join('\n');
+
+    await page.visitEdit('gts', gts);
+
+    /**
+     * Plain events, because the test helpers wait for settled, and the
+     * pending TypeScript load is a test waiter: the editor would only be
+     * asked once the server is ready. The editor exists a moment before it
+     * listens for hovers, and a hover counts after the mouse has rested.
+     */
+    document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true }));
+    await waitFor('.cm-content');
+
+    const { element, clientX, clientY } = pointOver('greeting');
+
+    let loading: string | undefined;
+    const deadline = Date.now() + 10_000;
+
+    while (!loading && Date.now() < deadline) {
+      element.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, clientX, clientY }));
+      await new Promise((resolve) => setTimeout(resolve, 400));
+
+      loading = document.querySelector(LOADING_TOOLTIP)?.textContent?.trim();
+    }
+
+    assert.ok(loading, `the tooltip says what the loading is doing: ${loading}`);
+
+    await waitFor(HOVER_TOOLTIP, { timeout: LOAD_TIMEOUT });
+
+    assert.dom(HOVER_TOOLTIP).includesText('Demo.greeting: string', 'the hover was answered');
+    assert.dom(LOADING_TOOLTIP).doesNotExist();
+
+    await settled();
+  });
 
   test('a gts document gets type diagnostics for the script and the template', async function (assert) {
     const gts = [

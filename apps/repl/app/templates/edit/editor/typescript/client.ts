@@ -1,5 +1,6 @@
 import { linter } from '@codemirror/lint';
 import { languageServerExtensions, LSPClient, LSPPlugin } from '@codemirror/lsp-client';
+import { EditorView, hoverTooltip } from '@codemirror/view';
 import DOMPurify from 'dompurify';
 import { installer } from 'repl-sdk/fs';
 
@@ -41,6 +42,59 @@ export function hasTypeScript(format: string): boolean {
 }
 
 export type OnStatus = (message: string) => void;
+
+/**
+ * Where the loading is at, for the tooltip of a hover that comes too early.
+ */
+let status = 'Loading TypeScript';
+
+/**
+ * The last mouse position over the editor, for the hover that the language
+ * server owes once it is ready.
+ */
+let lastMouse: { x: number; y: number } | undefined;
+
+/**
+ * Until the language server is ready, hovering says where the loading is at.
+ * The tooltip goes away with the extension when the real one takes its place.
+ */
+export function loadingExtension(): Extension {
+  return [
+    hoverTooltip((_view, pos) => ({
+      pos,
+      above: true,
+      create() {
+        const dom = document.createElement('div');
+
+        dom.className = 'cm-lsp-documentation cm-lsp-loading';
+        dom.textContent = status;
+
+        return { dom };
+      },
+    })),
+    EditorView.domEventHandlers({
+      mousemove(event) {
+        lastMouse = { x: event.clientX, y: event.clientY };
+      },
+    }),
+  ];
+}
+
+/**
+ * Hovers again where the mouse last was, so the language server answers
+ * the hover it was not there for.
+ */
+export function hoverAgain(view: EditorView): void {
+  if (!lastMouse) return;
+
+  const target = document.elementFromPoint(lastMouse.x, lastMouse.y);
+
+  if (!target || !view.dom.contains(target)) return;
+
+  target.dispatchEvent(
+    new MouseEvent('mousemove', { bubbles: true, clientX: lastMouse.x, clientY: lastMouse.y })
+  );
+}
 
 /**
  * The vite plugin writes TypeScript next to the app in parts.
@@ -144,6 +198,19 @@ async function installTypes(onStatus: OnStatus): Promise<void> {
 }
 
 let client: Promise<LSPClient> | undefined;
+let worker: Worker | undefined;
+
+/**
+ * Forgets the language server, so the next document starts one afresh.
+ * For tests, which share one page.
+ */
+export function stopTypeScript(): void {
+  worker?.terminate();
+  worker = undefined;
+  client = undefined;
+  status = 'Loading TypeScript';
+  lastMouse = undefined;
+}
 
 /**
  * One language server per page. The first caller pays for the download.
@@ -152,9 +219,16 @@ let client: Promise<LSPClient> | undefined;
  * It is the page's one compiler too, so the first caller's is everyone's.
  */
 export function typeScriptClient(compiler: Compiler, onStatus: OnStatus): Promise<LSPClient> {
-  client ??= installTypes(onStatus)
-    .then(() => startWorker(onStatus))
-    .then(async ({ transport }) => {
+  const report: OnStatus = (message) => {
+    status = message;
+    onStatus(message);
+  };
+
+  client ??= installTypes(report)
+    .then(() => startWorker(report))
+    .then(async ({ worker: started, transport }) => {
+      worker = started;
+
       const lsp = new LSPClient({
         rootUri: ROOT_URI,
         extensions: languageServerExtensions(),
@@ -168,7 +242,7 @@ export function typeScriptClient(compiler: Compiler, onStatus: OnStatus): Promis
       }).connect(transport);
 
       await lsp.initializing;
-      onStatus('TypeScript ready');
+      report('TypeScript ready');
 
       return lsp;
     });

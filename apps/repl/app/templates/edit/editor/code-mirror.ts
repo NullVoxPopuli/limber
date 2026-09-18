@@ -7,7 +7,12 @@ import { Compartment } from '@codemirror/state';
 import Modifier from 'ember-modifier';
 import { getCompiler } from 'ember-repl';
 
-import { hasTypeScript, typeScriptExtension } from './typescript/client.ts';
+import {
+  hasTypeScript,
+  hoverAgain,
+  loadingExtension,
+  typeScriptExtension,
+} from './typescript/client.ts';
 
 import type RouterService from '@ember/routing/router-service';
 import type EditorService from 'limber/services/editor';
@@ -203,6 +208,8 @@ class CodeMirror extends Modifier<Signature> {
         return;
       }
 
+      view.dispatch({ effects: this.#typescript.reconfigure(loadingExtension()) });
+
       waitForPromise(
         typeScriptExtension(format, compilerService.compiler, onStatus).then(
           (extension) => {
@@ -210,12 +217,17 @@ class CodeMirror extends Modifier<Signature> {
             if (this.#previousFormat !== format) return;
 
             view.dispatch({ effects: this.#typescript.reconfigure(extension) });
+            hoverAgain(view);
           },
           (error) => {
             compilerService.messages.push({
               type: 'error',
               message: String(error?.message ?? error),
             });
+
+            if (isDestroyed(this) || isDestroying(this)) return;
+
+            view.dispatch({ effects: this.#typescript.reconfigure([]) });
           }
         )
       );
