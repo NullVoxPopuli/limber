@@ -67,6 +67,7 @@ export async function compiler(config, api) {
         needsLive,
         ALLOWED_FORMATS: allowedFormats,
         getFlavorFromMeta,
+        glimmer: true,
       });
 
       const { template } = await api.tryResolve('@ember/template-compiler/runtime');

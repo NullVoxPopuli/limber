@@ -192,8 +192,10 @@ export function buildCompiler(options) {
       });
     });
 
-  // @ts-ignore - unified processor types are complex and change as plugins are added
-  compiler = compiler.use(sanitizeForGlimmer);
+  if (options.glimmer) {
+    // @ts-ignore - unified processor types are complex and change as plugins are added
+    compiler = compiler.use(sanitizeForGlimmer);
+  }
 
   // Finally convert to string! oofta!
   // @ts-ignore - unified processor types are complex and change as plugins are added

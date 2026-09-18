@@ -1,4 +1,8 @@
 export interface LiveCodeExtractionOptions {
+  /**
+   * The HTML becomes a Glimmer template, so `{{` in code has to be escaped.
+   */
+  glimmer?: boolean;
   isLive?: (meta: string, lang: string) => boolean;
   ALLOWED_FORMATS?: string[];
   isPreview?: (meta: string) => boolean;

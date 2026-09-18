@@ -45,6 +45,23 @@ describe('markdown', () => {
     expect(element.textContent).toContain('${title} ${lastName}');
   });
 
+  test('shows curlies in code as they are', async () => {
+    const compiler = new Compiler({ resolve: allKnownModules });
+    const { element } = await compiler.compile(
+      'md',
+      [
+        'Use `{{this.name}}` like this:',
+        '',
+        '```js',
+        "const html = '<Person @name={{this.name}} />';",
+        '```',
+      ].join('\n')
+    );
+
+    expect(element.textContent).toContain('{{this.name}}');
+    expect(element.textContent).not.toContain('\\{{');
+  });
+
   describe('code fences', () => {
     const vue = `
       <style scoped>

@@ -28,6 +28,10 @@ function assertCodeBlocks(
 
 const ALLOWED_FORMATS = ['gjs', 'jsx', 'vue', 'svelte', 'hbs'];
 const defaults = {
+  /**
+   * These tests are the glimdown path: the HTML becomes a template.
+   */
+  glimmer: true,
   ...buildCodeFenceMetaUtils({
     getAllowedFormats: () => ALLOWED_FORMATS,
     getFlavorsFor: (lang) => {
