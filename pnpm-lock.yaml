@@ -435,8 +435,8 @@ importers:
         specifier: ^1.3.7
         version: 1.3.7
       vite-ember-ssr:
-        specifier: 0.1.0-alpha.13
-        version: 0.1.0-alpha.13(1772a17673355c6de89229b7565213b1)
+        specifier: 0.4.1
+        version: 0.4.1(1772a17673355c6de89229b7565213b1)
       vite-plugin-circular-dependency:
         specifier: ^0.5.0
         version: 0.5.0(rollup@4.57.1)
@@ -10921,11 +10921,11 @@ packages:
     resolution: {integrity: sha512-dYlW6iM0Gq7+uSEfXytDC+UjruUMgEKhXwQUbw4cJUgHA6FdEhpLgIrL5OZEyabrzVen0mZyfOSESyZ7nGyT8g==}
     hasBin: true
 
-  vite-ember-ssr@0.1.0-alpha.13:
-    resolution: {integrity: sha512-32qgocwkFUikLTN3Mbh78TXLojBH39dyfAwljSUbkMbqTtvHxolXsPHZqTS/lSqm1u4y4u1NJhU2IQzGrFGugw==}
+  vite-ember-ssr@0.4.1:
+    resolution: {integrity: sha512-thMm18koHJ32vpJadPBNnTBq9sVZEES6mkFieRvag69RzhVJQdsLJFuL3DStm+ExJq9VNk2PYBsZwxX5OJClWw==}
     engines: {node: '>=22'}
     peerDependencies:
-      vite: ^6.0.0 || ^7.0.0
+      vite: ^6.0.0 || ^7.0.0 || ^8.0.0
 
   vite-node@3.2.4:
     resolution: {integrity: sha512-EbKSKh+bh1E1IFxeO0pg1n4dvoOTt0UDiXMd/qn++r98+jPO1xtJilvXldeuQ8giIB5IkpjCgMleHMNEsGH6pg==}
@@ -18615,7 +18615,7 @@ snapshots:
       '@types/ws': 8.18.1
       entities: 7.0.1
       whatwg-mimetype: 3.0.0
-      ws: 8.19.0
+      ws: 8.21.3
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -22375,7 +22375,7 @@ snapshots:
 
   vite-bundle-analyzer@1.3.7: {}
 
-  vite-ember-ssr@0.1.0-alpha.13(1772a17673355c6de89229b7565213b1):
+  vite-ember-ssr@0.4.1(1772a17673355c6de89229b7565213b1):
     dependencies:
       happy-dom: 20.8.9
       tinypool: 2.1.0
