@@ -1,0 +1,31 @@
+# Unlabeled Changes
+
+* `repl-sdk`
+  * [#2276](https://github.com/NullVoxPopuli/limber/pull/2276) Let storage answer stat, entries, and bytes ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2256](https://github.com/NullVoxPopuli/limber/pull/2256) Make the origin private file system the file system ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2257](https://github.com/NullVoxPopuli/limber/pull/2257) Name markdown fences after their document ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2222](https://github.com/NullVoxPopuli/limber/pull/2222) Resolve through a module fs: no request ids, versions from package.json ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2226](https://github.com/NullVoxPopuli/limber/pull/2226) Fix browser tests: bump mermaid to drop langium ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* Other
+  * [#2273](https://github.com/NullVoxPopuli/limber/pull/2273) Paint the app shell before the app evaluates ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2275](https://github.com/NullVoxPopuli/limber/pull/2275) Move the Shiki worker into limber-shared, for both apps ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2272](https://github.com/NullVoxPopuli/limber/pull/2272) Update vite-ember-ssr to 0.5.0, and use its transformHtml option ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2271](https://github.com/NullVoxPopuli/limber/pull/2271) Update vite-ember-ssr to 0.4.1 ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2270](https://github.com/NullVoxPopuli/limber/pull/2270) Trim the app shell and duplicate stylesheet links from prerendered pages ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2269](https://github.com/NullVoxPopuli/limber/pull/2269) Keep the in-process Shiki out of the entry page ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2268](https://github.com/NullVoxPopuli/limber/pull/2268) Prerender the docs pages again ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2265](https://github.com/NullVoxPopuli/limber/pull/2265) Keep the painted <pre> when the highlight arrives ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2263](https://github.com/NullVoxPopuli/limber/pull/2263) Group the highlighting code in app/utils/highlighting ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2258](https://github.com/NullVoxPopuli/limber/pull/2258) Make the repl load faster ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2262](https://github.com/NullVoxPopuli/limber/pull/2262) Resolve ember-primitives and decorator-transforms to one version each ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2261](https://github.com/NullVoxPopuli/limber/pull/2261) Stop the text from moving when CodeMirror replaces the placeholder ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2260](https://github.com/NullVoxPopuli/limber/pull/2260) Shrink Shiki and stop the placeholder text from moving ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2259](https://github.com/NullVoxPopuli/limber/pull/2259) Keep CodeMirror out of the first page load ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2237](https://github.com/NullVoxPopuli/limber/pull/2237) [WIP] Fix failing GitHub Actions job for ember-source tarball ([@Copilot](https://github.com/apps/copilot-swe-agent))
+* `ember-repl`, `repl-sdk`
+  * [#2267](https://github.com/NullVoxPopuli/limber/pull/2267) Add @glimdown/babel-8-lite, and drop the Babel tarball ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `ember-repl`, `limber-ui`, `repl-sdk`
+  * [#2225](https://github.com/NullVoxPopuli/limber/pull/2225) Upgrade Glint ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+
+*Cannot plan release until the above changes are labeled*.
