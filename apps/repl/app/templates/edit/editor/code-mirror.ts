@@ -204,7 +204,7 @@ class CodeMirror extends Modifier<Signature> {
       }
 
       waitForPromise(
-        typeScriptExtension(format, onStatus).then(
+        typeScriptExtension(format, compilerService.compiler, onStatus).then(
           (extension) => {
             if (isDestroyed(this) || isDestroying(this)) return;
             if (this.#previousFormat !== format) return;

@@ -1,12 +1,14 @@
 import { linter } from '@codemirror/lint';
 import { languageServerExtensions, LSPClient, LSPPlugin } from '@codemirror/lsp-client';
+import DOMPurify from 'dompurify';
 import { installer } from 'repl-sdk/fs';
 
-import { renderDocumentation } from './documentation.ts';
+import { documentationRenderer } from './documentation.ts';
 
 import type { Diagnostic } from '@codemirror/lint';
 import type { Transport } from '@codemirror/lsp-client';
 import type { Extension } from '@codemirror/state';
+import type { Compiler } from 'repl-sdk';
 
 /**
  * The packages the checker reads, at the versions the app itself has.
@@ -145,8 +147,11 @@ let client: Promise<LSPClient> | undefined;
 
 /**
  * One language server per page. The first caller pays for the download.
+ *
+ * The compiler renders the documentation the server sends.
+ * It is the page's one compiler too, so the first caller's is everyone's.
  */
-export function typeScriptClient(onStatus: OnStatus): Promise<LSPClient> {
+export function typeScriptClient(compiler: Compiler, onStatus: OnStatus): Promise<LSPClient> {
   client ??= installTypes(onStatus)
     .then(() => startWorker(onStatus))
     .then(async ({ transport }) => {
@@ -154,7 +159,12 @@ export function typeScriptClient(onStatus: OnStatus): Promise<LSPClient> {
         rootUri: ROOT_URI,
         extensions: languageServerExtensions(),
         timeout: REQUEST_TIMEOUT,
-        renderMarkdown: renderDocumentation,
+        renderMarkdown: documentationRenderer(compiler),
+        /**
+         * The documentation comes from the type declarations of packages,
+         * and Markdown may carry HTML.
+         */
+        sanitizeHTML: (html) => DOMPurify.sanitize(html),
       }).connect(transport);
 
       await lsp.initializing;
@@ -224,12 +234,16 @@ function pullDiagnostics(): Extension {
  * The editor extension that syncs the document to the language server
  * and shows its diagnostics, completions, and hovers.
  */
-export async function typeScriptExtension(format: string, onStatus: OnStatus): Promise<Extension> {
+export async function typeScriptExtension(
+  format: string,
+  compiler: Compiler,
+  onStatus: OnStatus
+): Promise<Extension> {
   const language = LANGUAGES[format];
 
   if (!language) return [];
 
-  const lsp = await typeScriptClient(onStatus);
+  const lsp = await typeScriptClient(compiler, onStatus);
 
   return [lsp.plugin(`${ROOT_URI}${language.file}`, language.languageId), pullDiagnostics()];
 }

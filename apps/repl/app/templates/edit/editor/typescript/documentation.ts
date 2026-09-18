@@ -1,26 +1,23 @@
-import rehypeStringify from 'rehype-stringify';
-import remarkParse from 'remark-parse';
-import remarkRehype from 'remark-rehype';
-import { unified } from 'unified';
-
-import { rehypeShikiWorker } from '#hl/rehype.ts';
+import type { Compiler } from 'repl-sdk';
 
 /**
  * The Markdown in hover, completion, and signature documentation,
- * rendered the way the REPL renders a document: the same remark and
- * rehype, and the same Shiki in its worker for the code blocks.
+ * rendered by the REPL's own `md` compiler: the same remark and rehype
+ * plugins as an md document, Shiki for the code blocks included.
  *
- * Raw HTML in the Markdown is dropped. The text comes from the type
- * declarations of packages, which nobody here reviewed.
+ * The compile writes the text as a file under its own name,
+ * so a compile of the document is not disturbed.
  */
-const processor = unified()
-  .use(remarkParse)
-  .use(remarkRehype)
-  .use(rehypeShikiWorker)
-  .use(rehypeStringify);
+export function documentationRenderer(compiler: Compiler) {
+  return async (markdown: string): Promise<string> => {
+    const { element, destroy } = await compiler.compile('md', markdown, {
+      fileName: 'documentation.md',
+    });
 
-export async function renderDocumentation(markdown: string): Promise<string> {
-  const file = await processor.process(markdown);
-
-  return String(file);
+    try {
+      return element.innerHTML;
+    } finally {
+      destroy();
+    }
+  };
 }
