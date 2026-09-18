@@ -65,6 +65,51 @@ function preloadShikiWorker() {
   };
 }
 
+/**
+ * A prerendered page has its content in the HTML, so it does not need the app shell
+ * of index.html. The shell is 100vh tall and comes first, so with it the content
+ * starts below the fold until the app boots and removes the shell: the largest
+ * contentful paint then waits for JavaScript for no reason.
+ *
+ * The prerender also adds stylesheet links that index.html already has.
+ *
+ * vite-ember-ssr writes the pages in closeBundle, and this plugin comes after it.
+ */
+function trimPrerenderedPages() {
+  let outDir = 'dist';
+
+  return {
+    name: 'trim-prerendered-pages',
+    configResolved(config) {
+      outDir = config.build.outDir;
+    },
+    async closeBundle() {
+      const { glob, readFile, writeFile } = await import('node:fs/promises');
+
+      for await (const file of glob(`${outDir}/**/index.html`)) {
+        let html = await readFile(file, 'utf8');
+
+        // The rehydration markers of vite-ember-ssr
+        if (!html.includes('<!--%+b:')) continue;
+
+        html = html.replace(/\s*<!-- app-shell -->[\s\S]*?<!-- \/app-shell -->/, '');
+
+        const seen = new Set();
+
+        html = html.replace(/\s*<link rel="stylesheet"[^>]*href="([^"]+)"[^>]*>/g, (tag, href) => {
+          if (seen.has(href)) return '';
+
+          seen.add(href);
+
+          return tag;
+        });
+
+        await writeFile(file, html, 'utf8');
+      }
+    },
+  };
+}
+
 export default defineConfig({
   build: {
     rolldownOptions: {
@@ -209,6 +254,7 @@ export default defineConfig({
       ssrEntry: 'app/app-ssr.ts',
       rehydrate: true,
     }),
+    trimPrerenderedPages(),
   ],
   ssr: {
     noExternal: [/./],
