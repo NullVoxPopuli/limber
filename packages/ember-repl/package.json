@@ -41,7 +41,7 @@
     "prepack": "pnpm :rollup"
   },
   "dependencies": {
-    "@ember/test-helpers": "^5.4.1",
+    "@ember/test-helpers": "^5.5.0",
     "@ember/test-waiters": "^4.1.0",
     "codemirror": "^6.0.2",
     "content-tag": "^4.0.0",
@@ -59,7 +59,7 @@
     "@babel/runtime": "^7.29.2",
     "@ember/app-tsconfig": "^2.0.0",
     "@ember/library-tsconfig": "^2.0.0",
-    "@ember/test-helpers": "^5.2.1",
+    "@ember/test-helpers": "^5.5.0",
     "@embroider/addon-dev": "^8.3.1",
     "@embroider/compat": "^4.1.22",
     "@embroider/core": "^4.6.3",
