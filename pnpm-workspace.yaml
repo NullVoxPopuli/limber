@@ -77,6 +77,7 @@ patchedDependencies:
   "browserslist-generator": "patches/browserslist-generator.patch"
 
 overrides:
+  ember-source: "file:./apps/repl/ember-source-7.5.0-alpha.1.nvp-capture-render-tree-render-component-main+598b6824.tgz"
   "@glint/template": "1.8.0"
   "array-includes": "npm:@nolyfill/array-includes@^1"
   "array.prototype.findlastindex": "npm:@nolyfill/array.prototype.findlastindex@^1"
