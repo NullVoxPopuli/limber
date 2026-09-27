@@ -30,6 +30,6 @@
     "@babel/plugin-transform-typescript": "^8.0.5",
     "@babel/preset-react": "^8.0.1",
     "path-browserify": "^1.0.1",
-    "rolldown": "1.0.0-rc.15"
+    "rolldown": "1.2.11"
   }
 }
