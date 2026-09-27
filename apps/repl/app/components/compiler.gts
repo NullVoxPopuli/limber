@@ -14,7 +14,7 @@ interface Signature {
 
 export default class Compiler extends Component<Signature> {
   <template>
-    {{#let (Compiled this.editor.text this.format this.flavor) as |compiled|}}
+    {{#let (Compiled this.editor.renderInput.text this.format this.flavor) as |compiled|}}
       {{yield compiled}}
     {{/let}}
   </template>
@@ -22,7 +22,7 @@ export default class Compiler extends Component<Signature> {
   @service declare editor: EditorService;
 
   get formatQP() {
-    return this.editor.format;
+    return this.editor.renderInput?.format ?? this.editor.format;
   }
 
   get formatQPParts() {

@@ -51,7 +51,7 @@
     "decorator-transforms": "2.4.0",
     "oniguruma-parser": "^0.12.2",
     "penpal": "^6.2.2",
-    "reactiveweb": "1.9.1"
+    "reactiveweb": "1.9.4"
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",

@@ -1,11 +1,16 @@
 import { tracked } from '@glimmer/tracking';
+import { registerDestructor } from '@ember/destroyable';
 import Service, { service } from '@ember/service';
 
+import { castToBoolean } from 'ember-primitives/qp';
+import { use } from 'ember-resources';
+import { keepLatest } from 'reactiveweb/keep-latest';
 import { link } from 'reactiveweb/link';
 
 import { FileURIComponent } from 'limber/utils/editor-text';
 
 import type { DemoEntry } from '../snippets';
+import type Owner from '@ember/owner';
 import type RouterService from '@ember/routing/router-service';
 import type { FormatQP } from '#app/languages.gts';
 
@@ -37,6 +42,62 @@ export default class EditorService extends Service {
   get format(): FormatQP {
     return this.fileURIComponent.format;
   }
+
+  /**
+   * `?autorender=off` pauses compiling as the user types.
+   *
+   * This is a field instead of a getter on the router, because every edit writes the URL.
+   * A getter would invalidate renderInput on each keystroke and compile the same text again.
+   */
+  @tracked autoRender = true;
+
+  constructor(owner: Owner) {
+    super(owner);
+
+    this.router.on('routeDidChange', this.#syncAutoRender);
+    registerDestructor(this, () => this.router.off('routeDidChange', this.#syncAutoRender));
+  }
+
+  #syncAutoRender = () => {
+    const value = this.router.currentRoute?.queryParams?.['autorender'];
+    const next = typeof value === 'string' ? castToBoolean(value) : true;
+
+    // Setting a tracked field dirties it even when the value is the same.
+    if (next !== this.autoRender) this.autoRender = next;
+  };
+
+  @tracked renderRequests = 0;
+  #seenRenderRequests = -1;
+
+  render = () => {
+    this.renderRequests++;
+  };
+
+  /**
+   * The text and format for the output pane.
+   *
+   * While paused, the value function returns undefined without a read of `text`,
+   * so keepLatest keeps the last rendered file and edits do not compile.
+   *
+   * Exception: a render reads `text` and `format`, which come from the URL,
+   * so the first edit after it compiles the same file once more.
+   */
+  @use renderInput = keepLatest({
+    when: () => !this.autoRender,
+    value: () => {
+      if (!this.autoRender && this.renderRequests === this.#seenRenderRequests) {
+        return undefined;
+      }
+
+      const { text, format } = this;
+
+      // Before the route loads a document there is no text,
+      // and that must not count as the render for a paused first load.
+      if (text) this.#seenRenderRequests = this.renderRequests;
+
+      return { text, format };
+    },
+  });
 
   get nohighlight() {
     return (this.router.currentRoute?.queryParams ?? {}).nohighlight;
