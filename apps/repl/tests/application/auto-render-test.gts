@@ -1,5 +1,5 @@
 import { click, currentURL, find, settled, visit } from '@ember/test-helpers';
-import { module, test, todo } from 'qunit';
+import { module, test } from 'qunit';
 
 import LZString from 'lz-string';
 
@@ -91,9 +91,7 @@ module('Editor > Auto render', function (hooks) {
     assert.notStrictEqual(find(out), before, 'the output compiled again');
   });
 
-  // The render click reads the text and format from the URL, so the next edit
-  // invalidates keepLatest and compiles the same text once more.
-  todo('after render is clicked, typing does not compile again', async function (assert) {
+  test('after render is clicked, typing does not compile again', async function (assert) {
     await page.visitEdit('gjs', doc('one'));
     await click(toggle);
     await type('two');

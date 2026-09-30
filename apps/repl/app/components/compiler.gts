@@ -22,7 +22,7 @@ export default class Compiler extends Component<Signature> {
   @service declare editor: EditorService;
 
   get formatQP() {
-    return this.editor.renderInput?.format ?? this.editor.format;
+    return this.editor.renderInput.format;
   }
 
   get formatQPParts() {

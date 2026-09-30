@@ -46,7 +46,7 @@
     "ember-resources": "^7.1.0",
     "kolay": "github:universal-ember/kolay#dist",
     "limber-ui": "workspace:*",
-    "reactiveweb": "1.9.4",
+    "reactiveweb": "1.9.1",
     "rehype-raw": "^7.0.0",
     "rehype-stringify": "^10.0.1",
     "remark-parse": "^11.0.0",

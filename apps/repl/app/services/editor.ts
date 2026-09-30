@@ -3,8 +3,6 @@ import { registerDestructor } from '@ember/destroyable';
 import Service, { service } from '@ember/service';
 
 import { castToBoolean } from 'ember-primitives/qp';
-import { use } from 'ember-resources';
-import { keepLatest } from 'reactiveweb/keep-latest';
 import { link } from 'reactiveweb/link';
 
 import { FileURIComponent } from 'limber/utils/editor-text';
@@ -13,6 +11,11 @@ import type { DemoEntry } from '../snippets';
 import type Owner from '@ember/owner';
 import type RouterService from '@ember/routing/router-service';
 import type { FormatQP } from '#app/languages.gts';
+
+interface RenderInput {
+  text: EditorService['text'];
+  format: FormatQP;
+}
 
 export default class EditorService extends Service {
   @service declare router: RouterService;
@@ -44,12 +47,13 @@ export default class EditorService extends Service {
   }
 
   /**
-   * `?autorender=off` pauses compiling as the user types.
+   * The file in the output pane while `?autorender=off` pauses compiling.
+   * Rendering is automatic while this is undefined.
    *
-   * This is a field instead of a getter on the router, because every edit writes the URL.
-   * A getter would invalidate renderInput on each keystroke and compile the same text again.
+   * A getter on the router would compile again on each keystroke,
+   * because every edit writes the URL.
    */
-  @tracked autoRender = true;
+  @tracked pausedFile: RenderInput | undefined;
 
   constructor(owner: Owner) {
     super(owner);
@@ -60,44 +64,32 @@ export default class EditorService extends Service {
 
   #syncAutoRender = () => {
     const value = this.router.currentRoute?.queryParams?.['autorender'];
-    const next = typeof value === 'string' ? castToBoolean(value) : true;
+    const autoRender = typeof value === 'string' ? castToBoolean(value) : true;
 
-    // Setting a tracked field dirties it even when the value is the same.
-    if (next !== this.autoRender) this.autoRender = next;
+    // Every edit writes the URL, so a new pausedFile here would compile each keystroke.
+    if (autoRender === this.autoRender) return;
+
+    this.pausedFile = autoRender ? undefined : this.#file;
   };
 
-  @tracked renderRequests = 0;
-  #seenRenderRequests = -1;
+  get autoRender() {
+    return this.pausedFile === undefined;
+  }
 
   render = () => {
-    this.renderRequests++;
+    this.pausedFile = this.#file;
   };
+
+  get #file(): RenderInput {
+    return { text: this.text, format: this.format };
+  }
 
   /**
    * The text and format for the output pane.
-   *
-   * While paused, the value function returns undefined without a read of `text`,
-   * so keepLatest keeps the last rendered file and edits do not compile.
-   *
-   * Exception: a render reads `text` and `format`, which come from the URL,
-   * so the first edit after it compiles the same file once more.
    */
-  @use renderInput = keepLatest({
-    when: () => !this.autoRender,
-    value: () => {
-      if (!this.autoRender && this.renderRequests === this.#seenRenderRequests) {
-        return undefined;
-      }
-
-      const { text, format } = this;
-
-      // Before the route loads a document there is no text,
-      // and that must not count as the render for a paused first load.
-      if (text) this.#seenRenderRequests = this.renderRequests;
-
-      return { text, format };
-    },
-  });
+  get renderInput(): RenderInput {
+    return this.pausedFile ?? this.#file;
+  }
 
   get nohighlight() {
     return (this.router.currentRoute?.queryParams ?? {}).nohighlight;
