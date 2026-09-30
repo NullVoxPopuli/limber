@@ -17,6 +17,7 @@ import { castToBoolean, qp, withQP } from 'ember-primitives/qp';
 
 import currentURL from 'limber/helpers/current-url';
 
+import { AutoRender } from './auto-render.gts';
 import { Button } from './button.gts';
 import { FormatDocument } from './format-document.gts';
 
@@ -70,6 +71,7 @@ export const Controls: TOC<{
           {{/if}}
         </Button>
         <FormatDocument />
+        <AutoRender />
         <Button
           title="Rotate Editor/Output orientation"
           disabled={{or @isMaximized @isMinimized}}

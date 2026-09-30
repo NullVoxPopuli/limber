@@ -72,6 +72,10 @@ export default class ApplicationController extends Controller {
     // or force it to not be rendered in to a shadow-dom if falsey value is passed
     'shadowdom',
 
+    // When falsey ("off"), the output only compiles when the "Render" button is clicked,
+    // instead of on every edit.
+    'autorender',
+
     // Disable shiki highlighting on page load
     // this is primarily an optimization for tests
     'nohighlight',

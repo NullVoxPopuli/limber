@@ -1,13 +1,21 @@
 import { tracked } from '@glimmer/tracking';
+import { registerDestructor } from '@ember/destroyable';
 import Service, { service } from '@ember/service';
 
+import { castToBoolean } from 'ember-primitives/qp';
 import { link } from 'reactiveweb/link';
 
 import { FileURIComponent } from 'limber/utils/editor-text';
 
 import type { DemoEntry } from '../snippets';
+import type Owner from '@ember/owner';
 import type RouterService from '@ember/routing/router-service';
 import type { FormatQP } from '#app/languages.gts';
+
+interface RenderInput {
+  text: EditorService['text'];
+  format: FormatQP;
+}
 
 export default class EditorService extends Service {
   @service declare router: RouterService;
@@ -36,6 +44,51 @@ export default class EditorService extends Service {
 
   get format(): FormatQP {
     return this.fileURIComponent.format;
+  }
+
+  /**
+   * The file in the output pane while `?autorender=off` pauses compiling.
+   * Rendering is automatic while this is undefined.
+   *
+   * A getter on the router would compile again on each keystroke,
+   * because every edit writes the URL.
+   */
+  @tracked pausedFile: RenderInput | undefined;
+
+  constructor(owner: Owner) {
+    super(owner);
+
+    this.router.on('routeDidChange', this.#syncAutoRender);
+    registerDestructor(this, () => this.router.off('routeDidChange', this.#syncAutoRender));
+  }
+
+  #syncAutoRender = () => {
+    const value = this.router.currentRoute?.queryParams?.['autorender'];
+    const autoRender = typeof value === 'string' ? castToBoolean(value) : true;
+
+    // Every edit writes the URL, so a new pausedFile here would compile each keystroke.
+    if (autoRender === this.autoRender) return;
+
+    this.pausedFile = autoRender ? undefined : this.#file;
+  };
+
+  get autoRender() {
+    return this.pausedFile === undefined;
+  }
+
+  render = () => {
+    this.pausedFile = this.#file;
+  };
+
+  get #file(): RenderInput {
+    return { text: this.text, format: this.format };
+  }
+
+  /**
+   * The text and format for the output pane.
+   */
+  get renderInput(): RenderInput {
+    return this.pausedFile ?? this.#file;
   }
 
   get nohighlight() {
