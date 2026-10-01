@@ -1,0 +1,48 @@
+release prepare
+
+Edits the package.json and changelog files to prepare for release.
+
+Options:
+  --version        Show version number                                 [boolean]
+  --help           Show help                                           [boolean]
+  --fromStdin      Read the summary of changes from stdin instead of building
+                   them from scratch.                                  [boolean]
+  --singlePackage  Allows you to run this command in a non monorepo and define
+                   the package name                                     [string]
+
+ExecaError: Command failed with exit code 1: node /opt/hostedtoolcache/node/24.21.0/x64/lib/node_modules/release-plan/node_modules/github-changelog/bin/cli.js --ignore-releases --next-version Release
+
+Fetch error: Service Unavailable.
+{"message":"No server is currently available to service your request. Sorry about that. Please try resubmitting your request and contact us if the problem persists."}
+    at getFinalError (file:///opt/hostedtoolcache/node/24.21.0/x64/lib/node_modules/release-plan/node_modules/execa/lib/return/final-error.js:6:9)
+    at makeError (file:///opt/hostedtoolcache/node/24.21.0/x64/lib/node_modules/release-plan/node_modules/execa/lib/return/result.js:108:16)
+    at getAsyncResult (file:///opt/hostedtoolcache/node/24.21.0/x64/lib/node_modules/release-plan/node_modules/execa/lib/methods/main-async.js:168:4)
+    at handlePromise (file:///opt/hostedtoolcache/node/24.21.0/x64/lib/node_modules/release-plan/node_modules/execa/lib/methods/main-async.js:151:17)
+    at async gatherChanges (file:///opt/hostedtoolcache/node/24.21.0/x64/lib/node_modules/release-plan/dist/gather-changes.js:8:20)
+    at async newChangelogContent (file:///opt/hostedtoolcache/node/24.21.0/x64/lib/node_modules/release-plan/dist/cli.js:90:19)
+    at async Object.handler (file:///opt/hostedtoolcache/node/24.21.0/x64/lib/node_modules/release-plan/dist/cli.js:14:36) {
+  shortMessage: 'Command failed with exit code 1: node /opt/hostedtoolcache/node/24.21.0/x64/lib/node_modules/release-plan/node_modules/github-changelog/bin/cli.js --ignore-releases --next-version Release',
+  command: 'node /opt/hostedtoolcache/node/24.21.0/x64/lib/node_modules/release-plan/node_modules/github-changelog/bin/cli.js --ignore-releases --next-version Release',
+  escapedCommand: 'node /opt/hostedtoolcache/node/24.21.0/x64/lib/node_modules/release-plan/node_modules/github-changelog/bin/cli.js --ignore-releases --next-version Release',
+  cwd: '/home/runner/work/limber/limber',
+  durationMs: 9972.539138,
+  failed: true,
+  timedOut: false,
+  isCanceled: false,
+  isGracefullyCanceled: false,
+  isTerminated: false,
+  isMaxBuffer: false,
+  isForcefullyTerminated: false,
+  exitCode: 1,
+  stdout: 'Fetch error: Service Unavailable.\n' +
+    '{"message":"No server is currently available to service your request. Sorry about that. Please try resubmitting your request and contact us if the problem persists."}',
+  stderr: '',
+  stdio: [
+    undefined,
+    'Fetch error: Service Unavailable.\n' +
+      '{"message":"No server is currently available to service your request. Sorry about that. Please try resubmitting your request and contact us if the problem persists."}',
+    ''
+  ],
+  ipcOutput: [],
+  pipedFrom: []
+}
