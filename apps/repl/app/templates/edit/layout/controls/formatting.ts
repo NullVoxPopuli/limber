@@ -49,6 +49,10 @@ const FORMATTERS: Record<FormatQP, { parser: string; plugins: PluginName[] } | u
     parser: 'ember-template-tag',
     plugins: ['babel', 'estree', 'glimmer', 'ember-template-tag'],
   },
+  'gjs|codegen': {
+    parser: 'ember-template-tag',
+    plugins: ['babel', 'estree', 'glimmer', 'ember-template-tag'],
+  },
   hbs: { parser: 'glimmer', plugins: ['glimmer'] },
   'hbs|ember': { parser: 'glimmer', plugins: ['glimmer'] },
   md: { parser: 'markdown', plugins: ['markdown'] },

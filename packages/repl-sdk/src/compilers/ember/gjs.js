@@ -55,12 +55,17 @@ const buildDependencies = [
  * gjs and gts share one pipeline.
  * gts adds the babel typescript plugin, which only strips types.
  *
+ * `codegen` is EXPERIMENTAL: templates are compiled directly to DOM operations
+ * (no wire format, no VM), and rendered with the runtime from `@glimmer/dom`.
+ * See https://github.com/NullVoxPopuli-ai-agent/ember.js/tree/claude/gallant-heisenberg-aovzyr/packages/@glimmer/dom
+ *
  * @param {Parameters<CompilerFactory>[0]} config
  * @param {Parameters<CompilerFactory>[1]} api
- * @param {{ typescript?: boolean }} [flags]
+ * @param {{ typescript?: boolean; codegen?: boolean }} [flags]
  */
 export async function compiler(config, api, flags = {}) {
   const typescript = flags.typescript ?? false;
+  const codegen = flags.codegen ?? false;
   const ext = typescript ? 'ts' : 'js';
   const filename = `dynamic-repl.${ext}`;
 
@@ -84,6 +89,26 @@ export async function compiler(config, api, flags = {}) {
       : _emberTemplateCompilation;
 
   const babel = 'availablePlugins' in _babel ? _babel : _babel.default;
+
+  /**
+   * @type {unknown[]}
+   */
+  const templatePlugin = codegen
+    ? [
+        (await import('./vendor/codegen-compiler.js')).codegenBabelPlugin,
+        // the parser that ships with ember-source
+        { preprocess: compiler._preprocess },
+      ]
+    : [
+        emberTemplateCompilation,
+        {
+          compiler,
+          transforms: [
+            // ...macros.templateMacros
+          ],
+          targetFormat: 'wire',
+        },
+      ];
 
   // let macros = embroiderMacros.buildMacros();
 
@@ -111,16 +136,7 @@ export async function compiler(config, api, flags = {}) {
     return babel.transformAsync(text, {
       filename,
       plugins: typePlugins.concat([
-        [
-          emberTemplateCompilation,
-          {
-            compiler,
-            transforms: [
-              // ...macros.templateMacros
-            ],
-            targetFormat: 'wire',
-          },
-        ],
+        templatePlugin,
         [
           // @ts-ignore - we don't care about types here..
           decoratorTransforms,
@@ -200,7 +216,9 @@ export async function compiler(config, api, flags = {}) {
 
       element.setAttribute(attribute, '');
 
-      const { renderComponent } = await compiler.tryResolve('@ember/renderer');
+      const { renderComponent } = await compiler.tryResolve(
+        codegen ? '@glimmer/dom' : '@ember/renderer'
+      );
 
       const owner = makeOwner(config.owner);
       const args = /** @type {Record<string, unknown> | undefined} */ (

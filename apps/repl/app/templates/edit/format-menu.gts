@@ -106,6 +106,7 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
           <Button @format="js" />
           <Button @format="gjs" />
           <Button @format="gts" />
+          <Button @format="gjs|codegen" />
           <Button @format="hbs" />
           <Button @format="svelte" />
           <Button @format="vue" />

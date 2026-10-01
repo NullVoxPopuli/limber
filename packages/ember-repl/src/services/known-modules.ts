@@ -40,6 +40,13 @@ const frameworkModules = {
   '@glimmer/tracking': () => import('@glimmer/tracking'),
   '@glimmer/tracking/primitives/cache': () =>
     import('@glimmer/tracking/primitives/cache'),
+  /**
+   * EXPERIMENTAL: the runtime for the `gjs|codegen` format, where templates
+   * are compiled directly to DOM operations (no wire format, no VM).
+   * Vendored from a branch of ember.js, see the file's header.
+   */
+  // @ts-ignore
+  '@glimmer/dom': () => import('../vendor/glimmer-dom.js'),
 };
 
 const coreLibraries = {

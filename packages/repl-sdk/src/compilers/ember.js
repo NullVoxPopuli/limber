@@ -107,23 +107,44 @@ function onUnhandled(e, handle) {
   handle(reason);
 }
 
+const gjsCodemirror = {
+  lang: async () => {
+    const { gjs } = await import('codemirror-lang-glimmer-js');
+
+    return gjs();
+  },
+};
+
 /**
- * @type {CompilerConfig}
+ * `gjs` doubles as the config for its flavors (`gjs|codegen`).
+ *
+ * @type {CompilerConfig & { codegen: CompilerConfig }}
  */
 export const gjs = {
   resolve,
   onUnhandled,
-  codemirror: {
-    lang: async () => {
-      const { gjs } = await import('codemirror-lang-glimmer-js');
-
-      return gjs();
-    },
-  },
+  codemirror: gjsCodemirror,
   compiler: async (...args) => {
     const gjs = await import('./ember/gjs.js');
 
     return gjs.compiler(...args);
+  },
+
+  /**
+   * EXPERIMENTAL: strict-mode templates compiled directly to DOM operations,
+   * with no wire format and no VM.
+   *
+   * The host must provide `@glimmer/dom` (ember-repl does).
+   */
+  codegen: {
+    resolve,
+    onUnhandled,
+    codemirror: gjsCodemirror,
+    compiler: async (config, api) => {
+      const gjs = await import('./ember/gjs.js');
+
+      return gjs.compiler(config, api, { codegen: true });
+    },
   },
 };
 
