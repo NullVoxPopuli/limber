@@ -90,14 +90,21 @@ export async function compiler(config, api, flags = {}) {
 
   const babel = 'availablePlugins' in _babel ? _babel : _babel.default;
 
+  const codegenCompiler = codegen ? await import('./vendor/codegen-compiler.js') : null;
   /**
    * @type {unknown[]}
    */
-  const templatePlugin = codegen
+  const templatePlugin = codegenCompiler
     ? [
-        (await import('./vendor/codegen-compiler.js')).codegenBabelPlugin,
-        // the parser that ships with ember-source
-        { preprocess: compiler._preprocess },
+        codegenCompiler.codegenBabelPlugin,
+        {
+          // the parser that ships with ember-source
+          preprocess: compiler._preprocess,
+          // compiled components can be rendered by the VM too (and VM-only
+          // components, e.g. from addons, by compiled templates)
+          vmInterop: true,
+          isGlobal: codegenCompiler.isAllowedGlobal,
+        },
       ]
     : [
         emberTemplateCompilation,

@@ -46,7 +46,9 @@ const frameworkModules = {
    * Vendored from a branch of ember.js, see the file's header.
    */
   // @ts-ignore
-  '@glimmer/dom': () => import('../vendor/glimmer-dom.js'),
+  '@glimmer/dom': () => import('../vendor/glimmer-dom/index.js'),
+  // @ts-ignore
+  '@glimmer/dom/vm': () => import('../vendor/glimmer-dom/vm.js'),
 };
 
 const coreLibraries = {

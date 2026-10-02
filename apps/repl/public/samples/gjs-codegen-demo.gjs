@@ -5,6 +5,9 @@ import { tracked } from '@glimmer/tracking';
 import { trackedArray } from '@ember/reactive/collections';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
+// A component compiled for the VM (from an addon): rendered by the VM,
+// with the attributes and block from this compiled template.
+import { ExternalLink } from 'ember-primitives';
 
 const shout = (text) => `${text.toUpperCase()}!`;
 
@@ -74,6 +77,15 @@ class Todos extends Component {
   </Card>
 
   <Card><:title>Empty</:title></Card>
+
+  <Card>
+    <:title>From an addon</:title>
+    <:body>
+      <ExternalLink href="https://github.com/emberjs/ember.js/pull/21649" class="pr-link">
+        The ember.js PR
+      </ExternalLink>
+    </:body>
+  </Card>
 
   <style>
     .card { border: 1px solid #ccc; border-radius: 0.5rem; padding: 0.5rem 1rem; margin: 1rem 0; }

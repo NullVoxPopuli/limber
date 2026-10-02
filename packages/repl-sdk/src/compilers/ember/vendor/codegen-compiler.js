@@ -4,7 +4,8 @@
  * VENDORED -- do not edit.
  *
  * The template compiler for the codegen flavor (babel plugin + code generator).
- * Built from https://github.com/NullVoxPopuli-ai-agent/ember.js/tree/claude/gallant-heisenberg-aovzyr (2b03eb8).
+ * Built from https://github.com/NullVoxPopuli-ai-agent/ember.js/tree/claude/gallant-heisenberg-aovzyr (af3aef79),
+ * see https://github.com/emberjs/ember.js/pull/21649
  *
  * This is an experiment: strict-mode templates compiled directly to DOM
  * operations, with no wire format and no VM.
@@ -80,6 +81,7 @@ var SPECIALIZED = {
     "and",
     "array",
     "concat",
+    "element",
     "eq",
     "fn",
     "get",
@@ -345,12 +347,9 @@ ${children}`;
     let builtin = this.builtin(node.path, body.scope);
     if (builtin === "on") {
       let [event, handler] = node.params;
-      if (!event || !handler) {
-        throw new CodegenError("`on` requires an event name and a handler", node);
-      }
       let options = node.hash.pairs.length ? `, { ${node.hash.pairs.map((p) => `${key(p.key)}: ${this.expr(p.value, body)}`).join(", ")} }` : "";
       body.lines.push(
-        `${this.rt("listen")}($_b, ${element}, ${this.expr(event, body)}, () => ${this.expr(handler, body)}${options});`
+        `${this.rt("listen")}($_b, ${element}, ${event ? this.expr(event, body) : "undefined"}, () => ${handler ? this.expr(handler, body) : "undefined"}${options});`
       );
       return;
     }
@@ -404,6 +403,15 @@ ${children}`;
       }
       case "debugger":
         body.lines.push("debugger;");
+        return;
+      case "outlet":
+        if (this.options.vmInterop) {
+          body.lines.push(`${this.rt("outlet")}($_b, ${anchor});`);
+        } else {
+          body.lines.push(
+            `${this.rt("invokeDyn")}($_b, ${anchor}, () => $_a.outlet, {}, null, null);`
+          );
+        }
         return;
       case "component": {
         let [definition, ...rest] = params;
@@ -673,6 +681,8 @@ ${inner.lines.join("\n")}
           base = head.name;
         } else if (head.name in AUTO_IMPORTED) {
           base = this.options.importBinding(AUTO_IMPORTED[head.name], head.name);
+        } else if (this.options.isGlobal?.(head.name)) {
+          base = head.name;
         } else {
           throw new CodegenError(
             `Attempted to use \`${head.name}\`, but it is not in scope. In strict mode, values must be imported or defined in JavaScript`,
@@ -744,7 +754,7 @@ ${inner.lines.join("\n")}
       case "log":
         return `${this.rt("log")}(${all().join(", ")})`;
       case "element":
-        break;
+        return `${this.rt("element")}(${arg(0)})`;
       default:
         throw new CodegenError(`\`${builtin}\` is not supported by the codegen compiler yet`, node);
     }
@@ -787,6 +797,7 @@ function generate(ast, options) {
 }
 
 // packages/@glimmer/compiler/lib/codegen/babel-plugin.ts
+var VM_RUNTIME = /* @__PURE__ */ new Set(["outlet", "setTemplate", "template"]);
 var TEMPLATE_MODULES = /* @__PURE__ */ new Set(["@ember/template-compiler", "@ember/template-compiler/runtime"]);
 function importedName(specifier) {
   return specifier.imported.type === "StringLiteral" ? specifier.imported.value : specifier.imported.name;
@@ -794,107 +805,177 @@ function importedName(specifier) {
 function codegenBabelPlugin(babel, options) {
   let t = babel.types;
   let runtimeModule = options.runtimeModule ?? "@glimmer/dom";
-  return {
-    name: "glimmer-codegen",
-    visitor: {
-      Program: {
-        enter(_path, state) {
-          state.codegen = { imports: /* @__PURE__ */ new Map(), hoisted: [], templates: 0 };
-        },
-        exit(path, state) {
-          let { imports, hoisted } = state.codegen;
-          if (imports.size === 0) return;
-          let declarations = [...imports].map(
-            ([module, names]) => t.importDeclaration(
-              [...names].map(
-                ([name, local]) => t.importSpecifier(t.identifier(local), t.identifier(name))
-              ),
-              t.stringLiteral(module)
-            )
-          );
-          let statements = hoisted.flatMap(
-            (code) => babel.template.statements.ast(code, { placeholderPattern: false })
-          );
-          path.unshiftContainer("body", [...declarations, ...statements]);
-          path.scope.crawl();
-          for (let statement of path.get("body")) {
-            if (!statement.isImportDeclaration()) continue;
-            if (!TEMPLATE_MODULES.has(statement.node.source.value)) continue;
-            for (let specifier of statement.get("specifiers")) {
-              let binding = path.scope.getBinding(specifier.node.local.name);
-              if (binding && !binding.referenced) specifier.remove();
-            }
-            if (statement.node.specifiers.length === 0) statement.remove();
-          }
+  let vmInterop = options.vmInterop ?? false;
+  let moduleFor = (name) => vmInterop && VM_RUNTIME.has(name) ? `${runtimeModule}/vm` : runtimeModule;
+  let compileTemplate = (path, state) => {
+    let callee = path.get("callee");
+    if (!callee.isIdentifier()) return;
+    let binding = path.scope.getBinding(callee.node.name);
+    if (!binding || binding.kind !== "module" || !binding.path.isImportSpecifier()) return;
+    if (!TEMPLATE_MODULES.has(binding.path.parent.source.value)) return;
+    if (importedName(binding.path.node) !== "template") return;
+    let [source, templateOptions] = path.node.arguments;
+    let text;
+    if (t.isTemplateLiteral(source) && source.expressions.length === 0) {
+      text = source.quasis[0].value.cooked;
+    } else if (t.isStringLiteral(source)) {
+      text = source.value;
+    } else {
+      throw path.buildCodeFrameError("template() must be called with a static string");
+    }
+    let component = null;
+    if (templateOptions && t.isObjectExpression(templateOptions)) {
+      for (let property of templateOptions.properties) {
+        if (t.isObjectProperty(property) && t.isIdentifier(property.key, { name: "component" })) {
+          component = property.value;
         }
-      },
-      CallExpression(path, state) {
-        let callee = path.get("callee");
-        if (!callee.isIdentifier()) return;
-        let binding = path.scope.getBinding(callee.node.name);
-        if (!binding || binding.kind !== "module" || !binding.path.isImportSpecifier()) return;
-        if (!TEMPLATE_MODULES.has(binding.path.parent.source.value)) return;
-        if (importedName(binding.path.node) !== "template") return;
-        let [source, templateOptions] = path.node.arguments;
-        let text;
-        if (t.isTemplateLiteral(source) && source.expressions.length === 0) {
-          text = source.quasis[0].value.cooked;
-        } else if (t.isStringLiteral(source)) {
-          text = source.value;
-        } else {
-          throw path.buildCodeFrameError("template() must be called with a static string");
-        }
-        let component = null;
-        if (templateOptions && t.isObjectExpression(templateOptions)) {
-          for (let property of templateOptions.properties) {
-            if (t.isObjectProperty(property) && t.isIdentifier(property.key, { name: "component" })) {
-              component = property.value;
-            }
-          }
-        }
-        let program = path.scope.getProgramParent();
-        let { imports } = state.codegen;
-        let local = (module, name) => {
-          let names = imports.get(module);
-          if (!names) imports.set(module, names = /* @__PURE__ */ new Map());
-          let existing = names.get(name);
-          if (existing) return existing;
-          let id = program.generateUid(name.replace(/\W/gu, "_"));
-          names.set(name, id);
-          return id;
-        };
-        let importOf = (name) => {
-          let found = path.scope.getBinding(name);
-          if (!found || found.kind !== "module") return void 0;
-          let module = found.path.parent.source.value;
-          if (found.path.isImportSpecifier())
-            return { module, name: importedName(found.path.node) };
-          if (found.path.isImportDefaultSpecifier()) return { module, name: "default" };
-          return void 0;
-        };
-        let ast = options.preprocess(text, { strictMode: true });
-        let { hoisted, expression } = generate(ast, {
-          isLexical: (name) => Boolean(path.scope.getBinding(name)),
-          importOf,
-          runtime: (name) => local(runtimeModule, name),
-          importBinding: local,
-          prefix: `${state.codegen.templates++}_`
-        });
-        state.codegen.hoisted.push(...hoisted);
-        let replacement = babel.template.expression.ast(expression, { placeholderPattern: false });
-        if (component) {
-          replacement = t.callExpression(t.identifier(local(runtimeModule, "setTemplate")), [
-            component,
-            replacement
-          ]);
-        }
-        path.replaceWith(replacement);
       }
     }
+    let program = path.scope.getProgramParent();
+    let { imports } = state.codegen;
+    let local = (module, name) => {
+      let names = imports.get(module);
+      if (!names) imports.set(module, names = /* @__PURE__ */ new Map());
+      let existing = names.get(name);
+      if (existing) return existing;
+      let id = program.generateUid(name.replace(/\W/gu, "_"));
+      names.set(name, id);
+      return id;
+    };
+    let importOf = (name) => {
+      let found = path.scope.getBinding(name);
+      if (!found || found.kind !== "module") return void 0;
+      let module = found.path.parent.source.value;
+      if (found.path.isImportSpecifier()) return { module, name: importedName(found.path.node) };
+      if (found.path.isImportDefaultSpecifier()) return { module, name: "default" };
+      return void 0;
+    };
+    let ast = options.preprocess(text, { strictMode: true });
+    let { hoisted, expression } = generate(ast, {
+      isLexical: (name) => Boolean(path.scope.getBinding(name)),
+      importOf,
+      runtime: (name) => local(moduleFor(name), name),
+      importBinding: local,
+      prefix: `${state.codegen.templates++}_`,
+      vmInterop,
+      ...options.isGlobal ? { isGlobal: options.isGlobal } : {}
+    });
+    state.codegen.hoisted.push(...hoisted);
+    let replacement = babel.template.expression.ast(expression, { placeholderPattern: false });
+    if (component) {
+      replacement = t.callExpression(t.identifier(local(moduleFor("setTemplate"), "setTemplate")), [
+        component,
+        replacement
+      ]);
+    }
+    path.replaceWith(replacement);
+  };
+  let addImports = (path, state) => {
+    let { imports, hoisted } = state.codegen;
+    if (imports.size === 0) return;
+    let declarations = [...imports].map(
+      ([module, names]) => t.importDeclaration(
+        [...names].map(
+          ([name, local]) => t.importSpecifier(t.identifier(local), t.identifier(name))
+        ),
+        t.stringLiteral(module)
+      )
+    );
+    let statements = hoisted.flatMap(
+      (code) => babel.template.statements.ast(code, { placeholderPattern: false })
+    );
+    path.unshiftContainer("body", [...declarations, ...statements]);
+    path.scope.crawl();
+    for (let statement of path.get("body")) {
+      if (!statement.isImportDeclaration()) continue;
+      if (!TEMPLATE_MODULES.has(statement.node.source.value)) continue;
+      for (let specifier of statement.get("specifiers")) {
+        let binding = path.scope.getBinding(specifier.node.local.name);
+        if (binding && !binding.referenced) specifier.remove();
+      }
+      if (statement.node.specifiers.length === 0) statement.remove();
+    }
+  };
+  return {
+    name: "glimmer-codegen",
+    // Everything happens in `pre` (rather than in a visitor), so that this
+    // plugin compiles `template()` before other template plugins see it
+    // (babel-plugin-ember-template-compilation also does its work in `pre`).
+    // List this plugin first.
+    pre(file) {
+      this.codegen = { imports: /* @__PURE__ */ new Map(), hoisted: [], templates: 0 };
+      file.path.traverse(
+        {
+          CallExpression: (call) => {
+            compileTemplate(call, this);
+          }
+        },
+        this
+      );
+      addImports(file.path, this);
+    },
+    visitor: {}
   };
 }
+
+// packages/@ember/template-compiler/lib/plugins/allowed-globals.ts
+var ALLOWED_GLOBALS = /* @__PURE__ */ new Set([
+  // ////////////////
+  // namespaces
+  // ////////////////
+  //   TC39
+  "globalThis",
+  "Atomics",
+  "JSON",
+  "Math",
+  "Reflect",
+  //   WHATWG
+  "localStorage",
+  "sessionStorage",
+  "URL",
+  // ////////////////
+  // functions / utilities
+  // ////////////////
+  //   TC39
+  "isNaN",
+  "isFinite",
+  "parseInt",
+  "parseFloat",
+  "decodeURI",
+  "decodeURIComponent",
+  "encodeURI",
+  "encodeURIComponent",
+  //   WHATWG
+  "postMessage",
+  "structuredClone",
+  // ////////////////
+  // new-less Constructors (still functions)
+  // ////////////////
+  //   TC39
+  "Array",
+  // different behavior from (array)
+  "BigInt",
+  "Boolean",
+  "Date",
+  "Number",
+  "Object",
+  // different behavior from (hash)
+  "String",
+  // ////////////////
+  // Values
+  // ////////////////
+  //   TC39
+  "Infinity",
+  "NaN",
+  //   WHATWG
+  "isSecureContext"
+]);
+
+// <stdin>
+var isAllowedGlobal = (name) => ALLOWED_GLOBALS.has(name);
 export {
   CodegenError,
   codegenBabelPlugin,
-  generate
+  generate,
+  isAllowedGlobal
 };
