@@ -52,6 +52,13 @@ const languages = {
       </span>
     </template>,
   },
+  'gjs|codegen': {
+    name: 'Glimmer JS (codegen, experimental)',
+    ext: 'gjs',
+    icon: <template>
+      <span>{{{FileGlimmer}}}</span>
+    </template>,
+  },
   // an alias
   get hbs() {
     return languages['hbs|ember'];

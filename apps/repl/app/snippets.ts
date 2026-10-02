@@ -130,6 +130,11 @@ export const ALL = [
     path: '/samples/nested-ember-routing-demo.gjs',
   },
   { format: 'gts', label: 'Ember GTS', path: '/samples/gts-demo.gts' },
+  {
+    format: 'gjs|codegen',
+    label: 'Ember GJS (codegen, experimental)',
+    path: '/samples/gjs-codegen-demo.gjs',
+  },
   { format: 'svelte', label: 'Svelte', path: '/samples/svelte-demo.svelte' },
   { format: 'js', label: 'Vanilla JS', path: '/samples/js-demo.js' },
   // Yaml
@@ -195,7 +200,7 @@ export async function getFromLabel(label: string): Promise<string> {
 }
 
 export function defaultSnippetForFormat(format: string) {
-  if (format === 'gjs') {
+  if (format === 'gjs' || format === 'gjs|codegen') {
     return DEFAULT_GJS;
   }
 
