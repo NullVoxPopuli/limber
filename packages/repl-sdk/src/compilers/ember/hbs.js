@@ -1,3 +1,4 @@
+import { parseImports } from '../../to-source.js';
 import { isRecord } from '../../utils.js';
 import { makeOwner } from './owner.js';
 
@@ -55,12 +56,30 @@ export async function compiler(config, api) {
       return component;
     },
     /**
-     * The scope is empty, because source can not hold the objects of a runtime `scope`.
+     * Source can not hold the objects of a runtime `scope`.
+     * The template has access to what `imports` imports, and nothing else.
      */
-    toSource: async (text) => {
+    toSource: async (text, options) => {
+      const imports = typeof options.imports === 'string' ? options.imports.trim() : '';
+
+      /** @type {string[]} */
+      let names = [];
+
+      if (imports) {
+        const resolved = await api.tryResolve('@glimdown/babel-8-lite');
+        const babel = 'transform' in resolved ? resolved : resolved.default;
+
+        names = parseImports(babel, imports)
+          .map((entry) => entry.local)
+          .filter(Boolean);
+      }
+
+      const scope = names.length ? `{ ${names.join(', ')} }` : `{}`;
+
       return (
+        (imports ? `${imports}\n` : '') +
         `import { template } from '@ember/template-compiler';\n\n` +
-        `export default template(${JSON.stringify(text)}, { scope: () => ({}) });\n`
+        `export default template(${JSON.stringify(text)}, { scope: () => (${scope}) });\n`
       );
     },
     render: async (element, compiled, extra, compiler) => {

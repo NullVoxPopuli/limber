@@ -109,21 +109,23 @@ export async function compiler(config, api) {
       /** @type {Array<{ name: string, placeholderId: string, source: string }>} */
       const demos = [];
 
+      const imports = typeof options.imports === 'string' ? options.imports : '';
+
       for (const { format, flavor, code, placeholderId } of result.codeBlocks) {
-        const { source } = await api.compileToSource(format, code, { flavor });
+        const { source } = await api.compileToSource(format, code, { flavor, imports });
 
         demos.push({ name: `Demo${demos.length + 1}`, placeholderId, source });
       }
 
       let babel;
 
-      if (demos.length) {
+      if (demos.length || imports.trim()) {
         const resolved = await api.tryResolve('@glimdown/babel-8-lite');
 
         babel = 'transform' in resolved ? resolved : resolved.default;
       }
 
-      return buildGmdModule({ babel, prose: result.text, demos });
+      return buildGmdModule({ babel, prose: result.text, demos, imports });
     },
     render: async (element, compiled, extra, compiler) => {
       /**

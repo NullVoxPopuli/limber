@@ -48,7 +48,15 @@ export interface PublicMethods {
   compileToSource: (
     format: string,
     text: string,
-    options?: { flavor?: string; [key: string]: unknown }
+    options?: {
+      flavor?: string;
+      /**
+       * Import statements, as text.
+       * Markdown prose and hbs templates have access to what they import.
+       */
+      imports?: string;
+      [key: string]: unknown;
+    }
   ) => Promise<{ source: string }>;
 
   optionsFor: (

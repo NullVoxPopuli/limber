@@ -32,17 +32,21 @@ const PARSER_PLUGINS = ['decorators'];
  * A demo has access to what it imports, and nothing else.
  *
  * @param {object} args
- * @param {any} [args.babel] - `@glimdown/babel-8-lite` or `@babel/standalone`. Only necessary when there are demos.
+ * @param {any} [args.babel] - `@glimdown/babel-8-lite` or `@babel/standalone`. Only necessary when there are demos or imports.
  * @param {string} args.prose - Markdown rendered to HTML, with demo placeholders
  * @param {Demo[]} [args.demos]
+ * @param {string} [args.imports] - import statements. The prose can use what they import.
  * @returns {string}
  */
-export function buildGmdModule({ babel, prose, demos = [] }) {
+export function buildGmdModule({ babel, prose, demos = [], imports: importText = '' }) {
+  const hasImports = Boolean(importText.trim());
+
   assert(
     `Inlining ${demos.length} live demo(s) needs babel. ` +
       `Pass '@glimdown/babel-8-lite' or '@babel/standalone' as \`babel\`.`,
     babel || !demos.length
   );
+  assert(`Reading \`imports\` needs babel.`, babel || !hasImports);
 
   const imports = new ImportRegistry();
   const templateLocal = imports.use('@ember/template-compiler', 'named', 'template', 'template');
@@ -51,22 +55,39 @@ export function buildGmdModule({ babel, prose, demos = [] }) {
     imports.reserve(demo.name);
   }
 
+  /**
+   * What the prose has access to: the name in the template, and the local that holds it.
+   *
+   * @type {string[]}
+   */
+  const scope = [];
+
+  if (hasImports) {
+    for (const entry of parseImports(babel, importText)) {
+      if (entry.kind === 'side-effect') {
+        imports.sideEffect(entry.from);
+        continue;
+      }
+
+      const local = imports.use(entry.from, entry.kind, entry.imported, entry.local);
+
+      scope.push(local === entry.local ? local : `${entry.local}: ${local}`);
+    }
+  }
+
   /** @type {string[]} */
   const declarations = [];
-  /** @type {string[]} */
-  const demoNames = [];
-
   let rewrittenProse = prose;
 
   demos.forEach((demo, index) => {
     const body = inlineDemo({ babel, source: demo.source, index, imports });
 
     declarations.push(`const ${demo.name} = (() => {\n${body}\n})();`);
-    demoNames.push(demo.name);
+    scope.push(demo.name);
     rewrittenProse = replacePlaceholder(rewrittenProse, demo.placeholderId, demo.name);
   });
 
-  const scopeBody = demoNames.length ? `{ ${demoNames.join(', ')} }` : `{}`;
+  const scopeBody = scope.length ? `{ ${scope.join(', ')} }` : `{}`;
 
   return (
     `${imports.toSource()}\n\n` +
@@ -76,6 +97,61 @@ export function buildGmdModule({ babel, prose, demos = [] }) {
     `});\n` +
     `export default _component;\n`
   );
+}
+
+/**
+ * The bindings that a string of import statements declares.
+ *
+ * @param {any} babel
+ * @param {string} text
+ * @returns {ImportEntry[]}
+ */
+export function parseImports(babel, text) {
+  /** @type {ImportEntry[]} */
+  const entries = [];
+
+  /** @param {{ types: any }} api */
+  const plugin = ({ types: t }) => ({
+    visitor: {
+      /** @param {any} path */
+      ImportDeclaration(path) {
+        const from = path.node.source.value;
+
+        if (!path.node.specifiers.length) {
+          entries.push({ from, kind: 'side-effect', imported: null, local: '' });
+        }
+
+        for (const specifier of path.node.specifiers) {
+          const local = specifier.local.name;
+
+          if (t.isImportDefaultSpecifier(specifier)) {
+            entries.push({ from, kind: 'default', imported: null, local });
+          } else if (t.isImportNamespaceSpecifier(specifier)) {
+            entries.push({ from, kind: 'namespace', imported: null, local });
+          } else {
+            const { imported } = specifier;
+
+            entries.push({
+              from,
+              kind: 'named',
+              imported: t.isIdentifier(imported) ? imported.name : imported.value,
+              local,
+            });
+          }
+        }
+      },
+    },
+  });
+
+  babel.transform(text, {
+    plugins: [plugin],
+    sourceType: 'module',
+    configFile: false,
+    babelrc: false,
+    code: false,
+  });
+
+  return entries;
 }
 
 /**

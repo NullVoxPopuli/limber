@@ -16,7 +16,8 @@
   "files": [
     "declarations",
     "dist",
-    "src"
+    "src",
+    "vite"
   ],
   "scripts": {
     ":vite": "vite --config ./config/vite.config.mjs",
@@ -134,12 +135,17 @@
   },
   "imports": {
     "#src/*": "./src/*",
+    "#tests-node/*": "./tests-node/*",
     "#app/*": "./tests/app/*"
   },
   "exports": {
     ".": {
       "types": "./declarations/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./vite": {
+      "types": "./vite/index.d.ts",
+      "default": "./vite/index.js"
     },
     "./test-support": {
       "types": "./declarations/test-support.d.ts",

@@ -38,8 +38,6 @@ const NODE_POLYFILLS = {
   'node:util': 'util-browser',
 };
 
-assert(`There is no document. repl-sdk is meant to be ran in a browser`, globalThis.document);
-
 export { errorMessage } from './utils.js';
 
 export const defaultFormats = Object.keys(compilers);
@@ -62,7 +60,10 @@ export class Compiler {
     STABLE_REFERENCE.resolve = this.#resolve;
     STABLE_REFERENCE.source = this.#source;
 
-    window.addEventListener('unhandledrejection', this.#handleUnhandledRejection);
+    /**
+     * Node has no window. `compileToSource` works there, because it does not render.
+     */
+    globalThis.window?.addEventListener('unhandledrejection', this.#handleUnhandledRejection);
   }
 
   /**
@@ -380,7 +381,7 @@ export class Compiler {
    *
    * @param {string} format
    * @param {string} text
-   * @param {{ flavor?: string, [key: string]: unknown }} [ options ]
+   * @param {{ flavor?: string, imports?: string, [key: string]: unknown }} [ options ]
    * @returns {Promise<{ source: string }>}
    */
   async compileToSource(format, text, options = {}) {
@@ -424,6 +425,11 @@ export class Compiler {
    * @returns {Promise<{ element: HTMLElement, destroy: () => void }>}
    */
   async #compile(format, text, options) {
+    assert(
+      `There is no document. \`compile\` renders, so it needs a browser. \`compileToSource\` does not.`,
+      globalThis.document
+    );
+
     this.#log('[compile] idempotently installing es-module-shim');
 
     // @ts-ignore

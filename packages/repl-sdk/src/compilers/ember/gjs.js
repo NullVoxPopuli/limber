@@ -2,6 +2,9 @@ import { makeOwner } from './owner.js';
 
 let elementId = 0;
 
+/**
+ * What both `compile` and `toSource` use.
+ */
 const buildDependencies = [
   /**
    * Babel with only what this compiler uses, in the shape of `@babel/standalone`.
@@ -9,13 +12,6 @@ const buildDependencies = [
    * which has the same API and way too much stuff.
    */
   '@glimdown/babel-8-lite',
-  /**
-   * We will be using this decorator transform
-   * instead of the babel one.
-   * The babel transform does way too much transforming.
-   */
-  'decorator-transforms',
-
   /**
    * Babel plugin that understands all the different ways
    * which templates have been authored and what they need to
@@ -32,6 +28,19 @@ const buildDependencies = [
    * Converts gjs/gts to standard js/ts
    */
   'content-tag',
+];
+
+/**
+ * What only `compile` uses, because only `compile` makes code for this runtime.
+ * A host that only calls `toSource` does not need to provide these.
+ */
+const runtimeDependencies = [
+  /**
+   * We will be using this decorator transform
+   * instead of the babel one.
+   * The babel transform does way too much transforming.
+   */
+  'decorator-transforms',
   /**
    * Older-style build macros
    * (before import.meta.env was even a thing)
@@ -64,20 +73,10 @@ export async function compiler(config, api, flags = {}) {
   const ext = typescript ? 'ts' : 'js';
   const filename = `dynamic-repl.${ext}`;
 
-  const [
-    _babel,
-    _decoratorTransforms,
-    _emberTemplateCompilation,
-    compiler,
-    contentTag,
-    { default: DebugMacros },
-    // embroiderMacros,
-  ] = await api.tryResolveAll(buildDependencies);
+  const [_babel, _emberTemplateCompilation, compiler, contentTag] =
+    await api.tryResolveAll(buildDependencies);
 
   // These libraries are compiled incorrectly for cjs<->ESM compat
-  const decoratorTransforms =
-    'default' in _decoratorTransforms ? _decoratorTransforms.default : _decoratorTransforms;
-
   const emberTemplateCompilation =
     'default' in _emberTemplateCompilation
       ? _emberTemplateCompilation.default
@@ -105,10 +104,24 @@ export async function compiler(config, api, flags = {}) {
     : [];
 
   /**
+   * Babel must not read the babel config of a project.
+   * That config is for the build of the project, and in Node, babel finds it.
+   */
+  const isolated = { configFile: false, babelrc: false };
+
+  /**
    * @param {string} text
    */
   async function transform(text) {
+    const [_decoratorTransforms, { default: DebugMacros }] =
+      await api.tryResolveAll(runtimeDependencies);
+
+    // This library is compiled incorrectly for cjs<->ESM compat
+    const decoratorTransforms =
+      'default' in _decoratorTransforms ? _decoratorTransforms.default : _decoratorTransforms;
+
     return babel.transformAsync(text, {
+      ...isolated,
       filename,
       plugins: typePlugins.concat([
         [
@@ -184,6 +197,7 @@ export async function compiler(config, api, flags = {}) {
    */
   async function transformToSource(text) {
     return babel.transformAsync(text, {
+      ...isolated,
       filename,
       parserOpts: { plugins: ['decorators'] },
       plugins: typePlugins.concat([[emberTemplateCompilation, { compiler, targetFormat: 'hbs' }]]),

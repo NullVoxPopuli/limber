@@ -268,4 +268,50 @@ describe('buildGmdModule', () => {
     expect(out).toContain(`import Demo1$1 from './other.js';`);
     expect(out).toContain(`const _demo0_default = Demo1$1;`);
   });
+
+  test('imports are in scope for the prose', () => {
+    const out = buildGmdModule({
+      babel,
+      prose: `<APIDocs />`,
+      imports: `import { APIDocs } from 'kolay';\nimport Thing, * as all from './thing.js';\nimport './setup.js';`,
+    });
+
+    expect(out).toContain(`import { APIDocs } from 'kolay';`);
+    expect(out).toContain(`import * as all from './thing.js';`);
+    expect(out).toContain(`import Thing from './thing.js';`);
+    expect(out).toContain(`import './setup.js';`);
+    expect(out).toMatch(/scope: \(\) => \(\{ APIDocs, Thing, all \}\)/);
+  });
+
+  test('an import that a demo also has is emitted once', () => {
+    const out = buildGmdModule({
+      babel,
+      prose: `<Shadowed /><div id="a"></div>`,
+      imports: `import { Shadowed } from 'ember-primitives';`,
+      demos: [
+        {
+          name: 'Demo1',
+          placeholderId: 'a',
+          source: [`import { Shadowed } from 'ember-primitives';`, `export default Shadowed;`].join(
+            '\n'
+          ),
+        },
+      ],
+    });
+
+    expect(out.match(/from 'ember-primitives';/g)?.length).toBe(1);
+    expect(out).toContain(`const _demo0_default = Shadowed;`);
+    expect(out).toMatch(/scope: \(\) => \(\{ Shadowed, Demo1 \}\)/);
+  });
+
+  test('an import with the name of a demo keeps its name in the template', () => {
+    const out = buildGmdModule({
+      babel,
+      prose: `<div id="a"></div>`,
+      imports: `import { Demo1 } from './elsewhere.js';`,
+      demos: [{ name: 'Demo1', placeholderId: 'a', source: `export default 1;` }],
+    });
+
+    expect(out).toContain(`import { Demo1 as Demo1$1 } from './elsewhere.js';`);
+  });
 });

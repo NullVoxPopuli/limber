@@ -1,77 +1,32 @@
-import { createRequire } from 'node:module';
+import { ember, extensions } from '@embroider/vite';
 
-import { transformAsync } from '@babel/core';
-import { buildMacros } from '@embroider/macros/babel';
+import { babel } from '@rollup/plugin-babel';
 import { defineConfig } from 'vitest/config';
 
-const require = createRequire(import.meta.url);
+import { emberRepl } from './vite/index.js';
 
 /**
- * `@ember/*` and `@glimmer/*` are not packages. They are files in ember-source.
- * An app build maps them with embroider. Node needs the same map.
+ * The same plugins as an ember app, and the plugin of this package.
  */
-function emberSourceModules() {
-  const renamed = require('ember-source/package.json')['ember-addon'][
-    'renamed-modules'
-  ];
-
-  return {
-    name: 'ember-source-modules',
-    enforce: 'pre',
-    /**
-     * @param {string} id
-     */
-    resolveId(id) {
-      const target = renamed[`${id}.js`] ?? renamed[`${id}/index.js`];
-
-      if (target) return this.resolve(target);
-    },
-  };
-}
-
-/**
- * Addons call `@embroider/macros`, which only works after its babel plugin ran.
- * An app build runs that plugin on each addon.
- */
-function embroiderMacros() {
-  const macros = buildMacros();
-
-  return {
-    name: 'embroider-macros',
-    /**
-     * @param {string} code
-     * @param {string} id
-     */
-    async transform(code, id) {
-      if (!code.includes('@embroider/macros')) return;
-
-      const result = await transformAsync(code, {
-        filename: id,
-        plugins: macros.babelMacros,
-        configFile: false,
-        babelrc: false,
-        sourceMaps: true,
-      });
-
-      return result
-        ? { code: result.code ?? code, map: result.map }
-        : undefined;
-    },
-  };
-}
-
 export default defineConfig({
-  plugins: [emberSourceModules(), embroiderMacros()],
-  resolve: {
-    conditions: ['development'],
-  },
+  plugins: [
+    emberRepl({
+      imports: `import { Greeting } from '#tests-node/fixtures/greeting.gjs';`,
+    }),
+    ember(),
+    babel({
+      babelHelpers: 'inline',
+      extensions,
+    }),
+  ],
   test: {
     environment: 'happy-dom',
     include: ['tests-node/**/*.test.ts'],
     server: {
       deps: {
         /**
-         * Addons import `@ember/*`, so each dependency has to go through the plugins above.
+         * Addons import `@ember/*` and call macros,
+         * so each dependency has to go through the plugins above.
          */
         inline: true,
       },
