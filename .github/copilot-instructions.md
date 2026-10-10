@@ -16,7 +16,7 @@ The project enables users to write, test, and share Ember/Glimmer code directly 
 - **Node Version**: v24.12.0+ (enforced via Volta)
 - **Languages**: TypeScript 5.9.3, JavaScript (ES2022+)
 - **Testing**: Vitest (node), Testem (browser), QUnit
-- **Linting**: ESLint (flat config), Prettier, ember-template-lint
+- **Linting**: ESLint (flat config, with the template rules of eslint-plugin-ember), Prettier
 - **Styling**: TailwindCSS
 - **Syntax Parsing**: CodeMirror v6, Lezer parsers
 
@@ -90,8 +90,7 @@ pnpm lint:fix     # Auto-fixes issues where possible
 ```
 
 Individual lint tasks (via Turbo):
-- `lint:js` - ESLint with flat config
-- `lint:hbs` - Ember template linting
+- `lint:js` - ESLint with flat config, templates included
 - `lint:prettier` - Code formatting (100 char line width, single quotes)
 - `lint:types` - TypeScript type checking with Glint
 - `lint:package` - Package.json validation

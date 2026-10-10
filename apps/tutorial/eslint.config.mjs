@@ -1,9 +1,20 @@
 import { configs } from '@nullvoxpopuli/eslint-configs';
 
+import templateLintMigration from 'eslint-plugin-ember/configs/template-lint-migration';
+
 const config = configs.ember(import.meta.dirname);
 
 export default [
   ...config,
+  ...templateLintMigration,
+  {
+    files: ['**/*.{gjs,gts}'],
+    rules: {
+      // We do what we want. psh
+      'ember/template-no-forbidden-elements': 'off',
+      'ember/template-no-inline-styles': 'off',
+    },
+  },
   {
     files: ['app/components/prose/prose-not-found.gts'],
     rules: {

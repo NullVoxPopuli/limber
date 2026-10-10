@@ -45,7 +45,7 @@ import { Share } from './share.gts';
             </DefaultContent>
           </span>
           <span class="md:hidden">
-            {{! template-lint-disable no-triple-curlies }}
+            {{! eslint-disable-next-line ember/template-no-triple-curlies }}
             {{{Docs}}}
           </span>
         </:custom>

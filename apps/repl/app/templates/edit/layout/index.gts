@@ -117,7 +117,6 @@ export const Layout: TOC<{
             <Handle
               aria-label="Resize the editor"
               class="bg-horizon-lavender leading-4 text-white shadow flex items-end justify-end focus:ring-4 focus:outline-none focus-visible:outline-none"
-              {{! template-lint-disable no-inline-styles }}
               style="text-shadow: 1px 1px 1px black"
             >
               {{if horizontallySplit "⬍" "⬌"}}

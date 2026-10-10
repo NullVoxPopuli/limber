@@ -88,7 +88,7 @@
     "ember-source": "7.5.0-alpha.3",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-ember": "^12.7.5",
+    "eslint-plugin-ember": "^13.6.1",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-n": "^17.23.1",
     "globals": "^17.0.0",

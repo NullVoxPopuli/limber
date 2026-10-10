@@ -13,7 +13,7 @@
     "tinybench": "^2.9.0"
   },
   "devDependencies": {
-    "@nullvoxpopuli/eslint-configs": "^5.4.0",
+    "@nullvoxpopuli/eslint-configs": "^6.0.0",
     "eslint": "^9.39.1",
     "prettier": "^3.9.6",
     "prettier-plugin-ember-template-tag": "2.1.8",

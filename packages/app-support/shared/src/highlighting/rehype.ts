@@ -57,6 +57,7 @@ export function rehypeShikiWorker() {
       if (text.endsWith('\n')) text = text.slice(0, -1);
 
       // mdast-util-to-hast puts the text after the language of a code fence here
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion -- tsc fails without it
       const data = code.data as { meta?: string } | undefined;
       const meta = data?.meta ?? code.properties.metastring?.toString() ?? '';
 

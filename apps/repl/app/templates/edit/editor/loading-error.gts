@@ -13,7 +13,7 @@ export const LoadingError: TOC<{
       We need this log to get the stack trace, otherwise we have no easy to
       see what happen that caused the StateMachine to error
     }}
-    {{! template-lint-disable no-log }}
+    {{! eslint-disable-next-line ember/template-no-log }}
     {{log @error}}
     <pre class="whitespace-pre-wrap">{{@error}}</pre>
   </div>

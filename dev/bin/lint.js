@@ -50,10 +50,6 @@ async function run() {
       return exec(`pnpm eslint . ` + `--fix --cache --cache-strategy content`);
     case 'js':
       return exec(`pnpm eslint . `);
-    case 'hbs:fix':
-      return exec(`pnpm ember-template-lint . --fix --no-error-on-unmatched-pattern`);
-    case 'hbs':
-      return exec(`pnpm ember-template-lint . --no-error-on-unmatched-pattern`);
     case 'fix':
       return turbo('_:lint:fix');
     default:

@@ -38,7 +38,7 @@ export const Link: TOC<{
 
     {{! href attribute should be passed in to Link }}
     {{! The lints maybe need a runtime integration. }}
-    {{! template-lint-disable link-href-attributes }}
+    {{! eslint-disable-next-line ember/template-link-href-attributes }}
     <a class={{classList}} ...attributes>
       {{yield}}
     </a>
