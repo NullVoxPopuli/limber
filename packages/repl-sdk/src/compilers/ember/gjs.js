@@ -1,3 +1,4 @@
+import { assert } from '../../utils.js';
 import { makeOwner } from './owner.js';
 
 let elementId = 0;
@@ -55,6 +56,107 @@ const runtimeDependencies = [
    */
   // '@embroider/macros/babel',
 ];
+
+const TEMPLATE_SOURCES = ['@ember/template-compiler', '@ember/template-compilation'];
+
+/**
+ * The template plugin prints each template again when it adds the scope,
+ * and the print loses text: `\\{{` (a literal `{{`) comes out as `{{`.
+ *
+ * This reads each template before the template plugin runs,
+ * and puts the same text back after.
+ *
+ */
+function keepTemplateText() {
+  /**
+   * The calls that hold a template, in the order of the file.
+   *
+   * @param {any} program
+   * @returns {any[]}
+   */
+  function templateCalls(program) {
+    /** @type {any[]} */
+    const calls = [];
+
+    program.scope.crawl();
+
+    program.traverse({
+      /** @param {any} path */
+      CallExpression(path) {
+        const callee = path.get('callee');
+
+        if (!callee.isIdentifier()) return;
+
+        const declaration = path.scope.getBinding(callee.node.name)?.path.parentPath;
+
+        if (!declaration?.isImportDeclaration()) return;
+        if (!TEMPLATE_SOURCES.includes(declaration.node.source.value)) return;
+
+        calls.push(path);
+      },
+    });
+
+    return calls;
+  }
+
+  /**
+   * @param {any} t
+   * @param {any} node the first argument of a template call
+   * @returns {string | undefined}
+   */
+  function textOf(t, node) {
+    if (t.isStringLiteral(node)) return node.value;
+
+    if (t.isTemplateLiteral(node) && node.quasis.length === 1) {
+      return node.quasis[0].value.cooked;
+    }
+  }
+
+  /** @type {Array<string | undefined>} */
+  let texts = [];
+
+  return {
+    /**
+     * For a pass that does not have the template plugin.
+     */
+    /** @param {{ types: any }} api */
+    read: ({ types: t }) => ({
+      visitor: {
+        /** @param {any} program */
+        Program(program) {
+          texts = templateCalls(program).map((call) => textOf(t, call.node.arguments[0]));
+        },
+      },
+    }),
+    /**
+     * For the pass that has the template plugin.
+     */
+    /** @param {{ types: any }} api */
+    write: ({ types: t }) => ({
+      visitor: {
+        Program: {
+          /** @param {any} program */
+          exit(program) {
+            const calls = templateCalls(program);
+
+            assert(
+              `Expected ${texts.length} templates after the template plugin, but there are ${calls.length}.`,
+              calls.length === texts.length
+            );
+
+            calls.forEach((call, index) => {
+              const text = texts[index];
+
+              if (text !== undefined) {
+                call.node.arguments[0] = t.stringLiteral(text);
+              }
+            });
+          },
+        },
+      },
+    }),
+  };
+}
 
 /**
  * @typedef {import('../../types.ts').CompilerConfig['compiler']} CompilerFactory
@@ -196,12 +298,25 @@ export async function compiler(config, api, flags = {}) {
    * @param {string} text
    */
   async function transformToSource(text) {
+    const templateText = keepTemplateText();
+    const options = { ...isolated, filename, parserOpts: { plugins: ['decorators'] }, presets: [] };
+
+    /**
+     * The template plugin changes the file before any other plugin sees it,
+     * so the read is a pass of its own.
+     */
+    await babel.transformAsync(text, {
+      ...options,
+      code: false,
+      plugins: typePlugins.concat([templateText.read]),
+    });
+
     return babel.transformAsync(text, {
-      ...isolated,
-      filename,
-      parserOpts: { plugins: ['decorators'] },
-      plugins: typePlugins.concat([[emberTemplateCompilation, { compiler, targetFormat: 'hbs' }]]),
-      presets: [],
+      ...options,
+      plugins: typePlugins.concat([
+        [emberTemplateCompilation, { compiler, targetFormat: 'hbs' }],
+        templateText.write,
+      ]),
     });
   }
 

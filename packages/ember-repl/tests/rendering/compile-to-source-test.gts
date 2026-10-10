@@ -295,6 +295,28 @@ module('Rendering | compileToSource()', function (hooks) {
     assert.dom('pre code').includesText('notLive');
   });
 
+  test('a literal {{ stays a literal', async function (assert) {
+    const compiler = getCompiler(this);
+
+    const { source } = await compiler.compileToSource(
+      'gmd',
+      [
+        '```gjs',
+        '{{#if sample}}not a block{{/if}}',
+        '```',
+        '',
+        '```gjs live',
+        '<template><output>\\{{literal}}</output></template>',
+        '```',
+      ].join('\n')
+    );
+
+    await render(await build(compiler, source));
+
+    assert.dom('output').hasText('{{literal}}');
+    assert.dom('pre code').hasText('{{#if sample}}not a block{{/if}}');
+  });
+
   test('a format with no source form rejects', async function (assert) {
     setupOnerror(() => {});
 

@@ -101,4 +101,22 @@ describe('compileToSource in node', () => {
       }), templateOnly());"
     `);
   });
+
+  test('a literal {{ stays a literal', async () => {
+    const { source } = await compiler().compileToSource(
+      'gmd',
+      [
+        '```gjs',
+        '{{#if sample}}not a block{{/if}}',
+        '```',
+        '',
+        '```gjs live',
+        '<template><code>\\{{literal}}</code></template>',
+        '```',
+      ].join('\n')
+    );
+
+    expect(source).toContain(String.raw`<code>\\{{literal}}</code>`);
+    expect(source).toContain(String.raw`\\{{#if sample}}not a block\\{{/if}}`);
+  });
 });
