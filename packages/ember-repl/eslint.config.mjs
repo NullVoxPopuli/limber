@@ -1,5 +1,4 @@
 // eslint.config.js
-// eslint-disable-next-line n/no-extraneous-import
 import { configs } from '@nullvoxpopuli/eslint-configs';
 
 // accommodates: JS, TS, App, Addon, and V2 Addon

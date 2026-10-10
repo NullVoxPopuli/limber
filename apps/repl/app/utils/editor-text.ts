@@ -113,7 +113,7 @@ export class FileURIComponent {
    * Used so we no-op when qps match
    */
   get #currentQPs(): Record<string, unknown> {
-    return this.router.currentRoute?.queryParams ?? ({} as Record<string, unknown>);
+    return this.router.currentRoute?.queryParams ?? {};
   }
 
   get #text() {

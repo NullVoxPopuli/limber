@@ -437,7 +437,7 @@ module('Rendering | compile()', function (hooks) {
                 return 'skip';
               });
             };
-          } as Plugin<[], Root>,
+          },
         ],
       });
 

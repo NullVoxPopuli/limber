@@ -190,7 +190,7 @@ export const LayoutState = setup({
       'are managed by <Resizable> (from ember-primitives).'
     : '',
   schema: {
-    context: {} as Context,
+    context: {},
     events: {} as
       | { type: 'CONTAINER_FOUND'; container: HTMLElement }
       | { type: 'CONTAINER_REMOVED' }

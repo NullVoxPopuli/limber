@@ -1,3 +1,3 @@
 import { configs } from '@nullvoxpopuli/eslint-configs';
 
-export default configs.ember(import.meta.dirname);
+export default configs.ember(import.meta.dirname, { templates: true });

@@ -16,7 +16,6 @@ class EditThis extends Component {
   }
 
   <template>
-    {{! template-lint-disable no-inline-styles }}
     <div style="position: fixed; bottom: 1rem; right: 1rem;">
       <Link href={{this.href}} target="_blank">Edit</Link>
     </div>

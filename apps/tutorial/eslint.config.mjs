@@ -1,9 +1,17 @@
 import { configs } from '@nullvoxpopuli/eslint-configs';
 
-const config = configs.ember(import.meta.dirname);
+const config = configs.ember(import.meta.dirname, { templates: true });
 
 export default [
   ...config,
+  {
+    files: ['**/*.{gjs,gts}'],
+    rules: {
+      // We do what we want. psh
+      'ember/template-no-forbidden-elements': 'off',
+      'ember/template-no-inline-styles': 'off',
+    },
+  },
   {
     files: ['app/components/prose/prose-not-found.gts'],
     rules: {

@@ -34,6 +34,6 @@ export default class Compiler extends Component<Signature> {
   }
 
   get flavor() {
-    return this.formatQPParts[1] as string | undefined;
+    return this.formatQPParts[1];
   }
 }

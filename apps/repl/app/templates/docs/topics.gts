@@ -7,10 +7,10 @@ export const NavLink: TOC<{
   Args: { icon?: string };
   Blocks: { default: [] };
 }> = <template>
-  {{! template-lint-disable link-href-attributes }}
+  {{! eslint-disable-next-line ember/template-link-href-attributes }}
   <a ...attributes>
     {{#if @icon}}
-      <span>{{! template-lint-disable no-triple-curlies }}
+      <span>{{! eslint-disable-next-line ember/template-no-triple-curlies }}
         {{{@icon}}}</span>
     {{/if}}
     <span>{{yield}}</span>

@@ -101,7 +101,6 @@ const Menu: TOC<{
       }}
       <FloatingUI as |reference floating|>
         <menu.Content data-test-menu-items {{reference}} class="limber__menu__content" as |content|>
-          {{! template-lint-disable no-inline-styles }}
           <div
             class="border"
             style="

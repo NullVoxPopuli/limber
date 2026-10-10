@@ -1,9 +1,31 @@
 import { configs } from '@nullvoxpopuli/eslint-configs';
 
-const config = configs.ember(import.meta.dirname);
+const config = configs.ember(import.meta.dirname, { templates: true });
 
 export default [
   ...config,
+  {
+    files: ['**/*.{gjs,gts}'],
+    rules: {
+      // eh
+      'ember/template-no-inline-styles': 'off',
+      // Don't care
+      'ember/template-no-forbidden-elements': 'off',
+      // Incorrect, because it matches anything that looks like an arg, even if it's a string (intentionally)
+      'ember/template-no-potential-path-strings': 'off',
+      // Broke with formatDocs here:
+      // {{#each formats as |formatDocs|}}
+      //   <formatDocs />
+      // {{/each}}
+      'ember/template-no-shadowed-elements': 'off',
+    },
+  },
+  {
+    files: ['**/languages.gts'],
+    rules: {
+      'ember/template-no-triple-curlies': 'off',
+    },
+  },
   {
     // Samples are user-facing documents, not app code.
     ignores: ['public/**'],
