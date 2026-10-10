@@ -35,6 +35,117 @@ async function build(compiler: ReturnType<typeof getCompiler>, source: string) {
   return component;
 }
 
+/**
+ * The exact source for each format.
+ * A change here is a change to what the build of another app gets.
+ */
+const EXPECTED = {
+  gjs: String.raw`
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { precompileTemplate } from "@ember/template-compilation";
+import { setComponentTemplate } from "@ember/component";
+const greeting = 'hello';
+export default class Demo extends Component {
+  @tracked
+  name = 'there';
+  static {
+    setComponentTemplate(precompileTemplate("<output>{{greeting}} {{this.name}}</output>", {
+      strictMode: true,
+      scope: () => ({
+        greeting
+      })
+    }), this);
+  }
+}
+`,
+  gts: String.raw`
+import { precompileTemplate } from "@ember/template-compilation";
+import { setComponentTemplate } from "@ember/component";
+import templateOnly from "@ember/component/template-only";
+const greeting = 'hello';
+export default setComponentTemplate(precompileTemplate("<output>{{greeting}}</output>", {
+  strictMode: true,
+  scope: () => ({
+    greeting
+  })
+}), templateOnly());
+`,
+  hbs: String.raw`
+import { template } from '@ember/template-compiler';
+
+export default template("<output>hello</output>", { scope: () => ({}) });
+`,
+  markdown: String.raw`
+import { template } from '@ember/template-compiler';
+
+const _component = template("<h1 id=\"title\">Title</h1>\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>", {
+  scope: () => ({}),
+});
+export default _component;
+`,
+  demos: String.raw`
+import { template } from '@ember/template-compiler';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { precompileTemplate } from '@ember/template-compilation';
+import { setComponentTemplate } from '@ember/component';
+import templateOnly from '@ember/component/template-only';
+
+const Demo1 = (() => {
+const _demo0_value = 'first';
+class _demo0_Demo extends Component {
+  @tracked
+  suffix = "!";
+  static {
+    setComponentTemplate(precompileTemplate("<output class=\"one\">{{value}}{{this.suffix}}</output>", {
+      strictMode: true,
+      scope: () => ({
+        value: _demo0_value
+      })
+    }), this);
+  }
+}
+const _demo0_default = _demo0_Demo;
+
+return _demo0_default;
+})();
+
+const Demo2 = (() => {
+const _demo1_value = 'second';
+const _demo1_default = setComponentTemplate(precompileTemplate("<output class=\"two\">{{value}}</output>", {
+  strictMode: true,
+  scope: () => ({
+    value: _demo1_value
+  })
+}), templateOnly());
+
+return _demo1_default;
+})();
+
+const Demo3 = (() => {
+const _demo2_default = template("<output class=\"three\">third</output>", {
+  scope: () => ({})
+});
+
+return _demo2_default;
+})();
+
+const _component = template("<h1 id=\"title\">Title</h1>\n<div class=\"repl-sdk__demo\"><div data-repl-output><Demo1 /></div></div>\n<div class=\"repl-sdk__demo\"><div data-repl-output><Demo2 /></div></div>\n<div class=\"repl-sdk__demo\"><div data-repl-output><Demo3 /></div></div>\n<div class=\"repl-sdk__snippet\" data-repl-output><pre><code class=\"language-gjs\">const notLive = true;\n</code></pre></div>", {
+  scope: () => ({ Demo1, Demo2, Demo3 }),
+});
+export default _component;
+`,
+};
+
+/**
+ * @param source the result of compileToSource
+ * @param expected an entry of EXPECTED
+ */
+function assertSource(source: string, expected: string) {
+  QUnit.assert.strictEqual(source.trim(), expected.trim(), 'the source');
+}
+
 module('Rendering | compileToSource()', function (hooks) {
   setupRenderingTest(hooks);
   setupCompiler(hooks);
@@ -66,16 +177,7 @@ module('Rendering | compileToSource()', function (hooks) {
       `
     );
 
-    assert.strictEqual(typeof source, 'string');
-    assert.true(source.includes('export default'), 'the source is a module');
-    assert.false(
-      source.includes('createTemplateFactory'),
-      'the template is not in the wire format of one ember-source version'
-    );
-    assert.false(
-      source.includes('decorator-transforms'),
-      'the decorators are left for the host build'
-    );
+    assertSource(source, EXPECTED.gjs);
 
     await render(await build(compiler, source));
 
@@ -96,7 +198,7 @@ module('Rendering | compileToSource()', function (hooks) {
       `
     );
 
-    assert.false(source.includes(': string'), 'the types are gone');
+    assertSource(source, EXPECTED.gts);
 
     await render(await build(compiler, source));
 
@@ -111,7 +213,7 @@ module('Rendering | compileToSource()', function (hooks) {
       `<output>hello</output>`
     );
 
-    assert.true(source.includes(`from '@ember/template-compiler'`));
+    assertSource(source, EXPECTED.hbs);
 
     await render(await build(compiler, source));
 
@@ -130,6 +232,8 @@ module('Rendering | compileToSource()', function (hooks) {
         - two
       `
     );
+
+    assertSource(source, EXPECTED.markdown);
 
     await render(await build(compiler, source));
 
@@ -178,11 +282,7 @@ module('Rendering | compileToSource()', function (hooks) {
       ].join('\n')
     );
 
-    assert.strictEqual(
-      source.match(/^import /gm)?.length,
-      new Set(source.match(/^import .*$/gm)).size,
-      'no import is repeated'
-    );
+    assertSource(source, EXPECTED.demos);
 
     await render(await build(compiler, source));
 
