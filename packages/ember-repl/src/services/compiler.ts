@@ -117,8 +117,10 @@ const standardScope = {
   Math,
   Reflect,
   //   WHATWG
-  localStorage,
-  sessionStorage,
+  //   (read from globalThis, because a bare name that does not exist throws,
+  //    and not every runtime has each of these)
+  localStorage: globalThis.localStorage,
+  sessionStorage: globalThis.sessionStorage,
   URL,
   // ////////////////
   // functions / utilities
@@ -133,7 +135,7 @@ const standardScope = {
   encodeURI,
   encodeURIComponent,
   //   WHATWG
-  postMessage,
+  postMessage: globalThis.postMessage,
   structuredClone,
   // ////////////////
   // new-less Constructors (still functions)
@@ -153,7 +155,7 @@ const standardScope = {
   Infinity,
   NaN,
   //   WHATWG
-  isSecureContext,
+  isSecureContext: globalThis.isSecureContext,
 };
 
 export default class CompilerService {

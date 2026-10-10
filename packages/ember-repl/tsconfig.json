@@ -5,7 +5,7 @@
  */
 {
   "extends": "@ember/app-tsconfig",
-  "include": ["src/**/*", "tests/**/*", "unpublished-development-types/**/*"],
+  "include": ["src/**/*", "tests/**/*", "tests-node/**/*", "unpublished-development-types/**/*"],
   "compilerOptions": {
     "rootDir": ".",
     "types": [
