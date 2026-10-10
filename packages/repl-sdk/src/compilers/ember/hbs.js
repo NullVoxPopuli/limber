@@ -26,6 +26,22 @@ export async function compiler(config, api) {
    */
   const hbsCompiler = {
     compile: async (text, options) => {
+      if (isRecord(options) && options.renderToString) {
+        // Build-time form: emit a JS module that imports `template` from the
+        // build-time template-compiler. The host app's content-tag/babel
+        // pipeline will precompile the `template(...)` call to wire format.
+        //
+        // A runtime `scope` object cannot be serialized into source, so the
+        // emitted module declares an empty scope. Identifiers the hbs body
+        // references have to be in scope at the consumer instead.
+        const source =
+          `import { template } from '@ember/template-compiler';\n` +
+          `const _component = template(${JSON.stringify(text)}, { scope: () => ({}) });\n` +
+          `export default _component;\n`;
+
+        return source;
+      }
+
       const { template } = await api.tryResolve('@ember/template-compiler/runtime');
 
       const component = template(text, {
