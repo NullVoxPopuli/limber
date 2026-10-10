@@ -17,10 +17,12 @@ describe('compileToSource in node', () => {
     );
 
     expect(source).toMatchInlineSnapshot(`
-      "import { template } from '@ember/template-compiler';
-
-      export default template("<output>hello</output>", { scope: () => ({}) });
-      "
+      "import { precompileTemplate } from "@ember/template-compilation";
+      import { setComponentTemplate } from "@ember/component";
+      import templateOnly from "@ember/component/template-only";
+      export default setComponentTemplate(precompileTemplate("<output>hello</output>", {
+        strictMode: true
+      }), templateOnly());"
     `);
   });
 
@@ -71,36 +73,32 @@ describe('compileToSource in node', () => {
     );
 
     expect(source).toMatchInlineSnapshot(`
-      "import { template } from '@ember/template-compiler';
-      import { precompileTemplate } from '@ember/template-compilation';
+      "import { precompileTemplate } from '@ember/template-compilation';
       import { setComponentTemplate } from '@ember/component';
       import templateOnly from '@ember/component/template-only';
-
       const Demo1 = (() => {
-      const _demo0_value = 'first';
-      const _demo0_default = setComponentTemplate(precompileTemplate("{{value}}", {
+        const _demo0_value = 'first';
+        const _demo0_default = setComponentTemplate(precompileTemplate("{{value}}", {
+          strictMode: true,
+          scope: () => ({
+            value: _demo0_value
+          })
+        }), templateOnly());
+        return _demo0_default;
+      })();
+      const Demo2 = (() => {
+        const _demo1_default = setComponentTemplate(precompileTemplate("<output>second</output>", {
+          strictMode: true
+        }), templateOnly());
+        return _demo1_default;
+      })();
+      export default setComponentTemplate(precompileTemplate("<h1 id=\\"title\\">Title</h1>\\n<div class=\\"repl-sdk__demo\\"><div data-repl-output><Demo1 /></div></div>\\n<div class=\\"repl-sdk__demo\\"><div data-repl-output><Demo2 /></div></div>", {
         strictMode: true,
         scope: () => ({
-          value: _demo0_value
+          Demo1,
+          Demo2
         })
-      }), templateOnly());
-
-      return _demo0_default;
-      })();
-
-      const Demo2 = (() => {
-      const _demo1_default = template("<output>second</output>", {
-        scope: () => ({})
-      });
-
-      return _demo1_default;
-      })();
-
-      const _component = template("<h1 id=\\"title\\">Title</h1>\\n<div class=\\"repl-sdk__demo\\"><div data-repl-output><Demo1 /></div></div>\\n<div class=\\"repl-sdk__demo\\"><div data-repl-output><Demo2 /></div></div>", {
-        scope: () => ({ Demo1, Demo2 }),
-      });
-      export default _component;
-      "
+      }), templateOnly());"
     `);
   });
 });

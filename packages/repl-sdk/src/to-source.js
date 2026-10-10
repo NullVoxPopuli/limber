@@ -1,7 +1,6 @@
 /**
- * Builds the module that `compileToSource` returns for a gmd document.
+ * Builds the one module that a gmd document becomes, with each live demo inline, next to the prose.
  *
- * The result is one module, so each live demo is inline, next to the prose.
  * Demos are separate modules that know nothing about each other.
  * A merge has to resolve import collisions and name collisions,
  * and that needs real scope information. Text matching can not do it.
@@ -23,56 +22,41 @@ const PARSER_PLUGINS = ['decorators'];
 
 /**
  * Puts the demos of a gmd document inline with its prose.
- * Returns the source of one ES module.
+ * Returns one module in gjs: the prose is a `<template>` at the end.
  *
- * The module imports `template` from `@ember/template-compiler`,
- * so the build of the app that uses the module compiles the prose.
- *
- * There is no live scope, because source can not hold a runtime object.
- * A demo has access to what it imports, and nothing else.
+ * The gjs compiler finds what the prose uses, so there is no scope list here.
+ * The prose has access to the demos and to what `imports` imports.
  *
  * @param {object} args
- * @param {any} [args.babel] - `@glimdown/babel-8-lite` or `@babel/standalone`. Only necessary when there are demos or imports.
+ * @param {any} [args.babel] - `@glimdown/babel-8-lite` or `@babel/standalone`. Only necessary when there are demos.
  * @param {string} args.prose - Markdown rendered to HTML, with demo placeholders
  * @param {Demo[]} [args.demos]
- * @param {string} [args.imports] - import statements. The prose can use what they import.
+ * @param {string} [args.imports] - import statements, as text
  * @returns {string}
  */
 export function buildGmdModule({ babel, prose, demos = [], imports: importText = '' }) {
-  const hasImports = Boolean(importText.trim());
+  if (!demos.length) {
+    return `${importText.trim()}\n\n<template>${prose}</template>\n`.trimStart();
+  }
 
   assert(
     `Inlining ${demos.length} live demo(s) needs babel. ` +
       `Pass '@glimdown/babel-8-lite' or '@babel/standalone' as \`babel\`.`,
-    babel || !demos.length
+    babel
   );
-  assert(`Reading \`imports\` needs babel.`, babel || !hasImports);
 
   const imports = new ImportRegistry();
-  const templateLocal = imports.use('@ember/template-compiler', 'named', 'template', 'template');
+
+  /**
+   * These go first, so that they keep the names that the prose uses.
+   * The text has only imports, so nothing is left of it after they move to the registry.
+   */
+  if (importText.trim()) {
+    inlineDemo({ babel, source: importText, index: -1, imports });
+  }
 
   for (const demo of demos) {
     imports.reserve(demo.name);
-  }
-
-  /**
-   * What the prose has access to: the name in the template, and the local that holds it.
-   *
-   * @type {string[]}
-   */
-  const scope = [];
-
-  if (hasImports) {
-    for (const entry of parseImports(babel, importText)) {
-      if (entry.kind === 'side-effect') {
-        imports.sideEffect(entry.from);
-        continue;
-      }
-
-      const local = imports.use(entry.from, entry.kind, entry.imported, entry.local);
-
-      scope.push(local === entry.local ? local : `${entry.local}: ${local}`);
-    }
   }
 
   /** @type {string[]} */
@@ -83,75 +67,14 @@ export function buildGmdModule({ babel, prose, demos = [], imports: importText =
     const body = inlineDemo({ babel, source: demo.source, index, imports });
 
     declarations.push(`const ${demo.name} = (() => {\n${body}\n})();`);
-    scope.push(demo.name);
     rewrittenProse = replacePlaceholder(rewrittenProse, demo.placeholderId, demo.name);
   });
 
-  const scopeBody = scope.length ? `{ ${scope.join(', ')} }` : `{}`;
-
   return (
     `${imports.toSource()}\n\n` +
-    (declarations.length ? declarations.join('\n\n') + '\n\n' : '') +
-    `const _component = ${templateLocal}(${JSON.stringify(rewrittenProse)}, {\n` +
-    `  scope: () => (${scopeBody}),\n` +
-    `});\n` +
-    `export default _component;\n`
+    `${declarations.join('\n\n')}\n\n` +
+    `<template>${rewrittenProse}</template>\n`
   );
-}
-
-/**
- * The bindings that a string of import statements declares.
- *
- * @param {any} babel
- * @param {string} text
- * @returns {ImportEntry[]}
- */
-export function parseImports(babel, text) {
-  /** @type {ImportEntry[]} */
-  const entries = [];
-
-  /** @param {{ types: any }} api */
-  const plugin = ({ types: t }) => ({
-    visitor: {
-      /** @param {any} path */
-      ImportDeclaration(path) {
-        const from = path.node.source.value;
-
-        if (!path.node.specifiers.length) {
-          entries.push({ from, kind: 'side-effect', imported: null, local: '' });
-        }
-
-        for (const specifier of path.node.specifiers) {
-          const local = specifier.local.name;
-
-          if (t.isImportDefaultSpecifier(specifier)) {
-            entries.push({ from, kind: 'default', imported: null, local });
-          } else if (t.isImportNamespaceSpecifier(specifier)) {
-            entries.push({ from, kind: 'namespace', imported: null, local });
-          } else {
-            const { imported } = specifier;
-
-            entries.push({
-              from,
-              kind: 'named',
-              imported: t.isIdentifier(imported) ? imported.name : imported.value,
-              local,
-            });
-          }
-        }
-      },
-    },
-  });
-
-  babel.transform(text, {
-    plugins: [plugin],
-    sourceType: 'module',
-    configFile: false,
-    babelrc: false,
-    code: false,
-  });
-
-  return entries;
 }
 
 /**
@@ -276,7 +199,7 @@ function inlineDemo({ babel, source, index, imports }) {
               const imported = specifier.imported;
               const name = t.isIdentifier(imported) ? imported.name : imported.value;
 
-              shared = imports.use(from, 'named', name, name);
+              shared = imports.use(from, 'named', name, local);
             }
 
             if (shared !== local) {

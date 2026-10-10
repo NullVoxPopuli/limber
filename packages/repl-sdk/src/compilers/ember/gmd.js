@@ -102,6 +102,9 @@ export async function compiler(config, api) {
      *
      * Source has no runtime, so here each demo is compiled to source,
      * and all of them go into the one module with the prose.
+     *
+     * That module is gjs: the prose is its `<template>`.
+     * The gjs compiler then gives the prose its scope.
      */
     toSource: async (text, options) => {
       const result = await parse(text, options);
@@ -119,13 +122,15 @@ export async function compiler(config, api) {
 
       let babel;
 
-      if (demos.length || imports.trim()) {
+      if (demos.length) {
         const resolved = await api.tryResolve('@glimdown/babel-8-lite');
 
         babel = 'transform' in resolved ? resolved : resolved.default;
       }
 
-      return buildGmdModule({ babel, prose: result.text, demos, imports });
+      const gjs = buildGmdModule({ babel, prose: result.text, demos, imports });
+
+      return (await api.compileToSource('gjs', gjs)).source;
     },
     render: async (element, compiled, extra, compiler) => {
       /**

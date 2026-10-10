@@ -1,4 +1,3 @@
-import { parseImports } from '../../to-source.js';
 import { isRecord } from '../../utils.js';
 import { makeOwner } from './owner.js';
 
@@ -58,29 +57,14 @@ export async function compiler(config, api) {
     /**
      * Source can not hold the objects of a runtime `scope`.
      * The template has access to what `imports` imports, and nothing else.
+     *
+     * That is a gjs file, so the gjs compiler does the work.
      */
     toSource: async (text, options) => {
       const imports = typeof options.imports === 'string' ? options.imports.trim() : '';
+      const gjs = `${imports}\n\n<template>${text}</template>\n`.trimStart();
 
-      /** @type {string[]} */
-      let names = [];
-
-      if (imports) {
-        const resolved = await api.tryResolve('@glimdown/babel-8-lite');
-        const babel = 'transform' in resolved ? resolved : resolved.default;
-
-        names = parseImports(babel, imports)
-          .map((entry) => entry.local)
-          .filter(Boolean);
-      }
-
-      const scope = names.length ? `{ ${names.join(', ')} }` : `{}`;
-
-      return (
-        (imports ? `${imports}\n` : '') +
-        `import { template } from '@ember/template-compiler';\n\n` +
-        `export default template(${JSON.stringify(text)}, { scope: () => (${scope}) });\n`
-      );
+      return (await api.compileToSource('gjs', gjs)).source;
     },
     render: async (element, compiled, extra, compiler) => {
       /**

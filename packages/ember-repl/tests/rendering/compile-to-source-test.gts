@@ -72,69 +72,68 @@ export default setComponentTemplate(precompileTemplate("<output>{{greeting}}</ou
 }), templateOnly());
 `,
   hbs: String.raw`
-import { template } from '@ember/template-compiler';
-
-export default template("<output>hello</output>", { scope: () => ({}) });
+import { precompileTemplate } from "@ember/template-compilation";
+import { setComponentTemplate } from "@ember/component";
+import templateOnly from "@ember/component/template-only";
+export default setComponentTemplate(precompileTemplate("<output>hello</output>", {
+  strictMode: true
+}), templateOnly());
 `,
   markdown: String.raw`
-import { template } from '@ember/template-compiler';
-
-const _component = template("<h1 id=\"title\">Title</h1>\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>", {
-  scope: () => ({}),
-});
-export default _component;
+import { precompileTemplate } from "@ember/template-compilation";
+import { setComponentTemplate } from "@ember/component";
+import templateOnly from "@ember/component/template-only";
+export default setComponentTemplate(precompileTemplate("<h1 id=\"title\">Title</h1>\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>", {
+  strictMode: true
+}), templateOnly());
 `,
   demos: String.raw`
-import { template } from '@ember/template-compiler';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { precompileTemplate } from '@ember/template-compilation';
 import { setComponentTemplate } from '@ember/component';
 import templateOnly from '@ember/component/template-only';
-
 const Demo1 = (() => {
-const _demo0_value = 'first';
-class _demo0_Demo extends Component {
-  @tracked
-  suffix = "!";
-  static {
-    setComponentTemplate(precompileTemplate("<output class=\"one\">{{value}}{{this.suffix}}</output>", {
-      strictMode: true,
-      scope: () => ({
-        value: _demo0_value
-      })
-    }), this);
+  const _demo0_value = 'first';
+  class _demo0_Demo extends Component {
+    @tracked
+    suffix = "!";
+    static {
+      setComponentTemplate(precompileTemplate("<output class=\"one\">{{value}}{{this.suffix}}</output>", {
+        strictMode: true,
+        scope: () => ({
+          value: _demo0_value
+        })
+      }), this);
+    }
   }
-}
-const _demo0_default = _demo0_Demo;
-
-return _demo0_default;
+  const _demo0_default = _demo0_Demo;
+  return _demo0_default;
 })();
-
 const Demo2 = (() => {
-const _demo1_value = 'second';
-const _demo1_default = setComponentTemplate(precompileTemplate("<output class=\"two\">{{value}}</output>", {
+  const _demo1_value = 'second';
+  const _demo1_default = setComponentTemplate(precompileTemplate("<output class=\"two\">{{value}}</output>", {
+    strictMode: true,
+    scope: () => ({
+      value: _demo1_value
+    })
+  }), templateOnly());
+  return _demo1_default;
+})();
+const Demo3 = (() => {
+  const _demo2_default = setComponentTemplate(precompileTemplate("<output class=\"three\">third</output>", {
+    strictMode: true
+  }), templateOnly());
+  return _demo2_default;
+})();
+export default setComponentTemplate(precompileTemplate("<h1 id=\"title\">Title</h1>\n<div class=\"repl-sdk__demo\"><div data-repl-output><Demo1 /></div></div>\n<div class=\"repl-sdk__demo\"><div data-repl-output><Demo2 /></div></div>\n<div class=\"repl-sdk__demo\"><div data-repl-output><Demo3 /></div></div>\n<div class=\"repl-sdk__snippet\" data-repl-output><pre><code class=\"language-gjs\">const notLive = true;\n</code></pre></div>", {
   strictMode: true,
   scope: () => ({
-    value: _demo1_value
+    Demo1,
+    Demo2,
+    Demo3
   })
 }), templateOnly());
-
-return _demo1_default;
-})();
-
-const Demo3 = (() => {
-const _demo2_default = template("<output class=\"three\">third</output>", {
-  scope: () => ({})
-});
-
-return _demo2_default;
-})();
-
-const _component = template("<h1 id=\"title\">Title</h1>\n<div class=\"repl-sdk__demo\"><div data-repl-output><Demo1 /></div></div>\n<div class=\"repl-sdk__demo\"><div data-repl-output><Demo2 /></div></div>\n<div class=\"repl-sdk__demo\"><div data-repl-output><Demo3 /></div></div>\n<div class=\"repl-sdk__snippet\" data-repl-output><pre><code class=\"language-gjs\">const notLive = true;\n</code></pre></div>", {
-  scope: () => ({ Demo1, Demo2, Demo3 }),
-});
-export default _component;
 `,
 };
 
