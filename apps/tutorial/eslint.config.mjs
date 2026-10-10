@@ -1,12 +1,9 @@
 import { configs } from '@nullvoxpopuli/eslint-configs';
 
-import templateLintMigration from 'eslint-plugin-ember/configs/template-lint-migration';
-
-const config = configs.ember(import.meta.dirname);
+const config = configs.ember(import.meta.dirname, { templates: true });
 
 export default [
   ...config,
-  ...templateLintMigration,
   {
     files: ['**/*.{gjs,gts}'],
     rules: {

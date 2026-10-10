@@ -24,10 +24,10 @@
   "devDependencies": {
     "@babel/core": "^7.28.5",
     "@glint/ember-tsc": "^1.11.0",
-    "@nullvoxpopuli/eslint-configs": "^6.0.0",
+    "@nullvoxpopuli/eslint-configs": "^7.1.0",
     "concurrently": "^9.2.1",
     "dev-tools": "workspace:*",
-    "eslint": "^9.39.1",
+    "eslint": "^10.0.0",
     "prettier": "^3.9.6",
     "prettier-plugin-ember-template-tag": "2.1.8",
     "prettier-plugin-tailwindcss": "^0.7.2",

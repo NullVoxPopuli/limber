@@ -404,7 +404,8 @@ export class Compiler {
     const compiler = await this.#getCompiler(format, opts.flavor);
     const compiled = await compiler.compile(text, opts);
 
-    let compiledText = 'export default "failed to compile"';
+    /** @type {string} */
+    let compiledText;
     let extras = { compiled: '' };
 
     if (typeof compiled === 'string') {
@@ -675,10 +676,8 @@ export class Compiler {
         await Promise.all(Object.values(morePromises));
 
         for (let i = 0; i < results.length; i++) {
-          let result = results[i];
-
-          if (!result && morePromises[i]) {
-            result = morePromises[i];
+          if (!results[i] && morePromises[i]) {
+            results[i] = await morePromises[i];
           }
         }
       }
