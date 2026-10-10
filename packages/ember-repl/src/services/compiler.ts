@@ -434,16 +434,21 @@ export default class CompilerService {
   /**
    * @public
    *
-   * Build-time variant of {@link CompilerService.compile}: returns the
-   * compiled JS module source as a string instead of an evaluated component.
+   * Compiles to the source of a JS module, as a string.
+   * Nothing is evaluated, and nothing renders.
    *
-   * Intended for SSG / pre-rendering pipelines that want to take the output
-   * of a live demo (or a `gmd` document containing many demos) and hand it
-   * to their own bundler, rather than evaluating it in the browser at boot.
+   * This is for tools that pre-render pages (SSG).
+   * The module goes to the build of the app, like any other source file.
    *
-   * The returned string is a `.gjs`-shaped ES module — top-level imports
-   * plus an `export default` — that the consuming app's content-tag + babel
-   * pipeline can precompile to wire format.
+   * - templates are not compiled to the wire format
+   * - decorators are still decorators
+   * - a markdown document becomes one module, with its live demos inline
+   *
+   * The `scope` option has no effect here, because source can not hold live objects.
+   * A demo has access to what it imports.
+   *
+   * @param {string} ext the ext/format to be compiled
+   * @param {string} text the code to be compiled using the configured compiler for the ext
    */
   @waitFor
   async compileToSource(
@@ -451,17 +456,14 @@ export default class CompilerService {
     text: string,
     options?: Record<string, unknown>
   ): Promise<{ source: string }> {
-    this.messages = [];
-
     await Promise.resolve();
 
-    const opts = { ...(options ?? {}) };
+    this.messages.length = 0;
 
-    if (ext === 'hbs') {
-      opts.flavor = 'ember';
-    }
-
-    return this.compiler.compileToSource(ext, text, opts);
+    return this.compiler.compileToSource(ext, text, {
+      ...options,
+      ...(ext === 'hbs' ? { flavor: 'ember' } : {}),
+    });
   }
 }
 

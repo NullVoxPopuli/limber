@@ -173,6 +173,24 @@ export async function compiler(config, api, flags = {}) {
     });
   }
 
+  /**
+   * Does only what a build can not do later, or what the caller needs now:
+   * types go away, and each template gets an explicit scope.
+   *
+   * The explicit scope lets a tool rename or move the code around the template.
+   * The template is still text, so it is not tied to one version of ember-source.
+   *
+   * @param {string} text
+   */
+  async function transformToSource(text) {
+    return babel.transformAsync(text, {
+      filename,
+      parserOpts: { plugins: ['decorators'] },
+      plugins: typePlugins.concat([[emberTemplateCompilation, { compiler, targetFormat: 'hbs' }]]),
+      presets: [],
+    });
+  }
+
   const preprocessor = new contentTag.Preprocessor();
 
   /**
@@ -188,6 +206,14 @@ export async function compiler(config, api, flags = {}) {
       const code = transformed.code;
 
       return code;
+    },
+    toSource: async (text) => {
+      const { code: preprocessed } = preprocessor.process(text, {
+        filename: `dynamic-repl.g${ext}`,
+      });
+      const transformed = await transformToSource(preprocessed);
+
+      return transformed.code;
     },
     render: async (element, compiled, extra, compiler) => {
       /**

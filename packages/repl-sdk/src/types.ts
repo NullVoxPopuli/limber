@@ -38,23 +38,17 @@ export interface PublicMethods {
     options?: {
       flavor?: string;
       fileName?: string;
-      [key: string]: unknown;
     }
   ) => Promise<{ element: HTMLElement; destroy: () => void }>;
 
   /**
-   * Build-time variant of {@link PublicMethods.compile}: returns the compiled
-   * source as a string rather than evaluating it and rendering to a DOM
-   * element.
-   *
-   * Useful for SSG / pre-rendering pipelines that want to take a live demo's
-   * compiled output and hand it to their own bundler instead of executing it
-   * in the browser.
+   * Like `compile`, but nothing is evaluated and nothing renders.
+   * The result is the source of a JS module, for the build of another app.
    */
   compileToSource: (
     format: string,
     text: string,
-    options?: Record<string, unknown>
+    options?: { flavor?: string; [key: string]: unknown }
   ) => Promise<{ source: string }>;
 
   optionsFor: (
@@ -91,13 +85,7 @@ type CompileResult =
   | {
       compiled: string;
       [option: string]: unknown;
-    }
-  /**
-   * Variant returned by compilers when invoked with `renderToString: true` —
-   * the build-time form, where no rendering happens and the caller receives
-   * the compiled JS module source as a string instead of a rendered element.
-   */
-  | { source: string; [option: string]: unknown };
+    };
 
 export interface Compiler {
   /**
@@ -107,6 +95,15 @@ export interface Compiler {
    * You may return either just a string, or an object with a `compiled` property that is a string -- any additional properties will be passde through to the render function -- which may be useful if there is accompanying CSS.
    */
   compile: (text: string, options: Record<string, unknown>) => Promise<CompileResult>;
+
+  /**
+   * Convert a string from "fileExtension" to the source of a JavaScript module.
+   * Nothing loads this module. It goes to the build of another app,
+   * so it must not depend on this runtime (no live scope, no compiled templates).
+   *
+   * Optional. `compileToSource` rejects for a compiler that does not have it.
+   */
+  toSource?: (text: string, options: Record<string, unknown>) => Promise<string>;
 
   /**
    * For the root of a node rendered for this compiler,

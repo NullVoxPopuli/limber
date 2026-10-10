@@ -1383,6 +1383,9 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
     devDependencies:
+      '@glimdown/babel-8-lite':
+        specifier: workspace:*
+        version: link:../babel-8-lite
       '@nullvoxpopuli/eslint-configs':
         specifier: ^7.1.0
         version: 7.1.0(54d15b8b3fa7a7fd40662bccb9bfa72a)

@@ -22,22 +22,17 @@ export class Compiler {
     options?: {
       flavor?: string;
       fileName?: string;
-      [key: string]: unknown;
     }
   ): Promise<{ element: HTMLElement; destroy: () => void }>;
 
   /**
-   * Build-time variant of {@link Compiler.compile}: returns the compiled JS
-   * module source as a string instead of evaluating and rendering.
-   *
-   * Intended for SSG / pre-rendering pipelines that want to hand the
-   * compiled output to their own bundler rather than evaluate it in the
-   * browser at boot.
+   * Like `compile`, but nothing is evaluated and nothing renders.
+   * The result is the source of a JS module, for the build of another app.
    */
   compileToSource(
     format: string,
     text: string,
-    options?: Record<string, unknown>
+    options?: { flavor?: string; [key: string]: unknown }
   ): Promise<{ source: string }>;
 
   optionsFor(format: string, flavor?: string): Omit<CompilerConfig, 'compiler'>;

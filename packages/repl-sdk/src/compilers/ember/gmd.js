@@ -1,7 +1,7 @@
 /**
  * @typedef {import('unified').Plugin} Plugin
  */
-import { buildGmdModule } from '../../render-to-string.js';
+import { buildGmdModule } from '../../to-source.js';
 import { assert, isRecord } from '../../utils.js';
 import { buildCodeFenceMetaUtils } from '../markdown/utils.js';
 import { makeOwner } from './owner.js';
@@ -54,81 +54,76 @@ export async function compiler(config, api) {
   const { parseMarkdown } = await import('../markdown/parse.js');
 
   /**
+   * @param {string} text
+   * @param {Record<string, unknown>} options
+   */
+  function parse(text, options) {
+    const compileOptions = filterOptions(options);
+
+    return parseMarkdown(text, {
+      remarkPlugins: [...userOptions.remarkPlugins, ...compileOptions.remarkPlugins],
+      rehypePlugins: [...userOptions.rehypePlugins, ...compileOptions.rehypePlugins],
+      isLive,
+      isPreview,
+      isBelow,
+      needsLive,
+      ALLOWED_FORMATS: allowedFormats,
+      getFlavorFromMeta,
+    });
+  }
+
+  /**
    * @type {import('../../types.ts').Compiler}
    */
   const gmdCompiler = {
-    /**
-     * Two shapes come out of here.
-     *
-     * The runtime form returns a live component for the prose alone. Each
-     * live codefence stays a separate island that `render` compiles and
-     * mounts into its placeholder, so demos keep their own module, their own
-     * owner, and the caller's `scope` object by reference.
-     *
-     * The renderToString form has no runtime to lean on: it has to hand back
-     * one self-contained module, so every demo is compiled to source and
-     * inlined. A live `scope` object cannot survive that trip, so build-time
-     * demos see an empty scope.
-     */
     compile: async (text, options) => {
-      const compileOptions = filterOptions(options);
-      const result = await parseMarkdown(text, {
-        remarkPlugins: [...userOptions.remarkPlugins, ...compileOptions.remarkPlugins],
-        rehypePlugins: [...userOptions.rehypePlugins, ...compileOptions.rehypePlugins],
-        isLive,
-        isPreview,
-        isBelow,
-        needsLive,
-        ALLOWED_FORMATS: allowedFormats,
-        getFlavorFromMeta,
-      });
-
-      const scope = {
-        ...userOptions.scope,
-        ...compileOptions.scope,
-      };
-
-      if (isRecord(options) && options.renderToString === true) {
-        /** @type {Array<{ name: string, placeholderId: string, source: string }>} */
-        const demos = [];
-
-        let nth = 0;
-
-        for (const info of result.codeBlocks) {
-          const { format, flavor, code, placeholderId } = info;
-
-          if (!api.canCompile(format, flavor).result) continue;
-
-          nth++;
-
-          const sub = await api.compileToSource(format, code, {
-            ...(options ?? {}),
-            flavor,
-          });
-
-          demos.push({ name: `Demo${nth}`, placeholderId, source: sub.source });
-        }
-
-        // Merging demo modules is the only thing here that needs an AST, so a
-        // document with no live demos never asks the host for babel.
-        let babel;
-
-        if (demos.length) {
-          const resolved = await api.tryResolve('@babel/standalone');
-
-          babel = 'packages' in resolved ? resolved : resolved.default;
-        }
-
-        return { source: buildGmdModule({ babel, prose: result.text, demos }) };
-      }
+      const result = await parse(text, options);
 
       const { template } = await api.tryResolve('@ember/template-compiler/runtime');
 
+      const scope = {
+        ...filterOptions(userOptions).scope,
+        ...filterOptions(options).scope,
+      };
+
       const component = template(result.text, {
-        scope: () => ({ ...scope }),
+        scope: () => ({
+          ...scope,
+          // TODO: compile all the components from "result" and add them to scope here
+          //       would this be better than the markdown style multiple islands
+        }),
       });
 
       return { compiled: component, ...result, scope };
+    },
+    /**
+     * At runtime, each live code fence is a separate island.
+     * `render` compiles it and puts it in its placeholder.
+     *
+     * Source has no runtime, so here each demo is compiled to source,
+     * and all of them go into the one module with the prose.
+     */
+    toSource: async (text, options) => {
+      const result = await parse(text, options);
+
+      /** @type {Array<{ name: string, placeholderId: string, source: string }>} */
+      const demos = [];
+
+      for (const { format, flavor, code, placeholderId } of result.codeBlocks) {
+        const { source } = await api.compileToSource(format, code, { flavor });
+
+        demos.push({ name: `Demo${demos.length + 1}`, placeholderId, source });
+      }
+
+      let babel;
+
+      if (demos.length) {
+        const resolved = await api.tryResolve('@glimdown/babel-8-lite');
+
+        babel = 'transform' in resolved ? resolved : resolved.default;
+      }
+
+      return buildGmdModule({ babel, prose: result.text, demos });
     },
     render: async (element, compiled, extra, compiler) => {
       /**
@@ -173,28 +168,42 @@ export async function compiler(config, api) {
           /** @type {Record<string, unknown>} */
           const infoObj = /** @type {Record<string, unknown>} */ (info);
 
-          const format = /** @type {string} */ (infoObj.format);
-          const flavor = /** @type {string} */ (infoObj.flavor);
-
-          if (!api.canCompile(format, flavor).result) {
+          if (
+            !api.canCompile(
+              /** @type {string} */ (infoObj.format),
+              /** @type {string} */ (infoObj.flavor)
+            ).result
+          ) {
             return;
           }
 
+          const flavor = /** @type {string} */ (infoObj.flavor);
           const hasScope =
-            flavor === 'ember' || format === 'gjs' || format === 'gts' || format === 'hbs';
-          const subRender = await compiler.compile(format, /** @type {string} */ (infoObj.code), {
-            ...compiler.optionsFor(format, flavor),
-            flavor: flavor,
-            // @ts-ignore
-            ...(hasScope ? { scope: extra.scope } : {}),
-          });
+            flavor === 'ember' ||
+            infoObj.format === 'gjs' ||
+            infoObj.format === 'gts' ||
+            infoObj.format === 'hbs';
+          const subRender = await compiler.compile(
+            /** @type {string} */ (infoObj.format),
+            /** @type {string} */ (infoObj.code),
+            {
+              ...compiler.optionsFor(/** @type {string} */ (infoObj.format), flavor),
+              flavor: flavor,
+              // @ts-ignore
+              ...(hasScope
+                ? {
+                    scope: extra.scope,
+                  }
+                : {}),
+            }
+          );
 
           const selector = `#${/** @type {string} */ (infoObj.placeholderId)}`;
           const target = element.querySelector(selector);
 
           assert(
             `Could not find placeholder / target element (using selector: \`${selector}\`). ` +
-              `Could not render ${format} block.`,
+              `Could not render ${/** @type {string} */ (infoObj.format)} block.`,
             target
           );
 

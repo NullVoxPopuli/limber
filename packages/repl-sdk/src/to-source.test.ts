@@ -1,7 +1,8 @@
-import babel from '@babel/standalone';
 import { describe, expect, test } from 'vitest';
 
-import { buildGmdModule, replacePlaceholder } from './render-to-string.js';
+import * as babel from '@glimdown/babel-8-lite';
+
+import { buildGmdModule, replacePlaceholder } from './to-source.js';
 
 function build(
   prose: string,
@@ -57,7 +58,7 @@ describe('buildGmdModule', () => {
         prose: `<div id="a"></div>`,
         demos: [{ name: 'Demo1', placeholderId: 'a', source: `export default 1;` }],
       })
-    ).toThrow(/@babel\/standalone/);
+    ).toThrow(/needs babel/);
   });
 
   test('emits a build-time template import and an empty scope with no demos', () => {
@@ -80,7 +81,7 @@ describe('buildGmdModule', () => {
       { name: 'Demo1', placeholderId: 'repl_1', source },
     ]);
 
-    // the demo's import keeps its original local name
+    /** the demo's import keeps its original local name */
     expect(out).toContain(`import Component from '@glimmer/component';`);
     expect(out).toMatch(/const Demo1 = \(\(\) => \{[\s\S]*\}\)\(\);/);
     expect(out).toContain(`<div class=\\"demo\\"><div data-repl-output><Demo1 /></div></div>`);
@@ -98,7 +99,7 @@ describe('buildGmdModule', () => {
 
     expect(out).toMatch(/scope: \(\) => \(\{ Demo1, Demo2 \}\)/);
     expect(out.indexOf('const Demo1 ')).toBeLessThan(out.indexOf('const Demo2 '));
-    // both demos still produce their own value
+    /** both demos still produce their own value */
     expect(out).toContain('1');
     expect(out).toContain('2');
   });
@@ -119,7 +120,7 @@ describe('buildGmdModule', () => {
 
     expect(out).toContain(`from '@ember/modifier';`);
     expect(out).toContain(`from 'somewhere-else';`);
-    // the second `on` is renamed rather than merged into the first
+    /** the second `on` is renamed rather than merged into the first */
     expect(out).toMatch(/on as on\$1|on\$1/);
   });
 
@@ -146,10 +147,11 @@ describe('buildGmdModule', () => {
 
     const out = build(`<div id="a"></div>`, [{ name: 'Demo1', placeholderId: 'a', source }]);
 
-    // The quoted module keeps its own import and its own export default
-    expect(out).toContain(`import { tracked } from "@glimmer/tracking";`);
-    expect(out).toContain(`export default class Hello extends Component {}`);
-    // ...and only the demo's real import was hoisted, alongside `template`
+    /** The quoted module keeps its own import and its own export default, with no change to the text */
+    expect(out).toContain(
+      '`import { tracked } from "@glimmer/tracking";\n\nexport default class Hello extends Component {}\n`'
+    );
+    /** ...and only the demo's real import was hoisted, alongside `template` */
     expect(out.match(/^import /gm)?.length).toBe(2);
   });
 
@@ -169,5 +171,101 @@ describe('buildGmdModule', () => {
 
     expect(out).not.toMatch(/^\s*export const/m);
     expect(out).toMatch(/const _demo0_helper = 1;/);
+  });
+
+  test('a default export that is a named class stays a declaration', () => {
+    const source = [
+      `import Component from '@glimmer/component';`,
+      `export default class Demo extends Component {`,
+      `  static self = Demo;`,
+      `}`,
+    ].join('\n');
+
+    const out = build(`<div id="a"></div>`, [{ name: 'Demo1', placeholderId: 'a', source }]);
+
+    expect(out).toContain(`class _demo0_Demo extends Component {`);
+    expect(out).toContain(`static self = _demo0_Demo;`);
+    expect(out).toContain(`const _demo0_default = _demo0_Demo;`);
+    expect(out).toContain(`return _demo0_default;`);
+  });
+
+  test('a default export that is a named function is returned', () => {
+    const out = build(`<div id="a"></div>`, [
+      { name: 'Demo1', placeholderId: 'a', source: `export default function demo() {}` },
+    ]);
+
+    expect(out).toContain(`function _demo0_demo() {}`);
+    expect(out).toContain(`const _demo0_default = _demo0_demo;`);
+    expect(out).toContain(`return _demo0_default;`);
+  });
+
+  test('a default export in an export list is returned', () => {
+    const source = [`const a = 1;`, `const b = 2;`, `export { a as default, b };`].join('\n');
+
+    const out = build(`<div id="a"></div>`, [{ name: 'Demo1', placeholderId: 'a', source }]);
+
+    expect(out).toContain(`const _demo0_default = _demo0_a;`);
+    expect(out).toContain(`return _demo0_default;`);
+    expect(out).not.toMatch(/^\s*export \{/m);
+  });
+
+  test('decorators stay decorators', () => {
+    const source = [
+      `import { tracked } from '@glimmer/tracking';`,
+      `export default class Demo {`,
+      `  @tracked count = 0;`,
+      `}`,
+    ].join('\n');
+
+    const out = build(`<div id="a"></div>`, [{ name: 'Demo1', placeholderId: 'a', source }]);
+
+    expect(out).toMatch(/@tracked\s+count = 0;/);
+  });
+
+  test('an import with no bindings is kept, one time', () => {
+    const source = [`import './setup.js';`, `export default 1;`].join('\n');
+
+    const out = build(`<div id="a"></div><div id="b"></div>`, [
+      { name: 'Demo1', placeholderId: 'a', source },
+      { name: 'Demo2', placeholderId: 'b', source },
+    ]);
+
+    expect(out.match(/^import '\.\/setup\.js';$/gm)?.length).toBe(1);
+  });
+
+  test('an import can have the name that another demo declares', () => {
+    const out = build(`<div id="a"></div><div id="b"></div>`, [
+      {
+        name: 'Demo1',
+        placeholderId: 'a',
+        source: [`const tracked = 1;`, `export default tracked;`].join('\n'),
+      },
+      {
+        name: 'Demo2',
+        placeholderId: 'b',
+        source: [
+          `import { tracked as t } from '@glimmer/tracking';`,
+          `const tracked = 2;`,
+          `export default [t, tracked];`,
+        ].join('\n'),
+      },
+    ]);
+
+    expect(out).toContain(`import { template } from '@ember/template-compiler';`);
+    expect(out).toContain(`import { tracked } from '@glimmer/tracking';`);
+    expect(out).toContain(`const _demo1_default = [tracked, _demo1_tracked];`);
+  });
+
+  test('an import can not take the name of a demo', () => {
+    const out = build(`<div id="a"></div>`, [
+      {
+        name: 'Demo1',
+        placeholderId: 'a',
+        source: [`import Demo1 from './other.js';`, `export default Demo1;`].join('\n'),
+      },
+    ]);
+
+    expect(out).toContain(`import Demo1$1 from './other.js';`);
+    expect(out).toContain(`const _demo0_default = Demo1$1;`);
   });
 });
