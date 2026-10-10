@@ -1,7 +1,11 @@
+import { assert } from '../../utils.js';
 import { makeOwner } from './owner.js';
 
 let elementId = 0;
 
+/**
+ * What both `compile` and `toSource` use.
+ */
 const buildDependencies = [
   /**
    * Babel with only what this compiler uses, in the shape of `@babel/standalone`.
@@ -9,13 +13,6 @@ const buildDependencies = [
    * which has the same API and way too much stuff.
    */
   '@glimdown/babel-8-lite',
-  /**
-   * We will be using this decorator transform
-   * instead of the babel one.
-   * The babel transform does way too much transforming.
-   */
-  'decorator-transforms',
-
   /**
    * Babel plugin that understands all the different ways
    * which templates have been authored and what they need to
@@ -32,6 +29,19 @@ const buildDependencies = [
    * Converts gjs/gts to standard js/ts
    */
   'content-tag',
+];
+
+/**
+ * What only `compile` uses, because only `compile` makes code for this runtime.
+ * A host that only calls `toSource` does not need to provide these.
+ */
+const runtimeDependencies = [
+  /**
+   * We will be using this decorator transform
+   * instead of the babel one.
+   * The babel transform does way too much transforming.
+   */
+  'decorator-transforms',
   /**
    * Older-style build macros
    * (before import.meta.env was even a thing)
@@ -46,6 +56,107 @@ const buildDependencies = [
    */
   // '@embroider/macros/babel',
 ];
+
+const TEMPLATE_SOURCES = ['@ember/template-compiler', '@ember/template-compilation'];
+
+/**
+ * The template plugin prints each template again when it adds the scope,
+ * and the print loses text: `\\{{` (a literal `{{`) comes out as `{{`.
+ *
+ * This reads each template before the template plugin runs,
+ * and puts the same text back after.
+ *
+ */
+function keepTemplateText() {
+  /**
+   * The calls that hold a template, in the order of the file.
+   *
+   * @param {any} program
+   * @returns {any[]}
+   */
+  function templateCalls(program) {
+    /** @type {any[]} */
+    const calls = [];
+
+    program.scope.crawl();
+
+    program.traverse({
+      /** @param {any} path */
+      CallExpression(path) {
+        const callee = path.get('callee');
+
+        if (!callee.isIdentifier()) return;
+
+        const declaration = path.scope.getBinding(callee.node.name)?.path.parentPath;
+
+        if (!declaration?.isImportDeclaration()) return;
+        if (!TEMPLATE_SOURCES.includes(declaration.node.source.value)) return;
+
+        calls.push(path);
+      },
+    });
+
+    return calls;
+  }
+
+  /**
+   * @param {any} t
+   * @param {any} node the first argument of a template call
+   * @returns {string | undefined}
+   */
+  function textOf(t, node) {
+    if (t.isStringLiteral(node)) return node.value;
+
+    if (t.isTemplateLiteral(node) && node.quasis.length === 1) {
+      return node.quasis[0].value.cooked;
+    }
+  }
+
+  /** @type {Array<string | undefined>} */
+  let texts = [];
+
+  return {
+    /**
+     * For a pass that does not have the template plugin.
+     */
+    /** @param {{ types: any }} api */
+    read: ({ types: t }) => ({
+      visitor: {
+        /** @param {any} program */
+        Program(program) {
+          texts = templateCalls(program).map((call) => textOf(t, call.node.arguments[0]));
+        },
+      },
+    }),
+    /**
+     * For the pass that has the template plugin.
+     */
+    /** @param {{ types: any }} api */
+    write: ({ types: t }) => ({
+      visitor: {
+        Program: {
+          /** @param {any} program */
+          exit(program) {
+            const calls = templateCalls(program);
+
+            assert(
+              `Expected ${texts.length} templates after the template plugin, but there are ${calls.length}.`,
+              calls.length === texts.length
+            );
+
+            calls.forEach((call, index) => {
+              const text = texts[index];
+
+              if (text !== undefined) {
+                call.node.arguments[0] = t.stringLiteral(text);
+              }
+            });
+          },
+        },
+      },
+    }),
+  };
+}
 
 /**
  * @typedef {import('../../types.ts').CompilerConfig['compiler']} CompilerFactory
@@ -64,20 +175,10 @@ export async function compiler(config, api, flags = {}) {
   const ext = typescript ? 'ts' : 'js';
   const filename = `dynamic-repl.${ext}`;
 
-  const [
-    _babel,
-    _decoratorTransforms,
-    _emberTemplateCompilation,
-    compiler,
-    contentTag,
-    { default: DebugMacros },
-    // embroiderMacros,
-  ] = await api.tryResolveAll(buildDependencies);
+  const [_babel, _emberTemplateCompilation, compiler, contentTag] =
+    await api.tryResolveAll(buildDependencies);
 
   // These libraries are compiled incorrectly for cjs<->ESM compat
-  const decoratorTransforms =
-    'default' in _decoratorTransforms ? _decoratorTransforms.default : _decoratorTransforms;
-
   const emberTemplateCompilation =
     'default' in _emberTemplateCompilation
       ? _emberTemplateCompilation.default
@@ -105,10 +206,24 @@ export async function compiler(config, api, flags = {}) {
     : [];
 
   /**
+   * Babel must not read the babel config of a project.
+   * That config is for the build of the project, and in Node, babel finds it.
+   */
+  const isolated = { configFile: false, babelrc: false };
+
+  /**
    * @param {string} text
    */
   async function transform(text) {
+    const [_decoratorTransforms, { default: DebugMacros }] =
+      await api.tryResolveAll(runtimeDependencies);
+
+    // This library is compiled incorrectly for cjs<->ESM compat
+    const decoratorTransforms =
+      'default' in _decoratorTransforms ? _decoratorTransforms.default : _decoratorTransforms;
+
     return babel.transformAsync(text, {
+      ...isolated,
       filename,
       plugins: typePlugins.concat([
         [
@@ -173,6 +288,38 @@ export async function compiler(config, api, flags = {}) {
     });
   }
 
+  /**
+   * Does only what a build can not do later, or what the caller needs now:
+   * types go away, and each template gets an explicit scope.
+   *
+   * The explicit scope lets a tool rename or move the code around the template.
+   * The template is still text, so it is not tied to one version of ember-source.
+   *
+   * @param {string} text
+   */
+  async function transformToSource(text) {
+    const templateText = keepTemplateText();
+    const options = { ...isolated, filename, parserOpts: { plugins: ['decorators'] }, presets: [] };
+
+    /**
+     * The template plugin changes the file before any other plugin sees it,
+     * so the read is a pass of its own.
+     */
+    await babel.transformAsync(text, {
+      ...options,
+      code: false,
+      plugins: typePlugins.concat([templateText.read]),
+    });
+
+    return babel.transformAsync(text, {
+      ...options,
+      plugins: typePlugins.concat([
+        [emberTemplateCompilation, { compiler, targetFormat: 'hbs' }],
+        templateText.write,
+      ]),
+    });
+  }
+
   const preprocessor = new contentTag.Preprocessor();
 
   /**
@@ -188,6 +335,14 @@ export async function compiler(config, api, flags = {}) {
       const code = transformed.code;
 
       return code;
+    },
+    toSource: async (text) => {
+      const { code: preprocessed } = preprocessor.process(text, {
+        filename: `dynamic-repl.g${ext}`,
+      });
+      const transformed = await transformToSource(preprocessed);
+
+      return transformed.code;
     },
     render: async (element, compiled, extra, compiler) => {
       /**

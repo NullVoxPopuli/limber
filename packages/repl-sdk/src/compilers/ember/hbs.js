@@ -54,6 +54,18 @@ export async function compiler(config, api) {
        */
       return component;
     },
+    /**
+     * Source can not hold the objects of a runtime `scope`.
+     * The template has access to what `imports` imports, and nothing else.
+     *
+     * That is a gjs file, so the gjs compiler does the work.
+     */
+    toSource: async (text, options) => {
+      const imports = typeof options.imports === 'string' ? options.imports.trim() : '';
+      const gjs = `${imports}\n\n<template>${text}</template>\n`.trimStart();
+
+      return (await api.compileToSource('gjs', gjs)).source;
+    },
     render: async (element, compiled, extra, compiler) => {
       /**
        *
