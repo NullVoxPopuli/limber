@@ -110,6 +110,26 @@ export function emberRepl(options = {}) {
       root = config.root;
     },
 
+    /**
+     * ember-repl imports `content-tag` to compile in the browser.
+     * In a server build, that import goes to the Node build of content-tag,
+     * which is CommonJS and reads `__dirname`. A server bundle is ESM, so that throws.
+     * The standalone build is ESM and works in both.
+     *
+     * @this {{ resolve: (id: string, importer?: string, options?: object) => unknown }}
+     * @param {string} id
+     * @param {string | undefined} importer
+     * @param {{ ssr?: boolean }} [options]
+     */
+    resolveId(id, importer, options) {
+      if (id === 'content-tag' && options?.ssr) {
+        return this.resolve('content-tag/standalone', importer, {
+          ...options,
+          skipSelf: true,
+        });
+      }
+    },
+
     /** @param {string} id */
     async load(id) {
       const [path] = id.split('?');

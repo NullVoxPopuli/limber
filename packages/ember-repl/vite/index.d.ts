@@ -21,5 +21,13 @@ export function emberRepl(options?: Options): {
   name: string;
   enforce: 'pre';
   configResolved(config: { root: string }): void;
+  resolveId(
+    this: {
+      resolve: (id: string, importer?: string, options?: object) => unknown;
+    },
+    id: string,
+    importer: string | undefined,
+    options?: { ssr?: boolean }
+  ): unknown;
   load(id: string): Promise<{ code: string; map: unknown } | undefined>;
 };

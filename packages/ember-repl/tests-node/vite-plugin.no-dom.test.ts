@@ -40,4 +40,24 @@ describe('ember-repl/vite, with no DOM', () => {
     expect(await plugin.load('/some/file.md')).toBeUndefined();
     expect(await plugin.load('/some/file.gjs')).toBeUndefined();
   });
+
+  test('a server build gets the standalone build of content-tag', async () => {
+    const plugin = emberRepl();
+    const context = {
+      resolve: (id: string) => `resolved:${id}`,
+    };
+
+    expect(
+      plugin.resolveId.call(context, 'content-tag', '/app.js', { ssr: true })
+    ).toBe('resolved:content-tag/standalone');
+
+    expect(
+      plugin.resolveId.call(context, 'content-tag', '/app.js', { ssr: false }),
+      'a browser build already gets it'
+    ).toBeUndefined();
+
+    expect(
+      plugin.resolveId.call(context, 'other', '/app.js', { ssr: true })
+    ).toBeUndefined();
+  });
 });
