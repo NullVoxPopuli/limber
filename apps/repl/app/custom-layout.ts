@@ -7,8 +7,6 @@
  *
  * Other files in that folder belong to that route alone.
  *
- * The docs routes are plain templates and stay in app/templates/.
- *
  * The resolver still looks modules up by the classic layout
  * (routes/, templates/, controllers/), so the module keys are translated here.
  */

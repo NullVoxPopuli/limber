@@ -1,11 +1,3 @@
-// Types for compiled templates
-declare module 'limber/templates/*' {
-  import type { TemplateFactory } from 'htmlbars-inline-precompile';
-
-  const tmpl: TemplateFactory;
-  export default tmpl;
-}
-
 type Injections = Array<object | undefined>;
 
 type LazyTrackedArgs = {

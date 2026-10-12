@@ -1,9 +1,9 @@
-import './docs/styles.css';
+import './styles.css';
 // This side-effect import is needed because I forgot
 // to include some variables imports in the sub-components.
 import 'nvp.ui';
 
-import { NavLink, Topics } from './docs/topics.gts';
+import { NavLink, Topics } from './topics.gts';
 
 <template>
   <nav class="docs-nav">

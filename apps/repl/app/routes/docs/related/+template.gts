@@ -8,7 +8,7 @@ import { ExternalLink } from '@nullvoxpopuli/limber-shared';
     Do you know of or work on a REPL?<br />
     Feel free to PR it here ❤️
     <ExternalLink
-      href="https://github.com/NullVoxPopuli/limber/edit/main/apps/repl/app/templates/docs/related.gts"
+      href="https://github.com/NullVoxPopuli/limber/edit/main/apps/repl/app/routes/docs/related/+template.gts"
     >Edit this file on GitHub</ExternalLink>
 
     <h2>Other non-node, browser-focused REPLs</h2>

@@ -33,13 +33,13 @@ function bundle(name: string, loader: () => Promise<{ default: unknown }>[]) {
 }
 
 (window as any)._embroiderRouteBundles_ = [
-  bundle('docs', () => [import('./templates/docs.gts')]),
-  bundle('docs.index', () => [import('./templates/docs/index.gts')]),
-  bundle('docs.repl-sdk', () => [import('./templates/docs/repl-sdk.gts')]),
-  bundle('docs.ember-repl', () => [import('./templates/docs/ember-repl.gts')]),
-  bundle('docs.embedding', () => [import('./templates/docs/embedding.gts')]),
-  bundle('docs.editor', () => [import('./templates/docs/editor.gts')]),
-  bundle('docs.related', () => [import('./templates/docs/related.gts')]),
+  bundle('docs', () => [import('./routes/docs/+template.gts')]),
+  bundle('docs.index', () => [import('./routes/docs/index/+template.gts')]),
+  bundle('docs.repl-sdk', () => [import('./routes/docs/repl-sdk/+template.gts')]),
+  bundle('docs.ember-repl', () => [import('./routes/docs/ember-repl/+template.gts')]),
+  bundle('docs.embedding', () => [import('./routes/docs/embedding/+template.gts')]),
+  bundle('docs.editor', () => [import('./routes/docs/editor/+template.gts')]),
+  bundle('docs.related', () => [import('./routes/docs/related/+template.gts')]),
 ];
 
 Router.map(function () {
