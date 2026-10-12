@@ -1,4 +1,4 @@
-import Header from './edit/header.gts';
+import Header from '../edit/header.gts';
 
 import type { TOC } from '@ember/component/template-only';
 

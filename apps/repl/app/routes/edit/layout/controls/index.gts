@@ -15,10 +15,9 @@ import { service } from 'ember-primitives/helpers/service';
 import { inIframe } from 'ember-primitives/iframe';
 import { castToBoolean, qp, withQP } from 'ember-primitives/qp';
 
-import currentURL from 'limber/helpers/current-url';
-
 import { AutoRender } from './auto-render.gts';
 import { Button } from './button.gts';
+import currentURL from './current-url.ts';
 import { FormatDocument } from './format-document.gts';
 
 import type { TOC } from '@ember/component/template-only';
