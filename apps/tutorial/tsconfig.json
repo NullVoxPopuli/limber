@@ -1,11 +1,6 @@
 {
-  "extends": "@tsconfig/ember/tsconfig.json",
+  "extends": "@ember/app-tsconfig",
   "compilerOptions": {
-    "lib": ["DOM", "ES2023"],
-    "declaration": false,
-    "declarationMap": false,
-    // temporary until ember gets the glimmer-vm upgrade
-    "skipLibCheck": true,
     "paths": {
       "tutorial/tests/*": ["./tests/*"],
       "tutorial/*": ["./app/*"],

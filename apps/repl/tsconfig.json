@@ -1,32 +1,14 @@
 {
-  "extends": "@tsconfig/ember",
+  "extends": "@ember/app-tsconfig",
   "compilerOptions": {
-    "allowImportingTsExtensions": true,
-    // Stylistic
-    "noPropertyAccessFromIndexSignature": false,
-    // Ecosystem
-    "skipLibCheck": true,
     "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "noUncheckedIndexedAccess": true,
-    "noEmitOnError": false,
-    "noEmit": true,
-    "declaration": false,
-    "declarationMap": false,
     "rootDir": "./",
-    "experimentalDecorators": true,
     "paths": {
       "limber/tests/*": ["./tests/*"],
       "limber/*": ["./app/*"],
       "*": ["./types/*"]
     },
-    "types": ["vite/client","@embroider/core/virtual", "@glint/ember-tsc/types"
-    ]
+    "types": ["vite/client", "@embroider/core/virtual", "@glint/ember-tsc/types"]
   },
   "include": ["app/**/*", "tests/**/*", "types/**/*"],
   "contentMappers": [{ "package": "ember-content-mapper", "extensions": [".gts", ".gjs"] }]
