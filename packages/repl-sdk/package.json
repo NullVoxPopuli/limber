@@ -71,6 +71,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "@glimdown/babel-8-lite": "workspace:*",
     "@nullvoxpopuli/eslint-configs": "^7.1.0",
     "@tsconfig/ember": "^3.0.7",
     "@types/common-tags": "^1.8.4",

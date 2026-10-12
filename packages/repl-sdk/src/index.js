@@ -38,8 +38,6 @@ const NODE_POLYFILLS = {
   'node:util': 'util-browser',
 };
 
-assert(`There is no document. repl-sdk is meant to be ran in a browser`, globalThis.document);
-
 export { errorMessage } from './utils.js';
 
 export const defaultFormats = Object.keys(compilers);
@@ -62,7 +60,10 @@ export class Compiler {
     STABLE_REFERENCE.resolve = this.#resolve;
     STABLE_REFERENCE.source = this.#source;
 
-    window.addEventListener('unhandledrejection', this.#handleUnhandledRejection);
+    /**
+     * Node has no window. `compileToSource` works there, because it does not render.
+     */
+    globalThis.window?.addEventListener('unhandledrejection', this.#handleUnhandledRejection);
   }
 
   /**
@@ -369,10 +370,44 @@ export class Compiler {
    * @returns {Promise<{ element: HTMLElement, destroy: () => void }>}
    */
   async compile(format, text, options = {}) {
+    return this.#announced(format, () => this.#compile(format, text, options));
+  }
+
+  /**
+   * Like `compile`, but nothing is evaluated and nothing renders.
+   * The result is the source of a JS module, for the build of another app.
+   *
+   * Only compilers that have `toSource` can do this.
+   *
+   * @param {string} format
+   * @param {string} text
+   * @param {{ flavor?: string, imports?: string, [key: string]: unknown }} [ options ]
+   * @returns {Promise<{ source: string }>}
+   */
+  async compileToSource(format, text, options = {}) {
+    return this.#announced(format, async () => {
+      const compiler = await this.#getCompiler(format, options.flavor);
+
+      assert(
+        `The compiler for '${format}' can not compile to source, because it has no \`toSource\`.`,
+        compiler.toSource
+      );
+
+      return { source: await compiler.toSource(text, options) };
+    });
+  }
+
+  /**
+   * @template T
+   * @param {string} format
+   * @param {() => Promise<T>} run
+   * @returns {Promise<T>}
+   */
+  async #announced(format, run) {
     this.#announce('info', `Compiling ${format}`);
 
     try {
-      return await this.#compile(format, text, options);
+      return await run();
     } catch (e) {
       // for on.log usage
       this.#announce('error', errorMessage(e));
@@ -390,6 +425,11 @@ export class Compiler {
    * @returns {Promise<{ element: HTMLElement, destroy: () => void }>}
    */
   async #compile(format, text, options) {
+    assert(
+      `There is no document. \`compile\` renders, so it needs a browser. \`compileToSource\` does not.`,
+      globalThis.document
+    );
+
     this.#log('[compile] idempotently installing es-module-shim');
 
     // @ts-ignore
@@ -688,6 +728,10 @@ export class Compiler {
      * @param {Parameters<Compiler['compile']>} args
      */
     compile: (...args) => this.compile(...args),
+    /**
+     * @param {Parameters<Compiler['compileToSource']>} args
+     */
+    compileToSource: (...args) => this.compileToSource(...args),
     /**
      * @param {Parameters<Compiler['optionsFor']>} args
      */
