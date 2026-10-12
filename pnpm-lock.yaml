@@ -230,6 +230,9 @@ importers:
       '@codemirror/view':
         specifier: 6.39.12
         version: 6.39.12
+      '@ember/app-tsconfig':
+        specifier: ^2.1.0
+        version: 2.1.0
       '@ember/string':
         specifier: ^4.0.1
         version: 4.0.1
@@ -287,9 +290,6 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.19
         version: 0.5.19(tailwindcss@3.4.19(yaml@2.9.0))
-      '@tsconfig/ember':
-        specifier: ^3.0.9
-        version: 3.0.12
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -498,6 +498,9 @@ importers:
       '@babel/runtime':
         specifier: ^7.29.2
         version: 7.29.2
+      '@ember/app-tsconfig':
+        specifier: ^2.1.0
+        version: 2.1.0
       '@ember/string':
         specifier: ^4.0.1
         version: 4.0.1
@@ -552,9 +555,6 @@ importers:
       '@rollup/plugin-babel':
         specifier: ^6.1.0
         version: 6.1.0(2feedaebee37a40334972cdc05053654)
-      '@tsconfig/ember':
-        specifier: ^3.0.9
-        version: 3.0.12
       '@types/qunit':
         specifier: ^2.19.12
         version: 2.19.13
@@ -3259,6 +3259,9 @@ packages:
 
   '@ember/app-tsconfig@2.0.0':
     resolution: {integrity: sha512-NmD1OZFtCF49k4WDaPdhGP4OKoRbPaXpTBO3AsJe0okIJeCVUiEiC8YUpfTJmld9EJOEa9mW/p0tJQS70GktOA==}
+
+  '@ember/app-tsconfig@2.1.0':
+    resolution: {integrity: sha512-s44smHIQVM2Ews1+bIAwqibVF6OHsw3/G14xV0DA0/GchVolqTG/Kfzqn/jZnU4zlXPEndJdTpn+PFEsuFs7mg==}
 
   '@ember/edition-utils@1.2.0':
     resolution: {integrity: sha512-VmVq/8saCaPdesQmftPqbFtxJWrzxNGSQ+e8x8LLe3Hjm36pJ04Q8LeORGZkAeOhldoUX9seLGmSaHeXkIqoog==}
@@ -12844,6 +12847,8 @@ snapshots:
   '@ember-data/rfc395-data@0.0.4': {}
 
   '@ember/app-tsconfig@2.0.0': {}
+
+  '@ember/app-tsconfig@2.1.0': {}
 
   '@ember/edition-utils@1.2.0': {}
 
