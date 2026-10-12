@@ -218,6 +218,9 @@ export default defineConfig({
         'docs/related',
       ],
       ssrEntry: 'app/app-ssr.ts',
+      // Same layout rule as app/custom-layout.ts.
+      routeName: (path) =>
+        /^app\/routes\/(.+)\/\+template\.gts$/.exec(path)?.[1]?.replaceAll('/', '.'),
       rehydrate: true,
       // A prerendered page has its content in the HTML, so it does not need the app shell.
       // The shell is 100vh tall and comes first, so with it the content starts below the fold
