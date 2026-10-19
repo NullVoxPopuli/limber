@@ -333,7 +333,7 @@ importers:
         specifier: ^10.4.22
         version: 10.4.23(postcss@8.5.9)
       babel-plugin-ember-template-compilation:
-        specifier: ^4.0.1
+        specifier: 4.0.1
         version: 4.0.1(patch_hash=460d2ecc892aa43c6ea5c0c0d5f6a0d0b767b487dd0894f8793fb4cf443e373b)
       chalk:
         specifier: ^5.6.2
@@ -777,7 +777,7 @@ importers:
         specifier: ^3.0.4
         version: 3.0.4
       babel-plugin-ember-template-compilation:
-        specifier: ^4.0.1
+        specifier: 4.0.1
         version: 4.0.1(patch_hash=460d2ecc892aa43c6ea5c0c0d5f6a0d0b767b487dd0894f8793fb4cf443e373b)
       concurrently:
         specifier: ^9.2.1
@@ -1019,7 +1019,7 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(@babel/core@7.29.0)
       babel-plugin-ember-template-compilation:
-        specifier: ^4.0.1
+        specifier: 4.0.1
         version: 4.0.1(patch_hash=460d2ecc892aa43c6ea5c0c0d5f6a0d0b767b487dd0894f8793fb4cf443e373b)
       change-case:
         specifier: ^5.4.4
@@ -1206,7 +1206,7 @@ importers:
         specifier: ^6.1.0
         version: 6.1.0(2feedaebee37a40334972cdc05053654)
       babel-plugin-ember-template-compilation:
-        specifier: ^4.0.1
+        specifier: 4.0.1
         version: 4.0.1(patch_hash=460d2ecc892aa43c6ea5c0c0d5f6a0d0b767b487dd0894f8793fb4cf443e373b)
       concurrently:
         specifier: ^9.2.1

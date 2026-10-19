@@ -69,7 +69,7 @@
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@tsconfig/ember": "^3.0.9",
     "@types/hast": "^3.0.4",
-    "babel-plugin-ember-template-compilation": "^4.0.1",
+    "babel-plugin-ember-template-compilation": "4.0.1",
     "concurrently": "^9.2.1",
     "ember-async-data": "2.0.1",
     "ember-content-mapper": "^0.2.0",

@@ -73,7 +73,7 @@
     "@types/rsvp": "^4.0.9",
     "@types/unist": "^3.0.3",
     "autoprefixer": "^10.4.22",
-    "babel-plugin-ember-template-compilation": "^4.0.1",
+    "babel-plugin-ember-template-compilation": "4.0.1",
     "chalk": "^5.6.2",
     "common-tags": "^1.8.2",
     "concurrently": "^9.2.1",
