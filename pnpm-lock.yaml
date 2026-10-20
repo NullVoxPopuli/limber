@@ -42,7 +42,7 @@ overrides:
 
 patchedDependencies:
   babel-plugin-ember-template-compilation@4.0.1:
-    hash: 460d2ecc892aa43c6ea5c0c0d5f6a0d0b767b487dd0894f8793fb4cf443e373b
+    hash: ddde1c113bfb6786558749e4df6f0e16297567add22cbe2c02d68a6e05a1ec53
     path: patches/babel-plugin-ember-template-compilation@4.0.1.patch
   browserslist-generator:
     hash: 8012b033c48b9eeeb2a450dd39dcc4fd9632dda6b3697bfddcd5371ab1866ebe
@@ -334,7 +334,7 @@ importers:
         version: 10.4.23(postcss@8.5.9)
       babel-plugin-ember-template-compilation:
         specifier: 4.0.1
-        version: 4.0.1(patch_hash=460d2ecc892aa43c6ea5c0c0d5f6a0d0b767b487dd0894f8793fb4cf443e373b)
+        version: 4.0.1(patch_hash=ddde1c113bfb6786558749e4df6f0e16297567add22cbe2c02d68a6e05a1ec53)
       chalk:
         specifier: ^5.6.2
         version: 5.6.2
@@ -778,7 +778,7 @@ importers:
         version: 3.0.4
       babel-plugin-ember-template-compilation:
         specifier: 4.0.1
-        version: 4.0.1(patch_hash=460d2ecc892aa43c6ea5c0c0d5f6a0d0b767b487dd0894f8793fb4cf443e373b)
+        version: 4.0.1(patch_hash=ddde1c113bfb6786558749e4df6f0e16297567add22cbe2c02d68a6e05a1ec53)
       concurrently:
         specifier: ^9.2.1
         version: 9.2.1
@@ -1020,7 +1020,7 @@ importers:
         version: 2.0.0(@babel/core@7.29.0)
       babel-plugin-ember-template-compilation:
         specifier: 4.0.1
-        version: 4.0.1(patch_hash=460d2ecc892aa43c6ea5c0c0d5f6a0d0b767b487dd0894f8793fb4cf443e373b)
+        version: 4.0.1(patch_hash=ddde1c113bfb6786558749e4df6f0e16297567add22cbe2c02d68a6e05a1ec53)
       change-case:
         specifier: ^5.4.4
         version: 5.4.4
@@ -1207,7 +1207,7 @@ importers:
         version: 6.1.0(2feedaebee37a40334972cdc05053654)
       babel-plugin-ember-template-compilation:
         specifier: 4.0.1
-        version: 4.0.1(patch_hash=460d2ecc892aa43c6ea5c0c0d5f6a0d0b767b487dd0894f8793fb4cf443e373b)
+        version: 4.0.1(patch_hash=ddde1c113bfb6786558749e4df6f0e16297567add22cbe2c02d68a6e05a1ec53)
       concurrently:
         specifier: ^9.2.1
         version: 9.2.1
@@ -15586,7 +15586,7 @@ snapshots:
       babel-import-util: 3.0.1
       import-meta-resolve: 4.2.0
 
-  babel-plugin-ember-template-compilation@4.0.1(patch_hash=460d2ecc892aa43c6ea5c0c0d5f6a0d0b767b487dd0894f8793fb4cf443e373b):
+  babel-plugin-ember-template-compilation@4.0.1(patch_hash=ddde1c113bfb6786558749e4df6f0e16297567add22cbe2c02d68a6e05a1ec53):
     dependencies:
       '@glimmer/syntax': 0.95.0
       babel-import-util: 3.0.1

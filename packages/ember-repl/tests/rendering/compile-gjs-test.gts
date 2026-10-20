@@ -73,7 +73,7 @@ module('Rendering | compile()', function (hooks) {
       assert.dom('button').hasText('Click');
     });
 
-    test('literal values in an explicit scope work', async function (assert) {
+    test('expressions in an explicit scope work', async function (assert) {
       const compiler = getCompiler(this);
 
       /**
@@ -84,9 +84,9 @@ module('Rendering | compile()', function (hooks) {
         import { template } from '@ember/template-compiler';
 
         export default template(
-          '<p>[{{LABEL}}][{{COUNT}}][{{NEG}}][{{if ON "on" "off"}}][{{if OFF "on" "off"}}][{{NOTHING}}][{{UNDEF}}]</p>',
+          '<p>[{{LABEL}}][{{COUNT}}][{{NEG}}][{{if ON "on" "off"}}][{{if OFF "on" "off"}}][{{NOTHING}}][{{UNDEF}}][{{SUM}}]</p>',
           {
-            scope: () => ({ LABEL: \`hi\`, COUNT: 3, NEG: -1, ON: !0, OFF: !1, NOTHING: null, UNDEF: void 0 }),
+            scope: () => ({ LABEL: \`hi\`, COUNT: 3, NEG: -1, ON: !0, OFF: !1, NOTHING: null, UNDEF: void 0, SUM: 1 + 2 }),
           }
         );
       `;
@@ -108,7 +108,7 @@ module('Rendering | compile()', function (hooks) {
 
       await render(component);
 
-      assert.dom('p').hasText('[hi][3][-1][on][off][][]');
+      assert.dom('p').hasText('[hi][3][-1][on][off][][][3]');
     });
 
     test('parse errors are not swallowed', async function (assert) {
