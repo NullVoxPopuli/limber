@@ -5,12 +5,15 @@
  */
 const { buildMacros } = require('@embroider/macros/babel');
 
-const { babelCompatSupport, templateCompatSupport } = require('@embroider/compat/babel');
-
 const macros = buildMacros();
 
-// For scenario testing
+/**
+ * For scenario testing.
+ * Only the compat scenarios install @embroider/compat.
+ */
 const isCompat = Boolean(process.env.ENABLE_COMPAT_BUILD);
+// eslint-disable-next-line n/no-missing-require
+const compat = isCompat ? require('@embroider/compat/babel') : undefined;
 
 module.exports = {
   plugins: [
@@ -25,7 +28,11 @@ module.exports = {
     [
       'babel-plugin-ember-template-compilation',
       {
-        transforms: [...(isCompat ? templateCompatSupport() : macros.templateMacros)],
+        transforms: [
+          ...(isCompat
+            ? compat.templateCompatSupport()
+            : macros.templateMacros),
+        ],
       },
     ],
     [
@@ -36,7 +43,7 @@ module.exports = {
         },
       },
     ],
-    ...(isCompat ? babelCompatSupport() : macros.babelMacros),
+    ...(isCompat ? compat.babelCompatSupport() : macros.babelMacros),
   ],
 
   generatorOpts: {
