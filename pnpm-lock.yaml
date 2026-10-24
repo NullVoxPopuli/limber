@@ -928,9 +928,6 @@ importers:
       ember-primitives:
         specifier: ^0.62.0
         version: 0.62.0(9560d01dfd9c50df37d96d7c1e6923e3)
-      ember-resolver:
-        specifier: ^13.1.0
-        version: 13.1.1
       ember-resources:
         specifier: ^7.1.0
         version: 7.1.0(26b86c1b73200152d68c973d8eccec8d)
