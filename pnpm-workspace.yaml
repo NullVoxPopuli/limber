@@ -78,6 +78,7 @@ patchedDependencies:
   "vite-ember-ssr@0.6.2": "patches/vite-ember-ssr@0.6.2.patch"
 
 overrides:
+  "@embroider/addon-shim": "1.11.0"
   "@glint/template": "1.8.0"
   "array-includes": "npm:@nolyfill/array-includes@^1"
   "array.prototype.findlastindex": "npm:@nolyfill/array.prototype.findlastindex@^1"
