@@ -25,6 +25,24 @@ export class Compiler {
     }
   ): Promise<{ element: HTMLElement; destroy: () => void }>;
 
+  /**
+   * Like `compile`, but nothing is evaluated and nothing renders.
+   * The result is the source of a JS module, for the build of another app.
+   */
+  compileToSource(
+    format: string,
+    text: string,
+    options?: {
+      flavor?: string;
+      /**
+       * Import statements, as text.
+       * Markdown prose and hbs templates have access to what they import.
+       */
+      imports?: string;
+      [key: string]: unknown;
+    }
+  ): Promise<{ source: string }>;
+
   optionsFor(format: string, flavor?: string): Omit<CompilerConfig, 'compiler'>;
 
   /**

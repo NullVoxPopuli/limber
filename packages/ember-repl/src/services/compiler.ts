@@ -117,8 +117,10 @@ const standardScope = {
   Math,
   Reflect,
   //   WHATWG
-  localStorage,
-  sessionStorage,
+  //   (read from globalThis, because a bare name that does not exist throws,
+  //    and not every runtime has each of these)
+  localStorage: globalThis.localStorage,
+  sessionStorage: globalThis.sessionStorage,
   URL,
   // ////////////////
   // functions / utilities
@@ -133,7 +135,7 @@ const standardScope = {
   encodeURI,
   encodeURIComponent,
   //   WHATWG
-  postMessage,
+  postMessage: globalThis.postMessage,
   structuredClone,
   // ////////////////
   // new-less Constructors (still functions)
@@ -153,7 +155,7 @@ const standardScope = {
   Infinity,
   NaN,
   //   WHATWG
-  isSecureContext,
+  isSecureContext: globalThis.isSecureContext,
 };
 
 export default class CompilerService {
@@ -429,6 +431,41 @@ export default class CompilerService {
     }
   ): Promise<CompileResult> {
     return this.compile('md', source, options);
+  }
+
+  /**
+   * @public
+   *
+   * Compiles to the source of a JS module, as a string.
+   * Nothing is evaluated, and nothing renders.
+   *
+   * This is for tools that pre-render pages (SSG).
+   * The module goes to the build of the app, like any other source file.
+   *
+   * - templates are not compiled to the wire format
+   * - decorators are still decorators
+   * - a markdown document becomes one module, with its live demos inline
+   *
+   * The `scope` option has no effect here, because source can not hold live objects.
+   * A demo has access to what it imports.
+   *
+   * @param {string} ext the ext/format to be compiled
+   * @param {string} text the code to be compiled using the configured compiler for the ext
+   */
+  @waitFor
+  async compileToSource(
+    ext: string,
+    text: string,
+    options?: Record<string, unknown>
+  ): Promise<{ source: string }> {
+    await Promise.resolve();
+
+    this.messages.length = 0;
+
+    return this.compiler.compileToSource(ext, text, {
+      ...options,
+      ...(ext === 'hbs' ? { flavor: 'ember' } : {}),
+    });
   }
 }
 
