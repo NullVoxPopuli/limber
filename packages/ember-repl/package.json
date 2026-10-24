@@ -47,7 +47,6 @@
     "content-tag": "^4.0.0",
     "decorator-transforms": "2.4.0",
     "ember-primitives": "^0.61.1",
-    "ember-resolver": "^13.1.0",
     "ember-resources": "^7.1.0",
     "repl-sdk": "workspace:^"
   },
