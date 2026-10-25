@@ -73,6 +73,44 @@ module('Rendering | compile()', function (hooks) {
       assert.dom('button').hasText('Click');
     });
 
+    test('expressions in an explicit scope work', async function (assert) {
+      const compiler = getCompiler(this);
+
+      /**
+       * These are the shapes that bundlers give inlined constants,
+       * for example in a library's published dist.
+       */
+      const snippet = stripIndent`
+        import { template } from '@ember/template-compiler';
+
+        export default template(
+          '<p>[{{LABEL}}][{{COUNT}}][{{NEG}}][{{if ON "on" "off"}}][{{if OFF "on" "off"}}][{{NOTHING}}][{{UNDEF}}][{{SUM}}]</p>',
+          {
+            scope: () => ({ LABEL: \`hi\`, COUNT: 3, NEG: -1, ON: !0, OFF: !1, NOTHING: null, UNDEF: void 0, SUM: 1 + 2 }),
+          }
+        );
+      `;
+
+      let component: ComponentLike | undefined;
+
+      const state = compile(compiler, snippet, {
+        format: 'gjs',
+        onSuccess: (comp) => (component = comp),
+        onError: unexpectedErrorHandler,
+        onCompileStart: () => {
+          /* not used */
+        },
+      });
+
+      await state.promise;
+
+      debugAssert(`[BUG]`, component);
+
+      await render(component);
+
+      assert.dom('p').hasText('[hi][3][-1][on][off][][][3]');
+    });
+
     test('parse errors are not swallowed', async function (assert) {
       const compiler = getCompiler(this);
 

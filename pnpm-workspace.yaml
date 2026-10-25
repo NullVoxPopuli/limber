@@ -74,6 +74,7 @@ catalogs:
     typescript: 5.9.3
 
 patchedDependencies:
+  "babel-plugin-ember-template-compilation@4.0.1": "patches/babel-plugin-ember-template-compilation@4.0.1.patch"
   "browserslist-generator": "patches/browserslist-generator.patch"
   "vite-ember-ssr@0.6.2": "patches/vite-ember-ssr@0.6.2.patch"
 
