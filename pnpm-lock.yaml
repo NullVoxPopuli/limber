@@ -370,8 +370,8 @@ importers:
         specifier: ^9.6.1
         version: 9.6.1
       fastboot:
-        specifier: github:NullVoxPopuli-ai-agent/ember-cli-fastboot#659f484&path:packages/fastboot
-        version: https://codeload.github.com/NullVoxPopuli-ai-agent/ember-cli-fastboot/tar.gz/659f4844fc8a3e189924c111de642275cfe61189#path:packages/fastboot(1772a17673355c6de89229b7565213b1)
+        specifier: file:./vendor/fastboot-659f484.tgz
+        version: file:apps/repl/vendor/fastboot-659f484.tgz(1772a17673355c6de89229b7565213b1)
       fractal-page-object:
         specifier: ^1.0.0
         version: 1.0.0
@@ -6699,8 +6699,8 @@ packages:
     resolution: {integrity: sha512-EFd6afGmXlCx8H8WTZHhAoDaWaGyuIBoZJ2mknrNxug+aZKjkp0a0dlars9Izl+jF+7Gu1/5f/2h68cQpe0IiA==}
     hasBin: true
 
-  fastboot@https://codeload.github.com/NullVoxPopuli-ai-agent/ember-cli-fastboot/tar.gz/659f4844fc8a3e189924c111de642275cfe61189#path:packages/fastboot:
-    resolution: {gitHosted: true, integrity: sha512-A2G3N3tlJtrNAvzM6Fe6fKJ+LQltcmXVdsc6XYOTNTdQQmJJecRnaYHqTYmJbTvn4bmDilfw3vIDybm94kXErg==, tarball: https://codeload.github.com/NullVoxPopuli-ai-agent/ember-cli-fastboot/tar.gz/659f4844fc8a3e189924c111de642275cfe61189}
+  fastboot@file:apps/repl/vendor/fastboot-659f484.tgz:
+    resolution: {integrity: sha512-ztgFFdnJViG/Y6Q8vHu6asvstLEMBSbnep5lAtl+Y/6bM58HU+WlxT4hGbgPP9cpDBaZ1xbIxwjOI1x+zqpMsg==, tarball: file:apps/repl/vendor/fastboot-659f484.tgz}
     version: 6.0.0
     engines: {node: '>= 22.12'}
     peerDependencies:
@@ -15967,7 +15967,7 @@ snapshots:
     dependencies:
       strnum: 2.1.2
 
-  fastboot@https://codeload.github.com/NullVoxPopuli-ai-agent/ember-cli-fastboot/tar.gz/659f4844fc8a3e189924c111de642275cfe61189#path:packages/fastboot(1772a17673355c6de89229b7565213b1):
+  fastboot@file:apps/repl/vendor/fastboot-659f484.tgz(1772a17673355c6de89229b7565213b1):
     dependencies:
       '@happy-dom/global-registrator': 21.0.4
     optionalDependencies:

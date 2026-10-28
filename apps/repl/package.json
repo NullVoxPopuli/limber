@@ -86,7 +86,7 @@
     "ember-source": "7.5.0-alpha.3",
     "eslint": "^10.0.0",
     "execa": "^9.6.1",
-    "fastboot": "github:NullVoxPopuli-ai-agent/ember-cli-fastboot#659f484&path:packages/fastboot",
+    "fastboot": "file:./vendor/fastboot-659f484.tgz",
     "fractal-page-object": "^1.0.0",
     "loader.js": "^4.7.0",
     "onp": "^2.0.4",
