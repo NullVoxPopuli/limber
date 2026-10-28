@@ -1,7 +1,7 @@
+import { fastboot } from 'fastboot/vite';
 import icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vite';
 import { analyzer } from 'vite-bundle-analyzer';
-import { emberSsg } from 'vite-ember-ssr/vite-plugin';
 import circleDependency from 'vite-plugin-circular-dependency';
 import mkcert from 'vite-plugin-mkcert';
 
@@ -208,28 +208,23 @@ export default defineConfig({
         ],
       },
     }),
-    emberSsg({
-      routes: [
-        'docs',
-        'docs/editor',
-        'docs/embedding',
-        'docs/ember-repl',
-        'docs/repl-sdk',
-        'docs/related',
-      ],
-      ssrEntry: 'app/app-ssr.ts',
-      // Same layout rule as app/custom-layout.ts.
-      routeName: (path) =>
-        /^app\/routes\/(.+)\/\+template\.gts$/.exec(path)?.[1]?.replaceAll('/', '.'),
-      rehydrate: true,
-      // A prerendered page has its content in the HTML, so it does not need the app shell.
-      // The shell is 100vh tall and comes first, so with it the content starts below the fold
-      // until the app boots and removes the shell.
-      // The prerendered pages need no app shell, and their stylesheets must block.
-      template: 'index.ssg.html',
+    fastboot({
+      entry: 'app/app-ssr.ts',
+      prerender: {
+        routes: [
+          'docs',
+          'docs/editor',
+          'docs/embedding',
+          'docs/ember-repl',
+          'docs/repl-sdk',
+          'docs/related',
+        ],
+        // The prerendered pages need no app shell, and their stylesheets must block.
+        template: 'index.ssg.html',
+        // Same layout rule as app/custom-layout.ts.
+        routeName: (path) =>
+          /^app\/routes\/(.+)\/\+template\.gts$/.exec(path)?.[1]?.replaceAll('/', '.'),
+      },
     }),
   ],
-  ssr: {
-    noExternal: [/./],
-  },
 });
