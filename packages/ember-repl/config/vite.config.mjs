@@ -31,6 +31,8 @@ export default defineConfig({
     babel({
       babelHelpers: 'inline',
       extensions,
+      // Prebuilt, and not all of the minified code parses as TypeScript.
+      exclude: /\/mermaid\/dist\//,
     }),
   ],
 });
