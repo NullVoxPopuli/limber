@@ -27,24 +27,11 @@ export default class SsrApp extends Application {
 }
 
 export function createSsrApp() {
-  const g = globalThis as Record<string, unknown>;
-
-  g.process ??= { env: {} };
-  g.Buffer ??= {};
-
-  const app = SsrApp.create({ autoboot: false });
-
-  const originalVisit = app.visit.bind(app);
-
-  Object.assign(app, {
-    visit: async (...args: Parameters<typeof originalVisit>) => {
-      const instance = await originalVisit(...args);
-
-      await settled();
-
-      return instance;
-    },
-  });
-
-  return app;
+  return SsrApp.create({ autoboot: false });
 }
+
+/**
+ * FastBoot waits for this before it reads the page:
+ * the docs highlight their code blocks after the first render.
+ */
+export { settled };

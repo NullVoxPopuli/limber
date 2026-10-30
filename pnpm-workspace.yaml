@@ -75,7 +75,6 @@ catalogs:
 
 patchedDependencies:
   "browserslist-generator": "patches/browserslist-generator.patch"
-  "vite-ember-ssr@0.6.2": "patches/vite-ember-ssr@0.6.2.patch"
 
 overrides:
   "@embroider/addon-shim": "1.11.0"
