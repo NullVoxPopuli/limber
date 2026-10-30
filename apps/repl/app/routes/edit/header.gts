@@ -3,6 +3,7 @@ import { faEmber, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faCubes } from '@fortawesome/free-solid-svg-icons';
 import { notInIframe } from 'ember-primitives/iframe';
 
+import { ThemeToggle } from '#components/theme-toggle.gts';
 import { default as Docs } from '~icons/pajamas/document?raw';
 
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
@@ -36,7 +37,7 @@ import { Share } from './share.gts';
       <Share />
     </div>
 
-    <nav class="gap-2 text-white flex items-baseline">
+    <nav class="gap-2 text-white flex items-center">
       <ExternalLink href="/docs" class="sm:block hidden">
         <:custom as |DefaultContent|>
           <span class="md:block hidden">
@@ -74,7 +75,7 @@ import { Share } from './share.gts';
           </span>
         </:custom>
       </ExternalLink>
-
+      <ThemeToggle />
     </nav>
   </header>
 </template>

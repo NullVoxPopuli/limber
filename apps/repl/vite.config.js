@@ -67,6 +67,13 @@ function preloadShikiWorker() {
 
 export default defineConfig({
   build: {
+    /**
+     * Older targets make the CSS minifier replace light-dark() with variables.
+     *
+     * Those variables only work when a stylesheet sets color-scheme.
+     * ember-primitives sets color-scheme on the element instead.
+     */
+    cssTarget: ['chrome123', 'firefox120', 'safari17.5'],
     rolldownOptions: {
       treeshake: true,
       // index.ssg.html is the template of the prerendered pages, see emberSsg below.

@@ -123,7 +123,7 @@ export const Layout: TOC<{
           {{/if}}
 
           <Panel class="limber__output-panel drop-shadow-inner relative grid overflow-hidden">
-            <div class="bg-white relative flex overflow-auto" data-test-output>
+            <div class="relative flex overflow-auto bg-[var(--limber-surface)]" data-test-output>
 
               {{yield to="output"}}
 

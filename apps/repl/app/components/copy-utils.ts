@@ -1,3 +1,4 @@
+import { colorScheme } from 'ember-primitives/color-scheme';
 import { toBlob, toPng } from 'html-to-image';
 
 export function getSnippetElement(event: Event) {
@@ -64,7 +65,7 @@ export async function copyToClipboard(toCopy: HTMLElement) {
 }
 
 async function toClipboard(target: HTMLElement) {
-  const backgroundColor = '#ffffff';
+  const backgroundColor = colorScheme.isDark ? '#1c1e26' : '#ffffff';
   const canCopyToImage = 'ClipboardItem' in window;
   const filter = (node: HTMLElement | Text) => {
     if (node instanceof Text) return true;

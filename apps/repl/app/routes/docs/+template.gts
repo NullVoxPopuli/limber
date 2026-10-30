@@ -3,6 +3,8 @@ import './styles.css';
 // to include some variables imports in the sub-components.
 import 'nvp.ui';
 
+import { ThemeToggle } from '#components/theme-toggle.gts';
+
 import { NavLink, Topics } from './topics.gts';
 
 <template>
@@ -13,6 +15,7 @@ import { NavLink, Topics } from './topics.gts';
 
     <div class="right-nav">
       <NavLink href="/edit">Back to REPL</NavLink>
+      <ThemeToggle />
     </div>
   </nav>
 

@@ -55,6 +55,21 @@
     <!-- VITE_EMBER_SSR_HEAD -->
   </head>
   <body class="syntax-dark syntax-bright">
+    <script>
+      /**
+       * Before the first paint, so that a dark page does not flash white.
+       *
+       * ember-primitives/color-scheme reads the same key when the app boots.
+       */
+      {
+        const key = "ember-primitives/color-scheme#local-preference";
+        const isDark = matchMedia("(prefers-color-scheme: dark)").matches;
+        const scheme = localStorage.getItem(key) ?? (isDark ? "dark" : "light");
+
+        document.documentElement.style.colorScheme = scheme;
+        document.body.classList.add(`theme-${scheme}`);
+      }
+    </script>
     <!-- VITE_EMBER_SSR_BODY -->
 
     <!--
