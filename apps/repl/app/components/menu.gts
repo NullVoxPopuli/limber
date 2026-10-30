@@ -28,7 +28,7 @@ const Button: TOC<{
   };
 }> = <template>
   <@content.Item
-    class="px-4 py-2 text-black hover:bg-gray-100 block w-full bg-transparent text-left select-none ring-inset focus:ring-4 focus:outline-none"
+    class="px-4 py-2 text-[var(--limber-text)] hover:bg-[var(--limber-surface-hover)] block w-full bg-transparent text-left select-none ring-inset focus:ring-4 focus:outline-none"
     tabindex="0"
     data-test-menu-button
     ...attributes
@@ -47,7 +47,7 @@ const DefaultTrigger: TOC<{
   };
 }> = <template>
   <@menu.Trigger
-    class="ring-ember-brand -my-1 rounded bg-white px-2 py-1 text-black drop-shadow-md ease-in-out hover:drop-shadow-xl sm:text-sm border text-left transition duration-150 focus:ring-4 focus:outline-none focus-visible:outline-none"
+    class="ring-ember-brand -my-1 rounded border-[var(--limber-border)] bg-[var(--limber-surface)] px-2 py-1 text-[var(--limber-text)] drop-shadow-md ease-in-out hover:drop-shadow-xl sm:text-sm border text-left transition duration-150 focus:ring-4 focus:outline-none focus-visible:outline-none"
     ...attributes
   >
     {{yield @menu}}
@@ -102,10 +102,10 @@ const Menu: TOC<{
       <FloatingUI as |reference floating|>
         <menu.Content data-test-menu-items {{reference}} class="limber__menu__content" as |content|>
           <div
-            class="border"
+            class="border border-[var(--limber-border)]"
             style="
         position: absolute;
-        background: white;
+        background: var(--limber-surface);
         width: 8px;
         height: 8px;
         transform: rotate(45deg);
@@ -115,7 +115,7 @@ const Menu: TOC<{
           ></div>
 
           <div
-            class="rounded bg-white drop-shadow-xl grid max-h-[80dvh] min-w-max overflow-auto border"
+            class="rounded border-[var(--limber-border)] bg-[var(--limber-surface)] drop-shadow-xl grid max-h-[80dvh] min-w-max overflow-auto border"
           >
             {{yield (component Button content=content) to="options"}}
           </div>

@@ -4,6 +4,41 @@
 @tailwind components;
 @tailwind utilities;
 
+/**
+ * ember-primitives sets color-scheme on the root element.
+ *
+ * light-dark() follows it, also inside the Shadow DOM of the output.
+ */
+:root {
+  --limber-surface: light-dark(white, #1c1e26);
+  --limber-surface-hover: light-dark(#f3f4f6, #2e303e);
+  --limber-text: light-dark(black, #e5e7eb);
+  --limber-border: light-dark(#e5e7eb, #44465a);
+}
+
+/**
+ * The prose-invert class needs a template that knows the color scheme.
+ *
+ * Many templates use .prose, so the variables switch here instead.
+ */
+.prose {
+  --tw-prose-body: light-dark(#374151, var(--tw-prose-invert-body));
+  --tw-prose-headings: light-dark(#111827, var(--tw-prose-invert-headings));
+  --tw-prose-lead: light-dark(#4b5563, var(--tw-prose-invert-lead));
+  --tw-prose-links: light-dark(#111827, var(--tw-prose-invert-links));
+  --tw-prose-bold: light-dark(#111827, var(--tw-prose-invert-bold));
+  --tw-prose-counters: light-dark(#6b7280, var(--tw-prose-invert-counters));
+  --tw-prose-bullets: light-dark(#d1d5db, var(--tw-prose-invert-bullets));
+  --tw-prose-hr: light-dark(#e5e7eb, var(--tw-prose-invert-hr));
+  --tw-prose-quotes: light-dark(#111827, var(--tw-prose-invert-quotes));
+  --tw-prose-quote-borders: light-dark(#e5e7eb, var(--tw-prose-invert-quote-borders));
+  --tw-prose-captions: light-dark(#6b7280, var(--tw-prose-invert-captions));
+  --tw-prose-kbd: light-dark(#111827, var(--tw-prose-invert-kbd));
+  --tw-prose-code: light-dark(#111827, var(--tw-prose-invert-code));
+  --tw-prose-th-borders: light-dark(#d1d5db, var(--tw-prose-invert-th-borders));
+  --tw-prose-td-borders: light-dark(#e5e7eb, var(--tw-prose-invert-td-borders));
+}
+
 
 * {
   touch-action: manipulation;
@@ -60,8 +95,8 @@ dialog::backdrop {
 .menu__keyboard__help {
   font-size: 0.65rem;
   padding: 0.1rem 0.6rem 0.3rem 1rem;
-  background: white;
-  color: black;
+  background: var(--limber-surface);
+  color: var(--limber-text);
   z-index: -1;
   border-bottom-left-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;

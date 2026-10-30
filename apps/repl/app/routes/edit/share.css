@@ -24,6 +24,7 @@ dialog.preem {
     border-radius: 0.25rem;
     padding: 0.25rem;
     background: #fee;
+    color: #622;
   }
 }
 
@@ -97,7 +98,7 @@ dialog.preem {
   }
 
   > .modal-facade {
-    background: white;
+    background: var(--limber-surface);
     border-radius: 0.25rem;
     width: max-content;
   }
@@ -110,7 +111,10 @@ dialog.preem header {
   justify-content: space-between;
   padding: 1rem;
   align-items: center;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid light-dark(#333, #6c6f93);
+}
+dialog.preem header button {
+  color: var(--limber-text);
 }
 dialog.preem h2 {
   margin: 0 !important;
@@ -136,9 +140,9 @@ dialog.preem main {
   }
   input {
     padding: 0.25rem 0.5rem;
-    border: 1px solid #333;
+    border: 1px solid light-dark(#333, #6c6f93);
     border-radius: 0.25rem;
-    color: #444;
+    color: light-dark(#444, #e5e7eb);
   }
 }
 

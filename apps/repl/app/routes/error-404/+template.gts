@@ -54,14 +54,14 @@ import type { TOC } from '@ember/component/template-only';
           top: -0.75rem;
           left: -0.125rem;
           font-size: 0.75rem;
-          background: white;
+          background: var(--limber-surface);
           border: 1px solid lightgray;
           padding: 0.125rem 0.25rem;
         }
 
         code {
-          border: 1px solid #efefef;
-          background: #eee;
+          border: 1px solid var(--limber-border);
+          background: var(--limber-surface-hover);
           padding: 0.125rem 0.25rem;
         }
       }
