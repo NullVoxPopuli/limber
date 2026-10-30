@@ -607,7 +607,7 @@ export class Compiler {
      * Compiler-implementation-provided fallback takes precidence over
      * going through the shimmedImport / tgz / npm fallback.
      */
-    if (fallback) {
+    if (!result && fallback) {
       result = await fallback(name);
     }
 
