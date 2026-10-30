@@ -48,6 +48,7 @@
     "decorator-transforms": "2.4.0",
     "ember-primitives": "^0.61.1",
     "ember-resources": "^7.1.0",
+    "mermaid": "^11.16.1",
     "repl-sdk": "workspace:^"
   },
   "devDependencies": {

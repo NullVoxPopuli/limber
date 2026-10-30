@@ -931,6 +931,9 @@ importers:
       ember-resources:
         specifier: ^7.1.0
         version: 7.1.0(26b86c1b73200152d68c973d8eccec8d)
+      mermaid:
+        specifier: ^11.16.1
+        version: 11.16.1
       repl-sdk:
         specifier: workspace:^
         version: link:../repl-sdk

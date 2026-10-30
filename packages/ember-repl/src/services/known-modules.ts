@@ -45,6 +45,9 @@ const frameworkModules = {
 const coreLibraries = {
   'ember-resources': () => import('ember-resources'),
   'ember-primitives': () => import('ember-primitives'),
+  // The prebuilt entry has its dependencies inlined and loads each diagram type on demand.
+  // @ts-ignore
+  mermaid: () => import('mermaid/dist/mermaid.esm.min.mjs'),
   'repl-sdk': () => import('repl-sdk'),
 };
 
