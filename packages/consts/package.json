@@ -16,9 +16,9 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.5",
+    "@babel/core": "^8.0.0",
     "@nullvoxpopuli/eslint-configs": "^7.1.0",
-    "concurrently": "^9.2.1",
+    "concurrently": "^10.0.0",
     "eslint": "^10.0.0",
     "prettier": "^3.9.6",
     "prettier-plugin-ember-template-tag": "2.1.8",
