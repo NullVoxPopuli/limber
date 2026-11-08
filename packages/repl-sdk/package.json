@@ -83,8 +83,8 @@
     "publint": "^0.3.16",
     "typescript": "catalog:ts5",
     "vite": "^8.0.8",
-    "vite-plugin-dts": "4.5.4",
-    "vitest": "^4.0.18"
+    "vite-plugin-dts": "5.1.2",
+    "vitest": "^5.0.0"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.20.0",
