@@ -302,6 +302,32 @@ export default class Demo extends Component {
     assert.true(row.names.includes('@glimmer/component'), 'addons load from npm too');
   });
 
+  test('markdown on a pinned ember-source gets its default scope', async function (assert) {
+    const markdown = [
+      '# Pinned',
+      '',
+      '{{#let (hash name="hash") as |h|}}<span data-test-text>{{h.name}}</span>{{/let}}',
+      '',
+      '{{#each (array "a" "b") as |x|}}<span data-test-item>{{x}}</span>{{/each}}',
+    ].join('\n');
+
+    const qps = new URLSearchParams({
+      format: 'gmd',
+      deps: 'ember-source@7.4.0',
+      c: compressToEncodedURIComponent(markdown),
+    });
+
+    await visit(`/output?${qps.toString()}`);
+
+    await waitUntil(() => findAll('[data-test-item]').length === 2, { timeout: 30_000 });
+
+    assert.dom('[data-test-text]').hasText('hash');
+    assert.deepEqual(
+      findAll('[data-test-item]').map((item) => item.textContent),
+      ['a', 'b']
+    );
+  });
+
   test('an ember-source without an ES module template compiler explains why', async function (assert) {
     const qps = new URLSearchParams({
       format: 'gjs',
@@ -328,6 +354,7 @@ export default class Demo extends Component {
         compiler.lastError?.message.includes('6.10 or newer'),
         compiler.lastError?.message
       );
+      assert.dom('[data-test-error]').includesText('6.10 or newer', 'the output page shows it');
     } finally {
       QUnit.onUncaughtException = onUncaughtException;
     }

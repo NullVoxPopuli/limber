@@ -12,6 +12,13 @@ export function provideForImportSync(values: Record<string, unknown>) {
   Object.assign(loaded, values);
 }
 
+/**
+ * An ember-source module of the current compile: the pinned one, or the bundled one.
+ */
+export function emberModule<T = Record<string, unknown>>(specifier: string): T {
+  return loaded[specifier] as T;
+}
+
 const frameworkModules = {
   '@ember/application': () => import('@ember/application'),
   '@ember/application/instance': () => import('@ember/application/instance'),

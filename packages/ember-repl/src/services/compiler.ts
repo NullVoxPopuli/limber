@@ -5,8 +5,6 @@ import { setComponentTemplate } from '@ember/component';
 import templateOnly from '@ember/component/template-only';
 import { assert } from '@ember/debug';
 import { registerDestructor } from '@ember/destroyable';
-import { array, concat, fn, get, hash } from '@ember/helper';
-import { on } from '@ember/modifier';
 import { getOwner } from '@ember/owner';
 import { trackedArray, trackedMap } from '@ember/reactive/collections';
 import { precompileTemplate } from '@ember/template-compilation';
@@ -20,6 +18,7 @@ import { visit } from 'unist-util-visit';
 import { nameFor } from '../compile/utils.ts';
 import {
   EMBER_SOURCE,
+  emberModule,
   emberSourceSpecifiers,
   isEmberIndependent,
   modules,
@@ -29,6 +28,8 @@ import {
 } from './known-modules.ts';
 
 import type { CompileResult, ModuleMap } from '../compile/types.ts';
+import type * as EmberHelper from '@ember/helper';
+import type * as EmberModifier from '@ember/modifier';
 import type { ComponentLike } from '@glint/template';
 import type { EditorView } from 'codemirror';
 import type { ErrorMessage, InfoMessage, Message } from 'repl-sdk';
@@ -100,12 +101,27 @@ interface CompilerOptions {
 const standardScope = {
   // These are only added here because it's convenient for hbs
   // to have them
-  array,
-  concat,
-  fn,
-  get,
-  hash,
-  on,
+  //
+  // Getters, so that a pinned ember-source gets its own helpers.
+  // Helpers from another Ember have no manager in it.
+  get array() {
+    return emberModule<typeof EmberHelper>('@ember/helper').array;
+  },
+  get concat() {
+    return emberModule<typeof EmberHelper>('@ember/helper').concat;
+  },
+  get fn() {
+    return emberModule<typeof EmberHelper>('@ember/helper').fn;
+  },
+  get get() {
+    return emberModule<typeof EmberHelper>('@ember/helper').get;
+  },
+  get hash() {
+    return emberModule<typeof EmberHelper>('@ember/helper').hash;
+  },
+  get on() {
+    return emberModule<typeof EmberModifier>('@ember/modifier').on;
+  },
   // The default available scope for gjs:
   //
   // We don't use gjs transpilation here, because hbs transpilation
@@ -163,6 +179,15 @@ const standardScope = {
   //   WHATWG
   isSecureContext,
 };
+
+/**
+ * A spread would read the getters of `standardScope` once, before any compile.
+ */
+function withStandardScope(extra: Record<string, unknown> | undefined) {
+  const scope = Object.defineProperties({}, Object.getOwnPropertyDescriptors(standardScope));
+
+  return Object.defineProperties(scope, Object.getOwnPropertyDescriptors(extra ?? {}));
+}
 
 export default class CompilerService {
   #compiler: Compiler | undefined;
@@ -348,10 +373,7 @@ export default class CompilerService {
         gmd: {
           owner,
           ...(options.gmd ?? {}),
-          scope: {
-            ...standardScope,
-            ...(options.gmd?.scope ?? {}),
-          },
+          scope: withStandardScope(options.gmd?.scope),
           remarkPlugins: [
             function defaultHbsToEmber() {
               return function transformer(tree: any) {
@@ -377,10 +399,7 @@ export default class CompilerService {
           ember: {
             owner,
             ...(options.hbs ?? {}),
-            scope: {
-              ...standardScope,
-              ...(options.hbs?.scope ?? {}),
-            },
+            scope: withStandardScope(options.hbs?.scope),
           },
         },
       },

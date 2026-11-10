@@ -4,6 +4,7 @@ import { service } from '@ember/service';
 import Output from '#components/output.gts';
 import { VerifyDanger } from '#components/verify-danger.gts';
 import Guest from '#edit/guest.gts';
+import { Status } from '#edit/layout/status.gts';
 
 import { ExternalLink as Link } from '@nullvoxpopuli/limber-shared';
 
@@ -30,4 +31,5 @@ class EditThis extends Component {
     <Output @shadow={{false}} />
   </VerifyDanger>
   <EditThis />
+  <Status />
 </template>
