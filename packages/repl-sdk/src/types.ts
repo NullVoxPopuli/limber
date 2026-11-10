@@ -248,6 +248,11 @@ export interface Options {
      * - what is being fetched / compiled
      */
     log?: (type: 'error' | 'info', message: string) => void;
+    /**
+     * A package from npm that the document imports, with the version that loaded.
+     * Imports from inside other packages are not reported.
+     */
+    dependency?: (name: string, version: string) => void;
   };
 
   /**

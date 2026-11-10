@@ -9,6 +9,7 @@ import { STABLE_REFERENCE } from './es-module-shim.js';
 import { takeEntry, writeEntry } from './fs/entry.js';
 import { clearFs, installer, storage } from './fs/store.js';
 import {
+  DEPS_PREFIX,
   extensionOf,
   NODE_MODULES_PREFIX,
   npmUrl,
@@ -40,6 +41,17 @@ const NODE_POLYFILLS = {
 };
 
 assert(`There is no document. repl-sdk is meant to be ran in a browser`, globalThis.document);
+
+/**
+ * Specifier URL → the package that it installed.
+ *
+ * A later compile finds the module in the loader's cache,
+ * so the source hook does not run again for it.
+ * The loader is global, so this is too.
+ *
+ * @type {Map<string, { name: string, version: string }>}
+ */
+const installed = new Map();
 
 export { errorMessage } from './utils.js';
 
@@ -249,9 +261,15 @@ export class Compiler {
     const { name, version, path } = parseSpecifier(vanilla);
     const pinned = version ? undefined : this.#versions[name];
 
-    if (!pinned) return specifierUrl(vanilla);
+    const url = pinned
+      ? specifierUrl(`${name}@${encodeURIComponent(pinned)}${path.slice(1)}`)
+      : specifierUrl(vanilla);
 
-    return specifierUrl(`${name}@${encodeURIComponent(pinned)}${path.slice(1)}`);
+    if (parentUrl.startsWith(SRC_PREFIX)) {
+      this.#reportDependency(installed.get(url));
+    }
+
+    return url;
   };
   /**
    * The es-module-shims source hook, which supersedes the fetch hook
@@ -311,6 +329,17 @@ export class Compiler {
       assert(`${real} resolved but is not in the fs`, text !== undefined);
 
       const source = await this.#postProcess(text, extensionOf(real));
+
+      /**
+       * A bare specifier lands here once per package.
+       * Files inside a package already have their real URL.
+       */
+      if (!path.startsWith(DEPS_PREFIX)) {
+        const pkg = parseNpmUrl(real);
+
+        if (pkg) installed.set(path, pkg);
+        if (parent.startsWith(SRC_PREFIX)) this.#reportDependency(pkg);
+      }
 
       this.#announce('info', `Loaded ${real}`);
 
@@ -771,6 +800,15 @@ export class Compiler {
     div.id = nextId();
 
     return div;
+  }
+
+  /**
+   * @param {{ name: string, version: string } | undefined} pkg
+   */
+  #reportDependency(pkg) {
+    if (!pkg) return;
+
+    this.#options.on?.dependency?.(pkg.name, pkg.version);
   }
 
   /**

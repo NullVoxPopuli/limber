@@ -8,7 +8,7 @@ import { registerDestructor } from '@ember/destroyable';
 import { array, concat, fn, get, hash } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { getOwner } from '@ember/owner';
-import { trackedArray } from '@ember/reactive/collections';
+import { trackedArray, trackedMap } from '@ember/reactive/collections';
 import { precompileTemplate } from '@ember/template-compilation';
 import { waitFor } from '@ember/test-waiters';
 
@@ -177,6 +177,11 @@ export default class CompilerService {
 
   readonly messages = trackedArray<Message>();
 
+  /**
+   * The npm packages that the last compile imported, as name → version.
+   */
+  readonly dependencies = trackedMap<string, string>();
+
   get lastInfo(): InfoMessage | undefined {
     const m = this.messages;
 
@@ -241,6 +246,9 @@ export default class CompilerService {
       on: {
         log: (type: Message['type'], message: string) => {
           this.messages.push({ type, message });
+        },
+        dependency: (name: string, version: string) => {
+          this.dependencies.set(name, version);
         },
       },
       options: {
@@ -339,6 +347,7 @@ export default class CompilerService {
     await Promise.resolve();
 
     this.messages.length = 0;
+    this.dependencies.clear();
 
     return this.compiler.compile(ext, text, options ?? {});
   }

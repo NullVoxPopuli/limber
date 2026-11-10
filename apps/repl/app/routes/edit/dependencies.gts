@@ -15,6 +15,7 @@ import { FlatButton } from '@nullvoxpopuli/limber-shared';
 
 import type RouterService from '@ember/routing/router-service';
 import type EditorService from 'limber/services/editor';
+import type StatusService from 'limber/services/status';
 
 export const Dependencies = <template>
   <Modal as |m|>
@@ -54,13 +55,14 @@ class DependenciesForm extends Component<{ onClose: () => void }> {
     <form {{on "submit" this.handleSubmit}}>
       <main>
         <p>
-          Pin the npm version of a package that the document imports. Packages that the REPL
-          bundles, such as ember-source, keep the bundled version.
+          Pin the npm version of a package that the document imports. Loaded is the version that
+          runs now. Packages that the REPL bundles, such as ember-source, keep the bundled version.
         </p>
 
         <div class="dependency-rows">
           <span>Package</span>
           <span>Version</span>
+          <span>Loaded</span>
           <span></span>
           {{#each this.rows as |row|}}
             <input
@@ -79,6 +81,7 @@ class DependenciesForm extends Component<{ onClose: () => void }> {
               autocomplete="off"
               data-test-dependency-version
             />
+            <span class="loaded" data-test-dependency-loaded>{{this.loadedVersion row.name}}</span>
             <button
               type="button"
               aria-label="Remove"
@@ -108,6 +111,11 @@ class DependenciesForm extends Component<{ onClose: () => void }> {
 
   @service declare editor: EditorService;
   @service declare router: RouterService;
+  /**
+   * Not `getCompiler`: the header is part of the prerendered pages,
+   * and importing ember-repl here would put it in that build.
+   */
+  @service declare status: StatusService;
 
   /**
    * Only the rows are state.
@@ -115,11 +123,22 @@ class DependenciesForm extends Component<{ onClose: () => void }> {
    */
   rows = trackedArray<Row>(this.#initialRows());
 
+  get #loaded() {
+    return this.status.compiler.dependencies;
+  }
+
+  loadedVersion = (name: string) => this.#loaded.get(name);
+
+  /**
+   * Pins first, then the packages that loaded without a pin.
+   */
   #initialRows(): Row[] {
-    const rows = Object.entries(this.editor.versions).map(([name, version]) => ({
-      name,
-      version,
-    }));
+    const pins = this.editor.versions;
+    const rows: Row[] = Object.entries(pins).map(([name, version]) => ({ name, version }));
+
+    for (const name of this.#loaded.keys()) {
+      if (!(name in pins)) rows.push({ name, version: '' });
+    }
 
     return rows.length ? rows : [{ name: '', version: '' }];
   }

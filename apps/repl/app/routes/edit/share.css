@@ -103,6 +103,7 @@ dialog.preem {
     background: var(--limber-surface);
     border-radius: 0.25rem;
     width: max-content;
+    max-width: 100%;
   }
 }
 dialog.preem::backdrop {
@@ -128,6 +129,10 @@ dialog.preem main {
   max-width: 500px;
   display: grid;
   gap: 1rem;
+
+  @media (max-width: 640px) {
+    padding: 1rem;
+  }
 
   .field {
     display: grid;
@@ -214,7 +219,14 @@ dialog.preem footer {
 
 dialog.preem .dependency-rows {
   display: grid;
-  grid-template-columns: 1fr 8rem min-content;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 6rem) min-content min-content;
   gap: 0.5rem;
   align-items: center;
+}
+dialog.preem .dependency-rows input {
+  min-width: 0;
+}
+dialog.preem .dependency-rows .loaded {
+  font-family: monospace;
+  white-space: nowrap;
 }
