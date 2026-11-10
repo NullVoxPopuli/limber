@@ -14,7 +14,7 @@ interface Signature {
 
 export default class Compiler extends Component<Signature> {
   <template>
-    {{#let (Compiled this.editor.renderInput.text this.format this.flavor) as |compiled|}}
+    {{#let (Compiled this.editor.renderInput.text this.options) as |compiled|}}
       {{yield compiled}}
     {{/let}}
   </template>
@@ -35,5 +35,13 @@ export default class Compiler extends Component<Signature> {
 
   get flavor() {
     return this.formatQPParts[1];
+  }
+
+  get options() {
+    return {
+      format: this.format,
+      flavor: this.flavor,
+      versions: this.editor.renderInput.versions,
+    };
   }
 }

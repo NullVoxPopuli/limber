@@ -23,6 +23,11 @@ export interface CompiledOptions {
    * added later will not become reactive.
    */
   args?: Record<string, unknown>;
+  /**
+   * Package versions for imports from npm, as name → version or range.
+   * A new object compiles again.
+   */
+  versions?: Record<string, string>;
 }
 
 export function Compiled(markdownText: Input | (() => Input)): CompileState;
@@ -64,6 +69,7 @@ export function Compiled(
     let format: Format | undefined;
     let flavor: string | undefined;
     let args: Record<string, unknown> | undefined;
+    let versions: Record<string, string> | undefined;
 
     if (typeof maybeFormatOrOptions === 'function') {
       format = maybeFormatOrOptions();
@@ -73,6 +79,7 @@ export function Compiled(
       format = maybeFormatOrOptions.format;
       flavor = maybeFormatOrOptions.flavor;
       args = maybeFormatOrOptions.args;
+      versions = maybeFormatOrOptions.versions;
     }
 
     format ??= 'glimdown';
@@ -95,6 +102,7 @@ export function Compiled(
       format,
       flavor,
       args,
+      versions,
     });
   });
 }

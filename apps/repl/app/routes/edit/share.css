@@ -1,5 +1,6 @@
 /* focus */
 button[data-share-button],
+button[data-dependencies-button],
 dialog.preem input {
   --tw-ring-color: var(--ember-brand);
 
@@ -29,7 +30,8 @@ dialog.preem {
 }
 
 
-button[data-share-button] {
+button[data-share-button],
+button[data-dependencies-button] {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
   transition-property: all;
@@ -209,3 +211,10 @@ dialog.preem footer {
   }
 }
 
+
+dialog.preem .dependency-rows {
+  display: grid;
+  grid-template-columns: 1fr 8rem min-content;
+  gap: 0.5rem;
+  align-items: center;
+}

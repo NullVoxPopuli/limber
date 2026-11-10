@@ -38,6 +38,11 @@ export interface PublicMethods {
     options?: {
       flavor?: string;
       fileName?: string;
+      /**
+       * Package versions for the bare imports of this compile.
+       * Overrides the `versions` option.
+       */
+      versions?: { [packageName: string]: string };
     }
   ) => Promise<{ element: HTMLElement; destroy: () => void }>;
 

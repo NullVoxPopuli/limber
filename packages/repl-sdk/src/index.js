@@ -22,6 +22,7 @@ import {
 } from './fs/url.js';
 import { virtualModuleSource } from './fs/virtual.js';
 import { fsWorker } from './fs/worker.js';
+import { parseSpecifier } from './specifier.js';
 import { assert, errorMessage, nextId } from './utils.js';
 
 /**
@@ -53,11 +54,20 @@ export class Compiler {
   #options;
 
   /**
+   * The package versions for the compile in progress.
+   * A compile can pass its own, else the `versions` option applies.
+   *
+   * @type {{ [packageName: string]: string }}
+   */
+  #versions;
+
+  /**
    * Options may be passed to the compiler to add to its behavior.
    * @param {Partial<Options>} options
    */
   constructor(options = defaults) {
     this.#options = Object.assign({}, defaults, options);
+    this.#versions = this.#options.versions ?? {};
 
     STABLE_REFERENCE.resolve = this.#resolve;
     STABLE_REFERENCE.source = this.#source;
@@ -232,9 +242,16 @@ export class Compiler {
 
     this.#log(`[resolve] ${id} not found, deferring to npmjs.com's provided tarball`);
 
-    const pinned = this.#options.versions?.[vanilla];
+    /**
+     * A pin is per package, so `lodash/merge` uses the pin for `lodash`.
+     * A version written in the specifier wins over the pin.
+     */
+    const { name, version, path } = parseSpecifier(vanilla);
+    const pinned = version ? undefined : this.#versions[name];
 
-    return specifierUrl(pinned ? `${vanilla}@${encodeURIComponent(pinned)}` : vanilla);
+    if (!pinned) return specifierUrl(vanilla);
+
+    return specifierUrl(`${name}@${encodeURIComponent(pinned)}${path.slice(1)}`);
   };
   /**
    * The es-module-shims source hook, which supersedes the fetch hook
@@ -365,7 +382,7 @@ export class Compiler {
   /**
    * @param {string} format
    * @param {string} text
-   * @param {{ fileName?: string, flavor?: string, args?: Record<string, unknown>, [key: string]: unknown }} [ options ]
+   * @param {{ fileName?: string, flavor?: string, args?: Record<string, unknown>, versions?: Record<string, string>, [key: string]: unknown }} [ options ]
    * @returns {Promise<{ element: HTMLElement, destroy: () => void }>}
    */
   async compile(format, text, options = {}) {
@@ -386,7 +403,7 @@ export class Compiler {
   /**
    * @param {string} format
    * @param {string} text
-   * @param {{ fileName?: string, flavor?: string, [key: string]: unknown }} [ options ]
+   * @param {{ fileName?: string, flavor?: string, versions?: Record<string, string>, [key: string]: unknown }} [ options ]
    * @returns {Promise<{ element: HTMLElement, destroy: () => void }>}
    */
   async #compile(format, text, options) {
@@ -398,6 +415,7 @@ export class Compiler {
     const opts = { ...options };
 
     opts.fileName ||= `index.${format}`;
+    this.#versions = opts.versions ?? this.#options.versions ?? {};
 
     this.#log('[compile] compiling');
 
@@ -563,7 +581,7 @@ export class Compiler {
 
     return {
       needsLiveMeta: /* @type {boolean | undefined} */ needsLiveMeta ?? true,
-      versions: this.#options.versions ?? {},
+      versions: this.#versions,
       ...(this.#resolveUserOptions(format, flavor) ?? {}),
     };
   };
