@@ -1,3 +1,5 @@
+import bundledVersions from 'virtual:bundled-versions';
+
 /**
  * Package name → version or range, for imports that load from npm.
  */
@@ -42,4 +44,24 @@ export function serializeDeps(versions: Versions): string | undefined {
   const entries = Object.entries(versions).map(([name, version]) => `${name}@${version}`);
 
   return entries.length ? entries.join(',') : undefined;
+}
+
+/**
+ * The package that provides a bundled import, with its installed version.
+ *
+ * ember-source provides the `@ember/*` and `@glimmer/*` modules
+ * that are not packages of their own, such as `@glimmer/tracking`.
+ *
+ * Modules of the app itself have no package.
+ */
+export function bundledPackage(name: string): { name: string; version: string } | undefined {
+  const version = bundledVersions[name];
+
+  if (version) return { name, version };
+
+  const emberSource = bundledVersions['ember-source'];
+
+  if (emberSource && (name.startsWith('@ember/') || name.startsWith('@glimmer/'))) {
+    return { name: 'ember-source', version: emberSource };
+  }
 }

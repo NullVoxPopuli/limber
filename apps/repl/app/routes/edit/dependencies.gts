@@ -9,7 +9,7 @@ import { faBoxOpen, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { focusTrap } from 'ember-focus-trap';
 import { Modal } from 'ember-primitives/components/dialog';
 
-import { serializeDeps, type Versions } from 'limber/utils/dependencies';
+import { bundledPackage, serializeDeps, type Versions } from 'limber/utils/dependencies';
 
 import { FlatButton } from '@nullvoxpopuli/limber-shared';
 
@@ -91,6 +91,12 @@ class DependenciesForm extends Component<{ onClose: () => void }> {
               <FaIcon @icon={{faTrash}} />
             </button>
           {{/each}}
+          {{#each this.bundled as |pkg|}}
+            <span class="bundled-name" data-test-bundled-name>{{pkg.name}}</span>
+            <span class="bundled-label">bundled</span>
+            <span class="loaded" data-test-bundled-version>{{pkg.version}}</span>
+            <span></span>
+          {{/each}}
         </div>
 
         <div>
@@ -130,14 +136,34 @@ class DependenciesForm extends Component<{ onClose: () => void }> {
   loadedVersion = (name: string) => this.#loaded.get(name);
 
   /**
+   * The packages behind the bundled imports, one row each.
+   * Many `@ember/*` imports are one ember-source row.
+   */
+  get bundled() {
+    const packages = new Map<string, string>();
+
+    for (const [name, version] of this.#loaded) {
+      if (version !== undefined) continue;
+
+      const pkg = bundledPackage(name);
+
+      if (pkg) packages.set(pkg.name, pkg.version);
+    }
+
+    return Array.from(packages, ([name, version]) => ({ name, version })).sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+  }
+
+  /**
    * Pins first, then the packages that loaded without a pin.
    */
   #initialRows(): Row[] {
     const pins = this.editor.versions;
     const rows: Row[] = Object.entries(pins).map(([name, version]) => ({ name, version }));
 
-    for (const name of this.#loaded.keys()) {
-      if (!(name in pins)) rows.push({ name, version: '' });
+    for (const [name, version] of this.#loaded) {
+      if (version !== undefined && !(name in pins)) rows.push({ name, version: '' });
     }
 
     return rows.length ? rows : [{ name: '', version: '' }];

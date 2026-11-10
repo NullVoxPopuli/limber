@@ -249,10 +249,11 @@ export interface Options {
      */
     log?: (type: 'error' | 'info', message: string) => void;
     /**
-     * A package from npm that the document imports, with the version that loaded.
+     * A package that the document imports, with the version that loaded from npm.
+     * The version is `undefined` when the module came from the `resolve` option.
      * Imports from inside other packages are not reported.
      */
-    dependency?: (name: string, version: string) => void;
+    dependency?: (name: string, version: string | undefined) => void;
   };
 
   /**

@@ -1,4 +1,5 @@
 import { click, currentURL, fillIn, findAll, visit } from '@ember/test-helpers';
+import { VERSION } from '@ember/version';
 import { module, test } from 'qunit';
 
 import LZString from 'lz-string';
@@ -77,6 +78,22 @@ module('Editor > Dependencies', function (hooks) {
     assert.dom(name).hasValue('dompurify');
     assert.dom(version).hasValue('', 'no pin');
     assert.dom(loaded).hasText(latest);
+  });
+
+  test('the dialog lists bundled packages with their version', async function (assert) {
+    await visitWith();
+    await click(open);
+
+    const names = findAll('[data-test-bundled-name]').map((el) => el.textContent?.trim());
+    const index = names.indexOf('ember-source');
+
+    assert.notStrictEqual(index, -1, `ember-source is listed: ${names.join(', ')}`);
+    assert.strictEqual(
+      findAll('[data-test-bundled-version]')[index]?.textContent?.trim(),
+      VERSION,
+      'with the version that runs'
+    );
+    assert.false(names.includes('dompurify'), 'npm packages are not in the bundled list');
   });
 
   test('applying a new version compiles against it', async function (assert) {

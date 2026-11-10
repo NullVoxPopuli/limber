@@ -188,6 +188,10 @@ export class Compiler {
     if (this.#options.resolve?.[vanilla]) {
       this.#log(`[resolve] ${vanilla} found in manually specified resolver`);
 
+      if (parentUrl.startsWith(SRC_PREFIX)) {
+        this.#reportDependency({ name: parseSpecifier(vanilla).name, version: undefined });
+      }
+
       return virtualUrl('manual', vanilla);
     }
 
@@ -803,7 +807,9 @@ export class Compiler {
   }
 
   /**
-   * @param {{ name: string, version: string } | undefined} pkg
+   * No version means that the caller provided the module.
+   *
+   * @param {{ name: string, version: string | undefined } | undefined} pkg
    */
   #reportDependency(pkg) {
     if (!pkg) return;

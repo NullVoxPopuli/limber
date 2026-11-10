@@ -178,9 +178,10 @@ export default class CompilerService {
   readonly messages = trackedArray<Message>();
 
   /**
-   * The npm packages that the last compile imported, as name → version.
+   * The packages that the last compile imported, as name → version.
+   * The version is `undefined` for modules that ember-repl or the host app provides.
    */
-  readonly dependencies = trackedMap<string, string>();
+  readonly dependencies = trackedMap<string, string | undefined>();
 
   get lastInfo(): InfoMessage | undefined {
     const m = this.messages;
@@ -247,7 +248,7 @@ export default class CompilerService {
         log: (type: Message['type'], message: string) => {
           this.messages.push({ type, message });
         },
-        dependency: (name: string, version: string) => {
+        dependency: (name: string, version: string | undefined) => {
           this.dependencies.set(name, version);
         },
       },

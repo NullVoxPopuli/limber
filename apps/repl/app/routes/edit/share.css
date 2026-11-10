@@ -226,6 +226,12 @@ dialog.preem .dependency-rows {
 dialog.preem .dependency-rows input {
   min-width: 0;
 }
+dialog.preem .dependency-rows .bundled-name {
+  overflow-wrap: anywhere;
+}
+dialog.preem .dependency-rows .bundled-label {
+  opacity: 0.7;
+}
 dialog.preem .dependency-rows .loaded {
   font-family: monospace;
   white-space: nowrap;
