@@ -38,6 +38,11 @@ export interface PublicMethods {
     options?: {
       flavor?: string;
       fileName?: string;
+      /**
+       * Package versions for the bare imports of this compile.
+       * Overrides the `versions` option.
+       */
+      versions?: { [packageName: string]: string };
     }
   ) => Promise<{ element: HTMLElement; destroy: () => void }>;
 
@@ -243,6 +248,12 @@ export interface Options {
      * - what is being fetched / compiled
      */
     log?: (type: 'error' | 'info', message: string) => void;
+    /**
+     * A package that the document imports, with the version that loaded from npm.
+     * The version is `undefined` when the module came from the `resolve` option.
+     * Imports from inside other packages are not reported.
+     */
+    dependency?: (name: string, version: string | undefined) => void;
   };
 
   /**

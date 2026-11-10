@@ -9,6 +9,7 @@ import { STABLE_REFERENCE } from './es-module-shim.js';
 import { takeEntry, writeEntry } from './fs/entry.js';
 import { clearFs, installer, storage } from './fs/store.js';
 import {
+  DEPS_PREFIX,
   extensionOf,
   NODE_MODULES_PREFIX,
   npmUrl,
@@ -22,6 +23,7 @@ import {
 } from './fs/url.js';
 import { virtualModuleSource } from './fs/virtual.js';
 import { fsWorker } from './fs/worker.js';
+import { parseSpecifier } from './specifier.js';
 import { assert, errorMessage, nextId } from './utils.js';
 
 /**
@@ -40,6 +42,17 @@ const NODE_POLYFILLS = {
 
 assert(`There is no document. repl-sdk is meant to be ran in a browser`, globalThis.document);
 
+/**
+ * Specifier URL → the package that it installed.
+ *
+ * A later compile finds the module in the loader's cache,
+ * so the source hook does not run again for it.
+ * The loader is global, so this is too.
+ *
+ * @type {Map<string, { name: string, version: string }>}
+ */
+const installed = new Map();
+
 export { errorMessage } from './utils.js';
 
 export const defaultFormats = Object.keys(compilers);
@@ -53,11 +66,20 @@ export class Compiler {
   #options;
 
   /**
+   * The package versions for the compile in progress.
+   * A compile can pass its own, else the `versions` option applies.
+   *
+   * @type {{ [packageName: string]: string }}
+   */
+  #versions;
+
+  /**
    * Options may be passed to the compiler to add to its behavior.
    * @param {Partial<Options>} options
    */
   constructor(options = defaults) {
     this.#options = Object.assign({}, defaults, options);
+    this.#versions = this.#options.versions ?? {};
 
     STABLE_REFERENCE.resolve = this.#resolve;
     STABLE_REFERENCE.source = this.#source;
@@ -166,6 +188,10 @@ export class Compiler {
     if (this.#options.resolve?.[vanilla]) {
       this.#log(`[resolve] ${vanilla} found in manually specified resolver`);
 
+      if (parentUrl.startsWith(SRC_PREFIX)) {
+        this.#reportDependency({ name: parseSpecifier(vanilla).name, version: undefined });
+      }
+
       return virtualUrl('manual', vanilla);
     }
 
@@ -232,9 +258,22 @@ export class Compiler {
 
     this.#log(`[resolve] ${id} not found, deferring to npmjs.com's provided tarball`);
 
-    const pinned = this.#options.versions?.[vanilla];
+    /**
+     * A pin is per package, so `lodash/merge` uses the pin for `lodash`.
+     * A version written in the specifier wins over the pin.
+     */
+    const { name, version, path } = parseSpecifier(vanilla);
+    const pinned = version ? undefined : this.#versions[name];
 
-    return specifierUrl(pinned ? `${vanilla}@${encodeURIComponent(pinned)}` : vanilla);
+    const url = pinned
+      ? specifierUrl(`${name}@${encodeURIComponent(pinned)}${path.slice(1)}`)
+      : specifierUrl(vanilla);
+
+    if (parentUrl.startsWith(SRC_PREFIX)) {
+      this.#reportDependency(installed.get(url));
+    }
+
+    return url;
   };
   /**
    * The es-module-shims source hook, which supersedes the fetch hook
@@ -294,6 +333,17 @@ export class Compiler {
       assert(`${real} resolved but is not in the fs`, text !== undefined);
 
       const source = await this.#postProcess(text, extensionOf(real));
+
+      /**
+       * A bare specifier lands here once per package.
+       * Files inside a package already have their real URL.
+       */
+      if (!path.startsWith(DEPS_PREFIX)) {
+        const pkg = parseNpmUrl(real);
+
+        if (pkg) installed.set(path, pkg);
+        if (parent.startsWith(SRC_PREFIX)) this.#reportDependency(pkg);
+      }
 
       this.#announce('info', `Loaded ${real}`);
 
@@ -365,7 +415,7 @@ export class Compiler {
   /**
    * @param {string} format
    * @param {string} text
-   * @param {{ fileName?: string, flavor?: string, args?: Record<string, unknown>, [key: string]: unknown }} [ options ]
+   * @param {{ fileName?: string, flavor?: string, args?: Record<string, unknown>, versions?: Record<string, string>, [key: string]: unknown }} [ options ]
    * @returns {Promise<{ element: HTMLElement, destroy: () => void }>}
    */
   async compile(format, text, options = {}) {
@@ -386,7 +436,7 @@ export class Compiler {
   /**
    * @param {string} format
    * @param {string} text
-   * @param {{ fileName?: string, flavor?: string, [key: string]: unknown }} [ options ]
+   * @param {{ fileName?: string, flavor?: string, versions?: Record<string, string>, [key: string]: unknown }} [ options ]
    * @returns {Promise<{ element: HTMLElement, destroy: () => void }>}
    */
   async #compile(format, text, options) {
@@ -398,6 +448,7 @@ export class Compiler {
     const opts = { ...options };
 
     opts.fileName ||= `index.${format}`;
+    this.#versions = opts.versions ?? this.#options.versions ?? {};
 
     this.#log('[compile] compiling');
 
@@ -563,7 +614,7 @@ export class Compiler {
 
     return {
       needsLiveMeta: /* @type {boolean | undefined} */ needsLiveMeta ?? true,
-      versions: this.#options.versions ?? {},
+      versions: this.#versions,
       ...(this.#resolveUserOptions(format, flavor) ?? {}),
     };
   };
@@ -753,6 +804,17 @@ export class Compiler {
     div.id = nextId();
 
     return div;
+  }
+
+  /**
+   * No version means that the caller provided the module.
+   *
+   * @param {{ name: string, version: string | undefined } | undefined} pkg
+   */
+  #reportDependency(pkg) {
+    if (!pkg) return;
+
+    this.#options.on?.dependency?.(pkg.name, pkg.version);
   }
 
   /**

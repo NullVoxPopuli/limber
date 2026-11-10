@@ -1,5 +1,10 @@
 import type { ModuleMap } from '../compile/types.ts';
 
+/**
+ * ember-source modules, loaded ahead of time for `importSync`.
+ */
+const loaded: Record<string, unknown> = {};
+
 const frameworkModules = {
   '@ember/application': () => import('@ember/application'),
   '@ember/application/instance': () => import('@ember/application/instance'),
@@ -112,6 +117,7 @@ const emberCompilationModules = {
 
     // @ts-ignore
     importSync: (x: string) =>
+      loaded[x] ??
       // @ts-expect-error
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       window[Symbol.for('__repl-sdk__compiler__') as any]!.resolves[x],
@@ -141,3 +147,63 @@ export const modules = (extraModules: ModuleMap): ModuleMap => ({
   ...emberCompilationModules,
   ...markdownCompilationModules,
 });
+
+export const EMBER_SOURCE = 'ember-source';
+
+/**
+ * Framework modules that are packages of their own.
+ * Every other framework module comes from ember-source.
+ */
+const ownPackages = new Set([
+  '@glimmer/component',
+  '@ember/test-helpers',
+  '@ember/test-waiters',
+]);
+
+/**
+ * The npm package of a bundled module.
+ *
+ *   @ember/helper        → ember-source
+ *   @glimmer/component   → @glimmer/component
+ *   ember-primitives/x   → ember-primitives
+ */
+export function packageOf(specifier: string): string {
+  if (specifier in frameworkModules && !ownPackages.has(specifier)) {
+    return EMBER_SOURCE;
+  }
+
+  if (
+    specifier.startsWith('@ember/template-compiler') ||
+    specifier.startsWith('ember-source/')
+  ) {
+    return EMBER_SOURCE;
+  }
+
+  const parts = specifier.split('/');
+
+  return specifier.startsWith('@')
+    ? `${parts[0]}/${parts[1]}`
+    : (parts[0] ?? specifier);
+}
+
+/**
+ * `importSync` from `@embroider/macros` must answer at once,
+ * and npm builds of addons use it for `@ember/*` modules.
+ *
+ * The host app has these modules already, so this is fast.
+ */
+export async function preloadEmberSource(): Promise<void> {
+  const pending: Promise<void>[] = [];
+
+  for (const [specifier, load] of Object.entries(frameworkModules)) {
+    if (packageOf(specifier) !== EMBER_SOURCE || specifier in loaded) continue;
+
+    pending.push(
+      Promise.resolve(load()).then((value: unknown) => {
+        loaded[specifier] = value;
+      })
+    );
+  }
+
+  await Promise.all(pending);
+}

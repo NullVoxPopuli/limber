@@ -5,6 +5,7 @@ import Service, { service } from '@ember/service';
 import { castToBoolean } from 'ember-primitives/qp';
 import { link } from 'reactiveweb/link';
 
+import { parseDeps, type Versions } from 'limber/utils/dependencies';
 import { FileURIComponent } from 'limber/utils/editor-text';
 
 import type { DemoEntry } from '../snippets';
@@ -15,6 +16,7 @@ import type { FormatQP } from '#app/languages.gts';
 interface RenderInput {
   text: EditorService['text'];
   format: FormatQP;
+  versions: Versions;
 }
 
 export default class EditorService extends Service {
@@ -44,6 +46,13 @@ export default class EditorService extends Service {
 
   get format(): FormatQP {
     return this.fileURIComponent.format;
+  }
+
+  /**
+   * Pinned npm package versions, from the `deps` query param.
+   */
+  get versions(): Versions {
+    return parseDeps(this.router.currentRoute?.queryParams?.['deps']);
   }
 
   /**
@@ -81,11 +90,11 @@ export default class EditorService extends Service {
   };
 
   get #file(): RenderInput {
-    return { text: this.text, format: this.format };
+    return { text: this.text, format: this.format, versions: this.versions };
   }
 
   /**
-   * The text and format for the output pane.
+   * The text, format, and versions for the output pane.
    */
   get renderInput(): RenderInput {
     return this.pausedFile ?? this.#file;

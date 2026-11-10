@@ -68,6 +68,10 @@ export default class ApplicationController extends Controller {
     // Load a file from the public directory
     'file',
 
+    // Pinned npm package versions for the document's imports,
+    // for example "dompurify@3.2.0,lodash-es@^4"
+    'deps',
+
     // Force the output to be rendered in to a shadow-dom
     // or force it to not be rendered in to a shadow-dom if falsey value is passed
     'shadowdom',

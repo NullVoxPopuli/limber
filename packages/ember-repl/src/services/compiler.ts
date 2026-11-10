@@ -8,7 +8,7 @@ import { registerDestructor } from '@ember/destroyable';
 import { array, concat, fn, get, hash } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { getOwner } from '@ember/owner';
-import { trackedArray } from '@ember/reactive/collections';
+import { trackedArray, trackedMap } from '@ember/reactive/collections';
 import { precompileTemplate } from '@ember/template-compilation';
 import { waitFor } from '@ember/test-waiters';
 
@@ -18,7 +18,12 @@ import { Compiler } from 'repl-sdk';
 import { visit } from 'unist-util-visit';
 
 import { nameFor } from '../compile/utils.ts';
-import { modules } from './known-modules.ts';
+import {
+  EMBER_SOURCE,
+  modules,
+  packageOf,
+  preloadEmberSource,
+} from './known-modules.ts';
 
 import type { CompileResult, ModuleMap } from '../compile/types.ts';
 import type { ComponentLike } from '@glint/template';
@@ -177,6 +182,38 @@ export default class CompilerService {
 
   readonly messages = trackedArray<Message>();
 
+  /**
+   * The packages that the last compile imported, as name → version.
+   * The version is `undefined` for modules that ember-repl or the host app provides.
+   */
+  readonly dependencies = trackedMap<string, string | undefined>();
+
+  /**
+   * The pinned versions of the compile in progress.
+   */
+  #pins: Record<string, string> = {};
+
+  #emberSourceReady: Promise<void> | undefined;
+
+  /**
+   * A pinned package loads from npm in place of its bundled modules.
+   *
+   * ember-source stays bundled:
+   * the compilers and the renderer come from it too.
+   */
+  #isOverridden(specifier: string) {
+    const name = packageOf(specifier);
+
+    return this.canOverride(name) && name in this.#pins;
+  }
+
+  /**
+   * Can a pin replace the bundled modules of this package?
+   */
+  canOverride(packageName: string) {
+    return packageName !== EMBER_SOURCE;
+  }
+
   get lastInfo(): InfoMessage | undefined {
     const m = this.messages;
 
@@ -210,6 +247,8 @@ export default class CompilerService {
   setup = (extraModules: ModuleMap = {}, options: CompilerOptions = {}) => {
     const localModules = modules(extraModules);
 
+    this.#emberSourceReady = preloadEmberSource();
+
     const parentOwner = getOwner(this);
     const owner = {
       name: 'ember-repl owner',
@@ -235,12 +274,30 @@ export default class CompilerService {
 
     this.#compiler = new Compiler({
       logging: location.search.includes('debug'),
-      resolve: {
-        ...localModules,
-      },
+      /**
+       * repl-sdk looks a module up here before it goes to npm,
+       * so hiding a module here is enough to override its bundle.
+       */
+      resolve: new Proxy(localModules, {
+        get: (target, key) => {
+          if (typeof key === 'string' && this.#isOverridden(key)) return;
+
+          return target[key as keyof typeof target];
+        },
+      }),
       on: {
         log: (type: Message['type'], message: string) => {
           this.messages.push({ type, message });
+        },
+        dependency: (name: string, version: string | undefined) => {
+          /**
+           * A bundled module is listed under its package,
+           * so all of `@ember/*` is one ember-source entry.
+           */
+          this.dependencies.set(
+            version === undefined ? packageOf(name) : name,
+            version
+          );
         },
       },
       options: {
@@ -339,6 +396,10 @@ export default class CompilerService {
     await Promise.resolve();
 
     this.messages.length = 0;
+    this.dependencies.clear();
+    this.#pins = (options?.['versions'] as Record<string, string>) ?? {};
+
+    await this.#emberSourceReady;
 
     return this.compiler.compile(ext, text, options ?? {});
   }

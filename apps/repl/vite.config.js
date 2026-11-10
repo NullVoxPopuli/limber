@@ -7,6 +7,8 @@ import mkcert from 'vite-plugin-mkcert';
 
 import { ember } from '@nullvoxpopuli/ember-vite';
 
+import { bundledVersions } from './config/bundled-versions.mjs';
+
 /**
  * The REPL runs user code against the Ember of this app,
  * and users need the assertions and error messages of the development build.
@@ -152,6 +154,7 @@ export default defineConfig({
     }),
     circleDependency(),
     emberSourceDevelopment(),
+    bundledVersions(),
     preloadShikiWorker(),
     mkcert({
       savePath: 'node_modules/.vite-plugin-mkcert/',
