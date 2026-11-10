@@ -9,7 +9,7 @@ import { faBoxOpen, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { focusTrap } from 'ember-focus-trap';
 import { Modal } from 'ember-primitives/components/dialog';
 
-import { bundledPackage, serializeDeps, type Versions } from 'limber/utils/dependencies';
+import { bundledVersion, serializeDeps, type Versions } from 'limber/utils/dependencies';
 
 import { FlatButton } from '@nullvoxpopuli/limber-shared';
 
@@ -56,7 +56,7 @@ class DependenciesForm extends Component<{ onClose: () => void }> {
       <main>
         <p>
           Pin the npm version of a package that the document imports. Loaded is the version that
-          runs now. Packages that the REPL bundles, such as ember-source, keep the bundled version.
+          runs now. A pin also replaces a bundled package, except ember-source.
         </p>
 
         <div class="dependency-rows">
@@ -76,7 +76,7 @@ class DependenciesForm extends Component<{ onClose: () => void }> {
             <input
               name="version"
               aria-label="Version"
-              placeholder="latest"
+              placeholder={{if (this.isBundled row.name) "bundled" "latest"}}
               value={{row.version}}
               autocomplete="off"
               data-test-dependency-version
@@ -91,7 +91,7 @@ class DependenciesForm extends Component<{ onClose: () => void }> {
               <FaIcon @icon={{faTrash}} />
             </button>
           {{/each}}
-          {{#each this.bundled as |pkg|}}
+          {{#each this.fixed as |pkg|}}
             <span class="bundled-name" data-test-bundled-name>{{pkg.name}}</span>
             <span class="bundled-label">bundled</span>
             <span class="loaded" data-test-bundled-version>{{pkg.version}}</span>
@@ -123,47 +123,58 @@ class DependenciesForm extends Component<{ onClose: () => void }> {
    */
   @service declare status: StatusService;
 
-  /**
-   * Only the rows are state.
-   * The inputs keep their own values until submit.
-   */
-  rows = trackedArray<Row>(this.#initialRows());
-
   get #loaded() {
     return this.status.compiler.dependencies;
   }
 
-  loadedVersion = (name: string) => this.#loaded.get(name);
+  /**
+   * ember-repl reports a bundled package with no version.
+   */
+  isBundled = (name: string) => this.#loaded.has(name) && this.#loaded.get(name) === undefined;
+
+  loadedVersion = (name: string) =>
+    this.isBundled(name) ? bundledVersion(name) : this.#loaded.get(name);
 
   /**
-   * The packages behind the bundled imports, one row each.
-   * Many `@ember/*` imports are one ember-source row.
+   * Only the rows are state.
+   * The inputs keep their own values until submit.
+   *
+   * Below the fields that `#initialRows` reads, because fields run in order.
    */
-  get bundled() {
-    const packages = new Map<string, string>();
+  rows = trackedArray<Row>(this.#initialRows());
 
-    for (const [name, version] of this.#loaded) {
-      if (version !== undefined) continue;
+  /**
+   * Bundled packages that a pin cannot replace, such as ember-source.
+   */
+  get fixed() {
+    const rows: { name: string; version: string }[] = [];
 
-      const pkg = bundledPackage(name);
+    for (const name of this.#loaded.keys()) {
+      const version = bundledVersion(name);
 
-      if (pkg) packages.set(pkg.name, pkg.version);
+      if (version && this.isBundled(name) && !this.status.compiler.canOverride(name)) {
+        rows.push({ name, version });
+      }
     }
 
-    return Array.from(packages, ([name, version]) => ({ name, version })).sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
+    return rows.sort((a, b) => a.name.localeCompare(b.name));
   }
 
   /**
    * Pins first, then the packages that loaded without a pin.
+   *
+   * Bundled modules of the app itself have no version, and get no row.
    */
   #initialRows(): Row[] {
     const pins = this.editor.versions;
     const rows: Row[] = Object.entries(pins).map(([name, version]) => ({ name, version }));
 
-    for (const [name, version] of this.#loaded) {
-      if (version !== undefined && !(name in pins)) rows.push({ name, version: '' });
+    for (const name of this.#loaded.keys()) {
+      if (name in pins) continue;
+      if (this.isBundled(name) && !this.status.compiler.canOverride(name)) continue;
+      if (this.loadedVersion(name) === undefined) continue;
+
+      rows.push({ name, version: '' });
     }
 
     return rows.length ? rows : [{ name: '', version: '' }];

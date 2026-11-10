@@ -1,4 +1,4 @@
-import { click, currentURL, fillIn, findAll, visit } from '@ember/test-helpers';
+import { click, currentURL, fillIn, find, findAll, visit } from '@ember/test-helpers';
 import { VERSION } from '@ember/version';
 import { module, test } from 'qunit';
 
@@ -24,6 +24,17 @@ const doc = `
 import DOMPurify from 'dompurify';
 
 <template><p data-test-text>{{DOMPurify.version}}</p></template>
+`;
+
+/**
+ * ember-resources is bundled with the REPL.
+ */
+const usesBundle = `
+import { cell } from 'ember-resources';
+
+const value = cell(2);
+
+<template><p data-test-text>{{value.current}}</p></template>
 `;
 
 const noImports = `<template><p data-test-text>no imports</p></template>`;
@@ -94,6 +105,30 @@ module('Editor > Dependencies', function (hooks) {
       'with the version that runs'
     );
     assert.false(names.includes('dompurify'), 'npm packages are not in the bundled list');
+  });
+
+  test('a pin replaces a bundled package', async function (assert) {
+    await visitWith(undefined, usesBundle);
+
+    assert.dom(out).hasText('2');
+
+    await click(open);
+
+    assert.dom(name).hasValue('ember-resources');
+    assert.dom(version).hasAttribute('placeholder', 'bundled');
+
+    const bundled = find(loaded)?.textContent?.trim();
+
+    assert.notStrictEqual(bundled, '7.0.0', `the bundle is not 7.0.0: ${bundled}`);
+
+    await fillIn(version, '7.0.0');
+    await click(apply);
+
+    assert.dom(out).hasText('2', 'the npm copy renders too');
+
+    await click(open);
+
+    assert.dom(loaded).hasText('7.0.0');
   });
 
   test('applying a new version compiles against it', async function (assert) {
