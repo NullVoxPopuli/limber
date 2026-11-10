@@ -1,9 +1,11 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 
+import { service as serviceHelper } from 'ember-primitives/helpers/service';
 import { notInIframe } from 'ember-primitives/iframe';
 
 import Output from '#components/output.gts';
+import { PinnedOutput } from '#components/pinned-output.gts';
 import { VerifyDanger } from '#components/verify-danger.gts';
 
 import { ExternalLink as Link } from '@nullvoxpopuli/limber-shared';
@@ -14,6 +16,7 @@ import Header from './header.gts';
 import Layout from './layout/index.gts';
 
 import type RouterService from '@ember/routing/router-service';
+import type EditorService from 'limber/services/editor';
 
 class OpenOutput extends Component {
   @service declare router: RouterService;
@@ -35,6 +38,8 @@ class OpenOutput extends Component {
   </template>
 }
 
+const pinsEmberSource = (editor: EditorService) => 'ember-source' in editor.renderInput.versions;
+
 <template>
   <Guest />
 
@@ -50,9 +55,14 @@ class OpenOutput extends Component {
 
       <:output>
         <div class="h-full w-full">
-          <VerifyDanger>
-            <Output />
-          </VerifyDanger>
+          {{#if (pinsEmberSource (serviceHelper "editor"))}}
+            {{! The frame has its own VerifyDanger. }}
+            <PinnedOutput />
+          {{else}}
+            <VerifyDanger>
+              <Output />
+            </VerifyDanger>
+          {{/if}}
           <OpenOutput />
         </div>
       </:output>

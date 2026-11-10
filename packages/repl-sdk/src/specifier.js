@@ -29,7 +29,8 @@ export function parseSpecifier(specifier) {
 
     // Enter version mode
     // Goes until the end, or a slash
-    if (char === '@' && i > 0) {
+    // An `@` in the path is part of the path: `ember-source@7/@ember/owner`
+    if (char === '@' && i > 0 && !isPath) {
       finishedName = true;
       isVersion = true;
       continue;

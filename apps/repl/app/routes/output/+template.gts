@@ -3,6 +3,7 @@ import { service } from '@ember/service';
 
 import Output from '#components/output.gts';
 import { VerifyDanger } from '#components/verify-danger.gts';
+import Guest from '#edit/guest.gts';
 
 import { ExternalLink as Link } from '@nullvoxpopuli/limber-shared';
 
@@ -23,6 +24,8 @@ class EditThis extends Component {
 }
 
 <template>
+  {{! The edit page frames this page when ember-source is pinned, and sends the text. }}
+  <Guest />
   <VerifyDanger>
     <Output @shadow={{false}} />
   </VerifyDanger>

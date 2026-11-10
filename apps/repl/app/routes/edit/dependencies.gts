@@ -1,6 +1,7 @@
 import './share.css';
 
 import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
 import { trackedArray } from '@ember/reactive/collections';
 import { service } from '@ember/service';
 
@@ -8,6 +9,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faBoxOpen, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { focusTrap } from 'ember-focus-trap';
 import { Modal } from 'ember-primitives/components/dialog';
+import { getPromiseState } from 'reactiveweb/get-promise-state';
 
 import { bundledVersion, serializeDeps, type Versions } from 'limber/utils/dependencies';
 
@@ -33,7 +35,7 @@ export const Dependencies = <template>
     <m.Dialog class="preem" inert={{not m.isOpen}} {{focusTrap isActive=m.isOpen}}>
       {{#if m.isOpen}}
         <div class="modal-facade">
-          <DependenciesForm @onClose={{m.close}} />
+          <DependenciesBody @onClose={{m.close}} />
         </div>
       {{/if}}
     </m.Dialog>
@@ -45,18 +47,53 @@ interface Row {
   version: string;
 }
 
-class DependenciesForm extends Component<{ onClose: () => void }> {
+type Loaded = ReadonlyMap<string, string | undefined>;
+
+/**
+ * What the output loaded: from this page's compiler,
+ * or from the frame that renders a pinned ember-source.
+ */
+class DependenciesBody extends Component<{ onClose: () => void }> {
+  @service declare editor: EditorService;
+  /**
+   * Not `getCompiler`: the header is part of the prerendered pages,
+   * and importing ember-repl here would put it in that build.
+   */
+  @service declare status: StatusService;
+
+  @cached
+  get request(): Promise<Loaded> {
+    const frame = this.editor.outputFrame;
+
+    if (!frame) return Promise.resolve(this.status.compiler.dependencies);
+
+    return frame.dependencies().then((entries) => new Map(entries));
+  }
+
+  get state() {
+    return getPromiseState(this.request);
+  }
+
   <template>
+    {{! The focus trap needs a button while the list loads. }}
     <header><h2>Dependencies</h2>
       <FlatButton {{on "click" @onClose}} aria-label="close the dependencies modal">
         <FaIcon @size="xs" @icon={{faXmark}} class="aspect-square" />
       </FlatButton>
     </header>
+    {{#if this.state.resolved}}
+      <DependenciesForm @loaded={{this.state.resolved}} @onClose={{@onClose}} />
+    {{/if}}
+  </template>
+}
+
+class DependenciesForm extends Component<{ loaded: Loaded; onClose: () => void }> {
+  <template>
     <form {{on "submit" this.handleSubmit}}>
       <main>
         <p>
           Pin the npm version of a package that the document imports. Loaded is the version that
-          runs now. A pin also replaces a bundled package, except ember-source.
+          runs now. A pin also replaces a package that the REPL bundles.
         </p>
 
         <div class="dependency-rows">
@@ -91,12 +128,6 @@ class DependenciesForm extends Component<{ onClose: () => void }> {
               <FaIcon @icon={{faTrash}} />
             </button>
           {{/each}}
-          {{#each this.fixed as |pkg|}}
-            <span class="bundled-name" data-test-bundled-name>{{pkg.name}}</span>
-            <span class="bundled-label">bundled</span>
-            <span class="loaded" data-test-bundled-version>{{pkg.version}}</span>
-            <span></span>
-          {{/each}}
         </div>
 
         <div>
@@ -117,14 +148,9 @@ class DependenciesForm extends Component<{ onClose: () => void }> {
 
   @service declare editor: EditorService;
   @service declare router: RouterService;
-  /**
-   * Not `getCompiler`: the header is part of the prerendered pages,
-   * and importing ember-repl here would put it in that build.
-   */
-  @service declare status: StatusService;
 
   get #loaded() {
-    return this.status.compiler.dependencies;
+    return this.args.loaded;
   }
 
   /**
@@ -144,23 +170,6 @@ class DependenciesForm extends Component<{ onClose: () => void }> {
   rows = trackedArray<Row>(this.#initialRows());
 
   /**
-   * Bundled packages that a pin cannot replace, such as ember-source.
-   */
-  get fixed() {
-    const rows: { name: string; version: string }[] = [];
-
-    for (const name of this.#loaded.keys()) {
-      const version = bundledVersion(name);
-
-      if (version && this.isBundled(name) && !this.status.compiler.canOverride(name)) {
-        rows.push({ name, version });
-      }
-    }
-
-    return rows.sort((a, b) => a.name.localeCompare(b.name));
-  }
-
-  /**
    * Pins first, then the packages that loaded without a pin.
    *
    * Bundled modules of the app itself have no version, and get no row.
@@ -171,7 +180,6 @@ class DependenciesForm extends Component<{ onClose: () => void }> {
 
     for (const name of this.#loaded.keys()) {
       if (name in pins) continue;
-      if (this.isBundled(name) && !this.status.compiler.canOverride(name)) continue;
       if (this.loadedVersion(name) === undefined) continue;
 
       rows.push({ name, version: '' });

@@ -1371,9 +1371,6 @@ importers:
       resolve.imports:
         specifier: ^2.0.3
         version: 2.0.3
-      tarparser:
-        specifier: ^0.0.5
-        version: 0.0.5
       unified:
         specifier: ^11.0.5
         version: 11.0.5

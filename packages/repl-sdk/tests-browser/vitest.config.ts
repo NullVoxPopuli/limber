@@ -9,7 +9,7 @@ export default defineConfig({
    * which breaks whatever test was running.
    */
   optimizeDeps: {
-    include: ['comlink', 'package-name-regex', 'tarparser'],
+    include: ['comlink', 'package-name-regex'],
   },
   test: {
     testTimeout: 30_000,

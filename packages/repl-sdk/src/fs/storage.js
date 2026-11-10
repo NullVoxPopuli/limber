@@ -23,7 +23,14 @@
 export const NODE_MODULES = 'node_modules';
 export const DEPS = '.deps';
 
-const COMPLETE_MARKER = '.complete';
+/**
+ * The number goes up when unpacking changes,
+ * so a package from an older unpacker installs again.
+ *
+ * - 2: paths longer than 100 characters, see tar.js
+ */
+const COMPLETE_MARKER = '.complete-2';
+const OLD_MARKERS = new Set(['.complete']);
 const LINK_MARKER = '.link';
 
 const encoder = new TextEncoder();
@@ -545,7 +552,7 @@ export class Storage {
 function isMarker(path) {
   const name = path.slice(path.lastIndexOf('/') + 1);
 
-  return name === COMPLETE_MARKER || name === LINK_MARKER;
+  return name === COMPLETE_MARKER || name === LINK_MARKER || OLD_MARKERS.has(name);
 }
 
 /**

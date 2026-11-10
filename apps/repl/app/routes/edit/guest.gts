@@ -1,6 +1,7 @@
 import { isDevelopingApp, macroCondition } from '@embroider/macros';
 
 import { notInIframe } from 'ember-primitives/iframe';
+import { getCompiler } from 'ember-repl';
 import { resource } from 'ember-resources';
 import { connectToParent } from 'penpal';
 
@@ -29,6 +30,12 @@ const guestFrame = resource(({ on, owner }) => {
         // console.log(router.currentURL)
 
         editor.update(text, format);
+      },
+      /**
+       * The edit page asks for these when it frames this page with a pinned ember-source.
+       */
+      dependencies() {
+        return Array.from(getCompiler(owner).dependencies);
       },
     },
   });

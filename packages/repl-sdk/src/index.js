@@ -88,6 +88,32 @@ export class Compiler {
   }
 
   /**
+   * Resolution is synchronous, so a pinned v2 addon must be installed
+   * before anything imports one of its renamed modules, such as `@ember/*` from ember-source.
+   *
+   * `compile` calls this. A host calls it first to load pinned modules before a compile.
+   *
+   * @param {Record<string, string>} [versions]
+   */
+  async prepare(versions = this.#options.versions ?? {}) {
+    // @ts-ignore
+    await import('es-module-shims');
+
+    this.#versions = versions;
+
+    await Promise.all(
+      Object.entries(versions).map(([name, range]) => installer.renameModules(name, range))
+    );
+  }
+
+  /**
+   * Loads modules the way a compiler does: from the `resolve` option first, then from npm.
+   *
+   * @param {string[]} names
+   */
+  tryResolveAll = (names) => this.#nestedPublicAPI.tryResolveAll(names);
+
+  /**
    * The file system: installed packages under `/node_modules`, and the
    * compiled snippet under `/src`. Resolution does not read it; it is here so
    * a REPL can show what a demo actually ran against.
@@ -195,8 +221,31 @@ export class Compiler {
       return virtualUrl('manual', vanilla);
     }
 
-    for (const compilerResolve of this.#compilerResolvers) {
-      const result = compilerResolve(vanilla);
+    /**
+     * A compiler's own resolve is for hosts that bundle nothing,
+     * so a module of a pinned package wins over it.
+     */
+    if (installer.isRenamed(vanilla)) {
+      const renamed = tryDefaultResolve(resolve, vanilla, parentUrl);
+
+      if (renamed) {
+        this.#log(`[resolve] ${vanilla} is a renamed module of a pinned package: ${renamed}`);
+
+        if (parentUrl.startsWith(SRC_PREFIX)) {
+          this.#reportDependency(exactPackage(renamed));
+        }
+
+        return renamed;
+      }
+    }
+
+    /**
+     * Once the page pins a framework from npm, its addons come from npm too, so they match it.
+     */
+    const compilerResolvers = installer.hasRenamedModules ? [] : this.#compilerResolvers;
+
+    for (const compilerResolve of compilerResolvers) {
+      const result = compilerResolve(vanilla, this.#versions);
 
       if (result) {
         this.#log(`[resolve] ${vanilla} found in compiler config at ${result}.`);
@@ -252,6 +301,10 @@ export class Compiler {
 
     if (scoped) {
       this.#log(`[resolve] ${id} resolved through the import map to ${scoped}`);
+
+      if (parentUrl.startsWith(SRC_PREFIX)) {
+        this.#reportDependency(installed.get(scoped) ?? exactPackage(scoped));
+      }
 
       return scoped;
     }
@@ -342,7 +395,7 @@ export class Compiler {
         const pkg = parseNpmUrl(real);
 
         if (pkg) installed.set(path, pkg);
-        if (parent.startsWith(SRC_PREFIX)) this.#reportDependency(pkg);
+        if (parent?.startsWith(SRC_PREFIX)) this.#reportDependency(pkg);
       }
 
       this.#announce('info', `Loaded ${real}`);
@@ -448,7 +501,7 @@ export class Compiler {
     const opts = { ...options };
 
     opts.fileName ||= `index.${format}`;
-    this.#versions = opts.versions ?? this.#options.versions ?? {};
+    await this.prepare(opts.versions);
 
     this.#log('[compile] compiling');
 
@@ -889,6 +942,24 @@ function tryDefaultResolve(resolve, id, parentUrl) {
   } catch {
     return undefined;
   }
+}
+
+/**
+ * The package of an npm URL that names an exact version,
+ * like the renamed modules of a pinned package.
+ *
+ * @param {string} url
+ * @returns {undefined | { name: string, version: string }}
+ */
+function exactPackage(url) {
+  const inDeps = parseNpmUrl(url);
+
+  if (inDeps) return inDeps;
+  if (!url.startsWith(NODE_MODULES_PREFIX)) return;
+
+  const { name, version } = parseSpecifier(url.slice(NODE_MODULES_PREFIX.length));
+
+  return version ? { name, version } : undefined;
 }
 
 /**

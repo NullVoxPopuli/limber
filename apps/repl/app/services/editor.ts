@@ -100,6 +100,11 @@ export default class EditorService extends Service {
     return this.pausedFile ?? this.#file;
   }
 
+  /**
+   * Set while the output renders in a frame, see PinnedOutput.
+   */
+  outputFrame: { dependencies(): Promise<[string, string | undefined][]> } | undefined;
+
   get nohighlight() {
     return (this.router.currentRoute?.queryParams ?? {}).nohighlight;
   }

@@ -66,7 +66,11 @@ export async function compiler(config, api) {
       element.setAttribute(attribute, '');
 
       const { renderComponent } = await compiler.tryResolve('@ember/renderer');
-      const owner = makeOwner(config.owner);
+      /**
+       * A pinned ember-source is a second Ember on the page,
+       * and objects from the host's Ember do not work in it.
+       */
+      const owner = makeOwner(config.versions?.['ember-source'] ? undefined : config.owner);
       const args = /** @type {Record<string, unknown> | undefined} */ (
         extra && typeof extra === 'object' && 'args' in extra
           ? /** @type {Record<string, unknown>} */ (extra).args

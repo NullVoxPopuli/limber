@@ -20,9 +20,12 @@ import { visit } from 'unist-util-visit';
 import { nameFor } from '../compile/utils.ts';
 import {
   EMBER_SOURCE,
+  emberSourceSpecifiers,
+  isEmberIndependent,
   modules,
   packageOf,
   preloadEmberSource,
+  provideForImportSync,
 } from './known-modules.ts';
 
 import type { CompileResult, ModuleMap } from '../compile/types.ts';
@@ -197,21 +200,55 @@ export default class CompilerService {
 
   /**
    * A pinned package loads from npm in place of its bundled modules.
-   *
-   * ember-source stays bundled:
-   * the compilers and the renderer come from it too.
+   * repl-sdk looks in `resolve` first, so a hidden module goes to npm.
    */
   #isOverridden(specifier: string) {
-    const name = packageOf(specifier);
+    if (packageOf(specifier) in this.#pins) return true;
 
-    return this.canOverride(name) && name in this.#pins;
+    /**
+     * Bundled addons import the bundled Ember,
+     * so with ember-source pinned they load from npm too.
+     */
+    if (EMBER_SOURCE in this.#pins) return !isEmberIndependent(specifier);
+
+    return false;
   }
 
   /**
-   * Can a pin replace the bundled modules of this package?
+   * npm builds of addons call `importSync` from `@embroider/macros` for `@ember/*` modules,
+   * and it must answer at once.
+   * So the ember-source modules load before a compile:
+   * the bundled ones, or the pinned ones from npm.
+   *
+   * Two Embers on one page share every other npm module,
+   * so a page that pins ember-source must keep that pin.
    */
-  canOverride(packageName: string) {
-    return packageName !== EMBER_SOURCE;
+  async #prepareImportSync() {
+    if (!(EMBER_SOURCE in this.#pins)) {
+      this.#emberSourceReady ??= preloadEmberSource();
+      await this.#emberSourceReady;
+
+      return;
+    }
+
+    await this.compiler.prepare(this.#pins);
+
+    const values: Record<string, unknown> = {};
+
+    /**
+     * Older versions do not have every module that the bundle has.
+     */
+    await Promise.all(
+      emberSourceSpecifiers().map(async (specifier) => {
+        try {
+          [values[specifier]] = await this.compiler.tryResolveAll([specifier]);
+        } catch {
+          /* not in this version */
+        }
+      })
+    );
+
+    provideForImportSync(values);
   }
 
   get lastInfo(): InfoMessage | undefined {
@@ -246,8 +283,6 @@ export default class CompilerService {
    */
   setup = (extraModules: ModuleMap = {}, options: CompilerOptions = {}) => {
     const localModules = modules(extraModules);
-
-    this.#emberSourceReady = preloadEmberSource();
 
     const parentOwner = getOwner(this);
     const owner = {
@@ -399,7 +434,7 @@ export default class CompilerService {
     this.dependencies.clear();
     this.#pins = (options?.['versions'] as Record<string, string>) ?? {};
 
-    await this.#emberSourceReady;
+    await this.#prepareImportSync();
 
     return this.compiler.compile(ext, text, options ?? {});
   }

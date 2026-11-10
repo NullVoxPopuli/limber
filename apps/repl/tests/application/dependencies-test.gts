@@ -1,10 +1,12 @@
-import { click, currentURL, fillIn, find, findAll, visit } from '@ember/test-helpers';
+import { click, currentURL, fillIn, find, findAll, visit, waitUntil } from '@ember/test-helpers';
 import { VERSION } from '@ember/version';
-import { module, test } from 'qunit';
+import QUnit, { module, test } from 'qunit';
 
+import { getCompiler } from 'ember-repl';
 import LZString from 'lz-string';
 
 import { Output } from '#components/output.gts';
+import { PinnedOutput } from '#components/pinned-output.gts';
 import { Dependencies } from '#edit/dependencies.gts';
 import { setupApplicationCompilerTest } from '#tests/helpers.ts';
 
@@ -16,6 +18,21 @@ const version = '[data-test-dependency-version]';
 const loaded = '[data-test-dependency-loaded]';
 const apply = '[data-test-apply-dependencies]';
 const out = '[data-test-compiled-output] [data-test-text]';
+
+/**
+ * The row of the dialog for a package.
+ */
+function rowOf(packageName: string) {
+  const names = findAll(name).map((el) => (el as HTMLInputElement).value);
+  const index = names.indexOf(packageName);
+
+  return {
+    names,
+    index,
+    version: findAll(version)[index],
+    loaded: findAll(loaded)[index],
+  };
+}
 
 /**
  * dompurify has no dependencies and says which version loaded.
@@ -86,25 +103,22 @@ module('Editor > Dependencies', function (hooks) {
 
     await click(open);
 
-    assert.dom(name).hasValue('dompurify');
-    assert.dom(version).hasValue('', 'no pin');
-    assert.dom(loaded).hasText(latest);
+    const row = rowOf('dompurify');
+
+    assert.notStrictEqual(row.index, -1, `dompurify has a row: ${row.names.join(', ')}`);
+    assert.dom(row.version).hasValue('', 'no pin');
+    assert.dom(row.loaded).hasText(latest);
   });
 
   test('the dialog lists bundled packages with their version', async function (assert) {
     await visitWith();
     await click(open);
 
-    const names = findAll('[data-test-bundled-name]').map((el) => el.textContent?.trim());
-    const index = names.indexOf('ember-source');
+    const row = rowOf('ember-source');
 
-    assert.notStrictEqual(index, -1, `ember-source is listed: ${names.join(', ')}`);
-    assert.strictEqual(
-      findAll('[data-test-bundled-version]')[index]?.textContent?.trim(),
-      VERSION,
-      'with the version that runs'
-    );
-    assert.false(names.includes('dompurify'), 'npm packages are not in the bundled list');
+    assert.notStrictEqual(row.index, -1, `ember-source has a row: ${row.names.join(', ')}`);
+    assert.dom(row.version).hasAttribute('placeholder', 'bundled');
+    assert.dom(row.loaded).hasText(VERSION, 'with the version that runs');
   });
 
   test('a pin replaces a bundled package', async function (assert) {
@@ -114,21 +128,22 @@ module('Editor > Dependencies', function (hooks) {
 
     await click(open);
 
-    assert.dom(name).hasValue('ember-resources');
-    assert.dom(version).hasAttribute('placeholder', 'bundled');
+    const row = rowOf('ember-resources');
 
-    const bundled = find(loaded)?.textContent?.trim();
+    assert.dom(row.version).hasAttribute('placeholder', 'bundled');
+
+    const bundled = row.loaded?.textContent?.trim();
 
     assert.notStrictEqual(bundled, '7.0.0', `the bundle is not 7.0.0: ${bundled}`);
 
-    await fillIn(version, '7.0.0');
+    await fillIn(row.version as Element, '7.0.0');
     await click(apply);
 
     assert.dom(out).hasText('2', 'the npm copy renders too');
 
     await click(open);
 
-    assert.dom(loaded).hasText('7.0.0');
+    assert.dom(rowOf('ember-resources').loaded).hasText('7.0.0');
   });
 
   test('applying a new version compiles against it', async function (assert) {
@@ -168,5 +183,153 @@ module('Editor > Dependencies', function (hooks) {
     await click(apply);
 
     assert.false(currentURL().includes('deps='), 'no pins leaves no query param');
+  });
+});
+
+module('Output > pinned ember-source', function (hooks) {
+  setupApplicationCompilerTest(hooks);
+
+  const versionDoc = `
+import { VERSION } from '@ember/version';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
+
+export default class Demo extends Component {
+  @tracked count = 0;
+  inc = () => this.count++;
+
+  <template>
+    <p data-test-text>{{VERSION}}</p>
+    <button type="button" data-test-count {{on "click" this.inc}}>{{this.count}}</button>
+  </template>
+}
+`;
+
+  test('the output runs on the pinned ember-source', async function (assert) {
+    /**
+     * The oldest version that can be pinned.
+     */
+    const qps = new URLSearchParams({
+      format: 'gjs',
+      deps: 'ember-source@6.10.0',
+      c: compressToEncodedURIComponent(versionDoc),
+    });
+
+    await visit(`/output?${qps.toString()}`);
+
+    assert.dom('[data-test-text]').hasText('6.10.0');
+    assert.notStrictEqual(VERSION, '6.10.0', 'the host runs another version');
+
+    await click('[data-test-count]');
+
+    /**
+     * settled() waits for the host's Ember, not the pinned one.
+     */
+    await waitUntil(() => find('[data-test-count]')?.textContent === '1');
+
+    assert.dom('[data-test-count]').hasText('1', 'tracked state renders');
+  });
+
+  test('the edit page renders a pinned ember-source in a frame', async function (assert) {
+    this.owner.lookup('service:editor').setCodemirrorState = () => {};
+
+    const qps = new URLSearchParams({
+      format: 'gjs',
+      deps: 'ember-source@7.4.0',
+      c: compressToEncodedURIComponent(versionDoc),
+    });
+
+    await visit(`/edit?${qps.toString()}`);
+
+    const frame = find('[data-test-pinned-output]') as HTMLIFrameElement | null;
+    const inFrame = (selector: string) => frame?.contentDocument?.querySelector(selector);
+
+    assert.ok(frame, 'the output is a frame');
+
+    await waitUntil(() => inFrame('[data-test-text]')?.textContent === '7.4.0', {
+      timeout: 30_000,
+    });
+
+    assert.strictEqual(inFrame('[data-test-text]')?.textContent, '7.4.0');
+
+    const before = frame?.contentWindow;
+
+    this.owner
+      .lookup('service:editor')
+      .updateText(versionDoc.replace('{{VERSION}}', 'v{{VERSION}}'));
+
+    await waitUntil(() => inFrame('[data-test-text]')?.textContent === 'v7.4.0', {
+      timeout: 30_000,
+    });
+
+    assert.strictEqual(frame?.contentWindow, before, 'typing does not reload the frame');
+  });
+
+  test('the dialog lists what the frame loaded', async function (assert) {
+    this.owner.lookup('service:editor').setCodemirrorState = () => {};
+
+    this.owner.register(
+      'template:edit',
+      <template>
+        <Dependencies />
+        <PinnedOutput />
+      </template>
+    );
+
+    const qps = new URLSearchParams({
+      format: 'gjs',
+      deps: 'ember-source@7.4.0',
+      c: compressToEncodedURIComponent(versionDoc),
+    });
+
+    await visit(`/edit?${qps.toString()}`);
+
+    const frame = find('[data-test-pinned-output]') as HTMLIFrameElement | null;
+
+    await waitUntil(
+      () => frame?.contentDocument?.querySelector('[data-test-text]')?.textContent === '7.4.0',
+      { timeout: 30_000 }
+    );
+
+    await click(open);
+
+    const row = rowOf('ember-source');
+
+    assert.notStrictEqual(row.index, -1, `ember-source has a row: ${row.names.join(', ')}`);
+    assert.dom(row.version).hasValue('7.4.0');
+    assert.dom(row.loaded).hasText('7.4.0');
+    assert.true(row.names.includes('@glimmer/component'), 'addons load from npm too');
+  });
+
+  test('an ember-source without an ES module template compiler explains why', async function (assert) {
+    const qps = new URLSearchParams({
+      format: 'gjs',
+      deps: 'ember-source@6.4.0',
+      c: compressToEncodedURIComponent(versionDoc),
+    });
+
+    /**
+     * Nobody awaits a failed compile, so the browser reports an unhandled rejection,
+     * which is how the REPL shows the error. QUnit fails tests on those.
+     */
+    const onUncaughtException = QUnit.onUncaughtException;
+
+    QUnit.onUncaughtException = () => {};
+
+    try {
+      await visit(`/output?${qps.toString()}`);
+
+      const compiler = getCompiler(this.owner);
+
+      await waitUntil(() => compiler.lastError, { timeout: 30_000 });
+
+      assert.true(
+        compiler.lastError?.message.includes('6.10 or newer'),
+        compiler.lastError?.message
+      );
+    } finally {
+      QUnit.onUncaughtException = onUncaughtException;
+    }
   });
 });
