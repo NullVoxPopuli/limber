@@ -240,12 +240,18 @@ export default class Demo extends Component {
       c: compressToEncodedURIComponent(versionDoc),
     });
 
+    await visit(`/edit?${qps.toString().replace('ember-source%407.4.0', 'dompurify%403.2.0')}`);
+
+    assert.dom('[data-test-pinned-output]').doesNotExist('other pins render in the page');
+    assert.dom('[title^="Toggle Shadow DOM"]').exists('the page has the shadow DOM toggle');
+
     await visit(`/edit?${qps.toString()}`);
 
     const frame = find('[data-test-pinned-output]') as HTMLIFrameElement | null;
     const inFrame = (selector: string) => frame?.contentDocument?.querySelector(selector);
 
     assert.ok(frame, 'the output is a frame');
+    assert.dom('[title^="Toggle Shadow DOM"]').doesNotExist('the frame has no shadow DOM toggle');
 
     await waitUntil(() => inFrame('[data-test-text]')?.textContent === '7.4.0', {
       timeout: 30_000,

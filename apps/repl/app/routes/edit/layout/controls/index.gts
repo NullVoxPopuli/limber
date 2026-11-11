@@ -78,19 +78,22 @@ export const Controls: TOC<{
         >
           <FaIcon @icon={{faRotate}} />
         </Button>
-        {{#let (getShadowValue (qp "shadowdom")) as |shadow|}}
-          <a
-            title="Toggle Shadow DOM wrapper (currently: {{if shadow 'on' 'off'}})"
-            href={{withQP "shadowdom" (if shadow "off" "on")}}
-            class="px-3 py-2 text-xs text-white flex items-center select-none ring-inset hover:bg-[#9b2918] focus:ring-4 focus:outline-none disabled:opacity-30"
-          >
-            {{#if shadow}}
-              <FaIcon @icon={{faCircleNotch}} />
-            {{else}}
-              <FaIcon @icon={{faCircle}} />
-            {{/if}}
-          </a>
-        {{/let}}
+        {{! The frame has no shadowdom query param. }}
+        {{#unless editor.rendersInFrame}}
+          {{#let (getShadowValue (qp "shadowdom")) as |shadow|}}
+            <a
+              title="Toggle Shadow DOM wrapper (currently: {{if shadow 'on' 'off'}})"
+              href={{withQP "shadowdom" (if shadow "off" "on")}}
+              class="px-3 py-2 text-xs text-white flex items-center select-none ring-inset hover:bg-[#9b2918] focus:ring-4 focus:outline-none disabled:opacity-30"
+            >
+              {{#if shadow}}
+                <FaIcon @icon={{faCircleNotch}} />
+              {{else}}
+                <FaIcon @icon={{faCircle}} />
+              {{/if}}
+            </a>
+          {{/let}}
+        {{/unless}}
 
         {{#if (inIframe)}}
           <a

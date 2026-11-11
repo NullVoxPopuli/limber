@@ -101,6 +101,13 @@ export default class EditorService extends Service {
   }
 
   /**
+   * A pinned ember-source needs its own import map, so the output renders in a frame.
+   */
+  get rendersInFrame() {
+    return 'ember-source' in this.renderInput.versions;
+  }
+
+  /**
    * Set while the output renders in a frame, see PinnedOutput.
    */
   outputFrame: { dependencies(): Promise<[string, string | undefined][]> } | undefined;

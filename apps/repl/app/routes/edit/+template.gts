@@ -16,7 +16,6 @@ import Header from './header.gts';
 import Layout from './layout/index.gts';
 
 import type RouterService from '@ember/routing/router-service';
-import type EditorService from 'limber/services/editor';
 
 class OpenOutput extends Component {
   @service declare router: RouterService;
@@ -38,8 +37,6 @@ class OpenOutput extends Component {
   </template>
 }
 
-const pinsEmberSource = (editor: EditorService) => 'ember-source' in editor.renderInput.versions;
-
 <template>
   <Guest />
 
@@ -55,14 +52,16 @@ const pinsEmberSource = (editor: EditorService) => 'ember-source' in editor.rend
 
       <:output>
         <div class="h-full w-full">
-          {{#if (pinsEmberSource (serviceHelper "editor"))}}
-            {{! The frame has its own VerifyDanger. }}
-            <PinnedOutput />
-          {{else}}
-            <VerifyDanger>
-              <Output />
-            </VerifyDanger>
-          {{/if}}
+          {{#let (serviceHelper "editor") as |editor|}}
+            {{#if editor.rendersInFrame}}
+              {{! The frame has its own VerifyDanger. }}
+              <PinnedOutput />
+            {{else}}
+              <VerifyDanger>
+                <Output />
+              </VerifyDanger>
+            {{/if}}
+          {{/let}}
           <OpenOutput />
         </div>
       </:output>
