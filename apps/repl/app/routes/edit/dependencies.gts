@@ -13,7 +13,7 @@ import { getPromiseState } from 'reactiveweb/get-promise-state';
 
 import { bundledVersion, serializeDeps, type Versions } from 'limber/utils/dependencies';
 
-import { FlatButton } from '@nullvoxpopuli/limber-shared';
+import { ExternalLink, FlatButton } from '@nullvoxpopuli/limber-shared';
 
 import type RouterService from '@ember/routing/router-service';
 import type EditorService from 'limber/services/editor';
@@ -91,7 +91,8 @@ class DependenciesForm extends Component<{ loaded: Loaded; onClose: () => void }
       <main>
         <p>
           Pin the npm version of a package that the document imports. The comment shows the version
-          that runs now. A pin also replaces a package that the REPL bundles.
+          that runs now. See
+          <ExternalLink href="/docs/editor#imports">version specifiers</ExternalLink>.
         </p>
 
         <div class="package-json">
