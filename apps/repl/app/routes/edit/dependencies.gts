@@ -3,13 +3,12 @@ import './dependencies.css';
 
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { trackedArray } from '@ember/reactive/collections';
+import { trackedArray, trackedSet } from '@ember/reactive/collections';
 import { service } from '@ember/service';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faBoxOpen, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Drawer } from 'ember-primitives/components/drawer';
-import { getPromiseState } from 'reactiveweb/get-promise-state';
 
 import { bundledVersion, serializeDeps, type Versions } from 'limber/utils/dependencies';
 
@@ -41,16 +40,16 @@ export const Dependencies = <template>
 </template>;
 
 interface Row {
+  /**
+   * Keeps the inputs of a row across changes to the list.
+   */
+  key: string;
   name: string;
   version: string;
 }
 
 type Loaded = ReadonlyMap<string, string | undefined>;
 
-/**
- * What the output loaded: from this page's compiler,
- * or from the frame that renders a pinned ember-source.
- */
 class DependenciesBody extends Component<{ onClose: () => void }> {
   @service declare editor: EditorService;
   /**
@@ -59,29 +58,23 @@ class DependenciesBody extends Component<{ onClose: () => void }> {
    */
   @service declare status: StatusService;
 
-  @cached
-  get request(): Promise<Loaded> {
-    const frame = this.editor.outputFrame;
-
-    if (!frame) return Promise.resolve(this.status.compiler.dependencies);
-
-    return frame.dependencies().then((entries) => new Map(entries));
-  }
-
-  get state() {
-    return getPromiseState(this.request);
+  /**
+   * What the output loaded: from this page's compiler,
+   * or from the frame that renders a pinned ember-source.
+   */
+  get loaded(): Loaded {
+    return this.editor.rendersInFrame
+      ? this.editor.frameDependencies
+      : this.status.compiler.dependencies;
   }
 
   <template>
-    {{! The drawer focuses its first button, so it needs one while the list loads. }}
     <header><h2>package.json</h2>
       <FlatButton {{on "click" @onClose}} aria-label="close the dependencies drawer">
         <FaIcon @size="xs" @icon={{faXmark}} class="aspect-square" />
       </FlatButton>
     </header>
-    {{#if this.state.resolved}}
-      <DependenciesForm @loaded={{this.state.resolved}} @onClose={{@onClose}} />
-    {{/if}}
+    <DependenciesForm @loaded={{this.loaded}} @onClose={{@onClose}} />
   </template>
 }
 
@@ -100,8 +93,8 @@ class DependenciesForm extends Component<{ loaded: Loaded; onClose: () => void }
           <div class="line nested read-only">"name": "repl-document",</div>
           <div class="line nested">"dependencies": {</div>
           <div class="entries">
-            {{#each this.rows as |row index|}}
-              <div class="entry-row">
+            {{#each this.rows key="key" as |row index|}}
+              <div class="entry-row" {{on "input" (fn this.keep row)}}>
                 <span class="line"><span class="punct">"</span><input
                     name="name"
                     aria-label="Package name"
@@ -168,40 +161,70 @@ class DependenciesForm extends Component<{ loaded: Loaded; onClose: () => void }
     this.isBundled(name) ? bundledVersion(name) : this.#loaded.get(name);
 
   /**
-   * Only the rows are state.
+   * The rows that the user added or removed are the only state.
    * The inputs keep their own values until submit.
-   *
-   * Below the fields that `#initialRows` reads, because fields run in order.
    */
-  rows = trackedArray<Row>(this.#initialRows());
+  #added = trackedArray<Row>();
+  #removed = trackedSet<string>();
 
   /**
-   * Pins first, then the packages that loaded without a pin.
+   * Shows while there is nothing else, so that a package can be typed in.
+   */
+  #blank: Row = { key: 'blank', name: '', version: '' };
+
+  /**
+   * What loaded, then the pins that did not load, then the added rows.
    *
    * Bundled modules of the app itself have no version, and get no row.
    */
-  #initialRows(): Row[] {
+  @cached
+  get rows(): Row[] {
     const pins = this.editor.versions;
-    const rows: Row[] = Object.entries(pins).map(([name, version]) => ({ name, version }));
+    const rows: Row[] = [];
 
     for (const name of this.#loaded.keys()) {
-      if (name in pins) continue;
-      if (this.loadedVersion(name) === undefined) continue;
+      if (!(name in pins) && this.loadedVersion(name) === undefined) continue;
 
-      rows.push({ name, version: '' });
+      rows.push({ key: name, name, version: pins[name] ?? '' });
     }
 
-    return rows.length ? rows : [{ name: '', version: '' }];
+    for (const [name, version] of Object.entries(pins)) {
+      if (this.#loaded.has(name)) continue;
+
+      rows.push({ key: name, name, version });
+    }
+
+    const kept = rows.filter((row) => !this.#removed.has(row.key));
+
+    for (const row of this.#added) {
+      kept.push(row);
+    }
+
+    return kept.length ? kept : [this.#blank];
   }
 
   isLast = (index: number) => index === this.rows.length - 1;
 
+  /**
+   * The blank row stays once it has text, even after packages load.
+   */
+  keep = (row: Row) => {
+    if (row === this.#blank && !this.#added.includes(row)) this.#added.push(row);
+  };
+
   add = () => {
-    this.rows.push({ name: '', version: '' });
+    this.keep(this.rows[0] as Row);
+    this.#added.push({ key: crypto.randomUUID(), name: '', version: '' });
   };
 
   remove = (row: Row) => {
-    this.rows.splice(this.rows.indexOf(row), 1);
+    const index = this.#added.indexOf(row);
+
+    if (index === -1) {
+      this.#removed.add(row.key);
+    } else {
+      this.#added.splice(index, 1);
+    }
   };
 
   handleSubmit = (event: SubmitEvent) => {

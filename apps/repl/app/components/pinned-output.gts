@@ -23,7 +23,6 @@ interface Document {
 
 interface Guest {
   update: (document: Document) => void;
-  dependencies: () => [string, string | undefined][];
 }
 
 /**
@@ -81,18 +80,22 @@ export class PinnedOutput extends Component {
 
     iframe.src = `/output?${qps.toString()}`;
 
-    const connection = connectToChild<Guest>({ iframe, methods: {} });
-
-    this.#connection = connection;
-    this.editor.outputFrame = {
-      dependencies: async () => (await connection.promise).dependencies(),
-    };
+    this.#connection = connectToChild<Guest>({
+      iframe,
+      methods: {
+        /**
+         * The frame sends the whole list after each change.
+         */
+        dependencies: (entries: [string, string | undefined][]) => {
+          this.editor.frameDependencies = new Map(entries);
+        },
+      },
+    });
   }
 
   #disconnect() {
     this.#connection?.destroy();
     this.#connection = undefined;
-    this.editor.outputFrame = undefined;
   }
 
   async #send(connection: Connection<Guest>, document: Document) {

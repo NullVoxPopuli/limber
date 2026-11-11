@@ -108,9 +108,9 @@ export default class EditorService extends Service {
   }
 
   /**
-   * Set while the output renders in a frame, see PinnedOutput.
+   * What the output frame loaded, see PinnedOutput.
    */
-  outputFrame: { dependencies(): Promise<[string, string | undefined][]> } | undefined;
+  @tracked frameDependencies: ReadonlyMap<string, string | undefined> = new Map();
 
   get nohighlight() {
     return (this.router.currentRoute?.queryParams ?? {}).nohighlight;

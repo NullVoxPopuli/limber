@@ -184,9 +184,15 @@ const standardScope = {
  * A spread would read the getters of `standardScope` once, before any compile.
  */
 function withStandardScope(extra: Record<string, unknown> | undefined) {
-  const scope = Object.defineProperties({}, Object.getOwnPropertyDescriptors(standardScope));
+  const scope = Object.defineProperties(
+    {},
+    Object.getOwnPropertyDescriptors(standardScope)
+  );
 
-  return Object.defineProperties(scope, Object.getOwnPropertyDescriptors(extra ?? {}));
+  return Object.defineProperties(
+    scope,
+    Object.getOwnPropertyDescriptors(extra ?? {})
+  );
 }
 
 export default class CompilerService {
@@ -215,6 +221,32 @@ export default class CompilerService {
    * The version is `undefined` for modules that ember-repl or the host app provides.
    */
   readonly dependencies = trackedMap<string, string | undefined>();
+
+  #dependencyListeners = new Set<
+    (entries: [string, string | undefined][]) => void
+  >();
+
+  /**
+   * Calls `listener` with all of `dependencies` after each change,
+   * for a page that shows them in another window.
+   *
+   * Returns a function that stops the calls.
+   */
+  onDependencies(listener: (entries: [string, string | undefined][]) => void) {
+    this.#dependencyListeners.add(listener);
+
+    return () => this.#dependencyListeners.delete(listener);
+  }
+
+  #reportDependencies() {
+    if (this.#dependencyListeners.size === 0) return;
+
+    const entries = Array.from(this.dependencies);
+
+    for (const listener of this.#dependencyListeners) {
+      listener(entries);
+    }
+  }
 
   /**
    * The pinned versions of the compile in progress.
@@ -358,6 +390,7 @@ export default class CompilerService {
             version === undefined ? packageOf(name) : name,
             version
           );
+          this.#reportDependencies();
         },
       },
       options: {
@@ -451,6 +484,7 @@ export default class CompilerService {
 
     this.messages.length = 0;
     this.dependencies.clear();
+    this.#reportDependencies();
     this.#pins = (options?.['versions'] as Record<string, string>) ?? {};
 
     await this.#prepareImportSync();

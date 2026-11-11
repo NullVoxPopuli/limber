@@ -159,30 +159,55 @@ module('Editor > Dependencies', function (hooks) {
     assert.dom(out).hasText('3.1.0');
   });
 
+  test('a new pin keeps the other packages listed', async function (assert) {
+    await visitWith(undefined, `${usesBundle}\nimport DOMPurify from 'dompurify';`);
+    await click(open);
+
+    const before = rowOf('').names.sort();
+
+    assert.true(before.includes('dompurify'), `dompurify has a row: ${before.join(', ')}`);
+    assert.true(before.includes('ember-resources'), 'ember-resources has a row');
+
+    await fillIn(rowOf('dompurify').version as Element, '3.1.0');
+    await click(apply);
+    await click(open);
+
+    assert.deepEqual(rowOf('').names.sort(), before);
+    assert.dom(rowOf('dompurify').loaded).hasText('3.1.0');
+  });
+
   test('a package can be added and removed', async function (assert) {
     await visitWith(undefined, noImports);
     await click(open);
+    await waitUntil(() => rowOf('ember-source').index !== -1);
 
-    assert.strictEqual(findAll(name).length, 1, 'an empty row is ready');
+    assert.deepEqual(rowOf('').names, ['ember-source'], 'a template loads ember-source');
 
-    await fillIn(name, 'dompurify');
-    await fillIn(version, '3.1.0');
     await click('[data-test-add-dependency]');
 
     assert.strictEqual(findAll(name).length, 2);
 
+    await fillIn(findAll(name)[1] as Element, 'dompurify');
+    await fillIn(findAll(version)[1] as Element, '3.1.0');
     await click(apply);
 
     assert.true(
       currentURL().includes(`deps=${encodeURIComponent('dompurify@3.1.0')}`),
-      'the empty row adds nothing'
+      'a row with no version adds nothing'
     );
 
     await click(open);
-    await click('[data-test-remove-dependency]');
+    await click(findAll('[data-test-remove-dependency]')[rowOf('dompurify').index] as Element);
     await click(apply);
 
     assert.false(currentURL().includes('deps='), 'no pins leaves no query param');
+  });
+
+  test('a document with no packages has a blank row', async function (assert) {
+    await visit(`/edit?format=md&c=${compressToEncodedURIComponent('# no imports')}`);
+    await click(open);
+
+    assert.deepEqual(rowOf('').names, [''], 'the blank row');
   });
 });
 
@@ -339,21 +364,40 @@ import DOMPurify from 'dompurify';
 
     await visit(`/edit?${qps.toString()}`);
 
+    /**
+     * Open before the frame loads, so the list must fill in while the drawer is open.
+     */
+    await click(open);
+
+    const loadedIn = (packageName: string, text: string) =>
+      waitUntil(() => rowOf(packageName).loaded?.textContent === text, { timeout: 30_000 });
+
+    await loadedIn('ember-source', '7.4.0');
+    await waitUntil(() => rowOf('@glimmer/component').index !== -1, { timeout: 30_000 });
+
+    const row = rowOf('ember-source');
+
+    assert.dom(row.version).hasValue('7.4.0');
+    assert.dom(row.loaded).hasText('7.4.0');
+    assert.true(row.names.includes('@glimmer/component'), 'addons load from npm too');
+
+    const before = row.names.sort();
+
+    await fillIn(row.version as Element, '6.10.0');
+    await click(apply);
+
     const frame = find('[data-test-pinned-output]') as HTMLIFrameElement | null;
 
     await waitUntil(
-      () => frame?.contentDocument?.querySelector('[data-test-text]')?.textContent === '7.4.0',
+      () => frame?.contentDocument?.querySelector('[data-test-text]')?.textContent === '6.10.0',
       { timeout: 30_000 }
     );
 
     await click(open);
+    await loadedIn('ember-source', '6.10.0');
+    await waitUntil(() => rowOf('').names.length === before.length, { timeout: 30_000 });
 
-    const row = rowOf('ember-source');
-
-    assert.notStrictEqual(row.index, -1, `ember-source has a row: ${row.names.join(', ')}`);
-    assert.dom(row.version).hasValue('7.4.0');
-    assert.dom(row.loaded).hasText('7.4.0');
-    assert.true(row.names.includes('@glimmer/component'), 'addons load from npm too');
+    assert.deepEqual(rowOf('').names.sort(), before, 'a new frame lists the same packages');
   });
 
   test('markdown on a pinned ember-source gets its default scope', async function (assert) {

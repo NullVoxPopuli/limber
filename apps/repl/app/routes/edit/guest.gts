@@ -10,7 +10,7 @@ import { serializeDeps, type Versions } from 'limber/utils/dependencies';
 import type { FormatQP } from '#app/languages.gts';
 
 interface ParentMethods {
-  ready: () => void;
+  dependencies: (entries: [string, string | undefined][]) => void;
 }
 
 const guestFrame = resource(({ on, owner }) => {
@@ -46,13 +46,16 @@ const guestFrame = resource(({ on, owner }) => {
 
         editor.update(text, format);
       },
-      /**
-       * The edit page asks for these when it frames this page with a pinned ember-source.
-       */
-      dependencies() {
-        return Array.from(getCompiler(owner).dependencies);
-      },
     },
+  });
+
+  /**
+   * The edit page lists these when it frames this page with a pinned ember-source.
+   *
+   * This runs before the first compile, which comes after the render.
+   */
+  const stop = getCompiler(owner).onDependencies((entries) => {
+    void connection.promise.then((parent) => parent.dependencies(entries));
   });
 
   if (macroCondition(isDevelopingApp())) {
@@ -61,7 +64,10 @@ const guestFrame = resource(({ on, owner }) => {
     });
   }
 
-  on.cleanup(() => connection.destroy());
+  on.cleanup(() => {
+    stop();
+    connection.destroy();
+  });
 
   return '';
 });
