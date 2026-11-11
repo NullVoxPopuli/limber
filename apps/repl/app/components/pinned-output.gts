@@ -1,18 +1,24 @@
 import Component from '@glimmer/component';
+import { registerDestructor } from '@ember/destroyable';
 import { service } from '@ember/service';
 import { waitForPromise } from '@ember/test-waiters';
 
 import { modifier } from 'ember-modifier';
+import LZString from 'lz-string';
 import { connectToChild } from 'penpal';
 
-import { serializeDeps } from 'limber/utils/dependencies';
+import { serializeDeps, type Versions } from 'limber/utils/dependencies';
 
+import type Owner from '@ember/owner';
 import type EditorService from 'limber/services/editor';
-import type { AsyncMethodReturns } from 'penpal';
+import type { Connection } from 'penpal';
+
+const { compressToEncodedURIComponent } = LZString;
 
 interface Document {
   format: string;
   code: string;
+  versions: Versions;
 }
 
 interface Guest {
@@ -24,66 +30,85 @@ interface Guest {
  * Two Embers on one page share every npm module that they both import,
  * so a pinned ember-source renders in the `/output` page in a frame.
  *
- * The frame loads again when the format or a pin changes.
- * The text goes over penpal, so typing does not reload it.
+ * The text, format and pins go over penpal.
+ * The frame loads again only for a new ember-source pin,
+ * because a page cannot change its import map after load.
  */
 export class PinnedOutput extends Component {
   @service declare editor: EditorService;
 
-  #guest: Promise<AsyncMethodReturns<Guest>> | undefined;
+  #connection: Connection<Guest> | undefined;
+  #emberSource: string | undefined;
 
-  /**
-   * Not tracked: a new frame gets the latest text without a reload per keystroke.
-   */
-  #latest: Document | undefined;
-
-  get src() {
-    const { format, versions } = this.editor.renderInput;
-    const qps = new URLSearchParams({ format, deps: serializeDeps(versions) ?? '' });
-
-    return `/output?${qps.toString()}`;
+  constructor(owner: Owner, args: object) {
+    super(owner, args);
+    registerDestructor(this, () => this.#disconnect());
   }
 
   get document(): Document {
-    const { format, text } = this.editor.renderInput;
+    const { format, text, versions } = this.editor.renderInput;
 
-    return { format, code: text ?? '' };
+    return { format, code: text ?? '', versions };
   }
 
-  connect = modifier((iframe: HTMLIFrameElement, [src]: [string]) => {
-    iframe.src = src;
+  /**
+   * Every URL write runs this again, so the ember-source pin is compared by value.
+   */
+  frame = modifier((iframe: HTMLIFrameElement, [document]: [Document]) => {
+    const emberSource = document.versions['ember-source'];
+
+    if (this.#connection && emberSource === this.#emberSource) {
+      void this.#send(this.#connection, document);
+
+      return;
+    }
+
+    this.#emberSource = emberSource;
+    this.#load(iframe, document);
+  });
+
+  /**
+   * The URL has the whole document, so the frame renders it before penpal connects.
+   */
+  #load(iframe: HTMLIFrameElement, document: Document) {
+    this.#disconnect();
+
+    const qps = new URLSearchParams({
+      format: document.format,
+      deps: serializeDeps(document.versions) ?? '',
+      c: compressToEncodedURIComponent(document.code),
+    });
+
+    iframe.src = `/output?${qps.toString()}`;
 
     const connection = connectToChild<Guest>({ iframe, methods: {} });
 
-    /**
-     * Not a test waiter: a frame that never connects must fail a test, not hang it.
-     */
-    this.#guest = connection.promise;
-    void this.#send();
-
-    const guest = this.#guest;
-
+    this.#connection = connection;
     this.editor.outputFrame = {
-      dependencies: async () => (await guest).dependencies(),
+      dependencies: async () => (await connection.promise).dependencies(),
     };
+  }
 
-    return () => {
-      this.editor.outputFrame = undefined;
-      connection.destroy();
-    };
-  });
+  #disconnect() {
+    this.#connection?.destroy();
+    this.#connection = undefined;
+    this.editor.outputFrame = undefined;
+  }
 
-  send = modifier((_iframe: HTMLIFrameElement, [document]: [Document]) => {
-    this.#latest = document;
-    void this.#send();
-  });
+  async #send(connection: Connection<Guest>, document: Document) {
+    try {
+      /**
+       * Not a test waiter: a frame that never connects must fail a test, not hang it.
+       */
+      const guest = await connection.promise;
 
-  async #send() {
-    const guest = await this.#guest;
-
-    if (!guest || !this.#latest) return;
-
-    await waitForPromise(guest.update(this.#latest));
+      await waitForPromise(guest.update(document));
+    } catch (error) {
+      /**
+       * Penpal rejects the calls in flight when a new frame replaces this one.
+       */
+      if (connection === this.#connection) throw error;
+    }
   }
 
   <template>
@@ -91,8 +116,7 @@ export class PinnedOutput extends Component {
       title="Output"
       class="h-full w-full border-0"
       data-test-pinned-output
-      {{this.connect this.src}}
-      {{this.send this.document}}
+      {{this.frame this.document}}
     ></iframe>
   </template>
 }

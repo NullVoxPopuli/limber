@@ -72,59 +72,87 @@
           margin: 0;
           padding: 0;
         }
+
+        #initial-shell {
+          height: 100vh;
+          width: 100vw;
+          display: grid;
+          grid-template-rows: min-content 1fr;
+        }
+        #initial-header {
+          background: var(--ember-black);
+          height: 45px;
+          width: 100%;
+        }
+        #initial-panes {
+          display: grid;
+          grid-template-columns: auto 1fr;
+          font-weight: bold;
+          font-size: 24px;
+        }
+        #initial-editor {
+          width: 40vw;
+          background: rgba(39, 39, 42);
+          color: white;
+          padding-right: 2px;
+          display: grid;
+          align-items: center;
+          justify-content: end;
+        }
+        #initial-preview {
+          padding-left: 2px;
+          color: light-dark(rgb(39, 39, 42), white);
+          display: grid;
+          align-items: center;
+          justify-content: start;
+        }
+
+        /*
+          The edit page frames the output page.
+          The frame has no header and no editor, so it shows one centered message.
+        */
+        .in-frame #initial-header,
+        .in-frame #initial-editor {
+          display: none;
+        }
+        .in-frame #initial-shell,
+        .in-frame #initial-panes {
+          grid-template-rows: 1fr;
+          grid-template-columns: 1fr;
+        }
+        .in-frame #initial-preview {
+          padding: 0;
+          justify-content: center;
+          font-weight: normal;
+          font-size: 16px;
+          opacity: 0.6;
+        }
       </style>
       <!--
         This is the App Shell
         It's sole purpose is to show something when the HTML loads (which is small and loads / is parsed fast)
         This gives the user an illusion of speed
       -->
-      <div style="height: 100vh; width: 100vw; display: grid; grid-template-rows: min-content 1fr">
+      <div id="initial-shell">
         <!-- header -->
-        <div
-          id="initial-header"
-          style="background: var(--ember-black); height: 45px; width: 100%"
-        ></div>
+        <div id="initial-header"></div>
 
         <!-- everything else -->
-        <div
-          style="display: grid; grid-template-columns: auto 1fr; font-weight: bold; font-size: 24px"
-        >
+        <div id="initial-panes">
           <!-- editor -->
-          <div
-            style="
-              width: 40vw;
-              background: rgba(39, 39, 42);
-              color: white;
-              padding-right: 2px;
-              display: grid;
-              align-items: center;
-              justify-content: end;
-            "
-          >
-            Loading
-          </div>
+          <div id="initial-editor">Loading</div>
 
           <!-- preview -->
-          <div
-            style="
-              padding-left: 2px;
-              color: light-dark(rgb(39, 39, 42), white);
-              display: grid;
-              align-items: center;
-              justify-content: start;
-            "
-          >
-            Limber
-          </div>
+          <div id="initial-preview">Limber</div>
         </div>
       </div>
     </div>
 
     <script>
       if (window.self !== window.parent) {
-        window.self.document.querySelector("#initial-header").style.display = "none";
-        window.self.document.querySelector("#initial-loader > div").style.gridTemplateRows = "1fr";
-        window.self.document.body.classList.remove("overflow-hidden");
+        document.documentElement.classList.add("in-frame");
+        document.querySelector("#initial-preview").textContent = "Loading";
+        document.body.classList.remove("overflow-hidden");
       }
     </script>
 

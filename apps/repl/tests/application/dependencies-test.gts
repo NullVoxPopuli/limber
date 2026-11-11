@@ -253,7 +253,7 @@ export default class Demo extends Component {
 
     assert.strictEqual(inFrame('[data-test-text]')?.textContent, '7.4.0');
 
-    const before = frame?.contentWindow;
+    const before = frame?.contentDocument;
 
     this.owner
       .lookup('service:editor')
@@ -263,7 +263,55 @@ export default class Demo extends Component {
       timeout: 30_000,
     });
 
-    assert.strictEqual(frame?.contentWindow, before, 'typing does not reload the frame');
+    assert.strictEqual(frame?.contentDocument, before, 'typing does not reload the frame');
+  });
+
+  test('the frame loads again only for a new ember-source pin', async function (assert) {
+    this.owner.lookup('service:editor').setCodemirrorState = () => {};
+
+    const bothVersions = `
+import { VERSION } from '@ember/version';
+import DOMPurify from 'dompurify';
+
+<template><p data-test-text>{{VERSION}} {{DOMPurify.version}}</p></template>
+`;
+
+    /**
+     * The editor keeps its text after the first visit, so only the pins change.
+     */
+    const pin = (deps: string) =>
+      visit(
+        `/edit?${new URLSearchParams({ format: 'gjs', deps, c: compressToEncodedURIComponent(bothVersions) }).toString()}`
+      );
+
+    await pin('ember-source@7.4.0,dompurify@3.2.0');
+
+    const frame = find('[data-test-pinned-output]') as HTMLIFrameElement | null;
+    const textIs = (text: string) =>
+      waitUntil(
+        () => frame?.contentDocument?.querySelector('[data-test-text]')?.textContent === text,
+        { timeout: 30_000 }
+      );
+
+    await textIs('7.4.0 3.2.0');
+
+    const first = frame?.contentDocument;
+
+    assert.step('7.4.0 3.2.0');
+
+    await pin('ember-source@7.4.0,dompurify@3.1.0');
+    await textIs('7.4.0 3.1.0');
+
+    assert.strictEqual(frame?.contentDocument, first, 'another pin reuses the frame');
+    assert.step('7.4.0 3.1.0');
+
+    await pin('ember-source@6.10.0,dompurify@3.1.0');
+    await textIs('6.10.0 3.1.0');
+
+    assert.notStrictEqual(frame?.contentDocument, first, 'a new ember-source loads a new frame');
+    assert.step('6.10.0 3.1.0');
+
+    assert.verifySteps(['7.4.0 3.2.0', '7.4.0 3.1.0', '6.10.0 3.1.0']);
   });
 
   test('the dialog lists what the frame loaded', async function (assert) {
