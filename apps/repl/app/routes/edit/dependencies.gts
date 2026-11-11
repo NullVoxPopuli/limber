@@ -98,44 +98,46 @@ class DependenciesForm extends Component<{ loaded: Loaded; onClose: () => void }
           <div class="line">{</div>
           <div class="line nested read-only">"name": "repl-document",</div>
           <div class="line nested">"dependencies": {</div>
-          {{#each this.rows as |row index|}}
-            <div class="line nested-2">
-              <span class="punct">"</span><input
-                name="name"
-                aria-label="Package name"
-                placeholder="dompurify"
-                value={{row.name}}
-                autocomplete="off"
-                spellcheck="false"
-                data-test-dependency-name
-              /><span class="punct">": "</span><input
-                name="version"
-                aria-label="Version"
-                placeholder={{if (this.isBundled row.name) "bundled" "latest"}}
-                value={{row.version}}
-                autocomplete="off"
-                spellcheck="false"
-                data-test-dependency-version
-              /><span class="punct">"{{if (this.isLast index) "" ","}}</span>
-              <span class="comment">
-                {{~#if (this.loadedVersion row.name)}}// loaded {{/if~}}
-                <span data-test-dependency-loaded>{{this.loadedVersion row.name}}</span>
-              </span>
-              <button
-                type="button"
-                class="remove"
-                aria-label="Remove"
-                data-test-remove-dependency
-                {{on "click" (fn this.remove row)}}
-              >
-                <FaIcon @icon={{faTrash}} />
+          <div class="entries">
+            {{#each this.rows as |row index|}}
+              <div class="entry-row">
+                <span class="line"><span class="punct">"</span><input
+                    name="name"
+                    aria-label="Package name"
+                    placeholder="dompurify"
+                    value={{row.name}}
+                    autocomplete="off"
+                    spellcheck="false"
+                    data-test-dependency-name
+                  /><span class="punct">": "</span><input
+                    name="version"
+                    aria-label="Version"
+                    placeholder={{if (this.isBundled row.name) "bundled" "latest"}}
+                    value={{row.version}}
+                    autocomplete="off"
+                    spellcheck="false"
+                    data-test-dependency-version
+                  /><span class="punct">"{{if (this.isLast index) "" ","}}</span></span>
+                <span class="comment">
+                  {{~#if (this.loadedVersion row.name)}}// {{/if~}}
+                  <span data-test-dependency-loaded>{{this.loadedVersion row.name}}</span>
+                </span>
+                <button
+                  type="button"
+                  class="remove"
+                  aria-label="Remove"
+                  data-test-remove-dependency
+                  {{on "click" (fn this.remove row)}}
+                >
+                  <FaIcon @icon={{faTrash}} />
+                </button>
+              </div>
+            {{/each}}
+            <div class="line add-line">
+              <button type="button" class="add" data-test-add-dependency {{on "click" this.add}}>
+                + Add package
               </button>
             </div>
-          {{/each}}
-          <div class="line nested-2">
-            <button type="button" class="add" data-test-add-dependency {{on "click" this.add}}>
-              + Add package
-            </button>
           </div>
           <div class="line nested">}</div>
           <div class="line">}</div>

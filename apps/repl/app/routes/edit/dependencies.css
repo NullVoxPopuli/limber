@@ -2,7 +2,7 @@ dialog.dependencies-drawer {
   --tw-ring-color: var(--ember-brand);
 
   position: fixed;
-  inset: 0 0 0 auto;
+  inset: 0 auto 0 0;
   margin: 0;
   padding: 0;
   width: min(36rem, 100dvw);
@@ -10,7 +10,7 @@ dialog.dependencies-drawer {
   height: 100dvh;
   max-height: 100dvh;
   border: none;
-  border-left: 1px solid light-dark(#333, #6c6f93);
+  border-right: 1px solid light-dark(#333, #6c6f93);
   background: var(--limber-surface);
   color: var(--limber-text);
   overflow: auto;
@@ -21,6 +21,8 @@ dialog.dependencies-drawer {
   animation: dependencies-drawer-close 0.15s forwards;
 
   &[open] {
+    display: flex;
+    flex-direction: column;
     animation: dependencies-drawer-open 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
 
@@ -35,9 +37,9 @@ dialog.dependencies-drawer {
   }
 
   form {
+    flex: 1;
     display: grid;
     grid-template-rows: 1fr auto;
-    min-height: calc(100dvh - 4rem);
   }
 
   header {
@@ -118,8 +120,23 @@ dialog.dependencies-drawer .package-json {
     padding-left: 2ch;
   }
 
-  .nested-2 {
+  /**
+   * One grid for all entries, so that the comments line up.
+   */
+  .entries {
+    display: grid;
+    grid-template-columns: max-content 1fr min-content;
+    align-items: center;
+    column-gap: 2ch;
     padding-left: 4ch;
+  }
+
+  .entry-row {
+    display: contents;
+  }
+
+  .add-line {
+    grid-column: 1 / -1;
   }
 
   .read-only {
@@ -155,12 +172,11 @@ dialog.dependencies-drawer .package-json {
   }
 
   .comment {
-    margin-left: 1ch;
+    white-space: nowrap;
     color: #7f8aa8;
   }
 
   .remove {
-    margin-left: auto;
     padding: 0 0.5rem;
     color: #7f8aa8;
     background: none;
@@ -185,7 +201,7 @@ dialog.dependencies-drawer .package-json {
 
 @keyframes dependencies-drawer-open {
   from {
-    transform: translateX(100%);
+    transform: translateX(-100%);
   }
   to {
     transform: translateX(0);
@@ -197,6 +213,6 @@ dialog.dependencies-drawer .package-json {
     transform: translateX(0);
   }
   to {
-    transform: translateX(100%);
+    transform: translateX(-100%);
   }
 }
