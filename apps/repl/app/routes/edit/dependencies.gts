@@ -1,4 +1,5 @@
 import './share.css';
+import './dependencies.css';
 
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
@@ -7,8 +8,7 @@ import { service } from '@ember/service';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faBoxOpen, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { focusTrap } from 'ember-focus-trap';
-import { Modal } from 'ember-primitives/components/dialog';
+import { Drawer } from 'ember-primitives/components/drawer';
 import { getPromiseState } from 'reactiveweb/get-promise-state';
 
 import { bundledVersion, serializeDeps, type Versions } from 'limber/utils/dependencies';
@@ -20,26 +20,24 @@ import type EditorService from 'limber/services/editor';
 import type StatusService from 'limber/services/status';
 
 export const Dependencies = <template>
-  <Modal as |m|>
+  <Drawer as |d|>
     <button
       data-dependencies-button
       type="button"
       aria-label="Dependencies"
-      {{on "click" m.open}}
-      {{m.focusOnClose}}
+      {{on "click" d.open}}
+      {{d.focusOnClose}}
     >
       <span class="sm:inline-flex hidden">Dependencies</span>
       <FaIcon @icon={{faBoxOpen}} />
     </button>
 
-    <m.Dialog class="preem" inert={{not m.isOpen}} {{focusTrap isActive=m.isOpen}}>
-      {{#if m.isOpen}}
-        <div class="modal-facade">
-          <DependenciesBody @onClose={{m.close}} />
-        </div>
+    <d.Drawer class="dependencies-drawer" aria-label="Dependencies">
+      {{#if d.isOpen}}
+        <DependenciesBody @onClose={{d.close}} />
       {{/if}}
-    </m.Dialog>
-  </Modal>
+    </d.Drawer>
+  </Drawer>
 </template>;
 
 interface Row {
@@ -75,9 +73,9 @@ class DependenciesBody extends Component<{ onClose: () => void }> {
   }
 
   <template>
-    {{! The focus trap needs a button while the list loads. }}
-    <header><h2>Dependencies</h2>
-      <FlatButton {{on "click" @onClose}} aria-label="close the dependencies modal">
+    {{! The drawer focuses its first button, so it needs one while the list loads. }}
+    <header><h2>package.json</h2>
+      <FlatButton {{on "click" @onClose}} aria-label="close the dependencies drawer">
         <FaIcon @size="xs" @icon={{faXmark}} class="aspect-square" />
       </FlatButton>
     </header>
@@ -92,56 +90,61 @@ class DependenciesForm extends Component<{ loaded: Loaded; onClose: () => void }
     <form {{on "submit" this.handleSubmit}}>
       <main>
         <p>
-          Pin the npm version of a package that the document imports. Loaded is the version that
-          runs now. A pin also replaces a package that the REPL bundles.
+          Pin the npm version of a package that the document imports. The comment shows the version
+          that runs now. A pin also replaces a package that the REPL bundles.
         </p>
 
-        <div class="dependency-rows">
-          <span>Package</span>
-          <span>Version</span>
-          <span>Loaded</span>
-          <span></span>
-          {{#each this.rows as |row|}}
-            <input
-              name="name"
-              aria-label="Package name"
-              placeholder="dompurify"
-              value={{row.name}}
-              autocomplete="off"
-              data-test-dependency-name
-            />
-            <input
-              name="version"
-              aria-label="Version"
-              placeholder={{if (this.isBundled row.name) "bundled" "latest"}}
-              value={{row.version}}
-              autocomplete="off"
-              data-test-dependency-version
-            />
-            <span class="loaded" data-test-dependency-loaded>{{this.loadedVersion row.name}}</span>
-            <button
-              type="button"
-              aria-label="Remove"
-              data-test-remove-dependency
-              {{on "click" (fn this.remove row)}}
-            >
-              <FaIcon @icon={{faTrash}} />
-            </button>
+        <div class="package-json">
+          <div class="line">{</div>
+          <div class="line nested read-only">"name": "repl-document",</div>
+          <div class="line nested">"dependencies": {</div>
+          {{#each this.rows as |row index|}}
+            <div class="line nested-2">
+              <span class="punct">"</span><input
+                name="name"
+                aria-label="Package name"
+                placeholder="dompurify"
+                value={{row.name}}
+                autocomplete="off"
+                spellcheck="false"
+                data-test-dependency-name
+              /><span class="punct">": "</span><input
+                name="version"
+                aria-label="Version"
+                placeholder={{if (this.isBundled row.name) "bundled" "latest"}}
+                value={{row.version}}
+                autocomplete="off"
+                spellcheck="false"
+                data-test-dependency-version
+              /><span class="punct">"{{if (this.isLast index) "" ","}}</span>
+              <span class="comment">
+                {{~#if (this.loadedVersion row.name)}}// loaded {{/if~}}
+                <span data-test-dependency-loaded>{{this.loadedVersion row.name}}</span>
+              </span>
+              <button
+                type="button"
+                class="remove"
+                aria-label="Remove"
+                data-test-remove-dependency
+                {{on "click" (fn this.remove row)}}
+              >
+                <FaIcon @icon={{faTrash}} />
+              </button>
+            </div>
           {{/each}}
-        </div>
-
-        <div>
-          <button type="button" data-test-add-dependency {{on "click" this.add}}>Add package</button>
+          <div class="line nested-2">
+            <button type="button" class="add" data-test-add-dependency {{on "click" this.add}}>
+              + Add package
+            </button>
+          </div>
+          <div class="line nested">}</div>
+          <div class="line">}</div>
         </div>
       </main>
 
       <footer>
-        <div class="right">
-          <div class="buttons">
-            <button type="button" class="cancel" {{on "click" @onClose}}>Cancel</button>
-            <button type="submit" data-test-apply-dependencies>Apply</button>
-          </div>
-        </div>
+        <button type="button" class="cancel" {{on "click" @onClose}}>Cancel</button>
+        <button type="submit" data-test-apply-dependencies>Apply</button>
       </footer>
     </form>
   </template>
@@ -187,6 +190,8 @@ class DependenciesForm extends Component<{ loaded: Loaded; onClose: () => void }
 
     return rows.length ? rows : [{ name: '', version: '' }];
   }
+
+  isLast = (index: number) => index === this.rows.length - 1;
 
   add = () => {
     this.rows.push({ name: '', version: '' });

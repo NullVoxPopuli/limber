@@ -215,18 +215,3 @@ dialog.preem footer {
     gap: 1rem;
   }
 }
-
-
-dialog.preem .dependency-rows {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 6rem) min-content min-content;
-  gap: 0.5rem;
-  align-items: center;
-}
-dialog.preem .dependency-rows input {
-  min-width: 0;
-}
-dialog.preem .dependency-rows .loaded {
-  font-family: monospace;
-  white-space: nowrap;
-}

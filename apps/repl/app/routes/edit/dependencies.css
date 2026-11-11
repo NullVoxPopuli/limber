@@ -1,0 +1,202 @@
+dialog.dependencies-drawer {
+  --tw-ring-color: var(--ember-brand);
+
+  position: fixed;
+  inset: 0 0 0 auto;
+  margin: 0;
+  padding: 0;
+  width: min(36rem, 100dvw);
+  max-width: 100dvw;
+  height: 100dvh;
+  max-height: 100dvh;
+  border: none;
+  border-left: 1px solid light-dark(#333, #6c6f93);
+  background: var(--limber-surface);
+  color: var(--limber-text);
+  overflow: auto;
+
+  transition:
+    display 0.15s allow-discrete,
+    overlay 0.15s allow-discrete;
+  animation: dependencies-drawer-close 0.15s forwards;
+
+  &[open] {
+    animation: dependencies-drawer-open 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  &::backdrop {
+    backdrop-filter: blur(1px);
+    background: color-mix(in srgb, #020617 40%, transparent);
+  }
+
+  &:focus-visible,
+  &:focus {
+    outline: none;
+  }
+
+  form {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    min-height: calc(100dvh - 4rem);
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid light-dark(#333, #6c6f93);
+
+    h2 {
+      margin: 0 !important;
+      font-family: "Source Code Pro", ui-monospace, monospace;
+      font-size: 1.25rem;
+    }
+
+    button {
+      color: var(--limber-text);
+    }
+  }
+
+  main {
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  footer {
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+    padding: 1rem;
+    border-top: 1px solid light-dark(#333, #6c6f93);
+
+    button {
+      color: white;
+      border-radius: 0.25rem;
+      padding: 0.25rem 0.5rem;
+      background: var(--code-bg);
+      border: 1px solid var(--horizon-border);
+
+      &.cancel {
+        color: black;
+        background: #eee;
+        border-color: #aaa;
+      }
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+
+  button:focus-visible,
+  input:focus-visible {
+    outline: 2px solid var(--tw-ring-color);
+    outline-offset: 1px;
+  }
+}
+
+dialog.dependencies-drawer .package-json {
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
+  background: var(--code-bg);
+  color: #e5e7eb;
+  overflow-x: auto;
+
+  .line {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  .nested {
+    padding-left: 2ch;
+  }
+
+  .nested-2 {
+    padding-left: 4ch;
+  }
+
+  .read-only {
+    opacity: 0.6;
+  }
+
+  .punct {
+    white-space: pre;
+    color: #c3e88d;
+  }
+
+  /**
+   * The inputs look like the JSON strings that they edit.
+   */
+  input {
+    font: inherit;
+    color: #c3e88d;
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed color-mix(in srgb, currentColor 40%, transparent);
+    padding: 0;
+    width: 14ch;
+
+    @supports (field-sizing: content) {
+      width: auto;
+      min-width: 2ch;
+      field-sizing: content;
+    }
+
+    &::placeholder {
+      color: color-mix(in srgb, #e5e7eb 40%, transparent);
+    }
+  }
+
+  .comment {
+    margin-left: 1ch;
+    color: #7f8aa8;
+  }
+
+  .remove {
+    margin-left: auto;
+    padding: 0 0.5rem;
+    color: #7f8aa8;
+    background: none;
+    border: none;
+
+    &:hover {
+      color: #f07178;
+    }
+  }
+
+  .add {
+    padding: 0;
+    color: #7f8aa8;
+    background: none;
+    border: none;
+
+    &:hover {
+      color: #e5e7eb;
+    }
+  }
+}
+
+@keyframes dependencies-drawer-open {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes dependencies-drawer-close {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
