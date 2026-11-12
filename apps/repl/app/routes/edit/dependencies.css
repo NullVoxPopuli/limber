@@ -109,8 +109,11 @@ dialog.dependencies-drawer .package-json {
   background: var(--code-bg);
   color: #e5e7eb;
   overflow-x: auto;
+  container-type: inline-size;
 
-  .line {
+  .line,
+  .key,
+  .value {
     display: flex;
     align-items: center;
     white-space: nowrap;
@@ -143,6 +146,10 @@ dialog.dependencies-drawer .package-json {
     opacity: 0.6;
   }
 
+  .value {
+    padding-left: 1ch;
+  }
+
   .punct {
     white-space: pre;
     color: #c3e88d;
@@ -171,9 +178,60 @@ dialog.dependencies-drawer .package-json {
     }
   }
 
-  .comment {
+  .comment,
+  .note {
+    display: flex;
+    gap: 1ch;
     white-space: nowrap;
     color: #7f8aa8;
+  }
+
+  .pointer {
+    display: none;
+  }
+
+  /**
+   * A phone has no room for the comment at the end of the line.
+   * Each entry is a grid of its own, so that the arrow sits under its own value.
+   */
+  @container (width < 30rem) {
+    .entries {
+      grid-template-columns: 1fr;
+      padding-left: 2ch;
+    }
+
+    .entry-row {
+      display: grid;
+      grid-template-columns: max-content 1fr auto;
+      align-items: center;
+    }
+
+    .entry-row > .line,
+    .comment {
+      display: contents;
+    }
+
+    .key,
+    .value {
+      display: flex;
+      align-items: center;
+    }
+
+    .slashes {
+      grid-row: 2;
+      grid-column: 1;
+      justify-self: end;
+    }
+
+    .note {
+      grid-row: 2;
+      grid-column: 2;
+    }
+
+    .pointer {
+      display: block;
+      margin-left: 1ch;
+    }
   }
 
   .remove {

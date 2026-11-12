@@ -97,26 +97,35 @@ class DependenciesForm extends Component<{ loaded: Loaded; onClose: () => void }
           <div class="entries">
             {{#each this.rows key="key" as |row index|}}
               <div class="entry-row" {{on "input" (fn this.keep row)}}>
-                <span class="line"><span class="punct">"</span><input
-                    name="name"
-                    aria-label="Package name"
-                    placeholder="dompurify"
-                    value={{row.name}}
-                    autocomplete="off"
-                    spellcheck="false"
-                    data-test-dependency-name
-                  /><span class="punct">": "</span><input
-                    name="version"
-                    aria-label="Version"
-                    placeholder={{if (this.isBundled row.name) "bundled" "latest"}}
-                    value={{row.version}}
-                    autocomplete="off"
-                    spellcheck="false"
-                    data-test-dependency-version
-                  /><span class="punct">"{{if (this.isLast index) "" ","}}</span></span>
+                <span class="line"><span class="key"><span class="punct">"</span><input
+                      name="name"
+                      aria-label="Package name"
+                      placeholder="dompurify"
+                      value={{row.name}}
+                      autocomplete="off"
+                      spellcheck="false"
+                      data-test-dependency-name
+                    /><span class="punct">":</span></span><span class="value"><span
+                      class="punct"
+                    >"</span><input
+                      name="version"
+                      aria-label="Version"
+                      placeholder={{if (this.isBundled row.name) "bundled" "latest"}}
+                      value={{row.version}}
+                      autocomplete="off"
+                      spellcheck="false"
+                      data-test-dependency-version
+                    /><span class="punct">"{{if (this.isLast index) "" ","}}</span></span></span>
                 <span class="comment">
-                  {{~#if (this.loadedVersion row.name)}}// {{/if~}}
-                  <span data-test-dependency-loaded>{{this.loadedVersion row.name}}</span>
+                  {{#if (this.loadedVersion row.name)}}
+                    <span class="slashes">//</span>
+                  {{/if}}
+                  <span class="note">
+                    {{#if (this.loadedVersion row.name)}}
+                      <span class="pointer">↑</span>
+                    {{/if}}
+                    <span data-test-dependency-loaded>{{this.loadedVersion row.name}}</span>
+                  </span>
                 </span>
                 <button
                   type="button"
