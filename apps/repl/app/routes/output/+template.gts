@@ -1,6 +1,8 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 
+import { notInIframe } from 'ember-primitives/iframe';
+
 import Output from '#components/output.gts';
 import { VerifyDanger } from '#components/verify-danger.gts';
 import Guest from '#edit/guest.gts';
@@ -18,7 +20,7 @@ class EditThis extends Component {
   }
 
   <template>
-    <div style="position: fixed; bottom: 1rem; right: 1rem;">
+    <div style="position: fixed; bottom: 1rem; right: 1rem;" data-test-edit-this>
       <Link href={{this.href}} target="_blank">Edit</Link>
     </div>
   </template>
@@ -30,6 +32,9 @@ class EditThis extends Component {
   <VerifyDanger>
     <Output @shadow={{false}} />
   </VerifyDanger>
-  <EditThis />
+  {{! In a frame, the editor is already next to this page. }}
+  {{#if (notInIframe)}}
+    <EditThis />
+  {{/if}}
   <Status />
 </template>

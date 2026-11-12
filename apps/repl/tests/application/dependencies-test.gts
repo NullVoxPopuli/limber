@@ -245,6 +245,7 @@ export default class Demo extends Component {
 
     assert.dom('[data-test-text]').hasText('6.10.0');
     assert.notStrictEqual(VERSION, '6.10.0', 'the host runs another version');
+    assert.dom('[data-test-edit-this]').exists('the output page alone links to the editor');
 
     await click('[data-test-count]');
 
@@ -283,6 +284,7 @@ export default class Demo extends Component {
     });
 
     assert.strictEqual(inFrame('[data-test-text]')?.textContent, '7.4.0');
+    assert.notOk(inFrame('[data-test-edit-this]'), 'the frame has no edit link');
 
     const before = frame?.contentDocument;
 
