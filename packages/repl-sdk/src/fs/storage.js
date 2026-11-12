@@ -36,7 +36,7 @@ const LINK_MARKER = '.link';
 const encoder = new TextEncoder();
 
 /**
- * About 4 times faster than one at a time for ember-source's 927 files.
+ * About 3 times faster than one at a time for ember-source's 927 files.
  */
 const PARALLEL_WRITES = 16;
 
