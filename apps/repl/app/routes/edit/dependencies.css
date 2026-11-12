@@ -178,8 +178,7 @@ dialog.dependencies-drawer .package-json {
     }
   }
 
-  .comment,
-  .note {
+  .comment {
     display: flex;
     gap: 1ch;
     white-space: nowrap;
@@ -192,7 +191,8 @@ dialog.dependencies-drawer .package-json {
 
   /**
    * A phone has no room for the comment at the end of the line.
-   * Each entry is a grid of its own, so that the arrow sits under its own value.
+   * The comment goes on the next line: the slashes under the key, the arrow
+   * under the colon, and the version under the version specifier.
    */
   @container (width < 30rem) {
     .entries {
@@ -202,7 +202,7 @@ dialog.dependencies-drawer .package-json {
 
     .entry-row {
       display: grid;
-      grid-template-columns: max-content 1fr auto;
+      grid-template-columns: max-content max-content 1fr auto;
       align-items: center;
     }
 
@@ -217,20 +217,27 @@ dialog.dependencies-drawer .package-json {
       align-items: center;
     }
 
-    .slashes {
-      grid-row: 2;
-      grid-column: 1;
-      justify-self: end;
-    }
-
+    .slashes,
+    .pointer,
     .note {
       grid-row: 2;
-      grid-column: 2;
+    }
+
+    .slashes {
+      grid-column: 1;
     }
 
     .pointer {
       display: block;
-      margin-left: 1ch;
+      grid-column: 2;
+    }
+
+    /**
+     * Past the space and the quote of the value.
+     */
+    .note {
+      grid-column: 3;
+      padding-left: 2ch;
     }
   }
 

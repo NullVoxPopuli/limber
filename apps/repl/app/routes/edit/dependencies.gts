@@ -105,9 +105,9 @@ class DependenciesForm extends Component<{ loaded: Loaded; onClose: () => void }
                       autocomplete="off"
                       spellcheck="false"
                       data-test-dependency-name
-                    /><span class="punct">":</span></span><span class="value"><span
-                      class="punct"
-                    >"</span><input
+                    /><span class="punct">"</span></span><span class="punct">:</span><span
+                    class="value"
+                  ><span class="punct">"</span><input
                       name="version"
                       aria-label="Version"
                       placeholder={{if (this.isBundled row.name) "bundled" "latest"}}
@@ -120,12 +120,12 @@ class DependenciesForm extends Component<{ loaded: Loaded; onClose: () => void }
                   {{#if (this.loadedVersion row.name)}}
                     <span class="slashes">//</span>
                   {{/if}}
-                  <span class="note">
-                    {{#if (this.loadedVersion row.name)}}
-                      <span class="pointer">↑</span>
-                    {{/if}}
-                    <span data-test-dependency-loaded>{{this.loadedVersion row.name}}</span>
-                  </span>
+                  {{#if (this.loadedVersion row.name)}}
+                    <span class="pointer">↑</span>
+                  {{/if}}
+                  <span class="note" data-test-dependency-loaded>{{this.loadedVersion
+                      row.name
+                    }}</span>
                 </span>
                 <button
                   type="button"
