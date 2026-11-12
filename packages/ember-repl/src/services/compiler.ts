@@ -222,6 +222,13 @@ export default class CompilerService {
    */
   readonly dependencies = trackedMap<string, string | undefined>();
 
+  /**
+   * The packages of the compile in progress.
+   * They replace `dependencies` when the compile ends,
+   * so that the list does not empty out while a compile runs.
+   */
+  #pending: Map<string, string | undefined> | undefined;
+
   #dependencyListeners = new Set<
     (entries: [string, string | undefined][]) => void
   >();
@@ -386,10 +393,18 @@ export default class CompilerService {
            * A bundled module is listed under its package,
            * so all of `@ember/*` is one ember-source entry.
            */
-          this.dependencies.set(
-            version === undefined ? packageOf(name) : name,
-            version
-          );
+          const key = version === undefined ? packageOf(name) : name;
+
+          if (this.#pending) {
+            this.#pending.set(key, version);
+
+            return;
+          }
+
+          /**
+           * An `import()` that runs after the compile.
+           */
+          this.dependencies.set(key, version);
           this.#reportDependencies();
         },
       },
@@ -483,13 +498,35 @@ export default class CompilerService {
     await Promise.resolve();
 
     this.messages.length = 0;
-    this.dependencies.clear();
-    this.#reportDependencies();
     this.#pins = (options?.['versions'] as Record<string, string>) ?? {};
 
-    await this.#prepareImportSync();
+    const pending = new Map<string, string | undefined>();
 
-    return this.compiler.compile(ext, text, options ?? {});
+    this.#pending = pending;
+
+    try {
+      await this.#prepareImportSync();
+
+      return await this.compiler.compile(ext, text, options ?? {});
+    } finally {
+      /**
+       * A newer compile owns the list now.
+       */
+      if (this.#pending === pending) {
+        this.#pending = undefined;
+        this.#publishDependencies(pending);
+      }
+    }
+  }
+
+  #publishDependencies(entries: Map<string, string | undefined>) {
+    this.dependencies.clear();
+
+    for (const [name, version] of entries) {
+      this.dependencies.set(name, version);
+    }
+
+    this.#reportDependencies();
   }
 
   /**

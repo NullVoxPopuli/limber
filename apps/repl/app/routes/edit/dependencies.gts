@@ -61,11 +61,13 @@ class DependenciesBody extends Component<{ onClose: () => void }> {
   /**
    * What the output loaded: from this page's compiler,
    * or from the frame that renders a pinned ember-source.
+   *
+   * Until a new frame finishes its first compile, the last list stays.
    */
   get loaded(): Loaded {
-    return this.editor.rendersInFrame
-      ? this.editor.frameDependencies
-      : this.status.compiler.dependencies;
+    const frame = this.editor.rendersInFrame ? this.editor.frameDependencies : undefined;
+
+    return frame ?? this.status.compiler.dependencies;
   }
 
   <template>

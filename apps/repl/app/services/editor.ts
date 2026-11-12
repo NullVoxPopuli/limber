@@ -108,9 +108,9 @@ export default class EditorService extends Service {
   }
 
   /**
-   * What the output frame loaded, see PinnedOutput.
+   * What the last output frame loaded, see PinnedOutput.
    */
-  @tracked frameDependencies: ReadonlyMap<string, string | undefined> = new Map();
+  @tracked frameDependencies: ReadonlyMap<string, string | undefined> | undefined;
 
   get nohighlight() {
     return (this.router.currentRoute?.queryParams ?? {}).nohighlight;

@@ -345,6 +345,30 @@ import DOMPurify from 'dompurify';
     assert.verifySteps(['7.4.0 3.2.0', '7.4.0 3.1.0', '6.10.0 3.1.0']);
   });
 
+  test('pinning ember-source keeps the list while the frame loads', async function (assert) {
+    this.owner.lookup('service:editor').setCodemirrorState = () => {};
+
+    await visit(`/edit?format=gjs&c=${compressToEncodedURIComponent(versionDoc)}`);
+    await click(open);
+
+    const before = rowOf('').names.sort();
+
+    assert.deepEqual(before, ['@glimmer/component', 'decorator-transforms', 'ember-source']);
+
+    await fillIn(rowOf('ember-source').version as Element, '7.4.0');
+    await click(apply);
+    await waitUntil(() => !find('dialog.dependencies-drawer')?.hasAttribute('open'));
+    await click(open);
+
+    assert.deepEqual(rowOf('').names.sort(), before, 'the frame has not compiled yet');
+
+    await waitUntil(() => rowOf('ember-source').loaded?.textContent === '7.4.0', {
+      timeout: 30_000,
+    });
+
+    assert.deepEqual(rowOf('').names.sort(), before, 'the frame lists the same packages');
+  });
+
   test('the dialog lists what the frame loaded', async function (assert) {
     this.owner.lookup('service:editor').setCodemirrorState = () => {};
 
