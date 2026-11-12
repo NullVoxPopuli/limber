@@ -212,7 +212,11 @@ export interface CompilerConfig {
    *
    */
   resolve?: (
-    id: string
+    id: string,
+    /**
+     * The package versions of the compile in progress.
+     */
+    versions?: { [packageName: string]: string }
   ) =>
     string | (() => Record<string, unknown>) | (() => Promise<Record<string, unknown>>) | undefined;
 
@@ -336,6 +340,10 @@ export interface InstalledPackage {
     main?: string;
     module?: string;
     browser?: string;
+    /**
+     * v2 addons, see Installer#renameModules.
+     */
+    'ember-addon'?: { 'renamed-modules'?: Record<string, string> };
   };
   /**
    * Every file in the package, relative to its root. The files themselves are

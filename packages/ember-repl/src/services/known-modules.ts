@@ -5,6 +5,20 @@ import type { ModuleMap } from '../compile/types.ts';
  */
 const loaded: Record<string, unknown> = {};
 
+/**
+ * Sets what `importSync` answers for ember-source modules.
+ */
+export function provideForImportSync(values: Record<string, unknown>) {
+  Object.assign(loaded, values);
+}
+
+/**
+ * An ember-source module of the current compile: the pinned one, or the bundled one.
+ */
+export function emberModule<T = Record<string, unknown>>(specifier: string): T {
+  return loaded[specifier] as T;
+}
+
 const frameworkModules = {
   '@ember/application': () => import('@ember/application'),
   '@ember/application/instance': () => import('@ember/application/instance'),
@@ -187,23 +201,36 @@ export function packageOf(specifier: string): string {
 }
 
 /**
- * `importSync` from `@embroider/macros` must answer at once,
- * and npm builds of addons use it for `@ember/*` modules.
- *
+ * Compiler tools that work with any Ember, such as babel and content-tag.
+ * Every other bundled module is tied to the bundled Ember.
+ */
+export function isEmberIndependent(specifier: string): boolean {
+  return specifier in emberCompilationModules && packageOf(specifier) !== EMBER_SOURCE;
+}
+
+/**
+ * The bundled ember-source modules, by specifier.
+ */
+export function emberSourceSpecifiers(): string[] {
+  return Object.keys(frameworkModules).filter(
+    (specifier) => packageOf(specifier) === EMBER_SOURCE
+  );
+}
+
+/**
+ * The bundled ember-source modules for `importSync`.
  * The host app has these modules already, so this is fast.
  */
 export async function preloadEmberSource(): Promise<void> {
-  const pending: Promise<void>[] = [];
+  const values: Record<string, unknown> = {};
 
-  for (const [specifier, load] of Object.entries(frameworkModules)) {
-    if (packageOf(specifier) !== EMBER_SOURCE || specifier in loaded) continue;
+  await Promise.all(
+    emberSourceSpecifiers().map(async (specifier) => {
+      const load = frameworkModules[specifier as keyof typeof frameworkModules];
 
-    pending.push(
-      Promise.resolve(load()).then((value: unknown) => {
-        loaded[specifier] = value;
-      })
-    );
-  }
+      values[specifier] = await load();
+    })
+  );
 
-  await Promise.all(pending);
+  provideForImportSync(values);
 }

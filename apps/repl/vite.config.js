@@ -113,7 +113,6 @@ export default defineConfig({
       'ember-repl > codemirror',
       'ember-repl > repl-sdk > codemirror',
       'ember-repl > repl-sdk > codemirror-lang-mermaid',
-      'ember-repl > repl-sdk > tarparser',
       'ember-repl > repl-sdk > package-name-regex',
       'ember-repl > repl-sdk > rehype-raw',
       'ember-repl > repl-sdk > rehype-stringify',

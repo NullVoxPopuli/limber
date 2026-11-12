@@ -100,6 +100,18 @@ export default class EditorService extends Service {
     return this.pausedFile ?? this.#file;
   }
 
+  /**
+   * A pinned ember-source needs its own import map, so the output renders in a frame.
+   */
+  get rendersInFrame() {
+    return 'ember-source' in this.renderInput.versions;
+  }
+
+  /**
+   * What the last output frame loaded, see PinnedOutput.
+   */
+  @tracked frameDependencies: ReadonlyMap<string, string | undefined> | undefined;
+
   get nohighlight() {
     return (this.router.currentRoute?.queryParams ?? {}).nohighlight;
   }

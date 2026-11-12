@@ -111,9 +111,12 @@ export async function compiler(config, api) {
       // would make glimmer reuse a compiled handle from another island's
       // program, blowing up with "Cannot read properties of null (reading
       // 'syscall')" the second time a singleton scope component is invoked.
+      //
+      // A pinned ember-source is a second Ember on the page,
+      // and the host's owner belongs to the other one.
       const result = renderComponent(compiled, {
         into: element,
-        owner: makeOwner(userOptions.owner),
+        owner: makeOwner(config.versions?.['ember-source'] ? undefined : userOptions.owner),
         ...(args ? { args } : {}),
       });
 
