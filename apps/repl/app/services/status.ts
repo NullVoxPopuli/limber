@@ -3,6 +3,10 @@ import Service from '@ember/service';
 
 import { getCompiler } from 'ember-repl';
 
+import { summarize } from '#app/utils/error-summary.ts';
+
+import type { ErrorMessage } from 'repl-sdk';
+
 export default class StatusService extends Service {
   @cached
   get compiler() {
@@ -13,12 +17,22 @@ export default class StatusService extends Service {
     return this.compiler.lastInfo?.message;
   }
 
+  /**
+   * Each compile reports new message objects,
+   * so a dismissed error stays hidden only until the next one.
+   */
+  @tracked dismissed: ErrorMessage | undefined;
+
+  @cached
   get error() {
-    return this.compiler.lastError?.message;
+    const error = this.compiler.lastError;
+
+    if (!error || error === this.dismissed) return;
+
+    return summarize(error.message, error.error);
   }
 
-  @tracked showError = true;
-
-  hideError = () => void (this.showError = false);
-  newError = () => void (this.showError = true);
+  dismiss = () => {
+    this.dismissed = this.compiler.lastError;
+  };
 }

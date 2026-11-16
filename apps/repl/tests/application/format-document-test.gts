@@ -88,7 +88,8 @@ module('Editor > Format document', function (hooks) {
     await click(button);
 
     assert.strictEqual(getService('editor').text, broken, 'the text did not change');
-    assert.dom('[data-test-error]').containsText('Parse Error');
+    assert.dom('[data-test-error-summary]').includesText('Unexpected token');
+    assert.dom('[data-test-error-frame]').includesText('const x = {');
   });
 
   test('there is no button for a format without a formatter', async function (assert) {
