@@ -614,10 +614,6 @@ async function writeText(handle, text) {
   if (withSyncAccess.createSyncAccessHandle) {
     const access = await withSyncAccess.createSyncAccessHandle();
 
-    /**
-     * No flush: `close` hands the bytes to the OS, so a reload reads them.
-     * A flush only adds safety against power loss, and makes writes 3 times slower.
-     */
     try {
       access.truncate(0);
       access.write(encoder.encode(text));
