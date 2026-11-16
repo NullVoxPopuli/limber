@@ -1,0 +1,283 @@
+dialog.dependencies-drawer {
+  --tw-ring-color: var(--ember-brand);
+
+  position: fixed;
+  inset: 0 auto 0 0;
+  margin: 0;
+  padding: 0;
+  width: min(36rem, 100dvw);
+  max-width: 100dvw;
+  height: 100dvh;
+  max-height: 100dvh;
+  border: none;
+  border-right: 1px solid light-dark(#333, #6c6f93);
+  background: var(--limber-surface);
+  color: var(--limber-text);
+  overflow: auto;
+
+  transition:
+    display 0.15s allow-discrete,
+    overlay 0.15s allow-discrete;
+  animation: dependencies-drawer-close 0.15s forwards;
+
+  &[open] {
+    display: flex;
+    flex-direction: column;
+    animation: dependencies-drawer-open 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  &::backdrop {
+    backdrop-filter: blur(1px);
+    background: color-mix(in srgb, #020617 40%, transparent);
+  }
+
+  &:focus-visible,
+  &:focus {
+    outline: none;
+  }
+
+  form {
+    flex: 1;
+    display: grid;
+    grid-template-rows: 1fr auto;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid light-dark(#333, #6c6f93);
+
+    h2 {
+      margin: 0 !important;
+      font-family: "Source Code Pro", ui-monospace, monospace;
+      font-size: 1.25rem;
+    }
+
+    button {
+      color: var(--limber-text);
+    }
+  }
+
+  main {
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  footer {
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+    padding: 1rem;
+    border-top: 1px solid light-dark(#333, #6c6f93);
+
+    button {
+      color: white;
+      border-radius: 0.25rem;
+      padding: 0.25rem 0.5rem;
+      background: var(--code-bg);
+      border: 1px solid var(--horizon-border);
+
+      &.cancel {
+        color: black;
+        background: #eee;
+        border-color: #aaa;
+      }
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+
+  button:focus-visible,
+  input:focus-visible {
+    outline: 2px solid var(--tw-ring-color);
+    outline-offset: 1px;
+  }
+}
+
+dialog.dependencies-drawer .package-json {
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
+  background: var(--code-bg);
+  color: #e5e7eb;
+  overflow-x: auto;
+  container-type: inline-size;
+
+  .line,
+  .key,
+  .value {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  .nested {
+    padding-left: 2ch;
+  }
+
+  /**
+   * One grid for all entries, so that the comments line up.
+   */
+  .entries {
+    display: grid;
+    grid-template-columns: max-content 1fr min-content;
+    align-items: center;
+    column-gap: 2ch;
+    padding-left: 4ch;
+  }
+
+  .entry-row {
+    display: contents;
+  }
+
+  .add-line {
+    grid-column: 1 / -1;
+  }
+
+  .read-only {
+    opacity: 0.6;
+  }
+
+  .value {
+    padding-left: 1ch;
+  }
+
+  .punct {
+    white-space: pre;
+    color: #c3e88d;
+  }
+
+  /**
+   * The inputs look like the JSON strings that they edit.
+   */
+  input {
+    font: inherit;
+    color: #c3e88d;
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed color-mix(in srgb, currentColor 40%, transparent);
+    padding: 0;
+    width: 14ch;
+
+    @supports (field-sizing: content) {
+      width: auto;
+      min-width: 2ch;
+      field-sizing: content;
+    }
+
+    &::placeholder {
+      color: color-mix(in srgb, #e5e7eb 40%, transparent);
+    }
+  }
+
+  .comment {
+    display: flex;
+    gap: 1ch;
+    white-space: nowrap;
+    color: #7f8aa8;
+  }
+
+  .pointer {
+    display: none;
+  }
+
+  /**
+   * A phone has no room for the comment at the end of the line.
+   * The comment goes on the next line: the slashes under the key, the arrow
+   * under the colon, and the version under the version specifier.
+   */
+  @container (width < 30rem) {
+    .entries {
+      grid-template-columns: 1fr;
+      padding-left: 2ch;
+    }
+
+    .entry-row {
+      display: grid;
+      grid-template-columns: max-content max-content 1fr auto;
+      align-items: center;
+    }
+
+    .entry-row > .line,
+    .comment {
+      display: contents;
+    }
+
+    .key,
+    .value {
+      display: flex;
+      align-items: center;
+    }
+
+    .slashes,
+    .pointer,
+    .note {
+      grid-row: 2;
+    }
+
+    .slashes {
+      grid-column: 1;
+    }
+
+    .pointer {
+      display: block;
+      grid-column: 2;
+    }
+
+    /**
+     * Past the space and the quote of the value.
+     */
+    .note {
+      grid-column: 3;
+      padding-left: 2ch;
+    }
+  }
+
+  .remove {
+    padding: 0 0.5rem;
+    color: #7f8aa8;
+    background: none;
+    border: none;
+
+    &:hover {
+      color: #f07178;
+    }
+  }
+
+  .add {
+    padding: 0;
+    color: #7f8aa8;
+    background: none;
+    border: none;
+
+    &:hover {
+      color: #e5e7eb;
+    }
+  }
+}
+
+@keyframes dependencies-drawer-open {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes dependencies-drawer-close {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}

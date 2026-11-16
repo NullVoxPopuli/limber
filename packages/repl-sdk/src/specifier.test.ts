@@ -36,6 +36,18 @@ test('pkgName@beta/foo', {
   path: './foo',
 });
 
+test('ember-source@7.4.0/@ember/owner/index.js', {
+  name: 'ember-source',
+  version: '7.4.0',
+  path: './@ember/owner/index.js',
+});
+
+test('ember-source/@ember/owner', {
+  name: 'ember-source',
+  version: undefined,
+  path: './@ember/owner',
+});
+
 test('pkgName@5.4.3-beta.2', {
   name: 'pkgName',
   version: '5.4.3-beta.2',

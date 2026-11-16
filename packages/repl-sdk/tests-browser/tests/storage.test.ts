@@ -77,6 +77,25 @@ describe('Storage', () => {
   });
 
   describe('packages', () => {
+    it('writes many files into shared new directories', async () => {
+      const texts: Record<string, string> = { 'package.json': '{}' };
+
+      for (let i = 0; i < 60; i++) {
+        texts[`dist/packages/${i % 3}/deep/${i}.js`] = `export default ${i};`;
+      }
+
+      const written = await storage.writePackage('many', '1.0.0', contentsFor(texts));
+
+      expect(written.files.size).toBe(61);
+
+      const read = await storage.readPackage('many', '1.0.0');
+
+      expect(read?.files.size).toBe(61);
+      expect(await storage.read('/node_modules/.deps/many@1.0.0/dist/packages/2/deep/59.js')).toBe(
+        'export default 59;'
+      );
+    });
+
     it('round-trips a package', async () => {
       const manifest = { name: 'nanoid', version: '6.0.1' };
       const contents = contentsFor({

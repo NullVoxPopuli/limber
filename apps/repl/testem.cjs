@@ -8,6 +8,8 @@ if (typeof module !== 'undefined') {
     test_page: 'tests/index.html?hidepassed',
     disable_watching: true,
     cwd: 'dist',
+    // The edit page frames /output when ember-source is pinned.
+    routes: { '/output': 'index.html' },
     launch_in_ci: [CI_BROWSER],
     launch_in_dev: [DEFAULT_BROWSER],
     browser_start_timeout: 120,

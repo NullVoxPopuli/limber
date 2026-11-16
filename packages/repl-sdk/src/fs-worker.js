@@ -1,7 +1,7 @@
 import { expose } from 'comlink';
-import { parseTar } from 'tarparser';
 
 import { Storage } from './fs/storage.js';
+import { untar } from './fs/tar.js';
 import { getNPMInfo, getTarUrl, resolveVersion } from './npm.js';
 
 /**
@@ -118,22 +118,4 @@ async function installWorker(name, requestedVersion) {
   });
 
   return storage.writePackage(name, version, await untar(await response.arrayBuffer()));
-}
-
-/**
- * @param {ArrayBuffer} arrayBuffer
- */
-async function untar(arrayBuffer) {
-  /**
-   * @type {{ [name: string]: { text: string } }}
-   */
-  const contents = {};
-
-  for (const file of await parseTar(arrayBuffer)) {
-    if (file.type === 'file') {
-      contents[file.name.slice(8)] = file; // remove `package/` prefix
-    }
-  }
-
-  return contents;
 }

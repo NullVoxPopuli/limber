@@ -52,6 +52,29 @@ const buildDependencies = [
  */
 
 /**
+ * A pinned ember-source needs `ember-template-compiler/index.js`,
+ * the ES module build of the template compiler. ember-source 6.10 is the first to ship it.
+ *
+ * @param {Parameters<CompilerFactory>[0]} config
+ * @param {Parameters<CompilerFactory>[1]} api
+ */
+async function loadBuildDependencies(config, api) {
+  const pinned = config.versions?.['ember-source'];
+
+  try {
+    return await api.tryResolveAll(buildDependencies);
+  } catch (error) {
+    if (!pinned) throw error;
+
+    throw new Error(
+      `ember-source ${pinned} cannot run in the REPL. Pin ember-source 6.10 or newer, ` +
+        `because older versions have no ES module build of the template compiler.`,
+      { cause: error }
+    );
+  }
+}
+
+/**
  * gjs and gts share one pipeline.
  * gts adds the babel typescript plugin, which only strips types.
  *
@@ -72,7 +95,7 @@ export async function compiler(config, api, flags = {}) {
     contentTag,
     { default: DebugMacros },
     // embroiderMacros,
-  ] = await api.tryResolveAll(buildDependencies);
+  ] = await loadBuildDependencies(config, api);
 
   // These libraries are compiled incorrectly for cjs<->ESM compat
   const decoratorTransforms =
@@ -202,7 +225,11 @@ export async function compiler(config, api, flags = {}) {
 
       const { renderComponent } = await compiler.tryResolve('@ember/renderer');
 
-      const owner = makeOwner(config.owner);
+      /**
+       * A pinned ember-source is a second Ember on the page,
+       * and objects from the host's Ember do not work in it.
+       */
+      const owner = makeOwner(config.versions?.['ember-source'] ? undefined : config.owner);
       const args = /** @type {Record<string, unknown> | undefined} */ (
         extra && typeof extra === 'object' && 'args' in extra
           ? /** @type {Record<string, unknown>} */ (extra).args

@@ -21,6 +21,10 @@ interface Options {
    * rendered component without recompiling.
    */
   args?: Record<string, unknown>;
+  /**
+   * Package versions for imports from npm, as name → version or range.
+   */
+  versions?: Record<string, string>;
   onSuccess?: (component: ComponentLike) => Promise<unknown> | unknown;
   onError?: (error: string) => Promise<unknown> | unknown;
   onCompileStart?: () => Promise<unknown> | unknown;

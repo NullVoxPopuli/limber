@@ -28,6 +28,37 @@ export class Installer {
   ensure(name: string, version: string): Promise<string>;
 
   /**
+   * Maps the `ember-addon.renamed-modules` of a package for the whole page,
+   * at the version that the range resolves to. Resolves to that version.
+   *
+   * For example, ember-source 6.12.1 has this in its package.json:
+   *
+   * ```json
+   * "renamed-modules": {
+   *   "@ember/owner/index.js": "ember-source/@ember/owner/index.js"
+   * }
+   * ```
+   *
+   * After `renameModules('ember-source', '6.12.1')`,
+   * `import { getOwner } from '@ember/owner'` loads
+   * `ember-source/@ember/owner/index.js` from ember-source 6.12.1.
+   */
+  renameModules(name: string, range: string): Promise<string>;
+
+  /**
+   * Does a renamed module map claim this module name?
+   *
+   * For example, after `renameModules('ember-source', '6.12.1')`,
+   * `isRenamed('@ember/owner')` is true, and `isRenamed('dompurify')` is false.
+   */
+  isRenamed(specifier: string): boolean;
+
+  /**
+   * Did a package map renamed modules on this page?
+   */
+  readonly hasRenamedModules: boolean;
+
+  /**
    * Turn the provisional URL a synchronous resolve produced into the URL of a
    * file that now exists, downloading the package if needed.
    */

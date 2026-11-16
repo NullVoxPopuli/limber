@@ -1,5 +1,24 @@
 import type { ModuleMap } from '../compile/types.ts';
 
+/**
+ * ember-source modules, loaded ahead of time for `importSync`.
+ */
+const loaded: Record<string, unknown> = {};
+
+/**
+ * Sets what `importSync` answers for ember-source modules.
+ */
+export function provideForImportSync(values: Record<string, unknown>) {
+  Object.assign(loaded, values);
+}
+
+/**
+ * An ember-source module of the current compile: the pinned one, or the bundled one.
+ */
+export function emberModule<T = Record<string, unknown>>(specifier: string): T {
+  return loaded[specifier] as T;
+}
+
 const frameworkModules = {
   '@ember/application': () => import('@ember/application'),
   '@ember/application/instance': () => import('@ember/application/instance'),
@@ -112,6 +131,7 @@ const emberCompilationModules = {
 
     // @ts-ignore
     importSync: (x: string) =>
+      loaded[x] ??
       // @ts-expect-error
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       window[Symbol.for('__repl-sdk__compiler__') as any]!.resolves[x],
@@ -141,3 +161,76 @@ export const modules = (extraModules: ModuleMap): ModuleMap => ({
   ...emberCompilationModules,
   ...markdownCompilationModules,
 });
+
+export const EMBER_SOURCE = 'ember-source';
+
+/**
+ * Framework modules that are packages of their own.
+ * Every other framework module comes from ember-source.
+ */
+const ownPackages = new Set([
+  '@glimmer/component',
+  '@ember/test-helpers',
+  '@ember/test-waiters',
+]);
+
+/**
+ * The npm package of a bundled module.
+ *
+ *   @ember/helper        → ember-source
+ *   @glimmer/component   → @glimmer/component
+ *   ember-primitives/x   → ember-primitives
+ */
+export function packageOf(specifier: string): string {
+  if (specifier in frameworkModules && !ownPackages.has(specifier)) {
+    return EMBER_SOURCE;
+  }
+
+  if (
+    specifier.startsWith('@ember/template-compiler') ||
+    specifier.startsWith('ember-source/')
+  ) {
+    return EMBER_SOURCE;
+  }
+
+  const parts = specifier.split('/');
+
+  return specifier.startsWith('@')
+    ? `${parts[0]}/${parts[1]}`
+    : (parts[0] ?? specifier);
+}
+
+/**
+ * Compiler tools that work with any Ember, such as babel and content-tag.
+ * Every other bundled module is tied to the bundled Ember.
+ */
+export function isEmberIndependent(specifier: string): boolean {
+  return specifier in emberCompilationModules && packageOf(specifier) !== EMBER_SOURCE;
+}
+
+/**
+ * The bundled ember-source modules, by specifier.
+ */
+export function emberSourceSpecifiers(): string[] {
+  return Object.keys(frameworkModules).filter(
+    (specifier) => packageOf(specifier) === EMBER_SOURCE
+  );
+}
+
+/**
+ * The bundled ember-source modules for `importSync`.
+ * The host app has these modules already, so this is fast.
+ */
+export async function preloadEmberSource(): Promise<void> {
+  const values: Record<string, unknown> = {};
+
+  await Promise.all(
+    emberSourceSpecifiers().map(async (specifier) => {
+      const load = frameworkModules[specifier as keyof typeof frameworkModules];
+
+      values[specifier] = await load();
+    })
+  );
+
+  provideForImportSync(values);
+}

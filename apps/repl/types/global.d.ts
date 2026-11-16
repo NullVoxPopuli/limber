@@ -23,3 +23,11 @@ declare module '@ember/template-compilation' {
   }
   export function compileTemplate(template: string, options: CompileOptions): any;
 }
+
+declare module 'virtual:bundled-versions' {
+  /**
+   * Package name → installed version, see config/bundled-versions.mjs.
+   */
+  const versions: Record<string, string>;
+  export default versions;
+}

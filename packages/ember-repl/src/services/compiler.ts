@@ -5,10 +5,8 @@ import { setComponentTemplate } from '@ember/component';
 import templateOnly from '@ember/component/template-only';
 import { assert } from '@ember/debug';
 import { registerDestructor } from '@ember/destroyable';
-import { array, concat, fn, get, hash } from '@ember/helper';
-import { on } from '@ember/modifier';
 import { getOwner } from '@ember/owner';
-import { trackedArray } from '@ember/reactive/collections';
+import { trackedArray, trackedMap } from '@ember/reactive/collections';
 import { precompileTemplate } from '@ember/template-compilation';
 import { waitFor } from '@ember/test-waiters';
 
@@ -18,9 +16,20 @@ import { Compiler } from 'repl-sdk';
 import { visit } from 'unist-util-visit';
 
 import { nameFor } from '../compile/utils.ts';
-import { modules } from './known-modules.ts';
+import {
+  EMBER_SOURCE,
+  emberModule,
+  emberSourceSpecifiers,
+  isEmberIndependent,
+  modules,
+  packageOf,
+  preloadEmberSource,
+  provideForImportSync,
+} from './known-modules.ts';
 
 import type { CompileResult, ModuleMap } from '../compile/types.ts';
+import type * as EmberHelper from '@ember/helper';
+import type * as EmberModifier from '@ember/modifier';
 import type { ComponentLike } from '@glint/template';
 import type { EditorView } from 'codemirror';
 import type { ErrorMessage, InfoMessage, Message } from 'repl-sdk';
@@ -92,12 +101,27 @@ interface CompilerOptions {
 const standardScope = {
   // These are only added here because it's convenient for hbs
   // to have them
-  array,
-  concat,
-  fn,
-  get,
-  hash,
-  on,
+  //
+  // Getters, so that a pinned ember-source gets its own helpers.
+  // Helpers from another Ember have no manager in it.
+  get array() {
+    return emberModule<typeof EmberHelper>('@ember/helper').array;
+  },
+  get concat() {
+    return emberModule<typeof EmberHelper>('@ember/helper').concat;
+  },
+  get fn() {
+    return emberModule<typeof EmberHelper>('@ember/helper').fn;
+  },
+  get get() {
+    return emberModule<typeof EmberHelper>('@ember/helper').get;
+  },
+  get hash() {
+    return emberModule<typeof EmberHelper>('@ember/helper').hash;
+  },
+  get on() {
+    return emberModule<typeof EmberModifier>('@ember/modifier').on;
+  },
   // The default available scope for gjs:
   //
   // We don't use gjs transpilation here, because hbs transpilation
@@ -156,6 +180,21 @@ const standardScope = {
   isSecureContext,
 };
 
+/**
+ * A spread would read the getters of `standardScope` once, before any compile.
+ */
+function withStandardScope(extra: Record<string, unknown> | undefined) {
+  const scope = Object.defineProperties(
+    {},
+    Object.getOwnPropertyDescriptors(standardScope)
+  );
+
+  return Object.defineProperties(
+    scope,
+    Object.getOwnPropertyDescriptors(extra ?? {})
+  );
+}
+
 export default class CompilerService {
   #compiler: Compiler | undefined;
 
@@ -176,6 +215,105 @@ export default class CompilerService {
   }
 
   readonly messages = trackedArray<Message>();
+
+  /**
+   * The packages that the last compile imported, as name → version.
+   * The version is `undefined` for modules that ember-repl or the host app provides.
+   */
+  readonly dependencies = trackedMap<string, string | undefined>();
+
+  /**
+   * The packages of the compile in progress.
+   * They replace `dependencies` when the compile ends,
+   * so that the list does not empty out while a compile runs.
+   */
+  #pending: Map<string, string | undefined> | undefined;
+
+  #dependencyListeners = new Set<
+    (entries: [string, string | undefined][]) => void
+  >();
+
+  /**
+   * Calls `listener` with all of `dependencies` after each change,
+   * for a page that shows them in another window.
+   *
+   * Returns a function that stops the calls.
+   */
+  onDependencies(listener: (entries: [string, string | undefined][]) => void) {
+    this.#dependencyListeners.add(listener);
+
+    return () => this.#dependencyListeners.delete(listener);
+  }
+
+  #reportDependencies() {
+    if (this.#dependencyListeners.size === 0) return;
+
+    const entries = Array.from(this.dependencies);
+
+    for (const listener of this.#dependencyListeners) {
+      listener(entries);
+    }
+  }
+
+  /**
+   * The pinned versions of the compile in progress.
+   */
+  #pins: Record<string, string> = {};
+
+  #emberSourceReady: Promise<void> | undefined;
+
+  /**
+   * A pinned package loads from npm in place of its bundled modules.
+   * repl-sdk looks in `resolve` first, so a hidden module goes to npm.
+   */
+  #isOverridden(specifier: string) {
+    if (packageOf(specifier) in this.#pins) return true;
+
+    /**
+     * Bundled addons import the bundled Ember,
+     * so with ember-source pinned they load from npm too.
+     */
+    if (EMBER_SOURCE in this.#pins) return !isEmberIndependent(specifier);
+
+    return false;
+  }
+
+  /**
+   * npm builds of addons call `importSync` from `@embroider/macros` for `@ember/*` modules,
+   * and it must answer at once.
+   * So the ember-source modules load before a compile:
+   * the bundled ones, or the pinned ones from npm.
+   *
+   * Two Embers on one page share every other npm module,
+   * so a page that pins ember-source must keep that pin.
+   */
+  async #prepareImportSync() {
+    if (!(EMBER_SOURCE in this.#pins)) {
+      this.#emberSourceReady ??= preloadEmberSource();
+      await this.#emberSourceReady;
+
+      return;
+    }
+
+    await this.compiler.prepare(this.#pins);
+
+    const values: Record<string, unknown> = {};
+
+    /**
+     * Older versions do not have every module that the bundle has.
+     */
+    await Promise.all(
+      emberSourceSpecifiers().map(async (specifier) => {
+        try {
+          [values[specifier]] = await this.compiler.tryResolveAll([specifier]);
+        } catch {
+          /* not in this version */
+        }
+      })
+    );
+
+    provideForImportSync(values);
+  }
 
   get lastInfo(): InfoMessage | undefined {
     const m = this.messages;
@@ -235,12 +373,39 @@ export default class CompilerService {
 
     this.#compiler = new Compiler({
       logging: location.search.includes('debug'),
-      resolve: {
-        ...localModules,
-      },
+      /**
+       * repl-sdk looks a module up here before it goes to npm,
+       * so hiding a module here is enough to override its bundle.
+       */
+      resolve: new Proxy(localModules, {
+        get: (target, key) => {
+          if (typeof key === 'string' && this.#isOverridden(key)) return;
+
+          return target[key as keyof typeof target];
+        },
+      }),
       on: {
         log: (type: Message['type'], message: string) => {
           this.messages.push({ type, message });
+        },
+        dependency: (name: string, version: string | undefined) => {
+          /**
+           * A bundled module is listed under its package,
+           * so all of `@ember/*` is one ember-source entry.
+           */
+          const key = version === undefined ? packageOf(name) : name;
+
+          if (this.#pending) {
+            this.#pending.set(key, version);
+
+            return;
+          }
+
+          /**
+           * An `import()` that runs after the compile.
+           */
+          this.dependencies.set(key, version);
+          this.#reportDependencies();
         },
       },
       options: {
@@ -256,10 +421,7 @@ export default class CompilerService {
         gmd: {
           owner,
           ...(options.gmd ?? {}),
-          scope: {
-            ...standardScope,
-            ...(options.gmd?.scope ?? {}),
-          },
+          scope: withStandardScope(options.gmd?.scope),
           remarkPlugins: [
             function defaultHbsToEmber() {
               return function transformer(tree: any) {
@@ -285,10 +447,7 @@ export default class CompilerService {
           ember: {
             owner,
             ...(options.hbs ?? {}),
-            scope: {
-              ...standardScope,
-              ...(options.hbs?.scope ?? {}),
-            },
+            scope: withStandardScope(options.hbs?.scope),
           },
         },
       },
@@ -339,8 +498,35 @@ export default class CompilerService {
     await Promise.resolve();
 
     this.messages.length = 0;
+    this.#pins = (options?.['versions'] as Record<string, string>) ?? {};
 
-    return this.compiler.compile(ext, text, options ?? {});
+    const pending = new Map<string, string | undefined>();
+
+    this.#pending = pending;
+
+    try {
+      await this.#prepareImportSync();
+
+      return await this.compiler.compile(ext, text, options ?? {});
+    } finally {
+      /**
+       * A newer compile owns the list now.
+       */
+      if (this.#pending === pending) {
+        this.#pending = undefined;
+        this.#publishDependencies(pending);
+      }
+    }
+  }
+
+  #publishDependencies(entries: Map<string, string | undefined>) {
+    this.dependencies.clear();
+
+    for (const [name, version] of entries) {
+      this.dependencies.set(name, version);
+    }
+
+    this.#reportDependencies();
   }
 
   /**

@@ -18,9 +18,10 @@ const externalPackages = [
 
 /**
  * @param {string} id
+ * @param {Record<string, string>} [versions]
  * @returns {string | undefined | (() => Record<string, unknown>)}
  */
-function resolve(id) {
+function resolve(id, versions = {}) {
   // Not on npm. A host that does not provide it gets the full build, which has the same API.
   if (id === '@glimdown/babel-8-lite') {
     return `https://esm.sh/@babel/standalone@8`;
@@ -30,10 +31,14 @@ function resolve(id) {
     return `https://esm.sh/*ember-source/dist/packages/@ember/template-compiler/runtime.js`;
   }
 
-  const isExternalEmber = externalPackages.some((name) => id.startsWith(name));
+  const external = externalPackages.find((name) => id.startsWith(name));
 
-  if (isExternalEmber) {
-    return `https://esm.sh/*${id}`;
+  if (external) {
+    const pinned = versions[external];
+
+    return pinned
+      ? `https://esm.sh/*${external}@${pinned}${id.slice(external.length)}`
+      : `https://esm.sh/*${id}`;
   }
 
   if (id.startsWith('@ember')) {

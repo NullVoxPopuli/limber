@@ -22,8 +22,25 @@ export class Compiler {
     options?: {
       flavor?: string;
       fileName?: string;
+      /**
+       * Package versions for the bare imports of this compile.
+       * Overrides the `versions` option.
+       */
+      versions?: Record<string, string>;
     }
   ): Promise<{ element: HTMLElement; destroy: () => void }>;
+
+  /**
+   * Resolution is synchronous, so a pinned v2 addon must be installed
+   * before anything imports one of its renamed modules, such as `@ember/*` from ember-source.
+   * `compile` calls this. A host calls it first to load pinned modules before a compile.
+   */
+  prepare(versions?: Record<string, string>): Promise<void>;
+
+  /**
+   * Loads modules the way a compiler does: from the `resolve` option first, then from npm.
+   */
+  tryResolveAll(names: string[]): Promise<unknown[]>;
 
   optionsFor(format: string, flavor?: string): Omit<CompilerConfig, 'compiler'>;
 

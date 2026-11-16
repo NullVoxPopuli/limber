@@ -38,6 +38,11 @@ export interface PublicMethods {
     options?: {
       flavor?: string;
       fileName?: string;
+      /**
+       * Package versions for the bare imports of this compile.
+       * Overrides the `versions` option.
+       */
+      versions?: { [packageName: string]: string };
     }
   ) => Promise<{ element: HTMLElement; destroy: () => void }>;
 
@@ -207,7 +212,11 @@ export interface CompilerConfig {
    *
    */
   resolve?: (
-    id: string
+    id: string,
+    /**
+     * The package versions of the compile in progress.
+     */
+    versions?: { [packageName: string]: string }
   ) =>
     string | (() => Record<string, unknown>) | (() => Promise<Record<string, unknown>>) | undefined;
 
@@ -243,6 +252,12 @@ export interface Options {
      * - what is being fetched / compiled
      */
     log?: (type: 'error' | 'info', message: string) => void;
+    /**
+     * A package that the document imports, with the version that loaded from npm.
+     * The version is `undefined` when the module came from the `resolve` option.
+     * Imports from inside other packages are not reported.
+     */
+    dependency?: (name: string, version: string | undefined) => void;
   };
 
   /**
@@ -325,6 +340,10 @@ export interface InstalledPackage {
     main?: string;
     module?: string;
     browser?: string;
+    /**
+     * v2 addons, see Installer#renameModules.
+     */
+    'ember-addon'?: { 'renamed-modules'?: Record<string, string> };
   };
   /**
    * Every file in the package, relative to its root. The files themselves are

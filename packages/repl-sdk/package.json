@@ -129,7 +129,6 @@
     "remark-rehype": "^11.1.2",
     "resolve.exports": "^2.0.3",
     "resolve.imports": "^2.0.3",
-    "tarparser": "^0.0.5",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0",
     "vfile": "^6.0.3"

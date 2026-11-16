@@ -9,6 +9,7 @@ import { default as Docs } from '~icons/pajamas/document?raw';
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
 import DemoSelect from './demo-select.gts';
+import { Dependencies } from './dependencies.gts';
 import { FormatButtons } from './format-buttons.gts';
 import { Share } from './share.gts';
 
@@ -35,6 +36,7 @@ import { Share } from './share.gts';
       {{/if}}
       <DemoSelect />
       <Share />
+      <Dependencies />
     </div>
 
     <nav class="gap-2 text-white flex items-center">
