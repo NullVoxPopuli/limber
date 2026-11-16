@@ -31,6 +31,14 @@
 
 }
 
+/**
+ * nvp.ui puts the theme class on body, but the canvas takes its color from html.
+ * Without this, a window taller than the page shows the light background below it.
+ */
+html:has(> body.theme-dark) {
+  --color-page-background: #111;
+}
+
 .docs-nav {
   position: sticky;
   top: 0;
