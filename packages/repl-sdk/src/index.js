@@ -175,7 +175,7 @@ export class Compiler {
 
     for (const onUnhandled of this.#compilerOnUnhandled) {
       onUnhandled(e, (message) => {
-        this.#announce('error', message);
+        this.#announce('error', message, e.reason);
         handled = true;
       });
       if (handled) break;
@@ -183,7 +183,7 @@ export class Compiler {
 
     if (handled) return;
 
-    this.#announce('error', errorMessage(e.reason));
+    this.#announce('error', errorMessage(e.reason), e.reason);
   };
 
   /**
@@ -478,7 +478,7 @@ export class Compiler {
       return await this.#compile(format, text, options);
     } catch (e) {
       // for on.log usage
-      this.#announce('error', errorMessage(e));
+      this.#announce('error', errorMessage(e), e);
 
       // Don't hide errors!
       this.#error(e);
@@ -873,11 +873,12 @@ export class Compiler {
   /**
    * @param {'error' | 'info'} type
    * @param {string} message
+   * @param {unknown} [error] what was thrown, for an error
    */
-  #announce(type, message) {
+  #announce(type, message, error) {
     if (!this.#options?.on?.log) return;
 
-    this.#options.on.log(type, message);
+    this.#options.on.log(type, message, error);
   }
 
   /**

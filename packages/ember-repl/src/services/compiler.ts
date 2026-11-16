@@ -385,8 +385,10 @@ export default class CompilerService {
         },
       }),
       on: {
-        log: (type: Message['type'], message: string) => {
-          this.messages.push({ type, message });
+        log: (type: Message['type'], message: string, error?: unknown) => {
+          this.messages.push(
+            type === 'error' ? { type, message, error } : { type, message }
+          );
         },
         dependency: (name: string, version: string | undefined) => {
           /**

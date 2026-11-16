@@ -2,7 +2,6 @@ import { Shadowed } from 'ember-primitives/components/shadowed';
 import { castToBoolean, qp } from 'ember-primitives/qp';
 import { Seconds } from 'reactiveweb/interval';
 
-import { clearError } from './clear-error.ts';
 import Compiler from './compiler.gts';
 import CopyMenu from './copy-menu.gts';
 import resetsCSS from './output-reset.css?url';
@@ -45,8 +44,6 @@ export const Output: TOC<{
 
       <div class={{if (isGlimmerModule context.format) "glimdown-render"}}>
         {{#if context.component}}
-          {{clearError context.component}}
-
           {{#if (wantsShadow @shadow (qp "shadowdom"))}}
             <Shadowed>
               <link rel="stylesheet" href={{resetsCSS}} />

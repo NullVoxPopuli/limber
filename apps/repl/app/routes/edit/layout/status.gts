@@ -2,9 +2,8 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCircleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { modifier as eModifier } from 'ember-modifier';
-import { effect } from 'reactiveweb/effect';
 
 import { FlatButton } from '@nullvoxpopuli/limber-shared';
 
@@ -26,56 +25,71 @@ const fadeOut = eModifier((element, [msg]) => {
   };
 });
 
+/**
+ * A bar across the bottom of the output.
+ *
+ * An error stays until the next compile, or until it is dismissed.
+ * Progress shows while there is no error, and fades.
+ */
 export class Status extends Component {
   @service declare status: StatusService;
 
-  get last() {
-    return this.status.last;
-  }
-
-  get error() {
-    return this.status.error;
-  }
-
   <template>
-    {{#if this.last}}
-      <footer {{fadeOut this.last}} data-test-status class="layout__status__info">
-        {{this.last}}
-      </footer>
-    {{/if}}
+    <div class="layout__status">
+      {{#let this.status.error as |error|}}
+        {{#if error}}
+          <section role="alert" data-test-error class="layout__status__error">
+            <FaIcon @icon={{faCircleExclamation}} class="layout__status__icon" />
 
-    {{#if this.error}}
-      {{effect (fn this.status.newError this.error)}}
-      {{#if this.status.showError}}
-        <footer
-          data-test-error
-          class="layout__status__error rounded border-red-700 bg-red-100 drop-shadow-md border"
-        >
-          <FlatButton
-            {{on "click" this.status.hideError}}
-            class="layout__status__error__close"
-            aria-label="hide the help information"
-          >
-            <FaIcon @size="xs" @icon={{faXmark}} class="aspect-square" />
-          </FlatButton>
-          <pre class="layout__status__error__details">{{this.error}}</pre>
-        </footer>
-      {{/if}}
-    {{/if}}
+            <div class="layout__status__message">
+              {{#if error.details}}
+                <details>
+                  <summary data-test-error-summary>{{error.summary}}</summary>
+                  <pre data-test-error-details>{{error.details}}</pre>
+                </details>
+              {{else}}
+                <p data-test-error-summary>{{error.summary}}</p>
+              {{/if}}
+
+              {{#if error.frame}}
+                <pre data-test-error-frame>{{error.frame}}</pre>
+              {{/if}}
+            </div>
+
+            <FlatButton
+              {{on "click" this.status.dismiss}}
+              aria-label="Dismiss the error"
+              data-test-dismiss-error
+            >
+              <FaIcon @size="xs" @icon={{faXmark}} class="aspect-square" />
+            </FlatButton>
+          </section>
+        {{else if this.status.last}}
+          <p {{fadeOut this.status.last}} data-test-status class="layout__status__info">
+            {{this.status.last}}
+          </p>
+        {{/if}}
+      {{/let}}
+    </div>
 
     <style>
-      .layout__status__error__close {
-        position: fixed;
-        top: -1rem;
-        left: -1rem;
+      .layout__status {
+        position: absolute;
+        inset: auto 0 0 0;
+        z-index: 100;
+        pointer-events: none;
+
+        > * {
+          pointer-events: auto;
+        }
       }
+
       .layout__status__info {
         pointer-events: none;
-        position: absolute;
-        bottom: 1rem;
-        left: 1rem;
-        opacity: 1;
+        margin: 0;
+        padding: 0.25rem 1rem;
         font-size: 0.8rem;
+        opacity: 1;
         transition: opacity 0.25s linear;
         text-shadow: 1px 1px 0px light-dark(white, black);
 
@@ -83,23 +97,56 @@ export class Status extends Component {
           opacity: 0;
         }
       }
+
       .layout__status__error {
-        position: fixed;
-        bottom: 1rem;
-        right: 1rem;
-        z-index: 100;
-        max-width: 60dvw;
-        padding: 1rem;
-        color: black;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: start;
+        gap: 0.75rem;
+        padding: 0.5rem 0.75rem 0.5rem 1rem;
+        border-top: 2px solid light-dark(#b91c1c, #f87171);
+        background: light-dark(#fee2e2, #3b0a0a);
+        color: light-dark(#450a0a, #fee2e2);
+        font-size: 0.9rem;
+        line-height: 1.5rem;
+
+        button {
+          color: inherit;
+        }
       }
 
-      .layout__status__error__details {
-        max-height: 80dvh;
-        overflow: auto;
-        font-size: 1rem;
-        font-family: monospace;
-        line-height: 1.5rem;
-        white-space: pre-wrap;
+      .layout__status__icon {
+        height: 1.5rem;
+        color: light-dark(#b91c1c, #f87171);
+      }
+
+      .layout__status__message {
+        min-width: 0;
+
+        p,
+        summary {
+          margin: 0;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        summary {
+          cursor: pointer;
+        }
+
+        details[open] summary {
+          white-space: normal;
+        }
+
+        pre {
+          margin: 0.25rem 0 0;
+          max-height: 40dvh;
+          overflow: auto;
+          font-family: "Source Code Pro", ui-monospace, monospace;
+          font-size: 0.8rem;
+          line-height: 1.25rem;
+        }
       }
     </style>
   </template>

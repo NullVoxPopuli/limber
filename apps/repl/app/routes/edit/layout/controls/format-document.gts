@@ -45,7 +45,7 @@ export class FormatDocument extends Component {
   };
 
   /**
-   * The status footer shows the compiler's last error,
+   * The status bar shows the compiler's last error,
    * and a compile clears the messages,
    * so a formatting error stays visible until the next edit.
    */
@@ -55,7 +55,7 @@ export class FormatDocument extends Component {
 
     console.error(message);
 
-    compiler.messages.push({ type: 'error', message });
+    compiler.messages.push({ type: 'error', message, error });
   };
 
   <template>

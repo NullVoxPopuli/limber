@@ -250,8 +250,10 @@ export interface Options {
      * These include:
      * - errors
      * - what is being fetched / compiled
+     *
+     * For an error, `error` is what was thrown, such as an `Error` with a stack.
      */
-    log?: (type: 'error' | 'info', message: string) => void;
+    log?: (type: 'error' | 'info', message: string, error?: unknown) => void;
     /**
      * A package that the document imports, with the version that loaded from npm.
      * The version is `undefined` when the module came from the `resolve` option.
@@ -366,6 +368,10 @@ export interface InfoMessage {
 export interface ErrorMessage {
   type: 'error';
   message: string;
+  /**
+   * What was thrown, when there was a throw.
+   */
+  error?: unknown;
 }
 
 export type Message = InfoMessage | ErrorMessage;
