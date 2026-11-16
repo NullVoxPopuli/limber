@@ -41,28 +41,18 @@ function links() {
   return storage.links();
 }
 
-/** @type {Map<string, Promise<void>>} */
-const writes = new Map();
-
 /**
  * One write at a time per path. A sync access handle is exclusive, and two
  * compiles can target the same file name at once.
+ *
+ * The lock is origin wide: every REPL frame on a page has its own worker,
+ * and they all write `/src/index.<ext>`.
  *
  * @param {string} path
  * @param {string} text
  */
 function write(path, text) {
-  const previous = writes.get(path) ?? Promise.resolve();
-  const next = previous.then(
-    () => storage.write(path, text),
-    () => storage.write(path, text)
-  );
-
-  writes.set(path, next);
-
-  return next.finally(() => {
-    if (writes.get(path) === next) writes.delete(path);
-  });
+  return navigator.locks.request(`repl-sdk:write:${path}`, () => storage.write(path, text));
 }
 
 /**
@@ -110,12 +100,22 @@ async function installWorker(name, requestedVersion) {
     if (stored) return stored;
   }
 
-  const tgzUrl = await getTarUrl(json, requestedVersion);
-  const response = await fetch(tgzUrl, {
-    headers: {
-      ACCEPT: 'application/octet-stream',
-    },
-  });
+  /**
+   * Origin wide, because another frame's worker can be installing the same
+   * package. Whoever waited finds it complete.
+   */
+  return navigator.locks.request(`repl-sdk:install:${name}@${version}`, async () => {
+    const stored = await storage.readPackage(name, version);
 
-  return storage.writePackage(name, version, await untar(await response.arrayBuffer()));
+    if (stored) return stored;
+
+    const tgzUrl = await getTarUrl(json, requestedVersion);
+    const response = await fetch(tgzUrl, {
+      headers: {
+        ACCEPT: 'application/octet-stream',
+      },
+    });
+
+    return storage.writePackage(name, version, await untar(await response.arrayBuffer()));
+  });
 }
