@@ -96,12 +96,12 @@ export const commentContent = new ExternalTokenizer((input) => {
  * "{{else}}" and "{{else if x}}" are block syntax, so the grammar
  * must see the "else" keyword instead of an expression.
  */
-function startsWithElse(input: InputStream) {
+function startsWithElse(input: InputStream, offset: number) {
   for (let i = 0; i < elseWord.length; i++) {
-    if (input.peek(i) !== elseWord[i]) return false;
+    if (input.peek(offset + i) !== elseWord[i]) return false;
   }
 
-  const next = input.peek(elseWord.length);
+  const next = input.peek(offset + elseWord.length);
 
   return next < 0 || next === curlyClose || next === tilde || space.includes(next);
 }
@@ -217,11 +217,17 @@ function createCommentHandler(input: InputStream) {
 
 // closes on a delimiter that probably isn't in the expression
 export const longExpression = new ExternalTokenizer((input) => {
-  if (blockPrefixes.includes(input.next)) {
+  /**
+   * "{{~#if" and "{{~else" are blocks with whitespace control,
+   * so the grammar must see the "~" as its own token.
+   */
+  const offset = input.next === tilde ? 1 : 0;
+
+  if (blockPrefixes.includes(input.peek(offset))) {
     return;
   }
 
-  if (startsWithElse(input)) {
+  if (startsWithElse(input, offset)) {
     return;
   }
 

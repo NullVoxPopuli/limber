@@ -234,3 +234,99 @@ Document(
   )
 )
 
+# Whitespace control on block close
+
+{{#if x}}a{{~/if~}}
+
+==>
+
+Document(
+  IfBlock(
+    IfBlockOpen(
+      "{{",
+      BlockPrefix,
+      BlockType,
+      LongExpression,
+      "}}"
+    ),
+    Text,
+    IfBlockClose(
+      "{{",
+      "~",
+      BlockPrefix,
+      BlockType,
+      "~",
+      "}}"
+    )
+  )
+)
+
+# Whitespace control on every block mustache
+
+{{~#each xs as |x|~}}a{{~else~}}b{{~/each~}}
+
+==>
+
+Document(
+  EachBlock(
+    EachBlockOpen(
+      "{{",
+      "~",
+      BlockPrefix,
+      BlockType,
+      LongExpression,
+      "}}"
+    ),
+    Text,
+    ElseBlock(
+      "{{",
+      "~",
+      BlockType,
+      "~",
+      "}}"
+    ),
+    Text,
+    EachBlockClose(
+      "{{",
+      "~",
+      BlockPrefix,
+      BlockType,
+      "~",
+      "}}"
+    )
+  )
+)
+
+# Whitespace control on else if
+
+{{#if a}}1{{~else if b~}}2{{/if}}
+
+==>
+
+Document(
+  IfBlock(
+    IfBlockOpen(
+      "{{",
+      BlockPrefix,
+      BlockType,
+      LongExpression,
+      "}}"
+    ),
+    Text,
+    ElseBlock(
+      "{{",
+      "~",
+      BlockType,
+      if,
+      LongExpression,
+      "}}"
+    ),
+    Text,
+    IfBlockClose(
+      "{{",
+      BlockPrefix,
+      BlockType,
+      "}}"
+    )
+  )
+)

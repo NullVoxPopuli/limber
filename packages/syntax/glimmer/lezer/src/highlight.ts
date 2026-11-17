@@ -19,7 +19,7 @@ export const glimmerHighlighting = styleTags({
 
   as: t.definitionKeyword,
   'BlockParam/AttributeName': t.definition(t.variableName),
-  '|': t.punctuation,
+  '| ~': t.punctuation,
 
   '{{ }} {{{ }}}': t.brace,
   BlockPrefix: t.controlKeyword,
