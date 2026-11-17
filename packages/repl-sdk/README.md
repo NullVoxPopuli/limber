@@ -51,6 +51,37 @@ Packages a demo imports are downloaded from npm once and unpacked into the brows
 private file system, so a reload does not download them again. Only the unpacked files are
 kept. Browsers without that storage, and Node, work the same but download every time.
 
+## Plugins
+
+Plugins change how modules resolve, load, and transform. The hooks have the shape of Rollup's:
+
+```js
+new Compiler({
+  plugins: [
+    {
+      name: 'my-cdn',
+      async resolveId(source, importer, { versions }) {
+        if (source === 'lodash') return 'https://esm.sh/lodash-es@4';
+      },
+      transform(code, id) {
+        if (id.endsWith('.js')) return code.replaceAll('import.meta.env.DEV', 'true');
+      },
+    },
+  ],
+});
+```
+
+- `buildStart(ctx)` runs before each compile.
+- `resolveId(source, importer, ctx)` returns an id, or nothing to pass to the next plugin.
+- `load(id, ctx)` returns the text of a module, or nothing.
+- `transform(code, id, ctx)` returns new text, or nothing.
+
+An id is a URL in the module fs. An http(s) id downloads into the fs under `file:///external/<host>/`.
+
+`resolveId` can be async. A synchronous answer costs nothing extra. An async answer costs one small module for each importer, which re-exports the answer, so the module itself still loads one time. In that re-export, `default` is not a live binding.
+
+A compiler config can have `plugins` too. Its `resolve` and its compiler's `handlers` become plugins.
+
 ## Debugging
 
 Only one `Compiler` runs per window. Its `fs` getter shows everything a demo ran against:

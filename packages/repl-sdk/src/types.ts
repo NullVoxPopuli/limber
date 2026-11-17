@@ -172,7 +172,88 @@ export interface Compiler {
   };
 }
 
+export interface PluginContext {
+  /**
+   * The package versions of the compile in progress.
+   */
+  versions: { [packageName: string]: string };
+}
+
+export type LoadResult =
+  | string
+  | {
+      source: string;
+      /**
+       * Defaults to the type that the extension of `url` (or of the id) implies.
+       */
+      type?: 'js' | 'css' | 'json' | 'ts';
+      /**
+       * The URL of the module, for `import.meta.url` and its relative imports.
+       * Defaults to the id.
+       */
+      url?: string;
+    };
+
+type MaybePromise<T> = T | Promise<T>;
+
+/**
+ * Hooks in the shape of Rollup's.
+ *
+ * Every hook is optional. For `resolveId` and `load`, the first plugin to return
+ * a value wins, in order:
+ * 1. `Options.plugins`
+ * 2. the `resolve` option
+ * 3. the `plugins` (and `resolve`) of each compiler config, in the order they loaded
+ * 4. CDN URLs, which are stored under `file:///external/<host>/`
+ * 5. npm
+ */
+export interface Plugin {
+  name: string;
+
+  /**
+   * Before each compile.
+   */
+  buildStart?: (ctx: PluginContext) => MaybePromise<void>;
+
+  /**
+   * Return the id of the module that `source` names, or nothing to pass.
+   * An id is a URL in the file system, such as `file:///node_modules/...`,
+   * or an http(s) URL, which is downloaded into the file system.
+   *
+   * A synchronous answer is used as-is.
+   * A promise costs one extra small module per importer until the answer is cached.
+   * The cache is cleared before each compile.
+   */
+  resolveId?: (
+    source: string,
+    importer: string,
+    ctx: PluginContext
+  ) => MaybePromise<string | null | undefined>;
+
+  /**
+   * Return the text of the module with this id, or nothing to pass.
+   */
+  load?: (id: string, ctx: PluginContext) => MaybePromise<LoadResult | null | undefined>;
+
+  /**
+   * Change the text of a loaded module, or return nothing to keep it.
+   * Runs for every plugin, in order.
+   */
+  transform?: (
+    code: string,
+    id: string,
+    ctx: PluginContext
+  ) => MaybePromise<string | null | undefined>;
+}
+
 export interface CompilerConfig {
+  /**
+   * Loaded with the compiler, the first time that its format compiles.
+   * The module loader is global for the page,
+   * so these apply to modules of every format after that.
+   */
+  plugins?: Plugin[];
+
   /**
    * Extensions for codemirror, providing syntax highlighting and other editor features (completions, etc)
    */
@@ -210,6 +291,8 @@ export interface CompilerConfig {
    * This may not return a promise.
    * But we can return functions that return promises.
    *
+   * An http(s) URL is downloaded into the file system, like any other CDN URL.
+   * `plugins` can do the same, and more.
    */
   resolve?: (
     id: string,
@@ -269,6 +352,12 @@ export interface Options {
    * These will take precedence over the importMap, and implicit CDN fallback.
    */
   resolve?: { [importPath: string]: unknown };
+
+  /**
+   * Change how modules resolve, load, and transform.
+   * These run before every other source of modules.
+   */
+  plugins?: Plugin[];
 
   /**
    * Specifies which vesions of dependencies to when pulling from a CDN.
@@ -343,7 +432,7 @@ export interface InstalledPackage {
     module?: string;
     browser?: string;
     /**
-     * v2 addons, see Installer#renameModules.
+     * v2 addons, see compilers/ember/renamed-modules.js.
      */
     'ember-addon'?: { 'renamed-modules'?: Record<string, string> };
   };

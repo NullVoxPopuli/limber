@@ -286,8 +286,10 @@ export default class CompilerService {
    *
    * Two Embers on one page share every other npm module,
    * so a page that pins ember-source must keep that pin.
+   *
+   * @param ext the format (and flavor) of the compile, whose compiler config has the plugins for the pins
    */
-  async #prepareImportSync() {
+  async #prepareImportSync(ext: string, flavor: string | undefined) {
     if (!(EMBER_SOURCE in this.#pins)) {
       this.#emberSourceReady ??= preloadEmberSource();
       await this.#emberSourceReady;
@@ -295,7 +297,7 @@ export default class CompilerService {
       return;
     }
 
-    await this.compiler.prepare(this.#pins);
+    await this.compiler.prepare(this.#pins, ext, flavor);
 
     const values: Record<string, unknown> = {};
 
@@ -507,7 +509,10 @@ export default class CompilerService {
     this.#pending = pending;
 
     try {
-      await this.#prepareImportSync();
+      await this.#prepareImportSync(
+        ext,
+        options?.['flavor'] as string | undefined
+      );
 
       return await this.compiler.compile(ext, text, options ?? {});
     } finally {

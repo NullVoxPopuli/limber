@@ -3,6 +3,7 @@
  */
 
 import { errorMessage } from '../utils.js';
+import { hasRenamedModules, renamedModules } from './ember/renamed-modules.js';
 
 /**
  * Other `@ember` (and `@glimmer`) packages are bundled in ember-source,
@@ -22,6 +23,11 @@ const externalPackages = [
  * @returns {string | undefined | (() => Record<string, unknown>)}
  */
 function resolve(id, versions = {}) {
+  /**
+   * A pinned ember-source comes from npm, so its addons come from npm too, and match it.
+   */
+  if (hasRenamedModules()) return;
+
   // Not on npm. A host that does not provide it gets the full build, which has the same API.
   if (id === '@glimdown/babel-8-lite') {
     return `https://esm.sh/@babel/standalone@8`;
@@ -116,6 +122,7 @@ function onUnhandled(e, handle) {
  * @type {CompilerConfig}
  */
 export const gjs = {
+  plugins: [renamedModules],
   resolve,
   onUnhandled,
   codemirror: {
@@ -136,6 +143,7 @@ export const gjs = {
  * @type {CompilerConfig}
  */
 export const gts = {
+  plugins: [renamedModules],
   resolve,
   onUnhandled,
   codemirror: {
@@ -156,6 +164,7 @@ export const gts = {
  * @type {CompilerConfig}
  */
 export const hbs = {
+  plugins: [renamedModules],
   resolve,
   onUnhandled,
   codemirror: {
@@ -176,6 +185,7 @@ export const hbs = {
  * @type {CompilerConfig}
  */
 export const gmd = {
+  plugins: [renamedModules],
   resolve,
   onUnhandled,
   codemirror: {

@@ -257,6 +257,24 @@ export default class Demo extends Component {
     assert.dom('[data-test-count]').hasText('1', 'tracked state renders');
   });
 
+  test('gts runs on the pinned ember-source', async function (assert) {
+    const qps = new URLSearchParams({
+      format: 'gts',
+      deps: 'ember-source@6.10.0',
+      c: compressToEncodedURIComponent(`
+import { VERSION } from '@ember/version';
+
+const version: string = VERSION;
+
+<template><p data-test-text>{{version}}</p></template>
+`),
+    });
+
+    await visit(`/output?${qps.toString()}`);
+
+    assert.dom('[data-test-text]').hasText('6.10.0');
+  });
+
   test('the edit page renders a pinned ember-source in a frame', async function (assert) {
     this.owner.lookup('service:editor').setCodemirrorState = () => {};
 
