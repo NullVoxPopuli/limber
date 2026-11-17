@@ -30,6 +30,80 @@ export const SRC_PREFIX = 'file:///src/';
 export const VIRTUAL_PREFIX = 'file:///virtual/';
 
 /**
+ * Files from a CDN, by host and path:
+ *
+ *   https://esm.sh/react@19.2.3/es2022/react.mjs  →  file:///external/esm.sh/react@19.2.3/es2022/react.mjs
+ */
+export const EXTERNAL_PREFIX = 'file:///external/';
+
+/**
+ * A specifier that an async `resolveId` has not answered yet.
+ * See Compiler#source.
+ */
+export const RESOLVING_PREFIX = 'file:///resolving/';
+
+/**
+ * @param {string} remote an http(s) URL
+ * @returns {string}
+ */
+export function externalUrl(remote) {
+  const url = new URL(remote);
+
+  return `${EXTERNAL_PREFIX}${url.host}${url.pathname}${url.search}`;
+}
+
+/**
+ * @param {string} url a URL under EXTERNAL_PREFIX
+ * @returns {string} the http(s) URL that it came from
+ */
+export function remoteUrlOf(url) {
+  return `https://${url.slice(EXTERNAL_PREFIX.length)}`;
+}
+
+/**
+ * Where a CDN file is in storage.
+ *
+ * A CDN URL can name a file and a folder at once, such as
+ * `esm.sh/@babel/standalone@8` and `esm.sh/@babel/standalone@8/lib.js`.
+ * So each URL is a folder, and its text is in a file named `#` and the query.
+ *
+ * @param {string} url a URL under EXTERNAL_PREFIX
+ * @returns {string}
+ */
+export function externalPath(url) {
+  const { pathname, search } = new URL(url);
+
+  return `${pathname.replace(/\/$/, '')}/#${encodeURIComponent(search)}`;
+}
+
+/**
+ * @param {string} id
+ * @param {string} importer
+ * @returns {string}
+ */
+export function resolvingUrl(id, importer) {
+  const params = new URLSearchParams({ id, importer });
+
+  return `${RESOLVING_PREFIX}?${params}`;
+}
+
+/**
+ * @param {string} url
+ * @returns {undefined | { id: string, importer: string }}
+ */
+export function parseResolvingUrl(url) {
+  if (!url.startsWith(RESOLVING_PREFIX)) return;
+
+  const params = new URL(url).searchParams;
+  const id = params.get('id');
+  const importer = params.get('importer');
+
+  if (id === null || importer === null) return;
+
+  return { id, importer };
+}
+
+/**
  * @param {string} url
  * @returns {string} the path in storage, without the query
  */

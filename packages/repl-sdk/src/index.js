@@ -3,42 +3,31 @@
  * @typedef {import('./types.ts').CompilerConfig} CompilerConfig
  */
 
-import { cache, secretKey } from './cache.js';
+import { cache } from './cache.js';
 import { compilers } from './compilers.js';
 import { STABLE_REFERENCE } from './es-module-shim.js';
 import { takeEntry, writeEntry } from './fs/entry.js';
-import { clearFs, installer, storage } from './fs/store.js';
+import { clearFs, storage } from './fs/store.js';
 import {
   DEPS_PREFIX,
-  extensionOf,
   NODE_MODULES_PREFIX,
-  npmUrl,
   parseNpmUrl,
+  parseResolvingUrl,
   parseVirtualUrl,
   pathOf,
-  specifierUrl,
+  RESOLVING_PREFIX,
+  resolvingUrl,
   SRC_PREFIX,
-  typeFor,
-  virtualUrl,
 } from './fs/url.js';
-import { virtualModuleSource } from './fs/virtual.js';
 import { fsWorker } from './fs/worker.js';
+import { Pipeline, reexport } from './plugins.js';
+import { fromConfigResolve, fromHandlers } from './plugins/compiler-config.js';
+import { externalFiles } from './plugins/external.js';
+import { npm } from './plugins/npm.js';
+import { providedModules } from './plugins/provided.js';
+import { renamedModules } from './plugins/renamed.js';
 import { parseSpecifier } from './specifier.js';
 import { assert, errorMessage, nextId } from './utils.js';
-
-/**
- * node builtins that have a browser-shaped package on npm.
- */
-const NODE_POLYFILLS = {
-  'node:buffer': 'buffer',
-  'node:crypto': 'crypto-browserify',
-  'node:events': 'events',
-  'node:fs': 'browserify-fs',
-  'node:path': 'path-browser',
-  'node:process': 'process',
-  'node:stream': 'stream-browserify',
-  'node:util': 'util-browser',
-};
 
 assert(`There is no document. repl-sdk is meant to be ran in a browser`, globalThis.document);
 
@@ -73,6 +62,18 @@ export class Compiler {
    */
   #versions;
 
+  /** @type {Pipeline} */
+  #pipeline;
+
+  /**
+   * The import map of es-module-shims. Only built-in plugins use it.
+   *
+   * @type {(id: string, parentUrl: string) => string}
+   */
+  #defaultResolve = () => {
+    throw new Error(`The import map is not ready. Has es-module-shims loaded?`);
+  };
+
   /**
    * Options may be passed to the compiler to add to its behavior.
    * @param {Partial<Options>} options
@@ -81,6 +82,16 @@ export class Compiler {
     this.#options = Object.assign({}, defaults, options);
     this.#versions = this.#options.versions ?? {};
 
+    const defaultResolve = () => this.#defaultResolve;
+
+    this.#pipeline = new Pipeline(
+      (this.#options.plugins ?? []).concat(
+        providedModules(this.#options.resolve, (name) => this.#resolveManually(name)),
+        renamedModules(defaultResolve)
+      ),
+      [externalFiles(), npm(defaultResolve)]
+    );
+
     STABLE_REFERENCE.resolve = this.#resolve;
     STABLE_REFERENCE.source = this.#source;
 
@@ -88,7 +99,8 @@ export class Compiler {
   }
 
   /**
-   * Resolution is synchronous, so a pinned v2 addon must be installed
+   * Runs the `buildStart` of every plugin.
+   * For example, a pinned v2 addon must be installed
    * before anything imports one of its renamed modules, such as `@ember/*` from ember-source.
    *
    * `compile` calls this. A host calls it first to load pinned modules before a compile.
@@ -101,9 +113,7 @@ export class Compiler {
 
     this.#versions = versions;
 
-    await Promise.all(
-      Object.entries(versions).map(([name, range]) => installer.renameModules(name, range))
-    );
+    await this.#pipeline.buildStart(versions);
   }
 
   /**
@@ -187,14 +197,10 @@ export class Compiler {
   };
 
   /**
-   * Synchronous, and it stays synchronous by never trying to know anything it
-   * would have to download to find out. A bare specifier becomes a URL that
-   * names the package; the source hook turns that into the URL of a real file.
+   * The es-module-shims resolve hook, which must be synchronous.
    *
-   * Order of preference
-   * 1. manually resolved (from the caller)
-   * 2. specified in the compiler config (to use CDN)
-   * 3. npm
+   * When every plugin answers synchronously, the answer is the URL.
+   * Else this returns a placeholder URL, and the source hook waits for the answer.
    *
    * @param {string} id
    * @param {string} parentUrl
@@ -202,141 +208,39 @@ export class Compiler {
    * @returns {string}
    */
   #resolve = (id, parentUrl, resolve) => {
-    /**
-     * We have to strip the query params because our manual resolving
-     * doesn't use them -- but CDNs do
-     */
-    const vanilla = deCDN(id);
-
-    this.#announce('info', `Loading ${vanilla}`);
+    this.#defaultResolve = resolve;
+    this.#announce('info', `Loading ${id.split('?')[0]}`);
     this.#log('[resolve]', id, 'from', parentUrl);
 
-    if (this.#options.resolve?.[vanilla]) {
-      this.#log(`[resolve] ${vanilla} found in manually specified resolver`);
-
-      if (parentUrl.startsWith(SRC_PREFIX)) {
-        this.#reportDependency({ name: parseSpecifier(vanilla).name, version: undefined });
-      }
-
-      return virtualUrl('manual', vanilla);
-    }
-
     /**
-     * A compiler's own resolve is for hosts that bundle nothing,
-     * so a module of a pinned package wins over it.
+     * A placeholder only imports the answer, which is resolved already.
      */
-    if (installer.isRenamed(vanilla)) {
-      const renamed = tryDefaultResolve(resolve, vanilla, parentUrl);
+    if (parentUrl.startsWith(RESOLVING_PREFIX)) return id;
 
-      if (renamed) {
-        this.#log(`[resolve] ${vanilla} is a renamed module of a pinned package: ${renamed}`);
+    const answer = this.#pipeline.resolveId(id, parentUrl);
 
-        if (parentUrl.startsWith(SRC_PREFIX)) {
-          this.#reportDependency(exactPackage(renamed));
-        }
+    if (typeof answer !== 'string') {
+      if (answer) return resolvingUrl(id, parentUrl);
 
-        return renamed;
-      }
-    }
-
-    /**
-     * Once the page pins a framework from npm, its addons come from npm too, so they match it.
-     */
-    const compilerResolvers = installer.hasRenamedModules ? [] : this.#compilerResolvers;
-
-    for (const compilerResolve of compilerResolvers) {
-      const result = compilerResolve(vanilla, this.#versions);
-
-      if (result) {
-        this.#log(`[resolve] ${vanilla} found in compiler config at ${result}.`);
-
-        if (typeof result === 'function') {
-          return virtualUrl('configured', vanilla);
-        }
-
-        return result;
-      }
-    }
-
-    /**
-     * Subpath imports are private to the package that declares them, so the
-     * package has to travel with the specifier. `#` starts a URL fragment,
-     * hence the encoding.
-     */
-    const inPackage = id.startsWith('#') ? parseNpmUrl(parentUrl) : undefined;
-
-    if (inPackage) {
-      return npmUrl(inPackage.name, inPackage.version, encodeURIComponent(id));
-    }
-
-    /**
-     * The parent URL already says where it lives, so this is URL math and the
-     * default resolver can do it. This is the case that used to need a request
-     * id and a `?from=` parent chain.
-     */
-    if (id.startsWith('.') || id.startsWith('/')) return resolve(id, parentUrl);
-    if (id.startsWith('https://') || id.startsWith('blob:')) return resolve(id, parentUrl);
-    if (id.startsWith('file:')) return resolve(id, parentUrl);
-
-    if (parentUrl.startsWith('https://') && parentUrl !== location.href) {
       return resolve(id, parentUrl);
     }
 
-    const polyfill = NODE_POLYFILLS[/** @type {keyof typeof NODE_POLYFILLS} */ (id)];
-
-    if (polyfill) {
-      this.#log(`Is known node module: ${id}. Grabbing polyfill`);
-
-      return specifierUrl(polyfill);
-    }
-
-    /**
-     * The import map is where per-importer versions live. Installing a package
-     * registers a scope saying what its dependency names mean, so a bare
-     * specifier from inside that package lands on the version its own
-     * package.json asked for. Unmapped specifiers throw, which just means
-     * nobody has claimed this name for this importer.
-     */
-    const scoped = tryDefaultResolve(resolve, id, parentUrl);
-
-    if (scoped) {
-      this.#log(`[resolve] ${id} resolved through the import map to ${scoped}`);
-
-      if (parentUrl.startsWith(SRC_PREFIX)) {
-        this.#reportDependency(installed.get(scoped) ?? exactPackage(scoped));
-      }
-
-      return scoped;
-    }
-
-    this.#log(`[resolve] ${id} not found, deferring to npmjs.com's provided tarball`);
-
-    /**
-     * A pin is per package, so `lodash/merge` uses the pin for `lodash`.
-     * A version written in the specifier wins over the pin.
-     */
-    const { name, version, path } = parseSpecifier(vanilla);
-    const pinned = version ? undefined : this.#versions[name];
-
-    const url = pinned
-      ? specifierUrl(`${name}@${encodeURIComponent(pinned)}${path.slice(1)}`)
-      : specifierUrl(vanilla);
+    this.#log(`[resolve] ${id} → ${answer}`);
 
     if (parentUrl.startsWith(SRC_PREFIX)) {
-      this.#reportDependency(installed.get(url));
+      this.#reportDependency(packageOf(answer));
     }
 
-    return url;
+    return answer;
   };
+
   /**
    * The es-module-shims source hook, which supersedes the fetch hook
    * (es-module-shims marks `fetch` deprecated in favor of this one).
    *
-   * This is where the async work lives. `resolve` handed us a URL that only
-   * names a package; this installs it, and returns the URL of the file that
-   * actually holds the code. es-module-shims uses the returned URL as the base
-   * for that module's own relative imports, which is what lets the whole
-   * request-id and parent-chain layer go away.
+   * This is where the async work lives. es-module-shims uses the returned URL
+   * as the base for that module's own relative imports,
+   * so `resolve` can answer with a URL that only names a package.
    *
    * @param {string} url
    * @param {RequestInit} fetchOpts
@@ -348,16 +252,21 @@ export class Compiler {
      * Hot reloading appends ?v={n}. The registry keeps it, the fs doesn't.
      */
     const path = url.replace(/\?v=\d+$/, '');
-    const virtual = parseVirtualUrl(path);
+    const resolving = parseResolvingUrl(path);
 
-    if (virtual) {
-      this.#log('[source] virtual module', path);
+    if (resolving) {
+      const { id, importer } = resolving;
+      const answer = await this.#pipeline.resolveId(id, importer);
 
-      const source = await this.#virtualModuleSource(virtual.kind, virtual.name);
+      assert(`Could not resolve '${id}' from ${importer}`, answer);
 
-      this.#announce('info', `Loaded ${virtual.name}`);
+      this.#log(`[source] ${id} → ${answer}`);
 
-      return { url, type: 'js', source };
+      if (importer.startsWith(SRC_PREFIX)) {
+        this.#reportDependency(packageOf(answer));
+      }
+
+      return { url, type: 'js', source: reexport(answer) };
     }
 
     if (path.startsWith(SRC_PREFIX)) {
@@ -374,96 +283,31 @@ export class Compiler {
       return { url, type: 'js', source: text };
     }
 
-    if (path.startsWith(NODE_MODULES_PREFIX)) {
-      this.#log('[source] node_modules', path);
+    const loaded = await this.#pipeline.load(path);
 
-      const real = await installer.resolveUrl(path);
+    if (!loaded) {
+      this.#log('[source] passing through', path);
 
-      assert(`Could not resolve ${path}`, real);
-
-      const text = await storage.read(pathOf(real));
-
-      assert(`${real} resolved but is not in the fs`, text !== undefined);
-
-      const source = await this.#postProcess(text, extensionOf(real));
-
-      /**
-       * A bare specifier lands here once per package.
-       * Files inside a package already have their real URL.
-       */
-      if (!path.startsWith(DEPS_PREFIX)) {
-        const pkg = parseNpmUrl(real);
-
-        if (pkg) installed.set(path, pkg);
-        if (parent?.startsWith(SRC_PREFIX)) this.#reportDependency(pkg);
-      }
-
-      this.#announce('info', `Loaded ${real}`);
-
-      return { url: real, type: typeFor(real), source };
+      return defaultSourceHook(url, fetchOpts, parent);
     }
 
-    this.#log('[source] passing through', path);
-
-    return defaultSourceHook(url, fetchOpts, parent);
-  };
-
-  /**
-   * Both kinds of virtual module are a live JS object that has to be handed to
-   * the module system as source.
-   *
-   * @param {string} kind
-   * @param {string} name
-   * @returns {Promise<string>}
-   */
-  async #virtualModuleSource(kind, name) {
-    if (kind === 'manual') {
-      const result = await this.#resolveManually(name);
-
-      assert(`Failed to resolve ${name}`, result);
-
-      return virtualModuleSource(name, result, secretKey);
-    }
+    this.#log('[source]', path, '→', loaded.url);
 
     /**
-     * Unlike the manual resolver, these are just functions per id, they
-     * represent a way to get a module.
+     * A bare specifier lands here once per package.
+     * Files inside a package already have their real URL.
      */
-    let result;
+    if (path.startsWith(NODE_MODULES_PREFIX) && !path.startsWith(DEPS_PREFIX)) {
+      const pkg = parseNpmUrl(loaded.url);
 
-    for (const compilerResolve of this.#compilerResolvers) {
-      const fn = compilerResolve(name);
-
-      if (fn) {
-        result = await fn();
-      }
+      if (pkg) installed.set(path, pkg);
+      if (parent?.startsWith(SRC_PREFIX)) this.#reportDependency(pkg);
     }
 
-    assert(`Failed to resolve ${name}`, result);
-    cache.resolves[name] = result;
+    this.#announce('info', `Loaded ${parseVirtualUrl(path)?.name ?? loaded.url}`);
 
-    return virtualModuleSource(name, result, secretKey);
-  }
-
-  /**
-   * NOTE: this does not resolve compilers that are not loaded yet.
-   * So there would be a bit of a race condition here if different compilers
-   * were to have incompatible post-processing handlers.
-   *
-   * @param {string} text
-   * @param {string} ext
-   */
-  async #postProcess(text, ext) {
-    let code = text;
-
-    for (const compiler of this.#compilers) {
-      if (compiler.handlers?.[ext]) {
-        code = await compiler.handlers[ext](code);
-      }
-    }
-
-    return code;
-  }
+    return { ...loaded, url: loaded.url === path ? url : loaded.url };
+  };
 
   /**
    * @param {string} format
@@ -552,8 +396,13 @@ export class Compiler {
   }
 
   #compilerCache = new WeakMap();
-  #compilers = new Set();
-  #compilerResolvers = new Set();
+
+  /**
+   * Compiler configs share a `resolve` function, such as gjs and gts.
+   *
+   * @type {WeakMap<NonNullable<CompilerConfig['resolve']>, import('./types.ts').Plugin>}
+   */
+  #resolvePlugins = new WeakMap();
   /**
    * @type {Set<(e: PromiseRejectionEvent, handle: (message: string) => void) => void>}
    */
@@ -570,19 +419,37 @@ export class Compiler {
       return this.#compilerCache.get(config);
     }
 
-    if (config.resolve) {
-      this.#compilerResolvers.add(config.resolve);
-    }
-
     if (config.onUnhandled) {
       this.#compilerOnUnhandled.add(config.onUnhandled);
     }
+
+    /** @type {import('./types.ts').Plugin[]} */
+    const plugins = (config.plugins ?? []).slice();
+
+    if (config.resolve) {
+      let plugin = this.#resolvePlugins.get(config.resolve);
+
+      if (!plugin) {
+        plugin = fromConfigResolve(config.resolve);
+        this.#resolvePlugins.set(config.resolve, plugin);
+      }
+
+      plugins.push(plugin);
+    }
+
+    /**
+     * Before the compiler loads, because loading it can import modules.
+     */
+    await this.#pipeline.add(plugins);
 
     const options = this.optionsFor(format, flavor);
     const compiler = await config.compiler(options, this.#nestedPublicAPI);
 
     this.#compilerCache.set(config, compiler);
-    this.#compilers.add(compiler);
+
+    if (compiler.handlers) {
+      await this.#pipeline.add([fromHandlers(compiler)]);
+    }
 
     return compiler;
   }
@@ -932,17 +799,22 @@ function shimmedImport(...args) {
 }
 
 /**
- * @param {(id: string, parentUrl: string) => string} resolve
- * @param {string} id
- * @param {string} parentUrl
- * @returns {string | undefined}
+ * The package that a resolved URL belongs to, when the URL says so.
+ * No version means that the caller provided the module.
+ *
+ * @param {string} url
+ * @returns {undefined | { name: string, version: string | undefined }}
  */
-function tryDefaultResolve(resolve, id, parentUrl) {
-  try {
-    return resolve(id, parentUrl) || undefined;
-  } catch {
-    return undefined;
+function packageOf(url) {
+  const virtual = parseVirtualUrl(url);
+
+  if (virtual) {
+    return virtual.kind === 'manual'
+      ? { name: parseSpecifier(virtual.name).name, version: undefined }
+      : undefined;
   }
+
+  return installed.get(url) ?? exactPackage(url);
 }
 
 /**
@@ -960,18 +832,7 @@ function exactPackage(url) {
 
   const { name, version } = parseSpecifier(url.slice(NODE_MODULES_PREFIX.length));
 
-  return version ? { name, version } : undefined;
+  return version && EXACT_VERSION.test(version) ? { name, version } : undefined;
 }
 
-/**
- * CDNs will pre-process every file to make sure every import goes through them.
- * We don't want this.
- *
- * @param {string} id
- * @returns {string}
- */
-function deCDN(id) {
-  const noQPs = id.split('?')[0];
-
-  return /** @type {string} */ (noQPs);
-}
+const EXACT_VERSION = /^\d+\.\d+\.\d+(-[\w.]+)?$/;

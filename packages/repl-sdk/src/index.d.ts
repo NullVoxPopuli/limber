@@ -1,7 +1,15 @@
 import type { CompilerConfig, Options } from './types.ts';
 import type { EditorView } from 'codemirror';
 
-export type { ErrorMessage, InfoMessage, Message, Options } from './types.ts';
+export type {
+  ErrorMessage,
+  InfoMessage,
+  LoadResult,
+  Message,
+  Options,
+  Plugin,
+  PluginContext,
+} from './types.ts';
 
 /**
  * Builds the most useful human-readable message from a thrown error,

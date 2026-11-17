@@ -17,6 +17,26 @@ export const SRC_PREFIX: string;
 export const VIRTUAL_PREFIX: string;
 
 /**
+ * `file:///external/`, where files from a CDN are, by host and path.
+ */
+export const EXTERNAL_PREFIX: string;
+
+/**
+ * `file:///resolving/`, for a specifier that an async `resolveId` has not answered yet.
+ */
+export const RESOLVING_PREFIX: string;
+
+export function externalUrl(remote: string): string;
+export function remoteUrlOf(url: string): string;
+
+/**
+ * Where a CDN file is in storage. Each URL is a folder, and its text is in a file named `#` and the query.
+ */
+export function externalPath(url: string): string;
+export function resolvingUrl(id: string, importer: string): string;
+export function parseResolvingUrl(url: string): undefined | { id: string; importer: string };
+
+/**
  * The path in storage a URL names, without the query.
  */
 export function pathOf(url: string): string;

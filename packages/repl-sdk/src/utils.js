@@ -61,3 +61,16 @@ export function errorMessage(error) {
 
   return parts.join('\n\n');
 }
+
+/**
+ * CDNs will pre-process every file to make sure every import goes through them.
+ * We don't want this.
+ *
+ * @param {string} id
+ * @returns {string}
+ */
+export function deCDN(id) {
+  const noQPs = id.split('?')[0];
+
+  return /** @type {string} */ (noQPs);
+}
