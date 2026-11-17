@@ -291,3 +291,81 @@ Document(
   )
 )
 
+# Void element with self closing slash
+
+<hr />
+
+==>
+
+Document(
+  Element(
+    SelfClosingTag(
+      StartTag,
+      TagName,
+      SelfClosingEndTag
+    )
+  )
+)
+
+# Void element with attribute and self closing slash
+
+<input type="text" />
+
+==>
+
+Document(
+  Element(
+    SelfClosingTag(
+      StartTag,
+      TagName,
+      Attribute(
+        AttributeName,
+        Is,
+        AttributeValue(
+          DoubleQuote,
+          AttributeValueContent,
+          DoubleQuote
+        )
+      ),
+      SelfClosingEndTag
+    )
+  )
+)
+
+# Namespaced component
+
+<A::B>hi</A::B>
+
+==>
+
+Document(
+  Element(
+    OpenTag(
+      StartTag,
+      ComponentName,
+      EndTag
+    ),
+    Text,
+    CloseTag(
+      StartCloseTag,
+      ComponentName,
+      EndTag
+    )
+  )
+)
+
+# Self closing namespaced component
+
+<A::B />
+
+==>
+
+Document(
+  Element(
+    SelfClosingTag(
+      StartTag,
+      ComponentName,
+      SelfClosingEndTag
+    )
+  )
+)

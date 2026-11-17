@@ -72,7 +72,7 @@ MoustacheComment { moustacheCommentStart moustacheCommentContent* moustacheComme
   }
 
   SelfClosingTag {
-    StartSelfClosingTag TagName attr* EndTag |
+    StartSelfClosingTag TagName attr* (EndTag | SelfClosingEndTag) |
     StartTag elementName attr* SelfClosingEndTag
   }
 
@@ -142,55 +142,55 @@ MoustacheComment { moustacheCommentStart moustacheCommentContent* moustacheComme
   }
 
   LetBlockOpen[group=BlockOpen,closedBy=LetBlockClose] {
-    "{{" pfx<"#"> blk<"let"> LongExpression "}}"
+    "{{" "~"? pfx<"#"> blk<"let"> LongExpression "}}"
   }
 
   LetBlockClose[group=BlockClose,openedBy=LetBlockOpen] {
-    "{{" pfx<"/"> blk<"let"> "}}"
+    "{{" "~"? pfx<"/"> blk<"let"> "~"? "}}"
   }
 
   InElementBlockOpen[group=BlockOpen,closedBy=InElementBlockClose] {
-    "{{" pfx<"#"> blk<"in-element"> LongExpression "}}"
+    "{{" "~"? pfx<"#"> blk<"in-element"> LongExpression "}}"
   }
 
   InElementBlockClose[group=BlockClose,openedBy=InElementBlockOpen] {
-    "{{" pfx<"/"> blk<"in-element"> "}}"
+    "{{" "~"? pfx<"/"> blk<"in-element"> "~"? "}}"
   }
 
   IfBlockOpen[group=BlockOpen,closedBy=IfBlockClose] {
-    "{{" pfx<"#"> blk<"if"> LongExpression "}}"
+    "{{" "~"? pfx<"#"> blk<"if"> LongExpression "}}"
   }
 
   IfBlockClose[group=BlockClose,openedBy=IfBlockOpen] {
-    "{{" pfx<"/"> blk<"if"> "}}"
+    "{{" "~"? pfx<"/"> blk<"if"> "~"? "}}"
   }
 
   UnlessBlockOpen[group=BlockOpen,closedBy=UnlessBlockClose] {
-    "{{" pfx<"#"> blk<"unless"> LongExpression "}}"
+    "{{" "~"? pfx<"#"> blk<"unless"> LongExpression "}}"
   }
 
   UnlessBlockClose[group=BlockClose,openedBy=UnlessBlockOpen] {
-    "{{" pfx<"/"> blk<"unless"> "}}"
+    "{{" "~"? pfx<"/"> blk<"unless"> "~"? "}}"
   }
 
   ElseBlock[group=BlockInline] {
-    "{{" pfx<":">? blk<"else"> (kw<"if"> LongExpression)? "}}"
+    "{{" "~"? pfx<":">? blk<"else"> (kw<"if"> LongExpression)? "~"? "}}"
   }
 
   EachBlockOpen[group=BlockOpen,closedBy=EachBlockClose] {
-    "{{" pfx<"#"> blk<"each"> LongExpression "}}"
+    "{{" "~"? pfx<"#"> blk<"each"> LongExpression "}}"
   }
 
   EachBlockClose[group=BlockClose,openedBy=EachBlockOpen] {
-    "{{" pfx<"/"> blk<"each"> "}}"
+    "{{" "~"? pfx<"/"> blk<"each"> "~"? "}}"
   }
 
   EachInBlockOpen[group=BlockOpen,closedBy=EachInBlockClose] {
-    "{{" pfx<"#"> blk<"each-in"> LongExpression "}}"
+    "{{" "~"? pfx<"#"> blk<"each-in"> LongExpression "}}"
   }
 
   EachInBlockClose[group=BlockClose,openedBy=EachInBlockOpen] {
-    "{{" pfx<"/"> blk<"each-in"> "}}"
+    "{{" "~"? pfx<"/"> blk<"each-in"> "~"? "}}"
   }
 
   RawHTMLBlock[group=BlockInline] {
@@ -199,6 +199,7 @@ MoustacheComment { moustacheCommentStart moustacheCommentContent* moustacheComme
 
   UnknownBlock[group=BlockInline] {
     "{{"
+    "~"?
     BlockPrefix
     BlockType
     UnknownBlockContent?
@@ -300,7 +301,7 @@ blk<type> { @specialize[@name=BlockType]<BlockType, type> }
   "{{{"[closedBy="}}}"]
   "}}}"[openedBy="{{{"]
 
-  "|" "..."
+  "|" "..." "~"
 
   space { (" " | "\t" | "\r" | "\n")+ }
 
@@ -342,6 +343,7 @@ blk<type> { @specialize[@name=BlockType]<BlockType, type> }
     "_" |
     "-" |
     "." |
+    ":" |
     @asciiLetter |
     @digit |
     $[\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D] |
