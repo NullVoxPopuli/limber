@@ -5,7 +5,6 @@
  */
 
 import { cache, secretKey } from '../cache.js';
-import { installer } from '../fs/store.js';
 import { extensionOf, NODE_MODULES_PREFIX, parseVirtualUrl, virtualUrl } from '../fs/url.js';
 import { virtualModuleSource } from '../fs/virtual.js';
 import { assert, deCDN } from '../utils.js';
@@ -26,11 +25,6 @@ export function fromConfigResolve(resolve) {
     name: 'repl-sdk:compiler-config-resolve',
 
     resolveId(id, _importer, { versions }) {
-      /**
-       * Once the page pins a framework from npm, its addons come from npm too, so they match it.
-       */
-      if (installer.hasRenamedModules) return;
-
       const vanilla = deCDN(id);
       const result = resolve(vanilla, versions);
 

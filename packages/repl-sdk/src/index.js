@@ -25,7 +25,6 @@ import { fromConfigResolve, fromHandlers } from './plugins/compiler-config.js';
 import { externalFiles } from './plugins/external.js';
 import { npm } from './plugins/npm.js';
 import { providedModules } from './plugins/provided.js';
-import { renamedModules } from './plugins/renamed.js';
 import { parseSpecifier } from './specifier.js';
 import { assert, errorMessage, nextId } from './utils.js';
 
@@ -86,8 +85,7 @@ export class Compiler {
 
     this.#pipeline = new Pipeline(
       (this.#options.plugins ?? []).concat(
-        providedModules(this.#options.resolve, (name) => this.#resolveManually(name)),
-        renamedModules(defaultResolve)
+        providedModules(this.#options.resolve, (name) => this.#resolveManually(name))
       ),
       [externalFiles(), npm(defaultResolve)]
     );
@@ -100,18 +98,26 @@ export class Compiler {
 
   /**
    * Runs the `buildStart` of every plugin.
-   * For example, a pinned v2 addon must be installed
-   * before anything imports one of its renamed modules, such as `@ember/*` from ember-source.
+   * For example, the Ember plugins install a pinned ember-source
+   * before anything imports one of its `@ember/*` modules.
    *
    * `compile` calls this. A host calls it first to load pinned modules before a compile.
+   * With a format, the plugins of that format's compiler config run too,
+   * even when that compiler has not loaded yet.
    *
    * @param {Record<string, string>} [versions]
+   * @param {string} [format]
+   * @param {string} [flavor]
    */
-  async prepare(versions = this.#options.versions ?? {}) {
+  async prepare(versions = this.#options.versions ?? {}, format, flavor) {
     // @ts-ignore
     await import('es-module-shims');
 
     this.#versions = versions;
+
+    if (format) {
+      this.#pipeline.register(this.#pluginsOf(this.#resolveFormat(format, flavor)));
+    }
 
     await this.#pipeline.buildStart(versions);
   }
@@ -345,7 +351,7 @@ export class Compiler {
     const opts = { ...options };
 
     opts.fileName ||= `index.${format}`;
-    await this.prepare(opts.versions);
+    await this.prepare(opts.versions, format, opts.flavor);
 
     this.#log('[compile] compiling');
 
@@ -423,7 +429,28 @@ export class Compiler {
       this.#compilerOnUnhandled.add(config.onUnhandled);
     }
 
-    /** @type {import('./types.ts').Plugin[]} */
+    /**
+     * Before the compiler loads, because loading it can import modules.
+     */
+    await this.#pipeline.add(this.#pluginsOf(config));
+
+    const options = this.optionsFor(format, flavor);
+    const compiler = await config.compiler(options, this.#nestedPublicAPI);
+
+    this.#compilerCache.set(config, compiler);
+
+    if (compiler.handlers) {
+      await this.#pipeline.add([fromHandlers(compiler)]);
+    }
+
+    return compiler;
+  }
+
+  /**
+   * @param {CompilerConfig} config
+   * @returns {import('./types.ts').Plugin[]}
+   */
+  #pluginsOf(config) {
     const plugins = (config.plugins ?? []).slice();
 
     if (config.resolve) {
@@ -437,21 +464,7 @@ export class Compiler {
       plugins.push(plugin);
     }
 
-    /**
-     * Before the compiler loads, because loading it can import modules.
-     */
-    await this.#pipeline.add(plugins);
-
-    const options = this.optionsFor(format, flavor);
-    const compiler = await config.compiler(options, this.#nestedPublicAPI);
-
-    this.#compilerCache.set(config, compiler);
-
-    if (compiler.handlers) {
-      await this.#pipeline.add([fromHandlers(compiler)]);
-    }
-
-    return compiler;
+    return plugins;
   }
 
   /**

@@ -39,11 +39,12 @@ export class Compiler {
   ): Promise<{ element: HTMLElement; destroy: () => void }>;
 
   /**
-   * Resolution is synchronous, so a pinned v2 addon must be installed
-   * before anything imports one of its renamed modules, such as `@ember/*` from ember-source.
+   * Runs the `buildStart` of every plugin, such as the install of a pinned ember-source.
    * `compile` calls this. A host calls it first to load pinned modules before a compile.
+   * With a format, the plugins of that format's compiler config run too,
+   * even when that compiler has not loaded yet.
    */
-  prepare(versions?: Record<string, string>): Promise<void>;
+  prepare(versions?: Record<string, string>, format?: string, flavor?: string): Promise<void>;
 
   /**
    * Loads modules the way a compiler does: from the `resolve` option first, then from npm.

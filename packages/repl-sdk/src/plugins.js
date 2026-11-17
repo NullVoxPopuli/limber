@@ -53,12 +53,12 @@ export class Pipeline {
   }
 
   /**
-   * Plugins of a compiler, which loads after the first `buildStart`.
-   * Their `buildStart` runs now, for the compile in progress.
+   * Plugins of a compiler config, for the next `buildStart`.
    *
    * @param {Plugin[]} plugins
+   * @returns {Plugin[]} the ones that were not in the pipeline yet
    */
-  async add(plugins) {
+  register(plugins) {
     /** @type {Plugin[]} */
     const added = [];
 
@@ -70,6 +70,18 @@ export class Pipeline {
     }
 
     this.#all = this.#first.concat(this.#added, this.#last);
+
+    return added;
+  }
+
+  /**
+   * Plugins of a compiler, which can load after `buildStart`.
+   * Their `buildStart` runs now, for the compile in progress.
+   *
+   * @param {Plugin[]} plugins
+   */
+  async add(plugins) {
+    const added = this.register(plugins);
 
     await Promise.all(added.map((plugin) => plugin.buildStart?.(this.ctx)));
   }

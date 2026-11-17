@@ -39,12 +39,6 @@ export class Installer {
   /** @type {Set<string>} scopes already registered */
   #scoped = new Set();
 
-  /** @type {Set<string>} name@version whose renamed modules are mapped */
-  #renamed = new Set();
-
-  /** @type {Set<string>} module names that a renamed module map claims */
-  #renamedNames = new Set();
-
   /** @type {Map<string, InstalledPackage>} name@version, resolved this session */
   #packages = new Map();
 
@@ -78,8 +72,6 @@ export class Installer {
     this.#imports = {};
     this.#resolving.clear();
     this.#scoped.clear();
-    this.#renamed.clear();
-    this.#renamedNames.clear();
     this.#packages.clear();
     this.#stored = undefined;
     this.#links = undefined;
@@ -119,72 +111,15 @@ export class Installer {
   }
 
   /**
-   * A v2 addon can publish modules under other names,
-   * through `ember-addon.renamed-modules` in its package.json.
-   * ember-source publishes all of `@ember/*` that way.
-   *
-   * This maps those names for the whole page, at the version that the range resolves to.
-   * The map only takes effect for names that nothing resolved before it.
+   * The package that a range resolves to, installed.
+   * Its manifest is what a plugin reads, such as `ember-addon.renamed-modules`.
    *
    * @param {string} name
    * @param {string} range
-   * @returns {Promise<string>} the installed version
+   * @returns {Promise<InstalledPackage>}
    */
-  async renameModules(name, range) {
-    const pkg = this.#reuse(name, range) ?? (await this.#install(name, range));
-    const { version } = pkg.manifest;
-    const key = `${name}@${version}`;
-
-    if (this.#renamed.has(key)) return version;
-
-    this.#renamed.add(key);
-
-    const renamed = pkg.manifest['ember-addon']?.['renamed-modules'];
-
-    if (!renamed) return version;
-
-    /** @type {Record<string, string>} */
-    const imports = {};
-
-    for (const [from, to] of Object.entries(renamed)) {
-      if (!to.startsWith(`${name}/`)) continue;
-
-      const target = `${NODE_MODULES_PREFIX}${name}@${version}/${to.slice(name.length + 1)}`;
-
-      /**
-       * The keys name files:
-       *
-       *   @ember/owner/index.js          → @ember/owner
-       *   @ember/component/template-only.js → @ember/component/template-only
-       */
-      imports[from] = target;
-      imports[from.replace(/(\/index)?\.js$/, '')] = target;
-    }
-
-    for (const specifier of Object.keys(imports)) {
-      this.#renamedNames.add(specifier);
-    }
-
-    this.#addImportMap({ imports });
-
-    return version;
-  }
-
-  /**
-   * Does a renamed module map claim this module name?
-   *
-   * @param {string} specifier
-   */
-  isRenamed(specifier) {
-    return this.#renamedNames.has(specifier);
-  }
-
-  /**
-   * Did a package map renamed modules on this page?
-   * Then a framework, such as ember-source, comes from npm.
-   */
-  get hasRenamedModules() {
-    return this.#renamedNames.size > 0;
+  async package(name, range) {
+    return this.#reuse(name, range) ?? (await this.#install(name, range));
   }
 
   /**

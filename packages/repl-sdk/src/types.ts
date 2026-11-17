@@ -432,7 +432,7 @@ export interface InstalledPackage {
     module?: string;
     browser?: string;
     /**
-     * v2 addons, see Installer#renameModules.
+     * v2 addons, see compilers/ember/renamed-modules.js.
      */
     'ember-addon'?: { 'renamed-modules'?: Record<string, string> };
   };

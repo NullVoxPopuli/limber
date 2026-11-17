@@ -7,7 +7,6 @@ import { installer, storage } from '../fs/store.js';
 import { NODE_MODULES_PREFIX, npmUrl, parseNpmUrl, pathOf, specifierUrl } from '../fs/url.js';
 import { parseSpecifier } from '../specifier.js';
 import { assert, deCDN } from '../utils.js';
-import { tryResolve } from './renamed.js';
 
 /**
  * node builtins that have a browser-shaped package on npm.
@@ -100,4 +99,18 @@ export function npm(defaultResolve) {
       return { url: real, source };
     },
   };
+}
+
+/**
+ * @param {DefaultResolve} resolve
+ * @param {string} id
+ * @param {string} parentUrl
+ * @returns {string | undefined}
+ */
+function tryResolve(resolve, id, parentUrl) {
+  try {
+    return resolve(id, parentUrl) || undefined;
+  } catch {
+    return undefined;
+  }
 }

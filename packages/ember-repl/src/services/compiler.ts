@@ -295,7 +295,10 @@ export default class CompilerService {
       return;
     }
 
-    await this.compiler.prepare(this.#pins);
+    /**
+     * The Ember compiler config has the plugin that maps the pinned `@ember/*` modules.
+     */
+    await this.compiler.prepare(this.#pins, 'gjs');
 
     const values: Record<string, unknown> = {};
 

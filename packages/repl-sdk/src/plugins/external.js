@@ -48,12 +48,7 @@ export function externalFiles() {
 
       const source = await response.text();
 
-      /**
-       * A failed write only means that the next page load downloads the file again.
-       */
-      fsWorker()
-        .write(path, source)
-        .catch(() => {});
+      await fsWorker().write(path, source);
 
       return { url, source };
     },
