@@ -136,6 +136,24 @@ export default class EditorService extends Service {
     this.#editorSwapText = value;
   }
 
+  /**
+   * The text of the last document that the app loaded, before any edits.
+   */
+  #textAtSwitch: string | undefined;
+
+  get didDocChange(): boolean {
+    return this.text !== this.#textAtSwitch;
+  }
+
+  /**
+   * For documents that the app picks, such as a sample.
+   * `update` is for text that the user or the embedding page wrote.
+   */
+  load = (text: string, format: FormatQP) => {
+    this.#textAtSwitch = text;
+    this.update(text, format);
+  };
+
   update = (text: string, format: FormatQP) => {
     // Update ourselves
     this.fileURIComponent.set(text, format);
@@ -156,6 +174,8 @@ export default class EditorService extends Service {
 
   updateDemo = (text: string, demo: DemoEntry) => {
     const format = demo.format;
+
+    this.#textAtSwitch = text;
 
     // Update ourselves
     this.fileURIComponent.set(text, format, demo && 'qps' in demo ? demo.qps : {});

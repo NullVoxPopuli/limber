@@ -8,11 +8,34 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import Menu from '#components/menu.gts';
 import { formatQPFrom, infoFor, usage } from '#languages';
 
+import { snippetForFormat } from 'limber/snippets';
+import { getStoredDocumentForFormat } from 'limber/utils/editor-text';
+
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
 import type { ComponentLike } from '@glint/template';
 import type { Format, FormatQP } from '#app/languages.gts';
 import type EditorService from '#app/services/editor.ts';
+
+/**
+ * The document of the new format is what the user last wrote in it,
+ * or a sample when they never used it.
+ * Text that the user edited stays, because they can write a document
+ * and then pick its format.
+ */
+export async function switchFormat(editor: EditorService, value: string): Promise<void> {
+  const qp = formatQPFrom(value);
+
+  if (editor.didDocChange) {
+    editor.updateFormat(qp);
+
+    return;
+  }
+
+  const text = getStoredDocumentForFormat(qp) ?? (await snippetForFormat(qp));
+
+  editor.load(text, qp);
+}
 
 function abbreviationFor(format: Format) {
   return format === 'glimdown' ? 'gmd' : format;
@@ -38,9 +61,9 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
   @service declare router: RouterService;
   @service declare editor: EditorService;
 
-  switch = (format: FormatQP): void => {
+  switch = async (format: FormatQP): Promise<void> => {
     usage.track(format);
-    this.editor.fileURIComponent.format = format;
+    await switchFormat(this.editor, format);
   };
 
   isSelected = (format: Format) => {

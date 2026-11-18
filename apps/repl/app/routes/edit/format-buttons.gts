@@ -3,12 +3,9 @@ import { service } from '@ember/service';
 
 import { type ItemSignature, ToggleGroup } from 'ember-primitives/components/toggle-group';
 
-import { formatQPFrom, usage } from '#app/languages.gts';
+import { usage } from '#app/languages.gts';
 
-import { defaultSnippetForFormat } from 'limber/snippets';
-import { getStoredDocumentForFormat } from 'limber/utils/editor-text';
-
-import { FormatMenu } from './format-menu.gts';
+import { FormatMenu, switchFormat } from './format-menu.gts';
 
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
@@ -78,16 +75,7 @@ class Option extends Component<{
     return this.format === format ? 'bg-[#333] text-white' : 'bg-ember-black text-white';
   };
 
-  /**
-   * Because most of the formats are not cross-compatible with each other,
-   * we'll want to also swap the document
-   */
-  switch = (value: string): void => {
-    const qp = formatQPFrom(value);
-    const stored = getStoredDocumentForFormat(qp);
-
-    this.editor.fileURIComponent.set(stored ?? defaultSnippetForFormat(value), qp);
-  };
+  switch = (value: string): Promise<void> => switchFormat(this.editor, value);
 
   get format(): FormatQP {
     return this.router.currentRoute?.queryParams?.format as FormatQP;
