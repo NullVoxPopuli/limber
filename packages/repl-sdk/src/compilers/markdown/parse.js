@@ -1,9 +1,10 @@
 /**
  * @typedef {object} CodeBlock
- * @property {string} lang
  * @property {string} format
+ * @property {string | undefined} flavor
  * @property {string} code
- * @property {string} name
+ * @property {string} placeholderId the id of the element in `text` where this block renders
+ * @property {string | null | undefined} meta the text after the language on the fence line
  */
 
 /**
@@ -14,8 +15,6 @@
 
 import remarkEscapeComponents, { REPL_LT } from '../../remark-escape-components.js';
 import { buildCompiler } from './build-compiler.js';
-
-export { buildCompiler } from './build-compiler.js';
 
 /**
  * @param {string} input

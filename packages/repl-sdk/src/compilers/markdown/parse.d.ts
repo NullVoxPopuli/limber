@@ -6,9 +6,16 @@ export function parseMarkdown(
 ): Promise<{
   text: string;
   codeBlocks: Array<{
-    lang: string;
     format: string;
+    flavor: string | undefined;
     code: string;
-    name: string;
+    /**
+     * The id of the element in `text` where this block renders.
+     */
+    placeholderId: string;
+    /**
+     * The text after the language on the fence line.
+     */
+    meta: string | null | undefined;
   }>;
 }>;

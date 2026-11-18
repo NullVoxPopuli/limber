@@ -37,7 +37,7 @@ const defaults = {
 
       return [];
     },
-    optionsFor: () => ({}),
+    optionsFor: () => ({ versions: {}, needsLiveMeta: true }),
   }),
   ALLOWED_FORMATS,
 };
