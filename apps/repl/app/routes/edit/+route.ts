@@ -50,7 +50,7 @@ export default class EditRoute extends Route {
       const response = await fetch(qps.file as string);
       const text = await response.text();
 
-      this.editor.fileURIComponent.set(text, format);
+      this.editor.load(text, format);
       await this.editor.fileURIComponent.flush();
 
       return;
@@ -67,7 +67,7 @@ export default class EditRoute extends Route {
       if (format && doc) {
         console.info(`Found format and document in localStorage. Using those.`);
         transition.abort();
-        this.editor.fileURIComponent.set(doc, formatQPFrom(format));
+        this.editor.load(doc, formatQPFrom(format));
         await this.editor.fileURIComponent.flush();
 
         return;
@@ -79,7 +79,7 @@ export default class EditRoute extends Route {
       );
 
       transition.abort();
-      this.editor.fileURIComponent.set(DEFAULT_SNIPPET, 'gmd');
+      this.editor.load(DEFAULT_SNIPPET, 'gmd');
       await this.editor.fileURIComponent.flush();
 
       return;

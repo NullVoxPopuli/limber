@@ -5,7 +5,7 @@ import { getCompiler } from 'ember-repl';
 
 import { clearLocalStorage, getService, setupApplicationCompilerTest } from '#tests/helpers.ts';
 
-import { DEFAULT_GJS, getFromLabel } from 'limber/snippets';
+import { getFromLabel } from 'limber/snippets';
 import { fileFromParams } from 'limber/utils/messaging';
 
 import { Page } from './-page';
@@ -21,7 +21,7 @@ module('Editor > Format menu', function (hooks) {
     return fileFromParams(getService('router').currentRoute?.queryParams ?? {});
   }
 
-  async function choose(name: string) {
+  async function choose(name: string, format = name.toLowerCase()) {
     await click('[title="Change document language"]');
 
     const item = findAll('.menu-item').find((element) => element.textContent?.trim() === name);
@@ -29,12 +29,12 @@ module('Editor > Format menu', function (hooks) {
     if (!item) throw new Error(`No menu item named ${name}`);
 
     await click(item);
-    await waitUntil(() => currentFile().format === name.toLowerCase(), { timeout: 5_000 });
+    await waitUntil(() => currentFile().format === format, { timeout: 5_000 });
   }
 
   for (const name of ['Svelte', 'Mermaid']) {
     test(`choosing ${name} loads the ${name} sample`, async function (assert) {
-      await page.visitEdit('gjs', DEFAULT_GJS);
+      await page.expectRedirectToContent('/edit');
       await page.editor.load();
       await choose(name);
 
@@ -51,10 +51,24 @@ module('Editor > Format menu', function (hooks) {
   test('choosing a format loads what was last written in it', async function (assert) {
     localStorage.setItem('svelte-doc', '<p>mine</p>');
 
-    await page.visitEdit('gjs', DEFAULT_GJS);
+    await page.expectRedirectToContent('/edit');
     await choose('Svelte');
 
     assert.strictEqual(currentFile().text, '<p>mine</p>');
+  });
+
+  test('choosing a format keeps an edited sample', async function (assert) {
+    await page.expectRedirectToContent('/edit');
+    await page.editor.load();
+
+    const editor = getService('editor');
+    const edited = `${editor.text}\nmore`;
+
+    editor.updateText(edited);
+    await editor.fileURIComponent.flush();
+    await choose('Markdown', 'md');
+
+    assert.strictEqual(currentFile().text, edited);
   });
 
   test('choosing a format keeps text that was written by hand', async function (this: object, assert) {
