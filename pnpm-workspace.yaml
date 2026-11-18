@@ -28,12 +28,6 @@ packages:
   - "./packages/syntax/*/*"
   - "./packages/syntax/*/*/dev"
   - "./packages/syntax/*/*/tests"
-  ####################################
-  #
-  # Experiments
-  #
-  ####################################
-  - "./spikes/**"
 
 peerDependencyRules:
   allowAny:
