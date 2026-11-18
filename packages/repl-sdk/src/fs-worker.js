@@ -1,5 +1,6 @@
 import { expose } from 'comlink';
 
+import { isExactVersion } from './fs/semver.js';
 import { Storage } from './fs/storage.js';
 import { untar } from './fs/tar.js';
 import { getNPMInfo, getTarUrl, resolveVersion } from './npm.js';
@@ -15,8 +16,6 @@ const storage = new Storage();
 
 /** @type {Map<string, Promise<import('./types.ts').InstalledPackage>>} */
 const inFlight = new Map();
-
-const EXACT_VERSION = /^\d+\.\d+\.\d+/;
 
 const api = { install, installed, link, links, write };
 
@@ -85,13 +84,13 @@ function install(name, requestedVersion) {
  * @returns {Promise<import('./types.ts').InstalledPackage>}
  */
 async function installWorker(name, requestedVersion) {
-  if (EXACT_VERSION.test(requestedVersion)) {
+  if (isExactVersion(requestedVersion)) {
     const stored = await storage.readPackage(name, requestedVersion);
 
     if (stored) return stored;
   }
 
-  const json = await getNPMInfo(name, requestedVersion);
+  const json = await getNPMInfo(name);
   const version = resolveVersion(json, requestedVersion);
 
   if (version !== requestedVersion) {

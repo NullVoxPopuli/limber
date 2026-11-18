@@ -7,6 +7,7 @@ import { cache } from './cache.js';
 import { compilers } from './compilers.js';
 import { STABLE_REFERENCE } from './es-module-shim.js';
 import { takeEntry, writeEntry } from './fs/entry.js';
+import { isExactVersion } from './fs/semver.js';
 import { clearFs, storage } from './fs/store.js';
 import {
   DEPS_PREFIX,
@@ -823,7 +824,5 @@ function exactPackage(url) {
 
   const { name, version } = parseSpecifier(url.slice(NODE_MODULES_PREFIX.length));
 
-  return version && EXACT_VERSION.test(version) ? { name, version } : undefined;
+  return version && isExactVersion(version) ? { name, version } : undefined;
 }
-
-const EXACT_VERSION = /^\d+\.\d+\.\d+(-[\w.]+)?$/;

@@ -47,7 +47,6 @@ export interface PublicMethods {
     format: string,
     flavor?: string
   ) => {
-    resolve?: (id: string) => string | undefined;
     versions?: { [packageName: string]: string };
     needsLiveMeta?: boolean;
     [option: string]: unknown;
@@ -65,13 +64,6 @@ export interface PublicMethods {
       }
     | { result: false; reason: string };
 }
-export interface ResolvedCompilerOptions {
-  resolve: { [importPath: string]: unknown };
-  needsLiveMeta?: boolean;
-  versions?: { [packageName: string]: string };
-  userOptions?: Options['options'];
-}
-
 type CompileResult =
   | string
   | {

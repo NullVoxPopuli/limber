@@ -73,18 +73,3 @@ export class CompileState implements State {
 }
 
 export class MissingTextState extends CompileState {}
-
-export class CachedCompileState extends CompileState {
-  #resolvedPromise: Promise<ComponentLike>;
-  constructor(data: Data, component: ComponentLike) {
-    super(data);
-
-    this.component = component;
-    this.#resolvedPromise = Promise.resolve(component);
-    this.isReady = true;
-  }
-
-  get promise() {
-    return this.#resolvedPromise;
-  }
-}

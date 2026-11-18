@@ -37,10 +37,7 @@ export const md = {
     const { isLive, isPreview, needsLive, allowedFormats, isBelow, getFlavorFromMeta } =
       buildCodeFenceMetaUtils(api);
 
-    // Try both possible structures
-    const userOptions = filterOptions(
-      /** @type {Record<string, unknown>} */ (config.userOptions)?.md || config
-    );
+    const userOptions = filterOptions(config);
 
     // No recursing for now.
 

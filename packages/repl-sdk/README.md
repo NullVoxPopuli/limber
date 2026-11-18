@@ -82,14 +82,37 @@ An id is a URL in the module fs. An http(s) id downloads into the fs under `file
 
 A compiler config can have `plugins` too. Its `resolve` and its compiler's `handlers` become plugins.
 
+## Provided modules and pins
+
+`resolve` gives modules that the host already has. `versions` pins packages, and a compile can pass its own. A pin loads the package from npm in place of the provided modules. `packages` tells which provided modules belong to which package:
+
+```js
+new Compiler({
+  resolve: {
+    '@ember/owner': () => import('@ember/owner'),
+    'ember-primitives': () => import('ember-primitives'),
+  },
+  packages: {
+    'ember-source': { version: '7.3.0', modules: ['@ember/owner'] },
+    'ember-primitives': { builtWith: ['ember-source'] },
+  },
+});
+```
+
+- A module that is in no `modules` list belongs to the package that its name starts with.
+- A pin that accepts `version` keeps the provided modules.
+- A pin of a package in `builtWith` loads this package from npm too, so that both match.
+
+`preload` lists modules that load before each compile, with the pins of that compile. `importSync` from `@embroider/macros` answers with them, and `preloaded(id)` reads them.
+
 ## Debugging
 
 Only one `Compiler` runs per window. Its `fs` getter shows everything a demo ran against:
 
 ```js
-compiler.fs.list()                            // every URL in the module fs
-compiler.fs.list('file:///npm/nanoid@6.0.1/') // one package
-compiler.fs.read(url).source
+await compiler.fs.list('/node_modules')                     // every installed file
+await compiler.fs.list('/node_modules/.deps/nanoid@5.1.5') // one package
+await compiler.fs.read('/node_modules/nanoid/index.browser.js')
 ```
 
 Where to find `compiler` in the devtools console:
@@ -98,4 +121,4 @@ Where to find `compiler` in the devtools console:
 - Otherwise, use the instance your app created.
 
 The SDK's own caches live at `globalThis[Symbol.for('__repl-sdk__compiler__')]`:
-`resolves` (module path to module value), `tarballs`, and `promiseCache`.
+`resolves` (the values of provided modules, by module name) and `promiseCache`.
