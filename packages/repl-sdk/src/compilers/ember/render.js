@@ -48,13 +48,9 @@ export async function renderEmber(config, element, component, extra, compiler) {
    * and objects from the host's Ember do not work in it.
    */
   const owner = makeOwner(config.versions?.['ember-source'] ? undefined : config.owner);
-  const args = isRecord(extra) && isRecord(extra.args) ? extra.args : undefined;
+  const args = isRecord(extra) && isRecord(extra.args) ? extra.args : {};
 
-  const result = renderComponent(component, {
-    into: element,
-    owner,
-    ...(args ? { args } : {}),
-  });
+  const result = renderComponent(component, { into: element, owner, args });
 
   return () => result.destroy();
 }
