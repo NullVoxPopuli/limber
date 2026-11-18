@@ -12,11 +12,6 @@ concurrency:
   # cancel-in-progress: true
 
 env:
-  codemirror: packages/codemirror/
-  consts: packages/consts/
-  horizon: packages/horizon-theme/
-  monaco: packages/monaco
-  sw: packages/transpilation/
   NODE_OPTIONS: "--max-old-space-size=4096 --trace-warnings --unhandled-rejections=strict"
   TURBO_API: http://127.0.0.1:9080
   TURBO_TOKEN: this-is-not-a-secret
@@ -124,26 +119,6 @@ jobs:
       - run: pnpm turbo test:${{ matrix.environment }}
 
 
-  # browserstack-test:
-  #   name: Browserstack Tests (Safari, Edge, etc)
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 10
-  #   needs: [tests]
-  #
-  #   steps:
-  #     - uses: wyvox/action@v1
-  #       with:
-  #         repo-token: ${{ secrets.GITHUB_TOKEN }}
-  #     - run: pnpm turbo test:browserstack --log-order stream --output-logs=new-only
-  #       env:
-  #         # This is a guest user on an open source plan.
-  #         # (limited access, etc etc)
-  #         #
-  #         # Exposing this key is the only way to reasonably 
-  #         # have browserstack run on PRs from forks
-  #         BROWSERSTACK_ACCESS_KEY: km7yCVefUQDSdFMF9o64
-  #         BROWSERSTACK_USERNAME: glimdown_6vzpNh
-
 ##############################################################
 ##############################################################
 #
@@ -160,7 +135,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: 
-      # - browserstack-test
       - build_prod
 
     strategy: 

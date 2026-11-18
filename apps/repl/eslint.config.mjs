@@ -30,12 +30,6 @@ export default [
     // Samples are user-facing documents, not app code.
     ignores: ['public/**'],
   },
-  // your modifications here
-  // see: https://eslint.org/docs/user-guide/configuring/configuration-files#how-do-overrides-work
-  {
-    // ...baseNode,
-    files: ['browserstack.testem.js'],
-  },
   {
     files: ['**/*'],
     rules: {
