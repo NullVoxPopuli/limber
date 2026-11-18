@@ -22,7 +22,6 @@ import {
 } from './fs/url.js';
 import { fsWorker } from './fs/worker.js';
 import { Pipeline, reexport } from './plugins.js';
-import { fromConfigResolve, fromHandlers } from './plugins/compiler-config.js';
 import { externalFiles } from './plugins/external.js';
 import { npm } from './plugins/npm.js';
 import { providedModules } from './plugins/provided.js';
@@ -120,7 +119,7 @@ export class Compiler {
     this.#versions = versions;
 
     if (format) {
-      this.#pipeline.register(this.#pluginsOf(this.#resolveFormat(format, flavor)));
+      this.#pipeline.register(this.#resolveFormat(format, flavor).plugins ?? []);
     }
 
     await this.#pipeline.buildStart(versions);
@@ -410,12 +409,6 @@ export class Compiler {
   #compilerCache = new WeakMap();
 
   /**
-   * Compiler configs share a `resolve` function, such as gjs and gts.
-   *
-   * @type {WeakMap<NonNullable<CompilerConfig['resolve']>, import('./types.ts').Plugin>}
-   */
-  #resolvePlugins = new WeakMap();
-  /**
    * @type {Set<(e: PromiseRejectionEvent, handle: (message: string) => void) => void>}
    */
   #compilerOnUnhandled = new Set();
@@ -438,39 +431,16 @@ export class Compiler {
     /**
      * Before the compiler loads, because loading it can import modules.
      */
-    await this.#pipeline.add(this.#pluginsOf(config));
+    await this.#pipeline.add(config.plugins ?? []);
 
     const options = this.optionsFor(format, flavor);
     const compiler = await config.compiler(options, this.#nestedPublicAPI);
 
     this.#compilerCache.set(config, compiler);
 
-    if (compiler.handlers) {
-      await this.#pipeline.add([fromHandlers(compiler)]);
-    }
+    await this.#pipeline.add(compiler.plugins ?? []);
 
     return compiler;
-  }
-
-  /**
-   * @param {CompilerConfig} config
-   * @returns {import('./types.ts').Plugin[]}
-   */
-  #pluginsOf(config) {
-    const plugins = (config.plugins ?? []).slice();
-
-    if (config.resolve) {
-      let plugin = this.#resolvePlugins.get(config.resolve);
-
-      if (!plugin) {
-        plugin = fromConfigResolve(config.resolve);
-        this.#resolvePlugins.set(config.resolve, plugin);
-      }
-
-      plugins.push(plugin);
-    }
-
-    return plugins;
   }
 
   /**

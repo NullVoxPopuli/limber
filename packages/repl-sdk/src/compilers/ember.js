@@ -2,7 +2,8 @@
  * @typedef {import('../types.ts').CompilerConfig} CompilerConfig
  */
 
-import { errorMessage } from '../utils.js';
+import { babel, esmSh } from '../cdn.js';
+import { deCDN, errorMessage } from '../utils.js';
 import { macros } from './ember/macros.js';
 import { renamedModules } from './ember/renamed-modules.js';
 
@@ -19,44 +20,41 @@ const externalPackages = [
 ];
 
 /**
- * @param {string} id
- * @param {Record<string, string>} [versions]
- * @returns {string | undefined | (() => Record<string, unknown>)}
+ * Ember from a CDN, for a host that does not provide it.
+ *
+ * @type {import('../types.ts').Plugin}
  */
-function resolve(id, versions = {}) {
-  /**
-   * A pinned ember-source comes from npm, through its renamed modules.
-   * Its addons come from npm too, so that they match it.
-   */
-  if (versions['ember-source']) return;
+const cdn = {
+  name: 'repl-sdk:ember:cdn',
 
-  // Not on npm. A host that does not provide it gets the full build, which has the same API.
-  if (id === '@glimdown/babel-8-lite') {
-    return `https://esm.sh/@babel/standalone@8`;
-  }
+  resolveId(source, _importer, { versions }) {
+    /**
+     * A pinned ember-source comes from npm, through its renamed modules.
+     * Its addons come from npm too, so that they match it.
+     */
+    if (versions['ember-source']) return;
 
-  if (id === '@ember/template-compiler/runtime') {
-    return `https://esm.sh/*ember-source/dist/packages/@ember/template-compiler/runtime.js`;
-  }
+    const id = deCDN(source);
 
-  const external = externalPackages.find((name) => id.startsWith(name));
+    if (id === '@ember/template-compiler/runtime') {
+      return `https://esm.sh/*ember-source/dist/packages/@ember/template-compiler/runtime.js`;
+    }
 
-  if (external) {
-    const pinned = versions[external];
+    if (externalPackages.some((name) => id.startsWith(name))) {
+      return esmSh(versions, id, true);
+    }
 
-    return pinned
-      ? `https://esm.sh/*${external}@${pinned}${id.slice(external.length)}`
-      : `https://esm.sh/*${id}`;
-  }
+    if (id.startsWith('@ember')) {
+      return `https://esm.sh/*ember-source/dist/packages/${id}`;
+    }
 
-  if (id.startsWith('@ember')) {
-    return `https://esm.sh/*ember-source/dist/packages/${id}`;
-  }
+    if (id.startsWith('@glimmer')) {
+      return `https://esm.sh/*ember-source/dist/dependencies/${id}.js`;
+    }
+  },
+};
 
-  if (id.startsWith('@glimmer')) {
-    return `https://esm.sh/*ember-source/dist/dependencies/${id}.js`;
-  }
-}
+const plugins = [renamedModules, macros, babel, cdn];
 
 /**
     Example:
@@ -94,8 +92,7 @@ function onUnhandled(e, handle) {
  * @type {CompilerConfig}
  */
 export const gjs = {
-  plugins: [renamedModules, macros],
-  resolve,
+  plugins,
   onUnhandled,
   codemirror: {
     lang: async () => {
@@ -115,8 +112,7 @@ export const gjs = {
  * @type {CompilerConfig}
  */
 export const gts = {
-  plugins: [renamedModules, macros],
-  resolve,
+  plugins,
   onUnhandled,
   codemirror: {
     lang: async () => {
@@ -136,8 +132,7 @@ export const gts = {
  * @type {CompilerConfig}
  */
 export const hbs = {
-  plugins: [renamedModules, macros],
-  resolve,
+  plugins,
   onUnhandled,
   codemirror: {
     lang: async () => {
@@ -157,8 +152,7 @@ export const hbs = {
  * @type {CompilerConfig}
  */
 export const gmd = {
-  plugins: [renamedModules, macros],
-  resolve,
+  plugins,
   onUnhandled,
   codemirror: {
     lang: async () => {

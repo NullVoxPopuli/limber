@@ -1,24 +1,24 @@
+import { deCDN } from '../utils.js';
+
+/**
+ * Known to work with how the compiler and render functions are configured.
+ */
+const cdn = new Map([
+  ['vue', `https://cdn.jsdelivr.net/npm/vue@3.5.16/+esm`],
+  ['@vue/repl', `https://cdn.jsdelivr.net/npm/@vue/repl@4.5.1/+esm`],
+]);
+
 /**
  * @type {import('../types.ts').CompilerConfig}
  */
 export const vue = {
+  plugins: [{ name: 'repl-sdk:vue:cdn', resolveId: (id) => cdn.get(deCDN(id)) }],
   codemirror: {
     lang: async () => {
       const { vue } = await import('@codemirror/lang-vue');
 
       return vue();
     },
-  },
-  /**
-   * Default config, known to work with how the compiler and render functions are configured.
-   */
-  resolve: (id) => {
-    switch (id) {
-      case 'vue':
-        return `https://cdn.jsdelivr.net/npm/vue@3.5.16/+esm`;
-      case '@vue/repl':
-        return `https://cdn.jsdelivr.net/npm/@vue/repl@4.5.1/+esm`;
-    }
   },
   compiler: async (config, api) => {
     const [{ createApp }, { compileFile, useStore }] = await api.tryResolveAll([

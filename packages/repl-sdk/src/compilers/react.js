@@ -1,31 +1,27 @@
+import { babel } from '../cdn.js';
+import { deCDN } from '../utils.js';
+
+/**
+ * NOTE: react still only publishes CJS to NPM
+ */
+const cdn = new Map([
+  ['react', `https://esm.sh/react@19.2.3/es2022/react.development.mjs`],
+  ['react/jsx-dev-runtime', `https://esm.sh/react@19.2.3/es2022/jsx-dev-runtime.development.mjs`],
+  ['react/jsx-runtime', `https://esm.sh/react@19.2.3/es2022/jsx-runtime.mjs`],
+  ['react-dom/client', `https://esm.sh/react-dom@19.2.3/es2022/client.development.mjs`],
+]);
+
 /**
  * @type {import('../types.ts').CompilerConfig}
  */
 export const jsx = {
+  plugins: [babel, { name: 'repl-sdk:react:cdn', resolveId: (id) => cdn.get(deCDN(id)) }],
   codemirror: {
     lang: async () => {
       const { javascript } = await import('@codemirror/lang-javascript');
 
       return javascript({ jsx: true });
     },
-  },
-  resolve: (id) => {
-    /**
-     * NOTE: react still only publishes CJS to NPM
-     */
-    switch (id) {
-      case 'react':
-        return `https://esm.sh/react@19.2.3/es2022/react.development.mjs`;
-      case 'react/jsx-dev-runtime':
-        return `https://esm.sh/react@19.2.3/es2022/jsx-dev-runtime.development.mjs`;
-      case 'react/jsx-runtime':
-        return `https://esm.sh/react@19.2.3/es2022/jsx-runtime.mjs`;
-      case 'react-dom/client':
-        return `https://esm.sh/react-dom@19.2.3/es2022/client.development.mjs`;
-      // Not on npm. A host that does not provide it gets the full build, which has the same API.
-      case '@glimdown/babel-8-lite':
-        return `https://esm.sh/@babel/standalone@8`;
-    }
   },
   compiler: async (config, api) => {
     const [reactDom, babel] = await api.tryResolveAll([
