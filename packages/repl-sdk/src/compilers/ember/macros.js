@@ -5,7 +5,8 @@
 
 import { cache, secretKey } from '../../cache.js';
 import { satisfiesRange } from '../../fs/semver.js';
-import { parseVirtualUrl, virtualUrl } from '../../fs/url.js';
+import { installer } from '../../fs/store.js';
+import { parseNpmUrl, parseVirtualUrl, virtualUrl } from '../../fs/url.js';
 import { virtualModuleSource } from '../../fs/virtual.js';
 import { parseSpecifier } from '../../specifier.js';
 import { deCDN } from '../../utils.js';
@@ -122,24 +123,45 @@ export const macros = {
   },
 
   transform(code, url, ctx) {
-    return answerMacros(code, url, ctx);
+    return answerMacros(code, (name) => versionOf(name, url, ctx));
   },
 };
 
 /**
- * Replaces the macros about versions with `true` or `false`,
- * from the versions that the module gets in the compile in progress.
+ * The version of a package that a module gets, from the package.json files in the file system,
+ * as a build reads them from `node_modules`:
+ * the dependency of the module's own package, else the pin.
+ * The modules in `resolve` have no package.json, so their version comes from `packages`.
+ *
+ * @param {string} name
+ * @param {string} url the module
+ * @param {PluginContext} ctx
+ * @returns {Promise<string | undefined>}
+ */
+async function versionOf(name, url, ctx) {
+  const owner = parseNpmUrl(url);
+  const manifest = owner ? (await installer.package(owner.name, owner.version)).manifest : {};
+  const dependencies = /** @type {{ dependencies?: Record<string, string> }} */ (manifest)
+    .dependencies;
+  const range = dependencies?.[name] ?? ctx.versions[name];
+
+  if (range) return (await installer.package(name, range)).manifest.version;
+
+  return ctx.packages[name]?.version;
+}
+
+/**
+ * Replaces the macros about versions with `true` or `false`.
  *
  * Replaces each `importSync('x')` with an import of `x`, so that the loader follows it
  * like any import. A module that does not load throws only when code reads from it,
  * because the REPL keeps the branches that a build would remove.
  *
  * @param {string} code
- * @param {string} url the module
- * @param {Pick<PluginContext, 'versionOf'>} ctx
+ * @param {(name: string) => Promise<string | undefined>} versionOf the version of a package that the module gets
  * @returns {Promise<string | undefined>}
  */
-export async function answerMacros(code, url, ctx) {
+export async function answerMacros(code, versionOf) {
   if (!code.includes(MACROS)) return;
 
   const names = localNames(code);
@@ -151,7 +173,7 @@ export async function answerMacros(code, url, ctx) {
    * @param {string} range
    */
   async function satisfies(name, range) {
-    const version = await ctx.versionOf(name, url);
+    const version = await versionOf(name);
 
     return version !== undefined && satisfiesRange(version, range);
   }
@@ -162,7 +184,7 @@ export async function answerMacros(code, url, ctx) {
   const answers = {
     dependencySatisfies: (name, range = '*') => satisfies(name, range),
     appEmberSatisfies: (range) => satisfies('ember-source', range),
-    moduleExists: async (id) => (await ctx.versionOf(parseSpecifier(id).name, url)) !== undefined,
+    moduleExists: async (id) => (await versionOf(parseSpecifier(id).name)) !== undefined,
   };
 
   let result = code;

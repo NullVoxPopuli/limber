@@ -21,7 +21,6 @@ import {
   SRC_PREFIX,
 } from './fs/url.js';
 import { fsWorker } from './fs/worker.js';
-import { getNPMInfo, resolveVersion } from './npm.js';
 import { Pipeline, reexport } from './plugins.js';
 import { fromConfigResolve, fromHandlers } from './plugins/compiler-config.js';
 import { externalFiles } from './plugins/external.js';
@@ -92,7 +91,7 @@ export class Compiler {
     this.#pipeline = new Pipeline(
       (this.#options.plugins ?? []).concat(this.#provided),
       [externalFiles(), npm(defaultResolve)],
-      this.#versionOf
+      this.#options.packages
     );
 
     STABLE_REFERENCE.resolve = this.#resolve;
@@ -703,28 +702,6 @@ export class Compiler {
 
     return installed.get(url) ?? exactPackage(url);
   }
-
-  /**
-   * @type {import('./types.ts').PluginContext['versionOf']}
-   */
-  #versionOf = async (name, importer) => {
-    if (importer) {
-      const answer = await this.#pipeline.resolveId(name, importer);
-      const pkg = answer ? this.#packageOf(answer) : undefined;
-
-      if (pkg?.name === name) {
-        return pkg.version ?? this.#options.packages?.[name]?.version;
-      }
-    }
-
-    const pin = this.#pipeline.ctx.versions[name];
-
-    if (pin) {
-      return isExactVersion(pin) ? pin : resolveVersion(await getNPMInfo(name), pin);
-    }
-
-    return this.#options.packages?.[name]?.version;
-  };
 
   /**
    * No version means that the caller provided the module.

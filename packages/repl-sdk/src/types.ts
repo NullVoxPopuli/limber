@@ -168,12 +168,10 @@ export interface PluginContext {
   versions: { [packageName: string]: string };
 
   /**
-   * The exact version of a package that a module gets in the compile in progress:
-   * the version installed for the module, else the pin, else the version in `packages`.
-   * `undefined` when the module cannot import the package.
-   * Without `importer`, the version that the compile gets.
+   * The `packages` option: the versions of the modules in `resolve`.
+   * The file system does not have these packages.
    */
-  versionOf: (name: string, importer?: string) => Promise<string | undefined>;
+  packages: NonNullable<Options['packages']>;
 }
 
 export type LoadResult =

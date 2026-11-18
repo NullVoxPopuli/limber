@@ -105,11 +105,9 @@ new Compiler({
 
 Addons that load from npm use `@embroider/macros` without a build. When such a module loads, the Ember compilers answer its macros:
 
-- `dependencySatisfies`, `appEmberSatisfies` and `moduleExists` become `true` or `false`, from the versions that the module gets in this compile.
+- `dependencySatisfies`, `appEmberSatisfies` and `moduleExists` become `true` or `false`. The version comes from the package.json of the module's package, else the pin, else `packages`.
 - `importSync('x')` becomes an import of `x`, so the pins apply to it too.
 - `macroCondition` runs in the browser, so the branches that a build would remove stay.
-
-Plugins see the same versions through `ctx.versionOf(name, importer)`.
 
 ## Debugging
 

@@ -11,15 +11,13 @@ const stub = `data:text/javascript,${encodeURIComponent(
  */
 const versions: Record<string, string> = { 'ember-source': '6.4.0', nanoid: '5.1.5' };
 
-const ctx = {
-  versionOf: (name: string) => Promise.resolve(versions[name]),
-};
+const versionOf = (name: string) => Promise.resolve(versions[name]);
 
 /**
  * Runs the answered module, with a stand-in for `@embroider/macros`.
  */
 async function run(...lines: string[]): Promise<Record<string, unknown>> {
-  const answered = (await answerMacros(lines.join('\n'), 'file:///x.js', ctx)) ?? '';
+  const answered = (await answerMacros(lines.join('\n'), versionOf)) ?? '';
 
   expect(answered).not.toBe('');
 
@@ -32,9 +30,9 @@ async function run(...lines: string[]): Promise<Record<string, unknown>> {
 
 describe('answerMacros', () => {
   it('leaves code without @embroider/macros as it is', async () => {
-    expect(
-      await answerMacros(`export const x = importSync('node:path');`, 'file:///x.js', ctx)
-    ).toBe(undefined);
+    expect(await answerMacros(`export const x = importSync('node:path');`, versionOf)).toBe(
+      undefined
+    );
   });
 
   it('answers the macros about versions from the versions of the module', async () => {
@@ -77,8 +75,7 @@ describe('answerMacros', () => {
         `export const b = importSync('./old/map.js');`,
         `export const c = importSync('../');`,
       ].join('\n'),
-      'file:///x.js',
-      ctx
+      versionOf
     );
 
     expect(answered).toContain(
