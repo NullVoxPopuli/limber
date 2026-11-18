@@ -31,8 +31,8 @@ module('Output > Status bar', function (hooks) {
     QUnit.onUncaughtException = onUncaughtException;
   });
 
-  async function visitOutput(text: string) {
-    await visit(`/output?format=gjs&c=${compressToEncodedURIComponent(text)}`);
+  async function visitOutput(text: string, format = 'gjs') {
+    await visit(`/output?format=${format}&c=${compressToEncodedURIComponent(text)}`);
     await waitUntil(() => find('[data-test-error]') || find('[data-test-text]'), {
       timeout: 30_000,
     });
@@ -56,6 +56,15 @@ module('Output > Status bar', function (hooks) {
       );
     assert.dom(frame).includesText('{{nope}}');
     assert.dom('[data-test-error]').doesNotIncludeText('an unknown module');
+  });
+
+  test('a svelte runtime error shows the error that the component threw', async function (assert) {
+    /**
+     * As Svelte, `{ Input }` is an expression that reads an undefined global.
+     */
+    await visitOutput(`import { Input } from '@ember/component';\n\n<p>hi</p>`, 'svelte');
+
+    assert.dom(summary).hasText('Input is not defined');
   });
 
   test('a runtime error is one line, with the stack on request', async function (assert) {
