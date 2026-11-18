@@ -12,19 +12,14 @@ import { waitFor } from '@ember/test-waiters';
 
 import { createStore } from 'ember-primitives/store';
 import { resource } from 'ember-resources';
-import { Compiler } from 'repl-sdk';
+import { Compiler, preloaded } from 'repl-sdk';
 import { visit } from 'unist-util-visit';
 
 import { nameFor } from '../compile/utils.ts';
 import {
-  EMBER_SOURCE,
-  emberModule,
   emberSourceSpecifiers,
-  isEmberIndependent,
   modules,
-  packageOf,
-  preloadEmberSource,
-  provideForImportSync,
+  packagesFor,
 } from './known-modules.ts';
 
 import type { CompileResult, ModuleMap } from '../compile/types.ts';
@@ -92,6 +87,17 @@ interface CompilerOptions {
     remarkPlugins?: unknown[];
     rehypePlugins?: unknown[];
   };
+}
+
+/**
+ * An ember-source module of the compile in progress: the pinned one, or the bundled one.
+ */
+function emberModule<T>(specifier: string): T {
+  const value = preloaded<T>(specifier);
+
+  assert(`${specifier} did not load before the compile`, value);
+
+  return value;
 }
 
 /**
@@ -255,68 +261,6 @@ export default class CompilerService {
     }
   }
 
-  /**
-   * The pinned versions of the compile in progress.
-   */
-  #pins: Record<string, string> = {};
-
-  #emberSourceReady: Promise<void> | undefined;
-
-  /**
-   * A pinned package loads from npm in place of its bundled modules.
-   * repl-sdk looks in `resolve` first, so a hidden module goes to npm.
-   */
-  #isOverridden(specifier: string) {
-    if (packageOf(specifier) in this.#pins) return true;
-
-    /**
-     * Bundled addons import the bundled Ember,
-     * so with ember-source pinned they load from npm too.
-     */
-    if (EMBER_SOURCE in this.#pins) return !isEmberIndependent(specifier);
-
-    return false;
-  }
-
-  /**
-   * npm builds of addons call `importSync` from `@embroider/macros` for `@ember/*` modules,
-   * and it must answer at once.
-   * So the ember-source modules load before a compile:
-   * the bundled ones, or the pinned ones from npm.
-   *
-   * Two Embers on one page share every other npm module,
-   * so a page that pins ember-source must keep that pin.
-   *
-   * @param ext the format (and flavor) of the compile, whose compiler config has the plugins for the pins
-   */
-  async #prepareImportSync(ext: string, flavor: string | undefined) {
-    if (!(EMBER_SOURCE in this.#pins)) {
-      this.#emberSourceReady ??= preloadEmberSource();
-      await this.#emberSourceReady;
-
-      return;
-    }
-
-    await this.compiler.prepare(this.#pins, ext, flavor);
-
-    const values: Record<string, unknown> = {};
-
-    /**
-     * Older versions do not have every module that the bundle has.
-     */
-    await Promise.all(
-      emberSourceSpecifiers().map(async (specifier) => {
-        try {
-          [values[specifier]] = await this.compiler.tryResolveAll([specifier]);
-        } catch {
-          /* not in this version */
-        }
-      })
-    );
-
-    provideForImportSync(values);
-  }
-
   get lastInfo(): InfoMessage | undefined {
     const m = this.messages;
 
@@ -375,17 +319,13 @@ export default class CompilerService {
 
     this.#compiler = new Compiler({
       logging: location.search.includes('debug'),
+      resolve: localModules,
+      packages: packagesFor(Object.keys(localModules)),
       /**
-       * repl-sdk looks a module up here before it goes to npm,
-       * so hiding a module here is enough to override its bundle.
+       * npm builds of addons call `importSync` from `@embroider/macros` for `@ember/*` modules,
+       * and the hbs scope reads the helpers of the Ember in use.
        */
-      resolve: new Proxy(localModules, {
-        get: (target, key) => {
-          if (typeof key === 'string' && this.#isOverridden(key)) return;
-
-          return target[key as keyof typeof target];
-        },
-      }),
+      preload: emberSourceSpecifiers(),
       on: {
         log: (type: Message['type'], message: string, error?: unknown) => {
           this.messages.push(
@@ -393,14 +333,8 @@ export default class CompilerService {
           );
         },
         dependency: (name: string, version: string | undefined) => {
-          /**
-           * A bundled module is listed under its package,
-           * so all of `@ember/*` is one ember-source entry.
-           */
-          const key = version === undefined ? packageOf(name) : name;
-
           if (this.#pending) {
-            this.#pending.set(key, version);
+            this.#pending.set(name, version);
 
             return;
           }
@@ -408,7 +342,7 @@ export default class CompilerService {
           /**
            * An `import()` that runs after the compile.
            */
-          this.dependencies.set(key, version);
+          this.dependencies.set(name, version);
           this.#reportDependencies();
         },
       },
@@ -502,18 +436,12 @@ export default class CompilerService {
     await Promise.resolve();
 
     this.messages.length = 0;
-    this.#pins = (options?.['versions'] as Record<string, string>) ?? {};
 
     const pending = new Map<string, string | undefined>();
 
     this.#pending = pending;
 
     try {
-      await this.#prepareImportSync(
-        ext,
-        options?.['flavor'] as string | undefined
-      );
-
       return await this.compiler.compile(ext, text, options ?? {});
     } finally {
       /**
