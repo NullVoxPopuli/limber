@@ -27,7 +27,6 @@ packages:
   # packages/syntax / { syntax name } / { codemirror, lezer }
   - "./packages/syntax/*/*"
   - "./packages/syntax/*/*/dev"
-  - "./packages/syntax/*/*/tests"
 
 peerDependencyRules:
   allowAny:
