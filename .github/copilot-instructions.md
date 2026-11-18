@@ -35,7 +35,6 @@ limber/
 │   ├── app-support/       # Styles and shared utilities
 │   └── syntax/            # CodeMirror & Lezer syntax definitions
 │       ├── glimmer/       # Base Glimmer syntax
-│       ├── glimmer-ts/    # TypeScript variant
 │       ├── glimdown/      # Markdown/Glimdown syntax
 │       └── glimmer-js/    # JavaScript variant
 ├── dev/                   # Development tools (linting CLI)
