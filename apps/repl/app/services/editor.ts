@@ -1,6 +1,7 @@
 import { tracked } from '@glimmer/tracking';
 import { registerDestructor } from '@ember/destroyable';
 import Service, { service } from '@ember/service';
+import { VERSION } from '@ember/version';
 
 import { castToBoolean } from 'ember-primitives/qp';
 import { link } from 'reactiveweb/link';
@@ -101,10 +102,13 @@ export default class EditorService extends Service {
   }
 
   /**
-   * A pinned ember-source needs its own import map, so the output renders in a frame.
+   * Two Embers cannot share one page, so an ember-source pin
+   * that is not the Ember of this app renders in a frame.
    */
   get rendersInFrame() {
-    return 'ember-source' in this.renderInput.versions;
+    const pin = this.renderInput.versions['ember-source'];
+
+    return pin !== undefined && pin !== VERSION;
   }
 
   /**
@@ -154,9 +158,9 @@ export default class EditorService extends Service {
     this.update(text, format);
   };
 
-  update = (text: string, format: FormatQP) => {
+  update = (text: string, format: FormatQP, qps?: Record<string, string>) => {
     // Update ourselves
-    this.fileURIComponent.set(text, format);
+    this.fileURIComponent.set(text, format, qps);
 
     // Update the editor
     this.setCodemirrorState?.(text, format === 'hbs' ? 'hbs|ember' : format);
