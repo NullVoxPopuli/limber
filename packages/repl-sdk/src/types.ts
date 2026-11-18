@@ -36,19 +36,28 @@ export interface PublicMethods {
       flavor?: string;
       fileName?: string;
       /**
+       * Passed to the component that the document exports.
+       */
+      args?: Record<string, unknown>;
+      /**
        * Package versions for the bare imports of this compile.
        * Overrides the `versions` option.
        */
       versions?: { [packageName: string]: string };
+      [option: string]: unknown;
     }
   ) => Promise<{ element: HTMLElement; destroy: () => void }>;
 
+  /**
+   * The options that the host gave for this format,
+   * with the versions of the compile in progress.
+   */
   optionsFor: (
     format: string,
     flavor?: string
   ) => {
-    versions?: { [packageName: string]: string };
-    needsLiveMeta?: boolean;
+    versions: { [packageName: string]: string };
+    needsLiveMeta: boolean;
     [option: string]: unknown;
   };
 

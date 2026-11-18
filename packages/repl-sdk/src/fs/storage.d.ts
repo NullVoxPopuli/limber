@@ -10,7 +10,8 @@ export function linkDirectory(name: string): string;
 
 /**
  * The origin private file system, laid out like a project:
- * `/node_modules/<name>@<version>/...` and `/src/index.<ext>`.
+ * `/node_modules/.deps/<name>@<version>/...` and `/src/index.<ext>`.
+ * `/node_modules/<name>/` is a link to one of those versions.
  */
 export class Storage {
   constructor(getDirectory?: () => Promise<FileSystemDirectoryHandle>);

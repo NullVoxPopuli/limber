@@ -1,4 +1,5 @@
-import type { CompilerConfig, Options } from './types.ts';
+import type { Storage } from './fs/storage.js';
+import type { Options, PublicMethods } from './types.ts';
 import type { EditorView } from 'codemirror';
 
 export type {
@@ -18,25 +19,13 @@ export type {
  */
 export function errorMessage(error: unknown): string;
 
-export const defaultFormats: keyof Options['formats'];
-export const defaults: Options;
+export const defaultFormats: string[];
+export const defaults: Pick<Options, 'formats'>;
 
 export class Compiler {
   constructor(options?: Partial<Options>);
 
-  compile(
-    format: string,
-    text: string,
-    options?: {
-      flavor?: string;
-      fileName?: string;
-      /**
-       * Package versions for the bare imports of this compile.
-       * Overrides the `versions` option.
-       */
-      versions?: Record<string, string>;
-    }
-  ): Promise<{ element: HTMLElement; destroy: () => void }>;
+  compile: PublicMethods['compile'];
 
   /**
    * Runs the `buildStart` of every plugin, such as the install of a pinned ember-source.
@@ -47,11 +36,19 @@ export class Compiler {
   prepare(versions?: Record<string, string>, format?: string, flavor?: string): Promise<void>;
 
   /**
-   * Loads modules the way a compiler does: from the `resolve` option first, then from npm.
+   * Loads modules the way a compiler does: through the plugins, so a pin applies.
    */
   tryResolveAll(names: string[]): Promise<unknown[]>;
 
-  optionsFor(format: string, flavor?: string): Omit<CompilerConfig, 'compiler'>;
+  optionsFor: PublicMethods['optionsFor'];
+
+  /**
+   * The file system: installed packages under `/node_modules`,
+   * and the compiled snippet under `/src`.
+   */
+  readonly fs: Storage;
+
+  announceError(message: string): void;
 
   /**
    * Cretes a codemirror editor instance
@@ -78,6 +75,11 @@ export class Compiler {
        * Can be used to update external state (such as a URL or some other storage).
        */
       handleUpdate?: (updatedText: string) => void;
+
+      /**
+       * More codemirror extensions, after the ones of repl-sdk.
+       */
+      extensions?: unknown[];
     }
   ): Promise<{
     view: EditorView;
