@@ -166,6 +166,14 @@ export interface PluginContext {
    * The package versions of the compile in progress.
    */
   versions: { [packageName: string]: string };
+
+  /**
+   * The exact version of a package that a module gets in the compile in progress:
+   * the version installed for the module, else the pin, else the version in `packages`.
+   * `undefined` when the module cannot import the package.
+   * Without `importer`, the version that the compile gets.
+   */
+  versionOf: (name: string, importer?: string) => Promise<string | undefined>;
 }
 
 export type LoadResult =

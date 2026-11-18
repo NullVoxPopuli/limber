@@ -3,7 +3,6 @@
  */
 
 import { errorMessage } from '../utils.js';
-import { importSync } from './ember/import-sync.js';
 import { macros } from './ember/macros.js';
 import { renamedModules } from './ember/renamed-modules.js';
 
@@ -25,8 +24,6 @@ const externalPackages = [
  * @returns {string | undefined | (() => Record<string, unknown>)}
  */
 function resolve(id, versions = {}) {
-  if (id.startsWith('@embroider/macros')) return () => macros;
-
   /**
    * A pinned ember-source comes from npm, through its renamed modules.
    * Its addons come from npm too, so that they match it.
@@ -97,7 +94,7 @@ function onUnhandled(e, handle) {
  * @type {CompilerConfig}
  */
 export const gjs = {
-  plugins: [renamedModules, importSync],
+  plugins: [renamedModules, macros],
   resolve,
   onUnhandled,
   codemirror: {
@@ -118,7 +115,7 @@ export const gjs = {
  * @type {CompilerConfig}
  */
 export const gts = {
-  plugins: [renamedModules, importSync],
+  plugins: [renamedModules, macros],
   resolve,
   onUnhandled,
   codemirror: {
@@ -139,7 +136,7 @@ export const gts = {
  * @type {CompilerConfig}
  */
 export const hbs = {
-  plugins: [renamedModules, importSync],
+  plugins: [renamedModules, macros],
   resolve,
   onUnhandled,
   codemirror: {
@@ -160,7 +157,7 @@ export const hbs = {
  * @type {CompilerConfig}
  */
 export const gmd = {
-  plugins: [renamedModules, importSync],
+  plugins: [renamedModules, macros],
   resolve,
   onUnhandled,
   codemirror: {
