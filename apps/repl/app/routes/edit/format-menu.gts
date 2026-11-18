@@ -37,10 +37,6 @@ export async function switchFormat(editor: EditorService, value: string): Promis
   editor.load(text, qp);
 }
 
-function abbreviationFor(format: Format) {
-  return format === 'glimdown' ? 'gmd' : format;
-}
-
 const IconItem: TOC<{
   Args: {
     format: string;
@@ -66,18 +62,8 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
     await switchFormat(this.editor, format);
   };
 
-  isSelected = (format: Format) => {
-    const fmt = abbreviationFor(this.format);
-
-    return fmt === format;
-  };
-
   get format(): Format {
     return this.router.currentRoute?.queryParams?.format as Format;
-  }
-
-  get flavor(): string | undefined {
-    return this.router.currentRoute?.queryParams?.flavor as string | undefined;
   }
 
   @cached
