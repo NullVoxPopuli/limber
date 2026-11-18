@@ -2,18 +2,16 @@
 
 const path = require('path');
 
-const repoRoot = path.join(__dirname, '../../../');
-const replRoot = path.join(repoRoot, 'apps/repl');
-const tutorialRoot = path.join(repoRoot, 'apps/tutorial');
-const uiRoot = path.join(repoRoot, 'packages/app-support/shared');
+const shared = path.join(__dirname, '../shared');
 
-module.exports = {
+/**
+ * @param {string} appRoot the folder of the app that builds the CSS
+ */
+module.exports = (appRoot) => ({
   content: [
-    `${replRoot}/app/**/*.{js,ts,hbs,gjs,gts}`,
-    `${replRoot}/public/**/*.md`,
-    `${tutorialRoot}/app/**/*.{js,ts,hbs,gjs,gts}`,
-    `${tutorialRoot}/docs/**/*.{md,gjs}`,
-    `${uiRoot}/src/**/*.{js,ts,hbs,gjs,gts}`,
+    `${appRoot}/app/**/*.{js,ts,hbs,gjs,gts}`,
+    `${appRoot}/public/**/*.md`,
+    `${shared}/src/**/*.{js,ts,hbs,gjs,gts}`,
   ],
   theme: {
     variants: {
@@ -30,17 +28,7 @@ module.exports = {
     },
     fontFamily: {
       sans: ['system-ui', 'Helvetica', 'Arial', 'sans-serif'],
-      mono: [
-        'ui-monospace',
-        '-apple-system',
-        'BlinkMacSystemFont',
-        'Segoe WPC',
-        'Segoe UI',
-        'HelveticaNeue-Light',
-        'Ubuntu',
-        'Droid Sans',
-        'sans-serif',
-      ],
+      mono: ['ui-monospace', 'monospace', 'monospace'],
     },
     extend: {
       colors: {
@@ -89,4 +77,4 @@ module.exports = {
     },
   },
   plugins: [require('@tailwindcss/typography')],
-};
+});
