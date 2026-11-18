@@ -1,13 +1,12 @@
+import path from 'node:path';
+
+import theme from '@nullvoxpopuli/limber-styles';
 import autoprefixer from 'autoprefixer';
 import postcssImport from 'postcss-import';
 import tailwind from 'tailwindcss';
 
-const config = {
-  plugins: [
-    postcssImport(),
-    tailwind((await import('./tailwind.mjs')).default),
-    autoprefixer(),
-  ],
-};
+const appRoot = path.join(import.meta.dirname, '..');
 
-export default config;
+export default {
+  plugins: [postcssImport(), tailwind(theme(appRoot)), autoprefixer()],
+};
