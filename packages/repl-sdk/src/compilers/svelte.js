@@ -28,7 +28,7 @@ export const svelte = {
     //
     // See also: https://github.com/sveltejs/svelte/discussions/15658
     if (['svelte'].some((x) => id.startsWith(x))) {
-      return (
+      const url =
         esmSh(
           {
             svelte: '5.35.7',
@@ -37,8 +37,16 @@ export const svelte = {
           false
         ) +
         // + '?target=esnext';
-        '?dev&target=esnext&keep-names'
-      );
+        '?dev&target=esnext&keep-names';
+
+      /**
+       * The svelte runtime has import cycles that read live bindings,
+       * for example `active_effect` in `error-handling.js`.
+       * es-module-shims copies the exports of a module in a cycle one time,
+       * so those modules see the first value forever.
+       * A native import keeps the bindings live.
+       */
+      return () => import(/* @vite-ignore */ url);
     }
 
     // dependencies of svelte / the compiler
