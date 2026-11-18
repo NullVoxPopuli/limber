@@ -225,3 +225,13 @@ export async function snippetForFormat(format: string): Promise<string> {
 
   return getFromLabel(demo.label);
 }
+
+/**
+ * True when nobody edited the text after it loaded as a sample.
+ */
+export async function isUnchangedSnippet(text: string, format: string): Promise<boolean> {
+  if (LOADED.has(text)) return true;
+  if (text === DEFAULT_GJS || text === DEFAULT_GTS || text === DEFAULT_HBS) return true;
+
+  return text === (await snippetForFormat(format));
+}

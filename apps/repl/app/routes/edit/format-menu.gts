@@ -8,7 +8,7 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import Menu from '#components/menu.gts';
 import { formatQPFrom, infoFor, usage } from '#languages';
 
-import { snippetForFormat } from 'limber/snippets';
+import { isUnchangedSnippet, snippetForFormat } from 'limber/snippets';
 import { getStoredDocumentForFormat } from 'limber/utils/editor-text';
 
 import type { TOC } from '@ember/component/template-only';
@@ -20,9 +20,23 @@ import type EditorService from '#app/services/editor.ts';
 /**
  * The document of the new format is what the user last wrote in it,
  * or a sample when they never used it.
+ *
+ * With `keepCustomText`, text that the user wrote stays,
+ * because they can write a document and then pick its format.
  */
-export async function switchFormat(editor: EditorService, value: string): Promise<void> {
+export async function switchFormat(
+  editor: EditorService,
+  value: string,
+  { keepCustomText = false } = {}
+): Promise<void> {
   const qp = formatQPFrom(value);
+
+  if (keepCustomText && !(await isUnchangedSnippet(editor.text ?? '', editor.format))) {
+    editor.updateFormat(qp);
+
+    return;
+  }
+
   const text = getStoredDocumentForFormat(qp) ?? (await snippetForFormat(qp));
 
   editor.update(text, qp);
@@ -54,7 +68,7 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
 
   switch = async (format: FormatQP): Promise<void> => {
     usage.track(format);
-    await switchFormat(this.editor, format);
+    await switchFormat(this.editor, format, { keepCustomText: true });
   };
 
   isSelected = (format: Format) => {

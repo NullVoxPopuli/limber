@@ -1,9 +1,11 @@
 import { click, findAll, waitUntil } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import QUnit, { module, test } from 'qunit';
+
+import { getCompiler } from 'ember-repl';
 
 import { clearLocalStorage, getService, setupApplicationCompilerTest } from '#tests/helpers.ts';
 
-import { getFromLabel } from 'limber/snippets';
+import { DEFAULT_GJS, getFromLabel } from 'limber/snippets';
 import { fileFromParams } from 'limber/utils/messaging';
 
 import { Page } from './-page';
@@ -13,7 +15,7 @@ module('Editor > Format menu', function (hooks) {
   clearLocalStorage(hooks);
 
   const page = new Page();
-  const gjs = `const greeting = 'hi';\n\n<template>{{greeting}}</template>`;
+  const custom = `const greeting = 'hi';\n\n<template>{{greeting}}</template>`;
 
   function currentFile() {
     return fileFromParams(getService('router').currentRoute?.queryParams ?? {});
@@ -27,12 +29,12 @@ module('Editor > Format menu', function (hooks) {
     if (!item) throw new Error(`No menu item named ${name}`);
 
     await click(item);
-    await waitUntil(() => currentFile().text !== gjs, { timeout: 5_000 });
+    await waitUntil(() => currentFile().format === name.toLowerCase(), { timeout: 5_000 });
   }
 
   for (const name of ['Svelte', 'Mermaid']) {
     test(`choosing ${name} loads the ${name} sample`, async function (assert) {
-      await page.visitEdit('gjs', gjs);
+      await page.visitEdit('gjs', DEFAULT_GJS);
       await page.editor.load();
       await choose(name);
 
@@ -49,9 +51,33 @@ module('Editor > Format menu', function (hooks) {
   test('choosing a format loads what was last written in it', async function (assert) {
     localStorage.setItem('svelte-doc', '<p>mine</p>');
 
-    await page.visitEdit('gjs', gjs);
+    await page.visitEdit('gjs', DEFAULT_GJS);
     await choose('Svelte');
 
     assert.strictEqual(currentFile().text, '<p>mine</p>');
+  });
+
+  test('choosing a format keeps text that was written by hand', async function (this: object, assert) {
+    /**
+     * The gjs text does not compile as svelte, and nobody awaits the failed compile.
+     */
+    const onUncaughtException = QUnit.onUncaughtException;
+
+    QUnit.onUncaughtException = () => {};
+
+    try {
+      await page.visitEdit('gjs', custom);
+      await page.editor.load();
+      await choose('Svelte');
+
+      assert.strictEqual(currentFile().format, 'svelte');
+      assert.strictEqual(currentFile().text, custom);
+      assert.strictEqual(page.editor.format, 'svelte');
+      assert.true(page.editor.hasText(custom), 'the editor keeps the text');
+
+      await waitUntil(() => getCompiler(this).lastError, { timeout: 30_000 });
+    } finally {
+      QUnit.onUncaughtException = onUncaughtException;
+    }
   });
 });
