@@ -9,13 +9,7 @@ import LZString from 'lz-string';
 
 const { compressToEncodedURIComponent } = LZString;
 
-import {
-  flavorFrom,
-  formatFrom,
-  type FormatQP,
-  formatQPFrom,
-  isAllowedFormat,
-} from '#app/languages.gts';
+import { formatFrom, type FormatQP, formatQPFrom } from '#app/languages.gts';
 
 import { fileFromParams } from 'limber/utils/messaging';
 
@@ -133,30 +127,11 @@ export class FileURIComponent {
     const search = location.split('?')[1];
     const queryParams = new URLSearchParams(search);
 
-    const format = queryParams.get('format');
-
-    if (isAllowedFormat(format)) {
-      return format as FormatQP;
-    }
-
-    if (format === 'glimdown' || format === 'gdm') {
-      return 'gmd';
-    }
-
-    return 'gmd';
+    return formatFrom(queryParams.get('format'));
   }
   set format(value: string) {
     this.#updateFormatQP(value);
     this.#pushUpdate();
-  }
-
-  get flavor() {
-    const location = this.#currentURL();
-
-    const search = location.split('?')[1];
-    const queryParams = new URLSearchParams(search);
-
-    return flavorFrom(this.format, queryParams.get('flavor'));
   }
 
   constructor() {

@@ -149,76 +149,33 @@ const ALIASES = {
   gdm: 'gmd',
 } as Record<string, string>;
 
-export const DEFAULT_FORMAT = 'glimdown';
-
 export const ALLOWED_FORMATS = Object.keys(languages);
-
-export const ALLOWED_FLAVORS = {
-  jsx: ['react'],
-} as Record<string, string[]>;
 
 export type Format = (typeof ALLOWED_FORMATS)[number];
 
-function key(format: string, flavor: undefined | string) {
-  const lang = flavor ? `${format}|${flavor}` : format;
+export function infoFor(format: string) {
+  const info = LANGUAGE[ALIASES[format] ?? format];
 
-  return lang;
-}
-
-export function infoFor(format: string, flavor?: undefined | string) {
-  const lang = flavor ? `${format}|${flavor}` : format;
-
-  let info = LANGUAGE[key(format, flavor)];
-
-  // We have to do an alias check for all the prior former styles of formats
-  if (!info && ALIASES[format]) {
-    info = LANGUAGE[key(ALIASES[format], flavor)];
-  }
-
-  assert(`Could not find info for ${lang}${flavor ? ` and ${flavor}` : ''}`, info);
+  assert(`Could not find info for ${format}`, info);
 
   return info;
-}
-
-export function iconFor(format: string, flavor: undefined | string) {
-  return infoFor(format, flavor).icon;
-}
-
-export function nameFor(format: string, flavor: undefined | string) {
-  return infoFor(format, flavor).name;
 }
 
 export function isAllowedFormat(x?: string | null): x is (typeof ALLOWED_FORMATS)[number] {
   return Boolean(x && ALLOWED_FORMATS.includes(x));
 }
 
-function isAllowedFlavor(format: string, flavor: string) {
-  return (ALLOWED_FLAVORS[format] ?? []).includes(flavor);
-}
-
-export function flavorFrom(format: string | undefined | null, flavor?: string | null) {
-  if (!format) return;
-  if (!flavor) return;
-
-  if (isAllowedFlavor(format, flavor)) {
-    return flavor;
-  }
-
-  return;
-}
-
 export function formatQPFrom(x: string | undefined | null): FormatQP {
-  // Historical Compat
-  if (x === 'glimdown') return 'gmd';
-  if (x === 'gdm') return 'gmd';
-
   assert(`Expected formatQP to be set`, x);
+
+  const format = ALIASES[x] ?? x;
+
   assert(
-    `Expected ${JSON.stringify(x)} to be one of ${Object.keys(languages).join(', ')}`,
-    Object.keys(languages).includes(x)
+    `Expected ${JSON.stringify(x)} to be one of ${ALLOWED_FORMATS.join(', ')}`,
+    isAllowedFormat(format)
   );
 
-  return x as FormatQP;
+  return format as FormatQP;
 }
 
 export function formatFrom(x: string | undefined | null): FormatQP {
