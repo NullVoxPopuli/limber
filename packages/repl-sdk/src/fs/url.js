@@ -112,14 +112,6 @@ export function pathOf(url) {
 }
 
 /**
- * @param {string} path an absolute path in storage
- * @returns {string}
- */
-export function urlFor(path) {
-  return `file://${path}`;
-}
-
-/**
  * What a synchronous `resolve` can say about a bare specifier before anything
  * has been downloaded: which package, at which range, at which subpath.
  *

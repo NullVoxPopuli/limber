@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import { Installer } from './install.js';
 import { maxSatisfying, satisfiesRange } from './semver.js';
+import { parseNpmUrl, specifierUrl } from './url.js';
 
 import type { InstalledPackage } from '../types.js';
 
@@ -105,6 +106,15 @@ function scopeFor(url: string) {
   return scope;
 }
 
+/**
+ * The way an import of a bare specifier reaches the installer.
+ */
+async function install(specifier: string) {
+  const url = (await installer.resolveUrl(specifierUrl(specifier))) as string;
+
+  return { url, version: parseNpmUrl(url)?.version };
+}
+
 beforeEach(() => {
   asked = [];
   installs = [];
@@ -140,19 +150,14 @@ describe('semver', () => {
 
 describe('install', () => {
   it('names the file the entry point resolved to', async () => {
-    const result = await installer.install('app');
-
-    expect(result).toEqual({
-      specifier: 'app',
+    expect(await install('app')).toEqual({
       url: 'file:///node_modules/.deps/app@1.0.0/index.js',
-      name: 'app',
       version: '1.0.0',
     });
-    expect(installer.imports).toEqual({ app: 'file:///node_modules/.deps/app@1.0.0/index.js' });
   });
 
   it('treats a file the package has as already resolved', async () => {
-    await installer.install('app');
+    await install('app');
 
     expect(await installer.resolveUrl('file:///node_modules/.deps/app@1.0.0/index.js')).toBe(
       'file:///node_modules/.deps/app@1.0.0/index.js'
@@ -167,7 +172,7 @@ describe('install', () => {
 
 describe('dependency scopes', () => {
   it('scopes each package to the versions its own package.json asked for', async () => {
-    await installer.install('app');
+    await install('app');
     await installer.resolveUrl('file:///node_modules/left@%5E1.0.0');
 
     expect(scopes['file:///node_modules/.deps/app@1.0.0/']).toMatchObject({
@@ -180,7 +185,7 @@ describe('dependency scopes', () => {
   });
 
   it('maps the subpath prefix too, so deep imports keep the version', async () => {
-    await installer.install('app');
+    await install('app');
 
     expect(scopeFor('file:///node_modules/.deps/app@1.0.0/')['left/']).toBe(
       'file:///node_modules/left@%5E1.0.0/'
@@ -233,7 +238,7 @@ describe('what storage already has', () => {
   it('asks for the stored version by exact number instead of the range', async () => {
     stored = { legacy: ['1.0.0', '2.1.0'] };
 
-    const { version } = await installer.install('legacy@^2.0.0');
+    const { version } = await install('legacy@^2.0.0');
 
     expect(version).toBe('2.1.0');
     expect(asked).toEqual(['legacy@2.1.0']);
@@ -242,7 +247,7 @@ describe('what storage already has', () => {
   it('asks for the range when nothing stored satisfies it', async () => {
     stored = { legacy: ['1.0.0'] };
 
-    const { version } = await installer.install('legacy@^2.0.0');
+    const { version } = await install('legacy@^2.0.0');
 
     expect(version).toBe('2.1.0');
     expect(asked).toEqual(['legacy@^2.0.0']);
@@ -263,8 +268,8 @@ describe('what storage already has', () => {
       addImportMap: () => {},
     });
 
-    await installer.install('shared@^1.2.0');
-    await installer.install('legacy@^1.0.0');
+    await install('shared@^1.2.0');
+    await install('legacy@^1.0.0');
 
     expect(asked).toEqual(['shared@1.9.0', 'legacy@^1.0.0']);
     expect(listed).toBe(1);
@@ -276,7 +281,6 @@ describe('ensure', () => {
     expect(await installer.ensure('legacy', '2.1.0')).toBe('2.1.0');
     expect(asked).toEqual(['legacy@2.1.0']);
     expect(links).toEqual({ legacy: '2.1.0' });
-    expect(installer.imports).toEqual({});
   });
 
   it('means the linked version when there is one', async () => {
@@ -289,7 +293,7 @@ describe('ensure', () => {
   it('is what an unversioned import resolves to afterwards', async () => {
     await installer.ensure('legacy', '2.1.0');
 
-    const { version } = await installer.install('legacy');
+    const { version } = await install('legacy');
 
     expect(version).toBe('2.1.0');
     expect(asked).not.toContain('legacy@latest');
@@ -307,7 +311,7 @@ describe('links', () => {
   it('means the linked version when no version is asked for', async () => {
     links = { legacy: '1.0.0' };
 
-    const { version } = await installer.install('legacy');
+    const { version } = await install('legacy');
 
     expect(version).toBe('1.0.0');
     expect(asked).toEqual(['legacy@1.0.0']);
@@ -316,7 +320,7 @@ describe('links', () => {
   it('does not let a link answer for an explicit range', async () => {
     links = { legacy: '1.0.0' };
 
-    const { version } = await installer.install('legacy@^2.0.0');
+    const { version } = await install('legacy@^2.0.0');
 
     expect(version).toBe('2.1.0');
     expect(links).toEqual({ legacy: '1.0.0' });

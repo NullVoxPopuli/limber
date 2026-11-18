@@ -30,9 +30,6 @@ export class Installer {
   /** @type {Installs} */
   #worker;
 
-  /** @type {Record<string, string>} specifier => url */
-  #imports = {};
-
   /** @type {Map<string, Promise<string>>} */
   #resolving = new Map();
 
@@ -59,36 +56,12 @@ export class Installer {
     this.#addImportMap = addImportMap ?? defaultAddImportMap;
   }
 
-  /**
-   * Everything installed so far, as an import map. Not needed for resolution,
-   * which is why `resolve` can be as simple as it is. Useful for debugging and
-   * for showing which versions a demo actually ran against.
-   */
-  get imports() {
-    return { ...this.#imports };
-  }
-
   clear() {
-    this.#imports = {};
     this.#resolving.clear();
     this.#scoped.clear();
     this.#packages.clear();
     this.#stored = undefined;
     this.#links = undefined;
-  }
-
-  /**
-   * @param {string} specifier `nanoid`, `nanoid/non-secure`, `nanoid@6.0.1`
-   * @returns {Promise<{ specifier: string, url: string, name: string, version: string }>}
-   */
-  async install(specifier) {
-    const { name, version = 'latest', path } = parseSpecifier(specifier);
-    const url = await this.#resolveIn(name, version, path);
-    const installed = /** @type {{ name: string, version: string }} */ (parseNpmUrl(url));
-
-    this.#imports[specifier] = url;
-
-    return { specifier, url, name: installed.name, version: installed.version };
   }
 
   /**
