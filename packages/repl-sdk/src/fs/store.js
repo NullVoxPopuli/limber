@@ -1,7 +1,5 @@
-import { takeEntry } from './entry.js';
 import { Installer } from './install.js';
 import { Storage } from './storage.js';
-import { pathOf, typeFor } from './url.js';
 import { fsWorker } from './worker.js';
 
 /**
@@ -31,37 +29,4 @@ export const installer = new Installer({
  */
 export function clearFs() {
   installer.clear();
-}
-
-/**
- * The es-module-shims `source` hook.
- *
- * Async on purpose. This is what lets `resolve` stay dumb: anything the
- * installer missed can still be fetched here, without having to hand out an
- * opaque placeholder URL from a synchronous resolve first.
- *
- * @param {Storage} files
- * @param {Installer} installs
- */
-export function createSourceHook(files, installs) {
-  /**
-   * @param {string} url
-   * @param {RequestInit} fetchOpts
-   * @param {string} parent
-   * @param {(url: string, fetchOpts: RequestInit, parent: string) => Promise<any>} defaultSourceHook
-   */
-  return async function source(url, fetchOpts, parent, defaultSourceHook) {
-    /**
-     * Hot reloading appends ?v={n}. The registry key keeps it, the fs doesn't.
-     */
-    const path = url.replace(/\?v=\d+$/, '');
-    const real = (await installs.resolveUrl(path)) ?? path;
-    const text = takeEntry(url) ?? (await files.read(pathOf(real)));
-
-    if (text !== undefined) {
-      return { url: real === path ? url : real, type: typeFor(real), source: text };
-    }
-
-    return defaultSourceHook(url, fetchOpts, parent);
-  };
 }

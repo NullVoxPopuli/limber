@@ -13,15 +13,6 @@ export class Installer {
   });
 
   /**
-   * Everything installed so far, as an import map. Not needed for resolution.
-   */
-  readonly imports: Record<string, string>;
-
-  install(
-    specifier: string
-  ): Promise<{ specifier: string; url: string; name: string; version: string }>;
-
-  /**
    * Puts a package in the file system without asking for a file in it.
    * The linked version wins when there is one. Resolves to the version in
    * storage.

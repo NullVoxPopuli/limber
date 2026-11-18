@@ -12,16 +12,3 @@ export const installer: Installer;
  * Forgets what this page resolved. The files stay.
  */
 export function clearFs(): void;
-
-/**
- * The es-module-shims `source` hook, over the given file system and installer.
- */
-export function createSourceHook(
-  files: Storage,
-  installs: Installer
-): (
-  url: string,
-  fetchOpts: RequestInit,
-  parent: string,
-  defaultSourceHook: (url: string, fetchOpts: RequestInit, parent: string) => Promise<unknown>
-) => Promise<unknown>;

@@ -40,7 +40,6 @@ export function parseResolvingUrl(url: string): undefined | { id: string; import
  * The path in storage a URL names, without the query.
  */
 export function pathOf(url: string): string;
-export function urlFor(path: string): string;
 
 export function npmUrl(name: string, version: string, path?: string): string;
 export function parseNpmUrl(

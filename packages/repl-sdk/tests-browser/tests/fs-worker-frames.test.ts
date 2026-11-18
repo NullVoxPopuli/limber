@@ -1,7 +1,7 @@
 import { wrap } from 'comlink';
 import { describe, expect, test } from 'vitest';
 
-import type { FsWorker } from 'repl-sdk/fs/worker';
+import type { FsWorker } from '../../src/fs/worker.js';
 
 /**
  * Each REPL frame on a page gets its own worker, like the docs page that
