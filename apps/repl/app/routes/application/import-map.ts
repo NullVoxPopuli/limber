@@ -2,7 +2,9 @@ import { cell } from 'ember-resources';
 
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
-export const importMap = {
+import type { ModuleMap } from 'ember-repl';
+
+export const importMap: ModuleMap = {
   // svelte: () => import('svelte'),
   // Ember Libraries Bundled with this REPL
   'ember-deep-tracked': () => import('ember-deep-tracked'),
@@ -26,8 +28,6 @@ export const importMap = {
   'limber-ui': () => import('limber-ui'),
   '@nullvoxpopuli/limber-shared': () => import('@nullvoxpopuli/limber-shared'),
   'limber/components/header': () => import('#edit/header.gts'),
-  'limber/components/limber/header': () => import('#edit/header.gts'),
-  'limber/components/limber/menu': () => import('#components/menu.gts'),
   'limber/components/menu': () => import('#components/menu.gts'),
   '@fortawesome/fontawesome-svg-core': () => import('@fortawesome/fontawesome-svg-core'),
 
@@ -57,32 +57,35 @@ export const importMap = {
 };
 
 function defineWithWarning(
-  obj: object | (() => unknown),
+  obj: Record<string, unknown> | (() => Promise<unknown>),
   { name, original, replacement }: { name?: string; original: string; replacement?: string }
 ) {
-  Object.defineProperty(importMap, original, {
-    get() {
-      const suggestion = replacement
-        ? `Please use ${replacement} going forward.`
-        : `There is not a direct replacement, please consult the docs for the library you're trying to use.`;
+  /**
+   * ember-repl copies this map with a spread, so the alias must be a plain
+   * property. The warning goes in the loader, so it shows only for documents
+   * that import the alias.
+   */
+  importMap[original] = () => {
+    const suggestion = replacement
+      ? `Please use ${replacement} going forward.`
+      : `There is not a direct replacement, please consult the docs for the library you're trying to use.`;
 
-      if (name) {
-        console.warn(
-          `${name} is no longer located at ${original} and has been aliased for you. ${suggestion}`
-        );
-      } else {
-        console.warn(
-          `The import you are using at ${original} no longerg exists and has been aliased for you. ${suggestion}`
-        );
-      }
+    if (name) {
+      console.warn(
+        `${name} is no longer located at ${original} and has been aliased for you. ${suggestion}`
+      );
+    } else {
+      console.warn(
+        `The import you are using at ${original} no longer exists and has been aliased for you. ${suggestion}`
+      );
+    }
 
-      if (typeof obj === 'function') {
-        return obj();
-      }
+    if (typeof obj === 'function') {
+      return obj();
+    }
 
-      return obj;
-    },
-  });
+    return obj;
+  };
 }
 
 /**
@@ -92,11 +95,14 @@ function defineWithWarning(
  *
  * We could probably log a deprecation message on these paths
  */
-defineWithWarning(ExternalLink, {
-  name: '<ExternalLink />',
-  original: 'limber/components/external-link',
-  replacement: '@nullvoxpopuli/limber-shared',
-});
+defineWithWarning(
+  { default: ExternalLink, ExternalLink },
+  {
+    name: '<ExternalLink />',
+    original: 'limber/components/external-link',
+    replacement: '@nullvoxpopuli/limber-shared',
+  }
+);
 defineWithWarning(
   async () => {
     const ePrimitives = await import('ember-primitives');
