@@ -88,10 +88,11 @@ export class Compiler {
     const defaultResolve = () => this.#defaultResolve;
 
     this.#provided = providedModules(this.#options.resolve, this.#options.packages);
-    this.#pipeline = new Pipeline((this.#options.plugins ?? []).concat(this.#provided), [
-      externalFiles(),
-      npm(defaultResolve),
-    ]);
+    this.#pipeline = new Pipeline(
+      (this.#options.plugins ?? []).concat(this.#provided),
+      [externalFiles(), npm(defaultResolve)],
+      this.#options.packages
+    );
 
     STABLE_REFERENCE.resolve = this.#resolve;
     STABLE_REFERENCE.source = this.#source;

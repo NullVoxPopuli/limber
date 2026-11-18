@@ -275,6 +275,31 @@ const version: string = VERSION;
     assert.dom('[data-test-text]').hasText('6.10.0');
   });
 
+  test('an addon from npm gets the macros of the pinned ember-source', async function (assert) {
+    /**
+     * The pin loads ember-primitives from npm too, and its entry imports
+     * `isTesting` and calls `importSync`.
+     */
+    const qps = new URLSearchParams({
+      format: 'gjs',
+      deps: 'ember-source@7.4.0',
+      c: compressToEncodedURIComponent(`
+import { VERSION } from '@ember/version';
+import { ExternalLink } from 'ember-primitives';
+
+<template>
+  <p data-test-text>{{VERSION}}</p>
+  <ExternalLink data-test-link href="https://example.com">a link</ExternalLink>
+</template>
+`),
+    });
+
+    await visit(`/output?${qps.toString()}`);
+
+    assert.dom('[data-test-text]').hasText('7.4.0');
+    assert.dom('[data-test-link]').hasAttribute('target', '_blank');
+  });
+
   test('the edit page renders a pinned ember-source in a frame', async function (assert) {
     this.owner.lookup('service:editor').setCodemirrorState = () => {};
 

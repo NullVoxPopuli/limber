@@ -26,8 +26,11 @@ export class Pipeline {
   /** @type {Plugin[]} */
   #all;
 
+  /** @type {PluginContext['packages']} */
+  #packages;
+
   /** @type {PluginContext} */
-  ctx = { versions: {} };
+  ctx;
 
   /**
    * Each compile can change the answers, for example with a different pin.
@@ -45,8 +48,11 @@ export class Pipeline {
   /**
    * @param {Plugin[]} first
    * @param {Plugin[]} last
+   * @param {PluginContext['packages']} [packages]
    */
-  constructor(first, last) {
+  constructor(first, last, packages = {}) {
+    this.#packages = packages;
+    this.ctx = { versions: {}, packages };
     this.#first = first;
     this.#last = last;
     this.#all = first.concat(last);
@@ -90,7 +96,7 @@ export class Pipeline {
    * @param {PluginContext['versions']} versions
    */
   async buildStart(versions) {
-    this.ctx = { versions };
+    this.ctx = { versions, packages: this.#packages };
     this.#build += 1;
     this.#resolved.clear();
 
