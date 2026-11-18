@@ -169,7 +169,14 @@ export interface PluginContext {
 
   /**
    * The `packages` option: the versions of the modules in `resolve`.
-   * The file system does not have these packages.
+   *
+   * Plugins read every other version from the package.json files in the file system.
+   * These packages have no files there, because each module is a live object from the host,
+   * such as `() => import('@ember/owner')`.
+   *
+   * They stay out of the file system on purpose.
+   * The installer reuses any package that it has for a range that the package satisfies,
+   * so a package.json without files would send a pin to files that do not exist.
    */
   packages: NonNullable<Options['packages']>;
 }
