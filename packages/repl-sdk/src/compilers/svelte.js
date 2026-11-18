@@ -1,4 +1,58 @@
 import { esmSh } from '../cdn.js';
+import { liveModules } from '../plugins/provided.js';
+import { deCDN } from '../utils.js';
+
+/**
+ * Dependencies of svelte and of its compiler.
+ */
+const dependencies = [
+  'zimmerframe',
+  'locate-character',
+  'acorn',
+  'clsx',
+  'magic-string',
+  '@ampproject/remapping',
+  '@jridgewell/sourcemap-codec',
+  'axobject-query',
+  'esrap',
+  'is-reference',
+  'aria-query',
+  '@sveltejs/acorn-typescript',
+];
+
+/**
+ * This is basically an importmap, known to work with how the compiler
+ * and render functions are configured.
+ *
+ * Svelte 5 is no longer bundled, and has a tooooon of modules.
+ * See also: https://github.com/sveltejs/svelte/discussions/15658
+ *
+ * The svelte runtime has import cycles that read live bindings,
+ * for example `active_effect` in `error-handling.js`.
+ * es-module-shims copies the exports of a module in a cycle one time,
+ * so those modules see the first value forever.
+ * A native import keeps the bindings live.
+ */
+const runtime = liveModules('repl-sdk:svelte:runtime', 'configured', (id) => {
+  if (!id.startsWith('svelte')) return;
+
+  const url = esmSh({ svelte: '5.35.7' }, id) + '?dev&target=esnext&keep-names';
+
+  return () => import(/* @vite-ignore */ url);
+});
+
+/**
+ * @type {import('../types.ts').Plugin}
+ */
+const cdn = {
+  name: 'repl-sdk:svelte:cdn',
+
+  resolveId(source) {
+    const id = deCDN(source);
+
+    if (dependencies.some((x) => id.startsWith(x))) return esmSh({}, id);
+  },
+};
 
 /**
  * @type {import('../types.ts').CompilerConfig}
@@ -12,63 +66,7 @@ export const svelte = {
     },
   },
 
-  /**
-   * Default config, known to work with how the compiler and render functions are configured.
-   */
-  resolve: (id) => {
-    // This is basically an importmap.
-    // Because Svelte 5 is no longer bundled, we need another service to provide
-    // these.
-    //
-    // Svelte 5 has a tooooon of modules, and repl-sdk (at the time of writing)
-    // runs out of memory and crashes the browser while loading everything.
-    //
-    // There are optimizations to be had, for sure.
-    // But this is good for now.
-    //
-    // See also: https://github.com/sveltejs/svelte/discussions/15658
-    if (['svelte'].some((x) => id.startsWith(x))) {
-      const url =
-        esmSh(
-          {
-            svelte: '5.35.7',
-          },
-          id,
-          false
-        ) +
-        // + '?target=esnext';
-        '?dev&target=esnext&keep-names';
-
-      /**
-       * The svelte runtime has import cycles that read live bindings,
-       * for example `active_effect` in `error-handling.js`.
-       * es-module-shims copies the exports of a module in a cycle one time,
-       * so those modules see the first value forever.
-       * A native import keeps the bindings live.
-       */
-      return () => import(/* @vite-ignore */ url);
-    }
-
-    // dependencies of svelte / the compiler
-    if (
-      [
-        'zimmerframe',
-        'locate-character',
-        'acorn',
-        'clsx',
-        'magic-string',
-        '@ampproject/remapping',
-        '@jridgewell/sourcemap-codec',
-        'axobject-query',
-        'esrap',
-        'is-reference',
-        'aria-query',
-        '@sveltejs/acorn-typescript',
-      ].some((x) => id.startsWith(x))
-    ) {
-      return esmSh({}, id, false);
-    }
-  },
+  plugins: [runtime, cdn],
   compiler: async (config, api) => {
     const [svelte, compiler] = await api.tryResolveAll(['svelte', 'svelte/compiler']);
 

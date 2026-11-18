@@ -1,18 +1,23 @@
 import { esmSh } from '../cdn.js';
+import { deCDN } from '../utils.js';
 
 /**
  * @type {import('../types.ts').CompilerConfig}
  */
 export const mermaid = {
   needsLiveMeta: false,
-  /**
-   * A host that does not provide mermaid gets the CDN build,
-   * which has its dependencies inlined.
-   *
-   * @param {string} id
-   * @param {Record<string, string>} [versions]
-   */
-  resolve: (id, versions = {}) => (id === 'mermaid' ? esmSh(versions, 'mermaid') : undefined),
+  plugins: [
+    {
+      name: 'repl-sdk:mermaid:cdn',
+
+      /**
+       * A host that does not provide mermaid gets the CDN build,
+       * which has its dependencies inlined.
+       */
+      resolveId: (id, _importer, { versions }) =>
+        deCDN(id) === 'mermaid' ? esmSh(versions, 'mermaid') : undefined,
+    },
+  ],
   codemirror: {
     lang: async () => {
       const { mermaid } = await import('codemirror-lang-mermaid');

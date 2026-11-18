@@ -80,7 +80,7 @@ An id is a URL in the module fs. An http(s) id downloads into the fs under `file
 
 `resolveId` can be async. A synchronous answer costs nothing extra. An async answer costs one small module for each importer, which re-exports the answer, so the module itself still loads one time. In that re-export, `default` is not a live binding.
 
-A compiler config can have `plugins` too. Its `resolve` and its compiler's `handlers` become plugins.
+A compiler config can have `plugins` too, and so can the compiler that it returns.
 
 ## Provided modules and pins
 

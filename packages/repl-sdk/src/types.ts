@@ -115,50 +115,23 @@ export interface Compiler {
   ) => Promise<void | (() => void)>;
 
   /**
-   * Sometimes libraries do not publish browser-compatible modules,
-   * and require additional transpilation.
-   * Usually this happens by the consuming application's build process -- but in this REPL,
-   * we are kind of not exactly a consuming application, but still need to handle the further
-   * build concerns.
-   *
-   * For example, `import.meta.env.DEV` is not a platform native thing that and requires
-   * a build plugin. Vite has one built in, but all other tools need to manually specify
-   * what to do with `import.meta.env.DEV`.
-   *
-   * Another example, some component frameworks may use templates, which can only be compiled
-   * by the host application, as the details of how a template is compiled are private API,
-   * and can vary in minor releases of the template compiler.
-   *
-   * This should be a map of file extensions to async functions that must return either the
-   * original file text or additionally transformed text.
-   *
-   * ```js
-   * handlers: {
-   *   // When resolving a .js file from a CDN or NPM, replace `import.meta.env.DEV` with `true`
-   *   js: async(text) => {
-   *     return text.replaceAll('import.meta.env.DEV', 'true');
-   *   }
-   * }
-   * ```
-   *
-   * This could also be used to run the same build step on fetched files as
-   * the files provided to the REPL.
+   * Plugins that need the compiler, for example to give files from npm
+   * the same build step as the document.
    *
    * ```js
    * let compiler = {
    *   compile: async (text) => { ... },
    *   render: async (element, compiled, ...rest) => { ... },
-   *   handlers: {
-   *     js: async(text) => {
-   *       return compiler.compile(text);
-   *     }
-   *   }
+   *   plugins: [
+   *     {
+   *       name: 'build-npm-files',
+   *       transform: (code, id) => (id.endsWith('.js') ? compiler.compile(code) : undefined),
+   *     },
+   *   ],
    * }
    * ```
    */
-  handlers?: {
-    [fileExtension: string]: (text: string) => Promise<CompileResult>;
-  };
+  plugins?: Plugin[];
 }
 
 export interface PluginContext {
@@ -205,7 +178,7 @@ type MaybePromise<T> = T | Promise<T>;
  * a value wins, in order:
  * 1. `Options.plugins`
  * 2. the `resolve` option
- * 3. the `plugins` (and `resolve`) of each compiler config, in the order they loaded
+ * 3. the `plugins` of each compiler config, and of its compiler, in the order they loaded
  * 4. CDN URLs, which are stored under `file:///external/<host>/`
  * 5. npm
  */
@@ -253,6 +226,14 @@ export interface CompilerConfig {
    * Loaded with the compiler, the first time that its format compiles.
    * The module loader is global for the page,
    * so these apply to modules of every format after that.
+   *
+   * This is where a config names the CDN URLs of the modules that its compiler needs:
+   *
+   * ```js
+   * plugins: [
+   *   { name: 'vue-cdn', resolveId: (id) => (id === 'vue' ? 'https://esm.sh/vue@3' : undefined) },
+   * ],
+   * ```
    */
   plugins?: Plugin[];
 
@@ -285,25 +266,6 @@ export interface CompilerConfig {
    * \`\`\`
    */
   needsLiveMeta?: boolean;
-
-  /**
-   * Synchronously extend the way resolution works
-   * This is "import map as a function", which allows for more flexibility than just the static import map.
-   *
-   * This may not return a promise.
-   * But we can return functions that return promises.
-   *
-   * An http(s) URL is downloaded into the file system, like any other CDN URL.
-   * `plugins` can do the same, and more.
-   */
-  resolve?: (
-    id: string,
-    /**
-     * The package versions of the compile in progress.
-     */
-    versions?: { [packageName: string]: string }
-  ) =>
-    string | (() => Record<string, unknown>) | (() => Promise<Record<string, unknown>>) | undefined;
 
   /**
    * This optional method provides the opportunity to reformat messages that would be displayed to the REPL.

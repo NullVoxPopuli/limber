@@ -1,3 +1,4 @@
+import { extensionOf, NODE_MODULES_PREFIX } from '../../fs/url.js';
 import { makeOwner } from './owner.js';
 
 let elementId = 0;
@@ -245,14 +246,24 @@ export async function compiler(config, api, flags = {}) {
 
       return () => result.destroy();
     },
-    handlers: {
-      [ext]: async (text) => {
-        return gjsCompiler.compile(text, {});
+    plugins: [
+      {
+        name: `repl-sdk:ember:npm-${ext}`,
+
+        /**
+         * Files from npm get the same build as the document.
+         */
+        async transform(code, url) {
+          if (!url.startsWith(NODE_MODULES_PREFIX)) return;
+
+          const extension = extensionOf(url);
+
+          if (extension !== ext && extension !== `m${ext}`) return;
+
+          return /** @type {string} */ (await gjsCompiler.compile(code, {}));
+        },
       },
-      [`m${ext}`]: async (text) => {
-        return gjsCompiler.compile(text, {});
-      },
-    },
+    ],
   };
 
   return gjsCompiler;
