@@ -340,6 +340,7 @@ export interface Options {
     /**
      * A package that the document imports, with the version that loaded from npm.
      * The version is `undefined` when the module came from the `resolve` option.
+     * A module from `resolve` is reported under its package, see `packages`.
      * Imports from inside other packages are not reported.
      */
     dependency?: (name: string, version: string | undefined) => void;
@@ -354,14 +355,50 @@ export interface Options {
   resolve?: { [importPath: string]: unknown };
 
   /**
+   * What the modules in `resolve` are, by npm package.
+   *
+   * A compile that pins a package with `versions` loads it from npm,
+   * in place of the modules in `resolve`.
+   * This tells which modules belong to which package, and what they need:
+   *
+   * ```js
+   * packages: {
+   *   'ember-source': { version: '7.3.0', modules: ['@ember/owner', '@glimmer/tracking'] },
+   *   'ember-primitives': { builtWith: ['ember-source'] },
+   * }
+   * ```
+   *
+   * A module that is not in any `modules` list belongs to the package that its name starts with.
+   */
+  packages?: {
+    [packageName: string]: {
+      /**
+       * The version in `resolve`.
+       * A pin that accepts this version keeps the modules in `resolve`.
+       * Without it, any pin loads the package from npm.
+       */
+      version?: string;
+      /**
+       * Modules in `resolve` that belong to this package, when their names do not say so.
+       */
+      modules?: string[];
+      /**
+       * Packages that these modules import.
+       * A pin of one of them loads this package from npm too, so that both match.
+       */
+      builtWith?: string[];
+    };
+  };
+
+  /**
    * Change how modules resolve, load, and transform.
    * These run before every other source of modules.
    */
   plugins?: Plugin[];
 
   /**
-   * Specifies which vesions of dependencies to when pulling from a CDN.
-   * Defaults to latest.
+   * The versions of packages to load, by package name.
+   * A compile can pass its own, which replace these.
    */
   versions?: { [packageName: string]: string };
 

@@ -64,6 +64,9 @@ export class Compiler {
   /** @type {Pipeline} */
   #pipeline;
 
+  /** @type {ReturnType<typeof providedModules>} */
+  #provided;
+
   /**
    * The import map of es-module-shims. Only built-in plugins use it.
    *
@@ -83,12 +86,11 @@ export class Compiler {
 
     const defaultResolve = () => this.#defaultResolve;
 
-    this.#pipeline = new Pipeline(
-      (this.#options.plugins ?? []).concat(
-        providedModules(this.#options.resolve, (name) => this.#resolveManually(name))
-      ),
-      [externalFiles(), npm(defaultResolve)]
-    );
+    this.#provided = providedModules(this.#options.resolve, this.#options.packages);
+    this.#pipeline = new Pipeline((this.#options.plugins ?? []).concat(this.#provided), [
+      externalFiles(),
+      npm(defaultResolve),
+    ]);
 
     STABLE_REFERENCE.resolve = this.#resolve;
     STABLE_REFERENCE.source = this.#source;
@@ -234,7 +236,7 @@ export class Compiler {
     this.#log(`[resolve] ${id} → ${answer}`);
 
     if (parentUrl.startsWith(SRC_PREFIX)) {
-      this.#reportDependency(packageOf(answer));
+      this.#reportDependency(this.#packageOf(answer));
     }
 
     return answer;
@@ -269,7 +271,7 @@ export class Compiler {
       this.#log(`[source] ${id} → ${answer}`);
 
       if (importer.startsWith(SRC_PREFIX)) {
-        this.#reportDependency(packageOf(answer));
+        this.#reportDependency(this.#packageOf(answer));
       }
 
       return { url, type: 'js', source: reexport(answer) };
@@ -544,11 +546,18 @@ export class Compiler {
    */
   optionsFor = (format, flavor) => {
     const { needsLiveMeta } = this.#resolveFormat(format, flavor);
+    const compiler = this;
 
     return {
       needsLiveMeta: /* @type {boolean | undefined} */ needsLiveMeta ?? true,
-      versions: this.#versions,
       ...(this.#resolveUserOptions(format, flavor) ?? {}),
+      /**
+       * A compiler keeps its config for the life of the page,
+       * and the versions belong to the compile in progress.
+       */
+      get versions() {
+        return compiler.#versions;
+      },
     };
   };
 
@@ -740,6 +749,25 @@ export class Compiler {
   }
 
   /**
+   * The package that a resolved URL belongs to, when the URL says so.
+   * No version means that the caller provided the module.
+   *
+   * @param {string} url
+   * @returns {undefined | { name: string, version: string | undefined }}
+   */
+  #packageOf(url) {
+    const virtual = parseVirtualUrl(url);
+
+    if (virtual) {
+      return virtual.kind === 'manual'
+        ? { name: this.#provided.packageOf(virtual.name), version: undefined }
+        : undefined;
+    }
+
+    return installed.get(url) ?? exactPackage(url);
+  }
+
+  /**
    * No version means that the caller provided the module.
    *
    * @param {{ name: string, version: string | undefined } | undefined} pkg
@@ -809,25 +837,6 @@ function shimmedImport(...args) {
 
   // @ts-ignore
   return globalThis.importShim(/* @vite-ignore */ ...args);
-}
-
-/**
- * The package that a resolved URL belongs to, when the URL says so.
- * No version means that the caller provided the module.
- *
- * @param {string} url
- * @returns {undefined | { name: string, version: string | undefined }}
- */
-function packageOf(url) {
-  const virtual = parseVirtualUrl(url);
-
-  if (virtual) {
-    return virtual.kind === 'manual'
-      ? { name: parseSpecifier(virtual.name).name, version: undefined }
-      : undefined;
-  }
-
-  return installed.get(url) ?? exactPackage(url);
 }
 
 /**
