@@ -75,8 +75,6 @@
     "@rollup/plugin-babel": "^6.1.0",
     "@types/qunit": "^2.19.12",
     "autoprefixer": "^10.4.22",
-    "broccoli-asset-rev": "^3.0.0",
-    "broccoli-funnel": "^3.0.8",
     "concurrently": "^9.2.1",
     "ember-content-mapper": "^0.2.0",
     "ember-load-initializers": "^3.0.1",

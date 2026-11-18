@@ -25,7 +25,6 @@
     "start": "vite --port 4201",
     "start:build": "NODE_ENV=development vite build --mode=development --watch",
     "start:iframe": "pnpx http-server ./public -i -p 4204",
-    "test:browserstack": "./scripts/browserstack.sh",
     "test:chrome": "CI_BROWSER=Chrome pnpm dist:ember:test",
     "test:firefox": "CI_BROWSER=Firefox pnpm dist:ember:test",
     "test:preview": "pnpm vite preview",

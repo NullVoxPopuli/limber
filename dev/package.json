@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "main": "index.js",
   "volta": {
     "extends": "../package.json"
   },
@@ -12,15 +11,12 @@
   },
   "dependencies": {
     "chalk": "^5.6.2",
-    "execa": "^9.6.1",
-    "fs-extra": "^11.3.2",
-    "yargs": "^18.0.0"
+    "execa": "^9.6.1"
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",
     "@nullvoxpopuli/eslint-configs": "^7.1.0",
     "@types/node": "^24.0.12",
-    "@types/yargs": "^17.0.33",
     "eslint": "^10.0.0",
     "prettier": "^3.9.6",
     "prettier-plugin-ember-template-tag": "2.1.8",
