@@ -219,7 +219,7 @@ export class Compiler {
    */
   #resolve = (id, parentUrl, resolve) => {
     this.#defaultResolve = resolve;
-    this.#announce('info', `Loading ${id.split('?')[0]}`);
+    if (!isFromPage(parentUrl)) this.#announce('info', `Loading ${id.split('?')[0]}`);
     this.#log('[resolve]', id, 'from', parentUrl);
 
     /**
@@ -314,7 +314,9 @@ export class Compiler {
       if (parent?.startsWith(SRC_PREFIX)) this.#reportDependency(pkg);
     }
 
-    this.#announce('info', `Loaded ${parseVirtualUrl(path)?.name ?? loaded.url}`);
+    if (!isFromPage(parent)) {
+      this.#announce('info', `Loaded ${parseVirtualUrl(path)?.name ?? loaded.url}`);
+    }
 
     return { ...loaded, url: loaded.url === path ? url : loaded.url };
   };
@@ -779,6 +781,16 @@ export class Compiler {
   announceError(message) {
     this.#announce('error', message);
   }
+}
+
+/**
+ * Imports that the page makes itself, such as `preload` and the modules of a compiler.
+ * Only imports from documents and packages are news to the user.
+ *
+ * @param {string | undefined} parentUrl
+ */
+function isFromPage(parentUrl) {
+  return parentUrl === undefined || parentUrl.startsWith(location.origin);
 }
 
 /**
