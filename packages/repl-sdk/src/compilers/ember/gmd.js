@@ -3,9 +3,7 @@
  */
 import { assert, isRecord } from '../../utils.js';
 import { buildCodeFenceMetaUtils } from '../markdown/utils.js';
-import { makeOwner } from './owner.js';
-
-let elementId = 0;
+import { renderEmber } from './render.js';
 
 /**
  * @param {unknown} [ options ]
@@ -15,7 +13,6 @@ let elementId = 0;
  *   rehypePlugins: Plugin[],
  *   ShadowComponent: string | undefined,
  *   CopyComponent: string | undefined
- *   owner?: unknown | undefined
  *   }}
  */
 export function filterOptions(options) {
@@ -30,7 +27,6 @@ export function filterOptions(options) {
   }
 
   return {
-    owner: options?.owner,
     scope: /** @type {Record<string, unknown>}*/ (options?.scope || {}),
     remarkPlugins: /** @type {Plugin[]}*/ (options?.remarkPlugins || []),
     rehypePlugins: /** @type {Plugin[]}*/ (options?.rehypePlugins || []),
@@ -70,7 +66,7 @@ export async function compiler(config, api) {
       const { template } = await api.tryResolve('@ember/template-compiler/runtime');
 
       const scope = {
-        ...filterOptions(userOptions).scope,
+        ...userOptions.scope,
         ...filterOptions(options).scope,
       };
 
@@ -85,40 +81,7 @@ export async function compiler(config, api) {
       return { compiled: component, ...result, scope };
     },
     render: async (element, compiled, extra, compiler) => {
-      /**
-       *
-       * TODO: These will make things easier:
-       *    https://github.com/emberjs/rfcs/pull/1099
-       *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
-       */
-      const attribute = `data-repl-sdk-ember-gmd-${elementId++}`;
-
-      element.setAttribute(attribute, '');
-
-      const { renderComponent } = await compiler.tryResolve('@ember/renderer');
-
-      const args = /** @type {Record<string, unknown> | undefined} */ (
-        extra && typeof extra === 'object' && 'args' in extra
-          ? /** @type {Record<string, unknown>} */ (extra).args
-          : undefined
-      );
-
-      // A fresh owner per render, like gjs/hbs do: template instances (and
-      // their compiled handles) are cached per owner, but each renderComponent
-      // call has its own program artifacts — sharing one owner across islands
-      // would make glimmer reuse a compiled handle from another island's
-      // program, blowing up with "Cannot read properties of null (reading
-      // 'syscall')" the second time a singleton scope component is invoked.
-      //
-      // A pinned ember-source is a second Ember on the page,
-      // and the host's owner belongs to the other one.
-      const result = renderComponent(compiled, {
-        into: element,
-        owner: makeOwner(config.versions?.['ember-source'] ? undefined : userOptions.owner),
-        ...(args ? { args } : {}),
-      });
-
-      const destroy = () => result.destroy();
+      const destroy = await renderEmber(config, element, compiled, extra, compiler);
 
       /**
        * @type {(() => void)[]}

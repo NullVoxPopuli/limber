@@ -1,7 +1,5 @@
 import { extensionOf, NODE_MODULES_PREFIX } from '../../fs/url.js';
-import { makeOwner } from './owner.js';
-
-let elementId = 0;
+import { renderEmber } from './render.js';
 
 const buildDependencies = [
   /**
@@ -214,37 +212,11 @@ export async function compiler(config, api, flags = {}) {
       return code;
     },
     render: async (element, compiled, extra, compiler) => {
-      /**
-       *
-       * TODO: These will make things easier:
-       *    https://github.com/emberjs/rfcs/pull/1099
-       *    https://github.com/ember-cli/ember-addon-blueprint/blob/main/files/tests/test-helper.js
-       */
-      const attribute = `data-repl-sdk-ember-gjs-${elementId++}`;
-
-      element.setAttribute(attribute, '');
-
-      const { renderComponent } = await compiler.tryResolve('@ember/renderer');
-
-      /**
-       * A pinned ember-source is a second Ember on the page,
-       * and objects from the host's Ember do not work in it.
-       */
-      const owner = makeOwner(config.versions?.['ember-source'] ? undefined : config.owner);
-      const args = /** @type {Record<string, unknown> | undefined} */ (
-        extra && typeof extra === 'object' && 'args' in extra
-          ? /** @type {Record<string, unknown>} */ (extra).args
-          : undefined
-      );
-      const result = renderComponent(compiled, {
-        into: element,
-        owner,
-        ...(args ? { args } : {}),
-      });
+      const destroy = await renderEmber(config, element, compiled, extra, compiler);
 
       compiler.announce('info', 'Ember Island Rendered');
 
-      return () => result.destroy();
+      return destroy;
     },
     plugins: [
       {
