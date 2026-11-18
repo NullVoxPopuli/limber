@@ -154,6 +154,70 @@ describe('Storage', () => {
       expect(await storage.readPackage('broken', '1.0.0')).toBeUndefined();
     });
 
+    it('stores a package as a pack and its index', async () => {
+      await storage.writePackage(
+        'packed',
+        '1.0.0',
+        contentsFor({
+          'package.json': '{}',
+          'dist/a.js': 'export const a = "ä";',
+          'dist/nested/b.js': 'export const b = 2;',
+        })
+      );
+
+      const deps = await root
+        .getDirectoryHandle('node_modules')
+        .then((d) => d.getDirectoryHandle('.deps'));
+      const dir = await deps.getDirectoryHandle('packed@1.0.0');
+      const names = [];
+
+      for await (const name of dir.keys()) names.push(name);
+
+      expect(names.sort()).toEqual(['.complete-3', '.pack']);
+      expect(await storage.read('/node_modules/.deps/packed@1.0.0/dist/a.js')).toBe(
+        'export const a = "ä";'
+      );
+      expect(await storage.read('/node_modules/.deps/packed@1.0.0/dist')).toBeUndefined();
+      expect(await storage.read('/node_modules/.deps/packed@1.0.0/.pack')).toBeUndefined();
+      expect(await storage.stat('/node_modules/.deps/packed@1.0.0/dist/nested')).toMatchObject({
+        type: 'directory',
+      });
+      expect(
+        await storage.stat('/node_modules/.deps/packed@1.0.0/dist/missing.js')
+      ).toBeUndefined();
+      expect(
+        (await storage.entries('/node_modules/.deps/packed@1.0.0/dist'))
+          ?.map((entry) => `${entry.type}:${entry.name}`)
+          .sort()
+      ).toEqual(['directory:nested', 'file:a.js']);
+      expect(await storage.list('/node_modules/.deps/packed@1.0.0/dist')).toEqual([
+        '/node_modules/.deps/packed@1.0.0/dist/a.js',
+        '/node_modules/.deps/packed@1.0.0/dist/nested/b.js',
+      ]);
+    });
+
+    it('replaces a package from an older unpacker', async () => {
+      const deps = await root
+        .getDirectoryHandle('node_modules', { create: true })
+        .then((d) => d.getDirectoryHandle('.deps', { create: true }));
+      const old = await deps.getDirectoryHandle('old@1.0.0', { create: true });
+
+      await writeFile(old, 'package.json', '{}');
+      await writeFile(old, 'stale.js', 'stale');
+      await writeFile(old, '.complete-2', '');
+
+      expect(await storage.installed()).toEqual({});
+      expect(await storage.readPackage('old', '1.0.0')).toBeUndefined();
+
+      await storage.writePackage('old', '1.0.0', contentsFor({ 'package.json': '{}' }));
+
+      expect(await storage.installed()).toEqual({ old: ['1.0.0'] });
+      expect(await storage.exists('/node_modules/.deps/old@1.0.0/stale.js')).toBe(false);
+      expect(await storage.list('/node_modules/.deps/old@1.0.0')).toEqual([
+        '/node_modules/.deps/old@1.0.0/package.json',
+      ]);
+    });
+
     it('removes a package and clears everything', async () => {
       await storage.writePackage('a', '1.0.0', { 'package.json': { text: '{}' } });
       await storage.writePackage('b', '1.0.0', { 'package.json': { text: '{}' } });
