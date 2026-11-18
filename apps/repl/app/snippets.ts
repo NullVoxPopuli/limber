@@ -209,3 +209,19 @@ export function defaultSnippetForFormat(format: string) {
 
   return DEFAULT_SNIPPET;
 }
+
+/**
+ * Most formats cannot compile the text of another format,
+ * so a change of format loads a document that the new format can compile.
+ */
+export async function snippetForFormat(format: string): Promise<string> {
+  if (format === 'gjs' || format === 'gts' || format === 'hbs') {
+    return defaultSnippetForFormat(format);
+  }
+
+  const demo = ALL.find((entry) => entry.format === format);
+
+  if (!demo) return DEFAULT_SNIPPET;
+
+  return getFromLabel(demo.label);
+}
