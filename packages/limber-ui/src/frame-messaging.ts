@@ -8,10 +8,37 @@ import { connectToChild } from 'penpal';
 import type { ModifierLike } from '@glint/template';
 import type { Connection } from 'penpal';
 
-interface ParentToChildData {
+/**
+ * The messages between a page and the REPL in its frame.
+ *
+ * There are two such pairs. `<REPL>` frames the edit page,
+ * and the edit page frames the output page for a pinned ember-source.
+ * Both pairs use these types.
+ */
+export interface FrameDocument {
   code: string;
   format: string;
-  shadowdom: undefined | boolean | string;
+  /**
+   * `undefined` keeps what the frame has.
+   */
+  shadowdom?: undefined | boolean | string;
+  /**
+   * Pins, as package name → version.
+   */
+  versions?: Record<string, string>;
+}
+
+export interface GuestMethods {
+  update: (document: FrameDocument) => void;
+}
+
+export interface HostMethods {
+  /**
+   * The packages that the frame loaded, after each compile.
+   */
+  dependencies: (
+    entries: [name: string, version: string | undefined][]
+  ) => void;
 }
 
 /**
@@ -19,14 +46,14 @@ interface ParentToChildData {
  * We need to wait until the frame initiates contact.
  */
 function PostMessage(
-  handleUpdate: (data: ParentToChildData) => void
+  handleUpdate: (data: FrameDocument) => void
 ): ModifierLike<{
   Element: HTMLIFrameElement;
   Args: {
-    Positional: [data: ParentToChildData];
+    Positional: [data: FrameDocument];
   };
 }> {
-  return modifier((element: HTMLIFrameElement, [data]: [ParentToChildData]) => {
+  return modifier((element: HTMLIFrameElement, [data]: [FrameDocument]) => {
     // In SSR (happy-dom), contentWindow exists but can't do real messaging.
     // Skip to avoid triggering @waitFor-decorated queuePayload, whose
     // connection.promise never resolves and blocks settled() indefinitely.
@@ -49,9 +76,7 @@ function HandleMessage(
 export class HostMessaging {
   @tracked frameStatus: unknown;
 
-  connection?: Connection<{
-    update: (data: ParentToChildData) => void;
-  }>;
+  connection?: Connection<GuestMethods>;
 
   /**
    * We can't post right away, because we might do so before the iframe is ready.
@@ -61,7 +86,7 @@ export class HostMessaging {
   onMessage = HandleMessage((element) => {
     this.connection = connectToChild({
       iframe: element,
-      methods: {},
+      methods: { dependencies: () => {} } satisfies HostMethods,
     });
 
     waitForPromise(this.connection.promise).catch(console.error);
@@ -70,7 +95,7 @@ export class HostMessaging {
   });
 
   @waitFor
-  async queuePayload(data: ParentToChildData) {
+  async queuePayload(data: FrameDocument) {
     await Promise.resolve();
     if (isDestroyed(this) || isDestroying(this)) return;
 

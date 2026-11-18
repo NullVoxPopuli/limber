@@ -11,19 +11,12 @@ import { serializeDeps, type Versions } from 'limber/utils/dependencies';
 
 import type Owner from '@ember/owner';
 import type EditorService from 'limber/services/editor';
+import type { FrameDocument, GuestMethods, HostMethods } from 'limber-ui';
 import type { Connection } from 'penpal';
 
 const { compressToEncodedURIComponent } = LZString;
 
-interface Document {
-  format: string;
-  code: string;
-  versions: Versions;
-}
-
-interface Guest {
-  update: (document: Document) => void;
-}
+type Document = FrameDocument & { versions: Versions };
 
 /**
  * Two Embers on one page share every npm module that they both import,
@@ -36,7 +29,7 @@ interface Guest {
 export class PinnedOutput extends Component {
   @service declare editor: EditorService;
 
-  #connection: Connection<Guest> | undefined;
+  #connection: Connection<GuestMethods> | undefined;
   #emberSource: string | undefined;
 
   constructor(owner: Owner, args: object) {
@@ -80,16 +73,16 @@ export class PinnedOutput extends Component {
 
     iframe.src = `/output?${qps.toString()}`;
 
-    this.#connection = connectToChild<Guest>({
+    this.#connection = connectToChild<GuestMethods>({
       iframe,
       methods: {
         /**
          * The frame sends the whole list after each change.
          */
-        dependencies: (entries: [string, string | undefined][]) => {
+        dependencies: (entries) => {
           this.editor.frameDependencies = new Map(entries);
         },
-      },
+      } satisfies HostMethods,
     });
   }
 
@@ -98,7 +91,7 @@ export class PinnedOutput extends Component {
     this.#connection = undefined;
   }
 
-  async #send(connection: Connection<Guest>, document: Document) {
+  async #send(connection: Connection<GuestMethods>, document: Document) {
     try {
       /**
        * Not a test waiter: a frame that never connects must fail a test, not hang it.

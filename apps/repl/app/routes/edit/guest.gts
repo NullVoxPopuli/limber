@@ -5,13 +5,11 @@ import { getCompiler } from 'ember-repl';
 import { resource } from 'ember-resources';
 import { connectToParent } from 'penpal';
 
-import { serializeDeps, type Versions } from 'limber/utils/dependencies';
+import { formatFrom } from '#app/languages.gts';
 
-import type { FormatQP } from '#app/languages.gts';
+import { serializeDeps } from 'limber/utils/dependencies';
 
-interface ParentMethods {
-  dependencies: (entries: [string, string | undefined][]) => void;
-}
+import type { FrameDocument, GuestMethods, HostMethods } from 'limber-ui';
 
 const guestFrame = resource(({ on, owner }) => {
   /**
@@ -22,10 +20,9 @@ const guestFrame = resource(({ on, owner }) => {
     return '';
   }
 
-  const connection = connectToParent<ParentMethods>({
+  const connection = connectToParent<HostMethods>({
     methods: {
-      update(data: { format: FormatQP; code: string; versions?: Versions }) {
-        const { format, code: text, versions } = data;
+      update({ format, code, versions, shadowdom }: FrameDocument) {
         const editor = owner.lookup('service:editor');
 
         /**
@@ -44,9 +41,13 @@ const guestFrame = resource(({ on, owner }) => {
           }
         }
 
-        editor.update(text, format);
+        editor.update(
+          code,
+          formatFrom(format),
+          shadowdom === undefined ? undefined : { shadowdom: String(shadowdom) }
+        );
       },
-    },
+    } satisfies GuestMethods,
   });
 
   /**

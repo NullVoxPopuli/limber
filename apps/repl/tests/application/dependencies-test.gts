@@ -4,11 +4,14 @@ import QUnit, { module, test } from 'qunit';
 
 import { getCompiler } from 'ember-repl';
 import LZString from 'lz-string';
+import { connectToChild } from 'penpal';
 
 import { Output } from '#components/output.gts';
 import { PinnedOutput } from '#components/pinned-output.gts';
 import { Dependencies } from '#edit/dependencies.gts';
 import { setupApplicationCompilerTest } from '#tests/helpers.ts';
+
+import type { GuestMethods, HostMethods } from 'limber-ui';
 
 const { compressToEncodedURIComponent } = LZString;
 
@@ -524,6 +527,74 @@ import DOMPurify from 'dompurify';
       assert.dom('[data-test-error]').includesText('6.10 or newer', 'the output page shows it');
     } finally {
       QUnit.onUncaughtException = onUncaughtException;
+    }
+  });
+
+  test('a pin of the Ember that the app runs renders in the page', async function (assert) {
+    this.owner.lookup('service:editor').setCodemirrorState = () => {};
+
+    const qps = new URLSearchParams({
+      format: 'gjs',
+      deps: `ember-source@${VERSION}`,
+      shadowdom: '0',
+      c: compressToEncodedURIComponent(versionDoc),
+    });
+
+    await visit(`/edit?${qps.toString()}`);
+
+    assert.dom('[data-test-pinned-output]').doesNotExist('the output is not a frame');
+    assert.dom(out).hasText(VERSION);
+  });
+});
+
+module('Output > in a frame', function (hooks) {
+  setupApplicationCompilerTest(hooks);
+
+  test('the frame applies the shadowdom that its host sends', async function (assert) {
+    const iframe = document.createElement('iframe');
+    const qps = new URLSearchParams({ format: 'gjs', c: compressToEncodedURIComponent(noImports) });
+
+    iframe.src = `/output?${qps.toString()}`;
+    document.body.append(iframe);
+
+    let reports = 0;
+
+    const connection = connectToChild<GuestMethods>({
+      iframe,
+      methods: { dependencies: () => void reports++ } satisfies HostMethods,
+    });
+
+    const inPage = () => iframe.contentDocument?.querySelector('[data-test-text]');
+    const inShadow = () =>
+      Array.from(iframe.contentDocument?.querySelectorAll('[data-test-compiled-output] *') ?? [])
+        .map((element) => element.shadowRoot?.querySelector('[data-test-text]'))
+        .find(Boolean);
+
+    try {
+      await waitUntil(inPage, { timeout: 30_000 });
+
+      assert.notOk(inShadow(), 'the output page has no shadow DOM by default');
+      assert.step('in the page');
+
+      const guest = await connection.promise;
+
+      await guest.update({ code: noImports, format: 'gjs', shadowdom: true });
+      await waitUntil(inShadow, { timeout: 30_000 });
+
+      assert.notOk(inPage(), 'the output moved into a shadow root');
+      assert.step('in a shadow root');
+
+      await guest.update({ code: noImports, format: 'gjs', shadowdom: false });
+      await waitUntil(inPage, { timeout: 30_000 });
+
+      assert.notOk(inShadow(), 'the output moved back');
+      assert.step('in the page');
+
+      assert.verifySteps(['in the page', 'in a shadow root', 'in the page']);
+      assert.true(reports > 0, 'the frame reports what it loaded to its host');
+    } finally {
+      connection.destroy();
+      iframe.remove();
     }
   });
 });
