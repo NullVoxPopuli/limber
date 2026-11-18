@@ -125,7 +125,7 @@ export class Compiler {
   }
 
   /**
-   * Loads modules the way a compiler does: from the `resolve` option first, then from npm.
+   * Loads modules the way a compiler does: through the plugins, so a pin applies.
    *
    * @param {string[]} names
    */
@@ -567,49 +567,6 @@ export class Compiler {
   }
 
   /**
-   * @param {string} name
-   * @param {(name?: string) => Promise<undefined | object>} [fallback]
-   * @returns {Promise<undefined | object>}
-   */
-  #resolveManually = async (name, fallback) => {
-    const existing = cache.resolves[name];
-
-    if (existing) {
-      this.#log('[#resolveManually]', name, 'already resolved');
-
-      return existing;
-    }
-
-    let result =
-      /** @type {object | undefined} */
-      (await this.#options.resolve?.[name]);
-
-    if (!result) {
-      this.#log(`[#resolveManually] Could not resolve ${name}`);
-    }
-
-    if (typeof result === 'function') {
-      if (!result) {
-        this.#log(`[#resolveManually] Value for ${name} is a function. Invoking.`);
-      }
-
-      result = await result();
-    }
-
-    /**
-     * Compiler-implementation-provided fallback takes precidence over
-     * going through the shimmedImport / tgz / npm fallback.
-     */
-    if (!result && fallback) {
-      result = await fallback(name);
-    }
-
-    cache.resolves[name] ||= await result;
-
-    return result;
-  };
-
-  /**
    * @type {import('./types.ts').PublicMethods}
    */
   #nestedPublicAPI = {
@@ -621,62 +578,37 @@ export class Compiler {
     announce: (type, message) => this.#announce(type, message),
 
     /**
+     * Imports a module through the plugins, the way an import in a document does.
+     *
      * @param {string} name
-     * @param {(name?: string) => Promise<object | undefined>} [fallback]
-     * @returns {Promise<object | undefined>}
+     * @param {(name?: string) => Promise<object | undefined>} [fallback] for a module that does not load
+     * @returns {Promise<any>}
      */
     tryResolve: async (name, fallback) => {
-      const existing = await this.#resolveManually(name, fallback);
+      try {
+        return await shimmedImport(/* @vite-ignore */ name);
+      } catch (error) {
+        if (!fallback) throw error;
 
-      if (existing) {
-        this.#log(name, 'already resolved');
+        this.#warn(`Could not load ${name}. Trying fallback.`, error);
 
-        return existing;
+        return fallback(name);
       }
-
-      // @ts-ignore
-      const shimmed = await shimmedImport(/* vite-ignore */ name);
-
-      return shimmed;
     },
     /**
      * @param {string[]} names
-     * @param {(name?: string) => Promise<unknown>} [fallback]
+     * @param {(name?: string) => Promise<unknown>} [fallback] for a module that does not load
      * @returns {Promise<unknown[]>}
      */
-    tryResolveAll: async (names, fallback) => {
-      const results = await Promise.all(
-        names.map((name) => {
-          return this.#nestedPublicAPI.tryResolve(name);
-        })
-      );
-
-      if (fallback) {
-        /** @type {Record<string, Promise<unknown>>} */
-        const morePromises = {};
-
-        for (let i = 0; i < results.length; i++) {
-          const result = results[i];
-          const name = names[i];
-
-          if (!result) {
-            this.#warn(`Could not load ${name}. Trying fallback.`);
-
-            morePromises[i] = fallback(name);
-          }
-        }
-
-        await Promise.all(Object.values(morePromises));
-
-        for (let i = 0; i < results.length; i++) {
-          if (!results[i] && morePromises[i]) {
-            results[i] = await morePromises[i];
-          }
-        }
-      }
-
-      return results;
-    },
+    tryResolveAll: (names, fallback) =>
+      Promise.all(
+        names.map((name) =>
+          this.#nestedPublicAPI.tryResolve(
+            name,
+            /** @type {(name?: string) => Promise<object | undefined>} */ (fallback)
+          )
+        )
+      ),
     /**
      * @param {Parameters<Compiler['compile']>} args
      */
@@ -828,7 +760,7 @@ export class Compiler {
  * This should have happened at the beginning of the compile function.
  * If this error is ever thrown, something goofy has happened, and it would be very unexpected.
 
- * @param {...any[]} args
+ * @param {...any} args
  */
 function shimmedImport(...args) {
   if (!globalThis.importShim) {

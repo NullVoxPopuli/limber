@@ -1,10 +1,18 @@
-import { esmsh } from '../cdn.js';
+import { esmSh } from '../cdn.js';
 
 /**
  * @type {import('../types.ts').CompilerConfig}
  */
 export const mermaid = {
   needsLiveMeta: false,
+  /**
+   * A host that does not provide mermaid gets the CDN build,
+   * which has its dependencies inlined.
+   *
+   * @param {string} id
+   * @param {Record<string, string>} [versions]
+   */
+  resolve: (id, versions = {}) => (id === 'mermaid' ? esmSh(versions, 'mermaid') : undefined),
   codemirror: {
     lang: async () => {
       const { mermaid } = await import('codemirror-lang-mermaid');
@@ -13,10 +21,7 @@ export const mermaid = {
     },
   },
   compiler: async (config, api) => {
-    const versions = config.versions;
-    const { default: mermaid } = await api.tryResolve('mermaid', () => {
-      return esmsh.import(versions, 'mermaid');
-    });
+    const { default: mermaid } = await api.tryResolve('mermaid');
 
     let id = 0;
 

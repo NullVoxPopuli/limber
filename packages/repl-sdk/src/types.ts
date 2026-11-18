@@ -13,7 +13,9 @@ export interface PublicMethods {
   getFlavorsFor: (format: string) => string[];
 
   /**
-   * Will try to use a shimmed import, or will return null.
+   * Imports a module through the plugins, the way an import in a document does,
+   * so the pins of the compile apply.
+   * `fallback` runs when the import fails.
    */
   tryResolve: (
     moduleName: string,
@@ -21,12 +23,7 @@ export interface PublicMethods {
   ) => Promise<any>;
 
   /**
-   * Import many modules in parallel.
-   * For each array entry,
-   *   Will try to use a shimmed import, or will return null.
-   *
-   * Optionally accepts a fallback function for proxying to a CDN, if desired.
-   *
+   * `tryResolve` for many modules at once.
    */
   tryResolveAll: (
     moduleNames: string[],
