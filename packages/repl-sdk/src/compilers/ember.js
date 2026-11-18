@@ -3,7 +3,9 @@
  */
 
 import { errorMessage } from '../utils.js';
-import { hasRenamedModules, renamedModules } from './ember/renamed-modules.js';
+import { importSync } from './ember/import-sync.js';
+import { macros } from './ember/macros.js';
+import { renamedModules } from './ember/renamed-modules.js';
 
 /**
  * Other `@ember` (and `@glimmer`) packages are bundled in ember-source,
@@ -23,10 +25,13 @@ const externalPackages = [
  * @returns {string | undefined | (() => Record<string, unknown>)}
  */
 function resolve(id, versions = {}) {
+  if (id.startsWith('@embroider/macros')) return () => macros;
+
   /**
-   * A pinned ember-source comes from npm, so its addons come from npm too, and match it.
+   * A pinned ember-source comes from npm, through its renamed modules.
+   * Its addons come from npm too, so that they match it.
    */
-  if (hasRenamedModules()) return;
+  if (versions['ember-source']) return;
 
   // Not on npm. A host that does not provide it gets the full build, which has the same API.
   if (id === '@glimdown/babel-8-lite') {
@@ -53,36 +58,6 @@ function resolve(id, versions = {}) {
 
   if (id.startsWith('@glimmer')) {
     return `https://esm.sh/*ember-source/dist/dependencies/${id}.js`;
-  }
-
-  if (id.startsWith('@embroider/macros')) {
-    return () => ({
-      // passthrough, we are not doing dead-code-elimination
-
-      /**
-       * @param {unknown} x
-       */
-      macroCondition: (x) => Boolean(x),
-      // I *could* actually implement this
-      dependencySatisfies: () => true,
-      isDevelopingApp: () => true,
-      getGlobalConfig: () => ({
-        WarpDrive: {
-          debug: false,
-          env: {
-            DEBUG: false,
-            TESTING: false,
-            PRODUCTION: true,
-          },
-          activeLogging: false,
-          compatWith: '99.0',
-          features: {},
-          deprecations: {},
-          polyfillUUID: false,
-          includeDataAdapter: false,
-        },
-      }),
-    });
   }
 }
 
@@ -122,7 +97,7 @@ function onUnhandled(e, handle) {
  * @type {CompilerConfig}
  */
 export const gjs = {
-  plugins: [renamedModules],
+  plugins: [renamedModules, importSync],
   resolve,
   onUnhandled,
   codemirror: {
@@ -143,7 +118,7 @@ export const gjs = {
  * @type {CompilerConfig}
  */
 export const gts = {
-  plugins: [renamedModules],
+  plugins: [renamedModules, importSync],
   resolve,
   onUnhandled,
   codemirror: {
@@ -164,7 +139,7 @@ export const gts = {
  * @type {CompilerConfig}
  */
 export const hbs = {
-  plugins: [renamedModules],
+  plugins: [renamedModules, importSync],
   resolve,
   onUnhandled,
   codemirror: {
@@ -185,7 +160,7 @@ export const hbs = {
  * @type {CompilerConfig}
  */
 export const gmd = {
-  plugins: [renamedModules],
+  plugins: [renamedModules, importSync],
   resolve,
   onUnhandled,
   codemirror: {

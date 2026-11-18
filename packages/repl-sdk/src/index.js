@@ -7,6 +7,7 @@ import { cache } from './cache.js';
 import { compilers } from './compilers.js';
 import { STABLE_REFERENCE } from './es-module-shim.js';
 import { takeEntry, writeEntry } from './fs/entry.js';
+import { isExactVersion } from './fs/semver.js';
 import { clearFs, storage } from './fs/store.js';
 import {
   DEPS_PREFIX,
@@ -64,6 +65,9 @@ export class Compiler {
   /** @type {Pipeline} */
   #pipeline;
 
+  /** @type {ReturnType<typeof providedModules>} */
+  #provided;
+
   /**
    * The import map of es-module-shims. Only built-in plugins use it.
    *
@@ -83,12 +87,11 @@ export class Compiler {
 
     const defaultResolve = () => this.#defaultResolve;
 
-    this.#pipeline = new Pipeline(
-      (this.#options.plugins ?? []).concat(
-        providedModules(this.#options.resolve, (name) => this.#resolveManually(name))
-      ),
-      [externalFiles(), npm(defaultResolve)]
-    );
+    this.#provided = providedModules(this.#options.resolve, this.#options.packages);
+    this.#pipeline = new Pipeline((this.#options.plugins ?? []).concat(this.#provided), [
+      externalFiles(),
+      npm(defaultResolve),
+    ]);
 
     STABLE_REFERENCE.resolve = this.#resolve;
     STABLE_REFERENCE.source = this.#source;
@@ -123,7 +126,7 @@ export class Compiler {
   }
 
   /**
-   * Loads modules the way a compiler does: from the `resolve` option first, then from npm.
+   * Loads modules the way a compiler does: through the plugins, so a pin applies.
    *
    * @param {string[]} names
    */
@@ -215,7 +218,7 @@ export class Compiler {
    */
   #resolve = (id, parentUrl, resolve) => {
     this.#defaultResolve = resolve;
-    this.#announce('info', `Loading ${id.split('?')[0]}`);
+    if (!isFromPage(parentUrl)) this.#announce('info', `Loading ${id.split('?')[0]}`);
     this.#log('[resolve]', id, 'from', parentUrl);
 
     /**
@@ -234,7 +237,7 @@ export class Compiler {
     this.#log(`[resolve] ${id} → ${answer}`);
 
     if (parentUrl.startsWith(SRC_PREFIX)) {
-      this.#reportDependency(packageOf(answer));
+      this.#reportDependency(this.#packageOf(answer));
     }
 
     return answer;
@@ -269,7 +272,7 @@ export class Compiler {
       this.#log(`[source] ${id} → ${answer}`);
 
       if (importer.startsWith(SRC_PREFIX)) {
-        this.#reportDependency(packageOf(answer));
+        this.#reportDependency(this.#packageOf(answer));
       }
 
       return { url, type: 'js', source: reexport(answer) };
@@ -310,7 +313,9 @@ export class Compiler {
       if (parent?.startsWith(SRC_PREFIX)) this.#reportDependency(pkg);
     }
 
-    this.#announce('info', `Loaded ${parseVirtualUrl(path)?.name ?? loaded.url}`);
+    if (!isFromPage(parent)) {
+      this.#announce('info', `Loaded ${parseVirtualUrl(path)?.name ?? loaded.url}`);
+    }
 
     return { ...loaded, url: loaded.url === path ? url : loaded.url };
   };
@@ -544,11 +549,18 @@ export class Compiler {
    */
   optionsFor = (format, flavor) => {
     const { needsLiveMeta } = this.#resolveFormat(format, flavor);
+    const compiler = this;
 
     return {
       needsLiveMeta: /* @type {boolean | undefined} */ needsLiveMeta ?? true,
-      versions: this.#versions,
       ...(this.#resolveUserOptions(format, flavor) ?? {}),
+      /**
+       * A compiler keeps its config for the life of the page,
+       * and the versions belong to the compile in progress.
+       */
+      get versions() {
+        return compiler.#versions;
+      },
     };
   };
 
@@ -556,49 +568,6 @@ export class Compiler {
     cache.clear();
     clearFs();
   }
-
-  /**
-   * @param {string} name
-   * @param {(name?: string) => Promise<undefined | object>} [fallback]
-   * @returns {Promise<undefined | object>}
-   */
-  #resolveManually = async (name, fallback) => {
-    const existing = cache.resolves[name];
-
-    if (existing) {
-      this.#log('[#resolveManually]', name, 'already resolved');
-
-      return existing;
-    }
-
-    let result =
-      /** @type {object | undefined} */
-      (await this.#options.resolve?.[name]);
-
-    if (!result) {
-      this.#log(`[#resolveManually] Could not resolve ${name}`);
-    }
-
-    if (typeof result === 'function') {
-      if (!result) {
-        this.#log(`[#resolveManually] Value for ${name} is a function. Invoking.`);
-      }
-
-      result = await result();
-    }
-
-    /**
-     * Compiler-implementation-provided fallback takes precidence over
-     * going through the shimmedImport / tgz / npm fallback.
-     */
-    if (!result && fallback) {
-      result = await fallback(name);
-    }
-
-    cache.resolves[name] ||= await result;
-
-    return result;
-  };
 
   /**
    * @type {import('./types.ts').PublicMethods}
@@ -612,62 +581,37 @@ export class Compiler {
     announce: (type, message) => this.#announce(type, message),
 
     /**
+     * Imports a module through the plugins, the way an import in a document does.
+     *
      * @param {string} name
-     * @param {(name?: string) => Promise<object | undefined>} [fallback]
-     * @returns {Promise<object | undefined>}
+     * @param {(name?: string) => Promise<object | undefined>} [fallback] for a module that does not load
+     * @returns {Promise<any>}
      */
     tryResolve: async (name, fallback) => {
-      const existing = await this.#resolveManually(name, fallback);
+      try {
+        return await shimmedImport(/* @vite-ignore */ name);
+      } catch (error) {
+        if (!fallback) throw error;
 
-      if (existing) {
-        this.#log(name, 'already resolved');
+        this.#warn(`Could not load ${name}. Trying fallback.`, error);
 
-        return existing;
+        return fallback(name);
       }
-
-      // @ts-ignore
-      const shimmed = await shimmedImport(/* vite-ignore */ name);
-
-      return shimmed;
     },
     /**
      * @param {string[]} names
-     * @param {(name?: string) => Promise<unknown>} [fallback]
+     * @param {(name?: string) => Promise<unknown>} [fallback] for a module that does not load
      * @returns {Promise<unknown[]>}
      */
-    tryResolveAll: async (names, fallback) => {
-      const results = await Promise.all(
-        names.map((name) => {
-          return this.#nestedPublicAPI.tryResolve(name);
-        })
-      );
-
-      if (fallback) {
-        /** @type {Record<string, Promise<unknown>>} */
-        const morePromises = {};
-
-        for (let i = 0; i < results.length; i++) {
-          const result = results[i];
-          const name = names[i];
-
-          if (!result) {
-            this.#warn(`Could not load ${name}. Trying fallback.`);
-
-            morePromises[i] = fallback(name);
-          }
-        }
-
-        await Promise.all(Object.values(morePromises));
-
-        for (let i = 0; i < results.length; i++) {
-          if (!results[i] && morePromises[i]) {
-            results[i] = await morePromises[i];
-          }
-        }
-      }
-
-      return results;
-    },
+    tryResolveAll: (names, fallback) =>
+      Promise.all(
+        names.map((name) =>
+          this.#nestedPublicAPI.tryResolve(
+            name,
+            /** @type {(name?: string) => Promise<object | undefined>} */ (fallback)
+          )
+        )
+      ),
     /**
      * @param {Parameters<Compiler['compile']>} args
      */
@@ -740,6 +684,25 @@ export class Compiler {
   }
 
   /**
+   * The package that a resolved URL belongs to, when the URL says so.
+   * No version means that the caller provided the module.
+   *
+   * @param {string} url
+   * @returns {undefined | { name: string, version: string | undefined }}
+   */
+  #packageOf(url) {
+    const virtual = parseVirtualUrl(url);
+
+    if (virtual) {
+      return virtual.kind === 'manual'
+        ? { name: this.#provided.packageOf(virtual.name), version: undefined }
+        : undefined;
+    }
+
+    return installed.get(url) ?? exactPackage(url);
+  }
+
+  /**
    * No version means that the caller provided the module.
    *
    * @param {{ name: string, version: string | undefined } | undefined} pkg
@@ -797,10 +760,20 @@ export class Compiler {
 }
 
 /**
+ * Imports that the page makes itself, such as the modules of a compiler.
+ * Only imports from documents and packages are news to the user.
+ *
+ * @param {string | undefined} parentUrl
+ */
+function isFromPage(parentUrl) {
+  return parentUrl === undefined || parentUrl.startsWith(location.origin);
+}
+
+/**
  * This should have happened at the beginning of the compile function.
  * If this error is ever thrown, something goofy has happened, and it would be very unexpected.
 
- * @param {...any[]} args
+ * @param {...any} args
  */
 function shimmedImport(...args) {
   if (!globalThis.importShim) {
@@ -809,25 +782,6 @@ function shimmedImport(...args) {
 
   // @ts-ignore
   return globalThis.importShim(/* @vite-ignore */ ...args);
-}
-
-/**
- * The package that a resolved URL belongs to, when the URL says so.
- * No version means that the caller provided the module.
- *
- * @param {string} url
- * @returns {undefined | { name: string, version: string | undefined }}
- */
-function packageOf(url) {
-  const virtual = parseVirtualUrl(url);
-
-  if (virtual) {
-    return virtual.kind === 'manual'
-      ? { name: parseSpecifier(virtual.name).name, version: undefined }
-      : undefined;
-  }
-
-  return installed.get(url) ?? exactPackage(url);
 }
 
 /**
@@ -845,7 +799,5 @@ function exactPackage(url) {
 
   const { name, version } = parseSpecifier(url.slice(NODE_MODULES_PREFIX.length));
 
-  return version && EXACT_VERSION.test(version) ? { name, version } : undefined;
+  return version && isExactVersion(version) ? { name, version } : undefined;
 }
-
-const EXACT_VERSION = /^\d+\.\d+\.\d+(-[\w.]+)?$/;

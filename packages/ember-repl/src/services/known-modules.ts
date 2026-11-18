@@ -1,23 +1,7 @@
+import { VERSION } from '@ember/version';
+
 import type { ModuleMap } from '../compile/types.ts';
-
-/**
- * ember-source modules, loaded ahead of time for `importSync`.
- */
-const loaded: Record<string, unknown> = {};
-
-/**
- * Sets what `importSync` answers for ember-source modules.
- */
-export function provideForImportSync(values: Record<string, unknown>) {
-  Object.assign(loaded, values);
-}
-
-/**
- * An ember-source module of the current compile: the pinned one, or the bundled one.
- */
-export function emberModule<T = Record<string, unknown>>(specifier: string): T {
-  return loaded[specifier] as T;
-}
+import type { Options } from 'repl-sdk';
 
 const frameworkModules = {
   '@ember/application': () => import('@ember/application'),
@@ -94,60 +78,6 @@ const emberCompilationModules = {
 
   // @ts-ignore
   'babel-plugin-debug-macros': () => import('babel-plugin-debug-macros'),
-  '@embroider/macros': () => ({
-    // passthrough, we are not doing dead-code-elimination
-    macroCondition: (x: boolean) => x,
-    // I *could* actually implement this
-    appEmberSatisfies: () => true,
-    // I *could* actually implement this
-    dependencySatisfies: () => true,
-    isDevelopingApp: () => true,
-    // Trying to use warp-drive in a REPL environment may be impossible, since they
-    // encourage choosing your own adventure without a buildless recommended path.
-    // The use of nested configs (specifically env) is also problematic for
-    // "falling back to false" as what all other macros-using libraries use.
-    //   (many of us have seen "Cannot access DEBUG on undefined" in build errors)
-    // Even with this config, I have not successfully been able to use warp-drive
-    // in any of my REPL-based projects.
-    //
-    // (Its also perfectly fine for warp-drive to decide they don't care about the same things I do)
-    getGlobalConfig: () => ({
-      WarpDrive: {
-        debug: false,
-        env: {
-          DEBUG: false,
-          TESTING: false,
-          PRODUCTION: true,
-        },
-        activeLogging: false,
-        compatWith: '99.0',
-        features: {},
-        deprecations: {},
-        polyfillUUID: false,
-        includeDataAdapter: false,
-      },
-    }),
-    // Private
-
-    // @ts-ignore
-    importSync: (x: string) =>
-      loaded[x] ??
-      // @ts-expect-error
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      window[Symbol.for('__repl-sdk__compiler__') as any]!.resolves[x],
-    moduleExists: () => false,
-  }),
-};
-
-const markdownCompilationModules = {
-  // Provided directly in repl-sdk, but could be overridden
-  // 'rehype-raw': () => import('rehype-raw'),
-  // 'rehype-stringify': () => import('rehype-stringify'),
-  // 'remark-gfm': () => import('remark-gfm'),
-  // 'remark-parse': () => import('remark-parse'),
-  // 'remark-rehype': () => import('remark-rehype'),
-  // unified: () => import('unified'),
-  // 'unist-util-visit': () => import('unist-util-visit'),
 };
 
 /**
@@ -159,10 +89,9 @@ export const modules = (extraModules: ModuleMap): ModuleMap => ({
   ...frameworkModules,
   ...extraModules,
   ...emberCompilationModules,
-  ...markdownCompilationModules,
 });
 
-export const EMBER_SOURCE = 'ember-source';
+const EMBER_SOURCE = 'ember-source';
 
 /**
  * Framework modules that are packages of their own.
@@ -181,7 +110,7 @@ const ownPackages = new Set([
  *   @glimmer/component   → @glimmer/component
  *   ember-primitives/x   → ember-primitives
  */
-export function packageOf(specifier: string): string {
+function packageOf(specifier: string): string {
   if (specifier in frameworkModules && !ownPackages.has(specifier)) {
     return EMBER_SOURCE;
   }
@@ -204,33 +133,40 @@ export function packageOf(specifier: string): string {
  * Compiler tools that work with any Ember, such as babel and content-tag.
  * Every other bundled module is tied to the bundled Ember.
  */
-export function isEmberIndependent(specifier: string): boolean {
-  return specifier in emberCompilationModules && packageOf(specifier) !== EMBER_SOURCE;
-}
-
-/**
- * The bundled ember-source modules, by specifier.
- */
-export function emberSourceSpecifiers(): string[] {
-  return Object.keys(frameworkModules).filter(
-    (specifier) => packageOf(specifier) === EMBER_SOURCE
+function isEmberIndependent(specifier: string): boolean {
+  return (
+    specifier in emberCompilationModules &&
+    packageOf(specifier) !== EMBER_SOURCE
   );
 }
 
 /**
- * The bundled ember-source modules for `importSync`.
- * The host app has these modules already, so this is fast.
+ * What the bundled modules are, for repl-sdk's `packages` option.
+ *
+ * A compile that pins a package loads it from npm in place of these modules.
+ * Everything except the compiler tools imports the bundled Ember,
+ * so a pin of ember-source loads those from npm too.
  */
-export async function preloadEmberSource(): Promise<void> {
-  const values: Record<string, unknown> = {};
+export function packagesFor(
+  specifiers: string[]
+): NonNullable<Options['packages']> {
+  const emberSource = { version: VERSION, modules: [] as string[] };
+  const packages: NonNullable<Options['packages']> = {
+    [EMBER_SOURCE]: emberSource,
+  };
 
-  await Promise.all(
-    emberSourceSpecifiers().map(async (specifier) => {
-      const load = frameworkModules[specifier as keyof typeof frameworkModules];
+  for (const specifier of specifiers) {
+    const name = packageOf(specifier);
 
-      values[specifier] = await load();
-    })
-  );
+    if (name === EMBER_SOURCE) {
+      emberSource.modules.push(specifier);
+      continue;
+    }
 
-  provideForImportSync(values);
+    packages[name] ??= isEmberIndependent(specifier)
+      ? {}
+      : { builtWith: [EMBER_SOURCE] };
+  }
+
+  return packages;
 }

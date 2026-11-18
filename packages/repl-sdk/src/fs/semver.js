@@ -1,5 +1,16 @@
 import { compare, satisfies } from 'compare-versions';
 
+const EXACT_VERSION = /^\d+\.\d+\.\d+(-[\w.]+)?$/;
+
+/**
+ * One version, such as `1.2.3` or `1.2.3-beta.1`, and not a range or a tag.
+ *
+ * @param {string} version
+ */
+export function isExactVersion(version) {
+  return EXACT_VERSION.test(version);
+}
+
 /**
  * Ranges npm accepts and compare-versions does not (git urls, `workspace:*`,
  * a dist-tag) are not a match, and not a crash.

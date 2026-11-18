@@ -5,35 +5,18 @@ import { maxSatisfying } from './fs/semver.js';
 import { assert } from './utils.js';
 
 /**
- * @type {Map<string, unknown>} namp@version => manifest
- */
-const npmInfoCache = new Map();
-
-/**
+ * The registry answers with the document of the whole package,
+ * so one fetch serves every version and range of it.
+ *
  * @param {string} name
- * @param {string} version
  */
-export async function getNPMInfo(name, version) {
-  const key = `${name}@${version}`;
-
+export async function getNPMInfo(name) {
   assert(`Must pass valid npm-compatible package name`, packageNameRegex.test(name));
 
-  const existing = npmInfoCache.get(key);
-
-  if (existing) {
-    return existing;
-  }
-
-  return cache.cachedPromise(`getNPMInfo:${key}`, async () => {
-    assert(`Cannot get data from NPM without specifying the name of the package`, name);
-    assert(`Version is required. It may be 'latest'`, version);
-
+  return cache.cachedPromise(`getNPMInfo:${name}`, async () => {
     const response = await fetch(`https://registry.npmjs.org/${name}`);
-    const json = await response.json();
 
-    npmInfoCache.set(key, json);
-
-    return json;
+    return response.json();
   });
 }
 

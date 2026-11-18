@@ -268,25 +268,3 @@ function createAnswer(forFile, request, fromMethod) {
     from: fromMethod,
   };
 }
-
-/**
- * @param {import('./types.ts').InstalledPackage} untarred
- * @param {ResolveRequest} request
- * @param {undefined | import('./types.ts').RequestAnswer} answer
- * @throws {Error}
- */
-export function printError(untarred, request, answer) {
-  const { name, exports, main, module, browser } = untarred.manifest;
-
-  console.group(`${name} file info`);
-  console.info(`${name} has these files: `, Array.from(untarred.files));
-  console.info(`We searched for '${request.original}'`);
-  console.info(`from: `, { exports, main, module, browser });
-  console.info(`And found: `, answer);
-  console.info(`The request was: `, request);
-  console.groupEnd();
-
-  // eslint-disable-next-line no-debugger
-  debugger;
-  throw new Error(`Could not find file for ${request.original}`);
-}

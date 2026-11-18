@@ -67,13 +67,6 @@ async function runTheCompiler({
   await options?.onCompileStart?.();
   await Promise.resolve();
 
-  if (!text) {
-    state[REJECT](new Error('No Input Document yet'));
-    await options?.onError?.('No Input Document yet');
-
-    return;
-  }
-
   let result: CompileResult;
 
   // TODO: just use compile, eliminate all this branching

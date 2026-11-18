@@ -7,27 +7,18 @@ import { NODE_MODULES_PREFIX } from '../../fs/url.js';
 import { deCDN } from '../../utils.js';
 
 /**
- * Module name → the file in the pinned package that has it.
- * The module loader is global for the page, so this is too.
+ * name@version → module name → the file in that package that has it.
  *
- * @type {Map<string, string>}
+ * @type {Map<string, Map<string, string>>}
  */
-const renamed = new Map();
+const byPackage = new Map();
 
 /**
- * name@version whose renamed modules are in `renamed`.
+ * The renamed modules of the packages that the compile in progress pins.
  *
- * @type {Set<string>}
+ * @type {Map<string, string>[]}
  */
-const mapped = new Set();
-
-/**
- * Once the page pins a framework from npm, such as ember-source,
- * its addons come from npm too, so they match it.
- */
-export function hasRenamedModules() {
-  return renamed.size > 0;
-}
+let pinned = [];
 
 /**
  * A v2 addon can publish modules under other names,
@@ -54,30 +45,52 @@ export const renamedModules = {
    * Resolution of these is synchronous, so the package installs before anything imports it.
    */
   async buildStart({ versions }) {
-    await Promise.all(Object.entries(versions).map(([name, range]) => mapPackage(name, range)));
+    pinned = await Promise.all(
+      Object.entries(versions).map(([name, range]) => renamedModulesOf(name, range))
+    );
   },
 
   resolveId(id) {
-    return renamed.get(deCDN(id));
+    const vanilla = deCDN(id);
+
+    for (const modules of pinned) {
+      const target = modules.get(vanilla);
+
+      if (target) return target;
+    }
   },
 };
 
 /**
  * @param {string} name
  * @param {string} range
+ * @returns {Promise<Map<string, string>>}
  */
-async function mapPackage(name, range) {
+async function renamedModulesOf(name, range) {
   const pkg = await installer.package(name, range);
-  const { version } = pkg.manifest;
-  const key = `${name}@${version}`;
+  const key = `${name}@${pkg.manifest.version}`;
+  let modules = byPackage.get(key);
 
-  if (mapped.has(key)) return;
+  if (!modules) {
+    modules = mapPackage(name, pkg.manifest);
+    byPackage.set(key, modules);
+  }
 
-  mapped.add(key);
+  return modules;
+}
 
-  const modules = pkg.manifest['ember-addon']?.['renamed-modules'];
+/**
+ * @param {string} name
+ * @param {import('../../types.ts').InstalledPackage['manifest']} manifest
+ * @returns {Map<string, string>}
+ */
+function mapPackage(name, manifest) {
+  /** @type {Map<string, string>} */
+  const renamed = new Map();
+  const { version } = manifest;
+  const modules = manifest['ember-addon']?.['renamed-modules'];
 
-  if (!modules) return;
+  if (!modules) return renamed;
 
   for (const [from, to] of Object.entries(modules)) {
     if (!to.startsWith(`${name}/`)) continue;
@@ -93,4 +106,6 @@ async function mapPackage(name, range) {
     renamed.set(from, target);
     renamed.set(from.replace(/(\/index)?\.js$/, ''), target);
   }
+
+  return renamed;
 }

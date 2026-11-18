@@ -43,9 +43,7 @@ export function filterOptions(options) {
  * @type {import('../../types.ts').CompilerConfig['compiler']}
  */
 export async function compiler(config, api) {
-  const userOptions = filterOptions(
-    /** @type {Record<string, unknown>} */ (config.userOptions)?.gmd || config
-  );
+  const userOptions = filterOptions(config);
 
   const { isLive, isPreview, needsLive, allowedFormats, getFlavorFromMeta, isBelow } =
     buildCodeFenceMetaUtils(api);
