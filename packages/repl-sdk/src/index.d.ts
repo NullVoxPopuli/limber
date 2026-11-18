@@ -18,6 +18,12 @@ export type {
  */
 export function errorMessage(error: unknown): string;
 
+/**
+ * A module of the `preload` option, as the compile in progress loaded it.
+ * `undefined` when it did not load, such as a module that a pinned version does not have.
+ */
+export function preloaded<T = Record<string, unknown>>(id: string): T | undefined;
+
 export const defaultFormats: keyof Options['formats'];
 export const defaults: Options;
 

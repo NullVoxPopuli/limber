@@ -1,4 +1,4 @@
-import { Compiler } from 'repl-sdk';
+import { Compiler, preloaded } from 'repl-sdk';
 import { describe, expect, test } from 'vitest';
 
 import type { Options } from 'repl-sdk';
@@ -102,5 +102,21 @@ describe('the resolve option', () => {
 
     expect(element.textContent).toBe('provided');
     expect(dependencies).toEqual({ nanoid: undefined });
+  });
+
+  test('preload loads through the plugins, so the pins of the compile apply', async () => {
+    const { compiler } = compilerWith({
+      resolve: provided,
+      packages: { nanoid: { version: '5.1.5' } },
+      preload: ['nanoid'],
+    });
+
+    await compiler.compile('js', `export default 1;`);
+
+    expect(preloaded<{ nanoid: () => string }>('nanoid')?.nanoid()).toBe('provided');
+
+    await compiler.compile('js', `export default 1;`, { versions: { nanoid: '5.0.9' } });
+
+    expect(preloaded<{ nanoid: (size: number) => string }>('nanoid')?.nanoid(5)).toHaveLength(5);
   });
 });

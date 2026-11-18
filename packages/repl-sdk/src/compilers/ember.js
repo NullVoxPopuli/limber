@@ -3,6 +3,7 @@
  */
 
 import { errorMessage } from '../utils.js';
+import { macros } from './ember/macros.js';
 import { renamedModules } from './ember/renamed-modules.js';
 
 /**
@@ -23,35 +24,7 @@ const externalPackages = [
  * @returns {string | undefined | (() => Record<string, unknown>)}
  */
 function resolve(id, versions = {}) {
-  if (id.startsWith('@embroider/macros')) {
-    return () => ({
-      // passthrough, we are not doing dead-code-elimination
-
-      /**
-       * @param {unknown} x
-       */
-      macroCondition: (x) => Boolean(x),
-      // I *could* actually implement this
-      dependencySatisfies: () => true,
-      isDevelopingApp: () => true,
-      getGlobalConfig: () => ({
-        WarpDrive: {
-          debug: false,
-          env: {
-            DEBUG: false,
-            TESTING: false,
-            PRODUCTION: true,
-          },
-          activeLogging: false,
-          compatWith: '99.0',
-          features: {},
-          deprecations: {},
-          polyfillUUID: false,
-          includeDataAdapter: false,
-        },
-      }),
-    });
-  }
+  if (id.startsWith('@embroider/macros')) return () => macros;
 
   /**
    * A pinned ember-source comes from npm, through its renamed modules.
