@@ -1,5 +1,3 @@
-import { preloaded } from '../../preload.js';
-
 /**
  * `@embroider/macros` at runtime.
  * A build would answer these, and remove the code that a condition rules out.
@@ -15,21 +13,13 @@ export const macros = {
   isDevelopingApp: () => true,
   moduleExists: () => false,
   /**
-   * It must answer at once, so the module must load before the compile.
+   * The `import-sync` plugin turns each `importSync('x')` into an import.
+   * Only a call without a string literal gets here.
    *
    * @param {string} id
    */
   importSync: (id) => {
-    const value = preloaded(id);
-
-    if (value === undefined) {
-      throw new Error(
-        `importSync('${id}') needs '${id}' to load before the compile. ` +
-          `Add it to the \`preload\` option of the Compiler.`
-      );
-    }
-
-    return value;
+    throw new Error(`importSync(${JSON.stringify(id)}) needs a string literal, as in a build.`);
   },
   /**
    * WarpDrive reads nested config, such as `env.DEBUG`,

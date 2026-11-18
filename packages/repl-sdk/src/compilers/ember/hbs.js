@@ -26,10 +26,24 @@ export async function compiler(config, api) {
    */
   const hbsCompiler = {
     compile: async (text, options) => {
-      const { template } = await api.tryResolve('@ember/template-compiler/runtime');
+      const [{ template }, helpers, { on }] = await Promise.all([
+        api.tryResolve('@ember/template-compiler/runtime'),
+        api.tryResolve('@ember/helper'),
+        api.tryResolve('@ember/modifier'),
+      ]);
 
       const component = template(text, {
         scope: () => ({
+          /**
+           * The keywords of gjs. They come from the Ember of this compile,
+           * because helpers from another Ember have no manager in it.
+           */
+          array: helpers.array,
+          concat: helpers.concat,
+          fn: helpers.fn,
+          get: helpers.get,
+          hash: helpers.hash,
+          on,
           ...filterOptions(config).scope,
           ...filterOptions(options).scope,
         }),

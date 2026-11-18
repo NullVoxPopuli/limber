@@ -380,13 +380,6 @@ export interface Options {
   };
 
   /**
-   * Modules that load before each compile, through the plugins, so the pins apply.
-   * `importSync` from `@embroider/macros` answers with these,
-   * because it must answer at once. See `preloaded` too.
-   */
-  preload?: string[];
-
-  /**
    * Change how modules resolve, load, and transform.
    * These run before every other source of modules.
    */

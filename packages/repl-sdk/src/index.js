@@ -26,7 +26,6 @@ import { fromConfigResolve, fromHandlers } from './plugins/compiler-config.js';
 import { externalFiles } from './plugins/external.js';
 import { npm } from './plugins/npm.js';
 import { providedModules } from './plugins/provided.js';
-import { setPreloaded } from './preload.js';
 import { parseSpecifier } from './specifier.js';
 import { assert, errorMessage, nextId } from './utils.js';
 
@@ -43,7 +42,6 @@ assert(`There is no document. repl-sdk is meant to be ran in a browser`, globalT
  */
 const installed = new Map();
 
-export { preloaded } from './preload.js';
 export { errorMessage } from './utils.js';
 
 export const defaultFormats = Object.keys(compilers);
@@ -359,7 +357,6 @@ export class Compiler {
 
     opts.fileName ||= `index.${format}`;
     await this.prepare(opts.versions, format, opts.flavor);
-    await this.#preload();
 
     this.#log('[compile] compiling');
 
@@ -407,28 +404,6 @@ export class Compiler {
       ...extras,
       ...(opts.args ? { args: opts.args } : {}),
     });
-  }
-
-  /**
-   * Loads the modules of the `preload` option for the compile in progress.
-   * A module that does not load is left out,
-   * such as one that a pinned version does not have.
-   */
-  async #preload() {
-    /** @type {Map<string, unknown>} */
-    const modules = new Map();
-
-    await Promise.all(
-      (this.#options.preload ?? []).map(async (id) => {
-        try {
-          modules.set(id, await shimmedImport(/* @vite-ignore */ id));
-        } catch (error) {
-          this.#log(`[preload] ${id} did not load`, error);
-        }
-      })
-    );
-
-    setPreloaded(modules);
   }
 
   #compilerCache = new WeakMap();
@@ -785,7 +760,7 @@ export class Compiler {
 }
 
 /**
- * Imports that the page makes itself, such as `preload` and the modules of a compiler.
+ * Imports that the page makes itself, such as the modules of a compiler.
  * Only imports from documents and packages are news to the user.
  *
  * @param {string | undefined} parentUrl

@@ -3,6 +3,7 @@
  */
 
 import { errorMessage } from '../utils.js';
+import { importSync } from './ember/import-sync.js';
 import { macros } from './ember/macros.js';
 import { renamedModules } from './ember/renamed-modules.js';
 
@@ -96,7 +97,7 @@ function onUnhandled(e, handle) {
  * @type {CompilerConfig}
  */
 export const gjs = {
-  plugins: [renamedModules],
+  plugins: [renamedModules, importSync],
   resolve,
   onUnhandled,
   codemirror: {
@@ -117,7 +118,7 @@ export const gjs = {
  * @type {CompilerConfig}
  */
 export const gts = {
-  plugins: [renamedModules],
+  plugins: [renamedModules, importSync],
   resolve,
   onUnhandled,
   codemirror: {
@@ -138,7 +139,7 @@ export const gts = {
  * @type {CompilerConfig}
  */
 export const hbs = {
-  plugins: [renamedModules],
+  plugins: [renamedModules, importSync],
   resolve,
   onUnhandled,
   codemirror: {
@@ -159,7 +160,7 @@ export const hbs = {
  * @type {CompilerConfig}
  */
 export const gmd = {
-  plugins: [renamedModules],
+  plugins: [renamedModules, importSync],
   resolve,
   onUnhandled,
   codemirror: {

@@ -141,15 +141,6 @@ function isEmberIndependent(specifier: string): boolean {
 }
 
 /**
- * The bundled ember-source modules, by specifier.
- */
-export function emberSourceSpecifiers(): string[] {
-  return Object.keys(frameworkModules).filter(
-    (specifier) => packageOf(specifier) === EMBER_SOURCE
-  );
-}
-
-/**
  * What the bundled modules are, for repl-sdk's `packages` option.
  *
  * A compile that pins a package loads it from npm in place of these modules.

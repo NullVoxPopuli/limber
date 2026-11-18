@@ -103,7 +103,7 @@ new Compiler({
 - A pin that accepts `version` keeps the provided modules.
 - A pin of a package in `builtWith` loads this package from npm too, so that both match.
 
-`preload` lists modules that load before each compile, with the pins of that compile. `importSync` from `@embroider/macros` answers with them, and `preloaded(id)` reads them.
+An addon that calls `importSync('x')` from `@embroider/macros` gets an import of `x` in its place, so the pins apply to it too.
 
 ## Debugging
 

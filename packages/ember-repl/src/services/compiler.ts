@@ -12,19 +12,13 @@ import { waitFor } from '@ember/test-waiters';
 
 import { createStore } from 'ember-primitives/store';
 import { resource } from 'ember-resources';
-import { Compiler, preloaded } from 'repl-sdk';
+import { Compiler } from 'repl-sdk';
 import { visit } from 'unist-util-visit';
 
 import { nameFor } from '../compile/utils.ts';
-import {
-  emberSourceSpecifiers,
-  modules,
-  packagesFor,
-} from './known-modules.ts';
+import { modules, packagesFor } from './known-modules.ts';
 
 import type { CompileResult, ModuleMap } from '../compile/types.ts';
-import type * as EmberHelper from '@ember/helper';
-import type * as EmberModifier from '@ember/modifier';
 import type { ComponentLike } from '@glint/template';
 import type { EditorView } from 'codemirror';
 import type { ErrorMessage, InfoMessage, Message } from 'repl-sdk';
@@ -90,44 +84,10 @@ interface CompilerOptions {
 }
 
 /**
- * An ember-source module of the compile in progress: the pinned one, or the bundled one.
- */
-function emberModule<T>(specifier: string): T {
-  const value = preloaded<T>(specifier);
-
-  assert(`${specifier} did not load before the compile`, value);
-
-  return value;
-}
-
-/**
  * Standard for the REPL, not real apps.
  * HBS isn't used in real apps (that are fully up to date)
  */
 const standardScope = {
-  // These are only added here because it's convenient for hbs
-  // to have them
-  //
-  // Getters, so that a pinned ember-source gets its own helpers.
-  // Helpers from another Ember have no manager in it.
-  get array() {
-    return emberModule<typeof EmberHelper>('@ember/helper').array;
-  },
-  get concat() {
-    return emberModule<typeof EmberHelper>('@ember/helper').concat;
-  },
-  get fn() {
-    return emberModule<typeof EmberHelper>('@ember/helper').fn;
-  },
-  get get() {
-    return emberModule<typeof EmberHelper>('@ember/helper').get;
-  },
-  get hash() {
-    return emberModule<typeof EmberHelper>('@ember/helper').hash;
-  },
-  get on() {
-    return emberModule<typeof EmberModifier>('@ember/modifier').on;
-  },
   // The default available scope for gjs:
   //
   // We don't use gjs transpilation here, because hbs transpilation
@@ -321,11 +281,6 @@ export default class CompilerService {
       logging: location.search.includes('debug'),
       resolve: localModules,
       packages: packagesFor(Object.keys(localModules)),
-      /**
-       * npm builds of addons call `importSync` from `@embroider/macros` for `@ember/*` modules,
-       * and the hbs scope reads the helpers of the Ember in use.
-       */
-      preload: emberSourceSpecifiers(),
       on: {
         log: (type: Message['type'], message: string, error?: unknown) => {
           this.messages.push(
