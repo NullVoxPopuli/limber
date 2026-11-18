@@ -95,11 +95,14 @@ function defineWithWarning(
  *
  * We could probably log a deprecation message on these paths
  */
-defineWithWarning({ default: ExternalLink, ExternalLink }, {
-  name: '<ExternalLink />',
-  original: 'limber/components/external-link',
-  replacement: '@nullvoxpopuli/limber-shared',
-});
+defineWithWarning(
+  { default: ExternalLink, ExternalLink },
+  {
+    name: '<ExternalLink />',
+    original: 'limber/components/external-link',
+    replacement: '@nullvoxpopuli/limber-shared',
+  }
+);
 defineWithWarning(
   async () => {
     const ePrimitives = await import('ember-primitives');
