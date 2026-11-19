@@ -3,6 +3,7 @@ import * as gmd from './formats/gmd.gts';
 import * as gts from './formats/gts.gts';
 import * as hbs from './formats/hbs.gts';
 import * as hbsEmber from './formats/hbs-ember.gts';
+import * as html from './formats/html.gts';
 import * as js from './formats/js.gts';
 import * as jsx from './formats/jsx.gts';
 import * as jsxReact from './formats/jsx-react.gts';
@@ -28,6 +29,7 @@ export const formats = [
   gts,
   hbs,
   hbsEmber,
+  html,
   js,
   jsx,
   jsxReact,

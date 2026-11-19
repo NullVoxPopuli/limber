@@ -63,6 +63,7 @@ export default class ApplicationController extends Controller {
     //  - jsx|react
     //  - vue
     //  - mermaid
+    //  - html
     'format',
 
     // Load a file from the public directory

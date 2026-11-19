@@ -11,6 +11,7 @@ export type Format =
   | 'gts'
   | 'hbs'
   | 'mermaid'
+  | 'html'
   | 'react';
 
 export interface ScopeMap {

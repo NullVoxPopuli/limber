@@ -26,8 +26,9 @@ const MARKUP_FORMATS = new Set([
   'gmd',
   'hbs',
   'hbs|ember',
+  'html',
 ]);
-const SCRIPT_FORMATS = new Set(['js', 'gjs', 'gts', 'vue', 'jsx', 'jsx|react', 'svelte']);
+const SCRIPT_FORMATS = new Set(['js', 'gjs', 'gts', 'vue', 'jsx', 'jsx|react', 'svelte', 'html']);
 
 function couldHaveMarkup(format: Format) {
   return MARKUP_FORMATS.has(format);

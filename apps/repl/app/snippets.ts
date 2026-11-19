@@ -53,6 +53,7 @@ This REPL supports the following:
 | React ([jsx][jsx-react-demo]) | [react.dev][docs-react] ↗
 | Ember ([gjs][gjs-ember-demo], [gts][gts-ember-demo], [hbs][hbs-ember-demo]) | [emberjs.com][docs-ember] ↗
 | [Mermaid][mermaid-demo] | [mermaid.js.org][docs-mermaid] ↗
+| [HTML][html-demo] with scripts and styles | [MDN][docs-html] ↗
 | [Markdown][md-demo] with live islands | [@ GitHub][docs-markdown] ↗
 | [Glimdown][gmd-demo] (this doc) |
 
@@ -67,6 +68,7 @@ This REPL supports the following:
 [gts-ember-demo]: /?format=gts&file=/samples/gts-demo.gts
 [hbs-ember-demo]: /?format=hbs|ember&file=/samples/hbs-demo.hbs
 [mermaid-demo]: /?format=mermaid&file=/samples/mermaid-demo.mermaid
+[html-demo]: /?format=html&file=/samples/html-demo.html
 [md-demo]: /?format=md&file=/samples/all.md
 [gmd-demo]: /
 
@@ -75,6 +77,7 @@ This REPL supports the following:
 [docs-react]: https://react.dev/
 [docs-ember]: https://emberjs.com/
 [docs-mermaid]: https://mermaid.js.org/
+[docs-html]: https://developer.mozilla.org/en-US/docs/Web/HTML
 [docs-markdown]: https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
 
 ## Glimdown
@@ -132,6 +135,7 @@ export const ALL = [
   { format: 'gts', label: 'Ember GTS', path: '/samples/gts-demo.gts' },
   { format: 'svelte', label: 'Svelte', path: '/samples/svelte-demo.svelte' },
   { format: 'js', label: 'Vanilla JS', path: '/samples/js-demo.js' },
+  { format: 'html', label: 'HTML', path: '/samples/html-demo.html' },
   // Yaml
   { format: 'mermaid', label: 'Mermaid', path: '/samples/mermaid-demo.mermaid' },
   { format: 'vue', label: 'Vue', path: '/samples/vue-demo.vue' },
