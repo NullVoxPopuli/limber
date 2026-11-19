@@ -1,12 +1,14 @@
 .limber__files {
   display: flex;
   flex-direction: column;
-  width: 11rem;
+  width: calc(11rem + 38px);
   flex-shrink: 0;
   overflow-y: auto;
   background: var(--code-bg);
   color: #cbced0;
-  border-right: 1px solid #2e303e;
+  border-left: 1px solid #2e303e;
+  /* The editor controls float over this side of the panel. */
+  padding-right: 38px;
   font-size: 0.8rem;
 
   &.limber__files--drop {
@@ -142,4 +144,10 @@
   color: #9da0a2;
   font-size: 0.7rem;
   line-height: 1.4;
+}
+
+/* Split horizontally, the editor controls are a row along the top instead. */
+.limber__editor-panel:has([data-controls="row"]) .limber__files {
+  padding-top: 2rem;
+  padding-right: 0;
 }

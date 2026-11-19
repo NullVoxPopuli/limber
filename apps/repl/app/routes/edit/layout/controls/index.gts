@@ -26,6 +26,13 @@ import type { TOC } from '@ember/component/template-only';
 
 const or = (a: boolean, b: boolean) => a || b;
 
+/**
+ * The controls stay clear of the editor's scrollbar. With the file list open,
+ * the scrollbar is left of the list, and the controls sit over the list's padding.
+ */
+const controlsOffset = (editor: { filesOpen: boolean; scrollbarWidth: number }) =>
+  editor.filesOpen ? 0 : editor.scrollbarWidth;
+
 function getShadowValue(qpValue: string | undefined) {
   if (qpValue === undefined) return true;
 
@@ -45,7 +52,8 @@ export const Controls: TOC<{
     {{#let (service "editor") as |editor|}}
       <div
         data-is-minimized="{{@isMinimized}}"
-        style={{htmlSafe (concat "right: " editor.scrollbarWidth "px;")}}
+        data-controls={{if @splitHorizontally "row" "column"}}
+        style={{htmlSafe (concat "right: " (controlsOffset editor) "px;")}}
         class="right-0 top-0 absolute z-[1]
           {{if @splitHorizontally 'flex flex-row-reverse' 'grid'}}
           {{if @isMinimized 'bg-ember-black h-full content-start'}}
