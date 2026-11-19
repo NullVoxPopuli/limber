@@ -6,7 +6,7 @@ import { VERSION } from '@ember/version';
 import { castToBoolean } from 'ember-primitives/qp';
 import { link } from 'reactiveweb/link';
 
-import { infoFor } from '#app/languages.gts';
+import { editorFormatFor, editorFormatOf, FILE_EXTENSIONS, infoFor } from '#app/languages.gts';
 
 import { parseDeps, type Versions } from 'limber/utils/dependencies';
 import { FileURIComponent } from 'limber/utils/editor-text';
@@ -21,33 +21,6 @@ interface RenderInput {
   format: FormatQP;
   versions: Versions;
   files: Record<string, string>;
-}
-
-/**
- * The editor language of a file, by its extension.
- * Undefined for a file that the editor shows as plain text.
- */
-const EDITOR_FORMATS: Record<string, string> = {
-  gjs: 'gjs',
-  gts: 'gts',
-  ts: 'gts',
-  js: 'js',
-  mjs: 'js',
-  hbs: 'hbs|ember',
-  jsx: 'jsx|react',
-  md: 'md',
-  gmd: 'gmd',
-  vue: 'vue',
-  svelte: 'svelte',
-  html: 'html',
-};
-
-export function editorFormatFor(path: string): string | undefined {
-  const dot = path.lastIndexOf('.');
-
-  if (dot < 0) return;
-
-  return EDITOR_FORMATS[path.slice(dot + 1)];
 }
 
 const FILES_OPEN_KEY = 'limber:files-open';
@@ -69,8 +42,6 @@ function writeFilesOpen(value: boolean) {
     /* Private windows can refuse storage. The toggle still works. */
   }
 }
-
-const editorFormatOf = (format: FormatQP) => (format === 'hbs' ? 'hbs|ember' : format);
 
 /**
  * `./a.gjs`, `/a.gjs`, and `src/a.gjs` all name `a.gjs`.
@@ -223,6 +194,10 @@ export default class EditorService extends Service {
       return 'A file must be inside the project.';
     }
 
+    if (!editorFormatFor(path)) {
+      return `${path} needs one of these extensions: ${FILE_EXTENSIONS.join(', ')}.`;
+    }
+
     if (path === this.entryName) return `${path} is the entry file.`;
     if (path in this.files) return `${path} already exists.`;
   }
@@ -242,16 +217,16 @@ export default class EditorService extends Service {
   }
 
   /**
-   * A sample or a shared document is a new project.
+   * A sample or a stored document is a new project.
    */
-  #clearFiles() {
-    if (Object.keys(this.files).length === 0) return;
-
+  #replaceFiles(files: Record<string, string>) {
     for (const path of Object.keys(this.files)) {
       this.forgetDocument?.(path);
     }
 
-    this.fileURIComponent.setFiles({});
+    if (Object.keys(this.files).length === 0 && Object.keys(files).length === 0) return;
+
+    this.fileURIComponent.setFiles(files);
   }
 
   get text() {
@@ -366,9 +341,9 @@ export default class EditorService extends Service {
    * For documents that the app picks, such as a sample.
    * `update` is for text that the user or the embedding page wrote.
    */
-  load = (text: string, format: FormatQP) => {
+  load = (text: string, format: FormatQP, files: Record<string, string> = {}) => {
     this.#textAtSwitch = text;
-    this.#clearFiles();
+    this.#replaceFiles(files);
     this.update(text, format);
   };
 
@@ -402,7 +377,7 @@ export default class EditorService extends Service {
     const format = demo.format;
 
     this.#textAtSwitch = text;
-    this.#clearFiles();
+    this.#replaceFiles({});
 
     // Update ourselves
     this.fileURIComponent.set(text, format, demo && 'qps' in demo ? demo.qps : {});

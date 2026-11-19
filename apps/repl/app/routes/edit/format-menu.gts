@@ -9,7 +9,7 @@ import Menu from '#components/menu.gts';
 import { formatQPFrom, infoFor, usage } from '#languages';
 
 import { snippetForFormat } from 'limber/snippets';
-import { getStoredDocumentForFormat } from 'limber/utils/editor-text';
+import { getStoredDocumentForFormat, getStoredFilesForFormat } from 'limber/utils/editor-text';
 
 import type { TOC } from '@ember/component/template-only';
 import type RouterService from '@ember/routing/router-service';
@@ -32,9 +32,15 @@ export async function switchFormat(editor: EditorService, value: string): Promis
     return;
   }
 
-  const text = getStoredDocumentForFormat(qp) ?? (await snippetForFormat(qp));
+  const stored = getStoredDocumentForFormat(qp);
 
-  editor.load(text, qp);
+  if (stored !== null) {
+    editor.load(stored, qp, getStoredFilesForFormat(qp));
+
+    return;
+  }
+
+  editor.load(await snippetForFormat(qp), qp);
 }
 
 const IconItem: TOC<{

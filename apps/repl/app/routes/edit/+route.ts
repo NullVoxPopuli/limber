@@ -62,12 +62,12 @@ export default class EditRoute extends Route {
        * user-configurable.
        * (whatever they did last)
        */
-      const { format, doc } = getStoredDocument();
+      const { format, doc, files } = getStoredDocument();
 
       if (format && doc) {
         console.info(`Found format and document in localStorage. Using those.`);
         transition.abort();
-        this.editor.load(doc, formatQPFrom(format));
+        this.editor.load(doc, formatQPFrom(format), files);
         await this.editor.fileURIComponent.flush();
 
         return;

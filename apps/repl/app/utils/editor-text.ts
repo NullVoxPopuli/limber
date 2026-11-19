@@ -11,7 +11,7 @@ const { compressToEncodedURIComponent } = LZString;
 
 import { formatFrom, type FormatQP, formatQPFrom } from '#app/languages.gts';
 
-import { fileFromParams } from 'limber/utils/messaging';
+import { encodeFiles, fileFromParams, parseFiles } from 'limber/utils/messaging';
 
 import type RouterService from '@ember/routing/router-service';
 
@@ -137,7 +137,7 @@ export class FileURIComponent {
   setFiles = (files: Record<string, string>) => {
     this._files = files;
     this.#tokens.push(queueWaiter.beginAsync());
-    this.#qps.set('rawFiles', JSON.stringify(files));
+    this.#pendingFiles = files;
     this.#pushUpdate();
   };
   set #text(value) {
@@ -228,10 +228,16 @@ export class FileURIComponent {
   };
 
   #qps = new URLSearchParams();
+
+  /**
+   * Files that the URL does not have yet. Undefined when they did not change.
+   */
+  #pendingFiles: Record<string, string> | undefined;
   #tokens: unknown[] = [];
 
   #cleanup = () => {
     this.#qps = new URLSearchParams();
+    this.#pendingFiles = undefined;
     this.#tokens.forEach((token) => {
       queueWaiter.endAsync(token);
     });
@@ -267,12 +273,17 @@ export class FileURIComponent {
 
   #pushUpdate = () => {
     const rawText = this.#qps.get('rawText');
+    const formatQP = formatFrom(this.#qps.get('format') ?? this.format);
 
-    if (rawText) {
-      const format = this.#qps.get('format') ?? this.format;
-      const formatQP = formatFrom(format);
+    /**
+     * The document and its files are stored together,
+     * so that a stored document never has the files of another one.
+     */
+    const text = rawText ?? (this.#pendingFiles ? this.#text : undefined);
 
-      setStoredDocument(formatQP, rawText);
+    if (text) {
+      setStoredDocument(formatQP, text);
+      setStoredFiles(formatQP, this.files);
     }
 
     this.#pushUpdateToURL();
@@ -304,7 +315,7 @@ export class FileURIComponent {
      */
 
     const rawText = this.#qps.get('rawText');
-    const rawFiles = this.#qps.get('rawFiles');
+    const files = this.#pendingFiles;
     let encoded = '';
 
     if (rawText) {
@@ -312,7 +323,7 @@ export class FileURIComponent {
       this.#qps.delete('rawText');
     }
 
-    this.#qps.delete('rawFiles');
+    this.#pendingFiles = undefined;
 
     const qps = new URLSearchParams(this.#qps);
 
@@ -320,18 +331,15 @@ export class FileURIComponent {
       qps.set('c', encoded);
     }
 
-    if (rawFiles !== null) {
-      /**
-       * No files is no param, so a one-file URL looks the way it always did.
-       */
+    if (files) {
+      const encodedFiles = encodeFiles(files);
+
       activeQPs.delete('f');
 
-      if (rawFiles !== '{}') {
-        qps.set('f', compressToEncodedURIComponent(rawFiles));
-      }
+      if (encodedFiles) qps.set('f', encodedFiles);
     }
 
-    if (qps.size === 0 && rawFiles === null) {
+    if (qps.size === 0 && !files) {
       this.#cleanup();
       console.debug(`No query params, not redirecting`);
 
@@ -362,7 +370,7 @@ export class FileURIComponent {
     if (
       q.c === this.#currentQPs.c &&
       q.t === this.#currentQPs.t &&
-      (rawFiles === null || q.f === this.#currentQPs.f) &&
+      (!files || q.f === this.#currentQPs.f) &&
       q.format === this.#currentQPs.format &&
       q.shadowdom === this.#currentQPs.shadowdom
     ) {
@@ -404,6 +412,21 @@ export function getStoredDocumentForFormat(formatQP: FormatQP) {
 }
 
 /**
+ * The files next to the stored document of a format, as path → text.
+ */
+export function getStoredFilesForFormat(formatQP: FormatQP): Record<string, string> {
+  return parseFiles(localStorage.getItem(filesKey(formatQP)));
+}
+
+function setStoredFiles(formatQP: FormatQP, files: Record<string, string>) {
+  localStorage.setItem(filesKey(formatQP), JSON.stringify(files));
+}
+
+function filesKey(formatQP: FormatQP) {
+  return `${formatQP}-files`;
+}
+
+/**
  * We store the document per format, as well as which format
  * was last active.
  *
@@ -424,7 +447,7 @@ export function getStoredDocument() {
     const doc = localStorage.getItem(getKey(format as FormatQP));
 
     if (doc) {
-      return { format, doc };
+      return { format, doc, files: getStoredFilesForFormat(format as FormatQP) };
     }
   }
 
@@ -433,7 +456,7 @@ export function getStoredDocument() {
   const format = localStorage.getItem('format');
   const doc = localStorage.getItem('document');
 
-  return { format, doc };
+  return { format, doc, files: {} };
 }
 
 /**

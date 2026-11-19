@@ -8,6 +8,19 @@ import { basicSetup, EditorView } from 'codemirror';
 import { foldByIndent } from 'codemirror-lang-mermaid';
 
 /**
+ * Files that a project imports, which no compiler owns.
+ *
+ * @type {Record<string, () => Promise<any>>}
+ */
+const IMPORTED_LANGUAGES = {
+  css: async () => (await import('@codemirror/lang-css')).css(),
+  json: async () => (await import('@codemirror/lang-json')).json(),
+  mjs: async () => (await import('@codemirror/lang-javascript')).javascript(),
+  ts: async () => (await import('@codemirror/lang-javascript')).javascript({ typescript: true }),
+  mts: async () => (await import('@codemirror/lang-javascript')).javascript({ typescript: true }),
+};
+
+/**
  * Builds and creates a codemirror instance for the given element
  *
  * @typedef {any} Extension
@@ -46,6 +59,10 @@ export async function buildCodemirror({
    * @param {string} format
    */
   async function languageForFormat(format) {
+    const imported = IMPORTED_LANGUAGES[format];
+
+    if (imported) return imported();
+
     switch (format) {
       case 'glimdown':
       case 'gdm':
@@ -63,6 +80,8 @@ export async function buildCodemirror({
    * @param {string} format
    */
   async function supportForFormat(format) {
+    if (format in IMPORTED_LANGUAGES) return [];
+
     const support = await getSupport(format);
 
     if (!support) {

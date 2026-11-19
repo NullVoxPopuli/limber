@@ -73,7 +73,7 @@ const languages = {
   },
   svelte: {
     name: 'Svelte',
-    ext: 'sevlte',
+    ext: 'svelte',
     icon: <template>
       <span>{{{FileSvelte}}}</span>
     </template>,
@@ -160,6 +160,42 @@ const ALIASES = {
 export const ALLOWED_FORMATS = Object.keys(languages);
 
 export type Format = (typeof ALLOWED_FORMATS)[number];
+
+/**
+ * The editor language of a format. `hbs` is short for `hbs|ember`.
+ */
+export function editorFormatOf(format: FormatQP): FormatQP;
+export function editorFormatOf(format: string): string;
+
+export function editorFormatOf(format: string) {
+  return format === 'hbs' ? 'hbs|ember' : format;
+}
+
+/**
+ * No format owns these, but the entry can import them.
+ * repl-sdk compiles them, and its editor has a language for each.
+ */
+const IMPORTED_EXTENSIONS = ['ts', 'mts', 'mjs', 'css', 'json'];
+
+export const FILE_EXTENSIONS = Array.from(
+  new Set(Object.values(LANGUAGE).map((language) => language.ext))
+).concat(IMPORTED_EXTENSIONS);
+
+/**
+ * The editor language of a file, by its extension.
+ * Undefined for an extension that a project cannot have.
+ */
+export function editorFormatFor(path: string): string | undefined {
+  const dot = path.lastIndexOf('.');
+
+  if (dot < 0) return;
+
+  const ext = path.slice(dot + 1);
+  const info = Object.values(LANGUAGE).find((language) => language.ext === ext);
+
+  if (info) return editorFormatOf(info.formatQP);
+  if (IMPORTED_EXTENSIONS.includes(ext)) return ext;
+}
 
 export function infoFor(format: string) {
   const info = LANGUAGE[ALIASES[format] ?? format];

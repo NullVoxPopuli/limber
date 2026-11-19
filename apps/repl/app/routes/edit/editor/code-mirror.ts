@@ -6,6 +6,8 @@ import { waitForPromise } from '@ember/test-waiters';
 import Modifier from 'ember-modifier';
 import { getCompiler } from 'ember-repl';
 
+import { editorFormatOf } from '#app/languages.gts';
+
 import type RouterService from '@ember/routing/router-service';
 import type EditorService from 'limber/services/editor';
 
@@ -119,7 +121,7 @@ class CodeMirror extends Modifier<Signature> {
   #previousFormat?: string;
   #setFormat?: (format: string) => void;
   #checkFormat = async () => {
-    const format = this.editor.format === 'hbs' ? 'hbs|ember' : this.editor.format;
+    const format = editorFormatOf(this.editor.format);
 
     if (format === this.#previousFormat) {
       return;
@@ -150,16 +152,12 @@ class CodeMirror extends Modifier<Signature> {
     assert(`can only install codemirror editor an an HTMLElement`, element instanceof HTMLElement);
 
     const { text: value } = this.editor;
-    let formatFromURL: string = this.editor.format;
+    const formatFromURL = editorFormatOf(this.editor.format);
 
     this.#previousFormat = formatFromURL;
 
     const updateText = this.editor.updateText;
     const compiler = getCompiler(this);
-
-    if (formatFromURL === 'hbs') {
-      formatFromURL = 'hbs|ember';
-    }
 
     element.innerHTML = '';
     element.setAttribute('data-format', formatFromURL);

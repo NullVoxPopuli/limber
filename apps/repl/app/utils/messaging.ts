@@ -1,6 +1,6 @@
 import LZString from 'lz-string';
 
-const { decompressFromEncodedURIComponent } = LZString;
+const { compressToEncodedURIComponent, decompressFromEncodedURIComponent } = LZString;
 
 import { formatFrom } from '#app/languages.gts';
 
@@ -21,8 +21,27 @@ export function fileFromParams(search: string | object = location.search) {
 export function filesFrom(encoded: string | null | undefined): Record<string, string> {
   if (!encoded) return {};
 
+  return parseFiles(decompressFromEncodedURIComponent(encoded));
+}
+
+/**
+ * The value of the `f` query param. Undefined for no files,
+ * so a one-file URL looks the way it always did.
+ */
+export function encodeFiles(files: Record<string, string>): string | undefined {
+  if (Object.keys(files).length === 0) return;
+
+  return compressToEncodedURIComponent(JSON.stringify(files));
+}
+
+/**
+ * Files as path → text, from JSON that a person can have edited.
+ */
+export function parseFiles(json: string | null | undefined): Record<string, string> {
+  if (!json) return {};
+
   try {
-    const parsed: unknown = JSON.parse(decompressFromEncodedURIComponent(encoded) ?? '{}');
+    const parsed: unknown = JSON.parse(json);
 
     if (!parsed || typeof parsed !== 'object') return {};
 
@@ -32,7 +51,7 @@ export function filesFrom(encoded: string | null | undefined): Record<string, st
       )
     );
   } catch {
-    console.warn(`The files in the URL are not valid JSON. Ignoring them.`);
+    console.warn(`The files are not valid JSON. Ignoring them.`);
 
     return {};
   }

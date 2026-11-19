@@ -409,6 +409,7 @@ export class Compiler {
         ...extras,
         compiled: value,
         ...(opts.args ? { args: opts.args } : {}),
+        ...(opts.files ? { files: opts.files } : {}),
       });
     }
 
@@ -435,6 +436,7 @@ export class Compiler {
     const rendered = await this.#render(compiler, defaultExport, {
       ...extras,
       ...(opts.args ? { args: opts.args } : {}),
+      ...(opts.files ? { files: opts.files } : {}),
     });
 
     /**
@@ -481,14 +483,15 @@ export class Compiler {
         return { type: 'js', source: `export default ${source};` };
     }
 
-    const config = this.#options.formats[ext];
-
-    assert(`Cannot import ${path}: there is no compiler for .${ext} files`, config);
+    assert(
+      `Cannot import ${path}: there is no compiler for .${ext} files`,
+      this.#options.formats[ext]
+    );
 
     /**
      * hbs only has the ember flavor. A format with one flavor needs no choice.
      */
-    const flavors = 'compiler' in config ? [] : Object.keys(config);
+    const flavors = this.#nestedPublicAPI.getFlavorsFor(ext);
     const flavor = flavors.length === 1 ? flavors[0] : undefined;
 
     const compiler = await this.#getCompiler(ext, flavor);
@@ -733,6 +736,11 @@ export class Compiler {
 
       if (!config) return [];
       if (typeof config === 'function') return [];
+
+      /**
+       * A config with a compiler is one format, and its keys are its settings.
+       */
+      if ('compiler' in config) return [];
 
       if (typeof config === 'object') {
         return Object.keys(config);
