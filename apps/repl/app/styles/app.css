@@ -92,6 +92,19 @@ dialog::backdrop {
   backdrop-filter: blur(1px);
 }
 
+/**
+ * The menu content is a [popover], and the browser default
+ * gives it padding and a Canvas background.
+ *
+ * In dark mode, that shows a frame and pushes the arrow
+ * off the menu edge.
+ */
+.limber__menu__content {
+  padding: 0;
+  background: transparent;
+  color: inherit;
+}
+
 .menu__keyboard__help {
   font-size: 0.65rem;
   padding: 0.1rem 0.6rem 0.3rem 1rem;
