@@ -6,7 +6,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 import Menu from '#components/menu.gts';
-import { formatQPFrom, infoFor, usage } from '#languages';
+import { formatQPFrom, infoFor } from '#languages';
 
 import { snippetForFormat } from 'limber/snippets';
 import { getStoredDocumentForFormat } from 'limber/utils/editor-text';
@@ -57,10 +57,7 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
   @service declare router: RouterService;
   @service declare editor: EditorService;
 
-  switch = async (format: FormatQP): Promise<void> => {
-    usage.track(format);
-    await switchFormat(this.editor, format);
-  };
+  switch = (format: FormatQP): Promise<void> => switchFormat(this.editor, format);
 
   get format(): Format {
     return this.router.currentRoute?.queryParams?.format as Format;
@@ -83,6 +80,10 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
         gap: 0.75rem;
       }
       .menu-trigger {
+        box-shadow: 0 0px 1px rgba(255, 255, 255, 0.5);
+        &:hover {
+          box-shadow: 0 0px 4px rgba(255, 255, 255, 0.4);
+        }
         display: grid;
         grid-auto-flow: column;
         gap: 0.75rem;
@@ -97,7 +98,11 @@ export class FormatMenu extends Component<{ Element: HTMLButtonElement }> {
     </style>
     <Menu>
       <:trigger as |t|>
-        <t.Button title="Change document language" ...attributes class="menu-trigger">
+        <t.Button
+          title="Change document language"
+          class="menu-trigger ring-ember-brand px-2 py-1 text-white drop-shadow-md ease-in-out hover:drop-shadow-xl focus:rounded focus-visible:rounded sm:text-sm relative bg-[#333] text-left transition duration-150 select-none focus:ring-4 focus:outline-none focus-visible:outline-none"
+          ...attributes
+        >
           {{#if this.currentInfo}}
             <this.currentInfo.icon />
             <span>{{this.currentInfo.name}}</span>

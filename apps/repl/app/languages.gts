@@ -14,7 +14,6 @@ import { default as FileTypeScript } from '~icons/vscode-icons/file-type-typescr
 
 import type { ComponentLike } from '@glint/template';
 
-type Language = (typeof LANGUAGE)[number];
 /**
  * Since the pair of format + flavor is always coupled,
  * we're treating them as a single QP
@@ -193,64 +192,3 @@ export function formatFrom(x: string | undefined | null): FormatQP {
 
   return 'gmd';
 }
-
-class Usage {
-  #ownKey = `repl-language-usage`;
-
-  track(formatQP: FormatQP) {
-    const data = this.read();
-
-    data[formatQP] ||= 0;
-    data[formatQP]++;
-
-    this.#set(data);
-  }
-
-  read(): Record<string, number> {
-    const raw = localStorage.getItem(this.#ownKey);
-
-    if (!raw) return {};
-
-    try {
-      const parsed = JSON.parse(raw);
-
-      if (typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)) {
-        return parsed;
-      }
-
-      return {};
-    } catch (e) {
-      console.debug('Malformed usage data in localStorage');
-      console.debug(e);
-
-      return {};
-    }
-  }
-
-  top2() {
-    const data = this.read();
-    const sorted = Object.entries(data)
-      .sort((a, b) => b[1] - a[1])
-      .map((a) => {
-        return LANGUAGE[a[0]];
-      }) as Language[];
-
-    const top = sorted.slice(0, 2);
-
-    const result = this.#withDefaultLangs(top);
-
-    return result;
-  }
-
-  #withDefaultLangs(langs: Language[]): Language[] {
-    const result = new Set([...langs, LANGUAGE.gjs!, LANGUAGE.gmd!]);
-
-    return [...result.values()].slice(0, 2);
-  }
-
-  #set(data: Record<string, number>) {
-    localStorage.setItem(this.#ownKey, JSON.stringify(data));
-  }
-}
-
-export const usage = new Usage();
