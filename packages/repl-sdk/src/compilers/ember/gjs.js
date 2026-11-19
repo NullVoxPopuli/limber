@@ -203,7 +203,7 @@ export async function compiler(config, api, flags = {}) {
   const gjsCompiler = {
     compile: async (text, options) => {
       const { code: preprocessed } = preprocessor.process(text, {
-        filename: `dynamic-repl.g${ext}`,
+        filename: typeof options?.fileName === 'string' ? options.fileName : `dynamic-repl.g${ext}`,
       });
       const transformed = await transform(preprocessed);
 

@@ -38,9 +38,9 @@ export class PinnedOutput extends Component {
   }
 
   get document(): Document {
-    const { format, text, versions } = this.editor.renderInput;
+    const { format, text, versions, files } = this.editor.renderInput;
 
-    return { format, code: text ?? '', versions };
+    return { format, code: text ?? '', versions, files };
   }
 
   /**
@@ -70,6 +70,10 @@ export class PinnedOutput extends Component {
       deps: serializeDeps(document.versions) ?? '',
       c: compressToEncodedURIComponent(document.code),
     });
+
+    if (document.files && Object.keys(document.files).length > 0) {
+      qps.set('f', compressToEncodedURIComponent(JSON.stringify(document.files)));
+    }
 
     iframe.src = `/output?${qps.toString()}`;
 

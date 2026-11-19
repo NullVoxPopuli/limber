@@ -42,6 +42,7 @@ export default class Compiler extends Component<Signature> {
       format: this.format,
       flavor: this.flavor,
       versions: this.editor.renderInput.versions,
+      files: this.editor.renderInput.files,
     };
   }
 }

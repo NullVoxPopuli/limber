@@ -1,0 +1,150 @@
+.limber__files {
+  display: flex;
+  flex-direction: column;
+  width: 11rem;
+  flex-shrink: 0;
+  overflow-y: auto;
+  background: var(--code-bg);
+  color: #cbced0;
+  border-right: 1px solid #2e303e;
+  font-size: 0.8rem;
+
+  &.limber__files--collapsed {
+    width: auto;
+    padding-top: 0.25rem;
+  }
+
+  &.limber__files--drop {
+    outline: 2px dashed #e95678;
+    outline-offset: -4px;
+  }
+}
+
+.limber__files__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 0.25rem 0.25rem 0.75rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #9da0a2;
+}
+
+.limber__files__actions {
+  display: flex;
+}
+
+.limber__files__icon-button {
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.25rem;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover {
+    background: #2e303e;
+  }
+
+  &:focus-visible,
+  &:has(input:focus-visible) {
+    outline: 2px solid #e95678;
+    outline-offset: -2px;
+  }
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.limber__files__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.limber__files__item {
+  display: flex;
+  align-items: center;
+  padding-right: 0.25rem;
+
+  .limber__files__item-action {
+    opacity: 0;
+  }
+
+  &:hover .limber__files__item-action,
+  &:focus-within .limber__files__item-action {
+    opacity: 1;
+  }
+}
+
+.limber__files__name {
+  flex-grow: 1;
+  min-width: 0;
+  padding: 0.25rem 0.75rem;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: inherit;
+
+  &:hover {
+    background: #2e303e;
+  }
+
+  &[aria-current='true'] {
+    background: #2e303e;
+    color: white;
+    box-shadow: inset 2px 0 0 #e95678;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #e95678;
+    outline-offset: -2px;
+  }
+}
+
+.limber__files__badge {
+  margin-left: 0.25rem;
+  padding: 0 0.25rem;
+  border-radius: 0.25rem;
+  background: #44465a;
+  font-size: 0.65rem;
+  color: #cbced0;
+}
+
+.limber__files__form {
+  flex-grow: 1;
+  padding: 0.125rem 0.5rem;
+
+  input {
+    width: 100%;
+    padding: 0.125rem 0.25rem;
+    border: 1px solid #44465a;
+    border-radius: 0.25rem;
+    background: #16161c;
+    color: white;
+    font: inherit;
+
+    &[aria-invalid='true'] {
+      border-color: #e95678;
+    }
+  }
+}
+
+.limber__files__problem {
+  margin: 0.25rem 0.75rem;
+  color: #f09483;
+  font-size: 0.75rem;
+}
+
+.limber__files__hint {
+  margin-top: auto;
+  padding: 0.75rem;
+  color: #9da0a2;
+  font-size: 0.7rem;
+  line-height: 1.4;
+}

@@ -59,6 +59,7 @@ export async function shortenUrl(url: string) {
  * Query Params:
  *  - t: Original URI-encoded text // original implementation
  *  - c: Compressed URI-encoded text // new implementation
+ *  - f: Compressed JSON of the other files, as path → text
  *
  * Flow:
  *  - on load:
@@ -102,6 +103,7 @@ export class FileURIComponent {
   #initialFile: ReturnType<typeof fileFromParams> | undefined;
 
   @tracked _text: undefined | null | string;
+  @tracked _files: undefined | Record<string, string>;
 
   /**
    * Used so we no-op when qps match
@@ -110,13 +112,34 @@ export class FileURIComponent {
     return this.router.currentRoute?.queryParams ?? {};
   }
 
-  get #text() {
+  get #fromURL() {
     if (!this.#initialFile) {
       this.#initialFile = fileFromParams(this.#currentURL().split('?')[1] ?? location.search);
     }
 
-    return this._text ?? this.#initialFile.text;
+    return this.#initialFile;
   }
+
+  get #text() {
+    return this._text ?? this.#fromURL.text;
+  }
+
+  /**
+   * The files next to the entry, as path → text.
+   */
+  get files(): Record<string, string> {
+    return this._files ?? this.#fromURL.files;
+  }
+
+  /**
+   * Replaces all of the files next to the entry.
+   */
+  setFiles = (files: Record<string, string>) => {
+    this._files = files;
+    this.#tokens.push(queueWaiter.beginAsync());
+    this.#qps.set('rawFiles', JSON.stringify(files));
+    this.#pushUpdate();
+  };
   set #text(value) {
     this._text = value;
   }
@@ -281,6 +304,7 @@ export class FileURIComponent {
      */
 
     const rawText = this.#qps.get('rawText');
+    const rawFiles = this.#qps.get('rawFiles');
     let encoded = '';
 
     if (rawText) {
@@ -288,13 +312,26 @@ export class FileURIComponent {
       this.#qps.delete('rawText');
     }
 
+    this.#qps.delete('rawFiles');
+
     const qps = new URLSearchParams(this.#qps);
 
     if (encoded) {
       qps.set('c', encoded);
     }
 
-    if (qps.size === 0) {
+    if (rawFiles !== null) {
+      /**
+       * No files is no param, so a one-file URL looks the way it always did.
+       */
+      activeQPs.delete('f');
+
+      if (rawFiles !== '{}') {
+        qps.set('f', compressToEncodedURIComponent(rawFiles));
+      }
+    }
+
+    if (qps.size === 0 && rawFiles === null) {
       this.#cleanup();
       console.debug(`No query params, not redirecting`);
 
@@ -325,6 +362,7 @@ export class FileURIComponent {
     if (
       q.c === this.#currentQPs.c &&
       q.t === this.#currentQPs.t &&
+      (rawFiles === null || q.f === this.#currentQPs.f) &&
       q.format === this.#currentQPs.format &&
       q.shadowdom === this.#currentQPs.shadowdom
     ) {

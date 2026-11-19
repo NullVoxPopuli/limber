@@ -77,22 +77,30 @@ export async function buildCodemirror({
     supportForFormat(format),
   ]);
 
-  const editorExtensions = [
-    // features
-    basicSetup,
-    foldByIndent(),
-    // Language
-    languageConf.of(language),
-    supportConf.of(support),
+  /**
+   * @param {Extension} language
+   * @param {Extension[]} support
+   */
+  const extensionsFor = (language, support) =>
+    [
+      // features
+      basicSetup,
+      foldByIndent(),
+      // Language
+      languageConf.of(language),
+      supportConf.of(support),
 
-    updateListener,
-    EditorView.lineWrapping,
-    keymap.of([indentWithTab, ...completionKeymap, ...markdownKeymap]),
+      updateListener,
+      EditorView.lineWrapping,
+      keymap.of([indentWithTab, ...completionKeymap, ...markdownKeymap]),
+      tabSize.of(EditorState.tabSize.of(2)),
 
-    // TODO: lsp,
+      // TODO: lsp,
 
-    ...(extensions ?? []),
-  ].filter(Boolean);
+      ...(extensions ?? []),
+    ].filter(Boolean);
+
+  const editorExtensions = extensionsFor(language, support);
 
   const view = new EditorView({
     parent: element,
@@ -157,5 +165,57 @@ export async function buildCodemirror({
     ],
   });
 
-  return { view, setText, setFormat };
+  /**
+   * The state of each file that is not on screen, so that its undo history
+   * and selection are there when it comes back.
+   *
+   * @type {Map<string, EditorState>}
+   */
+  const documents = new Map();
+  let currentDocument = '';
+
+  /**
+   * Shows another file. A file that was open before gets its old state back,
+   * unless its text changed somewhere else.
+   *
+   * Not a transaction, so `handleUpdate` does not run.
+   *
+   * @param {string} key
+   * @param {string} text
+   * @param {string | undefined} format undefined for a file with no language support
+   */
+  const openDocument = async (key, text, format) => {
+    if (key === currentDocument) return;
+
+    documents.set(currentDocument, view.state);
+    currentDocument = key;
+
+    const saved = documents.get(key);
+
+    if (saved && saved.doc.toString() === text) {
+      view.setState(saved);
+
+      return;
+    }
+
+    const [language, support] = format
+      ? await Promise.all([languageForFormat(format), supportForFormat(format)])
+      : [[], []];
+
+    /**
+     * Another file was opened while this one's language loaded.
+     */
+    if (currentDocument !== key) return;
+
+    view.setState(EditorState.create({ doc: text, extensions: extensionsFor(language, support) }));
+  };
+
+  /**
+   * @param {string} key
+   */
+  const forgetDocument = (key) => {
+    documents.delete(key);
+  };
+
+  return { view, setText, setFormat, openDocument, forgetDocument };
 }
