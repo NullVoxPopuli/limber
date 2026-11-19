@@ -143,7 +143,7 @@ export class VerifyDanger extends Component<{ Blocks: { default: [] } }> {
       <div class="prose p-8 relative grid max-w-full" style="justify-items: center">
         <p>Would you like to run the code?</p>
         <Button {{on "click" allowCodeExecution}}>
-          <span style="color: black;">Yes, trust and run this code</span>
+          Yes, trust and run this code
         </Button>
         <div>
           <hr />
