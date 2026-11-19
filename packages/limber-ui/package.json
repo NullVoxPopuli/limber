@@ -50,7 +50,7 @@
     "@glint/template": "1.8.0",
     "@nullvoxpopuli/eslint-configs": "^7.1.0",
     "@rollup/plugin-babel": "^6.1.0",
-    "babel-plugin-ember-template-compilation": "^4.0.0",
+    "babel-plugin-ember-template-compilation": "4.0.1",
     "concurrently": "^9.2.1",
     "ember-async-data": "2.0.1",
     "ember-content-mapper": "^0.2.0",
