@@ -9,12 +9,19 @@ async function rendered(text: string) {
   expect(iframe, 'HTML renders in to an iframe').toBeTruthy();
 
   /**
-   * The frame loads its srcdoc when it enters the document.
+   * The frame gets its srcdoc when it enters the document.
    * Before that, `contentDocument` is the empty initial document.
    */
-  const loaded = new Promise((resolve) =>
-    iframe!.addEventListener('load', resolve, { once: true })
-  );
+  const loaded = new Promise<void>((resolve) => {
+    const onLoad = () => {
+      if (iframe!.contentDocument?.URL !== 'about:srcdoc') return;
+
+      iframe!.removeEventListener('load', onLoad);
+      resolve();
+    };
+
+    iframe!.addEventListener('load', onLoad);
+  });
 
   document.body.appendChild(element);
   await loaded;
@@ -107,6 +114,50 @@ describe('html', () => {
 
     await expect.poll(() => iframe.getBoundingClientRect().height).toBe(50);
 
+    destroy();
+    element.remove();
+  });
+
+  test('the frame follows the color scheme of the host page', async () => {
+    document.documentElement.style.colorScheme = 'dark';
+
+    const { doc, element, destroy } = await rendered(`
+      <!doctype html>
+      <style>
+        body { color: light-dark(rgb(1, 1, 1), rgb(2, 2, 2)); }
+      </style>
+      <p>text</p>
+    `);
+
+    const color = () => doc().defaultView!.getComputedStyle(doc().body).color;
+
+    expect(doc().compatMode, 'the page stays in standards mode').toBe('CSS1Compat');
+    expect(color()).toBe('rgb(2, 2, 2)');
+
+    document.documentElement.style.colorScheme = 'light';
+
+    await expect.poll(color).toBe('rgb(1, 1, 1)');
+
+    document.documentElement.style.colorScheme = '';
+    destroy();
+    element.remove();
+  });
+
+  test('a color scheme in the page wins over the host page', async () => {
+    document.documentElement.style.colorScheme = 'dark';
+
+    const { doc, element, destroy } = await rendered(`
+      <!doctype html>
+      <meta name="color-scheme" content="light">
+      <style>
+        body { color: light-dark(rgb(1, 1, 1), rgb(2, 2, 2)); }
+      </style>
+      <p>text</p>
+    `);
+
+    expect(doc().defaultView!.getComputedStyle(doc().body).color).toBe('rgb(1, 1, 1)');
+
+    document.documentElement.style.colorScheme = '';
     destroy();
     element.remove();
   });

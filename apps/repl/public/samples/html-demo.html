@@ -5,19 +5,20 @@
     <title>HTML demo</title>
 
     <!-- Styles stay inside this page. They do not change the REPL. -->
+    <!-- light-dark() picks a color for the light or dark mode of the REPL. -->
     <style>
       body {
         font-family: system-ui, sans-serif;
         padding: 1rem;
-        color: #222;
-        background: #fafafa;
+        color: light-dark(#222, #e5e7eb);
+        background: light-dark(#fafafa, #1c1e26);
       }
 
       .card {
         padding: 1rem;
-        border: 1px solid #ddd;
+        border: 1px solid light-dark(#ddd, #44465a);
         border-radius: 0.5rem;
-        background: white;
+        background: light-dark(white, #232530);
       }
 
       button {

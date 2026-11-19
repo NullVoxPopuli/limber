@@ -249,7 +249,9 @@ const Overview = <template>
       A whole HTML page. It renders in its own iframe, so
       <code>&lt;head&gt;</code>
       content, styles, classic scripts, and module scripts work as in a real page. Module scripts
-      can import from URLs, or from bare names listed in an import map.
+      can import from URLs, or from bare names listed in an import map. Use
+      <code>light-dark()</code>
+      for colors that follow the light or dark mode of the REPL.
     </article>
 
     <article>
