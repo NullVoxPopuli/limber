@@ -1,8 +1,13 @@
 .limber__files {
   display: flex;
   flex-direction: column;
-  width: calc(11rem + 38px);
-  flex-shrink: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: var(--limber-scrollbar-width, 0px);
+  /* Below the editor controls, which float over the padding on the right. */
+  z-index: 0;
+  width: var(--limber-files-width);
   overflow-y: auto;
   background: var(--code-bg);
   color: #cbced0;

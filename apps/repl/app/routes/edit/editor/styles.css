@@ -1,4 +1,7 @@
 .limber__editor-with-files {
+  --limber-files-width: calc(11rem + 38px);
+
+  position: relative;
   display: flex;
   min-height: 0;
   height: 100%;
@@ -6,6 +9,17 @@
   .limber__editor {
     flex-grow: 1;
     min-width: 0;
+  }
+
+  /* The file list floats over the editor, so the editor and its scrollbar keep their place. */
+  &[data-files-open="true"] {
+    .cm-content {
+      padding-right: var(--limber-files-width);
+    }
+
+    .limber__editor__tab-help {
+      right: calc(var(--limber-files-width) + var(--limber-scrollbar-width));
+    }
   }
 }
 
