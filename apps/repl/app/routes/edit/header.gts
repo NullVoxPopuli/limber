@@ -10,7 +10,7 @@ import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 
 import DemoSelect from './demo-select.gts';
 import { Dependencies } from './dependencies.gts';
-import { FormatButtons } from './format-buttons.gts';
+import { FormatMenu } from './format-menu.gts';
 import { Share } from './share.gts';
 
 <template>
@@ -32,7 +32,7 @@ import { Share } from './share.gts';
       </h1>
 
       {{#if (notInIframe)}}
-        <FormatButtons />
+        <FormatMenu />
       {{/if}}
       <DemoSelect />
       <Share />
