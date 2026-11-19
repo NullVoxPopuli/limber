@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>HTML demo</title>
+
+    <!-- Styles stay inside this page. They do not change the REPL. -->
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 1rem;
+        color: #222;
+        background: #fafafa;
+      }
+
+      .card {
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 0.5rem;
+        background: white;
+      }
+
+      button {
+        font: inherit;
+        padding: 0.25rem 0.75rem;
+      }
+    </style>
+
+    <!-- An import map names the modules that module scripts import. -->
+    <script type="importmap">
+      {
+        "imports": {
+          "canvas-confetti": "https://esm.sh/canvas-confetti@1.9.3"
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <h1>Hello from HTML</h1>
+
+    <div class="card">
+      <p>Clicked <output id="count">0</output> times.</p>
+      <button id="increment" type="button">Click me</button>
+      <button id="celebrate" type="button">Celebrate</button>
+    </div>
+
+    <p>
+      This page renders in its own iframe, so it can have a
+      <code>&lt;head&gt;</code>, styles, classic scripts, and module scripts.
+    </p>
+
+    <!-- A classic script -->
+    <script>
+      let count = 0;
+
+      document.querySelector('#increment').addEventListener('click', () => {
+        count++;
+        document.querySelector('#count').textContent = count;
+      });
+    </script>
+
+    <!-- A module script, which can import from a URL or from the import map -->
+    <script type="module">
+      document.querySelector('#celebrate').addEventListener('click', async () => {
+        const { default: confetti } = await import('canvas-confetti');
+
+        confetti({ particleCount: 100, spread: 70 });
+      });
+    </script>
+  </body>
+</html>

@@ -57,6 +57,7 @@ const FORMATTERS: Record<FormatQP, { parser: string; plugins: PluginName[] } | u
     plugins: ['markdown', 'babel', 'estree', 'glimmer', 'ember-template-tag'],
   },
   vue: { parser: 'vue', plugins: ['html', 'babel', 'estree', 'postcss'] },
+  html: { parser: 'html', plugins: ['html', 'babel', 'estree', 'postcss'] },
   svelte: undefined,
   mermaid: undefined,
 };

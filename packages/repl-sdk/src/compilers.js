@@ -1,4 +1,5 @@
 import * as ember from './compilers/ember.js';
+import { html } from './compilers/html.js';
 import { js } from './compilers/js.js';
 import * as markdown from './compilers/markdown.js';
 import { mermaid } from './compilers/mermaid.js';
@@ -52,6 +53,12 @@ export const compilers = {
    * https://emberjs.com
    */
   gts: ember.gts,
+
+  /**
+   * A whole HTML page, with its own scripts and styles,
+   * rendered in an iframe.
+   */
+  html,
 
   /**
    * Just vanilla JS.

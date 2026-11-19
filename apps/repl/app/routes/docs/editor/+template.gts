@@ -58,6 +58,7 @@ const Overview = <template>
           <li><a href="#supported-markdown">Markdown</a></li>
           <li><a href="#supported-ember-gjs">Ember GJS</a></li>
           <li><a href="#supported-ember-gts">Ember GTS</a></li>
+          <li><a href="#supported-html">HTML</a></li>
           <li><a href="#supported-mermaid">Mermaid</a></li>
           <li><a href="#supported-svelte">Svelte</a></li>
           <li><a href="#supported-vanilla-js">Vanilla JS</a></li>
@@ -237,6 +238,18 @@ const Overview = <template>
       is the TypeScript variant of
       <code>.gjs</code>. The REPL strips the types before it runs the code. It does not type check,
       so a type error still renders.
+    </article>
+
+    <article>
+      <header aria-label="Supported: HTML">
+        <H3 @id="supported-html" @text="HTML" />
+        <TryIt href="/edit?format=html&file=/samples/html-demo.html" />
+      </header>
+
+      A whole HTML page. It renders in its own iframe, so
+      <code>&lt;head&gt;</code>
+      content, styles, classic scripts, and module scripts work as in a real page. Module scripts
+      can import from URLs, or from bare names listed in an import map.
     </article>
 
     <article>

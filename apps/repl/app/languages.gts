@@ -7,6 +7,7 @@ import { default as FileVue } from '~icons/devicon/vuejs?raw';
 import { default as NestedMarkdown } from '~icons/mdi/language-markdown?raw';
 import { default as FileEmber } from '~icons/vscode-icons/file-type-ember?raw';
 import { default as FileGlimmer } from '~icons/vscode-icons/file-type-glimmer?raw';
+import { default as FileHtml } from '~icons/vscode-icons/file-type-html?raw';
 import { default as FileMarkdown } from '~icons/vscode-icons/file-type-markdown?raw';
 import { default as FileMermaid } from '~icons/vscode-icons/file-type-mermaid?raw';
 import { default as FileTypeScript } from '~icons/vscode-icons/file-type-typescript-official?raw';
@@ -82,6 +83,13 @@ const languages = {
     ext: 'jsx',
     icon: <template>
       <span>{{{FileReact}}}</span>
+    </template>,
+  },
+  html: {
+    name: 'HTML',
+    ext: 'html',
+    icon: <template>
+      <span>{{{FileHtml}}}</span>
     </template>,
   },
   mermaid: {

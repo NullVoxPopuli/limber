@@ -32,7 +32,7 @@ module('Editor > Format menu', function (hooks) {
     await waitUntil(() => currentFile().format === format, { timeout: 5_000 });
   }
 
-  for (const name of ['Svelte', 'Mermaid']) {
+  for (const name of ['Svelte', 'Mermaid', 'HTML']) {
     test(`choosing ${name} loads the ${name} sample`, async function (assert) {
       await page.expectRedirectToContent('/edit');
       await page.editor.load();

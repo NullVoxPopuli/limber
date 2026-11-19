@@ -116,6 +116,7 @@ const EXAMPLES = {
           <li>"svelte"</li>
           <li>"vue"</li>
           <li>"mermaid"</li>
+          <li>"html"</li>
           <li>"hbs|ember"</li>
           <li>"jsx|react"</li>
         </ul>
