@@ -99,6 +99,10 @@ export const md = {
                 {
                   ...compiler.optionsFor(/** @type {string} */ (infoObj.format), flavor),
                   flavor: flavor,
+                  /**
+                   * A fence imports the files of its document's project, like the entry does.
+                   */
+                  files: /** @type {Record<string, string> | undefined} */ (extra.files),
                   fileName: fenceFileName(
                     hostFileName,
                     index,

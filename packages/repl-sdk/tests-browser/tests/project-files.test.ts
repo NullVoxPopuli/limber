@@ -1,4 +1,4 @@
-import { Compiler } from 'repl-sdk';
+import { Compiler, defaults } from 'repl-sdk';
 import { describe, expect, test } from 'vitest';
 
 /**
@@ -8,6 +8,7 @@ import { describe, expect, test } from 'vitest';
 function projectCompiler() {
   return new Compiler({
     formats: {
+      md: defaults.formats.md,
       custom: {
         compiler: async () => ({
           compile: async (text: string) => text,
@@ -137,5 +138,16 @@ describe('a project of several files', () => {
     });
 
     expect(await compiler.fs.read('/src/a.upper')).toBe('raw text');
+  });
+
+  test('a live fence in markdown imports the files of its project', async () => {
+    const compiler = projectCompiler();
+    const fence = "```custom live\nimport { n } from './n.js'; export default 'n=' + n;\n```";
+
+    const { element } = await compiler.compile('md', `# Title\n\n${fence}\n`, {
+      files: { 'n.js': 'export const n = 7;' },
+    });
+
+    expect(element.textContent).toContain('n=7');
   });
 });

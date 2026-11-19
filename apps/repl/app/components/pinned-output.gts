@@ -8,6 +8,7 @@ import LZString from 'lz-string';
 import { connectToChild } from 'penpal';
 
 import { serializeDeps, type Versions } from 'limber/utils/dependencies';
+import { encodeFiles } from 'limber/utils/messaging';
 
 import type Owner from '@ember/owner';
 import type EditorService from 'limber/services/editor';
@@ -71,9 +72,9 @@ export class PinnedOutput extends Component {
       c: compressToEncodedURIComponent(document.code),
     });
 
-    if (document.files && Object.keys(document.files).length > 0) {
-      qps.set('f', compressToEncodedURIComponent(JSON.stringify(document.files)));
-    }
+    const files = encodeFiles(document.files ?? {});
+
+    if (files) qps.set('f', files);
 
     iframe.src = `/output?${qps.toString()}`;
 

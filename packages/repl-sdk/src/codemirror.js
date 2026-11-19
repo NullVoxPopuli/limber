@@ -47,6 +47,13 @@ export async function buildCodemirror({
    */
   async function languageForFormat(format) {
     switch (format) {
+      /**
+       * Files that a project imports, which no compiler owns.
+       */
+      case 'css':
+        return (await import('@codemirror/lang-css')).css();
+      case 'json':
+        return (await import('@codemirror/lang-json')).json();
       case 'glimdown':
       case 'gdm':
       case 'gmd':
@@ -63,6 +70,8 @@ export async function buildCodemirror({
    * @param {string} format
    */
   async function supportForFormat(format) {
+    if (format === 'css' || format === 'json') return [];
+
     const support = await getSupport(format);
 
     if (!support) {

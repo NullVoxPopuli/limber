@@ -114,6 +114,10 @@ export async function compiler(config, api) {
             {
               ...compiler.optionsFor(/** @type {string} */ (infoObj.format), flavor),
               flavor: flavor,
+              /**
+               * A fence imports the files of its document's project, like the entry does.
+               */
+              files: /** @type {Record<string, string> | undefined} */ (extra.files),
               // @ts-ignore
               ...(hasScope
                 ? {

@@ -1212,12 +1212,18 @@ importers:
       '@codemirror/commands':
         specifier: ^6.10.1
         version: 6.10.1
+      '@codemirror/lang-css':
+        specifier: ^6.3.1
+        version: 6.3.1
       '@codemirror/lang-html':
         specifier: ^6.4.11
         version: 6.4.11
       '@codemirror/lang-javascript':
         specifier: ^6.2.4
         version: 6.2.4
+      '@codemirror/lang-json':
+        specifier: ^6.0.2
+        version: 6.0.2
       '@codemirror/lang-markdown':
         specifier: ^6.5.0
         version: 6.5.0
