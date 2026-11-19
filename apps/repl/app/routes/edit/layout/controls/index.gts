@@ -1,3 +1,6 @@
+import { concat } from '@ember/helper';
+import { htmlSafe } from '@ember/template';
+
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import {
   faCircle,
@@ -43,6 +46,7 @@ export const Controls: TOC<{
       <div
         data-is-minimized="{{@isMinimized}}"
         data-controls={{if @splitHorizontally "row" "column"}}
+        style={{htmlSafe (concat "right: " editor.scrollbarWidth "px;")}}
         class="right-0 top-0 absolute z-[1]
           {{if @splitHorizontally 'flex flex-row-reverse' 'grid'}}
           {{if @isMinimized 'bg-ember-black h-full content-start'}}

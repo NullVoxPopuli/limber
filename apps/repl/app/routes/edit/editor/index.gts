@@ -2,7 +2,9 @@ import './styles.css';
 
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { concat } from '@ember/helper';
 import { service } from '@ember/service';
+import { htmlSafe } from '@ember/template';
 
 import { Key } from 'ember-primitives/components/keys';
 
@@ -27,7 +29,11 @@ export class Editor extends Component {
   };
 
   <template>
-    <div class="limber__editor-with-files">
+    <div
+      class="limber__editor-with-files"
+      data-files-open={{if this.editor.filesOpen "true"}}
+      style={{htmlSafe (concat "--limber-scrollbar-width: " this.editor.scrollbarWidth "px;")}}
+    >
       <div class="limber__editor overflow-hidden overflow-y-auto">
         <div class="limber__editor__tab-help">press <Key>esc</Key> to <Key>tab</Key> out</div>
         <div
