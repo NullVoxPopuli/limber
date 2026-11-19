@@ -50,6 +50,26 @@ export function editorFormatFor(path: string): string | undefined {
   return EDITOR_FORMATS[path.slice(dot + 1)];
 }
 
+const FILES_OPEN_KEY = 'limber:files-open';
+
+function readFilesOpen(): boolean | undefined {
+  try {
+    const value = localStorage.getItem(FILES_OPEN_KEY);
+
+    return value === null ? undefined : value === 'true';
+  } catch {
+    return undefined;
+  }
+}
+
+function writeFilesOpen(value: boolean) {
+  try {
+    localStorage.setItem(FILES_OPEN_KEY, String(value));
+  } catch {
+    /* Private windows can refuse storage. The toggle still works. */
+  }
+}
+
 const editorFormatOf = (format: FormatQP) => (format === 'hbs' ? 'hbs|ember' : format);
 
 /**
@@ -105,6 +125,20 @@ export default class EditorService extends Service {
   get files(): Record<string, string> {
     return this.fileURIComponent.files;
   }
+
+  @tracked _filesOpen = readFilesOpen();
+
+  /**
+   * Until someone uses the toggle, the file list shows when there is more than one file.
+   */
+  get filesOpen() {
+    return this._filesOpen ?? Object.keys(this.files).length > 0;
+  }
+
+  toggleFiles = () => {
+    this._filesOpen = !this.filesOpen;
+    writeFilesOpen(this._filesOpen);
+  };
 
   /**
    * The compiler gives the entry this name, so relative imports resolve against it.

@@ -7,6 +7,8 @@ import {
   faCircleNotch,
   faColumns,
   faExternalLinkAlt,
+  faFolderOpen,
+  faFolderTree,
   faRotate,
   faWindowMaximize,
   faWindowMinimize,
@@ -68,6 +70,14 @@ export const Controls: TOC<{
           {{else}}
             <FaIcon @icon={{faWindowMinimize}} @prefix="far" />
           {{/if}}
+        </Button>
+        <Button
+          title={{if editor.filesOpen "Hide files" "Show files"}}
+          aria-pressed={{if editor.filesOpen "true" "false"}}
+          data-test-files-toggle
+          {{on "click" editor.toggleFiles}}
+        >
+          <FaIcon @icon={{if editor.filesOpen faFolderOpen faFolderTree}} />
         </Button>
         <FormatDocument />
         <AutoRender />

@@ -9,11 +9,6 @@
   border-right: 1px solid #2e303e;
   font-size: 0.8rem;
 
-  &.limber__files--collapsed {
-    width: auto;
-    padding-top: 0.25rem;
-  }
-
   &.limber__files--drop {
     outline: 2px dashed #e95678;
     outline-offset: -4px;
@@ -95,7 +90,7 @@
     background: #2e303e;
   }
 
-  &[aria-current='true'] {
+  &[aria-current="true"] {
     background: #2e303e;
     color: white;
     box-shadow: inset 2px 0 0 #e95678;
@@ -129,7 +124,7 @@
     color: white;
     font: inherit;
 
-    &[aria-invalid='true'] {
+    &[aria-invalid="true"] {
       border-color: #e95678;
     }
   }

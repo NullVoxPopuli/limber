@@ -28,7 +28,9 @@ export class Editor extends Component {
 
   <template>
     <div class="limber__editor-with-files">
-      <Files />
+      {{#if this.editor.filesOpen}}
+        <Files />
+      {{/if}}
       <div class="limber__editor overflow-hidden overflow-y-auto">
         <div class="limber__editor__tab-help">press <Key>esc</Key> to <Key>tab</Key> out</div>
         <div
