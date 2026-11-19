@@ -1,3 +1,28 @@
+const SCHEME_ATTRIBUTE = 'data-repl-sdk-color-scheme';
+const DOCTYPE = /^\s*<!doctype[^>]*>/i;
+const AUTHOR_SCHEME = /<meta[^>]+name\s*=\s*["']?color-scheme/i;
+
+/**
+ * A `<meta name="color-scheme">` has the lowest precedence,
+ * so a page that sets `color-scheme` itself keeps its own choice.
+ *
+ * The meta goes after the doctype,
+ * because content before the doctype puts the page in quirks mode.
+ *
+ * @param {string} text
+ * @param {string} scheme
+ */
+function withColorScheme(text, scheme) {
+  if (AUTHOR_SCHEME.test(text)) return text;
+
+  const meta = `<meta name="color-scheme" content="${scheme}" ${SCHEME_ATTRIBUTE}>`;
+  const doctype = text.match(DOCTYPE)?.[0];
+
+  if (!doctype) return meta + text;
+
+  return doctype + meta + text.slice(doctype.length);
+}
+
 /**
  * @type {import('../types.ts').CompilerConfig}
  */
@@ -26,7 +51,14 @@ export const html = {
         iframe.style.display = 'block';
         iframe.style.width = '100%';
         iframe.style.border = '0';
-        iframe.srcdoc = /** @type {string} */ (text);
+
+        /**
+         * In a frame, `prefers-color-scheme` follows the OS,
+         * not the `color-scheme` of the host page.
+         * The meta gives the frame the color scheme of the host,
+         * so `light-dark()` and the default colors match the host.
+         */
+        const hostScheme = () => getComputedStyle(element).colorScheme;
 
         /** @type {ResizeObserver | undefined} */
         let observer;
@@ -53,13 +85,49 @@ export const html = {
           observer.observe(root);
         };
 
-        iframe.addEventListener('load', fitToContent);
+        const syncScheme = () => {
+          if (!element.isConnected) return;
+
+          const meta = iframe.contentDocument?.querySelector(`meta[${SCHEME_ATTRIBUTE}]`);
+
+          meta?.setAttribute('content', hostScheme());
+        };
+
+        /**
+         * The host scheme is known only after the element
+         * is in the document. A frame without a srcdoc loads
+         * `about:blank` when it enters the document,
+         * so the srcdoc is set on that first load.
+         */
+        const onLoad = () => {
+          if (!iframe.srcdoc) {
+            iframe.srcdoc = withColorScheme(/** @type {string} */ (text), hostScheme());
+
+            return;
+          }
+
+          syncScheme();
+          fitToContent();
+        };
+
+        /**
+         * Hosts switch light and dark mode
+         * with a class or a style on `<html>` or `<body>`.
+         */
+        const schemeObserver = new MutationObserver(syncScheme);
+        const schemeOptions = { attributes: true, attributeFilter: ['class', 'style'] };
+
+        schemeObserver.observe(document.documentElement, schemeOptions);
+        schemeObserver.observe(document.body, schemeOptions);
+
+        iframe.addEventListener('load', onLoad);
         element.appendChild(iframe);
         compiler.announce('info', 'Done');
 
         return () => {
           observer?.disconnect();
-          iframe.removeEventListener('load', fitToContent);
+          schemeObserver.disconnect();
+          iframe.removeEventListener('load', onLoad);
           iframe.remove();
         };
       },

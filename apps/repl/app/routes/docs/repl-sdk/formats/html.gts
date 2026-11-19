@@ -34,7 +34,12 @@ export const HTML = <template>
     <code>&lt;style&gt;</code>
     tags, classic scripts,
     <code>&lt;script type="module"&gt;</code>, and an import map. Styles do not leak in to or out of
-    the frame. The frame is as tall as its content.
+    the frame. The frame is as tall as its content. The frame gets the color scheme of the host
+    page, so
+    <code>light-dark()</code>
+    follows the light or dark mode of the host. A page with its own
+    <code>color-scheme</code>
+    keeps it.
 
     <snippet.js @code={{usage}} />
   </p>
