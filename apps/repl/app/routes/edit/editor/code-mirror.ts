@@ -163,10 +163,28 @@ class CodeMirror extends Modifier<Signature> {
     element.setAttribute('data-format', formatFromURL);
 
     // The theme imports CodeMirror, which must stay out of the first page load.
-    const [{ syntaxHighlighting }, { HorizonSyntaxTheme, HorizonTheme }] = await Promise.all([
-      import('@codemirror/language'),
-      import('./theme.ts'),
-    ]);
+    const [{ syntaxHighlighting }, { EditorView }, { HorizonSyntaxTheme, HorizonTheme }] =
+      await Promise.all([
+        import('@codemirror/language'),
+        import('@codemirror/view'),
+        import('./theme.ts'),
+      ]);
+
+    const measureScrollbar = (scroller: HTMLElement) => {
+      const width = scroller.offsetWidth - scroller.clientWidth;
+
+      if (this.editor.scrollbarWidth !== width) {
+        this.editor.scrollbarWidth = width;
+      }
+    };
+
+    /**
+     * The scrollbar comes and goes with the length of the document,
+     * and the controls must sit next to it either way.
+     */
+    const scrollbarWidth = EditorView.updateListener.of((update) => {
+      if (update.geometryChanged) measureScrollbar(update.view.scrollDOM);
+    });
 
     if (isDestroyed(this) || isDestroying(this)) return;
 
@@ -176,7 +194,7 @@ class CodeMirror extends Modifier<Signature> {
         text: value,
         format: formatFromURL,
         handleUpdate: updateText,
-        extensions: [HorizonTheme, syntaxHighlighting(HorizonSyntaxTheme)],
+        extensions: [HorizonTheme, syntaxHighlighting(HorizonSyntaxTheme), scrollbarWidth],
       }
     );
 
@@ -207,11 +225,7 @@ class CodeMirror extends Modifier<Signature> {
 
     this.editor.forgetDocument = forgetDocument;
 
-    const scrollable = document.querySelector('.cm-scroller');
-
-    if (scrollable instanceof HTMLElement) {
-      this.editor.scrollbarWidth = scrollable.offsetWidth - scrollable.clientWidth;
-    }
+    measureScrollbar(view.scrollDOM);
 
     registerDestructor(this, () => view.destroy());
   };
