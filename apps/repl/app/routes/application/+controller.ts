@@ -12,6 +12,7 @@ export default class ApplicationController extends Controller {
     // Code
     't', // legacy format, plaintext
     'c', // new format, uses lz-string for compressing text
+    'f', // the other files of the project, as lz-string compressed JSON of path → text
 
     /**
      * Maximize / Minimize of the Editor

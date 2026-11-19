@@ -6,16 +6,16 @@
 import { cache } from './cache.js';
 import { compilers } from './compilers.js';
 import { STABLE_REFERENCE } from './es-module-shim.js';
-import { takeEntry, writeEntry } from './fs/entry.js';
+import { isRevisioned, releaseEntry, srcPathOf, takeEntry, writeEntry } from './fs/entry.js';
 import { isExactVersion } from './fs/semver.js';
 import { clearFs, storage } from './fs/store.js';
 import {
   DEPS_PREFIX,
+  extensionOf,
   NODE_MODULES_PREFIX,
   parseNpmUrl,
   parseResolvingUrl,
   parseVirtualUrl,
-  pathOf,
   RESOLVING_PREFIX,
   resolvingUrl,
   SRC_PREFIX,
@@ -279,16 +279,35 @@ export class Compiler {
     }
 
     if (path.startsWith(SRC_PREFIX)) {
-      const text = takeEntry(url) ?? (await storage.read(pathOf(path)));
+      this.#log('[source] src', path);
+
+      const file = takeEntry(path);
+
+      if (file) {
+        if (file.compiled) return { url, type: 'js', source: file.source };
+
+        if (extensionOf(path) === 'css') {
+          this.#styles.get(file.revision)?.set(file.path, file.source);
+
+          return { url, type: 'js', source: `export default ${JSON.stringify(file.source)};` };
+        }
+
+        return { url, ...(await this.#compileFile(file.path, file.source)) };
+      }
+
+      /**
+       * Storage has what the user wrote, not a module, so it cannot stand in
+       * for a file that the project does not have.
+       */
+      assert(
+        `Cannot find ${srcPathOf(path).replace('/src/', './')}. It is not one of the project's files.`,
+        !isRevisioned(path)
+      );
+
+      const text = await storage.read(srcPathOf(path));
 
       assert(`${path} is not in the fs`, text !== undefined);
 
-      this.#log('[source] src', path);
-
-      /**
-       * Always js: whatever the format was, a compiler has already turned it
-       * into a module.
-       */
       return { url, type: 'js', source: text };
     }
 
@@ -323,7 +342,7 @@ export class Compiler {
   /**
    * @param {string} format
    * @param {string} text
-   * @param {{ fileName?: string, flavor?: string, args?: Record<string, unknown>, versions?: Record<string, string>, [key: string]: unknown }} [ options ]
+   * @param {{ fileName?: string, flavor?: string, args?: Record<string, unknown>, versions?: Record<string, string>, files?: Record<string, string>, [key: string]: unknown }} [ options ]
    * @returns {Promise<{ element: HTMLElement, destroy: () => void }>}
    */
   async compile(format, text, options = {}) {
@@ -344,7 +363,7 @@ export class Compiler {
   /**
    * @param {string} format
    * @param {string} text
-   * @param {{ fileName?: string, flavor?: string, versions?: Record<string, string>, [key: string]: unknown }} [ options ]
+   * @param {{ fileName?: string, flavor?: string, versions?: Record<string, string>, files?: Record<string, string>, [key: string]: unknown }} [ options ]
    * @returns {Promise<{ element: HTMLElement, destroy: () => void }>}
    */
   async #compile(format, text, options) {
@@ -393,17 +412,95 @@ export class Compiler {
       });
     }
 
-    const entryUrl = await writeEntry(fsWorker(), opts.fileName, compiledText);
+    const entry = await writeEntry(fsWorker(), opts.fileName, compiledText, opts.files);
+    /** @type {Map<string, string>} */
+    const styles = new Map();
 
-    // @ts-ignore
-    const { default: defaultExport } = await shimmedImport(/* @vite-ignore */ entryUrl);
+    this.#styles.set(entry.revision, styles);
+
+    /** @type {{ default: any }} */
+    let module;
+
+    try {
+      module = await shimmedImport(/* @vite-ignore */ entry.url);
+    } finally {
+      this.#styles.delete(entry.revision);
+      releaseEntry(entry.revision);
+    }
+
+    const defaultExport = module.default;
 
     this.#log('[compile] preparing to render', defaultExport, extras);
 
-    return this.#render(compiler, defaultExport, {
+    const rendered = await this.#render(compiler, defaultExport, {
       ...extras,
       ...(opts.args ? { args: opts.args } : {}),
     });
+
+    /**
+     * In the output, not the document head, so that the styles reach an
+     * output in a shadow root, and leave with the output.
+     */
+    for (const [path, css] of styles) {
+      const style = document.createElement('style');
+
+      style.dataset.replSrc = path;
+      style.textContent = css;
+      rendered.element.prepend(style);
+    }
+
+    return rendered;
+  }
+
+  /**
+   * The stylesheets that each loading project imported, by revision, as path → css.
+   *
+   * @type {Map<number, Map<string, string>>}
+   */
+  #styles = new Map();
+
+  /**
+   * A file that the entry imports, such as `./button.gjs`. Its extension picks
+   * the compiler, the way a bundler picks a loader.
+   *
+   * @param {string} path relative to `/src/`
+   * @param {string} source
+   * @returns {Promise<{ type: 'js' | 'ts', source: string }>}
+   */
+  async #compileFile(path, source) {
+    const ext = extensionOf(`${SRC_PREFIX}${path}`);
+
+    switch (ext) {
+      case 'js':
+      case 'mjs':
+        return { type: 'js', source };
+      case 'ts':
+      case 'mts':
+        return { type: 'ts', source };
+      case 'json':
+        return { type: 'js', source: `export default ${source};` };
+    }
+
+    const config = this.#options.formats[ext];
+
+    assert(`Cannot import ${path}: there is no compiler for .${ext} files`, config);
+
+    /**
+     * hbs only has the ember flavor. A format with one flavor needs no choice.
+     */
+    const flavors = 'compiler' in config ? [] : Object.keys(config);
+    const flavor = flavors.length === 1 ? flavors[0] : undefined;
+
+    const compiler = await this.#getCompiler(ext, flavor);
+    const compiled = await compiler.compile(source, { fileName: path, flavor });
+    const text = typeof compiled === 'string' ? compiled : compiled?.compiled;
+
+    assert(
+      `Cannot import ${path}: the .${ext} compiler does not make a module, so only the entry can be a .${ext} file`,
+      typeof text === 'string'
+    );
+
+    return { type: 'js', source: text };
   }
 
   #compilerCache = new WeakMap();

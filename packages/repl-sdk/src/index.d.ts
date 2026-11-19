@@ -85,6 +85,12 @@ export class Compiler {
     view: EditorView;
     setText: (text: string, format: string) => Promise<void>;
     setFormat: (format: string) => Promise<void>;
+    /**
+     * Shows another file, with its own undo history.
+     * `format` is undefined for a file with no language support.
+     */
+    openDocument: (key: string, text: string, format: string | undefined) => Promise<void>;
+    forgetDocument: (key: string) => void;
   }>;
 
   /**

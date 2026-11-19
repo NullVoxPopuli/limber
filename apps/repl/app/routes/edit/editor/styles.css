@@ -1,3 +1,14 @@
+.limber__editor-with-files {
+  display: flex;
+  min-height: 0;
+  height: 100%;
+
+  .limber__editor {
+    flex-grow: 1;
+    min-width: 0;
+  }
+}
+
 .limber__editor {
   position: relative;
 

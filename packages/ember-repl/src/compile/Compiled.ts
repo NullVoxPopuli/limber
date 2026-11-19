@@ -28,6 +28,12 @@ export interface CompiledOptions {
    * A new object compiles again.
    */
   versions?: Record<string, string>;
+  /**
+   * The other files of the project, as path → text.
+   * The text imports them with relative specifiers, like `./button.gjs`.
+   * A new object compiles again.
+   */
+  files?: Record<string, string>;
 }
 
 export function Compiled(markdownText: Input | (() => Input)): CompileState;
@@ -70,6 +76,7 @@ export function Compiled(
     let flavor: string | undefined;
     let args: Record<string, unknown> | undefined;
     let versions: Record<string, string> | undefined;
+    let files: Record<string, string> | undefined;
 
     if (typeof maybeFormatOrOptions === 'function') {
       format = maybeFormatOrOptions();
@@ -80,6 +87,7 @@ export function Compiled(
       flavor = maybeFormatOrOptions.flavor;
       args = maybeFormatOrOptions.args;
       versions = maybeFormatOrOptions.versions;
+      files = maybeFormatOrOptions.files;
     }
 
     format ??= 'glimdown';
@@ -103,6 +111,7 @@ export function Compiled(
       flavor,
       args,
       versions,
+      files,
     });
   });
 }

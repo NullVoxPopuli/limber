@@ -67,13 +67,14 @@ describe('the compiled snippet has a URL', () => {
 
     const [entryUrl] = seen;
 
-    expect(entryUrl).toBe('file:///src/index.custom');
+    expect(entryUrl).toMatch(/^file:\/\/\/src\/@\d+\/index\.custom$/);
 
     /**
-     * This is the mechanism #1892 and #946 need: a relative specifier from the
-     * snippet now has something real to resolve against.
+     * A relative specifier from the snippet resolves into the same revision.
      */
-    expect(new URL('./sibling.js', entryUrl).href).toBe('file:///src/sibling.js');
+    expect(new URL('./sibling.js', entryUrl).href).toBe(
+      entryUrl?.replace('index.custom', 'sibling.js')
+    );
 
     expect(compiler).toBeTruthy();
   });

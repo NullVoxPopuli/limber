@@ -172,12 +172,15 @@ class CodeMirror extends Modifier<Signature> {
 
     if (isDestroyed(this) || isDestroying(this)) return;
 
-    const { view, setText, setFormat } = await compiler.createEditor(element, {
-      text: value,
-      format: formatFromURL,
-      handleUpdate: updateText,
-      extensions: [HorizonTheme, syntaxHighlighting(HorizonSyntaxTheme)],
-    });
+    const { view, setText, setFormat, openDocument, forgetDocument } = await compiler.createEditor(
+      element,
+      {
+        text: value,
+        format: formatFromURL,
+        handleUpdate: updateText,
+        extensions: [HorizonTheme, syntaxHighlighting(HorizonSyntaxTheme)],
+      }
+    );
 
     if (isDestroyed(this) || isDestroying(this)) return;
 
@@ -197,6 +200,14 @@ class CodeMirror extends Modifier<Signature> {
       this.#previousFormat = formatQP;
       waitForPromise(setText(text, formatQP));
     };
+
+    this.editor.openDocument = (key, text, format) => {
+      element.setAttribute('data-format', format ?? 'text');
+
+      return waitForPromise(openDocument(key, text, format));
+    };
+
+    this.editor.forgetDocument = forgetDocument;
 
     const scrollable = document.querySelector('.cm-scroller');
 

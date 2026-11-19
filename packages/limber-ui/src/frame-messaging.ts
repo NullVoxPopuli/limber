@@ -19,6 +19,11 @@ export interface FrameDocument {
   code: string;
   format: string;
   /**
+   * The files next to `code`, as path → text.
+   * `undefined` keeps what the frame has.
+   */
+  files?: Record<string, string>;
+  /**
    * `undefined` keeps what the frame has.
    */
   shadowdom?: undefined | boolean | string;

@@ -22,7 +22,7 @@ const guestFrame = resource(({ on, owner }) => {
 
   const connection = connectToParent<HostMethods>({
     methods: {
-      update({ format, code, versions, shadowdom }: FrameDocument) {
+      update({ format, code, versions, shadowdom, files }: FrameDocument) {
         const editor = owner.lookup('service:editor');
 
         /**
@@ -44,7 +44,8 @@ const guestFrame = resource(({ on, owner }) => {
         editor.update(
           code,
           formatFrom(format),
-          shadowdom === undefined ? undefined : { shadowdom: String(shadowdom) }
+          shadowdom === undefined ? undefined : { shadowdom: String(shadowdom) },
+          files
         );
       },
     } satisfies GuestMethods,

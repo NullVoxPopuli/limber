@@ -44,6 +44,12 @@ export interface PublicMethods {
        * Overrides the `versions` option.
        */
       versions?: { [packageName: string]: string };
+      /**
+       * The other files of the project, as path → text, relative to `/src/`.
+       * The entry imports them with relative specifiers, like `./button.gjs`,
+       * and the extension of each file picks its compiler.
+       */
+      files?: Record<string, string>;
       [option: string]: unknown;
     }
   ) => Promise<{ element: HTMLElement; destroy: () => void }>;

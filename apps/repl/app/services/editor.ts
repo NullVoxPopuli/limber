@@ -6,6 +6,8 @@ import { VERSION } from '@ember/version';
 import { castToBoolean } from 'ember-primitives/qp';
 import { link } from 'reactiveweb/link';
 
+import { infoFor } from '#app/languages.gts';
+
 import { parseDeps, type Versions } from 'limber/utils/dependencies';
 import { FileURIComponent } from 'limber/utils/editor-text';
 
@@ -18,6 +20,66 @@ interface RenderInput {
   text: EditorService['text'];
   format: FormatQP;
   versions: Versions;
+  files: Record<string, string>;
+}
+
+/**
+ * The editor language of a file, by its extension.
+ * Undefined for a file that the editor shows as plain text.
+ */
+const EDITOR_FORMATS: Record<string, string> = {
+  gjs: 'gjs',
+  gts: 'gts',
+  ts: 'gts',
+  js: 'js',
+  mjs: 'js',
+  hbs: 'hbs|ember',
+  jsx: 'jsx|react',
+  md: 'md',
+  gmd: 'gmd',
+  vue: 'vue',
+  svelte: 'svelte',
+  html: 'html',
+};
+
+export function editorFormatFor(path: string): string | undefined {
+  const dot = path.lastIndexOf('.');
+
+  if (dot < 0) return;
+
+  return EDITOR_FORMATS[path.slice(dot + 1)];
+}
+
+const FILES_OPEN_KEY = 'limber:files-open';
+
+function readFilesOpen(): boolean | undefined {
+  try {
+    const value = localStorage.getItem(FILES_OPEN_KEY);
+
+    return value === null ? undefined : value === 'true';
+  } catch {
+    return undefined;
+  }
+}
+
+function writeFilesOpen(value: boolean) {
+  try {
+    localStorage.setItem(FILES_OPEN_KEY, String(value));
+  } catch {
+    /* Private windows can refuse storage. The toggle still works. */
+  }
+}
+
+const editorFormatOf = (format: FormatQP) => (format === 'hbs' ? 'hbs|ember' : format);
+
+/**
+ * `./a.gjs`, `/a.gjs`, and `src/a.gjs` all name `a.gjs`.
+ */
+export function normalizePath(path: string) {
+  return path
+    .trim()
+    .replace(/^\.?\//, '')
+    .replace(/^src\//, '');
 }
 
 export default class EditorService extends Service {
@@ -36,10 +98,161 @@ export default class EditorService extends Service {
   }
 
   updateText = (text: string) => {
+    const path = this.activePath;
+
+    if (path !== undefined) {
+      if (this.files[path] !== text) {
+        this.fileURIComponent.setFiles({ ...this.files, [path]: text });
+      }
+
+      return;
+    }
+
     if (text !== this.text) {
       this.fileURIComponent.queue(text);
     }
   };
+
+  /**
+   * The file in the editor, as a path next to the entry.
+   * Undefined for the entry.
+   */
+  @tracked activePath: string | undefined;
+
+  /**
+   * The files next to the entry, as path → text.
+   */
+  get files(): Record<string, string> {
+    return this.fileURIComponent.files;
+  }
+
+  @tracked _filesOpen = readFilesOpen();
+
+  /**
+   * Until someone uses the toggle, the file list shows when there is more than one file.
+   */
+  get filesOpen() {
+    return this._filesOpen ?? Object.keys(this.files).length > 0;
+  }
+
+  toggleFiles = () => {
+    this._filesOpen = !this.filesOpen;
+    writeFilesOpen(this._filesOpen);
+  };
+
+  /**
+   * The compiler gives the entry this name, so relative imports resolve against it.
+   */
+  get entryName() {
+    return `index.${infoFor(this.format).ext}`;
+  }
+
+  /**
+   * Set by the editor modifier, like setCodemirrorState.
+   */
+  openDocument?: (key: string, text: string, format: string | undefined) => Promise<void>;
+  forgetDocument?: (key: string) => void;
+
+  /**
+   * @param path undefined for the entry
+   */
+  openFile = (path?: string) => {
+    this.activePath = path;
+
+    if (path === undefined) {
+      void this.openDocument?.('', this.text ?? '', editorFormatOf(this.format));
+
+      return;
+    }
+
+    void this.openDocument?.(path, this.files[path] ?? '', editorFormatFor(path));
+  };
+
+  /**
+   * @returns why the name is not allowed, if it is not
+   */
+  addFile = (rawPath: string, text = ''): string | undefined => {
+    const path = normalizePath(rawPath);
+    const problem = this.#problemWith(path);
+
+    if (problem) return problem;
+
+    this.fileURIComponent.setFiles({ ...this.files, [path]: text });
+    this.openFile(path);
+  };
+
+  removeFile = (path: string) => {
+    const next = { ...this.files };
+
+    delete next[path];
+    this.fileURIComponent.setFiles(next);
+    this.forgetDocument?.(path);
+
+    if (this.activePath === path) this.openFile(undefined);
+  };
+
+  /**
+   * @returns why the name is not allowed, if it is not
+   */
+  renameFile = (from: string, rawTo: string): string | undefined => {
+    const to = normalizePath(rawTo);
+
+    if (to === from) return;
+
+    const problem = this.#problemWith(to);
+
+    if (problem) return problem;
+
+    const next: Record<string, string> = {};
+
+    for (const [path, text] of Object.entries(this.files)) {
+      next[path === from ? to : path] = text;
+    }
+
+    this.fileURIComponent.setFiles(next);
+    this.forgetDocument?.(from);
+
+    if (this.activePath === from) this.openFile(to);
+  };
+
+  #problemWith(path: string): string | undefined {
+    if (!path) return 'A file needs a name.';
+    if (path.endsWith('/')) return 'A file name cannot end with a slash.';
+
+    if (path.split('/').some((part) => part === '..' || part === '.')) {
+      return 'A file must be inside the project.';
+    }
+
+    if (path === this.entryName) return `${path} is the entry file.`;
+    if (path in this.files) return `${path} already exists.`;
+  }
+
+  /**
+   * Puts the entry in the editor, with new text.
+   */
+  #showEntry(text: string, format: FormatQP) {
+    if (this.activePath === undefined) {
+      this.setCodemirrorState?.(text, editorFormatOf(format));
+
+      return;
+    }
+
+    this.activePath = undefined;
+    void this.openDocument?.('', text, editorFormatOf(format));
+  }
+
+  /**
+   * A sample or a shared document is a new project.
+   */
+  #clearFiles() {
+    if (Object.keys(this.files).length === 0) return;
+
+    for (const path of Object.keys(this.files)) {
+      this.forgetDocument?.(path);
+    }
+
+    this.fileURIComponent.setFiles({});
+  }
 
   get text() {
     return this.fileURIComponent.decoded;
@@ -91,7 +304,7 @@ export default class EditorService extends Service {
   };
 
   get #file(): RenderInput {
-    return { text: this.text, format: this.format, versions: this.versions };
+    return { text: this.text, format: this.format, versions: this.versions, files: this.files };
   }
 
   /**
@@ -155,17 +368,26 @@ export default class EditorService extends Service {
    */
   load = (text: string, format: FormatQP) => {
     this.#textAtSwitch = text;
+    this.#clearFiles();
     this.update(text, format);
   };
 
-  update = (text: string, format: FormatQP, qps?: Record<string, string>) => {
+  /**
+   * @param files undefined keeps the files there are
+   */
+  update = (
+    text: string,
+    format: FormatQP,
+    qps?: Record<string, string>,
+    files?: Record<string, string>
+  ) => {
     // Update ourselves
     this.fileURIComponent.set(text, format, qps);
 
-    // Update the editor
-    this.setCodemirrorState?.(text, format === 'hbs' ? 'hbs|ember' : format);
+    if (files) this.fileURIComponent.setFiles(files);
 
-    // this.fileURIComponent.flush();
+    // Update the editor
+    this.#showEntry(text, format);
   };
 
   updateFormat = (format: FormatQP) => {
@@ -173,19 +395,20 @@ export default class EditorService extends Service {
     this.fileURIComponent.set(this.text ?? '', format);
 
     // Update the editor
-    this.setCodemirrorState?.(this.text ?? '', format === 'hbs' ? 'hbs|ember' : format);
+    this.#showEntry(this.text ?? '', format);
   };
 
   updateDemo = (text: string, demo: DemoEntry) => {
     const format = demo.format;
 
     this.#textAtSwitch = text;
+    this.#clearFiles();
 
     // Update ourselves
     this.fileURIComponent.set(text, format, demo && 'qps' in demo ? demo.qps : {});
 
     // Update the editor
-    this.setCodemirrorState?.(text, format === 'hbs' ? 'hbs|ember' : format);
+    this.#showEntry(text, format);
   };
 }
 

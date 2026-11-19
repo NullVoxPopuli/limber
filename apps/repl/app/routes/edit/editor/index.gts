@@ -7,6 +7,7 @@ import { service } from '@ember/service';
 import { Key } from 'ember-primitives/components/keys';
 
 import { codemirror } from './code-mirror.ts';
+import { Files } from './files.gts';
 import Loader from './loader.gts';
 import { LoadingError } from './loading-error.gts';
 import { Placeholder } from './placeholder.gts';
@@ -26,12 +27,17 @@ export class Editor extends Component {
   };
 
   <template>
-    <div class="limber__editor overflow-hidden overflow-y-auto">
-      <div class="limber__editor__tab-help">press <Key>esc</Key> to <Key>tab</Key> out</div>
-      <div
-        class="limber__editor__codemirror"
-        {{codemirror defer=true onStateChange=this.handleStateChange}}
-      >{{this.editor.text}}</div>
+    <div class="limber__editor-with-files">
+      <div class="limber__editor overflow-hidden overflow-y-auto">
+        <div class="limber__editor__tab-help">press <Key>esc</Key> to <Key>tab</Key> out</div>
+        <div
+          class="limber__editor__codemirror"
+          {{codemirror defer=true onStateChange=this.handleStateChange}}
+        >{{this.editor.text}}</div>
+      </div>
+      {{#if this.editor.filesOpen}}
+        <Files />
+      {{/if}}
     </div>
 
     {{#unless this.isDone}}

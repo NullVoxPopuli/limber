@@ -25,6 +25,11 @@ interface Options {
    * Package versions for imports from npm, as name → version or range.
    */
   versions?: Record<string, string>;
+  /**
+   * The other files of the project, as path → text.
+   * The text imports them with relative specifiers, like `./button.gjs`.
+   */
+  files?: Record<string, string>;
   onSuccess?: (component: ComponentLike) => Promise<unknown> | unknown;
   onError?: (error: string) => Promise<unknown> | unknown;
   onCompileStart?: () => Promise<unknown> | unknown;
