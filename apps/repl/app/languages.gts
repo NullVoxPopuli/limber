@@ -172,21 +172,14 @@ export function editorFormatOf(format: string) {
 }
 
 /**
- * Every extension that a project file can have, with its editor language:
- * the extension of each format, and the files that only another file imports.
- * repl-sdk's editor has its own languages for css and json.
+ * No format owns these, but the entry can import them.
+ * repl-sdk compiles them, and its editor has a language for each.
  */
-const FILE_FORMATS: Record<string, string> = {
-  ...Object.fromEntries(
-    Object.values(LANGUAGE).map((language) => [language.ext, editorFormatOf(language.formatQP)])
-  ),
-  ts: 'gts',
-  mjs: 'js',
-  css: 'css',
-  json: 'json',
-};
+const IMPORTED_EXTENSIONS = ['ts', 'mts', 'mjs', 'css', 'json'];
 
-export const FILE_EXTENSIONS = Object.keys(FILE_FORMATS);
+export const FILE_EXTENSIONS = Array.from(
+  new Set(Object.values(LANGUAGE).map((language) => language.ext))
+).concat(IMPORTED_EXTENSIONS);
 
 /**
  * The editor language of a file, by its extension.
@@ -197,7 +190,11 @@ export function editorFormatFor(path: string): string | undefined {
 
   if (dot < 0) return;
 
-  return FILE_FORMATS[path.slice(dot + 1)];
+  const ext = path.slice(dot + 1);
+  const info = Object.values(LANGUAGE).find((language) => language.ext === ext);
+
+  if (info) return editorFormatOf(info.formatQP);
+  if (IMPORTED_EXTENSIONS.includes(ext)) return ext;
 }
 
 export function infoFor(format: string) {
