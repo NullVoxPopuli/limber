@@ -2,7 +2,7 @@ import { completionKeymap } from '@codemirror/autocomplete';
 import { indentWithTab } from '@codemirror/commands';
 import { markdownKeymap } from '@codemirror/lang-markdown';
 import { Compartment, EditorSelection, EditorState } from '@codemirror/state';
-import { keymap } from '@codemirror/view';
+import { keymap, ViewPlugin } from '@codemirror/view';
 import { basicSetup, EditorView } from 'codemirror';
 // @ts-ignore
 import { foldByIndent } from 'codemirror-lang-mermaid';
@@ -19,6 +19,23 @@ const IMPORTED_LANGUAGES = {
   ts: async () => (await import('@codemirror/lang-javascript')).javascript({ typescript: true }),
   mts: async () => (await import('@codemirror/lang-javascript')).javascript({ typescript: true }),
 };
+
+/**
+ * CodeMirror re-measures 50ms after a resize. Until then, the
+ * gutters and the viewport keep the old line heights, so
+ * dragging a split handle shows them out of step with the text.
+ *
+ * The requested measure runs in the next animation frame.
+ * During a drag, that frame's pointermove resizes the editor
+ * before the measure, so the measure reads the current size.
+ */
+const measureOnResize = ViewPlugin.define((view) => {
+  const observer = new ResizeObserver(() => view.requestMeasure());
+
+  observer.observe(view.scrollDOM);
+
+  return { destroy: () => observer.disconnect() };
+});
 
 /**
  * Builds and creates a codemirror instance for the given element
@@ -110,6 +127,7 @@ export async function buildCodemirror({
       supportConf.of(support),
 
       updateListener,
+      measureOnResize,
       EditorView.lineWrapping,
       keymap.of([indentWithTab, ...completionKeymap, ...markdownKeymap]),
       tabSize.of(EditorState.tabSize.of(2)),
