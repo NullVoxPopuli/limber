@@ -207,12 +207,6 @@ class CodeMirror extends Modifier<Signature> {
 
     this.editor.forgetDocument = forgetDocument;
 
-    const scrollable = document.querySelector('.cm-scroller');
-
-    if (scrollable instanceof HTMLElement) {
-      this.editor.scrollbarWidth = scrollable.offsetWidth - scrollable.clientWidth;
-    }
-
     registerDestructor(this, () => view.destroy());
   };
 }

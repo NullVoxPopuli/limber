@@ -56,8 +56,6 @@ export function normalizePath(path: string) {
 export default class EditorService extends Service {
   @service declare router: RouterService;
 
-  @tracked scrollbarWidth = 0;
-
   #fileURIComponent: FileURIComponent | undefined;
   get fileURIComponent() {
     if (this.#fileURIComponent) return this.#fileURIComponent;

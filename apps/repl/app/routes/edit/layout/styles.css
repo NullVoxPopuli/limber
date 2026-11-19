@@ -25,16 +25,6 @@
   & .limber__editor-panel .cm-scroller {
     overflow: hidden !important;
   }
-
-  /**
-   * The controls normally sit left of the editor's scrollbar
-   * (right: {scrollbarWidth}px, inline); minimized there is no
-   * scrollbar to clear, and the offset would clip the buttons
-   * out of the bar.
-   */
-  & [data-is-minimized='true'] {
-    right: 0 !important;
-  }
 }
 
 .limber__layout[data-editor-state='maximized'] {
