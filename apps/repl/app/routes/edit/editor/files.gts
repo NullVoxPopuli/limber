@@ -108,7 +108,11 @@ class NameForm extends Component<NameFormSignature> {
         {{on "blur" @cancel}}
       />
       {{#if this.problem}}
-        <p id="limber-files-problem" class="limber__files__problem" role="alert">{{this.problem}}</p>
+        <p
+          id="limber-files-problem"
+          class="limber__files__problem"
+          role="alert"
+        >{{this.problem}}</p>
       {{/if}}
     </form>
   </template>
@@ -203,8 +207,7 @@ export class Files extends Component {
   handleDrop = async (event: DragEvent) => {
     event.preventDefault();
     this.isDropTarget = false;
-    this.importProblem =
-      (await importFiles(this.editor, event.dataTransfer?.files)) || undefined;
+    this.importProblem = (await importFiles(this.editor, event.dataTransfer?.files)) || undefined;
   };
 
   <template>
@@ -328,8 +331,8 @@ export class Files extends Component {
           <p class="limber__files__problem" role="alert">{{this.importProblem}}</p>
         {{/if}}
 
-        <p class="limber__files__hint">Import with <code>./name.ext</code>. Drop files here to add
-          them.</p>
+        <p class="limber__files__hint">Import with
+          <code>./name.ext</code>. Drop files here to add them.</p>
       </nav>
     {{/if}}
   </template>

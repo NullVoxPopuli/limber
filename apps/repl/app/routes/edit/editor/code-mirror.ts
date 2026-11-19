@@ -172,12 +172,15 @@ class CodeMirror extends Modifier<Signature> {
 
     if (isDestroyed(this) || isDestroying(this)) return;
 
-    const { view, setText, setFormat, openDocument, forgetDocument } = await compiler.createEditor(element, {
-      text: value,
-      format: formatFromURL,
-      handleUpdate: updateText,
-      extensions: [HorizonTheme, syntaxHighlighting(HorizonSyntaxTheme)],
-    });
+    const { view, setText, setFormat, openDocument, forgetDocument } = await compiler.createEditor(
+      element,
+      {
+        text: value,
+        format: formatFromURL,
+        handleUpdate: updateText,
+        extensions: [HorizonTheme, syntaxHighlighting(HorizonSyntaxTheme)],
+      }
+    );
 
     if (isDestroyed(this) || isDestroying(this)) return;
 
