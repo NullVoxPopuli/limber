@@ -6,7 +6,7 @@ import { VERSION } from '@ember/version';
 import { castToBoolean } from 'ember-primitives/qp';
 import { link } from 'reactiveweb/link';
 
-import { editorFormatFor, editorFormatOf, infoFor } from '#app/languages.gts';
+import { editorFormatFor, editorFormatOf, FILE_EXTENSIONS, infoFor } from '#app/languages.gts';
 
 import { parseDeps, type Versions } from 'limber/utils/dependencies';
 import { FileURIComponent } from 'limber/utils/editor-text';
@@ -192,6 +192,10 @@ export default class EditorService extends Service {
 
     if (path.split('/').some((part) => part === '..' || part === '.')) {
       return 'A file must be inside the project.';
+    }
+
+    if (!editorFormatFor(path)) {
+      return `${path} needs one of these extensions: ${FILE_EXTENSIONS.join(', ')}.`;
     }
 
     if (path === this.entryName) return `${path} is the entry file.`;
