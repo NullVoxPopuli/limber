@@ -1,0 +1,11 @@
+# Unlabeled Changes
+
+* Other
+  * [#2338](https://github.com/NullVoxPopuli/limber/pull/2338) Rehydrate the prerendered docs pages in place ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2334](https://github.com/NullVoxPopuli/limber/pull/2334) Show only the language menu in the editor header ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2331](https://github.com/NullVoxPopuli/limber/pull/2331) Remove the popover default padding and background from menus ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `ember-repl`, `limber-ui`, `repl-sdk`
+  * [#2337](https://github.com/NullVoxPopuli/limber/pull/2337) Remove imports of built-in template keywords ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+
+
+*Cannot plan release until the above changes are labeled*.
