@@ -1,5 +1,5 @@
 import { assert } from '@ember/debug';
-import { htmlSafe } from '@ember/template';
+import { trustHTML } from '@ember/template';
 
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 import { highlighted } from '@nullvoxpopuli/limber-shared/highlighting';
@@ -30,7 +30,7 @@ function escapeHTML(text: string) {
  * It keeps trusted HTML as it is.
  */
 function plainCode(code: string) {
-  return htmlSafe(`<pre><code>${escapeHTML(code)}</code></pre>`);
+  return trustHTML(`<pre><code>${escapeHTML(code)}</code></pre>`);
 }
 
 export const Highlighted: TOC<{
