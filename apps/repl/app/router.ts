@@ -4,6 +4,8 @@ import { properLinks } from 'ember-primitives/proper-links';
 
 import config from '#config';
 
+import type Owner from '@ember/owner';
+
 @properLinks
 export default class Router extends EmbroiderRouter {
   location = config.locationType;
@@ -32,7 +34,7 @@ function bundle(name: string, loader: () => Promise<{ default: unknown }>[]) {
   };
 }
 
-(window as any)._embroiderRouteBundles_ = [
+const routeBundles = [
   bundle('docs', () => [import('./routes/docs/+template.gts')]),
   bundle('docs.index', () => [import('./routes/docs/index/+template.gts')]),
   bundle('docs.repl-sdk', () => [import('./routes/docs/repl-sdk/+template.gts')]),
@@ -41,6 +43,53 @@ function bundle(name: string, loader: () => Promise<{ default: unknown }>[]) {
   bundle('docs.editor', () => [import('./routes/docs/editor/+template.gts')]),
   bundle('docs.related', () => [import('./routes/docs/related/+template.gts')]),
 ];
+
+(window as any)._embroiderRouteBundles_ = routeBundles;
+
+type Bundle = (typeof routeBundles)[number];
+
+interface LazyRouter {
+  registerBundle(bundle: Bundle): Promise<void>;
+}
+
+/**
+ * Loads the code of the lazy routes that a path enters.
+ *
+ *   /docs/editor → docs, docs.editor
+ *   /docs        → docs, docs.index
+ *
+ * Rehydration needs this before the first render.
+ * The router renders a route only after its code loads.
+ * Until then, the outlet of that route is empty,
+ * and rehydration deletes the prerendered content of that outlet.
+ */
+export function preloadRoutes(owner: Owner, path: string) {
+  /**
+   * The public router service has no API to load a lazy route.
+   */
+  // eslint-disable-next-line ember/no-private-routing-service
+  const router: unknown = owner.lookup('router:main');
+  const segments = path.split('/').filter(Boolean);
+  const names = new Set<string>();
+  let name = '';
+
+  for (const segment of segments) {
+    name = name ? `${name}.${segment}` : segment;
+    names.add(name);
+  }
+
+  names.add(name ? `${name}.index` : 'index');
+
+  const loads: Promise<void>[] = [];
+
+  for (const bundle of routeBundles) {
+    if (bundle.names.some((routeName) => names.has(routeName))) {
+      loads.push((router as LazyRouter).registerBundle(bundle));
+    }
+  }
+
+  return Promise.all(loads);
+}
 
 Router.map(function () {
   /**

@@ -1,9 +1,8 @@
 import { Tabs } from 'nvp.ui/tabs';
 
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
-import { highlighted } from '@nullvoxpopuli/limber-shared/highlighting';
 
-import { H2, H3 } from '../support/code.gts';
+import { H2, H3, Highlighted } from '../support/code.gts';
 import { Type } from '../support/type.gts';
 
 const samples = {
@@ -159,11 +158,11 @@ class Demo extends Component {
     <Tabs as |Tab|>
       {{! @glint-expect-error TODO: fix this in nvp.ui }}
       <Tab @label="npm">
-        <div data-format="bash" {{highlighted "npm add ember-repl"}}></div>
+        <Highlighted @format="bash" @code="npm add ember-repl" />
       </Tab>
       {{! @glint-expect-error TODO: fix this in nvp.ui }}
       <Tab @label="pnpm">
-        <div data-format="bash" {{highlighted "pnpm add ember-repl"}}></div>
+        <Highlighted @format="bash" @code="pnpm add ember-repl" />
       </Tab>
     </Tabs>
 
@@ -203,7 +202,7 @@ class Demo extends Component {
     for any set of code (even private unpublished code), or entirely unpublished modules. For
     example, it may be set up in the application's beforeModel hook:
 
-    <div data-format="js" {{highlighted samples.setup.basic}}></div>
+    <Highlighted @format="js" @code={{samples.setup.basic}} />
 
     All key-value pairs passed to the second argument of
     <code>setupCompiler</code>
@@ -228,7 +227,7 @@ class Demo extends Component {
     required).
 
     <br /><br />Example:
-    <div data-format="js" {{highlighted samples.compile.basic}}></div>
+    <Highlighted @format="js" @code={{samples.compile.basic}} />
 
     <H3 class="code-link" @id="index-Compiled"><code>Compiled</code>
       from ember-repl</H3>
@@ -242,14 +241,14 @@ class Demo extends Component {
     function.
 
     <br /><br />Example:
-    <div data-format="gjs" {{highlighted samples.Compiled.svelte}}></div>
+    <Highlighted @format="gjs" @code={{samples.Compiled.svelte}} />
 
     This can also be used in a class:
-    <div data-format="gjs" {{highlighted samples.Compiled.inJS}}></div>
+    <Highlighted @format="gjs" @code={{samples.Compiled.inJS}} />
 
     And there are sufficient overloads to allow reactive class usage via lazy access via arrow
     functions:
-    <div data-format="gjs" {{highlighted samples.Compiled.inJSReactive}}></div>
+    <Highlighted @format="gjs" @code={{samples.Compiled.inJSReactive}} />
 
     <H3 class="code-link" @id="index-getCompiler"><code>getCompiler</code>
       from ember-repl</H3>
@@ -262,10 +261,9 @@ class Demo extends Component {
     <code>getOwner</code>
     for you. You are only allowed one compiler for a whole browser document. Example:
 
-    <div
-      data-format="js"
-      {{highlighted
-        "import { getCompiler } from 'ember-repl';
+    <Highlighted
+      @format="js"
+      @code="import { getCompiler } from 'ember-repl';
 // ...
 export default class Application extends Route {
   beforeModel() {
@@ -273,8 +271,7 @@ export default class Application extends Route {
     // ...
   }
 }"
-      }}
-    ></div>
+    />
 
     <H3 class="code-link" @id="index-Format">type
       <code>Format</code>
@@ -358,10 +355,9 @@ export default class Application extends Route {
 
     <br /><br />Usage:
 
-    <div
-      data-format="js"
-      {{highlighted
-        "import { module, test } from 'qunit';
+    <Highlighted
+      @format="js"
+      @code="import { module, test } from 'qunit';
 import { setupCompiler } from 'ember-repl/test-support';
 
 module('a scenario', function (hooks) {
@@ -371,17 +367,15 @@ module('a scenario', function (hooks) {
     // ...
   });
 });"
-      }}
-    ></div>
+    />
 
     By default this only provides the basics. For improving test speed, and avoiding hitting the
     internet during testing, you may want to specify an import map (which allows you to also stub
     modules):
 
-    <div
-      data-format="js"
-      {{highlighted
-        "import { module, test } from 'qunit';
+    <Highlighted
+      @format="js"
+      @code="import { module, test } from 'qunit';
 import { setupCompiler } from 'ember-repl/test-support';
 
 module('a scenario', function (hooks) {
@@ -393,16 +387,14 @@ module('a scenario', function (hooks) {
   });
   // ...
 });"
-      }}
-    ></div>
+    />
 
     If you desire to clear the
     <code>ember-repl</code>
     compile cache, that can be configured as well:
-    <div
-      data-format="js"
-      {{highlighted
-        "import { module, test } from 'qunit';
+    <Highlighted
+      @format="js"
+      @code="import { module, test } from 'qunit';
 import { setupCompiler } from 'ember-repl/test-support';
 
 module('a scenario', function (hooks) {
@@ -411,18 +403,16 @@ module('a scenario', function (hooks) {
   });
   // ...
 });"
-      }}
-    ></div>
+    />
 
     Lastly,
     <code>setupCompiler</code>
     supports configuring the compilers provided by
     <code>repl-sdk</code>, similarly to how you'd configure the compiler in your actual app code:
 
-    <div
-      data-format="js"
-      {{highlighted
-        "import { module, test } from 'qunit';
+    <Highlighted
+      @format="js"
+      @code="import { module, test } from 'qunit';
 import { setupCompiler } from 'ember-repl/test-support';
 
 module('a scenario', function (hooks) {
@@ -436,8 +426,7 @@ module('a scenario', function (hooks) {
   });
   // ...
 });"
-      }}
-    ></div>
+    />
 
     If you have a heavy amount of configuration of the compiler in your actual app code, it may be
     beneficial to extract that configuration to a variable for sharing with this test-support
@@ -458,10 +447,9 @@ module('a scenario', function (hooks) {
 
     Usage:
 
-    <div
-      data-format="js"
-      {{highlighted
-        "import { module, test } from 'qunit';
+    <Highlighted
+      @format="js"
+      @code="import { module, test } from 'qunit';
 import { clearCache } from 'ember-repl/test-support';
 
 module('a scenario', function (hooks) {
@@ -471,8 +459,7 @@ module('a scenario', function (hooks) {
     // ...
   });
 });"
-      }}
-    ></div>
+    />
 
     However, this is not needed if you are using
     <code>setupComplier</code>.
@@ -485,10 +472,9 @@ module('a scenario', function (hooks) {
 
     It is invoked manually, either in a test, or test lifecycle hook.
     <br /><br />Usage:
-    <div
-      data-format="js"
-      {{highlighted
-        "import { module, test } from 'qunit';
+    <Highlighted
+      @format="js"
+      @code="import { module, test } from 'qunit';
 import { clearCompileCache } from 'ember-repl/test-support';
 
 module('a scenario', function (hooks) {
@@ -499,8 +485,7 @@ module('a scenario', function (hooks) {
     // ...
   });
 });"
-      }}
-    ></div>
+    />
 
   </div>
 </template>

@@ -1,9 +1,8 @@
 import { Tabs } from 'nvp.ui/tabs';
 
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
-import { highlighted } from '@nullvoxpopuli/limber-shared/highlighting';
 
-import { H2, H3, H4 } from '../support/code.gts';
+import { H2, H3, H4, Highlighted } from '../support/code.gts';
 import { formats } from './formats.gts';
 
 const samples = {
@@ -133,40 +132,42 @@ const compiler = new Compiler({
       window. There is a
       <code>Compiler</code>
       class that has two responsibilities, once configured. Those two responsibilities:
-      <ul>
-        <li>render
-          <em>something</em>
-          based on the input (text + format)<br />
-          This includes:
-          <ul>
-            <li>downloading imported dependencies from npm</li>
-            <li>dynamically loading support for implemented compilers</li>
-            <li>handle custom compilers provided by a consumer</li>
-            <li>out of the box compilers are configurable</li>
-          </ul>
-        </li>
-        <li>(optionally) create an editor with syntax highlighting, folding, etc</li>
-      </ul>
     </p>
+    <ul>
+      <li>render
+        <em>something</em>
+        based on the input (text + format)<br />
+        This includes:
+        <ul>
+          <li>downloading imported dependencies from npm</li>
+          <li>dynamically loading support for implemented compilers</li>
+          <li>handle custom compilers provided by a consumer</li>
+          <li>out of the box compilers are configurable</li>
+        </ul>
+      </li>
+      <li>(optionally) create an editor with syntax highlighting, folding, etc</li>
+    </ul>
 
     <H2 @id="install">Install</H2>
 
     <p>
       With your favorite package manager
+    </p>
 
-      <Tabs as |Tab|>
-        {{! @glint-expect-error TODO: fix this in nvp.ui }}
-        <Tab @label="npm">
-          <div data-format="bash" {{highlighted "npm add repl-sdk"}}></div>
-        </Tab>
-        {{! @glint-expect-error TODO: fix this in nvp.ui }}
-        <Tab @label="pnpm">
-          <div data-format="bash" {{highlighted "pnpm add repl-sdk"}}></div>
-        </Tab>
-      </Tabs>
+    <Tabs as |Tab|>
+      {{! @glint-expect-error TODO: fix this in nvp.ui }}
+      <Tab @label="npm">
+        <Highlighted @format="bash" @code="npm add repl-sdk" />
+      </Tab>
+      {{! @glint-expect-error TODO: fix this in nvp.ui }}
+      <Tab @label="pnpm">
+        <Highlighted @format="bash" @code="pnpm add repl-sdk" />
+      </Tab>
+    </Tabs>
 
-      <H2 @id="bundled-compilers">Bundled Compilers</H2>
+    <H2 @id="bundled-compilers">Bundled Compilers</H2>
 
+    <p>
       repl-sdk will not load any compiler out of the box on its, unless a
       <code>compile</code>
       request is made for that compiler's registered
@@ -195,21 +196,22 @@ const compiler = new Compiler({
 
     <p>
       There is only available module, and two exports from that module
+    </p>
 
-      <div data-format="js" {{highlighted "import {
+    <Highlighted @format="js" @code="import {
   Compiler,
   defaults
-} from 'repl-sdk';"}}></div>
-    </p>
+} from 'repl-sdk';" />
 
     <H3 class="code-link" @id="index-Compiler"><code>Compiler</code>
       from repl-sdk</H3>
     <p>
-
       By default, no configuration is needed.
+    </p>
 
-      <div data-format="js" {{highlighted samples.Compiler.basic}}></div>
+    <Highlighted @format="js" @code={{samples.Compiler.basic}} />
 
+    <p>
       Debug logging can be configured on or conditionally on via any means you choose. Here we can
       configure logging when
       <code>debug</code>
@@ -217,23 +219,27 @@ const compiler = new Compiler({
       <em>very</em>
       noisy for some module graphs, but is helpful in debugging the internal of
       <code>repl-sdk</code>.
+    </p>
 
-      <div data-format="js" {{highlighted samples.Compiler.debug}}></div>
+    <Highlighted @format="js" @code={{samples.Compiler.debug}} />
 
+    <p>
       If you want to wire up the higher-level messaging from each compiler to your UI, there is this
       <code>on.log</code>
       function that can be configured to push log messages outside of the
       <code>Compiler</code>
+    </p>
 
-      <div data-format="js" {{highlighted samples.Compiler.onlog}}></div>
+    <Highlighted @format="js" @code={{samples.Compiler.onlog}} />
 
+    <p>
       The
       <code>Compiler</code>
       can take an options object for configuring each of the compilers. They each may take a
       different configuration, and will ignore any options that are not expected.
-
-      <div data-format="js" {{highlighted samples.Compiler.options}}></div>
     </p>
+
+    <Highlighted @format="js" @code={{samples.Compiler.options}} />
 
     <H4 class="code-link" @id="index-Compiler-compile"><code>&lt;Compiler#compile&gt;</code></H4>
     <p>
@@ -248,14 +254,13 @@ const compiler = new Compiler({
       <br /><br />
       The element doesn't need to be immediately attached anywhere, but in order for the user to
       view what was compiled, it will need to be placed somewhere.
-
-      <div data-format="js" {{highlighted samples.compile.basic}}></div>
     </p>
+
+    <Highlighted @format="js" @code={{samples.compile.basic}} />
 
     <H4 class="code-link" @id="index-Compiler-createEditor"><code
       >&lt;Compiler#createEditor&gt;</code></H4>
     <p>
-
       This editor uses
       <ExternalLink href="https://codemirror.net/">codemirror</ExternalLink>
       which supports editing on both mobile and desktop devices, as well as proper keyboard
@@ -267,14 +272,13 @@ const compiler = new Compiler({
       This is
       <code>await import</code>'d, so if you don't want to use codemirror, you will not pay for the
       bytes of codemirror in your bundled project.
-
-      <div data-format="js" {{highlighted samples.createEditor.basic}}></div>
     </p>
+
+    <Highlighted @format="js" @code={{samples.createEditor.basic}} />
 
     <H3 class="code-link" @id="index-defaults"><code>defaults</code>
       from repl-sdk</H3>
     <p>
-
       This is the default configuration for the
       <code>Compiler</code>. It provides only the
       <code>formats</code>
@@ -282,9 +286,11 @@ const compiler = new Compiler({
 
       <br /><br />This can be used to add custom compilers, remove existing compilers, or replace
       them entirely.
+    </p>
 
-      <div data-format="js" {{highlighted samples.defaults.basic}}></div>
+    <Highlighted @format="js" @code={{samples.defaults.basic}} />
 
+    <p>
       Each compiler is
       <code>await import</code>'d so omitting compilers from this options object will omit their
       code from your final bundles.

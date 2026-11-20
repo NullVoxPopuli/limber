@@ -1,4 +1,5 @@
 import { assert } from '@ember/debug';
+import { htmlSafe } from '@ember/template';
 
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
 import { highlighted } from '@nullvoxpopuli/limber-shared/highlighting';
@@ -17,20 +18,42 @@ export const exampleMermaid =
     "Rats" : 15\n` +
   '```';
 
+function escapeHTML(text: string) {
+  return text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+}
+
+/**
+ * Trusted HTML, so that rehydration keeps the highlighted <pre> of the prerender.
+ *
+ * Rehydration compares text and elements with the prerendered DOM,
+ * and deletes what does not match.
+ * It keeps trusted HTML as it is.
+ */
+function plainCode(code: string) {
+  return htmlSafe(`<pre><code>${escapeHTML(code)}</code></pre>`);
+}
+
+export const Highlighted: TOC<{
+  Element: HTMLDivElement;
+  Args: { code: string; format: string };
+}> = <template>
+  <div data-format={{@format}} {{highlighted @code}} ...attributes>{{plainCode @code}}</div>
+</template>;
+
 export const CodeBlock: TOC<{ Args: { code: string } }> = <template>
-  <div data-format="md" {{highlighted @code}}><pre><code>{{@code}}</code></pre></div>
+  <Highlighted @format="md" @code={{@code}} />
 </template>;
 
 const JSCodeBlock: TOC<{ Args: { code: string } }> = <template>
-  <div data-format="js" {{highlighted @code}}><pre><code>{{@code}}</code></pre></div>
+  <Highlighted @format="js" @code={{@code}} />
 </template>;
 
 const MDCodeBlock: TOC<{ Args: { code: string } }> = <template>
-  <div data-format="md" {{highlighted @code}}><pre><code>{{@code}}</code></pre></div>
+  <Highlighted @format="md" @code={{@code}} />
 </template>;
 
 const VueCodeBlock: TOC<{ Args: { code: string } }> = <template>
-  <div data-format="vue" {{highlighted @code}}><pre><code>{{@code}}</code></pre></div>
+  <Highlighted @format="vue" @code={{@code}} />
 </template>;
 
 export const snippet = {

@@ -30,6 +30,17 @@ export const highlighted = modifier<Signature>((element: Element, [code]) => {
 
   if (!lang) return;
 
+  const prerendered = element.querySelector('pre');
+
+  /**
+   * The prerendered HTML already has the highlight.
+   */
+  if (
+    prerendered?.classList.contains('shiki') &&
+    prerendered.textContent === code
+  )
+    return;
+
   void (async () => {
     const html = await highlightToHtml(code, lang);
 
