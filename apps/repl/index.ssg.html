@@ -81,10 +81,9 @@
     <script type="module">
       import Application from "./app/app.ts";
       import environment from "./app/config/environment.ts";
+      import { rehydrate } from "./app/rehydrate.ts";
 
-      const app = Application.create({ ...environment.APP, autoboot: false });
-
-      app.visit(window.location.pathname + window.location.search, { _renderMode: "rehydrate" });
+      rehydrate(Application.create({ ...environment.APP, autoboot: false }));
     </script>
   </body>
 </html>

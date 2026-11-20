@@ -1,10 +1,9 @@
 import { REPL } from 'limber-ui';
 
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
-import { highlighted } from '@nullvoxpopuli/limber-shared/highlighting';
 
 import { Example, Live, Option, Refresh } from '../support/api.gts';
-import { H2 } from '../support/code.gts';
+import { H2, Highlighted } from '../support/code.gts';
 
 const hello = `<template>
   hello world
@@ -63,7 +62,7 @@ const EXAMPLES = {
     <code>REPL</code>
     component.
 
-    <div data-format="gjs" {{highlighted EXAMPLES.basic}}></div>
+    <Highlighted @format="gjs" @code={{EXAMPLES.basic}} />
 
     Output:
     <REPL @code={{counter}} @editor="60h" @editorLoad="force" />
@@ -76,8 +75,8 @@ const EXAMPLES = {
 
     With your favorite package manager
 
-    <div data-format="bash" {{highlighted "npm add limber-ui"}}></div>
-    <div data-format="bash" {{highlighted "pnpm add limber-ui"}}></div>
+    <Highlighted @format="bash" @code="npm add limber-ui" />
+    <Highlighted @format="bash" @code="pnpm add limber-ui" />
     (etc)
 
     <section class="options">
@@ -85,15 +84,17 @@ const EXAMPLES = {
 
       <p>
         For each option:
+      </p>
 
-        <dl>
-          <dt><Live /></dt>
-          <dd>changes to this argument will update the REPL (or its container) without a full
-            refresh of the iframe</dd>
-          <dt><Refresh /></dt>
-          <dd>changes to this argument will cause the REPL to fully reload</dd>
-        </dl>
+      <dl>
+        <dt><Live /></dt>
+        <dd>changes to this argument will update the REPL (or its container) without a full refresh
+          of the iframe</dd>
+        <dt><Refresh /></dt>
+        <dd>changes to this argument will cause the REPL to fully reload</dd>
+      </dl>
 
+      <p>
         These (both
         <Live />
         and

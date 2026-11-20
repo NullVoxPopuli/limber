@@ -1,5 +1,4 @@
 import { ExternalLink } from '@nullvoxpopuli/limber-shared';
-import { highlighted } from '@nullvoxpopuli/limber-shared/highlighting';
 
 import {
   CodeBlock,
@@ -7,6 +6,7 @@ import {
   exampleMermaid,
   H2,
   H3,
+  Highlighted,
   issueURL,
   sample,
   TryIt,
@@ -295,14 +295,12 @@ const Overview = <template>
       This mode is a no-frills, "just use JavaScript" mode. You are given an element and are free to
       manipulate that element however you wish.
 
-      <div
-        data-format="javascript"
-        {{highlighted
-          "export default function render(element) {
+      <Highlighted
+        @format="javascript"
+        @code="export default function render(element) {
   element.textContent = 'hello there';
 }"
-        }}
-      ></div>
+      />
     </article>
 
     <article>

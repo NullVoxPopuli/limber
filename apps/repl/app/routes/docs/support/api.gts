@@ -5,7 +5,7 @@ import { Form } from 'ember-primitives/components/form';
 
 import { REPL } from 'limber-ui';
 
-import { highlighted } from '@nullvoxpopuli/limber-shared/highlighting';
+import { Highlighted } from './code.gts';
 
 import type { TOC } from '@ember/component/template-only';
 
@@ -30,13 +30,13 @@ export const Option: TOC<{
 
     <pre><code>{{@type}}</code></pre>
 
-    <p>
+    <div class="description">
       {{#if @description}}
         {{@description}}
       {{else}}
         {{yield}}
       {{/if}}
-    </p>
+    </div>
   </div>
 </template>;
 
@@ -173,7 +173,7 @@ export class Example extends Component<{
       {{/if}}
       <div class="code">
         {{yield this.config to="code"}}
-        <div data-format="hbs" {{highlighted this.code}}></div>
+        <Highlighted @format="hbs" @code={{this.code}} />
       </div>
       <div class="output">
         <REPL
