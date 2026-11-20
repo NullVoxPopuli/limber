@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { on } from '@ember/modifier';
 
 const Three = <template>3 | Three</template>;
 const Bee   = <template>🐝 | Bee</template>;

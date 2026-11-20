@@ -1,5 +1,4 @@
 import { tracked } from '@glimmer/tracking';
-import { on } from '@ember/modifier';
 
 let dark = '#222';
 let light = '#eee';

@@ -105,7 +105,6 @@ module('Scenarios', function (hooks) {
         // const code = stripIndent`
         //   import Component from '@glimmer/component';
         //   import { tracked } from '@glimmer/tracking';
-        //   import { on } from '@ember/modifier';
 
         //   export default class HelloWorld extends Component {
         //     @tracked count = 0;

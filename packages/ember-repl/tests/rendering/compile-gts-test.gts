@@ -32,7 +32,6 @@ module('Rendering | compile()', function (hooks) {
 
       const snippet = stripIndent`
         import Component from '@glimmer/component';
-        import { on } from '@ember/modifier';
 
         import type { TOC } from '@ember/component/template-only';
 
@@ -81,7 +80,6 @@ module('Rendering | compile()', function (hooks) {
         const template = `
         import Component from '@glimmer/component';
         import { tracked } from '@glimmer/tracking';
-        import { on } from '@ember/modifier';
 
         export default class MyComponent extends Component {
           @tracked value: number = 0;

@@ -11,7 +11,6 @@ In the form below, we create a Vanilla™ [HTML form][2], and only add "Ember" c
 Using the native API, [FormData][1], we can gather the user inputs when the user presses the submit button.
 
 ```gjs live
-import { on } from '@ember/modifier';
 import { tracked } from '@glimmer/tracking';
 
 const state = tracked(null);

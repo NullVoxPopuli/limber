@@ -12,7 +12,6 @@
 ```gjs live
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { on } from '@ember/modifier';
 
 export default class HelloWorld extends Component {
   @tracked count = 0;

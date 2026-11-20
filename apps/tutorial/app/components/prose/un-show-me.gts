@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 
 import { Button } from '@nullvoxpopuli/limber-shared';

@@ -1,4 +1,3 @@
-import { on } from '@ember/modifier';
 import { tracked } from '@glimmer/tracking';
 // shadow-dom componentt used to get a reset on styling
 // this is showcased more prominently in the "Styleguide" demo

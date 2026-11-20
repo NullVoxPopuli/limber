@@ -3,7 +3,6 @@
 _This demo adapted for [this tweet](https://twitter.com/greg_johnston/status/1605028784071221248) from the `Forms` demo_ (selectable from the menu in the top right).
 
 ```gjs live
-import { on } from '@ember/modifier';
 import { tracked } from '@glimmer/tracking';
 
 let initial;

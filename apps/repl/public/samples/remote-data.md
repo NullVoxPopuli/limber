@@ -11,7 +11,6 @@ You may change the `id` of the Person to fetch from the StarWars API.
 ```gjs live
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { on } from '@ember/modifier';
 
 import { RemoteData } from 'reactiveweb/remote-data';
 

@@ -5,8 +5,6 @@ More details as well as a tutorial
 [here](https://gist.github.com/MelSumner/1e724431bcb3ec666408240a85fa94db)
 
 ```gjs live
-import { on } from '@ember/modifier';
-
 import { focusTrap } from 'ember-focus-trap';
 import { Menu } from 'ember-primitives/components/menu';
 

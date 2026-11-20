@@ -1,4 +1,3 @@
-import { on } from '@ember/modifier';
 import { tracked } from '@glimmer/tracking';
 
 let state = tracked(null);
