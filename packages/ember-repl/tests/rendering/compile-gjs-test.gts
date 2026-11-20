@@ -44,7 +44,6 @@ module('Rendering | compile()', function (hooks) {
 
       const snippet = stripIndent`
         import Component from '@glimmer/component';
-        import { on } from '@ember/modifier';
 
         const { console } = globalThis;
 
@@ -149,7 +148,6 @@ module('Rendering | compile()', function (hooks) {
         const template = `
         import Component from '@glimmer/component';
         import { tracked } from '@glimmer/tracking';
-        import { on } from '@ember/modifier';
 
         export default class MyComponent extends Component {
           @tracked value = 0;
@@ -202,7 +200,6 @@ module('Rendering | compile()', function (hooks) {
         const template = `
         import Component from '@glimmer/component';
         import { tracked } from '@glimmer/tracking';
-        import { on } from '@ember/modifier';
 
         import Example from 'ember-repl-test-app/components/example-component';
 
@@ -246,7 +243,6 @@ module('Rendering | compile()', function (hooks) {
         const template = `
         import Component from '@glimmer/component';
         import { tracked } from '@glimmer/tracking';
-        import { on } from '@ember/modifier';
 
         import AComponent from 'my-silly-import-path/a-component';
 

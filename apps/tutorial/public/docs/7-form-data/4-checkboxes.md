@@ -5,7 +5,6 @@
 ```gjs live
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { on } from '@ember/modifier';
 
 export default class Demo extends Component {
   @tracked value;
@@ -31,7 +30,6 @@ export default class Demo extends Component {
 ## Automatic binding using a `<form>`
 
 ```gjs live
-import { on } from '@ember/modifier';
 import { tracked } from '@glimmer/tracking';
 
 let state = tracked('');

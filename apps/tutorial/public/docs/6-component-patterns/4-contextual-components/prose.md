@@ -5,8 +5,6 @@ This pattern uses the [`Object` constructor](https://developer.mozilla.org/en-US
 For example, imagine a `ButtonGroup` component that yields different button types:
 
 ```gjs
-import { hash } from '@ember/helper';
-
 const AcceptButton = <template>
   <button>Accept</button>
 </template>;

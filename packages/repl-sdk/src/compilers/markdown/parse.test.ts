@@ -591,7 +591,6 @@ describe('options', () => {
       it('Code fence imports things', async function () {
         const snippet = stripIndent`
         import Component from '@glimmer/component';
-        import { on } from '@ember/modifier';
 
         <template>
           <button {{on "click" console.log}}>Click</button>
@@ -606,7 +605,6 @@ describe('options', () => {
           "<p>hi</p>
           <div id="repl_1" class="repl-sdk__demo"></div>
           <div class="repl-sdk__snippet" data-repl-output><pre><code class="language-gjs">import Component from '@glimmer/component';
-          import { on } from '@ember/modifier';
 
           &#x3C;template>
             &#x3C;button \\{{on "click" console.log}}>Click&#x3C;/button>

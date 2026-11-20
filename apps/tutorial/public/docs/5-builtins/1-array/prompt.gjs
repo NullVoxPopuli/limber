@@ -1,5 +1,3 @@
-import { array } from '@ember/helper';
-
 let one = 1;
 let two = 2;
 

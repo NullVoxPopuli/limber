@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { on } from '@ember/modifier';
 
 import { use, resource } from 'ember-resources';
 import { RemoteData, remoteData } from 'reactiveweb/remote-data';

@@ -1,5 +1,3 @@
-import { on } from '@ember/modifier';
-
 const Button = <template>
   <button ...attributes aria-disabled={{@isDisabled}} type="button">{{yield}}</button>
 </template>;

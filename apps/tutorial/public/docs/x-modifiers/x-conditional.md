@@ -4,7 +4,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { modifier } from 'ember-modifier';
-import { on } from '@ember/modifier';
 
 export default class HelloWorld extends Component {
   @tracked enabled = false;

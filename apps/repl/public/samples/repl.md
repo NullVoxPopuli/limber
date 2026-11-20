@@ -11,12 +11,10 @@ your app's time-to-interactive will be unaffected.
 ```gjs live
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { on } from '@ember/modifier';
 import { Compiled } from 'ember-repl';
 
 const STARTING_CODE = `import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { on } from '@ember/modifier';
 
 export default class HelloWorld extends Component {
   @tracked count = 0;

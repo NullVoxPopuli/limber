@@ -19,8 +19,6 @@ const Greeter = <template>
 This pattern can be also used in cases where a _component A_ `yields` _component B_ and this one then needs to be used in _component C_:
 
 ```gjs
-import { hash } from '@ember/helper';
-
 const Button = <template>
   <button type="button">Close</button>
 </template>;
