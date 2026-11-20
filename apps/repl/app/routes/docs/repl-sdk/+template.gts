@@ -155,11 +155,9 @@ const compiler = new Compiler({
     </p>
 
     <Tabs as |Tab|>
-      {{! @glint-expect-error TODO: fix this in nvp.ui }}
       <Tab @label="npm">
         <Highlighted @format="bash" @code="npm add repl-sdk" />
       </Tab>
-      {{! @glint-expect-error TODO: fix this in nvp.ui }}
       <Tab @label="pnpm">
         <Highlighted @format="bash" @code="pnpm add repl-sdk" />
       </Tab>
@@ -186,7 +184,6 @@ const compiler = new Compiler({
 
     <Tabs as |Tab|>
       {{#each-in formats as |format docs|}}
-        {{! @glint-expect-error TODO: fix this in nvp.ui }}
         <Tab @label={{format}}>
           <docs />
         </Tab>

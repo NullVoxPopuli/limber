@@ -31,7 +31,7 @@
   "dependencies": {
     "@ember/test-waiters": "^4.1.1",
     "@embroider/addon-shim": "1.11.0",
-    "@glimmer/component": "^2.1.1",
+    "@glimmer/component": "^2.2.1",
     "decorator-transforms": "2.4.0",
     "ember-modifier": "^4.2.2",
     "penpal": "^6.2.2",
@@ -54,7 +54,7 @@
     "concurrently": "^9.2.1",
     "ember-async-data": "2.0.1",
     "ember-content-mapper": "^0.2.0",
-    "ember-primitives": "^0.61.1",
+    "ember-primitives": "^0.64.3",
     "ember-resources": "^7.1.0",
     "ember-source": "7.5.0-alpha.3",
     "eslint": "^10.0.0",
