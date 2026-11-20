@@ -34,12 +34,12 @@
     "lint:prettier": "pnpm -w exec lint prettier"
   },
   "dependencies": {
-    "@glimmer/component": "^2.1.1",
+    "@glimmer/component": "^2.2.1",
     "@nullvoxpopuli/limber-shared": "workspace:*",
     "decorator-transforms": "2.4.0",
     "ember-async-data": "2.0.1",
     "ember-modifier": "^4.2.0",
-    "ember-primitives": "^0.61.1",
+    "ember-primitives": "^0.64.3",
     "ember-repl": "latest",
     "ember-resources": "^7.1.0",
     "kolay": "github:universal-ember/kolay#dist",

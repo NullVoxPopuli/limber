@@ -156,11 +156,9 @@ class Demo extends Component {
     With your favorite package manager
 
     <Tabs as |Tab|>
-      {{! @glint-expect-error TODO: fix this in nvp.ui }}
       <Tab @label="npm">
         <Highlighted @format="bash" @code="npm add ember-repl" />
       </Tab>
-      {{! @glint-expect-error TODO: fix this in nvp.ui }}
       <Tab @label="pnpm">
         <Highlighted @format="bash" @code="pnpm add ember-repl" />
       </Tab>

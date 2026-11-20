@@ -92,7 +92,7 @@ overrides:
   "rollup-plugin-dts": "^6.5.1"
   "@codemirror/view": "6.39.12"
   "decorator-transforms": "^2.4.0"
-  "ember-primitives": "^0.62.0"
+  "ember-primitives": "^0.64.3"
   "kolay": "github:universal-ember/kolay#dist"
   "kolay>ember-repl": "^8.0.0"
   "side-channel": "npm:@nolyfill/side-channel@^1"
