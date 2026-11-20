@@ -198,10 +198,13 @@ const compiler = new Compiler({
       There is only available module, and two exports from that module
     </p>
 
-    <Highlighted @format="js" @code="import {
+    <Highlighted
+      @format="js"
+      @code="import {
   Compiler,
   defaults
-} from 'repl-sdk';" />
+} from 'repl-sdk';"
+    />
 
     <H3 class="code-link" @id="index-Compiler"><code>Compiler</code>
       from repl-sdk</H3>
