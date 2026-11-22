@@ -17,7 +17,7 @@
     "directory": "packages/syntax/glimmer/codemirror"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.5",
+    "@babel/core": "^8.0.0",
     "@babel/eslint-parser": "^8.0.1",
     "@codemirror/buildhelper": "^1.0.2",
     "@codemirror/language": "^6.12.1",
@@ -26,7 +26,7 @@
     "@nullvoxpopuli/eslint-configs": "^7.1.0",
     "@tsconfig/ember": "^3.0.9",
     "codemirror": "^6.0.2",
-    "concurrently": "^9.2.1",
+    "concurrently": "^10.0.0",
     "eslint": "^10.0.0",
     "prettier": "^3.9.6",
     "rollup": "^4.53.3",
