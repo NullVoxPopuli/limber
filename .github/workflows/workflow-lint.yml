@@ -17,14 +17,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        uses: actions/checkout@v6.1.0
         with:
           persist-credentials: false
 
       - name: Run zizmor 🌈
-        uses: zizmorcore/zizmor-action@0dce2577a4760a2749d8cfb7a84b7d5585ebcb7d # v0.5.0
+        uses: zizmorcore/zizmor-action@v0.5.0
         with:
           # advanced-security uploads SARIF to GitHub code scanning, which
           # needs GitHub Advanced Security -- not available here.
           advanced-security: false
           inputs: .github/
+
+  # Fails when .github/workflows/actions.lock is out of sync with the
+  # workflows, or when a locked commit no longer matches upstream.
+  # Run `gh actions-lock` locally to fix it.
+  actions-lock:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6.1.0
+        with:
+          persist-credentials: false
+
+      - run: gh extension install github/gh-actions-lock --pin v0.5.1
+      - run: gh actions-lock --verify
