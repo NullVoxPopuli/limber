@@ -32,7 +32,7 @@ port="41137"
 common_args="
   --timeout 180000 \
   --file ./app/app.ts \
-  --wait-for 'main header nav' \
+  --wait-for 'header h1' \
   --url 'https://localhost:$port/' \
   $@
 "
