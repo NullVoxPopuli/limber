@@ -112,6 +112,11 @@ export class Status extends Component {
 
         button {
           color: inherit;
+          background: transparent;
+
+          &:hover {
+            background: light-dark(#fecaca, #7f1d1d);
+          }
         }
       }
 
