@@ -71,6 +71,10 @@ patchedDependencies:
   "vite-ember-ssr@0.6.2": "patches/vite-ember-ssr@0.6.2.patch"
 
 overrides:
+  # ember-vite lists @babel/core as a dependency, not a peer, so it gets Babel 8.
+  # The babel configs of the apps use Babel 7 plugins.
+  "@nullvoxpopuli/ember-vite>@babel/core": "^7.28.5"
+  "@nullvoxpopuli/ember-build-tooling-utils>@babel/core": "^7.28.5"
   "@embroider/addon-shim": "1.11.0"
   "@embroider/macros>ember-cli-babel": "-"
   "ember-tracked-storage-polyfill>ember-cli-babel": "-"
