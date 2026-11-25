@@ -4,6 +4,8 @@ import type { ModuleMap } from '../compile/types.ts';
 import type { Options } from 'repl-sdk';
 
 const frameworkModules = {
+  'ember-testing': () => import('ember-testing'),
+  'ember-testing/lib/test/adapter': () => import('ember-testing/lib/test/adapter'),
   '@ember/application': () => import('@ember/application'),
   '@ember/application/instance': () => import('@ember/application/instance'),
   '@ember/array': () => import('@ember/array'),
