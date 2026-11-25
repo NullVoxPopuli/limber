@@ -11,7 +11,7 @@
   },
   "author": "NullvoxPopuli",
   "devDependencies": {
-    "@babel/plugin-proposal-decorators": "^7.28.0",
+    "@babel/plugin-proposal-decorators": "^8.0.2",
     "@babel/standalone": "^8.0.5",
     "@nullvoxpopuli/eslint-configs": "^7.1.0",
     "@testing-library/dom": "^10.4.1",
