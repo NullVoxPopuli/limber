@@ -1,8 +1,7 @@
-import { ember, extensions } from '@embroider/vite';
-
-import { babel } from '@rollup/plugin-babel';
 import { docs } from 'kolay/vite';
 import { defineConfig } from 'vite';
+
+import { ember } from '@nullvoxpopuli/ember-vite';
 
 export default defineConfig((
   /* { mode, command, isSsrBuild, isPreview } */
@@ -18,9 +17,6 @@ export default defineConfig((
      * support light-dark() natively, so it ships as authored.
      */
     cssTarget: ['chrome123', 'firefox120', 'safari17.5'],
-  },
-  resolve: {
-    extensions,
   },
   css: {
     postcss: './config/postcss.config.mjs',
@@ -41,9 +37,5 @@ export default defineConfig((
   plugins: [
     docs('docs', { src: import.meta.resolve('./public/docs') }),
     ember(),
-    babel({
-      babelHelpers: 'runtime',
-      extensions,
-    }),
   ],
 }));

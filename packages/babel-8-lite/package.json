@@ -26,8 +26,8 @@
     "test:node": "node --test \"tests/*.test.js\""
   },
   "devDependencies": {
-    "@babel/core": "^8.0.5",
-    "@babel/plugin-transform-typescript": "^8.0.5",
+    "@babel/core": "^8.1.3",
+    "@babel/plugin-transform-typescript": "^8.1.3",
     "@babel/preset-react": "^8.0.1",
     "path-browserify": "^1.0.1",
     "rolldown": "1.0.0-rc.15"

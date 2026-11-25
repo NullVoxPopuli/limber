@@ -29,6 +29,9 @@ packages:
   - "./packages/syntax/*/*/dev"
 
 peerDependencyRules:
+  allowedVersions:
+    # @rollup/plugin-babel 7 works with Babel 8, but its peer range lists only Babel 7.
+    "@rollup/plugin-babel>@babel/core": "8"
   allowAny:
     - "@glimmer/component"
     - "ember-modifier"
