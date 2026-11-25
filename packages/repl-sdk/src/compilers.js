@@ -3,6 +3,7 @@ import { html } from './compilers/html.js';
 import { js } from './compilers/js.js';
 import * as markdown from './compilers/markdown.js';
 import { mermaid } from './compilers/mermaid.js';
+import { qunit } from './compilers/qunit.js';
 import * as react from './compilers/react.js';
 import { svelte } from './compilers/svelte.js';
 import { vue } from './compilers/vue.js';
@@ -103,6 +104,10 @@ export const compilers = {
    * https://mermaid.js.org/
    */
   mermaid,
+  /**
+   * https://qunitjs.com/
+   */
+  qunit,
   /**
    * https://svelte.dev/
    */
