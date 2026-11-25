@@ -1,5 +1,138 @@
 # Changelog
 
+## Release (2026-11-25)
+
+* ember-repl 8.3.0 (minor)
+* limber-ui 4.3.0 (minor)
+* repl-sdk 3.0.0 (major)
+* codemirror-lang-glimdown 2.0.5 (patch)
+* @glimdown/lezer 2.0.4 (patch)
+* codemirror-lang-glimmer-js 2.0.5 (patch)
+* @glimdown/lezer-glimmer-expression 2.0.4 (patch)
+* codemirror-lang-glimmer 2.0.5 (patch)
+* lezer-glimmer 2.0.4 (patch)
+
+#### :boom: Breaking Change
+* `repl-sdk`
+  * [#2324](https://github.com/NullVoxPopuli/limber/pull/2324) Remove the old source hook and the fs exports that only tests used ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2322](https://github.com/NullVoxPopuli/limber/pull/2322) Compiler configs use plugins, not resolve and handlers ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2222](https://github.com/NullVoxPopuli/limber/pull/2222) Resolve through a module fs: no request ids, versions from package.json ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+
+#### :rocket: Enhancement
+* `ember-repl`, `limber-ui`
+  * [#2339](https://github.com/NullVoxPopuli/limber/pull/2339) Upgrade to ember-primitives 0.64.3 and nvp.ui 0.12.0 ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `repl-sdk`
+  * [#2333](https://github.com/NullVoxPopuli/limber/pull/2333) Multi-file editor: fences, stored projects, css/json highlighting, and less duplication ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2307](https://github.com/NullVoxPopuli/limber/pull/2307) Lock file system writes across REPL frames ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2276](https://github.com/NullVoxPopuli/limber/pull/2276) Let storage answer stat, entries, and bytes ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2256](https://github.com/NullVoxPopuli/limber/pull/2256) Make the origin private file system the file system ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2257](https://github.com/NullVoxPopuli/limber/pull/2257) Name markdown fences after their document ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `ember-repl`, `limber-ui`, `repl-sdk`
+  * [#2332](https://github.com/NullVoxPopuli/limber/pull/2332) Edit and import multiple files in the REPL ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `ember-repl`, `repl-sdk`
+  * [#2328](https://github.com/NullVoxPopuli/limber/pull/2328) Add an html format that renders in an srcdoc iframe ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2312](https://github.com/NullVoxPopuli/limber/pull/2312) One model for pins and provided modules in repl-sdk and ember-repl ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2310](https://github.com/NullVoxPopuli/limber/pull/2310) repl-sdk: resolve, load, and transform modules through Rollup-style plugins ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2305](https://github.com/NullVoxPopuli/limber/pull/2305) Show errors in a status bar across the bottom of the output ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2302](https://github.com/NullVoxPopuli/limber/pull/2302) Let the REPL pin ember-source ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2267](https://github.com/NullVoxPopuli/limber/pull/2267) Add @glimdown/babel-8-lite, and drop the Babel tarball ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2249](https://github.com/NullVoxPopuli/limber/pull/2249) Add gts (Glimmer TypeScript) as a format ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `limber-ui`
+  * [#2326](https://github.com/NullVoxPopuli/limber/pull/2326) One frame protocol for the REPL hosts and guests ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* Other
+  * [#2299](https://github.com/NullVoxPopuli/limber/pull/2299) Add dark mode to the REPL ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2281](https://github.com/NullVoxPopuli/limber/pull/2281) Add a pause/play toggle for automatic rendering in the repl ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2275](https://github.com/NullVoxPopuli/limber/pull/2275) Move the Shiki worker into limber-shared, for both apps ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2262](https://github.com/NullVoxPopuli/limber/pull/2262) Resolve ember-primitives and decorator-transforms to one version each ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `ember-repl`
+  * [#2252](https://github.com/NullVoxPopuli/limber/pull/2252) Use trackedArray for the compiler messages ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+
+#### :bug: Bug Fix
+* `repl-sdk`
+  * [#2330](https://github.com/NullVoxPopuli/limber/pull/2330) Make the HTML output follow the light or dark mode of the REPL ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2325](https://github.com/NullVoxPopuli/limber/pull/2325) Make the repl-sdk declaration files match the JavaScript ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2316](https://github.com/NullVoxPopuli/limber/pull/2316) One plugin for @embroider/macros, with answers from the versions of each module ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2314](https://github.com/NullVoxPopuli/limber/pull/2314) Show the real error when a Svelte component throws ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* Other
+  * [#2329](https://github.com/NullVoxPopuli/limber/pull/2329) Fix the contrast of the trust button on the safety prompt ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2327](https://github.com/NullVoxPopuli/limber/pull/2327) Stop import-map alias warnings on every page load ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2319](https://github.com/NullVoxPopuli/limber/pull/2319) One Tailwind config for both apps ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2315](https://github.com/NullVoxPopuli/limber/pull/2315) Load a document for the new format from the format menu ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2306](https://github.com/NullVoxPopuli/limber/pull/2306) Paint the docs canvas dark in dark mode ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2261](https://github.com/NullVoxPopuli/limber/pull/2261) Stop the text from moving when CodeMirror replaces the placeholder ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `lezer-glimmer`
+  * [#2308](https://github.com/NullVoxPopuli/limber/pull/2308) Parse void elements with "/>", "~" on block tags, and "::" names ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `ember-repl`, `repl-sdk`
+  * [#2300](https://github.com/NullVoxPopuli/limber/pull/2300) Bundle mermaid instead of loading it from esm.sh ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `ember-repl`
+  * [#2279](https://github.com/NullVoxPopuli/limber/pull/2279) Upgrade @ember/test-helpers to ^5.5.0 ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer`, `lezer-glimmer`
+  * [#2246](https://github.com/NullVoxPopuli/limber/pull/2246) Fix gjs highlighting for modifiers, args, and mustache bodies ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+
+#### :memo: Documentation
+* Other
+  * [#2343](https://github.com/NullVoxPopuli/limber/pull/2343) Use a clear background for the error dismiss button ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2338](https://github.com/NullVoxPopuli/limber/pull/2338) Rehydrate the prerendered docs pages in place ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2335](https://github.com/NullVoxPopuli/limber/pull/2335) Keep the editor scrollbar and controls in place when the file list opens ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2334](https://github.com/NullVoxPopuli/limber/pull/2334) Show only the language menu in the editor header ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2331](https://github.com/NullVoxPopuli/limber/pull/2331) Remove the popover default padding and background from menus ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2273](https://github.com/NullVoxPopuli/limber/pull/2273) Paint the app shell before the app evaluates ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2271](https://github.com/NullVoxPopuli/limber/pull/2271) Update vite-ember-ssr to 0.4.1 ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2270](https://github.com/NullVoxPopuli/limber/pull/2270) Trim the app shell and duplicate stylesheet links from prerendered pages ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2269](https://github.com/NullVoxPopuli/limber/pull/2269) Keep the in-process Shiki out of the entry page ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2268](https://github.com/NullVoxPopuli/limber/pull/2268) Prerender the docs pages again ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2265](https://github.com/NullVoxPopuli/limber/pull/2265) Keep the painted <pre> when the highlight arrives ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2264](https://github.com/NullVoxPopuli/limber/pull/2264) Fix the share button name, the empty heading, and llms.txt ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2263](https://github.com/NullVoxPopuli/limber/pull/2263) Group the highlighting code in app/utils/highlighting ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2258](https://github.com/NullVoxPopuli/limber/pull/2258) Make the repl load faster ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2260](https://github.com/NullVoxPopuli/limber/pull/2260) Shrink Shiki and stop the placeholder text from moving ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2259](https://github.com/NullVoxPopuli/limber/pull/2259) Keep CodeMirror out of the first page load ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2245](https://github.com/NullVoxPopuli/limber/pull/2245) Use @nullvoxpopuli/ember-vite in the repl vite config ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `ember-repl`, `limber-ui`, `repl-sdk`
+  * [#2337](https://github.com/NullVoxPopuli/limber/pull/2337) Remove imports of built-in template keywords ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+
+#### :house: Internal
+* `ember-repl`, `limber-ui`, `repl-sdk`, `codemirror-lang-glimdown`, `@glimdown/lezer`, `codemirror-lang-glimmer-js`, `@glimdown/lezer-glimmer-expression`, `codemirror-lang-glimmer`, `lezer-glimmer`
+  * [#2345](https://github.com/NullVoxPopuli/limber/pull/2345) Move the apps to @nullvoxpopuli/ember-vite 2.1 and the workspace to Babel 8 ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2290](https://github.com/NullVoxPopuli/limber/pull/2290) Replace ember-template-lint with eslint-plugin-ember template rules ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2250](https://github.com/NullVoxPopuli/limber/pull/2250) Update prettier to 3.9.6 and prettier-plugin-ember-template-tag to 2.1.8 ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2235](https://github.com/NullVoxPopuli/limber/pull/2235) Type-check with TypeScript 7 and ember-content-mapper ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* Other
+  * [#2344](https://github.com/NullVoxPopuli/limber/pull/2344) Lock workflow actions with GitHub's actions.lock ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2342](https://github.com/NullVoxPopuli/limber/pull/2342) Wait for the repl header in perf-check.sh ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2320](https://github.com/NullVoxPopuli/limber/pull/2320) One format model in the repl app ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2323](https://github.com/NullVoxPopuli/limber/pull/2323) Remove the spikes directory ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2295](https://github.com/NullVoxPopuli/limber/pull/2295) Stop installing ember-cli-babel and ember-cli-htmlbars ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2292](https://github.com/NullVoxPopuli/limber/pull/2292) Move the docs routes to app/routes/docs/ ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2248](https://github.com/NullVoxPopuli/limber/pull/2248) Group each repl route's files in app/routes/<name>/ ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2291](https://github.com/NullVoxPopuli/limber/pull/2291) Use @ember/app-tsconfig in the apps ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2272](https://github.com/NullVoxPopuli/limber/pull/2272) Update vite-ember-ssr to 0.5.0, and use its transformHtml option ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2253](https://github.com/NullVoxPopuli/limber/pull/2253) Restore the last edited document on a bare /edit visit ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2251](https://github.com/NullVoxPopuli/limber/pull/2251) Add a format document button to the editor ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2237](https://github.com/NullVoxPopuli/limber/pull/2237) [WIP] Fix failing GitHub Actions job for ember-source tarball ([@Copilot](https://github.com/apps/copilot-swe-agent))
+* `repl-sdk`
+  * [#2321](https://github.com/NullVoxPopuli/limber/pull/2321) One render step for the Ember compilers ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2311](https://github.com/NullVoxPopuli/limber/pull/2311) Store each installed package as one pack file ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2226](https://github.com/NullVoxPopuli/limber/pull/2226) Fix browser tests: bump mermaid to drop langium ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `codemirror-lang-glimdown`, `codemirror-lang-glimmer-js`, `lezer-glimmer`
+  * [#2317](https://github.com/NullVoxPopuli/limber/pull/2317) Remove codemirror-lang-glimmer-ts, a copy of codemirror-lang-glimmer-js ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `ember-repl`
+  * [#2318](https://github.com/NullVoxPopuli/limber/pull/2318) Remove config for tools that this repo no longer uses ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2296](https://github.com/NullVoxPopuli/limber/pull/2296) Remove @embroider/compat ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2297](https://github.com/NullVoxPopuli/limber/pull/2297) Remove ember-resolver from ember-repl ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `limber-ui`
+  * [#2294](https://github.com/NullVoxPopuli/limber/pull/2294) Pin @embroider/addon-shim to 1.11.0 ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+* `ember-repl`, `limber-ui`
+  * [#2284](https://github.com/NullVoxPopuli/limber/pull/2284) Upgrade ember-source to 7.5.0-alpha.3 ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+  * [#2236](https://github.com/NullVoxPopuli/limber/pull/2236) Upgrade glint ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `ember-repl`, `limber-ui`, `repl-sdk`
+  * [#2225](https://github.com/NullVoxPopuli/limber/pull/2225) Upgrade Glint ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 3
+- @NullVoxPopuli's reduced-access machine account for AI usage ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+- Copilot [Bot] ([@copilot-swe-agent](https://github.com/apps/copilot-swe-agent))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2026-08-15)
 
 * ember-repl 8.2.3 (patch)
